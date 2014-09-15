@@ -1,5 +1,0 @@
-#similar to convention(s)-of
-hiring	practice
-lending	practice
-pricing	practice
-trade	practice

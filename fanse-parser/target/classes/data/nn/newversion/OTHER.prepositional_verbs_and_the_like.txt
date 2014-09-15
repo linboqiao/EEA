@@ -1,7 +1,0 @@
-#to
-poll	respondent
-survey	respondent
-
-#???
-dinner	guest
-wedding	guest

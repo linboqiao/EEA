@@ -1,4 +1,0 @@
-race	discrimination
-gender	discrimination
-sex	discrimination
-age	discrimination

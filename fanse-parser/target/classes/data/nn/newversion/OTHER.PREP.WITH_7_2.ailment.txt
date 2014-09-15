@@ -1,9 +1,0 @@
-asthma	patient
-
-stroke	patient
-cataract	patient
-leukemia	patient
-leprosy	patient
-cancer	patient
-
-leukemia	kid

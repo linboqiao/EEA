@@ -1,8 +1,0 @@
-philosophy	degree
-engineering	degree
-
-history	major
-
-science	graduate
-
-law	background
