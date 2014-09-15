@@ -1,0 +1,346 @@
+#enjoyed by
+#AFFECTED PART, SOMEWHAT AMBIGUOUS WITH_TARGET_OF
+#LOCATION OF APPLICABILITY + ARTIFACT/SUBSTANCE is used
+#[LOCATION OR EXPECTED PLACE OF] [EXISTENCE/APPLICATION/OCCURRENCE]
+#LOCATION OF EVENT/HAPPENING
+
+air	attack
+air	carrier
+air	strike
+air	traffic
+air	travel
+
+cockpit	recorder
+
+gorge	project
+
+aircraft	equipment
+
+arcade	game
+
+arena	party
+
+assembly line	worker
+
+back	bench
+back	burner
+back	nine
+back	pack
+back	page
+back	pocket
+back	road
+back	row
+back	seat
+back	side
+back	wall
+back	window
+
+backyard	barbecue
+backyard	composting
+backyard	pool
+
+basin	country
+
+battle	field
+
+bleacher	bum
+
+board	seat
+
+border	agent
+border	area
+border	camp
+border	check
+border	checkpoint
+border	city
+border	clash
+border	community
+border	district
+border	enclave
+border	fence
+border	force
+border	gate
+border	guard
+border	post
+border	province
+border	region
+border	river
+border	skirmish
+border	state
+border	station
+border	strip
+border	tension
+border	town
+border	trade
+border	troop
+border	unit
+border	village
+border	zone
+
+bottom	feeder
+
+box office	receipt
+
+bullpen	coach
+
+bunker	shot
+
+bush	pilot
+
+cabaret	singer
+
+
+
+cable	station
+
+carnival	ride
+
+casino	space
+
+ceiling	fan
+ceiling	tile
+
+center	console
+center	court
+center	display
+center	divider
+center	ice
+center	pole
+center	stage
+center	story
+center	tank
+
+centerfield	fence
+centerfield	wall
+
+centre	party
+centre	stage
+
+club	record
+club	scene
+
+cockpit	crew
+
+
+
+
+
+college	athlete
+college	basketball
+college	male
+college	sport
+college	student
+
+
+courtside	seat
+
+cover	story
+
+crosstown	rival
+
+curbside	program
+
+
+distance	learning
+
+downside	risk
+
+draft	beer
+
+earth	satellite
+
+entrance	gate
+
+exchange	activity
+
+fairway	bunker
+
+floor	broker
+floor	covering
+floor	fight
+floor	mat
+floor	space
+floor	speech
+
+food	label
+
+
+forest	product
+
+garden	experience
+garden	party
+
+garrison	troop
+
+gate	agent
+gate	receipt
+
+goal	post
+
+gorge	area
+
+government	life
+
+graveside	service
+
+greenside	bunker
+
+
+
+high-society	schmoozing
+
+highland	stronghold
+
+highschool	student
+
+ice	dancing
+
+landfill	space
+
+landscape	fragment
+
+lapel	pin
+
+lawn	bowling
+
+letter	bomb
+
+mail	bomb
+
+midair	collision
+
+mideast	politics
+
+moon	landing
+
+nature	walk
+
+northeast	shuttle
+
+outfield	fence
+outfield	wall
+
+parcel	bomb
+
+parish	priest
+
+passenger	side
+
+patio	furniture
+
+perimeter	fence
+
+pit	bull
+pit	crew
+pit	stop
+
+plains	state
+
+plate	appearance
+plate	umpire
+
+playground	equipment
+
+playoff	spot
+
+pocket	book
+pocket	change
+pocket	liner
+
+pump	price
+
+rail	accident
+rail	depot
+rail	worker
+
+railroad	worker
+
+railway	worker
+
+ramp	worker
+
+refrigerator	magnet
+
+resort	house
+
+rightfield	corner
+rightfield	fence
+rightfield	seat
+rightfield	wall
+
+roadside	bomb
+roadside	stand
+
+rock	cod
+
+roof	tile
+
+room	service
+
+runway	light
+runway	show
+
+sand	bass
+
+sector	activity
+sector	project
+
+seminary	student
+
+#metaphorical...
+shadow	budget
+shadow	cabinet
+shadow	convention
+shadow	economy
+shadow	government
+shadow	trade
+
+shelf	filing
+shelf	space
+
+side	street
+side	wall
+side	window
+
+sideline	product
+
+sidewalk	cafe
+
+
+sky	box
+
+soil	fungus
+soil	moisture
+
+sport	figure
+
+stage	actor
+stage	appearance
+stage	debut
+stage	performance
+stage	play
+stage	show
+stage	work
+
+station	wagon
+
+subway	worker
+
+summit	agreement
+
+tailgate	party
+
+ozone	hole
+
+theater	location
+
+
+train	worker
+
+tree	frog
+
+upside	potential
+
+water	skiing
+
+yard	sale

@@ -1,0 +1,25 @@
+subway	platform
+subway	stop
+subway	tunnel
+traffic	stop
+train	track
+vehicle	stop
+helicopter	pad
+ferry	terminal
+bike	path
+bus	stop
+motorcade	route
+metro	station
+elevator	shaft
+
+
+#for fueling...
+aircraft	fuel
+automobile	fuel
+jet	fuel
+rocket	fuel
+
+engine	oil
+computer	program
+artillery	shell
+mortar	shell

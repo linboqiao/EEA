@@ -1,0 +1,310 @@
+construction	permit
+boxing	license
+
+reconnaissance	aircraft
+surveillance	aircraft
+training	aircraft
+
+abortion	medication
+warning	bell
+
+handover	ceremony
+swearing-in	ceremony
+
+sprint	car
+
+export	opportunity
+work	opportunity
+
+work	visa
+
+consolation	prize
+
+heating	bar
+
+party	food
+party	snack
+patrol	cop
+
+identification	badge
+
+wrecking	ball
+loading	dock
+recycling	bin
+storage	bin
+briefing	book
+cleaning	agent
+conversion	pass
+enforcement	action
+petition	signature
+storage	unit
+certification	test
+screening	test
+investment	property
+trading	desk
+disclosure	form
+
+pitching	hand
+
+training	manual
+
+advertising	slogan
+disclosure	statement
+
+building	supply
+
+communication	infrastructure
+transportation	infrastructure
+
+transportation	item
+
+defense	equipment
+
+hiking	boot
+serving	bowl
+shipping	box
+
+pace	car
+
+playing	card
+
+measuring	cup
+
+construction	crane
+
+teaching	credential
+
+
+communication	device
+computing	device
+detection	device
+listening	device
+recording	device
+storage	device
+timing	device
+
+identification	document
+lifesaving	drug
+
+automation	equipment
+aviation	equipment
+communication	equipment
+communications	equipment
+construction	equipment
+defence	equipment
+detection	equipment
+drilling	equipment
+fabrication	equipment
+factory	equipment
+handling	equipment
+information	equipment
+manufacturing	equipment
+mining	equipment
+navigation	equipment
+networking	equipment
+pollution	equipment
+printing	equipment
+processing	equipment
+production	equipment
+surveillance	equipment
+switching	equipment
+telecommunication	equipment
+testing	equipment
+training	equipment
+transmission	equipment
+transportation	equipment
+treatment	equipment
+
+cooking	fork
+aviation	fuel
+
+
+cooking	gas
+
+communication	gear
+communications	gear
+steering	gear
+surveillance	gear
+
+
+answering	machine
+copying	machine
+gambling	machine
+marketing	machine
+milling	machine
+
+
+cooking	liquid
+
+
+bonding	material
+building	material
+construction	material
+insulation	material
+marketing	material
+packaging	material
+production	material
+reading	material
+teaching	material
+
+
+heating	oil
+
+
+
+briefing	paper
+consultation	paper
+discussion	paper
+divorce	paper
+identification	paper
+nomination	paper
+
+
+abortion	pill
+
+drilling	pipe
+
+
+reconnaissance	plane
+surveillance	plane
+
+
+fishing	pole
+
+
+cooking	pot
+
+
+hunting	rifle
+
+
+communication	satellite
+reconnaissance	satellite
+telecommunication	satellite
+
+
+adjustment	screw
+
+
+swing	set
+
+
+landing	ship
+salvage	ship
+
+running	shoe
+walking	shoe
+
+cooking	spray
+
+
+bathing	suit
+flight	suit
+jogging	suit
+
+irrigation	canal
+
+masking	tape
+
+communication	tool
+development	tool
+gardening	tool
+hedging	tool
+management	tool
+marketing	tool
+programming	tool
+teaching	tool
+
+
+logging	truck
+feeding	tube
+
+air conditioning	unit
+
+
+construction	vehicle
+delivery	vehicle
+investment	vehicle
+savings	vehicle
+transportation	vehicle
+
+
+fishing	vessel
+
+
+drinking	water
+irrigation	water
+
+
+fishing	trawler
+
+
+replacement	tire
+
+chewing	tobacco
+
+
+drinking	alcohol
+
+building	product
+improvement	product
+processing	product
+investment	product
+packaging	product
+storage	product
+
+insulation	mat
+
+shipping	container
+
+
+accounting	software
+communication	software
+encryption	software
+management	software
+networking	software
+recognition	software
+
+aerospace	technology
+battery	technology
+compression	technology
+encryption	technology
+information	technology
+manufacturing	technology
+networking	technology
+production	technology
+sensing	technology
+surveillance	technology
+telecommunication	technology
+
+transmission	technology
+
+overhaul	legislation
+reform	legislation
+
+sporting	good
+
+serving	plate
+
+
+advertising	page
+
+serving	platter
+printing	press
+
+advertising	circular
+cycling	clothes
+steering	column
+
+propulsion	hardware
+advertising	imagery
+throwing	knife
+
+construction	machinery
+
+
+bailout	legislation
+spending	legislation
+spending	bill
+appropriations	bill
+spending	measure

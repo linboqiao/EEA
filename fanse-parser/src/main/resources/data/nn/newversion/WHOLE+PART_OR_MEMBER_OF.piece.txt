@@ -1,0 +1,11 @@
+bullet	fragment
+sentence	fragment
+avocado	slice
+orange	slice
+corn	kernel
+tumor	cell
+
+pizza	slice
+
+#portion
+market	share

@@ -1,0 +1,111 @@
+watermelon	season
+governance	era
+terror	era
+
+crunch	time
+
+ad	time
+broadcast	time
+computer	time
+cycle	time
+delivery	time
+duty	time
+election	time
+exam	time
+flight	time
+game	time
+ice	time
+injury	time
+jail	time
+part	time
+playoff	time
+post	time
+prison	time
+production	time
+screen	time
+talk	time
+travel	time
+tv	time
+waiting	time
+dinner	time
+lunch	time
+
+vacation	day
+
+construction	phase
+development	phase
+
+election	day
+reinvigoration	break
+
+
+rest	period
+study	period
+
+launch	window
+
+harvest	time
+practice	time
+
+payback	time
+playing	time
+vacation	time
+
+advertising	time
+preparation	time
+recovery	time
+rehearsal	time
+
+repayment	period
+growth	period
+sweep	period
+adjustment	period
+campaign	period
+consultation	period
+training	period
+waiting	period
+settlement	period
+trading	period
+travel	period
+filing	period
+grace	period
+accounting	period
+reporting	period
+rating	period
+recovery	period
+election	period
+construction	period
+signing	period
+
+cooking	time
+
+attention	span
+life	span
+time	span
+
+election	year
+
+birth	date
+completion	date
+court	date
+cutoff	date
+delivery	date
+departure	date
+election	date
+expiration	date
+expiry	date
+launch	date
+payment	date
+publication	date
+redemption	date
+release	date
+retirement	date
+settlement	date
+startup	date
+
+discount	window
+
+apartheid	era
+
+year	end
+

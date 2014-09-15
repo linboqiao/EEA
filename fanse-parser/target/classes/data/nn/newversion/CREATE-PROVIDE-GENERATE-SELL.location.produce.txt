@@ -1,0 +1,125 @@
+arms	factory
+bomb	factory
+car	factory
+cigarette	factory
+fertilizer	factory
+furniture	factory
+part	factory
+shoe	factory
+steel	factory
+sugar	factory
+weapon	factory
+cement	factory
+clothing	factory
+garment	factory
+van	factory
+
+fish	farm
+hog	farm
+horse	farm
+pig	farm
+
+coal	field
+coca	field
+corn	field
+cotton	field
+gas	field
+grass	field
+oil	field
+poppy	field
+soybean	field
+tobacco	field
+wheat	field
+
+
+lumber	mill
+newsprint	mill
+pulp	mill
+rumor	mill
+steel	mill
+sugar	mill
+
+aircraft	plant
+aluminum	plant
+automobile	plant
+car	plant
+chemical	plant
+chip	plant
+coca	plant
+corn	plant
+electricity	plant
+electronics	plant
+engine	plant
+ethylene	plant
+fertilizer	plant
+food	plant
+fuel	plant
+meat	plant
+minivan	plant
+part	plant
+pesticide	plant
+petrochemical	plant
+plastic	plant
+power	plant
+rice	plant
+semiconductor	plant
+steel	plant
+tire	plant
+tobacco	plant
+truck	plant
+uranium	plant
+van	plant
+vehicle	plant
+wastewater	plant
+water	plant
+weapon	plant
+
+
+banana	plantation
+coca	plantation
+coffee	plantation
+poppy	plantation
+sugar	plantation
+tea	plantation
+
+apple	orchard
+
+poultry	farm
+
+rice	field
+
+cement	plant
+
+wheat	belt
+
+wine	country
+
+corn	acreage
+
+grain	area
+wheat	area
+
+crop	land
+
+rice	paddy
+
+wine	region
+
+weapon	lab
+
+cocaine	laboratory
+drug	laboratory
+weapon	laboratory
+
+hydropower	station
+
+movie	set
+
+oil	state
+
+weapon	facility
+
+steel	complex
+
+oil	town
+steel	town

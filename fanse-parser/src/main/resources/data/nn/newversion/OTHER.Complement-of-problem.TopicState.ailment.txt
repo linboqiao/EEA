@@ -1,0 +1,30 @@
+
+#state
+computer	glitch
+product	glitch
+software	glitch
+learning	disability
+computer	bug
+
+anxiety	disorder
+attention	disorder
+deficit	disorder
+eating	disorder
+hyperactivity	disorder
+sleep	disorder
+stress	disorder
+
+#in
+character	flaw
+design	flaw
+security	flaw
+software	flaw
+
+fatigue	syndrome
+stress	syndrome
+
+#state/att
+safety	defect
+
+budget	difficulty
+

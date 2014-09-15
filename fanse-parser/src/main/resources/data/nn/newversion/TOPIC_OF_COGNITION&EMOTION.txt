@@ -1,0 +1,72 @@
+shoe	fetish
+art	fetishist
+gadget	fetishist
+latex	fetishist
+underwear	fetishism
+
+
+market	optimism
+market	sentiment
+
+recession	worry
+inflation	worry
+turnout	worry
+
+stock market	fear
+recession	fear
+cancer	fear
+slowdown	fear
+security	fear
+
+health	scare
+copycat	scare
+listeria	scare
+
+safety	concern
+supply	concern
+security	concern
+health	concern
+inflation	concern
+privacy	concern
+rate	concern
+market	concern
+rating	concern
+food	concern
+product	concern
+gas	concern
+
+takeover	disappointment
+earnings	disappointment
+
+takeover	enthusiasm
+
+database	confusion
+
+sport	enthusiast
+bike	enthusiast
+drug	enthusiast
+food	enthusiast
+fruit	enthusiast
+jazz	enthusiast
+opera	enthusiast
+railroad	enthusiast
+
+auto	fanatic
+explosive	fanatic
+phone	fanatic
+storm	fanatic
+word	fanatic
+
+management	decision
+licensing	decision
+product	decision
+abortion	decision
+budgeting	decision
+policy	decision
+investment	decision
+career	decision
+budget	decision
+extradition	decision
+funding	decision
+spending	decision
+purchase	decision

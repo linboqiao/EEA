@@ -1,0 +1,370 @@
+quarterback	controversy
+industry	controversy
+voter	controversy
+
+market	rumor
+takeover	rumor
+market	rumour
+
+merchandise	report
+casualty	report
+finance	report
+impeachment	report
+research	report
+profit	report
+credit	report
+news	report
+conference	report
+survey	report
+investigation	report
+job	report
+census	report
+probation	report
+price	report
+feasibility	report
+intelligence	report
+ghost	report
+department	report
+traffic	report
+maintenance	report
+status	report
+ethic	report
+injury	report
+autopsy	report
+quarter	report
+air	report
+quality	report
+inspection	report
+inflation	report
+bookstore	report
+damage	report
+inventory	report
+budget	report
+world	report
+accident	report
+market	report
+impact	report
+unemployment	report
+work	report
+scouting	report
+crop	report
+security	report
+crime	report
+snow	report
+lobster	report
+malnutrition	report
+fish	report
+gun	report
+terror	report
+
+arsenal	report
+
+food	journalism
+
+vacation	chatter
+vacation	magazine
+vacation	literature
+
+redneck	joke
+engineer	joke
+
+management	philosophy
+
+cat	poem
+
+travel	feature
+
+family	saga
+
+
+tax	buzz
+breakup	buzz
+
+
+
+food	section
+
+student	file
+
+investment	adviser
+policy	adviser
+security	adviser
+commodity	adviser
+trading	adviser
+media	adviser
+affair	adviser
+health	adviser
+science	adviser
+tax	adviser
+security	advisor
+
+food	writer
+wine	writer
+tax	writer
+science	writer
+baseball	writer
+travel	writer
+
+court	reporter
+sports	reporter
+
+sports	commentator
+
+crime	story
+news	story
+dining	story
+ghost	story
+horror	story
+sport	story
+science	story
+recovery	story
+family	story
+sports	story
+entertainment	story
+trend	story
+travel	story
+culture	story
+
+travel	guide
+fishing	guide
+
+gossip	column
+beer	column
+travel	column
+recipe	column
+newspaper	column
+marketplace	column
+computer	column
+religion	column
+antique	column
+gardening	column
+exchange	column
+sport	column
+job	column
+baseball	column
+wine	column
+patent	column
+trivia	column
+book	column
+
+
+investment	counseling
+abortion	counseling
+drug	counseling
+
+noise	complaint
+election	complaint
+quality	complaint
+ethic	complaint
+discrimination	complaint
+baggage	complaint
+pasta	complaint
+missile	complaint
+drug	complaint
+alligator	complaint
+animal	complaint
+airline	complaint
+stress	complaint
+
+steel	talk
+status	talk
+trade	talk
+strategy	talk
+liberalisation	talk
+membership	talk
+normalization	talk
+labor	talk
+cease-fire	talk
+market	talk
+arms	talk
+proximity	talk
+price	talk
+wage	talk
+pay	talk
+settlement	talk
+border	talk
+takeover	talk
+framework	talk
+reduction	talk
+pep	talk
+reunification	talk
+accession	talk
+bid	talk
+security	talk
+contract	talk
+debt	talk
+coalition	talk
+disarmament	talk
+peace	talk
+unification	talk
+budget	talk
+
+bond trading	conversation
+
+conflict of interest	criticism
+
+investment	information
+background	information
+budget	information
+price	information
+share	information
+consumer	information
+nutrition	information
+market	information
+management	information
+pricing	information
+material	information
+research	information
+exchange	information
+intelligence	information
+customer	information
+emergency	information
+traffic	information
+contact	information
+safety	information
+defense	information
+ticket	information
+travel	information
+flight	information
+credit	information
+design	information
+store	information
+health	information
+graphics	information
+product	information
+crop	information
+tax	information
+purchase	information
+account	information
+marketing	information
+security	information
+assessment	information
+
+sports	fact
+
+
+ratings	datum
+inflation	datum
+trade	datum
+garbage	datum
+business	datum
+industry	datum
+output	datum
+market	datum
+
+pricing	detail
+
+production	data
+customer	data
+job	data
+flight	data
+industry	data
+price	data
+survey	data
+research	data
+employment	data
+stock-market	data
+consumer	data
+unemployment	data
+market	data
+radar	data
+inflation	data
+intelligence	data
+census	data
+outpatient	data
+passenger	data
+student	data
+traveler	data
+voter	data
+
+finance	advice
+trade	advice
+career	advice
+
+flight	instructor
+drill	instructor
+ski	instructor
+investment	advice
+tax	advice
+merger	advice
+
+boy	comedy
+buddy	comedy
+detective	comedy
+schoolboy	comedy
+
+heartbreak	song
+love	song
+pot	song
+death	song
+
+vehicle	magazine
+star	story
+
+drug	informant
+
+computer	complaint
+
+celebrity	buzz
+
+bargain	alert
+illness	alert
+quake	alert
+wave	alert
+security	alert
+smog	alert
+
+underdog	story
+
+industry	newsletter
+investment	newsletter
+
+history	textbook
+investment	literature
+sports	columnist
+
+sport	magazine
+travel	magazine
+technology	magazine
+fashion	magazine
+money	magazine
+computer	magazine
+science	magazine
+
+murder	mystery
+
+arrival	statement
+budget	statement
+earnings	statement
+impact	statement
+mission	statement
+policy	statement
+trading	statement
+
+policy	implication
+tax	implication
+security	implication
+
+earnings	warning
+flood	warning
+freeze	warning
+gale	warning
+health	warning
+hurricane	warning
+profit	warning
+shortage	warning
+storm	warning
+tornado	warning
+travel	warning
+winter	warning
+
+water	alert
+
+frontier	folklore
+
+efficiency	argument
+rights	argument
+
+popularity	poll
+basketball	poll
+

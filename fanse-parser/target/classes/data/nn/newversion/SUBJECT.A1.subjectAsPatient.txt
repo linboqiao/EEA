@@ -1,0 +1,65 @@
+market	fluctuation
+currency	fluctuation
+price	fluctuation
+
+price	swing
+mood	swing
+market	swing
+
+airplane	explosion
+
+sales	decline
+production	decline
+stock	decline
+profit	decline
+earnings	decline
+population	decline
+market	decline
+advertising	decline
+dollar	decline
+price	decline
+revenue	decline
+
+market	drop
+
+market	slide
+price	erosion
+market	plunge
+
+audience	drop-off
+inventory	shrinkage
+deposit	shrinkage
+work	slowdown
+market	slump
+sales	slump
+community	decay
+population	drain
+
+currency	depreciation
+aircraft	depreciation
+
+carp	death
+cow	death
+crab	death
+crow	death
+star	death
+professor	death
+protester	death
+rabbit	death
+policeman	death
+people	death
+migrant	death
+manatee	death
+embryo	death
+dinosaur	death
+dolphin	death
+driver	death
+fauna	death
+fetus	death
+houseplant	death
+witness	death
+visitor	death
+youth	death
+
+
+

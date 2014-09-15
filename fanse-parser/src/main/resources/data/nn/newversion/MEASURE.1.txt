@@ -1,0 +1,65 @@
+days	notice
+
+degrees	latitude
+degrees	longitude
+
+place	finish
+runner-up	finish
+top-10	finish
+
+midrange	computer
+honor	student
+color	print
+precision	weapon
+
+authority	figure
+
+
+quality	battery
+quality	defender
+quality	date
+quality	activity
+quality	cast
+quality	crop
+quality	equity
+quality	form
+quality	look
+quality	major
+quality	match
+quality	nutrition
+quality	rank
+quality	state
+
+grade	bamboo
+grade	athlete
+grade	wood
+grade	wool
+
+volume	sellers
+size	spider
+
+density	barite
+density	radon
+density	plastic
+density	township
+density	suburb
+density	explosive
+density	lipid
+density	moonbeam
+quality	head
+quality	member
+quality	part
+density	slum
+density	downtown
+density	rubber
+intensity	rain
+page	result
+page	return
+
+
+
+
+
+
+
+

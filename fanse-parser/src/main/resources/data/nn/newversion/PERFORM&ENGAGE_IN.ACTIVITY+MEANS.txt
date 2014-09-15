@@ -1,0 +1,58 @@
+pressure	tactic
+takeover	tactic
+
+initiation	rite
+training	course
+financing	alternative
+bailout	loan
+bailout	bond
+shutoff	valve
+sales	technique
+
+abortion	procedure
+application	procedure
+approval	procedure
+election	procedure
+enforcement	procedure
+enrollment	procedure
+selection	procedure
+settlement	procedure
+testing	procedure
+verification	procedure
+valuation	procedure
+
+accounting	method
+construction	method
+cooking	method
+depreciation	method
+manufacturing	method
+training	method
+
+
+accounting	practice
+banking	practice
+billing	practice
+employment	practice
+management	practice
+marketing	practice
+procurement	practice
+trading	practice
+
+
+accounting	technique
+management	technique
+manufacturing	technique
+marketing	technique
+production	technique
+training	technique
+
+
+stalling	tactic
+
+
+prevention	measure
+protection	measure
+
+financing	resource
+enforcement	resource
+

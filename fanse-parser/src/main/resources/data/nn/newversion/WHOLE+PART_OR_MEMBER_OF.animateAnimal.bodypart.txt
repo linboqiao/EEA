@@ -1,0 +1,35 @@
+whale	tongue
+mouse	skull
+trout	nose
+warbler	neck
+coyote	pelt
+ox	stomach
+cow	intestine
+goat	fur
+
+whale	head
+human	arm
+duck	breast
+duck	foot
+elephant	leg
+elephant	ear
+lemon	peel
+eel	skin
+elephant	tusk
+rose	petal
+cow	ear
+
+dinosaur	wing
+goose	wing
+
+bunny	fur
+
+
+
+bunny	ear
+dog	ear
+bear	bone
+sheep	bone
+whale	bone
+
+voter	mind

@@ -1,0 +1,22 @@
+
+arms	network
+broadband	network
+cable	network
+data	network
+electricity	network
+gas	network
+phone	network
+radio	network
+telephone	network
+
+electricity	system
+water	system
+energy	system
+power	system
+
+aid	system
+care	system
+
+food	system
+
+electricity	grid

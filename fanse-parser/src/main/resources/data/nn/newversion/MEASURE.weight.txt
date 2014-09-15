@@ -1,0 +1,28 @@
+pound	man
+pound	guard
+pound	box
+pound	lineman
+pound	note
+pound	selling
+pound	senior
+pound	bass
+pound	frame
+pound	bomb
+pound	tackle
+pound	junior
+pound	title
+pound	weight
+pound	bag
+pound	sack
+
+pound	division
+
+ton	ship
+ton	vessel
+ton	truck
+ton	satellite
+
+tonne	lot
+tonne	unit
+
+carat	diamond

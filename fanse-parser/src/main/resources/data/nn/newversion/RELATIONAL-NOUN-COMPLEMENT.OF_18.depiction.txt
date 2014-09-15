@@ -1,0 +1,63 @@
+crash	photo
+baby	photo
+family	photo
+
+family	picture
+action	picture
+baby	picture
+
+family	portrait
+
+danger	sign
+dollar	sign
+peace	sign
+victory	sign
+
+employment	picture
+playoff	picture
+
+city	history
+investment	history
+basketball	history
+banking	history
+playoff	history
+movie	history
+team	history
+league	history
+baseball	history
+franchise	history
+auction	history
+golf	history
+sport	history
+soccer	history
+club	history
+school	history
+state	history
+football	history
+world	history
+family	history
+revisionist	history
+aviation	history
+television	history
+art	history
+
+music	historian
+car	historian
+film	historian
+food	historian
+
+billing	record
+auction	record
+tax	record
+phone	record
+voting	record
+prison	record
+telephone	record
+price	record
+credit	record
+accounting	record
+maintenance	record
+health	record
+trading	record
+profit	record
+safety	record

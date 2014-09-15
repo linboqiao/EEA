@@ -1,0 +1,81 @@
+newspaper	classified
+newspaper	ad
+newspaper	editorial
+newspaper	headline
+newspaper	listing
+newspaper	photo
+newspaper	story
+
+movie	actor
+movie	character
+movie	role
+
+media	people
+media	violence
+
+magazine	advertisement
+magazine	story
+
+headline	figure
+
+textbook	case
+textbook	example
+
+title	character
+
+screen	debut
+screen	image
+
+tv	ad
+tv	commercial
+tv	evangelist
+
+television	actor
+television	address
+television	advertisement
+television	advertising
+television	analyst
+television	appearance
+television	campaign
+television	comedy
+television	commentator
+television	commercial
+television	correspondent
+television	documentary
+television	drama
+television	evangelist
+television	footage
+television	interview
+television	interviewer
+television	journalist
+television	ministry
+television	movie
+television	newscast
+television	personality
+television	picture
+television	programme
+television	replay
+television	report
+television	series
+television	show
+television	sitcom
+television	special
+television	spot
+
+billboard	publication
+
+ballot	initiative
+ballot	issue
+ballot	proposal
+ballot	proposition
+ballot	question
+
+disk	space
+
+computer	data
+computer	database
+computer	datum
+computer	information
+computer	model
+computer	record
+computer	software

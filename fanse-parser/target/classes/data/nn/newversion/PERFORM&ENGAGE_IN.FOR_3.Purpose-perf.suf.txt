@@ -1,0 +1,137 @@
+dialogue	committee
+oversight	committee
+service	worker
+service	station
+service	program
+service	project
+insurance	activity
+service	activity
+
+retirement	age
+
+impeachment	motion
+censure	motion
+
+practice	test
+
+acquisition	application
+emigration	application
+
+reduction	bill
+
+appropriation	measure
+deregulation	measure
+liberalisation	measure
+
+marketing	approach
+
+liberation	army
+
+rehabilitation	assignment
+
+investigation	subcommittee
+
+advertising	client
+
+investment	destination
+
+investment	environment
+learning	environment
+
+deployment	force
+
+elimination	game
+
+entertainment	gimmickry
+
+failing	grade
+
+conservation	ground
+
+division	match
+
+reforestation	offset
+
+assistance	package
+deregulation	package
+financing	package
+
+vacation	package
+
+residence	permit
+residency	permit
+
+leadership	ability
+
+combat	effectiveness
+
+cooperation	partner
+
+dance	party
+
+disclosure	report
+
+vacation	retreat
+
+investment	risk
+trading	risk
+
+production	run
+
+condolence	message
+
+breeding	stock
+
+repertory	theater
+
+investment	trust
+
+publishing	venture
+
+
+development	scheme
+expansion	scheme
+marketing	scheme
+protection	scheme
+retention	scheme
+retirement	scheme
+saving	scheme
+training	scheme
+management	scheme
+
+acquisition	strategy
+advertising	strategy
+arbitrage	strategy
+business	strategy
+campaign	strategy
+control	strategy
+defense	strategy
+development	strategy
+diversification	strategy
+election	strategy
+expansion	strategy
+export	strategy
+growth	strategy
+hedging	strategy
+investment	strategy
+marketing	strategy
+management	strategy
+
+pricing	strategy
+production	strategy
+security	strategy
+survival	strategy
+trading	strategy
+
+complaint	procedure
+control	procedure
+spending	blueprint
+
+development	agenda
+reform	agenda
+
+dialogue	process
+
+#to
+bribery	conspiracy
+racketeering	conspiracy

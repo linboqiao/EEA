@@ -1,0 +1,14 @@
+restaurant	kitchen
+hotel	lobby
+office	lobby
+church	basement
+hotel	ballroom
+hotel	bar
+train	bathroom
+school	auditorium
+school	cafeteria
+hotel	room
+airport	lounge
+hotel	restaurant
+hotel	suite
+motel	room

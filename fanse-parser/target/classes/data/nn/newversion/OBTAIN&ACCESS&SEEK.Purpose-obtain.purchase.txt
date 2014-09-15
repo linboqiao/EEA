@@ -1,0 +1,40 @@
+office	rent
+
+meal	ticket
+
+
+bond	investor
+stock	investor
+
+automobile	loan
+boat	loan
+car	loan
+energy	loan
+home	loan
+property	loan
+real estate	loan
+
+
+lunch	money
+bus	money
+candy	money
+travel	allowance
+textbook	allowance
+food	allowance
+gas	allowance
+gift	allowance
+
+medication	expenditure
+membership	expenditure
+
+capital	spending
+gasoline	spending
+
+cable	subscriber
+
+magazine	subscription
+
+carpet	shopping
+coat	shopping
+dress	shopping
+wig	shopping

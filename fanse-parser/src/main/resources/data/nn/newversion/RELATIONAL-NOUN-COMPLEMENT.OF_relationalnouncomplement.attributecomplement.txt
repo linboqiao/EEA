@@ -1,0 +1,463 @@
+#'oh, duh' attributes without -ity or -cy
+character	trait
+personality	trait
+
+body	shape
+eye	shape
+hair	shape
+ocean	shape
+pen	shape
+skull	shape
+toe	shape
+
+skin	tone
+eye	color
+makeup	color
+
+ocean	temperature
+oven	temperature
+water	temperature
+
+student	age
+worker	age
+passenger	age
+
+warranty	length
+sandwich	size
+class	size
+company	size
+family	size
+house	size
+market	size
+sample	size
+clock	speed
+transmission	speed
+wind	speed
+
+
+campaign	style
+classroom	style
+hair	style
+investment	style
+leadership	style
+life	style
+management	style
+party	style
+playing	style
+poetry	style
+work	style
+
+brand	name
+city	name
+company	name
+domain	name
+fund	name
+place	name
+product	name
+street	name
+user	name
+victim	name
+
+account	number
+flight	number
+jersey	number
+student	number
+ticket	number
+
+book	title
+job	title
+magazine	title
+
+category	code
+
+aluminum	price
+apartment	price
+apparel	price
+art	price
+asset	price
+auto	price
+base	price
+beef	price
+bond	price
+bonds	price
+bread	price
+broiler	price
+bullion	price
+car	price
+cattle	price
+ceiling	price
+chip	price
+cigarette	price
+clothing	price
+coal	price
+cocoa	price
+coffee	price
+coin	price
+commodity	price
+computer	price
+consumer	price
+contract	price
+copper	price
+corn	price
+cotton	price
+cover	price
+crop	price
+crude	price
+delivery	price
+diesel	price
+discount	price
+drug	price
+egg	price
+electricity	price
+energy	price
+equipment	price
+equity	price
+export	price
+farm	price
+food	price
+fruit	price
+fuel	price
+future	price
+futures	price
+gas	price
+gasoline	price
+gold	price
+goods	price
+grain	price
+guide	price
+hog	price
+home	price
+house	price
+import	price
+industry	price
+input	price
+issue	price
+land	price
+list	price
+livestock	price
+lumber	price
+market	price
+material	price
+meat	price
+metal	price
+newsprint	price
+oil	price
+tool	price
+option	price
+paper	price
+petrol	price
+platinum	price
+pork	price
+procurement	price
+producer	price
+product	price
+property	price
+psyllium	price
+pulp	price
+real estate	price
+redemption	price
+reinsurance	price
+rice	price
+sale	price
+sales	price
+seat	price
+security	price
+service	price
+settlement	price
+share	price
+silver	price
+soybean	price
+spot	price
+steel	price
+stock	price
+strike	price
+subscription	price
+sugar	price
+support	price
+takeover	price
+ticket	price
+tobacco	price
+trading	price
+transaction	price
+turkey	price
+unit	price
+wheat	price
+widget	price
+wool	price
+world	price
+
+asset	value
+breakup	value
+cash	value
+currency	value
+entertainment	value
+export	value
+home	value
+import	value
+investment	value
+land	value
+liquidation	value
+market	value
+portfolio	value
+property	value
+share	value
+shock	value
+stock	value
+time	value
+transfer	value
+
+air	quality
+asset	quality
+construction	quality
+credit	quality
+gem	quality
+image	quality
+leadership	quality
+picture	quality
+product	quality
+program	quality
+service	quality
+star	quality
+teacher	quality
+water	quality
+
+
+child	mortality
+
+completion	percentage
+fielding	percentage
+shooting	percentage
+
+#rate of occurence/existence/success percentage
+abortion	rate
+accident	rate
+accuracy	rate
+approval	rate
+cancer	rate
+burglary	rate
+casualty	rate
+completion	rate
+death	rate
+default	rate
+delinquency	rate
+employment	rate
+enrollment	rate
+error	rate
+failure	rate
+fatality	rate
+divorce	rate
+homicide	rate
+illiteracy	rate
+mortality	rate
+mortgage	rate
+murder	rate
+participation	rate
+pass	rate
+penetration	rate
+pregnancy	rate
+prevalence	rate
+recovery	rate
+reimbursement	rate
+rejection	rate
+repurchase	rate
+response	rate
+reversal	rate
+saving	rate
+suicide	rate
+support	rate
+survival	rate
+vacancy	rate
+infection	rate
+graduation	rate
+incarceration	rate
+literacy	rate
+injury	rate
+conversion	rate
+cure	rate
+incidence	rate
+return	rate
+success	rate
+approval	rating
+
+#price/tax/interest
+ad	rate
+advertising	rate
+borrowing	rate
+capital gains	rate
+cash	rate
+finance	rate
+freight	rate
+fund	rate
+room	rate
+royalty	rate
+electricity	rate
+subsidy	rate
+tariff	rate
+credit	rate
+currency	rate
+deposit	rate
+
+#speed
+consumption	rate
+growth	rate
+inflation	rate
+
+aid	rate
+annuity	rate
+barge	rate
+base	rate
+bonus	rate
+
+coupon	rate
+coverage	rate
+
+duty	rate
+exchange	rate
+guarantee	rate
+income tax	rate
+increase	rate
+
+insurance	rate
+intervention	rate
+investment	rate
+lease	rate
+lending	rate
+money	rate
+
+order	rate
+ownership	rate
+
+percentage	rate
+
+price	rate
+production	rate
+profit	rate
+property	rate
+
+selling	rate
+
+telephone	rate
+transport	rate
+utilization	rate
+wage	rate
+
+celebrity	clout
+consumer	clout
+employee	clout
+agency	clout
+superpower	clout
+
+bank	power
+executive	power
+government	power
+police	power
+state	power
+
+#
+acquisition	cost
+administration	cost
+advertising	cost
+benefit	cost
+business	cost
+car	cost
+cleanup	cost
+clothing	cost
+commission	cost
+compensation	cost
+condemnation	cost
+construction	cost
+court	cost
+debt	cost
+defense	cost
+depreciation	cost
+developing	cost
+development	cost
+disposal	cost
+drug	cost
+electricity	cost
+employee	cost
+employment	cost
+energy	cost
+equipment	cost
+feed	cost
+financing	cost
+food	cost
+fuel	cost
+funding	cost
+gasoline	cost
+health	cost
+health care	cost
+healthcare	cost
+hospital	cost
+hospitalization	cost
+housing	cost
+import	cost
+incentive	cost
+input	cost
+insurance	cost
+interest	cost
+investment	cost
+labor	cost
+labour	cost
+land	cost
+launch	cost
+litigation	cost
+maintenance	cost
+management	cost
+manufacturing	cost
+marketing	cost
+material	cost
+materials	cost
+medicare	cost
+money	cost
+mortality	cost
+oil	cost
+operating	cost
+overhead	cost
+pay	cost
+payroll	cost
+pension	cost
+processing	cost
+production	cost
+program	cost
+project	cost
+purchase	cost
+rationalisation	cost
+redundancy	cost
+reorganisation	cost
+repair	cost
+replacement	cost
+research	cost
+restructuring	cost
+security	cost
+settlement	cost
+setup	cost
+severance	cost
+shipping	cost
+staff	cost
+start up	cost
+startup	cost
+trading	cost
+training	cost
+transaction	cost
+transport	cost
+transportation	cost
+travel	cost
+tuition	cost
+wage	cost
+
+market	direction
+policy	direction
+
+development	momentum
+earnings	momentum
+growth	momentum
+
+health	status
+immigration	status
+job	status
+
+party	discipline
+student	discipline
+
+screen	resolution

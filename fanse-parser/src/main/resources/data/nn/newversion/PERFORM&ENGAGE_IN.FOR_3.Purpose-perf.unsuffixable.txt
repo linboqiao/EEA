@@ -1,0 +1,242 @@
+escrow	account
+
+email	address
+
+scam	artist
+
+breakfast	cereal
+
+rehab	assignment
+
+state	association
+
+broadcast	booth
+
+oversight	subcommittee
+
+cable	box
+
+retail	branch
+
+death	camp
+labor	camp
+
+protest	campaign
+referendum	campaign
+reform	campaign
+
+
+
+defense	capability
+
+baseball	career
+basketball	career
+football	career
+
+music	career
+
+discount	carrier
+
+business	center
+
+
+funeral	ceremony
+
+
+retail	chain
+supply	chain
+
+speciality	chemical
+
+art	circle
+
+
+rock	club
+strip	club
+
+export	commodity
+
+art	community
+
+art	complex
+defense	complex
+
+retail	complex
+
+defense	contracting
+
+protest	demonstration
+
+tourism	destination
+travel	destination
+
+management	employee
+
+
+defense	establishment
+
+bar	exam
+
+
+tourism	facility
+
+crime	family
+
+cable	franchise
+
+party	fund
+
+goodwill	game
+
+takeover	game
+
+sports	hall
+
+maternity	hospital
+
+radar	installation
+
+credit	institution
+
+leisure	item
+
+defense	lawyer
+
+import	license
+
+seat	license
+
+strobe	light
+
+broadcast	network
+retail	network
+telecom	network
+
+growth	opportunity
+
+save	opportunity
+
+media	outlet
+retail	outlet
+
+growth	package
+pay	package
+
+style	pen
+
+sales	people
+
+art	performance
+concert	performance
+dance	performance
+music	performance
+opera	performance
+rock	performance
+
+circus	performer
+
+concert	pianist
+
+defense	plant
+
+audio	product
+dialysis	product
+information	product
+retail	product
+telecommunications	product
+
+affair	program
+art	program
+basketball	program
+buy	program
+buyback	program
+cleanup	program
+control	program
+defense	program
+exchange	program
+exercise	program
+export	program
+
+flight	program
+football	program
+fund	program
+grant	program
+graphics	program
+guarantee	program
+
+
+interview	program
+job	program
+material	program
+outreach	program
+partnership	program
+policy	program
+
+theater	program
+therapy	program
+transplant	program
+loss	program
+
+workout	program
+
+reform	programme
+
+cleanup	project
+
+conservancy	project
+control	project
+
+reform	project
+technology	project
+transport	project
+
+discount	retailer
+home	retailer
+
+ball	rights
+
+speech	rights
+
+backup	role
+backup	quarterback
+backup	plan
+backup	generator
+backup	goalie
+backup	guard
+backup	singer
+backup	car
+backup	catcher
+
+transit	route
+
+reform	school
+
+pawn	shop
+
+math	skill
+
+budget	spending
+
+hit	squad
+
+sales	staff
+
+broadcast	station
+radar	station
+radio	station
+
+art	supply
+
+cable tv	system
+emissions	system
+securities	system
+
+project	team
+
+radar	van
+
+sports	vehicle
+
+prayer	vigil
+
+bath	water

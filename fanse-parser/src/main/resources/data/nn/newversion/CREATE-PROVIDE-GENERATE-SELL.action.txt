@@ -1,0 +1,85 @@
+aid	campaign
+aid	programme
+aid	project
+peace	operation
+
+
+aircraft	project
+airport	project
+book	project
+bridge	project
+car	project
+condominium	project
+dam	project
+energy	project
+gas	project
+gold	project
+highway	project
+hotel	project
+hydropower	project
+infrastructure	project
+movie	project
+oil	project
+pipeline	project
+plant	project
+railway	project
+
+autograph	session
+
+
+aid	program
+
+abortion	service
+broadband	service
+broadcast	service
+cable	service
+communication	service
+diaper	service
+email	service
+food	service
+mail	service
+modem	service
+multimedia	service
+phone	service
+support	service
+telecom	service
+telecommunications	service
+telephone	service
+tourism	service
+transport	service
+video	service
+
+relief	assistance
+
+horse	breeding
+
+stadium	project
+subway	project
+tunnel	project
+
+infrastructure	work
+
+budget	process
+
+terror	attack
+
+amnesty	program
+food	program
+lunch	program
+mortgage	program
+rebate	program
+relief	program
+scholarship	program
+shelter	program
+subsidy	program
+support	program
+voucher	program
+water	program
+
+aircraft	program
+arms	program
+bomber	program
+fighter	program
+missile	program
+rocket	program
+weapon	program

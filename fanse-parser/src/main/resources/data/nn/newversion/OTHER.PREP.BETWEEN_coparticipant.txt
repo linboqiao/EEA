@@ -1,0 +1,9 @@
+culture	clash
+personality	clash
+
+group	conflict
+personality	conflict
+
+gang	warfare
+
+sibling	rivalry

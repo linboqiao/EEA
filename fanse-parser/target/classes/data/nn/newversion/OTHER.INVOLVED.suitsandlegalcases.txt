@@ -1,0 +1,84 @@
+misconduct	lawsuit
+malpractice	lawsuit
+death	lawsuit
+infringement	lawsuit
+liability	lawsuit
+injury	lawsuit
+tobacco	lawsuit
+libel	lawsuit
+racketeering	lawsuit
+discrimination	lawsuit
+
+tobacco	litigation
+asbestos	litigation
+
+malpractice	suit
+fraud	suit
+discrimination	suit
+infringement	suit
+damage	suit
+copyright	suit
+defamation	suit
+racketeering	suit
+liability	suit
+class	suit
+death	suit
+tobacco	suit
+
+patent	case
+death sentence	case
+homicide	case
+crime	case
+drug	case
+infringement	case
+felony	case
+salmonella	case
+injury	case
+divorce	case
+racketeering	case
+libel	case
+aid	case
+tobacco	case
+molestation	case
+misconduct	case
+right	case
+discrimination	case
+espionage	case
+violence	case
+pollution	case
+rape	case
+compensation	case
+fraud	case
+extradition	case
+abuse	case
+asbestos	case
+dumping	case
+robbery	case
+child	case
+kidnapping	case
+merger	case
+murder	case
+sex	case
+misdemeanor	case
+conspiracy	case
+bribery	case
+perjury	case
+malpractice	case
+immigration	case
+tax	case
+death	case
+security	case
+impeachment	case
+desegregation	case
+smuggling	case
+asylum	case
+corruption	case
+liability	case
+abortion	case
+spy	case
+product	case
+arbitration	case
+
+
+
+

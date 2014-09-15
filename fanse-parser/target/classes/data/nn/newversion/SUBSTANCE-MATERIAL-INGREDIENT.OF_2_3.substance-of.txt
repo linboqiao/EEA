@@ -1,0 +1,721 @@
+#WOODLIKE
+oak	stand
+pine	stand
+bamboo	instrument
+
+shrub	sculpture
+
+mahogany	chair
+cedar	chalet
+
+
+oak	bookcase
+timber	product
+wicker	basket
+wood	board
+
+wood	pulp
+
+drug	combination
+
+#STONE & DIRT
+plasterboard	wall
+brick	museum
+porcelain	set
+brick	cabin
+brick	hall
+
+cement	block
+cement	floor
+
+coal	dust
+coal	reserve
+coal	resource
+coal	supply
+
+brick	home
+
+stone	city
+
+
+asbestos	fiber
+asbestos	fireproofing
+asbestos	product
+
+mud	hut
+lead	paint
+
+crystal	ball
+crystal	chandelier
+
+
+diamond	earring
+diamond	ring
+
+dirt	floor
+dirt	path
+
+dust	particle
+
+fuel	rod
+fuel	supply
+
+gas	cloud
+gas	deposit
+gas	reserve
+gas	supply
+
+gasoline	inventory
+gasoline	supply
+
+glass	bottle
+glass	bowl
+glass	case
+glass	ceiling
+glass	container
+glass	door
+glass	fiber
+glass	house
+glass	jar
+glass	panel
+glass	product
+glass	shard
+glass	tower
+glass	wall
+glass	window
+
+granite	wall
+
+graphite	electrode
+
+ice	cap
+ice	sample
+ice	sculpture
+ice	sheet
+
+marble	facing
+marble	floor
+marble	table
+
+oil	deposit
+oil	inventory
+oil	product
+oil	reserve
+oil	shipment
+oil	spill
+oil	supply
+
+ozone	layer
+ozone	pollution
+
+paper	asset
+paper	cup
+paper	cutout
+paper	document
+paper	money
+paper	plate
+paper	product
+paper	pulp
+paper	towel
+paper	trail
+
+plastic	bag
+plastic	glove
+plastic	pencil
+
+concrete	block
+
+candy	bar
+
+canvas	bag
+
+carbon	fiber
+carbon	product
+
+cardboard	tray
+
+polyester	resin
+
+polyethylene	resin
+polyethylene	sheet
+
+polyurethane	foam
+
+chemical	fertilizer
+chemical	product
+chemical	spray
+
+rock	formation
+rock	wall
+rubber	band
+rubber	solution
+
+salt	dome
+
+sand	beach
+sand	candle
+
+silicon	chip
+silicon	wafer
+
+clay	pot
+
+silicone	implant
+
+stone	furniture
+stone	tablet
+
+#METAL
+steel	construction
+iron	stand
+aluminum	construction
+
+alloy	wheel
+
+aluminum	alloy
+aluminum	bat
+aluminum	can
+aluminum	ingot
+aluminum	packaging
+aluminum	product
+aluminum	shipment
+aluminum	siding
+aluminum	wheel
+
+brass	mouthpiece
+
+bronze	statue
+
+copper	cathode
+copper	concentrate
+copper	deposit
+copper	inventory
+copper	wire
+
+gold	bar
+gold	bracelet
+gold	bullion
+gold	chain
+gold	coin
+gold	deposit
+gold	earring
+gold	jewelry
+gold	medal
+gold	necklace
+gold	reserve
+gold	ring
+gold	watch
+
+iron	ore
+iron	wheel
+
+lithium	battery
+
+metal	file
+metal	rack
+metal	stampings
+
+ore	body
+
+steel	bar
+steel	beam
+steel	blanket
+steel	cable
+steel	can
+steel	door
+steel	drum
+steel	frame
+steel	girder
+steel	jacket
+steel	pellet
+steel	pipe
+steel	product
+steel	reinforcement
+steel	rod
+steel	roof
+steel	sheet
+steel	shipment
+steel	structure
+steel	thread
+steel	tube
+steel	wall
+
+brass	ring
+
+tin	plate
+titanium	one
+
+uranium	fuel
+
+#INGREDIENT (sometimes more appropriate as 'flavor')
+vanilla	cookie
+fruit	drink
+fruit	jam
+peach	jam
+
+#flavor sometimes
+chocolate	gum
+peppermint	gum
+
+abalone	dish
+
+rye	sourdough
+
+heroin	pellet
+fruit	ball
+
+carrot	cube
+cow	brisket
+tuna	surprise
+chorizo	cube
+food	cube
+pork	cube
+cocaine	crumb
+tinfoil	cube
+baloney	slice
+cheese	slice
+cement	cube
+sugar	cube
+tofu	cube
+coffee	sample
+caramel	layer
+wine	sample
+
+sushi	combination
+apricot	jam
+
+popcorn	ball
+tofu	ball
+sausage	ball
+
+ginger	ale
+beet	bran
+egg	bread
+fruit	boutique
+
+milk	powder
+meat	product
+
+pancake	breakfast
+#
+meat	sauce
+
+cheese	sauce
+
+apple	cake
+apple	cider
+apple	juice
+apple	pie
+
+anchovy	fillet
+
+cheese	sandwich
+
+corn	meal
+corn	bread
+corn	tortilla
+
+duck	soup
+
+flour	tortilla
+
+gooseberry	fool
+
+grape	juice
+
+lobster	consomme
+
+mushroom	soup
+
+oat	bran
+
+onion	ring
+onion	soup
+
+orange	juice
+
+pasta	dish
+pasta	salad
+
+pork	chop
+pork	product
+pork	rind
+
+potato	pancake
+potato	salad
+
+rice	cake
+rice	pudding
+rice	vinegar
+rice	wine
+
+salmon	fillet
+salmon	steak
+
+sorghum	grain
+
+soy	milk
+soy	protein
+
+soybean	meal
+soybean	oil
+
+tomato	puree
+tomato	sauce
+tomato	soup
+
+noodle	soup
+
+fruit	juice
+garlic	powder
+
+egg	mixture
+
+drug	cocktail
+drug	content
+
+crab	cake
+
+cocaine	base
+cocaine	paste
+
+cocoa	powder
+
+cod liver	oil
+
+cole	slaw
+
+cinnamon	stick
+
+fish	product
+fish	sauce
+
+kiwi	sherbet
+bread	crumb
+bread	pudding
+
+peanut	butter
+
+#CLOTH
+cashmere	sweater
+chenille	robe
+cloth	diaper
+cotton	fabric
+cotton	shirt
+cotton	yarn
+denim	jacket
+mink	jacket
+flannel	shirt
+flannel	suit
+
+leather	accessory
+leather	backpack
+leather	bag
+leather	belt
+leather	boot
+leather	chair
+leather	coat
+leather	glove
+leather	goods
+leather	jacket
+leather	pant
+leather	product
+leather	seat
+leather	shoe
+
+fur	coat
+
+plaid	shirt
+tweed	jacket
+wool	suit
+
+camouflage	uniform
+
+corduroy	slipper
+
+velvet	sombrero
+velvet	gown
+velvet	tuxedo
+velvet	jumper
+velvet	jean
+velvet	ribbon
+velvet	string
+velvet	tapestry
+velvet	necktie
+velvet	cape
+velvet	coat
+velvet	knicker
+velvet	boot
+velvet	turban
+velvet	trouser
+
+chintz	upholstery
+chintz	drape
+chintz	skirt
+
+#REMAINDER
+
+cardboard	construction
+hardwood	construction
+
+
+drug	contraband
+sugar	contraband
+tobacco	contraband
+
+
+china	trinket
+grass	runway
+
+fertilizer	stock
+film	stock
+foodstuff	stock
+freshwater	stock
+
+wire	stand
+
+chocolate	side
+
+flannel	wall
+
+metal	armor
+chain	armor
+
+tinfoil	blanket
+
+water	particle
+shampoo	residue
+
+chocolate	spread
+plastic	spider
+
+waste	deposit
+
+#
+brain	tissue
+breast	tissue
+crab	meat
+duck	meat
+whale	meat
+
+fuel	blend
+tar	spot
+
+ad	clutter
+
+alligator	loafer
+
+ammonium	perchlorate
+
+apple	product
+
+aramid	fiber
+
+
+water	drop
+beef	product
+
+blood	content
+blood	product
+blood	sample
+blood	stream
+blood	supply
+
+cash	benefit
+cash	bonus
+cash	cache
+cash	equivalent
+cash	hoard
+cash	incentive
+cash	income
+cash	pile
+cash	prize
+cash	proceeds
+cash	rebate
+cash	reserve
+cash	resource
+cash	sum
+
+chlorine	bleach
+
+compost	pile
+
+computer	equipment
+
+cortisone	shot
+
+lung	tissue
+muscle	mass
+muscle	tissue
+
+currency	reserve
+
+cyanide	spill
+
+hydrogen	atom
+deuterium	atom
+
+electricity	supply
+
+electron	beam
+
+electronics	part
+
+energy	field
+energy	product
+energy	reserve
+energy	supply
+
+fiber	line
+fiber	network
+
+fiberglass	reinforcement
+
+flour	mixture
+
+foam	cushioning
+
+food	aid
+food	product
+food	ration
+food	reserve
+
+gelatin	capsule
+
+grain	product
+grain	reserve
+grain	supply
+
+grass	clipping
+grass	court
+
+gravel	road
+
+grease	mark
+
+hair	sample
+
+hardware	product
+
+hedge	wall
+
+insulin	product
+
+jute	goods
+
+lamb	chop
+
+land	mass
+
+latex	glove
+
+lightning	bolt
+
+moisture	content
+
+grain	shipment
+food	shipment
+cocaine	shipment
+vegetable	litter
+
+noise	pollution
+
+oxygen	molecule
+oxygen	supply
+
+urethane	finish
+
+
+mesh	wings
+plastic	sphere
+plastic	hospital
+plastic	chain
+plastic	set
+nylon	wings
+
+
+pepper	spray
+
+pesticide	residue
+
+petrochemical	product
+
+petroleum	product
+
+pineapple	face
+
+potassium	chloride
+
+poultry	product
+
+press	clipping
+
+print	ad
+
+psyllium	product
+
+radiation	dose
+
+rag	doll
+
+scar	tissue
+
+semiconductor	product
+semiconductor	wafer
+
+shareware	program
+
+slurry	wall
+
+snow	cover
+
+software	agent
+software	application
+software	code
+software	package
+software	product
+software	program
+software	technology
+software	title
+software	tool
+
+soil	sample
+
+stucco	house
+stucco	wall
+
+sugar	content
+
+tissue	product
+tissue	sample
+
+tobacco	product
+
+topaz	radiation
+
+urine	sample
+
+velcro	fastener
+
+vinyl	record
+vinyl	siding
+
+vitamin	supplement
+
+water	content
+water	molecule
+water	obstacle
+water	reserve
+water	sample
+
+alcohol	content
+
+wheat	stockpile
+
+wire	cage
+wire	fence
+wire	mesh
+wire	product
+wire	rack
+
+wood	alcohol

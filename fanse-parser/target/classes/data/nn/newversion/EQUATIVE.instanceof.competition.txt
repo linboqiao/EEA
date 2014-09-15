@@ -1,0 +1,82 @@
+athletics	competition
+gymnastics	competition
+soccer	competition
+sport	competition
+
+cycling	event
+doubles	event
+freestyle	event
+golf	event
+singles	event
+sport	event
+sprint	event
+tennis	event
+
+basketball	final
+breaststroke	final
+butterfly	final
+doubles	final
+freestyle	final
+singles	final
+soccer	final
+tennis	final
+
+basketball	game
+football	game
+lottery	game
+soccer	game
+sport	game
+tennis	game
+
+chess	match
+doubles	match
+football	match
+singles	match
+soccer	match
+tennis	match
+
+baseball	playoff
+basketball	playoff
+football	playoff
+
+doubles	quarterfinal
+singles	quarterfinal
+
+cycling	race
+marathon	race
+slalom	race
+
+doubles	round
+
+doubles	semifinal
+singles	semifinal
+
+team	championship
+tour	championship
+
+badminton	championship
+gymnastics	championship
+chess	championship
+golf	championship
+soccer	championship
+club	championship
+singles	championship
+
+formula	championship
+
+basketball	championship
+baseball	championship
+volleyball	championship
+football	championship
+track	championship
+tennis	championship
+
+athletics	championship
+
+skiing	championship
+throwing	championship
+weightlifting	championship
+cycling	championship
+
+
+

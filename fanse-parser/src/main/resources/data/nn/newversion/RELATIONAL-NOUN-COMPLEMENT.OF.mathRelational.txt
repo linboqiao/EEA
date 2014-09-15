@@ -1,0 +1,26 @@
+order	imbalance
+trade	imbalance
+
+time	difference
+price	difference
+income	difference
+
+income	inequality
+
+solvency	margin
+
+error	margin
+victory	margin
+
+salary	differential
+
+trade	surplus
+
+#equivalence
+brand	parity
+pay	parity
+production	parity
+income	disparity
+
+gender	equality
+gender	equity

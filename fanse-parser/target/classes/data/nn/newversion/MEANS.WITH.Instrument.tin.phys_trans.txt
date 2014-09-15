@@ -1,0 +1,55 @@
+rail	transport
+railway	transport
+
+rail	transportation
+railway	transportation
+bus	transportation
+voice	mail
+rail	travel
+rail	transit
+
+shuttle	mission
+
+train	trip
+plane	trip
+boat	trip
+bus	trip
+car	trip
+
+bus	tour
+helicopter	tour
+
+balloon	flight
+helicopter	flight
+shuttle	flight
+airplane	flight
+aircraft	flying
+
+motorcycle	officer
+
+car	chase
+
+bus	passenger
+
+foot	patrol
+
+foot	soldier
+
+mail	campaign
+mail	fraud
+
+cart	race
+bike	race
+
+#goes under provide instead? maybe both?
+limousine	service
+train	service
+ambulance	service
+car	service
+ferry	service
+taxi	service
+subway	service
+shuttle	service
+
+rail	service
+railway	service

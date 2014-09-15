@@ -1,0 +1,34 @@
+
+
+
+asbestos	exposure
+currency	exposure
+lead	exposure
+loan	exposure
+media	exposure
+mercury	exposure
+radiation	exposure
+sun	exposure
+television	exposure
+
+#TO, RELATIONAL
+herbicide	resistance
+
+health	threat
+security	threat
+safety	threat
+
+gambling	addiction
+
+crack	addict
+carbohydrate	addict
+drug	addict
+opium	addict
+
+food	allergy
+
+land	title
+
+jail	solution
+
+

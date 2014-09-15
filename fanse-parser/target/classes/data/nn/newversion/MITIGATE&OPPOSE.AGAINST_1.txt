@@ -1,0 +1,212 @@
+catastrophe	aid
+
+burglary	insurance
+illness	insurance
+health	insurance
+fire	insurance
+casualty	insurance
+earthquake	insurance
+accident	insurance
+indemnity	insurance
+flood	insurance
+liability	insurance
+unemployment	insurance
+
+earthquake	coverage
+interest	coverage
+liability	coverage
+loss	coverage
+
+missile	defense
+poison	defense
+takeover	defense
+fire	protection
+fire	safety
+radiation	safety
+
+tax	protection
+damage	protection
+quake	protection
+rain	protection
+
+flak	jacket
+
+abortion	foe
+riot	gear
+riot	squad
+
+fraud	squad
+fire	truck
+drug	strategy
+fire	company
+fire	system
+fire	road
+riot	officer
+narcotic	officer
+vice	officer
+aids	antibody
+
+rheumatism	oil
+war	backlash
+
+drug	effort
+virus	antibody
+
+gang	cop
+
+fraud	unit
+narcotic	unit
+crime	unit
+
+ulcer	drug
+arthritis	drug
+diabetes	drug
+asthma	drug
+cancer	drug
+aids	drug
+
+pain	medication
+cough	syrup
+
+burn	unit
+
+poverty	program
+cancer	surgery
+cancer	therapy
+cataract	surgery
+
+inflation	hedge
+
+tax	shelter
+tax	haven
+
+tick	collar
+cough	liquid
+anthrax	protection
+
+bomb	shelter
+
+elephant	gun
+
+bug	spray
+
+rat	poison
+
+cholera	inoculation
+meningitis	inoculation
+pertussis	inoculation
+rabies	inoculation
+
+anthrax	vaccine
+polio	vaccine
+aids	vaccine
+venom	vaccine
+
+alcohol	program
+
+inflation	measure
+
+missile	shield
+
+flu	vaccine
+
+debt	plan
+
+pollution	project
+poverty	project
+
+blood clot	drug
+
+pass	defense
+flu	shot
+
+point	guard
+
+arms	embargo
+oil	embargo
+
+oil	sanction
+drug	sanction
+food	sanction
+fuel	sanction
+money	sanction
+
+
+#responds to
+#reduce the effects thereof... could go under For Xing
+disaster	headquarters
+disaster	team
+disaster	program
+disaster	center
+disaster	preparedness
+disaster	assistance
+disaster	plan
+
+emergency	supply
+emergency	action
+emergency	crew
+
+bomb	squad
+
+polio	clinic
+flu	clinic
+
+crisis	center
+crisis	mode
+
+
+
+#
+output	ceiling
+price	ceiling
+spending	ceiling
+
+price	cap
+rate	cap
+spending	cap
+
+
+production	hurdle
+trade	barrier
+vapor	barrier
+
+budget	obstacle
+
+fishing	quota
+steel	quota
+hiring	quota
+sugar	quota
+import	quota
+output	quota
+production	quota
+
+
+#alleviate
+
+drought	aid
+hunger	aid
+tsunami	aid
+
+trauma	center
+drug	center
+cancer	center
+
+drug	clinic
+
+drought	relief
+disaster	relief
+hurricane	relief
+interest	relief
+poverty	relief
+mortgage	relief
+tax	relief
+flood	relief
+earthquake	relief
+debt	relief
+pain	relief
+
+aids	treatment
+infertility	treatment
+cancer	treatment
+
+

@@ -1,0 +1,794 @@
+accounting	service
+aviation	service
+broadcasting	service
+conciliation	service
+construction	service
+consultation	service
+consulting	service
+counseling	service
+counterintelligence	service
+distribution	service
+forecasting	service
+inspection	service
+investment	service
+listing	service
+printing	service
+protection	service
+rating	service
+relocation	service
+telecommunication	service
+testing	service
+trading	service
+translation	service
+transportation	service
+trucking	service
+career	service
+catering	service
+consultancy	service
+employment	service
+engineering	service
+maintenance	service
+management	service
+marketing	service
+rehabilitation	service
+repair	service
+research	service
+technology	service
+auction	service
+banking	service
+
+adjustment	process
+admission	process
+application	process
+appropriation	process
+approval	process
+arbitration	process
+auction	process
+bargaining	process
+bidding	process
+certification	process
+confirmation	process
+consultation	process
+democratization	process
+development	process
+disarmament	process
+discovery	process
+election	process
+enlargement	process
+evaluation	process
+extradition	process
+globalization	process
+healing	process
+impeachment	process
+independence	process
+inspection	process
+integration	process
+investment	process
+learning	process
+manufacturing	process
+mediation	process
+modernization	process
+negotiation	process
+nominating	process
+nomination	process
+peace	process
+privatisation	process
+privatization	process
+procurement	process
+production	process
+ratification	process
+rebuilding	process
+reconciliation	process
+recovery	process
+renovation	process
+screening	process
+selection	process
+settlement	process
+testing	process
+transformation	process
+transition	process
+treatment	process
+unification	process
+voting	process
+
+acquisition	activity
+banking	activity
+building	activity
+buying	activity
+construction	activity
+development	activity
+distribution	activity
+drilling	activity
+enforcement	activity
+exploration	activity
+inspection	activity
+investment	activity
+leasing	activity
+lending	activity
+management	activity
+manufacturing	activity
+marketing	activity
+mining	activity
+production	activity
+promotion	activity
+redemption	activity
+savings	activity
+settlement	activity
+smuggling	activity
+spying	activity
+trading	activity
+training	activity
+
+abuse	charge
+arson	charge
+bankruptcy	charge
+battery	charge
+bribery	charge
+burglary	charge
+cocaine	charge
+conspiracy	charge
+contempt	charge
+corruption	charge
+driving	charge
+drug	charge
+embezzlement	charge
+espionage	charge
+ethic	charge
+ethics	charge
+extortion	charge
+felony	charge
+finance	charge
+firearm	charge
+fraud	charge
+genocide	charge
+graft	charge
+handling	charge
+homicide	charge
+impeachment	charge
+interest	charge
+kidnapping	charge
+labor	charge
+management	charge
+manslaughter	charge
+misconduct	charge
+misdemeanor	charge
+molestation	charge
+money-laundering	charge
+narcotic	charge
+obscenity	charge
+obstruction	charge
+one-off	charge
+perjury	charge
+possession	charge
+practice	charge
+racketeering	charge
+rape	charge
+robbery	charge
+sex	charge
+shoplifting	charge
+smuggling	charge
+spying	charge
+tax	charge
+terrorism	charge
+theft	charge
+torture	charge
+trafficking	charge
+treason	charge
+weapon	charge
+
+cash	assistance
+food	assistance
+
+fire	danger
+
+priority	basis
+cost	basis
+contract	basis
+
+priority	program
+
+enemy	tribesman
+bikini	beachwear
+baby	coconut
+baby	anchovy
+baby	dolphin
+machine	dryer
+child	alligator
+fledgling	eagle
+
+adversary	government
+trick	pass
+blowout	win
+
+homecourt	advantage
+
+bonus	number
+
+security	holding
+stock	holding
+majority	holding
+junk-bond	holding
+equity	holding
+gold	holding
+property	holding
+cash	holding
+bank	holding
+dollar	holding
+
+organized crime	activity
+
+evaluation	purpose
+investment	purpose
+marketing	purpose
+recordkeeping	purpose
+
+surplus	water
+gravity	field
+cow	embryo
+quail	embryo
+waxwork	demon
+waxwork	dummy
+waxwork	portrait
+diehard	loyalist
+record	export
+sham	list
+sham	marriage
+sham	shipment
+sham	pain
+sham	canvassing
+
+sham	treatment
+target	population
+sham	reform
+tumor	specimen
+sham	transaction
+sham	trust
+sham	deal
+star	defender
+sham	negotiation
+sham	radiation
+sham	lien
+sham	secretin
+novelty	furniture
+junta	group
+robot	spider
+cartoon	goldfish
+barrier	wall
+
+gem	stone
+blues	hit
+amphetamine	stimulant
+company	competitor
+
+alternate	source
+
+imitation	berry
+
+packaging	waste
+
+profit	margin
+
+combination	package
+
+church	organization
+
+specialty	fertilizer
+
+minimum	standard
+wind	gust
+applicant	country
+
+design	plan
+
+art	treasure
+
+budget	draft
+
+ballot	paper
+
+bargain	price
+
+barrier	island
+
+battleground	state
+
+bellwether	issue
+
+benchmark	bond
+benchmark	survey
+
+bonus	point
+
+booster	seat
+
+buffer	stock
+buffer	zone
+
+burial	service
+
+bypass	road
+
+candidate	city
+candidate	country
+candidate	member
+
+car	model
+
+caretaker	cabinet
+caretaker	government
+
+carrier	rocket
+
+cartoon	character
+
+client	company
+client	investor
+client	state
+
+co-chief	executive
+
+code	name
+code	number
+code	word
+
+commodity	chemical
+commodity	product
+
+companion	measure
+companion	piece
+
+compromise	candidate
+compromise	deal
+compromise	legislation
+compromise	measure
+compromise	package
+compromise	plan
+compromise	proposal
+compromise	solution
+compromise	version
+
+computer	sensor
+computer	server
+computer	terminal
+computer	workstation
+
+concept	car
+
+condominium	unit
+
+consul	general
+
+consumer	country
+
+conveyor	belt
+
+couch potato	jock
+
+cover	letter
+
+creditor	bank
+creditor	country
+creditor	government
+
+custom	barrier
+
+data	product
+
+deadend	job
+
+debtor	country
+
+digit	number
+
+warning	notice
+
+disaster	state
+
+dividend	bonus
+
+dollar	equivalent
+
+donor	country
+donor	government
+
+draft	accord
+draft	agenda
+draft	agreement
+draft	budget
+draft	code
+draft	constitution
+draft	decision
+draft	declaration
+draft	decree
+draft	directive
+draft	document
+draft	guideline
+draft	legislation
+draft	plan
+draft	proposal
+draft	protocol
+draft	regulation
+draft	report
+draft	resolution
+draft	rule
+draft	statement
+draft	text
+draft	treaty
+draft	version
+
+drug	menace
+drug	product
+
+drum	machine
+
+embassy	compound
+
+ensemble	cast
+
+exhibition	match
+
+export	earner
+
+fault	line
+
+feature	story
+
+feeder	cattle
+
+felony	driving
+felony	murder
+felony	theft
+
+fighter	bomber
+
+filler	material
+
+flagship	brand
+flagship	company
+flagship	newspaper
+flagship	product
+flagship	store
+
+fledgling	speculator
+
+food	staple
+
+freeway	artery
+
+fusion	reaction
+
+incinerator	plant
+
+gift	certificate
+gift	check
+gift	item
+
+courtesy	call
+
+gold leaf	inlay
+
+grower	state
+
+guide	book
+
+hit	album
+hit	movie
+hit	musical
+hit	series
+hit	show
+hit	single
+
+home	city
+home	county
+home	district
+home	port
+home	province
+home	region
+home	state
+home	town
+home	village
+
+host	city
+host	committee
+host	computer
+host	country
+host	family
+host	government
+host	team
+
+hub	airport
+
+interceptor	missile
+
+intermediary	organization
+
+island	country
+island	province
+island	state
+island	territory
+
+jet	fighter
+jet	trainer
+
+junction	point
+
+junk	bond
+junk	email
+junk	food
+junk	mail
+
+killer	disease
+killer	earthquake
+
+landfill	site
+
+landmark	accord
+landmark	agreement
+landmark	building
+landmark	case
+landmark	decision
+landmark	law
+landmark	legislation
+landmark	property
+landmark	ruling
+landmark	study
+landmark	treaty
+landmark	trial
+
+luxury	item
+
+machine	gun
+machine	tool
+
+majority	coalition
+majority	party
+
+market	mechanism
+
+maximum	bang
+maximum	roll
+
+member	agent
+member	bank
+member	company
+member	country
+member	government
+member	institution
+member	organization
+member	school
+member	state
+
+merchant	banker
+
+microprocessor	chip
+
+minimum	percentage
+
+minority	nationality
+
+miracle	cure
+
+misdemeanor	assault
+
+monopoly	supplier
+
+movie	classic
+movie	musical
+
+
+
+neighbor	country
+
+niche	market
+
+observer	country
+
+compromise	agreement
+
+target	level
+
+record	level
+
+outlet	mall
+outlet	store
+
+benchmark	rate
+benchmark	issue
+
+parent	bank
+parent	body
+parent	company
+parent	corporation
+parent	organization
+
+partner	country
+
+petition	drive
+
+photo	illustration
+
+picnic	lunch
+
+politics	category
+
+portal	site
+
+powerhouse	competitor
+
+precursor	chemical
+
+predecessor	company
+
+prefix	number
+
+president	emeritus
+
+price	target
+
+priority	area
+priority	project
+priority	sector
+
+problem	area
+problem	asset
+problem	loan
+problem	property
+
+processor	chip
+
+producer	country
+
+
+protest	vote
+
+puppet	government
+puppet	regime
+puppet	state
+
+quarterback	job
+
+quarterfinal	match
+
+recipient	country
+
+record	peak
+record	price
+record	profit
+record	result
+record	revenue
+
+reference	material
+reference	price
+
+refund	check
+
+renegade	rider
+
+repeat	customer
+repeat	offender
+repeat	performance
+
+replacement	driver
+replacement	part
+replacement	player
+replacement	worker
+
+rerun	sale
+
+restrictor	plate
+
+rogue	state
+
+sacrifice	bunt
+
+
+seed	company
+
+semifinal	match
+
+signatory	country
+signatory	state
+
+sister	city
+sister	company
+sister	organization
+sister	party
+sister	publication
+
+snack	chip
+
+sniffer	dog
+
+soldier	ant
+
+source	country
+source	material
+
+splinter	group
+
+startup	company
+
+subway	line
+
+successor	company
+successor	state
+
+superconductor	crystal
+
+surprise	announcement
+surprise	appearance
+surprise	decision
+surprise	hit
+surprise	inspection
+surprise	move
+surprise	party
+surprise	team
+surprise	victory
+surprise	visit
+surprise	winner
+
+tanker	plane
+tanker	truck
+
+board	committee
+
+liaison	group
+
+target	audience
+target	country
+target	date
+target	figure
+target	group
+target	zone
+target	firm
+target	sector
+
+tariff	barrier
+
+tartan	plaid
+
+teller	machine
+
+test	explosion
+test	flight
+
+toy	car
+toy	vehicle
+
+trainer	aircraft
+upset	victory
+
+video	image
+
+volunteer	firefighter
+volunteer	masseuse
+volunteer	worker
+
+brokerage	house
+
+warehouse	store
+
+waste	water
+
+watch	import
+
+watchdog	body
+watchdog	organization
+
+watershed	event
+
+trading	abuse
+
+dual-trading	abuse
+
+dining	category
+income	category
+food	category
+lifestyle	category
+entertainment	category
+product	category
+travel	category
+service	category
+tax	category
+sport	category
+commentary	category

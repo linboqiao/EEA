@@ -1,0 +1,138 @@
+alliance	partner
+
+bloc	country
+
+chain	restaurant
+chain	store
+
+coalition	partner
+
+academy	member
+alliance	member
+association	member
+audience	member
+band	member
+board	member
+cast	member
+coalition	member
+class	member
+clergy	member
+commission	member
+committee	member
+conference	member
+congress	member
+cult	member
+delegation	member
+exchange	member
+gang	member
+group	member
+guard	member
+jury	member
+labor	member
+labour	member
+league	member
+mafia	member
+militia	member
+fraternity	member
+family	member
+minority	member
+orchestra	member
+panel	member
+parliament	member
+politburo	member
+scheme	member
+sect	member
+service	member
+society	member
+solidarity	member
+squad	member
+subcommittee	member
+team	member
+tribe	member
+
+cult	figure
+
+establishment	candidate
+
+family	farmer
+
+frat	boy
+
+fraternity	brother
+
+gang	pal
+
+jury	foreman
+
+minority	applicant
+minority	candidate
+minority	character
+minority	child
+minority	contractor
+minority	employee
+minority	investor
+minority	journalist
+minority	officer
+minority	partner
+minority	party
+minority	resident
+minority	student
+minority	voter
+minority	woman
+minority	worker
+
+mob	figure
+
+opposition	activist
+opposition	candidate
+opposition	conservative
+opposition	deputy
+opposition	faction
+opposition	figure
+opposition	lawmaker
+opposition	legislator
+opposition	member
+opposition	party
+opposition	politician
+opposition	representative
+
+parliament	deputy
+
+party	branch
+party	candidate
+party	colleague
+party	conservative
+party	elder
+party	elite
+party	faction
+party	faithful
+party	figure
+party	lawmaker
+party	loyalist
+party	member
+party	moderate
+party	nominee
+party	politician
+party	stalwart
+
+staff	aide
+staff	attorney
+staff	lawyer
+staff	person
+staff	reporter
+staff	scientist
+staff	worker
+staff	writer
+
+tribunal	official
+
+union	carpenter
+union	member
+union	miner
+union	regular
+union	electrician
+union	nationalist
+union	educator
+
+village	elder
+village	fool

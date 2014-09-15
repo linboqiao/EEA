@@ -1,0 +1,46 @@
+wine	author
+
+casting	call
+distress	call
+interference	call
+judgment	call
+
+airworthiness	directive
+policy	directive
+
+caution	flag
+
+goodwill	gesture
+
+holiday	greeting
+
+confidence	motion
+
+anticipation	note
+protest	note
+ransom	note
+suicide	note
+
+draft	order
+
+merger	overture
+peace	overture
+
+tax	pledge
+
+prayer	sermon
+
+acceptance	speech
+concession	speech
+resignation	speech
+budget	speech
+hate	speech
+policy	speech
+victory	speech
+
+price	tag
+
+dial	tone
+
+
+character	witness

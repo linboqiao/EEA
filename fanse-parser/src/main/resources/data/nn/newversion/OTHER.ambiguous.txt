@@ -1,0 +1,54 @@
+#complex
+tax	incentive
+astronomy	mission
+
+sports	program
+
+replacement	market
+office	market
+service	market
+
+money	firm
+
+sports	company
+sports	organization
+
+thrift	industry
+thrift	office
+
+currency	operation
+exchange	operation
+group	company
+
+data	company
+
+futures	industry
+market	company
+market	group
+market	operation
+market	sector
+press	office
+holiday	company
+equity	sector
+
+office	company
+
+science	department
+
+office	group
+peace	group
+population	group
+preservation	group
+
+press	group
+
+press	organization
+
+safety	group
+
+system	group
+
+trust	industry
+
+email	program
+

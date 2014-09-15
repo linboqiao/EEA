@@ -1,0 +1,23 @@
+season	average
+market	average
+
+fluctuation	band
+
+learning	curve
+yield	curve
+
+load	factor
+
+earnings	multiple
+
+income	scale
+pay	scale
+salary	scale
+
+investment	scale
+
+production	scale
+
+
+
+

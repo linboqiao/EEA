@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<defset prep="after">
+	<sense id="1">
+		<definition>following X2 in time (and, in some cases, also caused by X2) (e.g., happen after the wedding)</definition>
+		<majorcluster>TEMPORAL</majorcluster>
+		<pprojmap type="equivalent" unionof="1(1),1(1)-1,3(1b),4(1c)"/>
+	</sense>
+	<sense id="2">
+		<definition>moving so as to follow or intercept; in the direction of someone/something that is moving further away (e.g., walked after him)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="subsumes" targetid="5(2)"/>
+		<pprojmap type="subsumes" targetid="6(2a)"/>
+		<pprojmap type="subsumes" subsetof="7(3)"/>
+	</sense>
+	<sense id="3">
+		<definition>indicating the subject of a desire or inquiry (e.g., inquired after the stolen diamonds)</definition>
+		<majorcluster>TOPIC</majorcluster>
+		<pprojmap type="equivalent" subsetof="7(3)"/>
+	</sense>
+	<sense id="4">
+		<definition>indicating a base model (as of design or imitation) or namesake (e.g., designed after the Taj Mahal)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" unionof="9(5),10(5a)"/>
+	</sense>
+	<sense id="5">
+		<definition>at a subsequent position in a sequence or ranking (e.g., B is after A)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" targetid="8(4)"/>
+	</sense>
+	<sense id="6">
+		<definition>used in phrases indicating repetition or continuation (e.g., night after night, page after page)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" targetid="2(1a)"/>
+	</sense>
+	
+	
+</defset>

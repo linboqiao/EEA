@@ -1,0 +1,45 @@
+
+championship	fight
+custody	fight
+takeover	fight
+title	fight
+
+freedom	fighter
+
+peace	rally
+
+freedom	struggle
+independence	struggle
+liberation	struggle
+
+revenge	attack
+revenge	killing
+
+playoff	contention
+
+championship	match
+title	match
+
+
+championship	race
+pennant	race
+
+abortion	activist
+democracy	activist
+independence	activist
+peace	activist
+rights	activist
+solidarity	activist
+
+
+democracy	campaigner
+
+
+democracy	movement
+independence	movement
+liberation	movement
+rights	movement
+solidarity	movement
+
+medal	game
+title	game

@@ -1,0 +1,128 @@
+gambling	debt
+mortgage	debt
+tax	debt
+
+ad	dollar
+tax	dollar
+tourist	dollar
+
+ad	revenue
+subscription	revenue
+circulation	revenue
+export	revenue
+gambling	revenue
+membership	revenue
+oil	revenue
+operating	revenue
+penalty	revenue
+service	revenue
+tax	revenue
+toll	revenue
+tourist	revenue
+
+drug	proceeds
+sale	proceeds
+
+aerospace	earnings
+coal	earnings
+export	earnings
+
+restaurant	earnings
+
+#curious
+interest	earnings
+nonoperating	earnings
+operating	earnings
+tourism	earnings
+currency	earnings
+oil	earnings
+
+education	expense
+funeral	expense
+living	expense
+merger	expense
+travel	expense
+
+account	dividend
+
+dividend	income
+equity	income
+export	income
+fee	income
+interest	income
+oil	income
+operating	income
+royalty	income
+toll	income
+tourism	income
+trading	income
+trust	income
+
+farm	income
+
+aid	money
+bonus	money
+drug	money
+grant	money
+insurance	money
+interest	money
+loan	money
+lottery	money
+oil	money
+pension	money
+reward	money
+scholarship	money
+settlement	money
+sponsorship	money
+tax	money
+tobacco	money
+
+equity	interest
+real estate	interest
+
+
+oil	wealth
+
+currency	loss
+loan	loss
+operating	loss
+trading	loss
+underwriting	loss
+
+debt	interest
+
+grant	aid
+
+#profit/(profit)margin
+book	profit
+gasoline	profit
+insurance	profit
+trading	profit
+operating	margin
+refining	margin
+interest	margin
+chemical	margin
+gasoline	margin
+
+
+marketing	expense
+retirement	expense
+
+hospital	bill
+
+restructuring	charge
+room	charge
+service	charge
+
+convenience	credit
+emissions	credit
+export	credit
+investment	credit
+reduction	credit
+
+attorney	fee
+bank	fee
+license	fee
+licence	fee
+physician	fee
+rights	fee

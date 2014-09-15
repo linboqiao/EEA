@@ -1,0 +1,6 @@
+smokestack	industry
+gun	boat
+arm	chair
+slot	machine
+motor	vehicle
+radar	facility

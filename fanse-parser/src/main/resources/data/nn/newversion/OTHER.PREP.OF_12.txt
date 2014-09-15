@@ -1,0 +1,11 @@
+administration	policy
+church	policy
+city	policy
+party	policy
+school	policy
+university	policy
+
+court	rules
+government	rules
+industry	rules
+party	rules

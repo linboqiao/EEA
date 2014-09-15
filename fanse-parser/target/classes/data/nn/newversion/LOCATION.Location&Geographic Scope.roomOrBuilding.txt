@@ -1,0 +1,334 @@
+cube	dweller
+cube	chair
+
+campus	bookstore
+
+workplace	racism
+workplace	group
+workplace	team
+workplace	theft
+workplace	tool
+workplace	bias
+
+upstairs	office
+upstairs	unit
+
+#also 'part-of', 'leads to'
+apartment	door
+bathroom	door
+bedroom	door
+cell	door
+cupboard	door
+garage	door
+kitchen	door
+office	door
+
+
+airport	blast
+airport	explosion
+airport	fire
+
+prison	uniform
+
+college	sweetheart
+
+
+
+school	loner
+
+battlefield	explosion
+
+
+
+junkyard	blast
+
+armory	explosion
+basement	shop
+
+club	blast
+apartment	blast
+bank	blast
+depot	blast
+apartment	noise
+
+factory	fire
+
+motel	fire
+palace	fire
+kitchen	soap
+
+backroom	meeting
+dormitory	meeting
+
+hospital	shelf
+bookshop	shelf
+garage	shelf
+kitchen	shelf
+laboratory	shelf
+library	shelf
+office	shelf
+school	shelf
+
+
+
+classroom	teacher
+classroom	work
+
+jail	inmate
+jail	overcrowding
+jail	population
+
+jailhouse	informant
+jailhouse	lesbian
+
+office	chair
+office	computer
+office	equipment
+office	job
+office	machine
+office	massage
+office	network
+office	politicking
+office	politics
+office	product
+office	software
+office	space
+office	suite
+office	supply
+office	window
+office	work
+office	worker
+
+pharmacy	shelf
+
+plant	accident
+plant	worker
+
+prison	gang
+prison	hospital
+prison	inmate
+prison	labor
+prison	life
+prison	population
+prison	riot
+prison	term
+prison	yard
+
+school	book
+school	clothes
+school	kid
+school	massacre
+school	paper
+school	prayer
+school	shooting
+school	student
+school	supply
+school	textbook
+school	uniform
+school	violence
+
+stadium	usher
+
+store	clerk
+store	shelf
+store	window
+
+studio	audience
+
+university	student
+
+warehouse	space
+warehouse	stock
+warehouse	worker
+
+supermarket	aisle
+supermarket	shelf
+supermarket	tabloid
+
+restaurant	worker
+
+museum	exhibit
+museum	exhibition
+museum	piece
+museum	show
+
+mill	worker
+
+kitchen	counter
+kitchen	equipment
+kitchen	knife
+kitchen	utensil
+kitchen	window
+
+lab	animal
+lab	coat
+lab	rat
+lab	technician
+lab	test
+lab	work
+
+laboratory	analysis
+laboratory	animal
+laboratory	equipment
+laboratory	experiment
+laboratory	rat
+laboratory	study
+laboratory	technician
+laboratory	test
+laboratory	testing
+laboratory	work
+
+hospice	care
+
+hospital	patient
+hospital	stay
+hospital	treatment
+hospital	worker
+
+hotel	accommodation
+hotel	guest
+hotel	window
+hotel	worker
+
+house	arrest
+house	fire
+house	guest
+house	party
+house	plant
+
+household	appliance
+household	chemical
+household	product
+
+home	advantage
+home	appliance
+home	banking
+home	care
+home	computer
+home	cooking
+home	copying
+home	court
+home	crowd
+home	defeat
+home	delivery
+home	detention
+home	electronics
+home	entertainment
+home	environment
+home	fan
+home	field
+home	furnishing
+home	furnishings
+home	game
+home	gardener
+home	ice
+home	kitchen
+home	life
+home	loss
+home	machine
+home	match
+home	network
+home	opener
+home	party
+home	phone
+home	product
+home	remedy
+home	school
+home	service
+home	soil
+home	store
+home	team
+home	telephone
+home	theater
+home	turf
+home	user
+home	victory
+home	visit
+home	win
+
+hometown	boy
+hometown	fan
+hometown	hero
+hometown	team
+
+gym	bag
+gym	shorts
+
+hangar	queen
+
+harbor	pilot
+
+gallery	space
+
+garage	band
+
+factory	job
+factory	worker
+
+depot	hack
+
+court	battle
+court	challenge
+court	fight
+court	testimony
+court	victory
+
+church	bell
+church	fire
+church	worker
+
+campus	anti-intellectualism
+campus	building
+campus	life
+campus	newspaper
+campus	police
+
+cafeteria	worker
+
+bedroom	window
+
+basement	apartment
+basement	room
+basement	vault
+
+grocery	product
+grocery	shelf
+
+shipyard	service
+shipyard	worker
+
+bank	worker
+airport	worker
+
+courtroom	graphic
+
+cabin	crew
+cabin	pressure
+
+courthouse	square
+courthouse	step
+
+chamber	music
+
+banquet hall	musicianship
+
+coffee shop	chatter
+
+farm	equipment
+farm	tool
+
+bar	fight
+bar	stool
+nursing home	stay
+nursing home	equipment
+
+backroom	deal
+
+valley	resident
+village	life
+
+apartment	dweller
+
+building	circulation
+
+

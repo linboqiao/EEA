@@ -1,0 +1,183 @@
+
+
+movie	audience
+
+network	affiliate
+airline	customer
+banking	customer
+airline	passenger
+city	father
+family	friend
+media	darling
+
+homecoming	queen
+
+batting	champion
+doubles	champion
+meter	champion
+boxing	champion
+series	champion
+conference	champion
+singles	champion
+division	champion
+
+league	champion
+
+homicide	victim
+murder	victim
+shooting	victim
+rape	victim
+gunshot	victim
+bombing	victim
+torture	victim
+crime	victim
+storm	victim
+hurricane	victim
+earthquake	victim
+drought	victim
+quake	victim
+flood	victim
+burn	victim
+crash	victim
+disaster	victim
+accident	victim
+fire	victim
+asbestos	victim
+cancer	victim
+stroke	victim
+aids	victim
+
+basketball	star
+tennis	star
+soccer	star
+baseball	star
+football	star
+
+rap	star
+rock	star
+
+porn	star
+
+sports	hero
+football	hero
+
+candy	connoisseur
+champagne	connoisseur
+cheese	connoisseur
+cocktail	connoisseur
+coffee	connoisseur
+wine	connoisseur
+
+cookbook	aficionado
+blues	aficionado
+
+giants	fan
+chess	fan
+sports	fan
+
+jazz	fan
+movie	fan
+boxing	fan
+rock	fan
+race	fan
+hockey	fan
+football	fan
+basketball	fan
+soccer	fan
+golf	fan
+music	fan
+baseball	fan
+opera	fan
+
+administration	head
+delegation	head
+division	head
+studio	head
+village	head
+
+boat	captain
+ship	captain
+
+crime	boss
+mafia	boss
+mob	boss
+
+administration	chief
+army	chief
+bank	chief
+branch	chief
+bureau	chief
+campaign	chief
+department	chief
+division	chief
+government	chief
+judiciary	chief
+navy	chief
+party	chief
+police	chief
+school	chief
+section	chief
+state	chief
+station	chief
+studio	chief
+village	chief
+
+affairs	chief
+battalion	chief
+budget	chief
+crew	chief
+defense	chief
+fire	chief
+intelligence	chief
+operation	chief
+policy	chief
+security	chief
+service	chief
+staff	chief
+tax	chief
+
+borough	president
+state	president
+
+school	dean
+
+
+
+#more of a stretch...
+drug	boss
+cocaine	baron
+drug	baron
+
+#company
+advertising	executive
+manufacturing	executive
+marketing	executive
+entertainment	executive
+publishing	executive
+sales	executive
+shipping	executive
+insurance	executive
+tobacco	executive
+oil	executive
+
+airline	executive
+bank	executive
+banking	executive
+baseball	executive
+brokerage	executive
+business	executive
+cable	executive
+casino	executive
+company	executive
+computer	executive
+hospital	executive
+investment	executive
+media	executive
+movie	executive
+music	executive
+network	executive
+newspaper	executive
+studio	executive
+technology	executive
+television	executive
+thrift	executive

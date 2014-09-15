@@ -1,0 +1,74 @@
+vegetable	cart
+vegetable	basket
+vegetable	platter
+
+snake	cage
+snake	pit
+
+rice	bowl
+
+gift	box
+glove	box
+jewel	box
+
+lunch	box
+shoe	box
+tool	box
+
+tape	cartridge
+
+casserole	dish
+
+photo	album
+
+diaper	bag
+cigarette	pack
+cigarette	package
+
+
+body	suit
+
+
+ammunition	depot
+ammunition	dump
+
+file	cabinet
+
+hero	cemetery
+
+
+weapon	depot
+
+
+phone	bank
+
+apple	bin
+
+beverage	can
+
+medal	table
+cathode	tube
+
+trophy	case
+
+ammunition	clip
+
+theater	district
+warehouse	district
+
+debris	field
+
+gift	basket
+picnic	basket
+
+car	lot
+
+pie	plate
+magazine	rack
+
+boiler	room
+computer	room
+film	room
+weight	room
+
+missile	silo

@@ -1,0 +1,48 @@
+crop	estimate
+earnings	estimate
+growth	estimate
+cost	estimate
+population	estimate
+revenue	estimate
+subscriber	estimate
+
+damage	estimate
+budget	estimate
+
+price	forecast
+budget	forecast
+issues	forecast
+earnings	forecast
+growth	forecast
+revenue	forecast
+inflation	forecast
+
+growth	projection
+profit	projection
+earnings	projection
+revenue	projection
+budget	projection
+
+profit	expectation
+sales	expectation
+inflation	expectation
+
+takeover	speculation
+land	speculation
+earthquake	speculation
+currency	speculation
+merger	speculation
+real-estate	speculation
+market	speculation
+
+stock	speculator
+currency	speculator
+
+conspiracy	theorist
+
+liberation	theology
+
+chaos	theory
+greenhouse	theory
+conspiracy	theory
+superstring	theory

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<defset prep="across">
+	<sense id="1">
+		<definition>from one side of X2 to another (e.g., he ran across the bridge)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="approx_equal" targetid="1(1)"/>
+	</sense>
+	<sense id="2">
+		<definition>indicating a time period (X2) through/over which something happens or remains unchanged (e.g., changed across the centuries)</definition>
+		<majorcluster>TEMPORAL</majorcluster>
+		<pprojmap type="equivalent" targetid="1(1)-1"/>
+	</sense>
+	<sense id="3">
+		<definition>located on/at the other side of X2 (e.g., the house across the river)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="approx_equal" targetid="2(2)"/>
+	</sense>
+</defset>

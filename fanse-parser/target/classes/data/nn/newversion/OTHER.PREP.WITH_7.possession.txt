@@ -1,0 +1,15 @@
+collar	worker
+plainclothes	police
+tweed	schoolgirl
+bikini	babe
+coat	woman
+gown	woman
+
+
+#coreferentialesque
+turboprop	aircraft
+turboprop	plane
+port	city
+
+#experiencer.....
+interest	group

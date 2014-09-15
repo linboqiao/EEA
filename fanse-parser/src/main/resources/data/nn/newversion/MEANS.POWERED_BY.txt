@@ -1,0 +1,36 @@
+aerosol	can
+wind	turbine
+horse	cart
+
+rocket	ship
+
+battery	device
+
+steam	boat
+steam	plant
+steam	generator
+
+wood	fireplace
+
+petrol	engine
+
+power	shovel
+power	tool
+power	seat
+power	boat
+
+propane	cooker
+
+diesel	generator
+diesel	car
+diesel	locomotive
+diesel	vehicle
+diesel	model
+diesel	motor
+diesel	bus
+
+gas	grill
+gas	fireplace
+gas	cooker
+gas	reactor
+gasoline	minivan

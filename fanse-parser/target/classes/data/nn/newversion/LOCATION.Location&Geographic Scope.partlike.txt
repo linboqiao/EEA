@@ -1,0 +1,51 @@
+
+heart	artery
+
+college	campus
+school	campus
+university	campus
+
+town	center
+
+city	centre
+town	centre
+
+city	district
+
+body	fat
+
+embassy	ground
+school	ground
+
+tabloid	headline
+
+newspaper	insert
+
+knee	ligament
+
+door	lock
+
+calf	muscle
+groin	muscle
+leg	muscle
+stomach	muscle
+thigh	muscle
+
+window	pane
+
+sewer	pipe
+
+school	playground
+
+airport	runway
+
+window	screen
+
+airport	tarmac
+
+floor	tile
+
+body	tissue
+
+lake	water
+ocean	water

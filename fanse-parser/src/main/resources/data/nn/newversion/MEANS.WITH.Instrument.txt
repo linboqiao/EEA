@@ -1,0 +1,238 @@
+#currency
+cash	purchase
+
+#instrument used by agent?
+chainsaw	crew
+camera	crew
+
+bishop	endgame
+rook	ending
+
+puppet	play
+
+vehicle	homicide
+vacuum	sweeper
+mouse	skill
+
+camera	work
+
+text	book
+text	message
+
+radar	image
+
+ultrasound	evaluation
+ultrasound	examination
+ultrasound	monitor
+ultrasound	monitoring
+ultrasound	scan
+ultrasound	test
+ultrasound	testing
+microphone	comic
+cigar	hand
+
+tightrope	artist
+watercolor	artist
+trampoline	artist
+trapeze	artist
+
+telemarketing	scammer
+
+directory	assistance
+
+semiconductor	laser
+
+mortar	bomb
+
+laser	disk
+
+#hard to place this one
+disk	drive
+
+radar	gun
+parachute	infantry
+screen	printing
+satellite	program
+
+#used_to_perform/to_use
+wrist	shot
+hand	gesture
+hand	signal
+
+hand	grenade
+hand	brush
+#
+
+cash	charge
+voucher	plan
+
+#use
+candlelight	vigil
+
+#
+policy	application
+computer	application
+laser	application
+multimedia	application
+
+
+
+#uses/topic/performs overlap?
+balancing	act
+juggling	act
+#
+
+#uses/causes/is_accompanied_by
+suicide	bombing
+#
+
+#uses
+champagne	toast
+steam	distillation
+multimedia	technology
+media	blitz
+halogen	light
+steam	iron
+microwave	oven
+charm	offensive
+bungee	jumping
+inkjet	printer
+x-ray	scan
+germ	weapon
+voucher	system
+write-in	campaign
+trick	campaign
+water	reactor
+water	park
+#
+# more use?
+hunger	strike
+hunger	striker
+#
+#use/produce
+laser	weapon
+#
+#by performing the act of/engaging in
+strip	search
+#
+
+#use/part overlap?
+transistor	radio
+#
+#use/part/act_used overlap?
+pass	play
+#
+
+#use/destination overlap?
+videotape	recorder
+tape	recording
+#
+
+#use_to_create_or_perform/origin
+computer	graphic
+computer	image
+computer	printout
+computer	ranking
+computer	simulation
+computer	publishing
+computer	fraud
+computer	animation
+computer	analysis
+computer	analyst
+#
+#used to interact with/user of/used to control overlas
+computer	language
+#
+#agentive/instrumentative
+artillery	duel
+artillery	battle
+tank	battle
+artillery	bombardment
+artillery	shelling
+##
+#
+fist	fight
+food	fight
+#
+
+#
+grenade	attack
+shooting	attack
+artillery	attack
+bomb	attack
+missile	attack
+suicide	attack
+firebomb	attack
+weapon	attack
+gas	attack
+mortar	attack
+bombing	attack
+rocket	attack
+#
+
+#for or from?
+computer	product
+
+#use/use_to_perform
+radiation	therapy
+estrogen	therapy
+gene	therapy
+hormone	therapy
+drug	therapy
+replacement	therapy
+radiation	treatment
+chemotherapy	treatment
+laser	treatment
+dialysis	treatment
+laser	surgery
+bypass	surgery
+transplant	surgery
+incision	surgery
+balloon	angioplasty
+#
+
+#
+multimedia	presentation
+video	presentation
+crash	test
+polygraph	test
+stress	test
+#
+
+#more use/use_to_perform?
+discount	promotion
+video	replay
+funeral	service
+memorial	service
+laser	show
+slide	show
+multimedia	software
+missile	strike
+brush	stroke
+bidding	war
+trench	warfare
+eye	witness
+shuttle	diplomacy
+faith	healer
+x-ray	lithography
+breast	feeding
+barge	shipment
+car	bombing
+truck	bombing
+
+budget	gimmickry
+
+print	advertising
+newspaper	advertising
+image	advertising
+
+makeup	artist
+
+artillery	barrage
+
+vacuum	cleaner
+
+computer	display
+firework	display
+
+

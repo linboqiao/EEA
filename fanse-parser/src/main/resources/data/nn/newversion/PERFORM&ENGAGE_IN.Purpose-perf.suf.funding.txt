@@ -1,0 +1,79 @@
+contracting	aid
+development	aid
+reconstruction	aid
+
+advertising	budget
+construction	budget
+defence	budget
+development	budget
+investment	budget
+marketing	budget
+procurement	budget
+
+retirement	pension
+
+construction	outlay
+
+development	capital
+investment	capital
+operating	capital
+
+acquisition	fund
+production	fund
+retirement	fund
+
+
+assistance	grant
+development	grant
+law enforcement	grant
+
+
+adjustment	loan
+construction	loan
+development	loan
+home improvement	loan
+
+
+construction	money
+development	money
+investment	money
+protection	money
+retirement	money
+spending	money
+
+development	expenditure
+
+advertising	spending
+construction	spending
+consumption	spending
+exploration	spending
+investment	spending
+
+
+advertising	account
+investment	account
+management	account
+trading	account
+
+#payments
+maintenance	payment
+
+breakup	fee
+management	fee
+referral	fee
+research	fee
+surrender	fee
+underwriting	fee
+
+application	fee
+filing	fee
+handling	fee
+insurance	fee
+landing	fee
+maintenance	fee
+origination	fee
+parking	fee
+processing	fee
+transaction	fee
+
+

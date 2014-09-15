@@ -1,0 +1,26 @@
+oil	glut
+supply	glut
+
+leadership	vacuum
+
+diaper	shortage
+cash	shortage
+electricity	shortage
+energy	shortage
+food	shortage
+fuel	shortage
+fund	shortage
+gas	shortage
+grain	shortage
+labor	shortage
+labour	shortage
+liquidity	shortage
+manpower	shortage
+nursing	shortage
+oil	shortage
+part	shortage
+skill	shortage
+staff	shortage
+supply	shortage
+teacher	shortage
+water	shortage

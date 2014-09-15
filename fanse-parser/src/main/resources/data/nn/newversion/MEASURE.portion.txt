@@ -1,0 +1,22 @@
+percent	approval
+percent	decline
+percent	change
+
+percentage	increase
+percentage	yield
+percentage	change
+percentage	difference
+percentage	gain
+
+majority	voting
+majority	position
+majority	ownership
+majority	interest
+majority	share
+majority	vote
+
+minority	share
+
+one-third	interest
+one-third	stake
+two-thirds	approval

@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+
+<defset prep="by">
+	
+	<sense id="1">
+		<!-- lack of a 'noun by noun' example should be rectified-->
+		<definition>indicating the logical subject (that is, the word that would be the subject in an active construction), typically some form of agent (e.g. provided by Joe)</definition>
+<!-- through the agency or action of; indicating the primary cause or performer of an action -->
+		<majorcluster>AGENT</majorcluster>
+		<pprojmap type="approx_equal" unionof="1(1),2(1a),3(1b)"/>
+		<notes></notes>
+	</sense>
+	<sense id="1.1">
+		<definition>indicating the creator/author of (e.g., plays by Shakespeare)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" targetid="4(1c)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2">
+		<definition>indicating the MEANS of achieving something (e.g., melt it by cooking it)</definition>
+		<majorcluster>MEANS</majorcluster>
+		<pprojmap type="equivalent" targetid="5(2)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2.1">
+		<definition>indicating a term or name to which some meaning or referent is assigned (e.g., what is meant by 'fair')</definition>
+		<majorcluster>MEANS</majorcluster>
+		<pprojmap type="equivalent" unionof="6(2a),7(2b)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2.2">
+		<definition>indicating the means/medium/route of transport (e.g., travel by car)</definition>
+		<majorcluster>MEANS</majorcluster>
+		<pprojmap type="equivalent" targetid="8(2c)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2.3">
+		<definition>indicating the means/criteria/basis of judgment (e.g., judge by looks)</definition>
+		<majorcluster>MEANS</majorcluster>
+		<pprojmap type="equivalent" targetid="15(3c)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2.4">
+		<definition>indicating the other parent of someone's/something's child[ren] (e.g., his children by his ex-wife)</definition>
+		<majorcluster>MEANS</majorcluster>
+		<pprojmap type="equivalent" unionof="9(2c),9(2d)"/>
+		<notes></notes>
+	</sense>
+	<sense id="3">
+		<definition>indicating the size or amount, as of a margin (e.g., increase by 7%)</definition>
+		<majorcluster>SCALAR</majorcluster>
+		<pprojmap type="equivalent" targetid="12(3),13(3a)"/>
+		<notes></notes>
+	</sense>
+	<sense id="4">
+		<definition>as in phrases where something is happening repeatedly or progressively, indicating the unit of time (e.g., month by month)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" targetid="14(3b)"/>
+		<notes></notes>
+	</sense>
+	<sense id="5">
+		<definition>(mathematics) expressing multiplication (e.g., 6 feet by 7 feet)</definition>
+		<majorcluster>MATHEMATICS</majorcluster>
+		<pprojmap type="equivalent" targetid="16(3d)"/>
+		<notes></notes>
+	</sense>
+	<sense id="6">
+		<definition>near; close to in space (e.g., the tree by the house)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="equivalent" targetid="18(5)"/>
+		<notes></notes>
+	</sense>
+	<sense id="6.1">
+		<definition>near but then past and beyond, as of movement (e.g., drove by the house)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="equivalent" targetid="19(5a)"/>
+		<notes></notes>
+	</sense>
+	<sense id="7">
+		<definition>indicating a deadline or the end of a particular time period (e.g., be done by Friday)</definition>
+		<majorcluster>TEMPORAL</majorcluster>
+		<pprojmap type="equivalent" targetid="17(4)"/>
+		<notes></notes>
+	</sense>
+	<sense id="8">
+		<definition>indicating the period in which something happens (e.g., 'by day')</definition>
+		<majorcluster>TEMPORAL</majorcluster>
+		<pprojmap type="equivalent" targetid="20(6)"/>
+		<notes></notes>
+	</sense>
+	<sense id="9">
+		<definition>according to; concerning (e.g., did well by him)</definition>
+		<pprojmap type="equivalent" targetid="21(7)"/>
+		<notes></notes>
+	</sense>
+	<sense id="10">
+		<definition>as used in oaths/swearing (e.g., swore by God)</definition>
+		<pprojmap type="equivalent" targetid="22(8)"/>
+		<notes></notes>
+	</sense>
+	
+	
+		
+	
+</defset>

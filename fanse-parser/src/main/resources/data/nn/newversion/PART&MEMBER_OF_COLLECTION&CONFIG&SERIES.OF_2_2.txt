@@ -1,0 +1,449 @@
+train	set
+
+bestseller	list
+candidate	list
+career	list
+casualty	list
+client	list
+customer	list
+donor	list
+email	list
+hit	list
+loser	list
+name	list
+nonfiction	list
+priority	list
+
+order	backlog
+
+volume	list
+voter	list
+wine	list
+voter	roll
+witness	list
+passenger	list
+
+grocery	list
+
+injury	list
+waiting	list
+
+sell	list
+
+stock	portfolio
+credit card	portfolio
+equity	portfolio
+finance	portfolio
+fund	portfolio
+loan	portfolio
+mortgage	portfolio
+product	portfolio
+property	portfolio
+security	portfolio
+
+photo	list
+specie	list
+target	list
+to-do	list
+
+wish	list
+
+activist	group
+christian	group
+citizen	group
+company	group
+computer	group
+consumer	group
+creditor	group
+dealer	group
+doctor	group
+employee	group
+employer	group
+environmentalist	group
+exile	group
+extremist	group
+farmer	group
+fundamentalist	group
+guerrilla	group
+homeowner	group
+immigrant	group
+investor	group
+island	group
+lawyer	group
+loyalist	group
+minority	group
+observer	group
+opposition	group
+parent	group
+physician	group
+police	group
+realtor	group
+rebel	group
+resident	group
+shareholder	group
+student	group
+supremacist	group
+taxpayer	group
+teacher	group
+terrorist	group
+tourist	group
+user	group
+veteran	group
+victim	group
+vigilante	group
+volunteer	group
+voter	group
+watchdog	group
+worker	group
+youth	group
+
+aircraft	fleet
+shuttle	fleet
+vehicle	fleet
+
+youth	delegation
+
+fund	family
+immigrant	family
+peasant	family
+refugee	family
+
+police	contingent
+
+truck	convoy
+
+officer	corps
+police	corps
+
+christian	community
+donor	community
+exile	community
+expatriate	community
+immigrant	community
+minority	community
+
+university	community
+
+minority	coalition
+opposition	coalition
+
+clothing	collection
+
+labor	collective
+
+citizen	committee
+creditor	committee
+shareholder	committee
+veteran	committee
+villager	committee
+
+bookstore	chain
+drugstore	chain
+grocery	chain
+hotel	chain
+island	chain
+restaurant	chain
+store	chain
+supermarket	chain
+theater	chain
+
+apartment	block
+cell	block
+
+boy	team
+dog	team
+girl	team
+observer	team
+scout	team
+youth	team
+
+minority	tribe
+
+christian	troop
+loyalist	troop
+
+commando	unit
+infantry	unit
+
+labor	union
+
+police	squad
+
+fighter	squadron
+
+food	stock
+
+weapon	stockpile
+
+police	reinforcement
+
+spy	ring
+
+christian	sect
+
+chip	set
+
+delegate	slate
+
+car	pool
+gene	pool
+jury	pool
+talent	pool
+
+christian	population
+deer	population
+fish	population
+immigrant	population
+inmate	population
+minority	population
+refugee	population
+student	population
+
+citizen	panel
+judiciary	panel
+three judge	panel
+
+loyalist	paramilitary
+
+environmentalist	party
+non-communist	party
+peasant	party
+populist	party
+royalist	party
+unionist	party
+
+christian	organization
+consumer	organization
+employer	organization
+opposition	organization
+peasant	organization
+police	organization
+student	organization
+veteran	organization
+volunteer	organization
+worker	organization
+
+
+christian	militia
+student	militia
+
+christian	minority
+
+
+
+christian	force
+loyalist	force
+observer	force
+volunteer	force
+
+secessionist	gang
+youth	gang
+
+boy	band
+
+weapon	arsenal
+
+arms	shipment
+pc	shipment
+unit	shipment
+cargo	shipment
+weapon	shipment
+drug	shipment
+
+tape	collection
+twig	bundle
+bat	colony
+bug	colony
+cigarette	line
+cookie	line
+
+police	caravan
+
+booster	club
+boy	club
+fan	club
+investor	club
+
+alpaca	herd
+weapon	cache
+
+book	set
+
+client	base
+customer	base
+investor	base
+shareholder	base
+subscriber	base
+user	base
+
+opposition	bloc
+
+cattle	herd
+
+student	body
+
+coupon	book
+
+tent	city
+
+
+airline	industry
+dairy	industry
+fishery	industry
+hotel	industry
+rail	industry
+railroad	industry
+railway	industry
+restaurant	industry
+
+arms	cache
+
+carrier	battlegroups
+
+infantry	division
+infantry	battalion
+
+car	line
+clothing	line
+computer	line
+ship	line
+
+#series
+acquisition	binge
+buying	binge
+hitting	streak
+advertising	blitz
+marketing	blitz
+action	sequence
+book	series
+cartoon	series
+concert	series
+lecture	series
+acquisition	spree
+buying	spree
+crime	spree
+selling	spree
+shooting	spree
+spending	spree
+marriage	spree
+smashing	spree
+shooting	rampage
+merger	wave
+
+bombing	campaign
+sabotage	campaign
+vaccination	campaign
+
+growth	spurt
+#
+
+#COLLECTION MEMBERS
+
+dose	stockpile
+smallpox	stockpile
+
+opposition	alliance
+
+
+benefit	package
+incentive	package
+
+volunteer	army
+
+photo	essay
+
+route	system
+
+alumni	association
+banker	association
+consumer	association
+employer	association
+homeowner	association
+player	association
+student	association
+manufacturer	association
+
+
+
+value	system
+
+fare	structure
+pay	structure
+price	structure
+class	system
+rate	structure
+rate	system
+salary	scheme
+salary	structure
+fee	structure
+fee	system
+tariff	structure
+tariff	system
+tax	structure
+tax	system
+
+star	system
+
+plant	variety
+product	variety
+
+artillery	battery
+missile	battery
+
+minority	cadre
+
+lecture	circuit
+
+workers	council
+
+client	couple
+
+peasant	household
+
+car	inventory
+computer	inventory
+
+fish	stock
+
+bank teller	network
+branch	network
+computer	network
+dealer	network
+highway	network
+motorway	network
+pipeline	network
+rail	network
+railway	network
+route	network
+spy	network
+
+battery	pack
+
+
+arms	supply
+labor	supply
+power	supply
+ticket	supply
+
+belief	system
+freeway	system
+pipeline	system
+railroad	system
+river	system
+storm	system
+
+
+airline	traffic
+barge	traffic
+business	traffic
+customer	traffic
+data	traffic
+drug	traffic
+emergency	traffic
+passenger	traffic
+rail	traffic
+tanker	traffic
+telephone	traffic
+tourist	traffic
+voice	traffic
+

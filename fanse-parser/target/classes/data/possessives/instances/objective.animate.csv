@@ -1,0 +1,461 @@
+10450	"PTB_WSJ"	"Bush"	"adviser"	2	6	23222		
+10451	"PTB_WSJ"	"Ford"	"adviser"	11	15	23225		
+10452	"PTB_WSJ"	"fund"	"adviser"	25	28	13820		
+10453	"PTB_WSJ"	"fund"	"adviser"	30	32	13836		
+10454	"PTB_WSJ"	"her"	"adviser"	18	20	7053		
+10455	"PTB_WSJ"	"his"	"adviser"	19	22	23236		
+10456	"PTB_WSJ"	"his"	"adviser"	6	8	38639		
+10457	"PTB_WSJ"	"its"	"adviser"	22	24	2823		
+10458	"PTB_WSJ"	"its"	"adviser"	10	12	5049		
+10459	"PTB_WSJ"	"its"	"adviser"	11	13	8721		
+10460	"PTB_WSJ"	"its"	"adviser"	18	20	38315		
+10461	"PTB_WSJ"	"Koch"	"adviser"	5	9	10914		
+10462	"PTB_WSJ"	"machinists"	"adviser"	31	34	14703		
+10463	"PTB_WSJ"	"Shamir"	"adviser"	5	8	16357		
+10464	"PTB_WSJ"	"SONG"	"adviser"	33	36	10533		
+10465	"PTB_WSJ"	"Thatcher"	"adviser"	11	14	11147		
+10466	"PTB_WSJ"	"UAL"	"adviser"	9	12	18618		
+10467	"PTB_WSJ"	"Georgia-Pacific"	"advisers"	1	3	2372		
+10468	"PTB_WSJ"	"group"	"advisers"	27	29	25902		
+10469	"PTB_WSJ"	"group"	"advisers"	2	4	39819		
+10470	"PTB_WSJ"	"his"	"advisers"	5	6	16192		
+10471	"PTB_WSJ"	"his"	"advisers"	8	9	38724		
+10472	"PTB_WSJ"	"my"	"advisers"	13	15	24180		
+10474	"PTB_WSJ"	"their"	"advisers"	21	22	18335		
+10475	"PTB_WSJ"	"UAL"	"advisers"	13	15	14716		
+10476	"PTB_WSJ"	"UAL"	"advisers"	1	3	28417		
+10477	"PTB_WSJ"	"union"	"advisers"	17	19	28415		
+							
+10488	"PTB_WSJ"	"bank"	"owner"	9	12	25807		
+10489	"PTB_WSJ"	"chain"	"owner"	5	7	15446		
+10490	"PTB_WSJ"	"company"	"owner"	5	7	17972		
+10491	"PTB_WSJ"	"firm"	"owner"	31	33	39463		
+10492	"PTB_WSJ"	"its"	"owner"	6	7	35570		
+10493	"PTB_WSJ"	"its"	"owner"	14	15	35609		
+10494	"PTB_WSJ"	"Lincoln"	"owner"	9	12	2702		
+10495	"PTB_WSJ"	"Merksamer"	"owner"	20	22	13675		
+10496	"PTB_WSJ"	"painting"	"owner"	9	12	38678		
+10497	"PTB_WSJ"	"RJR"	"owner"	35	37	6643		
+10498	"PTB_WSJ"	"their"	"owner"	7	11	23320		
+10499	"PTB_WSJ"	"company"	"owners"	34	36	9871		
+10500	"PTB_WSJ"	"its"	"owners"	21	22	2701		
+10501	"PTB_WSJ"	"its"	"owners"	16	18	8451		
+10502	"PTB_WSJ"	"their"	"owners"	24	25	17415		
+							
+10524	"PTB_WSJ"	"bill"	"supporters"	4	6	31589		
+10525	"PTB_WSJ"	"chairman"	"supporters"	3	5	22229		
+10526	"PTB_WSJ"	"Hastings"	"supporters"	10	12	32430		
+10527	"PTB_WSJ"	"her"	"supporters"	4	5	7689		
+10528	"PTB_WSJ"	"her"	"supporters"	25	27	13066		
+10529	"PTB_WSJ"	"his"	"supporters"	21	22	7796		
+10530	"PTB_WSJ"	"His"	"supporters"	2	3	10889		
+10531	"PTB_WSJ"	"his"	"supporters"	8	9	23099		
+10532	"PTB_WSJ"	"Morgan"	"supporters"	13	15	13076		
+10533	"PTB_WSJ"	"their"	"supporters"	23	24	6684		
+10534	"PTB_WSJ"	"their"	"supporters"	39	42	8790		
+							
+10551	"PTB_WSJ"	"her"	"attacker"	15	16	6164		
+10552	"PTB_WSJ"	"Bork"	"attackers"	7	9	34739		
+10553	"PTB_WSJ"	"bondholders"	"adviser"	6	8	4284		
+10583	"PTB_WSJ"	"his"	"followers"	10	11	1361		
+10584	"PTB_WSJ"	"husband"	"followers"	14	16	28649		
+							
+10598	"PTB_WSJ"	"her"	"successor"	31	32	17653		
+10599	"PTB_WSJ"	"his"	"successor"	25	26	6532		
+10600	"PTB_WSJ"	"his"	"successor"	15	16	21247		
+10601	"PTB_WSJ"	"His"	"successor"	1	2	25613		
+10602	"PTB_WSJ"	"its"	"successor"	12	13	32644		
+10603	"PTB_WSJ"	"Lawson"	"successor"	31	33	7474		
+10604	"PTB_WSJ"	"my"	"successor"	33	34	21252		
+10605	"PTB_WSJ"	"Reagan"	"successor"	4	7	37390		
+10606	"PTB_WSJ"	"Verne"	"successor"	5	7	14093		
+10607	"PTB_WSJ"	"her"	"successors"	22	23	37034		
+							
+10608	"PTB_WSJ"	"their"	"accusers"	44	45	4933		
+							
+10609	"PTB_WSJ"	"program"	"backers"	18	20	37413		
+10610	"PTB_WSJ"	"Satellite"	"backers"	6	9	3372		
+							
+10620	"PTB_WSJ"	"its"	"creditor"	10	12	18722		
+10621	"PTB_WSJ"	"Sharon"	"creditor"	3	7	12699		
+10622	"PTB_WSJ"	"Airlines"	"creditors"	2	4	38112		
+10623	"PTB_WSJ"	"bank"	"creditors"	16	18	24583		
+10624	"PTB_WSJ"	"company"	"creditors"	6	8	14293		
+10625	"PTB_WSJ"	"its"	"creditors"	3	4	1777		
+10626	"PTB_WSJ"	"its"	"creditors"	12	13	2566		
+10627	"PTB_WSJ"	"its"	"creditors"	3	4	5433		
+10628	"PTB_WSJ"	"its"	"creditors"	10	12	16032		
+10629	"PTB_WSJ"	"its"	"creditors"	23	24	20514		
+10630	"PTB_WSJ"	"its"	"creditors"	9	12	34428		
+10631	"PTB_WSJ"	"its"	"creditors"	6	7	36771		
+10632	"PTB_WSJ"	"Steel"	"creditors"	8	11	4189		
+10633	"PTB_WSJ"	"subsidiary"	"creditors"	8	10	4190		
+10634	"PTB_WSJ"	"their"	"creditors"	11	12	2730		
+10635	"PTB_WSJ"	"Allen"	"critics"	10	12	37455		
+10636	"PTB_WSJ"	"Bush"	"critics"	3	6	1630		
+10637	"PTB_WSJ"	"city"	"critics"	4	6	23521		
+10656	"PTB_WSJ"	"bank"	"directors"	17	19	26613		
+10657	"PTB_WSJ"	"Claiborne"	"directors"	1	3	21840		
+10658	"PTB_WSJ"	"company"	"directors"	18	22	866		
+10659	"PTB_WSJ"	"company"	"directors"	12	14	3132		
+10660	"PTB_WSJ"	"company"	"directors"	6	9	8236		
+10661	"PTB_WSJ"	"corporation"	"directors"	15	17	1138		
+10662	"PTB_WSJ"	"Cray"	"directors"	1	3	5708		
+10663	"PTB_WSJ"	"fund"	"directors"	12	14	5538		
+10664	"PTB_WSJ"	"his"	"directors"	33	34	16329		
+10665	"PTB_WSJ"	"its"	"directors"	4	5	2201		
+10666	"PTB_WSJ"	"its"	"directors"	4	5	15088		
+10667	"PTB_WSJ"	"its"	"directors"	19	20	18237		
+10668	"PTB_WSJ"	"its"	"directors"	17	18	24608		
+10669	"PTB_WSJ"	"its"	"directors"	9	10	27728		
+10670	"PTB_WSJ"	"its"	"directors"	7	8	39432		
+10671	"PTB_WSJ"	"MiniScribe"	"directors"	15	18	3265		
+10672	"PTB_WSJ"	"Rally"	"directors"	16	18	9672		
+10673	"PTB_WSJ"	"Sansui"	"directors"	22	24	7331		
+10674	"PTB_WSJ"	"Telerate"	"directors"	5	9	6377		
+10675	"PTB_WSJ"	"Trelleborg"	"directors"	4	6	25682		
+10676	"PTB_WSJ"	"UAL"	"directors"	3	6	20880		
+10677	"PTB_WSJ"	"United"	"directors"	1	3	36188		
+10678	"PTB_WSJ"	"utility"	"directors"	4	6	35271		
+							
+10692	"PTB_WSJ"	"her"	"employer"	3	4	5958		
+10693	"PTB_WSJ"	"her"	"employer"	4	5	30015		
+10694	"PTB_WSJ"	"his"	"employer"	11	12	36260		
+10695	"PTB_WSJ"	"his"	"employer"	25	26	39207		
+10696	"PTB_WSJ"	"nation"	"employer"	19	22	23020		
+10697	"PTB_WSJ"	"their"	"employer"	10	11	14691		
+							
+10732	"PTB_WSJ"	"company"	"founder"	33	35	5546		
+10733	"PTB_WSJ"	"firm"	"founder"	23	25	18125		
+10734	"PTB_WSJ"	"its"	"founder"	48	50	12872		
+10735	"PTB_WSJ"	"its"	"founder"	22	23	25159		
+10736	"PTB_WSJ"	"its"	"founder"	7	8	31092		
+10737	"PTB_WSJ"	"Rally"	"founder"	11	13	9675		
+10738	"PTB_WSJ"	"whose"	"founder"	4	5	856		
+							
+10743	"PTB_WSJ"	"D.T."	"handlers"	3	5	20089		
+10744	"PTB_WSJ"	"its"	"handlers"	18	20	20051		
+10745	"PTB_WSJ"	"my"	"host"	11	12	21532		
+10746	"PTB_WSJ"	"whose"	"host"	4	5	8545		
+10747	"PTB_WSJ"	"his"	"hosts"	16	18	36397		
+10748	"PTB_WSJ"	"his"	"hosts"	9	10	37440		
+10749	"PTB_WSJ"	"my"	"hosts"	22	23	1371		
+10750	"PTB_WSJ"	"our"	"hosts"	4	6	6449		
+							
+10758	"PTB_WSJ"	"country"	"leader"	3	6	5618		
+10759	"PTB_WSJ"	"country"	"leader"	27	29	38254		
+10760	"PTB_WSJ"	"its"	"leader"	15	17	34854		
+10761	"PTB_WSJ"	"Lebanon"	"leader"	1	4	7534		
+10762	"PTB_WSJ"	"Senate"	"leader"	23	26	12324		
+10763	"PTB_WSJ"	"Singapore"	"leader"	7	9	1854		
+10764	"PTB_WSJ"	"their"	"leader"	13	15	6771		
+10765	"PTB_WSJ"	"their"	"leader"	23	25	26059		
+10766	"PTB_WSJ"	"city"	"leaders"	4	7	17078		
+10767	"PTB_WSJ"	"country"	"leaders"	10	12	1190		
+10768	"PTB_WSJ"	"federation"	"leaders"	42	44	8279		
+10769	"PTB_WSJ"	"its"	"leaders"	33	34	32030		
+10770	"PTB_WSJ"	"machinists"	"leaders"	16	19	14689		
+10771	"PTB_WSJ"	"machinists"	"leaders"	7	10	14702		
+10772	"PTB_WSJ"	"their"	"leaders"	29	30	10818		
+10773	"PTB_WSJ"	"their"	"leaders"	10	11	14058		
+10774	"PTB_WSJ"	"their"	"leaders"	16	17	28426		
+10775	"PTB_WSJ"	"West"	"leaders"	5	7	12602		
+10776	"PTB_WSJ"	"its"	"readers"	15	16	24222		
+10777	"PTB_WSJ"	"your"	"readers"	20	21	662		
+10778	"PTB_WSJ"	"your"	"readers"	23	24	38395		
+10779	"PTB_WSJ"	"your"	"readers"	32	34	38402		
+							
+10785	"PTB_WSJ"	"airport"	"supplier"	2	5	39247		
+10786	"PTB_WSJ"	"their"	"supplier"	17	20	6964		
+10787	"PTB_WSJ"	"his"	"suppliers"	11	12	36654		
+10788	"PTB_WSJ"	"their"	"suppliers"	14	15	36047		
+							
+10795	"PTB_WSJ"	"his"	"teacher"	7	10	22827		
+10796	"PTB_WSJ"	"McDuffie"	"teacher"	2	6	22818		
+10799	"PTB_WSJ"	"their"	"teachers"	17	18	38342		
+							
+10808	"PTB_WSJ"	"his"	"mentor"	8	10	11671		
+10809	"PTB_WSJ"	"his"	"mentor"	9	10	26074		
+10810	"PTB_WSJ"	"his"	"mentor"	21	23	33891		
+							
+10816	"PTB_WSJ"	"her"	"assailant"	16	18	6178		
+							
+10819	"PTB_WSJ"	"Baker"	"assistant"	2	4	8810		
+10820	"PTB_WSJ"	"Galamian"	"assistant"	30	33	22821		
+10821	"PTB_WSJ"	"his"	"assistant"	45	46	13181		
+10822	"PTB_WSJ"	"his"	"assistant"	33	34	30015		
+							
+10824	"PTB_WSJ"	"its"	"auditor"	2	3	37747		
+							
+10827	"PTB_WSJ"	"his"	"defenders"	4	5	12877		
+10828	"PTB_WSJ"	"his"	"defenders"	15	16	34739		
+10829	"PTB_WSJ"	"Reagan"	"defenders"	16	18	12900		
+							
+10845	"PTB_WSJ"	"branch"	"manager"	14	17	1636		
+10846	"PTB_WSJ"	"division"	"manager"	2	4	32860		
+10847	"PTB_WSJ"	"gallery"	"manager"	14	16	11885		
+10848	"PTB_WSJ"	"Giants"	"manager"	13	15	6765		
+10849	"PTB_WSJ"	"his"	"manager"	33	36	23417		
+10850	"PTB_WSJ"	"his"	"manager"	8	9	25460		
+10851	"PTB_WSJ"	"his"	"manager"	12	13	25461		
+10852	"PTB_WSJ"	"his"	"manager"	22	23	25470		
+							
+10898	"PTB_WSJ"	"program"	"creator"	30	32	11944		
+							
+10917	"PTB_WSJ"	"plan"	"authors"	4	6	26859		
+							
+10933	"PTB_WSJ"	"Corp."	"auditors"	15	17	24291		
+10934	"PTB_WSJ"	"its"	"auditors"	14	15	32852		
+10935	"PTB_WSJ"	"MiniScribe"	"auditors"	6	8	3267		
+							
+10940	"PTB_WSJ"	"Boesky"	"underwriter"	17	20	14972		
+10941	"PTB_WSJ"	"Lloyd"	"underwriter"	5	7	20789		
+							
+10946	"PTB_WSJ"	"his"	"tipper"	5	6	37625		
+							
+11075	"PTB_WSJ"	"Wall"	"sponsor"	11	14	22220		
+							
+11076	"PTB_WSJ"	"program"	"sponsors"	2	5	32061		
+							
+11086	"PTB_WSJ"	"magazine"	"co-editor"	35	37	22281		
+							
+11111	"PTB_WSJ"	"bill"	"managers"	2	4	9396		
+11112	"PTB_WSJ"	"company"	"managers"	16	18	34110		
+11113	"PTB_WSJ"	"BNL"	"managers"	4	7	27728		
+							
+11150	"PTB_WSJ"	"his"	"predecessor"	2	3	13187		
+11151	"PTB_WSJ"	"his"	"predecessor"	2	3	16312		
+11152	"PTB_WSJ"	"his"	"predecessor"	19	21	31754		
+11153	"PTB_WSJ"	"its"	"predecessor"	18	19	5840		
+11154	"PTB_WSJ"	"Wall"	"predecessor"	7	9	22235		
+11155	"PTB_WSJ"	"its"	"predecessors"	23	24	18117		
+11156	"PTB_WSJ"	"their"	"predecessors"	7	8	1529		
+							
+11157	"PTB_WSJ"	"Florio"	"opponent"	21	23	27834		
+11158	"PTB_WSJ"	"his"	"opponent"	26	28	10875		
+11159	"PTB_WSJ"	"his"	"opponent"	21	22	14888		
+11160	"PTB_WSJ"	"his"	"opponent"	16	17	16278		
+11161	"PTB_WSJ"	"his"	"opponent"	15	19	36435		
+11162	"PTB_WSJ"	"Bork"	"opponents"	2	4	34753		
+11163	"PTB_WSJ"	"Bush"	"opponents"	11	13	37936		
+11164	"PTB_WSJ"	"Gorbachev"	"opponents"	29	31	7782		
+11165	"PTB_WSJ"	"his"	"opponents"	21	22	33927		
+11166	"PTB_WSJ"	"its"	"opponents"	14	15	1347		
+11167	"PTB_WSJ"	"its"	"opponents"	10	12	3238		
+11168	"PTB_WSJ"	"its"	"opponents"	22	24	4109		
+11169	"PTB_WSJ"	"state"	"opponents"	20	24	32016		
+11170	"PTB_WSJ"	"their"	"opponents"	27	28	30305		
+							
+716	"PTB_WSJ"	"office"	"manager"	7	10	10289		
+							
+11192	"JB"	"our"	"teacher"	9	10	169	"`` Baloo has spoken , and he is <b>our</b> <b>teacher</b> for the young cubs . "	
+11193	"JB"	"their"	"teacher"	9	10	543	"See , O Bagheera , they never thank <b>their</b> <b>teacher</b> . "	
+							
+11141	"PTB_WSJ"	"its"	"holders"	25	26	34620		
+11143	"PTB_WSJ"	"Smurfit"	"holders"	24	27	20361		
+							
+11015	"PTB_WSJ"	"its"	"developer"	46	48	4634		
+11016	"PTB_WSJ"	"Its"	"developer"	1	2	24486		
+							
+11011	"PTB_WSJ"	"Bias"	"coach"	1	3	13434		
+11012	"PTB_WSJ"	"Your"	"coaches"	1	2	10492		
+							
+11006	"PTB_WSJ"	"measure"	"advocate"	7	10	19975		
+11007	"PTB_WSJ"	"apartheid"	"architect"	22	24	31131		
+11008	"PTB_WSJ"	"whose"	"architects"	19	20	4367		
+							
+11055	"PTB_WSJ"	"its"	"insurer"	9	10	32437		
+11056	"PTB_WSJ"	"Robins"	"insurer"	17	20	21725		
+							
+11021	"PTB_WSJ"	"league"	"promoters"	2	4	216		
+							
+10890	"PTB_WSJ"	"AZT"	"maker"	6	8	15329		
+10891	"PTB_WSJ"	"jetliner"	"maker"	23	25	1328		
+10892	"PTB_WSJ"	"their"	"makers"	19	20	39077		
+							
+11043	"PTB_WSJ"	"paper"	"publisher"	25	27	10732		
+11051	"PTB_WSJ"	"their"	"manager"	8	9	198		
+							
+10939	"PTB_WSJ"	"our"	"visitors"	5	7	6424		
+							
+690	"PTB_WSJ"	"airline"	"management"	17	19	25901		
+691	"PTB_WSJ"	"Anacomp"	"management"	14	16	25126		
+692	"PTB_WSJ"	"bank"	"management"	8	10	27732		
+693	"PTB_WSJ"	"Biny"	"management"	6	8	20527		
+694	"PTB_WSJ"	"company"	"management"	2	5	16424		
+695	"PTB_WSJ"	"company"	"management"	2	5	30497		
+696	"PTB_WSJ"	"Corp."	"management"	2	5	19441		
+697	"PTB_WSJ"	"Discovision"	"management"	8	11	30524		
+698	"PTB_WSJ"	"Eagle"	"management"	1	3	20527		
+699	"PTB_WSJ"	"Federal"	"management"	6	8	22987		
+700	"PTB_WSJ"	"Federal"	"management"	5	9	22991		
+701	"PTB_WSJ"	"Federal"	"management"	8	10	23049		
+702	"PTB_WSJ"	"its"	"management"	33	34	10272		
+703	"PTB_WSJ"	"its"	"management"	18	19	18303		
+704	"PTB_WSJ"	"its"	"management"	11	13	39599		
+705	"PTB_WSJ"	"Manville"	"management"	8	10	21636		
+706	"PTB_WSJ"	"P&G"	"management"	11	14	36520		
+707	"PTB_WSJ"	"Rockefeller"	"management"	11	13	1196		
+708	"PTB_WSJ"	"Ryder"	"management"	9	11	37259		
+709	"PTB_WSJ"	"Telerate"	"management"	16	18	6380		
+710	"PTB_WSJ"	"Telerate"	"management"	30	32	6381		
+711	"PTB_WSJ"	"Their"	"management"	2	3	34364		
+712	"PTB_WSJ"	"Tiger"	"management"	8	10	23048		
+713	"PTB_WSJ"	"UAL"	"management"	4	6	14719		
+714	"PTB_WSJ"	"UAL"	"management"	1	3	31891		
+715	"PTB_WSJ"	"KCRA"	"manager"	30	33	36678		
+717	"PTB_WSJ"	"team"	"manager"	33	36	6780		
+							
+21143	"HDFRE"	"his"	"assassins"	19	20	1143	"On the news of their approach , Pertinax , disdaining either flight or concealment , advanced to meet <b>his</b> <b>assassins</b> ; and recalled to their minds his own innocence , and the sanctity of their recent oath . "	
+							
+687	"PTB_WSJ"	"Carolina"	"governor"	33	35	34994		
+							
+25086	"HDFRE"	"their"	"governor"	57	59	5086	"A regard for the public tranquillity , which would so frequently have been interrupted by annual or by occasional elections , induced the primitive Christians to constitute an honorable and perpetual magistracy , and to choose one of the wisest and most holy among their presbyterians to execute , during his life , the duties of <b>their</b> ecclesiastical <b>governor</b> . "	
+25053	"HDFRE"	"their"	"governors"	28	30	5053	"The Christians felt and confessed that such institutions might be necessary for the present system of the world , and they cheerfully submitted to the authority of <b>their</b> Pagan <b>governors</b> . "	
+							
+20093	"HDFRE"	"its"	"teachers"	21	23	93	"When it had once received its impulse from above -- when it had once been infused into the minds of <b>its</b> first <b>teachers</b> -- when it had gained full possession of the reason and affections of the favored few -- it might be -- and to the Protestant , the rational Christian , it is impossible to define when it really was -- left to make its way by its native force , under the ordinary secret agencies of all-ruling Providence . "	
+							
+23596	"HDFRE"	"their"	"keepers"	15	16	3596	"Disdaining to shed their blood for the amusement of the populace , they killed <b>their</b> <b>keepers</b> , broke from the place of their confinement , and filled the streets of Rome with blood and confusion . "	
+							
+23003	"HDFRE"	"their"	"leader"	19	22	3003	"At length , a considerable army , stationed on the Upper Danube , invested with the Imperial purple <b>their</b> <b>leader</b> Aureolus ; who , disdaining a confined and barren reign over the mountains of Rh??tia , passed the Alps , occupied Milan , threatened Rome , and challenged Gallienus to dispute in the field the sovereignty of Italy . "	
+							
+24889	"HDFRE"	"their"	"Creator"	25	26	4889	"The d??mons soon discovered and abused the natural propensity of the human heart towards devotion , and artfully withdrawing the adoration of mankind from <b>their</b> <b>Creator</b> , they usurped the place and honors of the Supreme Deity . "	
+							
+20543	"HDFRE"	"its"	"founder"	21	22	543	"This column , which still subsists in its ancient beauty , exhibited an exact representation of the Dacian victories of <b>its</b> <b>founder</b> . "	
+24039	"HDFRE"	"their"	"founder"	20	21	4039	"A circus , a theatre , a mint , a palace , baths , which bore the name of <b>their</b> <b>founder</b> Maximian ; porticos adorned with statues , and a double circumference of walls , contributed to the beauty of the new capital ; nor did it seem oppressed even by the proximity of Rome . "	
+24880	"HDFRE"	"their"	"founders"	14	16	4880	"They were almost without exception of the race of the Gentiles , and <b>their</b> principal <b>founders</b> seem to have been natives of Syria or Egypt , where the warmth of the climate disposes both the mind and the body to indolent and contemplative devotion . "	
+							
+20245	"HDFRE"	"their"	"destroyers"	20	21	245	"Trajan was ambitious of fame ; and as long as mankind shall continue to bestow more liberal applause on <b>their</b> <b>destroyers</b> than on their benefactors , the thirst of military glory will ever be the vice of the most exalted characters . "	
+							
+24197	"HDFRE"	"its"	"defenders"	28	31	4197	"The ancient sages had derided the popular superstition ; after disguising its extravagance by the thin pretence of allegory , the disciples of Plotinus and Porphyry became <b>its</b> most zealous <b>defenders</b> . "	
+							
+21267	"HDFRE"	"their"	"riders"	24	26	1267	"The unpractised elephants , whose uncouth appearance , it was hoped , would strike terror into the army of the north , threw <b>their</b> unskilful <b>riders</b> ; and the awkward evolutions of the marines , drawn from the fleet of Misenum , were an object of ridicule to the populace ; whilst the senate enjoyed , with secret pleasure , the distress and weakness of the usurper . "	
+24729	"HDFRE"	"their"	"riders"	55	56	4729	"The army consisted of one hundred and fifty thousand foot , and fifteen thousand horse ; and as the cavalry was drawn , for the most part , from Phrygia and Cappadocia , we may conceive a more favorable opinion of the beauty of the horses , than of the courage and dexterity of <b>their</b> <b>riders</b> . "	
+							
+22689	"HDFRE"	"his"	"pursuers"	36	37	2689	"Decius followed them through a difficult country , and by forced marches ; but when he imagined himself at a considerable distance from the rear of the Goths , Cniva turned with rapid fury on <b>his</b> <b>pursuers</b> . "	
+							
+23286	"HDFRE"	"my"	"conqueror"	6	7	3286	"You alone I acknowledge as <b>my</b> <b>conqueror</b> and my sovereign . '' "	
+23092	"HDFRE"	"their"	"conqueror"	17	18	3092	"The pestilence which swept away such numbers of the barbarians , at length proved fatal to <b>their</b> <b>conqueror</b> . "	
+23159	"HDFRE"	"their"	"conqueror"	26	27	3159	"When Aurelian assumed his seat , his manly grace and majestic figure taught the barbarians to revere the person as well as the purple of <b>their</b> <b>conqueror</b> . "	
+20400	"HDFRE"	"their"	"conquerors"	27	28	400	"They enjoyed the religion of their ancestors , whilst in civil honors and advantages they were exalted , by just degrees , to an equality with <b>their</b> <b>conquerors</b> . "	
+23142	"HDFRE"	"their"	"conquerors"	19	20	3142	"These degenerate Romans continued to serve the empire , whose allegiance they had renounced , by introducing among <b>their</b> <b>conquerors</b> the first notions of agriculture , the useful arts , and the conveniences of civilized life . "	
+24765	"HDFRE"	"their"	"conquerors"	22	23	4765	"The troops of Licinius , though they were lately raised , ill armed , and worse disciplined , made head against <b>their</b> <b>conquerors</b> with fruitless but desperate valor , till a total defeat , and a slaughter of five and twenty thousand men , irretrievably determined the fate of their leader . "	
+							
+21693	"HDFRE"	"his"	"flatterers"	33	34	1693	"A capricious prodigality supplied the want of taste and elegance ; and whilst Elagabalus lavished away the treasures of his people in the wildest extravagance , his own voice and that of <b>his</b> <b>flatterers</b> applauded a spirit of magnificence unknown to the tameness of his predecessors . "	
+22377	"HDFRE"	"his"	"flatterers"	33	34	2377	"Such are the circumstances of this ostentatious and improbable relation , dictated , as it too plainly appears , by the vanity of the monarch , adorned by the unblushing servility of <b>his</b> <b>flatterers</b> , and received without contradiction by a distant and obsequious senate . "	
+							
+20983	"HDFRE"	"his"	"followers"	3	4	983	"He ordered <b>his</b> <b>followers</b> to disperse , to pass the Alps in small parties and various disguises , and to assemble at Rome , during the licentious tumult of the festival of Cybele . "	
+21341	"HDFRE"	"his"	"followers"	20	21	1341	"A defeat , by disabling the chief from the performance of his engagements , dissolved the mercenary allegiance of <b>his</b> <b>followers</b> , and left them to consult their own safety by a timely desertion of an unsuccessful cause . "	
+21657	"HDFRE"	"his"	"followers"	26	28	1657	"This new and injudicious violation of the constitution was probably dictated either by the ignorance of his Syrian courtiers , or the fierce disdain of <b>his</b> military <b>followers</b> . "	
+22292	"HDFRE"	"his"	"followers"	3	4	2292	"Ahriman and <b>his</b> <b>followers</b> , disarmed and subdued , will sink into their native darkness ; and virtue will maintain the eternal peace and harmony of the universe . "	
+22990	"HDFRE"	"his"	"followers"	15	16	2990	"The pageant of royalty was soon destroyed by an officer of Gallienus ; but <b>his</b> <b>followers</b> , despairing of mercy , resolved to shake off their allegiance , not only to the emperor , but to the empire , and suddenly returned to the savage manners from which they had never perfectly been reclaimed . "	
+23931	"HDFRE"	"his"	"followers"	12	13	3931	"Having incurred the displeasure of his master , Mamgo , with <b>his</b> <b>followers</b> , retired to the banks of the Oxus , and implored the protection of Sapor . "	
+22340	"HDFRE"	"their"	"followers"	11	12	2340	"An obstinate resistance was fatal to the chiefs ; but <b>their</b> <b>followers</b> were treated with lenity . "	
+22598	"HDFRE"	"their"	"followers"	37	38	2598	"The casual disputes that so frequently happened in their tumultuous parties of hunting or drinking , were sufficient to inflame the minds of whole nations ; the private feuds of any considerable chieftains diffused itself among <b>their</b> <b>followers</b> and allies . "	
+							
+21074	"HDFRE"	"her"	"lover"	12	13	1074	"Marcia seized the occasion of presenting a draught of wine to <b>her</b> <b>lover</b> , after he had fatigued himself with hunting some wild beasts . "	
+24711	"HDFRE"	"her"	"lover"	20	21	4711	"The virgin 's declaration , that she had been carried away with her own consent , instead of saving <b>her</b> <b>lover</b> , exposed her to share his fate . "	
+20901	"HDFRE"	"her"	"lovers"	5	6	901	"He promoted several of <b>her</b> <b>lovers</b> to posts of honor and profit , and during a connection of thirty years , invariably gave her proofs of the most tender confidence , and of a respect which ended not with her life . "	
+20951	"HDFRE"	"her"	"lovers"	32	33	951	"She had not ventured to communicate the black design to her second husband , Claudius Pompeiarus , a senator of distinguished merit and unshaken loyalty ; but among the crowd of <b>her</b> <b>lovers</b> ( for she imitated the manners of Faustina ) she found men of desperate fortunes and wild ambition , who were prepared to serve her more violent , as well as her tender passions . "	
+21699	"HDFRE"	"his"	"lovers"	38	40	1699	"The master of the Roman world affected to copy the dress and manners of the female sex , preferred the distaff to the sceptre , and dishonored the principal dignities of the empire by distributing them among <b>his</b> numerous <b>lovers</b> ; one of whom was publicly invested with the title and authority of the emperor 's , or , as he more properly styled himself , of the empress 's husband . "	
+							
+22560	"HDFRE"	"her"	"worshippers"	45	46	2560	"The unknown symbol of the Earth , covered with a thick veil , was placed on a carriage drawn by cows ; and in this manner the goddess , whose common residence was in the Isles of Rugen , visited several adjacent tribes of <b>her</b> <b>worshippers</b> . "	
+22143	"HDFRE"	"his"	"worshippers"	52	54	2143	"The army of Maximin was repulsed in repeated attacks , his machines destroyed by showers of artificial fire ; and the generous enthusiasm of the Aquileians was exalted into a confidence of success , by the opinion that Belenus , their tutelar deity , combated in person in the defence of <b>his</b> distressed <b>worshippers</b> . "	
+20429	"HDFRE"	"their"	"worshippers"	27	28	429	"* The Egyptian superstition , of all the most contemptible and abject , was frequently prohibited : the temples of Serapis and Isis demolished , and <b>their</b> <b>worshippers</b> banished from Rome and Italy . "	
+24928	"HDFRE"	"their"	"worshippers"	18	19	4928	"The petitions which were offered on the altars of Jupiter or Apollo , expressed the anxiety of <b>their</b> <b>worshippers</b> for temporal happiness , and their ignorance or indifference concerning a future life . "	
+							
+20421	"HDFRE"	"its"	"inhabitants"	60	61	421	"But whilst they acknowledged the general advantages of religion , they were convinced that the various modes of worship contributed alike to the same salutary purposes ; and that , in every country , the form of superstition , which had received the sanction of time and experience , was the best adapted to the climate , and to <b>its</b> <b>inhabitants</b> . "	
+22453	"HDFRE"	"its"	"inhabitants"	18	19	2453	"The game of various sorts , with which the forests of Germany were plentifully stocked , supplied <b>its</b> <b>inhabitants</b> with food and exercise . "	
+22460	"HDFRE"	"Its"	"inhabitants"	1	3	2460	"<b>Its</b> barbarous <b>inhabitants</b> wanted both skill and patience to investigate those rich veins of silver , which have so liberally rewarded the attention of the princes of Brunswick and Saxony . "	
+22490	"HDFRE"	"its"	"inhabitants"	52	53	2490	"The Germans abandoned their immense forests to the exercise of hunting , employed in pasturage the most considerable part of their lands , bestowed on the small remainder a rude and careless cultivation , and then accused the scantiness and sterility of a country that refused to maintain the multitude of <b>its</b> <b>inhabitants</b> . "	
+22617	"HDFRE"	"its"	"inhabitants"	6	7	2617	"The same territory often changed <b>its</b> <b>inhabitants</b> in the tide of conquest and emigration . "	
+23140	"HDFRE"	"its"	"inhabitants"	15	16	3140	"The old country of that name detained , however , a considerable number of <b>its</b> <b>inhabitants</b> , who dreaded exile more than a Gothic master . "	
+23179	"HDFRE"	"its"	"inhabitants"	11	12	3179	"With the progress of Roman greatness , the city and <b>its</b> <b>inhabitants</b> gradually increased , filled up the vacant space , pierced through the useless walls , covered the field of Mars , and , on every side , followed the public highways in long and beautiful suburbs . "	
+23550	"HDFRE"	"its"	"inhabitants"	23	25	3550	"The country which now forms the circle of Swabia had been left desert in the age of Augustus by the emigration of <b>its</b> ancient <b>inhabitants</b> . "	
+24020	"HDFRE"	"its"	"inhabitants"	8	9	4020	"The country of Iberia was barren , <b>its</b> <b>inhabitants</b> rude and savage . "	
+24944	"HDFRE"	"its"	"inhabitants"	16	17	4944	"A felicity consisting only of pure and spiritual pleasure would have appeared too refined for <b>its</b> <b>inhabitants</b> , who were still supposed to possess their human nature and senses . "	
+25223	"HDFRE"	"its"	"inhabitants"	54	55	5223	"The splendor and dignity of the queen of the East , the acknowledged populousness of C??sarea , Seleucia , and Alexandria , and the destruction of two hundred and fifty thousand souls in the earthquake which afflicted Antioch under the elder Justin , are so many convincing proofs that the whole number of <b>its</b> <b>inhabitants</b> was not less than half a million , and that the Christians , however multiplied by zeal and power , did not exceed a fifth part of that great city "	
+20204	"HDFRE"	"Their"	"inhabitants"	1	3	204	"<b>Their</b> peaceful <b>inhabitants</b> enjoyed and abused the advantages of wealth and luxury . "	
+20369	"HDFRE"	"their"	"inhabitants"	8	10	369	"In their original state of independence , <b>their</b> fierce <b>inhabitants</b> were intimately connected . "	
+23892	"HDFRE"	"their"	"inhabitants"	61	62	3892	"Scarcely any circumstances have been preserved of the exploits of Maximian in the western parts of Africa ; but it appears , by the event , that the progress of his arms was rapid and decisive , that he vanquished the fiercest barbarians of Mauritania , and that he removed them from the mountains , whose inaccessible strength had inspired <b>their</b> <b>inhabitants</b> with a lawless confidence , and habituated them to a life of rapine and violence . "	
+							
+20311	"HDFRE"	"their"	"leader"	39	40	311	"A body of troops , habituated to preserve this open order , in a long front and a rapid charge , found themselves prepared to execute every disposition which the circumstances of war , or the skill of <b>their</b> <b>leader</b> , might suggest . "	
+23587	"HDFRE"	"their"	"leader"	15	17	3587	"Their guilt was deeper , and their hopes more sanguine , than those of <b>their</b> experienced <b>leader</b> . "	
+23934	"HDFRE"	"their"	"leader"	12	13	3934	"They were employed to repel the invasion of Tiridates ; but <b>their</b> <b>leader</b> , after weighing the obligations and injuries which he had received from the Persian monarch , resolved to abandon his party . "	
+24014	"HDFRE"	"their"	"leader"	27	28	4014	"The ten thousand Greeks traversed their country , after a painful march , or rather engagement , of seven days ; and it is confessed by <b>their</b> <b>leader</b> , in his incomparable relation of the retreat , that they suffered more from the arrows of the Carduchians , than from the power of the Great King . "	
+24520	"HDFRE"	"their"	"leader"	21	23	4520	"The army of Gaul was drawn up in two lines , according to the usual practice of war ; but <b>their</b> experienced <b>leader</b> , perceiving that the numbers of the Italians far exceeded his own , suddenly changed his disposition , and , reducing the second , extended the front of his first line to a just proportion with that of the enemy . "	
+24766	"HDFRE"	"their"	"leader"	50	51	4766	"The troops of Licinius , though they were lately raised , ill armed , and worse disciplined , made head against their conquerors with fruitless but desperate valor , till a total defeat , and a slaughter of five and twenty thousand men , irretrievably determined the fate of <b>their</b> <b>leader</b> . "	
+20283	"HDFRE"	"his"	"leaders"	18	19	283	"He promised never to desert his standard , to submit his own will to the commands of <b>his</b> <b>leaders</b> , and to sacrifice his life for the safety of the emperor and the empire . "	
+20594	"HDFRE"	"their"	"leaders"	4	6	594	"The posterity of <b>their</b> boldest <b>leaders</b> was contented with the rank of citizens and subjects . "	
+21427	"HDFRE"	"their"	"leaders"	57	59	1427	"Their aversion , confirmed by years , and fomented by the arts of their interested favorites , broke out in childish , and gradually in more serious competitions ; and , at length , divided the theatre , the circus , and the court , into two factions , actuated by the hopes and fears of <b>their</b> respective <b>leaders</b> . "	
+23401	"HDFRE"	"their"	"leaders"	30	31	3401	"Yet , notwithstanding all these temptations , the discipline and memory of Aurelian still restrained the seditious temper of the troops , as well as the fatal ambition of <b>their</b> <b>leaders</b> . "	
+23809	"HDFRE"	"their"	"leaders"	10	13	3809	"The peasants reigned without control ; and two of <b>their</b> most daring <b>leaders</b> had the folly and rashness to assume the Imperial ornaments . "	
+							
+20258	"HDFRE"	"his"	"predecessor"	15	16	258	"It was , however , scarcely in his power to place the superiority of <b>his</b> <b>predecessor</b> in a more conspicuous light , than by thus confessing himself unequal to the task of defending the conquests of Trajan . "	
+20774	"HDFRE"	"his"	"predecessor"	38	39	774	"Nerva had scarcely accepted the purple from the assassins of Domitian , before he discovered that his feeble age was unable to stem the torrent of public disorders , which had multiplied under the long tyranny of <b>his</b> <b>predecessor</b> . "	
+20810	"HDFRE"	"his"	"predecessor"	45	46	810	"Marcus , on the other hand , revered the character of his benefactor , loved him as a parent , obeyed him as his sovereign , and , after he was no more , regulated his own administration by the example and maxims of <b>his</b> <b>predecessor</b> . "	
+20968	"HDFRE"	"his"	"predecessor"	36	37	968	"Whilst Commodus was immersed in blood and luxury , he devolved the detail of the public business on Perennis , a servile and ambitious minister , who had obtained his post by the murder of <b>his</b> <b>predecessor</b> , but who possessed a considerable share of vigor and ability . "	
+20993	"HDFRE"	"his"	"predecessor"	14	15	993	"His influence over the mind of Commodus was much greater than that of <b>his</b> <b>predecessor</b> ; for Cleander was devoid of any ability or virtue which could inspire the emperor with envy or distrust . "	
+21107	"HDFRE"	"his"	"predecessor"	9	10	1107	"* Pertinax found a nobler way of condemning <b>his</b> <b>predecessor</b> 's memory ; by the contrast of his own virtues with the vices of Commodus . "	
+21196	"HDFRE"	"his"	"predecessor"	46	48	1196	"Yet it was observed , that after the crowd of flatterers dispersed , and left him to darkness , solitude , and terrible reflection , he passed a sleepless night ; revolving most probably in his mind his own rash folly , the fate of <b>his</b> virtuous <b>predecessor</b> , and the doubtful and dangerous tenure of an empire which had not been acquired by merit , but purchased by money . "	
+21738	"HDFRE"	"his"	"predecessor"	20	21	1738	"His relation to the family of Severus , whose name he assumed , was the same as that of <b>his</b> <b>predecessor</b> ; his virtue and his danger had already endeared him to the Romans , and the eager liberality of the senate conferred upon him , in one day , the various titles and powers of the Imperial dignity . "	
+21843	"HDFRE"	"his"	"predecessor"	33	35	1843	"Alexander ascended his tribunal , and with a modest firmness represented to the armed multitude the absolute necessity , as well as his inflexible resolution , of correcting the vices introduced by <b>his</b> impure <b>predecessor</b> , and of maintaining the discipline , which could not be relaxed without the ruin of the Roman name and empire . "	
+22269	"HDFRE"	"his"	"predecessor"	74	75	2269	"A third , more mindful of ancient grandeur than of present necessity , attempted to retire , with a numerous train of vessels , towards their kinsman , the king of Armenia ; but this little army of deserters was intercepted , and cut off , by the vigilance of the conqueror , who boldly assumed the double diadem , and the title of King of Kings , which had been enjoyed by <b>his</b> <b>predecessor</b> . "	
+22756	"HDFRE"	"his"	"predecessor"	53	54	2756	"The guilt was theirs , * but the advantage of it was Valerian 's ; who obtained the possession of the throne by the means indeed of a civil war , but with a degree of innocence singular in that age of revolutions ; since he owed neither gratitude nor allegiance to <b>his</b> <b>predecessor</b> , whom he dethroned . "	
+23043	"HDFRE"	"his"	"predecessor"	20	21	3043	"They ratified , perhaps with a sincere transport of zeal , the election of Claudius ; and , as <b>his</b> <b>predecessor</b> had shown himself the personal enemy of their order , they exercised , under the name of justice , a severe revenge against his friends and family . "	
+23361	"HDFRE"	"his"	"predecessor"	19	20	3361	"It was observed by one of the most sagacious of the Roman princes , that the talents of <b>his</b> <b>predecessor</b> Aurelian were better suited to the command of an army , than to the government of an empire . "	
+23622	"HDFRE"	"his"	"predecessor"	9	11	3622	"A behavior so very opposite to that of <b>his</b> amiable <b>predecessor</b> afforded no favorable presage of the new reign : and the Romans , deprived of power and freedom , asserted their privilege of licentious murmurs . "	
+23683	"HDFRE"	"his"	"predecessor"	22	24	3683	"More than twenty years afterwards , when the courtiers of Diocletian represented to their frugal sovereign the fame and popularity of <b>his</b> munificent <b>predecessor</b> , he acknowledged that the reign of Carinus had indeed been a reign of pleasure . "	
+23769	"HDFRE"	"his"	"predecessor"	26	28	3769	"But the motives of his conduct , as well as the object of his choice , were of a very different nature from those of <b>his</b> admired <b>predecessor</b> . "	
+20240	"HDFRE"	"his"	"predecessors"	5	6	240	"The peaceful system of <b>his</b> <b>predecessors</b> was interrupted by scenes of war and conquest ; and the legions , after a long interval , beheld a military emperor at their head . "	
+20920	"HDFRE"	"his"	"predecessors"	28	30	920	"In this calm , elevated station , it was surely natural that he should prefer the love of mankind to their detestation , the mild glories of <b>his</b> five <b>predecessors</b> to the ignominious fate of Nero and Domitian . "	
+21694	"HDFRE"	"his"	"predecessors"	45	46	1694	"A capricious prodigality supplied the want of taste and elegance ; and whilst Elagabalus lavished away the treasures of his people in the wildest extravagance , his own voice and that of his flatterers applauded a spirit of magnificence unknown to the tameness of <b>his</b> <b>predecessors</b> . "	
+21920	"HDFRE"	"his"	"predecessors"	21	23	1920	"* Nor was the rapacious son of Severus contented with such a measure of taxation as had appeared sufficient to <b>his</b> moderate <b>predecessors</b> . "	
+22344	"HDFRE"	"his"	"predecessors"	33	34	2344	"As soon as the ambitious mind of Artaxerxes had triumphed ever the resistance of his vassals , he began to threaten the neighboring states , who , during the long slumber of <b>his</b> <b>predecessors</b> , had insulted Persia with impunity . "	
+23156	"HDFRE"	"his"	"predecessors"	12	13	3156	"Behind the throne the consecrated images of the emperor , and <b>his</b> <b>predecessors</b> , the golden eagles , and the various titles of the legions , engraved in letters of gold , were exalted in the air on lofty pikes covered with silver . "	
+23684	"HDFRE"	"his"	"predecessors"	26	27	3684	"The spectacles of Carinus may therefore be best illustrated by the observation of some particulars , which history has condescended to relate concerning those of <b>his</b> <b>predecessors</b> . "	
+23736	"HDFRE"	"his"	"predecessors"	14	15	3736	"As the reign of Diocletian was more illustrious than that of any of <b>his</b> <b>predecessors</b> , so was his birth more abject and obscure . "	
+23763	"HDFRE"	"his"	"predecessors"	40	41	3763	"Such a conduct , however , displayed to the Roman world the fairest prospect of the new reign , and the emperor affected to confirm this favorable prepossession , by declaring , that , among all the virtues of <b>his</b> <b>predecessors</b> , he was the most ambitious of imitating the humane philosophy of Marcus Antoninus . "	
+25022	"HDFRE"	"our"	"predecessors"	7	9	5022	"Very different was the reasoning of <b>our</b> devout <b>predecessors</b> ; vainly aspiring to imitate the perfection of angels , they disdained , or they affected to disdain , every earthly and corporeal delight . "	
+							
+21103	"HDFRE"	"his"	"protector"	19	21	1103	"But Pertinax could not refuse those last rites to the memory of Marcus , and the tears of <b>his</b> first <b>protector</b> Claudius Pompeianus , who lamented the cruel fate of his brother-in-law , and lamented still more that he had deserved it . "	
+20404	"HDFRE"	"his"	"protectors"	40	41	404	"Fear , gratitude , and curiosity , a dream or an omen , a singular disorder , or a distant journey , perpetually disposed him to multiply the articles of his belief , and to enlarge the list of <b>his</b> <b>protectors</b> . "	
+							
+21214	"HDFRE"	"his"	"accusers"	2	3	1214	"But <b>his</b> <b>accusers</b> are those venal writers who adored the fortune of Severus , and trampled on the ashes of an unsuccessful rival . "	
+20864	"HDFRE"	"Their"	"accusers"	1	3	864	"<b>Their</b> infamous <b>accusers</b> assumed the language of independent patriots , who arraigned a dangerous citizen before the tribunal of his country ; and the public service was rewarded by riches and honors . "	
+							
+20259	"HDFRE"	"his"	"successor"	17	18	259	"The martial and ambitious of spirit Trajan formed a very singular contrast with the moderation of <b>his</b> <b>successor</b> . "	
+20701	"HDFRE"	"his"	"successor"	5	6	701	"The milder temper of <b>his</b> <b>successor</b> declined so dangerous an ambition , which was never afterwards revived , except by the madness of Caligula and Domitian . "	
+20704	"HDFRE"	"his"	"successor"	67	68	704	"Augustus permitted indeed some of the provincial cities to erect temples to his honor , on condition that they should associate the worship of Rome with that of the sovereign ; he tolerated private superstition , of which he might be the object ; but he contented himself with being revered by the senate and the people in his human character , and wisely left to <b>his</b> <b>successor</b> the care of his public deification . "	
+20783	"HDFRE"	"his"	"successor"	41	43	783	"In his last moments the arts of the empress Plotina either fixed the irresolution of Trajan , or boldly supposed a fictitious adoption ; the truth of which could not be safely disputed , and Hadrian was peaceably acknowledged as <b>his</b> lawful <b>successor</b> . "	
+21282	"HDFRE"	"his"	"successor"	31	33	1282	"That assembly , convoked by the consul , unanimously acknowledged Severus as lawful emperor , decreed divine honors to Pertinax , and pronounced a sentence of deposition and death against <b>his</b> unfortunate <b>successor</b> . "	
+21293	"HDFRE"	"his"	"successor"	4	5	1293	"The concern of <b>his</b> <b>successor</b> was probably less sincere ; he esteemed the virtues of Pertinax , but those virtues would forever have confined his ambition to a private station . "	
+22220	"HDFRE"	"his"	"successor"	3	4	2220	"Philip , <b>his</b> <b>successor</b> in the pr??fecture , was an Arab by birth , and consequently , in the earlier part of his life , a robber by profession . "	
+22735	"HDFRE"	"his"	"successor"	46	48	2735	"The death of Hostiliamus , though it happened in the midst of a raging pestilence , was interpreted as the personal crime of Gallus ; and even the defeat of the later emperor was ascribed by the voice of suspicion to the perfidious counsels of <b>his</b> hated <b>successor</b> . "	
+22798	"HDFRE"	"his"	"successor"	24	25	2798	"This warlike people of Germans had been astonished by the immense preparations of Alexander Severus ; they were dismayed by the arms of <b>his</b> <b>successor</b> , a barbarian equal in valor and fierceness to themselves . "	
+23594	"HDFRE"	"his"	"successor"	39	41	3594	"The triumph due to the valor of Probus was conducted with a magnificence suitable to his fortune , and the people who had so lately admired the trophies of Aurelian , gazed with equal pleasure on those of <b>his</b> heroic <b>successor</b> . "	
+23686	"HDFRE"	"his"	"successor"	14	15	3686	"The collection prepared by the younger Gordian for his triumph , and which <b>his</b> <b>successor</b> exhibited in the secular games , was less remarkable by the number than by the singularity of the animals . "	
+23762	"HDFRE"	"his"	"successor"	44	45	3762	"The discerning judgment of Aurelian , of Probus , and of Carus , had filled the several departments of the state and army with officers of approved merit , whose removal would have injured the public service , without promoting the interest of <b>his</b> <b>successor</b> . "	
+24224	"HDFRE"	"his"	"successor"	43	44	4224	"Diocletian , was sincerely desirous of withdrawing himself from the world ; he considered Galerius , who had married his daughter , as the firmest support of his family and of the empire ; and he consented , without reluctance , that <b>his</b> <b>successor</b> should assume the merit as well as the envy of the important nomination . "	
+24622	"HDFRE"	"his"	"successor"	23	24	4622	"After the death of Galerius , her ample possessions provoked the avarice , and her personal attractions excited the desires , of <b>his</b> <b>successor</b> , Maximin . "	
+25229	"HDFRE"	"his"	"successor"	19	20	5229	"Three bishops were consecrated by the hands of Demetrius , and the number was increased to twenty by <b>his</b> <b>successor</b> Heraclas . "	
+20750	"HDFRE"	"their"	"successor"	24	26	750	"The Roman emperors , desirous to spare the legions that interval of suspense , and the temptation of an irregular choice , invested <b>their</b> designed <b>successor</b> with so large a share of present power , as should enable him , after their decease , to assume the remainder , without suffering the empire to perceive the change of masters . "	
+20216	"HDFRE"	"his"	"successors"	9	10	216	"He bequeathed , as a valuable legacy to <b>his</b> <b>successors</b> , the advice of confining the empire within those limits which nature seemed to have placed as its permanent bulwarks and boundaries : on the west , the Atlantic Ocean ; the Rhine and Danube on the north ; the Euphrates on the east ; and towards the south , the sandy deserts of Arabia and Africa . "	
+20218	"HDFRE"	"his"	"successors"	26	28	218	"Happily for the repose of mankind , the moderate system recommended by the wisdom of Augustus , was adopted by the fears and vices of <b>his</b> immediate <b>successors</b> . "	
+20340	"HDFRE"	"his"	"successors"	7	8	340	"The peace establishment of Hadrian and <b>his</b> <b>successors</b> was composed of no less than thirty of these formidable brigades ; and most probably formed a standing force of three hundred and seventy-five thousand men . "	
+20659	"HDFRE"	"his"	"successors"	38	39	659	"With this view , he permitted the senate to confer upon him , for his life , the powers of the consular and tribunitian offices , which were , in the same manner , continued to all <b>his</b> <b>successors</b> . "	
+20677	"HDFRE"	"his"	"successors"	12	13	677	"It was on the dignity of the senate that Augustus and <b>his</b> <b>successors</b> founded their new empire ; and they affected , on every occasion , to adopt the language and principles of Patricians . "	
+21607	"HDFRE"	"his"	"successors"	53	54	1607	"The prodigality of Caracalla had left behind it a long train of ruin and disorder ; and if that worthless tyrant had been capable of reflecting on the sure consequences of his own conduct , he would perhaps have enjoyed the dark prospect of the distress and calamities which he bequeathed to <b>his</b> <b>successors</b> . "	
+21892	"HDFRE"	"his"	"successors"	7	8	1892	"In the reign of Augustus and <b>his</b> <b>successors</b> , duties were imposed on every kind of merchandise , which through a thousand channels flowed to the great centre of opulence and luxury ; and in whatsoever manner the law was expressed , it was the Roman purchaser , and not the provincial merchant , who paid the tax . "	
+22364	"HDFRE"	"his"	"successors"	11	12	2364	"Cyrus , he alleged , had first subdued , and <b>his</b> <b>successors</b> had for a long time possessed , the whole extent of Asia , as far as the Propontis and the ??gean Sea ; the provinces of Caria and Ionia , under their empire , had been governed by Persian satraps , and all Egypt , to the confines of ??thiopia , had acknowledged their sovereignty . "	
+22678	"HDFRE"	"his"	"successors"	12	13	2678	"It is probable that the conquests of Trajan , maintained by <b>his</b> <b>successors</b> , less for any real advantage than for ideal dignity , had contributed to weaken the empire on that side . "	
+23328	"HDFRE"	"his"	"successors"	30	31	3328	"The son long continued a respectable member of the senate ; nor was there any one of the Roman nobility more esteemed by Aurelian , as well as by <b>his</b> <b>successors</b> . "	
+23468	"HDFRE"	"his"	"successors"	31	32	3468	"The perpetual revolutions of the throne had so perfectly erased every notion of hereditary title , that the family of an unfortunate emperor was incapable of exciting the jealousy of <b>his</b> <b>successors</b> . "	
+24059	"HDFRE"	"his"	"successors"	40	41	4059	"In the armies and in the provinces , they displayed the dignity of monarchs ; and when they fixed their residence at a distance from the capital , they forever laid aside the dissimulation which Augustus had recommended to <b>his</b> <b>successors</b> . "	
+24080	"HDFRE"	"his"	"successors"	7	8	4080	"The sumptuous robes of Diocletian and <b>his</b> <b>successors</b> were of silk and gold ; and it is remarked with indignation , that even their shoes were studded with the most precious gems . "	
+24288	"HDFRE"	"his"	"successors"	14	15	4288	"It was in vain that , a few months after his abdication , <b>his</b> <b>successors</b> dedicated , under his name , those magnificent baths , whose ruins still supply the ground as well as the materials for so many churches and convents . "	
+20363	"HDFRE"	"their"	"successors"	11	12	363	"On that celebrated ground the first consuls deserved triumphs , <b>their</b> <b>successors</b> adorned villas , and their posterity have erected convents . "	
+22255	"HDFRE"	"their"	"successors"	20	22	2255	"The Assyrians reigned over the East , till the sceptre of Ninus and Semiramis dropped from the hands of <b>their</b> enervated <b>successors</b> . "	
+24171	"HDFRE"	"their"	"successors"	23	24	4171	"Though Constantine , from a very obvious prejudice , affects to mention the palace of Diocletian with contempt , yet one of <b>their</b> <b>successors</b> , who could only see it in a neglected and mutilated state , celebrates its magnificence in terms of the highest admiration . "	
+24996	"HDFRE"	"their"	"successors"	51	53	4996	"As it is my intention to remark only such human causes as were permitted to second the influence of revelation , I shall slightly mention two motives which might naturally render the lives of the primitive Christians much purer and more austere than those of their Pagan contemporaries , or <b>their</b> degenerate <b>successors</b> ; repentance for their past sins , and the laudable desire of supporting the reputation of the society in which they were engaged . "	
+

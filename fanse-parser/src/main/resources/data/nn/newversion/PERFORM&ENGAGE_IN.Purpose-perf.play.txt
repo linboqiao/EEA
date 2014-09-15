@@ -1,0 +1,106 @@
+ski	area
+
+basketball	arena
+
+track	athlete
+
+golf	ball
+
+blues	band
+
+basketball	camp
+
+ball	cap
+
+poker	chip
+
+
+
+football	club
+hockey	club
+jazz	club
+soccer	club
+sports	club
+
+sport	complex
+
+golf	course
+
+basketball	court
+tennis	court
+
+race	driver
+
+sports	facility
+
+baseball	field
+softball	field
+sport	field
+
+pool	hall
+
+baseball	hat
+
+hula	hoop
+
+football	league
+rugby	league
+soccer	league
+sport	league
+
+poker	machine
+
+golf	outing
+
+doubles	partner
+
+baseball	program
+
+tennis	racket
+
+golf	resort
+ski	resort
+
+music	room
+
+golf	shirt
+
+basketball	shoe
+sport	shoe
+tennis	shoe
+
+ski	slope
+
+soccer	squad
+
+blackjack	table
+craps	table
+
+baseball	team
+campaign	team
+crisis	team
+doubles	team
+drill	team
+football	team
+freestyle	team
+golf	team
+gymnastics	team
+leadership	team
+race	team
+relay	team
+rugby	team
+ski	team
+soccer	team
+softball	team
+sport	team
+swim	team
+tennis	team
+title	team
+track	team
+volleyball	team
+
+ski	trip
+
+ski	vacation
+
+roulette	wheel

@@ -1,0 +1,22 @@
+acre	fire
+acre	development
+acre	lake
+acre	area
+acre	site
+acre	north
+acre	lot
+acre	project
+acre	property
+acre	ranch
+acre	island
+acre	plot
+acre	parcel
+acre	campus
+acre	complex
+acre	estate
+acre	tract
+acre	facility
+acre	farm
+
+
+

@@ -1,0 +1,24 @@
+win	bet
+
+language	certificate
+rabies	certificate
+
+business	college
+
+hospitality	forum
+security	forum
+tea	forum
+
+family	irony
+mob	hearing
+
+composer	credits
+
+wedding	promise
+
+terror	recommendation
+
+membership	roll
+poverty	roll
+
+restaurant	editor

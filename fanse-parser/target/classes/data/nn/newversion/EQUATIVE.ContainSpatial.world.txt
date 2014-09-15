@@ -1,0 +1,16 @@
+art	world
+banking	world
+baseball	world
+boxing	world
+computer	world
+entertainment	world
+fashion	world
+football	world
+golf	world
+investment	world
+media	world
+music	world
+publishing	world
+sport	world
+sports	world
+theater	world

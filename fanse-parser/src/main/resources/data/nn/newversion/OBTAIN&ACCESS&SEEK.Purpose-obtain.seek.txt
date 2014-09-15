@@ -1,0 +1,35 @@
+
+
+amnesty	applicant
+asylum	applicant
+job	applicant
+
+amnesty	application
+asylum	application
+grant	application
+license	application
+membership	application
+patent	application
+permit	application
+visa	application
+
+bankruptcy	petition
+
+crude	exploration
+gas	exploration
+oil	exploration
+
+strike	call
+
+
+bankruptcy	filing
+
+#detect
+
+drug	sniffer
+
+hurricane	watch
+suicide	watch
+flood	watch
+tornado	watch
+storm	watch

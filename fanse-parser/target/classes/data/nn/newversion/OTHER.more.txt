@@ -1,0 +1,459 @@
+#rocket scient ist
+computer	professional
+
+coal	plant
+
+jump	shot
+test	score
+
+audio	book
+
+tax	partner
+
+liquidity	crunch
+credit	squeeze
+cash	squeeze
+
+family	life
+business	life
+love	life
+sex	life
+service	life
+work	life
+sun	life
+student	life
+
+#uses
+euro	country
+
+#require/involve
+pay	television
+strategy	game
+subscription	service
+contact	sport
+toll	road
+#
+
+#(underspecified) ailment, productive
+heart	patient
+kidney	patient
+breast	patient
+
+survey	return
+tax	return
+
+policy	goal
+production	goal
+
+fire	hazard
+
+personality	cult
+doomsday	cult
+
+risk	group
+
+drug	culture
+consumer	culture
+car	culture
+
+market	economy
+manufacturing	economy
+
+siege	mentality
+
+sellout	crowd
+
+cancer	society
+
+theater	people
+soccer	people
+
+party	people
+music	people
+hockey	people
+gun	people
+baseball	people
+
+computer	geek
+
+life	activity
+
+health	budget
+
+real estate	bargain
+
+campaign	commercial
+
+sinking fund	debenture
+
+insanity	defense
+death	sentencing
+
+defense	doctrine
+
+finance	initiative
+
+math	exam
+
+therapy	experiment
+pyschology	experiment
+
+courtesy	visit
+goodwill	visit
+
+sales	pitch
+
+budget	politics
+money	politics
+
+share	scheme
+
+market	strategy
+
+bankruptcy	procedure
+
+interest rate	scenario
+
+#
+defense	booking
+
+comedy	club
+fitness	club
+
+earthquake	investment
+
+#infects
+stomach	virus
+computer	virus
+nerve	agent
+
+match	race
+
+factory	shipment
+
+stock	car
+
+cash	coverage
+
+penalty	goal
+
+earthquake	hazard
+
+penalty	kick
+
+funeral	mass
+
+league	play
+
+funeral	procession
+
+bunt	single
+
+#metonymic: greenhouse (effect)
+greenhouse	warming
+
+#state
+art	scene
+music	scene
+party	scene
+rock	scene
+
+labor	harmony
+
+buying	frenzy
+feeding	frenzy
+buy-out	fever
+merger	mania
+
+valuation	bubble
+labor	peace
+
+tax	consequence
+
+city	calm
+industry	calm
+labor	calm
+market	calm
+
+
+#these should go someplace else...
+government	guideline
+city	code
+state	statute
+government	policy
+state	policy
+state	guideline
+state	code
+
+ownership	group
+
+income	group
+
+savings	account
+
+ownership	rights
+
+money	man
+
+upper income	neighborhood
+
+championship	team
+two income	couple
+
+mortar	round
+
+#according to
+book	value
+
+cattle	epidemic
+fowl	epidemic
+
+solo	album
+
+floating rate	note
+
+damage	award
+
+#origin?
+forestry	product
+
+flight	route
+
+touchdown	run
+
+computer	project
+
+#science used to create?
+electronics	product
+biotechnology	product
+
+playoff	win
+
+meter	medalist
+
+rights	group
+rights	organization
+privacy	group
+
+art	patron
+
+#MODIFICATION
+
+kidney	dialysis
+
+#metonymic for 'telephon information'?
+telephone	link
+
+gasoline	additive
+food	additive
+petroleum	additive
+fuel	additive
+
+career	move
+
+driver	license
+
+
+#receiver of placebo
+placebo	group
+
+state	funeral
+state	dinner
+government	function
+
+border	crossing
+
+inbounds	pass
+
+wood	fire
+grass	fire
+
+student	fee
+
+screen	adaptation
+
+tax	withholding
+common	share
+voting	share
+
+city	contract
+
+budget	system
+property	system
+wage	system
+
+
+tax	delinquent
+government	relation
+
+seven-nation	summit
+
+preference	share
+multiparty	democracy
+
+leadoff	double
+
+loan	facility
+
+art	work
+merger	work
+root canal	work
+superconductor	work
+watch	list
+
+news	photo
+
+magnet	program
+
+action	figure
+
+discount	outlet
+
+discount	broker
+
+energy	structure
+premium	rate
+
+#for reasons related to X1
+security	prisoner
+
+discount	brokerage
+career	opportunity
+market	opportunity
+
+telephone	line
+
+contact	lense
+
+network	card
+entrance	examination
+entrance	exam
+
+city	system
+
+window	program
+
+cluster	bomb
+
+#that will result in
+collision	course
+
+family	responsibility
+
+twin-deficit	maven
+
+railroad	crossing
+
+club	membership
+
+league	title
+season	title
+
+#PARTICIPANTS
+war	criminal
+
+birth	mother
+
+genocide	suspect
+
+cruise	liner
+tax	goody
+
+#time of?
+return	engagement
+
+recovery	stock
+takeover	stock
+#'gold medal'ist - ONE who OWNs gold_medal
+gold	medalist
+gold	medallist
+
+#video is the data encoded upon the footage (as opposed to being the actual substance of the footage)
+
+#PERFORM?
+#[sumo_wrestling]er
+sumo	wrestler
+
+#ATTRIBUTIVE
+brand	product
+
+age	group
+
+photo	client
+graphics	client
+
+growth	company
+growth	sector
+
+interagency	group
+contact	group
+comparison	group
+
+#RECIPIENT/TARGET of
+consumer	company
+consumer	industry
+consumer	sector
+niche	product
+
+youth	market
+
+#in the state of
+retirement	living
+
+management	infighting
+
+#OCCURS AT OR DURING
+hit	inning
+multihomer	game
+rollover	crash
+
+slam	dunk
+
+profit	center
+interest	firm
+
+austerity	measure
+
+tax	treatment
+
+real estate	activity
+
+mortgage	bank
+
+grudge	match
+
+market	approach
+
+four-wheel-drive	vehicle
+
+#X + RECIPIENT_OF
+tour	group
+
+#finance speak
+surrender	value
+
+advertising	market
+aerospace	market
+auction	market
+aviation	market
+banking	market
+communication	market
+construction	market
+information	market
+insurance	market
+investment	market
+option	market
+reinsurance	market
+
+telecommunication	market
+trading	market
+
+employment	market
+
+#representative
+labor	group
+labor	organization
+
+treaty	right
+
+brain	power

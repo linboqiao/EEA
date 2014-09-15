@@ -1,0 +1,10 @@
+labor	unrest
+labour	unrest
+student	unrest
+
+
+consumer	attitude
+customer	attitude
+
+family	greed
+police	greed

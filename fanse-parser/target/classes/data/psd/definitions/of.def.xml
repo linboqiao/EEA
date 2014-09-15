@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+
+<defset prep="of">
+	
+	<sense id="1">
+		<definition>(part/member-of-whole) indicating the whole in a part-of-whole relationship (e.g., the roots of the tree)</definition>
+		<majorcluster>MEMBERSHIP</majorcluster>
+		<pprojmap type="subsumes" targetid="1(1)"/>
+		<pprojmap type="subsumes" subsetof="6(3)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2" dumby="true">
+		<definition>connecting a number, quantifier, or partitive noun with the thing(s)/substance that compose(s) it</definition>
+		<majorcluster>MEMBERSHIP</majorcluster>
+		<notes></notes>
+	</sense>
+	<sense id="2.1">
+		<definition>(measure/number/amount -of- something(s)) connecting a formal measure term or count with what is being measured/counted (e.g., six of them)</definition>
+		<majorcluster>MEMBERSHIP</majorcluster>
+		<pprojmap type="equivalent" subsetof="3(1b)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2.2">
+		<definition>(collection/configuration/series -of- members/parts) connecting a collection/configuration term with the member(s)/part(s) that constitute it (e.g., group of people)</definition>
+		<majorcluster>MEMBERSHIP</majorcluster>
+		<pprojmap type="equivalent" subsetof="3(1b)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2.3">
+		<definition>(substance/material/ingredient) indicating a/the substance/material/ingredient constituting something (e.g., ball of paste)</definition>
+		<majorcluster>SUBSTANCE</majorcluster>
+		<pprojmap type="subsumes" subsetof="3(1b)"/>
+		<pprojmap type="subsumes" targetid="17(8)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2.4"> <!-- moved from 8.2 after annotation; could be made a subtype of 2.2 -->
+		<definition>expressing a (species/variety -of- specimens) relationship (e.g., genus of plant)</definition>
+		<majorcluster>MEMBERSHIP</majorcluster>
+		<pprojmap type="equivalent" targetid="10(5a)"/>
+		<notes>A few 10(5a) datapoints were moved elsewhere (e.g., specimen of).</notes>
+	</sense>
+	<sense id="3"> <!-- revised after annotation from: connecting contents with their container (or containing area) -->
+		<definition>(container -of- contents) connecting container(s) (or containing area(s)) with their contents (e.g., basket of apples)</definition>
+		<majorcluster>CONTAINMENT</majorcluster>
+		<pprojmap type="equivalent" targetid="3(1b)-1"/>
+		<notes></notes>
+	</sense>
+	<sense id="4">
+<!--indicating the direct object, theme, or patient (the thing modified) associated with the governing verb-derived/verb-like noun (e.g., modification of cars)-->
+		<definition>indicating the direct object, theme, or patient (the thing modified) associated with the governing verb-derived/verb-like noun (e.g., modification of cars)</definition>
+		<majorcluster>ARGUMENT</majorcluster>
+		<pprojmap type="approx_equal" unionof="11(6),12(6a)"/>
+		<notes></notes>
+	</sense>
+	<sense id="5">
+		<definition>indicating the agent or logical grammatical subject of a verb-like noun (e.g., conclusions of the report)</definition>
+		<majorcluster>ARGUMENT</majorcluster>
+		<pprojmap type="approx_equal" targetid="10(5a)"/>
+		<notes>somewhat ambiguous with 5.1 (act vs product). somewhat ambiguous with 4 in the case of some intransitive verbs.</notes>
+	</sense>
+	<sense id="5.1">
+		<definition>expressing the relationship between a creator/producer and their product(s), most often for artistic works (e.g., books of J.K. Rowling)</definition>
+		<majorcluster>PRODUCER</majorcluster>
+		<pprojmap type="approx_equal" targetid="7(3a)"/>
+		<notes>somewhat ambiguous with 5 (act vs product)</notes>
+	</sense>
+	<sense id="6">
+		<definition>indicating a secondary argument not paraphrasable using 'about' (limited to a small set of verbs) (e.g., drained it of money, convict him of theft)</definition>
+		<majorcluster>ARGUMENT</majorcluster>
+		<pprojmap type="equivalent" subsetof="14(7)"/>
+		<notes></notes>
+	</sense>
+	<sense id="7">
+		<definition>indicating the subject/topic matter; about (e.g., spoke of the trouble)</definition>
+		<majorcluster>TOPIC</majorcluster>
+		<pprojmap type="equivalent" unionof="15(7a)"/>
+		<notes></notes>
+	</sense>
+	<sense id="7.1">
+		<definition>expressing and/or motivated by (e.g., grin of happiness) </definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" subsetof="6(3)-1"/>
+		<notes></notes>
+	</sense>
+
+	<sense id="8">
+		<definition>expressing an equative relationship, often where the second of the preposition's arguments is a specific instance of the class of things specified by the first (e.g., sacrament of baptism, city of Perth)</definition>
+		<majorcluster>EQUATIVE</majorcluster>
+		<pprojmap type="approx_equal" targetid="9(5)"/>
+		<notes>The TPP used 9(5) very liberally---many 9(5) data points were moved elsewhere.</notes>
+	</sense>
+	<sense id="8.1">
+		<definition>expressing the relationship between a scale or measure and a value (e.g., a loss of 5%)</definition>
+		<!-- expressing an equative relationship between something that is measurable (e.g., length, loss) and the measurement (e.g., 3mm, 5%) -->
+		<majorcluster>EQUATIVE</majorcluster>
+		<pprojmap type="equivalent" targetid="4(2)"/>
+		<notes></notes>
+	</sense>
+	<sense id="9">
+		<definition>indicating the time when something occurred, existed, or came into being (e.g., the famine of 1745)</definition>
+		<majorcluster>TEMPORAL</majorcluster>
+		<pprojmap type="equivalent" subsetof="6(3)"/>
+		<notes></notes>
+	</sense>
+	<sense id="10">
+		<definition>indicating the location where something is at/from (e.g., people of Toledo)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="equivalent" subsetof="6(3)"/>
+		<notes></notes>
+	</sense>
+	<sense id="11">
+		<definition>(mental experience -of- experiencer) indicating the experiencer who experiences the thought(s)/emotion(s) (e.g., fury of voters)</definition>
+		<majorcluster>EXPERIENCER</majorcluster>
+		<pprojmap type="approx_equal" subsetof="11(6)"/>
+		<notes></notes>
+	</sense>
+	<sense id="12">
+		<!-- control -->
+		<definition>(possession -of- possessor) indicating the possessor who owns or otherwise holds rights towards something (e.g., the house of the Johnsons)</definition>
+		<majorcluster>POSSESSION</majorcluster>
+		<pprojmap type="equivalent" subsetof="6(3)"/>
+		<notes></notes>
+	</sense>
+	<sense id="13">
+		<definition>connecting an attribute with the person/thing that exhibits it (e.g., that was smart of him)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="approx_equal" subsetof="13(6b)"/>
+		<notes>This sense doesn't appear to be captured well by the TPP.</notes>
+	</sense>
+	<sense id="14">
+		<definition>caused by (used mostly with death, perceptions, and feelings) (e.g., died of cancer)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" subsetof="16(7b)"/>
+		<notes></notes>
+	</sense>
+	<sense id="15">
+		<definition>(with verbs of smell/taste) indicating the thing that is detected or resembled (e.g., stinks of beer)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" subsetof="16(7b)"/>
+		<notes></notes>
+	</sense>
+	<!--<sense id="15.1">
+		<definition>(with nouns describing sensual qualities) indicating the thing that is detected or resembled (e.g., odour of milk)</definition>
+		<majorcluster>COMPLEMENTS</majorcluster>
+		<pprojmap type="equivalent" subsetof="9(5)"/>
+		<notes></notes>
+	</sense>-->
+	<sense id="16">
+		<definition>indicating a possessed attribute such as age or color (e.g., cloak of blue)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="subsumes" targetid="5(2a)"/>
+		<pprojmap type="subsumes" subsetof="6(3)-1"/>
+		<notes></notes>
+	</sense>
+	<sense id="17">
+		<definition>indicating an action/activity something is involved with or is used for (e.g., rod of smiting)</definition>
+		<majorcluster>COMPLEMENTS</majorcluster>
+		<pprojmap type="approx_equal" subsetof="9(5)"/>
+		<notes></notes>
+	</sense>
+	<sense id="18">
+		<definition>indicating the complement of a relational noun (e.g., son of, price of)</definition>
+		<majorcluster>COMPLEMENTS</majorcluster>
+		<pprojmap type="equivalent" subsetof="6(3)"/>
+		<notes></notes>
+	</sense>
+	<sense id="18.1">
+		<definition>indicating the complement of a measurable noun such as de-adjectival nouns (e.g., adequacy, compatibility, width)</definition>
+		<majorcluster>COMPLEMENTS</majorcluster>
+		<notes>Does not map well to TPP. Most data points were previously annotated as 9(5) or 6(3).</notes>
+	</sense>
+	<sense id="19">
+		<definition>indicating the complement of a predicative adjective (e.g., symptomatic of cancer) </definition>
+		<majorcluster>COMPLEMENTS</majorcluster>
+		<pprojmap type="approx_equal" subsetof="13(6b)"/>
+		<notes></notes>
+	</sense>
+	
+<!-- see also 18(9)-->
+
+</defset>

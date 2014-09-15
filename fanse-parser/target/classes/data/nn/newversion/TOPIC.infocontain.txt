@@ -1,0 +1,59 @@
+soundtrack	album
+
+video	disc
+
+video	disk
+memory	disk
+
+video	memory
+
+audio	file
+
+highlight	reel
+
+demo	tape
+surveillance	tape
+video	tape
+audio	tape
+
+data	base
+
+memory	chip
+
+audio	cassette
+video	cassette
+
+video	clip
+
+news	clipping
+video	footage
+
+phone	directory
+
+album	chart
+music	chart
+
+lineup	card
+
+identity	paper
+id	card
+
+news	headline
+
+#contains (information about)
+tax	note
+photo	note
+publication	note
+
+adult	database
+consumer	database
+student	database
+voter	database
+
+ethics	package
+stimulus	package
+budget	package
+tax	package
+diversity	package
+aid	package
+debt	package

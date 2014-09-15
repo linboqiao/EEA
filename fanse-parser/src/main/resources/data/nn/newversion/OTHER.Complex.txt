@@ -1,0 +1,59 @@
+#ambiguous and likely complex
+tax	scheme
+risk	system
+financing	scheme
+kickback	scheme
+bribery	scheme
+fraud	scheme
+land	system
+insurance	scheme
+investment	scheme
+loan	scheme
+
+contract	system
+fund	system
+permit	system
+
+pay	scheme
+pension	scheme
+
+benefit	system
+bonus	system
+leadership	system
+compensation	scheme
+option	scheme
+pay	system
+credit	system
+
+student	program
+land	program
+loan	program
+residency	program
+rule	program
+share	program
+tax	program
+sugar	program
+needle	program
+prison	program
+crop	program
+austerity	program
+credit	program
+commodity	program
+debt	program
+agriculture	program
+child	program
+discount	program
+highway	program
+music	program
+network	program
+tourism	program
+technology	program
+
+policy	agenda
+
+policy	framework
+
+equity	plan
+portfolio	strategy
+
+job	scheme

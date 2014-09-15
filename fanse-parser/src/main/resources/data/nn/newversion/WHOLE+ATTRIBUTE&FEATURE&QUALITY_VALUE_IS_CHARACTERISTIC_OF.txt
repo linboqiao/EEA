@@ -1,0 +1,74 @@
+#Tend to be lexicalizations
+buzzword	status
+#The NN2 characteristic of a NN1
+missionary	zeal
+college	age
+crisis	proportion
+crisis	level
+liquid nitrogen	temperature
+baby	step
+butter	texture
+room	temperature
+blockbuster	proportion
+celebrity	status
+front runner	status
+cult	status
+refugee	status
+resident	status
+observer	status
+landmark	status
+minority	status
+superpower	status
+star	status
+blizzard	condition
+
+forest	green
+
+hurricane	strength
+
+killer	instinct
+lime	green
+sky	blue
+
+book	form
+
+grassroot	level
+township	level
+world	level
+state	level
+company	level
+
+eye	level
+retail	level
+city	level
+service	level
+village	level
+board	level
+
+carnival	atmosphere
+
+earth	tone
+
+flood	stage
+lightning	speed
+
+monopoly	power
+star	power
+
+draft	form
+
+protectionist	sentiment
+christian	belief
+
+
+cult	following
+
+wealth	effect
+domino	effect
+snowball	effect
+spillover	effect
+ripple	effect
+greenhouse	effect
+placebo	effect
+
+watermelon	hue

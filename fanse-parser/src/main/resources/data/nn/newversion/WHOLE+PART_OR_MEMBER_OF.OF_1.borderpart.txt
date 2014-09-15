@@ -1,0 +1,30 @@
+album	cover
+magazine	cover
+
+rock	face
+
+bathroom	floor
+exchange	floor
+factory	floor
+kitchen	floor
+valley	floor
+
+tree	bark
+
+psyllium	husk
+
+bottle	cap
+
+store	front
+storm	front
+
+water	surface
+
+box	top
+counter	top
+
+bathroom	wall
+bedroom	wall
+city	wall
+office	wall
+prison	wall

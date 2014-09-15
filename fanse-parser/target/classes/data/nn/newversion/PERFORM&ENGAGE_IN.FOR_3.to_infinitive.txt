@@ -1,0 +1,10 @@
+
+
+subpoena	power
+veto	power
+
+broadcast	rights
+purchase	rights
+veto	rights
+
+

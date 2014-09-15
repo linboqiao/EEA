@@ -1,0 +1,87 @@
+corrosion	damage
+drought	damage
+earthquake	damage
+fire	damage
+flood	damage
+hurricane	damage
+quake	damage
+storm	damage
+weather	damage
+wind	damage
+
+shooting	death
+rain	delay
+storm	flooding
+skid	mark
+growing	pain
+tide	pool
+monsoon	rain
+wind	shear
+hurricane	wind
+storm	wind
+thunderstorm	wind
+gunshot	wound
+puncture	wound
+stab	wound
+stress	fracture
+wind	chill
+
+auction	result
+autopsy	result
+election	result
+poll	result
+research	result
+search	result
+survey	result
+test	result
+trading	result
+voting	result
+
+wind	energy
+crackdown	bite
+crisis	bite
+drought	bite
+
+combat	stress
+disaster	stress
+trauma	stress
+weather	stress
+wind	stress
+
+birthing	pains
+
+crush	fracture
+impact	fracture
+
+
+traffic	death
+traffic	fatality
+
+turbulence	injury
+
+information	revolution
+technology	revolution
+computer	revolution
+
+water	spot
+
+gas	explosion
+
+#somehow motivated by, consequence of
+drug	killing
+panic	selling
+panic	buying
+hate	crime
+temper	tantrum
+anger	outburst
+drug	raid
+#
+cost	advantage
+height	advantage
+incumbency	advantage
+
+cost	burden
+debt	burden
+interest	burden
+tax	burden
+

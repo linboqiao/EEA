@@ -1,0 +1,41 @@
+television	center
+television	tower
+entertainment	district
+
+movie	palace
+baseball	stadium
+soccer	stadium
+sports	stadium
+
+banquet	hall
+lecture	hall
+
+television	station
+
+
+portrait	studio
+oil	platform
+gas	rig
+
+oil	installation
+
+
+arms	depot
+fuel	depot
+oil	depot
+supply	depot
+care	home
+job	center
+
+food	bank
+karaoke	bar
+information	booth
+
+
+childcare	facility
+fuel	facility
+oil	facility
+
+gold	coast
+
+movie	theater

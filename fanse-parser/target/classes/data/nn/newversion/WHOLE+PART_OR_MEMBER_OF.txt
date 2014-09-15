@@ -1,0 +1,58 @@
+cigarette	component
+cigarette	butt
+
+cheerleader	cleavage
+
+scale	spring
+
+church	elder
+family	elder
+class	harlot
+
+party	mouthpiece
+telephone	mouthpiece
+
+costume	jewelry
+
+snake	meat
+salmon	sperm
+sheep	sperm
+
+body	clock
+church	group
+toad	gene
+
+campaign	rally
+
+#SUBPART OF EVENT
+movie	scene
+return	leg
+
+#INSIDE
+vehicle	interior
+settlement	building
+#SUBSECTION
+city	section
+
+#location&part
+body	panel
+door	panel
+wall	panel
+budget	appropriation
+newspaper	article
+budget	item
+menu	item
+test	item
+contract	detail
+diary	entry
+
+contract	term
+roster	spot
+computer	chip
+computer	hardware
+
+#coreferentialesque
+apartment	unit
+bank	unit
+hospital	unit
+

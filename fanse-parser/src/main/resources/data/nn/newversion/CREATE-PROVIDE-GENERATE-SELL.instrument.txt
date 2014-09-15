@@ -1,0 +1,70 @@
+
+nicotine	patch
+
+pasta	sauce
+cake	flour
+wine	grape
+bubble	gum
+coffee	mix
+syrup	mix
+weapon	material
+window	glass
+
+furniture	cushioning
+cookie	dough
+pizza	dough
+warhead	plutonium
+tortilla	dough
+tortilla	flour
+
+television	technology
+
+
+facsimile	machine
+money	machine
+propaganda	machine
+video	machine
+
+
+megawatt	reactor
+control	product
+care	product
+
+volt	battery
+
+audio	equipment
+
+apple	tree
+banana	tree
+coconut	tree
+fruit	tree
+olive	tree
+peach	tree
+pear	tree
+shade	tree
+
+buzz	word
+
+fire	bomb
+
+hybrid	seed
+horsepower	engine
+
+note	pad
+grape	vine
+
+cookie	sheet
+
+tear	gas
+
+honey	gland
+
+light	bulb
+
+rose	bush
+
+video	camera
+
+graphics	card
+
+beef	cattle

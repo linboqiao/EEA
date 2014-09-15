@@ -1,0 +1,12 @@
+#RECIPIENT OF POSSESSION
+campaign	contribution
+pension	contribution
+campaign	contributor
+campaign	donation
+campaign	donor
+student	aid
+student	loan
+campaign	loan
+consumer	loan
+consumer	rebate
+consumer	lending

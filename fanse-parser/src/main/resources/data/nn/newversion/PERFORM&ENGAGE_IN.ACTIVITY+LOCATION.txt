@@ -1,0 +1,70 @@
+
+defense	field
+research	field
+
+soccer	field
+
+exhibit	hall
+study	hall
+
+research	lab
+conference	room
+research	laboratory
+
+barbecue	pit
+mosh	pit
+
+work	place
+
+chat	room
+exercise	room
+interview	room
+wiggle	room
+
+
+repair	shop
+
+
+dump	site
+launch	site
+research	site
+retail	site
+work	site
+
+crawl	space
+exhibit	space
+retail	space
+work	space
+
+
+pump	station
+relay	station
+research	station
+transfer	station
+work	station
+
+
+design	studio
+
+
+rest	stop
+
+
+party	school
+
+control	facility
+repair	facility
+research	facility
+support	facility
+
+
+research	center
+
+rest	area
+work	area
+
+dance	studio
+
+
+access	point
+check	point

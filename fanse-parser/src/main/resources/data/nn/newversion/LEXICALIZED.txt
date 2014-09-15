@@ -1,0 +1,202 @@
+#semi
+project	engineer
+action	hero
+tax	bite
+shock	wave
+
+time	trial
+heat	stroke
+shot	clock
+fashion	statement
+gallows	humor
+crony	capitalism
+#
+sports	bar
+love	triangle
+platform	shoe
+family	tree
+wind	farm
+floor	leader
+media	star
+spray	paint
+cutthroat	trout
+turtle	dove
+drag	queen
+party	animal
+career	ladder
+widow	spider
+crack	baby
+coach	potato
+mother	ship
+speed	trap
+stem	cell
+bubble	economy
+trade	secret
+green	movement
+flash	memory
+limit	order
+pickup	game
+subsistence	farmer
+figure	skater
+screen	name
+trade	fair
+price	war
+basket	project
+ice	cream
+growth	stock
+death	row
+bedroom	community
+asset	term
+force	structure
+vice	president
+crown	prince
+elbow	room
+bacillus	subtilis
+bean	counter
+prime	rate
+discount	rate
+title	company
+hat	trick
+ambulance	chaser
+ambulance	chasing
+cruise	missile
+tank	top
+fire	sale
+grunt	work
+blood	bath
+staphylococcus	aureus
+pork barrel	politics
+index	arbitrage
+focus	group
+keyboard	allergy
+pencil	pusher
+pork	barrel
+pig	iron
+steel	magnolia
+terra	firma
+nux	vomica
+pichia	pastoris
+seed	money
+potato	bug
+sweetheart	deal
+tar	ball
+soccer	mom
+equity	participation
+deja	vu
+soap	opera
+fountain	pen
+sound	bite
+flea	seed
+zip	code
+baby	boomer
+
+budget	pork
+ghost	town
+people	person
+
+muscle	shirt
+soul	food
+market	order
+gutter	language
+plantago	ovata
+folk	architecture
+broncs	cheer
+
+goodwill	ambassador
+
+pay	phone
+pay	telephone
+
+poison	pill
+
+thrift	shop
+thrift	store
+
+fire	power
+
+
+soccer	hooligan
+
+security	area
+
+muscle	car
+
+straw	poll
+
+speed	skating
+
+cottage	industry
+
+laundry	list
+
+warp	speed
+
+unification	bout
+
+
+mother	lode
+
+overtime	game
+
+
+command	economy
+commodity	economy
+
+title	track
+
+service	winner
+
+cease	fire
+
+caucus	state
+
+point	blank
+
+alphabet	soup
+
+career	woman
+cult	classic
+
+privatization	voucher
+
+basket	case
+
+name	brand
+
+eye	candy
+face	amount
+#baseball (team) owner
+face	value
+
+
+fuel	economy
+
+book	tour
+
+#one who analyzes the N1 (market)
+
+crap	shoot
+
+boot	camp
+
+rail	yard
+prayer	breakfast
+
+pick	pocket
+folk	doctor
+flea	wort
+flea	market
+photo	finish
+
+rail	strike
+coal	strike
+transport	strike
+penny	stock
+
+
+poster	child
+
+life	force
+
+
+#ReasonIsSomehowRelatedTo + Act

@@ -1,0 +1,92 @@
+body	heat
+
+carrier	buzz
+instrument	noise
+jackhammer	noise
+keyboard	noise
+machinery	noise
+motorcycle	noise
+helicopter	noise
+
+shotgun	blast
+clock	tick
+aircraft	noise
+
+crowd	noise
+dolphin	noise
+fan	noise
+monkey	noise
+
+vaccine	damage
+vaccination	death
+
+allergy	death
+
+anthrax	death
+
+acne	marks
+ax	wound
+
+impact	noise
+
+artillery	blast
+artillery	damage
+
+artillery	fire
+artillery	smoke
+artillery	sound
+
+population	pressure
+rate	pressure
+water	pressure
+
+investment	gain
+
+battery	power
+
+rain	water
+
+police	statistic
+state	statistic
+
+aids	death
+cancer	death
+
+drug	death
+tuberculosis	death
+
+allergy	sufferer
+aids	sufferer
+
+#
+culture	shock
+oil	shock
+sticker	shock
+
+budget	woe
+penalty	agony
+
+
+#FROM/ORIGIN+PART
+donor	heart
+donor	organ
+
+book	excerpt
+
+gun	fire
+musket	fire
+
+
+#
+
+
+tobacco	smoke
+adrenaline	rush
+uranium	sickness
+
+fuel	mileage
+
+efficiency	saving
+staff reduction	saving
+
+job	stress

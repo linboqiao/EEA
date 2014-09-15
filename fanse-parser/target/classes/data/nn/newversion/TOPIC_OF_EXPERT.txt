@@ -1,0 +1,155 @@
+chocolate	expertise
+
+wildlife	expert
+terrorism	expert
+tax	expert
+relations	expert
+health	expert
+nutrition	expert
+drug	expert
+cancer	expert
+food	expert
+oil	expert
+computer	expert
+health care	expert
+forensics	expert
+transportation	expert
+development	expert
+explosive	expert
+defense	expert
+security	expert
+media	expert
+bomb	expert
+marketing	expert
+aviation	expert
+aid	expert
+communication	expert
+policy	expert
+technology	expert
+budget	expert
+weapon	expert
+affair	expert
+disposal	expert
+market	expert
+patent	expert
+energy	expert
+finance	expert
+safety	expert
+arms	expert
+banking	expert
+intelligence	expert
+art	expert
+space	expert
+water	expert
+bankruptcy	expert
+labor	expert
+law	expert
+industry	expert
+takeover	expert
+
+terrorist	expert
+antique	expert
+bully	expert
+fossil	expert
+louse	expert
+youth	expert
+wheat	expert
+
+rocket	science
+space	science
+material	science
+plant	science
+food	science
+computer	science
+health	science
+
+oil	specialist
+security	specialist
+industry	specialist
+relation	specialist
+mission	specialist
+computer	specialist
+management	specialist
+cancer	specialist
+aviation	specialist
+tax	specialist
+affair	specialist
+investment	specialist
+development	specialist
+fund	specialist
+health	specialist
+information	specialist
+cotton	specialist
+marketing	specialist
+market	specialist
+personnel	specialist
+aid	specialist
+communication	specialist
+takeover	specialist
+buyout	specialist
+bankruptcy	specialist
+research	specialist
+
+magazine	junkie
+news	junkie
+
+ski	buff
+movie	buff
+history	buff
+opera	buff
+
+market	pundit
+
+policy	wonk
+
+defense	intellectual
+
+market	professional
+tax	professional
+
+food	guru
+grape	guru
+medicine	guru
+shampoo	guru
+wine	guru
+
+
+pool	technician
+turbine	technician
+electronics	technician
+computer	technician
+
+equity	strategist
+market	strategist
+
+market	technician
+
+beauty	pageant
+
+essay	contest
+photography	contest
+
+rocket	scientist
+malaria	scientist
+computer	scientist
+weather	scientist
+influenza	scientist
+
+wildlife	biologist
+
+oil	geologist
+petroleum	geologist
+
+metals	economist
+market	economist
+oil	economist
+labor	economist
+
+homicide	detective
+narcotic	detective
+
+film	scholar
+health	scholar
+
+computer	whiz
+physics	whizz

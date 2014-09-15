@@ -1,0 +1,85 @@
+driver	standing
+championship	standing
+world	standing
+credit	standing
+league	standing
+medal	standing
+slalom	standing
+group	standing
+
+development	trend
+fashion	trend
+growth	trend
+interestrate	trend
+population	trend
+price	trend
+product	trend
+
+behavior	pattern
+buying	pattern
+consumption	pattern
+flight	pattern
+growth	pattern
+people	pattern
+spending	pattern
+viewing	pattern
+trading	pattern
+traffic	pattern
+voting	pattern
+wind	pattern
+
+genome	sequence
+
+budget	cycle
+business	cycle
+election	cycle
+fashion	cycle
+fuel	cycle
+pricing	cycle
+product	cycle
+production	cycle
+
+bus	schedule
+delivery	schedule
+flight	schedule
+repayment	schedule
+travel	schedule
+work	schedule
+
+buying	habit
+eating	habit
+work	habit
+
+church	hierarchy
+party	hierarchy
+
+business	ethic
+work	ethic
+
+pitching	rotation
+
+family	structure
+market	structure
+government	structure
+party	structure
+investment	structure
+ownership	structure
+system	structure
+
+command	structure
+share	structure
+shareholding	structure
+state	structure
+
+management	structure
+pricing	structure
+export	structure
+production	structure
+
+development	model
+
+exercise	regimen
+training	regimen
+drug	regimen
+
+market	infrastructure

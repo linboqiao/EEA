@@ -1,0 +1,118 @@
+debt	moratorium
+
+independence	referendum
+
+plagiarism	ruling
+suicide	ruling
+tariff	ruling
+tobacco	ruling
+banana	ruling
+abortion	ruling
+
+strike	vote
+confirmation	vote
+ratification	vote
+censure	vote
+impeachment	vote
+confidence	vote
+
+budget	hearing
+impeachment	hearing
+appeal	hearing
+bankruptcy	hearing
+detention	hearing
+arbitration	hearing
+bail	hearing
+custody	hearing
+confirmation	hearing
+parole	hearing
+deportation	hearing
+reconfirmation	hearing
+extradition	hearing
+asylum	hearing
+
+budget	deliberation
+
+#
+
+inflation	figure
+income	figure
+population	figure
+job	figure
+merchandise	figure
+census	figure
+production	figure
+circulation	figure
+output	figure
+export	figure
+growth	figure
+employment	figure
+profit	figure
+cost	figure
+sales	figure
+lending	figure
+spending	figure
+budget	figure
+import	figure
+crime	figure
+unemployment	figure
+capitalization	figure
+deficit	figure
+product	figure
+performance	figure
+casualty	figure
+earnings	figure
+trade	figure
+payroll	figure
+sale	figure
+revenue	figure
+
+performance	statistic
+employment	statistic
+custom	statistic
+market	statistic
+growth	statistic
+labor	statistic
+crime	statistic
+unemployment	statistic
+health	statistic
+
+injury	update
+
+employment	number
+production	number
+passenger	number
+
+reform	stance
+
+spy	spoof
+
+history	book
+sport	book
+physics	book
+
+
+
+finance	legislation
+right	legislation
+air	legislation
+crime	legislation
+health-care	legislation
+protection	legislation
+banking	legislation
+safety	legislation
+campaign	legislation
+employment	legislation
+labor	legislation
+hate	legislation
+sanctions	legislation
+tobacco	legislation
+tax	legislation
+
+appropriations	act
+tax	act
+budget	act
+
+health	measure
+budget	measure
+tax	measure

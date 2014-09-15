@@ -1,0 +1,27 @@
+art	fair
+book	fair
+job	fair
+firework	fair
+food	fair
+furniture	fair
+garment	fair
+gem	fair
+gun	fair
+hardware	fair
+health	fair
+livestock	fair
+medicine	fair
+photo	fair
+product	fair
+safety	fair
+science	fair
+talent	fair
+travel	fair
+vegetable	fair
+wine	fair
+automobile	fair
+
+art	festival
+music	festival
+
+

@@ -1,0 +1,186 @@
+snow	amount
+
+advertising	linage
+
+water	depth
+
+audience	share
+
+beer	volume
+soft drink	volume
+sale	volume
+sales	volume
+item	volume
+advertising	volume
+loan	volume
+retail	volume
+call	volume
+transport	volume
+trading	volume
+passenger	volume
+transaction	volume
+credit	volume
+phone	volume
+unit	volume
+lending	volume
+investment	volume
+export	volume
+market	volume
+freight	volume
+production	volume
+trade	volume
+classified ad	volume
+reserve	volume
+cargo	volume
+telephone	volume
+import	volume
+traffic	volume
+
+arsenic	concentration
+artillery	concentration
+branch	concentration
+cholesterol	concentration
+oxide	concentration
+party	concentration
+phytoplankton	concentration
+risk	concentration
+drug	concentration
+fluoride	concentration
+
+coal	output
+oil	output
+car	output
+steel	output
+sugar	output
+cotton	output
+rice	output
+wheat	output
+gold	output
+milk	output
+grain	output
+gas	output
+vehicle	output
+corn	output
+heat	output
+energy	output
+electricity	output
+
+grain	yield
+corn	yield
+crop	yield
+
+
+
+medal	tally
+vote	tally
+
+death	toll
+battle	toll
+casualty	toll
+pneumonia	toll
+siege	toll
+typhoon	toll
+
+rainfall	total
+
+delegate	count
+fraud	count
+pitch	count
+misdemeanor	count
+medal	count
+conspiracy	count
+rig	count
+vote	count
+murder	count
+felony	count
+perjury	count
+sperm	count
+population	count
+casualty	count
+death	count
+
+principal	amount
+settlement	amount
+redemption	amount
+
+activity	level
+alcohol	level
+benefit	level
+blood	level
+cash	level
+cholesterol	level
+comfort	level
+confidence	level
+consumer	level
+consumption	level
+danger	level
+debt	level
+decibel	level
+development	level
+dollar	level
+emission	level
+employment	level
+energy	level
+entry	level
+exposure	level
+flood	level
+force	level
+funding	level
+government	level
+grade	level
+group	level
+homocysteine	level
+hormone	level
+income	level
+inflation	level
+intensity	level
+interest	level
+inventory	level
+investment	level
+lead	level
+lighting	level
+management	level
+manufacturing	level
+market	level
+occupancy	level
+output	level
+oxygen	level
+ozone	level
+pay	level
+performance	level
+pollution	level
+poverty	level
+price	level
+production	level
+productivity	level
+profit	level
+quarter	level
+radiation	level
+radon	level
+resistance	level
+risk	level
+river	level
+safety	level
+salary	level
+sea	level
+skill	level
+spending	level
+staff	level
+street	level
+stress	level
+subsistence	level
+support	level
+talent	level
+tariff	level
+tax	level
+testosterone	level
+trading	level
+troop	level
+unemployment	level
+wage	level
+water	level
+
+work	load
+
+
+output	value

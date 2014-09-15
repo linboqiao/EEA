@@ -1,0 +1,5 @@
+#into
+corruption	inquiry
+impeachment	inquiry
+
+corruption	probe

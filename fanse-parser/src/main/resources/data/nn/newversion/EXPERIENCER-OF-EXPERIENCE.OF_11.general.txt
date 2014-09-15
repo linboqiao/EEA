@@ -1,0 +1,98 @@
+
+business	interest
+
+christian	value
+
+company	strategy
+
+consumer	need
+consumer	sentiment
+consumer	taste
+
+customer	need
+
+employee	morale
+
+family	secret
+family	value
+
+farmer	interest
+
+government	position
+government	secret
+
+investor	appetite
+
+
+investor	interest
+investor	optimism
+investor	sentiment
+
+investor	confidence
+customer	confidence
+client	confidence
+creditor	confidence
+consumer	confidence
+government	confidence
+
+
+
+member	interest
+
+monetarist	sympathy
+
+staff	morale
+
+state	secret
+
+team	spirit
+
+union	sentiment
+
+voter	apathy
+
+voter	interest
+
+
+worker	concern
+worker	exposure
+
+world	attention
+world	opinion
+
+government	exposure
+population	exposure
+
+animal	fatigue
+donor	fatigue
+jury	fatigue
+
+star	narcissism
+
+operator	fatigue
+surgeon	fatigue
+taxpayer	fatigue
+
+fan	frenzy
+press	frenzy
+audience	hunger
+student	hunger
+viewer	hunger
+
+developer	interest
+
+fan	satisfaction
+
+consumer	comfort
+patrician	comfort
+user	comfort
+worker	comfort
+
+jury	tension
+infant	tetanus
+
+
+
+
+teen	abortion
+

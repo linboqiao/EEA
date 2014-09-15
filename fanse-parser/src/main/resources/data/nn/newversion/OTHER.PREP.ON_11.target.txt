@@ -1,0 +1,19 @@
+elbow	surgery
+knee	surgery
+heart	surgery
+prostate	surgery
+neck	surgery
+foot	surgery
+back	surgery
+brain	surgery
+eye	surgery
+breast	surgery
+bladder	surgery
+
+knee	operation
+heart	operation
+
+body	work
+
+#on
+tax	cheat

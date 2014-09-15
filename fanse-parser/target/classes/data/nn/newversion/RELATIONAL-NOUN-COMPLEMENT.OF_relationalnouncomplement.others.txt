@@ -1,0 +1,147 @@
+conference	manifesto
+
+software	standard
+living	standard
+
+childhood	memory
+
+campaign	poster
+
+#(treatment for) ailment
+transplant	patient
+dialysis	patient
+
+movie	soundtrack
+
+fortune	heir
+business	heir
+magazine	heir
+newspaper	heir
+
+coach	fare
+
+comfort	zone
+time	frame
+student	ethnicity
+crowd	favorite
+
+brand	identity
+
+playoff	experience
+
+newscast	text
+
+adequacy	ratio
+debt	ratio
+earnings	ratio
+expense	ratio
+solvency	ratio
+
+energy	source
+food	source
+fuel	source
+heat	source
+income	source
+revenue	source
+supply	source
+water	source
+pollution	source
+
+crack	epidemic
+drug	epidemic
+aids	epidemic
+cholera	epidemic
+ebola	epidemic
+flu	epidemic
+aids	pandemic
+flu	symptom
+cholera	outbreak
+
+flood	peak
+
+league	championship
+
+conference	championship
+
+section	championship
+division	championship
+city	championship
+state	championship
+
+movie	script
+
+computer	age
+population	age
+
+celebrity	birthday
+
+water	condition
+
+child	health
+worker	health
+
+battery	life
+
+heart	rhythm
+
+media	freedom
+press	freedom
+
+family	affiliation
+
+classroom	concentration
+
+job	rights
+
+state	temperature
+
+blockbuster	credits
+
+unemployment	toll
+
+family	background
+
+job	category
+
+state	border
+
+dinosaur	fossil
+
+door	frame
+
+accident	scene
+crash	scene
+crime	scene
+
+crowd	scene
+drug	scene
+mob	scene
+murder	scene
+
+death	scene
+
+shooting	scene
+
+#Y is attribute caused/stimulated by X?
+ride	comfort
+
+weather	condition
+
+market	environment
+
+state	fish
+
+investor	focus
+
+state	health
+
+moon	phase
+
+child	poverty
+
+military	target
+
+#used by? used to?
+campaign	theme
+
+ownership	system

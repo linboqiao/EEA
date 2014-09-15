@@ -1,0 +1,76 @@
+performance	calibration
+
+awareness	campaign
+awareness	program
+
+beauty	aid
+beauty	product
+
+eligibility	age
+
+fertility	clinic
+fertility	treatment
+
+fitness	center
+
+health	aide
+health	field
+health	product
+health	spa
+health	spending
+health	system
+
+health	worker
+health	program
+health	campaign
+health	facility
+
+hospitality	suite
+
+hygiene	product
+
+literacy	program
+
+safety	device
+safety	equipment
+safety	executive
+safety	officer
+safety	pin
+safety	practice
+safety	precaution
+safety	procedure
+safety	program
+safety	system
+
+security	activity
+security	agent
+security	aide
+security	blanket
+security	brokerage
+security	device
+security	equipment
+security	establishment
+security	executive
+security	feature
+security	fence
+security	field
+security	gate
+security	guard
+security	man
+security	measure
+security	mechanism
+security	patrol
+security	people
+security	personnel
+security	police
+security	post
+security	precaution
+security	procedure
+security	program
+security	software
+security	structure
+security	system
+security	zone
+
+austerity	plan
+#

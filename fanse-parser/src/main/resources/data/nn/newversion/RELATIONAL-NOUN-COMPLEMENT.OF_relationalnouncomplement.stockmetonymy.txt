@@ -1,0 +1,80 @@
+finance	share
+gold	share
+auto	share
+computer	share
+bearer	share
+oil	share
+property	share
+technology	share
+steel	share
+plantation	share
+bank	share
+product	share
+real estate	share
+depository	share
+mining	share
+loan	share
+banking	share
+treasury	share
+construction	share
+fund	share
+equity	share
+telecom	share
+
+company	share
+
+semiconductor	stock
+insurer	stock
+utility	stock
+resource	stock
+steel	stock
+service	stock
+electricity	stock
+telecom	stock
+line	stock
+loan	stock
+grain	stock
+brewery	stock
+media	stock
+section	stock
+bank	stock
+wheat	stock
+tech	stock
+telecommunication	stock
+technology	stock
+brokerage	stock
+airlines	stock
+property	stock
+oil	stock
+transportation	stock
+water	stock
+gold	stock
+paper	stock
+banking	stock
+energy	stock
+plastics	stock
+consumer	stock
+debt	stock
+biotechnology	stock
+drug	stock
+retailing	stock
+biotech	stock
+home building	stock
+producer	stock
+airline	stock
+computer	stock
+dealer	stock
+brokerage house	stock
+mining	stock
+treasury	stock
+gasoline	stock
+tobacco	stock
+construction	stock
+value	stock
+insurance	stock
+timber	stock
+capital	stock
+retail	stock
+copper	stock
+
+

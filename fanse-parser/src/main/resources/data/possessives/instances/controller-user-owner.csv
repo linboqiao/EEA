@@ -1,0 +1,2799 @@
+9991	"PTB_WSJ"	"his"	20	-1	-1	22979		
+10023	"PTB_WSJ"	"its"	"%"	13	15	5494		
+10024	"PTB_WSJ"	"Blumenfeld"	"$"	32	34	20099		
+9990	"PTB_WSJ"	"company"	"$"	21	23	2616		
+9992	"PTB_WSJ"	"firm"	"$"	24	26	33519		
+9993	"PTB_WSJ"	"government"	"$"	16	18	8313		
+10022	"PTB_WSJ"	"her"	"$"	47	49	35051		
+10021	"PTB_WSJ"	"his"	"$"	29	30	38691		
+10020	"PTB_WSJ"	"Interstate"	"$"	13	15	24092		
+9994	"PTB_WSJ"	"its"	"$"	10	11	28290		
+10018	"PTB_WSJ"	"its"	"$"	28	29	17271		
+10019	"PTB_WSJ"	"its"	"$"	10	11	14291		
+10025	"PTB_WSJ"	"its"	"$"	31	32	24053		
+9989	"PTB_WSJ"	"Union"	"$"	13	15	5018		
+2453	"PTB_WSJ"	"China"	"account"	13	16	22956		
+8490	"PTB_WSJ"	"Corp."	"account"	8	17	24228		
+8491	"PTB_WSJ"	"her"	"account"	17	19	24918		
+8492	"PTB_WSJ"	"his"	"account"	11	12	1838		
+8493	"PTB_WSJ"	"his"	"account"	23	25	37623		
+8494	"PTB_WSJ"	"his"	"account"	13	15	38452		
+8495	"PTB_WSJ"	"its"	"account"	22	24	2937		
+8496	"PTB_WSJ"	"its"	"account"	16	18	3504		
+8497	"PTB_WSJ"	"its"	"account"	15	17	4476		
+8498	"PTB_WSJ"	"its"	"account"	22	24	4690		
+8499	"PTB_WSJ"	"its"	"account"	9	11	4715		
+8500	"PTB_WSJ"	"its"	"account"	11	16	4875		
+8501	"PTB_WSJ"	"its"	"account"	14	16	5668		
+8502	"PTB_WSJ"	"its"	"account"	18	20	6125		
+8503	"PTB_WSJ"	"its"	"account"	50	51	6598		
+8504	"PTB_WSJ"	"its"	"account"	10	12	17197		
+8505	"PTB_WSJ"	"its"	"account"	6	10	21284		
+8506	"PTB_WSJ"	"its"	"account"	13	21	25261		
+8507	"PTB_WSJ"	"its"	"account"	12	21	25275		
+8508	"PTB_WSJ"	"its"	"account"	10	15	30384		
+8509	"PTB_WSJ"	"its"	"account"	36	39	30845		
+8510	"PTB_WSJ"	"its"	"account"	21	23	31692		
+8511	"PTB_WSJ"	"its"	"account"	10	15	32983		
+8512	"PTB_WSJ"	"my"	"account"	15	17	9845		
+8513	"PTB_WSJ"	"publication"	"account"	16	26	4878		
+8514	"PTB_WSJ"	"their"	"account"	11	13	413		
+8515	"PTB_WSJ"	"their"	"account"	40	42	6125		
+8516	"PTB_WSJ"	"their"	"account"	11	13	14815		
+8517	"PTB_WSJ"	"their"	"account"	20	22	38115		
+8518	"PTB_WSJ"	"their"	"account"	16	18	38471		
+2339	"PTB_WSJ"	"Britain"	"accounts"	25	28	6519		
+8519	"PTB_WSJ"	"Corp."	"accounts"	26	30	18550		
+8520	"PTB_WSJ"	"firms"	"accounts"	30	33	4708		
+8521	"PTB_WSJ"	"his"	"accounts"	23	25	39059		
+8522	"PTB_WSJ"	"investors"	"accounts"	19	21	20642		
+8523	"PTB_WSJ"	"Irving"	"accounts"	35	44	7811		
+8524	"PTB_WSJ"	"its"	"accounts"	22	23	2558		
+8525	"PTB_WSJ"	"its"	"accounts"	7	14	7418		
+8526	"PTB_WSJ"	"its"	"accounts"	9	15	32242		
+8527	"PTB_WSJ"	"its"	"accounts"	10	14	32970		
+8528	"PTB_WSJ"	"its"	"accounts"	24	28	37540		
+8529	"PTB_WSJ"	"its"	"accounts"	22	23	39460		
+8530	"PTB_WSJ"	"Omni"	"accounts"	6	8	6896		
+8531	"PTB_WSJ"	"their"	"accounts"	15	18	185		
+8532	"PTB_WSJ"	"their"	"accounts"	17	19	2450		
+8533	"PTB_WSJ"	"their"	"accounts"	16	18	4701		
+8534	"PTB_WSJ"	"their"	"accounts"	35	37	4712		
+8535	"PTB_WSJ"	"their"	"accounts"	39	41	6099		
+8536	"PTB_WSJ"	"their"	"accounts"	20	22	9140		
+8537	"PTB_WSJ"	"their"	"accounts"	13	16	11102		
+8538	"PTB_WSJ"	"their"	"accounts"	44	46	18709		
+8539	"PTB_WSJ"	"their"	"accounts"	19	21	19137		
+8540	"PTB_WSJ"	"their"	"accounts"	18	19	19138		
+8541	"PTB_WSJ"	"their"	"accounts"	11	13	38455		
+8542	"PTB_WSJ"	"their"	"accounts"	23	25	38464		
+9358	"PTB_WSJ"	"his"	"AG"	24	27	6857		
+8543	"PTB_WSJ"	"its"	"agencies"	7	10	19515		
+8544	"PTB_WSJ"	"its"	"agencies"	7	8	21260		
+8545	"PTB_WSJ"	"their"	"agencies"	16	19	27975		
+8546	"PTB_WSJ"	"EC"	"agency"	31	34	9693		
+8547	"PTB_WSJ"	"Group"	"agency"	9	14	24210		
+8548	"PTB_WSJ"	"Group"	"agency"	38	45	25262		
+8549	"PTB_WSJ"	"Group"	"agency"	30	35	25281		
+8550	"PTB_WSJ"	"Group"	"agency"	25	30	25282		
+8551	"PTB_WSJ"	"Group"	"agency"	24	27	32974		
+8552	"PTB_WSJ"	"Group"	"agency"	7	11	38430		
+8553	"PTB_WSJ"	"his"	"agency"	31	32	10140		
+8554	"PTB_WSJ"	"Iran"	"agency"	28	32	17682		
+8555	"PTB_WSJ"	"Omnicom"	"agency"	6	10	14049		
+8556	"PTB_WSJ"	"Pentagon"	"Agency"	21	27	24954		
+8557	"PTB_WSJ"	"Saatchi"	"agency"	7	14	14036		
+8558	"PTB_WSJ"	"Suzuki"	"agency"	2	5	25277		
+8559	"PTB_WSJ"	"whose"	"agency"	1	6	32913		
+10057	"PTB_WSJ"	"our"	"air"	25	26	15701		
+							
+							
+9569	"PTB_WSJ"	"Khan"	"airline"	18	20	658		
+9570	"PTB_WSJ"	"Air"	"Airlines"	5	8	1481		
+9571	"PTB_WSJ"	"Air"	"Airlines"	6	9	1482		
+9572	"PTB_WSJ"	"Corp."	"Airlines"	16	19	23796		
+9573	"PTB_WSJ"	"Corp."	"Airlines"	22	25	36774		
+5246	"PTB_WSJ"	"airline"	"airport"	15	19	39245		
+5247	"PTB_WSJ"	"our"	"airport"	22	23	3573		
+9156	"PTB_WSJ"	"Corp."	"Airways"	16	21	5774		
+9157	"PTB_WSJ"	"Corp."	"Airways"	14	19	18469		
+22555	"HDFRE"	"their"	"altars"	36	37	2555	"They were persuaded , that , by some ridiculous arts of divination , they could discover the will of the superior beings , and that human sacrifices were the most precious and acceptable offering to <b>their</b> <b>altars</b> . "	
+22020	"HDFRE"	"their"	"altars"	27	28	2020	"These impious orders could not be executed without tumults and massacres , as in many places the people chose rather to die in the defence of <b>their</b> <b>altars</b> , than to behold in the midst of peace their cities exposed to the rapine and cruelty of war . "	
+20426	"HDFRE"	"their"	"altars"	31	32	426	"Under the specious pretext of abolishing human sacrifices , the emperors Tiberius and Claudius suppressed the dangerous power of the Druids : but the priests themselves , their gods and <b>their</b> <b>altars</b> , subsisted in peaceful obscurity till the final destruction of Paganism . "	
+8561	"PTB_WSJ"	"Soviets"	"array"	37	39	23662		
+							
+							
+							
+7743	"PTB_WSJ"	"Their"	"asset"	2	4	21607		
+7744	"PTB_WSJ"	"Triangle"	"asset"	13	16	3119		
+7745	"PTB_WSJ"	"Bond"	"assets"	36	40	8466		
+7746	"PTB_WSJ"	"Central"	"assets"	1	3	39075		
+7747	"PTB_WSJ"	"client"	"assets"	30	32	33519		
+7748	"PTB_WSJ"	"company"	"assets"	14	16	2654		
+7749	"PTB_WSJ"	"company"	"assets"	26	28	8839		
+7750	"PTB_WSJ"	"company"	"assets"	28	31	12687		
+7751	"PTB_WSJ"	"company"	"assets"	5	9	18557		
+7752	"PTB_WSJ"	"company"	"assets"	22	24	18740		
+7753	"PTB_WSJ"	"company"	"assets"	6	8	21938		
+7754	"PTB_WSJ"	"company"	"assets"	34	36	22718		
+7755	"PTB_WSJ"	"company"	"assets"	29	31	28053		
+7756	"PTB_WSJ"	"company"	"assets"	11	13	28670		
+7757	"PTB_WSJ"	"company"	"assets"	10	13	31393		
+7758	"PTB_WSJ"	"Corp."	"assets"	18	20	24275		
+7759	"PTB_WSJ"	"dealers"	"assets"	32	34	29946		
+7760	"PTB_WSJ"	"defendant"	"assets"	25	27	11362		
+7761	"PTB_WSJ"	"defendants"	"assets"	20	22	17838		
+7762	"PTB_WSJ"	"firm"	"assets"	22	24	33081		
+7763	"PTB_WSJ"	"Fossett"	"assets"	40	43	39478		
+7764	"PTB_WSJ"	"Garratt"	"assets"	2	4	20271		
+7765	"PTB_WSJ"	"group"	"assets"	22	24	24294		
+7766	"PTB_WSJ"	"his"	"assets"	28	29	1081		
+7767	"PTB_WSJ"	"his"	"assets"	31	32	1083		
+7768	"PTB_WSJ"	"his"	"assets"	17	18	1090		
+7769	"PTB_WSJ"	"his"	"assets"	20	21	6357		
+7770	"PTB_WSJ"	"Hooker"	"assets"	22	24	13684		
+7771	"PTB_WSJ"	"its"	"assets"	5	6	2627		
+7772	"PTB_WSJ"	"its"	"assets"	3	11	2629		
+7773	"PTB_WSJ"	"its"	"assets"	24	28	2646		
+7774	"PTB_WSJ"	"its"	"assets"	27	28	5513		
+7775	"PTB_WSJ"	"its"	"assets"	13	15	6648		
+7776	"PTB_WSJ"	"its"	"assets"	21	22	7325		
+7777	"PTB_WSJ"	"its"	"assets"	18	19	8471		
+7778	"PTB_WSJ"	"its"	"assets"	23	24	10108		
+7779	"PTB_WSJ"	"its"	"assets"	25	26	14762		
+7780	"PTB_WSJ"	"its"	"assets"	14	15	14800		
+7781	"PTB_WSJ"	"its"	"assets"	28	29	16413		
+7782	"PTB_WSJ"	"its"	"assets"	7	8	21622		
+7783	"PTB_WSJ"	"its"	"assets"	11	14	24283		
+7784	"PTB_WSJ"	"its"	"assets"	21	22	30520		
+7785	"PTB_WSJ"	"its"	"assets"	8	10	36057		
+7786	"PTB_WSJ"	"Krysalis"	"assets"	7	9	22432		
+7787	"PTB_WSJ"	"Mercury"	"assets"	6	8	5534		
+7788	"PTB_WSJ"	"partnership"	"assets"	23	25	14979		
+7789	"PTB_WSJ"	"partnership"	"assets"	21	23	27459		
+7790	"PTB_WSJ"	"their"	"assets"	20	21	840		
+7791	"PTB_WSJ"	"their"	"assets"	36	38	843		
+7792	"PTB_WSJ"	"their"	"assets"	6	7	4065		
+7793	"PTB_WSJ"	"their"	"assets"	22	24	11091		
+7794	"PTB_WSJ"	"their"	"assets"	20	23	11095		
+7795	"PTB_WSJ"	"their"	"assets"	11	12	20535		
+7796	"PTB_WSJ"	"their"	"assets"	22	23	20539		
+7797	"PTB_WSJ"	"their"	"assets"	10	11	20546		
+7798	"PTB_WSJ"	"their"	"assets"	35	36	20688		
+7799	"PTB_WSJ"	"their"	"assets"	20	21	25798		
+7800	"PTB_WSJ"	"their"	"assets"	35	36	33077		
+9360	"PTB_WSJ"	"my"	"Atlas"	16	17	32641		
+8562	"PTB_WSJ"	"her"	"attic"	11	12	3817		
+20054	"HDFRE"	"his"	"authorities"	20	21	54	"The present editor has followed the track of Gibbon through many parts of his work ; he has read <b>his</b> <b>authorities</b> with constant reference to his pages , and must pronounce his deliberate judgment , in terms of the highest admiration as to his general accuracy . "	
+20065	"HDFRE"	"his"	"authorities"	14	16	65	"It is the more striking , when we pass from the works of <b>his</b> chief <b>authorities</b> , where , after laboring through long , minute , and wearisome descriptions of the accessary and subordinate circumstances , a single unmarked and undistinguished sentence , which we may overlook from the inattention of fatigue , contains the great moral and political result . "	
+23274	"HDFRE"	"his"	"baggage"	33	34	3274	"In his march over the sandy desert between Emesa and Palmyra , the emperor Aurelian was perpetually harassed by the Arabs ; nor could he always defend his army , and especially <b>his</b> <b>baggage</b> , from those flying troops of active and daring robbers , who watched the moment of surprise , and eluded the slow pursuit of the legions . "	
+20334	"HDFRE"	"their"	"baggage"	11	12	334	"On the appearance of an enemy , they threw aside <b>their</b> <b>baggage</b> , and by easy and rapid evolutions converted the column of march into an order of battle . "	
+9184	"PTB_WSJ"	"their"	"bags"	17	18	30332		
+2457	"PTB_WSJ"	"China"	"balance"	11	14	22957		
+2458	"PTB_WSJ"	"China"	"balance"	10	12	22970		
+2459	"PTB_WSJ"	"China"	"balance"	4	6	24807		
+2590	"PTB_WSJ"	"France"	"balance"	6	8	6012		
+10409	"JB"	"elephants"	"ball-rooms"	15	17	2387	"There are great cleared flat places hidden away in the forests that are called <b>elephants</b> ' <b>ball-rooms</b> , but even these are only found by accident , and no man has ever seen the elephants dance . "	
+9185	"PTB_WSJ"	"our"	"balloon"	5	6	556		
+9082	"PTB_WSJ"	"Allianz"	"bank"	3	7	12049		
+9083	"PTB_WSJ"	"Allianz"	"bank"	3	7	21310		
+9720	"PTB_WSJ"	"Corp."	"Bank"	19	23	31848		
+10000	"PTB_WSJ"	"country"	"bank"	13	16	37946		
+10001	"PTB_WSJ"	"Department"	"Bank"	35	39	35239		
+9998	"PTB_WSJ"	"his"	"Bank"	21	23	6888		
+9999	"PTB_WSJ"	"its"	"bank"	9	10	11922		
+9997	"PTB_WSJ"	"U.S."	"bank"	10	13	27935		
+9361	"PTB_WSJ"	"its"	"banks"	5	7	11923		
+9362	"PTB_WSJ"	"its"	"banks"	16	17	30465		
+22289	"HDFRE"	"his"	"banner"	37	38	2289	"Whilst the rest of human kind are led away captives in the chains of their infernal enemy , the faithful Persian alone reserves his religious adoration for his friend and protector Ormusd , and fights under <b>his</b> <b>banner</b> of light , in the full confidence that he shall , in the last day , share the glory of his triumph . "	
+9275	"PTB_WSJ"	"his"	"barn"	22	23	16883		
+9276	"PTB_WSJ"	"his"	"barnyard"	11	12	17365		
+9529	"PTB_WSJ"	"company"	"base"	14	17	23175		
+9530	"PTB_WSJ"	"IMF"	"base"	32	35	37784		
+9531	"PTB_WSJ"	"IMF"	"base"	6	9	37802		
+9532	"PTB_WSJ"	"its"	"base"	11	13	1639		
+9533	"PTB_WSJ"	"its"	"base"	8	11	20848		
+9534	"PTB_WSJ"	"its"	"base"	6	8	37791		
+10026	"PTB_WSJ"	"our"	"basket"	9	10	548		
+10346	"JB"	"Teddy"	"bath-room"	5	7	2039	"He stole off to <b>Teddy</b> 's <b>bath-room</b> , but there was nothing there , and then to Teddy 's mother 's bathroom . "	
+10347	"JB"	"mother"	"bathroom"	20	22	2039	"He stole off to Teddy 's bath-room , but there was nothing there , and then to Teddy 's <b>mother</b> 's <b>bathroom</b> . "	
+9309	"PTB_WSJ"	"your"	"bathroom"	30	31	6738		
+22808	"HDFRE"	"their"	"baths"	37	38	2808	"The rich and luxurious nobles , sinking into their natural character , accepted , as a favor , this disgraceful exemption from military service ; and as long as they were indulged in the enjoyment of <b>their</b> <b>baths</b> , their theatres , and their villas , they cheerfully resigned the more dangerous cares of empire to the rough hands of peasants and soldiers . "	
+10397	"JB"	"his"	"beach"	14	16	1707	"Kotick thought that that was good advice , so he swam round to <b>his</b> own <b>beach</b> , hauled out , and slept for half an hour , twitching all over , as seals will . "	
+10398	"JB"	"his"	"beaches"	15	17	1760	"That nearly broke his heart , and he headed round the Horn back to <b>his</b> own <b>beaches</b> ; and on his way north he hauled out on an island full of green trees , where he found an old , old seal who was dying , and Kotick caught fish for him and told him all his sorrows . "	
+10399	"JB"	"their"	"beaches"	20	21	1869	"This is the great deep-sea song that all the St. Paul seals sing when they are heading back to <b>their</b> <b>beaches</b> in the summer . "	
+10345	"JB"	"your"	"beast"	2	3	2400	"Lay <b>your</b> <b>beast</b> alongside , Toomai , and let him prod with his tusks . "	
+21678	"HDFRE"	"his"	"bed"	34	35	1678	"A crowd of inferior deities attended in various stations the majesty of the god of Emesa ; but his court was still imperfect , till a female of distinguished rank was admitted to <b>his</b> <b>bed</b> . "	
+23646	"HDFRE"	"his"	"bed"	18	19	3646	"`` Carus , '' says he , `` our dearest emperor , was confined by sickness to <b>his</b> <b>bed</b> , when a furious tempest arose in the camp . "	
+20842	"HDFRE"	"their"	"bed"	28	29	842	"I. When Persia was governed by the descendants of Sefi , a race of princes whose wanton cruelty often stained their divan , their table , and <b>their</b> <b>bed</b> , with the blood of their favorites , there is a saying recorded of a young nobleman , that he never departed from the sultan 's presence , without satisfying himself whether his head was still on his shoulders . "	
+25042	"HDFRE"	"their"	"bed"	29	30	5042	"Disdaining an ignominious flight , the virgins of the warm climate of Africa encountered the enemy in the closest engagement ; they permitted priests and deacons to share <b>their</b> <b>bed</b> , and gloried amidst the flames in their unsullied purity . "	
+9094	"PTB_WSJ"	"his"	"bees"	9	13	16888		
+							
+							
+							
+9095	"PTB_WSJ"	"his"	"bench"	8	9	904		
+9096	"PTB_WSJ"	"his"	"bench"	6	7	920		
+9097	"PTB_WSJ"	"his"	"bench"	13	14	965		
+9098	"PTB_WSJ"	"his"	"bench"	11	13	997		
+9099	"PTB_WSJ"	"his"	"bench"	16	17	4208		
+9100	"PTB_WSJ"	"our"	"bench"	12	13	940		
+							
+							
+							
+							
+							
+							
+							
+9995	"PTB_WSJ"	"Campeau"	"Bloomingdale"	53	55	29220		
+							
+2341	"PTB_WSJ"	"Britain"	"bond"	1	7	3093		
+2342	"PTB_WSJ"	"Britain"	"bond"	1	7	19001		
+2644	"PTB_WSJ"	"Germany"	"bond"	1	5	3089		
+2645	"PTB_WSJ"	"Germany"	"bond"	2	6	37164		
+2734	"PTB_WSJ"	"Japan"	"bond"	1	7	3556		
+2735	"PTB_WSJ"	"Japan"	"bond"	1	6	33847		
+9535	"PTB_WSJ"	"portfolio"	"bonds"	28	30	13829		
+							
+9363	"PTB_WSJ"	"Citicorp"	"books"	6	8	4443		
+9364	"PTB_WSJ"	"clients"	"books"	21	23	38749		
+9365	"PTB_WSJ"	"company"	"books"	21	23	4191		
+9366	"PTB_WSJ"	"FirstSouth"	"books"	17	19	35842		
+10339	"JB"	"his"	"books"	30	32	1180	"`` And I know that this is true , '' he said , `` because Purun Dass always limped from the blow that he got in a riot when <b>his</b> account <b>books</b> were burned , and the tiger that I speak of he limps , too , for the tracks of his pads are unequal . '' "	
+9369	"PTB_WSJ"	"its"	"books"	41	42	31748		
+9370	"PTB_WSJ"	"my"	"books"	12	14	1372		
+9371	"PTB_WSJ"	"our"	"books"	5	6	9574		
+9372	"PTB_WSJ"	"seller"	"books"	7	9	19672		
+9373	"PTB_WSJ"	"their"	"books"	6	7	436		
+9374	"PTB_WSJ"	"their"	"books"	20	21	1897		
+9375	"PTB_WSJ"	"their"	"books"	8	9	17679		
+9376	"PTB_WSJ"	"their"	"books"	6	7	22293		
+9377	"PTB_WSJ"	"their"	"books"	23	24	37696		
+10340	"JB"	"Dick"	"boot"	37	39	2707	"`` Generally I have to go in among a lot of yelling , hairy men with knives -- long shiny knives , worse than the farrier 's knives -- and I have to take care that <b>Dick</b> 's <b>boot</b> is just touching the next man 's boot without crushing it . "	
+10341	"JB"	"man"	"boot"	45	47	2707	"`` Generally I have to go in among a lot of yelling , hairy men with knives -- long shiny knives , worse than the farrier 's knives -- and I have to take care that Dick 's boot is just touching the next <b>man</b> 's <b>boot</b> without crushing it . "	
+9568	"PTB_WSJ"	"Inc."	"booth"	7	9	22347		
+10342	"JB"	"my"	"boots"	13	14	2597	"I knew who `` they '' were , so I put on <b>my</b> <b>boots</b> and waterproof and scuttled out into the slush . "	
+10343	"JB"	"their"	"boots"	48	50	1683	"Then ten or twelve men , each with an iron-bound club three or four feet long , came up , and Kerick pointed out one or two of the drove that were bitten by their companions or too hot , and the men kicked those aside with <b>their</b> heavy <b>boots</b> made of the skin of a walrus 's throat , and then Kerick said , `` Let go ! '' and then the men clubbed the seals on the head as fast as they could . "	
+22712	"HDFRE"	"their"	"booty"	18	19	2712	"Reduced to this extremity , the Goths would gladly have purchased , by the surrender of all <b>their</b> <b>booty</b> and prisoners , the permission of an undisturbed retreat . "	
+23456	"HDFRE"	"their"	"booty"	23	24	3456	"Great numbers of the Alani , appeased by the punctual discharge of the engagements which Aurelian had contracted with them , relinquished <b>their</b> <b>booty</b> and captives , and quietly retreated to their own deserts , beyond the Phasis . "	
+23528	"HDFRE"	"their"	"booty"	14	15	3528	"They esteemed themselves sufficiently fortunate to purchase , by the restitution of all <b>their</b> <b>booty</b> , the permission of an undisturbed retreat . "	
+10027	"PTB_WSJ"	"his"	"box"	3	5	23320		
+9104	"PTB_WSJ"	"children"	"boxes"	12	15	31368		
+9105	"PTB_WSJ"	"their"	"boxes"	10	12	5912		
+							
+10400	"JB"	"his"	"branch"	3	5	421	"Mowgli thrust <b>his</b> dead <b>branch</b> into the fire till the twigs lit and crackled , and whirled it above his head among the cowering wolves . "	
+9526	"PTB_WSJ"	"farmers"	"bread"	8	10	37053		
+5245	"PTB_WSJ"	"their"	"bridge"	15	16	222		
+							
+9996	"PTB_WSJ"	"N.V."	"Bros."	14	17	38198		
+1711	"JB"	"his"	"buck"	19	20	249	"But remember , Akela is very old , and soon the day comes when he can not kill <b>his</b> <b>buck</b> , and then he will be leader no more . "	
+1712	"JB"	"our"	"buck"	5	6	43	"Does he think that <b>our</b> <b>buck</b> are like his fat Waingunga bullocks ? '' "	
+9188	"PTB_WSJ"	"your"	"buck"	21	22	26967		
+10349	"JB"	"thy"	"buffalo"	5	6	1398	"Buldeo , that was <b>thy</b> <b>buffalo</b> . '' "	
+10350	"JB"	"thy"	"buffaloes"	7	8	1357	"Thy luck and the stupidity of <b>thy</b> <b>buffaloes</b> have helped thee to this kill . "	
+1710	"JB"	"his"	"bullocks"	9	12	43	"Does he think that our buck are like <b>his</b> fat Waingunga <b>bullocks</b> ? '' "	
+9384	"PTB_WSJ"	"agencies"	"business"	10	12	8613		
+9385	"PTB_WSJ"	"Akzo"	"business"	2	5	6498		
+9386	"PTB_WSJ"	"Allied-Signal"	"business"	3	6	22102		
+9387	"PTB_WSJ"	"bank"	"business"	23	26	5065		
+9388	"PTB_WSJ"	"bank"	"business"	4	8	36975		
+9389	"PTB_WSJ"	"Block"	"business"	1	4	30739		
+9390	"PTB_WSJ"	"Boeing"	"business"	2	5	6920		
+9391	"PTB_WSJ"	"Carbide"	"business"	9	14	20596		
+9392	"PTB_WSJ"	"Cathay"	"business"	11	13	23806		
+9393	"PTB_WSJ"	"clients"	"business"	9	11	1807		
+9394	"PTB_WSJ"	"Co."	"business"	15	19	6486		
+9064	"PTB_WSJ"	"Colgate"	"business"	15	18	27439		
+9065	"PTB_WSJ"	"Colgate"	"business"	10	12	27455		
+9066	"PTB_WSJ"	"Colgate"	"business"	16	19	36239		
+9067	"PTB_WSJ"	"Colgate"	"business"	1	5	36243		
+9068	"PTB_WSJ"	"Colgate"	"business"	5	8	36247		
+9069	"PTB_WSJ"	"company"	"business"	15	18	5346		
+9070	"PTB_WSJ"	"company"	"business"	20	27	12254		
+9071	"PTB_WSJ"	"company"	"business"	6	9	13570		
+9072	"PTB_WSJ"	"company"	"business"	28	31	16011		
+9073	"PTB_WSJ"	"company"	"business"	14	16	19152		
+9074	"PTB_WSJ"	"company"	"business"	19	25	20584		
+9075	"PTB_WSJ"	"company"	"business"	14	16	24143		
+9076	"PTB_WSJ"	"company"	"business"	4	7	24817		
+9077	"PTB_WSJ"	"company"	"business"	23	26	27121		
+9078	"PTB_WSJ"	"company"	"business"	8	11	27410		
+9079	"PTB_WSJ"	"company"	"business"	2	5	27446		
+9080	"PTB_WSJ"	"company"	"business"	17	19	27718		
+9081	"PTB_WSJ"	"company"	"business"	18	23	31093		
+9395	"PTB_WSJ"	"Conner"	"business"	8	10	24151		
+9396	"PTB_WSJ"	"Data"	"business"	12	16	7131		
+9397	"PTB_WSJ"	"Data"	"business"	2	5	7144		
+9398	"PTB_WSJ"	"Data"	"business"	10	14	12980		
+9399	"PTB_WSJ"	"Dentsu"	"business"	4	7	8600		
+9400	"PTB_WSJ"	"Digital"	"business"	5	7	27724		
+9401	"PTB_WSJ"	"Dow"	"business"	36	40	381		
+9402	"PTB_WSJ"	"Drexel"	"business"	19	21	20636		
+9403	"PTB_WSJ"	"EDS"	"business"	9	12	13131		
+9404	"PTB_WSJ"	"Exterior"	"business"	8	11	8162		
+9405	"PTB_WSJ"	"Group"	"business"	7	11	7548		
+9406	"PTB_WSJ"	"Group"	"business"	17	20	29446		
+9407	"PTB_WSJ"	"his"	"business"	9	11	11883		
+9408	"PTB_WSJ"	"his"	"business"	7	8	11910		
+9409	"PTB_WSJ"	"his"	"business"	8	9	11913		
+9410	"PTB_WSJ"	"his"	"business"	9	13	17946		
+9411	"PTB_WSJ"	"his"	"business"	4	5	19984		
+9412	"PTB_WSJ"	"his"	"business"	10	11	20805		
+9413	"PTB_WSJ"	"his"	"business"	2	6	27227		
+9414	"PTB_WSJ"	"his"	"business"	30	31	39542		
+9415	"PTB_WSJ"	"IBM"	"business"	13	16	33207		
+9416	"PTB_WSJ"	"Inc."	"business"	5	8	22094		
+8985	"PTB_WSJ"	"its"	"business"	5	7	1707		
+8986	"PTB_WSJ"	"its"	"business"	16	21	2268		
+8987	"PTB_WSJ"	"its"	"business"	14	16	2681		
+8988	"PTB_WSJ"	"its"	"business"	24	26	2866		
+8989	"PTB_WSJ"	"its"	"business"	11	13	5016		
+8990	"PTB_WSJ"	"its"	"business"	22	24	5192		
+8991	"PTB_WSJ"	"its"	"business"	17	19	6494		
+8992	"PTB_WSJ"	"its"	"business"	30	34	6709		
+8993	"PTB_WSJ"	"its"	"business"	9	11	6920		
+8994	"PTB_WSJ"	"its"	"business"	5	7	6955		
+8995	"PTB_WSJ"	"its"	"business"	11	13	6965		
+8996	"PTB_WSJ"	"its"	"business"	7	10	7145		
+8997	"PTB_WSJ"	"its"	"business"	8	13	7149		
+8998	"PTB_WSJ"	"its"	"business"	8	11	7151		
+8999	"PTB_WSJ"	"its"	"business"	40	41	8034		
+9000	"PTB_WSJ"	"its"	"business"	44	45	9446		
+9001	"PTB_WSJ"	"its"	"business"	14	18	10209		
+9002	"PTB_WSJ"	"its"	"business"	11	13	11502		
+9003	"PTB_WSJ"	"its"	"business"	30	32	11824		
+9004	"PTB_WSJ"	"its"	"business"	23	26	12221		
+9005	"PTB_WSJ"	"its"	"business"	3	8	13124		
+9006	"PTB_WSJ"	"its"	"business"	17	19	13132		
+9007	"PTB_WSJ"	"its"	"business"	27	29	14404		
+9008	"PTB_WSJ"	"its"	"business"	8	11	14580		
+9009	"PTB_WSJ"	"its"	"business"	22	27	14621		
+9010	"PTB_WSJ"	"its"	"business"	16	19	14624		
+9011	"PTB_WSJ"	"its"	"business"	7	9	15022		
+9012	"PTB_WSJ"	"its"	"business"	18	22	15149		
+9013	"PTB_WSJ"	"its"	"business"	11	14	15152		
+9014	"PTB_WSJ"	"its"	"business"	11	16	15373		
+9015	"PTB_WSJ"	"its"	"business"	4	6	16064		
+9016	"PTB_WSJ"	"its"	"business"	29	31	16433		
+9017	"PTB_WSJ"	"its"	"business"	17	19	19077		
+9018	"PTB_WSJ"	"its"	"business"	9	10	19268		
+9019	"PTB_WSJ"	"its"	"business"	12	15	19351		
+9020	"PTB_WSJ"	"its"	"business"	24	26	19594		
+9021	"PTB_WSJ"	"its"	"business"	6	8	20204		
+9022	"PTB_WSJ"	"its"	"business"	3	5	20206		
+9023	"PTB_WSJ"	"its"	"business"	20	26	20272		
+9024	"PTB_WSJ"	"its"	"business"	28	29	20508		
+9025	"PTB_WSJ"	"its"	"business"	18	20	20601		
+9026	"PTB_WSJ"	"its"	"business"	23	25	20616		
+9027	"PTB_WSJ"	"its"	"business"	7	9	20673		
+9028	"PTB_WSJ"	"its"	"business"	33	35	21155		
+9029	"PTB_WSJ"	"its"	"business"	15	17	21279		
+9030	"PTB_WSJ"	"its"	"business"	14	17	22733		
+9031	"PTB_WSJ"	"its"	"business"	17	20	23291		
+9032	"PTB_WSJ"	"its"	"business"	8	10	23614		
+9033	"PTB_WSJ"	"its"	"business"	14	18	24630		
+9034	"PTB_WSJ"	"its"	"business"	15	17	25079		
+9035	"PTB_WSJ"	"its"	"business"	7	9	25242		
+9036	"PTB_WSJ"	"its"	"business"	23	25	26328		
+9037	"PTB_WSJ"	"its"	"business"	3	5	27423		
+9038	"PTB_WSJ"	"its"	"business"	17	20	27434		
+9039	"PTB_WSJ"	"its"	"business"	3	10	27452		
+9040	"PTB_WSJ"	"its"	"business"	13	14	27716		
+9041	"PTB_WSJ"	"its"	"business"	7	9	27742		
+9042	"PTB_WSJ"	"its"	"business"	17	20	27766		
+9043	"PTB_WSJ"	"its"	"business"	9	11	28466		
+9044	"PTB_WSJ"	"its"	"business"	18	19	28469		
+9045	"PTB_WSJ"	"its"	"business"	15	17	29432		
+9046	"PTB_WSJ"	"its"	"business"	17	19	30639		
+9047	"PTB_WSJ"	"its"	"business"	7	10	31083		
+9048	"PTB_WSJ"	"its"	"business"	33	39	32072		
+9049	"PTB_WSJ"	"its"	"business"	25	26	32210		
+9050	"PTB_WSJ"	"its"	"business"	25	28	32918		
+9051	"PTB_WSJ"	"its"	"business"	15	20	33384		
+9052	"PTB_WSJ"	"its"	"business"	6	8	34142		
+9053	"PTB_WSJ"	"its"	"business"	16	18	34251		
+9054	"PTB_WSJ"	"its"	"business"	6	7	34516		
+9055	"PTB_WSJ"	"its"	"business"	28	34	35382		
+9056	"PTB_WSJ"	"its"	"business"	10	11	35987		
+9057	"PTB_WSJ"	"its"	"business"	14	16	36095		
+9058	"PTB_WSJ"	"its"	"business"	4	7	36250		
+9059	"PTB_WSJ"	"its"	"business"	11	14	36250		
+9060	"PTB_WSJ"	"its"	"business"	31	34	36983		
+9061	"PTB_WSJ"	"its"	"business"	28	30	37260		
+9062	"PTB_WSJ"	"its"	"business"	36	38	38646		
+9063	"PTB_WSJ"	"its"	"business"	17	19	39365		
+9574	"PTB_WSJ"	"its"	"business"	14	17	6261		
+9417	"PTB_WSJ"	"Kidder"	"business"	5	9	7973		
+9418	"PTB_WSJ"	"McDonnell"	"business"	33	35	18332		
+9419	"PTB_WSJ"	"Mixte"	"business"	23	26	12035		
+9420	"PTB_WSJ"	"Morishita"	"business"	2	5	11886		
+9421	"PTB_WSJ"	"Morishita"	"business"	9	11	11897		
+9422	"PTB_WSJ"	"Noriega"	"business"	17	20	27588		
+9423	"PTB_WSJ"	"our"	"business"	23	24	3336		
+9424	"PTB_WSJ"	"Our"	"business"	2	3	7026		
+9425	"PTB_WSJ"	"Our"	"business"	2	4	11855		
+9426	"PTB_WSJ"	"our"	"business"	9	11	28480		
+9427	"PTB_WSJ"	"our"	"business"	14	15	36521		
+9428	"PTB_WSJ"	"our"	"business"	10	11	39373		
+9429	"PTB_WSJ"	"Pacific"	"business"	2	5	24996		
+9430	"PTB_WSJ"	"Schlumberger"	"business"	23	27	30425		
+9431	"PTB_WSJ"	"Sitco"	"business"	20	22	24827		
+9432	"PTB_WSJ"	"Society"	"business"	23	27	24425		
+9433	"PTB_WSJ"	"subsidiary"	"business"	20	23	39219		
+9106	"PTB_WSJ"	"their"	"business"	17	18	8915		
+9107	"PTB_WSJ"	"their"	"business"	17	20	8992		
+9108	"PTB_WSJ"	"their"	"business"	7	9	19675		
+9109	"PTB_WSJ"	"their"	"business"	12	13	27969		
+9110	"PTB_WSJ"	"their"	"business"	25	27	28050		
+9111	"PTB_WSJ"	"their"	"business"	10	11	28127		
+9112	"PTB_WSJ"	"their"	"business"	25	26	30595		
+9113	"PTB_WSJ"	"their"	"business"	27	28	31847		
+9114	"PTB_WSJ"	"their"	"business"	44	45	33245		
+9115	"PTB_WSJ"	"their"	"business"	6	7	36245		
+9434	"PTB_WSJ"	"their"	"business"	23	24	800		
+9116	"PTB_WSJ"	"Ticketron"	"business"	1	5	7141		
+9117	"PTB_WSJ"	"Trelleborg"	"business"	6	9	25709		
+9118	"PTB_WSJ"	"unit"	"business"	25	28	3107		
+9119	"PTB_WSJ"	"unit"	"business"	30	33	15015		
+9435	"PTB_WSJ"	"whose"	"business"	3	5	5997		
+9120	"PTB_WSJ"	"Xerox"	"business"	11	14	16499		
+9121	"PTB_WSJ"	"York"	"business"	12	15	31851		
+9122	"PTB_WSJ"	"your"	"business"	16	17	2511		
+9123	"PTB_WSJ"	"Armstrong"	"businesses"	40	43	711		
+9124	"PTB_WSJ"	"Bell"	"businesses"	7	10	36138		
+9125	"PTB_WSJ"	"Block"	"businesses"	4	7	30785		
+9126	"PTB_WSJ"	"Bond"	"businesses"	5	8	8469		
+8976	"PTB_WSJ"	"Colgate"	"businesses"	4	12	27440		
+8977	"PTB_WSJ"	"Colgate"	"businesses"	4	11	36240		
+8978	"PTB_WSJ"	"company"	"businesses"	19	25	5508		
+8979	"PTB_WSJ"	"company"	"businesses"	3	6	16080		
+8980	"PTB_WSJ"	"company"	"businesses"	17	24	20599		
+8981	"PTB_WSJ"	"company"	"businesses"	17	23	22162		
+8982	"PTB_WSJ"	"company"	"businesses"	23	30	34198		
+8983	"PTB_WSJ"	"Corp."	"businesses"	42	45	10106		
+8984	"PTB_WSJ"	"Corp."	"businesses"	14	17	12974		
+9127	"PTB_WSJ"	"Dun"	"businesses"	3	8	17748		
+9128	"PTB_WSJ"	"Hess"	"businesses"	4	6	21029		
+9129	"PTB_WSJ"	"Holding"	"businesses"	15	18	31359		
+8942	"PTB_WSJ"	"its"	"businesses"	15	16	1232		
+8943	"PTB_WSJ"	"its"	"businesses"	21	23	1710		
+8944	"PTB_WSJ"	"its"	"businesses"	23	27	2185		
+8945	"PTB_WSJ"	"its"	"businesses"	26	29	2199		
+8946	"PTB_WSJ"	"its"	"businesses"	23	31	2431		
+8947	"PTB_WSJ"	"its"	"businesses"	13	14	2647		
+8948	"PTB_WSJ"	"its"	"businesses"	41	45	6007		
+8949	"PTB_WSJ"	"its"	"businesses"	8	9	6595		
+8950	"PTB_WSJ"	"its"	"businesses"	9	17	6641		
+8951	"PTB_WSJ"	"its"	"businesses"	25	27	6900		
+8952	"PTB_WSJ"	"its"	"businesses"	32	40	9100		
+8953	"PTB_WSJ"	"its"	"businesses"	13	15	14147		
+8954	"PTB_WSJ"	"its"	"businesses"	15	17	15478		
+8955	"PTB_WSJ"	"its"	"businesses"	26	34	16464		
+8956	"PTB_WSJ"	"its"	"businesses"	6	11	18247		
+8957	"PTB_WSJ"	"its"	"businesses"	4	6	18581		
+8958	"PTB_WSJ"	"its"	"businesses"	14	16	19354		
+8959	"PTB_WSJ"	"its"	"businesses"	15	18	21001		
+8960	"PTB_WSJ"	"its"	"businesses"	15	18	21791		
+8961	"PTB_WSJ"	"its"	"businesses"	19	22	22148		
+8962	"PTB_WSJ"	"its"	"businesses"	9	16	24288		
+8963	"PTB_WSJ"	"its"	"businesses"	15	17	24725		
+8964	"PTB_WSJ"	"its"	"businesses"	15	17	25244		
+8965	"PTB_WSJ"	"its"	"businesses"	18	20	25248		
+8966	"PTB_WSJ"	"its"	"businesses"	31	33	25249		
+8967	"PTB_WSJ"	"its"	"businesses"	18	24	29414		
+8968	"PTB_WSJ"	"its"	"businesses"	16	21	29733		
+8969	"PTB_WSJ"	"its"	"businesses"	9	20	31412		
+8970	"PTB_WSJ"	"its"	"businesses"	11	14	31719		
+8971	"PTB_WSJ"	"its"	"businesses"	30	33	31719		
+8972	"PTB_WSJ"	"its"	"businesses"	9	17	32183		
+8973	"PTB_WSJ"	"its"	"businesses"	15	21	34255		
+8974	"PTB_WSJ"	"its"	"businesses"	12	14	38121		
+8975	"PTB_WSJ"	"its"	"businesses"	21	23	38224		
+9130	"PTB_WSJ"	"Lotus"	"businesses"	7	10	25774		
+9131	"PTB_WSJ"	"our"	"businesses"	11	14	6652		
+9132	"PTB_WSJ"	"our"	"businesses"	18	19	16066		
+9133	"PTB_WSJ"	"Sun"	"businesses"	7	14	19245		
+8183	"PTB_WSJ"	"their"	"businesses"	14	15	184		
+8184	"PTB_WSJ"	"their"	"businesses"	30	32	381		
+8185	"PTB_WSJ"	"their"	"businesses"	10	15	12220		
+8186	"PTB_WSJ"	"their"	"businesses"	24	26	14562		
+8187	"PTB_WSJ"	"their"	"businesses"	19	20	15863		
+8188	"PTB_WSJ"	"their"	"businesses"	3	5	17943		
+8189	"PTB_WSJ"	"their"	"businesses"	22	24	17956		
+8190	"PTB_WSJ"	"their"	"businesses"	7	8	30750		
+8191	"PTB_WSJ"	"their"	"businesses"	11	13	31053		
+9134	"PTB_WSJ"	"Trust"	"businesses"	9	12	12645		
+							
+9988	"PTB_WSJ"	"company"	"C$"	23	25	14630		
+9189	"PTB_WSJ"	"its"	"cafeteria"	4	5	27290		
+5243	"PTB_WSJ"	"company"	"calendar"	15	18	8697		
+5244	"PTB_WSJ"	"Washington"	"calendar"	7	10	12389		
+10393	"JB"	"Sahib"	"camp"	17	19	2525	"`` Kala Nag , my lord , let us keep by Pudmini and go to Petersen <b>Sahib</b> 's <b>camp</b> , or I shall drop from thy neck . '' "	
+10004	"PTB_WSJ"	"team"	"camp"	32	36	23349		
+10394	"JB"	"woodcutter"	"campfire"	14	16	62	"`` The fool has had no more sense than to jump at a <b>woodcutter</b> 's <b>campfire</b> , and has burned his feet , '' said Father Wolf with a grunt . "	
+10395	"JB"	"woodcutter"	"campfire"	7	9	97	"Shere Khan had jumped at a <b>woodcutter</b> 's <b>campfire</b> , as Father Wolf had said , and was furious from the pain of his burned feet . "	
+10396	"JB"	"their"	"camps"	15	16	2997	"That was the end of the review , and the regiments went off to <b>their</b> <b>camps</b> in the rain , and an infantry band struck up with -- The animals went in two by two , Hurrah ! "	
+10005	"PTB_WSJ"	"their"	"camps"	26	27	37336		
+9436	"PTB_WSJ"	"its"	"campus"	45	47	32733		
+9721	"PTB_WSJ"	"their"	"canal"	7	8	539		
+25163	"HDFRE"	"their"	"canons"	25	27	5163	"The councils of Ancyra and Illiberis were held about the same time , the one in Galatia , the other in Spain ; but <b>their</b> respective <b>canons</b> , which are still extant , seem to breathe a very different spirit . "	
+10006	"PTB_WSJ"	"their"	"canvases"	39	40	7777		
+8941	"PTB_WSJ"	"his"	"cap"	2	5	36337		
+9135	"PTB_WSJ"	"Agnelli"	"capital"	29	33	649		
+9136	"PTB_WSJ"	"bank"	"capital"	46	49	27811		
+9137	"PTB_WSJ"	"bank"	"capital"	38	41	27825		
+9138	"PTB_WSJ"	"Catherall"	"capital"	28	32	18187		
+9139	"PTB_WSJ"	"DAF"	"capital"	14	16	31929		
+9140	"PTB_WSJ"	"his"	"capital"	10	11	27637		
+9141	"PTB_WSJ"	"Ifint"	"capital"	8	10	651		
+9142	"PTB_WSJ"	"IMF"	"capital"	10	12	37816		
+9143	"PTB_WSJ"	"industry"	"capital"	19	22	8729		
+9144	"PTB_WSJ"	"Mengistu"	"capital"	23	25	23667		
+9145	"PTB_WSJ"	"Mixte"	"capital"	32	34	12029		
+9146	"PTB_WSJ"	"Mixte"	"capital"	14	16	12047		
+9147	"PTB_WSJ"	"their"	"capital"	17	18	10201		
+9148	"PTB_WSJ"	"their"	"capital"	17	18	20539		
+9149	"PTB_WSJ"	"Zeta"	"capital"	5	7	14901		
+20588	"HDFRE"	"their"	"cargo"	22	24	588	"The return of the fleet of Egypt was fixed to the months of December or January ; and as soon as <b>their</b> rich <b>cargo</b> had been transported on the backs of camels , from the Red Sea to the Nile , and had descended that river as far as Alexandria , it was poured , without delay , into the capital of the empire . "	
+9308	"PTB_WSJ"	"his"	"carpet"	27	28	3698		
+9437	"PTB_WSJ"	"its"	"carriers"	32	34	23742		
+8568	"PTB_WSJ"	"whose"	"cars"	15	16	22662		
+10007	"PTB_WSJ"	"CenTrust"	"cash"	12	14	38649		
+8569	"PTB_WSJ"	"its"	"cash"	14	15	16544		
+8570	"PTB_WSJ"	"StatesWest"	"cash"	14	17	15485		
+8571	"PTB_WSJ"	"their"	"cash"	15	17	14187		
+8572	"PTB_WSJ"	"their"	"cash"	8	9	28315		
+9307	"PTB_WSJ"	"Circus"	"casino"	2	5	14230		
+8939	"PTB_WSJ"	"its"	"casinos"	27	28	19610		
+8940	"PTB_WSJ"	"Ramada"	"casinos"	34	36	19595		
+9306	"PTB_WSJ"	"Its"	"castle"	1	2	14233		
+23519	"HDFRE"	"their"	"castles"	14	16	3519	"He attacked the Isaurians in their mountains , besieged and took several of <b>their</b> strongest <b>castles</b> , and flattered himself that he had forever suppressed a domestic foe , whose independence so deeply wounded the majesty of the empire . "	
+9525	"PTB_WSJ"	"its"	"Castrol"	12	16	12539		
+8174	"PTB_WSJ"	"his"	"cattle"	8	9	1756		
+22493	"HDFRE"	"their"	"cattle"	17	18	2493	"But the Germans , who carried with them what they most valued , their arms , <b>their</b> <b>cattle</b> , and their women , cheerfully abandoned the vast silence of their woods for the unbounded hopes of plunder and conquest . "	
+23884	"HDFRE"	"their"	"cattle"	30	31	3884	"Among the provincials , it was a subject of flattering exultation , that the barbarian , so lately an object of terror , now cultivated their lands , drove <b>their</b> <b>cattle</b> to the neighboring fair , and contributed by his labor to the public plenty . "	
+8175	"PTB_WSJ"	"their"	"cattle"	12	13	26231		
+10271	"PTB_WSJ"	"Administration"	"Center"	19	23	34277		
+10272	"PTB_WSJ"	"bank"	"center"	20	25	28496		
+10273	"PTB_WSJ"	"Co."	"center"	14	17	1484		
+10274	"PTB_WSJ"	"Co."	"Center"	6	10	23897		
+10275	"PTB_WSJ"	"company"	"center"	9	13	15818		
+10276	"PTB_WSJ"	"company"	"Center"	5	9	33182		
+10277	"PTB_WSJ"	"Express"	"center"	20	27	38171		
+10283	"PTB_WSJ"	"government"	"center"	21	24	19371		
+10257	"PTB_WSJ"	"its"	"centers"	23	26	13977		
+9438	"PTB_WSJ"	"his"	"Centurion"	36	39	7969		
+10288	"PTB_WSJ"	"their"	"cereals"	17	19	5884		
+9162	"PTB_WSJ"	"Crossland"	"certificates"	17	19	6197		
+9163	"PTB_WSJ"	"her"	"certificates"	31	33	37621		
+10233	"PTB_WSJ"	"Field"	"chain"	34	40	31829		
+20880	"HDFRE"	"his"	"chain"	13	15	880	"The slave of Imperial despotism , whether he was condemned to drags <b>his</b> gilded <b>chain</b> in Rome and the senate , or to were out a life of exile on the barren rock of Seriphus , or the frozen bank of the Danube , expected his fate in silent despair . "	
+10234	"PTB_WSJ"	"its"	"chain"	23	30	13677		
+10235	"PTB_WSJ"	"its"	"chain"	19	25	22498		
+10236	"PTB_WSJ"	"its"	"chain"	15	18	38119		
+10237	"PTB_WSJ"	"PLC"	"chain"	48	52	26279		
+10258	"PTB_WSJ"	"Campeau"	"chains"	7	14	14505		
+10259	"PTB_WSJ"	"Hooker"	"chains"	36	42	36649		
+10260	"PTB_WSJ"	"its"	"chains"	9	14	37941		
+10261	"PTB_WSJ"	"PLC"	"chains"	36	46	29220		
+20231	"HDFRE"	"their"	"chains"	17	18	231	"The western isle might be improved into a valuable possession , and the Britons would wear <b>their</b> <b>chains</b> with the less reluctance , if the prospect and example of freedom were on every side removed from before their eyes . "	
+23572	"HDFRE"	"their"	"chains"	6	7	3572	"The barbarians , who broke <b>their</b> <b>chains</b> , had seized the favorable opportunity of a domestic war . "	
+10262	"PTB_WSJ"	"their"	"chains"	16	20	38856		
+8935	"PTB_WSJ"	"his"	"chair"	8	11	965		
+8936	"PTB_WSJ"	"his"	"chair"	3	4	7015		
+8937	"PTB_WSJ"	"His"	"chair"	1	3	39519		
+8938	"PTB_WSJ"	"Max"	"chair"	14	16	35095		
+10315	"JB"	"Teddy"	"chair"	9	11	2148	"Nagaina was coiled up on the matting by <b>Teddy</b> 's <b>chair</b> , within easy striking distance of Teddy 's bare leg , and she was swaying to and fro , singing a song of triumph . "	
+							
+							
+9722	"PTB_WSJ"	"their"	"change"	5	6	16654		
+10285	"PTB_WSJ"	"Broadcasting"	"channel"	20	25	21290		
+10245	"PTB_WSJ"	"HBO"	"Channel"	38	41	20678		
+10284	"PTB_WSJ"	"its"	"channel"	16	21	20188		
+21771	"HDFRE"	"his"	"chapel"	18	20	1771	"Alexander rose early : the first moments of the day were consecrated to private devotion , and <b>his</b> domestic <b>chapel</b> was filled with the images of those heroes , who , by improving or reforming human life , had deserved the grateful reverence of posterity . "	
+23959	"HDFRE"	"emperor"	"chariot"	27	29	3959	"The haughtiest of men , clothed in his purple , but humbled by the sense of his fault and misfortune , was obliged to follow the <b>emperor</b> 's <b>chariot</b> above a mile on foot , and to exhibit , before the whole court , the spectacle of his disgrace . "	
+21636	"HDFRE"	"their"	"chariots"	33	35	1636	"The rebel ranks were broken ; when the mother and grandmother of the Syrian prince , who , according to their eastern custom , had attended the army , threw themselves from <b>their</b> covered <b>chariots</b> , and , by exciting the compassion of the soldiers , endeavored to animate their drooping courage . "	
+9166	"PTB_WSJ"	"Citicorp"	"Citibank"	3	5	37700		
+10427	"JB"	"their"	"city"	6	7	834	"The monkeys called the place <b>their</b> <b>city</b> , and pretended to despise the Jungle-People because they lived in the forest . "	
+							
+9726	"PTB_WSJ"	"Co."	"Co"	44	48	21103		
+9727	"PTB_WSJ"	"Corp."	"Co"	33	39	28638		
+9167	"PTB_WSJ"	"Hollander"	"Co."	2	10	868		
+9168	"PTB_WSJ"	"Hollander"	"Co."	2	7	38061		
+9169	"PTB_WSJ"	"its"	"Co."	5	8	14591		
+9170	"PTB_WSJ"	"whose"	"Co."	23	27	8692		
+9171	"PTB_WSJ"	"his"	"coat"	17	19	36262		
+9172	"PTB_WSJ"	"her"	"cocktail"	13	15	22537		
+8244	"PTB_WSJ"	"Pemex"	"coffers"	13	15	31766		
+8245	"PTB_WSJ"	"Trelleborg"	"coffers"	29	31	25683		
+							
+							
+10008	"PTB_WSJ"	"lenders"	"collateral"	17	19	33234		
+10270	"PTB_WSJ"	"Bill"	"Collectibles"	32	35	26336		
+8573	"PTB_WSJ"	"his"	"collection"	36	37	21595		
+8574	"PTB_WSJ"	"his"	"collection"	14	15	38618		
+8575	"PTB_WSJ"	"my"	"collection"	41	43	26530		
+8576	"PTB_WSJ"	"mint"	"collections"	25	27	14090		
+10286	"PTB_WSJ"	"his"	"Communications"	16	20	34346		
+10278	"PTB_WSJ"	"Integrated"	"companies"	20	23	38220		
+10239	"PTB_WSJ"	"its"	"companies"	15	16	3415		
+10240	"PTB_WSJ"	"its"	"companies"	15	17	38218		
+10241	"PTB_WSJ"	"its"	"companies"	16	18	38227		
+10231	"PTB_WSJ"	"Saatchi"	"companies"	9	13	25235		
+10232	"PTB_WSJ"	"Simmons"	"companies"	7	9	35952		
+9524	"PTB_WSJ"	"your"	"companies"	24	26	21126		
+9723	"PTB_WSJ"	"father"	"company"	8	11	23363		
+9724	"PTB_WSJ"	"his"	"company"	14	15	12038		
+9725	"PTB_WSJ"	"his"	"company"	6	9	28137		
+10242	"PTB_WSJ"	"network"	"company"	2	6	36687		
+10009	"PTB_WSJ"	"Pont"	"company"	18	23	12562		
+5163	"PTB_WSJ"	"Sutton"	"company"	12	15	10911		
+9440	"PTB_WSJ"	"their"	"company"	7	9	22319		
+9441	"PTB_WSJ"	"their"	"company"	9	12	5220		
+10243	"PTB_WSJ"	"its"	"complex"	39	42	12923		
+10244	"PTB_WSJ"	"its"	"complex"	40	44	27822		
+10238	"PTB_WSJ"	"her"	"concern"	6	9	17986		
+9567	"PTB_WSJ"	"its"	"concern"	4	8	15897		
+9305	"PTB_WSJ"	"His"	"condos"	1	3	14343		
+9654	"PTB_WSJ"	"Moon"	"conglomerate"	1	5	1379		
+9442	"PTB_WSJ"	"his"	"convertible"	28	30	13527		
+10269	"PTB_WSJ"	"our"	"convoys"	14	15	38578		
+9443	"PTB_WSJ"	"their"	"copies"	14	16	5155		
+20131	"HDFRE"	"his"	"copy"	15	16	131	"The work originated in the editor 's habit of noting on the margin of <b>his</b> <b>copy</b> of Gibbon references to such authors as had discovered errors , or thrown new light on the subjects treated by Gibbon . "	
+9653	"PTB_WSJ"	"Our"	"copy"	1	2	3926		
+9696	"PTB_WSJ"	"its"	"copyright"	67	68	29260		
+9566	"PTB_WSJ"	"his"	"corn"	9	11	31122		
+9173	"PTB_WSJ"	"Murdoch"	"Corp"	19	22	3379		
+9174	"PTB_WSJ"	"Murdoch"	"Corp"	35	38	8544		
+9175	"PTB_WSJ"	"Murdoch"	"Corp"	23	26	19732		
+9176	"PTB_WSJ"	"Bank"	"Corp."	17	21	8017		
+9177	"PTB_WSJ"	"his"	"Corp."	14	16	13759		
+9178	"PTB_WSJ"	"Murdoch"	"Corp."	9	12	23560		
+9179	"PTB_WSJ"	"Parretti"	"Corp."	8	12	34261		
+23970	"HDFRE"	"his"	"corselet"	37	38	3970	"`` Their horses were tied , and generally shackled , to prevent their running away ; and if an alarm happened , a Persian had his housing to fix , his horse to bridle , and <b>his</b> <b>corselet</b> to put on , before he could mount . '' "	
+10010	"PTB_WSJ"	"Inc."	"Cos."	22	26	8332		
+23016	"HDFRE"	"his"	"couch"	59	61	3016	"At a late hour of the night , but while the emperor still protracted the pleasures of the table , an alarm was suddenly given , that Aureolus , at the head of all his forces , had made a desperate sally from the town ; Gallienus , who was never deficient in personal bravery , started from <b>his</b> silken <b>couch</b> , and without allowing himself time either to put on his armor , or to assemble his guards , he mounted on horseback , and rode full speed towards the supposed place of the attack "	
+9444	"PTB_WSJ"	"our"	"course"	7	9	16700		
+10028	"PTB_WSJ"	"his"	"courses"	11	13	11903		
+10011	"PTB_WSJ"	"Jersey"	"court"	2	6	27841		
+8930	"PTB_WSJ"	"his"	"courthouse"	29	30	4216		
+8931	"PTB_WSJ"	"his"	"courtroom"	20	24	903		
+8932	"PTB_WSJ"	"his"	"courtroom"	31	32	965		
+8933	"PTB_WSJ"	"his"	"courtroom"	27	28	4199		
+9652	"PTB_WSJ"	"Belli"	"courtyard"	20	22	29907		
+10029	"PTB_WSJ"	"their"	"coverage"	8	10	8735		
+9795	"PTB_WSJ"	"our"	"craft"	26	27	556		
+9233	"PTB_WSJ"	"my"	"credential"	37	39	28000		
+9234	"PTB_WSJ"	"Courter"	"credentials"	16	20	27872		
+9235	"PTB_WSJ"	"His"	"credentials"	1	2	17796		
+9236	"PTB_WSJ"	"his"	"credentials"	6	8	34743		
+9237	"PTB_WSJ"	"Israel"	"credentials"	13	15	38259		
+9238	"PTB_WSJ"	"Their"	"credentials"	1	3	2776		
+9445	"PTB_WSJ"	"its"	"cruisers"	7	9	24971		
+10353	"JB"	"my"	"crupper"	4	5	2745	"`` Oh , <b>my</b> <b>crupper</b> and breastplate ! '' said the troop-horse under his breath . "	
+10436	"JB"	"their"	"cuds"	5	6	2675	"The gun bullocks rolled <b>their</b> <b>cuds</b> , and answered both together : `` The seventh yoke of the first gun of the Big Gun Battery . "	
+21275	"HDFRE"	"their"	"cuirasses"	38	39	1275	"Severus , who dreaded neither his arms nor his enchantments , guarded himself from the only danger of secret conspiracy , by the faithful attendance of six hundred chosen men , who never quitted his person or <b>their</b> <b>cuirasses</b> , either by night or by day , during the whole march . "	
+9446	"PTB_WSJ"	"our"	"cup"	6	8	31170		
+5443	"PTB_WSJ"	"her"	"currency"	10	11	6547		
+10254	"PTB_WSJ"	"its"	"currency"	26	28	13912		
+10255	"PTB_WSJ"	"its"	"currency"	20	22	13913		
+10256	"PTB_WSJ"	"its"	"currency"	16	18	39250		
+5444	"PTB_WSJ"	"its"	"currency"	21	22	7071		
+10230	"PTB_WSJ"	"their"	"cushion"	16	18	26509		
+9198	"PTB_WSJ"	"People"	"Daily"	3	5	19509		
+9199	"PTB_WSJ"	"People"	"Daily"	20	22	19512		
+9200	"PTB_WSJ"	"People"	"Daily"	20	22	33983		
+9201	"PTB_WSJ"	"People"	"Daily"	23	25	38974		
+10435	"JB"	"their"	"dance-room"	130	131	2532	"But , since native children have no nerves worth speaking of , in two hours he was lying very contentedly in Petersen Sahib 's hammock with Petersen Sahib 's shooting-coat under his head , and a glass of warm milk , a little brandy , with a dash of quinine , inside of him , and while the old hairy , scarred hunters of the jungles sat three deep before him , looking at him as though he were a spirit , he told his tale in short words , as a child will , and wound up with : `` Now , if I lie in one word , send men to see , and they will find that the elephant folk have trampled down more room in <b>their</b> <b>dance-room</b> , and they will find ten and ten , and many times ten , tracks leading to that dance-room "	
+9447	"PTB_WSJ"	"its"	"data"	23	24	17749		
+9448	"PTB_WSJ"	"its"	"data"	6	7	38685		
+9449	"PTB_WSJ"	"their"	"data"	14	15	22425		
+9450	"PTB_WSJ"	"their"	"data"	18	19	22427		
+21532	"HDFRE"	"his"	"death-bed"	13	14	1532	"In full assurance of his virtue and abilities , Severus , on <b>his</b> <b>death-bed</b> , had conjured him to watch over the prosperity and union of the Imperial family . "	
+8246	"PTB_WSJ"	"Boston"	"debt"	5	13	4416		
+8247	"PTB_WSJ"	"Boston"	"debt"	12	18	4418		
+8248	"PTB_WSJ"	"city"	"debt"	9	12	23502		
+8249	"PTB_WSJ"	"company"	"debt"	14	16	2356		
+8250	"PTB_WSJ"	"company"	"debt"	17	19	11244		
+8251	"PTB_WSJ"	"company"	"debt"	13	15	22394		
+8252	"PTB_WSJ"	"company"	"debt"	20	23	28849		
+8253	"PTB_WSJ"	"company"	"debt"	12	14	33493		
+8254	"PTB_WSJ"	"Corp."	"debt"	14	17	24099		
+8255	"PTB_WSJ"	"country"	"debt"	12	14	34431		
+8256	"PTB_WSJ"	"Federal"	"debt"	5	8	23025		
+8257	"PTB_WSJ"	"its"	"debt"	10	11	2192		
+8258	"PTB_WSJ"	"its"	"debt"	13	18	3959		
+8259	"PTB_WSJ"	"its"	"debt"	27	28	4195		
+8260	"PTB_WSJ"	"its"	"debt"	13	14	5022		
+8261	"PTB_WSJ"	"its"	"debt"	13	15	5675		
+8262	"PTB_WSJ"	"its"	"debt"	24	26	6625		
+8263	"PTB_WSJ"	"its"	"debt"	22	25	6630		
+8264	"PTB_WSJ"	"its"	"debt"	4	6	6631		
+8265	"PTB_WSJ"	"its"	"debt"	21	23	9006		
+8266	"PTB_WSJ"	"its"	"debt"	26	31	10454		
+8267	"PTB_WSJ"	"its"	"debt"	29	31	11267		
+8268	"PTB_WSJ"	"its"	"debt"	18	19	14947		
+8269	"PTB_WSJ"	"its"	"debt"	31	32	15115		
+8270	"PTB_WSJ"	"its"	"debt"	10	14	24359		
+8271	"PTB_WSJ"	"its"	"debt"	28	30	24901		
+8272	"PTB_WSJ"	"its"	"debt"	30	33	29335		
+8273	"PTB_WSJ"	"its"	"debt"	3	4	32951		
+8274	"PTB_WSJ"	"its"	"debt"	19	21	34428		
+8275	"PTB_WSJ"	"its"	"debt"	20	25	35239		
+8276	"PTB_WSJ"	"its"	"debt"	17	19	35240		
+8277	"PTB_WSJ"	"its"	"debt"	22	27	38952		
+8278	"PTB_WSJ"	"its"	"debt"	9	10	39144		
+2902	"PTB_WSJ"	"Mexico"	"debt"	20	26	31766		
+2903	"PTB_WSJ"	"Mexico"	"debt"	10	16	38973		
+8279	"PTB_WSJ"	"National"	"debt"	11	14	28918		
+8280	"PTB_WSJ"	"our"	"debt"	21	22	3781		
+8281	"PTB_WSJ"	"Revco"	"debt"	3	6	4256		
+8282	"PTB_WSJ"	"their"	"debt"	5	6	16995		
+8283	"PTB_WSJ"	"their"	"debt"	14	15	29345		
+8284	"PTB_WSJ"	"USX"	"debt"	19	21	16333		
+8285	"PTB_WSJ"	"whose"	"debt"	14	15	21136		
+8286	"PTB_WSJ"	"your"	"debt"	16	18	26973		
+8287	"PTB_WSJ"	"airline"	"debts"	22	24	1777		
+8288	"PTB_WSJ"	"its"	"debts"	29	30	6343		
+8289	"PTB_WSJ"	"its"	"debts"	22	23	8471		
+8290	"PTB_WSJ"	"its"	"debts"	34	35	21729		
+8291	"PTB_WSJ"	"its"	"debts"	6	8	24827		
+22483	"HDFRE"	"Their"	"debts"	1	2	2483	"<b>Their</b> <b>debts</b> of honor ( for in that light they have transmitted to us those of play ) they discharged with the most romantic fidelity . "	
+8292	"PTB_WSJ"	"their"	"debts"	9	10	14545		
+8293	"PTB_WSJ"	"their"	"debts"	17	18	28161		
+8294	"PTB_WSJ"	"their"	"debts"	10	11	38850		
+							
+22085	"HDFRE"	"his"	"department"	7	9	2085	"Each was appointed to act in <b>his</b> respective <b>department</b> , authorized to enroll and discipline the Italian youth ; and instructed to fortify the ports and highways , against the impending invasion of Maximin . "	
+22107	"HDFRE"	"his"	"department"	12	14	2107	"The various nature of their talents seemed to appropriate to each <b>his</b> peculiar <b>department</b> of peace and war , without leaving room for jealous emulation . "	
+24202	"HDFRE"	"his"	"department"	25	27	4202	"The honors of seniority and precedence were allowed to the former of those princes , and he continued under a new appellation to administer <b>his</b> ancient <b>department</b> of Gaul , Spain , and Britain . "	
+24663	"HDFRE"	"his"	"department"	20	21	4663	"According to the system of government instituted by Diocletian , Italy , and perhaps Africa , were designed for <b>his</b> <b>department</b> in the empire . "	
+10266	"PTB_WSJ"	"Century"	"deposits"	10	12	30505		
+10267	"PTB_WSJ"	"its"	"deposits"	35	36	20138		
+10268	"PTB_WSJ"	"Pinnacle"	"deposits"	14	20	24901		
+10377	"JB"	"his"	"depth"	17	18	1604	"The first time that Kotick went down to the sea a wave carried him out beyond <b>his</b> <b>depth</b> , and his big head sank and his little hind flippers flew up exactly as his mother had told him in the song , and if the next wave had not thrown him back again he would have drowned . "	
+							
+9231	"PTB_WSJ"	"artist"	"digs"	11	14	13873		
+9232	"PTB_WSJ"	"its"	"digs"	19	21	35102		
+10378	"JB"	"his"	"dinner"	74	75	712	"They found him stretched out on a warm ledge in the afternoon sun , admiring his beautiful new coat , for he had been in retirement for the last ten days changing his skin , and now he was very splendid -- darting his big blunt-nosed head along the ground , and twisting the thirty feet of his body into fantastic knots and curves , and licking his lips as he thought of <b>his</b> <b>dinner</b> to come . "	
+10379	"JB"	"his"	"dinner"	48	49	1319	"Shere Khan heard the thunder of their hoofs , picked himself up , and lumbered down the ravine , looking from side to side for some way of escape , but the walls of the ravine were straight and he had to hold on , heavy with <b>his</b> <b>dinner</b> and his drink , willing to do anything rather than fight . "	
+10012	"PTB_WSJ"	"company"	"dish"	8	11	28858		
+							
+							
+							
+							
+							
+							
+							
+8910	"PTB_WSJ"	"investors"	"dollars"	3	5	11090		
+8911	"PTB_WSJ"	"our"	"dollars"	4	6	16779		
+8912	"PTB_WSJ"	"Provigo"	"dollars"	10	15	14622		
+8913	"PTB_WSJ"	"their"	"dollars"	45	47	33501		
+8914	"PTB_WSJ"	"Washington"	"dollars"	6	9	32546		
+							
+							
+8902	"PTB_WSJ"	"Bentsen"	"door"	31	33	29057		
+8903	"PTB_WSJ"	"firm"	"door"	13	15	35907		
+21083	"HDFRE"	"his"	"door"	40	41	1083	"He now remained almost alone of the friends and ministers of Marcus ; and when , at a late hour of the night , he was awakened with the news , that the chamberlain and the pr??fect were at <b>his</b> <b>door</b> , he received them with intrepid resignation , and desired they would execute their master 's orders . "	
+8904	"PTB_WSJ"	"his"	"door"	5	6	17482		
+8905	"PTB_WSJ"	"Rostenkowski"	"door"	37	39	29057		
+10318	"JB"	"their"	"door"	15	16	1176	"Most of the tales were about animals , for the jungle was always at <b>their</b> <b>door</b> . "	
+8906	"PTB_WSJ"	"customers"	"doors"	11	13	20480		
+10319	"JB"	"his"	"doors"	42	44	1191	"`` All the evening I have lain here listening , '' he called back over his shoulder , `` and , except once or twice , Buldeo has not said one word of truth concerning the jungle , which is at <b>his</b> very <b>doors</b> . "	
+8907	"PTB_WSJ"	"its"	"doors"	9	10	1202		
+8908	"PTB_WSJ"	"its"	"doors"	18	19	39501		
+24902	"HDFRE"	"their"	"doors"	16	17	4902	"On days of general festivity , it was the custom of the ancients to adorn <b>their</b> <b>doors</b> with lamps and with branches of laurel , and to crown their heads with a garland of flowers . "	
+8909	"PTB_WSJ"	"their"	"doors"	70	71	38402		
+9229	"PTB_WSJ"	"his"	"doorstep"	15	16	24157		
+9230	"PTB_WSJ"	"its"	"doorstep"	24	25	23009		
+10320	"JB"	"villager"	"doorstep"	33	35	401	"Some of ye are eaters of cattle , and of others I have heard that , under Shere Khan 's teaching , ye go by dark night and snatch children from the <b>villager</b> 's <b>doorstep</b> . "	
+10381	"JB"	"his"	"drink"	51	52	1319	"Shere Khan heard the thunder of their hoofs , picked himself up , and lumbered down the ravine , looking from side to side for some way of escape , but the walls of the ravine were straight and he had to hold on , heavy with his dinner and <b>his</b> <b>drink</b> , willing to do anything rather than fight . "	
+23263	"HDFRE"	"her"	"empire"	13	14	3263	"As far as the frontier of Egypt , the nations subject to <b>her</b> <b>empire</b> had joined the standard of the conqueror , who detached Probus , the bravest of his generals , to possess himself of the Egyptian provinces . "	
+8299	"PTB_WSJ"	"her"	"empire"	6	8	27660		
+21062	"HDFRE"	"his"	"empire"	33	34	1062	"Amidst the acclamations of a flattering court , he was unable to disguise from himself , that he had deserved the contempt and hatred of every man of sense and virtue in <b>his</b> <b>empire</b> . "	
+22333	"HDFRE"	"his"	"empire"	32	34	2333	"The majesty of Ormusd , who was jealous of a rival , was seconded by the despotism of Artaxerxes , who could not suffer a rebel ; and the schismatics within <b>his</b> vast <b>empire</b> were soon reduced to the inconsiderable number of eighty thousand . "	
+22395	"HDFRE"	"his"	"empire"	3	5	2395	"Artaxerxes bequeathed <b>his</b> new <b>empire</b> , and his ambitious designs against the Romans , to Sapor , a son not unworthy of his great father ; but those designs were too extensive for the power of Persia , and served only to involve both nations in a long series of destructive wars and reciprocal calamities . "	
+24235	"HDFRE"	"his"	"empire"	9	10	4235	"The hopes of uniting the western provinces to <b>his</b> <b>empire</b> were disappointed by the elevation of Constantine , whilst Italy and Africa were lost by the successful revolt of Maxentius . "	
+24299	"HDFRE"	"his"	"empire"	51	52	4299	"Though they had experienced every form of despotism , they had now enjoyed that exemption near five hundred years ; nor could they patiently brook the insolence of an Illyrian peasant , who , from his distant residence in Asia , presumed to number Rome among the tributary cities of <b>his</b> <b>empire</b> . "	
+8300	"PTB_WSJ"	"his"	"empire"	42	43	1373		
+8301	"PTB_WSJ"	"his"	"empire"	16	17	4100		
+8302	"PTB_WSJ"	"his"	"empire"	13	16	21212		
+8303	"PTB_WSJ"	"its"	"empire"	23	25	12106		
+8304	"PTB_WSJ"	"its"	"empire"	16	19	22497		
+8305	"PTB_WSJ"	"Posner"	"empire"	14	16	12695		
+8306	"PTB_WSJ"	"Rey"	"empire"	7	9	6894		
+23276	"HDFRE"	"her"	"engines"	19	21	3276	"Every part of the walls is provided with two or three balist and artificial fires are thrown from <b>her</b> military <b>engines</b> . "	
+20670	"HDFRE"	"their"	"ensigns"	16	18	670	"The usual number of consuls , pr??tors , and tribunes , were annually invested with <b>their</b> respective <b>ensigns</b> of office , and continued to discharge some of their least important functions . "	
+10279	"PTB_WSJ"	"its"	"enterprises"	12	15	29018		
+9181	"PTB_WSJ"	"his"	"equipment"	32	35	13527		
+9182	"PTB_WSJ"	"his"	"equipment"	4	7	17379		
+9180	"PTB_WSJ"	"makers"	"equipment"	19	21	5757		
+9183	"PTB_WSJ"	"stockholders"	"equity"	19	21	30324		
+8307	"PTB_WSJ"	"chairman"	"estate"	22	24	38601		
+21904	"HDFRE"	"his"	"estate"	42	43	1904	"From various causes , the partiality of paternal affection often lost its influence over the stern patriots of the commonwealth , and the dissolute nobles of the empire ; and if the father bequeathed to his son the fourth part of <b>his</b> <b>estate</b> , he removed all ground of legal complaint . "	
+21914	"HDFRE"	"his"	"estate"	20	21	1914	"Whatever was the motive of the testator , the treasury claimed , without distinction , the twentieth part of <b>his</b> <b>estate</b> : and in the course of two or three generations , the whole property of the subject must have gradually passed through the coffers of the state . "	
+8309	"PTB_WSJ"	"his"	"estate"	20	21	1089		
+8310	"PTB_WSJ"	"Hunt"	"estate"	40	43	6341		
+8311	"PTB_WSJ"	"its"	"estate"	17	19	2628		
+8312	"PTB_WSJ"	"its"	"estate"	16	18	2634		
+8313	"PTB_WSJ"	"its"	"estate"	7	9	13977		
+22470	"HDFRE"	"their"	"estate"	32	33	2470	"The select few , placed by fortune above that necessity , can , however , fill up their time by the pursuits of interest or glory , by the improvement of <b>their</b> <b>estate</b> or of their understanding , by the duties , the pleasures , and even the follies of social life . "	
+24633	"HDFRE"	"Her"	"estates"	1	2	4633	"<b>Her</b> <b>estates</b> were confiscated , her eunuchs and domestics devoted to the most inhuman tortures ; and several innocent and respectable matrons , who were honored with her friendship , suffered death , on a false accusation of adultery . "	
+20477	"HDFRE"	"their"	"estates"	10	12	477	"* In their numerous families , and particularly in <b>their</b> country <b>estates</b> , they encouraged the marriage of their slaves . "	
+21354	"HDFRE"	"their"	"estates"	43	44	1354	"The most considerable of the provincials , who , without any dislike to the fortunate candidate , had obeyed the governor under whose authority they were accidentally placed , were punished by death , exile , and especially by the confiscation of <b>their</b> <b>estates</b> . "	
+22025	"HDFRE"	"their"	"estates"	20	21	2025	"A respite of three days , obtained with difficulty from the rapacious treasurer , was employed in collecting from <b>their</b> <b>estates</b> a great number of slaves and peasants blindly devoted to the commands of their lords , and armed with the rustic weapons of clubs and axes . "	
+23668	"HDFRE"	"their"	"estates"	21	22	3668	"With the senators , Carinus affected a lofty and regal demeanor , frequently declaring , that he designed to distribute <b>their</b> <b>estates</b> among the populace of Rome . "	
+24295	"HDFRE"	"their"	"estates"	11	13	4295	"A very minute survey appears to have been taken of <b>their</b> real <b>estates</b> ; and wherever there was the slightest suspicion of concealment , torture was very freely employed to obtain a sincere declaration of their personal wealth . "	
+24454	"HDFRE"	"their"	"estates"	44	45	4454	"A formidable army of sycophants and delators invaded Africa ; the rich and the noble were easily convicted of a connection with the rebels ; and those among them who experienced the emperor 's clemency , were only punished by the confiscation of <b>their</b> <b>estates</b> . "	
+24571	"HDFRE"	"their"	"estates"	26	27	4571	"Informers were punished and discouraged ; the innocent , who had suffered under the late tyranny , were recalled from exile , and restored to <b>their</b> <b>estates</b> . "	
+9807	"PTB_WSJ"	"Inc."	"Excalibur"	8	13	14160		
+5453	"PTB_WSJ"	"its"	"exchanges"	8	11	22677		
+10198	"PTB_WSJ"	"Nissan"	"exhibit"	18	22	1519		
+9563	"PTB_WSJ"	"Navy"	"F-14"	11	13	15144		
+3064	"PTB_WSJ"	"Pakistan"	"F16s"	29	32	37352		
+8314	"PTB_WSJ"	"company"	"facilities"	27	29	14943		
+8315	"PTB_WSJ"	"company"	"facilities"	59	63	33170		
+8316	"PTB_WSJ"	"its"	"facilities"	4	6	3975		
+8317	"PTB_WSJ"	"its"	"facilities"	21	23	5580		
+8318	"PTB_WSJ"	"its"	"facilities"	25	32	6732		
+8319	"PTB_WSJ"	"its"	"facilities"	7	9	32111		
+8320	"PTB_WSJ"	"its"	"facilities"	12	15	34252		
+8321	"PTB_WSJ"	"its"	"facilities"	22	27	34499		
+8322	"PTB_WSJ"	"Pemex"	"facilities"	8	11	31767		
+8323	"PTB_WSJ"	"Star"	"facilities"	2	6	33704		
+8324	"PTB_WSJ"	"their"	"facilities"	8	9	32112		
+8325	"PTB_WSJ"	"Carbide"	"facility"	6	12	6810		
+8326	"PTB_WSJ"	"company"	"facility"	26	33	24760		
+8327	"PTB_WSJ"	"company"	"facility"	38	44	34057		
+8328	"PTB_WSJ"	"Deere"	"facility"	26	29	3435		
+8329	"PTB_WSJ"	"department"	"facility"	21	25	39514		
+8330	"PTB_WSJ"	"its"	"facility"	15	19	8681		
+8331	"PTB_WSJ"	"its"	"facility"	9	10	8685		
+8332	"PTB_WSJ"	"its"	"facility"	20	23	20512		
+8333	"PTB_WSJ"	"its"	"facility"	31	33	34461		
+8334	"PTB_WSJ"	"its"	"facility"	31	37	34504		
+8335	"PTB_WSJ"	"its"	"facility"	28	32	34527		
+							
+							
+							
+							
+							
+							
+							
+20021	"HDFRE"	"his"	"facts"	17	18	21	"We can not but admire the manner in which he masses his materials , and arranges <b>his</b> <b>facts</b> in successive groups , not according to chronological order , but to their moral or political connection ; the distinctness with which he marks his periods of gradually increasing decay ; and the skill with which , though advancing on separate parallels of history , he shows the common tendency of the slower or more rapid religious or civil innovations . "	
+20070	"HDFRE"	"his"	"facts"	16	17	70	"These observations apply more particularly to the accuracy and fidelity of the historian as to <b>his</b> <b>facts</b> ; his inferences , of course , are more liable to exception . "	
+9451	"PTB_WSJ"	"our"	"farm"	14	15	29809		
+9452	"PTB_WSJ"	"its"	"farms"	7	9	17393		
+							
+10253	"PTB_WSJ"	"his"	"fields"	4	6	31122		
+9794	"PTB_WSJ"	"Phillips"	"fields"	24	29	21038		
+10195	"PTB_WSJ"	"Estate"	"finances"	11	13	1213		
+10196	"PTB_WSJ"	"Goodson"	"finances"	20	22	21206		
+10197	"PTB_WSJ"	"its"	"finances"	23	24	38292		
+10265	"PTB_WSJ"	"our"	"financing"	13	14	15475		
+20302	"HDFRE"	"our"	"fire-arms"	8	10	302	"This instrument was indeed much inferior to <b>our</b> modern <b>fire-arms</b> ; since it was exhausted by a single discharge , at the distance of only ten or twelve paces . "	
+8468	"PTB_WSJ"	"his"	"firm"	7	9	1795		
+8469	"PTB_WSJ"	"his"	"firm"	10	11	1812		
+8470	"PTB_WSJ"	"his"	"firm"	13	14	4727		
+8471	"PTB_WSJ"	"his"	"firm"	9	10	6131		
+8472	"PTB_WSJ"	"his"	"firm"	17	18	15013		
+8473	"PTB_WSJ"	"his"	"firm"	5	6	17964		
+8474	"PTB_WSJ"	"his"	"firm"	9	10	20847		
+8475	"PTB_WSJ"	"his"	"firm"	7	8	23550		
+8476	"PTB_WSJ"	"his"	"firm"	5	6	24000		
+8477	"PTB_WSJ"	"his"	"firm"	4	5	29711		
+8478	"PTB_WSJ"	"his"	"firm"	24	25	30588		
+8479	"PTB_WSJ"	"his"	"firm"	4	5	30593		
+8480	"PTB_WSJ"	"his"	"firm"	17	18	30595		
+8481	"PTB_WSJ"	"his"	"firm"	13	15	31910		
+8482	"PTB_WSJ"	"His"	"firm"	1	2	33369		
+8483	"PTB_WSJ"	"his"	"firm"	12	13	35249		
+8484	"PTB_WSJ"	"his"	"firm"	19	21	38045		
+8485	"PTB_WSJ"	"his"	"firm"	30	31	38311		
+8486	"PTB_WSJ"	"his"	"firm"	11	12	38312		
+8487	"PTB_WSJ"	"his"	"firm"	4	5	39465		
+8488	"PTB_WSJ"	"his"	"firm"	17	18	39466		
+10263	"PTB_WSJ"	"Steinhardt"	"firm"	19	21	34081		
+10264	"PTB_WSJ"	"their"	"firm"	34	36	24190		
+9793	"PTB_WSJ"	"their"	"firms"	26	31	6991		
+8343	"PTB_WSJ"	"Aeroflot"	"fleet"	1	4	39256		
+8344	"PTB_WSJ"	"his"	"fleet"	6	7	27271		
+8345	"PTB_WSJ"	"its"	"fleet"	37	38	13291		
+8346	"PTB_WSJ"	"its"	"fleet"	13	15	13297		
+8347	"PTB_WSJ"	"its"	"fleet"	21	23	23746		
+8348	"PTB_WSJ"	"its"	"fleet"	7	8	23783		
+8349	"PTB_WSJ"	"its"	"fleet"	16	17	30975		
+8350	"PTB_WSJ"	"its"	"fleet"	12	13	39237		
+8351	"PTB_WSJ"	"PWA"	"fleet"	7	9	13301		
+8352	"PTB_WSJ"	"their"	"fleets"	11	13	35042		
+20562	"HDFRE"	"its"	"flocks"	8	9	562	"Laodicea collected a very considerable revenue from <b>its</b> <b>flocks</b> of sheep , celebrated for the fineness of their wool , and had received , a little before the contest , a legacy of above four hundred thousand pounds by the testament of a generous citizen . "	
+22414	"HDFRE"	"their"	"flocks"	20	21	2414	"We shall occasionally mention the Scythian or Sarmatian tribes , * which , with their arms and horses , <b>their</b> <b>flocks</b> and herds , their wives and families , wandered over the immense plains which spread themselves from the Caspian Sea to the Vistula , from the confines of Persia to those of Germany . "	
+23932	"HDFRE"	"their"	"flocks"	26	27	3932	"Armenia was chosen for the place of exile , and a large district was assigned to the Scythian horde , on which they might feed <b>their</b> <b>flocks</b> and herds , and remove their encampment from one place to another , according to the different seasons of the year . "	
+10280	"PTB_WSJ"	"children"	"food"	41	43	35051		
+10426	"JB"	"our"	"food"	13	14	387	"Akela lifted his head again and said , `` He has eaten <b>our</b> <b>food</b> . "	
+22832	"HDFRE"	"their"	"fortifications"	16	18	2832	"The numerous garrison of Trebizond , dissolved in riot and luxury , disdained to guard <b>their</b> impregnable <b>fortifications</b> . "	
+22853	"HDFRE"	"their"	"fortifications"	35	37	2853	"Thebes and Argos , Corinth and Sparta , which had formerly waged such memorable wars against each other , were now unable to bring an army into the field , or even to defend <b>their</b> ruined <b>fortifications</b> . "	
+22109	"HDFRE"	"his"	"fortune"	6	7	2109	"His birth was noble , <b>his</b> <b>fortune</b> affluent , his manners liberal and affable . "	
+20494	"HDFRE"	"his"	"fortune"	11	12	494	"A freedman , under the name of Augustus , though <b>his</b> <b>fortune</b> had suffered great losses in the civil wars , left behind him three thousand six hundred yoke of oxen , two hundred and fifty thousand head of smaller cattle , and what was almost included in the description of cattle , four thousand one hundred and sixteen slaves . "	
+20526	"HDFRE"	"his"	"fortune"	24	25	526	"Many will be of opinion , that Atticus literally obeyed the emperor 's last instructions ; since he expended the greatest part of <b>his</b> <b>fortune</b> , which was much increased by an advantageous marriage , in the service of the public . "	
+20815	"HDFRE"	"his"	"fortune"	8	9	815	"He enjoyed with moderation the conveniences of <b>his</b> <b>fortune</b> , and the innocent pleasures of society ; and the benevolence of his soul displayed itself in a cheerful serenity of temper . "	
+20996	"HDFRE"	"his"	"fortune"	44	45	996	"The rank of Consul , of Patrician , of Senator , was exposed to public sale ; and it would have been considered as disaffection , if any one had refused to purchase these empty and disgraceful honors with the greatest part of <b>his</b> <b>fortune</b> . "	
+21112	"HDFRE"	"his"	"fortune"	16	19	1112	"On the day of his accession , he resigned over to his wife and son <b>his</b> whole private <b>fortune</b> ; that they might have no pretence to solicit favors at the expense of the state . "	
+23110	"HDFRE"	"his"	"fortune"	47	49	3110	"At the recommendation of Valerian , a senator of the highest rank and merit , Ulpius Crinitus , whose blood was derived from the same source as that of Trajan , adopted the Pannonian peasant , gave him his daughter in marriage , and relieved with <b>his</b> ample <b>fortune</b> the honorable poverty which Aurelian had preserved inviolate . "	
+23593	"HDFRE"	"his"	"fortune"	16	17	3593	"The triumph due to the valor of Probus was conducted with a magnificence suitable to <b>his</b> <b>fortune</b> , and the people who had so lately admired the trophies of Aurelian , gazed with equal pleasure on those of his heroic successor . "	
+23662	"HDFRE"	"his"	"fortune"	38	39	3662	"In the Gallic war he discovered some degree of personal courage ; but from the moment of his arrival at Rome , he abandoned himself to the luxury of the capital , and to the abuse of <b>his</b> <b>fortune</b> . "	
+23692	"HDFRE"	"his"	"fortune"	15	16	3692	"In the midst of this glittering pageantry , the emperor Carinus , secure of <b>his</b> <b>fortune</b> , enjoyed the acclamations of the people , the flattery of his courtiers , and the songs of the poets , who , for want of a more essential merit , were reduced to celebrate the divine graces of his person . "	
+24744	"HDFRE"	"his"	"fortune"	37	38	4744	"In this place we might relate a wonderful exploit of Constantine , which , though it can scarcely be paralleled either in poetry or romance , is celebrated , not by a venal orator devoted to <b>his</b> <b>fortune</b> , but by an historian , the partial enemy of his fame . "	
+24761	"HDFRE"	"his"	"fortune"	33	34	4761	"Before he was surrounded , he prudently removed his person and treasures to Chalcedon in Asia ; and as he was always desirous of associating companions to the hopes and dangers of <b>his</b> <b>fortune</b> , he now bestowed the title of C??sar on Martinianus , who exercised one of the most important offices of the empire . "	
+21391	"HDFRE"	"his"	"fortune"	26	27	1391	"His reign lasted above then years , till the marriage of his daughter with the eldest son of the emperor , which seemed to assure <b>his</b> <b>fortune</b> , proved the occasion of his ruin . "	
+21685	"HDFRE"	"his"	"fortune"	24	25	1685	"But Elagabalus , ( I speak of the emperor of that name , ) corrupted by his youth , his country , and <b>his</b> <b>fortune</b> , abandoned himself to the grossest pleasures with ungoverned fury , and soon found disgust and satiety in the midst of his enjoyments . "	
+21965	"HDFRE"	"his"	"fortune"	22	23	1965	"Instead of securing his fidelity , these favors served only to inflame the ambition of the Thracian peasant , who deemed <b>his</b> <b>fortune</b> inadequate to his merit , as long as he was constrained to acknowledge a superior . "	
+21998	"HDFRE"	"his"	"fortune"	7	9	1998	"He remembered , that , in <b>his</b> humbler <b>fortune</b> , he had often waited before the door of the haughty nobles of Rome , and had been denied admittance by the insolence of their slaves . "	
+9651	"PTB_WSJ"	"Sidhpur"	"fortune"	4	6	5889		
+22060	"HDFRE"	"Their"	"fortune"	1	2	2060	"<b>Their</b> <b>fortune</b> had created many dependants in that assembly , their merit had acquired many friends . "	
+24163	"HDFRE"	"their"	"fortune"	53	55	4163	"His tenderness , or at least his pride , was deeply wounded by the misfortunes of his wife and daughter ; and the last moments of Diocletian were imbittered by some affronts , which Licinius and Constantine might have spared the father of so many emperors , and the first author of <b>their</b> own <b>fortune</b> . "	
+24644	"HDFRE"	"their"	"fortune"	15	16	4644	"The death of Maximin seemed to assure the empresses of a favorable alteration in <b>their</b> <b>fortune</b> . "	
+21028	"HDFRE"	"whose"	"fortune"	5	6	1028	"The servile crowd , <b>whose</b> <b>fortune</b> depended on their master 's vices , applauded these ignoble pursuits . "	
+23826	"HDFRE"	"his"	"fortunes"	8	9	3826	"By his liberality he had attached to <b>his</b> <b>fortunes</b> the fleet which he commanded , and secured the barbarians in his interest . "	
+24173	"HDFRE"	"his"	"fortunes"	12	13	4173	"The latter of those deities Diocletian revered as the patron of <b>his</b> <b>fortunes</b> , the former as the protector of his health . "	
+23796	"HDFRE"	"their"	"fortunes"	34	35	3796	"The C??sars , in their exalted rank , revered the majesty of the emperors , and the three younger princes invariably acknowledged , by their gratitude and obedience , the common parent of <b>their</b> <b>fortunes</b> . "	
+23926	"HDFRE"	"whose"	"fortunes"	9	10	3926	"Among the Armenian nobles appeared an ally , <b>whose</b> <b>fortunes</b> are too remarkable to pass unnoticed . "	
+10247	"PTB_WSJ"	"company"	"franchise"	5	8	30062		
+10248	"PTB_WSJ"	"Inc."	"franchise"	15	18	274		
+10249	"PTB_WSJ"	"its"	"franchise"	32	36	22487		
+10250	"PTB_WSJ"	"their"	"franchise"	18	19	2953		
+10251	"PTB_WSJ"	"their"	"franchise"	15	16	18806		
+10252	"PTB_WSJ"	"your"	"franchise"	7	9	33333		
+20348	"HDFRE"	"his"	"frigates"	15	18	348	"Augustus himself , in the victory of Actium , had seen the superiority of <b>his</b> own light <b>frigates</b> ( they were called Liburnians ) over the lofty but unwieldy castles of his rival . "	
+10229	"PTB_WSJ"	"their"	"fronds"	22	24	22689		
+10013	"PTB_WSJ"	"Blackstone"	"fund"	12	14	1132		
+10014	"PTB_WSJ"	"Fidelity"	"fund"	1	4	11123		
+10015	"PTB_WSJ"	"Fidelity"	"Fund"	7	10	32911		
+10169	"PTB_WSJ"	"his"	"fund"	7	8	38814		
+10170	"PTB_WSJ"	"its"	"fund"	21	23	27522		
+10171	"PTB_WSJ"	"Our"	"fund"	5	6	11113		
+10172	"PTB_WSJ"	"Price"	"Fund"	38	43	25022		
+10173	"PTB_WSJ"	"Price"	"fund"	40	46	39737		
+10174	"PTB_WSJ"	"Secretary"	"fund"	9	13	11710		
+10175	"PTB_WSJ"	"Smeal"	"Fund"	26	28	4635		
+10176	"PTB_WSJ"	"Stanley"	"fund"	52	55	38315		
+10177	"PTB_WSJ"	"Fidelity"	"funds"	15	22	32898		
+10178	"PTB_WSJ"	"Fidelity"	"funds"	4	7	39037		
+10179	"PTB_WSJ"	"firm"	"funds"	9	13	39038		
+10180	"PTB_WSJ"	"her"	"funds"	23	25	24918		
+10181	"PTB_WSJ"	"his"	"funds"	14	15	22155		
+10182	"PTB_WSJ"	"his"	"funds"	22	24	35248		
+10183	"PTB_WSJ"	"its"	"funds"	15	17	24418		
+10184	"PTB_WSJ"	"its"	"funds"	5	8	25623		
+10185	"PTB_WSJ"	"party"	"funds"	29	31	37184		
+10186	"PTB_WSJ"	"Shareholders"	"funds"	1	3	22416		
+10187	"PTB_WSJ"	"shareholders"	"funds"	8	10	27814		
+10188	"PTB_WSJ"	"shareholders"	"funds"	20	22	37947		
+10189	"PTB_WSJ"	"sponsors"	"funds"	19	21	26774		
+10168	"PTB_WSJ"	"their"	"funds"	16	17	28804		
+10190	"PTB_WSJ"	"Their"	"funds"	1	3	11095		
+10191	"PTB_WSJ"	"their"	"funds"	5	6	13808		
+10192	"PTB_WSJ"	"their"	"funds"	11	12	17548		
+10193	"PTB_WSJ"	"their"	"funds"	6	7	24103		
+10194	"PTB_WSJ"	"their"	"funds"	28	30	25176		
+							
+							
+							
+10281	"PTB_WSJ"	"Noriega"	"G-2"	7	9	36414		
+8894	"PTB_WSJ"	"his"	"gallery"	15	17	11877		
+8895	"PTB_WSJ"	"his"	"gallery"	5	6	11884		
+8896	"PTB_WSJ"	"Morishita"	"gallery"	5	8	11874		
+8897	"PTB_WSJ"	"rogues"	"gallery"	2	4	26562		
+8898	"PTB_WSJ"	"Senate"	"gallery"	2	5	32430		
+8899	"PTB_WSJ"	"whose"	"gallery"	4	6	11859		
+10166	"PTB_WSJ"	"its"	"gates"	7	9	32135		
+23877	"HDFRE"	"their"	"gates"	20	21	3877	"He retreated with difficulty towards Langres ; but , in the general consternation , the citizens refused to open <b>their</b> <b>gates</b> , and the wounded prince was drawn up the wall by the means of a rope . "	
+10167	"PTB_WSJ"	"their"	"gates"	17	18	34826		
+8581	"PTB_WSJ"	"our"	"generator"	10	12	33680		
+8582	"PTB_WSJ"	"its"	"generators"	3	5	33239		
+22320	"HDFRE"	"your"	"goods"	23	24	2320	"To obtain the acceptation of this guide to salvation , you must faithfully pay him tithes of all you possess , of <b>your</b> <b>goods</b> , of your lands , and of your money . "	
+10437	"JB"	"our"	"ground"	19	20	51	"Are there not enough beetles and frogs in the tanks that he must eat Man , and on <b>our</b> <b>ground</b> too ! '' "	
+10438	"JB"	"his"	"grounds"	30	32	21	"Tabaqui sat still , rejoicing in the mischief that he had made , and then he said spitefully : `` Shere Khan , the Big One , has shifted <b>his</b> hunting <b>grounds</b> . "	
+10439	"JB"	"his"	"grounds"	31	33	511	"Then , too , Mowgli was taught the Strangers ' Hunting Call , which must be repeated aloud till it is answered , whenever one of the Jungle-People hunts outside <b>his</b> own <b>grounds</b> . "	
+9967	"PTB_WSJ"	"my"	"grounds"	11	12	26534		
+10440	"JB"	"their"	"grounds"	6	7	745	"`` The Bandar-log have shifted <b>their</b> <b>grounds</b> , '' he said quietly . "	
+10441	"JB"	"their"	"grounds"	18	20	1598	"The old people in the nurseries took no notice of them , and the holluschickie kept to <b>their</b> own <b>grounds</b> , and the babies had a beautiful playtime . "	
+9685	"PTB_WSJ"	"Co."	"Group"	5	8	19658		
+9686	"PTB_WSJ"	"Co."	"Group"	21	24	34356		
+9687	"PTB_WSJ"	"company"	"group"	40	46	6722		
+9688	"PTB_WSJ"	"company"	"group"	5	9	29726		
+9689	"PTB_WSJ"	"company"	"group"	11	14	30064		
+9690	"PTB_WSJ"	"company"	"group"	20	24	37987		
+9691	"PTB_WSJ"	"Corp."	"group"	7	11	2095		
+9692	"PTB_WSJ"	"Corp."	"group"	21	24	15710		
+9693	"PTB_WSJ"	"Corp."	"group"	18	21	19726		
+9694	"PTB_WSJ"	"Corp."	"Group"	20	25	31352		
+9695	"PTB_WSJ"	"Corp."	"group"	3	9	32733		
+10213	"PTB_WSJ"	"GM"	"group"	5	10	8186		
+10214	"PTB_WSJ"	"GM"	"Group"	4	9	11278		
+10215	"PTB_WSJ"	"Holding"	"Group"	10	15	31356		
+10217	"PTB_WSJ"	"its"	"group"	22	24	50		
+10218	"PTB_WSJ"	"its"	"Group"	20	24	2186		
+10219	"PTB_WSJ"	"its"	"Group"	18	21	3358		
+10220	"PTB_WSJ"	"its"	"group"	6	8	5775		
+10221	"PTB_WSJ"	"its"	"group"	18	20	6605		
+10222	"PTB_WSJ"	"its"	"group"	5	13	9164		
+10223	"PTB_WSJ"	"its"	"group"	10	14	9446		
+10224	"PTB_WSJ"	"its"	"Group"	21	26	21782		
+10225	"PTB_WSJ"	"its"	"group"	4	6	30493		
+10226	"PTB_WSJ"	"its"	"group"	24	27	34409		
+10227	"PTB_WSJ"	"its"	"group"	3	8	38388		
+10228	"PTB_WSJ"	"its"	"group"	13	17	38915		
+10212	"PTB_WSJ"	"ITT"	"Group"	1	5	16073		
+9674	"PTB_WSJ"	"Parker"	"group"	13	16	14144		
+9675	"PTB_WSJ"	"Sears"	"group"	4	7	16459		
+9676	"PTB_WSJ"	"Sears"	"group"	4	10	16464		
+9677	"PTB_WSJ"	"Sears"	"Group"	3	9	16465		
+9678	"PTB_WSJ"	"Sears"	"group"	21	24	32470		
+9679	"PTB_WSJ"	"Whittaker"	"group"	20	24	4036		
+9680	"PTB_WSJ"	"whose"	"group"	13	14	27192		
+9681	"PTB_WSJ"	"Woman\/McCall"	"Group"	12	14	34355		
+9682	"PTB_WSJ"	"your"	"group"	11	12	10110		
+9683	"PTB_WSJ"	"its"	"groups"	7	11	6921		
+9684	"PTB_WSJ"	"their"	"groups"	12	16	32956		
+10355	"JB"	"his"	"gun"	7	8	2198	"The big man has gone for <b>his</b> <b>gun</b> ! "	
+9673	"PTB_WSJ"	"Trotter"	"Haberle"	2	5	4784		
+20694	"HDFRE"	"Their"	"habit"	1	2	694	"<b>Their</b> <b>habit</b> , their palace , their table , were suited only to the rank of an opulent senator . "	
+9987	"PTB_WSJ"	"Lloyd"	"hall"	1	5	20781		
+							
+							
+							
+20812	"HDFRE"	"other"	"harvests"	12	14	812	"Numa could only prevent a few neighboring villages from plundering each <b>other</b> 's <b>harvests</b> . "	
+9304	"PTB_WSJ"	"his"	"hashish"	24	25	11661		
+9303	"PTB_WSJ"	"Buffett"	"Hathaway"	27	30	34107		
+							
+							
+							
+8583	"PTB_WSJ"	"Bank"	"headquarters"	8	10	38592		
+8584	"PTB_WSJ"	"company"	"headquarters"	5	10	2152		
+8585	"PTB_WSJ"	"company"	"headquarters"	34	37	10388		
+8586	"PTB_WSJ"	"company"	"headquarters"	22	28	11001		
+8587	"PTB_WSJ"	"Corp."	"headquarters"	5	7	27288		
+8588	"PTB_WSJ"	"corporations"	"headquarters"	7	9	30207		
+8589	"PTB_WSJ"	"Farmers"	"headquarters"	10	12	18252		
+8590	"PTB_WSJ"	"Ford"	"headquarters"	14	16	16231		
+8591	"PTB_WSJ"	"general"	"headquarters"	23	25	39195		
+8592	"PTB_WSJ"	"his"	"headquarters"	23	24	36301		
+8593	"PTB_WSJ"	"Honda"	"headquarters"	5	7	1518		
+8437	"PTB_WSJ"	"its"	"headquarters"	13	14	3139		
+8438	"PTB_WSJ"	"its"	"headquarters"	9	10	6221		
+8439	"PTB_WSJ"	"its"	"headquarters"	14	17	8099		
+8440	"PTB_WSJ"	"its"	"headquarters"	17	19	9847		
+8441	"PTB_WSJ"	"its"	"headquarters"	7	8	11521		
+8442	"PTB_WSJ"	"its"	"headquarters"	9	10	11526		
+8443	"PTB_WSJ"	"its"	"headquarters"	10	11	11536		
+8444	"PTB_WSJ"	"its"	"headquarters"	8	9	20512		
+8445	"PTB_WSJ"	"its"	"headquarters"	6	7	25762		
+8446	"PTB_WSJ"	"its"	"headquarters"	14	19	29526		
+8447	"PTB_WSJ"	"its"	"headquarters"	19	21	29982		
+8448	"PTB_WSJ"	"Its"	"headquarters"	1	3	32142		
+8449	"PTB_WSJ"	"its"	"headquarters"	25	26	34470		
+8450	"PTB_WSJ"	"its"	"headquarters"	24	25	34477		
+8451	"PTB_WSJ"	"its"	"headquarters"	43	46	34502		
+8452	"PTB_WSJ"	"its"	"headquarters"	23	24	34515		
+8453	"PTB_WSJ"	"its"	"headquarters"	26	27	34519		
+8454	"PTB_WSJ"	"its"	"headquarters"	8	10	34531		
+8455	"PTB_WSJ"	"its"	"headquarters"	23	24	34560		
+8456	"PTB_WSJ"	"its"	"headquarters"	8	10	37487		
+8594	"PTB_WSJ"	"KGB"	"headquarters"	14	17	5621		
+8595	"PTB_WSJ"	"MTM"	"headquarters"	13	15	6301		
+8596	"PTB_WSJ"	"Pinkerton"	"headquarters"	1	4	2153		
+8597	"PTB_WSJ"	"Sierra"	"headquarters"	37	39	36877		
+8598	"PTB_WSJ"	"whose"	"headquarters"	16	17	28503		
+9672	"PTB_WSJ"	"his"	"heaven"	11	12	536		
+							
+							
+							
+8891	"PTB_WSJ"	"their"	"hoard"	17	18	33520		
+8892	"PTB_WSJ"	"their"	"hoards"	7	9	4078		
+8614	"PTB_WSJ"	"foundation"	"holding"	20	22	25693		
+8615	"PTB_WSJ"	"his"	"holding"	27	28	34119		
+8418	"PTB_WSJ"	"its"	"holding"	10	11	9158		
+8419	"PTB_WSJ"	"its"	"holding"	15	17	23315		
+8420	"PTB_WSJ"	"its"	"holding"	10	11	38010		
+8421	"PTB_WSJ"	"its"	"holding"	8	9	38386		
+8616	"PTB_WSJ"	"Rey"	"Holding"	15	18	6893		
+8617	"PTB_WSJ"	"company"	"holdings"	13	15	19609		
+8618	"PTB_WSJ"	"company"	"holdings"	13	15	39147		
+8619	"PTB_WSJ"	"his"	"holdings"	15	16	5540		
+8620	"PTB_WSJ"	"his"	"holdings"	25	26	17753		
+8621	"PTB_WSJ"	"his"	"holdings"	7	11	17758		
+8622	"PTB_WSJ"	"his"	"holdings"	6	7	17774		
+8623	"PTB_WSJ"	"his"	"holdings"	9	10	17783		
+8624	"PTB_WSJ"	"his"	"holdings"	8	9	25668		
+8625	"PTB_WSJ"	"his"	"holdings"	15	16	39794		
+8422	"PTB_WSJ"	"its"	"holdings"	4	5	1200		
+8423	"PTB_WSJ"	"its"	"holdings"	8	10	1390		
+8424	"PTB_WSJ"	"its"	"holdings"	16	18	8481		
+8425	"PTB_WSJ"	"its"	"holdings"	10	12	9058		
+8426	"PTB_WSJ"	"its"	"holdings"	13	15	14757		
+8427	"PTB_WSJ"	"its"	"holdings"	12	15	21866		
+8428	"PTB_WSJ"	"its"	"holdings"	8	10	22713		
+8429	"PTB_WSJ"	"its"	"holdings"	40	41	25122		
+8430	"PTB_WSJ"	"its"	"holdings"	21	22	25667		
+8431	"PTB_WSJ"	"its"	"holdings"	16	19	26328		
+8432	"PTB_WSJ"	"its"	"holdings"	20	21	27483		
+8433	"PTB_WSJ"	"its"	"holdings"	8	11	30748		
+8434	"PTB_WSJ"	"its"	"holdings"	22	24	31853		
+8435	"PTB_WSJ"	"its"	"holdings"	30	34	33483		
+8436	"PTB_WSJ"	"its"	"holdings"	15	16	39152		
+2965	"PTB_WSJ"	"nation"	"holdings"	2	4	25920		
+8626	"PTB_WSJ"	"Paul"	"holdings"	7	9	38708		
+8599	"PTB_WSJ"	"state"	"holdings"	26	28	25783		
+8600	"PTB_WSJ"	"their"	"holdings"	17	18	10766		
+8601	"PTB_WSJ"	"their"	"holdings"	17	19	11508		
+8602	"PTB_WSJ"	"their"	"holdings"	21	22	12913		
+8603	"PTB_WSJ"	"their"	"holdings"	9	10	17744		
+8604	"PTB_WSJ"	"their"	"holdings"	27	28	17759		
+8605	"PTB_WSJ"	"their"	"holdings"	20	21	17780		
+8606	"PTB_WSJ"	"their"	"holdings"	37	38	21671		
+8607	"PTB_WSJ"	"their"	"holdings"	18	19	25310		
+8608	"PTB_WSJ"	"their"	"holdings"	6	9	25533		
+8609	"PTB_WSJ"	"their"	"holdings"	18	19	32523		
+8610	"PTB_WSJ"	"their"	"holdings"	11	12	35271		
+8611	"PTB_WSJ"	"their"	"holdings"	13	15	35954		
+8612	"PTB_WSJ"	"their"	"holdings"	20	24	37118		
+8613	"PTB_WSJ"	"whose"	"holdings"	10	12	30409		
+8627	"PTB_WSJ"	"Guy"	"Hospital"	16	18	9520		
+8628	"PTB_WSJ"	"Joseph"	"Hospital"	22	24	9781		
+8629	"PTB_WSJ"	"whose"	"hospital"	17	18	34989		
+8630	"PTB_WSJ"	"company"	"hospitals"	45	47	15092		
+8631	"PTB_WSJ"	"its"	"hospitals"	6	8	27391		
+8632	"PTB_WSJ"	"their"	"hospitals"	9	13	27395		
+8633	"PTB_WSJ"	"company"	"hotel"	3	5	14237		
+8634	"PTB_WSJ"	"my"	"hotel"	5	7	28024		
+8635	"PTB_WSJ"	"my"	"hotel"	2	3	28025		
+8636	"PTB_WSJ"	"Corp."	"hotel-casino"	12	16	14220		
+10360	"JB"	"general"	"house"	44	46	1935	"He sat on all their laps one after the other , because every well-brought-up mongoose always hopes to be a house mongoose some day and have rooms to run about in ; and Rikki-tikki 's mother ( she used to live in the <b>general</b> 's <b>house</b> at Segowlee ) had carefully told Rikki what to do if ever he came across white men . "	
+9792	"PTB_WSJ"	"its"	"Ilyushins"	7	10	39249		
+20200	"HDFRE"	"my"	"information"	15	16	200	"But I would vary the use of Zoroaster and Zerdusht , as I drew <b>my</b> <b>information</b> from Greece or Persia : since our connection with India , the genuine Timour is restored to the throne of Tamerlane : our most correct writers have retrenched the Al , the superfluous article , from the Koran ; and we escape an ambiguous termination , by adopting Moslem instead of Musulman , in the plural number . "	
+25026	"HDFRE"	"our"	"information"	21	22	5026	"Some of our senses indeed are necessary for our preservation , others for our subsistence , and others again for <b>our</b> <b>information</b> ; and thus far it was impossible to reject the use of them . "	
+9224	"PTB_WSJ"	"their"	"information"	17	21	32233		
+9225	"PTB_WSJ"	"their"	"information"	7	9	29689		
+8637	"PTB_WSJ"	"its"	"installations"	24	25	10823		
+8638	"PTB_WSJ"	"its"	"installations"	18	19	10824		
+8639	"PTB_WSJ"	"their"	"installations"	19	21	36058		
+9961	"PTB_WSJ"	"Academy"	"Institute"	7	11	10599		
+9962	"PTB_WSJ"	"Department"	"Institute"	9	12	23946		
+9963	"PTB_WSJ"	"Her"	"Institute"	1	2	31811		
+9964	"PTB_WSJ"	"His"	"Institute"	1	3	31805		
+9965	"PTB_WSJ"	"University"	"Institute"	11	17	20300		
+9966	"PTB_WSJ"	"University"	"Institute"	32	35	27853		
+10211	"PTB_WSJ"	"our"	"institutions"	14	16	36740		
+10160	"PTB_WSJ"	"Columbia"	"interest"	20	22	28696		
+10161	"PTB_WSJ"	"Combustion"	"interest"	18	21	18249		
+10157	"PTB_WSJ"	"Corp."	"interest"	7	9	21404		
+10158	"PTB_WSJ"	"Doman"	"interest"	14	16	30484		
+10159	"PTB_WSJ"	"estate"	"interest"	22	24	28499		
+10059	"PTB_WSJ"	"its"	"interest"	15	18	36651		
+10060	"PTB_WSJ"	"its"	"interest"	7	9	37964		
+10199	"PTB_WSJ"	"its"	"interest"	9	12	14593		
+10200	"PTB_WSJ"	"its"	"interest"	15	18	19275		
+10201	"PTB_WSJ"	"its"	"interest"	14	17	25127		
+10202	"PTB_WSJ"	"its"	"interest"	13	14	25671		
+10203	"PTB_WSJ"	"its"	"interest"	10	11	28492		
+10204	"PTB_WSJ"	"its"	"interest"	15	16	28499		
+10205	"PTB_WSJ"	"its"	"interest"	11	14	31746		
+10206	"PTB_WSJ"	"its"	"interest"	38	41	34356		
+10061	"PTB_WSJ"	"their"	"interest"	16	17	16453		
+10153	"PTB_WSJ"	"AmeriGas"	"interests"	12	16	39219		
+10154	"PTB_WSJ"	"Co."	"interests"	14	18	7119		
+10155	"PTB_WSJ"	"company"	"interests"	15	20	18560		
+10156	"PTB_WSJ"	"company"	"interests"	13	16	31706		
+10151	"PTB_WSJ"	"its"	"interests"	7	12	9757		
+10152	"PTB_WSJ"	"its"	"interests"	7	8	24948		
+10163	"PTB_WSJ"	"its"	"interests"	6	8	32180		
+10207	"PTB_WSJ"	"its"	"interests"	14	16	32173		
+10208	"PTB_WSJ"	"its"	"interests"	13	15	5473		
+10209	"PTB_WSJ"	"its"	"interests"	11	12	30718		
+10210	"PTB_WSJ"	"its"	"interests"	22	24	30718		
+10162	"PTB_WSJ"	"Mixte"	"interests"	9	12	21306		
+8888	"PTB_WSJ"	"its"	"inventories"	34	37	35719		
+8889	"PTB_WSJ"	"their"	"inventories"	31	32	8244		
+10300	"PTB_WSJ"	"its"	"investment"	12	16	2792		
+10301	"PTB_WSJ"	"its"	"investment"	22	23	12360		
+10302	"PTB_WSJ"	"its"	"investment"	27	29	15277		
+10303	"PTB_WSJ"	"its"	"investment"	20	21	18427		
+10304	"PTB_WSJ"	"its"	"investment"	11	13	18772		
+10305	"PTB_WSJ"	"its"	"investment"	18	19	25126		
+10306	"PTB_WSJ"	"its"	"investment"	43	48	31863		
+10291	"PTB_WSJ"	"their"	"investment"	38	39	5383		
+10292	"PTB_WSJ"	"their"	"investment"	4	7	7422		
+10293	"PTB_WSJ"	"their"	"investment"	35	36	19291		
+10294	"PTB_WSJ"	"their"	"investment"	23	24	26678		
+10307	"PTB_WSJ"	"its"	"investments"	23	25	6317		
+10308	"PTB_WSJ"	"its"	"investments"	7	8	15260		
+10309	"PTB_WSJ"	"its"	"investments"	6	8	31021		
+10310	"PTB_WSJ"	"its"	"investments"	27	29	38610		
+10311	"PTB_WSJ"	"its"	"investments"	18	19	39145		
+10295	"PTB_WSJ"	"their"	"investments"	20	21	13779		
+10296	"PTB_WSJ"	"their"	"investments"	26	27	20135		
+10297	"PTB_WSJ"	"their"	"investments"	26	27	21670		
+10298	"PTB_WSJ"	"their"	"investments"	9	10	26917		
+10299	"PTB_WSJ"	"their"	"investments"	15	16	32902		
+9221	"PTB_WSJ"	"our"	"issues"	19	21	16789		
+9222	"PTB_WSJ"	"their"	"issues"	11	14	11125		
+9223	"PTB_WSJ"	"their"	"issues"	13	16	33782		
+9561	"PTB_WSJ"	"Zell"	"Itel"	10	12	2632		
+10428	"JB"	"their"	"jungle"	18	20	748	"`` Beyond doubt then it is no small thing that takes two such hunters -- leaders in <b>their</b> own <b>jungle</b> I am certain -- on the trail of the Bandar-log , '' Kaa replied courteously , as he swelled with curiosity . "	
+20511	"HDFRE"	"his"	"jurisdiction"	31	32	511	"When Pliny was intrusted with the government of Bithynia and Pontus , provinces by no means the richest or most considerable of the empire , he found the cities within <b>his</b> <b>jurisdiction</b> striving with each other in every useful and ornamental work , that might deserve the curiosity of strangers , or the gratitude of their citizens . "	
+20637	"HDFRE"	"his"	"jurisdiction"	15	16	637	"In his camp the general exercise an absolute power of life and death ; <b>his</b> <b>jurisdiction</b> was not confined by any forms of trial , or rules of proceeding , and the execution of the sentence was immediate and without appeal . "	
+20647	"HDFRE"	"his"	"jurisdiction"	12	13	647	"The emperor alone was the general of the republic , and <b>his</b> <b>jurisdiction</b> , civil as well as military , extended over all the conquests of Rome . "	
+23790	"HDFRE"	"his"	"jurisdiction"	6	8	3790	"Every one was sovereign with <b>his</b> own <b>jurisdiction</b> ; but their united authority extended over the whole monarchy , and each of them was prepared to assist his colleagues with his counsels or presence . "	
+20473	"HDFRE"	"their"	"jurisdiction"	9	11	473	"The two languages exercised at the same time <b>their</b> separate <b>jurisdiction</b> throughout the empire : the former , as the natural idiom of science ; the latter , as the legal dialect of public transactions . "	
+20661	"HDFRE"	"their"	"jurisdiction"	3	5	661	"Such was <b>their</b> ordinary <b>jurisdiction</b> ; but whenever the senate empowered the first magistrate to consult the safety of the commonwealth , he was raised by that decree above the laws , and exercised , in the defence of liberty , a temporary despotism . "	
+20664	"HDFRE"	"their"	"jurisdiction"	22	24	664	"As long as the republic subsisted , the dangerous influence , which either the consul or the tribune might derive from <b>their</b> respective <b>jurisdiction</b> , was diminished by several important restrictions . "	
+23433	"HDFRE"	"their"	"jurisdiction"	18	20	3433	"To appoint the proconsuls and presidents of the provinces , and to confer on all the magistrates <b>their</b> civil <b>jurisdiction</b> . "	
+25088	"HDFRE"	"their"	"jurisdiction"	15	17	5088	"But we may define , in a few words , the narrow limits of <b>their</b> original <b>jurisdiction</b> , which was chiefly of a spiritual , though in some instances of a temporal nature . "	
+							
+							
+							
+							
+							
+							
+9562	"PTB_WSJ"	"company"	"lab"	6	11	34524		
+9559	"PTB_WSJ"	"Central"	"labs"	31	33	38156		
+9560	"PTB_WSJ"	"Corp."	"labs"	21	24	24960		
+10383	"JB"	"my"	"lair"	6	7	1086	"Brother , I go to <b>my</b> <b>lair</b> -- to die . "	
+10384	"JB"	"their"	"lairs"	77	78	504	"The big , serious , old brown bear was delighted to have so quick a pupil , for the young wolves will only learn as much of the Law of the Jungle as applies to their own pack and tribe , and run away as soon as they can repeat the Hunting Verse -- '' Feet that make no noise ; eyes that can see in the dark ; ears that can hear the winds in <b>their</b> <b>lairs</b> , and sharp white teeth , all these things are the marks of our brothers except Tabaqui the Jackal and the Hyaena whom we hate "	
+8884	"PTB_WSJ"	"his"	"lawn"	15	16	915		
+8885	"PTB_WSJ"	"his"	"lawn"	17	18	38516		
+9671	"PTB_WSJ"	"their"	"levels"	6	8	39048		
+9985	"PTB_WSJ"	"its"	"liabilities"	17	18	7325		
+9986	"PTB_WSJ"	"Sharon"	"liabilities"	31	33	12688		
+9806	"PTB_WSJ"	"city"	"library"	2	5	30239		
+9536	"PTB_WSJ"	"Volokhs"	"library"	24	27	22278		
+9655	"PTB_WSJ"	"Drexel"	"license"	8	11	20638		
+9656	"PTB_WSJ"	"Drexel"	"license"	13	16	20641		
+9657	"PTB_WSJ"	"firm"	"license"	28	30	20605		
+9658	"PTB_WSJ"	"its"	"license"	18	19	20647		
+9659	"PTB_WSJ"	"her"	"licensee"	24	26	20264		
+9660	"PTB_WSJ"	"its"	"licensee"	27	29	36551		
+9661	"PTB_WSJ"	"its"	"licenses"	9	12	20616		
+9662	"PTB_WSJ"	"representatives"	"licenses"	8	10	21795		
+9663	"PTB_WSJ"	"whose"	"licenses"	15	17	20612		
+10165	"PTB_WSJ"	"his"	"line"	27	29	27231		
+5471	"PTB_WSJ"	"giant"	"lines"	32	35	6913		
+10062	"PTB_WSJ"	"his"	"lines"	14	16	14559		
+10063	"PTB_WSJ"	"Inc."	"lines"	7	10	33180		
+9638	"PTB_WSJ"	"administration"	"list"	8	11	29780		
+9639	"PTB_WSJ"	"Board"	"list"	22	26	18870		
+9640	"PTB_WSJ"	"Board"	"list"	32	34	21146		
+9641	"PTB_WSJ"	"Cocom"	"list"	14	18	6939		
+9642	"PTB_WSJ"	"comptroller"	"list"	22	27	38600		
+9643	"PTB_WSJ"	"firm"	"list"	17	20	18875		
+9644	"PTB_WSJ"	"its"	"list"	7	11	8184		
+9645	"PTB_WSJ"	"its"	"list"	8	9	15197		
+9646	"PTB_WSJ"	"its"	"list"	10	11	18873		
+9647	"PTB_WSJ"	"its"	"list"	22	24	37038		
+9648	"PTB_WSJ"	"my"	"list"	7	9	16798		
+9649	"PTB_WSJ"	"my"	"list"	7	8	20924		
+9650	"PTB_WSJ"	"our"	"list"	23	25	24249		
+9984	"PTB_WSJ"	"Campeau"	"load"	8	12	14509		
+9983	"PTB_WSJ"	"customer"	"load"	19	22	23009		
+9981	"PTB_WSJ"	"his"	"load"	25	26	22982		
+9982	"PTB_WSJ"	"its"	"load"	16	18	11994		
+10433	"JB"	"Somebody"	"load"	1	3	3022	"<b>Somebody</b> 's <b>load</b> has tipped off in the road -- Cheer for a halt and a row ! "	
+10434	"JB"	"their"	"load"	20	21	643	"Rann saw that the monkeys were carrying something , and dropped a few hundred yards to find out whether <b>their</b> <b>load</b> was good to eat . "	
+9670	"PTB_WSJ"	"judge"	"loan"	4	6	990		
+9790	"PTB_WSJ"	"My"	"loft"	17	18	13873		
+9789	"PTB_WSJ"	"their"	"losers"	15	16	31189		
+9293	"PTB_WSJ"	"center"	"lot"	6	9	23898		
+9294	"PTB_WSJ"	"Its"	"lot"	1	3	14224		
+9295	"PTB_WSJ"	"its"	"lot"	31	33	34477		
+9296	"PTB_WSJ"	"their"	"lots"	28	29	8243		
+9297	"PTB_WSJ"	"their"	"lots"	15	16	8246		
+9669	"PTB_WSJ"	"Brierley"	"Ltd."	9	18	25667		
+9664	"PTB_WSJ"	"his"	"lunch"	18	19	7777		
+9667	"PTB_WSJ"	"subscriber"	"machine"	44	47	29706		
+22141	"HDFRE"	"his"	"machines"	11	12	2141	"The army of Maximin was repulsed in repeated attacks , <b>his</b> <b>machines</b> destroyed by showers of artificial fire ; and the generous enthusiasm of the Aquileians was exalted into a confidence of success , by the opinion that Belenus , their tutelar deity , combated in person in the defence of his distressed worshippers . "	
+9668	"PTB_WSJ"	"its"	"machines"	7	10	30216		
+9665	"PTB_WSJ"	"their"	"machines"	4	7	39603		
+9666	"PTB_WSJ"	"their"	"machines"	11	12	3712		
+24544	"HDFRE"	"His"	"magazines"	1	3	4544	"<b>His</b> ample <b>magazines</b> secured him against the danger of famine ; and as the situation of Constantine admitted not of delay , he might have been reduced to the sad necessity of destroying with fire and sword the Imperial city , the noblest reward of his victory , and the deliverance of which had been the motive , or rather indeed the pretence , of the civil war . "	
+22145	"HDFRE"	"their"	"magazines"	17	18	2145	"The people of Aquileia had scarcely experienced any of the common miseries of a siege ; <b>their</b> <b>magazines</b> were plentifully supplied , and several fountains within the walls assured them of an inexhaustible resource of fresh water . "	
+8883	"PTB_WSJ"	"their"	"magazines"	20	21	14015		
+9292	"PTB_WSJ"	"its"	"mainframe"	17	18	34473		
+8882	"PTB_WSJ"	"our"	"mainframes"	31	33	32239		
+8881	"PTB_WSJ"	"Hambrecht"	"makers"	6	12	35156		
+8640	"PTB_WSJ"	"its"	"malls"	16	19	36664		
+9537	"PTB_WSJ"	"Loggia"	"Mancuso"	6	8	23125		
+9291	"PTB_WSJ"	"Morishita"	"manor"	13	17	11908		
+8489	"PTB_WSJ"	"her"	"mansion"	6	7	29104		
+9558	"PTB_WSJ"	"his"	"mare"	43	46	1755		
+1764	"JB"	"his"	"mark"	6	7	1953	"The great God Brahm put <b>his</b> <b>mark</b> upon all our people , when the first cobra spread his hood to keep the sun off Brahm as he slept . "	
+20020	"HDFRE"	"his"	"materials"	12	13	20	"We can not but admire the manner in which he masses <b>his</b> <b>materials</b> , and arranges his facts in successive groups , not according to chronological order , but to their moral or political connection ; the distinctness with which he marks his periods of gradually increasing decay ; and the skill with which , though advancing on separate parallels of history , he shows the common tendency of the slower or more rapid religious or civil innovations . "	
+20132	"HDFRE"	"his"	"materials"	10	11	132	"The chief works from which the editor has derived <b>his</b> <b>materials</b> are , I. The French translation , with notes by M. Guizot ; 2d edition , Paris , 1828 . "	
+23387	"HDFRE"	"his"	"materials"	40	41	3387	"The Roman senators heard , without surprise , that another emperor had been assassinated in his camp ; they secretly rejoiced in the fall of Aurelian ; and , besides the recent notoriety of the facts , constantly draws <b>his</b> <b>materials</b> from the Journals of the Senate , and the but the modest and dutiful address of the legions , when it was communicated in full assembly by the consul , diffused the most pleasing astonishment . "	
+10385	"JB"	"his"	"meal"	4	5	83	"He is taking <b>his</b> <b>meal</b> with the others . "	
+9538	"PTB_WSJ"	"His"	"meals"	1	2	36300		
+9539	"PTB_WSJ"	"your"	"meals"	12	13	22296		
+10386	"JB"	"my"	"meat"	6	7	374	"Free People , he was <b>my</b> <b>meat</b> from the first . "	
+21032	"HDFRE"	"his"	"medals"	22	23	1032	"Ignorant of these distinctions , Commodus eagerly embraced the glorious resemblance , and styled himself ( as we still read on <b>his</b> <b>medals</b> ) the Roman Hercules . "	
+22357	"HDFRE"	"their"	"medals"	44	45	2357	"The feeble sovereigns of Osrhoene , placed on the dangerous verge of two contending empires , were attached from inclination to the Parthian cause ; but the superior power of Rome exacted from them a reluctant homage , which is still attested by <b>their</b> <b>medals</b> . "	
+9960	"PTB_WSJ"	"Banxquote"	"Mehl"	14	17	18085		
+5470	"PTB_WSJ"	"restaurant"	"menu"	4	7	859		
+9540	"PTB_WSJ"	"their"	"Mercedes-Benzes"	23	24	26639		
+8410	"PTB_WSJ"	"its"	"mill"	17	22	20207		
+8411	"PTB_WSJ"	"its"	"mill"	18	23	31422		
+9980	"PTB_WSJ"	"their"	"millions"	13	15	35928		
+8412	"PTB_WSJ"	"its"	"mills"	17	19	8986		
+8413	"PTB_WSJ"	"its"	"mills"	19	30	25925		
+8414	"PTB_WSJ"	"its"	"mine"	13	16	7116		
+8415	"PTB_WSJ"	"its"	"mine"	10	13	19276		
+8416	"PTB_WSJ"	"its"	"mine"	20	23	34205		
+8417	"PTB_WSJ"	"its"	"mines"	14	17	30477		
+9290	"PTB_WSJ"	"Olivetti"	"minicomputers"	13	16	27346		
+10058	"PTB_WSJ"	"its"	"minimill"	6	11	16046		
+10079	"PTB_WSJ"	"Our"	"model"	2	6	13718		
+20017	"HDFRE"	"his"	"models"	4	6	17	"In imitation of <b>his</b> classical <b>models</b> , Gibbon places Rome as the cardinal point from which his inquiries diverge , and to which they bear constant reference ; yet how immeasurable the space over which those inquiries range ; how complicated , how confused , how apparently inextricable the causes which tend to the decline of the Roman empire ! how countless the nations which swarm forth , in mingling and indistinct hordes , constantly changing the geographical limits -- incessantly confounding the natural boundaries ! "	
+9541	"PTB_WSJ"	"their"	"models"	6	9	13722		
+10031	"PTB_WSJ"	"challengers"	"monohull"	34	37	29798		
+10030	"PTB_WSJ"	"government"	"monopoly"	11	15	22332		
+10282	"PTB_WSJ"	"their"	"mortgages"	53	54	36170		
+9959	"PTB_WSJ"	"its"	"mural"	12	15	29815		
+10078	"PTB_WSJ"	"Their"	"museum"	1	2	4767		
+9637	"PTB_WSJ"	"his"	"mutts"	33	36	915		
+9805	"PTB_WSJ"	"Co."	"NBC"	10	12	4463		
+21044	"HDFRE"	"his"	"net"	24	25	1044	"If he missed the first throw , he was obliged to fly from the pursuit of the Secutor , till he had prepared <b>his</b> <b>net</b> for a second cast . "	
+10164	"PTB_WSJ"	"Bell"	"network"	7	9	33648		
+10066	"PTB_WSJ"	"company"	"network"	19	23	23007		
+10067	"PTB_WSJ"	"company"	"network"	24	28	27119		
+10068	"PTB_WSJ"	"FADA"	"network"	17	19	29617		
+10069	"PTB_WSJ"	"Inc."	"Network"	19	23	36685		
+10070	"PTB_WSJ"	"Inc."	"network"	14	17	37914		
+10033	"PTB_WSJ"	"its"	"network"	7	15	19565		
+10034	"PTB_WSJ"	"its"	"network"	5	12	20617		
+10035	"PTB_WSJ"	"its"	"network"	8	10	22384		
+10071	"PTB_WSJ"	"its"	"network"	8	10	8181		
+10072	"PTB_WSJ"	"its"	"network"	19	21	9022		
+10036	"PTB_WSJ"	"Kidder"	"network"	14	18	7973		
+10037	"PTB_WSJ"	"manufacturer"	"network"	15	19	20471		
+10038	"PTB_WSJ"	"my"	"network"	15	17	1897		
+10032	"PTB_WSJ"	"NASA"	"Network"	15	20	37592		
+10073	"PTB_WSJ"	"System"	"Network"	7	11	38185		
+10074	"PTB_WSJ"	"its"	"networks"	11	12	21296		
+10075	"PTB_WSJ"	"its"	"networks"	15	16	37583		
+10076	"PTB_WSJ"	"its"	"networks"	9	13	37830		
+10077	"PTB_WSJ"	"Saatchi"	"networks"	2	6	25249		
+9753	"PTB_WSJ"	"Bogart"	"nightclub"	3	5	21586		
+9780	"PTB_WSJ"	"its"	"No."	8	13	11284		
+10422	"JB"	"his"	"notes"	10	14	2230	"As Rikki-tikki went up the path , he heard <b>his</b> `` attention '' <b>notes</b> like a tiny dinner gong , and then the steady `` Ding-dong-tock ! "	
+9968	"PTB_WSJ"	"caller"	"number"	5	8	38207		
+9969	"PTB_WSJ"	"its"	"number"	21	23	38192		
+9970	"PTB_WSJ"	"its"	"number"	17	19	38208		
+9779	"PTB_WSJ"	"Thomson"	"number"	26	29	10684		
+9778	"PTB_WSJ"	"dependents"	"numbers"	7	11	26821		
+9777	"PTB_WSJ"	"his"	"numbers"	12	15	26352		
+9776	"PTB_WSJ"	"their"	"numbers"	6	8	26871		
+10423	"JB"	"our"	"nurseries"	7	8	1824	"Remember we 've been fighting for <b>our</b> <b>nurseries</b> , and that 's a thing you never did . "	
+10424	"JB"	"his"	"nursery"	9	10	1554	"He only wanted room by the sea for <b>his</b> <b>nursery</b> . "	
+10425	"JB"	"Teddy"	"nursery"	6	8	1925	"At nightfall he ran into <b>Teddy</b> 's <b>nursery</b> to watch how kerosene lamps were lighted , and when Teddy went to bed Rikki-tikki climbed up too . "	
+9971	"PTB_WSJ"	"acupuncturist"	"office"	21	23	23866		
+9972	"PTB_WSJ"	"Advertising"	"office"	18	20	21284		
+9973	"PTB_WSJ"	"Aetna"	"office"	29	35	10980		
+9974	"PTB_WSJ"	"Aetna"	"office"	8	10	10992		
+9975	"PTB_WSJ"	"ARCO"	"office"	2	5	29959		
+9589	"PTB_WSJ"	"assistant"	"office"	46	48	13181		
+9590	"PTB_WSJ"	"attorney"	"office"	4	6	8207		
+9591	"PTB_WSJ"	"attorney"	"office"	3	5	8215		
+9592	"PTB_WSJ"	"Attorney"	"office"	3	5	10095		
+9593	"PTB_WSJ"	"Attorney"	"office"	15	17	10097		
+9594	"PTB_WSJ"	"attorney"	"office"	6	8	11356		
+9595	"PTB_WSJ"	"attorney"	"office"	3	6	16931		
+9596	"PTB_WSJ"	"attorney"	"office"	6	9	16939		
+9597	"PTB_WSJ"	"Attorney"	"Office"	31	33	26877		
+9598	"PTB_WSJ"	"attorney"	"office"	37	39	26928		
+9599	"PTB_WSJ"	"attorney"	"office"	10	12	32460		
+9600	"PTB_WSJ"	"attorney"	"office"	23	25	35223		
+9601	"PTB_WSJ"	"attorney"	"office"	39	41	35842		
+9976	"PTB_WSJ"	"Ayer"	"office"	14	17	25281		
+9977	"PTB_WSJ"	"Bank"	"office"	6	11	30217		
+9978	"PTB_WSJ"	"Bennett"	"office"	6	8	29943		
+9979	"PTB_WSJ"	"broker"	"office"	9	11	20107		
+10039	"PTB_WSJ"	"Brown"	"office"	10	12	17853		
+10040	"PTB_WSJ"	"chairman"	"office"	9	11	13184		
+10041	"PTB_WSJ"	"Chamber"	"office"	20	25	19960		
+10099	"PTB_WSJ"	"city"	"Office"	2	4	32644		
+10100	"PTB_WSJ"	"company"	"office"	8	11	8758		
+10101	"PTB_WSJ"	"company"	"office"	5	7	26913		
+10102	"PTB_WSJ"	"company"	"office"	17	23	36519		
+9602	"PTB_WSJ"	"comptroller"	"office"	2	4	18416		
+9603	"PTB_WSJ"	"comptroller"	"office"	2	4	18417		
+9604	"PTB_WSJ"	"comptroller"	"office"	59	61	26895		
+9605	"PTB_WSJ"	"comptroller"	"office"	5	7	38602		
+9606	"PTB_WSJ"	"comptroller"	"office"	2	4	38605		
+9607	"PTB_WSJ"	"comptroller"	"office"	26	28	38656		
+9608	"PTB_WSJ"	"comptroller"	"office"	2	4	38658		
+10103	"PTB_WSJ"	"DARPA"	"office"	33	37	24968		
+10104	"PTB_WSJ"	"department"	"Office"	2	4	19041		
+10105	"PTB_WSJ"	"department"	"office"	17	19	24973		
+10106	"PTB_WSJ"	"director"	"office"	22	24	24469		
+10107	"PTB_WSJ"	"Dorfman"	"office"	27	29	22586		
+10108	"PTB_WSJ"	"Fidelity"	"office"	2	4	39059		
+9609	"PTB_WSJ"	"general"	"office"	15	17	910		
+9610	"PTB_WSJ"	"general"	"office"	14	16	975		
+9611	"PTB_WSJ"	"general"	"office"	4	6	10163		
+9612	"PTB_WSJ"	"General"	"Office"	10	12	17691		
+9613	"PTB_WSJ"	"General"	"office"	12	14	24714		
+9614	"PTB_WSJ"	"general"	"office"	7	9	26597		
+9615	"PTB_WSJ"	"general"	"office"	3	5	28349		
+9616	"PTB_WSJ"	"general"	"office"	27	29	28355		
+10109	"PTB_WSJ"	"Givaudan"	"office"	4	7	24790		
+10110	"PTB_WSJ"	"government"	"Office"	2	4	10796		
+10111	"PTB_WSJ"	"Hamilton"	"office"	25	28	35325		
+9617	"PTB_WSJ"	"her"	"office"	8	9	27669		
+9618	"PTB_WSJ"	"his"	"office"	11	12	919		
+9619	"PTB_WSJ"	"his"	"office"	12	13	952		
+9620	"PTB_WSJ"	"his"	"office"	22	27	1856		
+9621	"PTB_WSJ"	"his"	"office"	21	27	3299		
+9622	"PTB_WSJ"	"his"	"office"	35	36	4539		
+9623	"PTB_WSJ"	"his"	"office"	29	31	10918		
+9624	"PTB_WSJ"	"his"	"office"	4	5	11369		
+9625	"PTB_WSJ"	"his"	"office"	23	25	12387		
+9626	"PTB_WSJ"	"his"	"office"	7	8	13211		
+9627	"PTB_WSJ"	"his"	"office"	9	14	23268		
+9628	"PTB_WSJ"	"his"	"office"	27	29	27880		
+9629	"PTB_WSJ"	"his"	"office"	7	8	29876		
+9630	"PTB_WSJ"	"his"	"office"	14	15	29907		
+9631	"PTB_WSJ"	"his"	"office"	11	12	29908		
+9632	"PTB_WSJ"	"his"	"office"	13	15	29909		
+9633	"PTB_WSJ"	"his"	"office"	20	21	31774		
+9634	"PTB_WSJ"	"his"	"office"	13	14	36067		
+9635	"PTB_WSJ"	"his"	"office"	11	12	38733		
+9636	"PTB_WSJ"	"his"	"office"	2	3	39223		
+10112	"PTB_WSJ"	"Inc."	"office"	13	16	10290		
+10113	"PTB_WSJ"	"Inc."	"Office"	14	19	37827		
+10114	"PTB_WSJ"	"Inouye"	"office"	38	40	9402		
+10115	"PTB_WSJ"	"its"	"office"	31	33	4496		
+10116	"PTB_WSJ"	"its"	"office"	17	22	14001		
+10117	"PTB_WSJ"	"its"	"office"	6	8	14019		
+10118	"PTB_WSJ"	"its"	"office"	15	20	15960		
+10119	"PTB_WSJ"	"its"	"office"	14	18	21266		
+10120	"PTB_WSJ"	"its"	"office"	11	14	25250		
+10121	"PTB_WSJ"	"its"	"office"	13	15	30042		
+10122	"PTB_WSJ"	"its"	"office"	25	29	34495		
+10123	"PTB_WSJ"	"Iwai"	"office"	22	25	24816		
+10124	"PTB_WSJ"	"Lynch"	"office"	8	14	20117		
+10125	"PTB_WSJ"	"mayor"	"Office"	7	12	23916		
+10126	"PTB_WSJ"	"McKinsey"	"office"	22	27	4533		
+10127	"PTB_WSJ"	"Minister"	"Office"	24	26	23764		
+10128	"PTB_WSJ"	"my"	"office"	10	12	11222		
+10129	"PTB_WSJ"	"naczelnik"	"office"	6	8	17457		
+10130	"PTB_WSJ"	"Nixon"	"office"	4	6	12138		
+10131	"PTB_WSJ"	"Nixon"	"office"	2	4	12140		
+10132	"PTB_WSJ"	"republic"	"office"	16	19	12873		
+10133	"PTB_WSJ"	"resort"	"office"	9	12	27201		
+10134	"PTB_WSJ"	"SEC"	"office"	35	37	18		
+10135	"PTB_WSJ"	"Service"	"office"	8	10	39501		
+10136	"PTB_WSJ"	"state"	"Office"	5	7	5265		
+10137	"PTB_WSJ"	"subsidiary"	"office"	27	29	34489		
+10138	"PTB_WSJ"	"Sutro"	"office"	1	4	33177		
+10139	"PTB_WSJ"	"their"	"office"	20	21	35288		
+10140	"PTB_WSJ"	"Time"	"Office"	29	33	18426		
+9767	"PTB_WSJ"	"treasurer"	"office"	32	34	16931		
+9768	"PTB_WSJ"	"treasurer"	"office"	17	19	16939		
+9769	"PTB_WSJ"	"Wang"	"office"	7	13	36036		
+9770	"PTB_WSJ"	"Wang"	"office"	9	12	36062		
+9771	"PTB_WSJ"	"Wang"	"office"	28	31	36081		
+9772	"PTB_WSJ"	"Wellington"	"Office"	14	18	170		
+10141	"PTB_WSJ"	"whose"	"office"	25	26	38596		
+10142	"PTB_WSJ"	"Workers"	"office"	9	11	31101		
+10143	"PTB_WSJ"	"Young"	"office"	6	12	6598		
+10144	"PTB_WSJ"	"your"	"office"	5	6	12011		
+9773	"PTB_WSJ"	"attorneys"	"offices"	7	9	5274		
+9774	"PTB_WSJ"	"attorneys"	"offices"	19	21	5281		
+9775	"PTB_WSJ"	"attorneys"	"offices"	7	9	8199		
+10145	"PTB_WSJ"	"bank"	"offices"	13	16	30506		
+10146	"PTB_WSJ"	"Beers"	"offices"	16	19	16695		
+10147	"PTB_WSJ"	"companies"	"offices"	9	12	2151		
+10148	"PTB_WSJ"	"Corp."	"offices"	3	6	4572		
+10080	"PTB_WSJ"	"group"	"offices"	9	11	2904		
+10081	"PTB_WSJ"	"his"	"offices"	32	33	36360		
+10082	"PTB_WSJ"	"its"	"offices"	14	17	4497		
+10083	"PTB_WSJ"	"its"	"offices"	16	19	4572		
+10084	"PTB_WSJ"	"its"	"offices"	9	13	10224		
+10085	"PTB_WSJ"	"its"	"offices"	8	13	13994		
+10086	"PTB_WSJ"	"its"	"offices"	11	13	28497		
+10087	"PTB_WSJ"	"its"	"offices"	15	18	35989		
+10088	"PTB_WSJ"	"its"	"offices"	12	15	36000		
+10089	"PTB_WSJ"	"its"	"offices"	22	27	39510		
+10090	"PTB_WSJ"	"Kidder"	"offices"	7	11	7974		
+10091	"PTB_WSJ"	"our"	"offices"	8	10	4501		
+10092	"PTB_WSJ"	"our"	"offices"	8	10	15927		
+10093	"PTB_WSJ"	"their"	"offices"	19	20	26683		
+10094	"PTB_WSJ"	"their"	"offices"	13	14	27343		
+10095	"PTB_WSJ"	"their"	"offices"	16	17	30246		
+10096	"PTB_WSJ"	"their"	"offices"	24	25	32960		
+10097	"PTB_WSJ"	"whose"	"offices"	3	5	15989		
+10098	"PTB_WSJ"	"whose"	"offices"	5	6	32962		
+9718	"PTB_WSJ"	"GROUP"	"Ogilvy"	2	4	3777		
+8641	"PTB_WSJ"	"its"	"oilfield"	17	19	27214		
+9752	"PTB_WSJ"	"its"	"ones"	24	26	23757		
+9936	"PTB_WSJ"	"agency"	"operation"	12	16	6584		
+9937	"PTB_WSJ"	"artists"	"operation"	12	14	26665		
+9938	"PTB_WSJ"	"company"	"operation"	5	9	22144		
+9939	"PTB_WSJ"	"Drexel"	"operation"	22	27	20645		
+9940	"PTB_WSJ"	"Ekco"	"operation"	1	4	24777		
+9941	"PTB_WSJ"	"Exchange"	"operation"	7	11	13221		
+9942	"PTB_WSJ"	"his"	"operation"	2	3	27606		
+9943	"PTB_WSJ"	"his"	"operation"	22	23	36346		
+9944	"PTB_WSJ"	"his"	"operation"	7	9	36421		
+9945	"PTB_WSJ"	"its"	"operation"	24	26	7048		
+9946	"PTB_WSJ"	"Its"	"operation"	1	4	7950		
+9947	"PTB_WSJ"	"its"	"operation"	26	28	8282		
+9948	"PTB_WSJ"	"its"	"operation"	20	22	9374		
+9949	"PTB_WSJ"	"its"	"operation"	29	33	20187		
+9950	"PTB_WSJ"	"its"	"operation"	20	23	32549		
+9951	"PTB_WSJ"	"its"	"operation"	10	13	39320		
+9952	"PTB_WSJ"	"Merrill"	"operation"	31	34	4726		
+9953	"PTB_WSJ"	"Motorola"	"operation"	1	4	14014		
+9954	"PTB_WSJ"	"Saab"	"operation"	8	14	23299		
+9955	"PTB_WSJ"	"Sciences"	"operation"	15	17	19844		
+9956	"PTB_WSJ"	"Sears"	"operation"	8	13	16430		
+9957	"PTB_WSJ"	"Shell"	"operation"	23	28	19248		
+9958	"PTB_WSJ"	"whose"	"operation"	22	25	31320		
+9814	"PTB_WSJ"	"Amoco"	"operations"	1	8	29206		
+9815	"PTB_WSJ"	"BellSouth"	"operations"	3	6	7392		
+9816	"PTB_WSJ"	"BethForge"	"operations"	6	9	11489		
+9817	"PTB_WSJ"	"Bethlehem"	"operations"	11	13	11491		
+9818	"PTB_WSJ"	"Bethlehem"	"operations"	3	8	14575		
+9819	"PTB_WSJ"	"Colgate"	"operations"	5	8	36242		
+9820	"PTB_WSJ"	"company"	"operations"	5	8	5700		
+9821	"PTB_WSJ"	"company"	"operations"	22	24	12544		
+9822	"PTB_WSJ"	"company"	"operations"	27	30	14567		
+9823	"PTB_WSJ"	"company"	"operations"	8	11	16311		
+9824	"PTB_WSJ"	"company"	"operations"	32	35	17718		
+9825	"PTB_WSJ"	"company"	"operations"	25	28	20868		
+9826	"PTB_WSJ"	"company"	"operations"	20	24	25746		
+9827	"PTB_WSJ"	"company"	"operations"	18	21	28569		
+9828	"PTB_WSJ"	"Corp."	"operations"	28	33	4592		
+9829	"PTB_WSJ"	"exchange"	"operations"	11	14	33167		
+9830	"PTB_WSJ"	"Federal"	"operations"	12	15	22990		
+9831	"PTB_WSJ"	"firm"	"operations"	21	27	3001		
+9832	"PTB_WSJ"	"firm"	"operations"	11	13	7954		
+9833	"PTB_WSJ"	"firm"	"operations"	18	20	15013		
+9834	"PTB_WSJ"	"firms"	"operations"	16	19	24887		
+9835	"PTB_WSJ"	"Ford"	"operations"	7	11	12238		
+9836	"PTB_WSJ"	"Ford"	"Operations"	7	12	16232		
+9837	"PTB_WSJ"	"GM"	"operations"	33	36	8192		
+9838	"PTB_WSJ"	"GM"	"operations"	24	29	13115		
+9839	"PTB_WSJ"	"GM"	"operations"	11	13	13125		
+9840	"PTB_WSJ"	"Industries"	"operations"	10	13	2861		
+9841	"PTB_WSJ"	"its"	"operations"	10	12	702		
+9842	"PTB_WSJ"	"its"	"operations"	19	24	2132		
+9843	"PTB_WSJ"	"its"	"operations"	25	27	3395		
+9844	"PTB_WSJ"	"its"	"operations"	8	10	3437		
+9845	"PTB_WSJ"	"its"	"operations"	22	24	3973		
+9846	"PTB_WSJ"	"its"	"operations"	10	12	4222		
+9847	"PTB_WSJ"	"its"	"operations"	23	31	5858		
+9848	"PTB_WSJ"	"its"	"operations"	31	34	6619		
+9849	"PTB_WSJ"	"its"	"operations"	11	15	6669		
+9850	"PTB_WSJ"	"its"	"operations"	20	22	7356		
+9851	"PTB_WSJ"	"its"	"operations"	6	9	8691		
+9852	"PTB_WSJ"	"its"	"operations"	10	15	10020		
+9853	"PTB_WSJ"	"its"	"operations"	27	28	10409		
+9854	"PTB_WSJ"	"its"	"operations"	33	34	10738		
+9855	"PTB_WSJ"	"its"	"operations"	10	13	12096		
+9856	"PTB_WSJ"	"its"	"operations"	26	28	12222		
+9857	"PTB_WSJ"	"its"	"operations"	11	12	12265		
+9858	"PTB_WSJ"	"its"	"operations"	33	35	12360		
+9859	"PTB_WSJ"	"its"	"operations"	15	17	14621		
+9860	"PTB_WSJ"	"its"	"operations"	9	12	15115		
+9861	"PTB_WSJ"	"its"	"operations"	21	22	15212		
+9862	"PTB_WSJ"	"its"	"operations"	5	7	16075		
+9863	"PTB_WSJ"	"its"	"operations"	27	28	16105		
+9864	"PTB_WSJ"	"its"	"operations"	10	12	16229		
+9865	"PTB_WSJ"	"its"	"operations"	59	65	16305		
+9866	"PTB_WSJ"	"its"	"operations"	17	20	16793		
+9867	"PTB_WSJ"	"its"	"operations"	3	5	18062		
+9868	"PTB_WSJ"	"its"	"operations"	17	20	19560		
+9869	"PTB_WSJ"	"its"	"operations"	15	17	20829		
+9870	"PTB_WSJ"	"its"	"operations"	22	24	20851		
+9871	"PTB_WSJ"	"its"	"operations"	23	25	21155		
+9872	"PTB_WSJ"	"its"	"operations"	29	33	21672		
+9873	"PTB_WSJ"	"its"	"operations"	11	14	21684		
+9874	"PTB_WSJ"	"its"	"operations"	7	10	23787		
+9875	"PTB_WSJ"	"its"	"operations"	22	24	24090		
+9876	"PTB_WSJ"	"its"	"operations"	4	5	24095		
+9877	"PTB_WSJ"	"its"	"operations"	9	12	24279		
+9878	"PTB_WSJ"	"its"	"operations"	22	24	24497		
+9879	"PTB_WSJ"	"its"	"operations"	11	17	24985		
+9880	"PTB_WSJ"	"its"	"operations"	3	5	26004		
+9881	"PTB_WSJ"	"its"	"operations"	8	9	27722		
+9882	"PTB_WSJ"	"its"	"operations"	9	11	29453		
+9883	"PTB_WSJ"	"its"	"operations"	10	13	29974		
+9884	"PTB_WSJ"	"its"	"operations"	32	33	30438		
+9885	"PTB_WSJ"	"its"	"operations"	30	32	30472		
+9886	"PTB_WSJ"	"its"	"operations"	16	21	30568		
+9887	"PTB_WSJ"	"its"	"operations"	10	11	32108		
+9888	"PTB_WSJ"	"its"	"operations"	23	24	32141		
+9889	"PTB_WSJ"	"its"	"operations"	10	15	32153		
+9890	"PTB_WSJ"	"its"	"operations"	8	12	35372		
+9891	"PTB_WSJ"	"its"	"operations"	12	16	35785		
+9892	"PTB_WSJ"	"its"	"operations"	30	32	35991		
+9893	"PTB_WSJ"	"its"	"operations"	26	29	36983		
+9894	"PTB_WSJ"	"its"	"operations"	10	11	37711		
+9895	"PTB_WSJ"	"its"	"operations"	39	41	38544		
+9896	"PTB_WSJ"	"Lincoln"	"operations"	6	8	2701		
+9897	"PTB_WSJ"	"Ltd."	"operations"	19	23	10103		
+9898	"PTB_WSJ"	"Lufthansa"	"operations"	10	13	33129		
+9899	"PTB_WSJ"	"maker"	"operations"	31	34	23295		
+9900	"PTB_WSJ"	"maker"	"operations"	20	23	23311		
+9901	"PTB_WSJ"	"Mixte"	"operations"	15	18	21322		
+9902	"PTB_WSJ"	"MTM"	"operations"	22	24	6292		
+9903	"PTB_WSJ"	"Newport"	"operations"	10	13	874		
+9904	"PTB_WSJ"	"Nissan"	"operations"	4	7	1576		
+9905	"PTB_WSJ"	"Nissan"	"operations"	24	28	22657		
+9906	"PTB_WSJ"	"Occidental"	"operations"	29	35	21044		
+9907	"PTB_WSJ"	"our"	"operations"	26	28	17526		
+9908	"PTB_WSJ"	"our"	"operations"	18	20	23062		
+9909	"PTB_WSJ"	"our"	"operations"	7	8	31791		
+9910	"PTB_WSJ"	"P&G"	"operations"	8	11	17054		
+9911	"PTB_WSJ"	"Peck"	"operations"	12	15	7344		
+9912	"PTB_WSJ"	"Phillips"	"operations"	6	9	20993		
+9913	"PTB_WSJ"	"Pinkerton"	"operations"	7	9	2133		
+9914	"PTB_WSJ"	"Provigo"	"operations"	18	21	14627		
+9915	"PTB_WSJ"	"Reserve"	"operations"	18	22	37101		
+9916	"PTB_WSJ"	"Saab"	"operations"	25	28	23289		
+9917	"PTB_WSJ"	"Saab"	"operations"	18	21	25946		
+9918	"PTB_WSJ"	"Storer"	"operations"	19	22	18738		
+9919	"PTB_WSJ"	"their"	"operations"	14	16	2317		
+9920	"PTB_WSJ"	"their"	"operations"	12	15	6657		
+9921	"PTB_WSJ"	"their"	"operations"	26	27	8915		
+9922	"PTB_WSJ"	"their"	"operations"	12	15	10281		
+9923	"PTB_WSJ"	"their"	"operations"	17	20	12178		
+9924	"PTB_WSJ"	"their"	"operations"	19	20	20469		
+9925	"PTB_WSJ"	"their"	"operations"	13	16	23297		
+9926	"PTB_WSJ"	"their"	"operations"	18	19	30454		
+9927	"PTB_WSJ"	"their"	"operations"	15	16	32703		
+9928	"PTB_WSJ"	"their"	"operations"	14	15	34071		
+9929	"PTB_WSJ"	"their"	"operations"	23	24	34452		
+9930	"PTB_WSJ"	"their"	"operations"	6	9	34927		
+9931	"PTB_WSJ"	"Toshiba"	"operations"	14	17	4603		
+9932	"PTB_WSJ"	"Toys"	"operations"	15	18	31071		
+9933	"PTB_WSJ"	"Wardair"	"operations"	6	8	13291		
+9934	"PTB_WSJ"	"Weyerhaeuser"	"operations"	1	6	36958		
+9935	"PTB_WSJ"	"Whitbread"	"operations"	1	8	32172		
+9287	"PTB_WSJ"	"his"	"Orchard"	34	38	16890		
+9288	"PTB_WSJ"	"neighbors"	"orchards"	19	21	16888		
+10064	"PTB_WSJ"	"company"	"organizations"	18	22	27396		
+24606	"HDFRE"	"his"	"ornaments"	14	16	4606	"Twenty-four hours afterwards he was seen , pale , trembling , and without <b>his</b> Imperial <b>ornaments</b> , at Nicomedia , one hundred and sixty miles from the place of his defeat . "	
+21289	"HDFRE"	"their"	"ornaments"	29	31	1289	"Severus mounted the tribunal , sternly reproached them with perfidy and cowardice , dismissed them with ignominy from the trust which they had betrayed , despoiled them of <b>their</b> splendid <b>ornaments</b> , and banished them , on pain of death , to the distance of a hundred miles from the capital . "	
+8878	"PTB_WSJ"	"customers"	"outlets"	19	22	24776		
+8879	"PTB_WSJ"	"its"	"outlets"	8	10	6267		
+8880	"PTB_WSJ"	"its"	"outlets"	21	26	24427		
+9788	"PTB_WSJ"	"his"	"own"	11	12	2133		
+9787	"PTB_WSJ"	"its"	"own"	20	21	22937		
+9786	"PTB_WSJ"	"one"	"own"	8	10	7074		
+10429	"JB"	"our"	"own"	31	32	2041	"`` When the house is emptied of people , '' said Nagaina to her husband , `` he will have to go away , and then the garden will be <b>our</b> <b>own</b> again . "	
+9785	"PTB_WSJ"	"their"	"own"	38	39	12643		
+9784	"PTB_WSJ"	"your"	"own"	35	36	26109		
+9093	"PTB_WSJ"	"whose"	"ox"	13	14	10890		
+10432	"JB"	"Somebody"	"pack"	1	3	3021	"<b>Somebody</b> 's <b>pack</b> has slid from his back , Wish it were only mine ! "	
+10065	"PTB_WSJ"	"customer"	"package"	8	10	6799		
+10042	"PTB_WSJ"	"her"	"packages"	21	22	31099		
+5211	"PTB_WSJ"	"Oil"	"packaging"	4	8	7575		
+1798	"JB"	"our"	"packs"	27	28	2747	"`` We sat down -- a hundred of us , '' the camel went on , `` in a big square , and the men piled <b>our</b> <b>packs</b> and saddles , outside the square , and they fired over our backs , the men did , on all sides of the square . '' "	
+1799	"JB"	"his"	"pad"	24	26	2604	"He belonged to a screw-gun battery , for I could hear the rattle of the straps and rings and chains and things on <b>his</b> saddle <b>pad</b> . "	
+9802	"PTB_WSJ"	"his"	"paintings"	7	8	38721		
+24180	"HDFRE"	"Diocletian"	"palace"	5	7	4180	"For this account of <b>Diocletian</b> 's <b>palace</b> we are principally indebted to an ingenious artist of our own time and country , whom a very liberal curiosity carried into the heart of Dalmatia . "	
+9803	"PTB_WSJ"	"its"	"Palace"	16	19	14182		
+10333	"JB"	"king"	"palace"	53	55	259	"`` There is no one in the jungle that knows that I , Bagheera , carry that mark -- the mark of the collar ; and yet , Little Brother , I was born among men , and it was among men that my mother died -- in the cages of the <b>king</b> 's <b>palace</b> at Oodeypore . "	
+20695	"HDFRE"	"their"	"palace"	4	5	695	"Their habit , <b>their</b> <b>palace</b> , their table , were suited only to the rank of an opulent senator . "	
+20746	"HDFRE"	"their"	"palace"	7	8	746	"Caligula and Domitian were assassinated in <b>their</b> <b>palace</b> by their own domestics : * the convulsions which agitated Rome on the death of the former , were confined to the walls of the city . "	
+24948	"HDFRE"	"her"	"palaces"	44	45	4948	"All these were only so many preparatory and alarming signs of the great catastrophe of Rome , when the country of the Scipios and C??sars should be consumed by a flame from Heaven , and the city of the seven hills , with <b>her</b> <b>palaces</b> , her temples , and her triumphal arches , should be buried in a vast lake of fire and brimstone . "	
+10246	"PTB_WSJ"	"families"	"palazzi"	8	14	35941		
+9523	"PTB_WSJ"	"his"	"palms"	17	20	22679		
+9543	"PTB_WSJ"	"one"	"pantry"	16	18	39195		
+9801	"PTB_WSJ"	"her"	"papers"	17	18	10693		
+9588	"PTB_WSJ"	"Co."	"park"	26	30	19180		
+9557	"PTB_WSJ"	"its"	"part"	21	22	6366		
+8642	"PTB_WSJ"	"my"	"passport"	12	13	25317		
+9813	"PTB_WSJ"	"unit"	"patent"	26	28	25941		
+23052	"HDFRE"	"her"	"patrimony"	31	32	3052	"On the accession of Claudius , an old woman threw herself at his feet , and complained that a general of the late emperor had obtained an arbitrary grant of <b>her</b> <b>patrimony</b> . "	
+20522	"HDFRE"	"his"	"patrimony"	45	46	522	"His grandfather had suffered by the hands of justice , and Julius Atticus , his father , must have ended his life in poverty and contempt , had he not discovered an immense treasure buried under an old house , the last remains of <b>his</b> <b>patrimony</b> . "	
+21404	"HDFRE"	"his"	"patrimony"	65	67	1404	"The lawyers and historians concurred in teaching , that the Imperial authority was held , not by the delegated commission , but by the irrevocable resignation of the senate ; that the emperor was freed from the restraint of civil laws , could command by his arbitrary will the lives and fortunes of his subjects , and might dispose of the empire as of <b>his</b> private <b>patrimony</b> . "	
+23408	"HDFRE"	"his"	"patrimony"	17	19	3408	"He had twice been invested with the consular dignity , and enjoyed with elegance and sobriety <b>his</b> ample <b>patrimony</b> of between two and three millions sterling . "	
+23471	"HDFRE"	"his"	"patrimony"	11	13	3471	"When Tacitus was elected by the senate , he resigned <b>his</b> ample <b>patrimony</b> to the public service ; an act of generosity specious in appearance , but which evidently disclosed his intention of transmitting the empire to his descendants . "	
+22023	"HDFRE"	"their"	"patrimony"	29	30	2023	"An iniquitous sentence had been pronounced against some opulent youths of that country , the execution of which would have stripped them of far the greater part of <b>their</b> <b>patrimony</b> . "	
+25121	"HDFRE"	"their"	"patrimony"	60	61	5121	"The progress of the Christian religion relaxed , and gradually abolished , this generous institution , which , in hands less pure than those of the apostles , would too soon have been corrupted and abused by the returning selfishness of human nature ; and the converts who embraced the new religion were permitted to retain the possession of <b>their</b> <b>patrimony</b> , to receive legacies and inheritances , and to increase their separate property by all the lawful means of trade and industry "	
+9357	"PTB_WSJ"	"her"	"pennies"	25	26	17628		
+9528	"PTB_WSJ"	"its"	"pesetas"	32	36	8161		
+24963	"HDFRE"	"his"	"philosophers"	18	19	4963	"The careless Polytheist , assailed by new and unexpected terrors , against which neither his priests nor <b>his</b> <b>philosophers</b> could afford him any certain protection , was very frequently terrified and subdued by the menace of eternal tortures . "	
+9353	"PTB_WSJ"	"her"	"phone"	31	32	9889		
+9354	"PTB_WSJ"	"Torrijos"	"phone"	7	10	36381		
+9355	"PTB_WSJ"	"Our"	"phones"	1	2	15167		
+9356	"PTB_WSJ"	"their"	"phones"	10	11	9894		
+8643	"PTB_WSJ"	"his"	"pickup"	9	11	238		
+9286	"PTB_WSJ"	"its"	"pictures"	30	32	21296		
+9766	"PTB_WSJ"	"his"	"piece"	11	13	23158		
+10407	"JB"	"thy"	"pillow"	9	10	1539	"Where billow meets billow , then soft be <b>thy</b> <b>pillow</b> , Ah , weary wee flipperling , curl at thy ease ! "	
+20305	"HDFRE"	"his"	"pilum"	8	9	305	"As soon as the Roman had darted <b>his</b> <b>pilum</b> , he drew his sword , and rushed forwards to close with the enemy . "	
+9799	"PTB_WSJ"	"Exchange"	"pit"	12	22	39658		
+9796	"PTB_WSJ"	"its"	"pit"	8	16	38470		
+9800	"PTB_WSJ"	"exchange"	"pits"	28	34	8910		
+10416	"JB"	"father"	"place"	24	26	2279	"He was ten years old , the eldest son of Big Toomai , and , according to custom , he would take his <b>father</b> 's <b>place</b> on Kala Nag 's neck when he grew up , and would handle the heavy iron ankus , the elephant goad , that had been worn smooth by his father , and his grandfather , and his great-grandfather . "	
+10417	"JB"	"his"	"place"	43	44	142	"The cubs tumbled over each other in the center of the circle where their mothers and fathers sat , and now and again a senior wolf would go quietly up to a cub , look at him carefully , and return to <b>his</b> <b>place</b> on noiseless feet . "	
+10418	"JB"	"his"	"place"	3	4	216	"He took <b>his</b> <b>place</b> at the Council Rock , too , when the Pack met , and there he discovered that if he stared hard at any wolf , the wolf would be forced to drop his eyes , and so he used to stare for fun . "	
+10419	"JB"	"his"	"place"	5	7	383	"Let him go to <b>his</b> own <b>place</b> . '' "	
+10420	"JB"	"his"	"place"	37	39	404	"But for the sake of the Honor of the Pack , -- a little matter that by being without a leader ye have forgotten , -- I promise that if ye let the man-cub go to <b>his</b> own <b>place</b> , I will not , when my time comes to die , bare one tooth against ye . "	
+10421	"JB"	"man-cub"	"place"	24	26	403	"It is certain that I must die , and my life is of no worth , or I would offer that in the <b>man-cub</b> 's <b>place</b> . "	
+9705	"PTB_WSJ"	"Airlines"	"planes"	13	16	14616		
+9285	"PTB_WSJ"	"our"	"planet"	10	11	36613		
+8353	"PTB_WSJ"	"company"	"plant"	9	12	1515		
+8354	"PTB_WSJ"	"company"	"plant"	12	15	5351		
+8355	"PTB_WSJ"	"company"	"plant"	21	26	6736		
+8356	"PTB_WSJ"	"company"	"plant"	19	22	19504		
+8357	"PTB_WSJ"	"company"	"plant"	12	14	39275		
+8358	"PTB_WSJ"	"Corp."	"plant"	3	5	8137		
+8359	"PTB_WSJ"	"Corp."	"plant"	9	13	39309		
+8360	"PTB_WSJ"	"DAF"	"plant"	36	39	31917		
+8361	"PTB_WSJ"	"Detrex"	"plant"	31	34	22125		
+8362	"PTB_WSJ"	"Digital"	"plant"	5	7	27704		
+8363	"PTB_WSJ"	"its"	"plant"	34	41	2431		
+8364	"PTB_WSJ"	"its"	"plant"	16	21	3434		
+8365	"PTB_WSJ"	"its"	"plant"	6	10	6709		
+8366	"PTB_WSJ"	"its"	"plant"	18	24	7309		
+8367	"PTB_WSJ"	"its"	"plant"	21	25	8502		
+8368	"PTB_WSJ"	"its"	"plant"	9	15	11275		
+8369	"PTB_WSJ"	"its"	"plant"	18	21	11278		
+8370	"PTB_WSJ"	"its"	"plant"	11	17	11280		
+8371	"PTB_WSJ"	"its"	"plant"	22	25	11982		
+8372	"PTB_WSJ"	"its"	"plant"	16	17	12370		
+8373	"PTB_WSJ"	"its"	"plant"	15	16	13491		
+8374	"PTB_WSJ"	"its"	"plant"	38	43	18100		
+8375	"PTB_WSJ"	"its"	"plant"	34	35	29404		
+8376	"PTB_WSJ"	"its"	"plant"	20	26	30923		
+8377	"PTB_WSJ"	"its"	"plant"	15	21	30938		
+8378	"PTB_WSJ"	"its"	"Plant"	12	15	30944		
+8379	"PTB_WSJ"	"its"	"plant"	19	22	32706		
+8380	"PTB_WSJ"	"its"	"plant"	7	10	32709		
+8381	"PTB_WSJ"	"its"	"plant"	7	11	32839		
+8382	"PTB_WSJ"	"its"	"plant"	40	42	34495		
+8383	"PTB_WSJ"	"its"	"plant"	25	28	34522		
+8384	"PTB_WSJ"	"its"	"plant"	13	16	39217		
+8385	"PTB_WSJ"	"Nissan"	"plant"	5	9	1577		
+8386	"PTB_WSJ"	"our"	"plant"	20	21	8687		
+8387	"PTB_WSJ"	"Renault"	"plant"	28	31	31917		
+8388	"PTB_WSJ"	"S.A."	"plant"	4	7	19502		
+9284	"PTB_WSJ"	"his"	"planter"	18	19	31119		
+8389	"PTB_WSJ"	"area"	"plants"	20	25	34920		
+8390	"PTB_WSJ"	"company"	"plants"	5	11	6732		
+8391	"PTB_WSJ"	"her"	"plants"	12	13	11059		
+8392	"PTB_WSJ"	"its"	"plants"	4	5	710		
+8393	"PTB_WSJ"	"its"	"plants"	23	25	4239		
+8394	"PTB_WSJ"	"its"	"plants"	12	16	4247		
+8395	"PTB_WSJ"	"its"	"plants"	25	28	6270		
+8396	"PTB_WSJ"	"its"	"plants"	9	10	6466		
+8397	"PTB_WSJ"	"its"	"plants"	14	15	8100		
+8398	"PTB_WSJ"	"its"	"plants"	10	30	11282		
+8399	"PTB_WSJ"	"its"	"plants"	27	30	16245		
+8400	"PTB_WSJ"	"its"	"plants"	6	17	30943		
+8401	"PTB_WSJ"	"its"	"plants"	32	33	32722		
+8402	"PTB_WSJ"	"its"	"plants"	26	28	34534		
+8403	"PTB_WSJ"	"nation"	"plants"	5	8	2176		
+8404	"PTB_WSJ"	"their"	"plants"	21	22	33638		
+8405	"PTB_WSJ"	"their"	"plants"	11	13	39290		
+9719	"PTB_WSJ"	"Timken"	"plants"	30	37	30326		
+9781	"PTB_WSJ"	"his"	"plate"	16	17	7008		
+9782	"PTB_WSJ"	"our"	"plate"	8	9	34374		
+10406	"JB"	"his"	"platter"	27	29	1174	"The monkeys sat and talked in the upper branches , and there was a hole under the platform where a cobra lived , and he had <b>his</b> little <b>platter</b> of milk every night because he was sacred ; and the old men sat around the tree and talked , and pulled at the big huqas ( the water-pipes ) till far into the night . "	
+1823	"JB"	"our"	"playground"	4	5	1876	"The platforms of <b>our</b> <b>playground</b> , all shining smooth and worn ! "	
+1824	"JB"	"man"	"plaything"	25	27	263	"They fed me behind bars from an iron pan till one night I felt that I was Bagheera -- the Panther -- and no <b>man</b> 's <b>plaything</b> , and I broke the silly lock with one blow of my paw and came away . "	
+9717	"PTB_WSJ"	"Group"	"Plaza"	9	13	23932		
+9704	"PTB_WSJ"	"Murdoch"	"PLC"	6	10	14898		
+10332	"JB"	"their"	"pockets"	13	14	2961	"Most of the white men , I know , have things in <b>their</b> <b>pockets</b> , '' said the troop-horse . "	
+9352	"PTB_WSJ"	"their"	"pockets"	25	26	38306		
+10413	"JB"	"my"	"pole"	4	7	2611	"( That was <b>my</b> broken tent <b>pole</b> , and I was very glad to know it. ) `` Shall we run on ? '' "	
+20441	"HDFRE"	"her"	"policy"	5	7	441	"The republic gloried in <b>her</b> generous <b>policy</b> , and was frequently rewarded by the merit and services of her adopted sons . "	
+20656	"HDFRE"	"his"	"policy"	13	14	656	"It was more agreeable to his temper , as well as to <b>his</b> <b>policy</b> , to reign under the venerable names of ancient magistracy , and artfully to collect , in his own person , all the scattered rays of civil jurisdiction . "	
+24770	"HDFRE"	"his"	"policy"	25	26	4770	"Constantia , his wife , and the sister of Constantine , interceded with her brother in favor of her husband , and obtained from <b>his</b> <b>policy</b> , rather than from his compassion , a solemn promise , confirmed by an oath , that after the sacrifice of Martinianus , and the resignation of the purple , Licinius himself should be permitted to pass the remainder of this life in peace and affluence . "	
+22184	"HDFRE"	"Their"	"policy"	1	2	2184	"<b>Their</b> <b>policy</b> was effectual , but it proved fatal both to their emperors and to themselves . "	
+22393	"HDFRE"	"their"	"policy"	20	24	2393	"Till the last period of the Persian monarchy , his code of laws was respected as the groundwork of <b>their</b> civil and religious <b>policy</b> . "	
+22731	"HDFRE"	"their"	"policy"	19	20	2731	"After the wealth of nations had centred in Rome , the emperors displayed their greatness , and even <b>their</b> <b>policy</b> , by the regular exercise of a steady and moderate liberality towards the allies of the state . "	
+25072	"HDFRE"	"their"	"policy"	32	34	5072	"The hostile disputants of Rome , of Paris , of Oxford , and of Geneva , have alike struggled to reduce the primitive and apostolic model to the respective standards of <b>their</b> own <b>policy</b> . "	
+9280	"PTB_WSJ"	"farmers"	"ponds"	8	10	26792		
+9281	"PTB_WSJ"	"pol"	"pool"	10	12	23112		
+9282	"PTB_WSJ"	"Virginia"	"pool"	20	24	16937		
+9283	"PTB_WSJ"	"their"	"pools"	29	31	33833		
+7806	"PTB_WSJ"	"Bank"	"portfolio"	10	14	19539		
+7807	"PTB_WSJ"	"Bank"	"portfolio"	24	26	19542		
+7808	"PTB_WSJ"	"bank"	"portfolio"	2	7	27747		
+7809	"PTB_WSJ"	"Board"	"Portfolio"	4	8	14925		
+7810	"PTB_WSJ"	"Cable"	"portfolio"	10	12	5508		
+7811	"PTB_WSJ"	"City"	"portfolio"	2	4	31849		
+7812	"PTB_WSJ"	"Co."	"portfolio"	39	47	22518		
+7813	"PTB_WSJ"	"Columbia"	"portfolio"	11	19	14748		
+7814	"PTB_WSJ"	"company"	"portfolio"	34	40	16412		
+7815	"PTB_WSJ"	"company"	"portfolio"	23	26	18558		
+7801	"PTB_WSJ"	"couple"	"portfolio"	12	14	26472		
+7802	"PTB_WSJ"	"couple"	"portfolio"	5	7	26475		
+7803	"PTB_WSJ"	"couple"	"portfolio"	28	30	26477		
+7804	"PTB_WSJ"	"couple"	"portfolio"	10	12	26483		
+7816	"PTB_WSJ"	"Exterior"	"portfolio"	9	13	8161		
+7817	"PTB_WSJ"	"firm"	"portfolio"	11	14	13721		
+7818	"PTB_WSJ"	"fund"	"portfolio"	13	15	13816		
+7819	"PTB_WSJ"	"fund"	"portfolio"	15	17	35252		
+7820	"PTB_WSJ"	"his"	"portfolio"	18	19	10119		
+7821	"PTB_WSJ"	"his"	"portfolio"	4	5	25040		
+7822	"PTB_WSJ"	"Interstate"	"portfolio"	16	19	24061		
+7823	"PTB_WSJ"	"investor"	"portfolio"	6	8	28206		
+7824	"PTB_WSJ"	"investors"	"portfolio"	7	9	39726		
+7825	"PTB_WSJ"	"its"	"portfolio"	37	40	2486		
+7826	"PTB_WSJ"	"its"	"portfolio"	4	6	2487		
+7827	"PTB_WSJ"	"its"	"portfolio"	2	3	6895		
+7828	"PTB_WSJ"	"its"	"portfolio"	10	12	6985		
+7829	"PTB_WSJ"	"its"	"portfolio"	5	6	13696		
+7830	"PTB_WSJ"	"its"	"portfolio"	25	28	13704		
+7831	"PTB_WSJ"	"its"	"portfolio"	13	14	13805		
+7832	"PTB_WSJ"	"its"	"portfolio"	10	12	14749		
+7833	"PTB_WSJ"	"its"	"portfolio"	7	11	14772		
+7834	"PTB_WSJ"	"its"	"portfolio"	21	22	16997		
+7835	"PTB_WSJ"	"its"	"portfolio"	21	25	18098		
+7836	"PTB_WSJ"	"its"	"portfolio"	36	37	21684		
+7837	"PTB_WSJ"	"its"	"portfolio"	23	26	22513		
+7838	"PTB_WSJ"	"its"	"portfolio"	14	20	26327		
+7839	"PTB_WSJ"	"its"	"portfolio"	20	22	28850		
+7840	"PTB_WSJ"	"its"	"portfolio"	24	26	33491		
+7841	"PTB_WSJ"	"its"	"portfolio"	24	26	34417		
+7842	"PTB_WSJ"	"its"	"portfolio"	37	38	35890		
+7843	"PTB_WSJ"	"its"	"portfolio"	15	17	36167		
+7844	"PTB_WSJ"	"its"	"portfolio"	4	7	39145		
+7845	"PTB_WSJ"	"manager"	"portfolio"	12	14	27488		
+7846	"PTB_WSJ"	"person"	"portfolio"	6	9	26468		
+7847	"PTB_WSJ"	"Philippines"	"portfolio"	10	13	7995		
+7848	"PTB_WSJ"	"Pont"	"portfolio"	7	10	1974		
+7849	"PTB_WSJ"	"Renaissance"	"portfolio"	6	8	13700		
+7850	"PTB_WSJ"	"Renaissance"	"portfolio"	13	15	13707		
+7851	"PTB_WSJ"	"Stone"	"portfolio"	2	6	6361		
+7852	"PTB_WSJ"	"their"	"portfolio"	24	26	26539		
+7853	"PTB_WSJ"	"their"	"portfolio"	11	13	28811		
+7854	"PTB_WSJ"	"Vanguard"	"Portfolio"	1	9	11114		
+7855	"PTB_WSJ"	"your"	"portfolio"	26	27	6245		
+7856	"PTB_WSJ"	"your"	"portfolio"	14	15	26453		
+7857	"PTB_WSJ"	"your"	"portfolio"	10	12	26506		
+7858	"PTB_WSJ"	"your"	"portfolio"	38	39	31178		
+7859	"PTB_WSJ"	"bank"	"portfolios"	12	14	28284		
+7860	"PTB_WSJ"	"clients"	"portfolios"	16	18	2593		
+7861	"PTB_WSJ"	"clients"	"portfolios"	17	19	26467		
+7862	"PTB_WSJ"	"firm"	"portfolios"	29	32	39037		
+7863	"PTB_WSJ"	"investors"	"portfolios"	28	30	28186		
+7864	"PTB_WSJ"	"their"	"portfolios"	8	9	8435		
+7865	"PTB_WSJ"	"their"	"portfolios"	10	11	9078		
+7866	"PTB_WSJ"	"their"	"portfolios"	10	12	22512		
+7867	"PTB_WSJ"	"their"	"portfolios"	18	19	24381		
+7868	"PTB_WSJ"	"their"	"portfolios"	12	14	28242		
+7869	"PTB_WSJ"	"their"	"portfolios"	14	15	28256		
+7870	"PTB_WSJ"	"their"	"portfolios"	16	17	28798		
+7871	"PTB_WSJ"	"their"	"portfolios"	9	10	28826		
+7872	"PTB_WSJ"	"their"	"portfolios"	27	28	32607		
+7873	"PTB_WSJ"	"their"	"portfolios"	21	23	33806		
+23789	"HDFRE"	"his"	"portion"	14	16	3789	"Italy and Africa were considered as the department of Maximian ; and for <b>his</b> peculiar <b>portion</b> , Diocletian reserved Thrace , Egypt , and the rich countries of Asia . "	
+10414	"JB"	"his"	"portion"	41	42	2437	"It is a very soothing lullaby , and the first verse says : Shiv , who poured the harvest and made the winds to blow , Sitting at the doorways of a day of long ago , Gave to each <b>his</b> <b>portion</b> , food and toil and fate , From the King upon the guddee to the Beggar at the gate . "	
+10415	"JB"	"his"	"portion"	44	45	2573	"Shiv and the Grasshopper ( The song that Toomai 's mother sang to the baby ) Shiv , who poured the harvest and made the winds to blow , Sitting at the doorways of a day of long ago , Gave to each <b>his</b> <b>portion</b> , food and toil and fate , From the King upon the guddee to the Beggar at the gate . "	
+9765	"PTB_WSJ"	"fund"	"position"	2	5	24399		
+9764	"PTB_WSJ"	"his"	"position"	27	29	13832		
+9762	"PTB_WSJ"	"its"	"position"	23	26	30173		
+9763	"PTB_WSJ"	"its"	"position"	6	8	15492		
+9760	"PTB_WSJ"	"their"	"position"	5	7	39047		
+9761	"PTB_WSJ"	"their"	"position"	4	6	4079		
+9759	"PTB_WSJ"	"its"	"positions"	19	20	35156		
+9754	"PTB_WSJ"	"their"	"positions"	28	30	25202		
+9755	"PTB_WSJ"	"their"	"positions"	4	6	13826		
+9756	"PTB_WSJ"	"their"	"positions"	24	25	18661		
+9757	"PTB_WSJ"	"their"	"positions"	33	34	21360		
+9758	"PTB_WSJ"	"their"	"positions"	27	28	21362		
+8876	"PTB_WSJ"	"their"	"possession"	20	22	13014		
+24620	"HDFRE"	"her"	"possessions"	7	9	4620	"After the death of Galerius , <b>her</b> ample <b>possessions</b> provoked the avarice , and her personal attractions excited the desires , of his successor , Maximin . "	
+22500	"HDFRE"	"our"	"possessions"	11	12	2500	"Their poverty secured their freedom , since our desires and <b>our</b> <b>possessions</b> are the strongest fetters of despotism . "	
+22520	"HDFRE"	"their"	"possessions"	12	13	2520	"A people thus jealous of their persons , and careless of <b>their</b> <b>possessions</b> , must have been totally destitute of industry and the arts , but animated with a high sense of honor and independence . "	
+8877	"PTB_WSJ"	"their"	"possessions"	19	20	23871		
+10412	"JB"	"his"	"pot"	10	12	339	"All that day Mowgli sat in the cave tending <b>his</b> fire <b>pot</b> and dipping dry branches into it to see how they looked . "	
+9555	"PTB_WSJ"	"Inc."	"Press"	11	16	4010		
+9556	"PTB_WSJ"	"NBC-TV"	"Press"	14	19	8791		
+1792	"JB"	"their"	"prisoner"	22	23	638	"So , bounding and crashing and whooping and yelling , the whole tribe of Bandar-log swept along the tree-roads with Mowgli <b>their</b> <b>prisoner</b> . "	
+9279	"PTB_WSJ"	"its"	"probe"	24	27	37583		
+10056	"PTB_WSJ"	"his"	"program"	8	10	18198		
+7874	"PTB_WSJ"	"B.A.T"	"properties"	16	21	29423		
+7875	"PTB_WSJ"	"its"	"properties"	10	14	2619		
+7876	"PTB_WSJ"	"its"	"properties"	9	10	2665		
+7877	"PTB_WSJ"	"its"	"properties"	9	12	7356		
+7878	"PTB_WSJ"	"its"	"properties"	29	30	9757		
+7879	"PTB_WSJ"	"its"	"properties"	18	20	18288		
+7880	"PTB_WSJ"	"its"	"properties"	22	25	19232		
+7881	"PTB_WSJ"	"its"	"properties"	10	11	21199		
+7882	"PTB_WSJ"	"its"	"properties"	19	20	21684		
+7883	"PTB_WSJ"	"its"	"properties"	15	18	32094		
+7884	"PTB_WSJ"	"RTC"	"properties"	7	9	16823		
+7885	"PTB_WSJ"	"Tana"	"properties"	10	12	23180		
+7886	"PTB_WSJ"	"their"	"properties"	30	32	16487		
+7887	"PTB_WSJ"	"whose"	"properties"	13	15	21665		
+7888	"PTB_WSJ"	"family"	"property"	16	18	10279		
+20493	"HDFRE"	"her"	"property"	37	38	493	"The same number of four hundred belonged to an estate which an African widow , of a very private condition , resigned to her son , whilst she reserved for herself a much larger share of <b>her</b> <b>property</b> . "	
+20634	"HDFRE"	"his"	"property"	48	49	634	"The dictator , or consul , had a right to command the service of the Roman youth ; and to punish an obstinate or cowardly disobedience by the most severe and ignominious penalties , by striking the offender out of the list of citizens , by confiscating <b>his</b> <b>property</b> , and by selling his person into slavery . "	
+21370	"HDFRE"	"his"	"property"	7	8	1370	"Severus considered the Roman empire as <b>his</b> <b>property</b> , and had no sooner secured the possession , than he bestowed his care on the cultivation and improvement of so valuable an acquisition . "	
+22899	"HDFRE"	"his"	"property"	30	31	2899	"Arrayed in his sacerdotal robes , he appeared at the head of a great body of fanatic peasants , armed only with slings , and defended his god and <b>his</b> <b>property</b> from the sacrilegious hands of the followers of Zoroaster . "	
+7889	"PTB_WSJ"	"his"	"property"	8	9	27639		
+7890	"PTB_WSJ"	"his"	"property"	37	38	30005		
+7891	"PTB_WSJ"	"its"	"property"	27	29	9760		
+7892	"PTB_WSJ"	"its"	"property"	44	47	34208		
+22466	"HDFRE"	"our"	"property"	16	17	2466	"The value of money has been settled by general consent to express our wants and <b>our</b> <b>property</b> , as letters were invented to express our ideas ; and both these institutions , by giving a more active energy to the powers and passions of human nature , have contributed to multiply the objects they were designed to represent . "	
+20164	"HDFRE"	"their"	"property"	15	17	164	"Latin. l. iii. c. 6 ) concerning their number , their names , and <b>their</b> respective <b>property</b> , that for the most part I have quoted them without distinction , under the general and well-known title of the Augustan History . "	
+24297	"HDFRE"	"their"	"property"	24	25	4297	"Even when the spirit of freedom had been utterly extinguished , the tamest subjects have sometimes ventured to resist an unprecedented invasion of <b>their</b> <b>property</b> ; but on this occasion the injury was aggravated by the insult , and the sense of private interest was quickened by that of national honor . "	
+24586	"HDFRE"	"their"	"property"	12	13	4586	"The senators , according to the declaration which was required of <b>their</b> <b>property</b> , were divided into several classes . "	
+25122	"HDFRE"	"their"	"property"	72	74	5122	"The progress of the Christian religion relaxed , and gradually abolished , this generous institution , which , in hands less pure than those of the apostles , would too soon have been corrupted and abused by the returning selfishness of human nature ; and the converts who embraced the new religion were permitted to retain the possession of their patrimony , to receive legacies and inheritances , and to increase <b>their</b> separate <b>property</b> by all the lawful means of trade and industry "	
+9554	"PTB_WSJ"	"his"	"Protection"	25	28	2128		
+23957	"HDFRE"	"his"	"purple"	8	9	3957	"The haughtiest of men , clothed in <b>his</b> <b>purple</b> , but humbled by the sense of his fault and misfortune , was obliged to follow the emperor 's chariot above a mile on foot , and to exhibit , before the whole court , the spectacle of his disgrace . "	
+24134	"HDFRE"	"his"	"purple"	9	10	4134	"As soon as he had divested himself of <b>his</b> <b>purple</b> , he withdrew from the gazing multitude ; and traversing the city in a covered chariot , proceeded , without delay , to the favorite retirement which he had chosen in his native country of Dalmatia . "	
+24775	"HDFRE"	"his"	"purple"	14	15	4775	"Licinius solicited and accepted the pardon of his offences , laid himself and <b>his</b> <b>purple</b> at the feet of his lord and master , was raised from the ground with insulting pity , was admitted the same day to the Imperial banquet , and soon afterwards was sent away to Thessalonica , which had been chosen for the place of his confinement . "	
+24435	"HDFRE"	"their"	"purple"	20	21	4435	"He had no sooner expired in his palace of Nicomedia , than the two emperors who were indebted for <b>their</b> <b>purple</b> to his favors , began to collect their forces , with the intention either of disputing , or of dividing , the dominions which he had left without a master . "	
+9272	"PTB_WSJ"	"Shere"	"purse"	24	26	853		
+9273	"PTB_WSJ"	"their"	"purses"	25	26	16658		
+9274	"PTB_WSJ"	"their"	"purses"	33	34	22886		
+10330	"JB"	"his"	"quarters"	19	20	25	"Father Wolf began angrily -- '' By the Law of the Jungle he has no right to change <b>his</b> <b>quarters</b> without due warning . "	
+10331	"JB"	"his"	"quarters"	54	56	161	"Then the only other creature who is allowed at the Pack Council -- Baloo , the sleepy brown bear who teaches the wolf cubs the Law of the Jungle : old Baloo , who can come and go where he pleases because he eats only nuts and roots and honey -- rose upon <b>his</b> hind <b>quarters</b> and grunted . "	
+8874	"PTB_WSJ"	"D.T."	"queen"	3	5	20084		
+8875	"PTB_WSJ"	"its"	"queen"	20	21	20079		
+23260	"HDFRE"	"their"	"quivers"	14	15	3260	"The light infantry , in the mean time , when they had exhausted <b>their</b> <b>quivers</b> , remaining without protection against a closer onset , exposed their naked sides to the swords of the legions . "	
+9350	"PTB_WSJ"	"its"	"railroad"	4	5	2643		
+9351	"PTB_WSJ"	"its"	"Railroad"	4	7	29591		
+9700	"PTB_WSJ"	"their"	"ranches"	25	26	26231		
+9750	"PTB_WSJ"	"Corp."	"Records"	47	50	3686		
+9751	"PTB_WSJ"	"Corp."	"Records"	9	12	28573		
+9798	"PTB_WSJ"	"GOP"	"redoubt"	25	28	34445		
+7893	"PTB_WSJ"	"its"	"refineries"	19	20	10576		
+7894	"PTB_WSJ"	"their"	"refineries"	35	36	34926		
+7895	"PTB_WSJ"	"Co."	"refinery"	27	29	8727		
+7896	"PTB_WSJ"	"company"	"refinery"	25	27	21031		
+7897	"PTB_WSJ"	"government"	"refinery"	34	38	8012		
+7898	"PTB_WSJ"	"its"	"refinery"	37	39	9760		
+7899	"PTB_WSJ"	"its"	"refinery"	29	30	34177		
+7900	"PTB_WSJ"	"its"	"refinery"	13	14	34498		
+7901	"PTB_WSJ"	"Tesoro"	"refinery"	18	20	20508		
+10430	"JB"	"his"	"reservation"	44	45	1560	"Sea Catch had just finished his forty-fifth fight one spring when Matkah , his soft , sleek , gentle-eyed wife , came up out of the sea , and he caught her by the scruff of the neck and dumped her down on <b>his</b> <b>reservation</b> , saying gruffly : `` Late as usual . "	
+7902	"PTB_WSJ"	"city"	"reserve"	5	11	30245		
+7903	"PTB_WSJ"	"its"	"reserve"	11	12	28291		
+7904	"PTB_WSJ"	"its"	"reserve"	7	8	31247		
+7905	"PTB_WSJ"	"its"	"reserve"	7	8	31249		
+7906	"PTB_WSJ"	"its"	"reserve"	16	17	31996		
+7907	"PTB_WSJ"	"its"	"reserve"	4	7	35998		
+7908	"PTB_WSJ"	"its"	"reserve"	37	38	36968		
+7909	"PTB_WSJ"	"its"	"reserve"	5	7	36995		
+7910	"PTB_WSJ"	"your"	"reserve"	5	7	27001		
+7911	"PTB_WSJ"	"CBS"	"reserves"	35	39	15755		
+7912	"PTB_WSJ"	"company"	"reserves"	6	9	36566		
+7913	"PTB_WSJ"	"field"	"reserves"	7	10	9769		
+7914	"PTB_WSJ"	"its"	"reserves"	24	28	2486		
+7915	"PTB_WSJ"	"its"	"reserves"	7	9	10229		
+7916	"PTB_WSJ"	"its"	"reserves"	7	9	12268		
+7917	"PTB_WSJ"	"its"	"reserves"	40	41	16305		
+7918	"PTB_WSJ"	"its"	"reserves"	17	18	18281		
+7919	"PTB_WSJ"	"its"	"reserves"	4	6	22943		
+7920	"PTB_WSJ"	"its"	"reserves"	8	9	22945		
+7921	"PTB_WSJ"	"its"	"reserves"	14	19	23181		
+7922	"PTB_WSJ"	"its"	"reserves"	16	18	24807		
+7923	"PTB_WSJ"	"its"	"reserves"	20	22	25920		
+7924	"PTB_WSJ"	"its"	"reserves"	30	31	33494		
+7925	"PTB_WSJ"	"its"	"reserves"	6	8	36167		
+7926	"PTB_WSJ"	"its"	"reserves"	20	26	36167		
+7927	"PTB_WSJ"	"its"	"reserves"	9	10	36997		
+7928	"PTB_WSJ"	"lenders"	"reserves"	16	18	24060		
+7929	"PTB_WSJ"	"Marathon"	"reserves"	41	45	16329		
+7930	"PTB_WSJ"	"their"	"reserves"	19	23	9055		
+7931	"PTB_WSJ"	"their"	"reserves"	11	12	24074		
+7932	"PTB_WSJ"	"Union"	"reserves"	11	15	13911		
+9587	"PTB_WSJ"	"its"	"reservoir"	20	21	32532		
+9349	"PTB_WSJ"	"Bush"	"residence"	8	10	9438		
+8856	"PTB_WSJ"	"company"	"resort"	13	17	13762		
+8857	"PTB_WSJ"	"its"	"resort"	35	40	13755		
+8858	"PTB_WSJ"	"company"	"resort-casino"	8	12	31343		
+8859	"PTB_WSJ"	"company"	"resorts"	38	41	22411		
+8860	"PTB_WSJ"	"its"	"resorts"	19	22	18746		
+8861	"PTB_WSJ"	"its"	"resorts"	27	30	22392		
+8862	"PTB_WSJ"	"group"	"resources"	29	31	6801		
+8863	"PTB_WSJ"	"group"	"resources"	3	6	10295		
+8864	"PTB_WSJ"	"insurers"	"resources"	37	39	21478		
+8865	"PTB_WSJ"	"its"	"resources"	18	20	17867		
+8866	"PTB_WSJ"	"its"	"resources"	11	12	19354		
+8867	"PTB_WSJ"	"its"	"resources"	21	22	23307		
+8868	"PTB_WSJ"	"its"	"resources"	5	6	33388		
+8869	"PTB_WSJ"	"its"	"resources"	13	14	36288		
+8870	"PTB_WSJ"	"our"	"resources"	13	14	6804		
+8871	"PTB_WSJ"	"their"	"resources"	4	5	3271		
+8872	"PTB_WSJ"	"their"	"resources"	21	23	19563		
+8873	"PTB_WSJ"	"their"	"resources"	3	4	31924		
+9269	"PTB_WSJ"	"Arby"	"restaurants"	13	15	26292		
+9270	"PTB_WSJ"	"Its"	"restaurants"	1	3	15510		
+9271	"PTB_WSJ"	"its"	"restaurants"	10	11	15535		
+9348	"PTB_WSJ"	"their"	"resumes"	27	28	3918		
+23349	"HDFRE"	"their"	"riches"	33	34	3349	"The transient evil is soon obliterated by the permanent benefit , the loss is divided among multitudes ; and if a few wealthy individuals experience a sensible diminution of treasure , with <b>their</b> <b>riches</b> , they at the same time lose the degree of weight and importance which they derived from the possession of them . "	
+9268	"PTB_WSJ"	"his"	"ring"	31	33	6778		
+9749	"PTB_WSJ"	"Harrah"	"Rio"	27	30	29340		
+10442	"JB"	"our"	"road"	13	14	3018	"Good luck to every sergeant , then , that lets us pick <b>our</b> <b>road</b> ; Bad luck to all the driver-men that can not pack a load : For we can wriggle and climb , my lads , and turn up everywhere , Oh , it 's our delight on a mountain height , with a leg or two to spare ! "	
+10443	"JB"	"their"	"roads"	3	5	632	"They have <b>their</b> regular <b>roads</b> and crossroads , up hills and down hills , all laid out from fifty to seventy or a hundred feet above ground , and by these they can travel even at night if necessary . "	
+8854	"PTB_WSJ"	"his"	"robe"	10	13	906		
+21665	"HDFRE"	"his"	"robes"	5	7	1665	"He was drawn in <b>his</b> sacerdotal <b>robes</b> of silk and gold , after the loose flowing fashion of the Medes and Phnicians ; his head was covered with a lofty tiara , his numerous collars and bracelets were adorned with gems of an inestimable value . "	
+22897	"HDFRE"	"his"	"robes"	3	5	2897	"Arrayed in <b>his</b> sacerdotal <b>robes</b> , he appeared at the head of a great body of fanatic peasants , armed only with slings , and defended his god and his property from the sacrilegious hands of the followers of Zoroaster . "	
+8855	"PTB_WSJ"	"his"	"robes"	8	9	4199		
+10410	"JB"	"his"	"rock"	25	26	138	"Akela , the great gray Lone Wolf , who led all the Pack by strength and cunning , lay out at full length on <b>his</b> <b>rock</b> , and below him sat forty or more wolves of every size and color , from badger-colored veterans who could handle a buck alone to young black three-year-olds who thought they could . "	
+10411	"JB"	"his"	"rock"	10	11	342	"Akela the Lone Wolf lay by the side of <b>his</b> <b>rock</b> as a sign that the leadership of the Pack was open , and Shere Khan with his following of scrap-fed wolves walked to and fro openly being flattered . "	
+8853	"PTB_WSJ"	"their"	"Rolodexes"	8	9	6206		
+9345	"PTB_WSJ"	"his"	"room"	5	7	6862		
+9346	"PTB_WSJ"	"his"	"room"	16	19	27228		
+9347	"PTB_WSJ"	"his"	"room"	5	7	31131		
+9797	"PTB_WSJ"	"Bartlett"	"rooms"	2	5	13871		
+9344	"PTB_WSJ"	"its"	"rooms"	15	17	13994		
+5173	"PTB_WSJ"	"Cathay"	"routes"	14	17	23792		
+5174	"PTB_WSJ"	"its"	"routes"	12	15	5434		
+4922	"PTB_WSJ"	"their"	"routine"	18	20	6801		
+9748	"PTB_WSJ"	"OTC"	"Safeco"	16	18	35128		
+9703	"PTB_WSJ"	"her"	"salon"	16	17	17624		
+8849	"PTB_WSJ"	"People"	"Savings"	1	3	327		
+8850	"PTB_WSJ"	"People"	"Savings"	5	7	329		
+8851	"PTB_WSJ"	"whose"	"savings"	8	9	29999		
+8852	"PTB_WSJ"	"your"	"savings"	14	16	38592		
+5067	"PTB_WSJ"	"mine"	"scale"	9	12	16715		
+21923	"HDFRE"	"his"	"sceptre"	43	45	1923	"Instead of a twentieth , he exacted a tenth of all legacies and inheritances ; and during his reign ( for the ancient proportion was restored after his death ) he crushed alike every part of the empire under the weight of <b>his</b> iron <b>sceptre</b> . "	
+9522	"PTB_WSJ"	"its"	"schools"	3	5	8769		
+10055	"PTB_WSJ"	"Wilfred"	"schools"	7	11	8768		
+9521	"PTB_WSJ"	"their"	"scotch"	56	57	38402		
+9339	"PTB_WSJ"	"brokers"	"screens"	11	13	3091		
+9340	"PTB_WSJ"	"brokers"	"screens"	11	13	19003		
+9341	"PTB_WSJ"	"brokers"	"screens"	12	14	21485		
+9342	"PTB_WSJ"	"brokers"	"screens"	11	13	33847		
+9343	"PTB_WSJ"	"brokers"	"screens"	12	14	37169		
+23157	"HDFRE"	"his"	"seat"	4	5	3157	"When Aurelian assumed <b>his</b> <b>seat</b> , his manly grace and majestic figure taught the barbarians to revere the person as well as the purple of their conqueror . "	
+9551	"PTB_WSJ"	"his"	"seat"	11	12	12466		
+9552	"PTB_WSJ"	"my"	"seat"	2	4	28928		
+9553	"PTB_WSJ"	"their"	"seat"	25	26	16630		
+9336	"PTB_WSJ"	"its"	"seats"	10	13	19033		
+9337	"PTB_WSJ"	"its"	"seats"	28	29	36787		
+9338	"PTB_WSJ"	"their"	"seats"	3	4	17080		
+9550	"PTB_WSJ"	"his"	"securities"	13	14	9897		
+9547	"PTB_WSJ"	"their"	"securities"	21	22	9039		
+9548	"PTB_WSJ"	"their"	"securities"	10	11	17671		
+9549	"PTB_WSJ"	"their"	"securities"	13	14	34603		
+9520	"PTB_WSJ"	"their"	"sets"	23	25	22736		
+9480	"PTB_WSJ"	"Anheuser"	"share"	10	13	14799		
+9481	"PTB_WSJ"	"brand"	"share"	20	24	24218		
+9482	"PTB_WSJ"	"charity"	"share"	28	31	28375		
+9483	"PTB_WSJ"	"company"	"share"	15	18	15264		
+9484	"PTB_WSJ"	"Corning"	"share"	24	28	8615		
+9485	"PTB_WSJ"	"Cowboys"	"share"	5	7	23384		
+9486	"PTB_WSJ"	"exchange"	"share"	12	14	20747		
+9487	"PTB_WSJ"	"Express"	"share"	2	4	27759		
+9488	"PTB_WSJ"	"government"	"share"	18	22	334		
+23088	"HDFRE"	"his"	"share"	37	38	3088	"A select body of the Gothic youth was received among the Imperial troops ; the remainder was sold into servitude ; and so considerable was the number of female captives , that every soldier obtained to <b>his</b> <b>share</b> two or three women . "	
+9489	"PTB_WSJ"	"his"	"share"	7	8	935		
+9490	"PTB_WSJ"	"its"	"share"	27	30	432		
+9491	"PTB_WSJ"	"its"	"share"	20	22	441		
+9492	"PTB_WSJ"	"its"	"share"	19	21	1536		
+9493	"PTB_WSJ"	"its"	"share"	6	9	2562		
+9494	"PTB_WSJ"	"its"	"share"	26	27	5238		
+9495	"PTB_WSJ"	"its"	"share"	32	34	8153		
+9496	"PTB_WSJ"	"its"	"share"	10	11	11861		
+9497	"PTB_WSJ"	"its"	"share"	5	8	15269		
+9498	"PTB_WSJ"	"its"	"share"	10	11	16028		
+9499	"PTB_WSJ"	"its"	"share"	14	16	23726		
+9500	"PTB_WSJ"	"its"	"share"	9	10	23739		
+9501	"PTB_WSJ"	"its"	"share"	18	20	23740		
+9502	"PTB_WSJ"	"its"	"share"	7	8	36129		
+9503	"PTB_WSJ"	"Kellogg"	"share"	1	4	8083		
+9504	"PTB_WSJ"	"lion"	"share"	10	12	18449		
+9505	"PTB_WSJ"	"lion"	"share"	15	17	28335		
+9506	"PTB_WSJ"	"Lloyd"	"share"	3	5	20754		
+9507	"PTB_WSJ"	"Mills"	"share"	15	17	8083		
+9508	"PTB_WSJ"	"Mills"	"share"	20	22	8095		
+9509	"PTB_WSJ"	"mining"	"share"	13	15	25707		
+9510	"PTB_WSJ"	"my"	"share"	8	9	26511		
+9511	"PTB_WSJ"	"my"	"share"	6	7	26536		
+9512	"PTB_WSJ"	"Nestle"	"share"	27	31	6642		
+9513	"PTB_WSJ"	"Nestle"	"share"	1	3	6654		
+9514	"PTB_WSJ"	"Nestle"	"share"	10	14	9156		
+9515	"PTB_WSJ"	"Nissan"	"share"	1	4	1503		
+9516	"PTB_WSJ"	"RJR"	"share"	18	21	6653		
+9517	"PTB_WSJ"	"their"	"share"	3	4	1310		
+9518	"PTB_WSJ"	"their"	"share"	3	4	28590		
+9519	"PTB_WSJ"	"your"	"share"	13	14	26993		
+10053	"PTB_WSJ"	"its"	"shareholding"	33	34	19196		
+10054	"PTB_WSJ"	"its"	"shareholding"	11	14	30513		
+9471	"PTB_WSJ"	"her"	"shares"	19	20	648		
+9472	"PTB_WSJ"	"his"	"shares"	9	11	6875		
+9473	"PTB_WSJ"	"his"	"shares"	18	19	11374		
+9474	"PTB_WSJ"	"his"	"shares"	33	34	28545		
+9475	"PTB_WSJ"	"his"	"shares"	11	12	32421		
+9476	"PTB_WSJ"	"his"	"shares"	17	18	34105		
+9477	"PTB_WSJ"	"his"	"shares"	4	5	35255		
+9478	"PTB_WSJ"	"Icahn"	"shares"	11	15	16310		
+9260	"PTB_WSJ"	"their"	"shares"	20	22	35162		
+9261	"PTB_WSJ"	"their"	"shares"	27	28	34224		
+9262	"PTB_WSJ"	"their"	"shares"	35	36	34618		
+9263	"PTB_WSJ"	"their"	"shares"	20	21	2201		
+9264	"PTB_WSJ"	"their"	"shares"	19	20	5495		
+9265	"PTB_WSJ"	"their"	"shares"	25	26	7448		
+9266	"PTB_WSJ"	"their"	"shares"	36	37	17745		
+9267	"PTB_WSJ"	"their"	"shares"	14	15	27784		
+9479	"PTB_WSJ"	"their"	"shares"	10	11	38135		
+9259	"PTB_WSJ"	"Trump"	"shares"	23	28	32413		
+10405	"JB"	"his"	"she-elephant"	6	8	2351	"Petersen Sahib came in on <b>his</b> clever <b>she-elephant</b> Pudmini ; he had been paying off other camps among the hills , for the season was coming to an end , and there was a native clerk sitting at a table under a tree , to pay the drivers their wages . "	
+25104	"HDFRE"	"his"	"sheep"	61	62	5104	"The bishops acknowledged the supreme authority which resided in the assembly of their brethren ; but in the government of his peculiar diocese , each of them exacted from his flock the same implicit obedience as if that favorite metaphor had been literally just , and as if the shepherd had been of a more exalted nature than that of <b>his</b> <b>sheep</b> . "	
+9335	"PTB_WSJ"	"his"	"sheep"	17	19	31122		
+9463	"PTB_WSJ"	"its"	"sheet"	24	26	8721		
+9464	"PTB_WSJ"	"Labatt"	"sheet"	14	17	8632		
+9465	"PTB_WSJ"	"MiniScribe"	"sheet"	4	8	3256		
+9466	"PTB_WSJ"	"Trelleborg"	"sheet"	7	10	25680		
+9467	"PTB_WSJ"	"their"	"sheets"	25	27	21119		
+9468	"PTB_WSJ"	"their"	"sheets"	18	20	21124		
+9469	"PTB_WSJ"	"their"	"sheets"	3	5	39290		
+22564	"HDFRE"	"his"	"shield"	18	19	2564	"A brave man was the worthy favorite of their martial deities ; the wretch who had lost <b>his</b> <b>shield</b> was alike banished from the religious and civil assemblies of his countrymen . "	
+21185	"HDFRE"	"their"	"shields"	26	27	1185	"They placed their new sovereign , whom they served and despised , in the centre of their ranks , surrounded him on every side with <b>their</b> <b>shields</b> , and conducted him in close order of battle through the deserted streets of the city . "	
+22582	"HDFRE"	"their"	"shields"	10	14	2582	"A variety of colors was the only ornament of <b>their</b> wooden or osier <b>shields</b> . "	
+23532	"HDFRE"	"Their"	"shields"	1	2	3532	"<b>Their</b> <b>shields</b> are black , their bodies are painted black . "	
+23856	"HDFRE"	"his"	"ships"	15	16	3856	"Asclepiodatus had no sooner disembarked the imperial troops , then he set fire to <b>his</b> <b>ships</b> ; and , as the expedition proved fortunate , his heroic conduct was universally admired . "	
+9334	"PTB_WSJ"	"its"	"ships"	29	33	20244		
+23065	"HDFRE"	"their"	"ships"	25	26	3065	"In their passage through the Bosphorus , the unskilful pilots were overpowered by the violence of the current ; and while the multitude of <b>their</b> <b>ships</b> were crowded in a narrow channel , many were dashed against each other , or against the shore . "	
+8239	"PTB_WSJ"	"his"	"shirt"	5	8	11893		
+8240	"PTB_WSJ"	"their"	"shirts"	8	9	6247		
+8241	"PTB_WSJ"	"her"	"shoe"	19	21	19160		
+8242	"PTB_WSJ"	"his"	"shoe"	9	10	16718		
+8243	"PTB_WSJ"	"my"	"shoelaces"	3	4	38553		
+8235	"PTB_WSJ"	"his"	"shoes"	11	13	11893		
+8236	"PTB_WSJ"	"his"	"shoes"	6	7	29259		
+24081	"HDFRE"	"their"	"shoes"	24	25	4081	"The sumptuous robes of Diocletian and his successors were of silk and gold ; and it is remarked with indignation , that even <b>their</b> <b>shoes</b> were studded with the most precious gems . "	
+8237	"PTB_WSJ"	"their"	"shoes"	19	21	12473		
+8238	"PTB_WSJ"	"their"	"shoes"	16	17	19532		
+10374	"JB"	"thy"	"shoes"	12	14	1126	"`` Dost thou not remember the day when I gave thee <b>thy</b> new <b>shoes</b> ? '' "	
+10375	"JB"	"Sahib"	"shooting-coat"	28	30	2532	"But , since native children have no nerves worth speaking of , in two hours he was lying very contentedly in Petersen Sahib 's hammock with Petersen <b>Sahib</b> 's <b>shooting-coat</b> under his head , and a glass of warm milk , a little brandy , with a dash of quinine , inside of him , and while the old hairy , scarred hunters of the jungles sat three deep before him , looking at him as though he were a spirit , he told his tale in short words , as a child will , and wound up with : `` Now , if I lie in one word , send men to see , and they will find that the elephant folk have trampled down more room in their dance-room , and they will find ten and ten , and many times ten , tracks leading to that dance-room "	
+9702	"PTB_WSJ"	"Ida"	"Shop"	37	40	12451		
+9586	"PTB_WSJ"	"BethForge"	"shops"	12	16	11501		
+9470	"PTB_WSJ"	"its"	"showers"	27	28	23864		
+8644	"PTB_WSJ"	"his"	"showroom"	10	13	27272		
+9462	"PTB_WSJ"	"its"	"shuttle"	8	11	36772		
+4680	"PTB_WSJ"	"its"	"sights"	23	24	8592		
+4681	"PTB_WSJ"	"its"	"sights"	6	7	9827		
+4682	"PTB_WSJ"	"their"	"sights"	27	28	34148		
+4683	"PTB_WSJ"	"their"	"sights"	10	11	38011		
+9746	"PTB_WSJ"	"its"	"sign"	10	12	31298		
+9698	"PTB_WSJ"	"Corp."	"sites"	19	25	19309		
+9699	"PTB_WSJ"	"its"	"sites"	24	28	32711		
+9330	"PTB_WSJ"	"her"	"skirt"	24	25	5301		
+9331	"PTB_WSJ"	"His"	"skis"	1	2	11387		
+9332	"PTB_WSJ"	"their"	"skis"	7	8	23880		
+9333	"PTB_WSJ"	"its"	"skyscraper"	21	25	11524		
+9747	"PTB_WSJ"	"other"	"slopes"	37	39	27968		
+8406	"PTB_WSJ"	"his"	"sneakers"	13	15	18148		
+5172	"PTB_WSJ"	"Nissan"	"song"	1	5	1490		
+10017	"PTB_WSJ"	"My"	"Sony"	26	28	38887		
+9745	"PTB_WSJ"	"my"	"space"	3	5	26533		
+9716	"PTB_WSJ"	"their"	"space"	6	9	4540		
+22719	"HDFRE"	"their"	"spears"	20	21	2719	"The barbarians , on the contrary , were inured to encounter in the bogs , their persons tall , <b>their</b> <b>spears</b> long , such as could wound at a distance . '' "	
+9327	"PTB_WSJ"	"company"	"spirit"	9	12	31788		
+9328	"PTB_WSJ"	"its"	"spirit"	7	9	3308		
+9329	"PTB_WSJ"	"residents"	"spirits"	13	15	6777		
+23517	"HDFRE"	"their"	"spoil"	23	24	3517	"He broke the wandering power of the Sarmatian tribes , and by the terror of his arms compelled those barbarians to relinquish <b>their</b> <b>spoil</b> . "	
+23330	"HDFRE"	"his"	"spoils"	5	7	3330	"A considerable portion of <b>his</b> oriental <b>spoils</b> was consecrated to the gods of Rome ; the Capitol , and every other temple , glittered with the offerings of his ostentatious piety ; and the temple of the Sun alone received above fifteen thousand pounds of gold . "	
+5075	"PTB_WSJ"	"my"	"spot"	11	13	28023		
+9585	"PTB_WSJ"	"Nelson"	"spyglass"	9	11	20776		
+7933	"PTB_WSJ"	"Agnellis"	"stake"	18	21	659		
+7934	"PTB_WSJ"	"Aluminum"	"stake"	17	21	9033		
+7935	"PTB_WSJ"	"Brierley"	"stake"	5	7	25669		
+7936	"PTB_WSJ"	"Columbia"	"stake"	11	15	1235		
+7937	"PTB_WSJ"	"company"	"stake"	21	25	31069		
+7938	"PTB_WSJ"	"Healthcare"	"stake"	6	10	896		
+7939	"PTB_WSJ"	"his"	"stake"	12	13	649		
+7940	"PTB_WSJ"	"his"	"stake"	28	29	2854		
+7941	"PTB_WSJ"	"his"	"stake"	7	8	3448		
+7942	"PTB_WSJ"	"his"	"stake"	11	14	6857		
+7943	"PTB_WSJ"	"his"	"stake"	16	19	8816		
+7944	"PTB_WSJ"	"his"	"stake"	23	24	9321		
+7945	"PTB_WSJ"	"his"	"stake"	8	10	9322		
+7946	"PTB_WSJ"	"his"	"stake"	4	5	10736		
+7947	"PTB_WSJ"	"his"	"stake"	25	26	11373		
+7948	"PTB_WSJ"	"his"	"stake"	27	29	12044		
+7949	"PTB_WSJ"	"his"	"stake"	18	20	16261		
+7950	"PTB_WSJ"	"his"	"stake"	19	21	16305		
+7951	"PTB_WSJ"	"his"	"stake"	35	36	18876		
+7952	"PTB_WSJ"	"his"	"stake"	23	24	23185		
+7953	"PTB_WSJ"	"his"	"stake"	36	37	23699		
+7954	"PTB_WSJ"	"his"	"stake"	18	19	25932		
+7955	"PTB_WSJ"	"his"	"stake"	6	9	28676		
+7956	"PTB_WSJ"	"his"	"stake"	34	36	34079		
+7957	"PTB_WSJ"	"his"	"stake"	6	8	34083		
+7958	"PTB_WSJ"	"his"	"stake"	16	17	35264		
+7959	"PTB_WSJ"	"his"	"stake"	9	10	35947		
+7960	"PTB_WSJ"	"his"	"stake"	19	21	35951		
+7961	"PTB_WSJ"	"his"	"stake"	5	6	37857		
+7962	"PTB_WSJ"	"his"	"stake"	4	5	37862		
+7963	"PTB_WSJ"	"his"	"stake"	7	9	39776		
+7964	"PTB_WSJ"	"Inspectorate"	"stake"	7	11	6899		
+7965	"PTB_WSJ"	"investor"	"stake"	30	34	18781		
+7966	"PTB_WSJ"	"its"	"stake"	11	12	373		
+7967	"PTB_WSJ"	"its"	"stake"	14	17	868		
+7968	"PTB_WSJ"	"its"	"stake"	8	11	5499		
+7969	"PTB_WSJ"	"its"	"stake"	20	21	7045		
+7970	"PTB_WSJ"	"its"	"stake"	5	8	7046		
+7971	"PTB_WSJ"	"its"	"stake"	35	36	8480		
+7972	"PTB_WSJ"	"its"	"stake"	25	26	8482		
+7973	"PTB_WSJ"	"its"	"stake"	35	38	8692		
+7974	"PTB_WSJ"	"its"	"stake"	6	7	9242		
+7975	"PTB_WSJ"	"its"	"stake"	9	10	10401		
+7976	"PTB_WSJ"	"its"	"stake"	5	8	10739		
+7977	"PTB_WSJ"	"its"	"stake"	11	12	11250		
+7978	"PTB_WSJ"	"its"	"stake"	28	29	12027		
+7979	"PTB_WSJ"	"its"	"stake"	11	12	12050		
+7980	"PTB_WSJ"	"its"	"stake"	5	7	12118		
+7981	"PTB_WSJ"	"its"	"stake"	33	35	14292		
+7982	"PTB_WSJ"	"its"	"stake"	44	45	14292		
+7983	"PTB_WSJ"	"its"	"stake"	9	10	14675		
+7984	"PTB_WSJ"	"its"	"stake"	18	19	14836		
+7985	"PTB_WSJ"	"Its"	"stake"	1	2	14959		
+7986	"PTB_WSJ"	"its"	"stake"	6	7	15608		
+7987	"PTB_WSJ"	"Its"	"stake"	2	3	20755		
+7988	"PTB_WSJ"	"its"	"stake"	5	8	21052		
+7989	"PTB_WSJ"	"its"	"stake"	20	23	21301		
+7990	"PTB_WSJ"	"its"	"stake"	16	20	21337		
+7991	"PTB_WSJ"	"its"	"stake"	15	16	21994		
+7992	"PTB_WSJ"	"its"	"stake"	22	25	22392		
+7993	"PTB_WSJ"	"its"	"stake"	26	27	22729		
+7994	"PTB_WSJ"	"its"	"stake"	16	17	23217		
+7995	"PTB_WSJ"	"its"	"stake"	12	13	24962		
+7996	"PTB_WSJ"	"its"	"stake"	35	36	25121		
+7997	"PTB_WSJ"	"its"	"stake"	11	12	25416		
+7998	"PTB_WSJ"	"its"	"stake"	28	29	25632		
+7999	"PTB_WSJ"	"its"	"stake"	24	25	25666		
+8000	"PTB_WSJ"	"its"	"stake"	7	8	30480		
+8001	"PTB_WSJ"	"its"	"stake"	39	41	31326		
+8002	"PTB_WSJ"	"its"	"stake"	4	7	31331		
+8003	"PTB_WSJ"	"its"	"stake"	29	33	32067		
+8004	"PTB_WSJ"	"its"	"stake"	10	13	32922		
+8005	"PTB_WSJ"	"its"	"stake"	10	11	33394		
+8006	"PTB_WSJ"	"its"	"stake"	12	13	35533		
+8007	"PTB_WSJ"	"its"	"stake"	10	11	35814		
+8008	"PTB_WSJ"	"its"	"stake"	16	17	38061		
+8009	"PTB_WSJ"	"its"	"stake"	34	39	38133		
+8010	"PTB_WSJ"	"KKR"	"stake"	25	28	18771		
+8011	"PTB_WSJ"	"Lloyd"	"stake"	1	5	20748		
+8012	"PTB_WSJ"	"Ltd."	"stake"	20	24	30483		
+8013	"PTB_WSJ"	"My"	"stake"	1	3	26535		
+8014	"PTB_WSJ"	"Patent"	"stake"	17	19	35486		
+8015	"PTB_WSJ"	"Petrie"	"stake"	14	18	8819		
+8016	"PTB_WSJ"	"Qintex"	"stake"	13	16	22406		
+8017	"PTB_WSJ"	"Rally"	"stake"	39	41	8772		
+8018	"PTB_WSJ"	"their"	"stake"	10	11	3117		
+8019	"PTB_WSJ"	"their"	"stake"	17	18	25632		
+8020	"PTB_WSJ"	"Their"	"stake"	1	3	37092		
+8021	"PTB_WSJ"	"Westinghouse"	"stake"	12	16	13581		
+8022	"PTB_WSJ"	"whose"	"stake"	23	27	3369		
+8023	"PTB_WSJ"	"Corning"	"stakes"	16	18	37665		
+8024	"PTB_WSJ"	"their"	"stakes"	12	13	12031		
+21264	"HDFRE"	"his"	"standard"	9	10	1264	"Fear and shame prevented the guards from deserting <b>his</b> <b>standard</b> ; but they trembled at the name of the Pannonian legions , commanded by an experienced general , and accustomed to vanquish the barbarians on the frozen Danube . "	
+20281	"HDFRE"	"his"	"standard"	6	7	281	"He promised never to desert <b>his</b> <b>standard</b> , to submit his own will to the commands of his leaders , and to sacrifice his life for the safety of the emperor and the empire . "	
+22590	"HDFRE"	"his"	"standard"	15	16	2590	"Eight Batavian cohorts renowned in the wars of Britain and Italy , repaired to <b>his</b> <b>standard</b> . "	
+9324	"PTB_WSJ"	"its"	"station"	7	9	12132		
+9325	"PTB_WSJ"	"its"	"station"	41	43	12865		
+9326	"PTB_WSJ"	"its"	"station"	8	10	32120		
+9323	"PTB_WSJ"	"his"	"stationery"	26	28	982		
+5079	"PTB_WSJ"	"BART"	"stations"	17	19	20011		
+9460	"PTB_WSJ"	"its"	"stations"	7	8	29364		
+9461	"PTB_WSJ"	"network"	"stations"	31	33	13341		
+9457	"PTB_WSJ"	"Storer"	"stations"	12	15	18739		
+9458	"PTB_WSJ"	"their"	"stations"	10	13	29355		
+9459	"PTB_WSJ"	"TV"	"stations"	2	5	18737		
+8848	"PTB_WSJ"	"their"	"stereos"	10	11	23880		
+10401	"JB"	"his"	"stick"	20	21	1323	"Mowgli watched his time , and slipped off Rama 's neck , laying about him right and left with <b>his</b> <b>stick</b> . "	
+7805	"PTB_WSJ"	"couple"	"stockholdings"	3	5	26474		
+9811	"PTB_WSJ"	"foreigners"	"stocks"	5	8	4318		
+9812	"PTB_WSJ"	"his"	"stocks"	8	9	18199		
+9546	"PTB_WSJ"	"their"	"stocks"	10	11	24740		
+9090	"PTB_WSJ"	"your"	"stocks"	13	15	21126		
+9091	"PTB_WSJ"	"your"	"stocks"	19	21	31218		
+9092	"PTB_WSJ"	"your"	"stocks"	7	8	39730		
+8025	"PTB_WSJ"	"Field"	"store"	29	32	27283		
+8026	"PTB_WSJ"	"its"	"store"	6	9	6276		
+8027	"PTB_WSJ"	"their"	"store"	6	8	24328		
+8028	"PTB_WSJ"	"chain"	"stores"	20	23	34541		
+8029	"PTB_WSJ"	"company"	"stores"	21	23	6639		
+8030	"PTB_WSJ"	"its"	"stores"	6	7	6271		
+8031	"PTB_WSJ"	"its"	"stores"	12	13	12106		
+8032	"PTB_WSJ"	"its"	"stores"	17	18	12119		
+8033	"PTB_WSJ"	"its"	"stores"	25	26	13447		
+8034	"PTB_WSJ"	"its"	"stores"	39	40	13447		
+8035	"PTB_WSJ"	"its"	"stores"	3	5	16431		
+8036	"PTB_WSJ"	"its"	"stores"	19	20	16440		
+8038	"PTB_WSJ"	"its"	"stores"	7	10	22474		
+8039	"PTB_WSJ"	"its"	"stores"	24	27	34481		
+8040	"PTB_WSJ"	"its"	"stores"	21	26	34491		
+8041	"PTB_WSJ"	"its"	"stores"	30	35	34491		
+8042	"PTB_WSJ"	"its"	"stores"	22	23	34500		
+8043	"PTB_WSJ"	"its"	"stores"	29	32	34532		
+8044	"PTB_WSJ"	"its"	"stores"	24	27	34536		
+8045	"PTB_WSJ"	"its"	"stores"	15	18	39572		
+8046	"PTB_WSJ"	"McDonald"	"stores"	11	14	20226		
+8047	"PTB_WSJ"	"Mervyn"	"stores"	32	35	34491		
+20142	"HDFRE"	"our"	"stores"	47	48	142	"V. Some few classical works and fragments have come to light , since the appearance of Gibbon 's History , and have been noticed in their respective places ; and much use has been made , in the latter volumes particularly , of the increase to <b>our</b> <b>stores</b> of Oriental literature . "	
+8048	"PTB_WSJ"	"our"	"stores"	36	37	13689		
+8049	"PTB_WSJ"	"Revco"	"stores"	4	7	4270		
+8050	"PTB_WSJ"	"their"	"stores"	26	27	29227		
+10431	"JB"	"your"	"street"	27	28	1429	"Fare you well , children of men , and thank Messua that I do not come in with my wolves and hunt you up and down <b>your</b> <b>street</b> . '' "	
+9202	"PTB_WSJ"	"her"	"studio"	8	9	22829		
+9203	"PTB_WSJ"	"Hoelzer"	"studio"	25	27	29820		
+9204	"PTB_WSJ"	"our"	"studio"	4	6	28610		
+9205	"PTB_WSJ"	"Inc."	"Studios"	29	33	22750		
+10045	"PTB_WSJ"	"our"	"stuff"	10	12	24144		
+9456	"PTB_WSJ"	"my"	"subcompact"	4	6	26531		
+8051	"PTB_WSJ"	"company"	"subsidiaries"	21	31	19321		
+8052	"PTB_WSJ"	"company"	"subsidiaries"	22	27	25926		
+8053	"PTB_WSJ"	"Continental"	"subsidiaries"	35	39	36741		
+8054	"PTB_WSJ"	"I.C.H."	"subsidiaries"	46	49	3359		
+8055	"PTB_WSJ"	"its"	"subsidiaries"	13	14	847		
+8056	"PTB_WSJ"	"its"	"subsidiaries"	17	19	1255		
+8057	"PTB_WSJ"	"its"	"subsidiaries"	5	6	6629		
+8058	"PTB_WSJ"	"its"	"subsidiaries"	39	40	11267		
+8059	"PTB_WSJ"	"its"	"subsidiaries"	9	10	16409		
+8060	"PTB_WSJ"	"its"	"subsidiaries"	23	24	21024		
+8061	"PTB_WSJ"	"its"	"subsidiaries"	19	20	21025		
+8062	"PTB_WSJ"	"its"	"subsidiaries"	26	29	24030		
+8063	"PTB_WSJ"	"its"	"subsidiaries"	15	16	34417		
+8064	"PTB_WSJ"	"Ashland"	"subsidiary"	17	21	29285		
+8065	"PTB_WSJ"	"Boehringer-Ingleheim"	"subsidiary"	14	20	5024		
+8066	"PTB_WSJ"	"Bumiputra"	"subsidiary"	23	26	27812		
+8067	"PTB_WSJ"	"Campeau"	"subsidiary"	29	34	12104		
+8068	"PTB_WSJ"	"Co."	"subsidiary"	2	7	1253		
+8069	"PTB_WSJ"	"Co."	"subsidiary"	15	23	16412		
+8070	"PTB_WSJ"	"company"	"subsidiary"	18	22	2822		
+8071	"PTB_WSJ"	"company"	"subsidiary"	2	5	12154		
+8072	"PTB_WSJ"	"company"	"subsidiary"	17	21	15897		
+8073	"PTB_WSJ"	"company"	"subsidiary"	14	18	16250		
+8074	"PTB_WSJ"	"company"	"subsidiary"	4	8	23459		
+8075	"PTB_WSJ"	"company"	"subsidiary"	19	23	31688		
+8076	"PTB_WSJ"	"company"	"subsidiary"	30	36	36485		
+8077	"PTB_WSJ"	"concern"	"subsidiary"	21	27	10561		
+8078	"PTB_WSJ"	"Corp."	"subsidiary"	24	28	5205		
+8079	"PTB_WSJ"	"Ford"	"subsidiary"	24	27	21550		
+8080	"PTB_WSJ"	"GM"	"subsidiary"	9	13	13110		
+8081	"PTB_WSJ"	"Henley"	"subsidiary"	16	20	16028		
+8082	"PTB_WSJ"	"Hoechst"	"subsidiary"	23	26	5024		
+8083	"PTB_WSJ"	"Inc."	"subsidiary"	7	11	23611		
+8084	"PTB_WSJ"	"its"	"subsidiary"	9	13	1076		
+8085	"PTB_WSJ"	"its"	"subsidiary"	12	19	2182		
+8086	"PTB_WSJ"	"its"	"subsidiary"	12	15	2238		
+8087	"PTB_WSJ"	"its"	"subsidiary"	8	12	3124		
+8088	"PTB_WSJ"	"its"	"subsidiary"	22	25	3280		
+8089	"PTB_WSJ"	"its"	"subsidiary"	10	12	3460		
+8090	"PTB_WSJ"	"its"	"subsidiary"	7	8	4190		
+8091	"PTB_WSJ"	"its"	"subsidiary"	51	52	4192		
+8092	"PTB_WSJ"	"its"	"subsidiary"	9	12	4496		
+8093	"PTB_WSJ"	"its"	"subsidiary"	21	25	4814		
+8094	"PTB_WSJ"	"its"	"subsidiary"	9	12	5577		
+8095	"PTB_WSJ"	"its"	"subsidiary"	19	21	7218		
+8096	"PTB_WSJ"	"its"	"subsidiary"	16	18	7318		
+8097	"PTB_WSJ"	"its"	"subsidiary"	11	17	8332		
+8098	"PTB_WSJ"	"its"	"subsidiary"	19	22	10571		
+8099	"PTB_WSJ"	"its"	"subsidiary"	7	8	11984		
+8100	"PTB_WSJ"	"its"	"subsidiary"	13	15	12268		
+8101	"PTB_WSJ"	"its"	"subsidiary"	22	24	13305		
+8102	"PTB_WSJ"	"its"	"subsidiary"	10	15	15014		
+8103	"PTB_WSJ"	"its"	"subsidiary"	27	34	15077		
+8104	"PTB_WSJ"	"its"	"subsidiary"	21	24	15296		
+8105	"PTB_WSJ"	"its"	"subsidiary"	29	33	18098		
+8106	"PTB_WSJ"	"its"	"subsidiary"	19	21	18426		
+8107	"PTB_WSJ"	"its"	"subsidiary"	28	31	18905		
+8108	"PTB_WSJ"	"its"	"subsidiary"	7	12	19275		
+8109	"PTB_WSJ"	"its"	"subsidiary"	6	8	19339		
+8110	"PTB_WSJ"	"its"	"subsidiary"	30	33	19353		
+8111	"PTB_WSJ"	"its"	"subsidiary"	26	28	21789		
+8112	"PTB_WSJ"	"its"	"subsidiary"	22	26	22476		
+8113	"PTB_WSJ"	"its"	"subsidiary"	31	33	24592		
+8114	"PTB_WSJ"	"its"	"subsidiary"	8	12	25922		
+8115	"PTB_WSJ"	"its"	"subsidiary"	4	8	26189		
+8116	"PTB_WSJ"	"its"	"subsidiary"	4	6	27058		
+8117	"PTB_WSJ"	"its"	"subsidiary"	56	60	29285		
+8118	"PTB_WSJ"	"its"	"subsidiary"	12	16	29445		
+8119	"PTB_WSJ"	"its"	"subsidiary"	4	8	31023		
+8120	"PTB_WSJ"	"its"	"subsidiary"	12	17	34421		
+8121	"PTB_WSJ"	"its"	"subsidiary"	6	11	38780		
+8122	"PTB_WSJ"	"its"	"subsidiary"	4	6	39217		
+8123	"PTB_WSJ"	"its"	"subsidiary"	13	15	39221		
+8124	"PTB_WSJ"	"Mixte"	"subsidiary"	10	13	5489		
+8125	"PTB_WSJ"	"Morgan"	"subsidiary"	20	23	35379		
+8126	"PTB_WSJ"	"Orkem"	"subsidiary"	16	19	2678		
+8127	"PTB_WSJ"	"Pacific"	"subsidiary"	8	14	38005		
+8128	"PTB_WSJ"	"PLC"	"subsidiary"	3	6	5801		
+8129	"PTB_WSJ"	"PLC"	"subsidiary"	18	23	32834		
+8130	"PTB_WSJ"	"Quebecor"	"subsidiary"	36	40	5233		
+23131	"HDFRE"	"whose"	"suffrage"	17	18	3131	"It was earnestly solicited by the barbarians , and cheerfully ratified by the legions , to <b>whose</b> <b>suffrage</b> the prudence of Aurelian referred the decision of that important question . "	
+20673	"HDFRE"	"their"	"suffrages"	16	17	673	"That artful prince , instead of discovering the least symptom of impatience , humbly solicited <b>their</b> <b>suffrages</b> for himself or his friends , and scrupulously practised all the duties of an ordinary candidate . "	
+21578	"HDFRE"	"their"	"suffrages"	41	42	1578	"The choice of the army ( for the authority of a distant and feeble senate was little regarded ) hung in anxious suspense , as no candidate presented himself whose distinguished birth and merit could engage their attachment and unite <b>their</b> <b>suffrages</b> . "	
+9206	"PTB_WSJ"	"his"	"suite"	13	15	23425		
+9207	"PTB_WSJ"	"his"	"suite"	10	12	38734		
+9257	"PTB_WSJ"	"his"	"suits"	20	22	10898		
+9258	"PTB_WSJ"	"his"	"suits"	37	39	26690		
+9455	"PTB_WSJ"	"his"	"Sunbird"	5	7	978		
+21192	"HDFRE"	"his"	"supper"	22	23	1192	"The first objects that struck his eyes , were the abandoned trunk of Pertinax , and the frugal entertainment prepared for <b>his</b> <b>supper</b> . "	
+23635	"HDFRE"	"his"	"supper"	12	13	3635	"A piece of stale bacon and a few hard peas composed <b>his</b> <b>supper</b> . "	
+10372	"JB"	"Nag"	"supper"	6	8	2429	"Little Toomai attended to Kala <b>Nag</b> 's <b>supper</b> , and as evening fell , wandered through the camp , unspeakably happy , in search of a tom-tom . "	
+10048	"PTB_WSJ"	"his"	"supply"	13	16	8251		
+10046	"PTB_WSJ"	"its"	"supply"	11	13	29983		
+10047	"PTB_WSJ"	"their"	"supply"	20	22	34273		
+20306	"HDFRE"	"his"	"sword"	13	14	306	"As soon as the Roman had darted his pilum , he drew <b>his</b> <b>sword</b> , and rushed forwards to close with the enemy . "	
+20307	"HDFRE"	"His"	"sword"	1	2	307	"<b>His</b> <b>sword</b> was a short well-tempered Spanish blade , that carried a double edge , and was alike suited to the purpose of striking or of pushing ; but the soldier was always instructed to prefer the latter use of his weapon , as his own body remained less exposed , whilst he inflicted a more dangerous wound on his adversary . "	
+23726	"HDFRE"	"his"	"sword"	30	31	3726	"`` This man , '' said he , `` is the murderer of Numerian ; '' and without giving him time to enter on a dangerous justification , drew <b>his</b> <b>sword</b> , and buried it in the breast of the unfortunate pr??fect . "	
+10373	"JB"	"his"	"sword"	13	14	2995	"For a minute it seemed as though he were going to draw <b>his</b> <b>sword</b> and slash his way out through the English men and women in the carriages at the back . "	
+21175	"HDFRE"	"their"	"swords"	29	30	1175	"These assertions , however defective in reason , became unanswerable when the fierce Pr??torians increased their weight , by throwing , like the barbarian conqueror of Rome , <b>their</b> <b>swords</b> into the scale . "	
+24302	"HDFRE"	"their"	"swords"	53	54	4302	"The rising fury of the people was encouraged by the authority , or at least the connivance , of the senate ; and the feeble remains of the Pr??torian guards , who had reason to apprehend their own dissolution , embraced so honorable a pretence , and declared their readiness to draw <b>their</b> <b>swords</b> in the service of their oppressed country . "	
+8407	"PTB_WSJ"	"his"	"synthesizers"	21	22	38338		
+9582	"PTB_WSJ"	"Board"	"system"	31	35	2930		
+9737	"PTB_WSJ"	"company"	"system"	23	26	34437		
+9810	"PTB_WSJ"	"company"	"system"	12	16	32234		
+9583	"PTB_WSJ"	"exchange"	"system"	12	16	9890		
+9584	"PTB_WSJ"	"exchange"	"system"	3	7	9893		
+22315	"HDFRE"	"his"	"system"	29	30	2315	"Had Zoroaster , in all his institutions , invariably supported this exalted character , his name would deserve a place with those of Numa and Confucius , and <b>his</b> <b>system</b> would be justly entitled to all the applause , which it has pleased some of our divines , and even some of our philosophers , to bestow on it . "	
+9809	"PTB_WSJ"	"his"	"system"	21	23	786		
+9739	"PTB_WSJ"	"its"	"system"	10	14	27457		
+9740	"PTB_WSJ"	"its"	"system"	18	21	30218		
+9741	"PTB_WSJ"	"its"	"system"	15	17	30818		
+9742	"PTB_WSJ"	"its"	"system"	7	10	8297		
+9743	"PTB_WSJ"	"its"	"system"	19	21	3629		
+9744	"PTB_WSJ"	"its"	"system"	4	8	2559		
+9736	"PTB_WSJ"	"our"	"system"	8	10	6804		
+10052	"PTB_WSJ"	"our"	"system"	12	13	4241		
+24187	"HDFRE"	"their"	"system"	27	28	4187	"The school of Alexandria silenced those of Athens ; and the ancient sects enrolled themselves under the banners of the more fashionable teachers , who recommended <b>their</b> <b>system</b> by the novelty of their method , and the austerity of their manners . "	
+24198	"HDFRE"	"their"	"system"	20	22	4198	"As they agreed with the Christians in a few mysterious points of faith , they attacked the remainder of <b>their</b> theological <b>system</b> with all the fury of civil war . "	
+9738	"PTB_WSJ"	"their"	"system"	23	25	8927		
+9733	"PTB_WSJ"	"Time"	"system"	22	27	18447		
+9734	"PTB_WSJ"	"Treasury"	"system"	23	26	8330		
+25246	"HDFRE"	"whose"	"system"	41	43	5246	"From Edessa the principles of Christianity were easily introduced into the Greek and Syrian cities which obeyed the successors of Artaxerxes ; but they do not appear to have made any deep impression on the minds of the Persians , <b>whose</b> religious <b>system</b> , by the labors of a well disciplined order of priests , had been constructed with much more art and solidity than the uncertain mythology of Greece and Rome . "	
+4709	"PTB_WSJ"	"your"	"system"	4	6	25501		
+4710	"PTB_WSJ"	"your"	"system"	12	14	25506		
+9581	"PTB_WSJ"	"Corp."	"Systems"	17	21	32259		
+9250	"PTB_WSJ"	"its"	"systems"	26	28	25228		
+9735	"PTB_WSJ"	"its"	"systems"	31	33	18433		
+20598	"HDFRE"	"their"	"systems"	20	21	598	"The authority of Plato and Aristotle , of Zeno and Epicurus , still reigned in the schools ; and <b>their</b> <b>systems</b> , transmitted with blind deference from one generation of disciples to another , precluded every generous attempt to exercise the powers , or enlarge the limits , of the human mind . "	
+9251	"PTB_WSJ"	"their"	"systems"	9	10	13248		
+9252	"PTB_WSJ"	"their"	"systems"	10	12	25503		
+9253	"PTB_WSJ"	"their"	"systems"	13	14	25504		
+9254	"PTB_WSJ"	"their"	"systems"	5	7	29686		
+9255	"PTB_WSJ"	"their"	"systems"	28	29	33925		
+9256	"PTB_WSJ"	"their"	"systems"	22	23	37593		
+9249	"PTB_WSJ"	"his"	"T-shirt"	7	8	31119		
+21780	"HDFRE"	"His"	"table"	1	2	1780	"<b>His</b> <b>table</b> was served with the most frugal simplicity , and whenever he was at liberty to consult his own inclination , the company consisted of a few select friends , men of learning and virtue , amongst whom Ulpian was constantly invited . "	
+25197	"HDFRE"	"his"	"table"	36	37	5197	"The fashion of incredulity was communicated from the philosopher to the man of pleasure or business , from the noble to the plebeian , and from the master to the menial slave who waited at <b>his</b> <b>table</b> , and who eagerly listened to the freedom of his conversation . "	
+9247	"PTB_WSJ"	"my"	"table"	4	5	510		
+20578	"HDFRE"	"their"	"table"	5	6	578	"In their dress , <b>their</b> <b>table</b> , their houses , and their furniture , the favorites of fortune united every refinement of conveniency , of elegance , and of splendor , whatever could soothe their pride or gratify their sensuality . "	
+20696	"HDFRE"	"their"	"table"	7	8	696	"Their habit , their palace , <b>their</b> <b>table</b> , were suited only to the rank of an opulent senator . "	
+20841	"HDFRE"	"their"	"table"	24	25	841	"I. When Persia was governed by the descendants of Sefi , a race of princes whose wanton cruelty often stained their divan , <b>their</b> <b>table</b> , and their bed , with the blood of their favorites , there is a saying recorded of a young nobleman , that he never departed from the sultan 's presence , without satisfying himself whether his head was still on his shoulders . "	
+9248	"PTB_WSJ"	"your"	"table"	12	18	25315		
+8408	"PTB_WSJ"	"its"	"tankers"	31	32	21007		
+8409	"PTB_WSJ"	"its"	"tankers"	25	26	21984		
+9545	"PTB_WSJ"	"its"	"tanks"	17	20	24971		
+9580	"PTB_WSJ"	"his"	"teams"	27	33	24606		
+9706	"PTB_WSJ"	"EG&G"	"technologies"	18	21	1074		
+9707	"PTB_WSJ"	"Inc."	"technology"	2	4	29696		
+9708	"PTB_WSJ"	"its"	"technology"	13	14	2774		
+9709	"PTB_WSJ"	"its"	"technology"	34	35	11823		
+9710	"PTB_WSJ"	"its"	"technology"	25	26	14597		
+9711	"PTB_WSJ"	"its"	"technology"	26	27	22026		
+9712	"PTB_WSJ"	"Nucor"	"technology"	10	12	39279		
+9713	"PTB_WSJ"	"their"	"technology"	5	6	3632		
+9714	"PTB_WSJ"	"their"	"technology"	13	14	3650		
+9715	"PTB_WSJ"	"Wang"	"technology"	4	6	36065		
+10365	"JB"	"his"	"tent"	6	7	2549	"Petersen Sahib ate alone in <b>his</b> <b>tent</b> , but he gave orders that the camp should have two sheep and some fowls , as well as a double ration of flour and rice and salt , for he knew that there would be a feast . "	
+10366	"JB"	"My"	"tent"	1	2	2593	"<b>My</b> <b>tent</b> lay far away from the camel lines , and I thought it was safe . "	
+10367	"JB"	"My"	"tent"	1	2	2596	"<b>My</b> <b>tent</b> 's gone ! '' "	
+10368	"JB"	"our"	"tent"	13	14	2933	"You big , blundering beast of a camel you , you upset <b>our</b> <b>tent</b> . "	
+20041	"HDFRE"	"their"	"term"	65	67	41	"I discovered , in certain chapters , errors which appeared to me sufficiently important and numerous to make me believe that they had been written with extreme negligence ; in others , I was struck with a certain tinge of partiality and prejudice , which imparted to the exposition of the facts that want of truth and justice , which the English express by <b>their</b> happy <b>term</b> misrepresentation . "	
+9730	"PTB_WSJ"	"its"	"terminal"	6	7	20982		
+9731	"PTB_WSJ"	"its"	"terminal"	34	36	23794		
+9732	"PTB_WSJ"	"its"	"terminal"	30	31	32134		
+9729	"PTB_WSJ"	"company"	"terminals"	10	12	32109		
+9246	"PTB_WSJ"	"Postels"	"terrace"	12	14	35897		
+10369	"JB"	"my"	"terrier"	4	6	2598	"Little Vixen , <b>my</b> fox <b>terrier</b> , went out through the other side ; and then there was a roaring and a grunting and bubbling , and I saw the tent cave in , as the pole snapped , and begin to dance about like a mad ghost . "	
+9243	"PTB_WSJ"	"its"	"territory"	29	31	23491		
+9244	"PTB_WSJ"	"its"	"territory"	25	27	33426		
+9245	"PTB_WSJ"	"its"	"territory"	29	31	33427		
+22809	"HDFRE"	"their"	"theatres"	40	41	2809	"The rich and luxurious nobles , sinking into their natural character , accepted , as a favor , this disgraceful exemption from military service ; and as long as they were indulged in the enjoyment of their baths , <b>their</b> <b>theatres</b> , and their villas , they cheerfully resigned the more dangerous cares of empire to the rough hands of peasants and soldiers . "	
+24485	"HDFRE"	"his"	"throne"	13	14	4485	"Maxentius , who considered the Pr??torian guards as the firmest defence of <b>his</b> <b>throne</b> , had increased them to their ancient establishment ; and they composed , including the rest of the Italians who were enlisted into his service , a formidable body of fourscore thousand men . "	
+22911	"HDFRE"	"our"	"throne"	19	20	2911	"If he entertains a hope of mitigating his punishment , let him fall prostrate before the foot of <b>our</b> <b>throne</b> , with his hands bound behind his back . "	
+20687	"HDFRE"	"their"	"throne"	8	9	687	"The masters of the Roman world surrounded <b>their</b> <b>throne</b> with darkness , concealed their irresistible strength , and humbly professed themselves the accountable ministers of the senate , whose supreme decrees they dictated and obeyed . "	
+23317	"HDFRE"	"their"	"throne"	9	10	3317	"Princes who , without success , had defended <b>their</b> <b>throne</b> or freedom , were frequently strangled in prison , as soon as the triumphal pomp ascended the Capitol . "	
+20445	"HDFRE"	"their"	"thrones"	24	25	445	"Those princes , whom the ostentation of gratitude or generosity permitted for a while to hold a precarious sceptre , were dismissed from <b>their</b> <b>thrones</b> , as soon as they had per formed their appointed task of fashioning to the yoke the vanquished nations . "	
+9240	"PTB_WSJ"	"Lucy"	"ticket"	22	29	13532		
+9241	"PTB_WSJ"	"your"	"ticket"	22	23	11166		
+9242	"PTB_WSJ"	"his"	"tickets"	20	23	13425		
+9322	"PTB_WSJ"	"his"	"tie"	10	11	16717		
+5588	"PTB_WSJ"	"its"	"time"	13	16	4832		
+23604	"HDFRE"	"their"	"tools"	36	37	3604	"In one of the hottest days of summer , as he severely urged the unwholesome labor of draining the marshes of Sirmium , the soldiers , impatient of fatigue , on a sudden threw down <b>their</b> <b>tools</b> , grasped their arms , and broke out into a furious mutiny . "	
+9544	"PTB_WSJ"	"Their"	"tools"	1	3	32721		
+10043	"PTB_WSJ"	"Republic"	"total"	1	3	31996		
+10044	"PTB_WSJ"	"trust"	"total"	20	22	21618		
+10051	"PTB_WSJ"	"International"	"tower"	8	12	32129		
+10016	"PTB_WSJ"	"its"	"Tower"	6	8	34882		
+9454	"PTB_WSJ"	"S&L"	"tower"	34	38	38598		
+9579	"PTB_WSJ"	"its"	"Toys"	13	15	31071		
+9578	"PTB_WSJ"	"its"	"track"	20	21	32114		
+9218	"PTB_WSJ"	"Darin"	"trademark"	45	52	5561		
+9219	"PTB_WSJ"	"its"	"trademarks"	10	12	6400		
+9697	"PTB_WSJ"	"its"	"trails"	21	22	36870		
+24208	"HDFRE"	"his"	"treasure"	9	12	4208	"He declared , with unaffected sincerity , that <b>his</b> most valued <b>treasure</b> was in the hearts of his people , and that , whenever the dignity of the throne , or the danger of the state , required any extraordinary supply , he could depend with confidence on their gratitude and liberality . "	
+22777	"HDFRE"	"their"	"treasure"	17	19	2777	"The love of liberty was the ruling passion of these Germans ; the enjoyment of it <b>their</b> best <b>treasure</b> ; the word that expressed that enjoyment , the most pleasing to their ear . "	
+20536	"HDFRE"	"his"	"treasures"	42	43	536	"The most splendid ornaments bestowed on the temple of Neptune in the Isthmus , a theatre at Corinth , a stadium at Delphi , a bath at Thermopyl?? , and an aqueduct at Canusium in Italy , were insufficient to exhaust <b>his</b> <b>treasures</b> . "	
+24678	"HDFRE"	"his"	"treasures"	11	12	4678	"His diligence preserved his wife , his son , and <b>his</b> <b>treasures</b> , which he had deposited at Sirmium . "	
+8645	"PTB_WSJ"	"their"	"treasuries"	26	27	18659		
+8646	"PTB_WSJ"	"employer"	"treasury"	21	23	32621		
+8647	"PTB_WSJ"	"its"	"treasury"	28	29	8171		
+9321	"PTB_WSJ"	"his"	"trophy"	36	38	6778		
+8648	"PTB_WSJ"	"His"	"truck"	1	2	17326		
+8649	"PTB_WSJ"	"his"	"truck"	17	18	17333		
+8650	"PTB_WSJ"	"my"	"truck"	4	5	31469		
+8651	"PTB_WSJ"	"their"	"truck"	5	6	9968		
+10371	"JB"	"his"	"trumpet"	9	10	2875	"He began trumpeting furiously at the top of <b>his</b> <b>trumpet</b> . "	
+10050	"PTB_WSJ"	"government"	"Trust"	14	18	25776		
+10049	"PTB_WSJ"	"its"	"trust"	11	18	23187		
+10402	"JB"	"Cow"	"tunnel"	8	10	1857	"Who comes with me to the Sea <b>Cow</b> 's <b>tunnel</b> ? "	
+10403	"JB"	"Cow"	"tunnel"	23	25	1865	"A week later he and his army ( nearly ten thousand holluschickie and old seals ) went away north to the Sea <b>Cow</b> 's <b>tunnel</b> , Kotick leading them , and the seals that stayed at Novastoshnah called them idiots . "	
+10404	"JB"	"Cow"	"tunnel"	29	31	1866	"But next spring , when they all met off the fishing banks of the Pacific , Kotick 's seals told such tales of the new beaches beyond Sea <b>Cow</b> 's <b>tunnel</b> that more and more seals left Novastoshnah . "	
+9318	"PTB_WSJ"	"her"	"turf"	15	17	27682		
+9319	"PTB_WSJ"	"its"	"turf"	39	41	25712		
+9320	"PTB_WSJ"	"their"	"turf"	6	7	179		
+9577	"PTB_WSJ"	"their"	"TVs"	21	23	28020		
+8131	"PTB_WSJ"	"his"	"underwear"	29	31	918		
+8684	"PTB_WSJ"	"Atlantic"	"unit"	18	22	13176		
+8685	"PTB_WSJ"	"B.A.T"	"unit"	22	27	29427		
+8686	"PTB_WSJ"	"B.A.T"	"unit"	7	11	32090		
+8687	"PTB_WSJ"	"bank"	"unit"	2	5	24092		
+8688	"PTB_WSJ"	"chip"	"unit"	15	19	11439		
+8689	"PTB_WSJ"	"Cineplex"	"unit"	27	31	12925		
+8690	"PTB_WSJ"	"Co."	"unit"	3	9	2935		
+8691	"PTB_WSJ"	"Co."	"unit"	3	7	6364		
+8692	"PTB_WSJ"	"Co."	"unit"	22	29	7676		
+8693	"PTB_WSJ"	"Co."	"unit"	15	22	14414		
+8694	"PTB_WSJ"	"Co."	"unit"	11	15	14779		
+8695	"PTB_WSJ"	"Co."	"unit"	8	13	20200		
+8696	"PTB_WSJ"	"Co."	"unit"	10	15	38187		
+8697	"PTB_WSJ"	"company"	"unit"	12	16	5854		
+8698	"PTB_WSJ"	"company"	"unit"	19	22	7139		
+8699	"PTB_WSJ"	"company"	"unit"	8	13	7391		
+8700	"PTB_WSJ"	"company"	"unit"	19	23	12983		
+8701	"PTB_WSJ"	"company"	"unit"	14	17	16557		
+8702	"PTB_WSJ"	"company"	"unit"	25	28	19131		
+8703	"PTB_WSJ"	"company"	"unit"	20	23	24100		
+8704	"PTB_WSJ"	"company"	"unit"	10	14	24766		
+8705	"PTB_WSJ"	"company"	"unit"	13	16	27130		
+8706	"PTB_WSJ"	"company"	"unit"	29	36	34053		
+8707	"PTB_WSJ"	"company"	"unit"	13	17	36666		
+8708	"PTB_WSJ"	"Corp."	"unit"	19	22	5510		
+8709	"PTB_WSJ"	"Corp."	"unit"	5	11	6123		
+8710	"PTB_WSJ"	"Corp."	"unit"	9	12	7583		
+8711	"PTB_WSJ"	"Corp."	"unit"	2	7	7676		
+8712	"PTB_WSJ"	"Corp."	"unit"	9	12	10018		
+8713	"PTB_WSJ"	"Corp."	"unit"	3	10	13108		
+8714	"PTB_WSJ"	"Corp."	"unit"	9	14	18240		
+8715	"PTB_WSJ"	"Corp."	"unit"	15	20	24992		
+8716	"PTB_WSJ"	"Corp."	"unit"	18	21	32112		
+8717	"PTB_WSJ"	"Corp."	"unit"	3	6	32114		
+8718	"PTB_WSJ"	"Corp."	"unit"	3	6	36149		
+8719	"PTB_WSJ"	"Corp."	"unit"	4	9	38937		
+8720	"PTB_WSJ"	"Cross"	"unit"	8	19	37963		
+8721	"PTB_WSJ"	"Daiwa"	"unit"	23	26	20837		
+8722	"PTB_WSJ"	"Daiwa"	"unit"	27	30	20852		
+8723	"PTB_WSJ"	"Exxon"	"unit"	1	5	8279		
+8724	"PTB_WSJ"	"GE"	"unit"	1	5	5668		
+8725	"PTB_WSJ"	"GE"	"unit"	31	34	7958		
+8726	"PTB_WSJ"	"GM"	"unit"	7	10	5702		
+8727	"PTB_WSJ"	"GM"	"unit"	1	4	8502		
+8728	"PTB_WSJ"	"GM"	"unit"	1	5	15368		
+8729	"PTB_WSJ"	"group"	"unit"	26	31	1990		
+8730	"PTB_WSJ"	"Group"	"unit"	22	27	2493		
+8731	"PTB_WSJ"	"Group"	"unit"	10	15	14929		
+8732	"PTB_WSJ"	"group"	"unit"	21	25	32311		
+8733	"PTB_WSJ"	"Guinness"	"unit"	1	5	20174		
+8734	"PTB_WSJ"	"his"	"unit"	15	16	7681		
+8735	"PTB_WSJ"	"Hooker"	"unit"	1	4	38119		
+8736	"PTB_WSJ"	"Howard"	"unit"	19	23	18504		
+8737	"PTB_WSJ"	"Imasco"	"unit"	17	24	25766		
+8738	"PTB_WSJ"	"Inc."	"unit"	6	11	2938		
+8739	"PTB_WSJ"	"Inc."	"unit"	33	37	3680		
+8740	"PTB_WSJ"	"Inc."	"unit"	15	20	5505		
+8741	"PTB_WSJ"	"Inc."	"unit"	15	20	7350		
+8742	"PTB_WSJ"	"Inc."	"unit"	3	7	11081		
+8743	"PTB_WSJ"	"Inc."	"unit"	27	32	14929		
+8744	"PTB_WSJ"	"Inc."	"unit"	4	8	16085		
+8745	"PTB_WSJ"	"Inc."	"unit"	21	26	22708		
+8746	"PTB_WSJ"	"Inc."	"unit"	7	11	26283		
+8747	"PTB_WSJ"	"Inc."	"unit"	10	14	29441		
+8748	"PTB_WSJ"	"Industries"	"unit"	13	16	29367		
+8749	"PTB_WSJ"	"its"	"unit"	4	9	329		
+8750	"PTB_WSJ"	"its"	"unit"	4	8	469		
+8751	"PTB_WSJ"	"its"	"unit"	3	4	470		
+8752	"PTB_WSJ"	"its"	"unit"	9	14	719		
+8753	"PTB_WSJ"	"its"	"unit"	16	19	2635		
+8754	"PTB_WSJ"	"its"	"unit"	13	16	2646		
+8755	"PTB_WSJ"	"its"	"unit"	12	17	2855		
+8756	"PTB_WSJ"	"its"	"unit"	16	22	3098		
+8757	"PTB_WSJ"	"its"	"unit"	6	11	4188		
+8758	"PTB_WSJ"	"its"	"unit"	7	9	4445		
+8759	"PTB_WSJ"	"its"	"unit"	13	15	4718		
+8760	"PTB_WSJ"	"its"	"unit"	5	8	5242		
+8761	"PTB_WSJ"	"its"	"unit"	25	28	5311		
+8762	"PTB_WSJ"	"its"	"unit"	5	7	5510		
+8763	"PTB_WSJ"	"its"	"unit"	5	8	5686		
+8764	"PTB_WSJ"	"its"	"unit"	5	8	5695		
+8765	"PTB_WSJ"	"its"	"unit"	35	38	6646		
+8766	"PTB_WSJ"	"its"	"unit"	22	24	7138		
+8767	"PTB_WSJ"	"its"	"unit"	20	22	9028		
+8768	"PTB_WSJ"	"its"	"unit"	10	14	9762		
+8769	"PTB_WSJ"	"its"	"unit"	23	29	11920		
+8770	"PTB_WSJ"	"its"	"unit"	10	14	11990		
+8771	"PTB_WSJ"	"its"	"unit"	5	9	12944		
+8772	"PTB_WSJ"	"its"	"unit"	19	21	13094		
+8773	"PTB_WSJ"	"its"	"unit"	24	26	15122		
+8774	"PTB_WSJ"	"its"	"unit"	4	7	16077		
+8775	"PTB_WSJ"	"its"	"unit"	24	28	16250		
+8776	"PTB_WSJ"	"its"	"unit"	11	15	18099		
+8777	"PTB_WSJ"	"its"	"unit"	6	12	19610		
+8778	"PTB_WSJ"	"its"	"unit"	4	6	19738		
+8779	"PTB_WSJ"	"its"	"unit"	22	24	20706		
+8780	"PTB_WSJ"	"its"	"unit"	14	16	21146		
+8781	"PTB_WSJ"	"its"	"unit"	12	16	21282		
+8782	"PTB_WSJ"	"its"	"unit"	16	20	21660		
+8783	"PTB_WSJ"	"its"	"unit"	10	14	22143		
+8784	"PTB_WSJ"	"its"	"unit"	5	9	23964		
+8785	"PTB_WSJ"	"its"	"unit"	9	10	23965		
+8786	"PTB_WSJ"	"its"	"unit"	29	35	24050		
+8787	"PTB_WSJ"	"its"	"unit"	9	11	25212		
+8788	"PTB_WSJ"	"its"	"unit"	11	13	25234		
+8789	"PTB_WSJ"	"its"	"unit"	5	9	25759		
+8790	"PTB_WSJ"	"its"	"unit"	22	24	25953		
+8791	"PTB_WSJ"	"its"	"unit"	21	24	25985		
+8792	"PTB_WSJ"	"its"	"unit"	7	10	27214		
+8793	"PTB_WSJ"	"its"	"unit"	20	23	27354		
+8794	"PTB_WSJ"	"its"	"unit"	25	27	27741		
+8795	"PTB_WSJ"	"its"	"unit"	21	25	27746		
+8796	"PTB_WSJ"	"its"	"unit"	12	16	28485		
+8797	"PTB_WSJ"	"its"	"unit"	24	27	29143		
+8798	"PTB_WSJ"	"its"	"unit"	22	26	29161		
+8799	"PTB_WSJ"	"its"	"unit"	9	13	30329		
+8800	"PTB_WSJ"	"its"	"unit"	31	33	30431		
+8801	"PTB_WSJ"	"its"	"unit"	20	23	30434		
+8802	"PTB_WSJ"	"its"	"unit"	30	32	31067		
+8803	"PTB_WSJ"	"its"	"unit"	18	21	31072		
+8804	"PTB_WSJ"	"its"	"unit"	15	20	31399		
+8805	"PTB_WSJ"	"its"	"unit"	14	19	32841		
+8806	"PTB_WSJ"	"its"	"unit"	33	35	32913		
+8807	"PTB_WSJ"	"its"	"unit"	4	7	33691		
+8808	"PTB_WSJ"	"its"	"unit"	3	9	34063		
+8809	"PTB_WSJ"	"its"	"unit"	9	12	34463		
+8810	"PTB_WSJ"	"its"	"unit"	27	31	34502		
+8811	"PTB_WSJ"	"its"	"unit"	32	34	34633		
+8812	"PTB_WSJ"	"its"	"unit"	17	22	35485		
+8813	"PTB_WSJ"	"its"	"unit"	23	28	36135		
+8814	"PTB_WSJ"	"its"	"unit"	20	25	36139		
+8815	"PTB_WSJ"	"its"	"unit"	12	19	36247		
+8816	"PTB_WSJ"	"its"	"unit"	15	17	37730		
+8817	"PTB_WSJ"	"its"	"unit"	3	8	38156		
+8818	"PTB_WSJ"	"its"	"unit"	14	18	38318		
+8819	"PTB_WSJ"	"its"	"unit"	17	19	38439		
+8820	"PTB_WSJ"	"its"	"unit"	25	27	39012		
+8821	"PTB_WSJ"	"Lilly"	"unit"	48	52	36227		
+8822	"PTB_WSJ"	"Ltd."	"unit"	15	18	8835		
+8823	"PTB_WSJ"	"Ltd."	"unit"	18	23	9907		
+8824	"PTB_WSJ"	"Lynch"	"unit"	16	24	8704		
+8825	"PTB_WSJ"	"Pacific"	"unit"	20	22	10588		
+8826	"PTB_WSJ"	"Pinnacle"	"unit"	19	24	24057		
+8827	"PTB_WSJ"	"Pinnacle"	"unit"	1	8	34061		
+8828	"PTB_WSJ"	"PLC"	"unit"	20	26	24591		
+8829	"PTB_WSJ"	"Provigo"	"unit"	10	17	14648		
+8830	"PTB_WSJ"	"RJR"	"unit"	23	27	6643		
+8831	"PTB_WSJ"	"S.A."	"unit"	20	24	6641		
+8832	"PTB_WSJ"	"Saatchi"	"unit"	11	16	25246		
+8833	"PTB_WSJ"	"Sears"	"unit"	18	28	14407		
+8834	"PTB_WSJ"	"Sears"	"unit"	3	7	16460		
+8835	"PTB_WSJ"	"Sony"	"unit"	24	28	1232		
+8836	"PTB_WSJ"	"Southern"	"unit"	1	5	2999		
+8837	"PTB_WSJ"	"Telecommunications"	"unit"	12	17	33688		
+8838	"PTB_WSJ"	"WCRS"	"unit"	23	28	6607		
+8839	"PTB_WSJ"	"whose"	"unit"	3	7	30410		
+8840	"PTB_WSJ"	"Air"	"units"	24	27	5848		
+8841	"PTB_WSJ"	"companies"	"units"	21	24	37999		
+8842	"PTB_WSJ"	"company"	"units"	37	41	15425		
+8843	"PTB_WSJ"	"company"	"units"	5	11	18650		
+8844	"PTB_WSJ"	"Esselte"	"units"	10	13	15128		
+8845	"PTB_WSJ"	"family"	"units"	19	23	10288		
+8846	"PTB_WSJ"	"Group"	"units"	7	11	21231		
+8847	"PTB_WSJ"	"Inc."	"units"	15	20	1310		
+8661	"PTB_WSJ"	"its"	"units"	23	24	4023		
+8662	"PTB_WSJ"	"its"	"units"	13	20	4024		
+8663	"PTB_WSJ"	"its"	"units"	9	11	4027		
+8664	"PTB_WSJ"	"its"	"units"	3	10	4033		
+8665	"PTB_WSJ"	"its"	"units"	10	11	8266		
+8666	"PTB_WSJ"	"its"	"units"	12	16	12266		
+8667	"PTB_WSJ"	"Its"	"units"	1	7	15175		
+8668	"PTB_WSJ"	"its"	"units"	22	23	15201		
+8669	"PTB_WSJ"	"its"	"units"	34	36	15462		
+8670	"PTB_WSJ"	"its"	"units"	8	9	18314		
+8671	"PTB_WSJ"	"its"	"units"	11	12	18320		
+8672	"PTB_WSJ"	"its"	"units"	18	20	20851		
+8673	"PTB_WSJ"	"its"	"units"	24	25	24275		
+8674	"PTB_WSJ"	"its"	"units"	12	14	25233		
+8675	"PTB_WSJ"	"its"	"units"	16	20	25238		
+8676	"PTB_WSJ"	"its"	"units"	8	10	25257		
+8677	"PTB_WSJ"	"its"	"units"	10	12	25956		
+8678	"PTB_WSJ"	"its"	"units"	25	28	28549		
+8679	"PTB_WSJ"	"its"	"units"	7	12	29432		
+8680	"PTB_WSJ"	"its"	"units"	6	16	31413		
+8681	"PTB_WSJ"	"its"	"units"	17	24	32064		
+8682	"PTB_WSJ"	"its"	"units"	36	37	32857		
+8683	"PTB_WSJ"	"its"	"units"	30	36	37829		
+9314	"PTB_WSJ"	"MCA"	"units"	2	7	31068		
+9315	"PTB_WSJ"	"partnership"	"units"	20	22	32194		
+9316	"PTB_WSJ"	"their"	"units"	31	32	33045		
+9317	"PTB_WSJ"	"Union"	"units"	20	27	5401		
+9808	"PTB_WSJ"	"Corp."	"USA"	4	8	5611		
+8660	"PTB_WSJ"	"our"	"vans"	4	5	6800		
+9239	"PTB_WSJ"	"Bank"	"vault"	11	14	10094		
+9214	"PTB_WSJ"	"its"	"vehicle"	8	12	10363		
+9215	"PTB_WSJ"	"its"	"vehicle"	10	14	14905		
+9216	"PTB_WSJ"	"James"	"vehicle"	9	12	18256		
+9217	"PTB_WSJ"	"their"	"vehicles"	9	11	23022		
+8658	"PTB_WSJ"	"its"	"vessels"	13	15	19501		
+22463	"HDFRE"	"their"	"vessels"	53	56	2463	"The various transactions of peace and war had introduced some Roman coins ( chiefly silver ) among the borderers of the Rhine and Danube ; but the more distant tribes were absolutely unacquainted with the use of money , carried on their confined traffic by the exchange of commodities , and prized <b>their</b> rude earthen <b>vessels</b> as of equal value with the silver vases , the presents of Rome to their princes and ambassadors . "	
+22847	"HDFRE"	"their"	"vessels"	14	15	2847	"The assistance of captives and deserters must have been very necessary to pilot <b>their</b> <b>vessels</b> , and to direct their various incursions , as well on the coast of Greece as on that of Asia . "	
+22859	"HDFRE"	"their"	"vessels"	11	12	2859	"The small remainder of this destroying host returned on board <b>their</b> <b>vessels</b> ; and measuring back their way through the Hellespont and the Bosphorus , ravaged in their passage the shores of Troy , whose fame , immortalized by Homer , will probably survive the memory of the Gothic conquests . "	
+8659	"PTB_WSJ"	"their"	"vests"	13	14	19450		
+9701	"PTB_WSJ"	"Whitbread"	"Vineyards"	20	24	32148		
+9213	"PTB_WSJ"	"Their"	"visa"	1	2	22313		
+22427	"HDFRE"	"their"	"wagons"	29	31	2427	"The barbarians , who often chose that severe season for their inroads , transported , without apprehension or danger , their numerous armies , their cavalry , and <b>their</b> heavy <b>wagons</b> , over a vast and solid bridge of ice . "	
+8652	"PTB_WSJ"	"Shere"	"wallet"	12	14	855		
+8653	"PTB_WSJ"	"their"	"wallets"	10	11	9975		
+8132	"PTB_WSJ"	"their"	"wardrobe"	8	9	6248		
+9312	"PTB_WSJ"	"its"	"warehouse"	23	25	34475		
+9313	"PTB_WSJ"	"its"	"warehouses"	15	16	27677		
+8654	"PTB_WSJ"	"my"	"watch"	4	5	553		
+10370	"JB"	"my"	"waterproof"	20	21	2602	"As I did not want to plowter about any more in the drizzle and the dark , I put <b>my</b> <b>waterproof</b> over the muzzle of one gun , and made a sort of wigwam with two or three rammers that I found , and lay along the tail of another gun , wondering where Vixen had got to , and where I might be . "	
+20851	"HDFRE"	"his"	"wealth"	4	5	851	"His name , <b>his</b> <b>wealth</b> , his honors , were the gift of a master , who might , without injustice , resume what he had bestowed . "	
+25124	"HDFRE"	"his"	"wealth"	42	43	5124	"Instead of an absolute sacrifice , a moderate proportion was accepted by the ministers of the gospel ; and in their weekly or monthly assemblies , every believer , according to the exigency of the occasion , and the measure of <b>his</b> <b>wealth</b> and piety , presented his voluntary offering for the use of the common fund . "	
+22831	"HDFRE"	"its"	"wealth"	19	20	2831	"Trebizond , celebrated in the retreat of the ten thousand as an ancient colony of Greeks , derived <b>its</b> <b>wealth</b> and splendor from the magnificence of the emperor Hadrian , who had constructed an artificial port on a coast left destitute by nature of secure harbors . "	
+8232	"PTB_WSJ"	"our"	"wealth"	17	18	31041		
+8233	"PTB_WSJ"	"owners"	"wealth"	25	27	17415		
+20584	"HDFRE"	"their"	"wealth"	9	10	584	"The provinces would soon have been exhausted of <b>their</b> <b>wealth</b> , if the manufactures and commerce of luxury had not insensibly restored to the industrious subjects the sums which were exacted from them by the arms and authority of Rome . "	
+21123	"HDFRE"	"their"	"wealth"	19	21	1123	"At the same time that he obliged the worthless favorites of the tyrant to resign a part of <b>their</b> ill-gotten <b>wealth</b> , he satisfied the just creditors of the state , and unexpectedly discharged the long arrears of honest services . "	
+21365	"HDFRE"	"their"	"wealth"	4	5	1365	"Their numbers , <b>their</b> <b>wealth</b> , their order , and their security , are the best and only foundations of his real greatness ; and were he totally devoid of virtue , prudence might supply its place , and would dictate the same rule of conduct . "	
+22457	"HDFRE"	"their"	"wealth"	23	24	2457	"Their monstrous herds of cattle , less remarkable indeed for their beauty than for their utility , formed the principal object of <b>their</b> <b>wealth</b> . "	
+23121	"HDFRE"	"their"	"wealth"	18	19	3121	"`` The public allowance , '' continues the emperor , `` is sufficient for their support ; <b>their</b> <b>wealth</b> should be collected from the spoils of the enemy , not from the tears of the provincials . '' "	
+23690	"HDFRE"	"their"	"wealth"	12	13	3690	"In the decoration of these scenes , the Roman emperors displayed <b>their</b> <b>wealth</b> and liberality ; and we read on various occasions that the whole furniture of the amphitheatre consisted either of silver , or of gold , or of amber . "	
+24296	"HDFRE"	"their"	"wealth"	36	38	4296	"A very minute survey appears to have been taken of their real estates ; and wherever there was the slightest suspicion of concealment , torture was very freely employed to obtain a sincere declaration of <b>their</b> personal <b>wealth</b> . "	
+8234	"PTB_WSJ"	"their"	"wealth"	3	4	28800		
+8657	"PTB_WSJ"	"Barclay"	"Wedd"	21	25	12098		
+9310	"PTB_WSJ"	"his"	"wells"	40	41	26895		
+9311	"PTB_WSJ"	"its"	"wells"	3	4	10035		
+9576	"PTB_WSJ"	"one"	"wheels"	17	19	22624		
+10287	"PTB_WSJ"	"its"	"wine"	9	10	32173		
+9728	"PTB_WSJ"	"their"	"winners"	11	12	31189		
+9575	"PTB_WSJ"	"his"	"wood"	19	20	915		
+8656	"PTB_WSJ"	"company"	"workstations"	11	14	19878		
+10392	"JB"	"his"	"yard"	24	26	118	"So he backed out of the cave mouth growling , and when he was clear he shouted : `` Each dog barks in <b>his</b> own <b>yard</b> ! "	
+9208	"PTB_WSJ"	"his"	"yard"	13	15	22679		
+9209	"PTB_WSJ"	"its"	"yard"	16	18	32114		
+9210	"PTB_WSJ"	"our"	"yard"	6	8	31548		
+9211	"PTB_WSJ"	"their"	"yard"	27	28	11017		
+9212	"PTB_WSJ"	"their"	"yard"	17	19	22690		
+8655	"PTB_WSJ"	"their"	"zappers"	21	24	38167		
+							
+589	"PTB_WSJ"	"PLC"	"King"	7	10	4842		
+							
+							
+2488	"PTB_WSJ"	"China"	"rhetoric"	7	10	12730		
+							
+5110	"PTB_WSJ"	"its"	"ownership"	25	27	13484		
+5111	"PTB_WSJ"	"its"	"ownership"	20	22	15979		
+5112	"PTB_WSJ"	"its"	"ownership"	2	4	21050		
+5114	"PTB_WSJ"	"its"	"ownership"	31	32	29823		
+5115	"PTB_WSJ"	"its"	"ownership"	8	9	35794		
+							
+733	"PTB_WSJ"	"AG"	"Chairman"	4	1	12934		
+734	"PTB_WSJ"	"agency"	"chairman-elect"	40	43	6565		
+

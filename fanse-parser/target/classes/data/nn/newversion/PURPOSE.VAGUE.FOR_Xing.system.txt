@@ -1,0 +1,109 @@
+#These need some further analysis
+
+
+#INSTRUMENT.VEHICLE
+aircraft	system
+car	system
+vehicle	system
+
+#INSTRUMENT
+laser	system
+phone	system
+rocket	system
+engine	system
+missile	system
+reactor	system
+weapon	system
+telephone	system
+
+#ACTIVITY
+communications	system
+defense	system
+email	system
+control	system
+video	system
+transit	system
+transport	system
+public address	system
+
+command	system
+supply	system
+
+#
+campaign	system
+flight	system
+healthcare	system
+customs	system
+export	system
+bankruptcy	system
+deposit	system
+playoff	system
+
+
+#BUILDINGS/ORGANIZATIONS
+bank	system
+congress	system
+hospital	system
+jail	system
+prison	system
+school	system
+university	system
+court	system
+
+#ROUTES
+bus	system
+metro	system
+rail	system
+subway	system
+
+
+#PROVIDED SERVICE (x4)
+
+
+#BASIS?
+
+accountability	system
+responsibility	system
+
+
+weapons	system
+
+#MANAGE/PROCESS?
+sewage	system
+mail	system
+radar	system
+sonar	system
+foster child	system
+window	system
+
+#PART OF/CENTRAL FEATURE OF
+party	system
+card	system
+
+#FIXED TERM
+constituency	system
+
+#UNCLEAR WITHOUT CONTEXT
+airline	system
+train	system
+
+grain	system
+world	system
+company	system
+
+import	system
+branch	system
+theater	system
+share	system
+technology	system
+traffic	system
+cable	system
+
+currency	system
+data	system
+exchange	system
+market	system
+network	system
+
+
+

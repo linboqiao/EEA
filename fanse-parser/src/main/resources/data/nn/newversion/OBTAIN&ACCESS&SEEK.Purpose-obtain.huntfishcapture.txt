@@ -1,0 +1,19 @@
+salmon	fishing
+trout	fishing
+piranha	fishing
+snapper	fishing
+
+bass	fisher
+catfish	fisherman
+tuna	fisherman
+urchin	fishing
+
+tourist	attraction
+
+tourist	trap
+wildlife	trap
+
+shrimp	boat
+tuna	boat
+
+

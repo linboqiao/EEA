@@ -1,0 +1,72 @@
+advertising	effort
+collection	effort
+conservation	effort
+development	effort
+enforcement	effort
+eradication	effort
+expansion	effort
+exploration	effort
+impeachment	effort
+interdiction	effort
+mediation	effort
+modernization	effort
+peace	effort
+preservation	effort
+prevention	effort
+privatization	effort
+protection	effort
+rebuilding	effort
+reconciliation	effort
+reconstruction	effort
+recovery	effort
+recruitment	effort
+recycling	effort
+reelection	effort
+restoration	effort
+salvage	effort
+
+aid	effort
+buyout	effort
+campaign	effort
+cleanup	effort
+control	effort
+defense	effort
+outreach	effort
+relief	effort
+
+research	effort
+search	effort
+takeover	effort
+
+recall	effort
+reform	effort
+rescue	effort
+
+comeback	attempt
+escape	attempt
+launch	attempt
+pass	attempt
+rescue	attempt
+suicide	attempt
+
+#more of a stretch
+assassination	plot
+bomb	plot
+coup	plot
+murder	plot
+
+recall	campaign
+smear	campaign
+
+reform	program
+
+buyout	bid
+comeback	bid
+
+bypass	operation
+transplant	operation
+
+assassination	attempt
+conversion	attempt
+extortion	attempt
+robbery	attempt

@@ -1,0 +1,38 @@
+gallon	container
+gallon	spill
+gallon	jug
+gallon	drum
+gallon	tank
+
+gigabyte	drive
+
+
+liter	bottle
+liter	engine
+
+litre	engine
+
+grams	fat
+
+quart	saucepan
+
+ounce	bottle
+ounce	can
+ounce	serving
+ounce	package
+
+tablespoon	salt
+tablespoon	oil
+tablespoon	sugar
+
+tablespoons	water
+tablespoons	flour
+tablespoons	oil
+tablespoons	sugar
+
+teaspoon	sugar
+teaspoon	powder
+
+teaspoons	sugar
+
+megabyte	drive

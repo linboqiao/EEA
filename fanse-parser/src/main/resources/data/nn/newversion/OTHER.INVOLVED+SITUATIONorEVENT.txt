@@ -1,0 +1,126 @@
+#event/state
+currency	crisis
+fuel	crisis
+banking	crisis
+drug	crisis
+liquidity	crisis
+payment	crisis
+cow	crisis
+market	crisis
+debt	crisis
+health	crisis
+leadership	crisis
+weapon	crisis
+family	crisis
+coalition	crisis
+funding	crisis
+budget	crisis
+cash	crisis
+nonpayment	crisis
+impeachment	crisis
+refugee	crisis
+food	crisis
+inspection	crisis
+thrift	crisis
+hostage	crisis
+energy	crisis
+water	crisis
+oil	crisis
+aid	crisis
+government	crisis
+missile	crisis
+
+#event
+sex	scandal
+security	scandal
+bidding	scandal
+arm	scandal
+campaign	scandal
+spy	scandal
+fraud	scandal
+banking	scandal
+finance	scandal
+drug	scandal
+bribery	scandal
+money	scandal
+
+quarterback	situation
+tax	situation
+job	situation
+budget	situation
+hostage	situation
+crime	situation
+flood	situation
+security	situation
+labor	situation
+employment	situation
+
+deer	accident
+
+school	tragedy
+family	tragedy
+
+impeachment	ordeal
+
+family	emergency
+balance-of-payments	emergency
+health	emergency
+
+#state
+trade	conflict
+
+scheduling	conflict
+
+hostage	affair
+
+family	dilemma
+
+trade	friction
+
+management	turmoil
+
+team	game
+roleplaying	game
+
+aircraft	accident
+automobile	accident
+bus	accident
+car	accident
+motorcycle	accident
+train	accident
+
+bank	transaction
+banking	transaction
+underwriting	transaction
+
+defense	purpose
+tax	purpose
+
+paint	job
+repair	job
+
+cocktail	reception
+
+medication	error
+tabulation	error
+sampling	error
+computer	error
+program	error
+fielding	error
+
+sex	abuse
+property	crime
+computer	crime
+sex	crime
+drug	crime
+consumer	fraud
+accounting	fraud
+vote	fraud
+insurance	fraud
+procurement	fraud
+securities	fraud
+customer	fraud
+tax	fraud
+medicare	fraud
+drug	offender
+sex	offender

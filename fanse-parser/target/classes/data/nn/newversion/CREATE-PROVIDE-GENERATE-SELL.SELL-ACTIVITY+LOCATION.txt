@@ -1,0 +1,78 @@
+chicken	restaurant
+food	restaurant
+pizza	restaurant
+seafood	restaurant
+
+antique	shop
+book	shop
+clothing	shop
+doughnut	shop
+flower	shop
+jewelry	shop
+paint	shop
+sex	shop
+shoe	shop
+souvenir	shop
+specialty	shop
+tobacco	shop
+video	shop
+wig	shop
+wine	shop
+
+
+antique	store
+apparel	store
+appliance	store
+book	store
+craft	store
+discount	store
+drug	store
+electronics	store
+food	store
+furniture	store
+gift	store
+grocery	store
+merchandise	store
+music	store
+part	store
+rental	store
+retail	store
+specialty	store
+stationery	store
+supply	store
+tobacco	store
+video	store
+watch	store
+
+concession	stand
+fruit	stand
+snack	stand
+soda	stand
+noodle	stand
+pizza	stand
+
+gasoline	station
+
+coffee	house
+crack	house
+drug	house
+
+salad	bar
+snack	bar
+wine	bar
+
+lunch	counter
+ticket	counter
+
+food	court
+
+car	dealership
+
+food	booth
+
+garment	district
+
+gem	emporium
+
+pizza	place
+

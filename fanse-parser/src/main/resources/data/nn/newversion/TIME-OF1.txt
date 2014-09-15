@@ -1,0 +1,556 @@
+
+lifetime	access
+
+future	generation
+
+
+
+afternoon	dealing
+
+quarter	spread
+
+third-quarter	earnings
+fourth-quarter	earnings
+third-quarter	net
+third-quarter	profit
+fourth-quarter	result
+third-quarter	result
+third-quarter	revenue
+third-quarter	sale
+
+preseason	opener
+offseason	program
+
+emergency	trip
+emergency	surgery
+emergency	assistance
+emergency	funding
+emergency	service
+emergency	use
+
+
+
+honeymoon	period
+
+
+day	care
+
+return	visit
+
+'60s	dropout
+'80s	capitalism
+
+winter	glove
+spring	good
+spring	merchandise
+
+session	high
+fourth-quarter	income
+emergency	restriction
+
+session	low
+peacetime	growth
+day	labor
+pretax	gain
+
+lunch	meeting
+
+
+reagan era	neglect
+
+winter	sowing
+
+
+
+
+
+spring	training
+night	work
+
+
+playoff	game
+series	game
+
+
+
+holiday	break
+
+career	diplomat
+career	soldier
+career	criminal
+career	leader
+career	prosecutor
+career	employee
+career	politician
+career	title
+career	game
+career	hit
+career	officer
+
+career	high
+career	mark
+
+boyhood	friend
+
+halftime	lead
+
+
+
+
+advance	copy
+advance	estimate
+advance	fare
+advance	guard
+advance	inquiry
+advance	knowledge
+advance	party
+advance	sale
+advance	team
+advance	ticket
+advance	warning
+advance	word
+advance	information
+advance	booking
+advance	notice
+
+vintage	wine
+
+after-hours	trading
+
+afternoon	buying
+afternoon	trading
+afternoon	practice
+afternoon	newspaper
+afternoon	shower
+afternoon	paper
+afternoon	temperature
+afternoon	meeting
+afternoon	rally
+afternoon	session
+afternoon	game
+afternoon	sun
+afternoon	thunderstorm
+afternoon	fixing
+afternoon	tea
+
+anniversary	summit
+
+autumn	statement
+
+battle	cry
+
+birth	defect
+birth	weight
+
+boating	accident
+
+bowl	appearance
+
+boyhood	home
+
+breakfast	meeting
+
+campaign	promise
+campaign	pledge
+
+diving	header
+
+career	at-bat
+career	earnings
+career	path
+career	shutout
+career	total
+career	homer
+career	goal
+career	win
+career	victory
+
+century	art
+century	history
+century	music
+century	building
+century	furniture
+century	mark
+century	painting
+
+championship	victory
+
+
+comeback	victory
+
+commencement	speech
+commencement	address
+
+construction	accident
+
+convention	speech
+
+date	rape
+
+dawn	raid
+
+daylight	hours
+
+death	throes
+
+debut	album
+
+deposition	testimony
+
+dinner	meeting
+
+draft	choice
+draft	pick
+
+election	defeat
+election	pledge
+election	victory
+election	success
+
+evening	newspaper
+evening	paper
+evening	thunderstorm
+evening	party
+evening	class
+evening	performance
+evening	program
+evening	meal
+evening	meeting
+evening	session
+evening	hour
+evening	newscast
+
+exhibition	victory
+
+fall	campaign
+fall	show
+fall	schedule
+fall	series
+fall	meeting
+fall	collection
+fall	election
+fall	harvest
+fall	lineup
+fall	semester
+
+fastbreak	layup
+
+full-year	profit
+
+halftime	show
+
+holiday	party
+holiday	gift
+holiday	tradition
+holiday	sale
+holiday	spirit
+holiday	meal
+holiday	destination
+holiday	period
+holiday	discount
+holiday	traveler
+holiday	shopper
+
+inauguration	speech
+
+intraday	high
+intraday	peak
+
+kickoff	return
+
+life	imprisonment
+life	sentence
+
+lifetime	employment
+lifetime	record
+
+lunch	break
+
+luncheon	speech
+
+mid-afternoon	trading
+
+midday	trading
+midday	sun
+
+midmorning	today
+
+midnight	deadline
+midnight	mass
+
+midterm	poll
+
+millennium	summit
+millennium	bug
+
+morning	paper
+morning	flight
+morning	traffic
+morning	rally
+morning	light
+morning	meeting
+morning	trading
+morning	practice
+morning	workout
+morning	newspaper
+morning	service
+morning	session
+morning	coffee
+morning	program
+morning	show
+morning	sun
+morning	hour
+morning	activity
+morning	tea
+morning	fixing
+
+night	spot
+night	club
+night	show
+night	lineup
+night	meeting
+night	football
+night	match
+night	party
+night	stay
+night	flight
+night	stand
+night	class
+night	cruise
+night	special
+night	life
+night	attack
+night	race
+night	light
+night	movie
+night	session
+night	crawler
+night	watchman
+night	owl
+night	guard
+night	sky
+
+noon	deadline
+noon	prayer
+
+offseason	surgery
+
+one-out	walk
+
+overtime	goal
+overtime	loss
+overtime	victory
+overtime	win
+overtime	work
+
+peacetime	expansion
+
+pinch	runner
+
+playoff	victory
+playoff	appearance
+
+postseason	play
+postseason	game
+postseason	appearance
+
+
+pre-tax	profit
+
+pregame	show
+pregame	ceremony
+
+preseason	favorite
+preseason	camp
+preseason	poll
+preseason	game
+
+pretax	profit
+
+
+quarter	loss
+quarter	charge
+quarter	sale
+quarter	rose
+quarter	century
+quarter	earnings
+quarter	ending
+quarter	figure
+quarter	final
+quarter	gain
+quarter	growth
+quarter	income
+quarter	net
+quarter	performance
+quarter	profit
+quarter	result
+quarter	revenue
+
+quarterfinal	game
+quarterfinal	victory
+
+recess	appointment
+
+reelection	victory
+
+
+season	debut
+season	night
+season	game
+season	high
+season	opener
+season	finale
+
+
+semifinal	game
+semifinal	victory
+
+series	victory
+
+skiing	accident
+
+sleep	apnea
+
+spring	collection
+spring	meeting
+spring	break
+spring	rain
+spring	crop
+spring	election
+spring	offensive
+spring	practice
+spring	festival
+spring	wheat
+spring	session
+spring	game
+spring	planting
+spring	semester
+
+stage	victory
+
+summer	tourist
+summer	weather
+summer	class
+summer	home
+summer	resort
+summer	residence
+summer	break
+summer	palace
+summer	camp
+summer	program
+summer	series
+summer	sale
+summer	movie
+summer	rally
+summer	crop
+summer	heat
+summer	reading
+summer	flood
+summer	league
+summer	rain
+summer	school
+summer	travel
+summer	period
+summer	harvest
+summer	session
+summer	grain
+summer	tour
+summer	job
+summer	doldrums
+summer	sun
+summer	night
+summer	game
+summer	holiday
+summer	afternoon
+summer	festival
+summer	drought
+summer	evening
+summer	rains
+summer	dust
+summer	month
+summer	recess
+summer	vacation
+
+
+today	meeting
+
+tomorrow	afternoon
+tomorrow	evening
+tomorrow	morning
+tomorrow	meeting
+tomorrow	night
+
+tour	victory
+
+vacation	trip
+vacation	destination
+
+vigil	service
+
+end	performance
+
+wartime	experience
+wartime	past
+wartime	atrocity
+wartime	action
+wartime	etiquette
+wartime	killing
+wartime	massacre
+wartime	support
+wartime	uniform
+wartime	price
+
+wedding	vow
+
+weekend	trip
+weekend	meeting
+weekend	conference
+weekend	edition
+weekend	interview
+weekend	rain
+weekend	series
+weekend	talk
+weekend	visit
+weekend	election
+weekend	warrior
+weekend	summit
+weekend	furlough
+weekend	circulation
+weekend	report
+weekend	jaunt
+
+winter	ball
+winter	weather
+winter	home
+winter	area
+winter	break
+winter	crop
+winter	game
+winter	sport
+winter	meeting
+winter	session
+winter	harvest
+winter	storm
+winter	month
+winter	wheat
+winter	coat
+
+
+yesterday	afternoon
+yesterday	evening
+yesterday	morning
+
+day	trader
+
+wartime	leader
+
+night	supervisor
+night	manager
+evening	manager
+evening	supervisor
+
+commencement	speaker
+
+playoff	opponent
+
+primary	voter

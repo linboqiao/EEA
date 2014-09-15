@@ -1,0 +1,72 @@
+goodwill	write-off
+
+#for justification
+achievement	award
+literature	prize
+chemistry	prize
+
+business	traveler
+business	deduction
+
+#
+drug	indictment
+racketeering	indictment
+
+racketeering	prosecution
+
+cancellation	penalty
+interference	penalty
+marriage	penalty
+
+signing	bonus
+
+traffic	ticket
+
+retirement	pay
+severance	pay
+overtime	pay
+
+redundancy	payment
+severance	payment
+deficiency	payment
+disaster	payment
+
+overtime	salary
+
+severance	package
+
+disability	pension
+
+earthquake	repair
+
+penalty	shot
+
+invalidity	benefit
+severance	benefit
+
+fraud	conviction
+drug	conviction
+driving	conviction
+perjury	conviction
+
+misdemeanor	conviction
+felony	conviction
+
+contempt	citation
+
+utility	bill
+
+#FOR-justification
+genocide	trial
+conspiracy	trial
+therapy	trial
+drug	trial
+corruption	trial
+impeachment	trial
+murder	trial
+racketeering	trial
+treason	trial
+perjury	trial
+show	trial
+fraud	trial
+rape	trial

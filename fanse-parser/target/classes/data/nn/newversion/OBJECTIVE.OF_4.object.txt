@@ -1,0 +1,3983 @@
+health	promotion
+
+housing	start
+
+photo	shoot
+
+stock	issue
+
+weapon	poisoning
+growth	reversal
+mood	reversal
+
+asset	valuation
+market	valuation
+
+question	wording
+
+page	layout
+
+construction	engineer
+
+disco	dancer
+
+grain	elevator
+
+infant	immunization
+student	immunization
+lawn	service
+
+employee	sharing
+
+price	discussion
+merger	discussion
+policy	discussion
+
+risk	profile
+
+media	research
+
+batting	practice
+
+cancer	diagnosis
+
+ocean	view
+
+keynote	speaker
+
+ticket	pricing
+portfolio	weighting
+
+chimney	sweep
+car	wash
+
+water	purification
+oil	strainer
+water	treatment
+
+design	engineer
+
+virus	writer
+
+music	writer
+
+currency	translation
+
+highschool	dropout
+
+industry	leader
+series	leader
+
+league	lead
+
+profit	tax
+fuel	tax
+alcohol	tax
+cut	tax
+ticket	tax
+carbon	tax
+transaction	tax
+sulfur	tax
+withholding	tax
+gasoline	tax
+employment	tax
+export	tax
+departure	tax
+sales	tax
+import	tax
+income	tax
+excise	tax
+gas	tax
+capital gains	tax
+marriage	tax
+car	tax
+gift	tax
+corporation	tax
+death	tax
+transfer	tax
+cigarette	tax
+energy	tax
+wealth	tax
+property	tax
+payroll	tax
+tobacco	tax
+oil	tax
+income	taxation
+
+missile	interceptor
+house	demolition
+cell	destruction
+bus	bombing
+embassy	bombing
+
+road	shutdown
+government	shutdown
+plant	shutdown
+
+debt	forgiveness
+debt	cancellation
+
+plant	closing
+base	closing
+
+plant	closure
+pit	closure
+
+circuit	breaker
+
+bolt	cutter
+
+trading	halt
+
+spending	rescission
+
+carp	slaughter
+dog	slaughter
+turtle	slaughter
+
+apartment	bombing
+pipeline	explosion
+
+flag	burning
+
+arms	reduction
+tax	reduction
+price	reduction
+budget	reduction
+cost	reduction
+debt	reduction
+force	reduction
+spending	reduction
+rate	reduction
+poverty	reduction
+job	reduction
+workforce	reduction
+pollution	reduction
+tariff	reduction
+deficit	reduction
+emission	reduction
+staff	reduction
+troop	reduction
+
+price	cut
+fare	cut
+program	cut
+medicare	cut
+team	cut
+capacity	cut
+spending	cut
+cost	cut
+salary	cut
+rate	cut
+troop	cut
+arms	cut
+dividend	cut
+benefit	cut
+funding	cut
+wage	cut
+defense	cut
+tariff	cut
+staff	cut
+production	cut
+output	cut
+budget	cut
+
+cost	cutting
+production	cutback
+budget	cutback
+staff	cutback
+
+crime	fighter
+government	opponent
+abortion	opponent
+crime	fighting
+
+price	freeze
+pay	freeze
+hiring	freeze
+
+contribution	limit
+
+import	restriction
+visa	restriction
+investment	restriction
+water	restriction
+age	restriction
+weight	restriction
+export	restriction
+abortion	restriction
+height	restriction
+travel	restriction
+budget	restriction
+treaty	restriction
+credit	restriction
+share	restriction
+
+poverty	eradication
+
+pain	killer
+
+poverty	alleviation
+
+
+pesticide	spraying
+water	sprinkler
+dart	thrower
+rock	throwing
+shuttle	launch
+rocket	launch
+missile	launch
+product	launch
+missile	launcher
+grenade	launcher
+baseball	pitcher
+
+chemical	sprayer
+ball	deflection
+ray	deflection
+
+leaf	blower
+
+gas	emission
+greenhouse	emission
+carbon dioxide	emission
+exhaust	emission
+carbon	emission
+radiation	leak
+gas	leak
+fuel	leak
+hydrogen	leak
+member	expulsion
+refugee	expulsion
+
+snow	shower
+
+rocket	booster
+coin	flip
+
+wasteland	development
+
+weapon	dismantlement
+
+water	desalinization
+
+army	reshuffle
+kebab	cooker
+turkey	baker
+turkey	roaster
+cheese	grater
+ginger	grater
+vegetable	grilling
+food	grinder
+infant	circumcision
+
+glass	sculptor
+ice	sculptor
+sand	sculptor
+wood	sculptor
+
+inventory	adjustment
+market	adjustment
+claims	adjustment
+capital	adjustment
+policy	adjustment
+benefit	adjustment
+price	adjustment
+valuation	adjustment
+tax	adjustment
+inflation	adjustment
+accounting	adjustment
+
+debt	refinancing
+
+van	conversion
+
+
+policy	reversal
+
+government	reshuffle
+
+market	change
+price	change
+staff	change
+rate	change
+zoning	change
+temperature	change
+lifestyle	change
+policy	change
+budget	change
+job	change
+career	change
+charter	change
+leadership	change
+design	change
+lineup	change
+accounting	change
+board	change
+costume	change
+time	change
+lead	change
+boundary	change
+tax	change
+portfolio	change
+date	change
+mood	change
+equipment	change
+ownership	change
+climate	change
+rule	change
+dividend	change
+
+concept	modification
+refinery	modification
+helicopter	modification
+
+health care	revision
+
+tummy	tuck
+
+door	opener
+garage	opener
+eye	opener
+
+cement	mixer
+ticket	splitting
+arm	twisting
+
+oil	refiner
+oil	refining
+
+land	reclamation
+
+health care	overhaul
+penalty	overhaul
+tax	overhaul
+
+bank	reform
+insurance	reform
+currency	reform
+law	reform
+healthcare	reform
+government	reform
+medicare	reform
+system	reform
+wage	reform
+labor	reform
+finance	reform
+enterprise	reform
+market	reform
+penalty	reform
+taxation	reform
+school	reform
+price	reform
+policy	reform
+banking	reform
+capital gains	reform
+management	reform
+tax	reform
+campaign	reform
+college sports	reform
+real estate	reform
+budget	reform
+pension	reform
+trade	reform
+
+claims	adjuster
+
+cocaine	possession
+drug	possession
+weapon	possession
+
+copyright	holder
+account	holder
+card	holder
+debenture	holder
+franchise	holder
+fund	holder
+policy	holder
+unit	holder
+equity	holder
+office	holder
+license	holder
+debt	holder
+ticket	holder
+trademark	holder
+mortgage	holder
+
+baseball	owner
+store	owner
+fund	owner
+station	owner
+yacht	owner
+parlor	owner
+business	owner
+club	owner
+copyright	owner
+computer	owner
+bookstore	owner
+team	owner
+hotel	owner
+truck	owner
+tavern	owner
+majority	owner
+league	owner
+restaurant	owner
+boat	owner
+plant	owner
+building	owner
+dog	owner
+land	owner
+theater	owner
+gallery	owner
+factory	owner
+dish	owner
+car	owner
+part	owner
+company	owner
+apartment	owner
+bar	owner
+nightclub	owner
+racehorse	owner
+taxi	owner
+ship	owner
+property	owner
+franchise	owner
+shop	owner
+vehicle	owner
+horse	owner
+
+pain	reliever
+
+division	winner
+semifinal	winner
+semifinal	loser
+election	loss
+
+soil	conservation
+wildlife	conservation
+youth	conservation
+water	conservation
+energy	conservation
+art	conservation
+
+book	conservationist
+book	conservation
+
+
+policy	shift
+paradigm	shift
+
+water	conservancy
+
+labor	protection
+property	protection
+privacy	protection
+environment	protection
+job	protection
+health	protection
+wildlife	protection
+investor	protection
+consumer	protection
+investment	protection
+food	protection
+relic	protection
+
+resident	protection
+offspring	protection
+community	protection
+family	protection
+fan	protection
+gun	protection
+gunner	protection
+homeowner	protection
+immigration	protection
+journalist	protection
+
+business	insurer
+portfolio	insurer
+life	insurer
+health	insurer
+
+health	coverage
+
+deposit	insurance
+life	insurance
+mortgage	insurance
+portfolio	insurance
+
+insurance	underwriter
+exchange	underwriter
+
+life	support
+license	renewal
+contract	extension
+line	extension
+
+screen	saver
+
+pocket	protector
+
+steel	consumption
+water	consumption
+food	consumption
+electricity	consumption
+meat	consumption
+energy	consumption
+oil	consumption
+fuel	consumption
+wine	consumption
+drug	consumption
+alcohol	consumption
+copper	consumption
+cigarette	consumption
+gas	consumption
+beer	consumption
+silver	consumption
+
+water	guzzler
+
+turtle	eating
+coffee	sipper
+
+electricity	hog
+tea	sipper
+
+steroid	use
+drug	use
+cocaine	use
+alcohol	use
+heroin	use
+tobacco	use
+energy	use
+electricity	use
+water	use
+
+wood	burning
+
+substance	abuse
+alcohol	abuse
+
+water	usage
+
+smoke	inhalation
+
+cigarette	smoking
+
+coffee	drinking
+
+cocaine	ingestion
+
+water	intake
+
+target	shooting
+bank	robbery
+bank	robber
+
+cigar	smoker
+cigarette	smoker
+chain	smoker
+
+drug	abuser
+food	eater
+wine	drinker
+
+heroin	user
+water	user
+energy	user
+cocaine	user
+
+draft	evaders
+tax	evaders
+
+tax	evasion
+vaccine	boycott
+election	boycott
+tourism	boycott
+bus	boycott
+
+drug	prevention
+fire	prevention
+disaster	prevention
+pollution	prevention
+cancer	prevention
+aids	prevention
+conflict	prevention
+crime	prevention
+flood	prevention
+disease	prevention
+loss	prevention
+
+trading	block
+channel	blocker
+beta	blocker
+angiogenesis	inhibitor
+
+law	breaking
+
+life	endangerment
+
+flag	desecration
+window	breaking
+
+auto	trashing
+
+homeowner	insurance
+
+child	abuser
+child	molestation
+child	abuse
+
+trademark	infringement
+copyright	infringement
+patent	infringement
+
+inventory	forgery
+
+computer	hacker
+brand	switcher
+expense account	fudging
+
+aid	recipient
+grant	recipient
+medicare	recipient
+transplant	recipient
+
+stair	climber
+trail	blazer
+tree	traversal
+museum	visitor
+spa	visitor
+city	visitor
+hospital	visit
+office	visit
+conference	attendee
+college	attendance
+church	attendance
+class	attendance
+distance	runner
+
+brewery	tour
+world	tour
+studio	tour
+
+soybean	trader
+stock	trader
+money	trader
+takeover	trader
+security	trader
+index	trader
+floor	trader
+metals	trader
+option	trader
+gold	trader
+commodity	trader
+oil	trader
+grain	trader
+currency	trader
+copper	trader
+future	trader
+options	trader
+futures	trader
+livestock	trader
+
+derivative	trading
+futures	trading
+equity	trading
+stock	trading
+commodity	trading
+securities	trading
+program	trading
+currency	trading
+contract	trading
+dollar	trading
+portfolio	trading
+option	trading
+
+commodity	broker
+energy	broker
+future	broker
+insurance	broker
+investment	broker
+media	broker
+money	broker
+mortgage	broker
+oil	broker
+peace	broker
+securities	broker
+security	broker
+stock	broker
+ticket	broker
+
+land	swap
+debt	swap
+share	swap
+currency	swap
+equity	swap
+
+ivory	trade
+arms	trade
+services	trade
+stock	trade
+merchandise	trade
+diamond	trade
+world	trade
+future	trade
+security	trade
+cocaine	trade
+grain	trade
+narcotic	trade
+
+product	smuggler
+rice	smuggler
+banana	smuggling
+caviar	smuggling
+coffee	smuggling
+medicine	smuggling
+salt	smuggling
+spirits	smuggling
+seafood	shipper
+wheat	shipper
+syphilis	transmission
+
+baggage	handler
+cargo	handler
+
+kidney	transplant
+organ	transplant
+marrow	transplant
+fetal tissue	transplant
+lung	transplant
+hand	transplant
+heart	transplant
+
+plant	relocation
+mail	sender
+
+freight	haulage
+
+freight	hauler
+trash	hauler
+
+drug	smuggler
+
+freight	carrier
+telecommunication	carrier
+helicopter	carrier
+drink	carrier
+cargo	carrier
+aid	carrier
+communication	carrier
+insurance	carrier
+phone	carrier
+telephone	carrier
+flag	carrier
+
+weapon	proliferation
+missile	proliferation
+arms	proliferation
+
+arms	smuggling
+drug	smuggling
+narcotics	smuggling
+
+gas	transportation
+freight	transportation
+passenger	transportation
+
+drug	trafficker
+cocaine	trafficker
+narcotic	trafficker
+
+drug	trafficking
+
+freight	handling
+baggage	handling
+
+equity	mover
+drug	runner
+
+scandal	survival
+
+life insurance	policyholder
+
+quality	improvement
+productivity	improvement
+transportation	improvement
+policy	improvement
+infrastructure	improvement
+home	improvement
+traffic	improvement
+safety	improvement
+efficiency	improvement
+
+credit	enhancement
+career	advancement
+
+hotel	expansion
+airport	expansion
+fund	expansion
+settlement	expansion
+
+capacity	addition
+
+
+inventory	buildup
+troop	buildup
+arms	buildup
+
+power	amplifier
+
+price	gouging
+
+rent	increase
+salary	increase
+tax	increase
+service	increase
+cost	increase
+spending	increase
+fare	increase
+benefit	increase
+budget	increase
+fee	increase
+pay	increase
+quota	increase
+price	increase
+tariff	increase
+toll	increase
+tuition	increase
+pension	increase
+wage	increase
+dividend	increase
+
+tuition	inflation
+pay	raise
+
+school	betterment
+
+wage	boost
+morale	boost
+price	boost
+pay	boost
+
+pay	hike
+salary	hike
+fare	hike
+price	hike
+wage	hike
+
+money	launderer
+
+money	laundering
+
+word	processor
+egg	processor
+food	processor
+meat	processor
+
+word	processing
+transaction	processing
+image	processing
+information	processing
+petrochemical	processing
+product	processing
+batch	processing
+food	processing
+minerals	processing
+
+aluminium	smelter
+iron	smelter
+modifier	parsing
+
+oil	refinery
+paint	thinner
+
+engine	repair
+highway	repair
+home	repair
+
+extinguisher	repairman
+photocopier	repairman
+copier	repairman
+equipment	repairman
+road	repairman
+
+aircraft	maintenance
+home	maintenance
+road	maintenance
+
+fracture	healing
+
+share	turnover
+board	turnover
+member	turnover
+staff	turnover
+market	turnover
+employee	turnover
+trade	turnover
+export	turnover
+group	turnover
+
+air	conditioner
+air	conditioning
+
+credit	loss
+weight	loss
+revenue	loss
+yard	loss
+property	loss
+
+hair	loss
+blood	loss
+job	loss
+crop	loss
+
+bone	loss
+
+price	spike
+market	rally
+dollar	rally
+wage	rise
+tax	rise
+profit	rise
+price	inflation
+rate	rise
+population	explosion
+market	expansion
+credit	expansion
+yen	appreciation
+price	appreciation
+
+earnings	improvement
+profit	improvement
+population	increase
+volume	increase
+output	increase
+productivity	increase
+sale	increase
+revenue	increase
+earnings	increase
+profit	increase
+sales	increase
+price	rise
+index	rise
+sale	gain
+employment	gain
+efficiency	gain
+profit	gain
+volume	gain
+productivity	gain
+earnings	gain
+weight	gain
+price	gain
+wage	gain
+circulation	gain
+income	gain
+real estate	gain
+security	gain
+revenue	gain
+capital	gain
+job	gain
+manufacturing	growth
+industry	growth
+loan	growth
+sales	growth
+hair	growth
+import	growth
+product	growth
+unit	growth
+plant	growth
+export	growth
+dividend	growth
+profit	growth
+volume	growth
+revenue	growth
+investment	growth
+market	growth
+population	growth
+world	growth
+production	growth
+index	growth
+asset	growth
+productivity	growth
+sale	growth
+deposit	growth
+job	growth
+wage	growth
+income	growth
+output	growth
+cell	growth
+spending	growth
+tumor	growth
+earnings	growth
+money	growth
+traffic	growth
+tourist	growth
+
+biodiversity	loss
+
+delivery	delay
+shipping	delay
+airline	delay
+product	delay
+flight	delay
+construction	delay
+
+money	loser
+growth	acceleration
+ozone	depletion
+
+earnings	recovery
+market	recovery
+
+securities	transaction
+share	transaction
+land	transaction
+currency	transaction
+cash	transaction
+drug	transaction
+trading	transaction
+property	transaction
+security	transaction
+equities	transaction
+
+industry	bailout
+
+convoy	attack
+
+animal	destruction
+church	destruction
+city	devastation
+family	devastation
+state	disintegration
+terrorism	eradication
+weevil	eradication
+animal	euthanasia
+diplomat	murder
+livestock	mutilation
+consumer	abuse
+employee	abuse
+prostitute	killing
+student	killing
+whale	killing
+gang	avoidance
+class	cancellation
+cop	poisoning
+dog	poisoning
+embassy	attack
+
+
+shock	absorber
+
+
+quarterback	sack
+
+salary	slash
+
+wound	infection
+
+aircraft	explosion
+chicken	slaughter
+child	poisoning
+
+shop	burning
+shrine	burning
+synagogue	burning
+
+credibility	damage
+credit	damage
+fabric	damage
+system	poisoning
+hardware	damage
+wildlife	damage
+vegetation	damage
+relationship	damage
+machine	damage
+infrastructure	damage
+memory	damage
+equipment	damages
+motor	damages
+plane	damages
+
+city	inhabitant
+
+air	controller
+computer	controller
+flight	controller
+traffic	controller
+
+account	director
+advertising	director
+affair	director
+area	director
+art	director
+athletics	director
+bank	director
+board	director
+budget	director
+bureau	director
+campaign	director
+casting	director
+census	director
+center	director
+city	director
+communication	director
+company	director
+department	director
+design	director
+development	director
+division	director
+enforcement	director
+factory	director
+fashion	director
+finance	director
+flight	director
+gallery	director
+group	director
+health	director
+hospital	director
+information	director
+institute	director
+launch	director
+lottery	director
+management	director
+marketing	director
+media	director
+movie	director
+museum	director
+music	director
+office	director
+operation	director
+plant	director
+player	director
+police	director
+policy	director
+prison	director
+production	director
+program	director
+project	director
+projects	director
+promotion	director
+race	director
+relation	director
+research	director
+resource	director
+safety	director
+sales	director
+school	director
+scouting	director
+service	director
+sport	director
+staff	director
+team	director
+theater	director
+wine	director
+zoo	director
+
+museum	curator
+
+market	dominance
+
+world	domination
+
+law	enforcer
+
+alliance	leader
+band	leader
+bloc	leader
+business	leader
+cartel	leader
+championship	leader
+church	leader
+city	leader
+clan	leader
+coalition	leader
+committee	leader
+commonwealth	leader
+community	leader
+congress	leader
+coup	leader
+cult	leader
+delegation	leader
+division	leader
+faction	leader
+gang	leader
+government	leader
+group	leader
+homeland	leader
+house	leader
+independence	leader
+junta	leader
+labor	leader
+labour	leader
+league	leader
+majority	leader
+market	leader
+media	leader
+militia	leader
+minority	leader
+movement	leader
+neighborhood	leader
+opinion	leader
+opposition	leader
+parliament	leader
+party	leader
+platoon	leader
+prayer	leader
+project	leader
+protest	leader
+race	leader
+reform	leader
+scout	leader
+sect	leader
+sector	leader
+solidarity	leader
+squad	leader
+squadron	leader
+state	leader
+summit	leader
+team	leader
+troop	leader
+union	leader
+uprising	leader
+village	leader
+world	leader
+
+asset	management
+bank	management
+case	management
+cash	management
+company	management
+crisis	management
+debt	management
+disaster	management
+enterprise	management
+facility	management
+fund	management
+growth	management
+hotel	management
+information	management
+inventory	management
+investment	management
+land	management
+materials	management
+money	management
+network	management
+portfolio	management
+product	management
+project	management
+property	management
+resource	management
+risk	management
+stress	management
+team	management
+time	management
+traffic	management
+utilities	management
+utilization	management
+waste	management
+water	management
+wildlife	management
+
+account	manager
+advertising	manager
+affair	manager
+airport	manager
+apartment	manager
+area	manager
+asset	manager
+bank	manager
+baseball	manager
+benefit	manager
+branch	manager
+brand	manager
+building	manager
+business	manager
+campaign	manager
+case	manager
+casino	manager
+center	manager
+city	manager
+club	manager
+communication	manager
+company	manager
+computer	manager
+construction	manager
+convention	manager
+credit	manager
+department	manager
+development	manager
+district	manager
+division	manager
+engineering	manager
+enterprise	manager
+equipment	manager
+facility	manager
+factory	manager
+finance	manager
+floor	manager
+fund	manager
+group	manager
+hedge	manager
+house	manager
+impeachment	manager
+information	manager
+investment	manager
+land	manager
+line	manager
+market	manager
+marketing	manager
+merchandise	manager
+money	manager
+office	manager
+operation	manager
+party	manager
+pension	manager
+personnel	manager
+pharmacy	manager
+plant	manager
+portfolio	manager
+product	manager
+production	manager
+program	manager
+project	manager
+property	manager
+purchasing	manager
+relation	manager
+research	manager
+reservations	manager
+resource	manager
+restaurant	manager
+risk	manager
+sales	manager
+service	manager
+shuttle	manager
+site	manager
+station	manager
+store	manager
+syndicate	manager
+system	manager
+tax	manager
+team	manager
+technology	manager
+theater	manager
+town	manager
+trading	manager
+travel	manager
+trust	manager
+unit	manager
+water	manager
+
+bank	regulator
+banking	regulator
+electricity	regulator
+gas	regulator
+insurance	regulator
+market	regulator
+safety	regulator
+securities	regulator
+security	regulator
+telecommunication	regulator
+thrift	regulator
+thrift industry	regulator
+water	regulator
+
+bank	supervision
+banking	supervision
+
+account	supervisor
+line	supervisor
+maintenance	supervisor
+nursing	supervisor
+
+stage	manager
+
+city	administration
+commodity	administration
+government	administration
+school	administration
+state	administration
+tax	administration
+
+art	administrator
+city	administrator
+court	administrator
+hospital	administrator
+school	administrator
+system	administrator
+university	administrator
+
+income	distribution
+
+book	review
+preadmission	review
+utilization	review
+
+employer	cost
+
+director	interview
+executive	interview
+family	interview
+filmmaker	interview
+musician	interview
+police	interview
+student	interview
+user	interview
+pedestrian	interview
+fan	interview
+
+engineering	analysis
+policy	analysis
+database	analysis
+contingency	analysis
+tumor	analysis
+market	analysis
+risk	analysis
+
+brain	scan
+wine	tasting
+
+speech	recognition
+voice	recognition
+name	recognition
+brand	recognition
+fire	detection
+signal	detection
+
+damage	assessment
+impact	assessment
+intelligence	assessment
+risk	assessment
+
+price	inspection
+arms	inspection
+safety	inspection
+discipline	inspection
+weapon	inspection
+product	inspection
+
+town	watching
+bird	watching
+
+impact	study
+health	study
+feasibility	study
+character	study
+policy	study
+drug	study
+safety	study
+research	study
+marketing	study
+market	study
+law	study
+engineering	study
+
+vaccine	research
+consumer	research
+biotechnology	research
+space	research
+equity	research
+gene	research
+fusion	research
+cancer	research
+energy	research
+health	research
+stem	research
+future	research
+cell	research
+aids	research
+drug	research
+market	research
+fund	research
+marketing	research
+breast	research
+material	research
+
+eye	exam
+
+job	classification
+
+credit	check
+safety	check
+reality	check
+endorsement	check
+maintenance	check
+
+television	viewer
+
+oil	analyst
+commodity	analyst
+food	analyst
+sugar	analyst
+aviation	analyst
+election	analyst
+retailing	analyst
+credit	analyst
+telecommunication	analyst
+future	analyst
+investment	analyst
+metals	analyst
+entertainment	analyst
+chip	analyst
+sector	analyst
+insurance	analyst
+energy	analyst
+football	analyst
+biotechnology	analyst
+stock	analyst
+market	analyst
+budget	analyst
+livestock	analyst
+research	analyst
+airline	analyst
+currencny	analyst
+defense	analyst
+aerospace	analyst
+media	analyst
+system	analyst
+industry	analyst
+policy	analyst
+beverage	analyst
+retail	analyst
+currency	analyst
+equity	analyst
+security	analyst
+drug	analyst
+auto	analyst
+securities	analyst
+grain	analyst
+
+child	psychoanalysis
+
+blood	testing
+
+opinion	survey
+employee	survey
+farm	survey
+listener	survey
+motorist	survey
+reader	survey
+rider	survey
+workplace	survey
+
+engineering	student
+journalism	student
+science	student
+law	student
+drama	student
+music	student
+architecture	student
+
+market	researcher
+consumer	researcher
+health	researcher
+aids	researcher
+cancer	researcher
+wave	researcher
+
+voice	recorder
+videocassette	recorder
+data	recorder
+cassette	recorder
+flight	recorder
+video	recorder
+
+retailing	observer
+market	observer
+election	observer
+industry	observer
+
+arson	investigator
+fire	investigator
+accident	investigator
+safety	investigator
+crash	investigator
+
+radar	detector
+mine	detector
+smoke	detector
+arms	inspector
+health	inspector
+building	inspector
+tax	inspector
+weapon	inspector
+safety	inspector
+
+market	watcher
+court	watcher
+ballot	watcher
+industry	watcher
+
+committee	watcher
+magazine	watcher
+
+talk	listener
+
+tv	viewer
+
+arm	monitor
+heart	monitor
+peace	monitor
+election	monitor
+
+turkey	sighting
+
+art	appreciation
+asset	pricing
+space	exploration
+profit	downgrade
+
+poetry	reading
+
+television	viewing
+
+page	view
+
+
+breast	augmentation
+price	manipulation
+rate	manipulation
+market	manipulation
+
+transportation	deregulation
+airline	deregulation
+market	deregulation
+price	liberalisation
+price	decontrol
+
+office	automation
+factory	automation
+
+hair	stylist
+
+downtown	redevelopment
+
+currency	devaluation
+ruble	devaluation
+
+gas	guzzler
+
+army	deserter
+brain	stimulation
+brain	stimulators
+
+fabric	softener
+
+#event
+book	signing
+
+diaper	cover
+manhole	cover
+
+meat	chopper
+
+body	builder
+
+water	diversion
+
+pollution	cleanup
+waste	cleanup
+room	cleanup
+party	cleanup
+hurricane	cleanup
+quake	cleanup
+debris	clearance
+silt	clearance
+snow	clearance
+snow	clearing
+trash	cleanup
+
+asbestos	removal
+asset	disposal
+waste	disposal
+cash	withdrawal
+
+license	suspension
+trading	suspension
+
+troop	pullback
+troop	pullout
+troop	withdrawal
+
+transmission	service
+debt	servicing
+
+traffic	mitigation
+
+rate	rollback
+
+land	degradation
+
+credit	tightening
+
+price	discounting
+
+rate	slash
+
+life	saving
+energy	saving
+
+investment	guarantee
+loan	guarantee
+credibility	guarantee
+peace	guarantee
+occupancy	guarantee
+liberty	guarantee
+mortgage	guarantee
+pension	guarantee
+price	guarantee
+profit	guarantee
+rate	guarantee
+refund	guarantee
+return	guarantee
+revenue	guarantee
+
+conflict	resolution
+
+meat	packer
+
+water	rationing
+
+fund	redemption
+
+debt	repayment
+loan	repayment
+
+blood	transfusion
+data	transmission
+
+land	redistribution
+income	redistribution
+
+hormone	replacement
+
+import	substitution
+
+heat	transfer
+technology	transfer
+data	transfer
+food	transfer
+cash	transfer
+fund	transfer
+money	transfer
+arms	transfer
+land	transfer
+
+photograph	collecting
+
+data	collection
+debt	collection
+revenue	collection
+
+art	collector
+debt	collector
+tax	collector
+
+data	gathering
+intelligence	gathering
+news	gathering
+wood	gathering
+
+corn	harvest
+grain	harvest
+rice	harvest
+soybean	harvest
+sugar	harvest
+timber	harvest
+wheat	harvest
+food	harvester
+corn	harvesting
+
+fund	raiser
+
+fund	raising
+
+particle	catcher
+
+bargain	hunter
+gene	hunter
+microbe	hunter
+
+bargain	hunting
+deer	hunting
+duck	hunting
+fox	hunting
+job	hunting
+monkey	hunting
+coon	hunting
+
+bird	catcher
+chicken	catcher
+crab	catcher
+insect	catcher
+
+whale	hunt
+witch	hunt
+
+aircraft	purchase
+arms	purchase
+automobile	purchase
+car	purchase
+dollar	purchase
+equipment	purchase
+grain	purchase
+graphics	purchase
+handgun	purchase
+home	purchase
+house	purchase
+inventory	purchase
+land	purchase
+oil	purchase
+weapon	purchase
+
+battery	buyer
+bond	buyer
+car	buyer
+chip	buyer
+computer	buyer
+dollar	buyer
+home	buyer
+junk	buyer
+racehorse	buyer
+stock	buyer
+ticket	buyer
+
+auto	buying
+automobile	buying
+book	buying
+dollar	buying
+fund	buying
+home	buying
+vote	buying
+
+
+airline	acquisition
+fund	acquisition
+land	acquisition
+
+banana	import
+beef	import
+car	import
+food	import
+grain	import
+merchandise	import
+oil	import
+rice	import
+steel	import
+sugar	import
+wheat	import
+
+
+
+banana	importation
+beef	importation
+chicken	importation
+prescription	importation
+pumpkin	importation
+banana	importer
+carpet	importer
+chicken	importer
+clothes	importer
+cocoa	importer
+corn	importer
+cosmetic	importer
+grain	importer
+lumber	importer
+meat	importer
+newsprint	importer
+plywood	importer
+rubber	importer
+stereo	importer
+sugar	importer
+vaccine	importer
+vehicle	importer
+weapon	importer
+wheat	importer
+wool	importer
+
+car	rental
+video	rental
+
+oil	importer
+
+urchin	buyer
+
+
+
+asylum	seeker
+autograph	seeker
+job	seeker
+mortgage	seeker
+treasure	seeker
+
+entertainment	pursuit
+
+copyright	piracy
+music	piracy
+software	piracy
+videocassette	piracy
+
+
+
+land	grab
+
+
+cattle	rustling
+palm tree	rustling
+
+ecstasy	seizure
+cocaine	seizure
+
+hostage	taker
+
+child	abduction
+
+profit	taking
+
+
+
+art	theft
+car	theft
+computer	theft
+identity	theft
+vehicle	theft
+
+art	thief
+car	thief
+
+child	adoption
+infant	adoption
+
+drug	discovery
+oil	discovery
+
+currency	earner
+income	earner
+revenue	earner
+
+fumble	recovery
+insurance	recovery
+profit	recovery
+reinsurance	recovery
+scrap	recovery
+waste	recovery
+
+
+
+
+minority	recruiting
+
+minority	recruitment
+
+goal	scorer
+
+airline	takeover
+paper company	takeover
+thrift	takeover
+
+award	winner
+money	winner
+
+
+art	critic
+government	critic
+television	critic
+industry	critic
+book	critic
+media	critic
+restaurant	critic
+food	critic
+
+abortion	protester
+
+#has
+cancer	survivor
+
+
+science	teacher
+history	teacher
+design	teacher
+gym	teacher
+kindergarten	teacher
+music	teacher
+drama	teacher
+grade	teacher
+math	teacher
+biology	teacher
+art	teacher
+
+track	coach
+football	coach
+volleyball	coach
+strength	coach
+line	coach
+conditioning	coach
+receiver	coach
+quarterback	coach
+basketball	coach
+linebacker	coach
+bench	coach
+baseball	coach
+soccer	coach
+pitching	coach
+hitting	coach
+
+auto	advertising
+cigarette	advertising
+renewal	advertising
+tobacco	advertising
+
+product	marketing
+propane	marketing
+
+investment	promotion
+boxing	promoter
+concert	promoter
+
+ski	promotion
+
+voter	registration
+property	write-down
+inventory	write-down
+interest	deduction
+cost	deduction
+debt	write-off
+tax	write-off
+loan	write-off
+
+tax	deferral
+policy	illustration
+
+cash	injection
+equity	injection
+fuel	injection
+insulin	injection
+
+tax	payer
+
+influence	peddling
+
+specialty	retailing
+
+asset	allocation
+credit	allocation
+market	allocation
+resource	allocation
+
+troop	redeployment
+missile	deployment
+troop	deployment
+pin	placement
+product	placement
+tuna	canning
+
+television	broadcaster
+
+news	broadcasting
+food	distribution
+care	giver
+
+equipment	installation
+
+
+
+horse	trainer
+team	trainer
+
+
+title	sponsor
+
+government	supporter
+abortion	supporter
+opposition	supporter
+rights	supporter
+party	supporter
+
+stadium	booster
+
+export	promotion
+
+tourism	promotion
+
+water	holder
+
+food	container
+
+bomb	explosion
+grenade	explosion
+
+policy	coordination
+
+program	coordinator
+trails	coordinator
+campaign	coordinator
+relief	coordinator
+project	coordinator
+service	coordinator
+policy	coordinator
+
+strike	organizer
+conference	organizer
+protest	organizer
+race	organizer
+event	organizer
+party	organizer
+labor	organizer
+rally	organizer
+
+table	setting
+
+price	fixing
+
+flight	dispatcher
+
+democracy	advocate
+safety	advocate
+massage	advocate
+rights	advocate
+abortion	advocate
+free market	advocate
+privacy	advocate
+right	advocate
+
+
+convention	coverage
+sport	coverage
+election	coverage
+football	coverage
+
+news	reporting
+
+corruption	investigation
+fraud	investigation
+accident	investigation
+crash	investigation
+background	investigation
+espionage	investigation
+
+audience	research
+storage	research
+abortion	research
+options	research
+superconductor	research
+ceramics	research
+fixed income	research
+hdtv	research
+
+news	coverage
+election	monitoring
+alarm	monitoring
+virus	monitoring
+student	examination
+
+antelope	sighting
+
+sales	tracking
+
+interest	abatement
+
+media	censorship
+press	censorship
+
+portfolio	co-manager
+
+jail	guard
+
+tour	guide
+
+telephone	usage
+
+browser	user
+
+pesticide	use
+computer	use
+copper	use
+pc	use
+land	use
+typewriter	use
+home	use
+phone	use
+herbicide	use
+cell	use
+chemical	use
+carrier	use
+
+phone	user
+computer	user
+brand	user
+bike	user
+cell	user
+wheelchair	user
+telephone	user
+bag	user
+
+capacity	utilisation
+
+capacity	utilization
+
+trumpet	player
+keyboard	player
+
+disc	player
+videodisk	player
+
+airline	operation
+
+company	operation
+
+network	operation
+plant	operation
+flight	operation
+truck	operation
+airport	operation
+fund	operation
+aircraft	operation
+bus	operation
+shuttle	operation
+hotel	operation
+bank	operation
+equipment	operation
+vehicle	operation
+
+train	driver
+limousine	driver
+car	driver
+ambulance	driver
+lorry	driver
+truck	driver
+taxi	driver
+cab	driver
+train	engineer
+#
+
+fighter	pilot
+helicopter	pilot
+bomber	pilot
+jet	pilot
+theater	operator
+phone	operator
+network	operator
+site	operator
+pipeline	operator
+plant	operator
+cable	operator
+system	operator
+restaurant	operator
+bus	operator
+service	operator
+tour	operator
+supermarket	operator
+room	operator
+camera	operator
+ferry	operator
+machine	operator
+feedlot	operator
+train	operator
+store	operator
+casino	operator
+market	operator
+airport	operator
+telecommunication	operator
+computer	operator
+oil	operator
+telecom	operator
+hotel	operator
+
+model	introduction
+product	introduction
+
+conference	opener
+exhibition	opener
+playoff	opener
+series	opener
+
+video	player
+music	player
+
+television	programmer
+tv	programmer
+
+computer	programming
+tv	programming
+
+fashion	trendsetter
+
+confidence	building
+
+policy	formulation
+mortgage	originator
+
+job	opening
+market	opening
+store	opening
+
+dam	builder
+
+tunnel	digger
+
+blues	singer
+jazz	singer
+opera	singer
+pop	singer
+rock	singer
+
+
+
+aluminium	producer
+aluminum	producer
+banana	producer
+beef	producer
+car	producer
+cattle	producer
+cement	producer
+coal	producer
+cocoa	producer
+coffee	producer
+commodity	producer
+copper	producer
+cotton	producer
+dairy	producer
+diamond	producer
+drug	producer
+egg	producer
+energy	producer
+entertainment	producer
+equipment	producer
+food	producer
+gas	producer
+gold	producer
+grain	producer
+hog	producer
+livestock	producer
+metals	producer
+movie	producer
+music	producer
+newsprint	producer
+oil	producer
+paper	producer
+plastics	producer
+pork	producer
+poultry	producer
+rice	producer
+software	producer
+steel	producer
+sugar	producer
+television	producer
+tobacco	producer
+wine	producer
+
+
+aircraft	maker
+airplane	maker
+aluminum	maker
+apparel	maker
+appliance	maker
+arm	maker
+auto	maker
+automobile	maker
+battery	maker
+candy	maker
+car	maker
+cement	maker
+chip	maker
+cigarette	maker
+clone	maker
+clothing	maker
+component	maker
+computer	maker
+cosmetics	maker
+deal	maker
+drug	maker
+engine	maker
+equipment	maker
+farm machine	maker
+food	maker
+furniture	maker
+glass	maker
+hardware	maker
+heavy truck	maker
+jewelry	maker
+laser	maker
+machinery	maker
+money	maker
+notebook	maker
+paper	maker
+part	maker
+policy	maker
+semiconductor	maker
+shoe	maker
+steel	maker
+telecommunication	maker
+tobacco	maker
+toy	maker
+vehicle	maker
+
+
+
+aerospace	manufacturer
+aircraft	manufacturer
+airplane	manufacturer
+apparel	manufacturer
+appliance	manufacturer
+arm	manufacturer
+asbestos	manufacturer
+automobile	manufacturer
+car	manufacturer
+chip	manufacturer
+cigarette	manufacturer
+clothing	manufacturer
+component	manufacturer
+computer	manufacturer
+drug	manufacturer
+electronics	manufacturer
+engine	manufacturer
+equipment	manufacturer
+food	manufacturer
+furniture	manufacturer
+garment	manufacturer
+glass	manufacturer
+goods	manufacturer
+hardware	manufacturer
+helicopter	manufacturer
+machinery	manufacturer
+paper	manufacturer
+part	manufacturer
+plastics	manufacturer
+product	manufacturer
+semiconductor	manufacturer
+shoe	manufacturer
+software	manufacturer
+steel	manufacturer
+television	manufacturer
+tire	manufacturer
+tobacco	manufacturer
+toy	manufacturer
+truck	manufacturer
+vehicle	manufacturer
+
+
+
+company	founder
+
+housing	developer
+land	developer
+property	developer
+real estate	developer
+software	developer
+
+apparel	retailer
+clothing	retailer
+computer	retailer
+electronics	retailer
+food	retailer
+furniture	retailer
+goods	retailer
+music	retailer
+video	retailer
+
+drug	distributor
+electricity	distributor
+food	distributor
+
+car	salesman
+equity	salesman
+insurance	salesman
+
+car	marketer
+soda	bottler
+arm	supplier
+component	supplier
+electricity	supplier
+energy	supplier
+equipment	supplier
+gas	supplier
+oil	supplier
+part	supplier
+parts	supplier
+
+software	supplier
+steel	supplier
+water	supplier
+
+arm	exporter
+bourbon	exporter
+oil	exporter
+rice	exporter
+
+food	vendor
+software	vendor
+
+drug	wholesaler
+food	wholesaler
+
+abortion	provider
+access	provider
+cable	provider
+care	provider
+childcare	provider
+health	provider
+service	provider
+telecommunication	provider
+
+book	publisher
+group	publisher
+magazine	publisher
+music	publisher
+newsletter	publisher
+newspaper	publisher
+software	publisher
+textbook	publisher
+aid	donor
+organ	donor
+antique	dealer
+arm	dealer
+art	dealer
+bond	dealer
+book	dealer
+bullion	dealer
+car	dealer
+cocaine	dealer
+coin	dealer
+crack	dealer
+currency	dealer
+dope	dealer
+drug	dealer
+exchange	dealer
+gem	dealer
+gold	dealer
+securities	dealer
+security	dealer
+cookbook	author
+
+apple	grower
+coca	grower
+coffee	grower
+cotton	grower
+fruit	grower
+grape	grower
+pineapple	grower
+rice	grower
+sugar	grower
+timber	grower
+tobacco	grower
+wheat	grower
+
+script	writer
+
+land	auction
+wine	auction
+slave	auction
+
+
+employment	creation
+job	creation
+ozone	creation
+wealth	creation
+
+arms	development
+brain	development
+business	development
+cancer	development
+career	development
+character	development
+child	development
+city	development
+condominium	development
+credit	development
+drug	development
+energy	development
+enterprise	development
+gas	development
+hotel	development
+industry	development
+infrastructure	development
+market	development
+missile	development
+office	development
+oil	development
+personality	development
+player	development
+policy	development
+product	development
+program	development
+property	development
+resource	development
+sector	development
+software	development
+space	development
+system	development
+takeover	development
+technology	development
+tourism	development
+weapon	development
+weapons	development
+
+auto	manufacturing
+computer	manufacturing
+semiconductor	manufacturing
+cement	making
+movie	making
+
+
+
+corn	planting
+soybean	planting
+tree	planting
+
+agriculture	production
+aircraft	production
+alcohol	production
+arms	production
+auto	production
+automobile	production
+beef	production
+broadcast	production
+bus	production
+car	production
+cement	production
+coal	production
+coca	production
+cocaine	production
+coffee	production
+commodity	production
+copper	production
+corn	production
+cotton	production
+crop	production
+drug	production
+electricity	production
+energy	production
+ethylene	production
+food	production
+gas	production
+gold	production
+grain	production
+livestock	production
+maize	production
+meat	production
+minitruck	production
+oil	production
+opera	production
+opium	production
+pork	production
+rice	production
+semiconductor	production
+soybean	production
+steel	production
+sugar	production
+tea	production
+television	production
+timber	production
+tobacco	production
+truck	production
+vehicle	production
+video	production
+weapon	production
+wheat	production
+wine	production
+watch	production
+
+
+card	dealing
+drug	dealing
+
+aid	delivery
+aircraft	delivery
+arms	delivery
+food	delivery
+gas	delivery
+mail	delivery
+oil	delivery
+service	delivery
+
+ad	sale
+aircraft	sale
+album	sale
+alcohol	sale
+apparel	sale
+arms	sale
+asset	sale
+assets	sale
+automobile	sale
+beer	sale
+book	sale
+camera	sale
+car	sale
+case	sale
+catalog	sale
+chemicals	sale
+chip	sale
+cigarette	sale
+clothing	sale
+computer	sale
+copier	sale
+cosmetics	sale
+debt	sale
+department-store	sale
+diamond	sale
+dollar	sale
+drug	sale
+electricity	sale
+equipment	sale
+equity	sale
+export	sale
+firearm	sale
+food	sale
+fund	sale
+furniture	sale
+gas	sale
+gasoline	sale
+glass	sale
+gold	sale
+grain	sale
+group	sale
+handgun	sale
+hardware	sale
+healthcare	sale
+home	sale
+industry	sale
+land	sale
+lease	sale
+partnership	sale
+liquor	sale
+loan	sale
+machinery	sale
+mainframe	sale
+merchandise	sale
+missile	sale
+movie	sale
+music	sale
+newspaper	sale
+note	sale
+package	sale
+goods	sale
+pc	sale
+product	sale
+property	sale
+securities	sale
+semiconductor	sale
+shipment	sale
+soap	sale
+software	sale
+stock	sale
+supercomputer	sale
+telephone	sale
+ticket	sale
+timber	sale
+tobacco	sale
+travel	sale
+truck	sale
+parts	sale
+unit	sale
+vehicle	sale
+video	sale
+weapon	sale
+weapons	sale
+wheat	sale
+wine	sale
+workstation	sale
+
+hostage	release
+news	release
+prisoner	release
+video	release
+
+dollar	selling
+fund	selling
+stock	selling
+arms	export
+banana	export
+beef	export
+car	export
+coal	export
+coffee	export
+commodity	export
+goods	export
+corn	export
+cotton	export
+diamond	export
+electronics	export
+fish	export
+food	export
+garment	export
+gas	export
+grain	export
+labor	export
+merchandise	export
+oil	export
+product	export
+rice	export
+service	export
+software	export
+soybean	export
+spirits	export
+steel	export
+sugar	export
+tea	export
+technology	export
+vehicle	export
+weapon	export
+wheat	export
+wine	export
+
+
+aid	payment
+alimony	payment
+benefit	payment
+bonus	payment
+car	payment
+compensation	payment
+debt	payment
+dividend	payment
+interest	payment
+lease	payment
+loan	payment
+mortgage	payment
+ransom	payment
+rent	payment
+royalty	payment
+settlement	payment
+tax	payment
+tuition	payment
+
+cash	contribution
+money	contribution
+cash	distribution
+land	distribution
+
+cash	infusion
+equity	infusion
+
+aircraft	lease
+
+property	lending
+
+budget	submission
+
+merchandise	giveaway
+
+equity	offering
+junk	offering
+product	offering
+right	offering
+stock	offering
+blood	donation
+cash	donation
+food	donation
+money	donation
+organ	donation
+
+food	preparation
+
+appliance	manufacture
+engine	manufacture
+weapons	manufacture
+fruit	growing
+fish	farming
+kelp	farming
+
+
+cash	generation
+electricity	generation
+power	generation
+
+coca	cultivation
+poppy	cultivation
+
+airport	construction
+apartment	construction
+building	construction
+highway	construction
+home	construction
+housing	construction
+infrastructure	construction
+office	construction
+plant	construction
+prison	construction
+railway	construction
+school	construction
+settlement	construction
+
+cow	raising
+worm	raising
+community	reconstruction
+fleet	reconstruction
+hospital	reconstruction
+railway	reconstruction
+
+book	publishing
+magazine	publishing
+music	publishing
+newspaper	publishing
+
+auto	assembly
+
+child	rearing
+
+video	recording
+
+
+book	writing
+
+mobility	impairment
+visibility	impairment
+antihistamine	impairment
+motor	impairment
+
+convention	planner
+party	planner
+
+business	planning
+coup	planning
+defense	planning
+market	planning
+marketing	planning
+production	planning
+project	planning
+war	planning
+
+coup	plotter
+
+traffic	tie-up
+
+traffic	congestion
+labor	disruption
+service	disruption
+supply	disruption
+traffic	disruption
+
+plant	lover
+nature	lover
+dog	lover
+art	lover
+wine	lover
+
+music	fancier
+tattoo	fancier
+tea	fancier
+
+horse	starvation
+
+land	exchange
+email	exchange
+information	exchange
+technology	exchange
+data	exchange
+option	exchange
+coin	exchange
+
+prisoner	exchange
+needle	exchange
+
+block	trading
+
+bell	ringing
+
+electricity	consumer
+
+apple	storage
+
+tampon	holder
+
+sweater	preference
+
+ancestor	admiration
+
+transplant	rejection
+organ	rejection
+
+traffic	jam
+
+worker	compensation
+
+crowd	pleaser
+
+couples	counseling
+
+family	entertainment
+adult	treatment
+
+drug	coverage
+
+bra	salesman
+canvas	salesman
+cosmetic	salesman
+fireplace	salesman
+handbag	salesman
+machinery	salesman
+sweatshirt	salesman
+textile	salesman
+umbrella	salesman
+toupee	salesman
+cosmetic	saleswoman
+
+banana	farmer
+catfish	farmer
+cattle	farmer
+coca	farmer
+corn	farmer
+cotton	farmer
+grain	farmer
+hog	farmer
+livestock	farmer
+pig	farmer
+rice	farmer
+sheep	farmer
+soybean	farmer
+tobacco	farmer
+wheat	farmer
+
+cattle	rancher
+
+pocket	picking
+
+hydrogen	fusion
+
+flag	flying
+
+patient	suffering
+
+investor	exhaustion
+
+water	flowing
+
+torch	relay
+
+cattle	drive
+
+emissions	trading
+
+investor	education
+jury	instruction
+police	training
+staff	training
+teacher	training
+worker	training
+
+celebrity	interview
+
+capital	inflow
+cash	inflow
+cash	outflow
+investment	flow
+cash	flow
+blood	flow
+traffic	flow
+water	flow
+information	flow
+data	flow
+lava	flow
+money	flow
+capital	flow
+trade	flow
+
+refugee	flow
+worker	inflow
+worker	influx
+foreigner	flood
+immigrant	flood
+pilgrim	flood
+visitor	flood
+refugee	overflow
+
+#event
+eye	movement
+body	movement
+price	movement
+market	movement
+market	move
+price	move
+sun	set
+market	tremor
+market	gyration
+market	jitter
+
+commodity	circulation
+newspaper	circulation
+blood	circulation
+
+mud	slide
+
+ocean	shift
+plate	shift
+
+grain	seller
+home	seller
+tax loss	seller
+
+boat	builder
+
+home	builder
+
+drug	pusher
+
+specialty	retailer
+
+cookie	cutter
+electricity	generator
+
+market	segmentation
+bronze	caster
+share	split
+
+plot	twist
+time	warp
+
+back	spasm
+muscle	spasm
+muscle	contraction
+industry	consolidation
+
+system	integration
+systems	integration
+system	integrator
+
+fishing	ban
+weapon	ban
+export	ban
+travel	ban
+import	ban
+abortion	ban
+flight	ban
+ephedra	ban
+peanut	ban
+pigeon	ban
+poker	ban
+
+sleep	deprivation
+
+pass	coverage
+
+fire	suppressant
+
+budget	impediment
+
+fire	retardant
+
+term	limitation
+
+cost	containment
+
+
+capacity	constraint
+
+spending	restraint
+trade	restraint
+production	restraint
+export	restraint
+
+budget	constraint
+time	constraint
+profit	constraint
+
+weight	control
+tobacco	control
+rent	control
+pest	control
+pollution	control
+price	control
+disease	control
+crime	control
+birth	control
+drug	control
+emission	control
+growth	control
+
+import	curb
+
+production	limit
+spending	limit
+income	limit
+height	limit
+campaign	limit
+age	limit
+price	limit
+term	limit
+borrowing	limit
+earnings	limit
+weight	limit
+liability	limit
+insurance	limit
+lending	limit
+trading	limit
+
+police	shooting
+police	killing
+
+livestock	breeding
+
+child	prostitution
+
+airline	reservation
+
+ball	player
+doubles	player
+football	player
+jazz	player
+lottery	player
+market	player
+poker	player
+rugby	player
+singles	player
+soccer	player
+softball	player
+
+data	encoding
+
+data	storage
+
+cease-fire	violation
+right	violation
+law	violation
+copyright	violation
+patent	violation
+
+security	violation
+ethics	violation
+safety	violation
+rule	violation
+code	violation
+parole	violation
+border	violation
+probation	violation
+
+drug	violation
+tax	violation
+securities	violation
+campaign	violation
+traffic	violation
+labor	violation
+weapon	violation
+
+phone	misuse
+
+right	abuse
+
+abortion	funding
+transportation	funding
+research	funding
+
+takeover	financier
+
+project	financing
+
+debt	financing
+state	financing
+government	financing
+
+acquisition	financing
+school	funding
+school	aid
+
+price	comparison
+
+favorability	rating
+household	rating
+popularity	rating
+support	rating
+television	rating
+
+bond	rating
+currency	rating
+investment	rating
+performance	rating
+quarterback	rating
+
+urine	test
+sobriety	test
+writing	test
+blood	test
+math	test
+brain	test
+endurance	test
+toxicology	test
+literacy	test
+fitness	test
+emission	test
+hospital	test
+taste	test
+competency	test
+proficiency	test
+achievement	test
+treadmill	test
+missile	test
+ballistics	test
+viability	test
+pregnancy	test
+flight	test
+
+cancer	study
+brain	study
+violin	study
+rabbit	study
+
+drug	testing
+
+alcohol	testing
+
+coach	poll
+
+opinion	poll
+
+cow	diagnosis
+
+settlement	watchdog
+vaccine	trial
+body	search
+
+highway	aid
+space station	funding
+
+infrastructure	spending
+aid	funding
+drug	funding
+export	subsidy
+ethanol	subsidy
+food	subsidy
+pork	subsidy
+art	funding
+
+product	subsidy
+
+#not sure about these subsidies, better here than in Purpose-perf, which is where they were
+price	subsidy
+tax	subsidy
+crop	subsidy
+rent	subsidy
+
+tax	break
+price	break
+
+tuition	reimbursement
+
+border	demarcation
+
+export	exhibition
+photo	exhibition
+
+cooking	demonstration
+
+car	demand
+credit	demand
+dollar	demand
+electricity	demand
+energy	demand
+export	demand
+gasoline	demand
+import	demand
+investment	demand
+labor	demand
+loan	demand
+oil	demand
+pay	demand
+press	demand
+steel	demand
+
+cash	need
+development	need
+energy	need
+food	need
+oil	need
+water	need
+
+activation	order
+buy	order
+closure	order
+deportation	order
+desegregation	order
+detention	order
+evacuation	order
+expulsion	order
+repurchase	order
+sell	order
+selling	order
+stop	order
+stop-loss	order
+gag	order
+
+aerospace	order
+defense	order
+
+engine	order
+equipment	order
+goods	order
+jetliner	order
+machinery	order
+export	order
+
+aid	request
+asylum	request
+extradition	request
+funding	request
+information	request
+interview	request
+reinvestment	request
+visa	request
+withdrawal	request
+
+quality	assurance
+security	assurance
+
+performance	indicator
+
+product	recall
+tire	recall
+
+price	quotation
+
+price	quote
+stock	quote
+
+risk	disclosure
+
+job	description
+layout	description
+
+travel	authorization
+
+wiretap	authorization
+
+earthquake	prediction
+
+campsite	reservation
+ferry	reservation
+government	reservation
+restaurant	reservation
+
+birthday	celebration
+millennium	celebration
+independence	celebration
+holiday	celebration
+anniversary	celebration
+
+devil	worship
+
+firework	exhibition
+furniture	exhibition
+health	exhibition
+propaganda	exhibition
+round	exhibition
+scale	exhibition
+stamp	exhibition
+doll	exhibition
+wildlife	exhibition
+book	exhibition
+car	exhibition
+cocoa	exhibition
+
+artillery	commander
+battalion	commander
+battery	commander
+combat	commander
+division	commander
+force	commander
+military	commander
+militia	commander
+opposition	commander
+platoon	commander
+shuttle	commander
+squadron	commander
+tank	commander
+troop	commander
+unit	commander
+
+school	governance
+
+arms	control
+border	control
+climate	control
+cost	control
+credit	control
+currency	control
+customs	control
+exchange	control
+expense	control
+export	control
+flight	control
+immigration	control
+import	control
+mission	control
+production	control
+quality	control
+seizure	control
+traction	control
+traffic	control
+voting	control
+wage	control
+water	control
+
+customer	support
+
+client	service
+community	service
+commuter	service
+constituency	service
+consumer	service
+customer	service
+outpatient	service
+passenger	service
+family	service
+student	service
+
+outpatient	treatment
+
+child	neglect
+
+weather	forecasting
+
+beverage	container
+
+tax	levy
+
+auto	designer
+clothing	designer
+computer	designer
+landscape	designer
+lighting	designer
+production	designer
+set	designer
+software	designer
+
+software	engineering
+system	engineering
+
+city	planner
+product	planning
+
+aircraft	design
+chip	design
+computer	design
+costume	design
+fashion	design
+furniture	design
+garden	design
+lighting	design
+plant	design
+product	design
+reactor	design
+set	design
+
+computer	engineer
+electronics	engineer
+highway	engineer
+safety	engineer
+system	engineer
+traffic	engineer
+
+building	collapse
+
+price	collapse
+market	collapse
+
+market system	breakdown
+computer	breakdown
+computer	crash
+system	crash
+market	crash
+computer	malfunction
+
+train	derailment
+
+security	lapse
+memory	lapse
+
+child	death
+
+train	wreck
+car	wreck
+
+helicopter	crash
+bus	crash
+plane	crash
+airplane	crash
+car	crash
+train	crash
+
+power	failure
+system	failure
+company	failure
+tire	failure
+computer	failure
+organ	failure
+kidney	failure
+launch	failure
+business	failure
+
+role	playing
+
+police	corruption
+government	corruption
+
+newspaper	reader
+
+performance	measure
+
+pollution	reading
+
+tax	refund
+
+concept	matching
+excerpt	announcer
+
+work	assignment
+homework	assignment
+job	assignment
+
+telephone	listing
+
+contract	award
+
+share	repurchase
+
+delegate	selection
+time	selection
+sex	selection
+jury	selection
+site	selection
+
+stock	picking
+stock	picker
+
+bankruptcy	approval
+drug	approval
+
+landscape	architect
+
+minority	representation
+
+
+helicopter	ride
+car	ride
+plane	ride
+bike	ride
+taxi	ride
+boat	ride
+cab	ride
+train	ride
+bus	ride
+ferry	ride
+
+motorcycle	rider
+subway	rider
+
+animal	regulation
+
+bank	regulation
+banking	regulation
+building	regulation
+currency	regulation
+export	regulation
+hospital	regulation
+industry	regulation
+insurance	regulation
+investment	regulation
+market	regulation
+merger	regulation
+price	regulation
+rate	regulation
+safety	regulation
+securities	regulation
+takeover	regulation
+tax	regulation
+traffic	regulation
+
+disaster	declaration
+independence	declaration
+peace	declaration
+statehood	declaration
+
+consent	decree
+
+earnings	announcement
+merger	announcement
+printer	announcement
+product	announcement
+resignation	announcement
+
+arms	negotiation
+wage	negotiation
+traffic	negotiation
+merger	negotiation
+pay	negotiation
+framework	negotiation
+labor	negotiation
+budget	negotiation
+contract	negotiation
+trade	negotiation
+status	negotiation
+treaty	negotiation
+peace	negotiation
+accession	negotiation
+enlargement	negotiation
+membership	negotiation
+debt	negotiation
+coalition	negotiation
+settlement	negotiation
+
+budget	negotiator
+
+feature	writer
+budget	writer
+mystery	writer
+fiction	writer
+speech	writer
+newspaper	writer
+headline	writer
+comedy	writer
+
+security	consideration
+tax	consideration
+
+small business	supplier
+
+brain	mapping
+
+inflation	gauge
+
+death	certificate
+
+brand	switching
+
+acquisition	offer
+contract	offer
+merger	offer
+settlement	offer
+takeover	offer
+
+acquisition	proposal
+aid	proposal
+arms	proposal
+budget	proposal
+buyout	proposal
+development	proposal
+election	proposal
+investment	proposal
+labor	proposal
+management	proposal
+merger	proposal
+peace	proposal
+policy	proposal
+project	proposal
+reform	proposal
+restructuring	proposal
+service	proposal
+spending	proposal
+tax	proposal
+
+yes	vote
+
+benefit	plan
+care	plan
+pension	plan
+aid	plan
+bonus	plan
+drug	plan
+health	plan
+insurance	plan
+lesson	plan
+relief	plan
+compensation	plan
+retirement	plan
+
+world	index
+consumer	index
+employment	index
+enterprise	index
+value	index
+confidence	index
+industry	index
+banking	index
+cash	index
+cost	index
+section	index
+spot	index
+art	index
+resource	index
+technology	index
+future	index
+stock	index
+commodity	index
+price	index
+market	index
+inflation	index
+gold	index
+service	index
+
+quotation	mark
+question	mark
+
+tampon	ad
+cow	ad
+
+cop	show
+quiz	show
+cooking	show
+sports	show
+court	show
+fashion	show
+award	show
+sport	show
+firework	show
+reality	show
+freak	show
+flower	show
+art	show
+game	show
+news	show
+car	show
+chat	show
+music	show
+talent	show
+interview	show
+horse	show
+air	show
+
+sex	symbol
+status	symbol
+danger	signal
+
+jewelry	display
+
+buy	recommendation
+policy	recommendation
+
+sample	viewing
+
+gene	probe
+
+asbestos	claim
+asylum	claim
+compensation	claim
+damage	claim
+disability	claim
+discrimination	claim
+health	claim
+injury	claim
+land	claim
+liability	claim
+prescription	claim
+property	claim
+reimbursement	claim
+tax	claim
+unemployment	claim
+
+city	government
+state	government
+township	government
+world	government
+
+flight	attendant
+parking	attendant
+
+baby	sitter
+
+party	government
+
+career	choice
+automobile	choice
+investment	choice
+school	choice
+
+pay	concession
+
+housing	lender
+mortgage	lender
+
+football	practice
+
+room	demand
+chicken	demand
+
+#also 'to'
+ballot	access
+broadband	access
+elevator	access
+
+acquisition	plan
+action	plan
+administration	plan
+bailout	plan
+breakup	plan
+building	plan
+buying	plan
+buyout	plan
+calling	plan
+campaign	plan
+cleanup	plan
+conservation	plan
+construction	plan
+control	plan
+cooperation	plan
+defense	plan
+desegregation	plan
+development	plan
+distribution	plan
+election	plan
+evacuation	plan
+expansion	plan
+financing	plan
+flight	plan
+funeral	plan
+growth	plan
+hiring	plan
+implementation	plan
+improvement	plan
+investment	plan
+liquidation	plan
+management	plan
+marketing	plan
+merger	plan
+modernization	plan
+pay	plan
+payment	plan
+pricing	plan
+privatisation	plan
+privatization	plan
+production	plan
+sharing	plan
+protection	plan
+purchase	plan
+rationing	plan
+rebuilding	plan
+reconstruction	plan
+recovery	plan
+redevelopment	plan
+reduction	plan
+reform	plan
+rehabilitation	plan
+renovation	plan
+reorganization	plan
+repayment	plan
+repurchase	plan
+rescue	plan
+restoration	plan
+saving	plan
+service	plan
+settlement	plan
+spending	plan
+stabilization	plan
+succession	plan
+takeover	plan
+transportation	plan
+treatment	plan
+withdrawal	plan
+work	plan
+vacation	plan
+
+career	plan
+share	plan
+school	plan
+security	plan
+budget	plan
+missile	plan
+stadium	plan
+
+championship	contender
+medal	contender
+playoff	contender
+title	contender
+
+campaign	watchdog
+franchise	watchdog
+state	watchdog
+
+

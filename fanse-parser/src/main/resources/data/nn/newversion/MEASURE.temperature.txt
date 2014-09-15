@@ -1,0 +1,4 @@
+degree	temperature
+degree	water
+degree	heat
+degree	weather

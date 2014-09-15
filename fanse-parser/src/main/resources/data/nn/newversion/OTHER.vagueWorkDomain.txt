@@ -1,0 +1,67 @@
+technology	worker
+case	worker
+diamond	worker
+fur	worker
+steel	worker
+census	worker
+communication	worker
+defense	worker
+election	worker
+telephone	worker
+transit	worker
+transport	worker
+transportation	worker
+cleanup	worker
+sex	worker
+childcare	worker
+food	worker
+propaganda	work
+defense	work
+steel	work
+system	work
+people	work
+intelligence	work
+
+oil	worker
+
+price	mechanism
+
+space	division
+
+biotechnology	concern
+broadcasting	concern
+retail	concern
+brokerage	concern
+gold	concern
+service	concern
+oil	concern
+marketing	concern
+defense	concern
+engineering	concern
+manufacturing	concern
+transportation	concern
+telecommunication	concern
+restaurant	concern
+services	concern
+shipping	concern
+entertainment	concern
+research	concern
+investment	concern
+retailing	concern
+development	concern
+equipment	concern
+mining	concern
+currency	concern
+publishing	concern
+technology	concern
+production	concern
+electronics	concern
+steel	concern
+
+aerospace	sector
+finance	sector
+aerospace	company
+aerospace	industry
+aerospace	unit
+aerospace	division
+aerospace	firm

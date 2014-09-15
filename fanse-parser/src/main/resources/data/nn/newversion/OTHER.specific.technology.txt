@@ -1,0 +1,8 @@
+weapon	technology
+energy	technology
+video	technology
+missile	technology
+defense	technology
+material	technology
+rocket	technology
+semiconductor	technology

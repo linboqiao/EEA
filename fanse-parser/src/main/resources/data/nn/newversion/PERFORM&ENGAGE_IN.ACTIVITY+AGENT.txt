@@ -1,0 +1,210 @@
+export	business
+
+law	firm
+law	office
+law	clerk
+
+campaign	group
+campaign	organization
+
+backup	center
+command	center
+daycare	center
+design	center
+exchange	center
+rehab	center
+rescue	center
+retail	center
+study	center
+support	center
+trade	center
+transit	center
+transplant	center
+work	center
+
+research	centre
+
+bid	committee
+reform	committee
+study	committee
+survey	committee
+
+cruise	company
+defense	company
+design	company
+disposal	company
+export	company
+research	company
+retail	company
+tour	company
+trade	company
+
+control	department
+defense	department
+design	department
+research	department
+study	department
+trade	department
+
+
+control	division
+research	division
+
+trade	enterprise
+
+accountancy	firm
+analysis	firm
+buyout	firm
+consultancy	firm
+defense	firm
+design	firm
+research	firm
+search	firm
+
+advocacy	group
+analysis	group
+broadcast	group
+business	group
+buyout	group
+charity	group
+chat	group
+consultancy	group
+control	group
+crime	group
+defense	group
+enterprise	group
+hate	group
+leadership	group
+lobby	group
+prayer	group
+pressure	group
+protest	group
+reform	group
+research	group
+retail	group
+study	group
+support	group
+theater	group
+work	group
+
+discount	house
+exchange	house
+
+agriculture	industry
+broadcast	industry
+cruise	industry
+defense	industry
+export	industry
+retail	industry
+
+exchange	office
+research	office
+
+broadcast	operation
+cleanup	operation
+combat	operation
+defense	operation
+forestry	operation
+mopping-up	operation
+transit	operation
+rescue	operation
+research	operation
+retail	operation
+search	operation
+support	operation
+
+research	organisation
+
+advocacy	organization
+charity	organization
+research	organization
+support	organization
+trade	organization
+
+agriculture	sector
+defense	sector
+export	sector
+retail	sector
+trade	sector
+
+crime	syndicate
+
+buyout	team
+
+control	unit
+retail	unit
+
+setup	man
+
+analysis	team
+bid	team
+response	team
+
+massage	therapist
+
+analysis	branch
+
+prayer	session
+
+rebuttal	witness
+
+rescue	personnel
+support	personnel
+
+repair	man
+
+research	institute
+research	institution
+research	engineer
+research	establishment
+
+survey	team
+work	team
+
+cleanup	hitter
+
+cleanup	crew
+repair	crew
+rescue	crew
+work	crew
+
+research	arm
+research	assistant
+research	associate
+research	community
+research	consortia
+
+design	team
+launch	team
+rescue	team
+research	team
+search	team
+study	team
+support	team
+
+combat	troop
+
+combat	unit
+rescue	unit
+research	unit
+research	university
+research	body
+
+copy	boy
+
+study	commission
+
+design	house
+design	operation
+
+ballet	troupe
+comedy	troupe
+theater	troupe
+
+transplant	surgeon
+
+rescue	squad
+support	staff
+
+control	officer
+patrol	officer

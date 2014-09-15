@@ -1,0 +1,138 @@
+movie	mogul
+
+apartment	project
+
+television	studio
+
+program	activity
+
+relief	appearance
+
+water	service
+
+luxury	car
+
+oil	capacity
+weapon	capability
+
+propaganda	campaign
+
+movie	rights
+
+television	system
+television	network
+
+relief	convoy
+service	employee
+care	service
+information	service
+entertainment	service
+leadership	post
+
+terror	campaign
+
+service	work
+
+peace	project
+
+remuneration	package
+retirement	package
+
+discount	coupon
+
+financing	source
+funding	source
+
+entertainment	field
+
+relief	flight
+
+comfort	food
+relief	food
+
+cancer	gene
+
+anthrax	germ
+
+anthrax	spore
+
+pertussis	toxin
+
+flu	virus
+hepatitis	virus
+influenza	virus
+polio	virus
+smallpox	virus
+
+music	group
+
+credit	line
+
+care	package
+relief	package
+
+care	physician
+
+relief	plane
+
+relief	project
+
+propaganda	purpose
+
+banquet	room
+
+therapy	session
+
+
+productivity	sharing
+methadone	program
+drug	program
+daycare	program
+award	program
+benefit	program
+bonus	program
+care	program
+childcare	program
+apprenticeship	program
+internship	program
+
+award	ceremony
+food	operator
+movie	career
+missile	capability
+
+missile	project
+petrochemical	project
+petrochemical	complex
+
+aid	spending
+
+rock	station
+
+buffet	table
+
+relief	team
+
+convenience	telephone
+
+relief	worker
+
+#
+death	blow
+
+touchdown	catch
+touchdown	play
+touchdown	reception
+birdie	putt
+eagle	putt
+touchdown	pass
+
+storm	cloud
+
+miracle	elixir
+
+suicide	mission
+
+rain	storm
+meteor	storm
+snow	storm

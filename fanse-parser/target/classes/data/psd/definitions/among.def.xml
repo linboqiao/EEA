@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<defset prep="among">
+	<sense id="1">
+		<!--add: at, to, or within a place that is... -->
+		<definition>situated more or less centrally in relation to (several other things); surrounded by (e.g., walk among the trees)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="equivalent" targetid="1(1)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2">
+		<definition>expressing membership in a group (e.g., foremost among them)</definition>
+		<majorcluster>MEMBERSHIP</majorcluster>
+		<pprojmap type="equivalent" targetid="2(2)"/>
+		<notes></notes>
+	</sense>
+	<sense id="3">
+		<definition>indicating connection(s), interaction(s), or relationship(s) involving two or members of a group or community (X2) (e.g., fight among the miners)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" subsetof="3(3)"/>
+		<intmap type="equivalent" word="between" targetid="4"/>
+		<notes></notes>
+	</sense>
+	<sense id="4">
+		<definition>shared or possessed by (a group or community) (e.g., thoughts among dockworkers)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" subsetof="3(3)"/>
+		<notes></notes>
+	</sense>
+	<sense id="5">
+		<definition>indicating a set of two or more people/things in the context of selection, division, and/or differentiation (e.g., choose among them, split it among them)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" targetid="4(4)"/>
+		<notes></notes>
+	</sense>
+	
+</defset>

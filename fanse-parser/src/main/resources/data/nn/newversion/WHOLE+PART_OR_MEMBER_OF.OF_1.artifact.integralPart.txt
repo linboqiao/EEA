@@ -1,0 +1,138 @@
+airplane	instrument
+automobile	instrument
+watch	strap
+watch	battery
+warship	bow
+warship	gun
+
+airport	gate
+
+trailer	chassis
+
+robot	arm
+
+email	attachment
+
+truck	axle
+
+saw	blade
+turbine	blade
+
+car	body
+
+pajama	bottom
+
+bank	branch
+
+highway	bridge
+railroad	bridge
+railway	bridge
+
+willow	bud
+
+subway	car
+train	car
+
+freeway	column
+
+aircraft	component
+computer	component
+engine	component
+missile	component
+
+network	computer
+
+reactor	core
+
+statehouse	dome
+
+car	door
+refrigerator	door
+
+desk	drawer
+
+computer	drive
+
+aircraft	electronics
+
+nerve	ending
+
+aircraft	engine
+car	engine
+helicopter	engine
+jet	engine
+truck	engine
+
+wing	flap
+
+sector	group
+
+arrow	head
+shower	head
+sprinkler	head
+
+artichoke	heart
+
+suit	jacket
+
+pant	leg
+
+rocket	motor
+
+newspaper	page
+
+airplane	part
+auto	part
+automobile	part
+building	part
+car	part
+computer	part
+engine	part
+laptop	part
+laser	part
+machine	part
+missile	part
+truck	part
+vehicle	part
+
+coat	pocket
+jacket	pocket
+shirt	pocket
+
+fence	post
+lamp	post
+
+cottage	rooftop
+
+monitor	screen
+
+network	server
+
+shirt	sleeve
+
+car	stereo
+
+purse	string
+
+airport	terminal
+
+railroad	tie
+
+wing	tip
+
+truck	tire
+
+railroad	track
+railway	track
+
+car	trunk
+
+missile	warhead
+
+flood	water
+
+apartment	window
+shop	window
+
+airplane	wing
+fighter	wing

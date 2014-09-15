@@ -1,0 +1,86 @@
+cooperation	possibility
+distribution	possibility
+marketing	possibility
+
+generation	capacity
+handling	capacity
+processing	capacity
+production	capacity
+refining	capacity
+storage	capacity
+transmission	capacity
+transportation	capacity
+
+development	potential
+investment	potential
+production	potential
+recovery	potential
+
+bargaining	power
+borrowing	power
+computing	power
+enforcement	power
+healing	power
+processing	power
+purchasing	power
+spending	power
+trading	power
+voting	power
+
+acquisition	opportunity
+arbitrage	opportunity
+buying	opportunity
+development	opportunity
+employment	opportunity
+investment	opportunity
+marketing	opportunity
+shopping	opportunity
+trading	opportunity
+training	opportunity
+
+intelligence	capability
+manufacturing	capability
+production	capability
+
+manufacturing	capacity
+
+abortion	right
+aviation	right
+bragging	right
+employment	rights
+development	right
+distribution	right
+fishing	right
+landing	right
+marketing	right
+mining	right
+operating	right
+stock appreciation	right
+trading	right
+visitation	right
+voting	right
+
+
+
+marketing	muscle
+
+
+trading	privilege
+
+banking	licence
+banking	license
+brokerage	license
+
+entry	visa
+admission	ticket
+lottery	ticket
+
+extradition	warrant
+
+communication	skill
+management	skill
+marketing	skill
+negotiating	skill
+negotiation	skill
+survival	skill
+writing	skill

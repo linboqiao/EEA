@@ -1,0 +1,13 @@
+university	department
+army	division
+union	faction
+mafia	family
+club	team
+league	team
+police	unit
+army	unit
+coalition	party
+school	group
+industry	giant
+government	organization
+union	family

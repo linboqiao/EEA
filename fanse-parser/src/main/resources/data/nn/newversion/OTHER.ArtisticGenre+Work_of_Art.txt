@@ -1,0 +1,24 @@
+comedy	special
+news	special
+
+mystery	novel
+
+comedy	movie
+action	movie
+action	flick
+
+horror	movie
+horror	flick
+horror	show
+horror	classic
+
+rock	album
+rap	album
+pop	album
+fantasy	game
+jazz	concert
+pop	concert
+
+
+
+nonfiction	television

@@ -1,0 +1,7 @@
+#IN, topic for interest_in
+buying	interest
+
+market	confidence
+
+#
+tea	ceremony

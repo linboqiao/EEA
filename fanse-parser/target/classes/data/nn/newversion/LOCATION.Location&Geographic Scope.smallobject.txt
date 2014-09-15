@@ -1,0 +1,62 @@
+chimney	dirt
+table	dance
+table	centerpiece
+
+turban	decoration
+turban	ornament
+
+helmet	camera
+pocket	camera
+wall	covering
+wall	space
+
+window	display
+window	condensation
+fireplace	fire
+
+#vehicle
+ambulance	crew
+ambulance	worker
+
+table	manner
+
+car	alarm
+car	phone
+car	radio
+car	seat
+
+helicopter	crew
+
+shuttle	astronaut
+shuttle	crew
+
+truck	bomb
+
+boat	people
+
+houseboat	generator
+
+#
+engine	fire
+dashboard	computer
+toilet	paper
+hood	ornament
+
+table	grape
+table	saw
+
+#
+
+corner	office
+corner	store
+
+desk	job
+desk	officer
+
+desktop	computer
+desktop	machine
+desktop	model
+desktop	publishing
+desktop	system
+
+

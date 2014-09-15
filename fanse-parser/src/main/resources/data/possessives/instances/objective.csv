@@ -1,0 +1,688 @@
+10444	"PTB_WSJ"	"Ferguson"	"arrest"	18	20	14994		
+10445	"PTB_WSJ"	"his"	"arrest"	2	3	4787		
+10446	"PTB_WSJ"	"his"	"arrest"	14	15	27622		
+10447	"PTB_WSJ"	"his"	"arrival"	2	3	3322		
+10448	"PTB_WSJ"	"its"	"acquisition"	34	36	1764		
+10449	"PTB_WSJ"	"its"	"acquisition"	29	33	15081		
+							
+							
+10478	"PTB_WSJ"	"Allday"	"appointment"	2	4	39430		
+10479	"PTB_WSJ"	"Baltimore"	"appointment"	21	24	25293		
+10480	"PTB_WSJ"	"Brawer"	"appointment"	3	5	22906		
+10481	"PTB_WSJ"	"Dozen"	"appointment"	5	7	20829		
+10482	"PTB_WSJ"	"Grobstein"	"appointment"	2	4	12026		
+10483	"PTB_WSJ"	"His"	"appointment"	1	2	10130		
+10484	"PTB_WSJ"	"its"	"appointment"	17	18	37949		
+10485	"PTB_WSJ"	"Linh"	"appointment"	3	5	27668		
+10486	"PTB_WSJ"	"Major"	"appointment"	31	33	9641		
+10487	"PTB_WSJ"	"whose"	"appointment"	14	15	5255		
+							
+10521	"PTB_WSJ"	"stock"	"rating"	9	12	21149		
+10522	"PTB_WSJ"	"company"	"rating"	18	22	28918		
+10523	"PTB_WSJ"	"company"	"rating"	23	26	37258		
+10541	"PTB_WSJ"	"its"	"takeover"	9	10	6565		
+10542	"PTB_WSJ"	"its"	"takeover"	29	32	21963		
+10592	"PTB_WSJ"	"his"	"indictment"	18	20	14991		
+10593	"PTB_WSJ"	"his"	"indictment"	14	15	36305		
+10594	"PTB_WSJ"	"Moliere"	"indictment"	7	10	35065		
+10595	"PTB_WSJ"	"Noriega"	"indictment"	9	11	27590		
+10596	"PTB_WSJ"	"Their"	"indictment"	1	3	36401		
+10597	"PTB_WSJ"	"Young"	"indictment"	10	14	25266		
+							
+10611	"PTB_WSJ"	"its"	"cleanup"	16	17	21736		
+10612	"PTB_WSJ"	"his"	"compensation"	3	4	13354		
+10613	"PTB_WSJ"	"their"	"compensation"	13	15	25176		
+10614	"PTB_WSJ"	"worker"	"compensation"	13	15	8020		
+10615	"PTB_WSJ"	"worker"	"compensation"	9	11	20757		
+10616	"PTB_WSJ"	"worker"	"compensation"	19	21	27149		
+10617	"PTB_WSJ"	"workers"	"compensation"	8	10	8724		
+10618	"PTB_WSJ"	"workers"	"compensation"	22	24	16015		
+10619	"PTB_WSJ"	"workers"	"compensation"	23	25	16016		
+10679	"PTB_WSJ"	"Her"	"dismissal"	1	2	12301		
+10680	"PTB_WSJ"	"his"	"dismissal"	20	21	8271		
+10681	"PTB_WSJ"	"His"	"dismissal"	1	2	27654		
+10698	"PTB_WSJ"	"whose"	"existence"	38	40	6158		
+							
+							
+10714	"PTB_WSJ"	"company"	"exposure"	8	11	16417		
+10715	"PTB_WSJ"	"company"	"exposure"	42	44	33721		
+10716	"PTB_WSJ"	"country"	"exposure"	24	27	24731		
+10717	"PTB_WSJ"	"employees"	"exposure"	16	18	4571		
+10718	"PTB_WSJ"	"Fargo"	"exposure"	6	9	36994		
+10719	"PTB_WSJ"	"his"	"exposure"	3	5	14552		
+10720	"PTB_WSJ"	"its"	"exposure"	35	36	5799		
+10721	"PTB_WSJ"	"its"	"exposure"	11	14	18285		
+10722	"PTB_WSJ"	"its"	"exposure"	37	41	32095		
+10723	"PTB_WSJ"	"state"	"exposure"	11	15	11258		
+10724	"PTB_WSJ"	"taxpayer"	"exposure"	11	13	2212		
+10725	"PTB_WSJ"	"their"	"exposure"	16	19	9705		
+10726	"PTB_WSJ"	"their"	"exposure"	14	18	9725		
+10727	"PTB_WSJ"	"their"	"exposure"	10	11	19409		
+10728	"PTB_WSJ"	"their"	"exposure"	11	12	33373		
+10729	"PTB_WSJ"	"their"	"exposure"	2	5	33834		
+10730	"PTB_WSJ"	"firm"	"exposures"	35	37	4428		
+10731	"PTB_WSJ"	"its"	"exposures"	25	29	4426		
+10739	"PTB_WSJ"	"company"	"founding"	13	15	22987		
+10740	"PTB_WSJ"	"its"	"founding"	12	13	103		
+10741	"PTB_WSJ"	"its"	"founding"	2	3	6235		
+10742	"PTB_WSJ"	"its"	"founding"	12	13	35364		
+10751	"PTB_WSJ"	"its"	"inception"	15	16	19884		
+10752	"PTB_WSJ"	"its"	"inception"	23	24	22939		
+10753	"PTB_WSJ"	"its"	"inception"	2	3	24129		
+10754	"PTB_WSJ"	"its"	"inception"	2	3	24148		
+10755	"PTB_WSJ"	"their"	"inception"	12	13	10307		
+10780	"PTB_WSJ"	"his"	"replacement"	10	11	98		
+10781	"PTB_WSJ"	"its"	"replacement"	16	17	34690		
+10782	"PTB_WSJ"	"Lawson"	"replacement"	8	10	11143		
+10783	"PTB_WSJ"	"concern"	"setback"	15	19	16012		
+10784	"PTB_WSJ"	"his"	"setbacks"	3	5	36434		
+							
+10800	"PTB_WSJ"	"his"	"trial"	9	10	920		
+10801	"PTB_WSJ"	"his"	"trial"	13	14	958		
+10802	"PTB_WSJ"	"his"	"trial"	16	17	995		
+10803	"PTB_WSJ"	"his"	"trial"	8	9	12411		
+10804	"PTB_WSJ"	"his"	"trial"	16	17	19752		
+10805	"PTB_WSJ"	"his"	"trial"	17	19	30687		
+10806	"PTB_WSJ"	"Marcos"	"trial"	2	4	1433		
+10807	"PTB_WSJ"	"North"	"trial"	23	26	36433		
+							
+10811	"PTB_WSJ"	"his"	"conviction"	17	18	13062		
+10812	"PTB_WSJ"	"his"	"conviction"	13	15	14991		
+10813	"PTB_WSJ"	"his"	"conviction"	31	32	14993		
+10814	"PTB_WSJ"	"its"	"abolition"	27	28	2088		
+10815	"PTB_WSJ"	"their"	"adoption"	7	8	1138		
+							
+10817	"PTB_WSJ"	"his"	"assassination"	47	48	20934		
+10818	"PTB_WSJ"	"his"	"assassination"	2	3	37366		
+10823	"PTB_WSJ"	"Its"	"attendance"	1	2	23333		
+							
+10836	"PTB_WSJ"	"their"	"depiction"	22	23	6406		
+10837	"PTB_WSJ"	"His"	"election"	1	2	4121		
+10838	"PTB_WSJ"	"his"	"election"	22	23	12877		
+10839	"PTB_WSJ"	"his"	"election"	16	17	19021		
+10840	"PTB_WSJ"	"Johnson"	"election"	34	36	35888		
+10841	"PTB_WSJ"	"his"	"injuries"	23	26	39494		
+10842	"PTB_WSJ"	"their"	"injuries"	10	11	35298		
+10843	"PTB_WSJ"	"woman"	"injuries"	22	24	19839		
+							
+							
+10853	"PTB_WSJ"	"bank"	"privatization"	32	34	8147		
+10854	"PTB_WSJ"	"their"	"privatization"	10	11	25859		
+10855	"PTB_WSJ"	"his"	"qualifications"	29	30	13203		
+10856	"PTB_WSJ"	"his"	"qualifications"	26	27	26602		
+10857	"PTB_WSJ"	"Sala"	"qualifications"	4	6	26605		
+10858	"PTB_WSJ"	"bank"	"quantification"	26	29	1634		
+10859	"PTB_WSJ"	"their"	"safekeeping"	27	28	38663		
+10860	"PTB_WSJ"	"His"	"selection"	1	2	15107		
+10867	"PTB_WSJ"	"their"	"suspension"	12	14	345		
+10868	"PTB_WSJ"	"his"	"swearing"	29	30	903		
+10869	"PTB_WSJ"	"judge"	"swearing-in"	8	10	910		
+10870	"PTB_WSJ"	"Lincoln"	"treatment"	1	3	36749		
+10871	"PTB_WSJ"	"their"	"treatment"	7	8	23434		
+10872	"PTB_WSJ"	"drug"	"usage"	13	15	15314		
+10873	"PTB_WSJ"	"Our"	"users"	1	3	33334		
+							
+10877	"PTB_WSJ"	"His"	"trials"	1	2	13064		
+10888	"PTB_WSJ"	"Florio"	"recognition"	12	15	27889		
+							
+10895	"PTB_WSJ"	"its"	"interpretation"	27	28	38255		
+10896	"PTB_WSJ"	"his"	"inauguration"	27	28	16207		
+							
+10899	"PTB_WSJ"	"its"	"commercialization"	18	19	13602		
+10900	"PTB_WSJ"	"its"	"advent"	42	43	6784		
+10901	"PTB_WSJ"	"your"	"birth"	26	27	10682		
+10902	"PTB_WSJ"	"his"	"amazement"	6	8	10712		
+10903	"PTB_WSJ"	"their"	"ascent"	4	6	27940		
+							
+10905	"PTB_WSJ"	"company"	"buy-out"	22	24	10748		
+10906	"PTB_WSJ"	"its"	"buy-out"	8	13	4256		
+10907	"PTB_WSJ"	"its"	"buy-out"	24	29	18047		
+10908	"PTB_WSJ"	"its"	"buy-out"	23	27	19400		
+10909	"PTB_WSJ"	"its"	"buy-out"	16	19	22158		
+10910	"PTB_WSJ"	"its"	"buy-out"	10	12	31207		
+10911	"PTB_WSJ"	"its"	"buy-out"	12	13	34082		
+10912	"PTB_WSJ"	"TV"	"buy-out"	2	4	18733		
+10913	"PTB_WSJ"	"TV"	"buy-out"	8	10	18736		
+10914	"PTB_WSJ"	"GAO"	"audit"	2	5	16999		
+10915	"PTB_WSJ"	"its"	"audit"	17	23	29925		
+10916	"PTB_WSJ"	"its"	"authorization"	14	16	30610		
+							
+10918	"PTB_WSJ"	"their"	"breach"	14	15	20299		
+10919	"PTB_WSJ"	"Her"	"challenge"	1	2	27660		
+10920	"PTB_WSJ"	"his"	"challenge"	7	10	24441		
+10921	"PTB_WSJ"	"Mike"	"challenge"	3	5	3317		
+10922	"PTB_WSJ"	"my"	"challenge"	3	4	3316		
+10923	"PTB_WSJ"	"industry"	"challenges"	14	18	31828		
+10924	"PTB_WSJ"	"their"	"challenges"	29	31	35968		
+							
+10936	"PTB_WSJ"	"their"	"blacklisting"	8	10	6122		
+10937	"PTB_WSJ"	"his"	"briefing"	10	13	34627		
+10938	"PTB_WSJ"	"his"	"surprise"	17	18	20105		
+							
+							
+10945	"PTB_WSJ"	"stock"	"trading"	7	9	18146		
+							
+10968	"PTB_WSJ"	"children"	"education"	44	46	20133		
+10969	"PTB_WSJ"	"kids"	"education"	2	5	26539		
+10970	"PTB_WSJ"	"our"	"education"	2	3	20415		
+10971	"PTB_WSJ"	"child"	"eduction"	7	9	26786		
+10972	"PTB_WSJ"	"Community"	"unification"	22	26	30565		
+10973	"PTB_WSJ"	"Dinkins"	"support"	9	11	10877		
+10974	"PTB_WSJ"	"its"	"support"	23	25	34964		
+10975	"PTB_WSJ"	"their"	"support"	14	15	37376		
+							
+10977	"PTB_WSJ"	"her"	"abduction"	20	22	8214		
+10978	"PTB_WSJ"	"our"	"isolation"	24	26	31800		
+10979	"PTB_WSJ"	"Kellogg"	"erosion"	5	7	8086		
+							
+10982	"PTB_WSJ"	"their"	"destruction"	31	32	5631		
+10983	"PTB_WSJ"	"industry"	"deregulation"	27	29	11318		
+							
+10986	"PTB_WSJ"	"our"	"buyout"	18	20	3779		
+10987	"PTB_WSJ"	"fund"	"test"	8	11	24851		
+10988	"PTB_WSJ"	"its"	"test"	6	8	39824		
+10989	"PTB_WSJ"	"their"	"tests"	7	9	32005		
+10992	"PTB_WSJ"	"Honecker"	"removal"	2	4	33949		
+10993	"PTB_WSJ"	"Cuba"	"reinstatement"	16	18	12502		
+							
+10996	"PTB_WSJ"	"its"	"punishment"	11	12	20633		
+10997	"PTB_WSJ"	"its"	"ouster"	11	12	32643		
+							
+11009	"PTB_WSJ"	"its"	"close"	7	8	25542		
+11010	"PTB_WSJ"	"market"	"close"	6	8	33194		
+							
+11013	"PTB_WSJ"	"Deaver"	"conviction"	23	25	12414		
+11014	"PTB_WSJ"	"her"	"conviction"	13	14	12445		
+							
+11018	"PTB_WSJ"	"stock"	"holder"	23	25	8715		
+11020	"PTB_WSJ"	"plant"	"shutdown"	21	23	31792		
+							
+11022	"PTB_WSJ"	"his"	"promotion"	26	27	20822		
+11023	"PTB_WSJ"	"country"	"call"	13	15	1685		
+11024	"PTB_WSJ"	"issue"	"absorption"	2	5	3079		
+							
+11028	"PTB_WSJ"	"children"	"enrollment"	27	30	26764		
+11029	"PTB_WSJ"	"Boyd"	"assignment"	8	12	12299		
+11030	"PTB_WSJ"	"her"	"assignment"	11	12	13858		
+11031	"PTB_WSJ"	"Its"	"measurement"	1	4	28011		
+11032	"PTB_WSJ"	"its"	"measurements"	15	20	20711		
+11033	"PTB_WSJ"	"his"	"tax"	28	30	24561		
+11034	"PTB_WSJ"	"Hunt"	"taxes"	3	5	1089		
+11035	"PTB_WSJ"	"their"	"taxes"	26	27	26797		
+							
+11037	"PTB_WSJ"	"his"	"sentence"	16	18	1352		
+11038	"PTB_WSJ"	"his"	"sentence"	36	40	14995		
+11039	"PTB_WSJ"	"Simmons"	"sentence"	9	12	21752		
+11040	"PTB_WSJ"	"Garcias"	"sentencing"	8	10	24183		
+11041	"PTB_WSJ"	"his"	"sentencing"	12	13	21704		
+11042	"PTB_WSJ"	"book"	"return"	11	13	863		
+							
+11044	"PTB_WSJ"	"our"	"protection"	9	13	28136		
+11045	"PTB_WSJ"	"economy"	"progress"	10	12	11774		
+11046	"PTB_WSJ"	"its"	"progress"	12	13	534		
+11047	"PTB_WSJ"	"its"	"progress"	2	4	1496		
+11048	"PTB_WSJ"	"our"	"progress"	11	12	38387		
+11049	"PTB_WSJ"	"Rake"	"Progress"	2	4	38510		
+11050	"PTB_WSJ"	"their"	"progress"	32	34	38962		
+11052	"PTB_WSJ"	"her"	"interview"	2	5	5595		
+11053	"PTB_WSJ"	"his"	"interview"	2	5	16200		
+11054	"PTB_WSJ"	"his"	"kidnapping"	6	8	19752		
+							
+11057	"PTB_WSJ"	"company"	"improvement"	5	9	6591		
+							
+11060	"PTB_WSJ"	"report"	"release"	13	15	35651		
+11061	"PTB_WSJ"	"government"	"limit"	19	22	2803		
+11062	"PTB_WSJ"	"government"	"limit"	9	16	2817		
+11063	"PTB_WSJ"	"its"	"limit"	17	19	21342		
+11064	"PTB_WSJ"	"our"	"limit"	4	5	21515		
+11065	"PTB_WSJ"	"its"	"limitations"	6	7	26429		
+11066	"PTB_WSJ"	"our"	"limitations"	32	38	9614		
+11067	"PTB_WSJ"	"his"	"limits"	29	30	32799		
+11068	"PTB_WSJ"	"its"	"limits"	4	5	33112		
+11069	"PTB_WSJ"	"their"	"limits"	14	16	23710		
+11070	"PTB_WSJ"	"its"	"leap"	30	32	25547		
+11071	"PTB_WSJ"	"Car"	"launch"	44	46	31310		
+11072	"PTB_WSJ"	"Merkur"	"launch"	21	24	31317		
+11073	"PTB_WSJ"	"Release"	"launch"	32	35	32695		
+11074	"PTB_WSJ"	"their"	"salvation"	21	22	11643		
+							
+							
+11077	"PTB_WSJ"	"Cuba"	"seating"	7	9	34703		
+11078	"PTB_WSJ"	"their"	"reunification"	23	24	34820		
+11079	"PTB_WSJ"	"its"	"ratings"	25	27	36685		
+11080	"PTB_WSJ"	"stations"	"ratings"	17	19	18755		
+11081	"PTB_WSJ"	"York"	"ratings"	7	10	23514		
+11082	"PTB_WSJ"	"ABC"	"ratings"	5	7	4467		
+11083	"PTB_WSJ"	"its"	"readership"	11	13	7793		
+11084	"PTB_WSJ"	"its"	"readership"	23	24	34368		
+11085	"PTB_WSJ"	"sale"	"reception"	17	19	3546		
+							
+							
+11088	"PTB_WSJ"	"issue"	"pricing"	6	9	21477		
+11089	"PTB_WSJ"	"their"	"own"	31	32	8736		
+11091	"PTB_WSJ"	"its"	"jolt"	5	7	22497		
+11092	"PTB_WSJ"	"MeraBank"	"rating"	1	3	24902		
+11093	"PTB_WSJ"	"unit"	"rating"	76	78	697		
+11094	"PTB_WSJ"	"plant"	"operation"	26	28	751		
+11095	"PTB_WSJ"	"plant"	"operation"	34	37	30822		
+11096	"PTB_WSJ"	"horse"	"maintenance"	6	8	18231		
+11097	"PTB_WSJ"	"my"	"dismissal"	22	20	1168		
+11098	"PTB_WSJ"	"Bank"	"increase"	5	12	37792		
+11099	"PTB_WSJ"	"LTV"	"increase"	1	4	2740		
+11100	"PTB_WSJ"	"its"	"increases"	35	37	29240		
+11101	"PTB_WSJ"	"their"	"increases"	11	12	9387		
+11102	"PTB_WSJ"	"company"	"recapitalization"	20	25	9010		
+11103	"PTB_WSJ"	"concern"	"recapitalization"	26	29	37325		
+11104	"PTB_WSJ"	"its"	"recapitalization"	8	10	9006		
+11105	"PTB_WSJ"	"our"	"recapitalization"	28	30	3055		
+11106	"PTB_WSJ"	"our"	"recapitalization"	21	24	4042		
+11107	"PTB_WSJ"	"department"	"directive"	8	10	22181		
+11108	"PTB_WSJ"	"stock"	"valuation"	8	14	2659		
+11109	"PTB_WSJ"	"his"	"end"	35	36	29254		
+11110	"PTB_WSJ"	"Breeden"	"hearing"	5	8	13203		
+11114	"PTB_WSJ"	"market-makers"	"squeeze"	7	9	30561		
+11115	"PTB_WSJ"	"its"	"reinsurance"	57	58	8745		
+11116	"PTB_WSJ"	"their"	"benefit"	18	20	16829		
+11117	"PTB_WSJ"	"whose"	"loss"	11	12	5113		
+11118	"PTB_WSJ"	"her"	"infection"	14	15	15323		
+							
+11131	"PTB_WSJ"	"body"	"defense"	18	20	24107		
+11132	"PTB_WSJ"	"computer"	"defense"	20	22	20072		
+11133	"PTB_WSJ"	"his"	"defense"	36	37	6599		
+11134	"PTB_WSJ"	"his"	"defense"	18	20	12030		
+11135	"PTB_WSJ"	"its"	"defense"	8	11	19770		
+11136	"PTB_WSJ"	"its"	"defense"	36	37	29331		
+11137	"PTB_WSJ"	"Maynard"	"defense"	17	19	32751		
+11138	"PTB_WSJ"	"Time"	"defense"	5	7	18432		
+11139	"PTB_WSJ"	"your"	"massage"	8	9	39498		
+							
+11144	"PTB_WSJ"	"its"	"calling"	20	23	19790		
+11145	"PTB_WSJ"	"their"	"delays"	6	7	23925		
+11146	"PTB_WSJ"	"their"	"elections"	25	28	34750		
+							
+11147	"PTB_WSJ"	"their"	"surgery"	11	13	12747		
+11148	"PTB_WSJ"	"its"	"disposition"	13	14	16763		
+							
+11171	"PTB_WSJ"	"Drexel"	"trouble"	6	8	20649		
+11172	"PTB_WSJ"	"Britain"	"troubles"	42	45	5595		
+11173	"PTB_WSJ"	"brokerage"	"troubles"	11	14	36093		
+11174	"PTB_WSJ"	"buy-out"	"troubles"	5	7	27081		
+11175	"PTB_WSJ"	"company"	"troubles"	26	28	14299		
+11176	"PTB_WSJ"	"company"	"troubles"	4	6	30049		
+11177	"PTB_WSJ"	"his"	"troubles"	13	14	12483		
+11178	"PTB_WSJ"	"his"	"troubles"	2	3	27605		
+11179	"PTB_WSJ"	"Integrated"	"troubles"	3	7	21794		
+11180	"PTB_WSJ"	"its"	"troubles"	16	18	20605		
+11181	"PTB_WSJ"	"its"	"troubles"	6	8	22156		
+11182	"PTB_WSJ"	"its"	"troubles"	28	29	24598		
+11183	"PTB_WSJ"	"market"	"troubles"	18	21	17599		
+11184	"PTB_WSJ"	"nation"	"troubles"	6	9	10597		
+11185	"PTB_WSJ"	"Noriega"	"troubles"	3	6	36431		
+11186	"PTB_WSJ"	"Saatchi"	"troubles"	2	4	25248		
+11187	"PTB_WSJ"	"UAL"	"troubles"	7	9	34082		
+11188	"PTB_WSJ"	"Wang"	"troubles"	4	8	36058		
+11189	"PTB_WSJ"	"whose"	"troubles"	18	19	24926		
+11190	"PTB_WSJ"	"her"	"ailment"	26	27	5958		
+							
+11191	"JB"	"Mowgli"	"capture"	13	15	842	"One of the monkeys made a speech and told his companions that <b>Mowgli</b> 's <b>capture</b> marked a new thing in the history of the Bandar-log , for Mowgli was going to show them how to weave sticks and canes together as a protection against rain and cold . "	
+11197	"JB"	"his"	"birth"	10	11	28	"`` He has been lame in one foot from <b>his</b> <b>birth</b> . "	
+							
+4032	"PTB_WSJ"	"government"	"obligation"	22	24	24263		
+4033	"PTB_WSJ"	"his"	"obligations"	23	24	10957		
+4034	"PTB_WSJ"	"its"	"obligations"	46	47	1387		
+4035	"PTB_WSJ"	"its"	"obligations"	17	19	8779		
+4036	"PTB_WSJ"	"its"	"obligations"	9	11	8787		
+4037	"PTB_WSJ"	"its"	"obligations"	24	25	14291		
+4038	"PTB_WSJ"	"PWA"	"obligations"	1	8	13302		
+4039	"PTB_WSJ"	"their"	"obligations"	14	16	7238		
+							
+							
+21817	"HDFRE"	"his"	"pardon"	31	32	1817	"He was pursued into the Imperial palace , and massacred at the feet of his master , who vainly strove to cover him with the purple , and to obtain <b>his</b> <b>pardon</b> from the inexorable soldiers . "	
+25165	"HDFRE"	"his"	"pardon"	16	17	5165	"The Galatian , who after his baptism had repeatedly sacrificed to idols , might obtain <b>his</b> <b>pardon</b> by a penance of seven years ; and if he had seduced others to imitate his example , only three years more were added to the term of his exile . "	
+24415	"HDFRE"	"their"	"pardon"	67	68	4415	"Apprehensive of the fatal consequences of delay , Constantine gave orders for an immediate assault ; but the scaling-ladders were found too short for the height of the walls , and Marseilles might have sustained as long a siege as it formerly did against the arms of C??sar , if the garrison , conscious either of their fault or of their danger , had not purchased <b>their</b> <b>pardon</b> by delivering up the city and the person of Maximian . "	
+							
+							
+24777	"HDFRE"	"his"	"confinement"	61	62	4777	"Licinius solicited and accepted the pardon of his offences , laid himself and his purple at the feet of his lord and master , was raised from the ground with insulting pity , was admitted the same day to the Imperial banquet , and soon afterwards was sent away to Thessalonica , which had been chosen for the place of <b>his</b> <b>confinement</b> . "	
+24778	"HDFRE"	"His"	"confinement"	1	2	4778	"<b>His</b> <b>confinement</b> was soon terminated by death , and it is doubtful whether a tumult of the soldiers , or a decree of the senate , was suggested as the motive for his execution . "	
+23597	"HDFRE"	"their"	"confinement"	23	24	3597	"Disdaining to shed their blood for the amusement of the populace , they killed their keepers , broke from the place of <b>their</b> <b>confinement</b> , and filled the streets of Rome with blood and confusion . "	
+							
+							
+							
+21049	"HDFRE"	"their"	"flattery"	68	69	1049	"It may be easily supposed , that in these engagements the master of the world was always successful ; in the amphitheatre , his victories were not often sanguinary ; but when he exercised his skill in the school of gladiators , or his own palace , his wretched antagonists were frequently honored with a mortal wound from the hand of Commodus , and obliged to seal <b>their</b> <b>flattery</b> with their blood . "	
+							
+							
+24313	"HDFRE"	"his"	"injury"	45	47	4313	"The gloomy passions of his soul , shame , vexation , and rage , were inflamed by envy on the news of Constantine 's success ; but the hopes of Maxentius revived with the public discontent , and he was easily persuaded to unite <b>his</b> personal <b>injury</b> and pretensions with the cause of the Roman people . "	
+22133	"HDFRE"	"his"	"injuries"	66	68	2133	"From the prudent conduct of Maximin , we may learn that the savage features of his character have been exaggerated by the pencil of party , that his passions , however impetuous , submitted to the force of reason , and that the barbarian possessed something of the generous spirit of Sylla , who subdued the enemies of Rome before he suffered himself to revenge <b>his</b> private <b>injuries</b> . "	
+							
+22935	"HDFRE"	"his"	"initiation"	34	35	2935	"When the great emergencies of the state required his presence and attention , he was engaged in conversation with the philosopher Plotinus , wasting his time in trifling or licentious pleasures , preparing <b>his</b> <b>initiation</b> to the Grecian mysteries , or soliciting a place in the Arcopagus of Athens . "	
+							
+22302	"HDFRE"	"his"	"salvation"	39	40	2302	"The saint , in the Magian religion , is obliged to beget children , to plant useful trees , to destroy noxious animals , to convey water to the dry lands of Persia , and to work out <b>his</b> <b>salvation</b> by pursuing all the labors of agriculture . "	
+25030	"HDFRE"	"his"	"salvation"	44	45	5030	"Gay apparel , magnificent houses , and elegant furniture , were supposed to unite the double guilt of pride and of sensuality ; a simple and mortified appearance was more suitable to the Christian who was certain of his sins and doubtful of <b>his</b> <b>salvation</b> . "	
+							
+20169	"HDFRE"	"my"	"satisfaction"	15	16	169	"I may now congratulate my deliverance from a long and laborious service , and <b>my</b> <b>satisfaction</b> will be pure and perfect , if the public favor should be extended to the conclusion of my work . "	
+23501	"HDFRE"	"their"	"satisfaction"	17	18	3501	"When this respectful epistle was read by the consul , the senators were unable to disguise <b>their</b> <b>satisfaction</b> , that Probus should condescend thus numbly to solicit a sceptre which he already possessed . "	
+							
+							
+23913	"HDFRE"	"his"	"restoration"	9	10	3913	"The gratitude of Tiridates contributed soon afterwards to <b>his</b> <b>restoration</b> . "	
+23937	"HDFRE"	"his"	"restoration"	46	47	3937	"The Armenian prince , who was well acquainted with this merit as well as power of Mamgo , treated him with distinguished respect ; and , by admitting him into his confidence , acquired a brave and faithful servant , who contributed very effectually to <b>his</b> <b>restoration</b> . "	
+							
+20233	"HDFRE"	"his"	"removal"	9	10	233	"But the superior merit of Agricola soon occasioned <b>his</b> <b>removal</b> from the government of Britain ; and forever disappointed this rational , though extensive scheme of conquest . "	
+23761	"HDFRE"	"whose"	"removal"	30	31	3761	"The discerning judgment of Aurelian , of Probus , and of Carus , had filled the several departments of the state and army with officers of approved merit , <b>whose</b> <b>removal</b> would have injured the public service , without promoting the interest of his successor . "	
+							
+							
+							
+20625	"HDFRE"	"father"	"murder"	12	14	625	"Filial piety had required at his hands the revenge of his <b>father</b> 's <b>murder</b> ; the humanity of his own nature had sometimes given way to the stern laws of necessity , and to a forced connection with two unworthy colleagues : as long as Antony lived , the republic forbade him to abandon her to a degenerate Roman , and a barbarian queen . "	
+							
+20007	"HDFRE"	"its"	"dismemberment"	54	55	7	"Guizot : -- `` The gradual decline of the most extraordinary dominion which has ever invaded and oppressed the world ; the fall of that immense empire , erected on the ruins of so many kingdoms , republics , and states both barbarous and civilized ; and forming in its turn , by <b>its</b> <b>dismemberment</b> , a multitude of states , republics , and kingdoms ; the annihilation of the religion of Greece and Rome ; the birth and the progress of the two new religions which have shared the most beautiful regions of the earth ; the decrepitude of the ancient world , the spectacle of its expiring glory and degenerate manners ; the infancy of the modern world , the picture of its first progress , of the new direction given to the mind and character of man -- such a subject must necessarily fix the attention and excite the interest of men , who can not behold with indifference those memorable epochs , during which , in the fine language of Corneille -- ' Un grand destin commence , un grand destin s'ach??ve "	
+							
+23949	"HDFRE"	"his"	"defeat"	19	20	3949	"But the consideration of the country that was the scene of action , may suggest another reason for <b>his</b> <b>defeat</b> . "	
+23982	"HDFRE"	"his"	"defeat"	17	19	3982	"The power , or at least the spirit , of Narses , had been broken by <b>his</b> last <b>defeat</b> ; and he considered an immediate peace as the only means that could stop the progress of the Roman arms . "	
+24607	"HDFRE"	"his"	"defeat"	30	31	4607	"Twenty-four hours afterwards he was seen , pale , trembling , and without his Imperial ornaments , at Nicomedia , one hundred and sixty miles from the place of <b>his</b> <b>defeat</b> . "	
+23318	"HDFRE"	"their"	"defeat"	5	6	3318	"These usurpers , whom <b>their</b> <b>defeat</b> had convicted of the crime of treason , were permitted to spend their lives in affluence and honorable repose . "	
+22606	"HDFRE"	"whose"	"defeat"	17	18	2606	"They deemed it a much safer expedient to divide than to combat the barbarians , from <b>whose</b> <b>defeat</b> they could derive neither honor nor advantage . "	
+							
+							
+21080	"HDFRE"	"his"	"birth"	27	28	1080	"They fixed on Pertinax , pr??fect of the city , an ancient senator of consular rank , whose conspicuous merit had broke through the obscurity of <b>his</b> <b>birth</b> , and raised him to the first honors of the state . "	
+22039	"HDFRE"	"his"	"birth"	11	12	2039	"A great estate enabled him to support the dignity of <b>his</b> <b>birth</b> , and in the enjoyment of it , he displayed an elegant taste and beneficent disposition . "	
+22108	"HDFRE"	"His"	"birth"	1	2	2108	"<b>His</b> <b>birth</b> was noble , his fortune affluent , his manners liberal and affable . "	
+22261	"HDFRE"	"His"	"birth"	1	2	2261	"<b>His</b> <b>birth</b> was obscure , and the obscurity equally gave room to the aspersions of his enemies , and the flattery of his adherents . "	
+22670	"HDFRE"	"his"	"birth"	70	71	2670	"The use of round bucklers and short swords rendered them formidable in a close engagement ; the manly obedience which they yielded to hereditary kings , gave uncommon union and stability to their councils ; and the renowned Amala , the hero of that age , and the tenth ancestor of Theodoric , king of Italy , enforced , by the ascendant of personal merit , the prerogative of <b>his</b> <b>birth</b> , which he derived from the Anses , or demi gods of the Gothic nation . "	
+22758	"HDFRE"	"His"	"birth"	1	3	2758	"<b>His</b> noble <b>birth</b> , his mild but unblemished manners , his learning , prudence , and experience , were revered by the senate and people ; and if mankind ( according to the observation of an ancient writer ) had been left at liberty to choose a master , their choice would most assuredly have fallen on Valerian . "	
+22951	"HDFRE"	"his"	"birth"	20	21	2951	"His mean and recent trade cast , indeed , an air of ridicule on his elevation ; * but <b>his</b> <b>birth</b> could not be more obscure than was that of the greater part of his rivals , who were born of peasants , and enlisted in the army as private soldiers . "	
+23023	"HDFRE"	"his"	"birth"	25	26	3023	"The obscurity which covered the origin of Claudius , though it was afterwards embellished by some flattering fictions , sufficiently betrays the meanness of <b>his</b> <b>birth</b> . "	
+23615	"HDFRE"	"his"	"birth"	49	51	3615	"He gloried in the title of Roman Citizen ; and affected to compare the purity of his blood with the foreign and even barbarous origin of the preceding emperors ; yet the most inquisitive of his contemporaries , very far from admitting his claim , have variously deduced <b>his</b> own <b>birth</b> , or that of his parents , from Illyricum , from Gaul , or from Africa . "	
+23737	"HDFRE"	"his"	"birth"	19	20	3737	"As the reign of Diocletian was more illustrious than that of any of his predecessors , so was <b>his</b> <b>birth</b> more abject and obscure . "	
+24237	"HDFRE"	"his"	"birth"	4	5	4237	"The place of <b>his</b> <b>birth</b> , as well as the condition of his mother Helena , have been the subject , not only of literary , but of national disputes . "	
+24308	"HDFRE"	"His"	"birth"	1	2	4308	"<b>His</b> <b>birth</b> and alliance seemed to offer him the fairest promise of succeeding to the empire ; but his vices and incapacity procured him the same exclusion from the dignity of C??sar , which Constantine had deserved by a dangerous superiority of merit . "	
+24615	"HDFRE"	"his"	"birth"	17	18	4615	"He was now advancing towards the twentieth year of his age , and the royalty of <b>his</b> <b>birth</b> , though unsupported either by merit or ambition , was sufficient to exasperate the jealous mind of Licinius . "	
+20179	"HDFRE"	"my"	"birth"	19	20	179	"But I shall ever glory in the name and character of an Englishman : I am proud of <b>my</b> <b>birth</b> in a free and enlightened country ; and the approbation of that country is the best and most honorable reward of my labors . "	
+22006	"HDFRE"	"their"	"birth"	25	26	2006	"The dark and sanguinary soul of the tyrant was open to every suspicion against those among his subjects who were the most distinguished by <b>their</b> <b>birth</b> or merit . "	
+21576	"HDFRE"	"whose"	"birth"	30	32	1576	"The choice of the army ( for the authority of a distant and feeble senate was little regarded ) hung in anxious suspense , as no candidate presented himself <b>whose</b> distinguished <b>birth</b> and merit could engage their attachment and unite their suffrages . "	
+							
+20090	"HDFRE"	"its"	"Author"	4	6	90	"So Christianity proclaims <b>its</b> Divine <b>Author</b> chiefly in its first origin and development . "	
+24793	"HDFRE"	"its"	"Author"	33	35	4793	"To this inquiry , an obvious but satisfactory answer may be returned ; that it was owing to the convincing evidence of the doctrine itself , and to the ruling providence of <b>its</b> great <b>Author</b> . "	
+24832	"HDFRE"	"its"	"Author"	28	30	4832	"These Judaizing Christians seem to have argued with some degree of plausibility from the divine origin of the Mosaic law , and from the immutable perfections of <b>its</b> great <b>Author</b> . "	
+25243	"HDFRE"	"its"	"Author"	37	39	5243	"The progress of Christianity was not confined to the Roman empire ; and according to the primitive fathers , who interpret facts by prophecy , the new religion , within a century after the death of <b>its</b> divine <b>Author</b> , had already visited every part of the globe . "	
+							
+21265	"HDFRE"	"whose"	"use"	21	22	1265	"They quitted , with a sigh , the pleasures of the baths and theatres , to put on arms , <b>whose</b> <b>use</b> they had almost forgotten , and beneath the weight of which they were oppressed . "	
+							
+22192	"HDFRE"	"their"	"tortures"	16	17	2192	"The fear of a rescue from the faithful Germans of the Imperial guards , shortened <b>their</b> <b>tortures</b> ; and their bodies , mangled with a thousand wounds , were left exposed to the insults or to the pity of the populace . "	
+							
+23879	"HDFRE"	"his"	"relief"	18	19	3879	"But , on the news of his distress , the Roman troops hastened from all sides to <b>his</b> <b>relief</b> , and before the evening he had satisfied his honor and revenge by the slaughter of six thousand Alemanni . "	
+							
+23288	"HDFRE"	"her"	"execution"	27	29	3288	"The courage of Zenobia deserted her in the hour of trial ; she trembled at the angry clamors of the soldiers , who called aloud for <b>her</b> immediate <b>execution</b> , forgot the generous despair of Cleopatra , which she had proposed as her model , and ignominiously purchased life by the sacrifice of her fame and her friends . "	
+24779	"HDFRE"	"his"	"execution"	33	34	4779	"His confinement was soon terminated by death , and it is doubtful whether a tumult of the soldiers , or a decree of the senate , was suggested as the motive for <b>his</b> <b>execution</b> . "	
+							
+23183	"HDFRE"	"his"	"destruction"	10	11	3183	"The rigid virtues of Posthumus served only to hasten <b>his</b> <b>destruction</b> . "	
+24359	"HDFRE"	"his"	"destruction"	16	17	4359	"The wealth which the Romans defended against his rapacious tyranny , they freely contributed for <b>his</b> <b>destruction</b> . "	
+24818	"HDFRE"	"its"	"destruction"	27	28	4818	"That obstacle was indeed removed by the destruction of the temple of Jerusalem ; but the most considerable part of the Jewish religion was involved in <b>its</b> <b>destruction</b> ; and the Pagans , who had long wondered at the strange report of an empty sanctuary , were at a loss to discover what could be the object , or what could be the instruments , of a worship which was destitute of temples and of altars , of priests and of sacrifices . "	
+							
+23478	"HDFRE"	"his"	"promotion"	24	25	3478	"The third , and afterwards the tenth , legion were intrusted to the command of Probus , who , in every step of <b>his</b> <b>promotion</b> , showed himself superior to the station which he filled . "	
+24385	"HDFRE"	"his"	"promotion"	4	5	4385	"The news of <b>his</b> <b>promotion</b> was no sooner carried into the East , than Maximin , who governed , or rather oppressed , the countries of Egypt and Syria , betrayed his envy and discontent , disdained the inferior name of C??sar , and , notwithstanding the prayers as well as arguments of Galerius , exacted , almost by violence , the equal title of Augustus . "	
+							
+24871	"HDFRE"	"his"	"worship"	34	36	4871	"The God of Israel was impiously represented by the Gnostics as a being liable to passion and to error , capricious in his favor , implacable in his resentment , meanly jealous of <b>his</b> superstitious <b>worship</b> , and confining his partial providence to a single people , and to this transitory life . "	
+24899	"HDFRE"	"their"	"worship"	31	32	4899	"If we cast our eyes over the numerous remains of antiquity , we shall perceive , that besides the immediate representations of the gods , and the holy instruments of <b>their</b> <b>worship</b> , the elegant forms and agreeable fictions consecrated by the imagination of the Greeks , were introduced as the richest ornaments of the houses , the dress , and the furniture of the Pagan . "	
+							
+							
+21241	"HDFRE"	"Their"	"subjection"	1	3	1241	"<b>Their</b> recent <b>subjection</b> , however , the neighborhood , and even the mixture , of the unconquered tribes , and perhaps the climate , adapted , as it has been observed , to the production of great bodies and slow minds , all contributed to preserve some remains of their original ferocity , and under the tame and uniform countenance of Roman provincials , the hardy features of the natives were still to be discerned . "	
+							
+22637	"HDFRE"	"his"	"nomination"	6	8	2637	"Decius , who long resisted <b>his</b> own <b>nomination</b> , seems to have insinuated the danger of presenting a leader of merit to the angry and apprehensive minds of the soldiers ; and his prediction was again confirmed by the event . "	
+24664	"HDFRE"	"His"	"nomination"	1	2	4664	"<b>His</b> <b>nomination</b> had been ratified by the consent of Licinius ; and that artful prince , by the means of his emissaries , soon contrived to enter into a secret and dangerous correspondence with the new C??sar , to irritate his discontents , and to urge him to the rash enterprise of extorting by violence what he might in vain solicit from the justice of Constantine . "	
+							
+25164	"HDFRE"	"his"	"baptism"	6	7	5164	"The Galatian , who after <b>his</b> <b>baptism</b> had repeatedly sacrificed to idols , might obtain his pardon by a penance of seven years ; and if he had seduced others to imitate his example , only three years more were added to the term of his exile . "	
+25000	"HDFRE"	"their"	"baptism"	21	22	5000	"The friends of Christianity may acknowledge without a blush , that many of the most eminent saints had been before <b>their</b> <b>baptism</b> the most abandoned sinners . "	
+25150	"HDFRE"	"their"	"baptism"	77	78	5150	"In the exercise of this power , the censures of the Christian church were chiefly directed against scandalous sinners , and particularly those who were guilty of murder , of fraud , or of incontinence ; against the authors or the followers of any heretical opinions which had been condemned by the judgment of the episcopal order ; and against those unhappy persons , who , whether from choice or compulsion , had polluted themselves after <b>their</b> <b>baptism</b> by any act of idolatrous worship "	
+							
+23120	"HDFRE"	"their"	"support"	15	16	3120	"`` The public allowance , '' continues the emperor , `` is sufficient for <b>their</b> <b>support</b> ; their wealth should be collected from the spoils of the enemy , not from the tears of the provincials . '' "	
+25181	"HDFRE"	"their"	"support"	36	38	5181	"In the various religions of Polytheism , some wandering fanatics of Egypt and Syria , who addressed themselves to the credulous superstition of the populace , were perhaps the only order of priests that derived <b>their</b> whole <b>support</b> and credit from their sacerdotal profession , and were very deeply affected by a personal concern for the safety or prosperity of their tutelar deities . "	
+							
+22910	"HDFRE"	"his"	"punishment"	8	9	2910	"If he entertains a hope of mitigating <b>his</b> <b>punishment</b> , let him fall prostrate before the foot of our throne , with his hands bound behind his back . "	
+21856	"HDFRE"	"their"	"punishment"	21	22	1856	"The tempest was instantly appeased : the soldiers , filled with grief and shame , silently confessed the justice of <b>their</b> <b>punishment</b> , and the power of discipline , yielded up their arms and military ensigns , and retired in confusion , not to their camp , but to the several inns of the city . "	
+23529	"HDFRE"	"Their"	"punishment"	1	2	3529	"<b>Their</b> <b>punishment</b> was immediate and terrible . "	
+							
+20886	"HDFRE"	"His"	"Assassination"	12	13	886	"Election Of Pertinax -- His Attempts To Reform The State -- <b>His</b> <b>Assassination</b> By The Pr??torian Guards . "	
+							
+							
+25167	"HDFRE"	"his"	"exile"	46	47	5167	"The Galatian , who after his baptism had repeatedly sacrificed to idols , might obtain his pardon by a penance of seven years ; and if he had seduced others to imitate his example , only three years more were added to the term of <b>his</b> <b>exile</b> . "	
+24646	"HDFRE"	"their"	"exile"	22	23	4646	"The public disorders relaxed the vigilance of their guard , and they easily found means to escape from the place of <b>their</b> <b>exile</b> , and to repair , though with some precaution , and in disguise , to the court of Licinius . "	
+							
+24444	"HDFRE"	"their"	"assessment"	32	33	4444	"In the sixth year of his reign , Constantine visited the city of Autun , and generously remitted the arrears of tribute , reducing at the same time the proportion of <b>their</b> <b>assessment</b> from twenty-five to eighteen thousand heads , subject to the real and personal capitation . "	
+							
+23124	"HDFRE"	"their"	"separation"	22	24	3124	"The guilty wretch was fastened to two trees forcibly drawn towards each other , and his limbs were torn asunder by <b>their</b> sudden <b>separation</b> . "	
+24924	"HDFRE"	"their"	"separation"	71	72	4924	"Since therefore the most sublime efforts of philosophy can extend no further than feebly to point out the desire , the hope , or , at most , the probability , of a future state , there is nothing , except a divine revelation , that can ascertain the existence , and describe the condition , of the invisible country which is destined to receive the souls of men after <b>their</b> <b>separation</b> from the body . "	
+							
+20705	"HDFRE"	"his"	"deification"	72	74	705	"Augustus permitted indeed some of the provincial cities to erect temples to his honor , on condition that they should associate the worship of Rome with that of the sovereign ; he tolerated private superstition , of which he might be the object ; but he contented himself with being revered by the senate and the people in his human character , and wisely left to his successor the care of <b>his</b> public <b>deification</b> . "	
+							
+20481	"HDFRE"	"his"	"deliverance"	22	23	481	"The subterraneous prisons were abolished ; and , upon a just complaint of intolerable treatment , the injured slave obtained either <b>his</b> <b>deliverance</b> , or a less cruel master . "	
+22211	"HDFRE"	"his"	"deliverance"	32	33	2211	"The minister , with the conscious dignity of virtue , congratulates Gordian that he is delivered from the tyranny of the eunuchs , and still more that he is sensible of <b>his</b> <b>deliverance</b> . "	
+20168	"HDFRE"	"my"	"deliverance"	5	6	168	"I may now congratulate <b>my</b> <b>deliverance</b> from a long and laborious service , and my satisfaction will be pure and perfect , if the public favor should be extended to the conclusion of my work . "	
+21095	"HDFRE"	"their"	"deliverance"	13	15	1095	"For a few minutes they sat in silent suspense , doubtful of <b>their</b> unexpected <b>deliverance</b> , and suspicious of the cruel artifices of Commodus : but when at length they were assured that the tyrant was no more , they resigned themselves to all the transports of joy and indignation . "	
+21594	"HDFRE"	"their"	"deliverance"	4	6	1594	"They exulted in <b>their</b> unexpected <b>deliverance</b> from a hated tyrant , and it seemed of little consequence to examine into the virtues of the successor of Caracalla . "	
+24563	"HDFRE"	"their"	"deliverance"	21	22	4563	"The sight of his head , when it was exposed to the eyes of the people , convinced them of <b>their</b> <b>deliverance</b> , and admonished them to receive with acclamations of loyalty and gratitude the fortunate Constantine , who thus achieved by his valor and ability the most splendid enterprise of his life . "	
+							
+20912	"HDFRE"	"his"	"assistance"	23	24	912	"Nothing however , was neglected by the anxious father , and by the men of virtue and learning whom he summoned to <b>his</b> <b>assistance</b> , to expand the narrow mind of young Commodus , to correct his growing vices , and to render him worthy of the throne for which he was designed . "	
+24327	"HDFRE"	"his"	"assistance"	40	41	4327	"The sea , which Severus commanded with a powerful fleet , secured him an inexhaustible supply of provisions , and gave a free entrance to the legions , which , on the return of spring , would advance to <b>his</b> <b>assistance</b> from Illyricum and the East . "	
+24091	"HDFRE"	"their"	"assistance"	43	44	4091	"It was his intention , that the two elder princes should be distinguished by the use of the diadem , and the title of Augusti ; that , as affection or esteem might direct their choice , they should regularly call to <b>their</b> <b>assistance</b> two subordinate colleagues ; and that the Csars , rising in their turn to the first rank , should supply an uninterrupted succession of emperors . "	
+							
+20208	"HDFRE"	"her"	"situation"	21	24	208	"Inclined to peace by his temper and situation , it was easy for him to discover that Rome , in <b>her</b> present exalted <b>situation</b> , had much less to hope than to fear from the chance of arms ; and that , in the prosecution of remote wars , the undertaking became every day more difficult , the event more doubtful , and the possession more precarious , and less beneficial . "	
+21248	"HDFRE"	"his"	"situation"	13	14	1248	"The new candidate for empire saw and improved the peculiar advantage of <b>his</b> <b>situation</b> . "	
+21865	"HDFRE"	"his"	"situation"	16	17	1865	"The abilities of that amiable prince seem to have been inadequate to the difficulties of <b>his</b> <b>situation</b> , the firmness of his conduct inferior to the purity of his intentions . "	
+22348	"HDFRE"	"his"	"situation"	7	9	2348	"Macrinus , indeed , prompted by <b>his</b> precarious <b>situation</b> and pusillanimous temper , purchased a peace at the expense of near two millions of our money ; but the generals of Marcus , the emperor Severus , and his son , erected many trophies in Armenia , Mesopotamia , and Assyria . "	
+23196	"HDFRE"	"his"	"situation"	5	7	3196	"He ventured to disclose <b>his</b> melancholy <b>situation</b> , and conjured the emperor to hasten to the relief of his unhappy rival . "	
+24691	"HDFRE"	"His"	"situation"	1	2	4691	"<b>His</b> <b>situation</b> was almost desperate , but the efforts of despair are sometimes formidable , and the good sense of Constantine preferred a great and certain advantage to a third trial of the chance of arms . "	
+20222	"HDFRE"	"its"	"situation"	4	5	222	"The proximity of <b>its</b> <b>situation</b> to the coast of Gaul seemed to invite their arms ; the pleasing though doubtful intelligence of a pearl fishery , attracted their avarice ; and as Britain was viewed in the light of a distinct and insulated world , the conquest scarcely formed any exception to the general system of continental measures . "	
+20380	"HDFRE"	"its"	"situation"	2	3	380	"By <b>its</b> <b>situation</b> that celebrated kingdom is included within the immense peninsula of Africa ; but it is accessible only on the side of Asia , whose revolutions , in almost every period of history , Egypt has humbly obeyed . "	
+22822	"HDFRE"	"its"	"situation"	36	38	2822	"By presents , by arms , and by a slight fortification drawn across the Isthmus , they effectually guarded against the roving plunderers of Sarmatia , the access of a country , which , from <b>its</b> peculiar <b>situation</b> and convenient harbors , commanded the Euxine Sea and Asia Minor . "	
+22190	"HDFRE"	"other"	"situation"	4	6	2190	"Ignorant of each <b>other</b> 's <b>situation</b> or designs , ( for they already occupied very distant apartments , ) afraid to give or to receive assistance , they wasted the important moments in idle debates and fruitless recriminations . "	
+24191	"HDFRE"	"our"	"situation"	7	8	4191	"The knowledge that is suited to <b>our</b> <b>situation</b> and powers , the whole compass of moral , natural , and mathematical science , was neglected by the new Platonists ; whilst they exhausted their strength in the verbal disputes of metaphysics , attempted to explore the secrets of the invisible world , and studied to reconcile Aristotle with Plato , on subjects of which both these philosophers were as ignorant as the rest of mankind . "	
+22614	"HDFRE"	"their"	"situation"	26	27	2614	"As the ancient , or as new tribes successively present themselves in the series of this history , we shall concisely mention their origin , <b>their</b> <b>situation</b> , and their particular character . "	
+22981	"HDFRE"	"their"	"situation"	11	12	2981	"The bravest usurpers were compelled , by the perplexity of <b>their</b> <b>situation</b> , to conclude ignominious treaties with the common enemy , to purchase with oppressive tributes the neutrality or services of the Barbarians , and to introduce hostile and independent nations into the heart of the Roman monarchy . "	
+23149	"HDFRE"	"Their"	"situation"	1	2	3149	"<b>Their</b> <b>situation</b> and astonishment gave him an easy victory ; his skilful conduct improved the advantage . "	
+23182	"HDFRE"	"their"	"situation"	39	40	3182	"Gaul , Spain , and Britain , Egypt , Syria , and Asia Minor , were still possessed by two rebels , who alone , out of so numerous a list , had hitherto escaped the dangers of <b>their</b> <b>situation</b> ; and to complete the ignominy of Rome , these rival thrones had been usurped by women . "	
+23557	"HDFRE"	"their"	"situation"	9	10	3557	"The impossibility of an escape reconciled them to <b>their</b> <b>situation</b> , and in the subsequent troubles of that island , they approved themselves the most faithful servants of the state . "	
+23698	"HDFRE"	"their"	"situation"	4	6	3698	"The arrangements which <b>their</b> new <b>situation</b> required were probably deferred till the return of the younger brother to Rome , where a triumph was decreed to the young emperors for the glorious success of the Persian war . "	
+24010	"HDFRE"	"Their"	"situation"	1	2	4010	"<b>Their</b> <b>situation</b> formed a very useful barrier , and their natural strength was soon improved by art and military skill . "	
+24339	"HDFRE"	"their"	"situation"	16	17	4339	"Though the characters of Constantine and Maxentius had very little affinity with each other , <b>their</b> <b>situation</b> and interest were the same ; and prudence seemed to require that they should unite their forces against the common enemy . "	
+24706	"HDFRE"	"their"	"situation"	21	23	4706	"It still remains an authentic monument to contradict and confound those venal orators , who were too well satisfied with <b>their</b> own <b>situation</b> to discover either vice or misery under the government of a generous sovereign . "	
+23307	"HDFRE"	"whose"	"situation"	23	24	3307	"In the course of his trade to India , he had formed very intimate connections with the Saracens and the Blemmyes , <b>whose</b> <b>situation</b> on either coast of the Red Sea gave them an easy introduction into the Upper Egypt . "	
+24038	"HDFRE"	"whose"	"situation"	20	21	4038	"The court of the emperor of the West was , for the most part , established at Milan , <b>whose</b> <b>situation</b> , at the foot of the Alps , appeared far more convenient than that of Rome , for the important purpose of watching the motions of the barbarians of Germany . "	
+							
+20201	"HDFRE"	"our"	"connection"	23	24	201	"But I would vary the use of Zoroaster and Zerdusht , as I drew my information from Greece or Persia : since <b>our</b> <b>connection</b> with India , the genuine Timour is restored to the throne of Tamerlane : our most correct writers have retrenched the Al , the superfluous article , from the Koran ; and we escape an ambiguous termination , by adopting Moslem instead of Musulman , in the plural number . "	
+20022	"HDFRE"	"their"	"connection"	31	35	22	"We can not but admire the manner in which he masses his materials , and arranges his facts in successive groups , not according to chronological order , but to <b>their</b> moral or political <b>connection</b> ; the distinctness with which he marks his periods of gradually increasing decay ; and the skill with which , though advancing on separate parallels of history , he shows the common tendency of the slower or more rapid religious or civil innovations . "	
+22412	"HDFRE"	"their"	"connection"	13	14	2412	"The government and religion of Persia have deserved some notice , from <b>their</b> <b>connection</b> with the decline and fall of the Roman empire . "	
+							
+20934	"HDFRE"	"father"	"counsellors"	25	27	934	"Commodus listened to the pleasing advice ; but whilst he hesitated between his own inclination and the awe which he still retained for his <b>father</b> 's <b>counsellors</b> , the summer insensibly elapsed , and his triumphal entry into the capital was deferred till the autumn . "	
+21764	"HDFRE"	"her"	"counsellors"	9	11	1764	"But the most important care of Mam??a and <b>her</b> wise <b>counsellors</b> , was to form the character of the young emperor , on whose personal qualities the happiness or misery of the Roman world must ultimately depend . "	
+							
+22071	"HDFRE"	"our"	"deliverers"	29	31	2071	"Let us return thanks , '' he boldly continued , `` to the youth of Thysdrus ; let us return thanks to the faithful people of Carthage , <b>our</b> generous <b>deliverers</b> from a horrid monster -- Why do you hear me thus coolly , thus timidly ? "	
+							
+23707	"HDFRE"	"father"	"elevation"	3	5	3707	"When his <b>father</b> 's <b>elevation</b> reluctantly forced him from the shade of retirement , neither his temper nor his pursuits had qualified him for the command of armies . "	
+20761	"HDFRE"	"his"	"elevation"	16	20	761	"The good sense of Vespasian engaged him indeed to embrace every measure that might confirm <b>his</b> recent and precarious <b>elevation</b> . "	
+21198	"HDFRE"	"his"	"elevation"	27	28	1198	"The guards themselves were ashamed of the prince whom their avarice had persuaded them to accept ; nor was there a citizen who did not consider <b>his</b> <b>elevation</b> with horror , as the last insult on the Roman name . "	
+21608	"HDFRE"	"his"	"elevation"	39	40	1608	"The numerous army , assembled in the East by the late emperor , instead of being immediately dispersed by Macrinus through the several provinces , was suffered to remain united in Syria , during the winter that followed <b>his</b> <b>elevation</b> . "	
+21671	"HDFRE"	"his"	"elevation"	14	15	1671	"To this protecting deity , Antoninus , not without some reason , ascribed <b>his</b> <b>elevation</b> to the throne . "	
+22950	"HDFRE"	"his"	"elevation"	15	16	2950	"His mean and recent trade cast , indeed , an air of ridicule on <b>his</b> <b>elevation</b> ; * but his birth could not be more obscure than was that of the greater part of his rivals , who were born of peasants , and enlisted in the army as private soldiers . "	
+22963	"HDFRE"	"his"	"elevation"	14	15	2963	"`` You have lost , '' said Saturninus , on the day of <b>his</b> <b>elevation</b> , `` you have lost a useful commander , and you have made a very wretched emperor . '' "	
+23335	"HDFRE"	"his"	"elevation"	39	40	3335	"His mother had been an inferior priestess in a chapel of the Sun ; a peculiar devotion to the god of Light was a sentiment which the fortunate peasant imbibed in his infancy ; and every step of <b>his</b> <b>elevation</b> , every victory of his reign , fortified superstition by gratitude . "	
+23426	"HDFRE"	"his"	"elevation"	53	54	3426	"He reminded the assembly of the evils which Rome had endured from the vices of headstrong and capricious youths , congratulated them on the election of a virtuous and experienced senator , and , with a manly , though perhaps a selfish , freedom , exhorted Tacitus to remember the reasons of <b>his</b> <b>elevation</b> , and to seek a successor , not in his own family , but in the republic . "	
+23576	"HDFRE"	"his"	"elevation"	46	47	3576	"That general , a man of merit and experience , was driven into rebellion by the absence of his sovereign , the levity of the Alexandrian people , the pressing instances of his friends , and his own fears ; but from the moment of <b>his</b> <b>elevation</b> , he never entertained a hope of empire , or even of life . "	
+23618	"HDFRE"	"his"	"elevation"	8	9	3618	"He enjoyed , at least , before <b>his</b> <b>elevation</b> , an acknowledged character of virtue and abilities ; but his austere temper insensibly degenerated into moroseness and cruelty ; and the imperfect writers of his life almost hesitate whether they shall not rank him in the number of Roman tyrants . "	
+22972	"HDFRE"	"their"	"elevation"	4	6	2972	"The price of <b>their</b> fatal <b>elevation</b> was instantly discharged to the troops by an immense donative , drawn from the bowels of the exhausted people . "	
+							
+25024	"HDFRE"	"our"	"preservation"	9	10	5024	"Some of our senses indeed are necessary for <b>our</b> <b>preservation</b> , others for our subsistence , and others again for our information ; and thus far it was impossible to reject the use of them . "	
+							
+21687	"HDFRE"	"his"	"aid"	9	10	1687	"The inflammatory powers of art were summoned to <b>his</b> <b>aid</b> : the confused multitude of women , of wines , and of dishes , and the studied variety of attitude and sauces , served to revive his languid appetites . "	
+22750	"HDFRE"	"his"	"aid"	26	27	2750	"That unfortunate prince had sent Valerian , already distinguished by the honorable title of censor , to bring the legions of Gaul and Germany to <b>his</b> <b>aid</b> . "	
+24917	"HDFRE"	"their"	"aid"	8	9	4917	"With this favorable prepossession they summoned to <b>their</b> <b>aid</b> the science , or rather the language , of Metaphysics . "	
+20743	"HDFRE"	"his"	"aid"	4	5	743	"Augustus summoned to <b>his</b> <b>aid</b> whatever remained in those fierce minds of Roman prejudices ; enforced the rigor of discipline by the sanction of law ; and , interposing the majesty of the senate between the emperor and the army , boldly claimed their allegiance , as the first magistrate of the republic . "	
+							
+25054	"HDFRE"	"their"	"conversion"	15	16	5054	"Some indulgence might , perhaps , be allowed to those persons who , before <b>their</b> <b>conversion</b> , were already engaged in such violent and sanguinary occupations ; but it was impossible that the Christians , without renouncing a more sacred duty , could assume the character of soldiers , of magistrates , or of princes . "	
+							
+21503	"HDFRE"	"his"	"favor"	4	5	1503	"Their declaration in <b>his</b> <b>favor</b> commanded the dutiful professions of the senate . "	
+23496	"HDFRE"	"his"	"favor"	34	35	3496	"Happy would it have been , if Florianus , instead of usurping the purple of his brother , like a private inheritance , had expected what your majesty might determine , either in <b>his</b> <b>favor</b> , or in that of other person . "	
+23759	"HDFRE"	"his"	"favor"	25	26	3759	"It is not improbable that motives of prudence might assist the humanity of the artful Dalmatian ; of these servants , many had purchased <b>his</b> <b>favor</b> by secret treachery ; in others , he esteemed their grateful fidelity to an unfortunate master . "	
+20085	"HDFRE"	"its"	"favor"	14	15	85	"The further Christianity advanced , the more causes purely human were enlisted in <b>its</b> <b>favor</b> ; nor can it be doubted that those developed with such artful exclusiveness by Gibbon did concur most essentially to its establishment . "	
+24307	"HDFRE"	"his"	"favor"	14	15	4307	"The name , as well as the situation , of Maxentius determined in <b>his</b> <b>favor</b> the popular enthusiasm . "	
+							
+23122	"HDFRE"	"his"	"host"	10	11	3122	"One of the soldiers had seduced the wife of <b>his</b> <b>host</b> . "	
+							
+24966	"HDFRE"	"their"	"comfort"	25	27	4966	"The supernatural gifts , which even in this life were ascribed to the Christians above the rest of mankind , must have conduced to <b>their</b> own <b>comfort</b> , and very frequently to the conviction of infidels . "	
+							
+23338	"HDFRE"	"its"	"cure"	15	16	3338	"But if we attentively reflect how much swifter is the progress of corruption than <b>its</b> <b>cure</b> , and if we remember that the years abandoned to public disorders exceeded the months allotted to the martial reign of Aurelian , we must confess that a few short intervals of peace were insufficient for the arduous work of reformation . "	
+							
+22199	"HDFRE"	"his"	"education"	45	46	2199	"As the third Gordian was only nineteen years of age at the time of his death , the history of his life , were it known to us with greater accuracy than it really is , would contain little more than the account of <b>his</b> <b>education</b> , and the conduct of the ministers , who by turns abused or guided the simplicity of his unexperienced youth . "	
+24229	"HDFRE"	"his"	"education"	13	15	4229	"The unexperienced youth still betrayed , by his manners and language , <b>his</b> rustic <b>education</b> , when , to his own astonishment , as well as that of the world , he was invested by Diocletian with the purple , exalted to the dignity of C??sar , and intrusted with the sovereign command of Egypt and Syria . "	
+24184	"HDFRE"	"Their"	"education"	1	3	4184	"<b>Their</b> military <b>education</b> was not calculated to inspire them with the love of letters ; and even the mind of Diocletian , however active and capacious in business , was totally uninformed by study or speculation . "	
+24282	"HDFRE"	"Their"	"education"	1	3	4282	"<b>Their</b> liberal <b>education</b> , advantageous marriages , the secure dignity of their lives , and the first honors of the state with which they were invested , attest the fraternal affection of Constantine ; and as those princes possessed a mild and grateful disposition , they submitted without reluctance to the superiority of his genius and fortune . "	
+25254	"HDFRE"	"their"	"education"	35	36	5254	"Whilst they cautiously avoid the dangerous encounter of philosophers , they mingle with the rude and illiterate crowd , and insinuate themselves into those minds , whom their age , their sex , or <b>their</b> <b>education</b> , has the best disposed to receive the impression of superstitious terrors . "	
+							
+20739	"HDFRE"	"his"	"election"	25	26	739	"The stupid Claudius , brother of Germanicus , was already in their camp , invested with the Imperial purple , and prepared to support <b>his</b> <b>election</b> by arms . "	
+21186	"HDFRE"	"his"	"election"	18	19	1186	"After Julian had filled the senate house with armed soldiers , he expatiated on the freedom of <b>his</b> <b>election</b> , his own eminent virtues , and his full assurance of the affections of the senate . "	
+21236	"HDFRE"	"his"	"election"	42	43	1236	"The legions of the eastern frontier embraced his cause ; the opulent but unarmed provinces , from the frontiers of ??thiopia to the Hadriatic , cheerfully submitted to his power ; and the kings beyond the Tigris and the Euphrates congratulated <b>his</b> <b>election</b> , and offered him their homage and services . "	
+21253	"HDFRE"	"his"	"election"	63	64	1253	"By a celerity proportioned to the greatness of the occasion , he might reasonably hope to revenge Pertinax , punish Julian , and receive the homage of the senate and people , as their lawful emperor , before his competitors , separated from Italy by an immense tract of sea and land , were apprised of his success , or even of <b>his</b> <b>election</b> . "	
+23719	"HDFRE"	"his"	"election"	39	40	3719	"The gradual decline of his health might have induced them to believe that his death was natural ; but the concealment was interpreted as an evidence of guilt , and the measures which Aper had taken to secure <b>his</b> <b>election</b> became the immediate occasion of his ruin Yet , even in the transport of their rage and grief , the troops observed a regular proceeding , which proves how firmly discipline had been reestablished by the martial successors of Gallienus "	
+22058	"HDFRE"	"their"	"election"	27	28	2058	"The letters of the new princes were modest and respectful , excusing the necessity which had obliged them to accept the Imperial title ; but submitting <b>their</b> <b>election</b> and their fate to the supreme judgment of the senate . "	
+22250	"HDFRE"	"their"	"election"	2	4	2250	"By <b>their</b> tumultuary <b>election</b> , a Syrian , a Goth , or an Arab , was exalted to the throne of Rome , and invested with despotic power over the conquests and over the country of the Scipios . "	
+22948	"HDFRE"	"their"	"election"	10	11	2948	"The field of victory was often the scene of <b>their</b> <b>election</b> ; and even the armorer Marius , the most contemptible of all the candidates for the purple , was distinguished , however by intrepid courage , matchless strength , and blunt honesty . "	
+23059	"HDFRE"	"their"	"elections"	27	29	3059	"The emperor expiated on the mischiefs of a lawless caprice , which the soldiers could only gratify at the expense of their own blood ; as <b>their</b> seditious <b>elections</b> had so frequently been followed by civil wars , which consumed the flower of the legions either in the field of battle , or in the cruel abuse of victory . "	
+							
+23513	"HDFRE"	"their"	"exclusion"	26	27	3513	"Though it was every moment in their power to repeal the disgraceful edict of Gallienus , the proud successors of the Scipios patiently acquiesced in <b>their</b> <b>exclusion</b> from all military employments . "	
+							
+25045	"HDFRE"	"their"	"exercise"	16	18	5045	"Among the Christian ascetics , however , ( a name which they soon acquired from <b>their</b> painful <b>exercise</b> , ) many , as they were less presumptuous , were probably more successful . "	
+24246	"HDFRE"	"his"	"exercises"	15	16	4246	"The figure of Constantine was tall and majestic ; he was dexterous in all <b>his</b> <b>exercises</b> , intrepid in war , affable in peace ; in his whole conduct , the active spirit of youth was tempered by habitual prudence ; and while his mind was engrossed by ambition , he appeared cold and insensible to the allurements of pleasure . "	
+22405	"HDFRE"	"their"	"exercises"	14	15	2405	"The most distinguished youth were educated under the monarch 's eye , practised <b>their</b> <b>exercises</b> in the gate of his palace , and were severely trained up to the habits of temperance and obedience , in their long and laborious parties of hunting . "	
+							
+21322	"HDFRE"	"father"	"ruin"	38	40	1322	"As long as the power of Niger inspired terror , or even respect , they were educated with the most tender care , with the children of Severus himself ; but they were soon involved in their <b>father</b> 's <b>ruin</b> , and removed first by exile , and afterwards by death , from the eye of public compassion . "	
+20748	"HDFRE"	"his"	"ruin"	8	9	748	"But Nero involved the whole empire in <b>his</b> <b>ruin</b> . "	
+21260	"HDFRE"	"his"	"ruin"	36	38	1260	"The wretched Julian had expected , and thought himself prepared , to dispute the empire with the governor of Syria ; but in the invincible and rapid approach of the Pannonian legions , he saw <b>his</b> inevitable <b>ruin</b> . "	
+21263	"HDFRE"	"his"	"ruin"	15	16	1263	"He attempted , however , to prevent , or at least to protract , <b>his</b> <b>ruin</b> . "	
+21392	"HDFRE"	"his"	"ruin"	33	34	1392	"His reign lasted above then years , till the marriage of his daughter with the eldest son of the emperor , which seemed to assure his fortune , proved the occasion of <b>his</b> <b>ruin</b> . "	
+21990	"HDFRE"	"his"	"ruin"	17	18	1990	"His mother , Mam??a , whose pride and avarice he loudly accused as the cause of <b>his</b> <b>ruin</b> , perished with her son . "	
+23720	"HDFRE"	"his"	"ruin"	46	47	3720	"The gradual decline of his health might have induced them to believe that his death was natural ; but the concealment was interpreted as an evidence of guilt , and the measures which Aper had taken to secure his election became the immediate occasion of <b>his</b> <b>ruin</b> Yet , even in the transport of their rage and grief , the troops observed a regular proceeding , which proves how firmly discipline had been reestablished by the martial successors of Gallienus "	
+24533	"HDFRE"	"his"	"ruin"	55	56	4533	"The officers of experience and ability , who had served under the banners of Maximian , were at length compelled to inform his effeminate son of the imminent danger to which he was reduced ; and , with a freedom that at once surprised and convinced him , to urge the necessity of preventing <b>his</b> <b>ruin</b> , by a vigorous exertion of his remaining power . "	
+22024	"HDFRE"	"their"	"ruin"	13	14	2024	"In this extremity , a resolution that must either complete or prevent <b>their</b> <b>ruin</b> , was dictated by despair . "	
+23077	"HDFRE"	"Their"	"ruin"	1	2	3077	"<b>Their</b> <b>ruin</b> was inevitable , had not the abilities of their emperor prepared a seasonable relief . "	
+23062	"HDFRE"	"whose"	"ruin"	24	26	3062	"These usurpers were his personal adversaries ; nor could he think of indulging any private resentment till he had saved an empire , <b>whose</b> impending <b>ruin</b> would , unless it was timely prevented , crush both the army and the people . "	
+							
+25062	"HDFRE"	"its"	"aggrandizement"	10	11	5062	"The safety of that society , its honor , <b>its</b> <b>aggrandizement</b> , were productive , even in the most pious minds , of a spirit of patriotism , such as the first of the Romans had felt for the republic , and sometimes of a similar indifference , in the use of whatever means might probably conduce to so desirable an end . "	
+							
+22626	"HDFRE"	"its"	"dissolution"	43	44	2626	"During that calamitous period , every instant of time was marked , every province of the Roman world was afflicted , by barbarous invaders , and military tyrants , and the ruined empire seemed to approach the last and fatal moment of <b>its</b> <b>dissolution</b> . "	
+24910	"HDFRE"	"our"	"dissolution"	31	32	4910	"When they are desirous of arming their disciples against the fear of death , they inculcate , as an obvious , though melancholy position , that the fatal stroke of <b>our</b> <b>dissolution</b> releases us from the calamities of life ; and that those can no longer suffer , who no longer exist . "	
+24300	"HDFRE"	"their"	"dissolution"	37	39	4300	"The rising fury of the people was encouraged by the authority , or at least the connivance , of the senate ; and the feeble remains of the Pr??torian guards , who had reason to apprehend <b>their</b> own <b>dissolution</b> , embraced so honorable a pretence , and declared their readiness to draw their swords in the service of their oppressed country . "	
+							
+21888	"HDFRE"	"Their"	"tax"	1	3	1888	"<b>Their</b> whole <b>tax</b> amounted indeed to no more than one hundred and fifty drachms , or about five pounds : but Gyarus was a little island , or rather a rock , of the ??gean Sea , destitute of fresh water and every necessary of life , and inhabited only by a few wretched fishermen . "	
+							
+24244	"HDFRE"	"mother"	"divorce"	27	29	4244	"He was about eighteen years of age when his father was promoted to the rank of C??sar ; but that fortunate event was attended with his <b>mother</b> 's <b>divorce</b> ; and the splendor of an Imperial alliance reduced the son of Helena to a state of disgrace and humiliation . "	
+							
+23831	"HDFRE"	"its"	"loss"	17	18	3831	"When Britain was thus dismembered from the empire , its importance was sensibly felt , and <b>its</b> <b>loss</b> sincerely lamented . "	
+							
+20797	"HDFRE"	"his"	"embraces"	35	36	797	"But whilst Hadrian was delighting himself with his own applause , and the acclamations of the soldiers , whose consent had been secured by an immense donative , the new C??sar was ravished from <b>his</b> <b>embraces</b> by an untimely death . "	
+							
+23960	"HDFRE"	"his"	"disgrace"	48	49	3960	"The haughtiest of men , clothed in his purple , but humbled by the sense of his fault and misfortune , was obliged to follow the emperor 's chariot above a mile on foot , and to exhibit , before the whole court , the spectacle of <b>his</b> <b>disgrace</b> . "	
+22830	"HDFRE"	"their"	"disgrace"	61	63	2830	"As long as Successianus , an officer of superior rank and merit , defended that frontier , all their efforts were ineffectual ; but as soon as he was removed by Valerian to a more honorable but less important station , they resumed the attack of Pityus ; and by the destruction of that city , obliterated the memory of <b>their</b> former <b>disgrace</b> . "	
+							
+24479	"HDFRE"	"his"	"defence"	64	66	4479	"That wise prince , who sincerely wished to decline a war , with the difficulty and importance of which he was sufficiently acquainted , at first dissembled the insult , and sought for redress by the milder expedient of negotiation , till he was convinced that the hostile and ambitious designs of the Italian emperor made it necessary for him to arm in <b>his</b> own <b>defence</b> . "	
+22524	"HDFRE"	"their"	"defence"	25	26	2524	"To be ever surrounded by a band of select youths was the pride and strength of the chiefs , their ornament in peace , <b>their</b> <b>defence</b> in war . "	
+20593	"HDFRE"	"their"	"defence"	16	17	593	"They received laws and governors from the will of their sovereign , and trusted for <b>their</b> <b>defence</b> to a mercenary army . "	
+25271	"HDFRE"	"our"	"defence"	6	7	5271	"* Instead of employing in <b>our</b> <b>defence</b> the fictions of later ages , it will be more prudent to convert the occasion of scandal into a subject of edification . "	
+							
+24834	"HDFRE"	"their"	"promulgation"	46	48	4834	"They affirmed , that if the Being , who is the same through all eternity , had designed to abolish those sacred rites which had served to distinguish his chosen people , the repeal of them would have been no less clear and solemn than <b>their</b> first <b>promulgation</b> : that , instead of those frequent declarations , which either suppose or assert the perpetuity of the Mosaic religion , it would have been represented as a provisionary scheme intended to last only to the coming of the Messiah , who should instruct mankind in a more perfect mode of faith and of worship : that the Messiah himself , and his disciples who conversed with him on earth , instead of authorizing by their example the most minute observances of the Mosaic law , would have published to the world the abolition of those useless and obsolete ceremonies , without suffering Christianity to remain during so many years obscurely confounded among the sects of the Jewish church "	
+							
+							
+							
+							
+20856	"HDFRE"	"their"	"corruption"	6	8	856	"Oppressed beneath the weight of <b>their</b> own <b>corruption</b> and of military violence , they for a long while preserved the sentiments , or at least the ideas , of their free-born ancestors . "	
+							
+21027	"HDFRE"	"his"	"instructors"	59	60	1027	"The masters in every branch of learning , whom Marcus provided for his son , were heard with inattention and disgust ; whilst the Moors and Parthians , who taught him to dart the javelin and to shoot with the bow , found a disciple who delighted in his application , and soon equalled the most skilful of <b>his</b> <b>instructors</b> in the steadiness of the eye and the dexterity of the hand . "	
+							
+							
+							
+20086	"HDFRE"	"its"	"establishment"	36	37	86	"The further Christianity advanced , the more causes purely human were enlisted in its favor ; nor can it be doubted that those developed with such artful exclusiveness by Gibbon did concur most essentially to <b>its</b> <b>establishment</b> . "	
+							
+22604	"HDFRE"	"our"	"entertainment"	21	22	2604	"Above sixty thousand barbarians were destroyed ; not by the Roman arms , but in our sight , and for <b>our</b> <b>entertainment</b> . "	
+							
+21239	"HDFRE"	"whose"	"resolution"	16	17	1239	"Instead of entering into an effectual negotiation with the powerful armies of the West , <b>whose</b> <b>resolution</b> might decide , or at least must balance , the mighty contest ; instead of advancing without delay towards Rome and Italy , where his presence was impatiently expected , Niger trifled away in the luxury of Antioch those irretrievable moments which were diligently improved by the decisive activity of Severus . "	
+							
+20446	"HDFRE"	"their"	"task"	34	36	446	"Those princes , whom the ostentation of gratitude or generosity permitted for a while to hold a precarious sceptre , were dismissed from their thrones , as soon as they had per formed <b>their</b> appointed <b>task</b> of fashioning to the yoke the vanquished nations . "	
+							
+21129	"HDFRE"	"their"	"benefit"	13	15	1129	"His honest indiscretion united against him the servile crowd , who found <b>their</b> private <b>benefit</b> in the public disorders , and who preferred the favor of a tyrant to the inexorable equality of the laws . "	
+25213	"HDFRE"	"whose"	"benefit"	35	36	5213	"As soon as those histories were translated into the Latin tongue , they were perfectly intelligible to all the subjects of Rome , excepting only to the peasants of Syria and Egypt , for <b>whose</b> <b>benefit</b> particular versions were afterwards made . "	
+							
+							
+							
+20366	"HDFRE"	"its"	"conflux"	36	37	366	"The province of Rh??tia , which soon extinguished the name of the Vindelicians , extended from the summit of the Alps to the banks of the Danube ; from its source , as far as <b>its</b> <b>conflux</b> with the Inn . "	
+							
+21081	"HDFRE"	"his"	"employments"	16	18	1081	"He had successively governed most of the provinces of the empire ; and in all <b>his</b> great <b>employments</b> , military as well as civil , he had uniformly distinguished himself by the firmness , the prudence , and the integrity of his conduct . "	
+21537	"HDFRE"	"his"	"employments"	39	41	1537	"Such intrepid virtue , which had escaped pure and unsullied from the intrigues courts , the habits of business , and the arts of his profession , reflects more lustre on the memory of Papinian , than all <b>his</b> great <b>employments</b> , his numerous writings , and the superior reputation as a lawyer , which he has preserved through every age of the Roman jurisprudence . "	
+21993	"HDFRE"	"their"	"employments"	24	25	1993	"Others were reserved for the more deliberate cruelty of the usurper ; and those who experienced the mildest treatment , were stripped of <b>their</b> <b>employments</b> , and ignominiously driven from the court and army . "	
+							
+21340	"HDFRE"	"his"	"engagements"	12	13	1340	"A defeat , by disabling the chief from the performance of <b>his</b> <b>engagements</b> , dissolved the mercenary allegiance of his followers , and left them to consult their own safety by a timely desertion of an unsuccessful cause . "	
+20154	"HDFRE"	"my"	"engagements"	27	28	154	"P. S. The entire History , which is now published , of the Decline and Fall of the Roman Empire in the West , abundantly discharges <b>my</b> <b>engagements</b> with the Public . "	
+23134	"HDFRE"	"their"	"engagements"	57	58	3134	"The treaty was observed with such religious fidelity , that when a party of five hundred men straggled from the camp in quest of plunder , the king or general of the barbarians commanded that the guilty leader should be apprehended and shot to death with darts , as a victim devoted to the sanctity of <b>their</b> <b>engagements</b> . "	
+23451	"HDFRE"	"their"	"engagements"	5	6	3451	"They were faithful to <b>their</b> <b>engagements</b> ; but when they arrived on the Roman frontier , Aurelian was already dead , the design of the Persian war was at least suspended , and the generals , who , during the interregnum , exercised a doubtful authority , were unprepared either to receive or to oppose them . "	
+							
+20706	"HDFRE"	"his"	"apotheosis"	44	45	706	"A regular custom was introduced , that on the decease of every emperor who had neither lived nor died like a tyrant , the senate by a solemn decree should place him in the number of the gods : and the ceremonies of <b>his</b> <b>apotheosis</b> were blended with those of his funeral . "	
+							
+20083	"HDFRE"	"its"	"development"	26	28	83	"No argument for the divine authority of Christianity has been urged with greater force , or traced with higher eloquence , than that deduced from <b>its</b> primary <b>development</b> , explicable on no other hypothesis than a heavenly origin , and from its rapid extension through great part of the Roman empire . "	
+							
+20084	"HDFRE"	"its"	"extension"	42	44	84	"No argument for the divine authority of Christianity has been urged with greater force , or traced with higher eloquence , than that deduced from its primary development , explicable on no other hypothesis than a heavenly origin , and from <b>its</b> rapid <b>extension</b> through great part of the Roman empire . "	
+							
+20763	"HDFRE"	"their"	"license"	30	31	763	"The rapid downfall of Galba , Otho , and Vitellus , taught the armies to consider the emperors as the creatures of their will , and the instruments of <b>their</b> <b>license</b> . "	
+							
+24923	"HDFRE"	"their"	"hearers"	20	21	4923	"At the bar and in the senate of Rome the ablest orators were not apprehensive of giving offence to <b>their</b> <b>hearers</b> , by exposing that doctrine as an idle and extravagant opinion , which was rejected with contempt by every man of a liberal education and understanding . "	
+							
+20270	"HDFRE"	"their"	"confines"	24	25	270	"They preserved peace by a constant preparation for war ; and while justice regulated their conduct , they announced to the nations on <b>their</b> <b>confines</b> , that they were as little disposed to endure , as to offer an injury . "	
+							
+24989	"HDFRE"	"our"	"justification"	31	32	4989	"According to the more rigid doctors , the moral virtues , which may be equally practised by infidels , are destitute of any value or efficacy in the work of <b>our</b> <b>justification</b> . "	
+							
+20387	"HDFRE"	"their"	"foundation"	4	5	387	"A city of <b>their</b> <b>foundation</b> may still be discovered near Mequinez , the residence of the barbarian whom we condescend to style the Emperor of Morocco ; but it does not appear , that his more southern dominions , Morocco itself , and Segelmessa , were ever comprehended within the Roman province . "	
+25237	"HDFRE"	"their"	"foundation"	29	30	5237	"But the obscure and imperfect origin of the western churches of Europe has been so negligently recorded , that if we would relate the time and manner of <b>their</b> <b>foundation</b> , we must supply the silence of antiquity by those legends which avarice or superstition long afterwards dictated to the monks in the lazy gloom of their convents . "	
+							
+20652	"HDFRE"	"his"	"commission"	14	16	652	"* A law was passed , that wherever the emperor was present , <b>his</b> extraordinary <b>commission</b> should supersede the ordinary jurisdiction of the governor ; a custom was introduced , that the new conquests belonged to the imperial portion ; and it was soon discovered that the authority of the Prince , the favorite epithet of Augustus , was the same in every part of the empire . "	
+20644	"HDFRE"	"their"	"commissions"	5	6	644	"They received and held <b>their</b> <b>commissions</b> at the will of a superior , to whose auspicious influence the merit of their action was legally attributed . "	
+							
+							
+22787	"HDFRE"	"their"	"bonds"	14	16	2787	"None were permitted to enter the holy precincts , without confessing , by <b>their</b> servile <b>bonds</b> and suppliant posture , the immediate presence of the sovereign Deity . "	
+							
+4795	"PTB_WSJ"	"bank"	"cost"	10	12	37000		
+4796	"PTB_WSJ"	"government"	"cost"	8	10	11829		
+4797	"PTB_WSJ"	"its"	"cost"	13	17	13503		
+4798	"PTB_WSJ"	"its"	"cost"	26	27	15316		
+4799	"PTB_WSJ"	"its"	"cost"	15	16	24395		
+4800	"PTB_WSJ"	"its"	"cost"	15	17	31393		
+4801	"PTB_WSJ"	"King"	"cost"	19	23	32755		
+4802	"PTB_WSJ"	"Microsoft"	"cost"	5	7	38083		
+4803	"PTB_WSJ"	"our"	"cost"	12	14	13837		
+							
+4805	"PTB_WSJ"	"their"	"cost"	32	33	11747		
+							
+4807	"PTB_WSJ"	"A"	"costs"	4	6	9120		
+4808	"PTB_WSJ"	"agents"	"costs"	22	24	37041		
+4809	"PTB_WSJ"	"Cathay"	"costs"	12	15	23788		
+4810	"PTB_WSJ"	"CBS"	"costs"	2	4	15764		
+4811	"PTB_WSJ"	"centers"	"costs"	9	18	23935		
+4812	"PTB_WSJ"	"companies"	"costs"	28	31	21882		
+4813	"PTB_WSJ"	"Data"	"costs"	17	23	7148		
+4814	"PTB_WSJ"	"group"	"costs"	8	12	37977		
+4815	"PTB_WSJ"	"industry"	"costs"	2	5	2406		
+4816	"PTB_WSJ"	"its"	"costs"	20	22	13829		
+4817	"PTB_WSJ"	"its"	"costs"	30	33	25192		
+4818	"PTB_WSJ"	"its"	"costs"	15	16	36784		
+4819	"PTB_WSJ"	"mill"	"costs"	20	23	20208		
+4820	"PTB_WSJ"	"our"	"costs"	9	10	8991		
+4821	"PTB_WSJ"	"our"	"costs"	17	18	26166		
+4822	"PTB_WSJ"	"Pemex"	"costs"	8	11	31769		
+							
+4823	"PTB_WSJ"	"pipelines"	"costs"	15	18	38904		
+							
+4825	"PTB_WSJ"	"SOCIETY"	"costs"	4	7	16009		
+4826	"PTB_WSJ"	"their"	"costs"	11	17	25426		
+4827	"PTB_WSJ"	"their"	"costs"	10	12	25427		
+4828	"PTB_WSJ"	"their"	"costs"	8	15	25431		
+4829	"PTB_WSJ"	"their"	"costs"	14	15	38178		
+4830	"PTB_WSJ"	"their"	"costs"	21	23	39740		
+							
+5285	"PTB_WSJ"	"Protocol"	"legions"	46	48	19906		
+							
+4916	"PTB_WSJ"	"their"	"uses"	11	13	27163		
+

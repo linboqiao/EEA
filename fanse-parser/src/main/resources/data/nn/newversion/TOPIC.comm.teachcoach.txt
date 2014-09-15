@@ -1,0 +1,85 @@
+math	class
+gym	class
+exercise	class
+art	class
+music	class
+aerobics	class
+computer	class
+training	class
+science	class
+dance	class
+cooking	class
+history	class
+economy	class
+study	class
+
+
+investment	seminar
+
+science	course
+study	course
+management	course
+computer	course
+safety	course
+
+civics	lesson
+
+toilet	training
+sensitivity	training
+job	training
+management	training
+
+travel	tip
+safety	tip
+energy	tip
+cash	tip
+
+
+
+test	coaching
+
+drama	school
+art	school
+law	school
+flight	school
+divinity	school
+journalism	school
+ski	school
+traffic	school
+
+cooking	school
+management	school
+
+pitching	staff
+
+software	tutorial
+
+language	instruction
+
+cancer	education
+
+science	professor
+chemistry	professor
+sociology	professor
+physics	professor
+mathematics	professor
+marketing	professor
+history	professor
+management	professor
+psychology	professor
+finance	professor
+philosophy	professor
+theology	professor
+law	professor
+literature	professor
+biology	professor
+journalism	professor
+music	professor
+communication	professor
+engineering	professor
+art	professor
+research	professor
+
+
+
+

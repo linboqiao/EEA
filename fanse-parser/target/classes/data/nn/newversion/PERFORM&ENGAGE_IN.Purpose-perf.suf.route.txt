@@ -1,0 +1,12 @@
+transportation	artery
+logging	road
+passage	route
+shipping	route
+transportation	route
+shipping	lane
+production	line
+telecommunication	line
+transmission	line
+communication	channel
+distribution	channel
+shipping	channel

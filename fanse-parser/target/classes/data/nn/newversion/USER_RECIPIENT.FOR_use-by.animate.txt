@@ -1,0 +1,106 @@
+passenger	cabin
+passenger	compartment
+
+company	argot
+police	argot
+
+actor	entrance
+employee	entrance
+
+police	tactic
+
+student	ticket
+youth	ticket
+star	hairdo
+user	guide
+hippie	house
+
+
+stripper	hairdo
+stripper	shoes
+
+child	center
+
+
+
+enterprise	system
+
+family	atmosphere
+
+spectator	sport
+minority	firm
+
+#MISC SERVICES
+
+parish	church
+physician	symposium
+
+tourist	visa
+travelers	check
+collector	item
+student	visa
+business	equipment
+business	service
+
+passenger	door
+passenger	seat
+baby	bottle
+baby	clothe
+
+sniper	rifle
+
+consumer	durables
+consumer	electronics
+consumer	good
+consumer	goods
+consumer	item
+consumer	magazine
+consumer	product
+
+hospital	product
+
+family	plan
+
+#tourist
+tourist	route
+tourist	area
+tourist	center
+tourist	city
+tourist	destination
+tourist	facility
+
+tourist	island
+tourist	office
+tourist	resort
+
+tourist	site
+tourist	spot
+tourist	town
+
+#consumption by
+animal	feed
+
+baby	food
+baby	formula
+cat	food
+chicken	feed
+gourmet	meal
+
+baby	biscuit
+cat	biscuit
+gourmet	biscuit
+
+cow	pasture
+
+family	meal
+gourmet	food
+
+vegetarian	diet
+livestock	feed
+mouse	food
+
+vegan	diet
+vegetarian	sandwich
+vegetarian	plate
+vegetarian	dish
+

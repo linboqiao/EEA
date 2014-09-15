@@ -1,0 +1,266 @@
+investor	money
+customer	money
+
+cowboy	attire
+cowboy	bandanna
+cowgirl	hat
+cowboy	handkerchief
+cowboy	belt
+cowboy	pants
+
+labor	right
+
+patient	right
+victim	right
+worker	right
+student	right
+defendant	right
+citizen	right
+
+winery	assets
+fishery	assets
+brokerage	assets
+airforce	assets
+agency	assets
+
+airport	debt
+factory	debt
+developer	debt
+industry	debt
+labor	debt
+partnership	debt
+plant	debt
+
+clan	land
+clan	compound
+clan	property
+
+militia	headquarters
+union	headquarters
+fleet	headquarters
+
+family	antique
+family	artifact
+family	mausoleum
+
+police	sign
+grandmother	house
+geek	glasses
+yuppie	glasses
+
+doctor	credentials
+
+brewery	vat
+
+city	library
+town	library
+mob	loot
+
+police	lot
+
+#APPLIES TO/RESPONSIBLE PARTY
+board	matter
+
+#OWN & OPERATE
+summit	agenda
+
+court	proceeding
+
+partnership	asset
+stock fund	asset
+
+working girl	mink
+
+attorney	office
+bank	office
+bank	fund
+bank	document
+bank	asset
+bank	debt
+bank	earnings
+business	asset
+business	confidence
+business	inventory
+campaign	fund
+campaign	bus
+campaign	platform
+campaign	debt
+campaign	office
+campaign	plane
+campaign	coffer
+campaign	site
+campaign	literature
+campaign	money
+campaign	account
+church	bus
+church	school
+church	money
+
+client	money
+client	account
+
+company	store
+company	automobile
+company	property
+company	asset
+company	policy
+company	information
+company	plan
+company	stock
+company	record
+company	fund
+company	tradition
+company	money
+company	product
+company	pension
+company	revenue
+company	debt
+company	car
+company	logo
+company	office
+company	document
+company	account
+
+congress	building
+
+consumer	debt
+consumer	right
+consumer	wealth
+
+country	debt
+
+court	record
+court	docket
+court	file
+court	document
+court	paper
+
+customer	account
+
+dealer	lot
+dealer	showroom
+
+doctor	office
+
+employee	right
+
+executive	duty
+
+factory	inventory
+
+family	album
+family	home
+family	estate
+family	heirloom
+family	pet
+family	restaurant
+family	budget
+family	operation
+family	farm
+family	newspaper
+family	compound
+family	firm
+family	wealth
+family	plot
+family	tradition
+family	car
+family	house
+family	sedan
+family	recipe
+family	mortuary
+family	income
+family	trust
+family	dog
+family	fortune
+
+group	revenue
+
+guerrilla	base
+
+hotel	property
+
+household	asset
+household	debt
+
+industry	product
+
+infantry	vehicle
+
+insider	information
+
+liaison	office
+
+media	spotlight
+
+merchant	fleet
+merchant	vessel
+
+ministry	building
+
+minority	business
+
+museum	collection
+
+network	show
+
+nominee	account
+
+opposition	newspaper
+opposition	stronghold
+
+parliament	building
+
+party	newspaper
+party	plan
+party	constitution
+party	platform
+party	apparatus
+party	program
+party	ticket
+party	building
+party	office
+party	post
+party	machine
+party	primary
+
+
+prosecution	case
+
+prosecutor	office
+
+ranger	station
+
+rebel	stronghold
+
+school	newspaper
+school	budget
+school	fund
+school	facility
+school	property
+
+server	software
+
+shareholder	right
+shareholder	fund
+shareholder	equity
+
+stockholder	equity
+
+student	newspaper
+
+superpower	arsenal
+
+taxpayer	money
+
+team	bus
+team	car
+
+town	enterprise
+
+township	enterprise
+
+troop	home
+
+university	computing
+university	hospital
+university	program

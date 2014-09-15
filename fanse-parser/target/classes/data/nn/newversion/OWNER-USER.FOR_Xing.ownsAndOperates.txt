@@ -1,0 +1,35 @@
+airline	company
+casino	company
+dairy	company
+hospital	company
+hotel	company
+restaurant	company
+
+brokerage	firm
+
+airline	group
+bank	group
+hotel	group
+restaurant	group
+store	group
+supermarket	group
+
+restaurant	operation
+
+policy	organization
+
+bank	sector
+fishery	sector
+hotel	sector
+railway	sector
+store	sector
+
+#instrument?
+ferry	company
+cab	company
+truck	company
+truck	division
+truck	industry
+rail	company
+railroad	company
+railway	company

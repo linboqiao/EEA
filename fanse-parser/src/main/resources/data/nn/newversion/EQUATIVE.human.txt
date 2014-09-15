@@ -1,0 +1,263 @@
+featherweight	champion
+welterweight	champion
+heavyweight	champion
+
+backpacker	victim
+
+female	owner
+
+boy	recruit
+
+assistant	attorney
+assistant	coach
+assistant	commissioner
+assistant	director
+assistant	general
+assistant	secretary
+
+associate	administrator
+associate	coach
+associate	commissioner
+associate	company
+associate	curator
+associate	dean
+associate	director
+associate	general
+associate	member
+associate	producer
+associate	professor
+associate	publisher
+associate	superintendent
+
+billionaire	businessman
+
+baby	boy
+baby	brother
+baby	daughter
+baby	girl
+baby	sister
+
+celebrity	chef
+celebrity	guest
+celebrity	kid
+
+child	actor
+child	laborer
+child	soldier
+child	star
+child	victim
+child	worker
+
+christian	commander
+christian	conservative
+christian	fundamentalist
+christian	gunner
+christian	leader
+christian	missionary
+christian	pilgrim
+
+chairman	emeritus
+
+citizen	soldier
+
+commander	general
+
+communist	insurgent
+
+comrade	commander
+comrade	leader
+
+deputy	administrator
+deputy	ambassador
+deputy	assistant
+deputy	attorney
+deputy	chairman
+deputy	chief
+deputy	commander
+deputy	commissioner
+deputy	coroner
+deputy	director
+deputy	general
+deputy	head
+deputy	leader
+deputy	manager
+deputy	marshal
+deputy	mayor
+deputy	officer
+deputy	president
+deputy	prosecutor
+deputy	representative
+deputy	sheriff
+deputy	speaker
+deputy	spokesman
+deputy	superintendent
+
+developer	friend
+
+diehard	fan
+
+director	general
+
+employee	representative
+
+executive	director
+executive	producer
+
+expatriate	worker
+
+fellow	biker
+fellow	broker
+fellow	officer
+
+founder	member
+freshmen	applicant
+girl	friend
+graduate	student
+guerrilla	leader
+
+immigrant	child
+immigrant	parent
+immigrant	worker
+
+individual	investor
+
+insider	trader
+
+inspector	general
+leader	general
+lieutenant	general
+postmaster	general
+procurator	general
+prosecutor	general
+
+professor	emeritus
+
+rebel	artillerist
+rebel	leader
+
+refugee	child
+
+rookie	coach
+rookie	designer
+rookie	guard
+rookie	pitcher
+rookie	quarterback
+
+republican	candidate
+republican	leader
+republican	member
+republican	senator
+
+secessionist	rebel
+
+secretary	general
+surgeon	general
+
+undergraduate	student
+
+unionist	leader
+veteran	scientist
+veteran	watcher
+
+settler	leader
+
+spy	chief
+
+star	athlete
+star	attraction
+star	center
+star	coach
+star	forward
+star	guard
+star	performer
+star	player
+star	quarterback
+star	receiver
+star	striker
+star	witness
+
+student	activist
+student	athlete
+student	demonstrator
+student	leader
+student	pilot
+student	protester
+student	representative
+student	teacher
+student	volunteer
+
+maverick	coach
+
+mystery	man
+
+nationalist	leader
+millionaire	businessman
+
+non-member	trader
+
+peasant	farmer
+peasant	leader
+peasant	woman
+
+whiz	kid
+
+woman	activist
+woman	artist
+woman	athlete
+woman	bishop
+woman	candidate
+woman	director
+woman	doctor
+woman	driver
+woman	employee
+woman	entrepreneur
+woman	executive
+woman	friend
+woman	leader
+woman	manager
+woman	member
+woman	officer
+woman	player
+woman	priest
+woman	prisoner
+woman	soldier
+woman	student
+woman	voter
+woman	worker
+woman	writer
+
+worker	representative
+
+youth	leader
+
+major	general
+
+lead	actor
+lead	attorney
+lead	author
+lead	character
+lead	guitarist
+lead	heading
+lead	investigator
+lead	lawyer
+lead	manager
+lead	midway
+lead	negotiator
+lead	plaintiff
+lead	prosecutor
+lead	researcher
+lead	role
+lead	singer
+
+con	man
+conservative	republican
+
+adult	woman
+alternate	juror
+alternate	member
+
+
+kid	brother
+
+
+

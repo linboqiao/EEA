@@ -1,0 +1,125 @@
+arm	inflammation
+arm	wound
+
+heart	ailment
+stomach	ailment
+
+thigh	bruise
+
+brain	cancer
+breast	cancer
+stomach	cancer
+
+leg	cramp
+stomach	cramp
+bladder	cancer
+
+brain	damage
+eye	damage
+kidney	damage
+ligament	damage
+lung	damage
+nerve	damage
+
+
+heart	defect
+pacemaker	defect
+
+colon	cancer
+lung	cancer
+skin	cancer
+lymph	cancer
+kidney	cancer
+prostate	cancer
+
+
+brain	disease
+chest	disease
+cow	disease
+gum	disease
+heart	disease
+kidney	disease
+mouth	disease
+plant	disease
+
+skin	disorder
+blood	disorder
+brain	disorder
+
+skull	fracture
+
+brain	hemorrhage
+
+blood	infection
+ear	infection
+lung	infection
+sinus	infection
+tract	infection
+
+ankle	injury
+arms	injury
+back	injury
+brain	injury
+calf	injury
+chest	injury
+elbow	injury
+eye	injury
+foot	injury
+groin	injury
+hamstring	injury
+hand	injury
+knee	injury
+leg	injury
+muscle	injury
+neck	injury
+rib	injury
+shoulder	injury
+thigh	injury
+wrist	injury
+
+leg	pain
+muscle	pain
+neck	pain
+stomach	pain
+
+throat	cancer
+
+ankle	sprain
+knee	sprain
+groin	strain
+
+world	problem
+well	problem
+stomach	problem
+skin	problem
+lung	problem
+kidney	problem
+knee	problem
+heart	problem
+foot	problem
+eye	problem
+elbow	problem
+back	problem
+
+arm	trouble
+back	trouble
+engine	trouble
+heart	trouble
+
+breast	tumor
+eye	tumor
+
+stomach	ulcer
+
+chest	wound
+
+eye	irritation
+skin	irritation
+
+skin	lesion
+
+air	pollution
+water	contamination
+crop	damage
+engine	damage
+property	damage

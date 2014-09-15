@@ -1,0 +1,140 @@
+export	permit
+import	permit
+broadcast	license
+export	license
+
+combat	aircraft
+patrol	aircraft
+strike	aircraft
+transport	aircraft
+
+snack	food
+
+wash	basin
+lounge	wear
+
+paint	brush
+
+rescue	boat
+tour	boat
+
+massage	chair
+
+alarm	clock
+
+work	cloth
+
+combat	equipment
+control	equipment
+rescue	equipment
+support	equipment
+transport	equipment
+
+debit	card
+tour	card
+
+
+battle	flag
+
+
+combat	gear
+
+
+combat	helicopter
+rescue	helicopter
+transport	helicopter
+
+
+combat	jet
+repair	kit
+
+copy	machine
+exercise	machine
+fax	machine
+
+
+travel	map
+
+
+fax	modem
+
+
+combat	plane
+patrol	plane
+spy	plane
+transport	plane
+
+
+guard	rail
+assault	rifle
+
+
+combat	ship
+rescue	ship
+research	ship
+support	ship
+
+dress	shirt
+
+
+picket	sign
+
+
+picnic	table
+battle	tank
+
+
+control	technology
+display	technology
+
+design	tool
+research	tool
+
+
+tow	truck
+combat	vehicle
+launch	vehicle
+rescue	vehicle
+star	vehicle
+transport	vehicle
+
+patrol	vessel
+rescue	vessel
+research	vessel
+
+
+battle	wagon
+
+assault	weapon
+murder	weapon
+
+
+design	world
+
+exercise	yard
+
+aid	material
+relief	material
+research	material
+
+
+bridge	loan
+
+
+search	engine
+
+
+search	dog
+
+
+exercise	bike
+
+export	crop
+
+control	device
+
+
+tour	bus
+
+
+

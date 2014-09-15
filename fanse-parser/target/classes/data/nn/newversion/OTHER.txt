@@ -1,0 +1,77 @@
+youth	league
+
+minority	people
+
+space	project
+
+#use to produce
+organ	music
+guitar	solo
+violin	concerto
+
+carbon	copy
+oil	painting
+#
+
+access	charge
+
+accounting	charge
+
+life	strategy
+
+stock	company
+
+reunion	tour
+
+impeachment	referral
+
+concert	tour
+lecture	tour
+
+escape	clause
+
+mortgage	note
+
+cost	effectiveness
+
+infant	fatality
+journalist	fatality
+fan	fatality
+
+export	competitiveness
+
+#for receiving credit
+credit	worthiness
+
+program	strategy
+
+development	priority
+policy	priority
+
+color	television
+color	videotape
+
+cost	efficiency
+energy	efficiency
+fuel	efficiency
+
+#ability to create? move to Purpose+prov?
+output	capacity
+export	capacity
+
+
+#for justification
+malpractice	liability
+
+pension	liability
+securities	liability
+
+funding	responsibility
+security	responsibility
+
+tax	credit
+trade	credit
+
+television	rights
+
+missile	unit

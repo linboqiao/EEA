@@ -1,0 +1,110 @@
+#USE
+wedge	issue
+
+#hmm
+father	figure
+
+
+monster	burger
+monster	hurricane
+
+
+
+acid	insult
+acid	satire
+blanket	statement
+killer	pass
+killer	play
+killer	injection
+windfall	profit
+bumper	profits
+freak	reaction
+
+pillar	industry
+
+#UNUSUALNESS
+freak	accident
+
+#TASTE
+grape	soda
+cherry	soda
+lime	soda
+lemon	soda
+orange	soda
+raspberry	soda
+
+#SOUND
+
+#STRUCTURE
+skeleton	crew
+skeleton	staff
+
+#LIMITED_BEHAVIOR_TRANSFER
+magnet	school
+
+#QUALITY
+gold	game
+
+#SHARPNESS
+razor	wire
+
+#COLOR OF
+chocolate	lab
+
+#ABRUPTNESS
+snap	election
+
+#STYLE OF AGENT
+pack	journalism
+
+#SHAPE/form
+package	deal
+stick	figure
+ring	worm
+disc	brake
+tunnel	vision
+rock	cocaine
+block	grant
+hairline	fracture
+hairline	crack
+funnel	cloud
+strip	mall
+sheet	steel
+lump	sum
+pyramid	scheme
+mushroom	lamp
+butterfly	hat
+circle	opening
+crescent	wrench
+tape	worm
+
+grassroots	group
+grassroots	organization
+
+#MAGNITUDE/SIZE
+landslide	victory
+shoestring	budget
+marquee	player
+marquee	name
+
+bulk	crystal
+
+#SCOPE
+blanket	appeal
+
+#INTENSITY
+crash	program
+crash	course
+
+#DURATION/SPEED
+marathon	trial
+marathon	session
+marathon	negotiation
+marathon	talk
+marathon	meeting
+whirlwind	tour
+flash	fire
+bullet	train
+
+#controlled like a puppet
+puppet	army

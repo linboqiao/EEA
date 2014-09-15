@@ -1,0 +1,398 @@
+#for...
+highway	money
+art	grant
+budget	blueprint
+product	strategy
+concert	stage
+computer	accessory
+bike	accessory
+truck	trailer
+telephone	cord
+piston	ring
+coloratura	ornament
+aerospace	product
+missile	equipment
+oil	equipment
+school	project
+tourism	project
+
+#for communicating with
+satellite	dish
+
+#for restraining
+chicken	wire
+
+#for expelling/shooting/propelling
+water	pistol
+water	gun
+water	rifle
+exhaust	fan
+
+
+#for showing on
+television	version
+
+#for X2ing / objective
+cattle	prod
+paper	clip
+
+#.. hard...
+acquisition	target
+budget	target
+deficit	target
+development	target
+earnings	target
+emissions	target
+export	target
+growth	target
+inflation	target
+investment	target
+production	target
+profit	target
+reduction	target
+revenue	target
+spending	target
+takeover	target
+investment	climate
+
+#for/that removes
+garbage	man
+
+#that does/for Xing{monitoring,evaluating...}
+credit	agency
+
+#for Xing{holding,transporting}
+cargo	capacity
+passenger	capacity
+
+#for Xing{voting on}
+primary	ballot
+election	ballot
+strike	ballot
+
+#for Xing{choosing}
+site	committee
+
+#for Xing{cooking}
+food	grill
+sandwich	grill
+coke	oven
+lobster	recipe
+shrimp	recipe
+
+#for 'taping' ducts
+duct	tape
+#for combing cats
+cat	comb
+#for fixing up hair
+hair	salon
+
+
+#for 'processing'
+poultry	plant
+water	facility
+mail	room
+waste	facility
+
+#for 'studying/researching/monitoring/measuring/observing/mapping'
+weather	satellite
+ozone	satellite
+crime	lab
+physics	laboratory
+animal	laboratory
+genome	project
+sobriety	checkpoint
+parking	meter
+water	meter
+hurricane	center
+
+
+#for 'dealing with/filing/figuring'
+tax	software
+network	software
+database	program
+spreadsheet	program
+database	software
+
+#for 'making it work/can be transported/etc'
+data	equipment
+telephone	equipment
+phone	equipment
+radar	equipment
+sonar	equipment
+network	equipment
+water	equipment
+semiconductor	equipment
+
+#for 'celebrating'
+birthday	bash
+victory	lap
+victory	dance
+victory	party
+retirement	party
+anniversary	party
+coming-out	party
+birthday	party
+
+#for protecting
+nose	guard
+#for X{protecting,fertilizing,?}
+crop	chemical
+
+#for 'trimming' hedges
+hedge	hatchet
+
+#for 'cutting'
+bread	knife
+
+#for 'consuming'
+butter	knife
+salad	fork
+drug	paraphernalia
+marijuana	bong
+
+#for Xing{transporting}
+wastewater	pipe
+gas	pipeline
+water	pipeline
+water	hose
+fuel	line
+water	line
+gas	line
+water	main
+power	line
+utility	line
+data	wire
+data	highway
+
+waste	truck
+waste	wagon
+
+news	wire
+cargo	aircraft
+civilian	aircraft
+tourist	aircraft
+
+oil	tanker
+water	tanker
+
+cargo	truck
+cargo	space
+cargo	pant
+cargo	jet
+cargo	plane
+
+coal	truck
+fuel	truck
+tank	truck
+water	truck
+
+commuter	aircraft
+passenger	aircraft
+
+passenger	ferry
+passenger	flight
+passenger	jet
+passenger	plane
+passenger	transport
+passenger	vehicle
+
+commuter	bus
+passenger	bus
+tourist	bus
+blood	vessel
+
+tourist	boat
+freight	train
+
+commuter	airline
+commuter	plane
+passenger	car
+
+freight	railroad
+
+#for Xing{taking/accepting/collecting}
+reservations	clerk
+
+#for Xing{herding}
+sheep	dog
+
+#for Xing{fixing?}
+tire	iron
+
+#for Xing{operating,using}
+mountain bike	shoe
+
+#for Xing{enhancing,furthering}
+plot	device
+
+#for Xing{improving}
+speech	therapy
+
+#who Xs{repairs} / for Xing{repairing}
+aircraft	mechanic
+airplane	mechanic
+
+#for Xing{practicing}
+law	license
+
+#for Xing{providing/awarding}
+award	banquet
+medal	ceremony
+
+#for Xing{displaying on}
+screen	version
+
+#for Xing{displaying}
+movie	screen
+
+#for Xing{buying/selling/transacting}
+soybean	pit
+commodity	firm
+commodity	group
+real estate	agent
+rice	market
+bullion	market
+aircraft	market
+airline	market
+aluminium	market
+arms	market
+art	market
+automobile	market
+beef	market
+beer	market
+bond	market
+book	market
+browser	market
+cable	market
+capital	market
+car	market
+cash	market
+cattle	market
+chip	market
+cigarette	market
+city	market
+coal	market
+cocoa	market
+coffee	market
+commodities	market
+commodity	market
+computer	market
+consumer	market
+copper	market
+corn	market
+credit	market
+currency	market
+debt	market
+derivative	market
+diamond	market
+discount	market
+drug	market
+electricity	market
+electronics	market
+energy	market
+equity	market
+export	market
+farmer	market
+fish	market
+flower	market
+food	market
+foreign exchange	market
+fund	market
+future	market
+futures	market
+gas	market
+gasoline	market
+gilt	market
+gold	market
+goods	market
+grain	market
+growth	market
+home	market
+hotel	market
+import	market
+interbank	market
+issue	market
+job	market
+junk	market
+labor	market
+labour	market
+land	market
+leisure	market
+loan	market
+mainframe	market
+
+meat	market
+media	market
+money	market
+mortgage	market
+music	market
+oil	market
+options	market
+paper	market
+phone	market
+platinum	market
+product	market
+property	market
+real estate	market
+resale	market
+retail	market
+securities	market
+security	market
+semiconductor	market
+share	market
+software	market
+soybean	market
+equipment	market
+television	market
+specialty	market
+spot	market
+steel	market
+stock	market
+sugar	market
+workstation	market
+swap	market
+target	market
+tea	market
+technology	market
+telecom	market
+telephone	market
+tobacco	market
+tourism	market
+transport	market
+travel	market
+vehicle	market
+video	market
+wheat	market
+wine	market
+
+#for Xing{using/operating}
+riverboat	license
+
+#that is/for Xing{transporting/delivering/sending/receiving}
+paper	route
+cargo	transport
+freight	transport
+coal	terminal
+gasoline	terminal
+cargo	terminal
+container	terminal
+container	port
+cargo	train
+aid	flight
+cargo	flight
+email	account
+container	vessel
+freight	company
+cargo	service
+air freight	activity
+cargo	traffic
+freight	traffic
+aid	convoy
+food	convoy
+refugee	convoy
+
+#for Xing{pumping}
+water	pump
+oil	pump
+fuel	pump

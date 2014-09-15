@@ -1,0 +1,55 @@
+introduction	text
+
+hate	mail
+
+phone	book
+
+art	book
+mortgage	book
+rule	book
+law	book
+address	book
+self-help	book
+loan	book
+travel	book
+science	book
+
+battlefield	guidebook
+college	guidebook
+college	yearbook
+computer	textbook
+plate	playbook
+
+balance	sheet
+fact	sheet
+stat	sheet
+information	sheet
+tally	sheet
+
+sport	page
+
+research	paper
+
+opinion	piece
+
+bid	document
+identity	document
+budget	document
+framework	document
+travel	document
+policy	document
+consultation	document
+strategy	document
+loan	document
+
+travel	brief
+health	brief
+
+media	guide
+
+investment	letter
+protest	letter
+rejection	letter
+resignation	letter
+
+civics	text

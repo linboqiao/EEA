@@ -1,0 +1,591 @@
+navy	admiral
+
+army	commander
+company	commander
+navy	commander
+police	commander
+
+church	commissioner
+city	commissioner
+police	commissioner
+
+army	general
+police	general
+
+church	accountant
+
+consumer	activist
+labor	activist
+party	activist
+
+state	administrator
+
+government	adviser
+
+child	advocate
+consumer	advocate
+
+government	agency
+state	agency
+
+government	agent
+player	agent
+police	agent
+
+administration	aide
+campaign	aide
+committee	aide
+press	aide
+
+bank	analyst
+brokerage	analyst
+city	analyst
+government	analyst
+
+network	anchor
+
+government	army
+
+state	assemblyman
+
+press	attache
+
+city	attorney
+company	attorney
+defense	attorney
+family	attorney
+government	attorney
+plaintiff	attorney
+state	attorney
+
+company	auditor
+district	auditor
+government	auditor
+state	auditor
+
+district	authorities
+
+government	bank
+
+army	battalion
+
+state	biologist
+
+
+state	board
+
+government	body
+state	body
+
+state	bureaucracy
+
+government	bureaucrat
+
+government	candidate
+labour	candidate
+
+army	captain
+navy	captain
+team	captain
+
+government	censor
+
+restaurant	chef
+
+
+
+church	choir
+
+city	clerk
+court	clerk
+
+circus	clown
+
+newspaper	columnist
+
+government	commission
+state	commission
+
+
+state	commissioner
+
+city	committee
+government	committee
+parliament	committee
+school	committee
+state	committee
+village	committee
+
+police	constable
+
+government	contractor
+
+city	controller
+state	controller
+
+army	convoy
+
+state	coordinator
+
+state	corporation
+
+state	councillor
+
+city	councilwoman
+
+business	counsel
+
+city	court
+
+city	crew
+
+government	delegation
+military	delegation
+parliament	delegation
+
+city	department
+government	department
+state	department
+
+police	detective
+
+state	director
+
+police	dispatcher
+
+navy	diver
+
+army	doctor
+company	doctor
+team	doctor
+
+city	economist
+department	economist
+government	economist
+
+magazine	editor
+
+airline	employee
+airport	employee
+bank	employee
+city	employee
+college	employee
+company	employee
+court	employee
+embassy	employee
+government	employee
+hospital	employee
+hotel	employee
+office	employee
+plant	employee
+prison	employee
+railroad	employee
+restaurant	employee
+school	employee
+state	employee
+store	employee
+university	employee
+
+city	engineer
+state	engineer
+
+government	entity
+state	entity
+
+magazine	entrepreneur
+
+police	escort
+
+industry	excutives
+
+army	expert
+government	expert
+police	expert
+state	expert
+
+alliance	force
+army	force
+government	force
+junta	force
+
+government	functionary
+
+state	group
+
+village	guard
+
+government	hand
+party	hand
+state	hand
+
+government	hostage
+
+government	informant
+police	informant
+
+police	informer
+
+company	insider
+industry	insider
+
+city	inspector
+government	inspector
+police	inspector
+state	inspector
+
+army	investigator
+board	investigator
+government	investigator
+navy	investigator
+police	investigator
+state	investigator
+
+state	jury
+
+state	lawmaker
+
+administration	lawyer
+city	lawyer
+company	lawyer
+defence	lawyer
+family	lawyer
+government	lawyer
+industry	lawyer
+plaintiff	lawyer
+state	lawyer
+
+state	legislator
+
+state	legislature
+
+army	lieutenant
+
+housing	lobby
+
+business	lobbyist
+industry	lobbyist
+
+army	major
+
+army	man
+
+government	manager
+state	manager
+
+state	marshal
+
+company	member
+government	member
+
+government	ministry
+state	ministry
+
+government	negotiator
+
+airline	office
+cartel	office
+league	office
+
+army	officer
+bank	officer
+city	officer
+company	officer
+court	officer
+government	officer
+navy	officer
+police	officer
+press	officer
+school	officer
+state	officer
+
+administration	official
+agency	official
+airline	official
+airport	official
+army	official
+bank	official
+board	official
+brokerage	official
+bureau	official
+church	official
+city	official
+club	official
+coalition	official
+commission	official
+committee	official
+company	official
+court	official
+department	official
+embassy	official
+foundation	official
+government	official
+hospital	official
+hotel	official
+industry	official
+institute	official
+jail	official
+lab	official
+labor	official
+labour	official
+league	official
+management	official
+military	official
+ministry	official
+museum	official
+navy	official
+network	official
+office	official
+opposition	official
+palace	official
+party	official
+plant	official
+police	official
+press	official
+prison	official
+railroad	official
+railway	official
+school	official
+state	official
+syndicate	official
+team	official
+town	official
+union	official
+university	official
+village	official
+zoo	official
+
+government	operation
+
+employer	organisation
+
+state	organization
+youth	organization
+
+government	panel
+state	panel
+
+army	paratrooper
+
+state	parliament
+
+immigrant	party
+labor	party
+
+army	patrol
+police	patrol
+
+industry	people
+
+army	personnel
+embassy	personnel
+government	personnel
+hospital	personnel
+navy	personnel
+party	personnel
+police	personnel
+school	personnel
+
+team	physician
+
+airline	pilot
+navy	pilot
+
+government	planner
+
+franchise	player
+
+city	police
+state	police
+
+city	politician
+
+army	private
+company	private
+
+government	professor
+university	professor
+
+city	prosecutor
+government	prosecutor
+state	prosecutor
+
+government	regulator
+state	regulator
+
+newspaper	reporter
+
+company	representative
+government	representative
+industry	representative
+labor	representative
+media	representative
+party	representative
+player	representative
+state	representative
+syndicate	representative
+union	representative
+
+union	negotiator
+
+government	researcher
+university	researcher
+
+army	reservist
+
+government	scientist
+project	scientist
+
+state	senator
+
+army	soldier
+government	soldier
+
+city	solicitor
+
+administration	source
+airport	source
+army	source
+bank	source
+committee	source
+company	source
+court	source
+department	source
+government	source
+hospital	source
+industry	source
+league	source
+media	source
+military	source
+ministry	source
+navy	source
+opposition	source
+party	source
+police	source
+studio	source
+team	source
+
+parliament	speaker
+state	speaker
+
+affairs	spokesman
+airline	spokesman
+airport	spokesman
+army	spokesman
+association	spokesman
+bank	spokesman
+board	spokesman
+bureau	spokesman
+campaign	spokesman
+church	spokesman
+city	spokesman
+commission	spokesman
+committee	spokesman
+company	spokesman
+custom	spokesman
+defence	spokesman
+department	spokesman
+embassy	spokesman
+employment	spokesman
+environment	spokesman
+exchange	spokesman
+family	spokesman
+fire	spokesman
+government	spokesman
+health	spokesman
+hospital	spokesman
+industry	spokesman
+labour	spokesman
+league	spokesman
+military	spokesman
+ministry	spokesman
+navy	spokesman
+office	spokesman
+opposition	spokesman
+party	spokesman
+police	spokesman
+press	spokesman
+prison	spokesman
+security	spokesman
+service	spokesman
+solidarity	spokesman
+state	spokesman
+team	spokesman
+transport	spokesman
+university	spokesman
+
+government	spokesperson
+
+airline	spokeswoman
+airport	spokeswoman
+army	spokeswoman
+campaign	spokeswoman
+city	spokeswoman
+commission	spokeswoman
+company	spokeswoman
+court	spokeswoman
+department	spokeswoman
+embassy	spokeswoman
+exchange	spokeswoman
+government	spokeswoman
+hospital	spokeswoman
+ministry	spokeswoman
+navy	spokeswoman
+police	spokeswoman
+state	spokeswoman
+university	spokeswoman
+
+army	staff
+bank	staff
+city	staff
+commission	staff
+committee	staff
+embassy	staff
+hospital	staff
+hotel	staff
+school	staff
+
+campaign	strategist
+party	strategist
+
+brokerage	subsidiary
+
+police	superintendent
+school	superintendent
+state	superintendent
+
+school	teacher
+university	teacher
+
+army	team
+
+government	technocrat
+
+bank	teller
+
+army	troop
+government	troop
+
+state	trooper
+
+army	veteran
+industry	veteran
+navy	veteran
+project	veteran
+
+defense	witness
+government	witness
+prosecution	witness
+state	witness
+
+airline	worker
+city	worker
+government	worker
+party	worker
+state	worker
+treasury	worker
+
+government	work
+party	work
+
+magazine	writer
+press	writer

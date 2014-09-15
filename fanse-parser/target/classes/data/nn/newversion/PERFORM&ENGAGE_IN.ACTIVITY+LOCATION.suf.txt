@@ -1,0 +1,279 @@
+construction	area
+fishing	area
+investment	area
+mining	area
+production	area
+reception	area
+training	area
+viewing	area
+
+combustion	chamber
+execution	chamber
+
+vacation	hideaway
+vacation	chateau
+vacation	wonderland
+
+parking	structure
+defense	structure
+wedding	chapel
+
+collection	point
+practice	court
+
+communication	facility
+detention	facility
+disposal	facility
+distribution	facility
+energy cogeneration	facility
+entertainment	facility
+immigration	facility
+irrigation	facility
+maintenance	facility
+manufacturing	facility
+parking	facility
+practice	facility
+processing	facility
+production	facility
+sanitation	facility
+service	facility
+storage	facility
+telecommunication	facility
+testing	facility
+training	facility
+transmission	facility
+transportation	facility
+treatment	facility
+
+practice	field
+
+parking	garage
+
+dumping	ground
+fishing	ground
+testing	ground
+training	ground
+
+
+conference	hall
+convention	hall
+dining	hall
+gambling	hall
+gaming	hall
+meeting	hall
+reception	hall
+recital	hall
+
+transportation	hub
+
+shopping	mall
+
+
+trading	pit
+
+burial	place
+parking	place
+voting	place
+
+
+desalination	plant
+fabrication	plant
+manufacturing	plant
+printing	plant
+processing	plant
+production	plant
+separation	plant
+treatment	plant
+
+
+fishing	port
+
+
+bombing	range
+training	range
+
+
+auction	room
+briefing	room
+delivery	room
+editing	room
+laundry	room
+meeting	room
+operation	room
+recovery	room
+rehearsal	room
+screening	room
+tasting	room
+trading	room
+training	room
+
+
+auction	site
+commerce	site
+construction	site
+convention	site
+development	site
+disposal	site
+entertainment	site
+excavation	site
+factory	site
+information	site
+investment	site
+landing	site
+manufacturing	site
+meeting	site
+production	site
+storage	site
+testing	site
+training	site
+
+
+expansion	slot
+landing	slot
+
+
+advertising	space
+development	space
+exhibition	space
+performance	space
+rehearsal	space
+selling	space
+
+
+parking	spot
+
+
+broadcasting	station
+communication	station
+docking	station
+inspection	station
+switching	station
+voting	station
+
+
+fishing	town
+mining	town
+
+
+race	track
+
+hiking	trail
+
+
+development	zone
+empowerment	zone
+exclusion	zone
+processing	zone
+protection	zone
+
+
+engineering	workstation
+
+
+fishing	village
+shopping	village
+
+
+playing	surface
+
+
+training	stadium
+
+
+nursing	home
+retirement	home
+
+teaching	hospital
+
+retirement	hotel
+
+processing	factory
+
+
+abortion	clinic
+rehabilitation	clinic
+
+
+detention	camp
+logging	camp
+training	camp
+
+
+administration	building
+storage	building
+
+testing	laboratory
+
+
+boring	mill
+
+massage	parlor
+
+
+diving	resort
+
+training	academy
+
+
+distribution	centre
+service	centre
+training	centre
+
+shipping	depot
+storage	depot
+
+
+entry	point
+meeting	point
+
+production	studio
+
+banking	center
+breeding	center
+collection	center
+communication	center
+convention	center
+coordination	center
+counseling	center
+detention	center
+development	center
+distribution	center
+employment	center
+evacuation	center
+exhibition	center
+feeding	center
+information	center
+learning	center
+machining	center
+maintenance	center
+management	center
+manufacturing	center
+nursing	center
+operation	center
+processing	center
+production	center
+reception	center
+recycling	center
+rehabilitation	center
+resource	center
+retirement	center
+science	center
+service	center
+shipping	center
+shopping	center
+switching	center
+
+testing	center
+trading	center
+training	center
+treatment	center
+
+breeding	farm
+
+entertainment	complex
+
+
+
+retirement	community
+fishing	community
+mining	community

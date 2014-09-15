@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<defset prep="off">
+	<sense id="1">
+		<!-- change 'moving away from' to 'changing location' -->
+		<definition>moving away from so as to no longer be located at or in contact with X2 (e.g., walk off the stage)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="equivalent" unionof="1(1),4(3)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2">
+		<!-- most places extension is included with movement, so it may be best to merge with sense 1 -->
+		<definition>abutting and extending away from X2 (e.g., a road off the main boulevard)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="equivalent" targetid="2(2)"/>
+		<notes></notes>
+	</sense>
+	<sense id="3">
+		<definition>in or at a position separated from X2 (e.g., the bird was off its perch) </definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="equivalent" unionof="1(1)"/>
+	</sense>
+	<sense id="3.1">
+		<definition>in or at a position in a body of water separated from X2 (e.g., the boats off the coast)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="equivalent" targetid="3(2a)"/>
+	</sense>
+	<sense id="4">
+		<definition>indicating a substance (often a drug or something that can be viewed as such) being abstained from (e.g., stay off drugs)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" unionof="6(3b),7(4)"/>
+	</sense>
+	<sense id="5">
+		<definition>indicating an activity (typically work) avoided or not engaged in (e.g., he took time off work)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" targetid="5(3a)"/>
+	</sense>
+	
+	
+</defset>

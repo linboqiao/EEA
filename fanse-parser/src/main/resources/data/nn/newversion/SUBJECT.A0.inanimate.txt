@@ -1,0 +1,58 @@
+bankruptcy	protection
+law	protection
+copyright	protection
+insurance	protection
+patent	protection
+tariff	protection
+
+traffic	delay
+
+wave	erosion
+ozone	protection
+tsunami	injury
+
+aids	infection
+
+lightning	strike
+
+vaccine	protection
+
+tanker	spill
+
+artillery	destruction
+
+bacteria	contamination
+bacterium	infection
+bug	infection
+
+insurance	coverage
+reinsurance	coverage
+
+vulture	shit
+
+government	outlay
+
+government	payment
+
+jury	award
+
+state	subsidy
+
+government	grant
+state	grant
+
+state	expense
+government	expense
+taxpayer	expense
+
+anxiety	attack
+
+state	aid
+
+government	investment
+
+sewer	overflow
+revenue	shortfall
+cash	shortfall
+
+

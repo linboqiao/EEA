@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+
+<defset prep="with">
+
+	<sense id="1">
+		<definition>indicating a participating entity/thing in an action/activity (e.g., talk with Joe, merge with traffic)</definition>
+		<majorcluster>COPARTICIPANT</majorcluster>
+		<pprojmap type="subsumes" targetid="6(4)"/>
+		<pprojmap type="subsumes" subsetof="1(1)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2">
+		<definition>indicating spatial accompaniment / proximity (e.g., he is with the bike)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="equivalent" subsetof="1(1)"/>
+		<notes></notes>
+	</sense>
+	<sense id="3">
+		<definition>indicating the group in a member-of-group relationship (e.g., Joe is with the marines, grouped with alternative medicine)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="approx_equal" targetid="13(8)"/>
+		<notes></notes>
+	</sense>
+	<sense id="4">
+		<definition>indicating the means or material used to perform an action or acting as the complement of similar participle adjectives (e.g., crammed with, coated with, covered with)</definition>
+		<majorcluster>MEANS</majorcluster>
+		<pprojmap type="equivalent" unionof="4(3),5(3a)"/>
+		<notes></notes>
+	</sense>
+	<sense id="5">
+		<definition>because of / due to (the physical/mental presence of) (e.g., boiling with anger, shining with dew)</definition>
+		<majorcluster>CAUSE</majorcluster>
+		<pprojmap type="equivalent" targetid="11(7b)"/>
+		<notes></notes>
+	</sense>
+	<sense id="6">
+		<definition>indicating the manner or circumstances (but not cause or motivation) of something (e.g., fix with precision)</definition>
+		<majorcluster>MANNER</majorcluster>
+		<pprojmap type="equivalent" targetid="7(5)"/>
+		<notes></notes>
+	</sense>
+	<sense id="7">
+		<definition>expressing a possessive relationship (e.g., the man with the hat)</definition>
+		<majorcluster>POSSESSIVE</majorcluster>
+		<pprojmap type="subsumes" subsetof="2(2)"/>
+		<pprojmap type="subsumes" unionof="3(2a),8(6),10(7a)"/>
+		<notes></notes>
+	</sense>
+	<sense id="7.1">
+		<definition>indicating a part in a part-of-whole relationship (e.g., the man with the broken arm)</definition>
+		<majorcluster>PART-OF</majorcluster>
+		<pprojmap type="equivalent" subsetof="2(2)"/>
+		<notes></notes>
+	</sense>
+	<sense id="7.2">
+		<definition>connecting an experiencer with some sort of experience, primarly ailments (e.g., person with schizophrenia)</definition>
+		<majorcluster>EXPERIENCER</majorcluster>
+		<pprojmap type="subsumes" subsetof="2(2)"/>
+		<pprojmap type="subsumes" unionof="3(2a),8(6),10(7a)"/>
+		<notes></notes>
+	</sense>
+	<sense id="8">
+		<definition>indicating the information content brought to a communication/discussion (e.g., phoned him with the question)</definition>
+<!-- connecting a word describing the initiation of communication to something(s) intended to be expressed during the communication-->
+		<majorcluster></majorcluster>
+		<pprojmap type="approx_equal" targetid="4(3)-1"/>
+		<notes></notes>
+	</sense>
+	<sense id="9">
+		<definition>expressing correlation (e.g., increases with age)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="approx_equal" targetid="12(7c)"/>
+		<notes></notes>
+	</sense>
+	
+	<sense id="10" dumby="true">
+		<definition>miscellaneous complements</definition>
+		<majorcluster>COMPLEMENTS</majorcluster>
+		<pprojmap type="" targetid=""/>
+		<notes></notes>
+	</sense>
+	<sense id="10.1" >
+		<definition>indicating the complement of a cognitive/emotional word (whatever it is oriented toward) (e.g., angry with her)</definition>
+		<majorcluster>COMPLEMENTS</majorcluster>
+		<pprojmap type="equivalent" subsetof="9(7)"/>
+		<notes></notes>
+	</sense>
+	<sense id="10.2" >
+		<definition>indicating the complement of an adherence/conformity word (e.g., adheres with, conforms with)</definition>
+		<majorcluster>COMPLEMENTS</majorcluster>
+		<pprojmap type="subsumes" subsetof="9(7)"/>
+		<pprojmap type="subsumes" targetid="15(9)-1"/>
+		<notes></notes>
+	</sense>
+	<sense id="10.3" >
+		<definition>in respect to; in relation to; indicating something(s)/someone(s) towards which some manner of behavior or being exists or is expressed (and doesn't fit elsewhere) (e.g., be polite with her)</definition>
+<!-- 		<definition>indicating the complement of an ability word (e.g., good with the drums)</definition> -->
+		<majorcluster>COMPLEMENTS</majorcluster>
+		<pprojmap type="subsumes" subsetof="9(7)"/>
+		<pprojmap type="subsumes" targetid="16(10)"/>
+		<notes></notes>
+	</sense>
+	<sense id="11" >
+		<definition>in the same direction as (e.g., shave with the grain)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" subsetof="15(9)"/>
+		<notes></notes>
+	</sense>
+	
+	
+</defset>

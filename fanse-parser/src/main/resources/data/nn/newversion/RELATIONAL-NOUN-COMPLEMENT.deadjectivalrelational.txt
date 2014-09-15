@@ -1,0 +1,181 @@
+airport	security
+aviation	security
+border	security
+company	security
+computer	security
+conduit	security
+debt	security
+energy	security
+equity	security
+food	security
+government	security
+high-yield	security
+income	security
+investment	security
+job	security
+junk	security
+land	security
+mortgage	security
+retirement	security
+test	security
+treasury	security
+world	security
+coupon	security
+
+job	insecurity
+
+market	imperfection
+
+currency	volatility
+market	volatility
+price	volatility
+
+aviation	safety
+flight	safety
+food	safety
+passenger	safety
+pipeline	safety
+product	safety
+school	safety
+traffic	safety
+worker	safety
+
+customer	loyalty
+
+currency	stability
+job	stability
+market	stability
+price	stability
+world	stability
+
+analyst	credibility
+
+party	popularity
+board	popularity
+court	popularity
+
+academy	sensibility
+country	sensibility
+egghead	sensibility
+investor	sensibility
+juror	sensibility
+naif	sensibility
+wing	sensibility
+
+enemy	generosity
+
+labour	flexibility
+
+football	respectability
+
+supply	tightness
+
+bank	indebtedness
+state	indebtedness
+
+staff	friendliness
+family	friendliness
+town	friendliness
+
+police	ineptness
+administration	ineptness
+
+government	weakness
+dollar	weakness
+market	weakness
+price	weakness
+army	weakness
+company	weakness
+
+price	competitiveness
+
+consumer	awareness
+
+employer	aggressiveness
+
+housing	affordability
+ticket	availability
+
+police	brutality
+program	clarity
+government	complicity
+pedestrian	density
+
+market	liquidity
+state	immunity
+
+order	accuracy
+
+employee	dishonesty
+
+self	sufficiency
+
+manufacturing	efficiency
+market	efficiency
+operating	efficiency
+production	efficiency
+work	efficiency
+
+state	sovereignty
+
+bank	secrecy
+banking	secrecy
+
+system	inefficiency
+
+budget	uncertainty
+market	uncertainty
+
+consumer	privacy
+employee	privacy
+
+invoicing	irregularity
+accounting	irregularity
+voting	irregularity
+
+market	integrity
+product	integrity
+
+labor	productivity
+labour	productivity
+manufacturing	productivity
+warehouse	productivity
+worker	productivity
+
+computer	capacity
+plant	capacity
+
+party	unity
+
+adult	responsibility
+government	responsibility
+management	responsibility
+
+lung	capacity
+memory	capacity
+
+administration	ineptitude
+
+media	ignorance
+
+market	potential
+
+police	presence
+
+analyst	independence
+voter	petulance
+
+audience	loyalty
+
+arm	strength
+manufacturing	strength
+voting	strength
+troop	strength
+
+#state/attribute
+iodine	deficiency
+
+#secondary
+hypoglycemia	unawareness
+aids	awareness
+brand	awareness

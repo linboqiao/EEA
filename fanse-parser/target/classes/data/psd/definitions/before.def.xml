@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<defset prep="before">
+
+	<sense id="1">
+		<definition>preceding X2 in time (e.g., snack before bedtime)</definition>
+		<majorcluster>TEMPORAL</majorcluster>
+		<pprojmap type="equivalent" targetid="1(1)"/>
+		<notes>opposite of after sense 1</notes>
+	</sense>
+	<sense id="2">
+		<definition>in front of (e.g., the food before her)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="equivalent" targetid="2(2)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2.1">
+		<definition>in front of, specifically in situations of judgment or examination (e.g., brought before the judge)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="equivalent" targetid="3(2a)"/>
+		<notes></notes>
+	</sense>
+	<sense id="3">
+		<definition>in an earlier position in a sequence or ranking; in preference to</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="approx_equal" targetid="4(3)"/>
+		<notes></notes>
+	</sense>
+	
+</defset>

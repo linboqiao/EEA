@@ -1,0 +1,54 @@
+infant	depression
+mother	depression
+
+consumer	fear
+
+crowd	passion
+
+investor	anxiety
+
+
+investor	enthusiasm
+investor	fears
+investor	worries
+
+management	concern
+
+alliance	anger
+child	anger
+student	anger
+whaler	anger
+passenger	anger
+peasant	anger
+
+fan	angst
+family	angst
+
+
+motorist	confusion
+
+animal	distress
+shareholder	distress
+
+crew	stress
+analyst	stress
+director	stress
+
+expert	worries
+
+family	concern
+government	concern
+
+farmer	enthusiasm
+
+voter	concern
+investor	concern
+
+business	optimism
+consumer	concern
+
+customer	satisfaction
+partner	satisfaction
+reader	satisfaction
+student	satisfaction
+subscriber	satisfaction

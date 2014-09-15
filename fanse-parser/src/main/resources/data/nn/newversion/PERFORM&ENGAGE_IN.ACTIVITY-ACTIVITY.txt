@@ -1,0 +1,223 @@
+wakeup	call
+
+evacuation	flight
+reconnaissance	flight
+surveillance	flight
+training	flight
+
+bombing	raid
+
+acquisition	bid
+reelection	bid
+
+finding	tour
+inspection	tour
+sightseeing	tour
+speaking	tour
+
+replacement	surgery
+
+entertainment	event
+
+afforestation	project
+
+building	project
+cogeneration	project
+communication	project
+conservation	project
+construction	project
+cooperation	project
+demonstration	project
+development	project
+diversion	project
+employment	project
+engineering	project
+expansion	project
+exploration	project
+finance	project
+funding	project
+improvement	project
+investment	project
+irrigation	project
+manufacturing	project
+mining	project
+modernization	project
+
+#location?
+office	project
+
+privatization	project
+production	project
+protection	project
+reclamation	project
+reconstruction	project
+redevelopment	project
+rehabilitation	project
+renovation	project
+resource	project
+restoration	project
+science	project
+
+telecommunication	project
+transformation	project
+transportation	project
+treatment	project
+
+acquisition	program
+action	program
+adjustment	program
+alleviation	program
+application	program
+assistance	program
+breeding	program
+certification	program
+compensation	program
+conditioning	program
+conservation	program
+construction	program
+conversion	program
+cooperation	program
+counseling	program
+dance	program
+development	program
+distribution	program
+diversion	program
+education	program
+election	program
+employment	program
+enforcement	program
+enrichment	program
+entertainment	program
+eradication	program
+expansion	program
+exploration	program
+feeding	program
+financing	program
+funding	program
+housing	program
+immunization	program
+improvement	program
+inspection	program
+insurance	program
+intervention	program
+investment	program
+lending	program
+maintenance	program
+management	program
+modernization	program
+nutrition	program
+peace	program
+pension	program
+population	program
+prevention	program
+privatization	program
+procurement	program
+production	program
+promotion	program
+protection	program
+reconstruction	program
+recovery	program
+recreation	program
+recycling	program
+reduction	program
+repatriation	program
+resettlement	program
+retirement	program
+retraining	program
+saving	program
+science	program
+screening	program
+
+spending	program
+stabilization	program
+standardization	program
+surveillance	program
+
+testing	program
+training	program
+transition	program
+transportation	program
+treatment	program
+vaccination	program
+writing	program
+
+development	programme
+expansion	programme
+investment	programme
+rationalisation	programme
+
+
+
+defiance	campaign
+election	campaign
+eradication	campaign
+immunization	campaign
+opposition	campaign
+primary	campaign
+promotion	campaign
+reelection	campaign
+
+
+camping	trip
+finding	trip
+fishing	trip
+hunting	trip
+sightseeing	trip
+
+marketing	ploy
+
+revival	meeting
+
+restructuring	move
+
+training	seminar
+
+entertainment	show
+
+
+speaking	engagement
+
+nominating	convention
+
+
+modernization	construction
+
+arrival	ceremony
+burial	ceremony
+dedication	ceremony
+inauguration	ceremony
+induction	ceremony
+launching	ceremony
+marriage	ceremony
+presentation	ceremony
+signing	ceremony
+unveiling	ceremony
+
+development	assistance
+
+bargaining	session
+counseling	session
+recording	session
+trading	session
+training	session
+
+
+election	race
+reelection	race
+
+
+modernization	drive
+recruitment	drive
+
+
+training	exercise
+
+
+bombing	mission
+finding	mission
+inspection	mission
+peace	mission
+reconnaissance	mission
+surveillance	mission
+training	mission
+verification	mission

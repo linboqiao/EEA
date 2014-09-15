@@ -1,0 +1,298 @@
+10882	"PTB_WSJ"	"city"	"recovery"	2	4	30211		
+10883	"PTB_WSJ"	"his"	"recovery"	17	18	35927		
+10884	"PTB_WSJ"	"its"	"recovery"	13	15	31237		
+10885	"PTB_WSJ"	"Nikkei"	"recovery"	16	19	21849		
+10886	"PTB_WSJ"	"their"	"recovery"	5	6	10420		
+10887	"PTB_WSJ"	"Their"	"recovery"	1	2	35040		
+3008	"PTB_WSJ"	"nation"	"recovery"	37	40	1498		
+							
+10878	"PTB_WSJ"	"its"	"rise"	14	15	7075		
+10879	"PTB_WSJ"	"Its"	"rise"	1	4	28890		
+10880	"PTB_WSJ"	"their"	"rise"	16	17	2175		
+10881	"PTB_WSJ"	"their"	"rise"	23	24	33885		
+							
+10861	"PTB_WSJ"	"its"	"slide"	6	7	20383		
+10862	"PTB_WSJ"	"market"	"slide"	8	10	21159		
+10863	"PTB_WSJ"	"market"	"slide"	22	25	23976		
+10864	"PTB_WSJ"	"market"	"slide"	14	16	24368		
+10865	"PTB_WSJ"	"National"	"slide"	2	4	28915		
+10866	"PTB_WSJ"	"pound"	"slide"	14	16	11149		
+							
+10925	"PTB_WSJ"	"his"	"death"	16	17	12729		
+10926	"PTB_WSJ"	"his"	"death"	39	40	17655		
+10927	"PTB_WSJ"	"his"	"death"	4	5	19756		
+10928	"PTB_WSJ"	"his"	"death"	14	15	20685		
+10929	"PTB_WSJ"	"his"	"death"	22	23	22942		
+10930	"PTB_WSJ"	"Merkur"	"death"	1	3	31301		
+10931	"PTB_WSJ"	"mother"	"death"	16	18	13515		
+10932	"PTB_WSJ"	"officer"	"death"	3	8	36297		
+11194	"JB"	"dog"	"death"	7	9	1335	"`` Brothers , that was a <b>dog</b> 's <b>death</b> , '' said Mowgli , feeling for the knife he always carried in a sheath round his neck now that he lived with men . "	
+11195	"JB"	"Nag"	"death"	4	6	2089	"The news of <b>Nag</b> 's <b>death</b> was all over the garden , for the sweeper had thrown the body on the rubbish-heap . "	
+11196	"JB"	"Nathoo"	"death"	14	16	1412	"Buldeo says thou art a wizard , but I know thou hast avenged <b>Nathoo</b> 's <b>death</b> . '' "	
+							
+10984	"PTB_WSJ"	"his"	"descent"	4	6	11388		
+							
+10994	"PTB_WSJ"	"its"	"rebound"	18	19	34148		
+10995	"PTB_WSJ"	"market"	"rebound"	13	15	18863		
+							
+10998	"PTB_WSJ"	"Composite"	"advance"	3	5	15594		
+10999	"PTB_WSJ"	"its"	"advance"	6	8	15195		
+11000	"PTB_WSJ"	"its"	"advance"	18	20	25518		
+11001	"PTB_WSJ"	"its"	"advance"	17	19	28886		
+11002	"PTB_WSJ"	"market"	"advance"	5	8	35198		
+11003	"PTB_WSJ"	"other"	"advance"	50	52	32000		
+11004	"PTB_WSJ"	"stock"	"advance"	2	4	9319		
+11005	"PTB_WSJ"	"their"	"advance"	22	23	31647		
+							
+11025	"PTB_WSJ"	"Co."	"fall"	2	4	16407		
+11026	"PTB_WSJ"	"Honecker"	"fall"	2	5	33864		
+11027	"PTB_WSJ"	"Street"	"fall"	32	34	25542		
+							
+11058	"PTB_WSJ"	"Jaguar"	"zigzags"	23	25	38027		
+11059	"PTB_WSJ"	"its"	"spiral"	8	10	17760		
+							
+11119	"PTB_WSJ"	"average"	"gain"	4	7	30073		
+11120	"PTB_WSJ"	"Brae"	"gain"	24	26	6366		
+11121	"PTB_WSJ"	"Its"	"gain"	1	12	12250		
+11122	"PTB_WSJ"	"its"	"gain"	12	15	20879		
+11123	"PTB_WSJ"	"its"	"gain"	12	16	21843		
+11124	"PTB_WSJ"	"its"	"gain"	7	9	27123		
+11125	"PTB_WSJ"	"its"	"gain"	37	38	35197		
+11126	"PTB_WSJ"	"its"	"gain"	12	14	38077		
+11127	"PTB_WSJ"	"market"	"gain"	4	7	2519		
+11128	"PTB_WSJ"	"Nasdaq"	"gain"	1	3	2523		
+11129	"PTB_WSJ"	"their"	"gain"	16	19	35007		
+							
+10874	"PTB_WSJ"	"Average"	"tumble"	23	26	2925		
+10875	"PTB_WSJ"	"sterling"	"tumble"	13	15	11130		
+10876	"PTB_WSJ"	"unit"	"tumble"	30	32	37877		
+							
+10825	"PTB_WSJ"	"its"	"climb"	17	19	26517		
+10826	"PTB_WSJ"	"market"	"climb"	8	10	2443		
+							
+10756	"PTB_WSJ"	"market"	"jitters"	41	43	7841		
+10757	"PTB_WSJ"	"market"	"jitters"	5	7	18936		
+							
+10699	"PTB_WSJ"	"bank"	"expansion"	30	32	10269		
+10700	"PTB_WSJ"	"company"	"expansion"	31	34	25283		
+10701	"PTB_WSJ"	"Dentsu"	"expansion"	4	7	8597		
+10702	"PTB_WSJ"	"economy"	"expansion"	18	20	11760		
+10703	"PTB_WSJ"	"its"	"expansion"	18	20	25706		
+10704	"PTB_WSJ"	"Movieline"	"expansion"	24	27	22257		
+10705	"PTB_WSJ"	"Strip"	"expansion"	10	13	14211		
+10706	"PTB_WSJ"	"their"	"expansion"	12	13	14187		
+							
+10682	"PTB_WSJ"	"its"	"downfall"	4	5	13670		
+10683	"PTB_WSJ"	"average"	"drop"	19	21	39622		
+10684	"PTB_WSJ"	"DJIA"	"drop"	5	8	16385		
+10685	"PTB_WSJ"	"its"	"drop"	20	22	27800		
+10686	"PTB_WSJ"	"market"	"drop"	13	16	9287		
+10687	"PTB_WSJ"	"market"	"drop"	3	6	17597		
+10688	"PTB_WSJ"	"market"	"drop"	17	19	18832		
+							
+10690	"PTB_WSJ"	"Street"	"drop"	13	16	18339		
+10691	"PTB_WSJ"	"Street"	"drop"	16	22	25524		
+							
+10638	"PTB_WSJ"	"AMR"	"decline"	1	4	32294		
+10639	"PTB_WSJ"	"company"	"decline"	5	8	32309		
+10640	"PTB_WSJ"	"Compaq"	"decline"	3	5	11450		
+10641	"PTB_WSJ"	"group"	"decline"	15	17	37710		
+10642	"PTB_WSJ"	"industry"	"decline"	24	26	9121		
+10643	"PTB_WSJ"	"its"	"decline"	17	21	323		
+10644	"PTB_WSJ"	"its"	"decline"	9	12	13980		
+10645	"PTB_WSJ"	"its"	"decline"	28	29	34162		
+10646	"PTB_WSJ"	"its"	"decline"	7	9	36471		
+10647	"PTB_WSJ"	"market"	"decline"	16	19	2541		
+10648	"PTB_WSJ"	"market"	"decline"	19	21	18833		
+10649	"PTB_WSJ"	"market"	"decline"	3	5	19619		
+10650	"PTB_WSJ"	"pound"	"decline"	17	20	11145		
+10651	"PTB_WSJ"	"stock"	"decline"	2	4	14766		
+10652	"PTB_WSJ"	"stock"	"decline"	2	4	38313		
+10653	"PTB_WSJ"	"unit"	"decline"	36	39	11136		
+10654	"PTB_WSJ"	"market"	"declines"	20	24	39062		
+10655	"PTB_WSJ"	"their"	"declines"	9	11	36909		
+							
+10585	"PTB_WSJ"	"market"	"gyrations"	4	7	9470		
+10586	"PTB_WSJ"	"market"	"gyrations"	22	24	24378		
+10587	"PTB_WSJ"	"market"	"gyrations"	15	17	26490		
+10588	"PTB_WSJ"	"market"	"gyrations"	3	6	35564		
+10589	"PTB_WSJ"	"market"	"gyrations"	24	26	39141		
+10590	"PTB_WSJ"	"Street"	"gyrations"	9	11	37874		
+10591	"PTB_WSJ"	"their"	"gyrations"	8	11	13378		
+							
+10554	"PTB_WSJ"	"sterling"	"nose-dive"	16	19	2075		
+10555	"PTB_WSJ"	"its"	"nosedive"	16	18	34185		
+10556	"PTB_WSJ"	"Street"	"nosedive"	8	11	19178		
+10557	"PTB_WSJ"	"cell"	"growth"	11	13	5077		
+10558	"PTB_WSJ"	"company"	"growth"	19	22	6222		
+10559	"PTB_WSJ"	"company"	"growth"	16	19	17732		
+10560	"PTB_WSJ"	"Corp."	"growth"	2	5	38074		
+10561	"PTB_WSJ"	"Dell"	"growth"	29	32	30400		
+10562	"PTB_WSJ"	"economy"	"growth"	7	9	7096		
+10563	"PTB_WSJ"	"IBM"	"growth"	4	6	39395		
+10564	"PTB_WSJ"	"indexing"	"growth"	8	11	27506		
+10565	"PTB_WSJ"	"industry"	"growth"	26	28	14774		
+10566	"PTB_WSJ"	"industry"	"growth"	21	23	15363		
+10567	"PTB_WSJ"	"its"	"growth"	21	23	5714		
+10568	"PTB_WSJ"	"its"	"growth"	19	20	6249		
+10569	"PTB_WSJ"	"its"	"growth"	19	20	11770		
+10570	"PTB_WSJ"	"its"	"growth"	12	13	11831		
+10571	"PTB_WSJ"	"its"	"growth"	3	5	14749		
+10572	"PTB_WSJ"	"its"	"growth"	21	22	15872		
+10573	"PTB_WSJ"	"its"	"growth"	18	20	21319		
+10574	"PTB_WSJ"	"its"	"growth"	6	8	25218		
+10575	"PTB_WSJ"	"its"	"growth"	8	11	25285		
+10576	"PTB_WSJ"	"its"	"growth"	3	5	30913		
+10577	"PTB_WSJ"	"magazines"	"growth"	10	12	16770		
+10578	"PTB_WSJ"	"P&G"	"growth"	14	17	17046		
+10579	"PTB_WSJ"	"segment"	"growth"	2	4	36220		
+10580	"PTB_WSJ"	"Telerate"	"growth"	25	28	4181		
+10581	"PTB_WSJ"	"their"	"growth"	21	23	12769		
+10582	"PTB_WSJ"	"Trelleborg"	"growth"	13	16	25693		
+							
+10543	"PTB_WSJ"	"bank"	"collapse"	50	52	24580		
+10544	"PTB_WSJ"	"bid"	"collapse"	20	22	31888		
+10545	"PTB_WSJ"	"buy-out"	"collapse"	20	22	38097		
+10546	"PTB_WSJ"	"deal"	"collapse"	49	51	25891		
+10547	"PTB_WSJ"	"deal"	"collapse"	17	19	37648		
+10548	"PTB_WSJ"	"freeway"	"collapse"	18	20	34569		
+10549	"PTB_WSJ"	"its"	"collapse"	39	40	4680		
+10550	"PTB_WSJ"	"their"	"collapse"	16	18	31598		
+							
+10535	"PTB_WSJ"	"mark"	"surge"	4	6	16395		
+10536	"PTB_WSJ"	"market"	"surge"	7	9	2841		
+10537	"PTB_WSJ"	"market"	"surge"	10	12	2845		
+10538	"PTB_WSJ"	"Microsoft"	"surge"	1	3	28903		
+10539	"PTB_WSJ"	"Trelleborg"	"surge"	6	10	25707		
+10540	"PTB_WSJ"	"UAL"	"surge"	27	31	18835		
+							
+10503	"PTB_WSJ"	"Instruments"	"plunge"	6	8	8640		
+10504	"PTB_WSJ"	"its"	"plunge"	21	22	21849		
+10505	"PTB_WSJ"	"its"	"plunge"	14	17	31207		
+10506	"PTB_WSJ"	"its"	"plunge"	26	29	37678		
+10507	"PTB_WSJ"	"its"	"plunge"	33	35	38282		
+10508	"PTB_WSJ"	"market"	"plunge"	2	5	7650		
+10509	"PTB_WSJ"	"market"	"plunge"	15	17	7835		
+10510	"PTB_WSJ"	"market"	"plunge"	27	30	24365		
+10511	"PTB_WSJ"	"market"	"plunge"	21	25	27934		
+10512	"PTB_WSJ"	"market"	"plunge"	11	13	32278		
+10513	"PTB_WSJ"	"market"	"plunge"	15	18	33248		
+10514	"PTB_WSJ"	"market"	"plunge"	19	22	33454		
+10515	"PTB_WSJ"	"market"	"plunge"	12	14	34148		
+10516	"PTB_WSJ"	"market"	"plunge"	15	17	35254		
+10517	"PTB_WSJ"	"market"	"plunge"	32	34	36928		
+10518	"PTB_WSJ"	"Street"	"plunge"	40	42	2059		
+10519	"PTB_WSJ"	"Street"	"plunge"	30	32	7466		
+10520	"PTB_WSJ"	"Street"	"plunge"	30	34	31618		
+							
+10790	"PTB_WSJ"	"its"	"swings"	19	21	8961		
+10791	"PTB_WSJ"	"market"	"swings"	13	16	2945		
+10792	"PTB_WSJ"	"market"	"swings"	15	19	7643		
+10793	"PTB_WSJ"	"market"	"swings"	29	33	7653		
+10794	"PTB_WSJ"	"market"	"swings"	6	9	18840		
+							
+10830	"PTB_WSJ"	"animal"	"demise"	11	13	12511		
+10831	"PTB_WSJ"	"its"	"demise"	25	26	4350		
+10832	"PTB_WSJ"	"its"	"demise"	13	14	24175		
+10833	"PTB_WSJ"	"Lehman"	"demise"	9	11	5831		
+10834	"PTB_WSJ"	"Merkur"	"demise"	3	5	31302		
+10835	"PTB_WSJ"	"their"	"demise"	21	22	1134		
+							
+10897	"PTB_WSJ"	"its"	"dips"	14	15	2537		
+							
+10980	"PTB_WSJ"	"market"	"downtrend"	27	30	14827		
+10981	"PTB_WSJ"	"exchange"	"downturn"	5	7	20799		
+							
+10990	"PTB_WSJ"	"economy"	"slowdown"	2	4	29013		
+10991	"PTB_WSJ"	"industry"	"slowdown"	2	4	18470		
+							
+11036	"PTB_WSJ"	"its"	"skid"	11	12	17185		
+							
+11017	"PTB_WSJ"	"market"	"dive"	10	13	27081		
+							
+11090	"PTB_WSJ"	"his"	"own"	44	45	11674		
+							
+2870	"PTB_WSJ"	"London"	"declines"	29	32	18348		
+							
+							
+24132	"HDFRE"	"his"	"abdication"	4	5	4132	"The ceremony of <b>his</b> <b>abdication</b> was performed in a spacious plain , about three miles from Nicomedia . "	
+24142	"HDFRE"	"his"	"abdication"	25	26	4142	"But he yielded , however reluctantly , to the ascendant which his wiser colleague had acquired over him , and retired , immediately after <b>his</b> <b>abdication</b> , to a villa in Lucania , where it was almost impossible that such an impatient spirit could find any lasting tranquility . "	
+24158	"HDFRE"	"his"	"abdication"	17	18	4158	"It was impossible that he could remain ignorant of the troubles which afflicted the empire after <b>his</b> <b>abdication</b> . "	
+24287	"HDFRE"	"his"	"abdication"	11	12	4287	"It was in vain that , a few months after <b>his</b> <b>abdication</b> , his successors dedicated , under his name , those magnificent baths , whose ruins still supply the ground as well as the materials for so many churches and convents . "	
+25036	"HDFRE"	"their"	"abhorrence"	25	26	5036	"The chaste severity of the fathers , in whatever related to the commerce of the two sexes , flowed from the same principle ; <b>their</b> <b>abhorrence</b> of every enjoyment which might gratify the sensual , and degrade the spiritual , nature of man . "	
+							
+20640	"HDFRE"	"his"	"return"	2	3	640	"On <b>his</b> <b>return</b> to Rome , he obtained , by a single act of the senate and people , the universal ratification of all his proceedings . "	
+21136	"HDFRE"	"his"	"return"	52	54	1136	"A short time afterwards , Sosius Falco , one of the consuls of the year , a rash youth , but of an ancient and opulent family , listened to the voice of ambition ; and a conspiracy was formed during a short absence of Pertinax , which was crushed by <b>his</b> sudden <b>return</b> to Rome , and his resolute behavior . "	
+21324	"HDFRE"	"his"	"return"	37	38	1324	"Whilst Severus was engaged in his eastern war , he had reason to apprehend that the governor of Britain might pass the sea and the Alps , occupy the vacant seat of empire , and oppose <b>his</b> <b>return</b> with the authority of the senate and the forces of the West . "	
+21515	"HDFRE"	"his"	"return"	2	3	1515	"On <b>his</b> <b>return</b> from the senate to the palace , he found his mother in the company of several noble matrons , weeping over the untimely fate of her younger son . "	
+21975	"HDFRE"	"his"	"return"	29	30	1975	"A great army was at that time assembled on the banks of the Rhine , under the command of the emperor himself , who , almost immediately after <b>his</b> <b>return</b> from the Persian war , had been obliged to march against the barbarians of Germany . "	
+22242	"HDFRE"	"his"	"return"	2	3	2242	"On <b>his</b> <b>return</b> from the East to Rome , Philip , desirous of obliterating the memory of his crimes , and of captivating the affections of the people , solemnized the secular games with infinite pomp and magnificence . "	
+24383	"HDFRE"	"his"	"return"	25	26	4383	"While the emperor was employed in the Italian war , he intrusted his friend with the defence of the Danube ; and immediately after <b>his</b> <b>return</b> from that unfortunate expedition , he invested Licinius with the vacant purple of Severus , resigning to his immediate command the provinces of Illyricum . "	
+21839	"HDFRE"	"their"	"return"	25	26	1839	"One particular fact well deserves to be recorded , as it illustrates the manners of the troops , and exhibits a singular instance of <b>their</b> <b>return</b> to a sense of duty and obedience . "	
+22175	"HDFRE"	"their"	"return"	59	61	2175	"As soon as he had received their oath of fidelity , he addressed them in terms full of mildness and moderation ; lamented , rather than arraigned the wild disorders of the times , and assured the soldiers , that of all their past conduct the senate would remember only their generous desertion of the tyrant , and <b>their</b> voluntary <b>return</b> to their duty . "	
+22816	"HDFRE"	"their"	"return"	35	36	2816	"Though flying parties of the barbarians , who incessantly hovered on the banks of the Danube , penetrated sometimes to the confines of Italy and Macedonia , their progress was commonly checked , or <b>their</b> <b>return</b> intercepted , by the Imperial lieutenants . "	
+22842	"HDFRE"	"their"	"return"	24	25	2842	"But even a complete victory would have been of little moment , as the approach of the autumnal equinox summoned them to hasten <b>their</b> <b>return</b> . "	
+23147	"HDFRE"	"their"	"return"	62	63	3147	"Collecting an active body of troops , he marched with silence and celerity along the skirts of the Hercynian forest ; and the Alemanni , laden with the spoils of Italy , arrived at the Danube , without suspecting , that on the opposite bank , and in an advantageous post , a Roman army lay concealed and prepared to intercept <b>their</b> <b>return</b> . "	
+23821	"HDFRE"	"their"	"return"	21	22	3821	"When the German pirates sailed from their own harbors , he connived at their passage , but he diligently intercepted <b>their</b> <b>return</b> , and appropriated to his own use an ample share of the spoil which they had acquired . "	
+							
+21076	"HDFRE"	"emperor"	"death"	29	31	1076	"The body was secretly conveyed out of the palace , before the least suspicion was entertained in the city , or even in the court , of the <b>emperor</b> 's <b>death</b> . "	
+22388	"HDFRE"	"emperor"	"death"	17	19	2388	"The favorable opportunities of the absence of Alexander , and of the confusions that followed that <b>emperor</b> 's <b>death</b> , presented themselves in vain to his ambition . "	
+23021	"HDFRE"	"emperor"	"death"	7	9	3021	"On the first news of the <b>emperor</b> 's <b>death</b> , the troops expressed some suspicion and resentment , till the one was removed , and the other assuaged , by a donative of twenty pieces of gold to each soldier . "	
+23656	"HDFRE"	"emperor"	"death"	15	17	3656	"Notwithstanding all the arts that were practised to disguise the manner of the late <b>emperor</b> 's <b>death</b> , it was found impossible to remove the opinion of the multitude , and the power of opinion is irresistible . "	
+23715	"HDFRE"	"emperor"	"death"	25	27	3715	"But a report soon circulated through the camp , at first in secret whispers , and at length in loud clamors , of the <b>emperor</b> 's <b>death</b> , and of the presumption of his ambitious minister , who still exercised the sovereign power in the name of a prince who was no more . "	
+21630	"HDFRE"	"father"	"death"	54	56	1630	"The young Antoninus ( for he had assumed and polluted that respectable name ) was declared emperor by the troops of Emesa , asserted his hereditary right , and called aloud on the armies to follow the standard of a young and liberal prince , who had taken up arms to revenge his <b>father</b> 's <b>death</b> and the oppression of the military order . "	
+23678	"HDFRE"	"father"	"death"	17	19	3678	"But the elevation of Constantius was for a while deferred ; and as soon as the <b>father</b> 's <b>death</b> had released Carinus from the control of fear or decency , he displayed to the Romans the extravagancies of Elagabalus , aggravated by the cruelty of Domitian . "	
+23697	"HDFRE"	"father"	"death"	11	13	3697	"The sons of Carus never saw each other after their <b>father</b> 's <b>death</b> . "	
+24267	"HDFRE"	"father"	"death"	10	12	4267	"Constantine informed him of the melancholy event of his <b>father</b> 's <b>death</b> , modestly asserted his natural claim to the succession , and respectfully lamented , that the affectionate violence of his troops had not permitted him to solicit the Imperial purple in the regular and constitutional manner . "	
+20715	"HDFRE"	"his"	"death"	7	8	715	"But , at the time of <b>his</b> <b>death</b> , the practice of a century had inseparably connected those appellations with the Imperial dignity , and they have been preserved by a long succession of emperors , Romans , Greeks , Franks , and Germans , from the fall of the republic to the present time . "	
+20800	"HDFRE"	"his"	"death"	9	11	800	"The philosophic emperor dissembled his follies , lamented <b>his</b> early <b>death</b> , and cast a decent veil over his memory . "	
+20826	"HDFRE"	"his"	"death"	15	16	826	"His memory was revered by a grateful posterity , and above a century after <b>his</b> <b>death</b> , many persons preserved the image of Marcus Antoninus among those of their household gods . "	
+21121	"HDFRE"	"his"	"death"	43	44	1121	"Though every measure of injustice and extortion had been adopted , which could collect the property of the subject into the coffers of the prince , the rapaciousness of Commodus had been so very inadequate to his extravagance , that , upon <b>his</b> <b>death</b> , no more than eight thousand pounds were found in the exhausted treasury , to defray the current expenses of government , and to discharge the pressing demand of a liberal donative , which the new emperor had been obliged to promise to the Pr??torian guards "	
+21233	"HDFRE"	"his"	"death"	29	30	1233	"As soon as the intelligence of the atrocious murder of Pertinax had reached Antioch , the wishes of Asia invited Niger to assume the Imperial purple and revenge <b>his</b> <b>death</b> . "	
+21393	"HDFRE"	"his"	"death"	39	40	1393	"The animosities of the palace , by irritating the ambition and alarming the fears of Plautianus , threatened to produce a revolution , and obliged the emperor , who still loved him , to consent with reluctance to <b>his</b> <b>death</b> . "	
+21525	"HDFRE"	"his"	"death"	70	71	1525	"His guards and freedmen , the ministers of his serious business , and the companions of his looser hours , those who by his interest had been promoted to any commands in the army or provinces , with the long connected chain of their dependants , were included in the proscription ; which endeavored to reach every one who had maintained the smallest correspondence with Geta , who lamented <b>his</b> <b>death</b> , or who even mentioned his name . "	
+21878	"HDFRE"	"his"	"death"	12	13	1878	"The dissolute tyranny of Commodus , the civil wars occasioned by <b>his</b> <b>death</b> , and the new maxims of policy introduced by the house of Severus , had all contributed to increase the dangerous power of the army , and to obliterate the faint image of laws and liberty that was still impressed on the minds of the Romans . "	
+21911	"HDFRE"	"his"	"death"	35	36	1911	"A servile crowd , in which he frequently reckoned pr??tors and consuls , courted his smiles , pampered his avarice , applauded his follies , served his passions , and waited with impatience for <b>his</b> <b>death</b> . "	
+21922	"HDFRE"	"his"	"death"	28	29	1922	"Instead of a twentieth , he exacted a tenth of all legacies and inheritances ; and during his reign ( for the ancient proportion was restored after <b>his</b> <b>death</b> ) he crushed alike every part of the empire under the weight of his iron sceptre . "	
+21979	"HDFRE"	"his"	"death"	4	5	1979	"The circumstances of <b>his</b> <b>death</b> are variously related . "	
+22078	"HDFRE"	"His"	"death"	1	2	2078	"<b>His</b> <b>death</b> alone could rescue the authority of the senate , and the lives of the senators from a state of danger and suspense . "	
+22197	"HDFRE"	"his"	"death"	15	16	2197	"As the third Gordian was only nineteen years of age at the time of <b>his</b> <b>death</b> , the history of his life , were it known to us with greater accuracy than it really is , would contain little more than the account of his education , and the conduct of the ministers , who by turns abused or guided the simplicity of his unexperienced youth . "	
+23225	"HDFRE"	"his"	"death"	31	32	3225	"Invincible in war , he was there cut off by domestic treason , and his favorite amusement of hunting was the cause , or at least the occasion , of <b>his</b> <b>death</b> . "	
+23462	"HDFRE"	"his"	"death"	11	12	3462	"It is certain that their insolences was the cause of <b>his</b> <b>death</b> . "	
+23515	"HDFRE"	"his"	"death"	2	3	3515	"After <b>his</b> <b>death</b> they seemed to revive with an increase of fury and of numbers . "	
+23552	"HDFRE"	"his"	"death"	6	7	3552	"Within a few years after <b>his</b> <b>death</b> , it was overthrown by the Alemanni . "	
+23643	"HDFRE"	"his"	"death"	10	11	3643	"They were scarcely uttered before they were contradicted by <b>his</b> <b>death</b> ; an event attended with such ambiguous circumstances , that it may be related in a letter from his own secretary to the pr??fect of the city . "	
+23648	"HDFRE"	"his"	"death"	15	16	3648	"But , as far as we have been able to investigate the truth , <b>his</b> <b>death</b> was the natural effect of his disorder . '' "	
+23660	"HDFRE"	"his"	"death"	25	26	3660	"Born and educated in a private station , the election of their father raised them at once to the rank of princes ; and <b>his</b> <b>death</b> , which happened about sixteen months afterwards , left them the unexpected legacy of a vast empire . "	
+23718	"HDFRE"	"his"	"death"	14	15	3718	"The gradual decline of his health might have induced them to believe that <b>his</b> <b>death</b> was natural ; but the concealment was interpreted as an evidence of guilt , and the measures which Aper had taken to secure his election became the immediate occasion of his ruin Yet , even in the transport of their rage and grief , the troops observed a regular proceeding , which proves how firmly discipline had been reestablished by the martial successors of Gallienus "	
+23824	"HDFRE"	"his"	"death"	28	29	3824	"The wealth of Carausius was , on this occasion , very justly considered as an evidence of his guilt ; and Maximian had already given orders for <b>his</b> <b>death</b> . "	
+23992	"HDFRE"	"his"	"death"	17	18	3992	"They detained him till the last moment of his life in shameful captivity , and after <b>his</b> <b>death</b> they exposed his body to perpetual ignominy . '' "	
+24125	"HDFRE"	"his"	"death"	4	5	4125	"The rumor of <b>his</b> <b>death</b> was for some time universally believed , and it was supposed to be concealed with a view to prevent the troubles that might have happened during the absence of the C??sar Galerius . "	
+24255	"HDFRE"	"His"	"death"	1	2	4255	"<b>His</b> <b>death</b> was immediately succeeded by the elevation of Constantine . "	
+24423	"HDFRE"	"his"	"death"	39	40	4423	"The last years of Galerius were less shameful and unfortunate ; and though he had filled with more glory the subordinate station of C??sar than the superior rank of Augustus , he preserved , till the moment of <b>his</b> <b>death</b> , the first place among the princes of the Roman world . "	
+24428	"HDFRE"	"His"	"death"	1	2	4428	"<b>His</b> <b>death</b> was occasioned by a very painful and lingering disorder . "	
+24610	"HDFRE"	"His"	"death"	1	2	4610	"<b>His</b> <b>death</b> , which happened at Tarsus , was variously ascribed to despair , to poison , and to the divine justice . "	
+21588	"HDFRE"	"master"	"death"	51	53	1588	"Adventus , however , the senior pr??fect , conscious of his age and infirmities , of his small reputation , and his smaller abilities , resigned the dangerous honor to the crafty ambition of his colleague Macrinus , whose well-dissembled grief removed all suspicion of his being accessary to his <b>master</b> 's <b>death</b> . "	
+20974	"HDFRE"	"minister"	"death"	40	42	974	"These military petitioners , by their own determined behaviour , by inflaming the divisions of the guards , by exaggerating the strength of the British army , and by alarming the fears of Commodus , exacted and obtained the <b>minister</b> 's <b>death</b> , as the only redress of their grievances . "	
+21853	"HDFRE"	"my"	"death"	46	47	1853	"`` Your courage , '' resumed the intrepid Alexander , `` would be more nobly displayed in the field of battle ; me you may destroy , you can not intimidate ; and the severe justice of the republic would punish your crime and revenge <b>my</b> <b>death</b> . '' "	
+22970	"HDFRE"	"their"	"death"	11	12	2970	"The election of these precarious emperors , their power and <b>their</b> <b>death</b> , were equally destructive to their subjects and adherents . "	
+24653	"HDFRE"	"their"	"death"	14	15	4653	"They were at length discovered at Thessalonica ; and as the sentence of <b>their</b> <b>death</b> was already pronounced , they were immediately beheaded , and their bodies thrown into the sea . "	
+22170	"HDFRE"	"tyrant"	"death"	3	5	2170	"After the <b>tyrant</b> 's <b>death</b> , his formidable army had acknowledged , from necessity rather than from choice , the authority of Maximus , who transported himself without delay to the camp before Aquileia . "	
+23849	"HDFRE"	"tyrant"	"death"	13	15	3849	"Before the preparations were finished , Constantius received the intelligence of the <b>tyrant</b> 's <b>death</b> , and it was considered as a sure presage of the approaching victory . "	
+							
+20234	"HDFRE"	"his"	"departure"	2	3	234	"Before <b>his</b> <b>departure</b> , the prudent general had provided for security as well as for dominion . "	
+23625	"HDFRE"	"his"	"departure"	2	3	3625	"Before <b>his</b> <b>departure</b> for this distant expedition , Carus conferred on his two sons , Carinus and Numerian , the title of C??sar , and investing the former with almost an equal share of the Imperial power , directed the young prince , first to suppress some troubles which had arisen in Gaul , and afterwards to fix the seat of his residence at Rome , and to assume the government of the Western provinces . "	
+24499	"HDFRE"	"his"	"departure"	50	51	4499	"Constantine preferred the road of the Cottian Alps , or , as it is now called , of Mount Cenis , and led his troops with such active diligence , that he descended into the plain of Piedmont before the court of Maxentius had received any certain intelligence of <b>his</b> <b>departure</b> from the banks of the Rhine . "	
+20123	"HDFRE"	"its"	"departure"	20	24	123	"It is idle , it is disingenuous , to deny or to dissemble the early depravations of Christianity , <b>its</b> gradual but rapid <b>departure</b> from its primitive simplicity and purity , still more , from its spirit of universal love . "	
+22728	"HDFRE"	"their"	"departure"	17	21	2728	"He plentifully supplied their camp with every conveniency that could assuage their angry spirits or facilitate <b>their</b> so much wished-for <b>departure</b> ; and he even promised to pay them annually a large sum of gold , on condition they should never afterwards infest the Roman territories by their incursions . "	
+							
+23207	"HDFRE"	"her"	"descent"	3	4	3207	"She claimed <b>her</b> <b>descent</b> from the Macedonian kings of Egypt , * equalled in beauty her ancestor Cleopatra , and far surpassed that princess in chastity and valor . "	
+21212	"HDFRE"	"his"	"descent"	8	9	1212	"But the branch from which he claimed <b>his</b> <b>descent</b> was sunk into mean circumstances , and transplanted into a remote province . "	
+23405	"HDFRE"	"his"	"descent"	3	4	3405	"He claimed <b>his</b> <b>descent</b> from the philosophic historian , whose writings will instruct the last generations of mankind . "	
+24276	"HDFRE"	"whose"	"descent"	20	22	4276	"The children of Constantius by his second marriage were six in number , three of either sex , and <b>whose</b> Imperial <b>descent</b> might have solicited a preference over the meaner extraction of the son of Helena . "	
+							
+21005	"HDFRE"	"his"	"repentance"	2	3	1005	"But <b>his</b> <b>repentance</b> lasted only thirty days ; and , under Cleander 's tyranny , the administration of Perennis was often regretted . "	
+21859	"HDFRE"	"their"	"repentance"	12	13	1859	"Alexander enjoyed , during thirty days , the edifying spectacle of <b>their</b> <b>repentance</b> ; nor did he restore them to their former rank in the army , till he had punished with death those tribunes whose connivance had occasioned the mutiny . "	
+							
+5266	"PTB_WSJ"	"its"	"opening"	22	24	14829		
+

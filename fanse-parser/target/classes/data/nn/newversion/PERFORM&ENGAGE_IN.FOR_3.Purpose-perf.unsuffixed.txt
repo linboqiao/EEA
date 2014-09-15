@@ -1,0 +1,157 @@
+aid	budget
+research	budget
+travel	budget
+
+startup	capital
+
+access	code
+
+strip	joint
+
+combat	readiness
+
+combat	action
+protest	action
+strike	action
+
+business	activity
+campaign	activity
+celebration	activity
+combat	activity
+espionage	activity
+export	activity
+finance	activity
+merger	activity
+research	activity
+retail	activity
+sport	activity
+support	activity
+takeover	activity
+tourism	activity
+
+return	flight
+
+combat	force
+strike	force
+
+battle	formation
+combat	formation
+
+research	grant
+
+work	hours
+
+transport	infrastructure
+
+reform	initiative
+
+picket	line
+
+draft	lottery
+
+control	measure
+reform	measure
+relief	measure
+stopgap	measure
+
+control	mechanism
+
+work	method
+
+relief	mission
+rescue	mission
+
+research	money
+
+research	network
+supply	network
+transport	network
+
+access	number
+dance	number
+
+
+reform	package
+rescue	package
+support	package
+tour	package
+travel	package
+
+export	pipeline
+
+speech	right
+
+transport	capacity
+
+combat	capability
+research	capability
+
+export	potential
+
+work	practices
+
+appeal	procedure
+test	procedure
+
+appeal	process
+bid	process
+design	process
+interview	process
+reform	process
+thought	process
+work	process
+
+repurchase	program
+rescue	program
+research	program
+study	program
+work	program
+
+research	project
+work	project
+
+research	purpose
+
+protest	rally
+
+escape	route
+transport	route
+travel	route
+
+access	service
+escort	service
+launch	service
+rescue	service
+retail	service
+search	service
+travel	service
+worship	service
+
+chat	session
+interview	session
+study	session
+
+research	spending
+
+backup	system
+combat	system
+display	system
+launch	system
+research	system
+trade	system
+transfer	system
+
+siege	tactic
+
+travel	trailer
+
+cleanup	work
+design	work
+relief	work
+repair	work
+rescue	work
+research	work
+support	work
+
+rescue	worker
+

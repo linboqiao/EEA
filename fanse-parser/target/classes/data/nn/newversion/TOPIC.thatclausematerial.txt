@@ -1,0 +1,27 @@
+bribery	allegation
+corruption	allegation
+fraud	allegation
+
+bomb	threat
+death	threat
+missile	threat
+murder	threat
+strike	threat
+takeover	threat
+veto	threat
+
+veto	message
+
+budget	message
+
+error	message
+toll	message
+
+death	notice
+eviction	notice
+layoff	notice
+
+#expressing
+loyalty	oath
+
+loophole	suggestion

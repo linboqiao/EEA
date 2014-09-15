@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<defset prep="onto">
+
+	<sense id="1">
+		<definition>moving (or extending) to a location on the surface of</definition>
+		<majorcluster>DESTINATION</majorcluster>
+		<pprojmap type="equivalent" targetid="1(1)"/>
+		<notes></notes>
+	</sense>
+	<sense id="1.1">
+		<!-- may need to be restricted a bit to make it less ambiguous with 1 -->
+		<definition>moving aboard a vehicle of transportation</definition>
+		<majorcluster>DESTINATION</majorcluster>
+		<pprojmap type="equivalent" targetid="2(2)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2">
+		<definition>(mathematics) in reference to an 'onto' mapping</definition>
+		<majorcluster>TEMPORAL</majorcluster>
+		<notes>metaphor</notes>
+	</sense>
+	
+	
+</defset>

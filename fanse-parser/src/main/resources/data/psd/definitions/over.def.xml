@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+
+<defset prep="over">
+	<!-- some difficulty with 'over the side' may still remain -->
+	<sense id="1">
+		<definition>(above and across) vertically above and moving/extending (at least partially) across X2 (e.g., flew over the plains)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="subsumes" subsetof="2(1a)"/>
+		<pprojmap type="subsumes" targetid="3(1b)"/>
+		<pprojmap type="subsumes" subsetof="4(2)"/>
+		<pprojmap type="subsumes" subsetof="13(4b)"/>
+		<notes></notes>
+	</sense>
+	<sense id="2">
+		<definition>(above) vertically above (e.g., the halo over his head)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="subsumes" subsetof="1(1)"/>
+		<pprojmap type="subsumes" subsetof="4(2)"/>
+		<notes></notes>
+	</sense>
+	<!-- 3 is slightly too wide -->
+	<sense id="3">
+		<definition>expressing passage or trajectory across (but without implied vertical separation); expressing a location that could be reached by travel across (e.g., journey over the desert, the house over the hill)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="subsumes" targetid="11(4)"/>
+		<pprojmap type="subsumes" subsetof="3(1b)"/>
+		<notes></notes>
+	</sense>
+	<sense id="4">
+		<definition>located at the other side of</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="equivalent" targetid="13(4b)"/>
+		<notes></notes>
+	</sense>
+	<sense id="5">
+		<definition>across so as to form a covering (e.g., spread jam over it)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<pprojmap type="equivalent" targetid="2(1a)"/>
+		<notes></notes>
+	</sense>
+	<sense id="6">
+		<definition>expressing the means by which something is done (e.g., talk over the phone)</definition>
+		<majorcluster>MEANS</majorcluster>
+		<pprojmap type="equivalent" targetid="15(6)"/>
+		<notes></notes>
+	</sense>
+	<sense id="6.1">
+		<definition>by means of the resistant surface constituted by (an object), as with striking or hitting (e.g., broke his club over Joe's head)</definition>
+		<majorcluster>SPATIAL</majorcluster>
+		<majorcluster>MEANS</majorcluster>
+		<pprojmap type="equivalent" targetid="15(6)-1"/>
+		<notes></notes>
+	</sense>
+	<sense id="7">
+		<definition>in cases of perceived despite some sort of interference, usually some sort of audible noise (e.g., heard it over the rock music)</definition>
+		<pprojmap type="equivalent" targetid="9(2e)"/>
+		<notes></notes>
+	</sense>
+	<sense id="8">
+		<definition>indicating the subject of (and, sometimes, the reason for) (e.g., fought over the trophy)</definition>
+		<majorcluster>TOPIC</majorcluster>
+		<pprojmap type="equivalent" targetid="16(7)"/>
+		<notes></notes>
+	</sense>
+	<sense id="9">
+		<definition>indicating a time period during which something happens or persists (e.g., the food spoiled over the weekend)</definition>
+		<majorcluster>TEMPORAL</majorcluster>
+		<pprojmap type="equivalent" targetid="14(5)"/>
+		<notes></notes>
+	</sense>
+	<sense id="10">
+		<definition>expressing dominance or influence, as of authority, rank, or victory (e.g. power over him)</definition>
+		<majorcluster></majorcluster>
+		<pprojmap type="equivalent" unionof="5(2a),6(2b),7(2c),8(2d)"/>
+		<notes></notes>
+	</sense>
+
+	<sense id="11">
+		<definition>indicating some foodstuff available/consumed during an event/activity (e.g., discuss it over coffee)</definition>
+		<pprojmap type="equivalent" targetid=""/>
+		<!--  -->
+		<notes>only examples that fit here were labeled 14(5) in TPP, but 14(5) is defined for temporal extent</notes>
+	</sense>
+
+<!-- see also 10(3) - adverb only sense? -->
+	
+	
+</defset>

@@ -1,0 +1,250 @@
+trace	amount
+
+security	aspect
+
+capital	asset
+currency	asset
+gas	asset
+property	asset
+
+salmonella	bacteria
+
+mariachi	band
+
+ferry	boat
+
+bank	building
+court	building
+embassy	building
+factory	building
+headquarters	building
+hospital	building
+office	building
+school	building
+
+sedan	car
+subcompact	car
+
+journalism	career
+
+cancer	case
+cholera	case
+malaria	case
+measles	case
+polio	case
+
+feta	cheese
+mozzarella	cheese
+ricotta	cheese
+
+capital	city
+
+crack	cocaine
+
+bank	company
+
+laptop	computer
+mainframe	computer
+server	computer
+
+boa	constrictor
+
+apple	crop
+coca	crop
+coffee	crop
+corn	crop
+cotton	crop
+drug	crop
+food	crop
+grain	crop
+maize	crop
+plant	crop
+rice	crop
+soybean	crop
+sugar	crop
+wheat	crop
+
+euro	currency
+
+doctorate	degree
+
+laser	device
+
+roundtable	discussion
+
+dumping	duty
+patrol	duty
+
+solo	effort
+
+media	event
+news	event
+tour	event
+
+airport	facility
+bank	facility
+prison	facility
+
+christian	faith
+
+technology	field
+
+solo	flight
+
+parquet	floor
+
+paper	form
+
+diesel	fuel
+
+exhaust	fume
+
+exhaust	gas
+hydrogen	gas
+methane	gas
+
+barbecue	grill
+
+militia	group
+
+migraine	headache
+
+smash	hit
+
+trailer	home
+
+bombing	incident
+shooting	incident
+
+food	item
+
+fighter	jet
+
+return	journey
+
+slave	laborer
+
+pasture	land
+
+tax	liability
+
+laser	light
+
+mortgage	loan
+
+telephone	machine
+
+caucus	meeting
+roundtable	meeting
+summit	meeting
+
+palladium	metal
+
+rap	music
+rock	music
+soul	music
+
+canola	oil
+crude	oil
+
+capri	pants
+
+parchment	paper
+
+jalapeno	pepper
+
+solo	performance
+
+cell	phone
+
+art	piece
+
+market	place
+
+fighter	plane
+
+apartheid	policy
+
+guard	position
+priority	position
+quarterback	position
+
+boutique	property
+office	property
+
+
+
+freestyle	relay
+
+credit	resource
+energy	resource
+fish	resource
+fishery	resource
+forestry	resource
+gas	resource
+information	resource
+mineral	resource
+oil	resource
+water	resource
+wildlife	resource
+
+
+comedy	routine
+
+autumn	season
+fall	season
+spring	season
+summer	season
+winter	season
+
+solo	shot
+
+cartoon	show
+comedy	show
+
+thumbs-up	sign
+
+application	software
+browser	software
+
+lede	story
+
+transfer	student
+
+cardigan	sweater
+
+computer	system
+mainframe	system
+
+round-table	talk
+roundtable	talk
+
+laser	technology
+phone	technology
+
+litmus	test
+
+beep	tone
+
+halter	top
+
+subway	train
+
+merger	transaction
+swap	transaction
+
+cypress	tree
+eucalyptus	tree
+fir	tree
+maple	tree
+plant	tree
+redwood	tree
+oak	tree
+
+infantry	troop
+
+pickup	truck
+
+closeup	view
+
+runoff	vote

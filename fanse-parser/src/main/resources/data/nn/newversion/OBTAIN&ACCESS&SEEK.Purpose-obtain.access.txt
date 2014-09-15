@@ -1,0 +1,12 @@
+#in order to utilize
+airline	ticket
+concert	ticket
+lift	ticket
+movie	ticket
+
+school	voucher
+
+car	key
+
+phone	card
+telephone	card

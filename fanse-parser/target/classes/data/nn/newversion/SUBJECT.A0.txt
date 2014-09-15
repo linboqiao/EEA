@@ -1,0 +1,832 @@
+industry	study
+
+army	gunfire
+animal	damage
+media	hype
+
+sniper	fire
+
+consumer	choice
+student	choice
+
+
+artillery	support
+market	response
+
+cicada	song
+
+airline	deal
+
+analyst	note
+
+government	offer
+
+court	opinion
+
+state	permit
+
+shareholder	consent
+
+state	requirement
+
+state	rule
+
+state	direction
+
+government	figure
+
+creditor	lawsuit
+shareholder	lawsuit
+
+shareholder	litigation
+
+analyst	projection
+government	projection
+
+state	provision
+
+student	achievement
+self	determination
+party	caucus
+
+airline	flight
+coalition	government
+labor	government
+labour	government
+student	government
+
+family	reunification
+
+family	support
+market	approval
+arson	fire
+police	gunfire
+party	support
+government	waste
+
+police	cooperation
+
+shareholder	resolution
+
+government	response
+police	response
+
+government	restriction
+state	restriction
+
+shareholder	suit
+
+administration	effort
+industry	effort
+
+egg industry	lobbying
+
+student	improvement
+
+bishop	conference
+donor	conference
+industry	conference
+media	conference
+
+family	gathering
+government	interference
+state	interference
+
+employee	misconduct
+lawyer	misconduct
+
+family	violence
+fan	violence
+gang	violence
+mob	violence
+police	violence
+youth	violence
+
+party	convention
+party	conference
+
+state	campaign
+government	campaign
+
+team	sport
+
+scavenger	hunt
+
+family	picnic
+family	dinner
+
+state	banquet
+
+labour	movement
+opposition	movement
+student	movement
+troop	movement
+worker	movement
+
+family	dispute
+
+criminal	activity
+family	activity
+gang	activity
+government	activity
+group	activity
+investor	activity
+labor	activity
+opposition	activity
+party	activity
+police	activity
+school	activity
+student	activity
+
+company	performance
+school	performance
+student	performance
+
+state	planning
+
+team	play
+
+class	reunion
+family	reunion
+
+company	sale
+government	sale
+
+farm	production
+
+airline	service
+bank	service
+brokerage	service
+city	service
+government	service
+hospital	service
+media	service
+physician	service
+police	service
+practitioner	service
+press	service
+state	service
+volunteer	service
+
+police	effort
+state	effort
+volunteer	effort
+company	reporting
+
+volunteer	project
+
+government	control
+management	control
+party	control
+state	control
+
+class	project
+police	work
+staff	work
+volunteer	work
+
+
+government	survey
+magazine	survey
+
+administration	reservation
+administration	view
+
+consumer	perception
+consumer	expectation
+consumer	preference
+economist	expectation
+
+majority	opinion
+
+user	feedback
+
+self	defense
+
+committee	action
+court	action
+government	action
+guerrilla	action
+labor	action
+rearguard	action
+state	action
+
+analyst	expectation
+city	expectation
+company	expectation
+
+state	prosecution
+
+army	raid
+commando	raid
+police	raid
+
+gang	rape
+
+consumer	scrutiny
+government	scrutiny
+media	scrutiny
+press	scrutiny
+
+investor	withdrawal
+
+farmer	selling
+insider	selling
+
+government	probe
+
+government	procurement
+
+valet	parking
+
+government	oversight
+state	oversight
+
+
+employee	misdeed
+
+government	move
+
+party	nomination
+
+army	regulations
+city	regulations
+government	regulations
+state	regulations
+
+government	crackdown
+police	crackdown
+
+
+insider	dealing
+
+jury	deliberation
+
+student	demonstration
+
+church	activism
+nurse	activism
+stockholder	activism
+
+artillery	advance
+
+
+
+media	coverage
+network	coverage
+press	coverage
+
+gang	crime
+
+consumer	purchase
+government	purchase
+
+government	repression
+
+consumer	resistance
+
+
+
+
+authorities	complaint
+cadet	complaint
+commuter	complaint
+court	complaint
+delegate	complaint
+developer	complaint
+environmentalist	complaint
+farmer	complaint
+listener	complaint
+parent	complaint
+physician	complaint
+player	complaint
+press	complaint
+shareholder	complaint
+subscriber	complaint
+tenant	complaint
+victim	complaint
+visitor	complaint
+star	endorsement
+
+bankers	acceptance
+consumer	acceptance
+government	acceptance
+
+eyewitness	account
+media	account
+newspaper	account
+press	account
+witness	account
+
+media	criticism
+
+company	announcement
+government	announcement
+
+board	approval
+committee	approval
+court	approval
+creditor	approval
+government	approval
+holder	approval
+shareholder	approval
+state	approval
+voter	approval
+
+defense	argument
+
+government	ban
+
+creditor	claim
+government	claim
+worker	claim
+
+government	communique
+press	communique
+
+citizen	complaint
+consumer	complaint
+customer	complaint
+passenger	complaint
+
+government	decree
+
+consumer	demand
+customer	demand
+government	demand
+investor	demand
+market-maker	demand
+opposition	demand
+student	demand
+worker	demand
+world	demand
+
+analyst	estimate
+government	estimate
+industry	estimate
+
+
+analyst	forecast
+economist	forecast
+government	forecast
+industry	forecast
+
+bank	guarantee
+government	guarantee
+state	guarantee
+
+court	judgment
+
+circuit	ruling
+court	ruling
+state	ruling
+
+
+army	statement
+campaign	statement
+company	statement
+embassy	statement
+government	statement
+ministry	statement
+police	statement
+press	statement
+state	statement
+witness	statement
+
+church	teaching
+
+witness	testimony
+
+
+auditor	report
+bank	report
+commission	report
+committee	report
+company	report
+eyewitness	report
+government	report
+magazine	report
+manager	report
+media	report
+navy	report
+newspaper	report
+panel	report
+police	report
+press	report
+researcher	report
+staff	report
+state	report
+
+industry	publication
+
+journalist	question
+reader	question
+reporter	question
+
+police	questioning
+
+staff	recommendation
+
+
+
+
+administration	request
+government	request
+investor	request
+
+administration	proposal
+commission	proposal
+company	proposal
+government	proposal
+shareholder	proposal
+
+labor	protest
+student	protest
+
+
+government	plan
+industry	plan
+
+
+analyst	prediction
+
+government	promise
+
+
+court	order
+customer	order
+doctor	order
+government	order
+manufacturer	order
+police	order
+
+court	permission
+government	permission
+
+
+government	mandate
+state	mandate
+
+coyote	attack
+lion	attack
+locust	attack
+wolf	attack
+snake	attack
+
+bulldog	bite
+cat	bite
+fly	bite
+hyena	bite
+recluse	bite
+skunk	bite
+snake	bite
+
+salmon	run
+
+staph	infection
+virus	infection
+vermin	infestation
+cat	scratch
+
+government	auction
+
+gang	fight
+
+family	feud
+
+union	election
+
+community	involvement
+government	involvement
+parent	involvement
+
+government	management
+state	management
+
+analyst	meeting
+association	meeting
+board	meeting
+commission	meeting
+committee	meeting
+company	meeting
+creditor	meeting
+director	meeting
+donor	meeting
+expert	meeting
+faculty	meeting
+government	meeting
+group	meeting
+leader	meeting
+leadership	meeting
+league	meeting
+owner	meeting
+party	meeting
+shareholder	meeting
+staff	meeting
+stockholder	meeting
+team	meeting
+town	meeting
+
+audience	participation
+citizen	participation
+investor	participation
+minority	participation
+voter	participation
+
+
+opposition	rally
+youth	rally
+
+airline	competition
+group	competition
+team	competition
+
+government	agreement
+
+business	behavior
+consumer	behavior
+
+government	pressure
+peer	pressure
+protectionist	pressure
+shareholder	pressure
+
+market	reaction
+
+creditor	support
+fan	support
+government	support
+shareholder	support
+investor	support
+state	support
+taxpayer	support
+voter	support
+
+
+government	assistance
+state	assistance
+
+government	backing
+
+bank	charge
+government	charge
+opposition	charge
+state	charge
+
+government	clearance
+state	clearance
+
+government	concession
+labor	concession
+
+board	decision
+court	decision
+family	decision
+government	decision
+state	decision
+
+audience	reaction
+fan	reaction
+investor	reaction
+shareholder	reaction
+
+communist	domination
+
+party	decision
+
+government	help
+
+court	protection
+government	protection
+police	protection
+state	protection
+
+administration	initiative
+citizen	initiative
+government	initiative
+state	initiative
+voter	initiative
+
+union	extortion
+police	abuse
+
+campaign	foray
+guerrilla	foray
+
+gunman	attack
+mafia	attack
+army	attack
+arson	attack
+government	attack
+guerrilla	attack
+infantry	attack
+rebel	attack
+sniper	attack
+terrorist	attack
+virus	attack
+
+company	act
+
+flight	arrival
+tourist	arrival
+visitor	arrival
+
+brain	function
+limb	function
+
+hospital	admission
+university	admission
+
+government	attempt
+
+police	beating
+
+bank	borrowing
+consumer	borrowing
+government	borrowing
+group	borrowing
+
+consumer	boycott
+
+investor	buying
+
+police	chase
+
+world	consumption
+
+commission	hearing
+committee	hearing
+court	hearing
+state	hearing
+subcommittee	hearing
+
+government	inquiry
+police	inquiry
+
+state	inspection
+
+police	interrogation
+
+government	intervention
+state	intervention
+
+magazine	interview
+media	interview
+newspaper	interview
+press	interview
+
+government	intrusion
+
+investor	attention
+voter	attention
+media	attention
+press	attention
+
+voter	preference
+
+company	investigation
+government	investigation
+police	investigation
+state	investigation
+
+minority	enrollment
+student	enrollment
+
+insider	filing
+
+cattle	grazing
+
+police	harassment
+
+airline	merger
+bank	merger
+firm	merger
+
+media	speculation
+press	speculation
+
+media	access
+user	access
+
+advertiser	spending
+campaign	spending
+consumer	spending
+government	spending
+state	spending
+
+labor	strike
+machinist	strike
+miner	strike
+pilot	strike
+player	strike
+student	strike
+teacher	strike
+worker	strike
+writer	strike
+
+government	study
+state	study
+
+court	supervision
+government	supervision
+
+police	surveillance
+
+police	sweep
+
+campaign	swing
+
+government	takeover
+state	takeover
+
+insider	trade
+
+insider	trading
+
+student	uprising
+
+category	performance
+market	performance
+stock	performance
+
+
+youth	smoking
+
+business	use
+household	use
+industry	use
+
+family	vacation
+
+doctor	visit
+family	visit
+
+utility	emission
+vehicle	emission
+
+tailpipe	emission
+
+automobile	pollution
+
+brokerage	hiring
+child	labor
+
+child	labour
+
+bank	lending
+
+consumer	contribution
+customer	contribution
+lawyer	contribution
+lobbyist	contribution
+student	contribution
+worker	contribution
+
+employer	contribution
+employee	contribution
+company	contribution
+city	funding
+
+consumer	expenditure
+government	expenditure
+state	expenditure
+government	funding
+
+medicare	reimbursement
+
+group	tour
+press	tour
+
+
+acid	damage
+acid	burn
+acid	corrosion
+acid	poisoning
+
+asbestos	damage
+
+alcohol	poisoning
+alcohol	damage
+alcohol	stain
+
+antibiotic	protection
+antifreeze	poisoning
+
+steam	burn
+chemical	burn
+arsenic	poisoning
+food	poisoning
+
+press	comments
+
+water	damage
+
+committee	vote
+opposition	vote
+shareholder	vote
+employee	commitment
+government	commitment
+government	warning
+media	poll
+newspaper	poll
+

@@ -1,0 +1,89 @@
+
+ad	space
+
+animal	motif
+dog	art
+
+dog	episode
+outlaw	episode
+
+visitor	gallery
+
+cigarette	ad
+
+beer	commercial
+
+acquisition	screen
+
+action	scene
+battle	scene
+love	scene
+sex	scene
+
+price	signal
+
+
+
+sports	shirt
+
+#?
+situation	comedy
+
+campaign	advertisement
+
+
+
+color	film
+
+swimsuit	issue
+
+art	gallery
+
+family	photograph
+
+rock	video
+
+fashion	photographer
+
+art	exhibit
+
+movie	trailer
+
+drama	series
+comedy	series
+
+sex	site
+pornography	site
+porn	site
+
+child	pornography
+
+color	display
+
+music	channel
+sport	channel
+news	channel
+entertainment	channel
+movie	channel
+
+crime	drama
+hostage	drama
+family	drama
+impeachment	drama
+rape	dramas
+movie	poster
+history	museum
+art	museum
+
+world	map
+forecast	map
+
+body	image
+team	image
+
+
+
+
+sports	feature
+
+

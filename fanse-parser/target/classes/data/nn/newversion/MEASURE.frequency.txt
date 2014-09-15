@@ -1,0 +1,14 @@
+time	candidate
+time	medalist
+time	table
+time	people
+time	visitor
+time	director
+time	buyer
+time	share
+time	player
+time	offender
+time	winner
+time	voter
+time	round
+time	champion

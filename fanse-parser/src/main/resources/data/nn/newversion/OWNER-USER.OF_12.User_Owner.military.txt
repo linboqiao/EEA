@@ -1,0 +1,55 @@
+army	checkpoint
+police	checkpoint
+
+army	post
+
+army	helicopter
+army	outpost
+army	barrack
+army	garrison
+army	depot
+army	truck
+army	vehicle
+army	building
+army	jeep
+army	camp
+army	uniform
+army	radio
+
+navy	helicopter
+navy	destroyer
+navy	ship
+navy	vessel
+navy	jet
+navy	aircraft
+navy	plane
+navy	warship
+
+
+police	roadblock
+police	post
+police	barrier
+
+police	case
+
+police	siren
+police	tape
+police	file
+police	radio
+police	record
+police	building
+police	bullet
+police	cruiser
+police	truck
+police	barrack
+police	bullhorn
+police	custody
+police	helicopter
+police	barricade
+police	substation
+
+police	uniform
+police	vehicle
+police	bus
+police	cordon
+police	van

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<defset prep="as">
+	<sense id="1">
+		<definition>indicating the function or character someone/something has or is supposed/assigned/believed to have</definition>
+		<majorcluster/>
+		<pprojmap type="equivalent" subsetof="1(1)"/>
+		<!-- TPP has no distinction between 'resigned as mayor' vs 'appoint as mayor'; these definitions attempt to make that distinction -->
+	</sense>
+	<sense id="2">
+		<definition>while acting in (the function/role specified) / during the time while being (the function/role/thing specified) </definition>
+		<majorcluster/>
+		<pprojmap type="subsumes" targetid="2(2)"/>
+		<!-- 2(2) covers the latter half: during the time while being -->
+		
+	</sense>
+	
+</defset>

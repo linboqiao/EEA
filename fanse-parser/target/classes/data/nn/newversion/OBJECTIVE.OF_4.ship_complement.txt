@@ -1,0 +1,4 @@
+home	ownership
+property	ownership
+car	ownership
+land	ownership

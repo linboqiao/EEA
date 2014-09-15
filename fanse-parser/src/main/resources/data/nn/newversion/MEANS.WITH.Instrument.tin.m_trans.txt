@@ -1,0 +1,49 @@
+voice	communication
+computer	communication
+telephone	communication
+satellite	communication
+
+telephone	meeting
+#IN means
+spanish language	magazine
+
+telephone	call
+phone	call
+phone	conversation
+text	correspondent
+voice	command
+telephone	survey
+
+radio	contact
+telephone	contact
+eye	contact
+telephone	caller
+phone	interview
+text	announcer
+voice	vote
+media	campaign
+wire	fraud
+rail	car
+
+voice	message
+fax	message
+email	message
+phone	message
+telephone	message
+
+telephone	poll
+wire	report
+radio	report
+video	report
+phone	representative
+tv	reporter
+wire	story
+telephone	talk
+telephone	threat
+wire	transfer
+
+directory	advertiser
+
+#
+cable	television
+cable	show

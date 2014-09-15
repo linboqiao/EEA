@@ -1,0 +1,95 @@
+tourist	tour
+voter	card
+voter	guide
+gourmet	magazine
+employee	manual
+family	comedy
+family	event
+family	show
+christian	site
+community	newspaper
+tourist	guide
+tourist	information
+boys	school
+girls	school
+fan	news
+fan	site
+
+factory	order
+
+party	victory
+squad	victory
+taxpayer	victory
+
+defense	verdict
+
+animal	doctor
+
+visitor	bureau
+
+
+
+visitor	center
+visitor	clubhouse
+court	room
+student	dormitory
+youth	camp
+
+refugee	center
+
+singles	bar
+
+passenger	terminal
+
+student	center
+
+press	center
+press	centre
+press	club
+press	room
+
+dog	house
+
+youth	center
+
+outpatient	center
+outpatient	clinic
+
+group	home
+jury	room
+leg	room
+
+#
+
+#RECIPIENT OF OWNERSHIP
+
+adult	dose
+student	credit
+driver	perk
+
+
+#
+
+family	physician
+family	practitioner
+veteran	hospital
+outpatient	care
+child	psychiatrist
+child	psychologist
+family	therapist
+
+family	center
+flier	program
+merchant	bank
+minority	program
+witness	program
+
+tourist	industry
+tourist	sector
+
+#FOR THE BENEFIT OF
+charity	event
+charity	game
+charity	work
+heart	drug
+#

@@ -1,0 +1,42 @@
+commission	income
+
+buyer	incentive
+employee	benefit
+employee	salary
+employee	wage
+player	salary
+
+retiree	benefit
+staff	salary
+government	receipt
+
+student	discount
+
+
+teacher	pay
+teacher	salary
+
+farmer	income
+bank	creditor
+household	income
+veteran	benefit
+
+juror	stipend
+renter	subsidy
+
+worker	benefit
+worker	salary
+worker	wage
+
+#obtained by
+industry	profit
+airline	profit
+aerospace	revenue
+casino	revenue
+newspaper	revenue
+commission	revenue
+
+actress	award
+undergraduate	degree
+master	degree
+

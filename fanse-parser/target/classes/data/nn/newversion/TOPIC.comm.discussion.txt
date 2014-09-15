@@ -1,0 +1,91 @@
+peace	summit
+budget	summit
+drug	summit
+
+budget	address
+policy	address
+
+budget	session
+strategy	session
+
+bankruptcy	proceeding
+deportation	proceeding
+bankruptcy law	proceeding
+divorce	proceeding
+condemnation	proceeding
+disciplinary	proceeding
+impeachment	proceeding
+foreclosure	proceeding
+extradition	proceeding
+
+
+
+celebrity	chatter
+
+market	commentary
+
+salary	arbitration
+
+management	consulting
+litigation	consulting
+
+wage	bargaining
+pay	bargaining
+plea	bargaining
+
+course correction	advisory
+
+reconciliation	conference
+aid	conference
+peace	conference
+world	conference
+disarmament	conference
+investment	conference
+election	conference
+leadership	conference
+labour	conference
+technology	conference
+
+security	conference
+
+peace	dialogue
+security	dialogue
+
+policy	meeting
+security	meeting
+strategy	meeting
+
+peace	mediator
+
+image	consultant
+benefit	consultant
+campaign	consultant
+compensation	consultant
+computer	consultant
+investment	consultant
+engineering	consultant
+marketing	consultant
+litigation	consultant
+publishing	consultant
+retail	consultant
+defense	consultant
+fitness	consultant
+technology	consultant
+pension	consultant
+design	consultant
+relation	consultant
+industry	consultant
+
+peace	negotiator
+hostage	negotiator
+debt	negotiator
+
+sports	negotiator
+
+arms	negotiator
+
+auto	journalist
+dog	journalist
+food	journalist
+housing	journalist
+music	journalist

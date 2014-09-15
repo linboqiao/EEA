@@ -1,0 +1,10 @@
+tree	root
+tree	limb
+sunflower	head
+coca	leaf
+lettuce	leaf
+maple	leaf
+spinach	leaf
+tobacco	leaf
+
+dandelion	head

@@ -1,0 +1,24 @@
+grape	variety
+
+tuberculosis	strain
+
+apple	species
+food	species
+grape	species
+business	species
+fauna	species
+flower	species
+ladybug	species
+media	species
+peacock	species
+ant	species
+penguin	species
+yeast	species
+bird	species
+fish	species
+plant	species
+
+bass	family
+
+beer	brand
+cigarette	brand

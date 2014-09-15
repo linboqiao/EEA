@@ -1,0 +1,18 @@
+tax	lawyer
+labor	lawyer
+injury	lawyer
+entertainment	lawyer
+bankruptcy	lawyer
+employment	lawyer
+security	lawyer
+immigration	lawyer
+takeover	lawyer
+
+patent	lawyer
+strike force	lawyer
+commodity	lawyer
+
+tax	attorney
+patent	attorney
+bankruptcy	attorney
+immigration	attorney

@@ -1,0 +1,609 @@
+toy	company
+
+software	company
+software	firm
+software	group
+
+vehicle	industry
+
+video	company
+video	industry
+
+catalog	company
+catalog	operation
+
+scrap	merchant
+wine	merchant
+
+gas	monopoly
+oil	monopoly
+telecommunication	manufacturer
+tabloid	press
+hospitality	industry
+utility	industry
+fashion	retailer
+
+grocery	market
+automobile	company
+propaganda	department
+boot	company
+terror	organization
+terror	group
+missile	division
+products	operation
+supply	center
+supply	company
+supply	house
+supply	industry
+supply	operation
+insurance	operation
+investment	salesman
+television	operation
+television	industry
+television	group
+television	division
+television	company
+fashion	company
+fashion	house
+aircraft	company
+aircraft	division
+
+aluminum	company
+
+apparel	company
+
+beer	company
+
+beverage	company
+
+biotech	company
+biotech	firm
+biotech	industry
+
+biotechnology	company
+biotechnology	firm
+biotechnology	group
+
+cable	company
+cable	giant
+cable	group
+cable	industry
+cable	operation
+cable	unit
+
+car	company
+car	division
+car	operation
+car	sector
+
+care	center
+care	company
+care	industry
+care	organization
+care	unit
+
+chemical	company
+chemical	group
+chemical	operation
+chemical	unit
+
+childcare	center
+cigarette	company
+
+
+coal	company
+coal	operation
+coal	sector
+
+computer	center
+computer	company
+computer	division
+computer	firm
+computer	industry
+computer	operation
+
+copper	company
+
+cosmetic	company
+
+water	company
+
+utility	company
+
+cosmetics	firm
+
+credit	cooperative
+credit	operation
+credit	unit
+
+drink	company
+drink	group
+
+drug	company
+drug	group
+drug	office
+drug	operation
+drug	organization
+drug	unit
+
+utility	sector
+water	sector
+
+utility	operation
+
+electricity	company
+
+electronics	company
+electronics	division
+electronics	firm
+
+energy	company
+energy	department
+energy	division
+energy	group
+energy	industry
+
+engine	company
+
+food	center
+food	company
+food	division
+food	group
+food	operation
+
+fuel	company
+
+gas	company
+gas	division
+gas	industry
+gas	operation
+
+glass	company
+
+gold	company
+gold	group
+gold	operation
+gold	sector
+
+goods	group
+
+grain	company
+grain	department
+
+hardware	company
+
+health	center
+health	committee
+health	company
+health	department
+health	division
+health	group
+health	industry
+health	organization
+health	sector
+
+healthcare	company
+healthcare	group
+
+liquor	company
+
+livestock	industry
+livestock	sector
+
+
+lumber	company
+
+magazine	division
+magazine	group
+magazine	industry
+
+materials	company
+materials	group
+materials	industry
+materials	sector
+
+
+merchandise	group
+
+mortgage	company
+mortgage	firm
+mortgage	operation
+mortgage	unit
+
+newspaper	company
+newspaper	division
+newspaper	group
+newspaper	office
+
+oil	company
+oil	firm
+oil	operation
+
+package	company
+
+goods	company
+
+paper	company
+paper	group
+
+parts	company
+parts	division
+parts	operation
+parts	unit
+
+petrochemical	company
+petrochemical	sector
+
+pharmaceutical	company
+pharmaceutical	division
+pharmaceutical	group
+pharmaceutical	sector
+
+
+phone	company
+phone	giant
+phone	industry
+phone	monopoly
+phone	operation
+
+product	company
+product	division
+product	group
+product	industry
+product	operation
+product	sector
+
+
+real estate	business
+
+record	company
+
+relief	center
+relief	group
+relief	operation
+relief	organization
+
+securities	company
+securities	firm
+securities	house
+
+self-help	group
+
+semiconductor	company
+semiconductor	division
+semiconductor	group
+semiconductor	industry
+semiconductor	operation
+
+shipping	company
+
+shoe	company
+
+steel	group
+steel	operation
+steel	sector
+steel	unit
+
+sugar	company
+
+taxi	company
+
+tech	company
+tech	sector
+
+technology	center
+technology	company
+technology	department
+technology	firm
+technology	giant
+technology	group
+technology	sector
+
+sex	industry
+
+telecom	company
+telecom	giant
+telecom	industry
+telecom	sector
+
+telephone	company
+telephone	giant
+telephone	industry
+telephone	monopoly
+telephone	operation
+
+tobacco	company
+tobacco	firm
+tobacco	operation
+
+timber	company
+timber	industry
+
+tire	company
+
+movie	company
+
+multimedia	company
+
+music	company
+music	division
+music	industry
+
+
+media	center
+media	company
+media	conglomerate
+media	empire
+media	firm
+media	giant
+media	group
+media	industry
+media	organization
+media	sector
+
+arms	company
+
+art	center
+art	company
+art	group
+art	house
+art	institution
+art	organisation
+art	organization
+
+aid	center
+aid	group
+aid	office
+aid	operation
+aid	organization
+
+
+leather	industry
+
+travel	company
+travel	group
+travel	industry
+travel	office
+
+
+tourism	bureau
+tourism	department
+tourism	industry
+tourism	office
+tourism	sector
+
+
+property	arm
+property	company
+property	division
+property	group
+property	industry
+property	sector
+
+pipeline	company
+pipeline	firm
+
+component	company
+component	division
+component	group
+component	industry
+
+furniture	industry
+
+
+blood	center
+
+specialty	company
+
+infrastructure	sector
+
+card	company
+
+security	arm
+security	company
+security	department
+security	division
+security	firm
+security	group
+security	house
+security	industry
+security	institution
+security	operation
+security	organization
+security	sector
+security	subsidiary
+security	unit
+
+chip	company
+
+
+loan	company
+
+insurance	agent
+
+
+electricity	utility
+gas	utility
+telephone	utility
+water	utility
+
+
+
+travel	agency
+
+award	dinner
+
+
+cement	company
+
+garment	industry
+cement	industry
+clothing	industry
+clothing	company
+garment	sector
+
+aid	worker
+housing	middleman
+
+con	artist
+graffiti	artist
+jazz	artist
+rap	artist
+tattoo	artist
+
+coffee	man
+milk	man
+oil	man
+
+cocaine	ring
+drug	ring
+heroin	ring
+
+chicken	business
+jewelry	business
+tissue	business
+
+
+bike	company
+cosmetics	company
+gasoline	company
+petroleum	company
+products	company
+spirits	company
+
+
+pastry	chef
+newspaper	chain
+
+
+chemical	division
+drug	division
+software	division
+steel	division
+technology	division
+vehicle	division
+
+
+chemical	giant
+computer	giant
+drug	giant
+electronics	giant
+food	giant
+oil	giant
+software	giant
+steel	giant
+tobacco	giant
+
+
+aluminium	group
+electronics	group
+gas	group
+oil	group
+rap	group
+tobacco	group
+vehicle	group
+
+aircraft	industry
+alcohol	industry
+aluminium	industry
+beef	industry
+beer	industry
+beverage	industry
+biotechnology	industry
+book	industry
+car	industry
+cattle	industry
+chemical	industry
+chip	industry
+cigarette	industry
+coal	industry
+coffee	industry
+copper	industry
+cosmetic	industry
+diamond	industry
+drug	industry
+electricity	industry
+firearm	industry
+fish	industry
+food	industry
+footwear	industry
+glass	industry
+gold	industry
+goods	industry
+liquor	industry
+meat	industry
+newspaper	industry
+oil	industry
+paper	industry
+part	industry
+petrochemical	industry
+pharmaceutical	industry
+software	industry
+steel	industry
+sugar	industry
+tea	industry
+tech	industry
+technology	industry
+textile	industry
+tire	industry
+water	industry
+wine	industry
+
+
+automobile	sector
+chemical	sector
+drink	sector
+drug	sector
+electricity	sector
+electronics	sector
+energy	sector
+food	sector
+gas	sector
+goods	sector
+oil	sector
+
+coal	enterprise
+grain	enterprise
+
+
+food	unit
+product	unit
+
+chemicals	operation
+paper	operation
+seafood	operation
+
+car	subsidiary
+part	subsidiary
+art	troupe
+
+rock	musician
+jazz	pianist
+
+software	house
+
+cocktail	waitress
+
+drug	syndicate
+
+paper	kid
+
+drug	kingpin
+oil	tycoon
+
+drug	mafia
+
+chicken	chain
+drug	chain
+fast food	chain
+pizza	chain
+video	chain
+
+cocaine	cartel
+drug	cartel
+
+food	conglomerate
+
+oil	corporation
+
+drug	gang

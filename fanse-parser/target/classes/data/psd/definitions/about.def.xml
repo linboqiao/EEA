@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<defset prep="about">
+	<sense id="1">
+		<definition>on the subject of; concerning (as of communication, thoughts, information, fights, etc.)</definition>
+		<majorcluster>TOPIC</majorcluster>
+		<pprojmap type="equivalent" targetid="1(1)"/>
+		<notes>X1 is a word of communication, competition, cognition/emotion, information, data containment (or a word such as '*thing' which stands in for this)</notes>
+	</sense>
+	<sense id="1.1">
+		<definition>so as to affect, as in "do something about it"</definition>
+		<pprojmap type="equivalent" targetid="2(1a)"/>
+	</sense>
+	<sense id="2">
+		<definition>indicating a focal point or region in space; partially, if not fully, encircling</definition>
+		<pprojmap type="equivalent" unionof="3(2),3(2)-1,4(3)"/>
+		<majorcluster>SPATIAL</majorcluster>
+	</sense>
+	
+</defset>

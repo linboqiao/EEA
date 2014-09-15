@@ -1,0 +1,69 @@
+shampoo	flask
+wine	skin
+
+water	bladder
+coffee	saucer
+
+water	capsule
+tar	pit
+tar	bucket
+
+food	package
+waste	dump
+food	packaging
+meat	packaging
+coal	region
+
+toner	cartridge
+urine	cup
+
+air	bag
+garbage	bag
+trash	bag
+
+helium	balloon
+water	balloon
+
+garbage	bin
+
+gall	bladder
+
+champagne	bottle
+liquor	bottle
+
+mail	box
+litter	box
+
+food	can
+soup	can
+
+gas	canister
+
+engine	compartment
+
+gas	cylinder
+
+oil	drum
+
+martini	glass
+wine	glass
+
+milk	jug
+
+lava	lamp
+
+gravel	pit
+
+ballast	tank
+fuel	tank
+oil	tank
+oxygen	tank
+propane	tank
+
+food	pantry
+
+food	basket
+
+blood	bank
+
+water	reservoir

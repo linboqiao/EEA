@@ -1,0 +1,278 @@
+city	church
+city	dweller
+city	folk
+city	life
+city	light
+city	neighborhood
+city	people
+city	politics
+city	population
+city	resident
+city	school
+city	square
+city	street
+city	voter
+city	cathedral
+city	gent
+city	upbringing
+city	cafe
+city	mosque
+city	nightclub
+city	homeowner
+
+
+
+
+town	schoolboy
+
+village	grocer
+village	pariah
+village	schoolmarm
+village	tyrant
+
+country	conservative
+country	gentleman
+country	equestrian
+country	stylist
+country	inn
+country	grassland
+country	boy
+
+town	industrialist
+town	liberal
+town	motel
+town	resident
+town	square
+township	resident
+township	violence
+
+coast	city
+coast	highway
+coast	region
+coast	state
+coast	town
+
+country	club
+country	people
+
+county	jail
+
+district	attorney
+district	office
+
+ice	fisherman
+
+county	supremacist
+
+airport	police
+district	police
+
+field	equipment
+field	commander
+field	director
+field	manager
+field	mouse
+field	office
+field	operation
+field	representative
+field	service
+field	study
+field	test
+field	trip
+field	worker
+
+island	newspaper
+island	resident
+island	resort
+
+mainland	authority
+mainland	company
+mainland	market
+mainland	official
+
+forest	fire
+jungle	camp
+mountain	bicycle
+mountain	bike
+mountain	biking
+mountain	goat
+mountain	village
+
+neighborhood	activist
+neighborhood	association
+neighborhood	child
+neighborhood	committee
+neighborhood	group
+neighborhood	kid
+neighborhood	life
+neighborhood	resident
+neighborhood	restaurant
+neighborhood	school
+neighborhood	store
+neighborhood	street
+
+ocean	dumping
+ocean	fishing
+ocean	wave
+ocean	shelf
+
+river	bank
+river	port
+river	traffic
+river	water
+
+sea	force
+sea	shell
+
+land	border
+land	force
+land	invasion
+land	mine
+
+space	activity
+space	alien
+space	center
+space	debris
+space	discovery
+space	flight
+space	odyssey
+space	radiation
+space	satellite
+space	ship
+space	shuttle
+space	traveler
+
+street	battle
+street	brawl
+street	child
+street	clash
+street	corner
+street	crime
+street	dealer
+street	demonstration
+street	fair
+street	festival
+street	fight
+street	fighter
+street	fighting
+street	gang
+street	kid
+street	lawyer
+street	life
+street	light
+street	market
+street	party
+street	peddler
+street	people
+street	performer
+street	price
+street	protest
+street	scene
+street	station
+street	theater
+street	value
+street	vendor
+street	violence
+highway	accident
+highway	assistance
+highway	death
+highway	officer
+highway	patrol
+highway	ramp
+highway	robbery
+highway	sign
+highway	traffic
+highway	traveler
+
+
+
+waterfront	highway
+waterfront	home
+
+hillside	home
+hill	town
+
+
+midtown	hotel
+woodland	hill
+
+community	resident
+
+beach	boy
+beach	city
+beach	community
+beach	house
+beach	party
+beach	post
+beach	resort
+beach	town
+beach	volleyball
+
+area	employment
+area	hospital
+area	resident
+area	school
+area	store
+
+ground	assault
+ground	battery
+ground	campaign
+ground	control
+ground	controller
+ground	crew
+ground	equipment
+ground	fighting
+ground	force
+ground	game
+ground	invasion
+ground	offensive
+ground	operation
+ground	personnel
+ground	transportation
+ground	troop
+ground	worker
+
+state	economy
+state	figure
+state	primary
+state	record
+state	resident
+state	homeowner
+state	voter
+
+whitewater	raft
+
+water	serpent
+water	exercise
+water	raft
+water	mussel
+water	flower
+water	spider
+water	bug
+water	footwear
+water	shellfish
+water	pearl
+water	fauna
+water	eel
+water	trout
+water	anchovy
+
+world	civilization
+world	economy
+world	environment
+world	figure
+world	hunger
+world	market
+world	oddity
+world	organization
+world	peace
+world	politics
+world	population
+world	press
+world	recession
+world	supply
+world	woman
+world	crisis
+world	community
+
+town	dentist

@@ -1,0 +1,90 @@
+farm	product
+farm	waste
+brewery	beer
+designer	clothing
+
+government	warranty
+court	subpoena
+
+customer	letter
+fan	letter
+fan	mail
+
+coastguard	fire
+commando	fire
+rebel	fire
+
+dairy	product
+bakery	product
+fishery	product
+
+factory	good
+factory	goods
+factory	output
+
+designer	clothes
+
+smelter	pollution
+
+cigarette	smoke
+bullet	wound
+knife	wound
+shrapnel	wound
+
+bomb	damage
+arms	fire
+rifle	fire
+rocket	fire
+tank	fire
+weapon	fire
+
+
+restaurant	meal
+
+bond	yield
+
+arson	flame
+
+turtle	eggs
+
+animal	urine
+
+animal	dung
+cow	manure
+dinosaur	egg
+
+star	autograph
+government	coverage
+
+
+state	benefit
+government	salary
+state	pension
+
+government	loan
+state	loan
+government	subsidy
+bank	loan
+government	check
+
+
+city	subsidy
+university	degree
+
+state	license
+
+bank	credit
+government	credit
+supplier	credit
+
+bug	damage
+bird	damage
+
+court	verdict
+jury	verdict
+
+animal	excretion
+
+monkey	excrement
+rat	excrement
+dog	excreta

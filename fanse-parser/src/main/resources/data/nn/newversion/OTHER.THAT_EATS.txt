@@ -1,0 +1,11 @@
+grain	beetle
+dust	mite
+fruit	bat
+fruit	fly
+pine	beetle
+honey	badger
+tomato	bug
+squash	bug
+
+
+

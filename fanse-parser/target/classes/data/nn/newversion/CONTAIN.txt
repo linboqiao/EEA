@@ -1,0 +1,111 @@
+#Y HoldsContainsOrDeterminesBoundariesFor X
+
+trash	landfill
+towel	rack
+
+water	bong
+
+rotator	cuff
+
+shrub	wetland
+turtle	sanctuary
+oak	grove
+
+data	center
+growth	area
+
+dealer	location
+enemy	location
+
+loan	package
+multimedia	package
+
+memory	bank
+
+home	address
+
+bargaining	table
+negotiation	table
+
+computer	lab
+
+water	slide
+
+video	arcade
+
+data	bank
+gene	bank
+
+sun	belt
+
+circuit	board
+
+test	booklet
+
+opposition	camp
+tent	camp
+
+semiconductor	chip
+
+champagne	cork
+
+summit	country
+
+sweat	lodge
+
+studio	lot
+
+fashion	section
+style	section
+
+trouble	spot
+
+tractor-trailer	truck
+
+truce	village
+
+missile	frigate
+missile	submarine
+
+#made_of, is_subdivided_into
+apartment	tower
+office	tower
+department	store
+
+resort	city
+
+#
+resort	community
+resort	town
+resort	island
+
+market	town
+mill	town
+garrison	town
+factory	town
+university	town
+
+river	valley
+
+missile	base
+missile	site
+
+computer	station
+
+missile	complex
+condominium	complex
+hotel	complex
+office	complex
+apartment	complex
+theater	complex
+temple	complex
+
+hill	country
+snow	country
+
+toilet	facility
+
+
+editorial	page
+ad	page
+

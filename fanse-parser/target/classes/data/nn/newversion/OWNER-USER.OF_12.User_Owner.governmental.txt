@@ -1,0 +1,192 @@
+#owned and operated, building-like
+state	prison
+state	hospital
+state	railway
+state	utility
+state	building
+state	facility
+state	property
+state	penitentiary
+state	factory
+state	university
+state	museum
+state	laboratory
+state	palace
+state	school
+city	jail
+city	hospital
+city	airport
+state	store
+government	facility
+government	school
+government	warehouse
+government	laboratory
+government	palace
+government	hospital
+
+state	finance
+project	finance
+government	finance
+
+#owned and operated, company-like
+state	company
+state	enterprise
+state	newspaper
+state	radio
+state	television
+government	monopoly
+state	monopoly
+state	airline
+state	institute
+state	bank
+government	enterprise
+government	television
+government	newspaper
+
+#owned (and operated), other
+state	park
+city	building
+state	land
+government	building
+
+#operated, strange to say owned
+state	lottery
+state	project
+
+#subpart?
+state	bureau
+
+state	resource
+
+state	fund
+
+state	custody
+state	apparatus
+state	court
+state	office
+state	coffer
+state	program
+
+#vehicle
+government	car
+city	bus
+government	vehicle
+government	aircraft
+
+#ambiguous with center of the state
+state	center
+
+state	measure
+state	debt
+
+state	beach
+state	water
+
+state	tax
+state	archive
+
+state	money
+
+state	bond
+
+state	surplus
+state	plan
+state	asset
+state	institution
+state	revenue
+
+state	limit
+state	ownership
+
+
+state	division
+state	operation
+state	sector
+
+#oddballs.. move to Other? they fall under 'have' but aren't really 'owned'
+state	flag
+state	position
+state	religion
+state	budget
+
+#ambiguous with topic
+state	data
+
+#hmm
+state	convention
+
+
+
+
+government	land
+government	property
+
+
+
+government	deficit
+government	asset
+
+government	radio
+
+government	datum
+government	paper
+
+government	project
+government	apparatus
+government	record
+government	budget
+government	account
+government	computer
+government	company
+government	line
+government	debt
+government	institution
+government	office
+
+government	bond
+government	propaganda
+government	information
+government	data
+
+government	money
+
+government	stock
+government	surplus
+government	document
+
+government	package
+government	program
+government	site
+
+government	coffer
+
+government	ownership
+government	pledge
+
+government	revenue
+government	fund
+government	house
+government	post
+government	benefit
+government	contract
+government	resource
+government	proceeding
+
+government	measure
+
+
+city	institution
+
+city	money
+city	fund
+city	property
+
+city	report
+
+city	record
+
+city	office
+
+city	program
+city	budget
+city	job

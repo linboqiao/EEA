@@ -1,0 +1,22 @@
+market	action
+market	activity
+market	barrier
+market	competition
+market	emergency
+market	force
+market	insider
+market	intervention
+market	niche
+market	sell-offs
+market	storm
+market	supply
+market	turbulence
+market	turmoil
+market	wave
+
+background	music
+
+industry	figure
+industry	worker
+
+

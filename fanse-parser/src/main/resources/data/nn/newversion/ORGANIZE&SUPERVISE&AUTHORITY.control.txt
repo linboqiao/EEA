@@ -1,0 +1,336 @@
+counterintelligence	agent
+customs	agent
+drug	agent
+escrow	agent
+firearm	agent
+immigration	agent
+redemption	agent
+sports	agent
+travel	agent
+
+airport	authority
+aviation	authority
+banking	authority
+border	authority
+borrowing	authority
+competition	authority
+customs	authority
+election	authority
+electricity	authority
+health	authority
+immigration	authority
+management	authority
+military	authority
+prison	authority
+railway	authority
+route	authority
+security	authority
+soccer	authority
+spending	authority
+sport	authority
+tax	authority
+telecommunication	authority
+tourism	authority
+traffic	authority
+university	authority
+water	authority
+
+city	authority
+hospital	authority
+school	authority
+
+government	authority
+
+appeal	board
+currency	board
+ethics	board
+oversight	board
+parole	board
+policy	board
+safety	board
+water	board
+
+bank	board
+co-op	board
+company	board
+labor	board
+management	board
+school	board
+
+accountancy	body
+security	body
+soccer	body
+sports	body
+trade	body
+
+aid	commission
+city	commission
+discipline	commission
+ethics	commission
+safety	commission
+security	commission
+
+
+affair	commissioner
+agriculture	commissioner
+banking	commissioner
+baseball	commissioner
+competition	commissioner
+corrections	commissioner
+customs	commissioner
+election	commissioner
+environment	commissioner
+fire	commissioner
+health	commissioner
+industry	commissioner
+insurance	commissioner
+labor	commissioner
+land	commissioner
+peace	commissioner
+transport	commissioner
+transportation	commissioner
+
+affair	committee
+agriculture	committee
+defense	committee
+equity	committee
+ethics	committee
+liaison	committee
+oblast	committee
+platform	committee
+property	committee
+safety	committee
+security	committee
+
+flight	crew
+
+industry	executive
+
+payroll	job
+
+fire	marshal
+
+oil	minister
+
+affair	ministry
+agriculture	ministry
+defense	ministry
+economy	ministry
+energy	ministry
+health	ministry
+tourism	ministry
+transport	ministry
+
+motor	nerve
+
+affair	officer
+compliance	officer
+correction	officer
+credit	officer
+custom	officer
+customs	officer
+duty	officer
+election	officer
+finance	officer
+fire	officer
+health	officer
+immigration	officer
+information	officer
+law	officer
+liaison	officer
+loan	officer
+parole	officer
+prison	officer
+program	officer
+relations	officer
+security	officer
+service	officer
+technology	officer
+traffic	officer
+wildlife	officer
+
+affair	official
+agriculture	official
+aid	official
+alliance	official
+association	official
+authority	official
+aviation	official
+banking	official
+baseball	official
+bid	official
+border	official
+boxing	official
+budget	official
+cemetery	official
+census	official
+center	official
+child	official
+commerce	official
+control	official
+correction	official
+custom	official
+customs	official
+defence	official
+defense	official
+development	official
+disaster	official
+district	official
+drug	official
+election	official
+energy	official
+enforcement	official
+environment	official
+exchange	official
+fair	official
+finance	official
+fire	official
+forestry	official
+fund	official
+health	official
+highway	official
+immigration	official
+insurance	official
+intelligence	official
+law	official
+lottery	official
+market	official
+marketing	official
+medicare	official
+oil	official
+parole	official
+personnel	official
+procurement	official
+project	official
+publishing	official
+race	official
+refugee	official
+relief	official
+replay	official
+rescue	official
+safety	official
+security	official
+service	official
+soccer	official
+space	official
+sport	official
+sports	official
+station	official
+tax	official
+thrift	official
+tourism	official
+tourist	official
+track	official
+trading	official
+traffic	official
+transit	official
+transport	official
+transportation	official
+water	official
+wildlife	official
+
+
+border	police
+narcotic	police
+riot	police
+tax	police
+traffic	police
+
+defense	secretary
+labor	secretary
+press	secretary
+
+fund	firm
+payroll	operation
+policy	unit
+affair	subcommittee
+defense	subcommittee
+health	subcommittee
+
+affairs	division
+network	division
+system	division
+
+
+reservation	agent
+
+
+fund	company
+asset	company
+billboard	company
+network	company
+sweepstake	company
+system	company
+football	association
+tax	office
+
+statistic	institute
+statistics	bureau
+committee	chairmanship
+
+election	commission
+defence	ministry
+finance	ministry
+industry	ministry
+relation	office
+environment	ministry
+election	committee
+environment	committee
+employment	office
+employment	department
+environment	department
+unemployment	office
+
+relations	committee
+relations	department
+relations	firm
+
+resource	group
+
+appropriation	subcommittee
+aviation	subcommittee
+commerce	subcommittee
+finance	subcommittee
+immigration	subcommittee
+
+telecommunication	subcommittee
+transportation	subcommittee
+
+parole	office
+policy	office
+statistic	office
+affairs	office
+budget	office
+customs	office
+ethics	office
+fund	industry
+fund	group
+policy	group
+
+account	committee
+appeal	committee
+budget	committee
+campaign	committee
+labor	committee
+market	committee
+policy	committee
+rules	committee
+strike	committee
+
+affairs	department
+agriculture	department
+customs	department
+equity	department
+highway	department
+labor	department
+land	department
+law	department
+press	department
+railway	department
+sports	department
+statistic	department
+tax	department
+trust	department
+water	department
+
+traffic	warden

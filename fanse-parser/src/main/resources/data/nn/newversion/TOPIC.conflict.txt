@@ -1,0 +1,31 @@
+
+
+#act/comm
+banana	dispute
+policy	dispute
+border	dispute
+custody	dispute
+property	dispute
+contract	dispute
+wage	dispute
+tax	dispute
+land	dispute
+labour	dispute
+trade	dispute
+pay	dispute
+boundary	dispute
+fishing	dispute
+
+#act
+unification	fight
+election	battle
+impeachment	battle
+budget	battle
+drug	fight
+budget	fight
+
+
+
+
+
+
