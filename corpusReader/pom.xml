@@ -19,7 +19,6 @@
         </pluginManagement>
     </build>
 
-    <groupId>edu.cmu.cs.lti</groupId>
     <artifactId>corpus-reader</artifactId>
     <version>0.0.1</version>
     <dependencies>
@@ -55,4 +54,9 @@
         </dependency>
     </dependencies>
     
+    <parent>
+    	<groupId>edu.cmu.cs.lti</groupId>
+    	<artifactId>uima-tools</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
+    </parent>
 </project>
