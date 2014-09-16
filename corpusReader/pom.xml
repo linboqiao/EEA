@@ -59,4 +59,5 @@
     	<artifactId>uima-tools</artifactId>
     	<version>0.0.1-SNAPSHOT</version>
     </parent>
+    <name>Uima Based Corpus Reader</name>
 </project>
