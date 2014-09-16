@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.script.analysis_engine;
+package edu.cmu.cs.lti.script.annotators;
 
 import java.util.ArrayList;
 import java.util.HashMap;

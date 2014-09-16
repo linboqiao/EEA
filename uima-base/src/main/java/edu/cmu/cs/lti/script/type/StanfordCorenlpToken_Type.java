@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Sep 13 18:23:45 EDT 2014 */
+/* First created by JCasGen Mon Sep 15 15:04:26 EDT 2014 */
 package edu.cmu.cs.lti.script.type;
 
 import org.apache.uima.jcas.JCas;
@@ -9,11 +9,9 @@ import org.apache.uima.cas.impl.FSGenerator;
 import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.cas.Type;
-import org.apache.uima.cas.impl.FeatureImpl;
-import org.apache.uima.cas.Feature;
 
 /** 
- * Updated by JCasGen Sun Sep 14 23:46:31 EDT 2014
+ * Updated by JCasGen Tue Sep 16 00:38:30 EDT 2014
  * @generated */
 public class StanfordCorenlpToken_Type extends Word_Type {
   /** @generated 
@@ -44,7 +42,9 @@ public class StanfordCorenlpToken_Type extends Word_Type {
      @modifiable */
   @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("edu.cmu.cs.lti.script.type.StanfordCorenlpToken");
- 
+
+
+
   /** initialize variables to correspond with Cas Type and Features
 	 * @generated
 	 * @param jcas JCas

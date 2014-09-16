@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Sep 13 18:23:45 EDT 2014 */
+/* First created by JCasGen Mon Sep 15 15:04:26 EDT 2014 */
 package edu.cmu.cs.lti.script.type;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.apache.uima.jcas.cas.StringList;
 
 
 /** Link between an event mention to its argument (which is an entity mention)
- * Updated by JCasGen Sun Sep 14 23:46:31 EDT 2014
+ * Updated by JCasGen Tue Sep 16 00:38:29 EDT 2014
  * XML source: /Users/zhengzhongliu/Documents/projects/uimafied-tools/uima-base/src/main/resources/TypeSystem.xml
  * @generated */
 public class EventMentionArgumentLink extends ComponentTOP {
@@ -225,16 +225,16 @@ public class EventMentionArgumentLink extends ComponentTOP {
    * @generated
    * @return value of the feature 
    */
-  public EntityBasedComponent getArgument() {
+  public EntityMention getArgument() {
     if (EventMentionArgumentLink_Type.featOkTst && ((EventMentionArgumentLink_Type)jcasType).casFeat_argument == null)
       jcasType.jcas.throwFeatMissing("argument", "edu.cmu.cs.lti.script.type.EventMentionArgumentLink");
-    return (EntityBasedComponent)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((EventMentionArgumentLink_Type)jcasType).casFeatCode_argument)));}
+    return (EntityMention)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((EventMentionArgumentLink_Type)jcasType).casFeatCode_argument)));}
     
   /** setter for argument - sets The argument attached to this link, represented as an Entity Based Component 
    * @generated
    * @param v value to set into the feature 
    */
-  public void setArgument(EntityBasedComponent v) {
+  public void setArgument(EntityMention v) {
     if (EventMentionArgumentLink_Type.featOkTst && ((EventMentionArgumentLink_Type)jcasType).casFeat_argument == null)
       jcasType.jcas.throwFeatMissing("argument", "edu.cmu.cs.lti.script.type.EventMentionArgumentLink");
     jcasType.ll_cas.ll_setRefValue(addr, ((EventMentionArgumentLink_Type)jcasType).casFeatCode_argument, jcasType.ll_cas.ll_getFSRef(v));}    

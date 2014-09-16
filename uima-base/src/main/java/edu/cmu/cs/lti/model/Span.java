@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.uima.model;
+package edu.cmu.cs.lti.model;
 
 import java.util.Arrays;
 import java.util.Collection;

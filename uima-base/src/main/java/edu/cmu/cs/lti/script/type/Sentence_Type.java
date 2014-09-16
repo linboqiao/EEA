@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Sep 13 18:23:45 EDT 2014 */
+/* First created by JCasGen Mon Sep 15 15:04:26 EDT 2014 */
 package edu.cmu.cs.lti.script.type;
 
 import org.apache.uima.jcas.JCas;
@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** 
- * Updated by JCasGen Sun Sep 14 23:46:31 EDT 2014
+ * Updated by JCasGen Tue Sep 16 00:38:30 EDT 2014
  * @generated */
 public class Sentence_Type extends ComponentAnnotation_Type {
   /** @generated 

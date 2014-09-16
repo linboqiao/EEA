@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Sep 13 18:23:45 EDT 2014 */
+/* First created by JCasGen Mon Sep 15 15:04:26 EDT 2014 */
 package edu.cmu.cs.lti.script.type;
 
 import org.apache.uima.jcas.JCas;
@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** Link between an event mention to its argument (which is an entity mention)
- * Updated by JCasGen Sun Sep 14 23:46:31 EDT 2014
+ * Updated by JCasGen Tue Sep 16 00:38:29 EDT 2014
  * @generated */
 public class EventMentionArgumentLink_Type extends ComponentTOP_Type {
   /** @generated 
@@ -277,7 +277,7 @@ public class EventMentionArgumentLink_Type extends ComponentTOP_Type {
     casFeatCode_superFrameElementRoleNames  = (null == casFeat_superFrameElementRoleNames) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_superFrameElementRoleNames).getCode();
 
  
-    casFeat_argument = jcas.getRequiredFeatureDE(casType, "argument", "edu.cmu.cs.lti.script.type.EntityBasedComponent", featOkTst);
+    casFeat_argument = jcas.getRequiredFeatureDE(casType, "argument", "edu.cmu.cs.lti.script.type.EntityMention", featOkTst);
     casFeatCode_argument  = (null == casFeat_argument) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_argument).getCode();
 
   }

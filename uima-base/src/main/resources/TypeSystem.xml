@@ -48,23 +48,6 @@
       <supertypeName>edu.cmu.cs.lti.script.type.Sentence</supertypeName>
       </typeDescription>
     <typeDescription>
-      <name>edu.cmu.cs.lti.script.type.StanfordDependencyNode</name>
-      <description/>
-      <supertypeName>edu.cmu.cs.lti.script.type.Word</supertypeName>
-      <features>
-        <featureDescription>
-          <name>token</name>
-          <description>Link to the token annotation that this Dependency node associate with.</description>
-          <rangeTypeName>edu.cmu.cs.lti.script.type.StanfordCorenlpToken</rangeTypeName>
-        </featureDescription>
-      </features>
-    </typeDescription>
-    <typeDescription>
-      <name>edu.cmu.cs.lti.script.type.StanfordDependencyRootNode</name>
-      <description/>
-      <supertypeName>edu.cmu.cs.lti.script.type.StanfordDependencyNode</supertypeName>
-    </typeDescription>
-    <typeDescription>
       <name>edu.cmu.cs.lti.script.type.StanfordDependencyRelation</name>
       <description/>
       <supertypeName>edu.cmu.cs.lti.script.type.Dependency</supertypeName>
@@ -890,7 +873,7 @@
       <featureDescription>
           <name>argument</name>
           <description>The argument attached to this link, represented as an Entity Based Component</description>
-          <rangeTypeName>edu.cmu.cs.lti.script.type.EntityBasedComponent</rangeTypeName>
+          <rangeTypeName>edu.cmu.cs.lti.script.type.EntityMention</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
@@ -1069,6 +1052,23 @@
           <rangeTypeName>edu.cmu.cs.lti.script.type.Word</rangeTypeName>
         </featureDescription>
         </features>
+    </typeDescription>
+  <typeDescription>
+      <name>edu.cmu.cs.lti.script.type.EntityBasedComponentLink</name>
+      <description/>
+      <supertypeName>edu.cmu.cs.lti.script.type.ComponentTOP</supertypeName>
+      <features>
+        <featureDescription>
+          <name>eventMention</name>
+          <description/>
+          <rangeTypeName>edu.cmu.cs.lti.script.type.EventMention</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>argument</name>
+          <description/>
+          <rangeTypeName>edu.cmu.cs.lti.script.type.EntityBasedComponent</rangeTypeName>
+        </featureDescription>
+      </features>
     </typeDescription>
   </types>
 </typeSystemDescription>

@@ -11,15 +11,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.uima.cas.CAS;
-import org.apache.uima.cas.CASException;
+import org.apache.uima.UimaContext;
 import org.apache.uima.collection.CollectionException;
-import org.apache.uima.collection.CollectionReader_ImplBase;
 import org.apache.uima.examples.SourceDocumentInformation;
+import org.apache.uima.fit.component.JCasCollectionReader_ImplBase;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
+import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.Progress;
 import org.apache.uima.util.ProgressImpl;
 
@@ -33,9 +33,7 @@ import edu.cmu.cs.lti.script.type.EntityMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.StanfordDependencyRelation;
-import edu.cmu.cs.lti.script.type.StanfordEntityMention;
 import edu.cmu.cs.lti.script.type.StanfordTreeAnnotation;
-import edu.cmu.cs.lti.uima.io.reader.AbstractStepBasedDirReader;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.jhu.agiga.AgigaCoref;
 import edu.jhu.agiga.AgigaDocument;
@@ -45,9 +43,11 @@ import edu.jhu.agiga.AgigaSentence;
 import edu.jhu.agiga.AgigaToken;
 import edu.jhu.agiga.AgigaTypedDependency;
 import edu.jhu.agiga.StreamingDocumentReader;
+//import edu.stanford.nlp.ling.Word;
 import edu.stanford.nlp.ling.CoreAnnotations.BeginIndexAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.EndIndexAnnotation;
-import edu.stanford.nlp.ling.CoreAnnotations.MentionsAnnotation;
+import edu.stanford.nlp.trees.HeadFinder;
+import edu.stanford.nlp.trees.SemanticHeadFinder;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
 
@@ -55,7 +55,7 @@ import edu.stanford.nlp.util.CoreMap;
  * @author zhengzhongliu
  * 
  */
-public class AgigaCollectionReader extends CollectionReader_ImplBase {
+public class AgigaCollectionReader extends JCasCollectionReader_ImplBase {
 
   public static final String PARAM_INPUTDIR = "InputDirectory";
 
@@ -71,8 +71,12 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
 
   public static final String COMPONENT_ID = AgigaCollectionReader.class.getSimpleName();
 
+  private HeadFinder shf = new SemanticHeadFinder();
+
+  int treeId = 0;
+
   @Override
-  public void initialize() {
+  public void initialize(UimaContext context) throws ResourceInitializationException {
     File inputDir = new File(((String) getConfigParameterValue(PARAM_INPUTDIR)).trim());
 
     gzFileList = inputDir.listFiles(new FilenameFilter() {
@@ -88,14 +92,7 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
   }
 
   @Override
-  public void getNext(CAS aCAS) throws IOException, CollectionException {
-    JCas jcas;
-    try {
-      jcas = aCAS.getJCas();
-    } catch (CASException e) {
-      throw new CollectionException(e);
-    }
-
+  public void getNext(JCas jcas) throws IOException, CollectionException {
     if (!reader.hasNext()) {
       reader = new StreamingDocumentReader(gzFileList[gCurrentIndex++].getAbsolutePath(), prefs);
       fileOffset = 0;
@@ -116,16 +113,7 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
   private void uimafyAnnotations(JCas jcas, AgigaDocument doc) {
     StringBuilder builder = new StringBuilder();
 
-    int sentBegin = 0;
-    int sentEnd = 0;
-
-    int tokenBegin = 0;
-    int tokenEnd = 0;
-
     int offset = 0;
-
-    int tokenIdx = 0;
-    int sentIdx = 0;
 
     Table<StanfordCorenlpToken, StanfordCorenlpToken, EntityMention> index2Mentions = HashBasedTable
             .create();
@@ -134,7 +122,13 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
 
     List<List<StanfordCorenlpToken>> allTokens = new ArrayList<List<StanfordCorenlpToken>>();
 
+    int sentIdx = 0;
+    int tokenIdx = 0;
+
     for (AgigaSentence aSent : doc.getSents()) {
+      int sentBegin = 0;
+      int sentEnd = 0;
+
       sentBegin = offset;
 
       List<StanfordCorenlpToken> sTokens = new ArrayList<StanfordCorenlpToken>();
@@ -144,25 +138,25 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
       StanfordCorenlpToken endToken = null;
 
       for (AgigaToken aToken : aSent.getTokens()) {
+        int tokenBegin = offset;
+
         tokenBegin = offset;
         String tokenSurface = aToken.getWord();
         builder.append(tokenSurface);
         builder.append(" ");
         offset += tokenSurface.length();
-        tokenEnd = offset;
+        int tokenEnd = offset;
         offset++;
 
-        StanfordCorenlpToken sToken = new StanfordCorenlpToken(jcas);
-        UimaAnnotationUtils
-                .finishAnnotation(sToken, tokenBegin, tokenEnd, COMPONENT_ID, tokenIdx++);
+        StanfordCorenlpToken sToken = new StanfordCorenlpToken(jcas, tokenBegin, tokenEnd);
+        UimaAnnotationUtils.finishAnnotation(sToken, COMPONENT_ID, tokenIdx++, jcas);
         sToken.setPos(aToken.getPosTag());
         sToken.setLemma(aToken.getLemma());
-
-        sTokens.add(sToken);
-
         // add named entities
         String neTag = aToken.getNerTag();
         sToken.setNerTag(aToken.getNerTag());
+
+        sTokens.add(sToken);
 
         if (neTag.equals("O") && !lastNETag.equals("O")) {
           // ne == O, lastNE = E
@@ -170,8 +164,6 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
           mention.setEntityType(lastNETag);
           allMentions.add(mention);
           index2Mentions.put(beginToken, endToken, mention);
-          // System.out.println("Meet O, Creating "+mention.getCoveredText()+" "+beginToken+" "+endToken+
-          // " "+lastNETag);
         } else {
           if (lastNETag.equals("O")) {
             beginToken = sToken;
@@ -183,12 +175,12 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
             allMentions.add(mention);
             beginToken = sToken;
             index2Mentions.put(beginToken, endToken, mention);
-            // System.out.println("Meeting another, Creating "+mention.getCoveredText()+" "+beginToken+" "+endToken+" "+lastNETag);
           }
           endToken = sToken;
         }
         lastNETag = neTag;
       }
+
       if (!lastNETag.equals("O")) {
         EntityMention mention = new EntityMention(jcas, beginToken.getBegin(), endToken.getEnd());
         mention.setEntityType(lastNETag);
@@ -200,7 +192,6 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
       offset += 1;
 
       // add trees
-
       Tree tree = aSent.getStanfordContituencyTree();
       if (tree.children().length != 1) {
         throw new RuntimeException("Expected single root node, found " + tree);
@@ -208,10 +199,8 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
       tree = tree.firstChild();
       tree.indexSpans(0);
       StanfordTreeAnnotation root = new StanfordTreeAnnotation(jcas);
-      UimaAnnotationUtils.finishAnnotation(root, COMPONENT_ID, sentIdx);
       root.setIsRoot(true);
-
-      this.addTreebankNodeToIndexes(root, jcas, tree, sTokens);
+      this.addTreebankNodeToIndexes(root, jcas, tree, sTokens, sentBegin);
 
       ArrayListMultimap<StanfordCorenlpToken, StanfordDependencyRelation> headRelations = ArrayListMultimap
               .create();
@@ -228,7 +217,7 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
           StanfordCorenlpToken headToken = sTokens.get(headIndex);
 
           StanfordDependencyRelation relation = new StanfordDependencyRelation(jcas);
-          UimaAnnotationUtils.finishTop(relation, COMPONENT_ID, null);
+          UimaAnnotationUtils.finishTop(relation, COMPONENT_ID, null, jcas);
           relation.setHead(headToken);
           relation.setChild(childToken);
 
@@ -245,7 +234,8 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
       }
 
       StanfordCorenlpSentence sSent = new StanfordCorenlpSentence(jcas);
-      UimaAnnotationUtils.finishAnnotation(sSent, sentBegin, sentEnd, COMPONENT_ID, sentIdx++);
+      UimaAnnotationUtils
+              .finishAnnotation(sSent, sentBegin, sentEnd, COMPONENT_ID, sentIdx++, jcas);
 
       allTokens.add(sTokens);
     }
@@ -301,14 +291,17 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
 
     int mentionIdx = 0;
     for (EntityMention mention : allMentions) {
-      UimaAnnotationUtils.finishAnnotation(mention, COMPONENT_ID, mentionIdx++);
+      UimaAnnotationUtils.finishAnnotation(mention, COMPONENT_ID, mentionIdx++, jcas);
       if (mention.getReferingEntity() == null) {
         Entity entity = new Entity(jcas);
         entity.setEntityMentions(new FSArray(jcas, 1));
         entity.setEntityMentions(0, mention);
         mention.setReferingEntity(entity);
-        mention.setHead(UimaAnnotationUtils.findHeadFromTreeAnnotation(jcas, mention));
         entities.add(entity);
+      }
+
+      if (mention.getHead() == null) {
+        mention.setHead(UimaAnnotationUtils.findHeadFromTreeAnnotation(jcas, mention));
       }
     }
 
@@ -334,12 +327,11 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
     // add entities to document
     int entityIdx = 0;
     for (Entity entity : entities) {
-      UimaAnnotationUtils.finishTop(entity, COMPONENT_ID, entityIdx++);
-      entity.addToIndexes();
+      UimaAnnotationUtils.finishTop(entity, COMPONENT_ID, entityIdx++, jcas);
     }
 
     Article article = new Article(jcas);
-    UimaAnnotationUtils.finishAnnotation(article, 0, offset, COMPONENT_ID, null);
+    UimaAnnotationUtils.finishAnnotation(article, 0, offset, COMPONENT_ID, null, jcas);
     article.setArticleName(doc.getDocId());
     article.setLanguage("en");
   }
@@ -370,7 +362,7 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
   }
 
   private FSArray addTreebankNodeChildrenToIndexes(StanfordTreeAnnotation parent, JCas jCas,
-          List<StanfordCorenlpToken> tokens, Tree tree) {
+          List<StanfordCorenlpToken> tokens, Tree tree, int offset) {
     Tree[] childTrees = tree.children();
 
     // collect all children (except leaves, which are just the words - POS tags are pre-terminals in
@@ -381,7 +373,7 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
         // set node attributes and add children (mutual recursion)
         StanfordTreeAnnotation node = new StanfordTreeAnnotation(jCas);
         node.setParent(parent);
-        this.addTreebankNodeToIndexes(node, jCas, child, tokens);
+        this.addTreebankNodeToIndexes(node, jCas, child, tokens, offset);
         childNodes.add(node);
       }
     }
@@ -395,7 +387,7 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
   }
 
   private void addTreebankNodeToIndexes(StanfordTreeAnnotation node, JCas jCas, Tree tree,
-          List<StanfordCorenlpToken> tokens) {
+          List<StanfordCorenlpToken> tokens, int textOffset) {
     // figure out begin and end character offsets
     CoreMap label = (CoreMap) tree.label();
     StanfordCorenlpToken beginToken = tokens.get(label.get(BeginIndexAnnotation.class));
@@ -405,11 +397,34 @@ public class AgigaCollectionReader extends CollectionReader_ImplBase {
     int nodeEnd = endToken.getEnd();
 
     // set span, node type, children (mutual recursion), and add it to the JCas
-    UimaAnnotationUtils.finishAnnotation(node, nodeBegin, nodeEnd, COMPONENT_ID, null);
-    node.setPennTreeLabel(tree.value());
-    node.setChildren(this.addTreebankNodeChildrenToIndexes(node, jCas, tokens, tree));
-    node.setIsLeaf(node.getChildren().size() == 0);
-    node.addToIndexes();
-  }
 
+    node.setPennTreeLabel(tree.value());
+    node.setChildren(this.addTreebankNodeChildrenToIndexes(node, jCas, tokens, tree, textOffset));
+    node.setIsLeaf(true);
+
+    UimaAnnotationUtils.finishAnnotation(node, nodeBegin, nodeEnd, COMPONENT_ID, treeId++, jCas);
+
+    boolean isLeaf = node.getChildren().size() == 0;
+
+    List<StanfordCorenlpToken> leafTokens = JCasUtil
+            .selectCovered(StanfordCorenlpToken.class, node);
+
+    if (leafTokens.size() == 0) {
+      return;
+    }
+
+    int leaveIndex = 0;
+    if (!isLeaf) {
+      Tree headLeaf = tree.headTerminal(shf);
+      for (Tree leaf : tree.getLeaves()) {
+        if (leaf.equals(headLeaf)) {
+          break;
+        }
+        leaveIndex++;
+      }
+    }
+
+    StanfordCorenlpToken leafToken = leafTokens.get(leaveIndex);
+    node.setHead(leafToken);
+  }
 }

@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Sep 13 18:23:45 EDT 2014 */
+/* First created by JCasGen Mon Sep 15 15:04:26 EDT 2014 */
 package edu.cmu.cs.lti.script.type;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.apache.uima.jcas.cas.FSList;
 
 
 /** The type storing the information on event coreference.
- * Updated by JCasGen Sun Sep 14 23:46:31 EDT 2014
+ * Updated by JCasGen Tue Sep 16 00:38:30 EDT 2014
  * XML source: /Users/zhengzhongliu/Documents/projects/uimafied-tools/uima-base/src/main/resources/TypeSystem.xml
  * @generated */
 public class PairwiseEventCoreferenceEvaluation extends ComponentTOP {
