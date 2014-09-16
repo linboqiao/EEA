@@ -37,14 +37,14 @@ public class PreparationPipeline {
     // Note that you should change the parameters below for your configuration.
     // //////////////////////////////////////////////////////////////////////////
     // Parameters for the reader
-    String paramInputDir = "/Users/zhengzhongliu/Downloads/agiga_sample";
+    String paramInputDir = args[0];// "/Users/zhengzhongliu/Downloads/agiga_sample"
 
     // Parameters for the writer
     String paramParentOutputDir = "data";
     String paramBaseOutputDirName = "xmi";
     String paramOutputFileSuffix = null;
 
-    String paramModelBaseDirectory = "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/";
+    String paramModelBaseDirectory = args[1];// "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/"
     // ////////////////////////////////////////////////////////////////
 
     String paramTypeSystemDescriptor = "TypeSystem";
