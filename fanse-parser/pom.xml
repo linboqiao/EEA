@@ -13,11 +13,6 @@
 	
   	<dependencies>
 		<dependency>
-			<groupId>edu.cmu.cs.lti</groupId>
-			<artifactId>corpusReader</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
 			<groupId>tratz</groupId>
 			<artifactId>fanse</artifactId>
 			<version>0.2.2</version>
