@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.cds.mode;
+package edu.cmu.cs.lti.cds.model;
 
 /**
  * An event profile captures the context and related information that

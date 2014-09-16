@@ -14,17 +14,16 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import edu.cmu.cs.lti.collection_reader.AgigaCollectionReader;
-import edu.cmu.cs.lti.collection_reader.ReaderTestPipeline;
-import edu.cmu.cs.lti.script.analysis_engine.FanseAnnotator;
+import edu.cmu.cs.lti.script.annotators.FanseAnnotator;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 
 /**
  * @author zhengzhongliu
  * 
  */
-public class Pipeline {
+public class PreparationPipeline {
 
-  private static String className = ReaderTestPipeline.class.getSimpleName();
+  private static String className = PreparationPipeline.class.getSimpleName();
 
   /**
    * @param args
@@ -70,6 +69,7 @@ public class Pipeline {
             paramParentOutputDir, paramBaseOutputDirName, 0, paramOutputFileSuffix);
 
     // Run the pipeline.
+    // SimplePipeline.runPipeline(reader, writer);
     SimplePipeline.runPipeline(reader, fanseParser, writer);
 
     System.out.println(className + " successfully completed.");
