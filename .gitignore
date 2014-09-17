@@ -1,2 +1,9 @@
+<<<<<<< HEAD
 target
 data
+=======
+target/
+.settings/ 
+.classpath
+.project
+>>>>>>> branch 'master' of git@bitbucket.org:hunterhector/uima-base-tools.git
