@@ -10,6 +10,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
+import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
@@ -28,9 +29,10 @@ public class PreparationPipeline {
   /**
    * @param args
    * @throws IOException
+   * @throws ResourceInitializationException
    * @throws UIMAException
    */
-  public static void main(String[] args) throws UIMAException, IOException {
+  public static void main(String[] args) throws IOException, ResourceInitializationException {
     System.out.println(className + " started...");
 
     // ///////////////////////// Parameter Setting ////////////////////////////
@@ -41,8 +43,8 @@ public class PreparationPipeline {
 
     // Parameters for the writer
     String paramParentOutputDir = "data";
-    String paramBaseOutputDirName = "xmi";
-    String paramOutputFileSuffix = null;
+    String paramBaseOutputDirName = "parsed";
+    String paramOutputFileSuffix = "xmi";
 
     String paramModelBaseDirectory = args[1];// "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/"
     // ////////////////////////////////////////////////////////////////
@@ -69,8 +71,12 @@ public class PreparationPipeline {
             paramParentOutputDir, paramBaseOutputDirName, 0, paramOutputFileSuffix);
 
     // Run the pipeline.
-    // SimplePipeline.runPipeline(reader, writer);
-    SimplePipeline.runPipeline(reader, fanseParser, writer);
+
+    try {
+      SimplePipeline.runPipeline(reader, fanseParser, writer);
+    } catch (UIMAException e) {
+      e.printStackTrace();
+    }
 
     System.out.println(className + " successfully completed.");
   }

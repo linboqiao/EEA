@@ -36,14 +36,13 @@ public class EventMentionTupleExtractorRunner {
     // Note that you should change the parameters below for your configuration.
     // //////////////////////////////////////////////////////////////////////////
     // Parameters for the reader
-    String paramInputDir = "data/00_xmi";
+    String paramInputDir = "data/00_agiga_xmi";
 
     // Parameters for the writer
     String paramParentOutputDir = "data";
-    String paramBaseOutputDirName = "xmi";
-    String paramOutputFileSuffix = null;
+    String paramBaseOutputDirName = "event_tuples";
+    String paramOutputFileSuffix = "xmi";
 
-    String paramModelBaseDirectory = "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/";
     // ////////////////////////////////////////////////////////////////
 
     String paramTypeSystemDescriptor = "TypeSystem";

@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.cds.annotators;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +18,6 @@ import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
 public class EntityFeatureExtractor extends AbstractCsvWriterAnalysisEngine {
-  // TObjectIntHashMap<String> allLemmas;
-
   List<Entity> allEntities;
 
   int entityIndex;
