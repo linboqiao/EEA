@@ -154,8 +154,10 @@ public class AgigaCollectionReader extends JCasCollectionReader_ImplBase {
         sToken.setLemma(aToken.getLemma());
         // add named entities
         String neTag = aToken.getNerTag();
+        if (neTag == null) {
+          neTag = "O";
+        }
         sToken.setNerTag(aToken.getNerTag());
-
         sTokens.add(sToken);
 
         if (neTag.equals("O") && !lastNETag.equals("O")) {
