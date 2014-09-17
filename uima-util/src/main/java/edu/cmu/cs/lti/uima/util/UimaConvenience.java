@@ -24,6 +24,8 @@ import org.apache.uima.cas.SofaFS;
 import org.apache.uima.cas.text.AnnotationFS;
 import org.apache.uima.cas.text.AnnotationIndex;
 import org.apache.uima.examples.SourceDocumentInformation;
+import org.apache.uima.fit.util.FSCollectionFactory;
+import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.cas.FSList;
@@ -32,8 +34,6 @@ import org.apache.uima.jcas.cas.StringArray;
 import org.apache.uima.jcas.cas.StringList;
 import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.jcas.tcas.Annotation;
-import org.uimafit.util.FSCollectionFactory;
-import org.uimafit.util.JCasUtil;
 
 import com.google.common.reflect.TypeToken;
 

@@ -5,11 +5,6 @@
 	<version>0.0.1</version>
 	<dependencies>
 		<dependency>
-			<groupId>org.apache.uima</groupId>
-			<artifactId>uimafit-core</artifactId>
-			<version>2.0.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.1</version>
@@ -48,6 +43,11 @@
 			<groupId>edu.cmu.cs.lti</groupId>
 			<artifactId>uima-base</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>uimafit-cpe</artifactId>
+			<version>2.1.0</version>
 		</dependency>
 	</dependencies>
 	<parent>

@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 
 import edu.cmu.cs.lti.uima.util.CsvFactory;
 import edu.cmu.cs.lti.uima.util.StringConstants.BasicStringConstant;
-import edu.cmu.cs.lti.uima.util.TimeUtils;
 import au.com.bytecode.opencsv.CSVWriter;
 
 /**
@@ -53,10 +52,10 @@ public abstract class AbstractCsvWriterAnalysisEngine extends JCasAnnotator_Impl
   @ConfigurationParameter(name = PARAM_STEP_NUMBER, mandatory = true)
   private Integer stepNumber;
 
-  @ConfigurationParameter(name = PARAM_OUTPUT_FILE_SUFFIX)
+  @ConfigurationParameter(name = PARAM_OUTPUT_FILE_SUFFIX, mandatory = false)
   private String outputFileSuffix;
 
-  @ConfigurationParameter(name = PARAM_SOURCE_DOCUMENT_INFO_VIEW_NAME, mandatory = true, description = "The view where the SourceDocumentInfo type can be found")
+  @ConfigurationParameter(name = PARAM_SOURCE_DOCUMENT_INFO_VIEW_NAME, mandatory = false)
   private String sourceDocumentViewName;
 
   private File outputDir;
@@ -71,9 +70,15 @@ public abstract class AbstractCsvWriterAnalysisEngine extends JCasAnnotator_Impl
       throw new ResourceInitializationException(e);
     }
 
+    parentOutputDir = (String) context.getConfigParameterValue(PARAM_PARENT_OUTPUT_DIR);
+
+    baseOutputDirName = (String) context.getConfigParameterValue(PARAM_BASE_OUTPUT_DIR_NAME);
+
+    stepNumber = (Integer) context.getConfigParameterValue(PARAM_STEP_NUMBER);
+
+    outputFileSuffix = (String) context.getConfigParameterValue(PARAM_OUTPUT_FILE_SUFFIX);
+
     List<Object> partOfDirNames = new ArrayList<Object>();
-    String currentDate = TimeUtils.getCurrentYYYYMMDD();
-    partOfDirNames.add(currentDate);
     if (stepNumber != null) {
       String stepNumberStr = Integer.toString(stepNumber);
       partOfDirNames.add(StringUtils.leftPad(stepNumberStr, 2, '0'));
@@ -92,10 +97,15 @@ public abstract class AbstractCsvWriterAnalysisEngine extends JCasAnnotator_Impl
   @Override
   public void process(JCas aJCas) throws AnalysisEngineProcessException {
     JCas sourceDocumentView = null;
-    try {
-      sourceDocumentView = aJCas.getView(sourceDocumentViewName);
-    } catch (CASException e) {
-      throw new AnalysisEngineProcessException(e);
+
+    if (sourceDocumentViewName != null) {
+      try {
+        sourceDocumentView = aJCas.getView(sourceDocumentViewName);
+      } catch (CASException e) {
+        sourceDocumentView = aJCas;
+      }
+    } else {
+      sourceDocumentView = aJCas;
     }
 
     // Retrieve the filename of the input file from the CAS.
@@ -122,19 +132,18 @@ public abstract class AbstractCsvWriterAnalysisEngine extends JCasAnnotator_Impl
 
       CSVWriter writer = CsvFactory.getCSVWriter(outFile);
 
+      prepare(aJCas);
+
       String[] header = getHeader();
 
       if (header != null) {
         writer.writeNext(header);
       }
 
-      prepare(aJCas);
       while (hasNextRow()) {
         writer.writeNext(getNextCsvRow());
       }
-
       writer.close();
-
     } catch (MalformedURLException e) {
       e.printStackTrace();
       System.exit(1);
