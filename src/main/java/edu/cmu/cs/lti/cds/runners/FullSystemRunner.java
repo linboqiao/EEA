@@ -1,5 +1,6 @@
-package edu.cmu.cs.lti.cds;
+package edu.cmu.cs.lti.cds.runners;
 
+import edu.cmu.cs.lti.cds.RelatedDocumentFinder;
 import edu.cmu.cs.lti.cr.readers.annotated_nyt.AnnotatedNytReader;
 
 import java.io.File;

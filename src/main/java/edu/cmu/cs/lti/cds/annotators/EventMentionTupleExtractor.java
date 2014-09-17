@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.cds.annotators;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -13,13 +14,15 @@ import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.util.FSCollectionFactory;
+import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.uimafit.util.JCasUtil;
 
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.ComponentAnnotation;
+import edu.cmu.cs.lti.script.type.Entity;
 import edu.cmu.cs.lti.script.type.EntityMention;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
@@ -37,16 +40,21 @@ import edu.cmu.cs.lti.uima.util.UimaConvenience;
  * @author Zhengzhong Liu, Hector
  * 
  */
-public class EventTupleExtractor extends JCasAnnotator_ImplBase {
+public class EventMentionTupleExtractor extends JCasAnnotator_ImplBase {
   Set<String> semanticSet = new HashSet<String>();
 
   Set<String> dependencySet = new HashSet<String>();
 
-  private static final String ANNOTATOR_COMPONENT_ID = EventTupleExtractor.class.getSimpleName();
+  private static final String ANNOTATOR_COMPONENT_ID = EventMentionTupleExtractor.class
+          .getSimpleName();
 
   private Map<Word, Map<String, Word>> events;
 
   private Map<Span, EntityMention> head2EntityMention;
+
+  private int numEntityMentions;
+
+  private int numEntities;
 
   @Override
   public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -62,9 +70,12 @@ public class EventTupleExtractor extends JCasAnnotator_ImplBase {
     events = new HashMap<Word, Map<String, Word>>();
 
     head2EntityMention = new HashMap<Span, EntityMention>();
-    for (EntityMention mention : JCasUtil.select(aJCas, EntityMention.class)) {
+    Collection<EntityMention> entityMentions = JCasUtil.select(aJCas, EntityMention.class);
+    for (EntityMention mention : entityMentions) {
       head2EntityMention.put(toSpan(mention.getHead()), mention);
     }
+    numEntityMentions = entityMentions.size();
+    numEntities = JCasUtil.select(aJCas, Entity.class).size();
 
     // step 1.1: use Fanse Semantic Annotations and Syntactic Annotations to find agent, patient for
     // verb based events
@@ -73,11 +84,11 @@ public class EventTupleExtractor extends JCasAnnotator_ImplBase {
     }
 
     for (Entry<Word, Map<String, Word>> eventEntry : events.entrySet()) {
-      System.out.println("Event " + eventEntry.getKey().getCoveredText());
-      for (Entry<String, Word> argumentEntry : eventEntry.getValue().entrySet()) {
-        System.out.println("Argument " + argumentEntry.getKey() + " : "
-                + argumentEntry.getValue().getCoveredText());
-      }
+      // System.out.println("Event " + eventEntry.getKey().getCoveredText());
+      // for (Entry<String, Word> argumentEntry : eventEntry.getValue().entrySet()) {
+      // System.out.println("Argument " + argumentEntry.getKey() + " : "
+      // + argumentEntry.getValue().getCoveredText());
+      // }
 
       Word eventWord = eventEntry.getKey();
       EventMention evm = new EventMention(aJCas, eventWord.getBegin(), eventWord.getEnd());
@@ -85,8 +96,8 @@ public class EventTupleExtractor extends JCasAnnotator_ImplBase {
       List<EventMentionArgumentLink> argumentLinks = new ArrayList<EventMentionArgumentLink>();
 
       for (Entry<String, Word> argumentEntry : eventEntry.getValue().entrySet()) {
-        System.out.println("Argument " + argumentEntry.getKey() + " : "
-                + argumentEntry.getValue().getCoveredText());
+        // System.out.println("Argument " + argumentEntry.getKey() + " : "
+        // + argumentEntry.getValue().getCoveredText());
 
         EventMentionArgumentLink link = new EventMentionArgumentLink(aJCas);
         UimaAnnotationUtils.finishTop(link, ANNOTATOR_COMPONENT_ID, null, aJCas);
@@ -97,55 +108,6 @@ public class EventTupleExtractor extends JCasAnnotator_ImplBase {
       }
       evm.setArguments(FSCollectionFactory.createFSList(aJCas, argumentLinks));
     }
-
-    // for (EventMention evm : allEvents) {
-    // List<FanseToken> tokensInEvent = JCasUtil.selectCovered(FanseToken.class, evm);
-    //
-    // ArrayList<EntityBasedComponentLink> agentLinks = new ArrayList<EntityBasedComponentLink>();
-    // ArrayList<EntityBasedComponentLink> patientLinks = new ArrayList<EntityBasedComponentLink>();
-    //
-    // for (FanseToken token : tokensInEvent) {
-    // Span eventTokenSpan = new Span(token.getBegin(), token.getEnd());
-    // if (token2AgentHead.containsKey(eventTokenSpan)) {
-    // ComponentAnnotation headWordToken = token2AgentHead.get(eventTokenSpan);
-    // Word headWord = anyToken2Word(headWordToken);
-    //
-    // System.out.println(headWordToken.getCoveredText() + " " + headWordToken.getBegin() + " "
-    // + headWordToken.getEnd());
-    //
-    // if (headWord != null) {
-    // System.out.println(headWord.getCoveredText());
-    // }
-    // Span span = getNonOverlappingNPSpan(headWord, evm, word2NPChunkIndex);
-    //
-    // EntityBasedComponent agent = getOrCreateEntityComponent(aJCas, span.getBegin(),
-    // span.getEnd(), headWord);
-    //
-    // addWord2EntityIndex(agent);
-    // agentLinks.add(APLUtils.createLink(aJCas, evm, agent, APLUtils.AGENT_LINK_TYPE,
-    // ANNOTATOR_COMPONENT_ID + "_Fanse"));
-    //
-    // }
-    //
-    // if (token2PatientHead.containsKey(eventTokenSpan)) {
-    // ComponentAnnotation headWordToken = token2PatientHead.get(eventTokenSpan);
-    //
-    // Word headWord = anyToken2Word(headWordToken);
-    //
-    // Span span = getNonOverlappingNPSpan(headWord, evm, word2NPChunkIndex);
-    // EntityBasedComponent patientLeftToAnd = getOrCreateEntityComponent(aJCas,
-    // span.getBegin(), span.getEnd(), headWord);
-    //
-    // addWord2EntityIndex(patientLeftToAnd);
-    // patientLinks.add(APLUtils.createLink(aJCas, evm, patientLeftToAnd,
-    // APLUtils.PATIENT_LINK_TYPE, ANNOTATOR_COMPONENT_ID + "_Fanse"));
-    // }
-    // // }
-    // // }
-    // // }
-    // evm.setAgentLinks(FSCollectionFactory.createFSList(aJCas, agentLinks));
-    // evm.setPatientLinks(FSCollectionFactory.createFSList(aJCas, patientLinks));
-    // }
   }
 
   private Word findObjectConnectedWithPrep(Word agentToken) {
@@ -210,7 +172,12 @@ public class EventTupleExtractor extends JCasAnnotator_ImplBase {
     EntityMention mention = head2EntityMention.get(toSpan(headWord));
     if (mention == null) {
       mention = new EntityMention(jcas, headWord.getBegin(), headWord.getEnd());
-      UimaAnnotationUtils.finishAnnotation(mention, ANNOTATOR_COMPONENT_ID, null, jcas);
+      UimaAnnotationUtils.finishAnnotation(mention, ANNOTATOR_COMPONENT_ID, numEntityMentions++,
+              jcas);
+      Entity entity = new Entity(jcas);
+      entity.setEntityMentions(new FSArray(jcas, 1));
+      entity.setEntityMentions(0, mention);
+      UimaAnnotationUtils.finishTop(entity, ANNOTATOR_COMPONENT_ID, numEntities++, jcas);
     }
     return mention;
   }

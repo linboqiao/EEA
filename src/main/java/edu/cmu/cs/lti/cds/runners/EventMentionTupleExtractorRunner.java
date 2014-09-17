@@ -1,29 +1,28 @@
 /**
  * 
  */
-package edu.cmu.cs.lti.cds;
+package edu.cmu.cs.lti.cds.runners;
 
 import java.io.IOException;
 
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.examples.xmi.XmiCollectionReader;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import edu.cmu.cs.lti.collection_reader.AgigaCollectionReader;
-import edu.cmu.cs.lti.script.annotators.FanseAnnotator;
+import edu.cmu.cs.lti.cds.annotators.EventMentionTupleExtractor;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 
 /**
  * @author zhengzhongliu
  * 
  */
-public class PreparationPipeline {
-
-  private static String className = PreparationPipeline.class.getSimpleName();
+public class EventMentionTupleExtractorRunner {
+  private static String className = EventMentionTupleExtractorRunner.class.getSimpleName();
 
   /**
    * @param args
@@ -37,14 +36,14 @@ public class PreparationPipeline {
     // Note that you should change the parameters below for your configuration.
     // //////////////////////////////////////////////////////////////////////////
     // Parameters for the reader
-    String paramInputDir = args[0];// "/Users/zhengzhongliu/Downloads/agiga_sample"
+    String paramInputDir = "data/00_xmi";
 
     // Parameters for the writer
     String paramParentOutputDir = "data";
     String paramBaseOutputDirName = "xmi";
     String paramOutputFileSuffix = null;
 
-    String paramModelBaseDirectory = args[1];// "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/"
+    String paramModelBaseDirectory = "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/";
     // ////////////////////////////////////////////////////////////////
 
     String paramTypeSystemDescriptor = "TypeSystem";
@@ -56,22 +55,22 @@ public class PreparationPipeline {
     // Instantiate a collection reader to get XMI as input.
     // Note that you should change the following parameters for your setting.
     CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
-            AgigaCollectionReader.class, typeSystemDescription,
-            AgigaCollectionReader.PARAM_INPUTDIR, paramInputDir);
+            XmiCollectionReader.class, typeSystemDescription, XmiCollectionReader.PARAM_INPUTDIR,
+            paramInputDir);
 
-    AnalysisEngineDescription fanseParser = CustomAnalysisEngineFactory.createAnalysisEngine(
-            FanseAnnotator.class, typeSystemDescription, FanseAnnotator.PARAM_MODEL_BASE_DIR,
-            paramModelBaseDirectory);
+    AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(
+            EventMentionTupleExtractor.class, typeSystemDescription);
 
     // Instantiate a XMI writer to put XMI as output.
     // Note that you should change the following parameters for your setting.
     AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(
-            paramParentOutputDir, paramBaseOutputDirName, 0, paramOutputFileSuffix);
+            paramParentOutputDir, paramBaseOutputDirName, 1, paramOutputFileSuffix);
 
     // Run the pipeline.
     // SimplePipeline.runPipeline(reader, writer);
-    SimplePipeline.runPipeline(reader, fanseParser, writer);
+    SimplePipeline.runPipeline(reader, tupleExtractor, writer);
 
-    System.out.println(className + " successfully completed.");
+    System.out.println(className + " completed.");
   }
+
 }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.cmu.cs.lti.cds;
+package edu.cmu.cs.lti.cds.runners;
 
 import java.io.IOException;
 
@@ -14,15 +14,15 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import edu.cmu.cs.lti.cds.annotators.EventTupleExtractor;
+import edu.cmu.cs.lti.cds.annotators.EntityFeatureExtractor;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 
 /**
  * @author zhengzhongliu
  * 
  */
-public class TupleExtractorRunner {
-  private static String className = TupleExtractorRunner.class.getSimpleName();
+public class EntityFeatureOutputRunner {
+  private static String className = EntityFeatureOutputRunner.class.getSimpleName();
 
   /**
    * @param args
@@ -36,14 +36,12 @@ public class TupleExtractorRunner {
     // Note that you should change the parameters below for your configuration.
     // //////////////////////////////////////////////////////////////////////////
     // Parameters for the reader
-    String paramInputDir = "data/00_xmi";
+    String paramInputDir = "data/01_xmi";
 
     // Parameters for the writer
     String paramParentOutputDir = "data";
-    String paramBaseOutputDirName = "xmi";
-    String paramOutputFileSuffix = null;
-
-    String paramModelBaseDirectory = "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/";
+    String paramBaseOutputDirName = "entity_features_tsv";
+    String paramOutputFileSuffix = ".csv";
     // ////////////////////////////////////////////////////////////////
 
     String paramTypeSystemDescriptor = "TypeSystem";
@@ -58,19 +56,15 @@ public class TupleExtractorRunner {
             XmiCollectionReader.class, typeSystemDescription, XmiCollectionReader.PARAM_INPUTDIR,
             paramInputDir);
 
-    AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(
-            EventTupleExtractor.class, typeSystemDescription);
+    AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
+            EntityFeatureExtractor.class, typeSystemDescription,
+            EntityFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
+            EntityFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
+            EntityFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
+            EntityFeatureExtractor.PARAM_STEP_NUMBER, 2);
 
-    // Instantiate a XMI writer to put XMI as output.
-    // Note that you should change the following parameters for your setting.
-    AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(
-            paramParentOutputDir, paramBaseOutputDirName, 1, paramOutputFileSuffix);
-
-    // Run the pipeline.
-    // SimplePipeline.runPipeline(reader, writer);
-    SimplePipeline.runPipeline(reader, tupleExtractor, writer);
+    SimplePipeline.runPipeline(reader, writer);
 
     System.out.println(className + " completed.");
   }
-
 }
