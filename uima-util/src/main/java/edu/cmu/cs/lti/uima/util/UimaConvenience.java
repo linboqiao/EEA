@@ -702,7 +702,7 @@ public class UimaConvenience extends BasicConvenience {
   }
 
   public static void printProcessLog(JCas aJCas) {
-    String fileName = getShortDocumentName(aJCas);
+    String fileName = getShortDocumentNameWithOffset(aJCas);
     System.out.println(String.format("Processing article: %s", fileName));
   }
 
