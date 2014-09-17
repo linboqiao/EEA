@@ -43,13 +43,15 @@ public class PreparationPipeline {
 
     // Parameters for the writer
     String paramParentOutputDir = "data";
-    String paramBaseOutputDirName = "parsed";
+    String paramBaseOutputDirName = args[1];
     String paramOutputFileSuffix = "xmi";
 
-    String paramModelBaseDirectory = args[1];// "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/"
+    String paramModelBaseDirectory = args[2];// "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/"
     // ////////////////////////////////////////////////////////////////
 
     String paramTypeSystemDescriptor = "TypeSystem";
+
+    System.out.println("Reading from " + paramInputDir + " , writing to base dir " + args[1]);
 
     // Instantiate the analysis engine.
     TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
