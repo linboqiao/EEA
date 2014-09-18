@@ -22,7 +22,7 @@ public class EMDocumentClusterer {
     System.out.println("Reading documents");
     List<Document> documents = reader.getDocumentForClustering();
     System.out.println("Document read, starting clustering");
-    Map<Integer, Cluster> clusters = DocumentClustering.getInitialModel(documents);
+    Map<Integer, Cluster> clusters = DocumentClustering.getDocumentClusters(documents);
     System.out.println("Clustering done");
 
     File outputFile = new File("data/clustering_out");
