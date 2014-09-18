@@ -11,5 +11,4 @@ public class StringUtils {
   public static String text2CsvField(String text) {
     return text.replace(",", ".").replace(":", "_").replace("\n", " ");
   }
-
 }

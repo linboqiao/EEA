@@ -31,6 +31,7 @@ import edu.cmu.cs.lti.script.type.FanseSemanticRelation;
 import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 
 /**
  * An annotator that uses possible resources to detect tuples of event and arguments. Mostly depends
@@ -92,6 +93,7 @@ public class EventMentionTupleExtractor extends JCasAnnotator_ImplBase {
 
       Word eventWord = eventEntry.getKey();
       EventMention evm = new EventMention(aJCas, eventWord.getBegin(), eventWord.getEnd());
+      evm.setHeadWord(eventWord);
       UimaAnnotationUtils.finishAnnotation(evm, ANNOTATOR_COMPONENT_ID, null, aJCas);
       List<EventMentionArgumentLink> argumentLinks = new ArrayList<EventMentionArgumentLink>();
 
@@ -171,9 +173,8 @@ public class EventMentionTupleExtractor extends JCasAnnotator_ImplBase {
   private EntityMention getOrCreateEntityMention(JCas jcas, Word headWord) {
     EntityMention mention = head2EntityMention.get(toSpan(headWord));
     if (mention == null) {
-      mention = new EntityMention(jcas, headWord.getBegin(), headWord.getEnd());
-      UimaAnnotationUtils.finishAnnotation(mention, ANNOTATOR_COMPONENT_ID, numEntityMentions++,
-              jcas);
+      mention = UimaNlpUtils.createEntityMention(jcas, headWord.getBegin(), headWord.getEnd(),
+              ANNOTATOR_COMPONENT_ID);
       Entity entity = new Entity(jcas);
       entity.setEntityMentions(new FSArray(jcas, 1));
       entity.setEntityMentions(0, mention);

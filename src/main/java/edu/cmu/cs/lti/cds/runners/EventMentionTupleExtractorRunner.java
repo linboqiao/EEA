@@ -15,6 +15,7 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import edu.cmu.cs.lti.cds.annotators.EventMentionTupleExtractor;
+import edu.cmu.cs.lti.cds.annotators.SingletonAnnotator;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 
 /**
@@ -41,7 +42,7 @@ public class EventMentionTupleExtractorRunner {
     // Parameters for the writer
     String paramParentOutputDir = "data";
     String paramBaseOutputDirName = "event_tuples";
-    String paramOutputFileSuffix = "xmi";
+    String paramOutputFileSuffix = null;
 
     // ////////////////////////////////////////////////////////////////
 
@@ -60,6 +61,9 @@ public class EventMentionTupleExtractorRunner {
     AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(
             EventMentionTupleExtractor.class, typeSystemDescription);
 
+    AnalysisEngineDescription singletonCreator = CustomAnalysisEngineFactory.createAnalysisEngine(
+            SingletonAnnotator.class, typeSystemDescription);
+
     // Instantiate a XMI writer to put XMI as output.
     // Note that you should change the following parameters for your setting.
     AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(
@@ -67,7 +71,7 @@ public class EventMentionTupleExtractorRunner {
 
     // Run the pipeline.
     // SimplePipeline.runPipeline(reader, writer);
-    SimplePipeline.runPipeline(reader, tupleExtractor, writer);
+    SimplePipeline.runPipeline(reader, tupleExtractor, singletonCreator, writer);
 
     System.out.println(className + " completed.");
   }

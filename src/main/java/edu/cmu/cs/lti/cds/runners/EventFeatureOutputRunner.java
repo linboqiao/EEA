@@ -14,7 +14,7 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import edu.cmu.cs.lti.cds.annotators.EntityFeatureExtractor;
+import edu.cmu.cs.lti.cds.annotators.EventFeatureExtractor;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 
 /**
@@ -36,12 +36,12 @@ public class EventFeatureOutputRunner {
     // Note that you should change the parameters below for your configuration.
     // //////////////////////////////////////////////////////////////////////////
     // Parameters for the reader
-    String paramInputDir = "data/01_xmi";
+    String paramInputDir = "data/02_singleton_annotated";
 
     // Parameters for the writer
     String paramParentOutputDir = "data";
-    String paramBaseOutputDirName = "entity_features_tsv";
-    String paramOutputFileSuffix = ".csv";
+    String paramBaseOutputDirName = "event_features_csv";
+    String paramOutputFileSuffix = "csv";
     // ////////////////////////////////////////////////////////////////
 
     String paramTypeSystemDescriptor = "TypeSystem";
@@ -57,11 +57,11 @@ public class EventFeatureOutputRunner {
             paramInputDir);
 
     AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
-            EntityFeatureExtractor.class, typeSystemDescription,
-            EntityFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
-            EntityFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-            EntityFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-            EntityFeatureExtractor.PARAM_STEP_NUMBER, 2);
+            EventFeatureExtractor.class, typeSystemDescription,
+            EventFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
+            EventFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
+            EventFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
+            EventFeatureExtractor.PARAM_STEP_NUMBER, 3);
 
     SimplePipeline.runPipeline(reader, writer);
 
