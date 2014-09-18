@@ -2,33 +2,109 @@ package edu.cmu.cs.lti.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
 import au.com.bytecode.opencsv.CSVReader;
+import edu.cmu.cs.lti.cds.model.EntityEventLink;
+import edu.cmu.cs.lti.cds.model.FeaturizedEntity;
+import edu.cmu.cs.lti.cds.model.FeaturizedEvent;
+import edu.cmu.cs.lti.cds.model.FeaturizedItem;
 import edu.cmu.cs.lti.uima.util.CsvFactory;
+import gnu.trove.map.hash.TIntObjectHashMap;
 
 public class CsvFeatureParser {
-  public CsvFeatureParser() {
-    
+
+  public Table<FeaturizedEvent, FeaturizedEntity, EntityEventLink> linkings;
+
+  public List<FeaturizedItem> entityTable;
+
+  public List<FeaturizedItem> eventTable;
+
+  public enum ItemType {
+    Event, Entity
   }
 
-  public Table<String, String, Integer> getFeatures(File file) throws IOException {
+  private List<FeaturizedItem> getFeatures(File file, ItemType type) throws IOException {
     CSVReader reader = CsvFactory.getCSVReader(file);
+
+    String docId = FilenameUtils.getBaseName(file.getName());
+
     String[] nextLine;
-    Table<String, String, Integer> featureTable = HashBasedTable.create();
+    List<FeaturizedItem> featureTables = new ArrayList<FeaturizedItem>();
     while ((nextLine = reader.readNext()) != null) {
-      for (String entry : nextLine) {
-        String[] f = entry.split(":");
-        if (f.length == 3) {
-          featureTable.put(f[0], f[1], Integer.parseInt(f[2]));
-        } else {
-          System.err.println("Incorrect feature : " + entry);
+      Table<String, String, Integer> featureTable = HashBasedTable.create();
+      if (nextLine.length > 1) {
+        int id = Integer.parseInt(nextLine[0]);
+
+        for (String entry : nextLine) {
+          String[] f = entry.split(":");
+          if (f.length == 3) {
+            featureTable.put(f[0], f[1], Integer.parseInt(f[2]));
+          }
         }
+        FeaturizedItem item;
+        if (type == ItemType.Entity) {
+          item = new FeaturizedEntity(docId, id, featureTable);
+        } else {
+          item = new FeaturizedEvent(docId, id, featureTable);
+        }
+        featureTables.add(item);
       }
     }
-    return featureTable;
+    return featureTables;
   }
-  
+
+  public void intialize(File linkFile, File entityFile, File eventFile) throws IOException {
+    linkings = HashBasedTable.create();
+
+    String docId = FilenameUtils.getBaseName(linkFile.getName());
+    String entityDocId = FilenameUtils.getBaseName(entityFile.getName());
+    String evmDocId = FilenameUtils.getBaseName(eventFile.getName());
+
+    if (!docId.equals(entityDocId) && !entityDocId.equals(evmDocId)) {
+      System.err.println("Feature files not aligned");
+    }
+
+    System.out.println("Procesing " + entityDocId);
+
+    TIntObjectHashMap<FeaturizedEntity> entityById = new TIntObjectHashMap<FeaturizedEntity>();
+
+    TIntObjectHashMap<FeaturizedEvent> eventById = new TIntObjectHashMap<FeaturizedEvent>();
+
+    entityTable = getFeatures(entityFile, ItemType.Entity);
+    eventTable = getFeatures(eventFile, ItemType.Event);
+
+    for (FeaturizedItem entity : entityTable) {
+      entityById.put(entity.itemId, (FeaturizedEntity) entity);
+    }
+
+    for (FeaturizedItem event : eventTable) {
+      eventById.put(event.itemId, (FeaturizedEvent) event);
+    }
+
+    CSVReader reader = CsvFactory.getCSVReader(linkFile);
+
+    String[] nextLine;
+    while ((nextLine = reader.readNext()) != null) {
+      if (nextLine.length != 4) {
+        System.err.println("Link file borken");
+      } else {
+        int eventId = Integer.parseInt(nextLine[0]);
+        int entityId = Integer.parseInt(nextLine[1]);
+        System.out.println(eventId + " " + entityId);
+        FeaturizedEntity entity = entityById.get(entityId);
+        FeaturizedEvent event = eventById.get(eventId);
+        linkings.put(event, entity,
+                new EntityEventLink(nextLine[2], Double.parseDouble(nextLine[3])));
+      }
+    }
+  }
 }

@@ -1,9 +1,11 @@
 /**
  * 
  */
-package edu.cmu.cs.lti.cds.runners;
+package edu.cmu.cs.lti.cds.demo;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -14,15 +16,14 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import edu.cmu.cs.lti.cds.annotators.EventFeatureExtractor;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 
 /**
  * @author zhengzhongliu
  * 
  */
-public class EventFeatureOutputRunner {
-  private static String className = EventFeatureOutputRunner.class.getSimpleName();
+public class ProperNameScriptExtractor {
+  private static String className = ProperNameScriptExtractor.class.getSimpleName();
 
   /**
    * @param args
@@ -38,11 +39,6 @@ public class EventFeatureOutputRunner {
     // Parameters for the reader
     String paramInputDir = "data/01_event_tuples";
 
-    // Parameters for the writer
-    String paramParentOutputDir = "data";
-    String paramBaseOutputDirName = "event_features";
-    String paramOutputFileSuffix = "csv";
-    int stepNum = 2;
     // ////////////////////////////////////////////////////////////////
 
     String paramTypeSystemDescriptor = "TypeSystem";
@@ -57,15 +53,13 @@ public class EventFeatureOutputRunner {
             XmiCollectionReader.class, typeSystemDescription, XmiCollectionReader.PARAM_INPUTDIR,
             paramInputDir);
 
-    AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
-            EventFeatureExtractor.class, typeSystemDescription,
-            EventFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
-            EventFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-            EventFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-            EventFeatureExtractor.PARAM_STEP_NUMBER, stepNum);
+    AnalysisEngineDescription finder = CustomAnalysisEngineFactory.createAnalysisEngine(
+            SimpsonScriptFinder.class, typeSystemDescription,
+            SimpsonScriptFinder.PARAM_TARGET_NAME, "clinton");
 
-    SimplePipeline.runPipeline(reader, writer);
+    SimplePipeline.runPipeline(reader, finder);
 
-    System.out.println(className + " completed.");
+    ScriptCollector.writeObservations(new PrintStream(new File("data/clinton_events")));
   }
+
 }
