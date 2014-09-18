@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.cds.annotators;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,6 +57,9 @@ public class EventMentionTupleExtractor extends JCasAnnotator_ImplBase {
   private int numEntityMentions;
 
   private int numEntities;
+
+  public static final Set<String> nonPrepRoles = new HashSet<String>(Arrays.asList("ARG0", "ARG1",
+          "ARGM-LOC", "ARGM-TMP", "ARGM-PNC"));
 
   @Override
   public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -125,7 +129,9 @@ public class EventMentionTupleExtractor extends JCasAnnotator_ImplBase {
         String relationType = childDependency.getDependencyType();
         if (relationType.equals("pobj")) {
           agentToken = childDependency.getChild();
+          break;
         }
+        agentToken = childDependency.getChild();
       }
     }
     return agentToken;
@@ -158,12 +164,11 @@ public class EventMentionTupleExtractor extends JCasAnnotator_ImplBase {
       argumentToken = fsr.getChild();
     }
 
-    if (relation.equals("ARG0") || relation.equals("ARG1") || relation.equals("ARGM-LOC")
-            || relation.equals("ARGM-TMP")) {
-      if (argumentToken.getPos().equals("IN")) {
-        argumentToken = findObjectConnectedWithPrep(argumentToken);
-      }
+    // if (nonPrepRoles.contains(relation)) {
+    if (argumentToken.getPos().equals("IN")) {
+      argumentToken = findObjectConnectedWithPrep(argumentToken);
     }
+    // }
 
     if (!Pattern.matches("\\p{Punct}", argumentToken.getCoveredText())) {
       addEventArgumentPair(headToken, argumentToken, relation);
@@ -175,10 +180,6 @@ public class EventMentionTupleExtractor extends JCasAnnotator_ImplBase {
     if (mention == null) {
       mention = UimaNlpUtils.createEntityMention(jcas, headWord.getBegin(), headWord.getEnd(),
               ANNOTATOR_COMPONENT_ID);
-      Entity entity = new Entity(jcas);
-      entity.setEntityMentions(new FSArray(jcas, 1));
-      entity.setEntityMentions(0, mention);
-      UimaAnnotationUtils.finishTop(entity, ANNOTATOR_COMPONENT_ID, numEntities++, jcas);
     }
     return mention;
   }

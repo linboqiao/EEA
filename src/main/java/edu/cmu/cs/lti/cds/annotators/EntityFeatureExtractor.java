@@ -17,6 +17,7 @@ import edu.cmu.cs.lti.script.type.EntityMention;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.io.writer.AbstractCsvWriterAnalysisEngine;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.StringUtils;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.hash.TObjectIntHashMap;
@@ -82,14 +83,15 @@ public class EntityFeatureExtractor extends AbstractCsvWriterAnalysisEngine {
       }
 
       // do not use pronoun for mention surface feature
-      if (mention.getHead().getPos().startsWith("PR")) {
+      if (!mention.getHead().getPos().startsWith("PR")) {
         String mentionSurface = StringUtils.text2CsvField(mention.getCoveredText()).toLowerCase();
         mentionSurfaceCount.adjustOrPutValue(mentionSurface, 1, 1);
-        mentionHeadWordCount.adjustOrPutValue(mention.getHead().getPos(), 1, 1);
+        mentionHeadWordCount.adjustOrPutValue(mention.getHead().getLemma().toLowerCase(), 1, 1);
       }
     }
 
     // contextual features
+
     for (Sentence sent : entity2Sents.get(en)) {
       for (StanfordCorenlpToken word : JCasUtil.selectCovered(StanfordCorenlpToken.class, sent)) {
         if (word.getPos().startsWith("N") || word.getPos().startsWith("V")

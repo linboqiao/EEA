@@ -40,8 +40,9 @@ public class SolrQueryEngine {
 
   public void getTermResponse(String queryStr) throws SolrServerException {
     SolrQuery query = new SolrQuery(queryStr);
-    query.setQueryType("/tvrh");
-    query.setParam("tv", false);
+    query.setRequestHandler("/tvrh");
+    query.setParam("tv", true);
+    query.setParam("tv_df", true);
     QueryResponse queryResponse = server.query(query);
     TermsResponse termResponse = queryResponse.getTermsResponse();
     for (Entry<String, List<Term>> te : termResponse.getTermMap().entrySet()) {

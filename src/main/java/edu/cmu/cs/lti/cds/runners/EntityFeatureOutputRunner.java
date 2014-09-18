@@ -36,12 +36,13 @@ public class EntityFeatureOutputRunner {
     // Note that you should change the parameters below for your configuration.
     // //////////////////////////////////////////////////////////////////////////
     // Parameters for the reader
-    String paramInputDir = "data/02_singleton_annotated";
+    String paramInputDir = "data/01_event_tuples";
 
     // Parameters for the writer
     String paramParentOutputDir = "data";
     String paramBaseOutputDirName = "entity_features_csv";
     String paramOutputFileSuffix = "csv";
+    int stepNum = 2;
     // ////////////////////////////////////////////////////////////////
 
     String paramTypeSystemDescriptor = "TypeSystem";
@@ -61,7 +62,7 @@ public class EntityFeatureOutputRunner {
             EntityFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
             EntityFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
             EntityFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-            EntityFeatureExtractor.PARAM_STEP_NUMBER, 3);
+            EntityFeatureExtractor.PARAM_STEP_NUMBER, stepNum);
 
     SimplePipeline.runPipeline(reader, writer);
 

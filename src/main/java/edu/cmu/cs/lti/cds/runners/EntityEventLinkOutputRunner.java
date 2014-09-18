@@ -14,7 +14,8 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import edu.cmu.cs.lti.cds.annotators.EventMentionTupleExtractor;
+import edu.cmu.cs.lti.cds.annotators.EventEntityLinkProducer;
+import edu.cmu.cs.lti.cds.annotators.EventFeatureExtractor;
 import edu.cmu.cs.lti.cds.annotators.SingletonAnnotator;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 
@@ -22,8 +23,8 @@ import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
  * @author zhengzhongliu
  * 
  */
-public class EventMentionTupleExtractorRunner {
-  private static String className = EventMentionTupleExtractorRunner.class.getSimpleName();
+public class EntityEventLinkOutputRunner {
+  private static String className = EntityEventLinkOutputRunner.class.getSimpleName();
 
   /**
    * @param args
@@ -37,14 +38,13 @@ public class EventMentionTupleExtractorRunner {
     // Note that you should change the parameters below for your configuration.
     // //////////////////////////////////////////////////////////////////////////
     // Parameters for the reader
-    String paramInputDir = "data/00_agiga_xmi";
+    String paramInputDir = "data/02_singleton_annotated";
 
     // Parameters for the writer
     String paramParentOutputDir = "data";
-    String paramBaseOutputDirName = "event_tuples";
-    String paramOutputFileSuffix = null;
-    int stepnum = 1;
-
+    String paramBaseOutputDirName = "entity_event_link";
+    String paramOutputFileSuffix = "csv";
+    int stemNum = 2;
     // ////////////////////////////////////////////////////////////////
 
     String paramTypeSystemDescriptor = "TypeSystem";
@@ -59,22 +59,15 @@ public class EventMentionTupleExtractorRunner {
             XmiCollectionReader.class, typeSystemDescription, XmiCollectionReader.PARAM_INPUTDIR,
             paramInputDir);
 
-    AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(
-            EventMentionTupleExtractor.class, typeSystemDescription);
+    AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
+            EventEntityLinkProducer.class, typeSystemDescription,
+            EventEntityLinkProducer.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
+            EventEntityLinkProducer.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
+            EventEntityLinkProducer.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
+            EventEntityLinkProducer.PARAM_STEP_NUMBER, stemNum);
 
-    AnalysisEngineDescription singletonCreator = CustomAnalysisEngineFactory.createAnalysisEngine(
-            SingletonAnnotator.class, typeSystemDescription);
-
-    // Instantiate a XMI writer to put XMI as output.
-    // Note that you should change the following parameters for your setting.
-    AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(
-            paramParentOutputDir, paramBaseOutputDirName, stepnum, paramOutputFileSuffix);
-
-    // Run the pipeline.
-    // SimplePipeline.runPipeline(reader, writer);
-    SimplePipeline.runPipeline(reader, tupleExtractor, singletonCreator, writer);
+    SimplePipeline.runPipeline(reader, writer);
 
     System.out.println(className + " completed.");
   }
-
 }
