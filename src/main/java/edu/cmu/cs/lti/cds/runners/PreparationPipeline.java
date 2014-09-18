@@ -44,7 +44,7 @@ public class PreparationPipeline {
     // Parameters for the writer
     String paramParentOutputDir = "data";
     String paramBaseOutputDirName = args[1];
-    String paramOutputFileSuffix = "xmi";
+    String paramOutputFileSuffix = null;
 
     String paramModelBaseDirectory = args[2];// "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/"
     // ////////////////////////////////////////////////////////////////
@@ -69,7 +69,7 @@ public class PreparationPipeline {
 
     // Instantiate a XMI writer to put XMI as output.
     // Note that you should change the following parameters for your setting.
-    AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(
+    AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createGzippedXmiWriter(
             paramParentOutputDir, paramBaseOutputDirName, 0, paramOutputFileSuffix);
 
     // Run the pipeline.
