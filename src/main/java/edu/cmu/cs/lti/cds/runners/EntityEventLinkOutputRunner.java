@@ -38,12 +38,12 @@ public class EntityEventLinkOutputRunner {
     // Note that you should change the parameters below for your configuration.
     // //////////////////////////////////////////////////////////////////////////
     // Parameters for the reader
-    String paramInputDir = "data/02_singleton_annotated";
+    String paramInputDir = "data/01_event_tuples";
 
     // Parameters for the writer
     String paramParentOutputDir = "data";
     String paramBaseOutputDirName = "entity_event_link";
-    String paramOutputFileSuffix = "csv";
+    String paramOutputFileSuffix = "tsv";
     int stemNum = 2;
     // ////////////////////////////////////////////////////////////////
 

@@ -14,8 +14,9 @@ import org.apache.uima.resource.ResourceInitializationException;
 import edu.cmu.cs.lti.script.type.EntityMention;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
+import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 
-public class SimpsonScriptFinder extends JCasAnnotator_ImplBase {
+public class NamedBasedScriptFinder extends JCasAnnotator_ImplBase {
 
   public static final String PARAM_TARGET_NAME = "targetName";
 
@@ -36,9 +37,13 @@ public class SimpsonScriptFinder extends JCasAnnotator_ImplBase {
       for (EventMentionArgumentLink argument : argumentLinks) {
         EntityMention entityMention = argument.getArgument();
         String role = argument.getArgumentRole();
-        if (entityMention.getCoveredText().toLowerCase().contains(targetName)) {
-          ScriptCollector.addObservation(aJCas, evm.getReferringEvent(),
-                  entityMention.getReferingEntity(), role);
+        for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class,
+                entityMention)) {
+          if (token.getLemma().toLowerCase().equals(targetName.toLowerCase())) {
+            ScriptCollector.addObservation(aJCas, evm.getReferringEvent(),
+                    entityMention.getReferingEntity());
+            break;
+          }
         }
       }
     }

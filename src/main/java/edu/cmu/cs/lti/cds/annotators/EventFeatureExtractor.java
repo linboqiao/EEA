@@ -7,20 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.FSArray;
 
-import com.google.common.collect.ArrayListMultimap;
-
-import edu.cmu.cs.lti.script.type.Entity;
-import edu.cmu.cs.lti.script.type.EntityMention;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
+import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.io.writer.AbstractCsvWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.StringUtils;
@@ -57,6 +51,7 @@ public class EventFeatureExtractor extends AbstractCsvWriterAnalysisEngine {
     }
 
     allEvents = new ArrayList<Event>(JCasUtil.select(aJCas, Event.class));
+    eventIndex = 0;
   }
 
   @Override
@@ -68,34 +63,42 @@ public class EventFeatureExtractor extends AbstractCsvWriterAnalysisEngine {
   protected String[] getNextCsvRow() {
     List<String> features = new ArrayList<String>();
 
+    // we start with a trivial single mention event, but we should still treat it as a list
     Event event = allEvents.get(eventIndex++);
     features.add(event.getId());
 
     TObjectIntHashMap<String> mentionSurfaceCount = new TObjectIntHashMap<String>();
     TObjectIntHashMap<String> lemmaCount = new TObjectIntHashMap<String>();
+    TObjectIntHashMap<String> headwordCount = new TObjectIntHashMap<String>();
     for (int i = 0; i < event.getEventMentions().size(); i++) {
       EventMention mention = event.getEventMentions(i);
+      Word headWord = mention.getHeadWord();
       String mentionSurface = UimaNlpUtils.getLemmatizedAnnotation(mention);
       mentionSurfaceCount.adjustOrPutValue(mentionSurface, 1, 1);
+      headwordCount.adjustOrPutValue(headWord.getCoveredText(), 1, 1);
     }
 
     for (Sentence sent : evm2Sents.get(event)) {
       for (StanfordCorenlpToken word : JCasUtil.selectCovered(StanfordCorenlpToken.class, sent)) {
         if (word.getPos().startsWith("N") || word.getPos().startsWith("V")
                 || word.getPos().startsWith("J")) {
-          lemmaCount.adjustOrPutValue(word.getLemma().toLowerCase(), 1, 1);
+          lemmaCount.adjustOrPutValue(word.getLemma(), 1, 1);
         }
       }
+    }
+
+    for (TObjectIntIterator<String> iter = headwordCount.iterator(); iter.hasNext();) {
+      iter.advance();
+      features.add("H:" + iter.key() + ":" + iter.value());
+    }
+    for (TObjectIntIterator<String> iter = mentionSurfaceCount.iterator(); iter.hasNext();) {
+      iter.advance();
+      features.add("M:" + iter.key() + ":" + iter.value());
     }
 
     for (TObjectIntIterator<String> iter = lemmaCount.iterator(); iter.hasNext();) {
       iter.advance();
       features.add("C:" + StringUtils.text2CsvField(iter.key()) + ":" + iter.value());
-    }
-
-    for (TObjectIntIterator<String> iter = mentionSurfaceCount.iterator(); iter.hasNext();) {
-      iter.advance();
-      features.add("M:" + iter.key() + ":" + iter.value());
     }
 
     return features.toArray(new String[features.size()]);

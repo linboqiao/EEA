@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.cds.annotators;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,7 +18,6 @@ import edu.cmu.cs.lti.script.type.EntityMention;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.io.writer.AbstractCsvWriterAnalysisEngine;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.StringUtils;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.hash.TObjectIntHashMap;
@@ -86,7 +86,7 @@ public class EntityFeatureExtractor extends AbstractCsvWriterAnalysisEngine {
       if (!mention.getHead().getPos().startsWith("PR")) {
         String mentionSurface = StringUtils.text2CsvField(mention.getCoveredText()).toLowerCase();
         mentionSurfaceCount.adjustOrPutValue(mentionSurface, 1, 1);
-        mentionHeadWordCount.adjustOrPutValue(mention.getHead().getLemma().toLowerCase(), 1, 1);
+        mentionHeadWordCount.adjustOrPutValue(mention.getHead().getLemma(), 1, 1);
       }
     }
 
@@ -96,7 +96,7 @@ public class EntityFeatureExtractor extends AbstractCsvWriterAnalysisEngine {
       for (StanfordCorenlpToken word : JCasUtil.selectCovered(StanfordCorenlpToken.class, sent)) {
         if (word.getPos().startsWith("N") || word.getPos().startsWith("V")
                 || word.getPos().startsWith("J")) {
-          lemmaCount.adjustOrPutValue(word.getLemma().toLowerCase(), 1, 1);
+          lemmaCount.adjustOrPutValue(word.getLemma(), 1, 1);
         }
       }
     }

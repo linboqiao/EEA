@@ -22,6 +22,7 @@ import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.uima.io.writer.AbstractCsvWriterAnalysisEngine;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
 /**
@@ -33,6 +34,8 @@ public class EventEntityLinkProducer extends AbstractCsvWriterAnalysisEngine {
   int index = 0;
 
   private List<Triple<Event, Entity, Pair<String, Integer>>> allLinks;
+
+  private String docId;
 
   /*
    * (non-Javadoc)
@@ -53,6 +56,9 @@ public class EventEntityLinkProducer extends AbstractCsvWriterAnalysisEngine {
    */
   @Override
   protected void prepare(JCas aJCas) {
+    setSeperator('\t');
+    docId = UimaConvenience.getShortDocumentNameWithOffset(aJCas);
+
     Table<Event, Entity, TObjectIntHashMap<String>> event2EntityLinks = HashBasedTable.create();
     allLinks = new ArrayList<Triple<Event, Entity, Pair<String, Integer>>>();
 
@@ -64,18 +70,20 @@ public class EventEntityLinkProducer extends AbstractCsvWriterAnalysisEngine {
           EntityMention en = argument.getArgument();
           Entity entity = en.getReferingEntity();
           String role = argument.getArgumentRole();
+
+          if (event == null) {
+            System.out.println("Event is null");
+          }
+
+          if (entity == null) {
+            System.err.println("Entity is null");
+          }
+
           if (event2EntityLinks.contains(event, entity)) {
             event2EntityLinks.get(event, entity).adjustOrPutValue(role, 1, 1);
           } else {
             TObjectIntHashMap<String> roleMap = new TObjectIntHashMap<String>();
             roleMap.put(role, 1);
-            if (event == null) {
-              System.out.println("Event null");
-            }
-            if (entity == null) {
-              System.out.println(en.getCoveredText() + " " + en.getId());
-              System.out.println("entity null");
-            }
             event2EntityLinks.put(event, entity, roleMap);
           }
         }
@@ -111,8 +119,8 @@ public class EventEntityLinkProducer extends AbstractCsvWriterAnalysisEngine {
     Triple<Event, Entity, Pair<String, Integer>> link = allLinks.get(index);
     String[] linkRow = new String[4];
 
-    linkRow[0] = link.getLeft().getId();
-    linkRow[1] = link.getMiddle().getId();
+    linkRow[0] = docId + "_" + link.getLeft().getId();
+    linkRow[1] = docId + "_" + link.getMiddle().getId();
     linkRow[2] = link.getRight().getLeft();
     linkRow[3] = Integer.toString(link.getRight().getRight());
 

@@ -3,10 +3,7 @@
  */
 package edu.cmu.cs.lti.cds.demo;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
-
+import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -16,7 +13,9 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 
 /**
  * @author zhengzhongliu
@@ -54,12 +53,12 @@ public class ProperNameScriptExtractor {
             paramInputDir);
 
     AnalysisEngineDescription finder = CustomAnalysisEngineFactory.createAnalysisEngine(
-            SimpsonScriptFinder.class, typeSystemDescription,
-            SimpsonScriptFinder.PARAM_TARGET_NAME, "clinton");
+            NamedBasedScriptFinder.class, typeSystemDescription,
+            NamedBasedScriptFinder.PARAM_TARGET_NAME, "Siddig");
 
     SimplePipeline.runPipeline(reader, finder);
 
-    ScriptCollector.writeObservations(new PrintStream(new File("data/clinton_events")));
+    ScriptCollector.writeObservations(new PrintStream(new File("data/sample_events/siddig_events")));
   }
 
 }
