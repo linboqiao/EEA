@@ -14,8 +14,7 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import edu.cmu.cs.lti.cds.annotators.EventMentionTupleExtractor;
-import edu.cmu.cs.lti.cds.annotators.SingletonAnnotator;
+import edu.cmu.cs.lti.cds.annotators.StreamingEntityCluster;
 import edu.cmu.cs.lti.cds.annotators.patches.DuplicatedMentionRemover;
 import edu.cmu.cs.lti.cds.annotators.patches.RepresentativeMentionFinder;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -24,8 +23,8 @@ import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
  * @author zhengzhongliu
  * 
  */
-public class EventMentionTupleExtractorRunner {
-  private static String className = EventMentionTupleExtractorRunner.class.getSimpleName();
+public class StreamingEntityClusteringRunner {
+  private static String className = StreamingEntityClusteringRunner.class.getSimpleName();
 
   /**
    * @param args
@@ -39,14 +38,10 @@ public class EventMentionTupleExtractorRunner {
     // Note that you should change the parameters below for your configuration.
     // //////////////////////////////////////////////////////////////////////////
     // Parameters for the reader
-    String paramInputDir = "data/00_agiga_xmi";
+    String paramInputDir = "data/01_event_tuples";
 
     // Parameters for the writer
-    String paramParentOutputDir = "data";
-    String paramBaseOutputDirName = "event_tuples";
-    String paramOutputFileSuffix = null;
-    int stepnum = 1;
-
+    int stepNum = 2;
     // ////////////////////////////////////////////////////////////////
 
     String paramTypeSystemDescriptor = "TypeSystem";
@@ -61,27 +56,17 @@ public class EventMentionTupleExtractorRunner {
             XmiCollectionReader.class, typeSystemDescription, XmiCollectionReader.PARAM_INPUTDIR,
             paramInputDir);
 
-    AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(
-            EventMentionTupleExtractor.class, typeSystemDescription);
+    // AnalysisEngineDescription duplicateMentionRemover = CustomAnalysisEngineFactory
+    // .createAnalysisEngine(DuplicatedMentionRemover.class, typeSystemDescription);
+    //
+    // AnalysisEngineDescription representativeMentionFinder = CustomAnalysisEngineFactory
+    // .createAnalysisEngine(RepresentativeMentionFinder.class, typeSystemDescription);
 
-    AnalysisEngineDescription duplicateMentionRemover = CustomAnalysisEngineFactory
-            .createAnalysisEngine(DuplicatedMentionRemover.class, typeSystemDescription);
+    AnalysisEngineDescription coreferenceProcessor = CustomAnalysisEngineFactory
+            .createAnalysisEngine(StreamingEntityCluster.class, typeSystemDescription);
 
-    AnalysisEngineDescription singletonCreator = CustomAnalysisEngineFactory.createAnalysisEngine(
-            SingletonAnnotator.class, typeSystemDescription);
+    SimplePipeline.runPipeline(reader, coreferenceProcessor);
 
-    AnalysisEngineDescription representativeMentionFinder = CustomAnalysisEngineFactory
-            .createAnalysisEngine(RepresentativeMentionFinder.class, typeSystemDescription);
-
-    // Instantiate a XMI writer to put XMI as output.
-    // Note that you should change the following parameters for your setting.
-    AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(
-            paramParentOutputDir, paramBaseOutputDirName, stepnum, paramOutputFileSuffix);
-
-    // Run the pipeline.
-    SimplePipeline.runPipeline(reader, tupleExtractor, duplicateMentionRemover, singletonCreator,
-            representativeMentionFinder, writer);
     System.out.println(className + " completed.");
   }
-
 }

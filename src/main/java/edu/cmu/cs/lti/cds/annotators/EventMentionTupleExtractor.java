@@ -17,7 +17,6 @@ import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.resource.ResourceInitializationException;
 
@@ -89,12 +88,6 @@ public class EventMentionTupleExtractor extends JCasAnnotator_ImplBase {
     }
 
     for (Entry<Word, Map<String, Word>> eventEntry : events.entrySet()) {
-      // System.out.println("Event " + eventEntry.getKey().getCoveredText());
-      // for (Entry<String, Word> argumentEntry : eventEntry.getValue().entrySet()) {
-      // System.out.println("Argument " + argumentEntry.getKey() + " : "
-      // + argumentEntry.getValue().getCoveredText());
-      // }
-
       Word eventWord = eventEntry.getKey();
       EventMention evm = new EventMention(aJCas, eventWord.getBegin(), eventWord.getEnd());
       evm.setHeadWord(eventWord);
@@ -102,9 +95,6 @@ public class EventMentionTupleExtractor extends JCasAnnotator_ImplBase {
       List<EventMentionArgumentLink> argumentLinks = new ArrayList<EventMentionArgumentLink>();
 
       for (Entry<String, Word> argumentEntry : eventEntry.getValue().entrySet()) {
-        // System.out.println("Argument " + argumentEntry.getKey() + " : "
-        // + argumentEntry.getValue().getCoveredText());
-
         EventMentionArgumentLink link = new EventMentionArgumentLink(aJCas);
         UimaAnnotationUtils.finishTop(link, ANNOTATOR_COMPONENT_ID, null, aJCas);
 
@@ -180,6 +170,7 @@ public class EventMentionTupleExtractor extends JCasAnnotator_ImplBase {
     if (mention == null) {
       mention = UimaNlpUtils.createEntityMention(jcas, headWord.getBegin(), headWord.getEnd(),
               ANNOTATOR_COMPONENT_ID);
+      head2EntityMention.put(toSpan(headWord), mention);
     }
     return mention;
   }
