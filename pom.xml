@@ -136,5 +136,10 @@
 			<artifactId>lucene-core</artifactId>
 			<version>4.10.0</version>
 		</dependency>
+		<dependency>
+			<groupId>edu.cmu.cs.lti</groupId>
+			<artifactId>zl-utils</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

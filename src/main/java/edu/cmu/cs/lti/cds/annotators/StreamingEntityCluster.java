@@ -3,13 +3,19 @@
  */
 package edu.cmu.cs.lti.cds.annotators;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -24,12 +30,19 @@ import edu.cmu.cs.lti.cds.solr.SolrIndexReader;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.Entity;
 import edu.cmu.cs.lti.script.type.EntityMention;
+import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
+import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import edu.cmu.cs.lti.utils.FileUtils;
 import edu.cmu.cs.lti.utils.StringUtils;
+import edu.cmu.cs.lti.utils.TimeUtils;
+import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.hash.TIntObjectHashMap;
+import gnu.trove.map.hash.TObjectDoubleHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import gnu.trove.set.hash.TIntHashSet;
 
 /**
  * @author zhengzhongliu
@@ -38,9 +51,7 @@ import gnu.trove.map.hash.TObjectIntHashMap;
 public class StreamingEntityCluster extends JCasAnnotator_ImplBase {
   SolrIndexReader reader;
 
-  EntityClusterManager manager = new EntityClusterManager();
-
-  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmdd");
+  EntityClusterManager manager;
 
   double cluster_threshold = 0.5;
 
@@ -59,6 +70,10 @@ public class StreamingEntityCluster extends JCasAnnotator_ImplBase {
     try {
       reader = new SolrIndexReader(
               "/Users/zhengzhongliu/tools/solr-4.7.0/example/solr/collection1/data/index");
+
+      File clusterOut = new File("data/03_entity_clusters");
+      FileUtils.ensureDirectory(clusterOut);
+      manager = new EntityClusterManager(clusterOut);
     } catch (IOException e) {
       throw new ResourceInitializationException(e);
     }
@@ -69,13 +84,18 @@ public class StreamingEntityCluster extends JCasAnnotator_ImplBase {
     String articleName = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
     System.out.println("Processing " + UimaConvenience.getShortDocumentNameWithOffset(aJCas)
             + " _ " + articleName);
+
+    int numExistingClusters = manager.numOfCluster();
+
+    System.out.println("Number of clusters " + numExistingClusters);
+
     String[] articleNamefields = articleName.split("_");
     String dateStr = "";
     Date date = null;
     if (articleNamefields.length == 3) {
       dateStr = articleNamefields[2].substring(0, 8);
       try {
-        date = dateFormat.parse(dateStr);
+        date = TimeUtils.dateFormat.parse(dateStr);
       } catch (ParseException e) {
         e.printStackTrace();
       }
@@ -105,15 +125,13 @@ public class StreamingEntityCluster extends JCasAnnotator_ImplBase {
       if (majorityType.equals(EntityClusterManager.entityType.ORGANIZATION.name())
       // || majorityType.equals(EntityClusterManager.entityType.LOCATION.name())
               || majorityType.equals(EntityClusterManager.entityType.PERSON.name())) {
+        System.out.println("Streaming in new entity : " + manager.getRepresentativeStr(entity)
+                + " entity id: " + entity.getId());
 
-        String headMentionStr = entity.getRepresentativeMention().getCoveredText()
-                .replace("\n", "");
-
-        String entityId = articleName + "_" + entity.getId();
         TIntObjectHashMap<FeatureTable> candidateClusterFeatures = manager
-                .getCandidateClusterFeatures(majorityType, headMentionStr);
+                .getCandidateClusterFeatures(majorityType, entity, numExistingClusters);
 
-        FeatureTable features = getFeatureVector(aJCas, dateStr, headMentionStr);
+        FeatureTable features = getFeatureVector(aJCas, dateStr, entity);
 
         int bestClusterId = -1;
         if (candidateClusterFeatures != null) {
@@ -123,9 +141,10 @@ public class StreamingEntityCluster extends JCasAnnotator_ImplBase {
         }
 
         if (bestClusterId == -1) {
-          manager.createNewCluster(entityId, date, features, majorityType, headMentionStr);
+          manager.createNewCluster(date, features, majorityType, entity, articleName);
         } else {
-          manager.addToExistingCluster(bestClusterId, entityId, date, features);
+          manager.addToExistingCluster(bestClusterId, date, features, majorityType, entity,
+                  articleName);
         }
       }
     }
@@ -148,7 +167,7 @@ public class StreamingEntityCluster extends JCasAnnotator_ImplBase {
       // System.out.println("Similarity with " + clusterId + " is " + sim);
     }
 
-    if (bestClusterId > cluster_threshold) {
+    if (maxSim > cluster_threshold) {
       return bestClusterId;
     } else {
       return -1;
@@ -205,19 +224,87 @@ public class StreamingEntityCluster extends JCasAnnotator_ImplBase {
     }
   }
 
-  private FeatureTable getFeatureVector(JCas aJCas, String dateStr, String headMentionStr) {
+  private FeatureTable getFeatureVector(JCas aJCas, String dateStr, Entity entity) {
     // create feature table
     FeatureTable features = new FeatureTable();
 
-    Collection<StanfordCorenlpToken> fullContext = JCasUtil.select(aJCas,
-            StanfordCorenlpToken.class);
-    TObjectIntHashMap<String> tfCounts = new TObjectIntHashMap<String>();
-    for (StanfordCorenlpToken token : fullContext) {
-      String t = token.getCoveredText();
-      tfCounts.adjustOrPutValue(t, 1, 1);
+    // context features
+    fillContextFeature(features, aJCas, entity);
+
+    // surface features
+    fillMentionSurfaceFeature(features, aJCas, entity);
+
+    return features;
+  }
+
+  private void fillMentionSurfaceFeature(FeatureTable features, JCas aJCas, Entity entity) {
+    String headMentionStr = manager.getRepresentativeStr(entity);
+
+    TObjectIntHashMap<String> skipBigramCounts = new TObjectIntHashMap<String>();
+    // System.out.println("head mention " + headMentionStr);
+    for (String skipBigram : StringUtils.characterSkipBigram(headMentionStr)) {
+      // System.out.println("sb " + skipBigram);
+      skipBigramCounts.adjustOrPutValue(skipBigram, 1, 1);
     }
 
-    for (String term : tfCounts.keySet()) {
+    for (String sb : skipBigramCounts.keySet()) {
+      features.addFeature(FeatureType.SURFACE.name(), sb, skipBigramCounts.get(sb));
+    }
+  }
+
+  private int getMinSentenceDistance(int currentSid, Collection<Integer> occurringSentenceIds) {
+    int leftMin = -1;
+
+    for (int occuringSid : occurringSentenceIds) {
+      if (currentSid == occuringSid) {
+        return 0;
+      } else if (currentSid > occuringSid) {
+        leftMin = currentSid - occuringSid;
+      } else {
+        int rightMin = occuringSid - currentSid;
+        return rightMin < leftMin ? rightMin : leftMin;
+      }
+    }
+
+    return leftMin;
+  }
+
+  private void fillContextFeature(FeatureTable features, JCas aJCas, Entity entity) {
+    Set<StanfordCorenlpToken> mentionWords = new HashSet<StanfordCorenlpToken>();
+    for (int i = 0; i < entity.getEntityMentions().size(); i++) {
+      EntityMention mention = entity.getEntityMentions(i);
+      for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, mention)) {
+        mentionWords.add(token);
+        break; // just take first token
+      }
+    }
+
+    TObjectIntHashMap<StanfordCorenlpToken> mentionRemovedContext = new TObjectIntHashMap<StanfordCorenlpToken>();
+    LinkedHashSet<Integer> occurringSentenceIds = new LinkedHashSet<Integer>();
+
+    Collection<Sentence> sentences = JCasUtil.select(aJCas, Sentence.class);
+    int numSents = sentences.size();
+    for (Sentence sent : sentences) {
+      int sid = Integer.parseInt(sent.getId());
+      for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, sent)) {
+        if (mentionWords.contains(token)) {
+          occurringSentenceIds.add(sid);
+        } else {
+          mentionRemovedContext.put(token, sid);
+        }
+      }
+    }
+
+    TObjectDoubleHashMap<String> weightedTfs = new TObjectDoubleHashMap<String>();
+    for (StanfordCorenlpToken token : mentionRemovedContext.keySet()) {
+      String t = token.getCoveredText();
+      int dist = getMinSentenceDistance(mentionRemovedContext.get(token), occurringSentenceIds);
+      double distReverse = dist * 1.0 / numSents;
+      double w = 1.0 - (distReverse);
+      weightedTfs.adjustOrPutValue(t, w, w);
+    }
+
+    for (String term : weightedTfs.keySet()) {
       int df = defaultDocumentFrequency;
       try {
         df = reader.getDocumentFrequency(term);
@@ -232,24 +319,15 @@ public class StreamingEntityCluster extends JCasAnnotator_ImplBase {
         idf = 1.0 / defaultDocumentFrequency;
       }
 
-      int tf = tfCounts.get(term);
+      double wtf = weightedTfs.get(term);
 
-      // System.out.println("tf is " + tf + " idf is " + idf);
-
-      features.addFeature(FeatureType.CONTEXT.name(), term, tf * idf);
+      features.addFeature(FeatureType.CONTEXT.name(), term, wtf * idf);
     }
-
-    TObjectIntHashMap<String> skipBigramCounts = new TObjectIntHashMap<String>();
-    // System.out.println("head mention " + headMentionStr);
-    for (String skipBigram : StringUtils.characterSkipBigram(headMentionStr)) {
-      // System.out.println("sb " + skipBigram);
-      skipBigramCounts.adjustOrPutValue(skipBigram, 1, 1);
-    }
-
-    for (String sb : skipBigramCounts.keySet()) {
-      features.addFeature(FeatureType.SURFACE.name(), sb, skipBigramCounts.get(sb));
-    }
-
-    return features;
   }
+
+  @Override
+  public void collectionProcessComplete() throws AnalysisEngineProcessException {
+    manager.finish();
+  }
+
 }

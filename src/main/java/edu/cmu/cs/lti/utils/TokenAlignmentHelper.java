@@ -70,5 +70,4 @@ public class TokenAlignmentHelper {
 
     return word2Token;
   }
-
 }

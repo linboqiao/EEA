@@ -8,15 +8,13 @@ import java.io.IOException;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
-import org.apache.uima.examples.xmi.XmiCollectionReader;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import edu.cmu.cs.lti.cds.annotators.StreamingEntityCluster;
-import edu.cmu.cs.lti.cds.annotators.patches.DuplicatedMentionRemover;
-import edu.cmu.cs.lti.cds.annotators.patches.RepresentativeMentionFinder;
+import edu.cmu.cs.lti.collection_reader.OffsetSortedXmiCollectionReader;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 
 /**
@@ -38,7 +36,7 @@ public class StreamingEntityClusteringRunner {
     // Note that you should change the parameters below for your configuration.
     // //////////////////////////////////////////////////////////////////////////
     // Parameters for the reader
-    String paramInputDir = "data/01_event_tuples";
+    String paramInputDir = "data/01_event_tuples_sample";
 
     // Parameters for the writer
     int stepNum = 2;
@@ -53,8 +51,8 @@ public class StreamingEntityClusteringRunner {
     // Instantiate a collection reader to get XMI as input.
     // Note that you should change the following parameters for your setting.
     CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
-            XmiCollectionReader.class, typeSystemDescription, XmiCollectionReader.PARAM_INPUTDIR,
-            paramInputDir);
+            OffsetSortedXmiCollectionReader.class, typeSystemDescription,
+            OffsetSortedXmiCollectionReader.PARAM_INPUTDIR, paramInputDir);
 
     // AnalysisEngineDescription duplicateMentionRemover = CustomAnalysisEngineFactory
     // .createAnalysisEngine(DuplicatedMentionRemover.class, typeSystemDescription);
