@@ -35,6 +35,9 @@ public class DiscourseParserAnnotator  extends JCasAnnotator_ImplBase{
             int[] beginOffsets = new int[tokens.size()];
             int[] endOffsets = new int[tokens.size()];
 
+
+
+
             maker.addSent(words,tags,lemmas,beginOffsets, endOffsets, SistaDocumentMaker.toSistaTree(getRootTree(sent), 0));
         }
 
