@@ -28,7 +28,7 @@ public class EntityHeadValidatorRunner {
         // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
         String parentInputDirPath = "data";
-        String baseInputDirName = "data_sample";
+        String baseInputDirName = "agiga";
         String inputFileSuffix = null;
         int inputStepNumber = 0;
 
