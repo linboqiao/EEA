@@ -4,16 +4,11 @@
 package edu.cmu.cs.lti.cds.runners;
 
 import edu.cmu.cs.lti.cds.annotators.EventMentionTupleExtractor;
-import edu.cmu.cs.lti.cds.annotators.SingletonAnnotator;
-import edu.cmu.cs.lti.cds.annotators.patches.DuplicatedMentionRemover;
-import edu.cmu.cs.lti.cds.annotators.patches.RepresentativeMentionFinder;
-import edu.cmu.cs.lti.cds.annotators.patches.TreeLeafFixer;
+import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
-import org.apache.uima.examples.xmi.XmiCollectionReader;
-import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
@@ -38,7 +33,11 @@ public class EventMentionTupleExtractorRunner {
         // Note that you should change the parameters below for your configuration.
         // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
-        String paramInputDir = "data/00_agiga_xmi";
+        // Parameters for the reader
+        String parentInputDirPath = "data";
+        String baseInputDirName = "agiga";
+        int inputStepNumber = 0;
+
 
         // Parameters for the writer
         String paramParentOutputDir = "data";
@@ -56,23 +55,22 @@ public class EventMentionTupleExtractorRunner {
 
         // Instantiate a collection reader to get XMI as input.
         // Note that you should change the following parameters for your setting.
-        CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
-                XmiCollectionReader.class, typeSystemDescription, XmiCollectionReader.PARAM_INPUTDIR,
-                paramInputDir);
+        CollectionReaderDescription reader =
+                CustomCollectionReaderFactory.createGzippedXmiReader(parentInputDirPath, baseInputDirName, inputStepNumber, false);
 
         AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionTupleExtractor.class, typeSystemDescription);
 
-        AnalysisEngineDescription duplicateMentionRemover = CustomAnalysisEngineFactory
-                .createAnalysisEngine(DuplicatedMentionRemover.class, typeSystemDescription);
-
-        AnalysisEngineDescription singletonCreator = CustomAnalysisEngineFactory.createAnalysisEngine(
-                SingletonAnnotator.class, typeSystemDescription);
-
-        AnalysisEngineDescription representativeMentionFinder = CustomAnalysisEngineFactory
-                .createAnalysisEngine(RepresentativeMentionFinder.class, typeSystemDescription);
-
-        AnalysisEngineDescription treeFixer = CustomAnalysisEngineFactory.createAnalysisEngine(TreeLeafFixer.class, typeSystemDescription);
+//        AnalysisEngineDescription duplicateMentionRemover = CustomAnalysisEngineFactory
+//                .createAnalysisEngine(DuplicatedMentionRemover.class, typeSystemDescription);
+//
+//        AnalysisEngineDescription singletonCreator = CustomAnalysisEngineFactory.createAnalysisEngine(
+//                SingletonAnnotator.class, typeSystemDescription);
+//
+//        AnalysisEngineDescription representativeMentionFinder = CustomAnalysisEngineFactory
+//                .createAnalysisEngine(RepresentativeMentionFinder.class, typeSystemDescription);
+//
+//        AnalysisEngineDescription treeFixer = CustomAnalysisEngineFactory.createAnalysisEngine(TreeLeafFixer.class, typeSystemDescription);
 
         // Instantiate a XMI writer to put XMI as output.
         // Note that you should change the following parameters for your setting.
@@ -80,9 +78,7 @@ public class EventMentionTupleExtractorRunner {
                 paramParentOutputDir, paramBaseOutputDirName, stepnum, paramOutputFileSuffix);
 
         // Run the pipeline.
-        SimplePipeline.runPipeline(reader, tupleExtractor, duplicateMentionRemover, singletonCreator,
-                representativeMentionFinder,treeFixer, writer);
+        SimplePipeline.runPipeline(reader, tupleExtractor, writer);
         System.out.println(className + " completed.");
     }
-
 }

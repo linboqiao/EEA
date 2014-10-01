@@ -3,8 +3,9 @@
  */
 package edu.cmu.cs.lti.cds.runners;
 
-import java.io.IOException;
-
+import edu.cmu.cs.lti.cds.annotators.StreamingEntityCluster;
+import edu.cmu.cs.lti.uima.io.reader.OffsetSortedXmiCollectionReader;
+import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -13,9 +14,7 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import edu.cmu.cs.lti.cds.annotators.StreamingEntityCluster;
-import edu.cmu.cs.lti.collection_reader.OffsetSortedXmiCollectionReader;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
+import java.io.IOException;
 
 /**
  * @author zhengzhongliu
