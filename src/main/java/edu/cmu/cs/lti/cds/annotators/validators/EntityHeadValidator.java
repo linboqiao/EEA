@@ -12,8 +12,9 @@ public class EntityHeadValidator extends JCasAnnotator_ImplBase {
   @Override
   public void process(JCas aJCas) throws AnalysisEngineProcessException {
     for (Entity entity : JCasUtil.select(aJCas, Entity.class)) {
-      String headMentionStr = entity.getRepresentativeMention().getCoveredText().replace("\n", "");
-      System.out.println("Entity " + entity.getId() + " is represented by " + headMentionStr);
+      System.out.println("Entity " + entity.getId() );
+        String headMentionStr = entity.getRepresentativeMention().getCoveredText().replace("\n", "");
+        System.out.println(" is represented by " + headMentionStr);
     }
   }
 }
