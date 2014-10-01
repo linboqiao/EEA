@@ -5,12 +5,6 @@ from sklearn.cluster import AgglomerativeClustering
 import numpy as np
 import gensim
 
-embedding_len = 300
-entity_dir = '02_entity_surfaces/*.tsv'
-
-print("loading embeddings")
-embedding = gensim.model.Word2Vec.load_word2vec_format('/home/hector/data/embeddings/mikolov/GoogleNews-vectors-negative300.bin',binary = True)
-
 def parse_entity_info(cells):
     headwords = {}
     types = {}
@@ -27,13 +21,24 @@ def parse_entity_info(cells):
     return headwords,types
     
 def get_entity_vector(headwords):
-    entity_vec = zeros(embedding_len)
+    entity_vec = np.zeros(embedding_len)
     for headword in headwords:
-        entity_vec += model[headword]
+        try:
+            entity_vec += model[headword]
+        except KeyError:
+            pass
     entity_vec /= len(headwords)
+    return entity_vec
 
+embedding_len = 300
+entity_dir = '/home/hector/projects/cross-document-script/data/entity_test/*.tsv'
+
+print("loading embeddings")
+#embedding = gensim.models.Word2Vec.load_word2vec_format('/home/hector/data/embeddings/mikolov/GoogleNews-vectors-negative300.bin',binary = True)
 entities = {}
-data_matrix = []
+data_matrix = None
+
+print("building data matrix")
 for fname in glob(entity_dir):
     with open(fname) as f:
         tsv = csv.reader(f, delimiter='\t')
@@ -42,11 +47,19 @@ for fname in glob(entity_dir):
                 eid = row[0]
                 headwords, types = parse_entity_info(row[1:])
                 entities[eid] = headwords,types
-                data_matrix.append(get_entity_vector(headwords))
+                if data_matrix is None:
+                    data_matrix = get_entity_vector(headwords)
+                else:
+                    data_matrix = np.vstack((data_matrix,get_entity_vector(headwords)))
 
+print("clustering")
 clustering = AgglomerativeClustering(linkage='average',n_clusters=10)
-np.array(data_matrix)
-clusters = clustering.fit_predict(data_matrix)
+cluster_res = clustering.fit_predict(data_matrix)
 
-for cluster in clusters:
-    print cluster
+print("writing results")
+out = open('/home/hector/projects/cross-document-script/data/entity_cluster','w')
+for eid, cluster_label in zip(entities, cluster_res):
+    print ("writing line to "+out.name)
+    out.write(eid + str(entities[eid]) +" "+str(cluster_label)+'\n')
+
+print("Done")
