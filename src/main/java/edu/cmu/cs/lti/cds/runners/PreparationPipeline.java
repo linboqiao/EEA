@@ -1,7 +1,7 @@
 /**
  * 
  */
-package g;
+package edu.cmu.cs.lti.cds.runners;
 
 import edu.cmu.cs.lti.collection_reader.AgigaCollectionReader;
 import edu.cmu.cs.lti.script.annotators.FanseAnnotator;
