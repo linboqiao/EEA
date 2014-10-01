@@ -1,10 +1,11 @@
 /**
  * 
  */
-package edu.cmu.cs.lti.cds.runners;
+package g;
 
-import java.io.IOException;
-
+import edu.cmu.cs.lti.collection_reader.AgigaCollectionReader;
+import edu.cmu.cs.lti.script.annotators.FanseAnnotator;
+import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -14,9 +15,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import edu.cmu.cs.lti.collection_reader.AgigaCollectionReader;
-import edu.cmu.cs.lti.script.annotators.FanseAnnotator;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
+import java.io.IOException;
 
 /**
  * @author zhengzhongliu

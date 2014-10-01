@@ -56,7 +56,7 @@ public class EntityClusterManager {
     return numOfCluster;
   }
 
-  public String getRepresentativeStr(Entity entity) {
+  public static String getRepresentativeStr(Entity entity) {
     return entity.getRepresentativeMention().getCoveredText().replace("\n", "");
   }
 
@@ -96,10 +96,8 @@ public class EntityClusterManager {
 
   public void createNewCluster(Date date, FeatureTable features, String clusterType, Entity entity,
           String articleName) {
-    String headMentionStr = getRepresentativeStr(entity);
-    // System.out.println("Observe new entity: [" + headMentionStr + "], type is " + clusterType);
     String entityId = getUniqueEntityId(articleName, entity);
-    EntityCluster cluster = new EntityCluster(entityId, date, headMentionStr, clusterType);
+    EntityCluster cluster = new EntityCluster(entityId, entity, date, clusterType);
     int clusterId = numOfCluster;
     clusters.put(clusterId, cluster);
     featureTables.put(clusterId, features);

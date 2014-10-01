@@ -141,5 +141,16 @@
 			<artifactId>zl-utils</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>edu.arizona.sista</groupId>
+			<artifactId>processors</artifactId>
+			<version>3.2</version>
+		</dependency>
+        <dependency>
+            <groupId>edu.arizona.sista</groupId>
+            <artifactId>processors</artifactId>
+            <version>3.2</version>
+            <classifier>models</classifier>
+        </dependency>
+    </dependencies>
 </project>

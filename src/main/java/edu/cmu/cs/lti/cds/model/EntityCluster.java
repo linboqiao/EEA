@@ -6,6 +6,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import edu.cmu.cs.lti.cds.clustering.EntityClusterManager;
+import edu.cmu.cs.lti.script.type.Entity;
+
 public class EntityCluster {
   private Set<String> entityIds = new LinkedHashSet<String>();
 
@@ -20,9 +23,10 @@ public class EntityCluster {
 
   private String clusterType;
 
-  public EntityCluster(String entityId, Date date, String mentionHead, String clusterType) {
+  public EntityCluster(String entityId, Entity entity, Date date, String clusterType) {
+    String headMentionStr = EntityClusterManager.getRepresentativeStr(entity);
     // System.out.println("Adding head " + mentionHead);
-    this.mentionHeads.add(mentionHead);
+    this.mentionHeads.add(headMentionStr);
     this.clusterType = clusterType;
     this.entityIds.add(entityId);
     this.firstSeen = date;
