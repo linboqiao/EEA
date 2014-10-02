@@ -6,21 +6,32 @@ import edu.arizona.sista.discourse.rstparser.DiscourseTree;
 import edu.arizona.sista.discourse.rstparser.RSTParser;
 import edu.arizona.sista.processors.Document;
 import edu.arizona.sista.processors.fastnlp.FastNLPProcessor;
+import edu.arizona.sista.struct.DirectedGraph;
+import edu.arizona.sista.struct.Tree;
 import edu.cmu.cs.lti.cds.discourse.SistaDocumentMaker;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.StanfordDependencyRelation;
 import edu.cmu.cs.lti.script.type.StanfordTreeAnnotation;
+import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSList;
+import org.apache.uima.resource.ResourceInitializationException;
 import scala.Tuple2;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,8 +40,29 @@ import java.util.Set;
  * Time: 2:17 PM
  */
 public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
-
+    Logger logger;
+    RSTParser rstParser;
+    PrintWriter writer;
     @Override
+    public void initialize(final UimaContext context) throws ResourceInitializationException {
+        File out = new File("data/discourse_out_uima");
+        try {
+             writer = new PrintWriter(new FileOutputStream(out));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        super.initialize(context);
+        logger = Logger.getLogger(this.getClass().getName());
+        logger.log(Level.INFO,"Loading RST parser");
+        rstParser = FastNLPProcessor.fetchParser(RSTParser.DEFAULT_DEPENDENCYSYNTAX_MODEL_PATH());
+        logger.log(Level.INFO,"Done.");
+    }
+
+    public void collectionProcessComplete() throws AnalysisEngineProcessException {
+        writer.close();
+    }
+
+        @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         SistaDocumentMaker maker = new SistaDocumentMaker();
         for (Sentence sent : JCasUtil.select(aJCas, Sentence.class)) {
@@ -41,50 +73,82 @@ public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
             int[] beginOffsets = new int[tokens.size()];
             int[] endOffsets = new int[tokens.size()];
 
+            maker.addSent(words, tags, lemmas, beginOffsets, endOffsets, getTree(sent), getDependencies(tokens));
+        }
 
-            Set<Integer> roots = new HashSet<>();
-            Table<Integer, Integer, String> allDeps = HashBasedTable.create();
-            int baseId = -1;
-            for (StanfordCorenlpToken token : tokens) {
-                int rawTokenId = Integer.parseInt(token.getId());
-                if (baseId == -1) {
-                    baseId = rawTokenId;
-                }
-                int tokenId = rawTokenId - baseId;
-                if (token.getIsDependencyRoot()) {
-                    roots.add(tokenId);
-                }
+        Document document = maker.makeDocument(aJCas.getDocumentText());
 
-                for (StanfordDependencyRelation relation : FSCollectionFactory.create(token.getHeadDependencyRelations(), StanfordDependencyRelation.class)) {
+        Tuple2<DiscourseTree, Tuple2<Object, Object>[][]> out = rstParser.parse(document, false);
+        DiscourseTree dt = out._1();
+
+        writer.println(dt);
+    }
+
+    private Tree<String> getTree(Sentence sent){
+        StanfordTreeAnnotation root = null;
+        StanfordTreeAnnotation maxTree = null;
+        int maxSpan = -1;
+        for (StanfordTreeAnnotation tree : JCasUtil.selectCovered( StanfordTreeAnnotation.class, sent)){
+            if (tree .getIsRoot()){
+                root = tree;
+            }
+            int treeSpan = tree.getBegin() - tree.getEnd();
+            if (treeSpan > maxSpan ){
+                maxSpan = treeSpan;
+                maxTree = tree;
+            }
+        }
+
+        if (root == null){
+            logger.warning("Using maximum tree as the root tree");
+            root = maxTree;
+        }
+
+        return SistaDocumentMaker.toSistaTree(root, 0);
+    }
+
+
+    /**
+     *
+     * @param tokens Tokens from one complete sentence
+     * @return
+     */
+    private DirectedGraph<String> getDependencies(List<StanfordCorenlpToken> tokens){
+        Set<Integer> roots = new HashSet<>();
+
+        Table<Integer, Integer, String> allDeps = HashBasedTable.create();
+        int baseId = -1;
+        for (StanfordCorenlpToken token : tokens) {
+            int rawTokenId = Integer.parseInt(token.getId());
+            if (baseId == -1) {
+                baseId = rawTokenId;
+            }
+            int tokenId = rawTokenId - baseId;
+            if (token.getIsDependencyRoot()) {
+                roots.add(tokenId);
+            }
+
+            FSList headDependenciesFS =  token.getHeadDependencyRelations();
+            FSList childDependenciesFS = token.getChildDependencyRelations();
+
+            if (headDependenciesFS != null) {
+                for (StanfordDependencyRelation relation : FSCollectionFactory.create(headDependenciesFS, StanfordDependencyRelation.class)) {
                     String t = relation.getDependencyType();
-                    int headTokenId = Integer.parseInt(relation.getHead().getId());
-                    int childTokenId = Integer.parseInt(relation.getChild().getId());
+                    int headTokenId = Integer.parseInt(relation.getHead().getId()) - baseId;
+                    int childTokenId = Integer.parseInt(relation.getChild().getId()) - baseId;
                     allDeps.put(headTokenId, childTokenId, t);
                 }
             }
 
-
-            maker.addSent(words, tags, lemmas, beginOffsets, endOffsets, SistaDocumentMaker.toSistaDependencies(allDeps, roots));
-//            maker.addSent(words, tags, lemmas, beginOffsets, endOffsets, SistaDocumentMaker.toSistaTree(getRootTree(sent), 0));
-        }
-
-        Document document = maker.makeDocument(aJCas.getDocumentText());
-//        RSTParser rstParser = CoreNLPProcessor.fetchParser(RSTParser.DEFAULT_CONSTITUENTSYNTAX_MODEL_PATH());
-        RSTParser rstParser = FastNLPProcessor.fetchParser(RSTParser.DEFAULT_DEPENDENCYSYNTAX_MODEL_PATH());
-
-        Tuple2<DiscourseTree, Tuple2<Object, Object>[][]> out = rstParser.parse(document, true);
-        DiscourseTree dt = out._1();
-
-        System.out.println(dt);
-    }
-
-    private StanfordTreeAnnotation getRootTree(Sentence sent) {
-        for (StanfordTreeAnnotation tree : JCasUtil.selectCovered(StanfordTreeAnnotation.class, sent)) {
-            if (tree.getIsRoot()) {
-                return tree;
+            if (childDependenciesFS != null){
+                for (StanfordDependencyRelation relation : FSCollectionFactory.create(childDependenciesFS, StanfordDependencyRelation.class)) {
+                    String t = relation.getDependencyType();
+                    int headTokenId = Integer.parseInt(relation.getHead().getId()) - baseId;
+                    int childTokenId = Integer.parseInt(relation.getChild().getId()) - baseId;
+                    allDeps.put(headTokenId, childTokenId, t);
+                }
             }
         }
-
-        throw new IllegalAccessError("Error in parse tree, there is not root");
+        return SistaDocumentMaker.toSistaDependencies(allDeps, roots);
     }
 }

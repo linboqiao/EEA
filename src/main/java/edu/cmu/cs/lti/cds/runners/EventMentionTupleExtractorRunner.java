@@ -34,9 +34,7 @@ public class EventMentionTupleExtractorRunner {
         // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
         // Parameters for the reader
-        String parentInputDirPath = "data";
-        String baseInputDirName = "agiga";
-        int inputStepNumber = 0;
+        String inputDir = "data/00_agiga";
 
 
         // Parameters for the writer
@@ -56,7 +54,7 @@ public class EventMentionTupleExtractorRunner {
         // Instantiate a collection reader to get XMI as input.
         // Note that you should change the following parameters for your setting.
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createGzippedXmiReader(parentInputDirPath, baseInputDirName, inputStepNumber, false);
+                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription,inputDir, false);
 
         AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionTupleExtractor.class, typeSystemDescription);
@@ -74,7 +72,7 @@ public class EventMentionTupleExtractorRunner {
 
         // Instantiate a XMI writer to put XMI as output.
         // Note that you should change the following parameters for your setting.
-        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(
+        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createGzippedXmiWriter(
                 paramParentOutputDir, paramBaseOutputDirName, stepnum, paramOutputFileSuffix);
 
         // Run the pipeline.
