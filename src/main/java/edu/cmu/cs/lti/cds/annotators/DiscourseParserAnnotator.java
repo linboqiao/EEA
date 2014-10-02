@@ -5,7 +5,7 @@ import com.google.common.collect.Table;
 import edu.arizona.sista.discourse.rstparser.DiscourseTree;
 import edu.arizona.sista.discourse.rstparser.RSTParser;
 import edu.arizona.sista.processors.Document;
-import edu.arizona.sista.processors.fastnlp.FastNLPProcessor;
+import edu.arizona.sista.processors.corenlp.CoreNLPProcessor;
 import edu.arizona.sista.struct.DirectedGraph;
 import edu.arizona.sista.struct.Tree;
 import edu.cmu.cs.lti.cds.discourse.SistaDocumentMaker;
@@ -45,6 +45,7 @@ public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
     PrintWriter writer;
     @Override
     public void initialize(final UimaContext context) throws ResourceInitializationException {
+        super.initialize(context);
         File out = new File("data/discourse_out_uima");
         try {
              writer = new PrintWriter(new FileOutputStream(out));
@@ -53,8 +54,8 @@ public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
         }
         super.initialize(context);
         logger = Logger.getLogger(this.getClass().getName());
-        logger.log(Level.INFO,"Loading RST parser");
-        rstParser = FastNLPProcessor.fetchParser(RSTParser.DEFAULT_DEPENDENCYSYNTAX_MODEL_PATH());
+        logger.log(Level.INFO,"Loading RST parser from "+RSTParser.DEFAULT_DEPENDENCYSYNTAX_MODEL_PATH());
+        rstParser = CoreNLPProcessor.fetchParser(RSTParser.DEFAULT_DEPENDENCYSYNTAX_MODEL_PATH());
         logger.log(Level.INFO,"Done.");
     }
 
@@ -73,10 +74,22 @@ public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
             int[] beginOffsets = new int[tokens.size()];
             int[] endOffsets = new int[tokens.size()];
 
-            maker.addSent(words, tags, lemmas, beginOffsets, endOffsets, getTree(sent), getDependencies(tokens));
+            for (int i = 0 ; i < tokens.size() ; i++){
+                StanfordCorenlpToken token = tokens.get(i);
+                words[i] = token.getCoveredText();
+                tags[i] = token.getPos();
+                lemmas[i] = token.getLemma();
+                beginOffsets[i] = token.getBegin();
+                endOffsets[i] = token.getEnd();
+            }
+
+            maker.addSent(words, tags, lemmas, beginOffsets, endOffsets, getDependencies(tokens));
+
+//            maker.addSent(words, tags, lemmas, beginOffsets, endOffsets, getTree(sent), getDependencies(tokens));
         }
 
         Document document = maker.makeDocument(aJCas.getDocumentText());
+
 
         Tuple2<DiscourseTree, Tuple2<Object, Object>[][]> out = rstParser.parse(document, false);
         DiscourseTree dt = out._1();

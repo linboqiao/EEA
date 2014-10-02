@@ -33,7 +33,7 @@ public class DiscourseParserRunner {
         // Note that you should change the parameters below for your configuration.
         // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
-        String paramInputDir = "data/01_event_tuples";
+        String paramInputDir = "data/01_event_tuples_sample";
 
         // Parameters for the writer
         String paramParentOutputDir = "data";

@@ -33,7 +33,6 @@ public class SistaDocumentMaker {
         sents = new ArrayList<>();
     }
 
-
     /**
      * Add sentence with syntatic and dependency tree
      *
@@ -48,6 +47,13 @@ public class SistaDocumentMaker {
         Sentence sent = new Sentence(tokens, beginOffsets, endOffsets, Some.apply(tags), Some.apply(lemmas), null, null, null, Some.apply(syntacticTree), Some.apply(dependencies));
         sents.add(sent);
     }
+
+    public void addSent(String[] tokens, String[] tags, String[] lemmas, int[] beginOffsets, int[] endOffsets, DirectedGraph<String> dependencies) {
+        Option<Tree<String>> noneTree = Option.apply(null);
+        Sentence sent = new Sentence(tokens, beginOffsets, endOffsets, Some.apply(tags), Some.apply(lemmas), null, null, null, noneTree, Some.apply(dependencies));
+        sents.add(sent);
+    }
+
 
     public Document makeDocument(String fullText) {
         Annotation anno = new Annotation(fullText);
