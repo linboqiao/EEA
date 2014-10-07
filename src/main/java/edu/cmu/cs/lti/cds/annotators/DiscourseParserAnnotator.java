@@ -75,7 +75,7 @@ public class DiscourseParserAnnotator extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        logProgress(aJCas);
+        logger.info(progressInfo(aJCas));
 
         SistaDocumentMaker maker = new SistaDocumentMaker();
 

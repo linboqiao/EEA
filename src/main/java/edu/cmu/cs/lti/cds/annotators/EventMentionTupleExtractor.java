@@ -52,7 +52,7 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        logProgress(aJCas);
+        logger.info(progressInfo(aJCas));
         System.out
                 .println(String.format("Processing article: %s with [%s]", UimaConvenience
                         .getShortDocumentNameWithOffset(aJCas), this.getClass().getSimpleName()));
