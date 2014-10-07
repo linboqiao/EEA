@@ -6,6 +6,7 @@ import edu.cmu.cs.lti.cds.annotators.SingletonAnnotator;
 import edu.cmu.cs.lti.collection_reader.AgigaCollectionReader;
 import edu.cmu.cs.lti.script.annotators.FanseAnnotator;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -37,7 +38,11 @@ public class FullSystemRunner {
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
-        int stepNum = 0;
+        String[] inputFileNameParts = FilenameUtils.normalizeNoEndSeparator(paramInputDir).split("/");
+
+        int inputStemNum = Integer.parseInt(inputFileNameParts[inputFileNameParts.length - 1]);
+
+        int outputStepNum = inputStemNum + 1;
 
         System.out.println("Reading from " + paramInputDir);
 
@@ -52,26 +57,26 @@ public class FullSystemRunner {
                 AgigaCollectionReader.PARAM_INPUTDIR, paramInputDir);
 
         AnalysisEngineDescription aWriter = CustomAnalysisEngineFactory.createXmiWriter(
-                paramParentOutputDir, "agiga", stepNum, paramOutputFileSuffix);
+                paramParentOutputDir, "agiga", outputStepNum, paramOutputFileSuffix);
 
-        stepNum++;
+        outputStepNum++;
 
         AnalysisEngineDescription fanseParser = CustomAnalysisEngineFactory.createAnalysisEngine(
                 FanseAnnotator.class, typeSystemDescription, FanseAnnotator.PARAM_MODEL_BASE_DIR,
                 paramFanseModelBaseDirectory);
 
         AnalysisEngineDescription fWriter = CustomAnalysisEngineFactory.createXmiWriter(
-                paramParentOutputDir, "parsed", stepNum, paramOutputFileSuffix);
+                paramParentOutputDir, "parsed", outputStepNum, paramOutputFileSuffix);
 
-        stepNum++;
+        outputStepNum++;
 
         AnalysisEngineDescription discourseParser = CustomAnalysisEngineFactory.createAnalysisEngine(
                 DiscourseParserAnnotator.class, typeSystemDescription);
 
         AnalysisEngineDescription dWriter = CustomAnalysisEngineFactory.createXmiWriter(
-                paramParentOutputDir, "discourse", stepNum, paramOutputFileSuffix);
+                paramParentOutputDir, "discourse", outputStepNum, paramOutputFileSuffix);
 
-        stepNum++;
+        outputStepNum++;
 
         AnalysisEngineDescription singletonCreator = CustomAnalysisEngineFactory.createAnalysisEngine(
                 SingletonAnnotator.class, typeSystemDescription);
@@ -80,7 +85,7 @@ public class FullSystemRunner {
                 EventMentionTupleExtractor.class, typeSystemDescription);
 
         AnalysisEngineDescription tWriter = CustomAnalysisEngineFactory.createXmiWriter(
-                paramParentOutputDir, "event_tuples", stepNum, paramOutputFileSuffix);
+                paramParentOutputDir, "event_tuples", outputStepNum, paramOutputFileSuffix);
 
 
         // Run the pipeline.

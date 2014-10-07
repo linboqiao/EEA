@@ -77,7 +77,6 @@ public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         logger.log(Level.INFO, "Processing " + UimaConvenience.getShortDocumentNameWithOffset(aJCas));
-//        UimaConvenience.printProcessLog(aJCas,logger);
 
         SistaDocumentMaker maker = new SistaDocumentMaker();
 
@@ -89,8 +88,6 @@ public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
             int[] beginOffsets = new int[tokens.size()];
             int[] endOffsets = new int[tokens.size()];
 
-//            System.out.println(words.length);
-
             for (int i = 0; i < tokens.size(); i++) {
                 StanfordCorenlpToken token = tokens.get(i);
                 words[i] = token.getCoveredText();
@@ -99,17 +96,7 @@ public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
                 beginOffsets[i] = token.getBegin();
                 endOffsets[i] = token.getEnd();
                 tokenIndexedByPosition.put(Integer.parseInt(sent.getId()), i, token);
-//                System.out.print(i+" "+token.getCoveredText()+" ");
             }
-
-//            DirectedGraph<String> dependencyGraph = getDependencies(tokens);
-
-//            System.out.println("Sentence id "+sent.getId());
-//            System.out.println(words.length);
-//            System.out.println(dependencyGraph.outgoingEdges().length);
-//            System.out.println(dependencyGraph.incomingEdges().length);
-
-//            System.out.println(dependencyGraph.toString());
 
 
             //The latter one call with Constituent Tree given, which benefits head finding
