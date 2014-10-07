@@ -29,7 +29,7 @@ public class FullSystemRunner {
         String paramInputDir = args[0];// "/Users/zhengzhongliu/Documents/data/agiga_sample/"
 
         // Parameters for the writer
-        String paramParentOutputDir = "data";
+        String paramParentOutputDir = args[1]; // "data";
         String paramOutputFileSuffix = null;
 
         String paramFanseModelBaseDirectory = args[1];// "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/"
