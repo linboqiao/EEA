@@ -4,21 +4,22 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import edu.arizona.sista.discourse.rstparser.DiscourseTree;
 import edu.arizona.sista.discourse.rstparser.RSTParser;
+import edu.arizona.sista.discourse.rstparser.TokenOffset;
 import edu.arizona.sista.processors.Document;
 import edu.arizona.sista.processors.corenlp.CoreNLPProcessor;
 import edu.arizona.sista.struct.DirectedGraph;
 import edu.arizona.sista.struct.Tree;
 import edu.cmu.cs.lti.cds.discourse.SistaDocumentMaker;
-import edu.cmu.cs.lti.script.type.Sentence;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.script.type.StanfordDependencyRelation;
-import edu.cmu.cs.lti.script.type.StanfordTreeAnnotation;
+import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.resource.ResourceInitializationException;
 import scala.Tuple2;
@@ -43,29 +44,43 @@ public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
     Logger logger;
     RSTParser rstParser;
     PrintWriter writer;
+    String parserPath;
+
+    public static final String COMPONENT_ID = DiscourseParserAnnotator.class.getName();
+
+    Table<Integer, Integer, StanfordCorenlpToken> tokenIndexedByPosition = HashBasedTable.create();
+
     @Override
     public void initialize(final UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
         File out = new File("data/discourse_out_uima");
         try {
-             writer = new PrintWriter(new FileOutputStream(out));
+            writer = new PrintWriter(new FileOutputStream(out));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         super.initialize(context);
         logger = Logger.getLogger(this.getClass().getName());
-        logger.log(Level.INFO,"Loading RST parser from "+RSTParser.DEFAULT_DEPENDENCYSYNTAX_MODEL_PATH());
-        rstParser = CoreNLPProcessor.fetchParser(RSTParser.DEFAULT_DEPENDENCYSYNTAX_MODEL_PATH());
-        logger.log(Level.INFO,"Done.");
+
+         parserPath = RSTParser.DEFAULT_CONSTITUENTSYNTAX_MODEL_PATH();
+//        parserPath = RSTParser.DEFAULT_DEPENDENCYSYNTAX_MODEL_PATH();
+
+        logger.log(Level.INFO, "Loading RST parser from " + parserPath);
+        rstParser = CoreNLPProcessor.fetchParser(parserPath);
+        logger.log(Level.INFO, "Done.");
     }
 
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
         writer.close();
     }
 
-        @Override
+    @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        logger.log(Level.INFO, "Processing " + UimaConvenience.getShortDocumentNameWithOffset(aJCas));
+//        UimaConvenience.printProcessLog(aJCas,logger);
+
         SistaDocumentMaker maker = new SistaDocumentMaker();
+
         for (Sentence sent : JCasUtil.select(aJCas, Sentence.class)) {
             List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sent);
             String[] words = new String[tokens.size()];
@@ -74,45 +89,102 @@ public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
             int[] beginOffsets = new int[tokens.size()];
             int[] endOffsets = new int[tokens.size()];
 
-            for (int i = 0 ; i < tokens.size() ; i++){
+//            System.out.println(words.length);
+
+            for (int i = 0; i < tokens.size(); i++) {
                 StanfordCorenlpToken token = tokens.get(i);
                 words[i] = token.getCoveredText();
                 tags[i] = token.getPos();
                 lemmas[i] = token.getLemma();
                 beginOffsets[i] = token.getBegin();
                 endOffsets[i] = token.getEnd();
+                tokenIndexedByPosition.put(Integer.parseInt(sent.getId()), i, token);
+//                System.out.print(i+" "+token.getCoveredText()+" ");
             }
 
-            maker.addSent(words, tags, lemmas, beginOffsets, endOffsets, getDependencies(tokens));
+//            DirectedGraph<String> dependencyGraph = getDependencies(tokens);
 
-//            maker.addSent(words, tags, lemmas, beginOffsets, endOffsets, getTree(sent), getDependencies(tokens));
+//            System.out.println("Sentence id "+sent.getId());
+//            System.out.println(words.length);
+//            System.out.println(dependencyGraph.outgoingEdges().length);
+//            System.out.println(dependencyGraph.incomingEdges().length);
+
+//            System.out.println(dependencyGraph.toString());
+
+
+            //The latter one call with Constituent Tree given, which benefits head finding
+            //Also, the sista depedency based head finding may ask for dependency from all nodes, which
+            //is probably not available since the "CC-processed" and punctuation causing some nodes have
+            //no dependency attached at all, you may face a "indexOutOfBoundary" error.
+            //Having both parsing is like a safe-guard
+
+//            maker.addSent(words, tags, lemmas, beginOffsets, endOffsets, getDependencies(tokens));
+            maker.addSent(words, tags, lemmas, beginOffsets, endOffsets, getTree(sent), getDependencies(tokens));
         }
 
         Document document = maker.makeDocument(aJCas.getDocumentText());
 
-
         Tuple2<DiscourseTree, Tuple2<Object, Object>[][]> out = rstParser.parse(document, false);
         DiscourseTree dt = out._1();
 
-        writer.println(dt);
+//        writer.println(dt);
+
+        annotateDiscourseTree(aJCas, dt);
     }
 
-    private Tree<String> getTree(Sentence sent){
+
+    private RstTree annotateDiscourseTree(JCas aJCas, DiscourseTree root) {
+        TokenOffset firstTokenPosition = root.firstToken();
+        TokenOffset lastTokenPosition = root.lastToken();
+
+        StanfordCorenlpToken firstToken = tokenIndexedByPosition.get(firstTokenPosition.sentence(), firstTokenPosition.token());
+        StanfordCorenlpToken lastToken = tokenIndexedByPosition.get(lastTokenPosition.sentence(), lastTokenPosition.token());
+
+        int begin = firstToken.getBegin();
+        int end = lastToken.getEnd();
+
+        RstTree tree = new RstTree(aJCas);
+        tree.setBegin(begin);
+        tree.setEnd(end);
+
+        DiscourseTree[] discourseChildren = root.children();
+
+        if (discourseChildren != null) {
+            FSArray childTrees = new FSArray(aJCas, discourseChildren.length);
+            for (int i = 0; i < discourseChildren.length; i++) {
+                childTrees.set(i, annotateDiscourseTree(aJCas, discourseChildren[i]));
+            }
+            tree.setChildren(childTrees);
+        } else {
+            tree.setIsTerminal(true);
+        }
+
+        tree.setRelationLabel(root.relationLabel());
+        tree.setRelationDirection(root.relationDirection().toString());
+
+//        System.out.println(tree.getRelationDirection() + " " + tree.getRelationLabel());
+
+        UimaAnnotationUtils.finishAnnotation(tree, begin, end, COMPONENT_ID, 0, aJCas);
+
+        return tree;
+    }
+
+    private Tree<String> getTree(Sentence sent) {
         StanfordTreeAnnotation root = null;
         StanfordTreeAnnotation maxTree = null;
         int maxSpan = -1;
-        for (StanfordTreeAnnotation tree : JCasUtil.selectCovered( StanfordTreeAnnotation.class, sent)){
-            if (tree .getIsRoot()){
+        for (StanfordTreeAnnotation tree : JCasUtil.selectCovered(StanfordTreeAnnotation.class, sent)) {
+            if (tree.getIsRoot()) {
                 root = tree;
             }
             int treeSpan = tree.getBegin() - tree.getEnd();
-            if (treeSpan > maxSpan ){
+            if (treeSpan > maxSpan) {
                 maxSpan = treeSpan;
                 maxTree = tree;
             }
         }
 
-        if (root == null){
+        if (root == null) {
             logger.warning("Using maximum tree as the root tree");
             root = maxTree;
         }
@@ -122,11 +194,10 @@ public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
 
 
     /**
-     *
      * @param tokens Tokens from one complete sentence
      * @return
      */
-    private DirectedGraph<String> getDependencies(List<StanfordCorenlpToken> tokens){
+    private DirectedGraph<String> getDependencies(List<StanfordCorenlpToken> tokens) {
         Set<Integer> roots = new HashSet<>();
 
         Table<Integer, Integer, String> allDeps = HashBasedTable.create();
@@ -141,7 +212,7 @@ public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
                 roots.add(tokenId);
             }
 
-            FSList headDependenciesFS =  token.getHeadDependencyRelations();
+            FSList headDependenciesFS = token.getHeadDependencyRelations();
             FSList childDependenciesFS = token.getChildDependencyRelations();
 
             if (headDependenciesFS != null) {
@@ -153,7 +224,7 @@ public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
                 }
             }
 
-            if (childDependenciesFS != null){
+            if (childDependenciesFS != null) {
                 for (StanfordDependencyRelation relation : FSCollectionFactory.create(childDependenciesFS, StanfordDependencyRelation.class)) {
                     String t = relation.getDependencyType();
                     int headTokenId = Integer.parseInt(relation.getHead().getId()) - baseId;

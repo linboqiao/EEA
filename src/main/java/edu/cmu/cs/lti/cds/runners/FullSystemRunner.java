@@ -1,37 +1,91 @@
 package edu.cmu.cs.lti.cds.runners;
 
-import edu.cmu.cs.lti.cds.RelatedDocumentFinder;
-import edu.cmu.cs.lti.cr.readers.annotated_nyt.AnnotatedNytReader;
+import edu.cmu.cs.lti.cds.annotators.DiscourseParserAnnotator;
+import edu.cmu.cs.lti.cds.annotators.EventMentionTupleExtractor;
+import edu.cmu.cs.lti.cds.annotators.SingletonAnnotator;
+import edu.cmu.cs.lti.collection_reader.AgigaCollectionReader;
+import edu.cmu.cs.lti.script.annotators.FanseAnnotator;
+import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
+import org.apache.uima.UIMAException;
+import org.apache.uima.analysis_engine.AnalysisEngineDescription;
+import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.CollectionReaderFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
+import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 public class FullSystemRunner {
+    static String className = FullSystemRunner.class.getName();
 
-    public static void main(String[] args) {
-        String dataDir = args[0];
+    public static void main(String[] args) throws UIMAException, IOException {
+        System.out.println(className + " started...");
 
-        AnnotatedNytReader reader = new AnnotatedNytReader(new File(dataDir));
+        // ///////////////////////// Parameter Setting ////////////////////////////
+        // Note that you should change the parameters below for your configuration.
+        // //////////////////////////////////////////////////////////////////////////
+        // Parameters for the reader
+        String paramInputDir = args[0];// "/Users/zhengzhongliu/Documents/data/agiga_sample/"
 
-        RelatedDocumentFinder finder = new RelatedDocumentFinder();
+        // Parameters for the writer
+        String paramParentOutputDir = "data";
+        String paramOutputFileSuffix = null;
 
-        while (reader.hasNextDay()){
-            reader.readNextDay();
-            List<String> docOfSameDay = new ArrayList<String>();
-            while (reader.hasNextDocument()){
-                docOfSameDay.add(reader.getNextDocument().getBody());
-            }
+        String paramFanseModelBaseDirectory = args[1];// "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/"
+        // ////////////////////////////////////////////////////////////////
 
-            List<List<String>> relatedDocuments = finder.findDocumentsByEntity(docOfSameDay);
+        String paramTypeSystemDescriptor = "TypeSystem";
 
-            for (String docStr : relatedDocuments.get(0)){
-                System.out.println(docStr);
-            }
+        int stepNum = 0;
 
-            break;//test on the first day
-        }
+        System.out.println("Reading from " + paramInputDir);
+
+        // Instantiate the analysis engine.
+        TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
+                .createTypeSystemDescription(paramTypeSystemDescriptor);
+
+        // Instantiate a collection reader to get XMI as input.
+        // Note that you should change the following parameters for your setting.
+        CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
+                AgigaCollectionReader.class, typeSystemDescription,
+                AgigaCollectionReader.PARAM_INPUTDIR, paramInputDir);
+
+        AnalysisEngineDescription aWriter = CustomAnalysisEngineFactory.createXmiWriter(
+                paramParentOutputDir, "agiga", stepNum, paramOutputFileSuffix);
+
+        stepNum++;
+
+        AnalysisEngineDescription fanseParser = CustomAnalysisEngineFactory.createAnalysisEngine(
+                FanseAnnotator.class, typeSystemDescription, FanseAnnotator.PARAM_MODEL_BASE_DIR,
+                paramFanseModelBaseDirectory);
+
+        AnalysisEngineDescription fWriter = CustomAnalysisEngineFactory.createXmiWriter(
+                paramParentOutputDir, "parsed", stepNum, paramOutputFileSuffix);
+
+        stepNum++;
+
+        AnalysisEngineDescription discourseParser = CustomAnalysisEngineFactory.createAnalysisEngine(
+                DiscourseParserAnnotator.class, typeSystemDescription);
+
+        AnalysisEngineDescription dWriter = CustomAnalysisEngineFactory.createXmiWriter(
+                paramParentOutputDir, "discourse", stepNum, paramOutputFileSuffix);
+
+        stepNum++;
+
+        AnalysisEngineDescription singletonCreator = CustomAnalysisEngineFactory.createAnalysisEngine(
+                SingletonAnnotator.class, typeSystemDescription);
+
+        AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(
+                EventMentionTupleExtractor.class, typeSystemDescription);
+
+        AnalysisEngineDescription tWriter = CustomAnalysisEngineFactory.createXmiWriter(
+                paramParentOutputDir, "event_tuples", stepNum, paramOutputFileSuffix);
 
 
+        // Run the pipeline.
+        SimplePipeline.runPipeline(reader, aWriter, fanseParser, fWriter, discourseParser,dWriter, singletonCreator, tupleExtractor,tWriter);
+
+        System.out.println(className + " successfully completed.");
     }
 }

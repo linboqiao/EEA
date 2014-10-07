@@ -71,7 +71,6 @@ public class SistaDocumentMaker {
             edges.add(new Tuple3<Object, Object, String>(gov, dep, label));
         }
 
-
         return new DirectedGraph<String>(JavaConversions.asScalaBuffer(edges).toList(), JavaConversions.asScalaSet(roots).toSet());
     }
 

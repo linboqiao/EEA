@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.cds.runners;
 
-import edu.cmu.cs.lti.cds.annotators.DiscourseParserAnnotator;
+import edu.cmu.cs.lti.cds.annotators.DiscourseBasedParentFinder;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
@@ -18,8 +18,8 @@ import java.io.IOException;
  * Date: 9/30/14
  * Time: 9:37 PM
  */
-public class DiscourseParserRunner {
-    private static String className = DiscourseParserRunner.class.getSimpleName();
+public class DiscourseParentFinderRunner {
+    private static String className = DiscourseParentFinderRunner.class.getSimpleName();
 
     /**
      * @param args
@@ -33,9 +33,7 @@ public class DiscourseParserRunner {
         // Note that you should change the parameters below for your configuration.
         // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
-        String paramInputDir = "data/01_event_tuples";
-
-//        String paramInputDir = "data/test";
+        String paramInputDir = "data/02_discourse_parsed";
 
         // Parameters for the writer
         String paramParentOutputDir = "data";
@@ -55,7 +53,7 @@ public class DiscourseParserRunner {
                 CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
 
         AnalysisEngineDescription discourseParser = CustomAnalysisEngineFactory.createAnalysisEngine(
-                DiscourseParserAnnotator.class, typeSystemDescription);
+                DiscourseBasedParentFinder.class, typeSystemDescription);
 
         AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createGzipWriter(
                 paramParentOutputDir, paramBaseOutputDirName, 2, paramOutputFileSuffix, null);

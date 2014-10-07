@@ -1,15 +1,14 @@
 /**
- * 
+ *
  */
 package edu.cmu.cs.lti.cds.runners;
 
 import edu.cmu.cs.lti.cds.annotators.StreamingEntityCluster;
-import edu.cmu.cs.lti.uima.io.reader.OffsetSortedXmiCollectionReader;
+import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
-import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
@@ -18,52 +17,50 @@ import java.io.IOException;
 
 /**
  * @author zhengzhongliu
- * 
  */
 public class StreamingEntityClusteringRunner {
-  private static String className = StreamingEntityClusteringRunner.class.getSimpleName();
+    private static String className = StreamingEntityClusteringRunner.class.getSimpleName();
 
-  /**
-   * @param args
-   * @throws IOException
-   * @throws UIMAException
-   */
-  public static void main(String[] args) throws UIMAException, IOException {
-    System.out.println(className + " started...");
+    /**
+     * @param args
+     * @throws IOException
+     * @throws UIMAException
+     */
+    public static void main(String[] args) throws UIMAException, IOException {
+        System.out.println(className + " started...");
 
-    // ///////////////////////// Parameter Setting ////////////////////////////
-    // Note that you should change the parameters below for your configuration.
-    // //////////////////////////////////////////////////////////////////////////
-    // Parameters for the reader
-    String paramInputDir = "data/01_event_tuples_sample";
+        // ///////////////////////// Parameter Setting ////////////////////////////
+        // Note that you should change the parameters below for your configuration.
+        // //////////////////////////////////////////////////////////////////////////
+        // Parameters for the reader
+        String paramInputDir = "data/02_discourse_parsed";
 
-    // Parameters for the writer
-    int stepNum = 2;
-    // ////////////////////////////////////////////////////////////////
+        // Parameters for the writer
+        int stepNum = 2;
+        // ////////////////////////////////////////////////////////////////
 
-    String paramTypeSystemDescriptor = "TypeSystem";
+        String paramTypeSystemDescriptor = "TypeSystem";
 
-    // Instantiate the analysis engine.
-    TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
-            .createTypeSystemDescription(paramTypeSystemDescriptor);
+        // Instantiate the analysis engine.
+        TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
+                .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-    // Instantiate a collection reader to get XMI as input.
-    // Note that you should change the following parameters for your setting.
-    CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
-            OffsetSortedXmiCollectionReader.class, typeSystemDescription,
-            OffsetSortedXmiCollectionReader.PARAM_INPUTDIR, paramInputDir);
+        // Instantiate a collection reader to get XMI as input.
+        // Note that you should change the following parameters for your setting.
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
 
-    // AnalysisEngineDescription duplicateMentionRemover = CustomAnalysisEngineFactory
-    // .createAnalysisEngine(DuplicatedMentionRemover.class, typeSystemDescription);
-    //
-    // AnalysisEngineDescription representativeMentionFinder = CustomAnalysisEngineFactory
-    // .createAnalysisEngine(RepresentativeMentionFinder.class, typeSystemDescription);
 
-    AnalysisEngineDescription coreferenceProcessor = CustomAnalysisEngineFactory
-            .createAnalysisEngine(StreamingEntityCluster.class, typeSystemDescription);
+        // AnalysisEngineDescription duplicateMentionRemover = CustomAnalysisEngineFactory
+        // .createAnalysisEngine(DuplicatedMentionRemover.class, typeSystemDescription);
+        //
+        // AnalysisEngineDescription representativeMentionFinder = CustomAnalysisEngineFactory
+        // .createAnalysisEngine(RepresentativeMentionFinder.class, typeSystemDescription);
 
-    SimplePipeline.runPipeline(reader, coreferenceProcessor);
+        AnalysisEngineDescription coreferenceProcessor = CustomAnalysisEngineFactory
+                .createAnalysisEngine(StreamingEntityCluster.class, typeSystemDescription);
 
-    System.out.println(className + " completed.");
-  }
+        SimplePipeline.runPipeline(reader, coreferenceProcessor);
+
+        System.out.println(className + " completed.");
+    }
 }
