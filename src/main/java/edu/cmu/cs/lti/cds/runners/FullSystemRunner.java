@@ -39,7 +39,11 @@ public class FullSystemRunner {
 
         int outputStepNum = 0;
 
-        boolean quiet = args[4].equals("quiet");;
+        boolean quiet = false;
+        // Quiet or not
+        if (args.length >=4) {
+            quiet = args[3].equals("quiet");
+        }
 
         System.out.println("Reading from " + paramInputDir);
 

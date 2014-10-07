@@ -33,7 +33,7 @@ public class DiscourseParserRunner {
     public static void main(String[] args) throws UIMAException, IOException {
         logger.log(Level.INFO, className + " started...");
 
-        if (args.length < 4){
+        if (args.length < 3){
             logger.log(Level.INFO, "Please provide input and output directory and step number");
             System.exit(1);
         }
@@ -52,9 +52,11 @@ public class DiscourseParserRunner {
         String paramBaseOutputDirName = args[2]; //"discourse_parsed";
         String paramOutputFileSuffix = null;
 
+        boolean quiet = false;
         // Quiet or not
-        boolean quiet = args[4].equals("quiet");
-
+        if (args.length >=4) {
+             quiet = args[3].equals("quiet");
+        }
         // ////////////////////////////////////////////////////////////////
 
         String paramTypeSystemDescriptor = "TypeSystem";
@@ -71,7 +73,7 @@ public class DiscourseParserRunner {
                 CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
 
         AnalysisEngineDescription discourseParser = CustomAnalysisEngineFactory.createAnalysisEngine(
-                DiscourseParserAnnotator.class, typeSystemDescription);
+                DiscourseParserAnnotator.class, typeSystemDescription, DiscourseParserAnnotator.PARAM_KEEP_QUIET, quiet);
 
         AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createGzipWriter(
                 paramParentOutputDir, paramBaseOutputDirName, outputStepNum, paramOutputFileSuffix, null);
