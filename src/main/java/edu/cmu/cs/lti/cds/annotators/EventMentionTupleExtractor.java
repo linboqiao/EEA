@@ -4,7 +4,6 @@ import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -53,9 +52,6 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         logger.info(progressInfo(aJCas));
-        System.out
-                .println(String.format("Processing article: %s with [%s]", UimaConvenience
-                        .getShortDocumentNameWithOffset(aJCas), this.getClass().getSimpleName()));
 
         events = new HashMap<Word, Map<String, Word>>();
 

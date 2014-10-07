@@ -31,7 +31,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -40,7 +39,6 @@ import java.util.logging.Logger;
  * Time: 2:17 PM
  */
 public class DiscourseParserAnnotator extends AbstractLoggingAnnotator {
-    Logger logger;
     RSTParser rstParser;
     PrintWriter writer;
     String parserPath;
@@ -58,8 +56,6 @@ public class DiscourseParserAnnotator extends AbstractLoggingAnnotator {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        super.initialize(context);
-        logger = Logger.getLogger(this.getClass().getName());
 
          parserPath = RSTParser.DEFAULT_CONSTITUENTSYNTAX_MODEL_PATH();
 //        parserPath = RSTParser.DEFAULT_DEPENDENCYSYNTAX_MODEL_PATH();
