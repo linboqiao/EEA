@@ -6,7 +6,6 @@ import edu.cmu.cs.lti.cds.annotators.SingletonAnnotator;
 import edu.cmu.cs.lti.collection_reader.AgigaCollectionReader;
 import edu.cmu.cs.lti.script.annotators.FanseAnnotator;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -38,11 +37,7 @@ public class FullSystemRunner {
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
-        String[] inputFileNameParts = FilenameUtils.normalizeNoEndSeparator(paramInputDir).split("/");
-
-        int inputStemNum = Integer.parseInt(inputFileNameParts[inputFileNameParts.length - 1]);
-
-        int outputStepNum = inputStemNum + 1;
+        int outputStepNum = 0;
 
         System.out.println("Reading from " + paramInputDir);
 

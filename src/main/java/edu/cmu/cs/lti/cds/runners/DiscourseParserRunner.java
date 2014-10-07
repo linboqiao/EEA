@@ -3,7 +3,6 @@ package edu.cmu.cs.lti.cds.runners;
 import edu.cmu.cs.lti.cds.annotators.DiscourseParserAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -44,23 +43,20 @@ public class DiscourseParserRunner {
         // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
         String paramInputDir = args[0]; //"data/01_event_tuples";
+        int inputStepNum = Integer.parseInt(args[1]);
 
 //        String paramInputDir = "data/test";
 
         // Parameters for the writer
         String paramParentOutputDir = "data";
-        String paramBaseOutputDirName = args[1]; //"discourse_parsed";
+        String paramBaseOutputDirName = args[2]; //"discourse_parsed";
         String paramOutputFileSuffix = null;
 
         // ////////////////////////////////////////////////////////////////
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
-        String[] inputFileNameParts = FilenameUtils.normalizeNoEndSeparator(paramInputDir).split("/");
-
-        int inputStemNum = Integer.parseInt(inputFileNameParts[inputFileNameParts.length - 1]);
-
-        int outputStepNum = inputStemNum + 1;
+        int outputStepNum = inputStepNum + 1;
 
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
