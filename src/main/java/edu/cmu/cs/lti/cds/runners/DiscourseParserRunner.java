@@ -33,7 +33,7 @@ public class DiscourseParserRunner {
     public static void main(String[] args) throws UIMAException, IOException {
         logger.log(Level.INFO, className + " started...");
 
-        if (args.length != 2){
+        if (args.length != 3){
             logger.log(Level.INFO, "Please provide input and output directory and step number");
             System.exit(1);
         }
