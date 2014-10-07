@@ -10,6 +10,7 @@ import edu.cmu.cs.lti.cds.clustering.EntityClusterManager;
 import edu.cmu.cs.lti.cds.model.FeatureTable;
 import edu.cmu.cs.lti.cds.solr.SolrIndexReader;
 import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.FileUtils;
 import edu.cmu.cs.lti.utils.StringUtils;
@@ -19,7 +20,6 @@ import gnu.trove.map.hash.TObjectDoubleHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -33,7 +33,7 @@ import java.util.Map.Entry;
 /**
  * @author zhengzhongliu
  */
-public class StreamingEntityCluster extends JCasAnnotator_ImplBase {
+public class StreamingEntityCluster extends AbstractLoggingAnnotator {
     SolrIndexReader reader;
 
     EntityClusterManager manager;
@@ -66,6 +66,7 @@ public class StreamingEntityCluster extends JCasAnnotator_ImplBase {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        logProgress(aJCas);
         String articleName = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
         System.out.println("Processing " + UimaConvenience.getShortDocumentNameWithOffset(aJCas)
                 + " _ " + articleName);

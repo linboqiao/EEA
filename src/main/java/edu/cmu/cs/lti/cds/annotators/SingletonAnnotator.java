@@ -3,19 +3,18 @@
  */
 package edu.cmu.cs.lti.cds.annotators;
 
-import java.util.Collection;
-
-import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
-import org.apache.uima.fit.util.JCasUtil;
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.FSArray;
-
 import edu.cmu.cs.lti.script.type.Entity;
 import edu.cmu.cs.lti.script.type.EntityMention;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
+import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.util.JCasUtil;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSArray;
+
+import java.util.Collection;
 
 /**
  * For each mention, if there is not high level cluster, then assign it with a entity
@@ -23,7 +22,7 @@ import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
  * @author zhengzhongliu
  * 
  */
-public class SingletonAnnotator extends JCasAnnotator_ImplBase {
+public class SingletonAnnotator extends AbstractLoggingAnnotator {
 
   public static String COMPONENT_ID = SingletonAnnotator.class.getSimpleName();
 
@@ -35,6 +34,7 @@ public class SingletonAnnotator extends JCasAnnotator_ImplBase {
    */
   @Override
   public void process(JCas aJCas) throws AnalysisEngineProcessException {
+      logProgress(aJCas);
     int id = 0;
     Collection<EventMention> eventMentions = JCasUtil.select(aJCas, EventMention.class);
     for (EventMention mention : eventMentions) {

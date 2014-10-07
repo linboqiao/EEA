@@ -11,11 +11,10 @@ import edu.arizona.sista.struct.DirectedGraph;
 import edu.arizona.sista.struct.Tree;
 import edu.cmu.cs.lti.cds.discourse.SistaDocumentMaker;
 import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -40,7 +39,7 @@ import java.util.logging.Logger;
  * Date: 9/30/14
  * Time: 2:17 PM
  */
-public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
+public class DiscourseParserAnnotator extends AbstractLoggingAnnotator {
     Logger logger;
     RSTParser rstParser;
     PrintWriter writer;
@@ -76,7 +75,7 @@ public class DiscourseParserAnnotator extends JCasAnnotator_ImplBase {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        logger.log(Level.INFO, "Processing " + UimaConvenience.getShortDocumentNameWithOffset(aJCas));
+        logProgress(aJCas);
 
         SistaDocumentMaker maker = new SistaDocumentMaker();
 

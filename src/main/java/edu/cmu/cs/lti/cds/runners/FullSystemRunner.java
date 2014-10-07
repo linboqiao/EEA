@@ -39,6 +39,8 @@ public class FullSystemRunner {
 
         int outputStepNum = 0;
 
+        boolean quiet = false;
+
         System.out.println("Reading from " + paramInputDir);
 
         // Instantiate the analysis engine.
@@ -58,7 +60,7 @@ public class FullSystemRunner {
 
         AnalysisEngineDescription fanseParser = CustomAnalysisEngineFactory.createAnalysisEngine(
                 FanseAnnotator.class, typeSystemDescription, FanseAnnotator.PARAM_MODEL_BASE_DIR,
-                paramFanseModelBaseDirectory);
+                paramFanseModelBaseDirectory, FanseAnnotator.PARAM_KEEP_QUIET, quiet);
 
         AnalysisEngineDescription fWriter = CustomAnalysisEngineFactory.createXmiWriter(
                 paramParentOutputDir, "parsed", outputStepNum, paramOutputFileSuffix);
@@ -66,7 +68,7 @@ public class FullSystemRunner {
         outputStepNum++;
 
         AnalysisEngineDescription discourseParser = CustomAnalysisEngineFactory.createAnalysisEngine(
-                DiscourseParserAnnotator.class, typeSystemDescription);
+                DiscourseParserAnnotator.class, typeSystemDescription, DiscourseParserAnnotator.PARAM_KEEP_QUIET, quiet);
 
         AnalysisEngineDescription dWriter = CustomAnalysisEngineFactory.createXmiWriter(
                 paramParentOutputDir, "discourse", outputStepNum, paramOutputFileSuffix);
@@ -74,17 +76,17 @@ public class FullSystemRunner {
         outputStepNum++;
 
         AnalysisEngineDescription singletonCreator = CustomAnalysisEngineFactory.createAnalysisEngine(
-                SingletonAnnotator.class, typeSystemDescription);
+                SingletonAnnotator.class, typeSystemDescription, SingletonAnnotator.PARAM_KEEP_QUIET, quiet);
 
         AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(
-                EventMentionTupleExtractor.class, typeSystemDescription);
+                EventMentionTupleExtractor.class, typeSystemDescription, EventMentionTupleExtractor.PARAM_KEEP_QUIET, quiet);
 
         AnalysisEngineDescription tWriter = CustomAnalysisEngineFactory.createXmiWriter(
                 paramParentOutputDir, "event_tuples", outputStepNum, paramOutputFileSuffix);
 
 
         // Run the pipeline.
-        SimplePipeline.runPipeline(reader, aWriter, fanseParser, fWriter, discourseParser,dWriter, singletonCreator, tupleExtractor,tWriter);
+        SimplePipeline.runPipeline(reader, aWriter, fanseParser, fWriter, discourseParser, dWriter, singletonCreator, tupleExtractor, tWriter);
 
         System.out.println(className + " successfully completed.");
     }

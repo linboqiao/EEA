@@ -2,12 +2,12 @@ package edu.cmu.cs.lti.cds.annotators;
 
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  *
  * @author Zhengzhong Liu, Hector
  */
-public class EventMentionTupleExtractor extends JCasAnnotator_ImplBase {
+public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
     Set<String> semanticSet = new HashSet<String>();
 
     Set<String> dependencySet = new HashSet<String>();
@@ -41,6 +41,7 @@ public class EventMentionTupleExtractor extends JCasAnnotator_ImplBase {
 
     private int numEntities;
 
+    //TODO: More need to be done to find the actual role from prep
     public static final Set<String> nonPrepRoles = new HashSet<String>(Arrays.asList("ARG0", "ARG1",
             "ARGM-LOC", "ARGM-TMP", "ARGM-PNC"));
 
@@ -51,6 +52,7 @@ public class EventMentionTupleExtractor extends JCasAnnotator_ImplBase {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        logProgress(aJCas);
         System.out
                 .println(String.format("Processing article: %s with [%s]", UimaConvenience
                         .getShortDocumentNameWithOffset(aJCas), this.getClass().getSimpleName()));
