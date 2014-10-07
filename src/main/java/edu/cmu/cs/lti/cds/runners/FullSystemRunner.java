@@ -39,7 +39,7 @@ public class FullSystemRunner {
 
         int outputStepNum = 0;
 
-        boolean quiet = false;
+        boolean quiet = args[4].equals("quiet");;
 
         System.out.println("Reading from " + paramInputDir);
 
@@ -62,16 +62,16 @@ public class FullSystemRunner {
                 FanseAnnotator.class, typeSystemDescription, FanseAnnotator.PARAM_MODEL_BASE_DIR,
                 paramFanseModelBaseDirectory, FanseAnnotator.PARAM_KEEP_QUIET, quiet);
 
-        AnalysisEngineDescription fWriter = CustomAnalysisEngineFactory.createXmiWriter(
-                paramParentOutputDir, "parsed", outputStepNum, paramOutputFileSuffix);
+        AnalysisEngineDescription fWriter = CustomAnalysisEngineFactory.createGzipWriter(
+                paramParentOutputDir, "parsed", outputStepNum, paramOutputFileSuffix, null);
 
         outputStepNum++;
 
         AnalysisEngineDescription discourseParser = CustomAnalysisEngineFactory.createAnalysisEngine(
                 DiscourseParserAnnotator.class, typeSystemDescription, DiscourseParserAnnotator.PARAM_KEEP_QUIET, quiet);
 
-        AnalysisEngineDescription dWriter = CustomAnalysisEngineFactory.createXmiWriter(
-                paramParentOutputDir, "discourse", outputStepNum, paramOutputFileSuffix);
+        AnalysisEngineDescription dWriter = CustomAnalysisEngineFactory.createGzipWriter(
+                paramParentOutputDir, "discourse", outputStepNum, paramOutputFileSuffix, null);
 
         outputStepNum++;
 
@@ -81,8 +81,8 @@ public class FullSystemRunner {
         AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionTupleExtractor.class, typeSystemDescription, EventMentionTupleExtractor.PARAM_KEEP_QUIET, quiet);
 
-        AnalysisEngineDescription tWriter = CustomAnalysisEngineFactory.createXmiWriter(
-                paramParentOutputDir, "event_tuples", outputStepNum, paramOutputFileSuffix);
+        AnalysisEngineDescription tWriter = CustomAnalysisEngineFactory.createGzipWriter(
+                paramParentOutputDir, "event_tuples", outputStepNum, paramOutputFileSuffix, null);
 
 
         // Run the pipeline.
