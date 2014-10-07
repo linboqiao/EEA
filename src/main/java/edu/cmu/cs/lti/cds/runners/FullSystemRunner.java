@@ -32,7 +32,7 @@ public class FullSystemRunner {
         String paramParentOutputDir = args[1]; // "data";
         String paramOutputFileSuffix = null;
 
-        String paramFanseModelBaseDirectory = args[1];// "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/"
+        String paramFanseModelBaseDirectory = args[2];// "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/"
         // ////////////////////////////////////////////////////////////////
 
         String paramTypeSystemDescriptor = "TypeSystem";
