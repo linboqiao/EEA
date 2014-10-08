@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.cmu.cs.lti.cds.annotators;
+package edu.cmu.cs.lti.cds.annotators.writers;
 
 import org.apache.uima.jcas.JCas;
 

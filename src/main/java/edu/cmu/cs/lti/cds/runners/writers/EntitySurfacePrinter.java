@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.cmu.cs.lti.cds.runners;
+package edu.cmu.cs.lti.cds.runners.writers;
 
 import java.io.IOException;
 
@@ -14,15 +14,15 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import edu.cmu.cs.lti.cds.annotators.EntityFeatureExtractor;
+import edu.cmu.cs.lti.cds.annotators.writers.DocumentLevelEntityWriter;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 
 /**
  * @author zhengzhongliu
  * 
  */
-public class EntityFeatureOutputRunner {
-  private static String className = EntityFeatureOutputRunner.class.getSimpleName();
+public class EntitySurfacePrinter {
+  private static String className = EntitySurfacePrinter.class.getSimpleName();
 
   /**
    * @param args
@@ -40,8 +40,8 @@ public class EntityFeatureOutputRunner {
 
     // Parameters for the writer
     String paramParentOutputDir = "data";
-    String paramBaseOutputDirName = "entity_features";
-    String paramOutputFileSuffix = "csv";
+    String paramBaseOutputDirName = "entity_surfaces";
+    String paramOutputFileSuffix = "tsv";
     int stepNum = 2;
     // ////////////////////////////////////////////////////////////////
 
@@ -58,11 +58,11 @@ public class EntityFeatureOutputRunner {
             paramInputDir);
 
     AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
-            EntityFeatureExtractor.class, typeSystemDescription,
-            EntityFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
-            EntityFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-            EntityFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-            EntityFeatureExtractor.PARAM_STEP_NUMBER, stepNum);
+            DocumentLevelEntityWriter.class, typeSystemDescription,
+            DocumentLevelEntityWriter.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
+            DocumentLevelEntityWriter.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
+            DocumentLevelEntityWriter.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
+            DocumentLevelEntityWriter.PARAM_STEP_NUMBER, stepNum);
 
     SimplePipeline.runPipeline(reader, writer);
 

@@ -1,15 +1,7 @@
 /**
  * 
  */
-package edu.cmu.cs.lti.cds.annotators;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
-import org.apache.uima.fit.util.JCasUtil;
-import org.apache.uima.jcas.JCas;
+package edu.cmu.cs.lti.cds.annotators.writers;
 
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
@@ -20,6 +12,13 @@ import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import org.apache.uima.fit.util.JCasUtil;
+import org.apache.uima.jcas.JCas;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author zhengzhongliu

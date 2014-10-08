@@ -5,6 +5,7 @@ import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.FSCollectionFactory;
@@ -19,7 +20,7 @@ import java.util.regex.Pattern;
 
 /**
  * An annotator that uses possible resources to detect tuples of event and arguments. Mostly depends
- * on semantic parsing, and with the combination of some rules. For nominal events which lack of
+ * on semantic parsing, and with the combination of some rules. For nominal eventWithSemanticRolesAndPrep which lack of
  * semantic role labeling, some rules are use, similar but richer than the Stanford system method.
  *
  * @author Zhengzhong Liu, Hector
@@ -32,7 +33,7 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
     private static final String ANNOTATOR_COMPONENT_ID = EventMentionTupleExtractor.class
             .getSimpleName();
 
-    private Map<Word, Map<String, Word>> events;
+    private Map<Word, Map<String, Pair<Word, Word>>> eventWithSemanticRolesAndPrep;
 
     private Map<Span, EntityMention> head2EntityMention;
 
@@ -53,7 +54,7 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         logger.info(progressInfo(aJCas));
 
-        events = new HashMap<Word, Map<String, Word>>();
+        eventWithSemanticRolesAndPrep = new HashMap<Word, Map<String, Pair<Word, Word>>>();
 
         head2EntityMention = new HashMap<Span, EntityMention>();
         Collection<EntityMention> entityMentions = JCasUtil.select(aJCas, EntityMention.class);
@@ -64,23 +65,26 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
         numEntities = JCasUtil.select(aJCas, Entity.class).size();
 
         // step 1.1: use Fanse Semantic Annotations and Syntactic Annotations to find agent, patient for
-        // verb based events
+        // verb based eventWithSemanticRolesAndPrep
         for (FanseSemanticRelation fsr : JCasUtil.select(aJCas, FanseSemanticRelation.class)) {
             saveArgument(fsr);
         }
 
-        for (Entry<Word, Map<String, Word>> eventEntry : events.entrySet()) {
+        for (Entry<Word, Map<String, Pair<Word, Word>>> eventEntry : eventWithSemanticRolesAndPrep.entrySet()) {
             Word eventWord = eventEntry.getKey();
             EventMention evm = new EventMention(aJCas, eventWord.getBegin(), eventWord.getEnd());
             evm.setHeadWord(eventWord);
             UimaAnnotationUtils.finishAnnotation(evm, ANNOTATOR_COMPONENT_ID, null, aJCas);
             List<EventMentionArgumentLink> argumentLinks = new ArrayList<EventMentionArgumentLink>();
 
-            for (Entry<String, Word> argumentEntry : eventEntry.getValue().entrySet()) {
+            for (Entry<String, Pair<Word, Word>> argumentEntry : eventEntry.getValue().entrySet()) {
                 EventMentionArgumentLink link = new EventMentionArgumentLink(aJCas);
                 UimaAnnotationUtils.finishTop(link, ANNOTATOR_COMPONENT_ID, null, aJCas);
 
-                link.setArgument(getOrCreateEntityMention(aJCas, argumentEntry.getValue()));
+                Pair<Word, Word> argumentWithPrep = argumentEntry.getValue();
+
+                link.setVerbPreposition(argumentWithPrep.getValue());
+                link.setArgument(getOrCreateEntityMention(aJCas, argumentWithPrep.getKey()));
                 link.setArgumentRole(argumentEntry.getKey());
                 link.setEventMention(evm);
                 argumentLinks.add(link);
@@ -89,36 +93,35 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
         }
     }
 
-    private Word findObjectConnectedWithPrep(Word agentToken) {
-        if (agentToken.getPos().equals("IN")) {
-            FSList childDependenciesFS = agentToken.getChildDependencyRelations();
+    private Word findObjectConnectedWithPrep(Word argumentToken) {
+        FSList childDependenciesFS = argumentToken.getChildDependencyRelations();
 
-            if (childDependenciesFS == null) {
-                return agentToken;
-            }
-
-            for (FanseDependencyRelation childDependency : FSCollectionFactory.create(
-                    childDependenciesFS, FanseDependencyRelation.class)) {
-                String relationType = childDependency.getDependencyType();
-                if (relationType.equals("pobj")) {
-                    agentToken = childDependency.getChild();
-                    break;
-                }
-                agentToken = childDependency.getChild();
-            }
+        if (childDependenciesFS == null) {
+            return argumentToken;
         }
-        return agentToken;
+
+        for (FanseDependencyRelation childDependency : FSCollectionFactory.create(
+                childDependenciesFS, FanseDependencyRelation.class)) {
+            String relationType = childDependency.getDependencyType();
+            if (relationType.equals("pobj")) {
+                argumentToken = childDependency.getChild();
+                break;
+            }
+            argumentToken = childDependency.getChild();
+        }
+
+        return argumentToken;
     }
 
     private Span toSpan(ComponentAnnotation anno) {
         return new Span(anno.getBegin(), anno.getEnd());
     }
 
-    private void addEventArgumentPair(Word eventToken, Word argumentToken, String semanticRole) {
-        if (!events.containsKey(eventToken)) {
-            events.put(eventToken, new HashMap<String, Word>());
+    private void addEventArgumentPair(Word eventToken, Word argumentToken, String semanticRole, Word prepToken) {
+        if (!eventWithSemanticRolesAndPrep.containsKey(eventToken)) {
+            eventWithSemanticRolesAndPrep.put(eventToken, new HashMap<String, Pair<Word,Word>>());
         }
-        events.get(eventToken).put(semanticRole, argumentToken);
+        eventWithSemanticRolesAndPrep.get(eventToken).put(semanticRole, Pair.of(argumentToken,prepToken));
     }
 
     private void saveArgument(FanseSemanticRelation fsr) {
@@ -137,14 +140,16 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
             argumentToken = fsr.getChild();
         }
 
-        // if (nonPrepRoles.contains(relation)) {
-        if (argumentToken.getPos().equals("IN")) {
+        Word verbPrep = null;
+
+        //check if we need to transfer to the pobj through preposition
+        if (argumentToken.getPos().equals("IN") || argumentToken.getPos().equals("TO")) {
+            verbPrep = argumentToken;
             argumentToken = findObjectConnectedWithPrep(argumentToken);
         }
-        // }
 
         if (!Pattern.matches("\\p{Punct}", argumentToken.getCoveredText())) {
-            addEventArgumentPair(headToken, argumentToken, relation);
+            addEventArgumentPair(headToken, argumentToken, relation, verbPrep);
         }
     }
 

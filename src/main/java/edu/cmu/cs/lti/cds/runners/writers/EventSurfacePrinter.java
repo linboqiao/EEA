@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.cmu.cs.lti.cds.runners;
+package edu.cmu.cs.lti.cds.runners.writers;
 
 import java.io.IOException;
 
@@ -14,15 +14,15 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import edu.cmu.cs.lti.cds.annotators.EventFeatureExtractor;
+import edu.cmu.cs.lti.cds.annotators.writers.DocumentLevelEventWriter;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 
 /**
  * @author zhengzhongliu
  * 
  */
-public class EventFeatureOutputRunner {
-  private static String className = EventFeatureOutputRunner.class.getSimpleName();
+public class EventSurfacePrinter {
+  private static String className = EventSurfacePrinter.class.getSimpleName();
 
   /**
    * @param args
@@ -40,8 +40,8 @@ public class EventFeatureOutputRunner {
 
     // Parameters for the writer
     String paramParentOutputDir = "data";
-    String paramBaseOutputDirName = "event_features";
-    String paramOutputFileSuffix = "csv";
+    String paramBaseOutputDirName = "event_surfaces";
+    String paramOutputFileSuffix = "tsv";
     int stepNum = 2;
     // ////////////////////////////////////////////////////////////////
 
@@ -58,11 +58,11 @@ public class EventFeatureOutputRunner {
             paramInputDir);
 
     AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
-            EventFeatureExtractor.class, typeSystemDescription,
-            EventFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
-            EventFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-            EventFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-            EventFeatureExtractor.PARAM_STEP_NUMBER, stepNum);
+            DocumentLevelEventWriter.class, typeSystemDescription,
+            DocumentLevelEventWriter.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
+            DocumentLevelEventWriter.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
+            DocumentLevelEventWriter.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
+            DocumentLevelEventWriter.PARAM_STEP_NUMBER, stepNum);
 
     SimplePipeline.runPipeline(reader, writer);
 

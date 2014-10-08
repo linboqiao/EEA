@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.cmu.cs.lti.cds.runners;
+package edu.cmu.cs.lti.cds.runners.writers;
 
 import java.io.IOException;
 
@@ -14,9 +14,9 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import edu.cmu.cs.lti.cds.annotators.EntityFeatureExtractor;
-import edu.cmu.cs.lti.cds.annotators.EventEntityLinkProducer;
-import edu.cmu.cs.lti.cds.annotators.EventFeatureExtractor;
+import edu.cmu.cs.lti.cds.annotators.writers.EntityFeatureExtractor;
+import edu.cmu.cs.lti.cds.annotators.writers.EventEntityLinkProducer;
+import edu.cmu.cs.lti.cds.annotators.writers.EventFeatureExtractor;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 
 /**

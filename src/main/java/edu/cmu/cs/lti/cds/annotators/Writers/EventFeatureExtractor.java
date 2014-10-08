@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.cds.annotators;
+package edu.cmu.cs.lti.cds.annotators.writers;
 
 import java.util.ArrayList;
 import java.util.HashMap;

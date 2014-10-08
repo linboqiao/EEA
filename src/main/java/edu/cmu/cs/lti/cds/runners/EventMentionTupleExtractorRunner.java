@@ -34,14 +34,14 @@ public class EventMentionTupleExtractorRunner {
         // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
         // Parameters for the reader
-        String inputDir = "data/00_agiga";
+        String inputDir = "data/01_discourse_parsed";
 
 
         // Parameters for the writer
         String paramParentOutputDir = "data";
         String paramBaseOutputDirName = "event_tuples";
         String paramOutputFileSuffix = null;
-        int stepnum = 1;
+        int stepnum = 2;
 
         // ////////////////////////////////////////////////////////////////
 
@@ -57,7 +57,7 @@ public class EventMentionTupleExtractorRunner {
                 CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription,inputDir, false);
 
         AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(
-                EventMentionTupleExtractor.class, typeSystemDescription);
+                EventMentionTupleExtractor.class, typeSystemDescription, EventMentionTupleExtractor.PARAM_KEEP_QUIET, false);
 
 //        AnalysisEngineDescription duplicateMentionRemover = CustomAnalysisEngineFactory
 //                .createAnalysisEngine(DuplicatedMentionRemover.class, typeSystemDescription);

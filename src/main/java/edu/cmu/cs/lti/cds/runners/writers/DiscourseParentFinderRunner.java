@@ -1,6 +1,6 @@
-package edu.cmu.cs.lti.cds.runners;
+package edu.cmu.cs.lti.cds.runners.writers;
 
-import edu.cmu.cs.lti.cds.annotators.DiscourseBasedParentFinder;
+import edu.cmu.cs.lti.cds.annotators.writers.DiscourseBasedParentFinder;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
