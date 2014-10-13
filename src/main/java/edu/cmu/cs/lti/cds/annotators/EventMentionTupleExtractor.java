@@ -45,6 +45,15 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
     public static final Set<String> nonPrepRoles = new HashSet<String>(Arrays.asList("ARG0", "ARG1",
             "ARGM-LOC", "ARGM-TMP", "ARGM-PNC"));
 
+    public static final Set<String> nonEntityModifiers = new HashSet<>(Arrays.asList(
+            "ARGM-MNR",
+            "ARGM-ADV",
+            "ARGM-DIS",
+            "ARGM-MOD",
+            "ARGM-NEG",
+            "ARGM-ADJ"));
+
+
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
@@ -131,6 +140,7 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
         Word headToken;
         Word argumentToken;
 
+
         if (relation.endsWith(invertedSign)) {
             relation = relation.substring(0, relation.length() - invertedSign.length());
             headToken = fsr.getChild();
@@ -140,7 +150,14 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
             argumentToken = fsr.getChild();
         }
 
-        Word verbPrep = null;
+
+        if (nonEntityModifiers.contains(relation)){
+            //do not add non entity ArgM s as real arguments.
+            return;
+        }
+
+
+            Word verbPrep = null;
 
         //check if we need to transfer to the pobj through preposition
         if (argumentToken.getPos().equals("IN") || argumentToken.getPos().equals("TO")) {

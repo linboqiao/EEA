@@ -23,10 +23,6 @@ import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.resource.ResourceInitializationException;
 import scala.Tuple2;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,24 +36,24 @@ import java.util.logging.Level;
  */
 public class DiscourseParserAnnotator extends AbstractLoggingAnnotator {
     RSTParser rstParser;
-    PrintWriter writer;
+    //    PrintWriter writer;
     String parserPath;
 
-    public static final String COMPONENT_ID = DiscourseParserAnnotator.class.getName();
+    public static final String COMPONENT_ID = DiscourseParserAnnotator.class.getSimpleName();
 
     Table<Integer, Integer, StanfordCorenlpToken> tokenIndexedByPosition = HashBasedTable.create();
 
     @Override
     public void initialize(final UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
-        File out = new File("data/discourse_out_uima");
-        try {
-            writer = new PrintWriter(new FileOutputStream(out));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+//        File out = new File("data/discourse_out_uima");
+//        try {
+//            writer = new PrintWriter(new FileOutputStream(out));
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
-         parserPath = RSTParser.DEFAULT_CONSTITUENTSYNTAX_MODEL_PATH();
+        parserPath = RSTParser.DEFAULT_CONSTITUENTSYNTAX_MODEL_PATH();
 //        parserPath = RSTParser.DEFAULT_DEPENDENCYSYNTAX_MODEL_PATH();
 
         logger.log(Level.INFO, "Loading RST parser from " + parserPath);
@@ -66,7 +62,7 @@ public class DiscourseParserAnnotator extends AbstractLoggingAnnotator {
     }
 
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        writer.close();
+//        writer.close();
     }
 
     @Override
