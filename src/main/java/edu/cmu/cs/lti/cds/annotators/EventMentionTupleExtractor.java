@@ -5,6 +5,7 @@ import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
+import edu.cmu.cs.lti.utils.Utils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -68,7 +69,7 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
         head2EntityMention = new HashMap<Span, EntityMention>();
         Collection<EntityMention> entityMentions = JCasUtil.select(aJCas, EntityMention.class);
         for (EntityMention mention : entityMentions) {
-            head2EntityMention.put(toSpan(mention.getHead()), mention);
+            head2EntityMention.put(Utils.toSpan(mention.getHead()), mention);
         }
         numEntityMentions = entityMentions.size();
         numEntities = JCasUtil.select(aJCas, Entity.class).size();
@@ -122,10 +123,6 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
         return argumentToken;
     }
 
-    private Span toSpan(ComponentAnnotation anno) {
-        return new Span(anno.getBegin(), anno.getEnd());
-    }
-
     private void addEventArgumentPair(Word eventToken, Word argumentToken, String semanticRole, Word prepToken) {
         if (!eventWithSemanticRolesAndPrep.containsKey(eventToken)) {
             eventWithSemanticRolesAndPrep.put(eventToken, new HashMap<String, Pair<Word,Word>>());
@@ -171,11 +168,11 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
     }
 
     private EntityMention getOrCreateEntityMention(JCas jcas, Word headWord) {
-        EntityMention mention = head2EntityMention.get(toSpan(headWord));
+        EntityMention mention = head2EntityMention.get(Utils.toSpan(headWord));
         if (mention == null) {
             mention = UimaNlpUtils.createEntityMention(jcas, headWord.getBegin(), headWord.getEnd(),
                     ANNOTATOR_COMPONENT_ID);
-            head2EntityMention.put(toSpan(headWord), mention);
+            head2EntityMention.put(Utils.toSpan(headWord), mention);
         }
         return mention;
     }
