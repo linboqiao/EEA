@@ -102,12 +102,13 @@ public class DiscourseParserAnnotator extends AbstractLoggingAnnotator {
 
         Document document = maker.makeDocument(aJCas.getDocumentText());
 
-        Tuple2<DiscourseTree, Tuple2<Object, Object>[][]> out = rstParser.parse(document, false);
-        DiscourseTree dt = out._1();
 
-//        writer.println(dt);
-
-        annotateDiscourseTree(aJCas, dt);
+        if (document.sentences().length > 0) {
+            //The parser will raise Exception if document is empty.
+            Tuple2<DiscourseTree, Tuple2<Object, Object>[][]> out = rstParser.parse(document, false);
+            DiscourseTree dt = out._1();
+            annotateDiscourseTree(aJCas, dt);
+        }
     }
 
 
