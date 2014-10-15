@@ -4,4 +4,4 @@ target/
 .settings/ 
 .classpath
 .project
-nohup*
+*nohup*
