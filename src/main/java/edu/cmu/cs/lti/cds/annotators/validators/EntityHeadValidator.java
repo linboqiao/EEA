@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.cds.annotators.validators;
 
+import edu.cmu.cs.lti.script.type.EntityMention;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.util.JCasUtil;
@@ -11,10 +12,10 @@ public class EntityHeadValidator extends JCasAnnotator_ImplBase {
 
   @Override
   public void process(JCas aJCas) throws AnalysisEngineProcessException {
-    for (Entity entity : JCasUtil.select(aJCas, Entity.class)) {
-      System.out.println("Entity " + entity.getId() );
-        String headMentionStr = entity.getRepresentativeMention().getCoveredText().replace("\n", "");
-        System.out.println(" is represented by " + headMentionStr);
-    }
+     for (EntityMention mention : JCasUtil.select(aJCas, EntityMention.class)){
+         Entity entity = mention.getReferingEntity();
+         assert entity!= null;
+         assert entity.getRepresentativeMention().getCoveredText() != null;
+     }
   }
 }

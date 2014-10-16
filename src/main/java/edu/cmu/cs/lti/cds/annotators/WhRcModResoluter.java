@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.cds.annotators;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Entity;
 import edu.cmu.cs.lti.script.type.EntityMention;
-import edu.cmu.cs.lti.script.type.StanfordDependencyRelation;
+import edu.cmu.cs.lti.script.type.FanseDependencyRelation;
 import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.model.AnnotationCondition;
@@ -21,19 +21,25 @@ import org.apache.uima.jcas.cas.TOP;
 import java.util.*;
 
 /**
+ * This seems to work well on recent version of Stanford Corenlp parser, the dependency
+ * structure is a little different in the annotated_gigaword version, so we use the Fanse
+ * dependency instead
+ * <p/>
  * Created with IntelliJ IDEA.
  * User: zhengzhongliu
  * Date: 10/8/14
  * Time: 12:24 AM
  */
-public class WhPronounResoluter extends AbstractLoggingAnnotator {
+public class WhRcModResoluter extends AbstractLoggingAnnotator {
     public final String WH_WORD_LABEL_PREFIX = "W";
     private HashMap<Span, EntityMention> head2EntityMention;
 
-    public static final String COMPONENT_ID = WhPronounResoluter.class.getSimpleName();
+    public static final String COMPONENT_ID = WhRcModResoluter.class.getSimpleName();
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        logger.info(progressInfo(aJCas));
+
         head2EntityMention = new HashMap<>();
         Collection<EntityMention> entityMentions = JCasUtil.select(aJCas, EntityMention.class);
         for (EntityMention mention : entityMentions) {
@@ -47,10 +53,10 @@ public class WhPronounResoluter extends AbstractLoggingAnnotator {
             Entity entity = rcmodEm.getReferingEntity();
             if (entity != null) {
                 //adding to existing entity
-                Collection<EntityMention> mentions = FSCollectionFactory.create(entity.getEntityMentions(), EntityMention.class);
+                List<EntityMention> mentions = new ArrayList<>(FSCollectionFactory.create(entity.getEntityMentions(), EntityMention.class));
                 mentions.add(whEm);
-
                 entity.setEntityMentions(FSCollectionFactory.createFSArray(aJCas, mentions));
+                whEm.setReferingEntity(entity);
             } else {
                 //create new entity
                 entity = new Entity(aJCas);
@@ -59,30 +65,33 @@ public class WhPronounResoluter extends AbstractLoggingAnnotator {
                 mentions.add(whEm);
                 entity.setEntityMentions(FSCollectionFactory.createFSArray(aJCas, mentions));
                 entity.setRepresentativeMention(rcmodEm);
+                whEm.setReferingEntity(entity);
+                rcmodEm.setReferingEntity(entity);
                 UimaAnnotationUtils.finishTop(entity, COMPONENT_ID, null, aJCas);
             }
         }
     }
 
     private Map<EntityMention, EntityMention> findWhAndNounPair(JCas aJCas) {
+        //find relative clause modifiers
         AnnotationCondition rcFilter = new AnnotationCondition() {
             @Override
             public Boolean check(TOP aAnnotation) {
-                StanfordDependencyRelation sdr = (StanfordDependencyRelation) aAnnotation;
+                FanseDependencyRelation sdr = (FanseDependencyRelation) aAnnotation;
                 return sdr.getDependencyType().equals("rcmod");
             }
         };
 
         Map<EntityMention, EntityMention> pairwiseCoreferences = new HashMap<>();
 
-        List<StanfordDependencyRelation> rcmodRelations = UimaConvenience.getAnnotationListWithFilter(
-                aJCas, StanfordDependencyRelation.class, rcFilter);
-        for (StanfordDependencyRelation rcmodRel : rcmodRelations) {
+        List<FanseDependencyRelation> rcmodRelations = UimaConvenience.getAnnotationListWithFilter(
+                aJCas, FanseDependencyRelation.class, rcFilter);
+        for (FanseDependencyRelation rcmodRel : rcmodRelations) {
             Word modifier = rcmodRel.getChild();
             FSList childRelations = modifier.getChildDependencyRelations();
             if (childRelations != null) {
-                for (StanfordDependencyRelation childRelation : FSCollectionFactory.create(
-                        modifier.getChildDependencyRelations(), StanfordDependencyRelation.class)) {
+                for (FanseDependencyRelation childRelation : FSCollectionFactory.create(
+                        modifier.getChildDependencyRelations(), FanseDependencyRelation.class)) {
                     String childRelationType = childRelation.getDependencyType();
                     if (childRelationType.equals("nsubj") || childRelationType.equals("rel")) {
                         Word modifierChild = childRelation.getChild();

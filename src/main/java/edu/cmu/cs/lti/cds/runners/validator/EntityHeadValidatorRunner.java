@@ -28,9 +28,9 @@ public class EntityHeadValidatorRunner {
         // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
         String parentInputDirPath = "data";
-        String baseInputDirName = "agiga";
+        String baseInputDirName = "discourse_parsed";
         String inputFileSuffix = null;
-        int inputStepNumber = 0;
+        int inputStepNumber = 1;
 
         // ////////////////////////////////////////////////////////////////
 

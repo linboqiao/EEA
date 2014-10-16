@@ -4,6 +4,7 @@
 package edu.cmu.cs.lti.cds.runners;
 
 import edu.cmu.cs.lti.cds.annotators.EventMentionTupleExtractor;
+import edu.cmu.cs.lti.cds.annotators.WhRcModResoluter;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
@@ -54,21 +55,12 @@ public class EventMentionTupleExtractorRunner {
         // Instantiate a collection reader to get XMI as input.
         // Note that you should change the following parameters for your setting.
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription,inputDir, false);
+                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, inputDir, false);
 
-        AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(
-                EventMentionTupleExtractor.class, typeSystemDescription, EventMentionTupleExtractor.PARAM_KEEP_QUIET, false);
 
-//        AnalysisEngineDescription duplicateMentionRemover = CustomAnalysisEngineFactory
-//                .createAnalysisEngine(DuplicatedMentionRemover.class, typeSystemDescription);
-//
-//        AnalysisEngineDescription singletonCreator = CustomAnalysisEngineFactory.createAnalysisEngine(
-//                SingletonAnnotator.class, typeSystemDescription);
-//
-//        AnalysisEngineDescription representativeMentionFinder = CustomAnalysisEngineFactory
-//                .createAnalysisEngine(RepresentativeMentionFinder.class, typeSystemDescription);
-//
-//        AnalysisEngineDescription treeFixer = CustomAnalysisEngineFactory.createAnalysisEngine(TreeLeafFixer.class, typeSystemDescription);
+        AnalysisEngineDescription whLinker = CustomAnalysisEngineFactory.createAnalysisEngine(WhRcModResoluter.class, typeSystemDescription);
+
+        AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(EventMentionTupleExtractor.class, typeSystemDescription);
 
         // Instantiate a XMI writer to put XMI as output.
         // Note that you should change the following parameters for your setting.
@@ -76,7 +68,7 @@ public class EventMentionTupleExtractorRunner {
                 paramParentOutputDir, paramBaseOutputDirName, stepnum, paramOutputFileSuffix);
 
         // Run the pipeline.
-        SimplePipeline.runPipeline(reader, tupleExtractor, writer);
+        SimplePipeline.runPipeline(reader, whLinker, tupleExtractor, writer);
         System.out.println(className + " completed.");
     }
 }
