@@ -1,21 +1,13 @@
 package edu.cmu.cs.lti.cds.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.*;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
-import edu.cmu.cs.lti.utils.Utils;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.uima.UimaContext;
-import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
-import org.apache.uima.resource.ResourceInitializationException;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -28,21 +20,21 @@ import java.util.regex.Pattern;
  *
  * @author Zhengzhong Liu, Hector
  */
-public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
+public class EventMentionTupleExtractor extends AbstractEntityMentionCreator {
     Set<String> semanticSet = new HashSet<String>();
 
     Set<String> dependencySet = new HashSet<String>();
 
-    private static final String ANNOTATOR_COMPONENT_ID = EventMentionTupleExtractor.class
+    private static final String COMPONENT_ID = EventMentionTupleExtractor.class
             .getSimpleName();
 
     private Map<Word, ArrayListMultimap<String, Pair<Word, Word>>> eventWithSemanticRolesAndPrep;
 
-    private Map<Span, EntityMention> head2EntityMention;
-
-    private int numEntityMentions;
-
-    private int numEntities;
+//    private Map<Span, EntityMention> head2EntityMention;
+//
+//    private int numEntityMentions;
+//
+//    private int numEntities;
 
     //TODO: More need to be done to find the actual role from prep
     public static final Set<String> nonPrepRoles = new HashSet<String>(Arrays.asList("ARG0", "ARG1",
@@ -58,23 +50,23 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
 
 
     @Override
-    public void initialize(UimaContext aContext) throws ResourceInitializationException {
-        super.initialize(aContext);
+    public String getComponentId() {
+        return COMPONENT_ID;
     }
 
     @Override
-    public void process(JCas aJCas) throws AnalysisEngineProcessException {
+    public void subprocess(JCas aJCas) {
         logger.info(progressInfo(aJCas));
 
-        eventWithSemanticRolesAndPrep = new HashMap<Word, ArrayListMultimap<String, Pair<Word, Word>>>();
+        eventWithSemanticRolesAndPrep = new HashMap<>();
 
-        head2EntityMention = new HashMap<Span, EntityMention>();
-        Collection<EntityMention> entityMentions = JCasUtil.select(aJCas, EntityMention.class);
-        for (EntityMention mention : entityMentions) {
-            head2EntityMention.put(Utils.toSpan(mention.getHead()), mention);
-        }
-        numEntityMentions = entityMentions.size();
-        numEntities = JCasUtil.select(aJCas, Entity.class).size();
+//        head2EntityMention = new HashMap<>();
+//        Collection<EntityMention> entityMentions = JCasUtil.select(aJCas, EntityMention.class);
+//        for (EntityMention mention : entityMentions) {
+//            head2EntityMention.put(Utils.toSpan(mention.getHead()), mention);
+//        }
+//        numEntityMentions = entityMentions.size();
+//        numEntities = JCasUtil.select(aJCas, Entity.class).size();
 
         for (FanseSemanticRelation fsr : JCasUtil.select(aJCas, FanseSemanticRelation.class)) {
             saveArgument(fsr);
@@ -84,14 +76,17 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
             Word eventWord = eventEntry.getKey();
             EventMention evm = new EventMention(aJCas, eventWord.getBegin(), eventWord.getEnd());
             evm.setHeadWord(eventWord);
-            UimaAnnotationUtils.finishAnnotation(evm, ANNOTATOR_COMPONENT_ID, null, aJCas);
-            List<EventMentionArgumentLink> argumentLinks = new ArrayList<EventMentionArgumentLink>();
+            UimaAnnotationUtils.finishAnnotation(evm, COMPONENT_ID, null, aJCas);
+            List<EventMentionArgumentLink> argumentLinks = new ArrayList<>();
 
             ArrayListMultimap<String, Pair<Word, Word>> role2Aruguments = eventEntry.getValue();
             for (String argumentRole : role2Aruguments.keySet()) {
-                List<Pair<Word, Word>> potentialLinks = role2Aruguments.get(argumentRole);
-                for (Pair<Word, Word> potentialLink : potentialLinks) {
-                    argumentLinks.add(createArgumentLink(aJCas, evm, argumentRole, potentialLink.getKey(), potentialLink.getValue()));
+                //do not add arguments that is not about entities
+                if (!nonEntityModifiers.contains(argumentRole)) {
+                    List<Pair<Word, Word>> potentialLinks = role2Aruguments.get(argumentRole);
+                    for (Pair<Word, Word> potentialLink : potentialLinks) {
+                        argumentLinks.add(createArgumentLink(aJCas, evm, argumentRole, potentialLink.getLeft(), potentialLink.getRight()));
+                    }
                 }
             }
             evm.setArguments(FSCollectionFactory.createFSList(aJCas, argumentLinks));
@@ -138,14 +133,17 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
             relation = relation.substring(0, relation.length() - invertedSign.length());
             headToken = fsr.getChild();
             argumentToken = fsr.getHead();
+
+            //TODO Fanse parser sometimes messed up VBN and VBD, which leads to incorrect semantic parsing here
+
         } else {
             headToken = fsr.getHead();
             argumentToken = fsr.getChild();
         }
 
-        if (nonEntityModifiers.contains(relation)) {
-            return;
-        }
+//        if (nonEntityModifiers.contains(relation)) {
+//            return;
+//        }
 
         Word verbPrep = null;
 
@@ -160,25 +158,31 @@ public class EventMentionTupleExtractor extends AbstractLoggingAnnotator {
         }
     }
 
-    private EventMentionArgumentLink createArgumentLink(JCas aJCas, EventMention evm, String roleName, Word argument, Word prep) {
-        EventMentionArgumentLink link = new EventMentionArgumentLink(aJCas);
-        EntityMention argumentEntity = getOrCreateEntityMention(aJCas, argument);
-        link.setVerbPreposition(prep);
-        link.setArgument(argumentEntity);
-        link.setArgumentRole(roleName);
-        link.setEventMention(evm);
-        UimaAnnotationUtils.finishTop(link, ANNOTATOR_COMPONENT_ID, null, aJCas);
-        argumentEntity.setArgumentLinks(UimaConvenience.appendFSList(aJCas, argumentEntity.getArgumentLinks(), argumentEntity, EntityMention.class));
-        return link;
-    }
-
-    private EntityMention getOrCreateEntityMention(JCas jcas, Word headWord) {
-        EntityMention mention = head2EntityMention.get(Utils.toSpan(headWord));
-        if (mention == null) {
-            mention = UimaNlpUtils.createEntityMention(jcas, headWord.getBegin(), headWord.getEnd(),
-                    ANNOTATOR_COMPONENT_ID);
-            head2EntityMention.put(Utils.toSpan(headWord), mention);
-        }
-        return mention;
-    }
+//    private EventMentionArgumentLink createArgumentLink(JCas aJCas, EventMention evm, String roleName, Word argument, Word prep) {
+//        EventMentionArgumentLink link = new EventMentionArgumentLink(aJCas);
+//        EntityMention argumentEntity = getOrCreateSingletonEntityMention(aJCas, argument);
+//        link.setVerbPreposition(prep);
+//        link.setArgument(argumentEntity);
+//        link.setArgumentRole(roleName);
+//        link.setEventMention(evm);
+//        UimaAnnotationUtils.finishTop(link, COMPONENT_ID, null, aJCas);
+//        argumentEntity.setArgumentLinks(UimaConvenience.appendFSList(aJCas, argumentEntity.getArgumentLinks(), link, EventMentionArgumentLink.class));
+//        return link;
+//    }
+//
+//    private EntityMention getOrCreateSingletonEntityMention(JCas jcas, Word headWord) {
+//        EntityMention mention = head2EntityMention.get(Utils.toSpan(headWord));
+//        if (mention == null) {
+//            mention = UimaNlpUtils.createEntityMention(jcas, headWord.getBegin(), headWord.getEnd(),
+//                    COMPONENT_ID);
+//            Entity entity = new Entity(jcas);
+//            entity.setEntityMentions(new FSArray(jcas, 1));
+//            entity.setEntityMentions(0, mention);
+//            entity.setRepresentativeMention(mention);
+//            mention.setReferingEntity(entity);
+//            UimaAnnotationUtils.finishTop(entity, COMPONENT_ID, null, jcas);
+//            head2EntityMention.put(Utils.toSpan(headWord), mention);
+//        }
+//        return mention;
+//    }
 }

@@ -3,8 +3,9 @@
  */
 package edu.cmu.cs.lti.cds.runners;
 
-import edu.cmu.cs.lti.cds.annotators.EventMentionTupleExtractor;
-import edu.cmu.cs.lti.cds.annotators.WhRcModResoluter;
+import edu.cmu.cs.lti.cds.annotators.*;
+import edu.cmu.cs.lti.cds.annotators.patches.HeadWordFixer;
+import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
@@ -57,10 +58,17 @@ public class EventMentionTupleExtractorRunner {
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, inputDir, false);
 
+        AnalysisEngineDescription fixer = CustomAnalysisEngineFactory.createAnalysisEngine(HeadWordFixer.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
-        AnalysisEngineDescription whLinker = CustomAnalysisEngineFactory.createAnalysisEngine(WhRcModResoluter.class, typeSystemDescription);
+        AnalysisEngineDescription whLinker = CustomAnalysisEngineFactory.createAnalysisEngine(WhRcModResoluter.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
         AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(EventMentionTupleExtractor.class, typeSystemDescription);
+
+        AnalysisEngineDescription syntaticDirectArgumentExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(SyntacticDirectArgumentFixer.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
+
+        AnalysisEngineDescription SyntacticArgumentPropagater = CustomAnalysisEngineFactory.createAnalysisEngine(SyntacticArgumentPropagateAnnotator.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
+
+        AnalysisEngineDescription goalMentionAnnotator = CustomAnalysisEngineFactory.createAnalysisEngine(GoalMentionAnnotator.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
         // Instantiate a XMI writer to put XMI as output.
         // Note that you should change the following parameters for your setting.
@@ -68,7 +76,7 @@ public class EventMentionTupleExtractorRunner {
                 paramParentOutputDir, paramBaseOutputDirName, stepnum, paramOutputFileSuffix);
 
         // Run the pipeline.
-        SimplePipeline.runPipeline(reader, whLinker, tupleExtractor, writer);
+        SimplePipeline.runPipeline(reader, fixer, whLinker, tupleExtractor, syntaticDirectArgumentExtractor, SyntacticArgumentPropagater, goalMentionAnnotator, writer);
         System.out.println(className + " completed.");
     }
 }

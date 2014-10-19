@@ -42,14 +42,16 @@ public class ArgumentStatisticsCounterRunner {
 
         SimplePipeline.runPipeline(reader, counter);
 
-        System.out.println(numEvents);
+        System.out.println("#Event_Mention :\t" + numEvents);
 
         for (String rowKey : argumentCounts.rowKeySet()) {
             String row = "";
+            int totalCount = 0;
             for (Map.Entry<String, Integer> cell : argumentCounts.row(rowKey).entrySet()) {
                 row += cell.getKey() + "\t" + cell.getValue() + "\t";
+                totalCount += cell.getValue();
             }
-            System.out.println(String.format("%s\t%s", rowKey, row));
+            System.out.println(String.format("%s : %d\t%s", rowKey, totalCount, row));
         }
 
     }

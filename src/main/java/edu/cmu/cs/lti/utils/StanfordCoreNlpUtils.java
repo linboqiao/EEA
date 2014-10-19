@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.utils;
 
+import edu.cmu.cs.lti.script.type.*;
 import edu.stanford.nlp.dcoref.CorefChain;
 import edu.stanford.nlp.dcoref.CorefCoreAnnotations;
 import edu.stanford.nlp.ling.CoreAnnotations;
@@ -8,13 +9,15 @@ import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations;
-import edu.stanford.nlp.trees.Tree;
-import edu.stanford.nlp.trees.TreeCoreAnnotations;
+import edu.stanford.nlp.trees.*;
 import edu.stanford.nlp.util.CoreMap;
+import edu.stanford.nlp.util.IntPair;
+import org.apache.uima.fit.util.FSCollectionFactory;
+import org.apache.uima.fit.util.JCasUtil;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSArray;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,6 +26,106 @@ import java.util.Properties;
  * Time: 8:19 PM
  */
 public class StanfordCoreNlpUtils {
+
+    public static Word fixByDependencyHead(ComponentAnnotation anno, Word currentHead){
+        return fixByDependencyHead(anno, currentHead,new HashSet<Word>());
+    }
+
+
+    public static Word fixByDependencyHead(ComponentAnnotation anno, Word currentHead, Set<Word> visitedHeadNodes) {
+        if (!inRange(currentHead, anno.getBegin(), anno.getEnd())) {
+            return null;
+        } else {
+            if (currentHead.getHeadDependencyRelations() != null) {
+                //actually we normally have one head, this for is not looping anyway
+                for (StanfordDependencyRelation headDep : FSCollectionFactory.create(currentHead.getHeadDependencyRelations(), StanfordDependencyRelation.class)) {
+                    Word headToken = headDep.getHead();
+                    if (visitedHeadNodes.contains(headToken)){
+                        return currentHead;
+                    }else{
+                        visitedHeadNodes.add(headToken);
+                    }
+
+                    Word newHead = fixByDependencyHead(anno, headToken, visitedHeadNodes);
+                    if (newHead == null) {
+                        return currentHead;
+                    } else {
+                        return newHead;
+                    }
+                }
+            }
+
+            // no head dependency, either a root or a collapsed prep
+            return currentHead;
+        }
+    }
+
+
+    public static boolean inRange(ComponentAnnotation anno, int begin, int end) {
+        return begin <= anno.getBegin() && end >= anno.getEnd();
+    }
+
+
+    /**
+     * @param aJCas
+     * @param finder
+     * @param tf
+     * @param uimaTree
+     * @return The head token if found, otherwise null.
+     */
+    public static StanfordCorenlpToken findHead(JCas aJCas, HeadFinder finder, TreeFactory tf, StanfordTreeAnnotation uimaTree) {
+        int offset = uimaTree.getBegin();
+
+        Tree tree = toStanfordTree(tf, uimaTree);
+
+        Tree head = findHead(finder, tree);
+
+        IntPair span = head.getSpan();
+
+        if (span != null) {
+            for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, uimaTree)) {
+                if (token.getBegin() - offset == span.get(0) && token.getEnd() - offset == span.get(1)) {
+                    return token;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public static Tree findHead(HeadFinder finder, Tree tree) {
+        return finder.determineHead(tree);
+    }
+
+    public static HeadFinder getSemanticHeadFinder() {
+        return new SemanticHeadFinder();
+    }
+
+    public static TreeFactory getLablledScoredTreeFactory() {
+        return new LabeledScoredTreeFactory();
+    }
+
+    public static Tree toStanfordTree(TreeFactory tf, StanfordTreeAnnotation uimaTree) {
+        Tree tree = uima2StanfordTree(tf, uimaTree);
+        tree.setSpans();
+        return tree;
+    }
+
+    public static Tree uima2StanfordTree(TreeFactory tf, StanfordTreeAnnotation uimaTree) {
+        if (uimaTree.getIsLeaf()) {
+            return tf.newLeaf(uimaTree.getPennTreeLabel());
+        } else {
+            FSArray uimaChildTree = uimaTree.getChildren();
+            List<Tree> daugheterTreeList = new ArrayList<>(uimaChildTree.size());
+            for (int i = 0; i < uimaChildTree.size(); i++) {
+                StanfordTreeAnnotation childTree = (StanfordTreeAnnotation) uimaChildTree.get(i);
+                Tree daugheterTree = uima2StanfordTree(tf, childTree);
+                daugheterTreeList.add(uima2StanfordTree(tf, childTree));
+            }
+            return tf.newTreeNode(uimaTree.getPennTreeLabel(), daugheterTreeList);
+        }
+    }
+
 
     public static Annotation parseWithCorenlp(String text) {
         // creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution

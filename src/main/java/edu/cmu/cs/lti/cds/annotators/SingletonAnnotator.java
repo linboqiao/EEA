@@ -59,6 +59,7 @@ public class SingletonAnnotator extends AbstractLoggingAnnotator {
         entity.setEntityMentions(new FSArray(aJCas, 1));
         entity.setEntityMentions(0, enm);
         enm.setReferingEntity(entity);
+        entity.setRepresentativeMention(enm);
         UimaAnnotationUtils.finishTop(entity, COMPONENT_ID, null, aJCas);
       }
     }

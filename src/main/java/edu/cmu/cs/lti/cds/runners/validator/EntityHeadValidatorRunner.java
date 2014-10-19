@@ -28,9 +28,9 @@ public class EntityHeadValidatorRunner {
         // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
         String parentInputDirPath = "data";
-        String baseInputDirName = "discourse_parsed";
+        String baseInputDirName = "event_tuples";
         String inputFileSuffix = null;
-        int inputStepNumber = 1;
+        int inputStepNumber = 2;
 
         // ////////////////////////////////////////////////////////////////
 
