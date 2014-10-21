@@ -3,7 +3,11 @@
  */
 package edu.cmu.cs.lti.cds.runners;
 
-import edu.cmu.cs.lti.cds.annotators.*;
+import edu.cmu.cs.lti.cds.annotators.annos.EventMentionTupleExtractor;
+import edu.cmu.cs.lti.cds.annotators.annos.GoalMentionAnnotator;
+import edu.cmu.cs.lti.cds.annotators.annos.SyntacticArgumentPropagateAnnotator;
+import edu.cmu.cs.lti.cds.annotators.annos.SyntacticDirectArgumentFixer;
+import edu.cmu.cs.lti.cds.annotators.clustering.WhRcModResoluter;
 import edu.cmu.cs.lti.cds.annotators.patches.HeadWordFixer;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;

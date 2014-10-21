@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.cds.annotators;
+package edu.cmu.cs.lti.cds.annotators.annos;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.ling.PennTreeTagSet;
@@ -27,6 +27,8 @@ public class SyntacticArgumentPropagateAnnotator extends AbstractEntityMentionCr
     public static final String COMPONENT_ID = SyntacticArgumentPropagateAnnotator.class.getSimpleName();
 
     private Set<String> shareSubjDeps = new HashSet<>(Arrays.asList("xcomp", "advcl", "purpcl"));
+
+    private Set<String> completeMarker = new HashSet<>(Arrays.asList("have", "had", "has"));
 
     //using span to communicate probably is the safest way when two types of tokens exists
     private ArrayListMultimap<Span, Pair<Span, String>> shareSubjVerbPairs;
@@ -78,6 +80,7 @@ public class SyntacticArgumentPropagateAnnotator extends AbstractEntityMentionCr
         //xcomp:
         //purpcl:
         //advcl: subject of the clause might be omitted
+        //vch??
 
         for (Map.Entry<Span, Collection<Pair<Span, String>>> subClausePairs : shareSubjVerbPairs.asMap().entrySet()) {
             Span headSpan = subClausePairs.getKey();
@@ -86,10 +89,12 @@ public class SyntacticArgumentPropagateAnnotator extends AbstractEntityMentionCr
 
             Word head = JCasUtil.selectCovered(aJCas, Word.class, headSpan.getBegin(), headSpan.getEnd()).get(0);
 
-
             for (Pair<Span, String> childDepPair : subClausePairs.getValue()) {
                 Span childSpan = childDepPair.getKey();
                 Word child = JCasUtil.selectCovered(aJCas, Word.class, childSpan.getBegin(), childSpan.getEnd()).get(0);
+
+//                String dep = childDepPair.getValue();
+//                boolean complementTransfer = completeMarker.contains(head.getCoveredText()) && dep.equals("vch");
 
                 //share agent
                 if (!child.getPos().equals(PennTreeTagSet.VBN)) {
@@ -106,6 +111,10 @@ public class SyntacticArgumentPropagateAnnotator extends AbstractEntityMentionCr
                             if (headSubjDepPair != null) {
                                 Word headSubj = headSubjDepPair.getKey();
                                 EventMentionArgumentLink newArgument = addNewArgument(aJCas, emptyAgentMention, headSubj, PropBankTagSet.ARG0);
+                                if (childDepPair.getValue().equals("vch")) {
+                                    System.out.println(String.format("Sharing agent [%s] from [%s] to [%s]", newArgument.getArgument().getCoveredText(), head.getCoveredText(), emptyAgentMention.getCoveredText()));
+                                    System.out.println(JCasUtil.selectCovering(Sentence.class, head).get(0).getCoveredText());
+                                }
                                 eventHead2Arg0.put(childSpan, newArgument.getArgument());
                             }
                             emptyAgentMentions.remove(childSpan);
@@ -278,6 +287,10 @@ public class SyntacticArgumentPropagateAnnotator extends AbstractEntityMentionCr
 
                 Span headSpan = Utils.toSpan(head);
                 Span childSpan = Utils.toSpan(child);
+
+//                if (dep.getDependencyType().equals("vch")){
+//                    System.out.println("vch "+head.getCoveredText()+" "+child.getCoveredText());
+//                }
 
                 //remove stanford one if duplicated
                 if (shareSubjVerbPairs.containsKey(headSpan)) {

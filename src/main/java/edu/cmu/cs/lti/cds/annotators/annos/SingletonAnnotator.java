@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.cmu.cs.lti.cds.annotators;
+package edu.cmu.cs.lti.cds.annotators.annos;
 
 import edu.cmu.cs.lti.script.type.Entity;
 import edu.cmu.cs.lti.script.type.EntityMention;

@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.cds.annotators;
+package edu.cmu.cs.lti.cds.annotators.annos;
 
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.*;

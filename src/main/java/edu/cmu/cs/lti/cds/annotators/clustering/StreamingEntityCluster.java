@@ -1,13 +1,13 @@
 /**
  *
  */
-package edu.cmu.cs.lti.cds.annotators;
+package edu.cmu.cs.lti.cds.annotators.clustering;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.cds.clustering.EntityClusterManager;
 import edu.cmu.cs.lti.cds.model.FeatureTable;
+import edu.cmu.cs.lti.cds.runners.StreamingEntityClusteringRunner;
 import edu.cmu.cs.lti.cds.solr.SolrIndexReader;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
@@ -57,8 +57,12 @@ public class StreamingEntityCluster extends AbstractLoggingAnnotator {
                     "/Users/zhengzhongliu/tools/solr-4.7.0/example/solr/collection1/data/index");
 
             File clusterOut = new File("data/03_entity_clusters");
+
+            File clusterIndexing = new File("data/03_cluster_index");
+
+            FileUtils.ensureDirectory(clusterIndexing);
             FileUtils.ensureDirectory(clusterOut);
-            manager = new EntityClusterManager(clusterOut);
+            manager = new EntityClusterManager(clusterOut, clusterIndexing, logger);
         } catch (IOException e) {
             throw new ResourceInitializationException(e);
         }
@@ -67,19 +71,21 @@ public class StreamingEntityCluster extends AbstractLoggingAnnotator {
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         logger.info(progressInfo(aJCas));
-        String articleName = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
-        System.out.println("Processing " + UimaConvenience.getShortDocumentNameWithOffset(aJCas)
-                + " _ " + articleName);
+
+        String articleName = UimaConvenience.getShortDocumentNameWithOffset(aJCas);
+
+        String datedArticleName = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
+
 
         int numExistingClusters = manager.numOfCluster();
 
-        System.out.println("Number of clusters " + numExistingClusters);
+//        System.out.println("Number of clusters " + numExistingClusters);
 
-        String[] articleNamefields = articleName.split("_");
+        String[] datedNameFields = datedArticleName.split("_");
         String dateStr = "";
         Date date = null;
-        if (articleNamefields.length == 3) {
-            dateStr = articleNamefields[2].substring(0, 8);
+        if (datedNameFields.length == 3) {
+            dateStr = datedNameFields[2].substring(0, 8);
             try {
                 date = TimeUtils.dateFormat.parse(dateStr);
             } catch (ParseException e) {
@@ -87,18 +93,33 @@ public class StreamingEntityCluster extends AbstractLoggingAnnotator {
             }
         }
 
-        Table<EntityMention, EventMention, String> argumentTable = HashBasedTable.create();
+//        logger.info("Article date " + date);
 
+        boolean dateChanged = false;
 
-        for (EventMentionArgumentLink argument : JCasUtil.select(aJCas, EventMentionArgumentLink.class)) {
-            argumentTable.put(argument.getArgument(), argument.getEventMention(), argument.getArgumentRole());
+        if (StreamingEntityClusteringRunner.date != null) {
+            if (!StreamingEntityClusteringRunner.date.equals(date)) {
+                dateChanged = true;
+            }
         }
 
+        StreamingEntityClusteringRunner.date = date;
+
+        if (dateChanged) {
+            manager.flushClusters(date);
+        }
+
+
+        Table<EntityMention, EventMention, String> argumentTable = HashBasedTable.create();
+
+//        for (EventMentionArgumentLink argument : JCasUtil.select(aJCas, EventMentionArgumentLink.class)) {
+//            argumentTable.put(argument.getArgument(), argument.getEventMention(), argument.getArgumentRole());
+//        }
 
         for (Entity entity : JCasUtil.select(aJCas, Entity.class)) {
             TObjectIntHashMap<String> mentionTypeCount = new TObjectIntHashMap<String>();
 
-            ArrayListMultimap<String, EventMention> relatedEventMentions = ArrayListMultimap.create();
+//            ArrayListMultimap<String, EventMention> relatedEventMentions = ArrayListMultimap.create();
 
             for (int i = 0; i < entity.getEntityMentions().size(); i++) {
                 EntityMention mention = entity.getEntityMentions(i);
@@ -106,11 +127,11 @@ public class StreamingEntityCluster extends AbstractLoggingAnnotator {
                     mentionTypeCount.adjustOrPutValue(mention.getEntityType(), 1, 1);
                 }
 
-                if (argumentTable.containsRow(mention)){
-                    for ( Entry<EventMention,String> headEventMention: argumentTable.row(mention).entrySet()) {
-                        relatedEventMentions.put(headEventMention.getValue(), headEventMention.getKey());
-                    }
-                }
+//                if (argumentTable.containsRow(mention)) {
+//                    for (Entry<EventMention, String> headEventMention : argumentTable.row(mention).entrySet()) {
+//                        relatedEventMentions.put(headEventMention.getValue(), headEventMention.getKey());
+//                    }
+//                }
             }
 
             String majorityType = "UNKONWN";
@@ -127,8 +148,8 @@ public class StreamingEntityCluster extends AbstractLoggingAnnotator {
             if (majorityType.equals(EntityClusterManager.entityType.ORGANIZATION.name())
                     // || majorityType.equals(EntityClusterManager.entityType.LOCATION.name())
                     || majorityType.equals(EntityClusterManager.entityType.PERSON.name())) {
-                System.out.println("Streaming in new entity : " + EntityClusterManager.getRepresentativeStr(entity)
-                        + " entity id: " + entity.getId());
+//                System.out.println("Streaming in new entity : " + EntityClusterManager.getRepresentativeStr(entity)
+//                        + " entity id: " + entity.getId());
 
                 TIntObjectHashMap<FeatureTable> candidateClusterFeatures = manager
                         .getCandidateClusterFeatures(majorityType, entity, numExistingClusters);
@@ -143,13 +164,13 @@ public class StreamingEntityCluster extends AbstractLoggingAnnotator {
                 }
 
                 if (bestClusterId == -1) {
-                    manager.createNewCluster(date, features, majorityType, entity, relatedEventMentions,  articleName);
+                    manager.createNewCluster(date, features, majorityType, entity, articleName);
                 } else {
-                    manager.addToExistingCluster(bestClusterId, date, features, majorityType, entity,
-                            relatedEventMentions, articleName);
+                    manager.addToExistingCluster(bestClusterId, date, features, majorityType, entity, articleName);
                 }
             }
         }
+
     }
 
     /**
@@ -165,7 +186,7 @@ public class StreamingEntityCluster extends AbstractLoggingAnnotator {
                 maxSim = sim;
                 bestClusterId = clusterId;
             }
-            // System.out.println("Similarity with " + clusterId + " is " + sim);
+//            System.out.println("Similarity with " + clusterId + " is " + sim);
         }
 
         if (maxSim > cluster_threshold) {
@@ -239,7 +260,7 @@ public class StreamingEntityCluster extends AbstractLoggingAnnotator {
     }
 
     private void fillMentionSurfaceFeature(FeatureTable features, JCas aJCas, Entity entity) {
-        String headMentionStr = manager.getRepresentativeStr(entity);
+        String headMentionStr = EntityClusterManager.getRepresentativeStr(entity);
 
         TObjectIntHashMap<String> skipBigramCounts = new TObjectIntHashMap<String>();
         // System.out.println("head mention " + headMentionStr);
@@ -328,7 +349,11 @@ public class StreamingEntityCluster extends AbstractLoggingAnnotator {
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        manager.finish();
+        try {
+            manager.finish();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

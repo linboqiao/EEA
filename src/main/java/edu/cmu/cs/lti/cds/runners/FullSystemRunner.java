@@ -1,8 +1,8 @@
 package edu.cmu.cs.lti.cds.runners;
 
-import edu.cmu.cs.lti.cds.annotators.DiscourseParserAnnotator;
-import edu.cmu.cs.lti.cds.annotators.EventMentionTupleExtractor;
-import edu.cmu.cs.lti.cds.annotators.SingletonAnnotator;
+import edu.cmu.cs.lti.cds.annotators.annos.DiscourseParserAnnotator;
+import edu.cmu.cs.lti.cds.annotators.annos.EventMentionTupleExtractor;
+import edu.cmu.cs.lti.cds.annotators.annos.SingletonAnnotator;
 import edu.cmu.cs.lti.collection_reader.AgigaCollectionReader;
 import edu.cmu.cs.lti.script.annotators.FanseAnnotator;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;

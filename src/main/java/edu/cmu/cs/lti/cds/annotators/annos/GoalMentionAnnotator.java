@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.cds.annotators;
+package edu.cmu.cs.lti.cds.annotators.annos;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.model.Span;

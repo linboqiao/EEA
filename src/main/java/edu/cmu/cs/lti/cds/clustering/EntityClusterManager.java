@@ -9,15 +9,18 @@ import edu.cmu.cs.lti.script.type.Entity;
 import edu.cmu.cs.lti.script.type.EntityMention;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Word;
-import edu.cmu.cs.lti.utils.StringUtils;
 import edu.cmu.cs.lti.utils.TimeUtils;
+import gnu.trove.list.TIntList;
+import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.hash.TIntObjectHashMap;
+import gnu.trove.procedure.TIntProcedure;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 public class EntityClusterManager {
     public enum entityType {
@@ -35,12 +38,25 @@ public class EntityClusterManager {
 
     private File dumpingFolder;
 
-    public EntityClusterManager(File dumpingFolder) {
+    private File clusterIndexFolder;
+
+    private Logger logger;
+
+
+    public EntityClusterManager(File dumpingFolder, File clusterIndexFolder, Logger logger) {
         if (dumpingFolder.isDirectory()) {
             this.dumpingFolder = dumpingFolder;
         } else {
             throw new IllegalArgumentException("Please provide a directory to store cluster information");
         }
+
+        if (clusterIndexFolder.isDirectory()) {
+            this.clusterIndexFolder = clusterIndexFolder;
+        } else {
+            throw new IllegalArgumentException("Please provide a directory to store cluster index");
+        }
+
+        this.logger = logger;
     }
 
     public int numOfCluster() {
@@ -85,20 +101,37 @@ public class EntityClusterManager {
         return featureTables.get(id);
     }
 
+    public void createNewCluster(Date date, FeatureTable features, String clusterType, Entity entity, String articleName) {
+        String entityId = getUniqueEntityId(articleName, entity);
+        EntityCluster cluster = new EntityCluster(entityId, entity, date, clusterType);
+        int clusterId = numOfCluster;
+        featureTables.put(clusterId, features);
+        for (String meaningfulWord : getEntityMentionWords(entity)) {
+            hashClusterByTypeAndWord(clusterType, meaningfulWord, clusterId);
+            cluster.addHashedWords(meaningfulWord);
+        }
+        clusters.put(clusterId, cluster);
+//        cluster.addNewEvents(relatedEventMentions);
+        numOfCluster++;
+//        System.out.println("Creating new cluster [" + getRepresentativeStr(entity) + "], # cluster is : "
+//                + clusters.size());
+    }
+
     public void createNewCluster(Date date, FeatureTable features, String clusterType, Entity entity, ArrayListMultimap<String, EventMention> relatedEventMentions,
                                  String articleName) {
         String entityId = getUniqueEntityId(articleName, entity);
         EntityCluster cluster = new EntityCluster(entityId, entity, date, clusterType);
         int clusterId = numOfCluster;
-        clusters.put(clusterId, cluster);
         featureTables.put(clusterId, features);
         for (String meaningfulWord : getEntityMentionWords(entity)) {
             hashClusterByTypeAndWord(clusterType, meaningfulWord, clusterId);
+            cluster.addHashedWords(meaningfulWord);
         }
-        cluster.addNewEvents(relatedEventMentions);
+        clusters.put(clusterId, cluster);
+//        cluster.addNewEvents(relatedEventMentions);
         numOfCluster++;
-        // System.out.println("Creating new cluster [" + headMentionStr + "], # cluster is : "
-        // + clusters.size());
+//        System.out.println("Creating new cluster [" + getRepresentativeStr(entity) + "], # cluster is : "
+//                + clusters.size());
     }
 
     private Set<String> getEntityMentionWords(Entity entity) {
@@ -114,6 +147,7 @@ public class EntityClusterManager {
     }
 
     private void hashClusterByTypeAndWord(String clusterType, String clusterHead, int clusterId) {
+//        System.out.println("Adding " + clusterHead + " " + clusterId);
         if (typeSpecifiedRepresentativeEntity2Cluster.contains(clusterType, clusterHead)) {
             typeSpecifiedRepresentativeEntity2Cluster.get(clusterType, clusterHead).add(clusterId);
         } else {
@@ -124,16 +158,29 @@ public class EntityClusterManager {
     }
 
     public void addToExistingCluster(int clusterId, Date date, FeatureTable newEntityFeature,
+                                     String clusterType, Entity entity, String articleName) {
+        String entityId = getUniqueEntityId(articleName, entity);
+        String mentionHead = getRepresentativeStr(entity);
+        EntityCluster cluster = getCluster(clusterId);
+        cluster.addNewEntity(entityId, date, mentionHead);
+//        cluster.addNewEvents(relatedEventMentions);
+        getClusterFeature(clusterId).mergeWith(newEntityFeature);
+        // ensure new cluster is added at the end
+        reinsertCluster(clusterId);
+//        System.out.println("Adding to existing cluster: [" + mentionHead + "], " + clusterId);
+    }
+
+    public void addToExistingCluster(int clusterId, Date date, FeatureTable newEntityFeature,
                                      String clusterType, Entity entity, ArrayListMultimap<String, EventMention> relatedEventMentions, String articleName) {
         String entityId = getUniqueEntityId(articleName, entity);
         String mentionHead = getRepresentativeStr(entity);
         EntityCluster cluster = getCluster(clusterId);
         cluster.addNewEntity(entityId, date, mentionHead);
-        cluster.addNewEvents(relatedEventMentions);
+//        cluster.addNewEvents(relatedEventMentions);
         getClusterFeature(clusterId).mergeWith(newEntityFeature);
         // ensure new cluster is added at the end
         reinsertCluster(clusterId);
-        // System.out.println("Adding to existing cluster: [" + mentionHead + "], " + clusterId);
+//        System.out.println("Adding to existing cluster: [" + mentionHead + "], " + clusterId);
     }
 
     public void reinsertCluster(int clusterId) {
@@ -143,53 +190,69 @@ public class EntityClusterManager {
     }
 
     public void flushClusters(Date date) {
-        Iterator<Entry<Integer, EntityCluster>> iter = clusters.entrySet().iterator();
-        while (iter.hasNext()) {
-            Entry<Integer, EntityCluster> nextEntry = iter.next();
+        //clusters are stored by order, so the first is the oldest
+        TIntList cidsToRemove = new TIntArrayList();
+        for (Entry<Integer, EntityCluster> nextEntry : clusters.entrySet()) {
             int cid = nextEntry.getKey();
             EntityCluster cluster = nextEntry.getValue();
             if (cluster.checkExpire(date)) {
-                dropCluster(cid);
+                cidsToRemove.add(cid);
             } else {
                 break;
             }
         }
+
+        cidsToRemove.forEach(new TIntProcedure() {
+            @Override
+            public boolean execute(int cid) {
+//                System.out.println("Removing " + cid);
+                dropCluster(cid);
+                return false;
+            }
+        });
     }
 
     public void dropCluster(int clusterId) {
-        System.out.println(clusterId + " is dropped");
+        logger.info("Dropping cluster #" + clusterId);
         EntityCluster cluster = clusters.get(clusterId);
-        dumpCluster(clusterId, cluster);
+        try {
+            dumpCluster(clusterId, cluster);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         String ct = cluster.getClusterType();
-        List<String> mhs = cluster.getMentionHeads();
+        List<String> hws = cluster.getHashedWords();
         clusters.remove(clusterId);
         featureTables.remove(clusterId);
 
-        for (String mh : mhs) {
-            Set<Integer> clustersHashed = typeSpecifiedRepresentativeEntity2Cluster.get(ct, mh);
+        for (String hw : hws) {
+//            System.out.println("Removing " + ct + " " + hw);
+            Set<Integer> clustersHashed = typeSpecifiedRepresentativeEntity2Cluster.get(ct, hw);
             clustersHashed.remove(clusterId);
         }
     }
 
-    public void dumpCluster(int clusterId, EntityCluster cluster) {
-        File outputFile = new File(dumpingFolder, clusterId+"_"+cluster.getMentionHeads().get(0) + ".cls");
+    public void dumpCluster(int clusterId, EntityCluster cluster) throws IOException {
+        String mentionRepresentative = cluster.getMentionHeads().get(0).replaceAll("\\W+", "_");
+        int pathLength = mentionRepresentative.length() > 20 ? 20 : mentionRepresentative.length();
+        String clusterInfoPath = clusterId + "_" + cluster.getMentionHeads().get(0).replaceAll("\\W+", "_").substring(0, pathLength) + ".cls";
+        File outputFile = new File(dumpingFolder, clusterInfoPath);
+
         List<String> lines = new ArrayList<String>();
 
-        String headStr = StringUtils.spaceJoiner.join(cluster.getMentionHeads());
-        String idStr = StringUtils.spaceJoiner.join(cluster.getEntityIds());
         String lifeSpan = TimeUtils.dateFormat.format(cluster.getFirstSeen()) + " "
                 + TimeUtils.dateFormat.format(cluster.getLastSeen());
 
         lines.add(lifeSpan);
-        lines.add(headStr);
-        lines.add(idStr);
 
-        for (String role : cluster.getEventMentions().keySet()){
-            List<String> eventMentions = cluster.getEventMentions().get(role);
-            lines.add("\t- "+ role+ " :\t");
-            for (String e : eventMentions){
-                lines.add(e);
-            }
+        int entityIndex = 0;
+        for (String globalEntityId : cluster.getEntityIds()) {
+            lines.add(globalEntityId + "\t" + cluster.getMentionHeads().get(entityIndex));
+            String articleId = globalEntityId.substring(0, globalEntityId.lastIndexOf("_"));
+            String localEntityId = globalEntityId.substring(globalEntityId.lastIndexOf("_") + 1);
+            String clusterIndexingPath = clusterIndexFolder.getAbsolutePath() + System.getProperty("file.separator") + articleId;
+            FileUtils.write(new File(clusterIndexingPath), localEntityId + "\t" + clusterInfoPath + "\n", true);
+            entityIndex++;
         }
 
         try {
@@ -199,7 +262,7 @@ public class EntityClusterManager {
         }
     }
 
-    public void finish() {
+    public void finish() throws IOException {
         for (Entry<Integer, EntityCluster> clusterEntry : clusters.entrySet()) {
             dumpCluster(clusterEntry.getKey(), clusterEntry.getValue());
         }

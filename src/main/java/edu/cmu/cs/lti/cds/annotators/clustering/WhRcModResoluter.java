@@ -1,6 +1,7 @@
-package edu.cmu.cs.lti.cds.annotators;
+package edu.cmu.cs.lti.cds.annotators.clustering;
 
 import com.google.common.collect.ArrayListMultimap;
+import edu.cmu.cs.lti.cds.annotators.annos.AbstractEntityMentionCreator;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Entity;
 import edu.cmu.cs.lti.script.type.EntityMention;
