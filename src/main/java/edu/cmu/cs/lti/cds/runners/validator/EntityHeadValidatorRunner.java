@@ -43,7 +43,7 @@ public class EntityHeadValidatorRunner {
         // Instantiate a collection reader to get XMI as input.
         // Note that you should change the following parameters for your setting.
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createGzippedXmiReader(parentInputDirPath, baseInputDirName, inputStepNumber, false);
+                CustomCollectionReaderFactory.createStepBasedGzippedXmiReader(parentInputDirPath, baseInputDirName, inputStepNumber, false);
 
         AnalysisEngineDescription validator = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EntityHeadValidator.class, typeSystemDescription);
