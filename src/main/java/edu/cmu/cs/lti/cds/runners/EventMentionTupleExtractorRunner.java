@@ -3,12 +3,10 @@
  */
 package edu.cmu.cs.lti.cds.runners;
 
-import edu.cmu.cs.lti.cds.annotators.annos.EventMentionTupleExtractor;
-import edu.cmu.cs.lti.cds.annotators.annos.GoalMentionAnnotator;
-import edu.cmu.cs.lti.cds.annotators.annos.SyntacticArgumentPropagateAnnotator;
-import edu.cmu.cs.lti.cds.annotators.annos.SyntacticDirectArgumentFixer;
+import edu.cmu.cs.lti.cds.annotators.annos.*;
 import edu.cmu.cs.lti.cds.annotators.clustering.WhRcModResoluter;
 import edu.cmu.cs.lti.cds.annotators.patches.HeadWordFixer;
+import edu.cmu.cs.lti.script.type.Entity;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -74,13 +72,21 @@ public class EventMentionTupleExtractorRunner {
 
         AnalysisEngineDescription goalMentionAnnotator = CustomAnalysisEngineFactory.createAnalysisEngine(GoalMentionAnnotator.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
+
+        String[] needIdTops = {Entity.class.getName()};
+
+        AnalysisEngineDescription idAssigRunner = CustomAnalysisEngineFactory.createAnalysisEngine(
+                IdAssigner.class, typeSystemDescription,
+                IdAssigner.PARAM_TOP_NAMES_TO_ASSIGN, needIdTops);
+
+
         // Instantiate a XMI writer to put XMI as output.
         // Note that you should change the following parameters for your setting.
         AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createGzippedXmiWriter(
                 paramParentOutputDir, paramBaseOutputDirName, stepnum, paramOutputFileSuffix);
 
         // Run the pipeline.
-        SimplePipeline.runPipeline(reader, fixer, whLinker, tupleExtractor, syntaticDirectArgumentExtractor, SyntacticArgumentPropagater, goalMentionAnnotator, writer);
+        SimplePipeline.runPipeline(reader, fixer, whLinker, tupleExtractor, syntaticDirectArgumentExtractor, SyntacticArgumentPropagater, goalMentionAnnotator, idAssigRunner, writer);
         System.out.println(className + " completed.");
     }
 }

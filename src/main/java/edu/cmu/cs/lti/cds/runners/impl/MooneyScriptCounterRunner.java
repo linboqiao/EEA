@@ -3,9 +3,7 @@
  */
 package edu.cmu.cs.lti.cds.runners.impl;
 
-import edu.cmu.cs.lti.cds.annotators.annos.IdAssigner;
 import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
-import edu.cmu.cs.lti.script.type.Entity;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -21,8 +19,8 @@ import java.io.IOException;
 /**
  * @author zhengzhongliu
  */
-public class MooneyScriptRunner {
-    private static String className = MooneyScriptRunner.class.getSimpleName();
+public class MooneyScriptCounterRunner {
+    private static String className = MooneyScriptCounterRunner.class.getSimpleName();
 
     /**
      * @param args
@@ -49,20 +47,13 @@ public class MooneyScriptRunner {
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, inputDir, false);
 
-
-        String[] needIdTops = {Entity.class.getName()};
-
-        AnalysisEngineDescription idAssigRunner = CustomAnalysisEngineFactory.createAnalysisEngine(
-                IdAssigner.class, typeSystemDescription,
-                IdAssigner.PARAM_TOP_NAMES_TO_ASSIGN, needIdTops);
-
-        AnalysisEngineDescription singletonCreator = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription kmScriptCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
                 KarlMooneyScriptCounter.class, typeSystemDescription,
                 KarlMooneyScriptCounter.PARAM_DB_DIR_PATH, "data/_db/",
                 KarlMooneyScriptCounter.PARAM_SKIP_BIGRAM_N, 2,
                 AbstractLoggingAnnotator.PARAM_KEEP_QUIET, false);
 
-        SimplePipeline.runPipeline(reader, idAssigRunner, singletonCreator);
+        SimplePipeline.runPipeline(reader, kmScriptCounter);
 
         System.out.println(className + " completed.");
     }

@@ -1,15 +1,18 @@
 package edu.cmu.cs.lti.cds.runners;
 
-import edu.cmu.cs.lti.cds.annotators.annos.DiscourseParserAnnotator;
 import edu.cmu.cs.lti.cds.annotators.annos.EventMentionTupleExtractor;
-import edu.cmu.cs.lti.cds.annotators.annos.SingletonAnnotator;
-import edu.cmu.cs.lti.collection_reader.AgigaCollectionReader;
-import edu.cmu.cs.lti.script.annotators.FanseAnnotator;
+import edu.cmu.cs.lti.cds.annotators.annos.GoalMentionAnnotator;
+import edu.cmu.cs.lti.cds.annotators.annos.SyntacticArgumentPropagateAnnotator;
+import edu.cmu.cs.lti.cds.annotators.annos.SyntacticDirectArgumentFixer;
+import edu.cmu.cs.lti.cds.annotators.clustering.WhRcModResoluter;
+import edu.cmu.cs.lti.cds.annotators.patches.HeadWordFixer;
+import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
-import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
@@ -30,20 +33,13 @@ public class FullSystemRunner {
 
         // Parameters for the writer
         String paramParentOutputDir = args[1]; // "data";
+        String paramBaseOutputDirName = args[2]; // "event_tuples"
         String paramOutputFileSuffix = null;
-
-        String paramFanseModelBaseDirectory = args[2];// "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/"
         // ////////////////////////////////////////////////////////////////
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
         int outputStepNum = 0;
-
-        boolean quiet = false;
-        // Quiet or not
-        if (args.length >=4) {
-            quiet = args[3].equals("quiet");
-        }
 
         System.out.println("Reading from " + paramInputDir);
 
@@ -53,44 +49,33 @@ public class FullSystemRunner {
 
         // Instantiate a collection reader to get XMI as input.
         // Note that you should change the following parameters for your setting.
-        CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
-                AgigaCollectionReader.class, typeSystemDescription,
-                AgigaCollectionReader.PARAM_INPUTDIR, paramInputDir);
+        CollectionReaderDescription reader =
+                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
 
-        AnalysisEngineDescription aWriter = CustomAnalysisEngineFactory.createXmiWriter(
-                paramParentOutputDir, "agiga", outputStepNum, paramOutputFileSuffix);
+        AnalysisEngineDescription fixer = CustomAnalysisEngineFactory.createAnalysisEngine(HeadWordFixer.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
-        outputStepNum++;
+        AnalysisEngineDescription whLinker = CustomAnalysisEngineFactory.createAnalysisEngine(WhRcModResoluter.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
-        AnalysisEngineDescription fanseParser = CustomAnalysisEngineFactory.createAnalysisEngine(
-                FanseAnnotator.class, typeSystemDescription, FanseAnnotator.PARAM_MODEL_BASE_DIR,
-                paramFanseModelBaseDirectory, FanseAnnotator.PARAM_KEEP_QUIET, quiet);
+        AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(EventMentionTupleExtractor.class, typeSystemDescription);
 
-        AnalysisEngineDescription fWriter = CustomAnalysisEngineFactory.createGzipWriter(
-                paramParentOutputDir, "parsed", outputStepNum, paramOutputFileSuffix, null);
+        AnalysisEngineDescription syntaticDirectArgumentExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(SyntacticDirectArgumentFixer.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
-        outputStepNum++;
+        AnalysisEngineDescription syntacticArgumentPropagater = CustomAnalysisEngineFactory.createAnalysisEngine(SyntacticArgumentPropagateAnnotator.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
-        AnalysisEngineDescription discourseParser = CustomAnalysisEngineFactory.createAnalysisEngine(
-                DiscourseParserAnnotator.class, typeSystemDescription, DiscourseParserAnnotator.PARAM_KEEP_QUIET, quiet);
+        AnalysisEngineDescription goalMentionAnnotator = CustomAnalysisEngineFactory.createAnalysisEngine(GoalMentionAnnotator.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
-        AnalysisEngineDescription dWriter = CustomAnalysisEngineFactory.createGzipWriter(
-                paramParentOutputDir, "discourse", outputStepNum, paramOutputFileSuffix, null);
+        AnalysisEngineDescription kmScriptCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
+                KarlMooneyScriptCounter.class, typeSystemDescription,
+                KarlMooneyScriptCounter.PARAM_DB_DIR_PATH, "data/_db/",
+                KarlMooneyScriptCounter.PARAM_SKIP_BIGRAM_N, 2,
+                AbstractLoggingAnnotator.PARAM_KEEP_QUIET, false);
 
-        outputStepNum++;
-
-        AnalysisEngineDescription singletonCreator = CustomAnalysisEngineFactory.createAnalysisEngine(
-                SingletonAnnotator.class, typeSystemDescription, SingletonAnnotator.PARAM_KEEP_QUIET, quiet);
-
-        AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(
-                EventMentionTupleExtractor.class, typeSystemDescription, EventMentionTupleExtractor.PARAM_KEEP_QUIET, quiet);
-
-        AnalysisEngineDescription tWriter = CustomAnalysisEngineFactory.createGzipWriter(
-                paramParentOutputDir, "event_tuples", outputStepNum, paramOutputFileSuffix, null);
+        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createGzipWriter(
+                paramParentOutputDir, paramBaseOutputDirName, outputStepNum, paramOutputFileSuffix, null);
 
 
         // Run the pipeline.
-        SimplePipeline.runPipeline(reader, aWriter, fanseParser, fWriter, discourseParser, dWriter, singletonCreator, tupleExtractor, tWriter);
+        SimplePipeline.runPipeline(reader, fixer, whLinker, tupleExtractor, syntaticDirectArgumentExtractor, syntacticArgumentPropagater, goalMentionAnnotator, kmScriptCounter, writer);
 
         System.out.println(className + " successfully completed.");
     }

@@ -1,14 +1,13 @@
 package edu.cmu.cs.lti.cds.annotators.script.karlmooney;
 
-import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
-import edu.cmu.cs.lti.ling.PropBankTagSet;
+import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.CollectionUtils;
+import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
@@ -19,12 +18,11 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.Fun;
-import org.mapdb.HTreeMap;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentNavigableMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,16 +36,23 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     public static final String PARAM_SKIP_BIGRAM_N = "skippedBigramN";
 
+    private ConcurrentNavigableMap<Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>>, Integer> cooccCounts;
 
-    private HTreeMap<Fun.Tuple2<MooneyEventRepre, MooneyEventRepre>, Integer> cooccCounts;
+    private ConcurrentNavigableMap<Fun.Tuple4<String, Integer, Integer, Integer>, Integer> occCounts;
 
     private int skippedBigramN;
 
     private DB db;
 
-    private LinkedHashMap<String, Integer> targetArguments;
+//    private LinkedHashMap<String, Integer> targetArguments;
 
-    public static final String defaultDBName = "coocc";
+    public static final String defaultDBName = "tuple_counts";
+
+    public static final String defaultCooccMapName = "subsituted_event_cooccurrences";
+
+    public static final String defaultOccMapName = "subsituted_event_occurrences";
+
+    private TokenAlignmentHelper align = new TokenAlignmentHelper();
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -56,91 +61,121 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
         skippedBigramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_BIGRAM_N);
 
-        targetArguments = new LinkedHashMap<>();
-        targetArguments.put(PropBankTagSet.ARG0, MooneyEventRepre.firstArg0Marker);
-        targetArguments.put(PropBankTagSet.ARG1, MooneyEventRepre.firstArg1Marker);
-        targetArguments.put(PropBankTagSet.ARG2, MooneyEventRepre.firstArg2Marker);
+        File dbParentPath = new File(dbPath);
 
-        db = DBMaker.newFileDB(new File(dbPath, defaultDBName)).closeOnJvmShutdown().make();
-        cooccCounts = db.getHashMap("subsituted_event_cooccurrences");
+        if (!dbParentPath.isDirectory()) {
+            dbParentPath.mkdirs();
+        }
+
+        db = DBMaker.newFileDB(new File(dbPath, defaultDBName)).transactionDisable().closeOnJvmShutdown().make();
+        cooccCounts = db.getTreeMap(defaultCooccMapName);
+        occCounts = db.getTreeMap(defaultOccMapName);
     }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         logger.info(progressInfo(aJCas));
 
+        align.loadWord2Stanford(aJCas);
+
         Collection<EventMention> allMentions = JCasUtil.select(aJCas, EventMention.class);
         List<Pair<EventMention, EventMention>> mentionBigrams = CollectionUtils.nSkippedBigrams(allMentions, skippedBigramN);
 
+        //TODO we probably also want to have a EOF indicator here
         for (Pair<EventMention, EventMention> bigram : mentionBigrams) {
-            Fun.Tuple2<MooneyEventRepre, MooneyEventRepre> subsitutedBigram = firstBasedSubstitution(aJCas, bigram.getLeft(), bigram.getRight());
+            Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedBigram =
+                    firstBasedSubstitution(bigram.getLeft(), bigram.getRight());
 
-            Integer oldCount = cooccCounts.get(subsitutedBigram);
-
-            if (oldCount == null) {
+            Integer oldCooccCount = cooccCounts.get(subsitutedBigram);
+            if (oldCooccCount == null) {
                 cooccCounts.put(subsitutedBigram, 1);
             } else {
-                cooccCounts.put(subsitutedBigram, oldCount + 1);
+                cooccCounts.put(subsitutedBigram, oldCooccCount + 1);
             }
-        }
 
+            Integer occCount = occCounts.get(subsitutedBigram.a);
+            if (occCount == null) {
+                occCounts.put(subsitutedBigram.a, 1);
+            } else {
+                occCounts.put(subsitutedBigram.a, occCount + 1);
+            }
+
+        }
     }
 
-    private Fun.Tuple2<MooneyEventRepre, MooneyEventRepre> firstBasedSubstitution(JCas aJCas, EventMention evm1, EventMention evm2) {
+    private Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>>
+    firstBasedSubstitution(EventMention evm1, EventMention evm2) {
         TIntIntHashMap evm1Args = new TIntIntHashMap();
 
         TIntIntHashMap evm1Slots = new TIntIntHashMap();
 
         for (EventMentionArgumentLink aLink : UimaConvenience.convertFSListToList(evm1.getArguments(), EventMentionArgumentLink.class)) {
             String argumentRole = aLink.getArgumentRole();
-            if (targetArguments.containsKey(argumentRole)) {
-                int slotId = targetArguments.get(argumentRole);
-                evm1Args.put(entityIdToInteger(aLink.getArgument().getReferingEntity().getId()), slotId);
-                //substitution for the first event is always self
-                evm1Slots.put(slotId, slotId);
+            if (KmTargetConstants.targetArguments.containsKey(argumentRole)) {
+                int slotId = KmTargetConstants.targetArguments.get(argumentRole);
+                evm1Args.put(Utils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId()), slotId);
+                //initialize with other
+                evm1Slots.put(slotId, KmTargetConstants.otherMarker);
             }
         }
-
-        MooneyEventRepre evmRepre1 = new MooneyEventRepre(getFanseLemma(aJCas, evm1.getHeadWord()),
-                evm1Slots.containsKey(MooneyEventRepre.firstArg0Marker) ? evm1Slots.get(MooneyEventRepre.firstArg0Marker) : MooneyEventRepre.nullArgMarker,
-                evm1Slots.containsKey(MooneyEventRepre.firstArg1Marker) ? evm1Slots.get(MooneyEventRepre.firstArg1Marker) : MooneyEventRepre.nullArgMarker,
-                evm1Slots.containsKey(MooneyEventRepre.firstArg2Marker) ? evm1Slots.get(MooneyEventRepre.firstArg2Marker) : MooneyEventRepre.nullArgMarker
-        );
 
         TIntIntHashMap evm2Slots = new TIntIntHashMap();
         for (EventMentionArgumentLink aLink : UimaConvenience.convertFSListToList(evm2.getArguments(), EventMentionArgumentLink.class)) {
             String argumentRole = aLink.getArgumentRole();
 
-            if (targetArguments.containsKey(argumentRole)) {
-                int entityId = entityIdToInteger(aLink.getArgument().getReferingEntity().getId());
+            if (KmTargetConstants.targetArguments.containsKey(argumentRole)) {
+                int entityId = Utils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId());
+                int slotId = KmTargetConstants.targetArguments.get(argumentRole);
+
+
                 //substitution for the second event is based on the first event mention
-                int substituteId = evm1Args.containsKey(entityId) ? evm1Args.get(entityId) : MooneyEventRepre.otherMarker;
-                int slotId = targetArguments.get(argumentRole);
+                int substituteId;
+                if (evm1Args.containsKey(entityId)) {
+                    substituteId = evm1Args.get(entityId);
+                    //substitution for the first event is always the same as the slot id if present
+                    evm1Slots.put(substituteId, substituteId);
+                } else {
+                    substituteId = KmTargetConstants.otherMarker;
+                }
+
                 evm2Slots.put(slotId, substituteId);
             }
         }
+//
+//        MooneyEventRepre evmRepre1 = new MooneyEventRepre(align.getLowercaseWordLemma(evm1.getHeadWord()),
+//                evm1Slots.containsKey(KmTargetConstants.firstArg0Marker) ? evm1Slots.get(KmTargetConstants.firstArg0Marker) : KmTargetConstants.nullArgMarker,
+//                evm1Slots.containsKey(KmTargetConstants.firstArg1Marker) ? evm1Slots.get(KmTargetConstants.firstArg1Marker) : KmTargetConstants.nullArgMarker,
+//                evm1Slots.containsKey(KmTargetConstants.firstArg2Marker) ? evm1Slots.get(KmTargetConstants.firstArg2Marker) : KmTargetConstants.nullArgMarker
+//        );
+//
+//
+//        MooneyEventRepre evmRepre2 = new MooneyEventRepre(align.getLowercaseWordLemma(evm2.getHeadWord()),
+//                evm2Slots.containsKey(KmTargetConstants.firstArg0Marker) ? evm2Slots.get(KmTargetConstants.firstArg0Marker) : KmTargetConstants.nullArgMarker,
+//                evm2Slots.containsKey(KmTargetConstants.firstArg1Marker) ? evm2Slots.get(KmTargetConstants.firstArg1Marker) : KmTargetConstants.nullArgMarker,
+//                evm2Slots.containsKey(KmTargetConstants.firstArg2Marker) ? evm2Slots.get(KmTargetConstants.firstArg2Marker) : KmTargetConstants.nullArgMarker
+//        );
 
-        MooneyEventRepre evmRepre2 = new MooneyEventRepre(getFanseLemma(aJCas, evm2.getHeadWord()),
-                evm2Slots.containsKey(MooneyEventRepre.firstArg0Marker) ? evm2Slots.get(MooneyEventRepre.firstArg0Marker) : MooneyEventRepre.nullArgMarker,
-                evm2Slots.containsKey(MooneyEventRepre.firstArg1Marker) ? evm2Slots.get(MooneyEventRepre.firstArg1Marker) : MooneyEventRepre.nullArgMarker,
-                evm2Slots.containsKey(MooneyEventRepre.firstArg2Marker) ? evm2Slots.get(MooneyEventRepre.firstArg2Marker) : MooneyEventRepre.nullArgMarker
+
+        Fun.Tuple4<String, Integer, Integer, Integer> eventTuple1 = new Fun.Tuple4<>(align.getLowercaseWordLemma(evm1.getHeadWord()),
+                evm1Slots.containsKey(KmTargetConstants.firstArg0Marker) ? evm1Slots.get(KmTargetConstants.firstArg0Marker) : KmTargetConstants.nullArgMarker,
+                evm1Slots.containsKey(KmTargetConstants.firstArg1Marker) ? evm1Slots.get(KmTargetConstants.firstArg1Marker) : KmTargetConstants.nullArgMarker,
+                evm1Slots.containsKey(KmTargetConstants.firstArg2Marker) ? evm1Slots.get(KmTargetConstants.firstArg2Marker) : KmTargetConstants.nullArgMarker
         );
 
-        return new Fun.Tuple2<>(evmRepre1, evmRepre2);
+        Fun.Tuple4<String, Integer, Integer, Integer> eventTuple2 = new Fun.Tuple4<>(align.getLowercaseWordLemma(evm2.getHeadWord()),
+                evm2Slots.containsKey(KmTargetConstants.firstArg0Marker) ? evm2Slots.get(KmTargetConstants.firstArg0Marker) : KmTargetConstants.nullArgMarker,
+                evm2Slots.containsKey(KmTargetConstants.firstArg1Marker) ? evm2Slots.get(KmTargetConstants.firstArg1Marker) : KmTargetConstants.nullArgMarker,
+                evm2Slots.containsKey(KmTargetConstants.firstArg2Marker) ? evm2Slots.get(KmTargetConstants.firstArg2Marker) : KmTargetConstants.nullArgMarker
+        );
+
+        return new Fun.Tuple2<>(eventTuple1, eventTuple2);
     }
 
-    private String getFanseLemma(JCas aJCas, Word token) {
-        StanfordCorenlpToken sToken = UimaConvenience.selectCoveredFirst(aJCas, token, StanfordCorenlpToken.class);
-        if (sToken != null) {
-            return sToken.getLemma();
-        } else {
-            return token.getCoveredText();
-        }
+    @Override
+    public void collectionProcessComplete() throws AnalysisEngineProcessException {
+        db.commit();
+        db.compact();
+        db.close();
     }
-
-    private int entityIdToInteger(String eid) {
-        return Integer.parseInt(eid);
-    }
-
 
 }

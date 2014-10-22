@@ -13,4 +13,8 @@ public class Utils {
     public static Span toSpan(ComponentAnnotation anno) {
         return new Span(anno.getBegin(), anno.getEnd());
     }
+
+    public static int entityIdToInteger(String eid) {
+        return Integer.parseInt(eid);
+    }
 }

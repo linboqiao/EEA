@@ -1,9 +1,9 @@
 /**
  *
  */
-package edu.cmu.cs.lti.cds.runners.writers;
+package edu.cmu.cs.lti.cds.runners.writers.eval;
 
-import edu.cmu.cs.lti.cds.annotators.writers.DocumentLevelEventWriter;
+import edu.cmu.cs.lti.cds.annotators.writers.eval.KmStyleAllEventMentionClozeTaskGenerator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
@@ -18,13 +18,13 @@ import java.io.IOException;
 /**
  * @author zhengzhongliu
  */
-public class EventSurfacePrinter {
-    private static String className = EventSurfacePrinter.class.getSimpleName();
+public class KmStyleClozeWriter {
+    private static String className = KmStyleClozeWriter.class.getSimpleName();
 
     /**
      * @param args
-     * @throws IOException
-     * @throws UIMAException
+     * @throws java.io.IOException
+     * @throws org.apache.uima.UIMAException
      */
     public static void main(String[] args) throws UIMAException, IOException {
         System.out.println(className + " started...");
@@ -33,13 +33,13 @@ public class EventSurfacePrinter {
         // Note that you should change the parameters below for your configuration.
         // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
-        String paramInputDir = "data/01_event_tuples";
+        String paramInputDir = "data/02_event_tuples";
+        int stepNum = 3;
 
         // Parameters for the writer
         String paramParentOutputDir = "data";
-        String paramBaseOutputDirName = "event_surfaces";
-        String paramOutputFileSuffix = "tsv";
-        int stepNum = 2;
+        String paramBaseOutputDirName = "cloze_files";
+        String paramOutputFileSuffix = ".txt";
         // ////////////////////////////////////////////////////////////////
 
         String paramTypeSystemDescriptor = "TypeSystem";
@@ -53,13 +53,12 @@ public class EventSurfacePrinter {
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
 
-
         AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
-                DocumentLevelEventWriter.class, typeSystemDescription,
-                DocumentLevelEventWriter.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
-                DocumentLevelEventWriter.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-                DocumentLevelEventWriter.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                DocumentLevelEventWriter.PARAM_STEP_NUMBER, stepNum);
+                KmStyleAllEventMentionClozeTaskGenerator.class, typeSystemDescription,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_STEP_NUMBER, stepNum);
 
         SimplePipeline.runPipeline(reader, writer);
 
