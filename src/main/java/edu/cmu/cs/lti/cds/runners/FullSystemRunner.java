@@ -46,9 +46,12 @@ public class FullSystemRunner {
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
         // Instantiate a collection reader to get XMI as input.
-        // Note that you should change the following parameters for your setting.
+//        CollectionReaderDescription reader =
+//                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
+
+        //use a unsorted fast reader
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
+                CustomCollectionReaderFactory.createGzippedXmiReader(typeSystemDescription, paramInputDir, false);
 
         AnalysisEngineDescription fixer = CustomAnalysisEngineFactory.createAnalysisEngine(HeadWordFixer.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
