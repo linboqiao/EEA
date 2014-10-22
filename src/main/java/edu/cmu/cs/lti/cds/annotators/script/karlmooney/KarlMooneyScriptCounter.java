@@ -106,10 +106,10 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
         //defrag from time to time
         //debug compact
-        db.compact();
         counter++;
-        if (counter % 10000 == 0) {
-            logger.info("Compacting after " + counter);
+        if (counter % 1000 == 0) {
+            logger.info("Commit and compacting after " + counter);
+            db.commit();
             db.compact();
         }
     }
