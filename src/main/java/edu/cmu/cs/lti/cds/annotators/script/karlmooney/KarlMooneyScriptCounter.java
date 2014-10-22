@@ -44,6 +44,8 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     private DB db;
 
+    private int counter = 0;
+
 //    private LinkedHashMap<String, Integer> targetArguments;
 
     public static final String defaultDBName = "tuple_counts";
@@ -100,6 +102,14 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
                 occCounts.put(subsitutedBigram.a, occCount + 1);
             }
 
+        }
+
+
+        //defrag from time to time
+        counter++;
+        if (counter % 10000 == 0) {
+            logger.info("Compacting after " +counter);
+            db.compact();
         }
     }
 
