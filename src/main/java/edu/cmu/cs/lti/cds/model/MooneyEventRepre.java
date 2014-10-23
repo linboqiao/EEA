@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.cds.model;
 
+import gnu.trove.set.TIntSet;
 import org.mapdb.Fun;
 
 /**
@@ -9,11 +10,16 @@ import org.mapdb.Fun;
  * Time: 5:02 PM
  */
 public class MooneyEventRepre {
-    final String predicate;
-    final int arg0;
-    final int arg1;
-    final int arg2;
-    final boolean toPredict;
+    String predicate;
+    int arg0;
+    int arg1;
+    int arg2;
+    //to be predict, consider missing
+    boolean toPredict;
+
+    public MooneyEventRepre() {
+
+    }
 
     public MooneyEventRepre(String p, int a0, int a1, int a2) {
         super();
@@ -31,6 +37,38 @@ public class MooneyEventRepre {
         this.arg1 = a1;
         this.arg2 = a2;
         this.toPredict = true;
+    }
+
+    public int[] getAllArguments() {
+        return new int[]{arg0, arg1, arg2};
+    }
+
+    //TODO make this elegant
+    public void setArgument(int slotId, int value) {
+        if (slotId == 0) {
+            arg0 = value;
+        } else if (slotId == 1) {
+            arg1 = value;
+        } else if (slotId == 2) {
+            arg2 = value;
+        }
+    }
+
+
+    public void setPredicate(String predicate) {
+        this.predicate = predicate;
+    }
+
+    public void setArg0(int arg0) {
+        this.arg0 = arg0;
+    }
+
+    public void setArg1(int arg1) {
+        this.arg1 = arg1;
+    }
+
+    public void setArg2(int arg2) {
+        this.arg2 = arg2;
     }
 
     public int getArg2() {
@@ -66,6 +104,27 @@ public class MooneyEventRepre {
     @Override
     public String toString() {
         return String.format("%s(%d,%d,%d)", predicate, arg0, arg1, arg2);
+    }
+
+    public String toEmptyPredicateString() {
+        return String.format("%s(%d,%d,%d)", KmTargetConstants.clozeBlankIndicator, arg0, arg1, arg2);
+    }
+
+    public String toStringWithEmptyIndicator(TIntSet mask) {
+        return String.format("%s%s(%d,%d,%d)",
+                KmTargetConstants.clozeBlankIndicator,
+                predicate,
+                maskedSlot(mask, arg0, KmTargetConstants.firstArg0Marker),
+                maskedSlot(mask, arg1, KmTargetConstants.firstArg1Marker),
+                maskedSlot(mask, arg2, KmTargetConstants.firstArg2Marker)
+        );
+    }
+
+    private int maskedSlot(TIntSet mask, int value, int slot) {
+        if (value == KmTargetConstants.nullArgMarker) {
+            return value;
+        }
+        return mask.contains(slot) ? value : KmTargetConstants.otherMarker;
     }
 
     public static MooneyEventRepre fromString(String s) {

@@ -114,6 +114,11 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         }
     }
 
+    private void store() {
+
+    }
+
+
     private Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>>
     firstBasedSubstitution(EventMention evm1, EventMention evm2) {
         TIntIntHashMap evm1Args = new TIntIntHashMap();
@@ -138,12 +143,12 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
                 int entityId = Utils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId());
                 int slotId = KmTargetConstants.targetArguments.get(argumentRole);
 
-
                 //substitution for the second event is based on the first event mention
                 int substituteId;
                 if (evm1Args.containsKey(entityId)) {
                     substituteId = evm1Args.get(entityId);
-                    //substitution for the first event is always the same as the slot id if present
+                    //we apply the mask to the former slot here
+                    //former event based, so event slot id is the same as subsituted id
                     evm1Slots.put(substituteId, substituteId);
                 } else {
                     substituteId = KmTargetConstants.otherMarker;
