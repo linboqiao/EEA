@@ -9,6 +9,8 @@ import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.map.hash.TIntIntHashMap;
+import gnu.trove.set.TIntSet;
+import gnu.trove.set.hash.TIntHashSet;
 import org.apache.uima.UimaContext;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -34,8 +36,6 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
-
-
     }
 
     @Override
@@ -70,48 +70,45 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
         TIntIntHashMap heldOutSlots = allSlots.get(heldOutIndex);
 
+        TIntSet heldOutSlotMask = new TIntHashSet();
+
         for (int heldoutSlotId : heldOutSlots.keys()) {
             int entityId = heldOutSlots.get(heldoutSlotId);
             rewriteMap.put(entityId, heldoutSlotId);
         }
 
-//        MooneyEventRepre[] chain = new MooneyEventRepre[allEvms.size()];
+        MooneyEventRepre[] chain = new MooneyEventRepre[allEvms.size()];
         for (int i = 0; i < allEvms.size(); i++) {
             EventMention evm = allEvms.get(i);
             TIntIntHashMap slots = allSlots.get(i);
 
             String predicate = align.getLowercaseWordLemma(evm.getHeadWord());
 
-            MooneyEventRepre evmRepre;
+            chain[i] = new MooneyEventRepre(
+                    predicate,
+                    rewrite(slots, KmTargetConstants.firstArg0Marker, rewriteMap, heldOutSlotMask),
+                    rewrite(slots, KmTargetConstants.firstArg1Marker, rewriteMap, heldOutSlotMask),
+                    rewrite(slots, KmTargetConstants.firstArg2Marker, rewriteMap, heldOutSlotMask));
+        }
+
+        for (int i = 0; i < chain.length; i++) {
+            MooneyEventRepre evmRepre = chain[i];
             if (i == heldOutIndex) {
-                //empty repre
-                evmRepre = new MooneyEventRepre(
-                        rewrite(slots, KmTargetConstants.firstArg0Marker, rewriteMap),
-                        rewrite(slots, KmTargetConstants.firstArg1Marker, rewriteMap),
-                        rewrite(slots, KmTargetConstants.firstArg2Marker, rewriteMap)
-                );
-                sb.append(KmTargetConstants.clozeBlankIndicator).append(evmRepre.toString()).append("\t").append(predicate).append("\n");
+                sb.append(evmRepre.toStringWithEmptyIndicator(heldOutSlotMask)).append("\n");
             } else {
-                evmRepre = new MooneyEventRepre(
-                        predicate,
-                        rewrite(slots, KmTargetConstants.firstArg0Marker, rewriteMap),
-                        rewrite(slots, KmTargetConstants.firstArg1Marker, rewriteMap),
-                        rewrite(slots, KmTargetConstants.firstArg2Marker, rewriteMap)
-                );
                 sb.append(evmRepre.toString()).append("\n");
             }
-
-//            chain[i] = evmRepre;
         }
 
         return sb.toString();
     }
 
-    private int rewrite(TIntIntHashMap slot2Id, int marker, TIntIntHashMap rewriteMap) {
+    private int rewrite(TIntIntHashMap slot2Id, int marker, TIntIntHashMap rewriteMap, TIntSet heldOutSlotAppearMarker) {
         if (slot2Id.containsKey(marker)) {
             int eid = slot2Id.get(marker);
 
             if (rewriteMap.containsKey(eid)) {
+                heldOutSlotAppearMarker.add(marker);
                 return rewriteMap.get(eid);
             } else {
                 return KmTargetConstants.otherMarker;
