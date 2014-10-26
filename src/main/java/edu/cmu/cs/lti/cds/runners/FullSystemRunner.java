@@ -44,7 +44,7 @@ public class FullSystemRunner {
         String paramOutputFileSuffix = null;
         // ////////////////////////////////////////////////////////////////
 
-        readBlackList(new File("blackListFile"));
+        readBlackList(new File(blackListFile));
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
