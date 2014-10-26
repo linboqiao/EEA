@@ -19,12 +19,13 @@ import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 public class FullSystemRunner {
     static String className = FullSystemRunner.class.getName();
 
-    public static Set<String> blackListedArticleId;
+    public static Set<String> blackListedArticleId = new HashSet<>();
 
     public static void main(String[] args) throws UIMAException, IOException {
         System.out.println(className + " started...");
@@ -48,7 +49,7 @@ public class FullSystemRunner {
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
-        int outputStepNum = 3;
+        int outputStepNum = 2;
 
         System.out.println("Reading from " + paramInputDir);
 
