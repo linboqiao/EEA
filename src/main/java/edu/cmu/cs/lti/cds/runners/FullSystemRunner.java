@@ -97,7 +97,7 @@ public class FullSystemRunner {
                 EventMentionHeadCounter.class, typeSystemDescription,
                 EventMentionHeadCounter.PARAM_DB_DIR_PATH, "data/_db/",
                 EventMentionHeadCounter.PARAM_DB_NAME, "headcounts_" + dbNamePrefix,
-                AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true
+                AbstractLoggingAnnotator.PARAM_KEEP_QUIET, false
         );
 
         AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createGzipWriter(
