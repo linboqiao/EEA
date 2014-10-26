@@ -1,5 +1,7 @@
 package edu.cmu.cs.lti.cds.annotators.script;
 
+import edu.cmu.cs.lti.cds.runners.FullSystemRunner;
+import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
@@ -59,6 +61,15 @@ public class EventMentionHeadCounter extends AbstractLoggingAnnotator {
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         logger.info(progressInfo(aJCas));
+
+        Article article = JCasUtil.selectSingle(aJCas, Article.class);
+
+        if (FullSystemRunner.blackListedArticleId.contains(article.getArticleName())) {
+            //ignore this blacklisted file;
+            logger.info("Ignored black listed file");
+            return;
+        }
+
         TObjectIntMap<String> tfCounts = new TObjectIntHashMap<>();
 
         align.loadWord2Stanford(aJCas);

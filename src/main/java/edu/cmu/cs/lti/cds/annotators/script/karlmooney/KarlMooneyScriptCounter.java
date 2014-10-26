@@ -1,6 +1,8 @@
 package edu.cmu.cs.lti.cds.annotators.script.karlmooney;
 
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
+import edu.cmu.cs.lti.cds.runners.FullSystemRunner;
+import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
@@ -22,7 +24,7 @@ import org.mapdb.Fun;
 import java.io.File;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -36,17 +38,20 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     public static final String PARAM_SKIP_BIGRAM_N = "skippedBigramN";
 
-    private ConcurrentNavigableMap<Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>>, Integer> cooccCounts;
+    public static final String PARAM_COOCC_NAME = "cooccName";
 
-    private ConcurrentNavigableMap<Fun.Tuple4<String, Integer, Integer, Integer>, Integer> occCounts;
+    public static final String PARAM_OCC_NAME = "occName";
+
+    //TODO consider sentence or event distance
+    private Map<Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>>, Integer> cooccCounts;
+
+    private Map<Fun.Tuple4<String, Integer, Integer, Integer>, Integer> occCounts;
 
     private int skippedBigramN;
 
     private DB db;
 
     private int counter = 0;
-
-//    private LinkedHashMap<String, Integer> targetArguments;
 
     public static final String defaultDBName = "tuple_counts";
 
@@ -63,6 +68,12 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
         skippedBigramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_BIGRAM_N);
 
+        String occName = (String) aContext.getConfigParameterValue(PARAM_OCC_NAME);
+        String cooccName = (String) aContext.getConfigParameterValue(PARAM_COOCC_NAME);
+
+        occName = occName == null ? defaultOccMapName : occName;
+        cooccName = cooccName == null ? defaultCooccMapName : cooccName;
+
         File dbParentPath = new File(dbPath);
 
         if (!dbParentPath.isDirectory()) {
@@ -70,13 +81,21 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         }
 
         db = DBMaker.newFileDB(new File(dbPath, defaultDBName)).transactionDisable().closeOnJvmShutdown().make();
-        cooccCounts = db.getTreeMap(defaultCooccMapName);
-        occCounts = db.getTreeMap(defaultOccMapName);
+        cooccCounts = db.getHashMap(cooccName);
+        occCounts = db.getHashMap(occName);
     }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         logger.info(progressInfo(aJCas));
+
+        Article article = JCasUtil.selectSingle(aJCas, Article.class);
+
+        if (FullSystemRunner.blackListedArticleId.contains(article.getArticleName())) {
+            //ignore this blacklisted file;
+            logger.info("Ignored black listed file");
+            return;
+        }
 
         align.loadWord2Stanford(aJCas);
 
@@ -101,13 +120,12 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             } else {
                 occCounts.put(subsitutedBigram.a, occCount + 1);
             }
-
         }
 
         //defrag from time to time
         //debug compact
         counter++;
-        if (counter % 1000 == 0) {
+        if (counter % 2000 == 0) {
             logger.info("Commit and compacting after " + counter);
             db.commit();
             db.compact();
@@ -152,20 +170,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
                 evm2Slots.put(slotId, substituteId);
             }
         }
-//
-//        MooneyEventRepre evmRepre1 = new MooneyEventRepre(align.getLowercaseWordLemma(evm1.getHeadWord()),
-//                evm1Slots.containsKey(KmTargetConstants.firstArg0Marker) ? evm1Slots.get(KmTargetConstants.firstArg0Marker) : KmTargetConstants.nullArgMarker,
-//                evm1Slots.containsKey(KmTargetConstants.firstArg1Marker) ? evm1Slots.get(KmTargetConstants.firstArg1Marker) : KmTargetConstants.nullArgMarker,
-//                evm1Slots.containsKey(KmTargetConstants.firstArg2Marker) ? evm1Slots.get(KmTargetConstants.firstArg2Marker) : KmTargetConstants.nullArgMarker
-//        );
-//
-//
-//        MooneyEventRepre evmRepre2 = new MooneyEventRepre(align.getLowercaseWordLemma(evm2.getHeadWord()),
-//                evm2Slots.containsKey(KmTargetConstants.firstArg0Marker) ? evm2Slots.get(KmTargetConstants.firstArg0Marker) : KmTargetConstants.nullArgMarker,
-//                evm2Slots.containsKey(KmTargetConstants.firstArg1Marker) ? evm2Slots.get(KmTargetConstants.firstArg1Marker) : KmTargetConstants.nullArgMarker,
-//                evm2Slots.containsKey(KmTargetConstants.firstArg2Marker) ? evm2Slots.get(KmTargetConstants.firstArg2Marker) : KmTargetConstants.nullArgMarker
-//        );
-
 
         Fun.Tuple4<String, Integer, Integer, Integer> eventTuple1 = new Fun.Tuple4<>(align.getLowercaseWordLemma(evm1.getHeadWord()),
                 evm1Slots.containsKey(KmTargetConstants.firstArg0Marker) ? evm1Slots.get(KmTargetConstants.firstArg0Marker) : KmTargetConstants.nullArgMarker,
