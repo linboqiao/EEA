@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.cds.runners.impl;
+package edu.cmu.cs.lti.cds.runners.script.mooney;
 
 import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
@@ -261,7 +261,7 @@ public class KarlMooneyPredictor {
                 KarlMooneyScriptCounter.defaultCooccMapName);
 
 //        ConcurrentNavigableMap<Tuple2<Tuple4<String, Integer, Integer, Integer>, Tuple4<String, Integer, Integer, Integer>>, Integer> cooccCounts
-//                = kmPredictor.readCooccCounts(KarlMooneyScriptCounter.defaultCooccMapName);
+//                = kmPredictor.readCooccCounts(KarlMooneyScriptCounter.defaultMentionHeadMapName);
 //        ConcurrentNavigableMap<Tuple4<String, Integer, Integer, Integer>, Integer> occCounts = kmPredictor.readOccCounts(KarlMooneyScriptCounter.defaultOccMapName);
 
         System.out.println("Coocc size " + kmPredictor.cooccCounts.size());
@@ -294,7 +294,7 @@ public class KarlMooneyPredictor {
 //        System.out.println("Starting the predictor ...");
 //        KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor("data/_db",
 //                KarlMooneyScriptCounter.defaultDBName, KarlMooneyScriptCounter.defaultOccMapName,
-//                KarlMooneyScriptCounter.defaultCooccMapName);
+//                KarlMooneyScriptCounter.defaultMentionHeadMapName);
 //
 //        System.out.println("Predictor started, testing ...");
 //        double recallAt10 = kmPredictor.test("data/03_cloze_files", 10, 0.01);

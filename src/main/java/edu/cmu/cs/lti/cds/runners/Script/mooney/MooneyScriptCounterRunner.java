@@ -1,7 +1,7 @@
 /**
  *
  */
-package edu.cmu.cs.lti.cds.runners.impl;
+package edu.cmu.cs.lti.cds.runners.script.mooney;
 
 import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;

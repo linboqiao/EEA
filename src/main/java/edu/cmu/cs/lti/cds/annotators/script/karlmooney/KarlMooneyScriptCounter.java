@@ -114,11 +114,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         }
     }
 
-    private void store() {
-
-    }
-
-
     private Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>>
     firstBasedSubstitution(EventMention evm1, EventMention evm2) {
         TIntIntHashMap evm1Args = new TIntIntHashMap();
