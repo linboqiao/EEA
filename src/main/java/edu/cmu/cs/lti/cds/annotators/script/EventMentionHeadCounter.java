@@ -15,9 +15,9 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.Fun;
-import org.mapdb.HTreeMap;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,7 +29,7 @@ public class EventMentionHeadCounter extends AbstractLoggingAnnotator {
 
     public static final String PARAM_DB_NAME = "dbName";
 
-    private HTreeMap<String, Fun.Tuple2<Integer, Integer>> eventHeadTfDf;
+    private Map<String, Fun.Tuple2<Integer, Integer>> eventHeadTfDf;
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
 
@@ -42,7 +42,6 @@ public class EventMentionHeadCounter extends AbstractLoggingAnnotator {
     private DB db;
 
     private TokenAlignmentHelper align = new TokenAlignmentHelper();
-
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -58,7 +57,6 @@ public class EventMentionHeadCounter extends AbstractLoggingAnnotator {
         if (!dbParentPath.isDirectory()) {
             dbParentPath.mkdirs();
         }
-
 
         db = DBMaker.newFileDB(new File(dbPath, dbFileName)).transactionDisable().closeOnJvmShutdown().make();
         eventHeadTfDf = db.getHashMap(defaultMentionHeadMapName);

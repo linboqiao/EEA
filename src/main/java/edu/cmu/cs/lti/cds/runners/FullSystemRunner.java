@@ -104,7 +104,7 @@ public class FullSystemRunner {
                 paramParentOutputDir, paramBaseOutputDirName, outputStepNum, paramOutputFileSuffix, null);
 
         // Run the pipeline.
-        SimplePipeline.runPipeline(reader, fixer, whLinker, tupleExtractor, syntaticDirectArgumentExtractor, syntacticArgumentPropagater, goalMentionAnnotator, idAssignRunner, kmScriptCounter, headCounter, writer);
+        SimplePipeline.runPipeline(reader, fixer, whLinker, tupleExtractor, syntaticDirectArgumentExtractor, syntacticArgumentPropagater, goalMentionAnnotator, idAssignRunner, headCounter, writer);
 
         System.out.println(className + " successfully completed.");
     }
