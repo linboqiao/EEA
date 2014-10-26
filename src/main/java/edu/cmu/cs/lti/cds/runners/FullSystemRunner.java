@@ -83,7 +83,8 @@ public class FullSystemRunner {
 
         AnalysisEngineDescription idAssignRunner = CustomAnalysisEngineFactory.createAnalysisEngine(
                 IdAssigner.class, typeSystemDescription,
-                IdAssigner.PARAM_TOP_NAMES_TO_ASSIGN, needIdTops);
+                IdAssigner.PARAM_TOP_NAMES_TO_ASSIGN, needIdTops,
+                AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
         AnalysisEngineDescription kmScriptCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
                 KarlMooneyScriptCounter.class, typeSystemDescription,
@@ -95,7 +96,8 @@ public class FullSystemRunner {
         AnalysisEngineDescription headCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionHeadCounter.class, typeSystemDescription,
                 EventMentionHeadCounter.PARAM_DB_DIR_PATH, "data/_db/",
-                EventMentionHeadCounter.PARAM_DB_NAME, "headcounts_" + dbNamePrefix
+                EventMentionHeadCounter.PARAM_DB_NAME, "headcounts_" + dbNamePrefix,
+                AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true
         );
 
         AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createGzipWriter(
