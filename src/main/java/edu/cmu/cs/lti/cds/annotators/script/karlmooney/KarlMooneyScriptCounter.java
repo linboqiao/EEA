@@ -34,6 +34,8 @@ import java.util.Map;
  */
 public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
+    public static final String PARAM_DB_NAME = "dbName";
+
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
 
     public static final String PARAM_SKIP_BIGRAM_N = "skippedBigramN";
@@ -65,6 +67,9 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
 
+        String dbName = (String) aContext.getConfigParameterValue(PARAM_DB_NAME);
+        String dbFileName = dbName == null ? defaultDBName : dbName;
+
         String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
         skippedBigramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_BIGRAM_N);
 
@@ -80,7 +85,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             dbParentPath.mkdirs();
         }
 
-        db = DBMaker.newFileDB(new File(dbPath, defaultDBName)).transactionDisable().closeOnJvmShutdown().make();
+        db = DBMaker.newFileDB(new File(dbPath, dbFileName)).transactionDisable().closeOnJvmShutdown().make();
         cooccCounts = db.getHashMap(cooccName);
         occCounts = db.getHashMap(occName);
     }

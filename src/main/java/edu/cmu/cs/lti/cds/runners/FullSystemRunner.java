@@ -42,6 +42,8 @@ public class FullSystemRunner {
 
         String blackListFile = args[3]; //"duplicate.count.tail"
 
+        String dbNamePrefix = args[4]; //"00-02"
+
         String paramOutputFileSuffix = null;
         // ////////////////////////////////////////////////////////////////
 
@@ -87,11 +89,13 @@ public class FullSystemRunner {
                 KarlMooneyScriptCounter.class, typeSystemDescription,
                 KarlMooneyScriptCounter.PARAM_DB_DIR_PATH, "data/_db/",
                 KarlMooneyScriptCounter.PARAM_SKIP_BIGRAM_N, 2,
+                KarlMooneyScriptCounter.PARAM_DB_NAME, "occs_" + dbNamePrefix,
                 AbstractLoggingAnnotator.PARAM_KEEP_QUIET, false);
 
         AnalysisEngineDescription headCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionHeadCounter.class, typeSystemDescription,
-                EventMentionHeadCounter.PARAM_DB_DIR_PATH, "data/_db/"
+                EventMentionHeadCounter.PARAM_DB_DIR_PATH, "data/_db/",
+                EventMentionHeadCounter.PARAM_DB_NAME, "headcounts_" + dbNamePrefix
         );
 
         AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createGzipWriter(
