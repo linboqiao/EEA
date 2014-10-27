@@ -31,17 +31,21 @@ public class HeadStatisticPrinter {
         headTfDfMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
     }
 
-    private void writeTfStatistics(File statDir) throws IOException {
-        ArrayListMultimap<Integer, String> stats = getTfStatistics();
+    private void writeStats(File statDir) throws IOException {
+        writeStats(statDir, getTfStatistics(), "tf");
+        writeStats(statDir, getDfStatistics(), "df");
+    }
+
+    private void writeStats(File statDir, ArrayListMultimap<Integer, String> stats, String prefix) throws IOException {
         for (int i = 0; i < 5; i++) {
-            FileUtils.writeStringToFile(new File(statDir, "head_stats_94-96_infrequent_words"), i + "\t" + Joiner.on(" ").join(stats.get(i)) + "\n", true);
+            FileUtils.writeStringToFile(new File(statDir, prefix + "_head_stats_94-96_infrequent_words"), i + "\t" + Joiner.on(" ").join(stats.get(i)) + "\n", true);
         }
 
         for (Map.Entry<Integer, Collection<String>> stat : stats.asMap().entrySet()) {
-            FileUtils.writeStringToFile(new File(statDir, "head_stats_94-96_dist"), stat.getKey() + "\t" + stat.getValue().size() + "\n", true);
+            FileUtils.writeStringToFile(new File(statDir, prefix + "_head_stats_94-96_dist"), stat.getKey() + "\t" + stat.getValue().size() + "\n", true);
 
             if (stat.getValue().size() == 1) {
-                FileUtils.writeStringToFile(new File(statDir, "head_stats_94-96_long_tail"), Joiner.on(" ").join(stat.getValue())+"\t"+ stat.getKey() + "\n", true);
+                FileUtils.writeStringToFile(new File(statDir, prefix + "_head_stats_94-96_long_tail"), Joiner.on(" ").join(stat.getValue()) + "\t" + stat.getKey() + "\n", true);
             }
         }
     }
@@ -54,11 +58,13 @@ public class HeadStatisticPrinter {
         return countBin2HeadCounts;
     }
 
-    private void printTfStatistics() {
+    private ArrayListMultimap<Integer, String> getDfStatistics() {
         ArrayListMultimap<Integer, String> countBin2HeadCounts = ArrayListMultimap.create();
         for (Map.Entry<String, Fun.Tuple2<Integer, Integer>> headCounts : headTfDfMap.entrySet()) {
             countBin2HeadCounts.put(headCounts.getValue().b, headCounts.getKey());
         }
+
+        return countBin2HeadCounts;
     }
 
     public static void main(String[] args) throws IOException {
@@ -66,7 +72,7 @@ public class HeadStatisticPrinter {
         printer.loadCounts("data/_db", "headcounts_94-96");
         System.out.println("Total number of terms: " + printer.headTfDfMap.size());
 
-        printer.writeTfStatistics(new File("stats"));
+        printer.writeStats(new File("stats"));
 
     }
 }
