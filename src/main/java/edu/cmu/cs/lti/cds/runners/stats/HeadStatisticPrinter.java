@@ -62,7 +62,7 @@ public class HeadStatisticPrinter {
         printer.loadCounts("data/_db", "headcounts_94-96");
         System.out.println("Total number of terms: " + printer.headTfDfMap.size());
 
-        printer.writeTfStatistics(new File("data/head_small_94-96"),new File("data/head_stats_94-96"));
+        printer.writeTfStatistics(new File("stats/head_small_94-96"),new File("stats/head_stats_94-96"));
 
     }
 }
