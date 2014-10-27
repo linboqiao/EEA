@@ -34,11 +34,11 @@ public class HeadStatisticPrinter {
     private void writeTfStatistics(File statDir) throws IOException {
         ArrayListMultimap<Integer, String> stats = getTfStatistics();
         for (int i = 0; i < 5; i++) {
-            FileUtils.writeStringToFile(new File(statDir, "head_small_94-96"), i + "\t" + Joiner.on(" ").join(stats.get(i)) + "\n", true);
+            FileUtils.writeStringToFile(new File(statDir, "head_stats_94-96_infrequent_words"), i + "\t" + Joiner.on(" ").join(stats.get(i)) + "\n", true);
         }
 
         for (Map.Entry<Integer, Collection<String>> stat : stats.asMap().entrySet()) {
-            FileUtils.writeStringToFile(new File(statDir, "head_stats_94-96"), stat.getKey() + "\t" + stat.getValue().size() + "\n", true);
+            FileUtils.writeStringToFile(new File(statDir, "head_stats_94-96_dist"), stat.getKey() + "\t" + stat.getValue().size() + "\n", true);
 
             if (stat.getValue().size() == 1) {
                 FileUtils.writeStringToFile(new File(statDir, "head_stats_94-96_long_tail"), Joiner.on(" ").join(stat.getValue()) + "\n", true);
