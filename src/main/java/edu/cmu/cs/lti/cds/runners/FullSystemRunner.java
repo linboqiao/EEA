@@ -109,7 +109,7 @@ public class FullSystemRunner {
         System.out.println(className + " successfully completed.");
     }
 
-    private static void readBlackList(File blackListFile) throws IOException {
+    public static void readBlackList(File blackListFile) throws IOException {
         for (String line : FileUtils.readLines(blackListFile)) {
             blackListedArticleId.add(line.trim());
         }

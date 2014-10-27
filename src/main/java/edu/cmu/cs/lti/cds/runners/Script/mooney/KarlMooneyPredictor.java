@@ -1,8 +1,10 @@
 package edu.cmu.cs.lti.cds.runners.script.mooney;
 
+import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
+import edu.cmu.cs.lti.cds.utils.DbManager;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import gnu.trove.set.TIntSet;
@@ -12,13 +14,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
+import org.mapdb.Fun;
 import org.mapdb.Fun.Tuple2;
 import org.mapdb.Fun.Tuple4;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ConcurrentNavigableMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,22 +39,20 @@ public class KarlMooneyPredictor {
 
     private Map<Tuple2<Tuple4<String, Integer, Integer, Integer>, Tuple4<String, Integer, Integer, Integer>>, Integer> cooccCounts;
     private Map<Tuple4<String, Integer, Integer, Integer>, Integer> occCounts;
+    private Map<String, Fun.Tuple2<Integer, Integer>> headCountMap;
 
-    public KarlMooneyPredictor(String dbPath, String dbName, String occName, String cooccName) {
+    public KarlMooneyPredictor(String dbPath, String dbName, String occName, String cooccName, String countingDbFileName) {
         DBMaker dbm = DBMaker.newFileDB(new File(dbPath, dbName)).readOnly();
         db = dbm.make();
         evalPointer = 0;
 
-        cooccCounts = readCooccCounts(cooccName);
-        occCounts = readOccCounts(occName);
-    }
+        cooccCounts = db.getTreeMap(cooccName);
+        occCounts = db.getTreeMap(occName);
 
-    private ConcurrentNavigableMap<Tuple2<Tuple4<String, Integer, Integer, Integer>, Tuple4<String, Integer, Integer, Integer>>, Integer> readCooccCounts(String mapName) {
-        return db.getTreeMap(mapName);
-    }
-
-    private ConcurrentNavigableMap<Tuple4<String, Integer, Integer, Integer>, Integer> readOccCounts(String mapName) {
-        return db.getTreeMap(mapName);
+        if (countingDbFileName != null) {
+            DB headCountDb = DbManager.getDB(dbPath, countingDbFileName);
+            headCountMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
+        }
     }
 
     private void loadEvalDir(String clozeDataDirPath) throws IOException {
@@ -99,6 +99,7 @@ public class KarlMooneyPredictor {
 
         return Pair.of(repres, blankIndex);
     }
+
 
     private Pair<MooneyEventRepre, MooneyEventRepre> formerBasedTransform(MooneyEventRepre former, MooneyEventRepre latter) {
         TIntIntMap transformMap = new TIntIntHashMap();
@@ -256,49 +257,47 @@ public class KarlMooneyPredictor {
     }
 
     public static void main(String[] args) throws IOException {
+        System.out.println("Starting the predictor ...");
+
         KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor("data/_db",
-                KarlMooneyScriptCounter.defaultDBName, KarlMooneyScriptCounter.defaultOccMapName,
-                KarlMooneyScriptCounter.defaultCooccMapName);
+                "occs_94-96", KarlMooneyScriptCounter.defaultOccMapName,
+                KarlMooneyScriptCounter.defaultCooccMapName, "headcounts_94-96");
 
 //        ConcurrentNavigableMap<Tuple2<Tuple4<String, Integer, Integer, Integer>, Tuple4<String, Integer, Integer, Integer>>, Integer> cooccCounts
 //                = kmPredictor.readCooccCounts(KarlMooneyScriptCounter.defaultMentionHeadMapName);
 //        ConcurrentNavigableMap<Tuple4<String, Integer, Integer, Integer>, Integer> occCounts = kmPredictor.readOccCounts(KarlMooneyScriptCounter.defaultOccMapName);
 
-        System.out.println("Coocc size " + kmPredictor.cooccCounts.size());
-        System.out.println("Occ size " + kmPredictor.occCounts.size());
-
-
-        int count = 10;
-        for (Map.Entry<Tuple2<Tuple4<String, Integer, Integer, Integer>, Tuple4<String, Integer, Integer, Integer>>, Integer> entry : kmPredictor.cooccCounts.entrySet()) {
-            System.out.println(entry.getKey().a);
-            System.out.println(entry.getKey().b);
-            System.out.println(entry.getValue());
-
-            count--;
-            if (count <= 0) {
-                break;
-            }
-        }
-
-        count = 10;
-        for (Map.Entry<Tuple4<String, Integer, Integer, Integer>, Integer> entry : kmPredictor.occCounts.entrySet()) {
-            System.out.println(entry.getKey());
-            System.out.println(entry.getValue());
-
-            count--;
-            if (count <= 0) {
-                break;
-            }
-        }
-
-//        System.out.println("Starting the predictor ...");
-//        KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor("data/_db",
-//                KarlMooneyScriptCounter.defaultDBName, KarlMooneyScriptCounter.defaultOccMapName,
-//                KarlMooneyScriptCounter.defaultMentionHeadMapName);
+//        System.out.println("Coocc size " + kmPredictor.cooccCounts.size());
+//        System.out.println("Occ size " + kmPredictor.occCounts.size());
 //
-//        System.out.println("Predictor started, testing ...");
+//
+//        int count = 10;
+//        for (Map.Entry<Tuple2<Tuple4<String, Integer, Integer, Integer>, Tuple4<String, Integer, Integer, Integer>>, Integer> entry : kmPredictor.cooccCounts.entrySet()) {
+//            System.out.println(entry.getKey().a);
+//            System.out.println(entry.getKey().b);
+//            System.out.println(entry.getValue());
+//
+//            count--;
+//            if (count <= 0) {
+//                break;
+//            }
+//        }
+//
+//        count = 10;
+//        for (Map.Entry<Tuple4<String, Integer, Integer, Integer>, Integer> entry : kmPredictor.occCounts.entrySet()) {
+//            System.out.println(entry.getKey());
+//            System.out.println(entry.getValue());
+//
+//            count--;
+//            if (count <= 0) {
+//                break;
+//            }
+//        }
+
+
+        System.out.println("Predictor started, testing ...");
+
 //        double recallAt10 = kmPredictor.test("data/03_cloze_files", 10, 0.01);
-//
 //        System.out.println("Recall at 10 " + recallAt10);
     }
 }

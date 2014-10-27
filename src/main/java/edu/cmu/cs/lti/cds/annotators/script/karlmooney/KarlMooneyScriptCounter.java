@@ -1,7 +1,9 @@
 package edu.cmu.cs.lti.cds.annotators.script.karlmooney;
 
+import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.runners.FullSystemRunner;
+import edu.cmu.cs.lti.cds.utils.DbManager;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
@@ -18,7 +20,6 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.mapdb.DB;
-import org.mapdb.DBMaker;
 import org.mapdb.Fun;
 
 import java.io.File;
@@ -44,14 +45,18 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     public static final String PARAM_OCC_NAME = "occName";
 
+    public static final String PARAM_HEAD_COUNT_DB_NAME = "headCountDbName";
+
     //TODO consider sentence or event distance
     private Map<Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>>, Integer> cooccCounts;
 
     private Map<Fun.Tuple4<String, Integer, Integer, Integer>, Integer> occCounts;
 
+    private Map<String, Fun.Tuple2<Integer, Integer>> headCountMap;
+
     private int skippedBigramN;
 
-    private DB db;
+    private DB tupleCountDb;
 
     private int counter = 0;
 
@@ -68,7 +73,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         super.initialize(aContext);
 
         String dbName = (String) aContext.getConfigParameterValue(PARAM_DB_NAME);
-        String dbFileName = dbName == null ? defaultDBName : dbName;
+        String tupleCountDbFileName = dbName == null ? defaultDBName : dbName;
 
         String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
         skippedBigramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_BIGRAM_N);
@@ -85,9 +90,16 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             dbParentPath.mkdirs();
         }
 
-        db = DBMaker.newFileDB(new File(dbPath, dbFileName)).transactionDisable().closeOnJvmShutdown().make();
-        cooccCounts = db.getHashMap(cooccName);
-        occCounts = db.getHashMap(occName);
+        tupleCountDb = DbManager.getDB(dbPath, tupleCountDbFileName, true);
+        cooccCounts = tupleCountDb.getHashMap(cooccName);
+        occCounts = tupleCountDb.getHashMap(occName);
+
+        String countingDbFileName = (String) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAME);
+
+        if (countingDbFileName != null) {
+            DB headCountDb = DbManager.getDB(dbPath, countingDbFileName);
+            headCountMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
+        }
     }
 
     @Override
@@ -132,8 +144,8 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         counter++;
         if (counter % 4000 == 0) {
             logger.info("Commit and compacting after " + counter);
-            db.commit();
-            db.compact();
+            tupleCountDb.commit();
+            tupleCountDb.compact();
         }
     }
 
@@ -193,9 +205,9 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        db.commit();
-        db.compact();
-        db.close();
+        tupleCountDb.commit();
+        tupleCountDb.compact();
+        tupleCountDb.close();
     }
 
 }
