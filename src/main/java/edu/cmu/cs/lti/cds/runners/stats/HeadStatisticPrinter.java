@@ -31,14 +31,14 @@ public class HeadStatisticPrinter {
         headTfDfMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
     }
 
-    private void writeTfStatistics(File outputFile) throws IOException {
+    private void writeTfStatistics(File strFile, File countFile) throws IOException {
         ArrayListMultimap<Integer, String> stats = getTfStatistics();
         for (int i = 0; i < 5; i++) {
-            System.out.println(stats.get(i));
+            FileUtils.writeStringToFile(strFile,i + "\t" + Joiner.on(" ").join(stats.get(i)), true);
         }
 
         for (Map.Entry<Integer, Collection<String>> stat : stats.asMap().entrySet()) {
-            FileUtils.writeStringToFile(outputFile, stat.getKey() + "\t" + Joiner.on(" ").join(stat.getValue()), true);
+            FileUtils.writeStringToFile(countFile, stat.getKey() + "\t" + stat.getValue().size()+ "\n", true);
         }
     }
 
@@ -62,7 +62,7 @@ public class HeadStatisticPrinter {
         printer.loadCounts("data/_db", "headcounts_94-96");
         System.out.println("Total number of terms: " + printer.headTfDfMap.size());
 
-        printer.writeTfStatistics(new File("data/head_stats_94-96"));
+        printer.writeTfStatistics(new File("data/head_small_94-96"),new File("data/head_stats_94-96"));
 
     }
 }
