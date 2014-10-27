@@ -34,7 +34,7 @@ public class HeadStatisticPrinter {
     private void writeTfStatistics(File strFile, File countFile) throws IOException {
         ArrayListMultimap<Integer, String> stats = getTfStatistics();
         for (int i = 0; i < 5; i++) {
-            FileUtils.writeStringToFile(strFile,i + "\t" + Joiner.on(" ").join(stats.get(i)), true);
+            FileUtils.writeStringToFile(strFile,i + "\t" + Joiner.on(" ").join(stats.get(i))+"\n", true);
         }
 
         for (Map.Entry<Integer, Collection<String>> stat : stats.asMap().entrySet()) {
