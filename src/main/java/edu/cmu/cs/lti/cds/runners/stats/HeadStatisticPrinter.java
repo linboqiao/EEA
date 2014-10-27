@@ -41,7 +41,7 @@ public class HeadStatisticPrinter {
             FileUtils.writeStringToFile(new File(statDir, "head_stats_94-96_dist"), stat.getKey() + "\t" + stat.getValue().size() + "\n", true);
 
             if (stat.getValue().size() == 1) {
-                FileUtils.writeStringToFile(new File(statDir, "head_stats_94-96_long_tail"), Joiner.on(" ").join(stat.getValue()) + "\n", true);
+                FileUtils.writeStringToFile(new File(statDir, "head_stats_94-96_long_tail"), Joiner.on(" ").join(stat.getValue())+"\t"+ stat.getKey() + "\n", true);
             }
         }
     }
