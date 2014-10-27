@@ -52,7 +52,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     private Map<Fun.Tuple4<String, Integer, Integer, Integer>, Integer> occCounts;
 
-    private Map<String, Fun.Tuple2<Integer, Integer>> headCountMap;
+    private Map<String, Fun.Tuple2<Integer, Integer>> headTfDfMap;
 
     private int skippedBigramN;
 
@@ -98,7 +98,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
         if (countingDbFileName != null) {
             DB headCountDb = DbManager.getDB(dbPath, countingDbFileName);
-            headCountMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
+            headTfDfMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
         }
     }
 
