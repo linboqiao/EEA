@@ -53,8 +53,7 @@ public class MooneyScriptCounterRunner {
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, inputDir, false);
-
+                CustomCollectionReaderFactory.createGzippedXmiReader(typeSystemDescription, inputDir, false);
 
         AnalysisEngineDescription kmScriptCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
                 KarlMooneyScriptCounter.class, typeSystemDescription,
@@ -62,7 +61,6 @@ public class MooneyScriptCounterRunner {
                 KarlMooneyScriptCounter.PARAM_SKIP_BIGRAM_N, 2,
                 KarlMooneyScriptCounter.PARAM_DB_NAME, "occs_" + dbNamePrefix,
                 AbstractLoggingAnnotator.PARAM_KEEP_QUIET, false);
-
 
         SimplePipeline.runPipeline(reader, kmScriptCounter);
 

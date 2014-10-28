@@ -12,7 +12,9 @@ import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.CollectionUtils;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
+import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -21,6 +23,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.mapdb.DB;
 import org.mapdb.Fun;
+import weka.core.SerializationHelper;
 
 import java.io.File;
 import java.util.Collection;
@@ -41,48 +44,47 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     public static final String PARAM_SKIP_BIGRAM_N = "skippedBigramN";
 
-    public static final String PARAM_COOCC_NAME = "cooccName";
-
-    public static final String PARAM_OCC_NAME = "occName";
-
     public static final String PARAM_HEAD_COUNT_DB_NAME = "headCountDbName";
 
     //TODO consider sentence or event distance
-    private Map<Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>>, Integer> cooccCounts;
+//    private Map<Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>>, Integer> cooccCounts;
 
-    private Map<Fun.Tuple4<String, Integer, Integer, Integer>, Integer> occCounts;
+    private TObjectIntMap<String> headIdMap = new TObjectIntHashMap<>();
+
+    private TObjectIntMap<int[]> cooccCounts = new TObjectIntHashMap<>();
+
+    private TObjectIntMap<int[]> occCounts = new TObjectIntHashMap<>();
 
     private Map<String, Fun.Tuple2<Integer, Integer>> headTfDfMap;
 
     private int skippedBigramN;
 
-    private DB tupleCountDb;
+//    private DB tupleCountDb;
 
     private int counter = 0;
 
     public static final String defaultDBName = "tuple_counts";
 
-    public static final String defaultCooccMapName = "subsituted_event_cooccurrences";
+    public static final String defaultCooccMapName = "substituted_event_cooccurrences";
 
-    public static final String defaultOccMapName = "subsituted_event_occurrences";
+    public static final String defaultOccMapName = "substituted_event_occurrences";
+
+    public static final String defaltHeadIdMapName = "head_id_map";
 
     private TokenAlignmentHelper align = new TokenAlignmentHelper();
+
+    private String tupleCountDbFileName;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
 
         String dbName = (String) aContext.getConfigParameterValue(PARAM_DB_NAME);
-        String tupleCountDbFileName = dbName == null ? defaultDBName : dbName;
+        tupleCountDbFileName = dbName == null ? defaultDBName : dbName;
 
         String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
         skippedBigramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_BIGRAM_N);
 
-        String occName = (String) aContext.getConfigParameterValue(PARAM_OCC_NAME);
-        String cooccName = (String) aContext.getConfigParameterValue(PARAM_COOCC_NAME);
-
-        occName = occName == null ? defaultOccMapName : occName;
-        cooccName = cooccName == null ? defaultCooccMapName : cooccName;
 
         File dbParentPath = new File(dbPath);
 
@@ -90,9 +92,9 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             dbParentPath.mkdirs();
         }
 
-        tupleCountDb = DbManager.getDB(dbPath, tupleCountDbFileName, true);
-        cooccCounts = tupleCountDb.getHashMap(cooccName);
-        occCounts = tupleCountDb.getHashMap(occName);
+//        tupleCountDb = DbManager.getDB(dbPath, tupleCountDbFileName, true);
+//        cooccCounts = tupleCountDb.getHashMap(cooccName);
+//        occCounts = tupleCountDb.getHashMap(occName);
 
         String countingDbFileName = (String) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAME);
 
@@ -124,30 +126,73 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedBigram =
                     firstBasedSubstitution(bigram.getLeft(), bigram.getRight());
 
-            Integer oldCooccCount = cooccCounts.get(subsitutedBigram);
-            if (oldCooccCount == null) {
-                cooccCounts.put(subsitutedBigram, 1);
-            } else {
-                cooccCounts.put(subsitutedBigram, oldCooccCount + 1);
-            }
+            cooccCounts.adjustOrPutValue(compactEvmPairSubstituiton(subsitutedBigram, headIdMap), 1, 1);
+            occCounts.adjustOrPutValue(compactEvmSubstituiton(subsitutedBigram.a, headIdMap), 1, 1);
 
-            Integer occCount = occCounts.get(subsitutedBigram.a);
-            if (occCount == null) {
-                occCounts.put(subsitutedBigram.a, 1);
-            } else {
-                occCounts.put(subsitutedBigram.a, occCount + 1);
-            }
+//            Integer oldCooccCount = cooccCounts.get(subsitutedBigram);
+//            if (oldCooccCount == null) {
+//                cooccCounts.put(subsitutedBigram, 1);
+//            } else {
+//                cooccCounts.put(subsitutedBigram, oldCooccCount + 1);
+//            }
+
+//            Integer occCount = occCounts.get(subsitutedBigram.a);
+//            if (occCount == null) {
+//                occCounts.put(subsitutedBigram.a, 1);
+//            } else {
+//                occCounts.put(subsitutedBigram.a, occCount + 1);
+//            }
         }
 
         //defrag from time to time
         //debug compact
         counter++;
         if (counter % 4000 == 0) {
-            logger.info("Commit and compacting after " + counter);
-            tupleCountDb.commit();
-            tupleCountDb.compact();
+//            logger.info("Commit and compacting after " + counter);
+//            tupleCountDb.commit();
+//            tupleCountDb.compact();
+            Utils.printMemInfo(logger);
         }
     }
+
+
+    private int[] compactEvmSubstituiton(Fun.Tuple4<String, Integer, Integer, Integer> evm, TObjectIntMap<String> headMap) {
+        int[] compactRep = new int[4];
+        compactRep[0] = getHeadId(headMap, evm.a);
+        compactRep[1] = evm.b;
+        compactRep[2] = evm.c;
+        compactRep[3] = evm.d;
+        return compactRep;
+    }
+
+    private int[] compactEvmPairSubstituiton(Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> evmPair,
+                                             TObjectIntMap<String> headMap) {
+        int[] compactRep = new int[8];
+        compactRep[0] = getHeadId(headMap, evmPair.a.a);
+        compactRep[1] = evmPair.a.b;
+        compactRep[2] = evmPair.a.c;
+        compactRep[3] = evmPair.a.d;
+
+        compactRep[4] = compactRep[0] = getHeadId(headMap, evmPair.b.a);
+        compactRep[5] = evmPair.b.b;
+        compactRep[6] = evmPair.b.c;
+        compactRep[7] = evmPair.b.d;
+
+        return compactRep;
+    }
+
+
+    private int getHeadId(TObjectIntMap<String> headMap, String head) {
+        int id;
+        if (headMap.containsKey(head)) {
+            id = headMap.get(head);
+        } else {
+            id = headMap.size();
+            headMap.put(head, id);
+        }
+        return id;
+    }
+
 
     private Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>>
     firstBasedSubstitution(EventMention evm1, EventMention evm2) {
@@ -205,9 +250,26 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        tupleCountDb.commit();
-        tupleCountDb.compact();
-        tupleCountDb.close();
+//        tupleCountDb.commit();
+//        tupleCountDb.compact();
+//        tupleCountDb.close();
+        try {
+            SerializationHelper.write(tupleCountDbFileName + "_" + defaultCooccMapName, cooccCounts);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            SerializationHelper.write(tupleCountDbFileName + "_" + defaultOccMapName, occCounts);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            SerializationHelper.write(tupleCountDbFileName + "_" + defaltHeadIdMapName, headIdMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
