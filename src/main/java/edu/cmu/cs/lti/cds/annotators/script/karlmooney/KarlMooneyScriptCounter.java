@@ -76,6 +76,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
     private TokenAlignmentHelper align = new TokenAlignmentHelper();
 
     private String tupleCountDbFileName;
+    private String dbPath;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -84,7 +85,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         String dbName = (String) aContext.getConfigParameterValue(PARAM_DB_NAME);
         tupleCountDbFileName = dbName == null ? defaultDBName : dbName;
 
-        String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
+        dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
         skippedBigramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_BIGRAM_N);
 
 
@@ -259,22 +260,21 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 //        tupleCountDb.compact();
 //        tupleCountDb.close();
         try {
-            SerializationHelper.write(tupleCountDbFileName + "_" + defaultCooccMapName, cooccCounts);
+            SerializationHelper.write(new File(dbPath, tupleCountDbFileName + "_" + defaultCooccMapName).getAbsolutePath(), cooccCounts);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         try {
-            SerializationHelper.write(tupleCountDbFileName + "_" + defaultOccMapName, occCounts);
+            SerializationHelper.write(new File(dbPath, tupleCountDbFileName + "_" + defaultOccMapName).getAbsolutePath(), occCounts);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         try {
-            SerializationHelper.write(tupleCountDbFileName + "_" + defaltHeadIdMapName, headIdMap);
+            SerializationHelper.write(new File(dbPath, tupleCountDbFileName + "_" + defaltHeadIdMapName).getAbsolutePath(), headIdMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }
