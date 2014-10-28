@@ -12,6 +12,8 @@ import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.CollectionUtils;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
+import gnu.trove.list.TIntList;
+import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
@@ -51,9 +53,9 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     private TObjectIntMap<String> headIdMap = new TObjectIntHashMap<>();
 
-    private TObjectIntMap<int[]> cooccCounts = new TObjectIntHashMap<>();
+    private TObjectIntMap<TIntList> cooccCounts = new TObjectIntHashMap<>();
 
-    private TObjectIntMap<int[]> occCounts = new TObjectIntHashMap<>();
+    private TObjectIntMap<TIntList> occCounts = new TObjectIntHashMap<>();
 
     private Map<String, Fun.Tuple2<Integer, Integer>> headTfDfMap;
 
@@ -153,32 +155,33 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 //            logger.info("Commit and compacting after " + counter);
 //            tupleCountDb.commit();
 //            tupleCountDb.compact();
-            Utils.printMemInfo(logger,"Memory info after loaded "+counter+" files");
+            Utils.printMemInfo(logger, "Memory info after loaded " + counter + " files");
         }
     }
 
 
-    private int[] compactEvmSubstituiton(Fun.Tuple4<String, Integer, Integer, Integer> evm, TObjectIntMap<String> headMap) {
-        int[] compactRep = new int[4];
-        compactRep[0] = getHeadId(headMap, evm.a);
-        compactRep[1] = evm.b;
-        compactRep[2] = evm.c;
-        compactRep[3] = evm.d;
+    private TIntLinkedList compactEvmSubstituiton(Fun.Tuple4<String, Integer, Integer, Integer> evm, TObjectIntMap<String> headMap) {
+        TIntLinkedList compactRep = new TIntLinkedList();
+        compactRep.add(getHeadId(headMap, evm.a));
+        compactRep.add(evm.b);
+        compactRep.add(evm.c);
+        compactRep.add(evm.d);
         return compactRep;
     }
 
-    private int[] compactEvmPairSubstituiton(Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> evmPair,
-                                             TObjectIntMap<String> headMap) {
-        int[] compactRep = new int[8];
-        compactRep[0] = getHeadId(headMap, evmPair.a.a);
-        compactRep[1] = evmPair.a.b;
-        compactRep[2] = evmPair.a.c;
-        compactRep[3] = evmPair.a.d;
+    private TIntLinkedList compactEvmPairSubstituiton(Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> evmPair,
+                                                      TObjectIntMap<String> headMap) {
+        TIntLinkedList compactRep = new TIntLinkedList();
 
-        compactRep[4] = compactRep[0] = getHeadId(headMap, evmPair.b.a);
-        compactRep[5] = evmPair.b.b;
-        compactRep[6] = evmPair.b.c;
-        compactRep[7] = evmPair.b.d;
+        compactRep.add(getHeadId(headMap, evmPair.a.a));
+        compactRep.add(evmPair.a.b);
+        compactRep.add(evmPair.a.c);
+        compactRep.add(evmPair.a.d);
+
+        compactRep.add(getHeadId(headMap, evmPair.b.a));
+        compactRep.add(evmPair.b.b);
+        compactRep.add(evmPair.b.c);
+        compactRep.add(evmPair.b.d);
 
         return compactRep;
     }
