@@ -102,6 +102,8 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             DB headCountDb = DbManager.getDB(dbPath, countingDbFileName);
             headTfDfMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
         }
+
+        Utils.printMemInfo(logger, "Initial memory information ");
     }
 
     @Override
@@ -151,7 +153,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 //            logger.info("Commit and compacting after " + counter);
 //            tupleCountDb.commit();
 //            tupleCountDb.compact();
-            Utils.printMemInfo(logger);
+            Utils.printMemInfo(logger,"Memory info after loaded "+counter+" files");
         }
     }
 
