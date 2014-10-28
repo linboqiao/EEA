@@ -131,6 +131,22 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedBigram =
                     firstBasedSubstitution(bigram.getLeft(), bigram.getRight());
 
+            Fun.Tuple2<Integer, Integer> eventMention1TfDf = headTfDfMap.get(align.getLowercaseWordLemma(bigram.getLeft().getHeadWord()));
+            Fun.Tuple2<Integer, Integer> eventMention2TfDf = headTfDfMap.get(align.getLowercaseWordLemma(bigram.getRight().getHeadWord()));
+
+            //ignoring the low frequent event heads, and let's see what happen
+            if (eventMention1TfDf == null || eventMention2TfDf == null) {
+                continue;
+            }
+
+            if (eventMention1TfDf.a / 10 == 0) {
+                continue;
+            }
+
+            if (eventMention2TfDf.a / 10 == 0) {
+                continue;
+            }
+
             cooccCounts.adjustOrPutValue(compactEvmPairSubstituiton(subsitutedBigram, headIdMap), 1, 1);
             occCounts.adjustOrPutValue(compactEvmSubstituiton(subsitutedBigram.a, headIdMap), 1, 1);
 

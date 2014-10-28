@@ -36,8 +36,6 @@ public class Utils {
         // after garbage collection and decrease as new objects are created.
         double heapFreeSize = Runtime.getRuntime().freeMemory() / (double) (1024 * 1024);
 
-        double totalMem = Runtime.getRuntime().totalMemory() / (double) (1024 * 1024);
-
-        logger.info(String.format("%s. Heap size: %.2f MB, Max Heap Size: %.2f MB, Free Heap Size: %.2f MB, Used Memory: %.2f MB", msg, heapSize, heapMaxSize, heapFreeSize, totalMem - heapFreeSize));
+        logger.info(String.format("%s. Heap size: %.2f MB, Max Heap Size: %.2f MB, Free Heap Size: %.2f MB, Used Memory: %.2f MB", msg, heapSize, heapMaxSize, heapFreeSize, heapSize - heapFreeSize));
     }
 }
