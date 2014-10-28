@@ -60,6 +60,7 @@ public class MooneyScriptCounterRunner {
                 KarlMooneyScriptCounter.PARAM_DB_DIR_PATH, "data/_db/",
                 KarlMooneyScriptCounter.PARAM_SKIP_BIGRAM_N, 2,
                 KarlMooneyScriptCounter.PARAM_DB_NAME, "occs_" + dbNamePrefix,
+                KarlMooneyScriptCounter.PARAM_HEAD_COUNT_DB_NAME, "headcounts_" + dbNamePrefix,
                 AbstractLoggingAnnotator.PARAM_KEEP_QUIET, false);
 
         SimplePipeline.runPipeline(reader, kmScriptCounter);
