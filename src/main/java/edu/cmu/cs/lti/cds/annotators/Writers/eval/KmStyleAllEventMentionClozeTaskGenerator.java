@@ -78,7 +78,7 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
             Fun.Tuple2<Integer, Integer> evmTfDf = headTfDfMap.get(align.getLowercaseWordLemma(mention.getHeadWord()));
 
             //filter by low tf df counts
-            if (Utils.tfDfFilter(evmTfDf.a, evmTfDf.b)) {
+            if (Utils.tfDfFilter(evmTfDf)) {
                 logger.info("Mention filtered because of low frequency: " + mention.getCoveredText());
                 continue;
             }
