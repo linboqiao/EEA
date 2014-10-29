@@ -296,8 +296,7 @@ public class KarlMooneyPredictor {
 
 
         System.out.println("Predictor started, testing ...");
-
-//        double recallAt10 = kmPredictor.test("data/03_cloze_files", 10, 0.01);
-//        System.out.println("Recall at 10 " + recallAt10);
+        double recallAt10 = kmPredictor.test("data/03_cloze_files", 10, 0.01);
+        System.out.println("Recall at 10 " + recallAt10);
     }
 }

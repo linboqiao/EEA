@@ -1,7 +1,11 @@
 package edu.cmu.cs.lti.cds.annotators.writers.eval;
 
+import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
+import edu.cmu.cs.lti.cds.runners.FullSystemRunner;
+import edu.cmu.cs.lti.cds.utils.DbManager;
+import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalsysisEngine;
@@ -15,9 +19,12 @@ import org.apache.uima.UimaContext;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.mapdb.DB;
+import org.mapdb.Fun;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -28,19 +35,40 @@ import java.util.Random;
  */
 public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomizedTextWriterAnalsysisEngine {
 
+    public static final String PARAM_HEAD_COUNT_DB_NAME = "headCountDbName";
+
+    public static final String PARAM_DB_DIR_PATH = "dbLocation";
+
     private TokenAlignmentHelper align = new TokenAlignmentHelper();
 
     private Random rand = new Random();
 
+    private Map<String, Fun.Tuple2<Integer, Integer>> headTfDfMap;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
+        String countingDbFileName = (String) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAME);
+
+        String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
+
+        DB headCountDb = DbManager.getDB(dbPath, countingDbFileName);
+        headTfDfMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
     }
 
     @Override
     public String getTextToPrint(JCas aJCas) {
         logger.info(progressInfo(aJCas));
+
+        Article article = JCasUtil.selectSingle(aJCas, Article.class);
+
+        if (FullSystemRunner.blackListedArticleId.contains(article.getArticleName())) {
+            //ignore this blacklisted file;
+            logger.info("Ignored black listed file");
+            return "BLACK_LISTED_FILE";
+        }
+
+
         align.loadWord2Stanford(aJCas);
         StringBuilder sb = new StringBuilder();
 
@@ -48,6 +76,14 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
         List<EventMention> allEvms = new ArrayList<>();
 
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
+            Fun.Tuple2<Integer, Integer> evmTfDf = headTfDfMap.get(align.getLowercaseWordLemma(mention.getHeadWord()));
+
+            //filter by low tf df counts
+            if (Utils.tfDfFilter(evmTfDf.a, evmTfDf.b)) {
+                logger.info("Mention filtered because of low frequency: " + mention.getCoveredText());
+                continue;
+            }
+
             TIntIntHashMap slots = new TIntIntHashMap();
 
             for (EventMentionArgumentLink aLink : UimaConvenience.convertFSListToList(mention.getArguments(), EventMentionArgumentLink.class)) {

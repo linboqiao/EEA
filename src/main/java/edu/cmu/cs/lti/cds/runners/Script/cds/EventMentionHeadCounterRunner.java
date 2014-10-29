@@ -36,7 +36,6 @@ public class EventMentionHeadCounterRunner {
         String inputDir = "data/02_event_tuples";
 
         // ////////////////////////////////////////////////////////////////
-
         String paramTypeSystemDescriptor = "TypeSystem";
 
         // Instantiate the analysis engine.
