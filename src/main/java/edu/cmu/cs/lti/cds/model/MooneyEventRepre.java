@@ -1,7 +1,14 @@
 package edu.cmu.cs.lti.cds.model;
 
+import gnu.trove.list.TIntList;
+import gnu.trove.list.linked.TIntLinkedList;
+import gnu.trove.map.TObjectIntMap;
 import gnu.trove.set.TIntSet;
 import org.mapdb.Fun;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -152,5 +159,45 @@ public class MooneyEventRepre {
     public static MooneyEventRepre fromTuple(Fun.Tuple4<String, Integer, Integer, Integer> tuple) {
         return new MooneyEventRepre(tuple.a, tuple.b, tuple.c, tuple.d);
     }
+
+    public static List<MooneyEventRepre> generateTuples(TIntList candidate, String[] idHeadMap) {
+        List<MooneyEventRepre> repres = new ArrayList<>();
+
+        if (candidate.get(0) < idHeadMap.length) {
+            repres.add(new MooneyEventRepre(idHeadMap[candidate.get(0)], candidate.get(1), candidate.get(2), candidate.get(3)));
+        }
+        return repres;
+    }
+
+
+    public static List<MooneyEventRepre> generateTuples(String head, Collection<Integer> entities) {
+        List<MooneyEventRepre> repres = new ArrayList<>();
+
+        //need to generate #slot^#entities possible
+        for (Integer entity : entities) {
+            for (int i = 0; i <= 2; i++) {
+
+            }
+        }
+
+        return repres;
+    }
+
+    public TIntLinkedList toCompactForm(TObjectIntMap<String> headMap) {
+        TIntLinkedList compactRep = new TIntLinkedList();
+        compactRep.add(headMap.get(predicate));
+        compactRep.add(arg0);
+        compactRep.add(arg1);
+        compactRep.add(arg1);
+        return compactRep;
+    }
+
+    public static TIntLinkedList joinCompactForm(TIntLinkedList compactRep1, TIntLinkedList compactRep2) {
+        TIntLinkedList compactMerged = new TIntLinkedList();
+        compactMerged.addAll(compactRep1);
+        compactMerged.addAll(compactRep2);
+        return compactMerged;
+    }
+
 
 }

@@ -169,7 +169,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
     }
 
 
-    private TIntLinkedList compactEvmSubstituiton(Fun.Tuple4<String, Integer, Integer, Integer> evm, TObjectIntMap<String> headMap) {
+    public TIntLinkedList compactEvmSubstituiton(Fun.Tuple4<String, Integer, Integer, Integer> evm, TObjectIntMap<String> headMap) {
         TIntLinkedList compactRep = new TIntLinkedList();
         compactRep.add(getHeadId(headMap, evm.a));
         compactRep.add(evm.b);
@@ -178,8 +178,8 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         return compactRep;
     }
 
-    private TIntLinkedList compactEvmPairSubstituiton(Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> evmPair,
-                                                      TObjectIntMap<String> headMap) {
+    public TIntLinkedList compactEvmPairSubstituiton(Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> evmPair,
+                                                     TObjectIntMap<String> headMap) {
         TIntLinkedList compactRep = new TIntLinkedList();
 
         compactRep.add(getHeadId(headMap, evmPair.a.a));
