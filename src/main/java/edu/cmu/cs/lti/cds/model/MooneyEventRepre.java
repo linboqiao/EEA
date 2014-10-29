@@ -164,7 +164,7 @@ public class MooneyEventRepre {
         List<MooneyEventRepre> repres = new ArrayList<>();
 
         if (candidate.get(0) < idHeadMap.length) {
-            repres.add(new MooneyEventRepre(idHeadMap[candidate.get(0)], candidate.get(1), candidate.get(2), candidate.get(3)));
+            repres.add(fromCompactForm(candidate, idHeadMap));
         }
         return repres;
     }
@@ -173,7 +173,7 @@ public class MooneyEventRepre {
     public static List<MooneyEventRepre> generateTuples(String head, Collection<Integer> entities) {
         List<MooneyEventRepre> repres = new ArrayList<>();
 
-        //need to generate #slot^#entities possible
+        //need to generate #slot^#entities possible, doesn't seem to be meaningful
         for (Integer entity : entities) {
             for (int i = 0; i <= 2; i++) {
 
@@ -181,6 +181,10 @@ public class MooneyEventRepre {
         }
 
         return repres;
+    }
+
+    public static MooneyEventRepre fromCompactForm(TIntList compactRep, String[] id2HeadMap) {
+        return new MooneyEventRepre(id2HeadMap[compactRep.get(0)], compactRep.get(1), compactRep.get(2), compactRep.get(3));
     }
 
     public TIntLinkedList toCompactForm(TObjectIntMap<String> headMap) {
