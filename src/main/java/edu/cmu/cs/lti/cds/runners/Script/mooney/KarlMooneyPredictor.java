@@ -21,6 +21,7 @@ import org.mapdb.DB;
 import org.mapdb.Fun;
 import weka.core.SerializationHelper;
 
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -108,6 +109,8 @@ public class KarlMooneyPredictor {
 
     private Pair<List<MooneyEventRepre>, Integer> readNext() throws IOException {
         File clozeFile = allClozeFiles.get(evalPointer++);
+
+        logger.info("Predicting cloze task : " + clozeFile.getName());
 
         List<String> lines = FileUtils.readLines(clozeFile);
 
@@ -221,15 +224,26 @@ public class KarlMooneyPredictor {
             List<MooneyEventRepre> candidateEvms = MooneyEventRepre.generateTuples(candidate, idHeadMap);
 
             for (MooneyEventRepre candidateEvm : candidateEvms) {
+                logger.info("Candidate is " + candidateEvm);
+
                 for (int i = 0; i < missingIndex; i++) {
                     Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(clozeTask.get(i), candidateEvm);
-                    score += conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter);
+                    double precedingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter);
+                    logger.info("Preceding score : " + precedingScore);
+
+                    score += precedingScore;
                 }
 
                 for (int i = missingIndex + 1; i < clozeTask.size(); i++) {
                     Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(candidateEvm, clozeTask.get(i));
-                    score += conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter);
+                    double followingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter);
+                    logger.info("Following score : " + followingScore);
+
+                    score += followingScore;
                 }
+
+                Console console = System.console();
+                console.readLine("Enter to continue...");
 
                 rankedEvents.add(Pair.of(candidateEvm, score));
             }
@@ -268,12 +282,12 @@ public class KarlMooneyPredictor {
             List<Pair<MooneyEventRepre, Double>> topkResults = predicateTopK(chain, entities, clozeIndex, k, smoothingParameter);
 
             MooneyEventRepre answer = chain.get(clozeIndex);
-            System.out.println("Correct answer is : " + answer);
+            logger.info("Correct answer is : " + answer);
 
-            System.out.println(topkResults);
+            logger.info(topkResults.toString());
             for (Pair<MooneyEventRepre, Double> r : topkResults) {
                 if (r.getLeft().equals(answer)) {
-                    System.out.println("Correct answer found");
+                    logger.info("Correct answer found");
                     recallCount++;
                 }
             }
@@ -313,36 +327,38 @@ public class KarlMooneyPredictor {
 //                = kmPredictor.readCooccCounts(KarlMooneyScriptCounter.defaultMentionHeadMapName);
 //        ConcurrentNavigableMap<Tuple4<String, Integer, Integer, Integer>, Integer> occCounts = kmPredictor.readOccCounts(KarlMooneyScriptCounter.defaultOccMapName);
 
-//        System.out.println("Coocc size " + kmPredictor.cooccCounts.size());
-//        System.out.println("Occ size " + kmPredictor.occCounts.size());
-//
-//
-//        int count = 10;
-//        for (Map.Entry<Tuple2<Tuple4<String, Integer, Integer, Integer>, Tuple4<String, Integer, Integer, Integer>>, Integer> entry : kmPredictor.cooccCounts.entrySet()) {
-//            System.out.println(entry.getKey().a);
-//            System.out.println(entry.getKey().b);
-//            System.out.println(entry.getValue());
-//
-//            count--;
-//            if (count <= 0) {
-//                break;
-//            }
-//        }
-//
-//        count = 10;
-//        for (Map.Entry<Tuple4<String, Integer, Integer, Integer>, Integer> entry : kmPredictor.occCounts.entrySet()) {
-//            System.out.println(entry.getKey());
-//            System.out.println(entry.getValue());
-//
-//            count--;
-//            if (count <= 0) {
-//                break;
-//            }
-//        }
+        System.out.println("Coocc size " + kmPredictor.cooccCounts.size());
+        System.out.println("Occ size " + kmPredictor.occCounts.size());
+
+        int count = 10;
+
+        for (TObjectIntIterator<TIntList> it = kmPredictor.cooccCounts.iterator(); it.hasNext(); ) {
+            it.advance();
+            TIntList pairList = it.key();
+            System.out.println(MooneyEventRepre.fromCompactForm(pairList.subList(0, 4), kmPredictor.idHeadMap));
+            System.out.println(MooneyEventRepre.fromCompactForm(pairList.subList(4, pairList.size()), kmPredictor.idHeadMap));
+            System.out.println(it.value());
+
+            count--;
+            if (count <= 0) {
+                break;
+            }
+        }
+
+        count = 10;
+        for (TObjectIntIterator<TIntList> it = kmPredictor.occCounts.iterator(); it.hasNext(); ) {
+            System.out.println(MooneyEventRepre.fromCompactForm(it.key(), kmPredictor.idHeadMap));
+            System.out.println(it.value());
+
+            count--;
+            if (count <= 0) {
+                break;
+            }
+        }
 
 
-        System.out.println("Predictor started, testing ...");
+        kmPredictor.logger.info("Predictor started, testing ...");
         double recallAtK = kmPredictor.test(evalDataPath, k, 1);
-        System.out.println(String.format("Recall at %d : %.2f", k, recallAtK));
+        kmPredictor.logger.info(String.format("Recall at %d : %.2f", k, recallAtK));
     }
 }
