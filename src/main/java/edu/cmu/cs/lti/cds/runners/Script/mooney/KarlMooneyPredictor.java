@@ -24,6 +24,8 @@ import weka.core.SerializationHelper;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -50,10 +52,21 @@ public class KarlMooneyPredictor {
 
     private String[] idHeadMap;
 
+    private String className = this.getClass().getName();
+
+    private Logger logger = Logger.getLogger(className);
+
+
     public KarlMooneyPredictor(String dbPath, String dbName, String occName, String cooccName, String countingDbFileName, String headIdMapName) throws Exception {
+        logger.setLevel(Level.INFO);
+
+        logger.info("Loading cooccs");
         cooccCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(new File(dbPath, dbName + "_" + cooccName).getAbsolutePath());
+        logger.info("Loading occs");
         occCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(new File(dbPath, dbName + "_" + occName).getAbsolutePath());
-        headIdMap = (TObjectIntMap<String>) SerializationHelper.read(new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath());
+        logger.info("Loading head ids");
+        headIdMap = (TObjectIntMap<String>) SerializationHelper.read(new File(dbPath, headIdMapName).getAbsolutePath());
+        logger.info("Loading reverse head ids");
         loadReverseIdMap();
 
         if (countingDbFileName != null) {
