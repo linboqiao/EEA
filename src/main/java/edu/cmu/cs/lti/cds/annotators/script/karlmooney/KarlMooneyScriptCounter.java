@@ -139,11 +139,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
                 continue;
             }
 
-            if (eventMention1TfDf.a / 10 == 0) {
-                continue;
-            }
-
-            if (eventMention2TfDf.a / 10 == 0) {
+            if (Utils.tfDfFilter(eventMention1TfDf.a, eventMention1TfDf.b) || Utils.tfDfFilter(eventMention2TfDf.a, eventMention2TfDf.b)) {
                 continue;
             }
 

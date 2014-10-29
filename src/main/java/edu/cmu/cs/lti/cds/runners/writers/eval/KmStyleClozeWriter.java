@@ -4,6 +4,7 @@
 package edu.cmu.cs.lti.cds.runners.writers.eval;
 
 import edu.cmu.cs.lti.cds.annotators.writers.eval.KmStyleAllEventMentionClozeTaskGenerator;
+import edu.cmu.cs.lti.cds.runners.FullSystemRunner;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
@@ -13,6 +14,7 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -33,14 +35,20 @@ public class KmStyleClozeWriter {
         // Note that you should change the parameters below for your configuration.
         // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
-        String paramInputDir = "data/02_event_tuples";
-        int stepNum = 3;
+        String inputDir = args[0]; //"data/02_event_tuples";
 
         // Parameters for the writer
-        String paramParentOutputDir = "data";
-        String paramBaseOutputDirName = "cloze_files";
         String paramOutputFileSuffix = ".txt";
+        String paramParentOutputDir = args[1]; // "data";
+        String paramBaseOutputDirName = args[2]; // "cloze"
+
+        String blackListFile = args[3]; //"duplicate.count.tail"
+
+        int stepNum = 3;
+
         // ////////////////////////////////////////////////////////////////
+
+        FullSystemRunner.readBlackList(new File(blackListFile));
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -51,7 +59,7 @@ public class KmStyleClozeWriter {
         // Instantiate a collection reader to get XMI as input.
         // Note that you should change the following parameters for your setting.
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
+                CustomCollectionReaderFactory.createGzippedXmiReader(typeSystemDescription, inputDir, false);
 
         AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
                 KmStyleAllEventMentionClozeTaskGenerator.class, typeSystemDescription,

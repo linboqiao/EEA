@@ -38,4 +38,16 @@ public class Utils {
 
         logger.info(String.format("%s. Heap size: %.2f MB, Max Heap Size: %.2f MB, Free Heap Size: %.2f MB, Used Memory: %.2f MB", msg, heapSize, heapMaxSize, heapFreeSize, heapSize - heapFreeSize));
     }
+
+    public static boolean tfDfFilter(int tf, int df) {
+        return documentFrequencyFilter(tf);
+    }
+
+    public static boolean termFrequencyFilter(int tf) {
+        return tf / 10 == 0;
+    }
+
+    public static boolean documentFrequencyFilter(int df) {
+        return df / 10 == 0;
+    }
 }
