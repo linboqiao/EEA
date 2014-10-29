@@ -5,7 +5,6 @@ import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
 import edu.cmu.cs.lti.cds.utils.DbManager;
-import edu.cmu.cs.lti.utils.SerializationHelper;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.list.TIntList;
 import gnu.trove.list.linked.TIntLinkedList;
@@ -21,6 +20,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.Fun;
+import weka.core.SerializationHelper;
 
 import java.io.File;
 import java.io.IOException;
