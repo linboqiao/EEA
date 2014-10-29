@@ -66,7 +66,8 @@ public class KmStyleClozeWriter {
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                KmStyleAllEventMentionClozeTaskGenerator.PARAM_STEP_NUMBER, stepNum);
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_STEP_NUMBER, stepNum,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_HEAD_COUNT_DB_NAME, "headcounts_94-96");
 
         SimplePipeline.runPipeline(reader, writer);
 
