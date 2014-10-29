@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.utils;
 
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.ComponentAnnotation;
+import org.mapdb.Fun;
 
 import java.util.logging.Logger;
 
@@ -37,6 +38,10 @@ public class Utils {
         double heapFreeSize = Runtime.getRuntime().freeMemory() / (double) (1024 * 1024);
 
         logger.info(String.format("%s. Heap size: %.2f MB, Max Heap Size: %.2f MB, Free Heap Size: %.2f MB, Used Memory: %.2f MB", msg, heapSize, heapMaxSize, heapFreeSize, heapSize - heapFreeSize));
+    }
+
+    public static boolean tfDfFilter(Fun.Tuple2<Integer, Integer> tfDf) {
+        return tfDf == null || tfDfFilter(tfDf.a, tfDf.b);
     }
 
     public static boolean tfDfFilter(int tf, int df) {

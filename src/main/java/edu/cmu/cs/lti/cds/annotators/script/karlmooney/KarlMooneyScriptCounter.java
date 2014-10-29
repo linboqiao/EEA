@@ -135,11 +135,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             Fun.Tuple2<Integer, Integer> eventMention2TfDf = headTfDfMap.get(align.getLowercaseWordLemma(bigram.getRight().getHeadWord()));
 
             //ignoring the low frequent event heads, and let's see what happen
-            if (eventMention1TfDf == null || eventMention2TfDf == null) {
-                continue;
-            }
-
-            if (Utils.tfDfFilter(eventMention1TfDf.a, eventMention1TfDf.b) || Utils.tfDfFilter(eventMention2TfDf.a, eventMention2TfDf.b)) {
+            if (Utils.tfDfFilter(eventMention1TfDf) || Utils.tfDfFilter(eventMention2TfDf)) {
                 continue;
             }
 
