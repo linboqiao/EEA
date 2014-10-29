@@ -302,11 +302,11 @@ public class KarlMooneyPredictor {
         System.out.println("Starting the predictor ...");
 
         String dbName = args[0]; //occs_94-96
-        String headIdMapName = args[1]; //"headcounts_94-96"
+        String headCountingFileName = args[1]; //"headcounts_94-96"
         String evalDataPath = args[2]; //"data/03_cloze_dev"
 
         KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor("data/_db", dbName, KarlMooneyScriptCounter.defaultOccMapName,
-                KarlMooneyScriptCounter.defaultCooccMapName, KarlMooneyScriptCounter.defaltHeadIdMapName, headIdMapName);
+                KarlMooneyScriptCounter.defaultCooccMapName, headCountingFileName, KarlMooneyScriptCounter.defaltHeadIdMapName);
 
 //        ConcurrentNavigableMap<Tuple2<Tuple4<String, Integer, Integer, Integer>, Tuple4<String, Integer, Integer, Integer>>, Integer> cooccCounts
 //                = kmPredictor.readCooccCounts(KarlMooneyScriptCounter.defaultMentionHeadMapName);
