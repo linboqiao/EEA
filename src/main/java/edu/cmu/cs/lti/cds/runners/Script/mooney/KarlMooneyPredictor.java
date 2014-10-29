@@ -60,11 +60,11 @@ public class KarlMooneyPredictor {
     public KarlMooneyPredictor(String dbPath, String dbName, String occName, String cooccName, String countingDbFileName, String headIdMapName) throws Exception {
         logger.setLevel(Level.INFO);
 
-        logger.info("Loading cooccs");
+        logger.info("Loading cooccs " + new File(dbPath, dbName + "_" + cooccName).getAbsolutePath());
         cooccCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(new File(dbPath, dbName + "_" + cooccName).getAbsolutePath());
-        logger.info("Loading occs");
+        logger.info("Loading occ " + new File(dbPath, dbName + "_" + occName).getAbsolutePath());
         occCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(new File(dbPath, dbName + "_" + occName).getAbsolutePath());
-        logger.info("Loading head ids");
+        logger.info("Loading head ids: " + new File(dbPath, headIdMapName).getAbsolutePath());
         headIdMap = (TObjectIntMap<String>) SerializationHelper.read(new File(dbPath, headIdMapName).getAbsolutePath());
         logger.info("Loading reverse head ids");
         loadReverseIdMap();
