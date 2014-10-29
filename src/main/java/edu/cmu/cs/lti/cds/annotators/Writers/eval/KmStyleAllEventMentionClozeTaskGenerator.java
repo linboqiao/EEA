@@ -65,7 +65,7 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
         if (FullSystemRunner.blackListedArticleId.contains(article.getArticleName())) {
             //ignore this blacklisted file;
             logger.info("Ignored black listed file");
-            return "BLACK_LISTED_FILE";
+            return "";
         }
 
 
@@ -98,6 +98,11 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
             allEvms.add(mention);
             allSlots.add(slots);
+        }
+
+        if (allEvms.size() == 0) {
+            //empty file
+            return "";
         }
 
         int heldOutIndex = rand.nextInt(allEvms.size());
