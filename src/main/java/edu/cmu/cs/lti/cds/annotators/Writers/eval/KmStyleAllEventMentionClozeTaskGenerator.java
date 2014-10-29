@@ -68,7 +68,6 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
             return "";
         }
 
-
         align.loadWord2Stanford(aJCas);
         StringBuilder sb = new StringBuilder();
 
