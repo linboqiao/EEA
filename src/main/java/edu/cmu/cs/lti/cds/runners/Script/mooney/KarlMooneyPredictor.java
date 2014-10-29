@@ -304,6 +304,7 @@ public class KarlMooneyPredictor {
         String dbName = args[0]; //occs_94-96
         String headCountingFileName = args[1]; //"headcounts_94-96"
         String evalDataPath = args[2]; //"data/03_cloze_dev"
+        int k = Integer.parseInt(args[3]); //the top "k" used for evaluation
 
         KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor("data/_db", dbName, KarlMooneyScriptCounter.defaultOccMapName,
                 KarlMooneyScriptCounter.defaultCooccMapName, headCountingFileName, KarlMooneyScriptCounter.defaltHeadIdMapName);
@@ -341,7 +342,7 @@ public class KarlMooneyPredictor {
 
 
         System.out.println("Predictor started, testing ...");
-        double recallAt10 = kmPredictor.test(evalDataPath, 10, 0.01);
-        System.out.println("Recall at 10 " + recallAt10);
+        double recallAtK = kmPredictor.test(evalDataPath, k, 1);
+        System.out.println(String.format("Recall at %d : %.2f", k, recallAtK));
     }
 }
