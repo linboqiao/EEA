@@ -65,7 +65,7 @@ public class KarlMooneyPredictor {
         logger.info("Loading occ " + new File(dbPath, dbName + "_" + occName).getAbsolutePath());
         occCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(new File(dbPath, dbName + "_" + occName).getAbsolutePath());
         logger.info("Loading head ids: " + new File(dbPath, headIdMapName).getAbsolutePath());
-        headIdMap = (TObjectIntMap<String>) SerializationHelper.read(new File(dbPath, headIdMapName).getAbsolutePath());
+        headIdMap = (TObjectIntMap<String>) SerializationHelper.read(new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath());
         logger.info("Loading reverse head ids");
         loadReverseIdMap();
 
