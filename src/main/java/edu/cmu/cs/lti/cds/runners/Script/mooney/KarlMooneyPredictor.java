@@ -18,7 +18,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.mapdb.DB;
-import org.mapdb.DBMaker;
 import org.mapdb.Fun;
 import weka.core.SerializationHelper;
 
@@ -52,10 +51,6 @@ public class KarlMooneyPredictor {
     private String[] idHeadMap;
 
     public KarlMooneyPredictor(String dbPath, String dbName, String occName, String cooccName, String countingDbFileName, String headIdMapName) throws Exception {
-        DBMaker dbm = DBMaker.newFileDB(new File(dbPath, dbName)).readOnly();
-        db = dbm.make();
-        evalPointer = 0;
-
         cooccCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(new File(dbPath, dbName + "_" + cooccName).getAbsolutePath());
         occCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(new File(dbPath, dbName + "_" + occName).getAbsolutePath());
         headIdMap = (TObjectIntMap<String>) SerializationHelper.read(new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath());
