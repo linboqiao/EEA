@@ -341,6 +341,7 @@ public class KarlMooneyPredictor {
 
         count = 10;
         for (TObjectIntIterator<TIntList> it = kmPredictor.occCounts.iterator(); it.hasNext(); ) {
+            it.advance();
             System.out.println(MooneyEventRepre.fromCompactForm(it.key(), kmPredictor.idHeadMap));
             System.out.println(it.value());
 

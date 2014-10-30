@@ -184,7 +184,6 @@ public class MooneyEventRepre {
     }
 
     public static MooneyEventRepre fromCompactForm(TIntList compactRep, String[] id2HeadMap) {
-        System.out.println(compactRep);
         return new MooneyEventRepre(id2HeadMap[compactRep.get(0)], compactRep.get(1), compactRep.get(2), compactRep.get(3));
     }
 
