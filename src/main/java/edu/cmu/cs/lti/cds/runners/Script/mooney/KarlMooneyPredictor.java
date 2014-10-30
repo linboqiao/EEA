@@ -229,16 +229,14 @@ public class KarlMooneyPredictor {
                 for (int i = 0; i < missingIndex; i++) {
                     Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(clozeTask.get(i), candidateEvm);
                     double precedingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter);
-                    logger.info("Preceding score : " + precedingScore);
-
+                    logger.info(String.format("Preceding score for %s - %s is %.2f ", transformedTuples.getLeft(), transformedTuples.getRight(), precedingScore));
                     score += precedingScore;
                 }
 
                 for (int i = missingIndex + 1; i < clozeTask.size(); i++) {
                     Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(candidateEvm, clozeTask.get(i));
                     double followingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter);
-                    logger.info("Following score : " + followingScore);
-
+                    logger.info(String.format("Following score for %s - %s is %.2f ", transformedTuples.getLeft(), transformedTuples.getRight(), followingScore));
                     score += followingScore;
                 }
 
@@ -322,10 +320,6 @@ public class KarlMooneyPredictor {
 
         KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor("data/_db", dbName, KarlMooneyScriptCounter.defaultOccMapName,
                 KarlMooneyScriptCounter.defaultCooccMapName, headCountingFileName, KarlMooneyScriptCounter.defaltHeadIdMapName);
-
-//        ConcurrentNavigableMap<Tuple2<Tuple4<String, Integer, Integer, Integer>, Tuple4<String, Integer, Integer, Integer>>, Integer> cooccCounts
-//                = kmPredictor.readCooccCounts(KarlMooneyScriptCounter.defaultMentionHeadMapName);
-//        ConcurrentNavigableMap<Tuple4<String, Integer, Integer, Integer>, Integer> occCounts = kmPredictor.readOccCounts(KarlMooneyScriptCounter.defaultOccMapName);
 
         System.out.println("Coocc size " + kmPredictor.cooccCounts.size());
         System.out.println("Occ size " + kmPredictor.occCounts.size());
