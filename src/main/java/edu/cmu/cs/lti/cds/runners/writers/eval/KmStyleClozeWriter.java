@@ -42,7 +42,17 @@ public class KmStyleClozeWriter {
         String paramParentOutputDir = args[1]; // "data";
         String paramBaseOutputDirName = args[2]; // "cloze"
 
-        String blackListFile = args[3]; //"duplicate.count.tail"
+        String headCountFileName = args[3]; //"headcounts"
+
+        String blackListFile = args[4]; //"duplicate.count.tail"
+
+        String ignoreLowFreq;
+        if (args.length > 5) {
+            ignoreLowFreq = args[5]; //"true"
+        } else {
+            //default true
+            ignoreLowFreq = "true";
+        }
 
         int stepNum = 3;
 
@@ -68,7 +78,9 @@ public class KmStyleClozeWriter {
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_STEP_NUMBER, stepNum,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_DB_DIR_PATH, "data/_db/",
-                KmStyleAllEventMentionClozeTaskGenerator.PARAM_HEAD_COUNT_DB_NAME, "headcounts_94-96");
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_HEAD_COUNT_DB_NAME, headCountFileName,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq.equals("true")
+        );
 
         SimplePipeline.runPipeline(reader, writer);
 

@@ -42,6 +42,14 @@ public class MooneyScriptCounterRunner {
 
         String dbNamePrefix = args[2]; //"00-02"
 
+        String ignoreLowFreq;
+        if (args.length > 3) {
+            ignoreLowFreq = args[3]; //"true"
+        } else {
+            //default true
+            ignoreLowFreq = "true";
+        }
+
         // ////////////////////////////////////////////////////////////////
 
         FullSystemRunner.readBlackList(new File(blackListFile));
@@ -61,6 +69,7 @@ public class MooneyScriptCounterRunner {
                 KarlMooneyScriptCounter.PARAM_SKIP_BIGRAM_N, 2,
                 KarlMooneyScriptCounter.PARAM_DB_NAME, "occs_" + dbNamePrefix,
                 KarlMooneyScriptCounter.PARAM_HEAD_COUNT_DB_NAME, "headcounts_" + dbNamePrefix,
+                KarlMooneyScriptCounter.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq.equals("true"),
                 AbstractLoggingAnnotator.PARAM_KEEP_QUIET, false);
 
         SimplePipeline.runPipeline(reader, kmScriptCounter);

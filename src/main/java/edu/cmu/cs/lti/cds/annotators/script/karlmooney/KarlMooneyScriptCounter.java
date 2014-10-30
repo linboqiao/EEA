@@ -48,6 +48,8 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     public static final String PARAM_HEAD_COUNT_DB_NAME = "headCountDbName";
 
+    public static final String PARAM_IGNORE_LOW_FREQ = "ignoreLowFreq";
+
     //TODO consider sentence or event distance
 //    private Map<Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>>, Integer> cooccCounts;
 
@@ -76,7 +78,10 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
     private TokenAlignmentHelper align = new TokenAlignmentHelper();
 
     private String tupleCountDbFileName;
+
     private String dbPath;
+
+    private boolean ignoreLowFreq;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -88,6 +93,11 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
         skippedBigramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_BIGRAM_N);
 
+        if (aContext.getConfigParameterValue(PARAM_IGNORE_LOW_FREQ) != null) {
+            ignoreLowFreq = (Boolean) aContext.getConfigParameterValue(PARAM_IGNORE_LOW_FREQ);
+        } else {
+            ignoreLowFreq = true;
+        }
 
         File dbParentPath = new File(dbPath);
 
@@ -99,11 +109,12 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 //        cooccCounts = tupleCountDb.getHashMap(cooccName);
 //        occCounts = tupleCountDb.getHashMap(occName);
 
-        String countingDbFileName = (String) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAME);
-
-        if (countingDbFileName != null) {
-            DB headCountDb = DbManager.getDB(dbPath, countingDbFileName);
-            headTfDfMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
+        if (ignoreLowFreq) {
+            String countingDbFileName = (String) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAME);
+            if (countingDbFileName != null) {
+                DB headCountDb = DbManager.getDB(dbPath, countingDbFileName);
+                headTfDfMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
+            }
         }
 
         Utils.printMemInfo(logger, "Initial memory information ");
@@ -131,12 +142,15 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedBigram =
                     firstBasedSubstitution(bigram.getLeft(), bigram.getRight());
 
-            Fun.Tuple2<Integer, Integer> eventMention1TfDf = headTfDfMap.get(align.getLowercaseWordLemma(bigram.getLeft().getHeadWord()));
-            Fun.Tuple2<Integer, Integer> eventMention2TfDf = headTfDfMap.get(align.getLowercaseWordLemma(bigram.getRight().getHeadWord()));
 
-            //ignoring the low frequent event heads, and let's see what happen
-            if (Utils.tfDfFilter(eventMention1TfDf) || Utils.tfDfFilter(eventMention2TfDf)) {
-                continue;
+            if (ignoreLowFreq) {
+                Fun.Tuple2<Integer, Integer> eventMention1TfDf = headTfDfMap.get(align.getLowercaseWordLemma(bigram.getLeft().getHeadWord()));
+                Fun.Tuple2<Integer, Integer> eventMention2TfDf = headTfDfMap.get(align.getLowercaseWordLemma(bigram.getRight().getHeadWord()));
+
+                //ignoring the low frequent event heads, and let's see what happen
+                if (Utils.tfDfFilter(eventMention1TfDf) || Utils.tfDfFilter(eventMention2TfDf)) {
+                    continue;
+                }
             }
 
             cooccCounts.adjustOrPutValue(compactEvmPairSubstituiton(subsitutedBigram, headIdMap), 1, 1);

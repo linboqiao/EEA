@@ -39,11 +39,15 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
 
+    public static final String PARAM_IGNORE_LOW_FREQ = "ignoreLowFreq";
+
     private TokenAlignmentHelper align = new TokenAlignmentHelper();
 
     private Random rand = new Random();
 
     private Map<String, Fun.Tuple2<Integer, Integer>> headTfDfMap;
+
+    private boolean ignoreLowFreq;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -52,8 +56,16 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
         String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
 
-        DB headCountDb = DbManager.getDB(dbPath, countingDbFileName);
-        headTfDfMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
+        if (aContext.getConfigParameterValue(PARAM_IGNORE_LOW_FREQ) != null) {
+            ignoreLowFreq = (Boolean) aContext.getConfigParameterValue(PARAM_IGNORE_LOW_FREQ);
+        } else {
+            ignoreLowFreq = true;
+        }
+
+        if (ignoreLowFreq) {
+            DB headCountDb = DbManager.getDB(dbPath, countingDbFileName);
+            headTfDfMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
+        }
     }
 
     @Override
@@ -75,12 +87,13 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
         List<EventMention> allEvms = new ArrayList<>();
 
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
-            Fun.Tuple2<Integer, Integer> evmTfDf = headTfDfMap.get(align.getLowercaseWordLemma(mention.getHeadWord()));
-
-            //filter by low tf df counts
-            if (Utils.tfDfFilter(evmTfDf)) {
-                logger.info("Mention filtered because of low frequency: " + mention.getCoveredText());
-                continue;
+            if (ignoreLowFreq) {
+                Fun.Tuple2<Integer, Integer> evmTfDf = headTfDfMap.get(align.getLowercaseWordLemma(mention.getHeadWord()));
+                //filter by low tf df counts
+                if (Utils.tfDfFilter(evmTfDf)) {
+                    logger.info("Mention filtered because of low frequency: " + mention.getCoveredText() + " " + evmTfDf);
+                    continue;
+                }
             }
 
             TIntIntHashMap slots = new TIntIntHashMap();
@@ -124,32 +137,44 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
             String predicate = align.getLowercaseWordLemma(evm.getHeadWord());
 
-            chain[i] = new MooneyEventRepre(
-                    predicate,
-                    rewrite(slots, KmTargetConstants.firstArg0Marker, rewriteMap, heldOutSlotMask),
-                    rewrite(slots, KmTargetConstants.firstArg1Marker, rewriteMap, heldOutSlotMask),
-                    rewrite(slots, KmTargetConstants.firstArg2Marker, rewriteMap, heldOutSlotMask));
+            if (i == heldOutIndex) {
+                chain[i] = new MooneyEventRepre(predicate, KmTargetConstants.firstArg0Marker, KmTargetConstants.firstArg1Marker, KmTargetConstants.firstArg2Marker);
+            } else {
+                chain[i] = new MooneyEventRepre(
+                        predicate,
+                        rewrite(slots, KmTargetConstants.firstArg0Marker, rewriteMap, heldOutSlotMask),
+                        rewrite(slots, KmTargetConstants.firstArg1Marker, rewriteMap, heldOutSlotMask),
+                        rewrite(slots, KmTargetConstants.firstArg2Marker, rewriteMap, heldOutSlotMask)
+                );
+            }
         }
 
         for (int i = 0; i < chain.length; i++) {
             MooneyEventRepre evmRepre = chain[i];
             if (i == heldOutIndex) {
-                sb.append(evmRepre.toStringWithEmptyIndicator(heldOutSlotMask)).append("\n");
+                String heldOutLine = evmRepre.toStringWithEmptyIndicator(heldOutSlotMask);
+                sb.append(heldOutLine).append("\n");
             } else {
                 sb.append(evmRepre.toString()).append("\n");
             }
         }
 
+//        Utils.pause();
+
+
         return sb.toString();
     }
 
-    private int rewrite(TIntIntHashMap slot2Id, int marker, TIntIntHashMap rewriteMap, TIntSet heldOutSlotAppearMarker) {
-        if (slot2Id.containsKey(marker)) {
-            int eid = slot2Id.get(marker);
+    private int rewrite(TIntIntHashMap slot2Id, int argumentMarker, TIntIntHashMap rewriteMap, TIntSet heldOutSlotAppearMarker) {
+        if (slot2Id.containsKey(argumentMarker)) {
+            int eid = slot2Id.get(argumentMarker);
 
             if (rewriteMap.containsKey(eid)) {
-                heldOutSlotAppearMarker.add(marker);
-                return rewriteMap.get(eid);
+                int heldOutId = rewriteMap.get(eid);
+
+                heldOutSlotAppearMarker.add(heldOutId);
+
+                return heldOutId;
             } else {
                 return KmTargetConstants.otherMarker;
             }

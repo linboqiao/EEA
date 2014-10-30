@@ -4,6 +4,7 @@ import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.ComponentAnnotation;
 import org.mapdb.Fun;
 
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 /**
@@ -54,5 +55,11 @@ public class Utils {
 
     public static boolean documentFrequencyFilter(int df) {
         return df / 10 == 0;
+    }
+
+    public static void pause() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter to continue");
+        in.nextLine();
     }
 }
