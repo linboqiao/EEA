@@ -224,24 +224,35 @@ public class KarlMooneyPredictor {
             List<MooneyEventRepre> candidateEvms = MooneyEventRepre.generateTuples(candidate, idHeadMap);
 
             for (MooneyEventRepre candidateEvm : candidateEvms) {
-                logger.info("Candidate is " + candidateEvm);
+
+                boolean sawAnswer = false;
+                if (answer.getPredicate().equals(candidateEvm.getPredicate())) {
+                    sawAnswer = true;
+                    logger.info("Answer candidate is " + candidateEvm);
+                }
 
                 for (int i = 0; i < missingIndex; i++) {
                     Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(clozeTask.get(i), candidateEvm);
                     double precedingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter);
-                    logger.info(String.format("Preceding score for %s - %s is %.2f ", transformedTuples.getLeft(), transformedTuples.getRight(), precedingScore));
+                    if (sawAnswer) {
+                        logger.info(String.format("Preceding score for %s - %s is %.2f ", transformedTuples.getLeft(), transformedTuples.getRight(), precedingScore));
+                    }
                     score += precedingScore;
                 }
 
                 for (int i = missingIndex + 1; i < clozeTask.size(); i++) {
                     Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(candidateEvm, clozeTask.get(i));
                     double followingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter);
-                    logger.info(String.format("Following score for %s - %s is %.2f ", transformedTuples.getLeft(), transformedTuples.getRight(), followingScore));
+                    if (sawAnswer) {
+                        logger.info(String.format("Following score for %s - %s is %.2f ", transformedTuples.getLeft(), transformedTuples.getRight(), followingScore));
+                    }
                     score += followingScore;
                 }
 
-                Console console = System.console();
-                console.readLine("Enter to continue...");
+                if (sawAnswer) {
+                    Console console = System.console();
+                    console.readLine("Enter to continue...");
+                }
 
                 rankedEvents.add(Pair.of(candidateEvm, score));
             }
