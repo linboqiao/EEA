@@ -12,20 +12,31 @@ import java.util.Map;
  * Time: 2:42 PM
  */
 public class KmTargetConstants {
+    //TODO very ugly class
+
     public static final Map<String, Integer> targetArguments;
 
+    public static int argMarkerToSlotIndex(int argMarker) {
+        return argMarker - anchorArg0Marker;
+    }
+
+    public static int slotIndexToArgMarker(int slotIndex) {
+        return slotIndex + anchorArg0Marker;
+    }
 
     public static final int nullArgMarker = -1;
-    public static final int firstArg0Marker = 1;
-    public static final int firstArg1Marker = 2;
-    public static final int firstArg2Marker = 3;
+    public static final int anchorArg0Marker = 1;
+    public static final int anchorArg1Marker = 2;
+    public static final int anchorArg2Marker = 3;
     public static final int otherMarker = 0;
+
+    public static final int numSlots = 3;
 
     static {
         targetArguments = new LinkedHashMap<>();
-        targetArguments.put(PropBankTagSet.ARG0, firstArg0Marker);
-        targetArguments.put(PropBankTagSet.ARG1, firstArg1Marker);
-        targetArguments.put(PropBankTagSet.ARG2, firstArg2Marker);
+        targetArguments.put(PropBankTagSet.ARG0, anchorArg0Marker);
+        targetArguments.put(PropBankTagSet.ARG1, anchorArg1Marker);
+        targetArguments.put(PropBankTagSet.ARG2, anchorArg2Marker);
     }
 
     public static final String clozeBlankIndicator = "##blank##";

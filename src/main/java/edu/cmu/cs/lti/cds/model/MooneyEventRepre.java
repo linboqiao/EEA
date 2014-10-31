@@ -6,9 +6,7 @@ import gnu.trove.map.TObjectIntMap;
 import gnu.trove.set.TIntSet;
 import org.mapdb.Fun;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -121,9 +119,9 @@ public class MooneyEventRepre {
         return String.format("%s%s(%d,%d,%d)",
                 KmTargetConstants.clozeBlankIndicator,
                 predicate,
-                maskedSlot(mask, arg0, KmTargetConstants.firstArg0Marker),
-                maskedSlot(mask, arg1, KmTargetConstants.firstArg1Marker),
-                maskedSlot(mask, arg2, KmTargetConstants.firstArg2Marker)
+                maskedSlot(mask, arg0, KmTargetConstants.anchorArg0Marker),
+                maskedSlot(mask, arg1, KmTargetConstants.anchorArg1Marker),
+                maskedSlot(mask, arg2, KmTargetConstants.anchorArg2Marker)
         );
     }
 
@@ -171,17 +169,59 @@ public class MooneyEventRepre {
 
 
     public static List<MooneyEventRepre> generateTuples(String head, Collection<Integer> entities) {
-        List<MooneyEventRepre> repres = new ArrayList<>();
+        Set<TIntList> baseRepres = new HashSet<>();
 
-        //need to generate #slot^#entities possible, doesn't seem to be meaningful
-        for (Integer entity : entities) {
-            for (int i = 0; i <= 2; i++) {
+        TIntList base = new TIntLinkedList();
 
+        baseRepres.add(base);
+
+        //add Null and Other entities
+
+        List<Integer> baseEntities = new ArrayList<>();
+        baseEntities.add(KmTargetConstants.nullArgMarker);
+        baseEntities.add(KmTargetConstants.otherMarker);
+
+        //need to generate #slot^#entities possible tuples
+        for (int i = 0; i < 3; i++) {
+            Set<TIntList> newerRepres = new HashSet<>();
+            for (int entityId : baseEntities) {
+                for (TIntList lastBase : baseRepres) {
+                    TIntList nextBase = new TIntLinkedList();
+                    nextBase.addAll(lastBase);
+                    nextBase.add(entityId);
+                    newerRepres.add(nextBase);
+                }
             }
+            baseRepres = newerRepres;
         }
 
-        return repres;
+        for (int entityId : entities) {
+            Set<TIntList> newerRepres = new HashSet<>();
+            for (int i = 0; i < 3; i++) {
+                for (TIntList lastBase : baseRepres) {
+                    TIntList nextBase = new TIntLinkedList();
+                    nextBase.addAll(lastBase);
+                    nextBase.set(i, entityId);
+                    newerRepres.add(nextBase);
+                    newerRepres.add(lastBase);
+                }
+            }
+            baseRepres = newerRepres;
+        }
+
+        List<MooneyEventRepre> candidateEvmRepre = new ArrayList<>();
+        for (TIntList baseRepre : baseRepres) {
+            MooneyEventRepre r = new MooneyEventRepre();
+            r.setPredicate(head);
+            for (int i = 0; i < baseRepre.size(); i++) {
+                r.setArgument(i, baseRepre.get(i));
+            }
+            candidateEvmRepre.add(r);
+        }
+
+        return candidateEvmRepre;
     }
+
 
     public static MooneyEventRepre fromCompactForm(TIntList compactRep, String[] id2HeadMap) {
         return new MooneyEventRepre(id2HeadMap[compactRep.get(0)], compactRep.get(1), compactRep.get(2), compactRep.get(3));
@@ -190,18 +230,18 @@ public class MooneyEventRepre {
     public TIntLinkedList toCompactForm(TObjectIntMap<String> headMap) {
         TIntLinkedList compactRep = new TIntLinkedList();
         compactRep.add(headMap.get(predicate));
-        compactRep.add(arg0);
-        compactRep.add(arg1);
-        compactRep.add(arg1);
+
+        for (int arg : getAllArguments()) {
+            compactRep.add(arg);
+        }
+
         return compactRep;
     }
 
-    public static TIntLinkedList joinCompactForm(TIntLinkedList compactRep1, TIntLinkedList compactRep2) {
+    public static TIntLinkedList joinCompactForm(TIntLinkedList formerTuple, TIntLinkedList latterTuple) {
         TIntLinkedList compactMerged = new TIntLinkedList();
-        compactMerged.addAll(compactRep1);
-        compactMerged.addAll(compactRep2);
+        compactMerged.addAll(formerTuple);
+        compactMerged.addAll(latterTuple);
         return compactMerged;
     }
-
-
 }
