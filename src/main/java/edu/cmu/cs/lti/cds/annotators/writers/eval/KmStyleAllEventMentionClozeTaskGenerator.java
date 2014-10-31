@@ -101,10 +101,9 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
             for (EventMentionArgumentLink aLink : UimaConvenience.convertFSListToList(mention.getArguments(), EventMentionArgumentLink.class)) {
                 String argumentRole = aLink.getArgumentRole();
                 if (KmTargetConstants.targetArguments.containsKey(argumentRole)) {
-                    int slotId = KmTargetConstants.targetArguments.get(argumentRole);
+                    int argumentId = KmTargetConstants.targetArguments.get(argumentRole);
                     int entityId = Utils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId());
-                    //substitution for the first event is always self
-                    slots.put(slotId, entityId);
+                    slots.put(argumentId, entityId);
                 }
             }
 
@@ -123,6 +122,8 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
         TIntIntHashMap heldOutSlots = allSlots.get(heldOutIndex);
 
+        System.out.println("Held out slot is " + heldOutSlots);
+
         TIntSet heldOutSlotMask = new TIntHashSet();
 
         for (int heldoutSlotId : heldOutSlots.keys()) {
@@ -138,13 +139,33 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
             String predicate = align.getLowercaseWordLemma(evm.getHeadWord());
 
             if (i == heldOutIndex) {
-                chain[i] = new MooneyEventRepre(predicate, KmTargetConstants.firstArg0Marker, KmTargetConstants.firstArg1Marker, KmTargetConstants.firstArg2Marker);
+                chain[i] = new MooneyEventRepre();
+                chain[i].setPredicate(predicate);
+
+//                for (int argument : KmTargetConstants.targetArguments.values()) {
+//                    if (slots.containsKey(argument)) {
+//                        chain[i].setArgument(KmTargetConstants.argMarkerToSlotIndex(argument), argument);
+//                        System.out.println("Setting slot id " + KmTargetConstants.argMarkerToSlotIndex(argument) + " into " + argument);
+//                    } else {
+//                        //TODO null doesn't work?
+//                        chain[i].setArgument(argument, KmTargetConstants.nullArgMarker);
+//                        System.out.println("Setting slot id " + KmTargetConstants.argMarkerToSlotIndex(argument) + " into null " + KmTargetConstants.nullArgMarker);
+//                    }
+//                }
+                chain[i] = new MooneyEventRepre(
+                        predicate,
+                        rewriteHeldOut(slots, KmTargetConstants.anchorArg0Marker, rewriteMap),
+                        rewriteHeldOut(slots, KmTargetConstants.anchorArg1Marker, rewriteMap),
+                        rewriteHeldOut(slots, KmTargetConstants.anchorArg2Marker, rewriteMap)
+                );
+                System.out.println(chain[i]);
+
             } else {
                 chain[i] = new MooneyEventRepre(
                         predicate,
-                        rewrite(slots, KmTargetConstants.firstArg0Marker, rewriteMap, heldOutSlotMask),
-                        rewrite(slots, KmTargetConstants.firstArg1Marker, rewriteMap, heldOutSlotMask),
-                        rewrite(slots, KmTargetConstants.firstArg2Marker, rewriteMap, heldOutSlotMask)
+                        rewrite(slots, KmTargetConstants.anchorArg0Marker, rewriteMap, heldOutSlotMask),
+                        rewrite(slots, KmTargetConstants.anchorArg1Marker, rewriteMap, heldOutSlotMask),
+                        rewrite(slots, KmTargetConstants.anchorArg2Marker, rewriteMap, heldOutSlotMask)
                 );
             }
         }
@@ -152,7 +173,9 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
         for (int i = 0; i < chain.length; i++) {
             MooneyEventRepre evmRepre = chain[i];
             if (i == heldOutIndex) {
+                //applying the mask here;
                 String heldOutLine = evmRepre.toStringWithEmptyIndicator(heldOutSlotMask);
+                System.out.println(heldOutLine);
                 sb.append(heldOutLine).append("\n");
             } else {
                 sb.append(evmRepre.toString()).append("\n");
@@ -161,8 +184,21 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
 //        Utils.pause();
 
-
         return sb.toString();
+    }
+
+    private int rewriteHeldOut(TIntIntHashMap slot2Id, int argumentMarker, TIntIntHashMap rewriteMap) {
+        if (slot2Id.containsKey(argumentMarker)) {
+            int eid = slot2Id.get(argumentMarker);
+
+            if (rewriteMap.containsKey(eid)) {
+                return rewriteMap.get(eid);
+            } else {
+                return KmTargetConstants.otherMarker;
+            }
+        } else {
+            return KmTargetConstants.nullArgMarker;
+        }
     }
 
     private int rewrite(TIntIntHashMap slot2Id, int argumentMarker, TIntIntHashMap rewriteMap, TIntSet heldOutSlotAppearMarker) {
@@ -171,9 +207,7 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
             if (rewriteMap.containsKey(eid)) {
                 int heldOutId = rewriteMap.get(eid);
-
                 heldOutSlotAppearMarker.add(heldOutId);
-
                 return heldOutId;
             } else {
                 return KmTargetConstants.otherMarker;

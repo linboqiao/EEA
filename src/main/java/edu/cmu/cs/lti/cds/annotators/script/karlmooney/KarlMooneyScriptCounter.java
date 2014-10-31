@@ -39,6 +39,7 @@ import java.util.Map;
  * Time: 3:47 PM
  */
 public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
+    //TODO use word sense instead of predicate head word
 
     public static final String PARAM_DB_NAME = "dbName";
 
@@ -51,7 +52,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
     public static final String PARAM_IGNORE_LOW_FREQ = "ignoreLowFreq";
 
     //TODO consider sentence or event distance
-//    private Map<Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>>, Integer> cooccCounts;
 
     private TObjectIntMap<String> headIdMap = new TObjectIntHashMap<>();
 
@@ -62,8 +62,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
     private Map<String, Fun.Tuple2<Integer, Integer>> headTfDfMap;
 
     private int skippedBigramN;
-
-//    private DB tupleCountDb;
 
     private int counter = 0;
 
@@ -105,10 +103,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             dbParentPath.mkdirs();
         }
 
-//        tupleCountDb = DbManager.getDB(dbPath, tupleCountDbFileName, true);
-//        cooccCounts = tupleCountDb.getHashMap(cooccName);
-//        occCounts = tupleCountDb.getHashMap(occName);
-
         if (ignoreLowFreq) {
             String countingDbFileName = (String) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAME);
             if (countingDbFileName != null) {
@@ -142,42 +136,28 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedBigram =
                     firstBasedSubstitution(bigram.getLeft(), bigram.getRight());
 
-
             if (ignoreLowFreq) {
                 Fun.Tuple2<Integer, Integer> eventMention1TfDf = headTfDfMap.get(align.getLowercaseWordLemma(bigram.getLeft().getHeadWord()));
                 Fun.Tuple2<Integer, Integer> eventMention2TfDf = headTfDfMap.get(align.getLowercaseWordLemma(bigram.getRight().getHeadWord()));
-
                 //ignoring the low frequent event heads, and let's see what happen
                 if (Utils.tfDfFilter(eventMention1TfDf) || Utils.tfDfFilter(eventMention2TfDf)) {
                     continue;
                 }
             }
 
+            if (subsitutedBigram.a.a.equals("have")) {
+                System.out.println(subsitutedBigram);
+                System.out.println(compactEvmPairSubstituiton(subsitutedBigram, headIdMap));
+            }
+
             cooccCounts.adjustOrPutValue(compactEvmPairSubstituiton(subsitutedBigram, headIdMap), 1, 1);
             occCounts.adjustOrPutValue(compactEvmSubstituiton(subsitutedBigram.a, headIdMap), 1, 1);
-
-//            Integer oldCooccCount = cooccCounts.get(subsitutedBigram);
-//            if (oldCooccCount == null) {
-//                cooccCounts.put(subsitutedBigram, 1);
-//            } else {
-//                cooccCounts.put(subsitutedBigram, oldCooccCount + 1);
-//            }
-
-//            Integer occCount = occCounts.get(subsitutedBigram.a);
-//            if (occCount == null) {
-//                occCounts.put(subsitutedBigram.a, 1);
-//            } else {
-//                occCounts.put(subsitutedBigram.a, occCount + 1);
-//            }
         }
 
         //defrag from time to time
         //debug compact
         counter++;
         if (counter % 4000 == 0) {
-//            logger.info("Commit and compacting after " + counter);
-//            tupleCountDb.commit();
-//            tupleCountDb.compact();
             Utils.printMemInfo(logger, "Memory info after loaded " + counter + " files");
         }
     }
@@ -262,15 +242,15 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         }
 
         Fun.Tuple4<String, Integer, Integer, Integer> eventTuple1 = new Fun.Tuple4<>(align.getLowercaseWordLemma(evm1.getHeadWord()),
-                evm1Slots.containsKey(KmTargetConstants.firstArg0Marker) ? evm1Slots.get(KmTargetConstants.firstArg0Marker) : KmTargetConstants.nullArgMarker,
-                evm1Slots.containsKey(KmTargetConstants.firstArg1Marker) ? evm1Slots.get(KmTargetConstants.firstArg1Marker) : KmTargetConstants.nullArgMarker,
-                evm1Slots.containsKey(KmTargetConstants.firstArg2Marker) ? evm1Slots.get(KmTargetConstants.firstArg2Marker) : KmTargetConstants.nullArgMarker
+                evm1Slots.containsKey(KmTargetConstants.anchorArg0Marker) ? evm1Slots.get(KmTargetConstants.anchorArg0Marker) : KmTargetConstants.nullArgMarker,
+                evm1Slots.containsKey(KmTargetConstants.anchorArg1Marker) ? evm1Slots.get(KmTargetConstants.anchorArg1Marker) : KmTargetConstants.nullArgMarker,
+                evm1Slots.containsKey(KmTargetConstants.anchorArg2Marker) ? evm1Slots.get(KmTargetConstants.anchorArg2Marker) : KmTargetConstants.nullArgMarker
         );
 
         Fun.Tuple4<String, Integer, Integer, Integer> eventTuple2 = new Fun.Tuple4<>(align.getLowercaseWordLemma(evm2.getHeadWord()),
-                evm2Slots.containsKey(KmTargetConstants.firstArg0Marker) ? evm2Slots.get(KmTargetConstants.firstArg0Marker) : KmTargetConstants.nullArgMarker,
-                evm2Slots.containsKey(KmTargetConstants.firstArg1Marker) ? evm2Slots.get(KmTargetConstants.firstArg1Marker) : KmTargetConstants.nullArgMarker,
-                evm2Slots.containsKey(KmTargetConstants.firstArg2Marker) ? evm2Slots.get(KmTargetConstants.firstArg2Marker) : KmTargetConstants.nullArgMarker
+                evm2Slots.containsKey(KmTargetConstants.anchorArg0Marker) ? evm2Slots.get(KmTargetConstants.anchorArg0Marker) : KmTargetConstants.nullArgMarker,
+                evm2Slots.containsKey(KmTargetConstants.anchorArg1Marker) ? evm2Slots.get(KmTargetConstants.anchorArg1Marker) : KmTargetConstants.nullArgMarker,
+                evm2Slots.containsKey(KmTargetConstants.anchorArg2Marker) ? evm2Slots.get(KmTargetConstants.anchorArg2Marker) : KmTargetConstants.nullArgMarker
         );
 
         return new Fun.Tuple2<>(eventTuple1, eventTuple2);
