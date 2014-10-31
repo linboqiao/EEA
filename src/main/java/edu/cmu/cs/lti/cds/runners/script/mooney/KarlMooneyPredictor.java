@@ -258,7 +258,7 @@ public class KarlMooneyPredictor {
                 boolean sawAnswer = false;
                 if (answer.equals(candidateEvm)) {
                     sawAnswer = true;
-                    System.out.println("Answer candidate is " + candidateEvm);
+                    System.out.println("Answer candidate appears: " + candidateEvm);
                 }
 
                 double score = 0;
@@ -266,12 +266,12 @@ public class KarlMooneyPredictor {
                     Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(clozeTask.get(i), candidateEvm);
 
                     double precedingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter);
-                    if (sawAnswer) {
-                        System.out.println("Preceding transforms");
-                        System.out.println(clozeTask.get(i) + " - " + candidateEvm + "  to " + transformedTuples);
-                        System.out.println(String.format("Preceding score for Answer %s - %s is %.2f ", transformedTuples.getLeft(), transformedTuples.getRight(), precedingScore));
-
-                    }
+//                    if (sawAnswer) {
+//                        System.out.println("Preceding transforms");
+//                        System.out.println(clozeTask.get(i) + " - " + candidateEvm + "  to " + transformedTuples);
+//                        System.out.println(String.format("Preceding score for Answer %s - %s is %.2f ", transformedTuples.getLeft(), transformedTuples.getRight(), precedingScore));
+//
+//                    }
                     score += precedingScore;
                 }
 
@@ -280,11 +280,11 @@ public class KarlMooneyPredictor {
 
                     double followingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter);
 
-                    if (sawAnswer) {
-                        System.out.println("Succeeding transforms");
-                        System.out.println(candidateEvm + " " + clozeTask.get(i) + " to " + transformedTuples);
-                        System.out.println(String.format("Following score for Answer %s - %s is %.2f", transformedTuples.getLeft(), transformedTuples.getRight(), followingScore));
-                    }
+//                    if (sawAnswer) {
+//                        System.out.println("Succeeding transforms");
+//                        System.out.println(candidateEvm + " " + clozeTask.get(i) + " to " + transformedTuples);
+//                        System.out.println(String.format("Following score for Answer %s - %s is %.2f", transformedTuples.getLeft(), transformedTuples.getRight(), followingScore));
+//                    }
 
 //                    if (sawAnswer) {
 //                        System.out.println(String.format("Following score for answer %s - %s is %.2f ", transformedTuples.getLeft(), transformedTuples.getRight(), followingScore));
@@ -350,12 +350,12 @@ public class KarlMooneyPredictor {
             System.out.println(topkResults);
 
             MooneyEventRepre answer = chain.get(clozeIndex);
-            logger.info("Working on chain, correct answer is : " + answer);
+            System.out.println("Working on chain, correct answer is : " + answer);
 
-            logger.info(topkResults.toString());
+            System.out.println(topkResults.toString());
             for (Pair<MooneyEventRepre, Double> r : topkResults) {
                 if (r.getLeft().equals(answer)) {
-                    logger.info("Correct answer found");
+                    System.out.println("Correct answer found");
                     recallCount++;
                 }
             }
