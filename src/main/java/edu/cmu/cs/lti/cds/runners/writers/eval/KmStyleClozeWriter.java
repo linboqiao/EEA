@@ -35,14 +35,14 @@ public class KmStyleClozeWriter {
         Configuration config = new Configuration(new File(args[0]));
         String subPath = args.length > 1 ? args[1] : "";
 
-        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path"); //"data/02_event_tuples";
-        String paramOutputFileSuffix = ".txt";
+        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path") + "/" + subPath; //"data/02_event_tuples";
         String paramParentOutputDir = config.get("edu.cmu.cs.lti.cds.parent.output") + "/" + subPath; // "data";
         String paramBaseOutputDirName = config.get("edu.cmu.cs.lti.cds.cloze.base") + "/" + subPath; // "cloze"
         String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
-
         boolean ignoreLowFreq = args.length <= 5 || config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
+
+        String paramOutputFileSuffix = ".txt";
 
         int stepNum = 3;
 
