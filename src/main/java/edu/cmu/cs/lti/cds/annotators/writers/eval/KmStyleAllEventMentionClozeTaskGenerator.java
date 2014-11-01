@@ -5,6 +5,7 @@ import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
 import edu.cmu.cs.lti.cds.runners.FullSystemRunner;
 import edu.cmu.cs.lti.cds.utils.DbManager;
+import edu.cmu.cs.lti.cds.utils.MultiMapUtils;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
@@ -19,7 +20,6 @@ import org.apache.uima.UimaContext;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.mapdb.DB;
 import org.mapdb.Fun;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import java.util.Random;
  */
 public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomizedTextWriterAnalsysisEngine {
 
-    public static final String PARAM_HEAD_COUNT_DB_NAME = "headCountDbName";
+    public static final String PARAM_HEAD_COUNT_DB_NAMES = "headCountDbFileNames";
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
 
@@ -45,14 +45,14 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
     private Random rand = new Random();
 
-    private Map<String, Fun.Tuple2<Integer, Integer>> headTfDfMap;
+    private Map<String, Fun.Tuple2<Integer, Integer>>[] headTfDfMaps;
 
     private boolean ignoreLowFreq;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
-        String countingDbFileName = (String) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAME);
+        String[] countingDbFileNames = (String[]) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAMES);
 
         String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
 
@@ -63,8 +63,7 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
         }
 
         if (ignoreLowFreq) {
-            DB headCountDb = DbManager.getDB(dbPath, countingDbFileName);
-            headTfDfMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
+            headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
         }
     }
 
@@ -88,10 +87,10 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
             if (ignoreLowFreq) {
-                Fun.Tuple2<Integer, Integer> evmTfDf = headTfDfMap.get(align.getLowercaseWordLemma(mention.getHeadWord()));
+                int evmTf = MultiMapUtils.getTf(headTfDfMaps, align.getLowercaseWordLemma(mention.getHeadWord()));
                 //filter by low tf df counts
-                if (Utils.tfDfFilter(evmTfDf)) {
-                    logger.info("Mention filtered because of low frequency: " + mention.getCoveredText() + " " + evmTfDf);
+                if (Utils.termFrequencyFilter(evmTf)) {
+                    logger.info("Mention filtered because of low frequency: " + mention.getCoveredText() + " " + evmTf);
                     continue;
                 }
             }

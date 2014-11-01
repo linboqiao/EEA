@@ -46,11 +46,11 @@ public class Utils {
     }
 
     public static boolean tfDfFilter(int tf, int df) {
-        return documentFrequencyFilter(tf);
+        return documentFrequencyFilter(df);
     }
 
     public static boolean termFrequencyFilter(int tf) {
-        return tf / 10 == 0;
+        return tf / 50 == 0;
     }
 
     public static boolean documentFrequencyFilter(int df) {
