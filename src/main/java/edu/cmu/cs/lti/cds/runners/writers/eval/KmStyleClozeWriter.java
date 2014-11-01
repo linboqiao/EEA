@@ -7,6 +7,7 @@ import edu.cmu.cs.lti.cds.annotators.writers.eval.KmStyleAllEventMentionClozeTas
 import edu.cmu.cs.lti.cds.runners.FullSystemRunner;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
+import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -31,18 +32,14 @@ public class KmStyleClozeWriter {
     public static void main(String[] args) throws UIMAException, IOException {
         System.out.println(className + " started...");
 
-        // ///////////////////////// Parameter Setting ////////////////////////////
-        // Note that you should change the parameters below for your configuration.
-        // //////////////////////////////////////////////////////////////////////////
-        // Parameters for the reader
-        String inputDir = args[0]; //"data/02_event_tuples";
+        Configuration config = new Configuration(new File(args[0]));
 
-        // Parameters for the writer
+        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path"); //"data/02_event_tuples";
         String paramOutputFileSuffix = ".txt";
-        String paramParentOutputDir = args[1]; // "data";
-        String paramBaseOutputDirName = args[2]; // "cloze"
+        String paramParentOutputDir = config.get("edu.cmu.cs.lti.cds.parent.output"); // "data";
+        String paramBaseOutputDirName = config.get("edu.cmu.cs.lti.cds.cloze.base"); // "cloze"
+        String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
 
-        String headCountFileName = args[3]; //"headcounts"
 
         String blackListFile = args[4]; //"duplicate.count.tail"
 
@@ -55,8 +52,6 @@ public class KmStyleClozeWriter {
         }
 
         int stepNum = 3;
-
-        // ////////////////////////////////////////////////////////////////
 
         FullSystemRunner.readBlackList(new File(blackListFile));
 
@@ -78,7 +73,7 @@ public class KmStyleClozeWriter {
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_STEP_NUMBER, stepNum,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_DB_DIR_PATH, "data/_db/",
-                KmStyleAllEventMentionClozeTaskGenerator.PARAM_HEAD_COUNT_DB_NAME, headCountFileName,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_HEAD_COUNT_DB_NAMES, headCountFileNames,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq.equals("true")
         );
 
