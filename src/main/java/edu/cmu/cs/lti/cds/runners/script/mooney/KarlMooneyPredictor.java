@@ -8,6 +8,7 @@ import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
 import edu.cmu.cs.lti.cds.utils.DbManager;
 import edu.cmu.cs.lti.cds.utils.MultiMapUtils;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.list.TIntList;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TObjectIntMap;
@@ -55,12 +56,25 @@ public class KarlMooneyPredictor {
 
     public KarlMooneyPredictor(String dbPath, String[] dbNames, String occName, String cooccName, String[] countingDbFileNames, String headIdMapName) throws Exception {
         logger.setLevel(Level.INFO);
+        Utils.printMemInfo(logger, "Initial memory information ");
 
         cooccCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, cooccName, logger, "Loading coocc");
+
+        Utils.printMemInfo(logger, "Memory info after loaded cooccs");
+
         occCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, occName, logger, "Loading occ");
+
+        Utils.printMemInfo(logger, "Memory info after loaded occs");
+
         headIdMaps = MultiMapUtils.loadMaps(dbPath, dbNames, headIdMapName, logger, "Loading head ids");
+
+        Utils.printMemInfo(logger, "Memory info after loaded head ids");
+
         logger.info("Loading event head counts : " + dbPath + "/" + Joiner.on(",").join(countingDbFileNames));
+
         headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
+
+        Utils.printMemInfo(logger, "Memory info after loaded tf df");
     }
 
 
