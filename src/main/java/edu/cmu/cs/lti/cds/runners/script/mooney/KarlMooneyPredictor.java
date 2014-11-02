@@ -1,24 +1,22 @@
 package edu.cmu.cs.lti.cds.runners.script.mooney;
 
+import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
 import edu.cmu.cs.lti.cds.utils.DbManager;
-import gnu.trove.iterator.TObjectIntIterator;
+import edu.cmu.cs.lti.cds.utils.MultiMapUtils;
+import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.list.TIntList;
-import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
-import gnu.trove.map.hash.TObjectIntHashMap;
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import org.mapdb.DB;
 import org.mapdb.Fun;
-import weka.core.SerializationHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,47 +37,39 @@ public class KarlMooneyPredictor {
 
     public static final String clozeFileSuffix = ".txt";
 
-    private TObjectIntMap<TIntList> cooccCounts;
+    private TObjectIntMap<TIntList>[] cooccCountMaps;
 
-    private TObjectIntMap<TIntList> occCounts;
+    private TObjectIntMap<TIntList>[] occCountMaps;
 
-    private Map<String, Fun.Tuple2<Integer, Integer>> headCountMap;
+    private Map[] headTfDfMaps;
 
-    private TObjectIntMap<String> headIdMap = new TObjectIntHashMap<>();
+    private TObjectIntMap<String>[] headIdMaps;
 
-    private String[] idHeadMap;
+//    private String[] idHeadMap;
 
     private String className = this.getClass().getName();
 
     private Logger logger = Logger.getLogger(className);
 
 
-    public KarlMooneyPredictor(String dbPath, String dbName, String occName, String cooccName, String countingDbFileName, String headIdMapName) throws Exception {
+    public KarlMooneyPredictor(String dbPath, String[] dbNames, String occName, String cooccName, String[] countingDbFileNames, String headIdMapName) throws Exception {
         logger.setLevel(Level.INFO);
 
-        logger.info("Loading cooccs " + new File(dbPath, dbName + "_" + cooccName).getAbsolutePath());
-        cooccCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(new File(dbPath, dbName + "_" + cooccName).getAbsolutePath());
-        logger.info("Loading occ " + new File(dbPath, dbName + "_" + occName).getAbsolutePath());
-        occCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(new File(dbPath, dbName + "_" + occName).getAbsolutePath());
-        logger.info("Loading head ids: " + new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath());
-        headIdMap = (TObjectIntMap<String>) SerializationHelper.read(new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath());
-        logger.info("Loading reverse head ids");
-        loadReverseIdMap();
-
-        logger.info("Loading event head counts : " + dbPath + "/" + countingDbFileName);
-        if (countingDbFileName != null) {
-            DB headCountDb = DbManager.getDB(dbPath, countingDbFileName);
-            headCountMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
-        }
+        cooccCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, cooccName, logger, "Loading coocc");
+        occCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, occName, logger, "Loading occ");
+        headIdMaps = MultiMapUtils.loadMaps(dbPath, dbNames, headIdMapName, logger, "Loading head ids");
+        logger.info("Loading event head counts : " + dbPath + "/" + Joiner.on(",").join(countingDbFileNames));
+        headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
     }
 
-    private void loadReverseIdMap() {
-        idHeadMap = new String[headIdMap.size()];
-        for (TObjectIntIterator it = headIdMap.iterator(); it.hasNext(); ) {
-            it.advance();
-            idHeadMap[it.value()] = (String) it.key();
-        }
-    }
+
+//    private void loadReverseIdMap() {
+//        idHeadMap = new String[headIdMap.size()];
+//        for (TObjectIntIterator it = headIdMap.iterator(); it.hasNext(); ) {
+//            it.advance();
+//            idHeadMap[it.value()] = (String) it.key();
+//        }
+//    }
 
     private void loadEvalDir(String clozeDataDirPath) throws IOException {
         File clozeDataDir = new File(clozeDataDirPath);
@@ -176,42 +166,29 @@ public class KarlMooneyPredictor {
     }
 
     //this is correct but slow.
-    private double conditionalFollowing(MooneyEventRepre former, MooneyEventRepre latter, double laplacianSmoothingParameter) {
-        TIntLinkedList formerTuple = former.toCompactForm(headIdMap);
-        TIntLinkedList latterTuple = latter.toCompactForm(headIdMap);
+    private double conditionalFollowing(MooneyEventRepre former, MooneyEventRepre latter, double laplacianSmoothingParameter, int numTotalEvents) {
+        Pair<Integer, Integer> counts = MultiMapUtils.getCounts(former, latter, cooccCountMaps, occCountMaps, headIdMaps);
 
-        TIntLinkedList joinedPair = MooneyEventRepre.joinCompactForm(formerTuple, latterTuple);
-
-        double numTotalEvents = occCounts.size();
-
-        double cooccCountSmoothed;
-        if (cooccCounts.containsKey(joinedPair)) {
-            cooccCountSmoothed = cooccCounts.get(joinedPair) + laplacianSmoothingParameter;
-        } else {
-            cooccCountSmoothed = laplacianSmoothingParameter;
-        }
-
-        double formerOccCountSmoothed;
-        if (occCounts.containsKey(formerTuple)) {
-            formerOccCountSmoothed = occCounts.get(formerTuple) + numTotalEvents * laplacianSmoothingParameter;
-        } else {
-            formerOccCountSmoothed = numTotalEvents * laplacianSmoothingParameter;
-        }
+        double cooccCountSmoothed = counts.getRight() + laplacianSmoothingParameter;
+        double formerOccCountSmoothed = counts.getLeft() + numTotalEvents * laplacianSmoothingParameter;
 
         //add one smoothing
         return Math.log(cooccCountSmoothed / formerOccCountSmoothed);
     }
 
     // this is correct but slow
-    public PriorityQueue<Pair<MooneyEventRepre, Double>> predictTopK(List<MooneyEventRepre> clozeTask, Set<Integer> entities, int missingIndex, double smoothingParameter) {
-        PriorityQueue<Pair<MooneyEventRepre, Double>> rankedEvents = new PriorityQueue<>(headCountMap.size(), new DescendingScoredPairComparator());
+    public PriorityQueue<Pair<MooneyEventRepre, Double>> predictTopK(List<MooneyEventRepre> clozeTask, Set<Integer> entities, int missingIndex, Collection<String> allPredicates, double smoothingParameter) {
+        PriorityQueue<Pair<MooneyEventRepre, Double>> rankedEvents = new PriorityQueue<>(allPredicates.size(), new DescendingScoredPairComparator());
         MooneyEventRepre answer = clozeTask.get(missingIndex);
 
         logger.info("Answer is " + answer);
-        logger.info("Candidate head number : " + idHeadMap.length);
+//        logger.info("Candidate head number : " + idHeadMap.length);
 
-        for (String head : idHeadMap) {
+
+        for (String head : allPredicates) {
             List<MooneyEventRepre> candidateEvms = MooneyEventRepre.generateTuples(head, entities);
+
+            int numTotalEvents = candidateEvms.size() * allPredicates.size();
 
             for (MooneyEventRepre candidateEvm : candidateEvms) {
                 boolean sawAnswer = false;
@@ -223,13 +200,13 @@ public class KarlMooneyPredictor {
                 double score = 0;
                 for (int i = 0; i < missingIndex; i++) {
                     Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(clozeTask.get(i), candidateEvm);
-                    double precedingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter);
+                    double precedingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter, numTotalEvents);
                     score += precedingScore;
                 }
 
                 for (int i = missingIndex + 1; i < clozeTask.size(); i++) {
                     Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(candidateEvm, clozeTask.get(i));
-                    double followingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter);
+                    double followingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter, numTotalEvents);
                     score += followingScore;
                 }
 
@@ -250,11 +227,27 @@ public class KarlMooneyPredictor {
         }
     }
 
-    public void test(String clozeDataDir, int k, double smoothingParameter) throws IOException {
+    public void test(String clozeDataDir, int[] allK, double smoothingParameter) throws IOException {
         loadEvalDir(clozeDataDir);
 
-        int recallCount = 0;
+        int[] recallCounts = new int[allK.length];
         int totalCount = 0;
+        double mrr = 0;
+
+        int maxK = 0;
+        for (int k : allK) {
+            if (k > maxK) {
+                maxK = k;
+            }
+        }
+
+        Set<String> allPredicates = new HashSet<>();
+
+        logger.info("Preparing predicates");
+        for (Map<String, Fun.Tuple2<Integer, Integer>> map : headTfDfMaps) {
+            allPredicates.addAll(map.keySet());
+        }
+        logger.info("Candidate predicates number : " + allPredicates.size());
 
         while (hasNext()) {
             Pair<List<MooneyEventRepre>, Integer> clozeTask = readNext();
@@ -267,11 +260,11 @@ public class KarlMooneyPredictor {
             }
 
             Set<Integer> entities = getEntitiesFromChain(chain);
-            PriorityQueue<Pair<MooneyEventRepre, Double>> fullResults = predictTopK(chain, entities, clozeIndex, smoothingParameter);
+            PriorityQueue<Pair<MooneyEventRepre, Double>> fullResults = predictTopK(chain, entities, clozeIndex, allPredicates, smoothingParameter);
 
             List<Pair<MooneyEventRepre, Double>> topkResults = new ArrayList<>();
 
-            for (int rank = 0; rank < k; rank++) {
+            for (int rank = 0; rank < maxK; rank++) {
                 if (fullResults.isEmpty()) {
                     break;
                 }
@@ -282,16 +275,34 @@ public class KarlMooneyPredictor {
             logger.info("Working on chain, correct answer is : " + answer);
 
             logger.info(topkResults.toString());
+
+            int rank = 0;
+            boolean oov = true;
             for (Pair<MooneyEventRepre, Double> r : fullResults) {
+                rank++;
                 if (r.getLeft().equals(answer)) {
-                    logger.info("Correct answer found");
-                    recallCount++;
+                    logger.info("Correct answer found at " + rank);
+                    for (int kPos = 0; kPos < allK.length; kPos++) {
+                        if (allK[kPos] >= rank) {
+                            recallCounts[kPos]++;
+                        }
+                    }
+                    oov = false;
+                    break;
                 }
+            }
+
+            if (!oov) {
+                mrr += 1 / rank;
+            } else {
+                logger.info("Answer Predicate is OOV, assigning 0 MRRs");
             }
             totalCount++;
         }
 
-        logger.info(String.format("Recall at %d : %.2f", k, recallCount * 1.0 / totalCount));
+        for (int kPos = 0; kPos < allK.length; kPos++) {
+            logger.info(String.format("Recall at %d : %.2f", allK[kPos], recallCounts[kPos] * 1.0 / totalCount));
+        }
     }
 
 
@@ -304,54 +315,27 @@ public class KarlMooneyPredictor {
                 }
             }
         }
-
         return entities;
-    }
-
-    private void check() {
-        System.out.println("Coocc size " + cooccCounts.size());
-        System.out.println("Occ size " + occCounts.size());
-
-        int count = 10;
-
-        for (TObjectIntIterator<TIntList> it = cooccCounts.iterator(); it.hasNext(); ) {
-            it.advance();
-            TIntList pairList = it.key();
-            System.out.println(MooneyEventRepre.fromCompactForm(pairList.subList(0, 4), idHeadMap));
-            System.out.println(MooneyEventRepre.fromCompactForm(pairList.subList(4, pairList.size()), idHeadMap));
-            System.out.println(it.value());
-
-            count--;
-            if (count <= 0) {
-                break;
-            }
-        }
-
-        count = 10;
-        for (TObjectIntIterator<TIntList> it = occCounts.iterator(); it.hasNext(); ) {
-            it.advance();
-            System.out.println(MooneyEventRepre.fromCompactForm(it.key(), idHeadMap));
-            System.out.println(it.value());
-
-            count--;
-            if (count <= 0) {
-                break;
-            }
-        }
     }
 
     public static void main(String[] args) throws Exception {
         System.out.println("Starting the predictor ...");
 
-        String dbName = args[0]; //occs_94-96
-        String headCountingFileName = args[1]; //"headcounts_94-96"
-        String evalDataPath = args[2]; //"data/03_cloze_dev"
-        int k = Integer.parseInt(args[3]); //the top "k" used for evaluation
+        Configuration config = new Configuration(new File(args[0]));
+        String subPath = args.length > 1 ? args[1] : "";
 
-        KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor("data/_db", dbName, KarlMooneyScriptCounter.defaultOccMapName,
-                KarlMooneyScriptCounter.defaultCooccMapName, headCountingFileName, KarlMooneyScriptCounter.defaltHeadIdMapName);
+        String parentDataDir = config.get("edu.cmu.cs.lti.cds.parent.output"); // "data";
+        String clozeDir = config.get("edu.cmu.cs.lti.cds.cloze.base") + "_" + subPath; // "cloze"
+        String inputDir = parentDataDir + "/03_" + clozeDir;
+        String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
+        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
+
+        int[] allK = config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k");
+
+        KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor("data/_db", dbNames, KarlMooneyScriptCounter.defaultOccMapName,
+                KarlMooneyScriptCounter.defaultCooccMapName, headCountFileNames, KarlMooneyScriptCounter.defaltHeadIdMapName);
 
         kmPredictor.logger.info("Predictor started, testing ...");
-        kmPredictor.test(evalDataPath, k, 1);
+        kmPredictor.test(inputDir, allK, 1);
     }
 }
