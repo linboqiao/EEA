@@ -33,7 +33,7 @@ public class EventMentionHeadCounter extends AbstractLoggingAnnotator {
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
 
-    public static final String defaultDBName = "head_counts";
+    public static final String defaultDBName = "headcounts";
 
     public static final String defaultMentionHeadMapName = "mention_head_counts";
 

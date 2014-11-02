@@ -43,7 +43,7 @@ public class EventMentionHeadCounterRunner {
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, inputDir, false);
+                CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
         AnalysisEngineDescription kmScriptCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionHeadCounter.class, typeSystemDescription,

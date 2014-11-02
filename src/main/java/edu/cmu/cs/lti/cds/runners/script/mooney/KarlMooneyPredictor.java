@@ -185,13 +185,11 @@ public class KarlMooneyPredictor {
         return Math.log(cooccCountSmoothed / formerOccCountSmoothed);
     }
 
-    // this is correct but slow
-    public PriorityQueue<Pair<MooneyEventRepre, Double>> predictTopK(List<MooneyEventRepre> clozeTask, Set<Integer> entities, int missingIndex, Collection<String> allPredicates, double smoothingParameter) {
+    public PriorityQueue<Pair<MooneyEventRepre, Double>> predict(List<MooneyEventRepre> clozeTask, Set<Integer> entities, int missingIndex, Collection<String> allPredicates, double smoothingParameter) {
         PriorityQueue<Pair<MooneyEventRepre, Double>> rankedEvents = new PriorityQueue<>(allPredicates.size(), new DescendingScoredPairComparator());
         MooneyEventRepre answer = clozeTask.get(missingIndex);
 
         logger.info("Answer is " + answer);
-//        logger.info("Candidate head number : " + idHeadMap.length);
 
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateEvms = MooneyEventRepre.generateTuples(head, entities);
@@ -235,7 +233,7 @@ public class KarlMooneyPredictor {
     }
 
     //TODO current testing score is wrong
-    public void test(String clozeDataDir, String outputDirPath, int[] allK, double smoothingParameter) throws IOException {
+    public void test(String clozeDataDir, String outputDirPath, int[] allK, double smoothingParameter, boolean doFilter) throws IOException {
         loadEvalDir(clozeDataDir);
 
         File outputParentDir = new File(outputDirPath);
@@ -247,24 +245,22 @@ public class KarlMooneyPredictor {
         int totalCount = 0;
         double mrr = 0;
 
-        int maxK = 0;
-        for (int k : allK) {
-            if (k > maxK) {
-                maxK = k;
-            }
-        }
-
         Set<String> allPredicates = new HashSet<>();
 
         logger.info("Preparing predicates");
         for (Map<String, Fun.Tuple2<Integer, Integer>> map : headTfDfMaps) {
             for (Map.Entry<String, Fun.Tuple2<Integer, Integer>> entry : map.entrySet()) {
-                int tf = MultiMapUtils.getTf(headTfDfMaps, entry.getKey());
-                if (Utils.termFrequencyFilter(tf)) {
+                if (doFilter) {
+                    int tf = MultiMapUtils.getTf(headTfDfMaps, entry.getKey());
+                    if (!Utils.termFrequencyFilter(tf)) {
+                        allPredicates.add(entry.getKey());
+                    }
+                } else {
                     allPredicates.add(entry.getKey());
                 }
             }
         }
+
         logger.info("Candidate predicates number : " + allPredicates.size());
 
         while (hasNext()) {
@@ -280,27 +276,16 @@ public class KarlMooneyPredictor {
             }
 
             Set<Integer> entities = getEntitiesFromChain(chain);
-            PriorityQueue<Pair<MooneyEventRepre, Double>> fullResults = predictTopK(chain, entities, clozeIndex, allPredicates, smoothingParameter);
+            PriorityQueue<Pair<MooneyEventRepre, Double>> fullResults = predict(chain, entities, clozeIndex, allPredicates, smoothingParameter);
 
-            List<Pair<MooneyEventRepre, Double>> topkResults = new ArrayList<>();
-
-            for (int rank = 0; rank < maxK; rank++) {
-                if (fullResults.isEmpty()) {
-                    break;
-                }
-                topkResults.add(fullResults.poll());
-            }
             MooneyEventRepre answer = chain.get(clozeIndex);
-
             logger.info("Working on chain, correct answer is : " + answer);
 
-            logger.info(topkResults.toString());
-
+            //write and check all results until you see the correct one
             int rank;
             boolean oov = true;
             List<String> lines = new ArrayList<>();
-
-            for (rank = 0; rank < maxK; rank++) {
+            for (rank = 1; rank <= fullResults.size(); rank++) {
                 Pair<MooneyEventRepre, Double> r = fullResults.poll();
                 lines.add(r.getLeft() + "\t" + r.getRight());
                 if (r.getLeft().equals(answer)) {
@@ -330,7 +315,7 @@ public class KarlMooneyPredictor {
             logger.info(String.format("Recall at %d : %.4f", allK[kPos], recallCounts[kPos] * 1.0 / totalCount));
         }
 
-        logger.info(String.format("MRR is : %.4f", mrr));
+        logger.info(String.format("MRR is : %.4f", mrr / totalCount));
     }
 
 
@@ -361,10 +346,12 @@ public class KarlMooneyPredictor {
         int[] allK = config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k");
         String outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + "_" + subPath;
 
+        boolean filter = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
+
         KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor("data/_db", dbNames, KarlMooneyScriptCounter.defaultOccMapName,
                 KarlMooneyScriptCounter.defaultCooccMapName, headCountFileNames, KarlMooneyScriptCounter.defaltHeadIdMapName);
 
         kmPredictor.logger.info("Predictor started, testing ...");
-        kmPredictor.test(inputDir, outputPath, allK, 1);
+        kmPredictor.test(inputDir, outputPath, allK, 1, filter);
     }
 }
