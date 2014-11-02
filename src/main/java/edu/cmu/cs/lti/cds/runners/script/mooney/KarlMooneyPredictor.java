@@ -262,7 +262,12 @@ public class KarlMooneyPredictor {
 
         logger.info("Preparing predicates");
         for (Map<String, Fun.Tuple2<Integer, Integer>> map : headTfDfMaps) {
-            allPredicates.addAll(map.keySet());
+            for (Map.Entry<String, Fun.Tuple2<Integer, Integer>> entry : map.entrySet()) {
+                int tf = MultiMapUtils.getTf(headTfDfMaps, entry.getKey());
+                if (Utils.termFrequencyFilter(tf)) {
+                    allPredicates.add(entry.getKey());
+                }
+            }
         }
         logger.info("Candidate predicates number : " + allPredicates.size());
 
