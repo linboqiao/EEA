@@ -346,7 +346,7 @@ public class KarlMooneyPredictor {
 
         int[] allK = config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k");
 
-        String outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path");
+        String outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + "_" + subPath;
 
         KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor("data/_db", dbNames, KarlMooneyScriptCounter.defaultOccMapName,
                 KarlMooneyScriptCounter.defaultCooccMapName, headCountFileNames, KarlMooneyScriptCounter.defaltHeadIdMapName);
