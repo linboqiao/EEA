@@ -151,10 +151,10 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
                 }
             }
 
-            if (subsitutedBigram.a.a.equals("have")) {
-                System.out.println(subsitutedBigram);
-                System.out.println(compactEvmPairSubstituiton(subsitutedBigram, headIdMap));
-            }
+//            if (subsitutedBigram.a.a.equals("have")) {
+//                System.out.println(subsitutedBigram);
+//                System.out.println(compactEvmPairSubstituiton(subsitutedBigram, headIdMap));
+//            }
 
             cooccCounts.adjustOrPutValue(compactEvmPairSubstituiton(subsitutedBigram, headIdMap), 1, 1);
             occCounts.adjustOrPutValue(compactEvmSubstituiton(subsitutedBigram.a, headIdMap), 1, 1);
