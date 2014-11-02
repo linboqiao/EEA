@@ -315,8 +315,10 @@ public class KarlMooneyPredictor {
         }
 
         for (int kPos = 0; kPos < allK.length; kPos++) {
-            logger.info(String.format("Recall at %d : %.2f", allK[kPos], recallCounts[kPos] * 1.0 / totalCount));
+            logger.info(String.format("Recall at %d : %.4f", allK[kPos], recallCounts[kPos] * 1.0 / totalCount));
         }
+
+        logger.info(String.format("MRR is : %.4f", mrr));
     }
 
 
