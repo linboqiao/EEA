@@ -60,21 +60,18 @@ public class KarlMooneyPredictor {
 
         cooccCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, cooccName, logger, "Loading coocc");
 
-        Utils.printMemInfo(logger, "Memory info after loaded cooccs");
 
         occCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, occName, logger, "Loading occ");
 
-        Utils.printMemInfo(logger, "Memory info after loaded occs");
 
         headIdMaps = MultiMapUtils.loadMaps(dbPath, dbNames, headIdMapName, logger, "Loading head ids");
 
-        Utils.printMemInfo(logger, "Memory info after loaded head ids");
 
         logger.info("Loading event head counts : " + dbPath + "/" + Joiner.on(",").join(countingDbFileNames));
 
         headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
 
-        Utils.printMemInfo(logger, "Memory info after loaded tf df");
+        Utils.printMemInfo(logger, "Memory info after all loading");
     }
 
 
