@@ -193,7 +193,6 @@ public class KarlMooneyPredictor {
         logger.info("Answer is " + answer);
 //        logger.info("Candidate head number : " + idHeadMap.length);
 
-
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateEvms = MooneyEventRepre.generateTuples(head, entities);
 
@@ -222,7 +221,6 @@ public class KarlMooneyPredictor {
                 if (sawAnswer) {
                     logger.info(String.format("Answer score for %s is %.2f", candidateEvm, score));
                 }
-
                 rankedEvents.add(Pair.of(candidateEvm, score));
             }
         }
@@ -297,11 +295,12 @@ public class KarlMooneyPredictor {
 
             logger.info(topkResults.toString());
 
-            int rank = 0;
+            int rank;
             boolean oov = true;
             List<String> lines = new ArrayList<>();
-            for (Pair<MooneyEventRepre, Double> r : topkResults) {
-                rank++;
+
+            for (rank = 0; rank < maxK; rank++) {
+                Pair<MooneyEventRepre, Double> r = fullResults.poll();
                 lines.add(r.getLeft() + "\t" + r.getRight());
                 if (r.getLeft().equals(answer)) {
                     logger.info("Correct answer found at " + rank);
