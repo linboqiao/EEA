@@ -35,8 +35,9 @@ public class MultiMapUtils {
         for (int i = 0; i < dbNames.length; i++) {
             String mapPath = new File(dbPath, dbNames[i] + "_" + mapName).getAbsolutePath();
             logger.info(msg + " " + mapPath);
-            Utils.printMemInfo(logger, "Memory info");
+            Utils.printMemInfo(logger, "Before loading");
             TObjectIntMap<T> map = (TObjectIntMap<T>) SerializationHelper.read(mapPath);
+            Utils.printMemInfo(logger, "After loading");
             maps[i] = map;
         }
         return maps;

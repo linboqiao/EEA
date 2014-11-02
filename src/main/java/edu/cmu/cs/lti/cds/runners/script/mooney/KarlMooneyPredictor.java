@@ -60,12 +60,9 @@ public class KarlMooneyPredictor {
 
         cooccCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, cooccName, logger, "Loading coocc");
 
-
         occCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, occName, logger, "Loading occ");
 
-
         headIdMaps = MultiMapUtils.loadMaps(dbPath, dbNames, headIdMapName, logger, "Loading head ids");
-
 
         logger.info("Loading event head counts : " + dbPath + "/" + Joiner.on(",").join(countingDbFileNames));
 
@@ -278,7 +275,6 @@ public class KarlMooneyPredictor {
             int clozeIndex = clozeTask.getMiddle();
             String outputBase = clozeTask.getRight() + "_res";
 
-
             if (clozeIndex == -1) {
                 logger.info("Ignoring empty file");
                 continue;
@@ -363,7 +359,6 @@ public class KarlMooneyPredictor {
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
 
         int[] allK = config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k");
-
         String outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + "_" + subPath;
 
         KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor("data/_db", dbNames, KarlMooneyScriptCounter.defaultOccMapName,
