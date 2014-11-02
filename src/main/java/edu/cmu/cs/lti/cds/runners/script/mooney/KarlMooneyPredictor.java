@@ -16,6 +16,7 @@ import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 import org.mapdb.Fun;
 
 import java.io.File;
@@ -94,7 +95,7 @@ public class KarlMooneyPredictor {
         return evalPointer < allClozeFiles.size();
     }
 
-    private Pair<List<MooneyEventRepre>, Integer> readNext() throws IOException {
+    private Triple<List<MooneyEventRepre>, Integer, String> readNext() throws IOException {
         File clozeFile = allClozeFiles.get(evalPointer++);
 
         logger.info("Predicting cloze task : " + clozeFile.getName());
@@ -114,7 +115,7 @@ public class KarlMooneyPredictor {
             }
         }
 
-        return Pair.of(repres, blankIndex);
+        return Triple.of(repres, blankIndex, clozeFile.getName());
     }
 
     private Pair<MooneyEventRepre, MooneyEventRepre> formerBasedTransform(MooneyEventRepre former, MooneyEventRepre latter) {
@@ -227,8 +228,13 @@ public class KarlMooneyPredictor {
         }
     }
 
-    public void test(String clozeDataDir, int[] allK, double smoothingParameter) throws IOException {
+    public void test(String clozeDataDir, String outputDirPath, int[] allK, double smoothingParameter) throws IOException {
         loadEvalDir(clozeDataDir);
+
+        File outputParentDir = new File(outputDirPath);
+        if (!outputParentDir.exists()) {
+            outputParentDir.mkdirs();
+        }
 
         int[] recallCounts = new int[allK.length];
         int totalCount = 0;
@@ -250,9 +256,12 @@ public class KarlMooneyPredictor {
         logger.info("Candidate predicates number : " + allPredicates.size());
 
         while (hasNext()) {
-            Pair<List<MooneyEventRepre>, Integer> clozeTask = readNext();
+            Triple<List<MooneyEventRepre>, Integer, String> clozeTask = readNext();
+
             List<MooneyEventRepre> chain = clozeTask.getLeft();
-            int clozeIndex = clozeTask.getRight();
+            int clozeIndex = clozeTask.getMiddle();
+            String outputBase = clozeTask.getRight() + "_res";
+
 
             if (clozeIndex == -1) {
                 logger.info("Ignoring empty file");
@@ -270,16 +279,18 @@ public class KarlMooneyPredictor {
                 }
                 topkResults.add(fullResults.poll());
             }
-
             MooneyEventRepre answer = chain.get(clozeIndex);
+
             logger.info("Working on chain, correct answer is : " + answer);
 
             logger.info(topkResults.toString());
 
             int rank = 0;
             boolean oov = true;
-            for (Pair<MooneyEventRepre, Double> r : fullResults) {
+            List<String> lines = new ArrayList<>();
+            for (Pair<MooneyEventRepre, Double> r : topkResults) {
                 rank++;
+                lines.add(r.getLeft() + "\t" + r.getRight());
                 if (r.getLeft().equals(answer)) {
                     logger.info("Correct answer found at " + rank);
                     for (int kPos = 0; kPos < allK.length; kPos++) {
@@ -291,6 +302,9 @@ public class KarlMooneyPredictor {
                     break;
                 }
             }
+
+            File outputFile = new File(outputDirPath, outputBase);
+            FileUtils.writeLines(outputFile, lines);
 
             if (!oov) {
                 mrr += 1 / rank;
@@ -332,10 +346,12 @@ public class KarlMooneyPredictor {
 
         int[] allK = config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k");
 
+        String outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path");
+
         KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor("data/_db", dbNames, KarlMooneyScriptCounter.defaultOccMapName,
                 KarlMooneyScriptCounter.defaultCooccMapName, headCountFileNames, KarlMooneyScriptCounter.defaltHeadIdMapName);
 
         kmPredictor.logger.info("Predictor started, testing ...");
-        kmPredictor.test(inputDir, allK, 1);
+        kmPredictor.test(inputDir, outputPath, allK, 1);
     }
 }
