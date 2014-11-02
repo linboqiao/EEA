@@ -52,7 +52,6 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
-        String[] countingDbFileNames = (String[]) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAMES);
 
         String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
 
@@ -63,6 +62,7 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
         }
 
         if (ignoreLowFreq) {
+            String[] countingDbFileNames = (String[]) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAMES);
             headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
         }
     }

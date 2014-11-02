@@ -8,6 +8,7 @@ import edu.cmu.cs.lti.cds.runners.FullSystemRunner;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
+import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -32,23 +33,15 @@ public class MooneyScriptCounterRunner {
     public static void main(String[] args) throws UIMAException, IOException {
         System.out.println(className + " started...");
 
-        // ///////////////////////// Parameter Setting ////////////////////////////
-        // Note that you should change the parameters below for your configuration.
-        // //////////////////////////////////////////////////////////////////////////
-        // Parameters for the reader
-        String inputDir = args[0]; //"data/02_event_tuples";
+        Configuration config = new Configuration(new File(args[0]));
+        String occSuffix = args.length > 1 ? args[1] : ""; //e.g. 00-02, full
 
-        String blackListFile = args[1]; //"duplicate.count.tail"
-
-        String dbNamePrefix = args[2]; //"00-02"
-
-        String ignoreLowFreq;
-        if (args.length > 3) {
-            ignoreLowFreq = args[3]; //"true"
-        } else {
-            //default true
-            ignoreLowFreq = "true";
-        }
+        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path"); //"data/02_event_tuples";
+        String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
+        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //data/_db
+        String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
+        boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
+        int skipGramN = config.getInt("edu.cmu.cs.lti.cds.skipgram.n");
 
         // ////////////////////////////////////////////////////////////////
 
@@ -61,15 +54,15 @@ public class MooneyScriptCounterRunner {
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createGzippedXmiReader(typeSystemDescription, inputDir, false);
+                CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
         AnalysisEngineDescription kmScriptCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
                 KarlMooneyScriptCounter.class, typeSystemDescription,
-                KarlMooneyScriptCounter.PARAM_DB_DIR_PATH, "data/_db/",
-                KarlMooneyScriptCounter.PARAM_SKIP_BIGRAM_N, 2,
-                KarlMooneyScriptCounter.PARAM_DB_NAME, "occs_" + dbNamePrefix,
-                KarlMooneyScriptCounter.PARAM_HEAD_COUNT_DB_NAME, "headcounts_" + dbNamePrefix,
-                KarlMooneyScriptCounter.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq.equals("true"),
+                KarlMooneyScriptCounter.PARAM_DB_DIR_PATH, dbPath,
+                KarlMooneyScriptCounter.PARAM_SKIP_BIGRAM_N, skipGramN,
+                KarlMooneyScriptCounter.PARAM_DB_NAME, "occs_" + occSuffix,
+                KarlMooneyScriptCounter.PARAM_HEAD_COUNT_DB_NAMES, headCountFileNames,
+                KarlMooneyScriptCounter.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
                 AbstractLoggingAnnotator.PARAM_KEEP_QUIET, false);
 
         SimplePipeline.runPipeline(reader, kmScriptCounter);

@@ -234,6 +234,7 @@ public class KarlMooneyPredictor {
         }
     }
 
+    //TODO current testing score is wrong
     public void test(String clozeDataDir, String outputDirPath, int[] allK, double smoothingParameter) throws IOException {
         loadEvalDir(clozeDataDir);
 
