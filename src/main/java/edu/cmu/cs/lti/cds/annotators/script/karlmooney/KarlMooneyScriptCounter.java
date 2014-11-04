@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.cds.annotators.script.karlmooney;
 
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
+import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
 import edu.cmu.cs.lti.cds.runners.FullSystemRunner;
 import edu.cmu.cs.lti.cds.utils.DbManager;
 import edu.cmu.cs.lti.cds.utils.MultiMapUtils;
@@ -139,7 +140,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         //TODO we probably also want to have a EOF indicator here
         for (Pair<EventMention, EventMention> bigram : mentionBigrams) {
             Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedBigram =
-                    firstBasedSubstitution(bigram.getLeft(), bigram.getRight());
+                    firstBasedSubstitution(align, bigram.getLeft(), bigram.getRight());
 
             if (ignoreLowFreq) {
                 int evm1Tf = MultiMapUtils.getTf(headTfDfMaps, align.getLowercaseWordLemma(bigram.getLeft().getHeadWord()));
@@ -208,8 +209,63 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
     }
 
 
-    private Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>>
-    firstBasedSubstitution(EventMention evm1, EventMention evm2) {
+    //TODO check correctness
+    public static Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> firstBasedSubstitution(
+            TokenAlignmentHelper align, LocalEventMentionRepre evm1, LocalEventMentionRepre evm2) {
+
+        TIntIntHashMap evm1Args = new TIntIntHashMap();
+
+        TIntIntHashMap evm1Slots = new TIntIntHashMap();
+        TIntIntHashMap evm2Slots = new TIntIntHashMap();
+
+        for (int i = 0; i < evm1.getNumArgs(); i++) {
+            int argMarker = KmTargetConstants.slotIndexToArgMarker(i);
+
+            Pair<Integer, String> argi = evm1.getArg(i);
+
+            if (argi != null) {
+                evm1Args.put(evm1.getArg(i).getKey(), argMarker);
+                evm1Slots.put(argMarker, KmTargetConstants.otherMarker);
+            }
+        }
+
+        for (int i = 0; i < evm2.getNumArgs(); i++) {
+            int argMarker = KmTargetConstants.slotIndexToArgMarker(i);
+            Pair<Integer, String> argi = evm1.getArg(i);
+
+            if (argi != null) {
+                int entityId = argi.getKey();
+
+                int substituteId;
+                if (evm1Args.containsKey(entityId)) {
+                    substituteId = evm1Args.get(entityId);
+                    evm1Slots.put(substituteId, substituteId);
+                } else {
+                    substituteId = KmTargetConstants.otherMarker;
+                }
+                evm2Slots.put(argMarker, substituteId);
+            }
+        }
+
+
+        Fun.Tuple4<String, Integer, Integer, Integer> eventTuple1 = new Fun.Tuple4<>(evm1.getMentionHead(),
+                evm1Slots.containsKey(KmTargetConstants.anchorArg0Marker) ? evm1Slots.get(KmTargetConstants.anchorArg0Marker) : KmTargetConstants.nullArgMarker,
+                evm1Slots.containsKey(KmTargetConstants.anchorArg1Marker) ? evm1Slots.get(KmTargetConstants.anchorArg1Marker) : KmTargetConstants.nullArgMarker,
+                evm1Slots.containsKey(KmTargetConstants.anchorArg2Marker) ? evm1Slots.get(KmTargetConstants.anchorArg2Marker) : KmTargetConstants.nullArgMarker
+        );
+
+        Fun.Tuple4<String, Integer, Integer, Integer> eventTuple2 = new Fun.Tuple4<>(evm2.getMentionHead(),
+                evm2Slots.containsKey(KmTargetConstants.anchorArg0Marker) ? evm2Slots.get(KmTargetConstants.anchorArg0Marker) : KmTargetConstants.nullArgMarker,
+                evm2Slots.containsKey(KmTargetConstants.anchorArg1Marker) ? evm2Slots.get(KmTargetConstants.anchorArg1Marker) : KmTargetConstants.nullArgMarker,
+                evm2Slots.containsKey(KmTargetConstants.anchorArg2Marker) ? evm2Slots.get(KmTargetConstants.anchorArg2Marker) : KmTargetConstants.nullArgMarker
+        );
+
+        return new Fun.Tuple2<>(eventTuple1, eventTuple2);
+    }
+
+    public static Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> firstBasedSubstitution(
+            TokenAlignmentHelper align, EventMention evm1, EventMention evm2) {
+
         TIntIntHashMap evm1Args = new TIntIntHashMap();
 
         TIntIntHashMap evm1Slots = new TIntIntHashMap();

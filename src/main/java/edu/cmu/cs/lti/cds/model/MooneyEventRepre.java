@@ -59,7 +59,6 @@ public class MooneyEventRepre {
         }
     }
 
-
     public void setPredicate(String predicate) {
         this.predicate = predicate;
     }
@@ -136,7 +135,6 @@ public class MooneyEventRepre {
         String[] groups = s.split("\\(");
         String predicate = groups[0];
         String[] arg = groups[1].substring(0, groups[1].length() - 1).split(",");
-
 
         if (predicate.equals(KmTargetConstants.clozeBlankIndicator)) {
             return new MooneyEventRepre(Integer.parseInt(arg[0]), Integer.parseInt(arg[1]), Integer.parseInt(arg[2]));

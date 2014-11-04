@@ -338,6 +338,7 @@ public class KarlMooneyPredictor {
         String subPath = args.length > 1 ? args[1] : "";
 
         String parentDataDir = config.get("edu.cmu.cs.lti.cds.parent.output"); // "data";
+        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
         String clozeDir = config.get("edu.cmu.cs.lti.cds.cloze.base") + "_" + subPath; // "cloze"
         String inputDir = parentDataDir + "/03_" + clozeDir;
         String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
@@ -348,7 +349,7 @@ public class KarlMooneyPredictor {
 
         boolean filter = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
 
-        KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor("data/_db", dbNames, KarlMooneyScriptCounter.defaultOccMapName,
+        KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor(dbPath, dbNames, KarlMooneyScriptCounter.defaultOccMapName,
                 KarlMooneyScriptCounter.defaultCooccMapName, headCountFileNames, KarlMooneyScriptCounter.defaltHeadIdMapName);
 
         kmPredictor.logger.info("Predictor started, testing ...");
