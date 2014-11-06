@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.cds.annotators.script.karlmooney;
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
-import edu.cmu.cs.lti.cds.runners.FullSystemRunner;
+import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.cds.utils.DbManager;
 import edu.cmu.cs.lti.cds.utils.MultiMapUtils;
 import edu.cmu.cs.lti.script.type.Article;
@@ -126,7 +126,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
 
-        if (FullSystemRunner.blackListedArticleId.contains(article.getArticleName())) {
+        if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
             //ignore this blacklisted file;
             logger.info("Ignored black listed file");
             return;

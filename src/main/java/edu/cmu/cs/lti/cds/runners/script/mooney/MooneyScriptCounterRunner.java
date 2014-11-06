@@ -4,7 +4,7 @@
 package edu.cmu.cs.lti.cds.runners.script.mooney;
 
 import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
-import edu.cmu.cs.lti.cds.runners.FullSystemRunner;
+import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -45,7 +45,7 @@ public class MooneyScriptCounterRunner {
 
         // ////////////////////////////////////////////////////////////////
 
-        FullSystemRunner.readBlackList(new File(blackListFile));
+        DataPool.readBlackList(new File(blackListFile));
 
         String paramTypeSystemDescriptor = "TypeSystem";
 

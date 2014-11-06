@@ -1,11 +1,14 @@
 package edu.cmu.cs.lti.cds.dist;
 
+import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
 import edu.cmu.cs.lti.cds.utils.DataPool;
+import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.iterator.TObjectIntIterator;
 import org.apache.commons.lang3.tuple.Pair;
 import org.mapdb.Fun;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -19,8 +22,6 @@ import java.util.*;
 public class GlobalUnigrmHwLocalUniformArgumentDist {
     Map<String, Fun.Tuple2<Integer, Integer>>[] headTfDfMaps;
 
-    String[] headWords;
-
     private final Random random;
 
     /* The probability and alias tables. */
@@ -33,8 +34,10 @@ public class GlobalUnigrmHwLocalUniformArgumentDist {
 
     private static double[] headCounts2Probs() {
         double[] probabilities = new double[DataPool.headIdMap.size()];
-        for (TObjectIntIterator<String> iter = DataPool.headIdMap.iterator(); iter.hasNext(); iter.advance()) {
+        for (TObjectIntIterator<String> iter = DataPool.headIdMap.iterator(); iter.hasNext(); ) {
+            iter.advance();
             probabilities[iter.value()] = DataPool.getPredicateProb(iter.key());
+
         }
         return probabilities;
     }
@@ -143,6 +146,7 @@ public class GlobalUnigrmHwLocalUniformArgumentDist {
     public Pair<LocalEventMentionRepre, Double> draw(List<Pair<Integer, String>> candidateArguments, int numArguments) {
         String predicate = drawPredicate();
 
+        //TODO do not let two argument share the same entity
         Pair<Integer, String>[] arguments = new Pair[numArguments];
         for (int i = 0; i < numArguments; i++) {
             arguments[i] = candidateArguments.get(random.nextInt(candidateArguments.size()));
@@ -152,12 +156,27 @@ public class GlobalUnigrmHwLocalUniformArgumentDist {
     }
 
     public String drawPredicate() {
-        return headWords[next()];
+        return DataPool.headWords[next()];
     }
 
     public Double probOf(LocalEventMentionRepre evm, int numCandidates, int numArguments) {
         double probOfEvm = DataPool.getPredicateProb(evm.getMentionHead());
-        double probOfArguments = Math.pow(1 / numCandidates, numArguments);
+        double probOfArguments = Math.pow(1.0 / numCandidates, numArguments);
         return probOfEvm * probOfArguments;
+    }
+
+    public static void main(String[] args) throws Exception {
+        //test the unigram draw
+        Configuration config = new Configuration(new File(args[0]));
+
+        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
+        String[] countingDbFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files");
+        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
+
+        //prepare data
+        DataPool.loadHeadIds(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName);
+        DataPool.loadHeadCounts(dbPath, countingDbFileNames, true);
+
+        GlobalUnigrmHwLocalUniformArgumentDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist();
     }
 }

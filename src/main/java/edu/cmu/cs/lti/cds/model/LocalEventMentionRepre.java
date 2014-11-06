@@ -19,13 +19,16 @@ import org.apache.commons.lang3.tuple.Pair;
  * Time: 3:44 PM
  */
 public class LocalEventMentionRepre {
-    private String mentionHead;
+    private final String mentionHead;
+
+    //Note, this could be null! Means no argument at this position
     //entity id (clustered mentions), head word pair
-    private Pair<Integer, String>[] args;
+    private final Pair<Integer, String>[] args;
 
     //TODO: change mention head to an integer
     public LocalEventMentionRepre(String mentionHead, Pair<Integer, String> arg0, Pair<Integer, String> arg1, Pair<Integer, String> arg2) {
         this.mentionHead = mentionHead;
+        this.args = new Pair[3];
         this.args[0] = arg0;
         this.args[1] = arg1;
         this.args[2] = arg2;
@@ -58,10 +61,6 @@ public class LocalEventMentionRepre {
         return mentionHead;
     }
 
-    public void setMentionHead(String mentionHead) {
-        this.mentionHead = mentionHead;
-    }
-
     public Pair<Integer, String> getArg(int i) {
         return args[i];
     }
@@ -72,5 +71,23 @@ public class LocalEventMentionRepre {
 
     public int getNumArgs() {
         return args.length;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(mentionHead).append(" : ");
+        for (int i = 0; i < args.length; i++) {
+            sb.append("\t");
+            Pair<Integer, String> arg = args[i];
+            if (arg != null) {
+                sb.append("arg").append(i).append(" ").append(arg.toString());
+            } else {
+                sb.append("arg").append(i).append(" null");
+            }
+
+        }
+
+        return sb.toString();
     }
 }

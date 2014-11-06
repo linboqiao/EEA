@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.cds.annotators.writers.eval;
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
-import edu.cmu.cs.lti.cds.runners.FullSystemRunner;
+import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.cds.utils.DbManager;
 import edu.cmu.cs.lti.cds.utils.MultiMapUtils;
 import edu.cmu.cs.lti.script.type.Article;
@@ -73,7 +73,7 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
 
-        if (FullSystemRunner.blackListedArticleId.contains(article.getArticleName())) {
+        if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
             //ignore this blacklisted file;
             logger.info("Ignored black listed file");
             return "";
@@ -146,7 +146,6 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 //                        chain[i].setArgument(KmTargetConstants.argMarkerToSlotIndex(argument), argument);
 //                        System.out.println("Setting slot id " + KmTargetConstants.argMarkerToSlotIndex(argument) + " into " + argument);
 //                    } else {
-//                        //TODO null doesn't work?
 //                        chain[i].setArgument(argument, KmTargetConstants.nullArgMarker);
 //                        System.out.println("Setting slot id " + KmTargetConstants.argMarkerToSlotIndex(argument) + " into null " + KmTargetConstants.nullArgMarker);
 //                    }

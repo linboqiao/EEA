@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.cds.annotators.script;
 
-import edu.cmu.cs.lti.cds.runners.FullSystemRunner;
+import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
@@ -68,7 +68,7 @@ public class EventMentionHeadCounter extends AbstractLoggingAnnotator {
 
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
 
-        if (FullSystemRunner.blackListedArticleId.contains(article.getArticleName())) {
+        if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
             //ignore this blacklisted file;
             logger.info("Ignored black listed file");
             return;

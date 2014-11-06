@@ -53,7 +53,6 @@ public class KarlMooneyPredictor {
 
     private Logger logger = Logger.getLogger(className);
 
-
     public KarlMooneyPredictor(String dbPath, String[] dbNames, String occName, String cooccName, String[] countingDbFileNames, String headIdMapName) throws Exception {
         logger.setLevel(Level.INFO);
         Utils.printMemInfo(logger, "Initial memory information ");
@@ -232,7 +231,6 @@ public class KarlMooneyPredictor {
         }
     }
 
-    //TODO current testing score is wrong
     public void test(String clozeDataDir, String outputDirPath, int[] allK, double smoothingParameter, boolean doFilter) throws IOException {
         loadEvalDir(clozeDataDir);
 

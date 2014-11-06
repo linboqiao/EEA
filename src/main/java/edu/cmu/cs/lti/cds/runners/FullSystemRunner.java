@@ -5,11 +5,11 @@ import edu.cmu.cs.lti.cds.annotators.clustering.WhRcModResoluter;
 import edu.cmu.cs.lti.cds.annotators.patches.HeadWordFixer;
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.script.type.Entity;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
-import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -19,13 +19,9 @@ import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 public class FullSystemRunner {
     static String className = FullSystemRunner.class.getName();
-
-    public static Set<String> blackListedArticleId = new HashSet<>();
 
     public static void main(String[] args) throws UIMAException, IOException {
         System.out.println(className + " started...");
@@ -47,7 +43,7 @@ public class FullSystemRunner {
         String paramOutputFileSuffix = null;
         // ////////////////////////////////////////////////////////////////
 
-        readBlackList(new File(blackListFile));
+        DataPool.readBlackList(new File(blackListFile));
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -107,11 +103,5 @@ public class FullSystemRunner {
         SimplePipeline.runPipeline(reader, fixer, whLinker, tupleExtractor, syntaticDirectArgumentExtractor, syntacticArgumentPropagater, goalMentionAnnotator, idAssignRunner, headCounter, writer);
 
         System.out.println(className + " successfully completed.");
-    }
-
-    public static void readBlackList(File blackListFile) throws IOException {
-        for (String line : FileUtils.readLines(blackListFile)) {
-            blackListedArticleId.add(line.trim());
-        }
     }
 }

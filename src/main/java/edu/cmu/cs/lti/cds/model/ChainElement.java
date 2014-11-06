@@ -14,26 +14,6 @@ public class ChainElement {
 
     private LocalEventMentionRepre mention;
 
-//    private boolean isBeginningOfDocument = false;
-//    private boolean isEndOfDocument = false;
-//
-//    public static ChainElement getBeginOfDoc() {
-//        ChainElement e = new ChainElement();
-//        e.isBeginningOfDocument = true;
-//        return e;
-//    }
-//
-//    public static ChainElement getEndOfDoc() {
-//        ChainElement e = new ChainElement();
-//        e.isEndOfDocument = true;
-//        return e;
-//    }
-
-//    public ChainElement() {
-//        isBeginningOfDocument = true;
-//        isEndOfDocument = true;
-//    }
-
     public ChainElement(Sentence sent, LocalEventMentionRepre mention) {
         this.sent = sent;
         this.mention = mention;
@@ -55,6 +35,11 @@ public class ChainElement {
     public void setMention(LocalEventMentionRepre mention) {
         this.mention = mention;
     }
+
+    public String toString() {
+        return mention + "@" + sent.getId();
+    }
+
 
 //    public boolean isBeginningOfDocument() {
 //        return isBeginningOfDocument;
