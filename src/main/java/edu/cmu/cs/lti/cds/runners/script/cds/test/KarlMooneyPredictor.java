@@ -1,12 +1,13 @@
-package edu.cmu.cs.lti.cds.runners.script.mooney;
+package edu.cmu.cs.lti.cds.runners.script.cds.test;
 
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
-import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
 import edu.cmu.cs.lti.cds.utils.DbManager;
 import edu.cmu.cs.lti.cds.utils.MultiMapUtils;
+import edu.cmu.cs.lti.utils.Comparators;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.list.TIntList;
@@ -47,8 +48,6 @@ public class KarlMooneyPredictor {
 
     private TObjectIntMap<String>[] headIdMaps;
 
-//    private String[] idHeadMap;
-
     private String className = this.getClass().getName();
 
     private Logger logger = Logger.getLogger(className);
@@ -69,15 +68,6 @@ public class KarlMooneyPredictor {
 
         Utils.printMemInfo(logger, "Memory info after all loading");
     }
-
-
-//    private void loadReverseIdMap() {
-//        idHeadMap = new String[headIdMap.size()];
-//        for (TObjectIntIterator it = headIdMap.iterator(); it.hasNext(); ) {
-//            it.advance();
-//            idHeadMap[it.value()] = (String) it.key();
-//        }
-//    }
 
     private void loadEvalDir(String clozeDataDirPath) throws IOException {
         File clozeDataDir = new File(clozeDataDirPath);
@@ -125,7 +115,7 @@ public class KarlMooneyPredictor {
         return Triple.of(repres, blankIndex, clozeFile.getName());
     }
 
-    private Pair<MooneyEventRepre, MooneyEventRepre> formerBasedTransform(MooneyEventRepre former, MooneyEventRepre latter) {
+    public static Pair<MooneyEventRepre, MooneyEventRepre> formerBasedTransform(MooneyEventRepre former, MooneyEventRepre latter) {
         TIntIntMap transformMap = new TIntIntHashMap();
 
         //TODO change representation to general array
@@ -185,7 +175,7 @@ public class KarlMooneyPredictor {
     }
 
     public PriorityQueue<Pair<MooneyEventRepre, Double>> predict(List<MooneyEventRepre> clozeTask, Set<Integer> entities, int missingIndex, Collection<String> allPredicates, double smoothingParameter) {
-        PriorityQueue<Pair<MooneyEventRepre, Double>> rankedEvents = new PriorityQueue<>(allPredicates.size(), new DescendingScoredPairComparator());
+        PriorityQueue<Pair<MooneyEventRepre, Double>> rankedEvents = new PriorityQueue<>(allPredicates.size(), new Comparators.DescendingScoredPairComparator<MooneyEventRepre, Double>());
         MooneyEventRepre answer = clozeTask.get(missingIndex);
 
         logger.info("Answer is " + answer);
@@ -222,13 +212,6 @@ public class KarlMooneyPredictor {
             }
         }
         return rankedEvents;
-    }
-
-    public class DescendingScoredPairComparator implements Comparator<Pair<MooneyEventRepre, Double>> {
-        @Override
-        public int compare(Pair<MooneyEventRepre, Double> o1, Pair<MooneyEventRepre, Double> o2) {
-            return -o1.getValue().compareTo(o2.getValue());
-        }
     }
 
     public void test(String clozeDataDir, String outputDirPath, int[] allK, double smoothingParameter, boolean doFilter) throws IOException {

@@ -17,12 +17,15 @@ import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * @author zhengzhongliu
  */
 public class KmStyleClozeWriter {
     private static String className = KmStyleClozeWriter.class.getSimpleName();
+
+    static Logger logger = Logger.getLogger(className);
 
     /**
      * @param args
@@ -40,7 +43,8 @@ public class KmStyleClozeWriter {
         String paramBaseOutputDirName = config.get("edu.cmu.cs.lti.cds.cloze.base") + "_" + subPath; // "cloze"
         String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
-        boolean ignoreLowFreq = args.length <= 5 || config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
+        boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
+        int clozeMinSize = config.getInt("edu.cmu.cs.lti.cds.cloze.minsize");
 
         String paramOutputFileSuffix = ".txt";
 
@@ -67,11 +71,13 @@ public class KmStyleClozeWriter {
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_STEP_NUMBER, stepNum,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_DB_DIR_PATH, "data/_db/",
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_HEAD_COUNT_DB_NAMES, headCountFileNames,
-                KmStyleAllEventMentionClozeTaskGenerator.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_CLOZE_MIN_SIZE, clozeMinSize
         );
 
         SimplePipeline.runPipeline(reader, writer);
 
-        System.out.println(className + " completed.");
+        logger.info("Completed.");
+        logger.info("Remeber to clean out empty cloze using the shell scripts");
     }
 }

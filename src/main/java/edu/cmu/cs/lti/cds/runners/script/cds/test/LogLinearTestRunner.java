@@ -3,8 +3,8 @@
  */
 package edu.cmu.cs.lti.cds.runners.script.cds.test;
 
-import edu.cmu.cs.lti.cds.annotators.script.CeTester;
-import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.cds.annotators.script.test.LogLinearTester;
+import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -21,10 +21,16 @@ import java.util.logging.Logger;
 /**
  * @author zhengzhongliu
  */
-public class CeTesterRunner {
-    private static String className = CeTesterRunner.class.getSimpleName();
+public class LogLinearTestRunner {
+    private static String className = LogLinearTestRunner.class.getSimpleName();
 
     private static Logger logger = Logger.getLogger(className);
+
+    public static int[] allK;
+    public static String outputPath;
+    public static double mrr = 0;
+    public static double totalCount = 0;
+    public static int[] recallCounts;
 
     /**
      * @param args
@@ -32,7 +38,7 @@ public class CeTesterRunner {
      * @throws org.apache.uima.UIMAException
      */
     public static void main(String[] args) throws Exception {
-        System.out.println(className + " started...");
+        logger.info(className + " started...");
 
         Configuration config = new Configuration(new File(args[0]));
         String subPath = args.length > 1 ? args[1] : "";
@@ -42,7 +48,10 @@ public class CeTesterRunner {
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath");
         String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
-        String modelPath = config.get("edu.cmu.cs.lti.cds.nce.model.path") + config.get("edu.cmu.cs.lti.cds.testing.model");
+        String modelSuffix = config.get("edu.cmu.cs.lti.cds.model.suffix");
+        //use negative sampling models
+        String modelPath = config.get("edu.cmu.cs.lti.cds.negative.model.path") + (config.getInt("edu.cmu.cs.lti.cds.sgd.iter") - 1) + modelSuffix;
+//        String modelPath = config.get("edu.cmu.cs.lti.cds.nce.model.path") + config.get("edu.cmu.cs.lti.cds.testing.model");
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
 
@@ -55,7 +64,6 @@ public class CeTesterRunner {
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
-
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
@@ -65,18 +73,30 @@ public class CeTesterRunner {
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createGzippedXmiReader(typeSystemDescription, inputDir, false);
 
-        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
-                CeTester.class, typeSystemDescription,
-                CeTester.PARAM_CLOZE_DIR_PATH, clozePath,
-                CeTester.PARAM_DB_DIR_PATH, dbPath,
-                CeTester.PARAM_HEAD_COUNT_DB_NAMES, headCountFileNames,
-                CeTester.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
-                CeTester.PARAM_MODEL_PATH, modelPath,
-                CeTester.PARAM_KEEP_QUIET, false
+        //initialize eval parameter
+        allK = config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k");
+        outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + "_" + subPath;
+        recallCounts = new int[allK.length];
+
+        AnalysisEngineDescription tester = CustomAnalysisEngineFactory.createAnalysisEngine(
+                LogLinearTester.class, typeSystemDescription,
+                LogLinearTester.PARAM_CLOZE_DIR_PATH, clozePath,
+                LogLinearTester.PARAM_DB_DIR_PATH, dbPath,
+                LogLinearTester.PARAM_HEAD_COUNT_DB_NAMES, headCountFileNames,
+                LogLinearTester.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
+                LogLinearTester.PARAM_MODEL_PATH, modelPath,
+                LogLinearTester.PARAM_KEEP_QUIET, false
         );
 
-        SimplePipeline.runPipeline(reader, writer);
+        SimplePipeline.runPipeline(reader, tester);
 
-        System.out.println(className + " completed.");
+
+        for (int kPos = 0; kPos < allK.length; kPos++) {
+            logger.info(String.format("Recall at %d : %.4f", allK[kPos], recallCounts[kPos] * 1.0 / totalCount));
+        }
+
+        logger.info(String.format("MRR is : %.4f", mrr / totalCount));
+
+        logger.info("Completed.");
     }
 }

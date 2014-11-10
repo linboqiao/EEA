@@ -1,9 +1,9 @@
 /**
  *
  */
-package edu.cmu.cs.lti.cds.runners.script.mooney;
+package edu.cmu.cs.lti.cds.runners.script.cds.train;
 
-import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;

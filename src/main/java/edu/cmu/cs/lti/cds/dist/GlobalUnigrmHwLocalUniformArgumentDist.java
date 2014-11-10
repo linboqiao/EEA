@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.cds.dist;
 
-import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.utils.Configuration;

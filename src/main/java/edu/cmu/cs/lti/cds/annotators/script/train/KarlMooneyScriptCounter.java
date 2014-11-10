@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.cds.annotators.script.karlmooney;
+package edu.cmu.cs.lti.cds.annotators.script.train;
 
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
@@ -211,8 +211,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     //TODO check correctness
     public static Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> firstBasedSubstitution(
-            TokenAlignmentHelper align, LocalEventMentionRepre evm1, LocalEventMentionRepre evm2) {
-
+            LocalEventMentionRepre evm1, LocalEventMentionRepre evm2) {
         TIntIntHashMap evm1Args = new TIntIntHashMap();
 
         TIntIntHashMap evm1Slots = new TIntIntHashMap();
@@ -220,9 +219,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
         for (int i = 0; i < evm1.getNumArgs(); i++) {
             int argMarker = KmTargetConstants.slotIndexToArgMarker(i);
-
             Pair<Integer, String> argi = evm1.getArg(i);
-
             if (argi != null) {
                 evm1Args.put(evm1.getArg(i).getKey(), argMarker);
                 evm1Slots.put(argMarker, KmTargetConstants.otherMarker);
@@ -231,11 +228,10 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
         for (int i = 0; i < evm2.getNumArgs(); i++) {
             int argMarker = KmTargetConstants.slotIndexToArgMarker(i);
-            Pair<Integer, String> argi = evm1.getArg(i);
+            Pair<Integer, String> argi = evm2.getArg(i);
 
             if (argi != null) {
                 int entityId = argi.getKey();
-
                 int substituteId;
                 if (evm1Args.containsKey(entityId)) {
                     substituteId = evm1Args.get(entityId);
@@ -246,7 +242,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
                 evm2Slots.put(argMarker, substituteId);
             }
         }
-
 
         Fun.Tuple4<String, Integer, Integer, Integer> eventTuple1 = new Fun.Tuple4<>(evm1.getMentionHead(),
                 evm1Slots.containsKey(KmTargetConstants.anchorArg0Marker) ? evm1Slots.get(KmTargetConstants.anchorArg0Marker) : KmTargetConstants.nullArgMarker,

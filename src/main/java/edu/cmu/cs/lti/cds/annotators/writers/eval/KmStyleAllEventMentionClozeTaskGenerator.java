@@ -41,6 +41,8 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
     public static final String PARAM_IGNORE_LOW_FREQ = "ignoreLowFreq";
 
+    public static final String PARAM_CLOZE_MIN_SIZE = "clozeMinSize";
+
     private TokenAlignmentHelper align = new TokenAlignmentHelper();
 
     private Random rand = new Random();
@@ -49,11 +51,15 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
     private boolean ignoreLowFreq;
 
+    private int clozeMinSize;
+
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
 
         String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
+
+        clozeMinSize = (Integer) aContext.getConfigParameterValue(PARAM_CLOZE_MIN_SIZE);
 
         if (aContext.getConfigParameterValue(PARAM_IGNORE_LOW_FREQ) != null) {
             ignoreLowFreq = (Boolean) aContext.getConfigParameterValue(PARAM_IGNORE_LOW_FREQ);
@@ -110,7 +116,7 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
             allSlots.add(slots);
         }
 
-        if (allEvms.size() == 0) {
+        if (allEvms.size() < clozeMinSize) {
             //empty file
             return "";
         }

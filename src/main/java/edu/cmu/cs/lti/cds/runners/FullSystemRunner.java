@@ -4,7 +4,7 @@ import edu.cmu.cs.lti.cds.annotators.annos.*;
 import edu.cmu.cs.lti.cds.annotators.clustering.WhRcModResoluter;
 import edu.cmu.cs.lti.cds.annotators.patches.HeadWordFixer;
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
-import edu.cmu.cs.lti.cds.annotators.script.karlmooney.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.script.type.Entity;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;

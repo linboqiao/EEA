@@ -1,9 +1,10 @@
-package edu.cmu.cs.lti.cds.annotators.script;
+package edu.cmu.cs.lti.cds.annotators.script.train;
 
 import edu.cmu.cs.lti.cds.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.cds.ml.features.FeatureExtractor;
 import edu.cmu.cs.lti.cds.model.ChainElement;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
+import edu.cmu.cs.lti.cds.runners.script.cds.train.StochasticNceTrainer;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.cds.utils.VectorUtils;
 import edu.cmu.cs.lti.script.type.Article;
@@ -15,10 +16,13 @@ import gnu.trove.iterator.TObjectDoubleIterator;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.resource.ResourceInitializationException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +42,9 @@ public class NceTrainer extends AbstractLoggingAnnotator {
 
     int numArguments = 3;
 
-    double stepSize = 0.001;
+    double stepSize = 0.0001;
+
+    double globalNormalization = 1;
 
     GlobalUnigrmHwLocalUniformArgumentDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist();
 
@@ -47,8 +53,20 @@ public class NceTrainer extends AbstractLoggingAnnotator {
     double cumulativeObjective = 0;
 
     @Override
+    public void initialize(UimaContext aContext) throws ResourceInitializationException {
+        super.initialize(aContext);
+    }
+
+    @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
+
+
+        try {
+            StochasticNceTrainer.trainOut.write(progressInfo(aJCas) + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
             //ignore this blacklisted file;
@@ -84,7 +102,7 @@ public class NceTrainer extends AbstractLoggingAnnotator {
             }
 
             //cumulative the gradient so far, and compute sample cost
-            double cumulativeObjective = gradientAscent(noiseSamples, Pair.of(features, noiseDist.probOf(realSample.getMention(), arguments.size(), numArguments)), cumulativeGradient);
+            double cumulativeObjective = gradientAscent(noiseSamples, Pair.of(features, noiseDist.probOf(realSample.getMention(), arguments.size(), numArguments)));
 //            logger.info("Sample cost " + c);
             this.cumulativeObjective += cumulativeObjective;
         }
@@ -109,7 +127,12 @@ public class NceTrainer extends AbstractLoggingAnnotator {
     }
 
     private double gradientAscent(List<Pair<TObjectDoubleMap<String>, Double>> noiseSamples,
-                                  Pair<TObjectDoubleMap<String>, Double> dataSample, TObjectDoubleMap<String> cumulativeGradient) {
+                                  Pair<TObjectDoubleMap<String>, Double> dataSample) {
+
+        for (TObjectDoubleIterator<String> iter = dataSample.getKey().iterator(); iter.hasNext(); ) {
+            iter.advance();
+        }
+
         //start by assigning gradient as  d/d\theta logP_\theta(w)
         TObjectDoubleMap<String> gradient = unNormalizedLogLogisticDerivative(dataSample.getKey());
 
@@ -117,33 +140,34 @@ public class NceTrainer extends AbstractLoggingAnnotator {
         double localObjective = 0;
 
         //sample prob given the parameters
-        double unlogisticSample = unnormalizedLogistic(dataSample.getKey());
+        double estimatedLogisticSample = estimatedLogistic(dataSample.getKey());
         //noise prob of the real sample
         double kNoiseSampleProb = numNoise * dataSample.getValue();
 
-        VectorUtils.vectorScalarProduct(gradient, (1 / (1 + unlogisticSample / kNoiseSampleProb)));
-        localObjective += 1 / (1 + kNoiseSampleProb / unlogisticSample);
+        VectorUtils.vectorScalarProduct(gradient, (1 / (1 + estimatedLogisticSample / kNoiseSampleProb)));
 
-//        logger.info(unlogisticSample + " " + kNoiseSampleProb);
-//        logger.info("sample cost " + 1 / (1 + kNoiseSampleProb / unlogisticSample));
+        localObjective += 1 / (1 + kNoiseSampleProb / estimatedLogisticSample);
 
         for (Pair<TObjectDoubleMap<String>, Double> noiseSample : noiseSamples) {
             //noise sample prob given the parameters
-            double unlogisticNoise = unnormalizedLogistic(noiseSample.getKey());
+            double estimatedLogisticNoise = estimatedLogistic(noiseSample.getKey());
             //noise prob of the noise * k
             double kNoiseNoiseProb = numNoise * noiseSample.getValue();
             TObjectDoubleMap<String> noiseGradient = unNormalizedLogLogisticDerivative(noiseSample.getKey());
-            VectorUtils.vectorScalarProduct(noiseGradient, (1 / (1 + kNoiseNoiseProb / unlogisticNoise)));
+            VectorUtils.vectorScalarProduct(noiseGradient, (1 / (1 + kNoiseNoiseProb / estimatedLogisticNoise)));
             VectorUtils.vectorMinus(gradient, noiseGradient);
-            localObjective += 1 / (1 + unlogisticNoise / kNoiseNoiseProb);
-//            logger.info("noise cost " + 1 / (1 + unlogisticNoise / kNoiseNoiseProb));
+            localObjective += 1 / (1 + estimatedLogisticNoise / kNoiseNoiseProb);
         }
 
         //update the cumulative gradient;
         for (TObjectDoubleIterator<String> iter = gradient.iterator(); iter.hasNext(); ) {
             iter.advance();
-//            System.out.println(iter.key() + " " + iter.value());
             cumulativeGradient.adjustOrPutValue(iter.key(), iter.value(), iter.value());
+            try {
+                StochasticNceTrainer.trainOut.write(iter.key() + " " + iter.value() + "\n");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return localObjective;
     }
@@ -153,8 +177,9 @@ public class NceTrainer extends AbstractLoggingAnnotator {
         return features;
     }
 
-    private double unnormalizedLogistic(TObjectDoubleMap<String> features) {
-        return Math.exp(VectorUtils.dotProd(features, DataPool.weights));
+
+    private double estimatedLogistic(TObjectDoubleMap<String> features) {
+        return Math.exp(VectorUtils.dotProd(features, DataPool.weights))- globalNormalization;
     }
 
     //TODO see AdaDelta
@@ -190,7 +215,7 @@ public class NceTrainer extends AbstractLoggingAnnotator {
             }
             DataPool.deltaGradientSq.put(iter.key(), accum_g);
 
-            //coupute delta i.e. step size
+            //compute delta i.e. step size
             double delta;
             //multiply update by RMS[delta X]_{t-1}
             if (DataPool.deltaVarSq.containsKey(iter.key())) {

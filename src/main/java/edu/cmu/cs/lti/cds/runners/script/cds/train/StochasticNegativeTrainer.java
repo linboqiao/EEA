@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.cds.runners.script.cds.train;
 
-import edu.cmu.cs.lti.cds.annotators.script.train.NceTrainer;
+import edu.cmu.cs.lti.cds.annotators.script.train.NegativeTrainer;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
@@ -26,8 +26,8 @@ import java.util.logging.Logger;
  * Date: 11/3/14
  * Time: 1:46 PM
  */
-public class StochasticNceTrainer {
-    private static Logger logger = Logger.getLogger(StochasticNceTrainer.class.getName());
+public class StochasticNegativeTrainer {
+    private static Logger logger = Logger.getLogger(StochasticNegativeTrainer.class.getName());
 
     public static BufferedWriter trainOut;
 
@@ -39,7 +39,9 @@ public class StochasticNceTrainer {
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
         String[] countingDbFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files");
         String blackListFileName = config.get("edu.cmu.cs.lti.cds.blacklist");
-        String modelStoragePath = config.get("edu.cmu.cs.lti.cds.nce.model.path");
+        String modelStoragePath = config.get("edu.cmu.cs.lti.cds.negative.model.path");
+        int noiseNum = config.getInt("edu.cmu.cs.lti.cds.negative.noisenum");
+        String modelSuffix = config.get("edu.cmu.cs.lti.cds.model.suffix");
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -57,9 +59,10 @@ public class StochasticNceTrainer {
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
-        AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(NceTrainer.class, typeSystemDescription);
+        AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(NegativeTrainer.class, typeSystemDescription,
+                NegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum);
 
-        trainOut = new BufferedWriter(new FileWriter(new File("nce_train_out")));
+        trainOut = new BufferedWriter(new FileWriter(new File("negative_train_out")));
 
         //possibly iterate this step
         for (int i = 0; i < maxIter; i++) {
@@ -72,12 +75,12 @@ public class StochasticNceTrainer {
                 modelDirParent.mkdirs();
             }
 
-            SerializationHelper.write(modelStoragePath + i + ".ser", DataPool.weights);
+            SerializationHelper.write(modelStoragePath + i + modelSuffix, DataPool.weights);
         }
 
         try {
-            StochasticNceTrainer.trainOut.write("Finished!");
-            StochasticNceTrainer.trainOut.close();
+            StochasticNegativeTrainer.trainOut.write("Finished!");
+            StochasticNegativeTrainer.trainOut.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
