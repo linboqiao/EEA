@@ -26,8 +26,6 @@ import java.util.logging.Logger;
 public class StochasticNegativeTrainer {
     private static Logger logger = Logger.getLogger(StochasticNegativeTrainer.class.getName());
 
-//    public static BufferedWriter trainOut;
-
     public static void main(String[] args) throws Exception {
         Configuration config = new Configuration(new File(args[0]));
         String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path");
@@ -59,8 +57,6 @@ public class StochasticNegativeTrainer {
         AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(NegativeTrainer.class, typeSystemDescription,
                 NegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum);
 
-//        trainOut = new BufferedWriter(new FileWriter(new File("negative_train_out")));
-
         //possibly iterate this step
         for (int i = 0; i < maxIter; i++) {
             Utils.printMemInfo(logger);
@@ -74,12 +70,5 @@ public class StochasticNegativeTrainer {
 
             SerializationHelper.write(modelStoragePath + i + modelSuffix, DataPool.weights);
         }
-
-//        try {
-//            StochasticNegativeTrainer.trainOut.write("Finished!");
-//            StochasticNegativeTrainer.trainOut.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 }
