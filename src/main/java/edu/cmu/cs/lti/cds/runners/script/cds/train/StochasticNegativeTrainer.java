@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.cds.runners.script.cds.train;
 
-import edu.cmu.cs.lti.cds.annotators.script.train.NegativeTrainer;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.cds.annotators.script.train.NegativeTrainer;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -14,10 +14,7 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.core.SerializationHelper;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
@@ -29,7 +26,7 @@ import java.util.logging.Logger;
 public class StochasticNegativeTrainer {
     private static Logger logger = Logger.getLogger(StochasticNegativeTrainer.class.getName());
 
-    public static BufferedWriter trainOut;
+//    public static BufferedWriter trainOut;
 
     public static void main(String[] args) throws Exception {
         Configuration config = new Configuration(new File(args[0]));
@@ -62,7 +59,7 @@ public class StochasticNegativeTrainer {
         AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(NegativeTrainer.class, typeSystemDescription,
                 NegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum);
 
-        trainOut = new BufferedWriter(new FileWriter(new File("negative_train_out")));
+//        trainOut = new BufferedWriter(new FileWriter(new File("negative_train_out")));
 
         //possibly iterate this step
         for (int i = 0; i < maxIter; i++) {
@@ -78,11 +75,11 @@ public class StochasticNegativeTrainer {
             SerializationHelper.write(modelStoragePath + i + modelSuffix, DataPool.weights);
         }
 
-        try {
-            StochasticNegativeTrainer.trainOut.write("Finished!");
-            StochasticNegativeTrainer.trainOut.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            StochasticNegativeTrainer.trainOut.write("Finished!");
+//            StochasticNegativeTrainer.trainOut.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }

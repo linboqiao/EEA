@@ -28,6 +28,11 @@ public class DataPool {
     //ada delta memory
     public static TObjectDoubleMap<String> deltaVarSq = new TObjectDoubleHashMap<>();
     public static TObjectDoubleMap<String> deltaGradientSq = new TObjectDoubleHashMap<>();
+
+
+    //ada grad memory
+    public static TObjectDoubleMap<String> adaGradDelGradientSq = new TObjectDoubleHashMap<String>();
+
     //sample counter
     public static long numSampleProcessed = 0;
 

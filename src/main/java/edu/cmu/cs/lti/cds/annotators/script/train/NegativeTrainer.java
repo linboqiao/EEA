@@ -4,7 +4,6 @@ import edu.cmu.cs.lti.cds.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.cds.ml.features.FeatureExtractor;
 import edu.cmu.cs.lti.cds.model.ChainElement;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
-import edu.cmu.cs.lti.cds.runners.script.cds.train.StochasticNegativeTrainer;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.cds.utils.VectorUtils;
 import edu.cmu.cs.lti.script.type.Article;
@@ -22,7 +21,6 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,11 +59,11 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
-        try {
-            StochasticNegativeTrainer.trainOut.write(progressInfo(aJCas) + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            StochasticNegativeTrainer.trainOut.write(progressInfo(aJCas) + "\n");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
             //ignore this blacklisted file;
@@ -102,7 +100,6 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
 
             //cumulative the gradient so far, and compute sample cost
             double cumulativeObjective = gradientAscent(noiseSamples, features);
-//            logger.info("Sample cost " + c);
             this.cumulativeObjective += cumulativeObjective;
         }
 
@@ -134,12 +131,11 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
         double scoreTrue = VectorUtils.dotProd(dataSample, DataPool.weights);
         double sigmoidTrue = sigmoid(scoreTrue);
 
-        try {
-            StochasticNegativeTrainer.trainOut.write("Sigmoid true for  " + dataSample + "  is " + scoreTrue + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+//        try {
+//            StochasticNegativeTrainer.trainOut.write("Sigmoid true for  " + dataSample + "  is " + scoreTrue + "\n");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         //multiple x_w by (1- sigmoid)
         // g = ( Lw(u) - sigmoid(\theta * x_w) ) x_w, where Lw(u) = 1
@@ -153,11 +149,11 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
             double scoreNoise = VectorUtils.dotProd(noiseSample, DataPool.weights);
             double sigmoidNoise = sigmoid(scoreNoise);
 
-            try {
-                StochasticNegativeTrainer.trainOut.write("Sigmoid noise for  " + noiseSample + "  is " + scoreNoise + "\n");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                StochasticNegativeTrainer.trainOut.write("Sigmoid noise for  " + noiseSample + "  is " + scoreNoise + "\n");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
             TObjectDoubleMap<String> noiseFeatures = noiseSample;
 
@@ -176,11 +172,11 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
         for (TObjectDoubleIterator<String> iter = gradient.iterator(); iter.hasNext(); ) {
             iter.advance();
             cumulativeGradient.adjustOrPutValue(iter.key(), iter.value(), iter.value());
-            try {
-                StochasticNegativeTrainer.trainOut.write(iter.key() + " " + iter.value() + "\n");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                StochasticNegativeTrainer.trainOut.write(iter.key() + " " + iter.value() + "\n");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
 
         //return the objective
@@ -193,6 +189,7 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
 
     private void update() {
 //        adaDeltaUpdate(1e-3, 0.95);
+//        adaGradUpdate(0.01);
         stepSizeUpdate();
     }
 
@@ -201,17 +198,39 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
         for (TObjectDoubleIterator<String> iter = cumulativeGradient.iterator(); iter.hasNext(); ) {
             iter.advance();
             double u = stepSize * iter.value();
-            try {
-                StochasticNegativeTrainer.trainOut.write("Update for " + iter.key() + " is " + u + " : " + stepSize + "*" + iter.value() + "\n");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                StochasticNegativeTrainer.trainOut.write("Update for " + iter.key() + " is " + u + " : " + stepSize + "*" + iter.value() + "\n");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
             DataPool.weights.adjustOrPutValue(iter.key(), u, u);
         }
         // empty the cumulative gradient
         cumulativeGradient.clear();
     }
 
+    private void adaGradUpdate(double eta) {
+        for (TObjectDoubleIterator<String> iter = cumulativeGradient.iterator(); iter.hasNext(); ) {
+            iter.advance();
+            double g = iter.value();
+
+            if (g != 0) {
+                double gSq = g * g;
+
+                double cumulativeGsq = DataPool.adaGradDelGradientSq.adjustOrPutValue(iter.key(), gSq, gSq);
+
+                double update = eta * g / Math.sqrt(cumulativeGsq);
+
+                if (Double.isNaN(g)) {
+                    System.out.println(iter.key() + " " + iter.value() + update);
+                }
+
+                DataPool.weights.adjustOrPutValue(iter.key(), update, update);
+            }
+        }
+    }
+
+    //this implementation has some problems
     private void adaDeltaUpdate(double decay, double epsilon) {
         // update parameters
         for (TObjectDoubleIterator<String> iter = cumulativeGradient.iterator(); iter.hasNext(); ) {
@@ -240,9 +259,9 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
                 DataPool.deltaVarSq.put(iter.key(), (1 - decay) * delta * delta);
             }
 
-//            System.out.println("delta "+ delta);
+            System.out.println("delta " + delta);
             //update weight for feature
-            DataPool.weights.adjustOrPutValue(iter.key(), -delta, -delta);
+            DataPool.weights.adjustOrPutValue(iter.key(), delta, delta);
         }
         // empty the cumulative gradient
         cumulativeGradient.clear();

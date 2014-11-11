@@ -34,7 +34,6 @@ import java.util.Random;
  * Time: 1:32 PM
  */
 public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomizedTextWriterAnalsysisEngine {
-
     public static final String PARAM_HEAD_COUNT_DB_NAMES = "headCountDbFileNames";
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
