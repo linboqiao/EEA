@@ -38,7 +38,7 @@ public class KmStyleClozeWriter {
         Configuration config = new Configuration(new File(args[0]));
         String subPath = args.length > 1 ? args[1] : "";
 
-        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path") + "/" + subPath; //"data/02_event_tuples";
+        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.heldout.path") + "/" + subPath; //"data/02_event_tuples";
         String paramParentOutputDir = config.get("edu.cmu.cs.lti.cds.parent.output"); // "data";
         String paramBaseOutputDirName = config.get("edu.cmu.cs.lti.cds.cloze.base") + "_" + subPath; // "cloze"
         String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
