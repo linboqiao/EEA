@@ -6,3 +6,4 @@ target/
 .project
 *nohup*
 logs/
+grad_compare/
