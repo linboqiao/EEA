@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.cds.runners.script.cds.train;
 
+import edu.cmu.cs.lti.cds.annotators.script.train.CompactNegativeTrainer;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
-import edu.cmu.cs.lti.cds.annotators.script.train.NegativeTrainer;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -54,8 +54,9 @@ public class StochasticNegativeTrainer {
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
-        AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(NegativeTrainer.class, typeSystemDescription,
-                NegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum);
+        AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(CompactNegativeTrainer.class, typeSystemDescription,
+                CompactNegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum);
+//        NegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum);
 
         //possibly iterate this step
         for (int i = 0; i < maxIter; i++) {
@@ -68,7 +69,7 @@ public class StochasticNegativeTrainer {
                 modelDirParent.mkdirs();
             }
 
-            SerializationHelper.write(modelStoragePath + i + modelSuffix, DataPool.weights);
+            SerializationHelper.write(modelStoragePath + i + modelSuffix, DataPool.compactWeights);
         }
     }
 }

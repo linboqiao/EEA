@@ -1,6 +1,8 @@
 package edu.cmu.cs.lti.cds.utils;
 
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
+import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
+import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.TObjectIntMap;
@@ -25,17 +27,20 @@ public class DataPool {
     //will be update by the trainer
     //learnt parameters
     public static final TObjectDoubleMap<String> weights = new TObjectDoubleHashMap<>();
+    public static TObjectDoubleMap<String> adaGradDelGradientSq = new TObjectDoubleHashMap<>();
+
+    //a more compact form in storing such parameters
+    public static final TLongBasedFeatureTable compactWeights = new TLongBasedFeatureTable();
+    //ada grad memory
+    public static final TLongShortDoubleHashTable compactAdaGradMemory = new TLongShortDoubleHashTable();
+
     //ada delta memory
     public static TObjectDoubleMap<String> deltaVarSq = new TObjectDoubleHashMap<>();
     public static TObjectDoubleMap<String> deltaGradientSq = new TObjectDoubleHashMap<>();
 
 
-    //ada grad memory
-    public static TObjectDoubleMap<String> adaGradDelGradientSq = new TObjectDoubleHashMap<String>();
-
     //sample counter
     public static long numSampleProcessed = 0;
-
 
     //data used by the trainer
     public static long predicateTotalCount = 0;
@@ -46,15 +51,17 @@ public class DataPool {
 
     //Load some of these large maps that will might be shared static
     //use only one unified head id map here.
-    public static void loadHeadIds(String dbPath, String dbNames, String headIdMapName) throws Exception {
-        String mapPath = new File(dbPath, dbNames + "_" + headIdMapName).getAbsolutePath();
+    public static void loadHeadIds(String dbPath, String dbName, String headIdMapName) throws Exception {
+        String mapPath = new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath();
         headIdMap = (TObjectIntMap<String>) SerializationHelper.read(mapPath);
         headWords = new String[headIdMap.size()];
     }
 
     public static void loadHeadCounts(String dbPath, String[] countingDbFileNames, boolean useProb) {
         headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
-        calUnigramSum();
+        if (useProb) {
+            calUnigramSum();
+        }
     }
 
     public static void calUnigramSum() {

@@ -165,7 +165,6 @@ public class MooneyEventRepre {
         return repres;
     }
 
-
     public static List<MooneyEventRepre> generateTuples(String head, Collection<Integer> entities) {
         Set<TIntList> baseRepres = new HashSet<>();
 
@@ -179,7 +178,6 @@ public class MooneyEventRepre {
         baseEntities.add(KmTargetConstants.nullArgMarker);
         baseEntities.add(KmTargetConstants.otherMarker);
 
-        //need to generate #slot^#entities possible tuples
         for (int i = 0; i < 3; i++) {
             Set<TIntList> newerRepres = new HashSet<>();
             for (int entityId : baseEntities) {
