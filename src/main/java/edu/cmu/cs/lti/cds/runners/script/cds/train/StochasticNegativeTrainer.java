@@ -39,6 +39,7 @@ public class StochasticNegativeTrainer {
         String blackListFileName = config.get("edu.cmu.cs.lti.cds.blacklist");
         String modelStoragePath = config.get("edu.cmu.cs.lti.cds.negative.model.path");
         int noiseNum = config.getInt("edu.cmu.cs.lti.cds.negative.noisenum");
+        int miniBatchNum = config.getInt("edu.cmu.cs.lti.cds.minibatch");
         String modelSuffix = config.get("edu.cmu.cs.lti.cds.model.suffix");
 
         String paramTypeSystemDescriptor = "TypeSystem";
@@ -60,7 +61,8 @@ public class StochasticNegativeTrainer {
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
         AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(CompactNegativeTrainer.class, typeSystemDescription,
-                CompactNegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum);
+                CompactNegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum,
+                CompactNegativeTrainer.PARAM_MINI_BATCH_SIZE, miniBatchNum);
 //        NegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum);
 
         Utils.printMemInfo(logger, "Beginning memory");

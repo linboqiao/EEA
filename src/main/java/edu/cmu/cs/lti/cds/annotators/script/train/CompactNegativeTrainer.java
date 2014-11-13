@@ -34,6 +34,8 @@ import java.util.List;
 public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
     public static final String PARAM_NEGATIVE_NUMBERS = "negativeNumbers";
 
+    public static final String PARAM_MINI_BATCH_SIZE = "miniBatchDocuments";
+
     TokenAlignmentHelper align = new TokenAlignmentHelper();
     CompactFeatureExtractor extractor = new CompactFeatureExtractor(DataPool.compactWeights);
 
@@ -55,6 +57,7 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
         numNoise = (Integer) aContext.getConfigParameterValue(PARAM_NEGATIVE_NUMBERS);
+        miniBatchDocNum = (Integer) aContext.getConfigParameterValue(PARAM_MINI_BATCH_SIZE);
     }
 
     @Override
