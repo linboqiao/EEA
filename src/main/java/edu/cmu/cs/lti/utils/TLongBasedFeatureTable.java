@@ -1,14 +1,16 @@
 package edu.cmu.cs.lti.utils;
 
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
+import edu.cmu.cs.lti.collections.TLongShortDoubleTreeTable;
+import edu.cmu.cs.lti.model.MutableDouble;
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.iterator.TObjectShortIterator;
-import gnu.trove.map.TShortDoubleMap;
 import gnu.trove.map.TShortObjectMap;
 import gnu.trove.map.hash.TObjectShortHashMap;
 import gnu.trove.map.hash.TShortObjectHashMap;
 
 import java.io.Serializable;
+import java.util.TreeMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,7 +29,9 @@ public class TLongBasedFeatureTable implements Serializable {
      * <p/>
      * Double is the feature value to be update
      */
-    TLongShortDoubleHashTable table = new TLongShortDoubleHashTable();
+//    TLongShortDoubleHashTable table = new TLongShortDoubleHashTable();
+
+    TLongShortDoubleTreeTable table = new TLongShortDoubleTreeTable();
 
     TObjectShortHashMap<String> secondaryFeatureLookupMap = new TObjectShortHashMap<>();
 
@@ -62,7 +66,7 @@ public class TLongBasedFeatureTable implements Serializable {
         }
     }
 
-    public TLongObjectIterator<TShortDoubleMap> iterator() {
+    public TLongObjectIterator<TreeMap<Short, MutableDouble>> iterator() {
         return table.iterator();
     }
 
@@ -86,7 +90,7 @@ public class TLongBasedFeatureTable implements Serializable {
         return table.get(rowKey, colKey);
     }
 
-    public TShortDoubleMap getRow(long rowKey) {
+    public TreeMap<Short, MutableDouble> getRow(long rowKey) {
         return table.getRow(rowKey);
     }
 

@@ -114,6 +114,7 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
             logger.info("Features lexical pairs learnt " + DataPool.compactWeights.getNumRows());
             logger.info("Processed " + DataPool.numSampleProcessed + " samples");
             logger.info("Average gain for previous batch is : " + cumulativeObjective / miniBatchDocNum);
+            logger.info("Committing " + cumulativeGradient.getNumRows() + " lexical pairs");
             cumulativeObjective = 0;
             update();
         }

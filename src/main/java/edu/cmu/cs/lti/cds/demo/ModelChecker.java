@@ -2,14 +2,13 @@ package edu.cmu.cs.lti.cds.demo;
 
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
+import edu.cmu.cs.lti.model.MutableDouble;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.iterator.TObjectDoubleIterator;
-import gnu.trove.iterator.TShortDoubleIterator;
 import gnu.trove.map.TObjectDoubleMap;
-import gnu.trove.map.TShortDoubleMap;
 import gnu.trove.map.TShortObjectMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.apache.commons.lang3.tuple.Pair;
@@ -18,6 +17,8 @@ import weka.core.SerializationHelper;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -48,16 +49,20 @@ public class ModelChecker {
 
         int numFeatures = 0;
         int numLexicalPairs = 0;
-        for (TLongObjectIterator<TShortDoubleMap> rowIter = compactWeights.iterator(); rowIter.hasNext(); ) {
+        for (TLongObjectIterator<TreeMap<Short, MutableDouble>> rowIter = compactWeights.iterator(); rowIter.hasNext(); ) {
             rowIter.advance();
             numLexicalPairs++;
             Pair<Integer, Integer> wordIds = BitUtils.get2IntFromLong(rowIter.key());
             writer.write(DataPool.headWords[wordIds.getKey()] + " " + DataPool.headWords[wordIds.getValue()] + " " + wordIds.getKey() + " " + wordIds.getValue() + "\n");
-            for (TShortDoubleIterator cellIter = rowIter.value().iterator(); cellIter.hasNext(); ) {
-                cellIter.advance();
-                writer.write(featureNames.get(cellIter.key()) + " " + cellIter.key() +" " + cellIter.value() + "\n");
-                numFeatures++;
+
+            for (Map.Entry<Short, MutableDouble> entry : rowIter.value().entrySet()) {
+                writer.write(featureNames.get(entry.getKey()) + " " + entry.getKey() + " " + entry.getValue() + "\n");
             }
+//            for (TShortDoubleIterator cellIter = rowIter.value().iterator(); cellIter.hasNext(); ) {
+//                cellIter.advance();
+//                writer.write(featureNames.get(cellIter.key()) + " " + cellIter.key() + " " + cellIter.value() + "\n");
+//                numFeatures++;
+//            }
         }
         System.out.println("Number of lexical pairs " + numLexicalPairs + " , num of features " + numFeatures);
         writer.close();
