@@ -202,7 +202,7 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateMooeyEvms = MooneyEventRepre.generateTuples(head, mooneyEntities);
             for (MooneyEventRepre candidateEvm : candidateMooeyEvms) {
-                logger.info("Change skip gram into " + skipGramN);
+//                logger.info("Change skip gram into " + skipGramN);
                 skipGramN = 50;
                 TLongShortDoubleHashTable features = extractor.getFeatures(mooneyChain, candidateEvm, testIndex, skipGramN);
                 double score = compactWeights.dotProd(features);
