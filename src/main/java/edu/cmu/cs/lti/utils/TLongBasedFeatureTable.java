@@ -27,8 +27,6 @@ public class TLongBasedFeatureTable implements Serializable {
      * <p/>
      * Double is the feature value to be update
      */
-//    TLongObjectHashMap<TShortDoubleMap> table = new TLongObjectHashMap<>();
-
     TLongShortDoubleHashTable table = new TLongShortDoubleHashTable();
 
     TObjectShortHashMap<String> secondaryFeatureLookupMap = new TObjectShortHashMap<>();
@@ -74,7 +72,6 @@ public class TLongBasedFeatureTable implements Serializable {
             iter.advance();
             featureNames.put(iter.value(), iter.key());
         }
-
         return featureNames;
     }
 

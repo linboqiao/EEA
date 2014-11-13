@@ -20,9 +20,6 @@ import edu.cmu.cs.lti.utils.Comparators;
 import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
-import gnu.trove.iterator.TLongObjectIterator;
-import gnu.trove.iterator.TShortDoubleIterator;
-import gnu.trove.map.TShortDoubleMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
@@ -209,23 +206,23 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
                 double score = compactWeights.dotProd(features);
 
                 if (candidateEvm.equals(answer)) {
-                    logger.info(features.toString());
-                    for (TLongObjectIterator<TShortDoubleMap> firstLevelIter = features.iterator(); firstLevelIter.hasNext(); ) {
-                        firstLevelIter.advance();
-                        long featureRowKey = firstLevelIter.key();
-                        if (compactWeights.containsRow(featureRowKey)) {
-                            System.out.println("Finding feature match under " + featureRowKey);
-                            TShortDoubleMap weightsRow = compactWeights.getRow(featureRowKey);
-                            TShortDoubleMap secondLevelFeatures = firstLevelIter.value();
-                            for (TShortDoubleIterator secondLevelIter = secondLevelFeatures.iterator(); secondLevelIter.hasNext(); ) {
-                                secondLevelIter.advance();
-                                System.out.println("Answer feature " + secondLevelIter.key());
-                                if (weightsRow.containsKey(secondLevelIter.key())) {
-                                    System.out.println("Feature matched " + weightsRow.get(secondLevelIter.key()));
-                                }
-                            }
-                        }
-                    }
+//                    logger.info(features.toString());
+//                    for (TLongObjectIterator<TShortDoubleMap> firstLevelIter = features.iterator(); firstLevelIter.hasNext(); ) {
+//                        firstLevelIter.advance();
+//                        long featureRowKey = firstLevelIter.key();
+//                        if (compactWeights.containsRow(featureRowKey)) {
+//                            System.out.println("Finding feature match under " + featureRowKey);
+//                            TShortDoubleMap weightsRow = compactWeights.getRow(featureRowKey);
+//                            TShortDoubleMap secondLevelFeatures = firstLevelIter.value();
+//                            for (TShortDoubleIterator secondLevelIter = secondLevelFeatures.iterator(); secondLevelIter.hasNext(); ) {
+//                                secondLevelIter.advance();
+//                                System.out.println("Answer feature " + secondLevelIter.key());
+//                                if (weightsRow.containsKey(secondLevelIter.key())) {
+//                                    System.out.println("Feature matched " + weightsRow.get(secondLevelIter.key()));
+//                                }
+//                            }
+//                        }
+//                    }
 
                     logger.info("Feature score " + score);
                 }
