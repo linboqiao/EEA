@@ -4,7 +4,6 @@ import edu.cmu.cs.lti.cds.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
 import edu.cmu.cs.lti.cds.model.ChainElement;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
-import edu.cmu.cs.lti.cds.runners.script.cds.train.StochasticNegativeTrainer;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.type.Article;
@@ -23,7 +22,6 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -195,8 +193,10 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
 
     private void update() {
         Utils.printMemInfo(logger);
+        logger.info("Updating");
 //        adaDeltaUpdate(1e-3, 0.95);
         adaGradUpdate(0.01);
+        logger.info("Update Done");
 //        stepSizeUpdate();
     }
 
@@ -235,11 +235,11 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
                         System.out.println(rowIter.key() + " " + rowIter.value() + update);
                     }
 
-                    try {
-                        StochasticNegativeTrainer.trainOut.write("Update for " + rowIter.key() + " is " + update + "\n");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        StochasticNegativeTrainer.trainOut.write("Update for " + rowIter.key() + " is " + update + "\n");
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
 
                     DataPool.compactWeights.adjustOrPutValue(rowIter.key(), cellIter.key(), update, update);
                 }

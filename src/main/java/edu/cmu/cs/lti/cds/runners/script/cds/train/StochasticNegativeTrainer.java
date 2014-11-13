@@ -16,7 +16,6 @@ import weka.core.SerializationHelper;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.util.logging.Logger;
 
 /**
@@ -44,7 +43,7 @@ public class StochasticNegativeTrainer {
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
-        trainOut = new BufferedWriter(new FileWriter(new File("neg_compact_train_out")));
+//        trainOut = new BufferedWriter(new FileWriter(new File("neg_compact_train_out")));
 
         //prepare data
         logger.info("Loading data");
@@ -78,6 +77,6 @@ public class StochasticNegativeTrainer {
             SerializationHelper.write(modelStoragePath + i + modelSuffix, DataPool.compactWeights);
         }
 
-        trainOut.close();
+//        trainOut.close();
     }
 }
