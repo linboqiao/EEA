@@ -4,6 +4,7 @@ import edu.cmu.cs.lti.cds.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
 import edu.cmu.cs.lti.cds.model.ChainElement;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
+import edu.cmu.cs.lti.cds.runners.script.cds.train.StochasticNegativeTrainer;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.type.Article;
@@ -22,6 +23,7 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
     public static final String PARAM_NEGATIVE_NUMBERS = "negativeNumbers";
 
     TokenAlignmentHelper align = new TokenAlignmentHelper();
-    CompactFeatureExtractor extractor = new CompactFeatureExtractor();
+    CompactFeatureExtractor extractor = new CompactFeatureExtractor(DataPool.compactWeights);
 
     int miniBatchDocNum = 100;
     int numNoise = 25;
@@ -68,7 +70,7 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
 
         if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
             //ignore this blacklisted file;
-            logger.info("Ignored black listed file");
+            logger.info("Ignored black listed file : " + article.getArticleName());
             return;
         }
 
@@ -95,6 +97,7 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
             List<TLongShortDoubleHashTable> noiseSamples = new ArrayList<>();
             for (int i = 0; i < numNoise; i++) {
                 Pair<LocalEventMentionRepre, Double> noise = noiseDist.draw(arguments, numArguments);
+//                Pair<LocalEventMentionRepre, Double> noise = noiseDist.draw(realSample.getMention().getArgs());
                 TLongShortDoubleHashTable noiseFeature = extractor.getFeatures(chain, align, new ChainElement(sampleSent, noise.getLeft()), sampleIndex, skipGramN);
                 noiseSamples.add(noiseFeature);
             }
@@ -223,15 +226,21 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
 
             for (TShortDoubleIterator cellIter = rowIter.value().iterator(); cellIter.hasNext(); ) {
                 cellIter.advance();
-
                 double g = cellIter.value();
                 if (g != 0) {
                     double gSq = g * g;
                     double cumulativeGsq = DataPool.compactAdaGradMemory.adjustOrPutValue(rowIter.key(), cellIter.key(), gSq, gSq);
                     double update = eta * g / Math.sqrt(cumulativeGsq);
-//                    if (Double.isNaN(g)) {
-//                        System.out.println(rowIter.key() + " " + rowIter.value() + update);
-//                    }
+                    if (Double.isNaN(g)) {
+                        System.out.println(rowIter.key() + " " + rowIter.value() + update);
+                    }
+
+                    try {
+                        StochasticNegativeTrainer.trainOut.write("Update for " + rowIter.key() + " is " + update + "\n");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     DataPool.compactWeights.adjustOrPutValue(rowIter.key(), cellIter.key(), update, update);
                 }
             }

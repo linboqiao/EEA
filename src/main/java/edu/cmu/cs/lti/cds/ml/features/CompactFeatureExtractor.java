@@ -8,6 +8,7 @@ import edu.cmu.cs.lti.cds.runners.script.cds.test.KarlMooneyPredictor;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.utils.BitUtils;
+import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import gnu.trove.list.array.TShortArrayList;
 import org.apache.commons.lang3.tuple.Pair;
@@ -24,6 +25,12 @@ import java.util.List;
  * Time: 4:47 PM
  */
 public class CompactFeatureExtractor {
+    TLongBasedFeatureTable featureTable;
+
+    public CompactFeatureExtractor(TLongBasedFeatureTable featureTable) {
+        this.featureTable = featureTable;
+    }
+
     public TLongShortDoubleHashTable getFeatures(List<MooneyEventRepre> chain, MooneyEventRepre targetMention, int index, int skipGramN) {
         TLongShortDoubleHashTable featureTable = new TLongShortDoubleHashTable();        //ngram features
         List<Pair<MooneyEventRepre, MooneyEventRepre>> ngrams = getSkippedNgrams(chain, targetMention, index, skipGramN);
@@ -54,7 +61,7 @@ public class CompactFeatureExtractor {
         //mooney features
         featureTable.put(predicatePair, getMooneyArgumentFeature(arg1s, arg2s), 1);
 
-//        //regular argument features
+        //regular argument features
 //        for (short f : getRegularArgumentFeatures(arg1s, arg2s)) {
 //            featureTable.put(predicatePair, f, 1);
 //        }
@@ -62,9 +69,8 @@ public class CompactFeatureExtractor {
 
     private short getMooneyArgumentFeature(int[] args1, int[] args2) {
         String featureName = "m_arg" + "_" + asArgumentStr(args1) + "_" + asArgumentStr(args2);
-        return DataPool.compactWeights.getOrPutFeatureIndex(featureName);
+        return featureTable.getOrPutFeatureIndex(featureName);
     }
-
 
     private int[] getLast3IntFromTuple(Fun.Tuple4<String, Integer, Integer, Integer> t) {
         int[] a = new int[3];
@@ -88,7 +94,7 @@ public class CompactFeatureExtractor {
 
                 if (slotId1Eid == slotId2Eid) {
                     String featureName = "r_arg" + "_" + slotId1 + "_" + slotId2;
-                    short fIndex = DataPool.compactWeights.getOrPutFeatureIndex(featureName);
+                    short fIndex = featureTable.getOrPutFeatureIndex(featureName);
                     regularArgumentFeatures.add(fIndex);
                 }
             }

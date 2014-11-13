@@ -31,13 +31,13 @@ public class DataPool {
 
     //a more compact form in storing such parameters
     public static final TLongBasedFeatureTable compactWeights = new TLongBasedFeatureTable();
+
     //ada grad memory
     public static final TLongShortDoubleHashTable compactAdaGradMemory = new TLongShortDoubleHashTable();
 
     //ada delta memory
     public static TObjectDoubleMap<String> deltaVarSq = new TObjectDoubleHashMap<>();
     public static TObjectDoubleMap<String> deltaGradientSq = new TObjectDoubleHashMap<>();
-
 
     //sample counter
     public static long numSampleProcessed = 0;
@@ -64,7 +64,7 @@ public class DataPool {
         }
     }
 
-    public static void calUnigramSum() {
+    private static void calUnigramSum() {
         for (TObjectIntIterator<String> iter = headIdMap.iterator(); iter.hasNext(); ) {
             iter.advance();
 //            System.out.println(iter.key() + " " + iter.value());

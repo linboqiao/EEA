@@ -1,7 +1,14 @@
 package edu.cmu.cs.lti.utils;
 
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
+import gnu.trove.iterator.TLongObjectIterator;
+import gnu.trove.iterator.TObjectShortIterator;
+import gnu.trove.map.TShortDoubleMap;
+import gnu.trove.map.TShortObjectMap;
 import gnu.trove.map.hash.TObjectShortHashMap;
+import gnu.trove.map.hash.TShortObjectHashMap;
+
+import java.io.Serializable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,7 +16,8 @@ import gnu.trove.map.hash.TObjectShortHashMap;
  * Date: 11/11/14
  * Time: 3:49 PM
  */
-public class TLongBasedFeatureTable {
+public class TLongBasedFeatureTable implements Serializable {
+    private static final long serialVersionUID = 1574621409197680994L;
     /**
      * Long is the main key, which can encode two integers (then map to two words)
      * <p/>
@@ -56,6 +64,20 @@ public class TLongBasedFeatureTable {
         }
     }
 
+    public TLongObjectIterator<TShortDoubleMap> iterator() {
+        return table.iterator();
+    }
+
+    public TShortObjectMap<String> getFeatureNameMap() {
+        TShortObjectMap<String> featureNames = new TShortObjectHashMap<>();
+        for (TObjectShortIterator<String> iter = secondaryFeatureLookupMap.iterator(); iter.hasNext(); ) {
+            iter.advance();
+            featureNames.put(iter.value(), iter.key());
+        }
+
+        return featureNames;
+    }
+
     /**
      * The data are stored in primitive, returning an object for easy null-check
      *
@@ -67,12 +89,20 @@ public class TLongBasedFeatureTable {
         return table.get(rowKey, colKey);
     }
 
+    public TShortDoubleMap getRow(long rowKey) {
+        return table.getRow(rowKey);
+    }
+
     public void put(long rowKey, short colKey, double value) {
         table.put(rowKey, colKey, value);
     }
 
     public boolean contains(long rowKey, short colKey) {
         return table.contains(rowKey, colKey);
+    }
+
+    public boolean containsRow(long rowKey) {
+        return table.containsRow(rowKey);
     }
 
     public boolean adjust(long rowKey, short colKey, double value) {

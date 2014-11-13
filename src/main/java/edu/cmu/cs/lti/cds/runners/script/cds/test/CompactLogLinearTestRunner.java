@@ -3,7 +3,7 @@
  */
 package edu.cmu.cs.lti.cds.runners.script.cds.test;
 
-import edu.cmu.cs.lti.cds.annotators.script.test.LogLinearTester;
+import edu.cmu.cs.lti.cds.annotators.script.test.CompactLogLinearTester;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
@@ -21,8 +21,8 @@ import java.util.logging.Logger;
 /**
  * @author zhengzhongliu
  */
-public class LogLinearTestRunner {
-    private static String className = LogLinearTestRunner.class.getSimpleName();
+public class CompactLogLinearTestRunner {
+    private static String className = CompactLogLinearTestRunner.class.getSimpleName();
 
     private static Logger logger = Logger.getLogger(className);
 
@@ -70,7 +70,7 @@ public class LogLinearTestRunner {
         // Instantiate a collection reader to get XMI as input.
         // Note that you should change the following parameters for your setting.
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createGzippedXmiReader(typeSystemDescription, inputDir, false);
+                CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
         //initialize eval parameter
         allK = config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k");
@@ -78,13 +78,13 @@ public class LogLinearTestRunner {
         recallCounts = new int[allK.length];
 
         AnalysisEngineDescription tester = CustomAnalysisEngineFactory.createAnalysisEngine(
-                LogLinearTester.class, typeSystemDescription,
-                LogLinearTester.PARAM_CLOZE_DIR_PATH, clozePath,
-                LogLinearTester.PARAM_DB_DIR_PATH, dbPath,
-                LogLinearTester.PARAM_HEAD_COUNT_DB_NAMES, headCountFileNames,
-                LogLinearTester.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
-                LogLinearTester.PARAM_MODEL_PATH, modelPath,
-                LogLinearTester.PARAM_KEEP_QUIET, false
+                CompactLogLinearTester.class, typeSystemDescription,
+                CompactLogLinearTester.PARAM_CLOZE_DIR_PATH, clozePath,
+                CompactLogLinearTester.PARAM_DB_DIR_PATH, dbPath,
+                CompactLogLinearTester.PARAM_HEAD_COUNT_DB_NAMES, headCountFileNames,
+                CompactLogLinearTester.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
+                CompactLogLinearTester.PARAM_MODEL_PATH, modelPath,
+                CompactLogLinearTester.PARAM_KEEP_QUIET, false
         );
 
         SimplePipeline.runPipeline(reader, tester);

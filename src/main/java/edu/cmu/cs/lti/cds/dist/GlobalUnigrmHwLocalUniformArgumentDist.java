@@ -143,6 +143,21 @@ public class GlobalUnigrmHwLocalUniformArgumentDist {
         return coinToss ? column : alias[column];
     }
 
+    /**
+     * Draw a predicate and create a mention with given arguments.
+     *
+     * @param providedArguments
+     * @return
+     */
+    public Pair<LocalEventMentionRepre, Double> draw(Pair<Integer, String>[] providedArguments) {
+        String predicate = drawPredicate();
+
+        LocalEventMentionRepre repre = new LocalEventMentionRepre(predicate, providedArguments.clone());
+
+        return Pair.of(repre, DataPool.getPredicateProb(predicate));
+    }
+
+
     public Pair<LocalEventMentionRepre, Double> draw(List<Pair<Integer, String>> candidateArguments, int numArguments) {
         String predicate = drawPredicate();
 
@@ -158,6 +173,7 @@ public class GlobalUnigrmHwLocalUniformArgumentDist {
     public String drawPredicate() {
         return DataPool.headWords[next()];
     }
+
 
     public Double probOf(LocalEventMentionRepre evm, int numCandidates, int numArguments) {
         double probOfEvm = DataPool.getPredicateProb(evm.getMentionHead());

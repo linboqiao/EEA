@@ -6,6 +6,7 @@ import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.Utils;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.pipeline.SimplePipeline;
@@ -13,7 +14,9 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.core.SerializationHelper;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.logging.Logger;
 
 /**
@@ -24,6 +27,8 @@ import java.util.logging.Logger;
  */
 public class StochasticNegativeTrainer {
     private static Logger logger = Logger.getLogger(StochasticNegativeTrainer.class.getName());
+
+    public static BufferedWriter trainOut;
 
     public static void main(String[] args) throws Exception {
         Configuration config = new Configuration(new File(args[0]));
@@ -38,6 +43,8 @@ public class StochasticNegativeTrainer {
         String modelSuffix = config.get("edu.cmu.cs.lti.cds.model.suffix");
 
         String paramTypeSystemDescriptor = "TypeSystem";
+
+        trainOut = new BufferedWriter(new FileWriter(new File("neg_compact_train_out")));
 
         //prepare data
         logger.info("Loading data");
@@ -57,6 +64,8 @@ public class StochasticNegativeTrainer {
                 CompactNegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum);
 //        NegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum);
 
+        Utils.printMemInfo(logger, "Beginning memory");
+
         //possibly iterate this step
         for (int i = 0; i < maxIter; i++) {
             SimplePipeline.runPipeline(reader, trainer);
@@ -68,5 +77,7 @@ public class StochasticNegativeTrainer {
 
             SerializationHelper.write(modelStoragePath + i + modelSuffix, DataPool.compactWeights);
         }
+
+        trainOut.close();
     }
 }
