@@ -71,7 +71,7 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
 
         if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
             //ignore this blacklisted file;
-            logger.info("Ignored black listed file : " + article.getArticleName());
+            logger.fine("Ignored black listed file : " + article.getArticleName());
             return;
         }
 
@@ -123,7 +123,7 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
         logger.info("Finish one epoch, totally  " + DataPool.numSampleProcessed + " samples processed so far");
-        logger.info("Features lexical pairs " + DataPool.compactWeights.getNumRows());
+        logger.info("Features lexical pairs learnt" + DataPool.compactWeights.getNumRows());
         logger.info("Average cumulative gain for the residual batch: " + cumulativeObjective / (DataPool.numSampleProcessed % miniBatchDocNum));
         update();
     }
