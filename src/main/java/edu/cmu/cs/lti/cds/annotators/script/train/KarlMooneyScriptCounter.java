@@ -41,7 +41,6 @@ import java.util.Map;
  */
 public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
     //TODO use word sense instead of predicate head word
-
     public static final String PARAM_DB_NAME = "dbName";
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
@@ -168,7 +167,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             Utils.printMemInfo(logger, "Memory info after loaded " + counter + " files");
         }
     }
-
 
     public TIntLinkedList compactEvmSubstituiton(Fun.Tuple4<String, Integer, Integer, Integer> evm, TObjectIntMap<String> headMap) {
         TIntLinkedList compactRep = new TIntLinkedList();

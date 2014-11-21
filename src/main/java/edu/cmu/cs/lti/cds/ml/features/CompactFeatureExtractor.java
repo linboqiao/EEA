@@ -59,12 +59,12 @@ public class CompactFeatureExtractor {
     private void getMooneyLikeFeatures(TLongShortDoubleHashTable featureTable, String p1, String p2, int[] arg1s, int[] arg2s) {
         long predicatePair = getCompactPredicatePair(p1, p2);
         //mooney features
-//        featureTable.put(predicatePair, getMooneyArgumentFeature(arg1s, arg2s), 1);
+        featureTable.put(predicatePair, getMooneyArgumentFeature(arg1s, arg2s), 1);
 
         //regular argument features
-        for (short f : getRegularArgumentFeatures(arg1s, arg2s)) {
-            featureTable.put(predicatePair, f, 1);
-        }
+//        for (short f : getRegularArgumentFeatures(arg1s, arg2s)) {
+//            featureTable.put(predicatePair, f, 1);
+//        }
     }
 
     private short getMooneyArgumentFeature(int[] args1, int[] args2) {

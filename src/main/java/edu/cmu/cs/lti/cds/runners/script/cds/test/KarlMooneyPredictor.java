@@ -316,17 +316,16 @@ public class KarlMooneyPredictor {
         System.out.println("Starting the predictor ...");
 
         Configuration config = new Configuration(new File(args[0]));
-        String subPath = args.length > 1 ? args[1] : "";
+        String subPath = args.length > 1 ? "_" + args[1] : "_km";
 
-        String parentDataDir = config.get("edu.cmu.cs.lti.cds.parent.output"); // "data";
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
-        String clozeDir = config.get("edu.cmu.cs.lti.cds.cloze.base") + "_" + subPath; // "cloze"
-        String inputDir = parentDataDir + "/03_" + clozeDir;
+        String inputDir = config.get("edu.cmu.cs.lti.cds.cloze.path");
         String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
 
         int[] allK = config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k");
-        String outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + "_" + subPath;
+
+        String outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + subPath;
 
         boolean filter = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
 

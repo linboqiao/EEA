@@ -14,7 +14,6 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.core.SerializationHelper;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.util.logging.Logger;
 
@@ -26,8 +25,6 @@ import java.util.logging.Logger;
  */
 public class StochasticNegativeTrainer {
     private static Logger logger = Logger.getLogger(StochasticNegativeTrainer.class.getName());
-
-    public static BufferedWriter trainOut;
 
     public static void main(String[] args) throws Exception {
         Configuration config = new Configuration(new File(args[0]));

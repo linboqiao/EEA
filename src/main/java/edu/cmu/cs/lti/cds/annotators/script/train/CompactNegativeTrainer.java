@@ -63,11 +63,6 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
-//        try {
-//            StochasticNegativeTrainer.trainOut.write(progressInfo(aJCas) + "\n");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
         if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
             //ignore this blacklisted file;
@@ -123,7 +118,7 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
         logger.info("Finish one epoch, totally  " + DataPool.numSampleProcessed + " samples processed so far");
-        logger.info("Features lexical pairs learnt" + DataPool.compactWeights.getNumRows());
+        logger.info("Features lexical pairs learnt " + DataPool.compactWeights.getNumRows());
         logger.info("Average cumulative gain for the residual batch: " + cumulativeObjective / (DataPool.numSampleProcessed % miniBatchDocNum));
         update();
     }
@@ -136,12 +131,6 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
         double scoreTrue = DataPool.compactWeights.dotProd(dataSample);
         double sigmoidTrue = sigmoid(scoreTrue);
 
-//        try {
-//            StochasticNegativeTrainer.trainOut.write("Sigmoid true for  " + dataSample + "  is " + scoreTrue + "\n");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         //multiple x_w by (1- sigmoid)
         // g = ( Lw(u) - sigmoid(\theta * x_w) ) x_w, where Lw(u) = 1
         gradient.multiplyBy((1 - sigmoidTrue));
@@ -153,12 +142,6 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
         for (TLongShortDoubleHashTable noiseSample : noiseSamples) {
             double scoreNoise = DataPool.compactWeights.dotProd(noiseSample);
             double sigmoidNoise = sigmoid(scoreNoise);
-
-//            try {
-//                StochasticNegativeTrainer.trainOut.write("Sigmoid noise for  " + noiseSample + "  is " + scoreNoise + "\n");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
 
             TLongShortDoubleHashTable noiseFeatures = noiseSample;
 
@@ -179,11 +162,6 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
             for (TShortDoubleIterator cellIter = rowIter.value().iterator(); cellIter.hasNext(); ) {
                 cellIter.advance();
                 cumulativeGradient.adjustOrPutValue(rowIter.key(), cellIter.key(), cellIter.value(), cellIter.value());
-//            try {
-//                StochasticNegativeTrainer.trainOut.write(rowIter.key() + " " + rowIter.value() + "\n");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
             }
         }
 
@@ -199,7 +177,7 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
         Utils.printMemInfo(logger);
         logger.info("Updating");
 //        adaDeltaUpdate(1e-3, 0.95);
-        adaGradUpdate(0.01);
+        adaGradUpdate(0.1);
         logger.info("Update Done");
 //        stepSizeUpdate();
     }
@@ -212,11 +190,6 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
                 cellIter.advance();
 
                 double u = stepSize * cellIter.value();
-//            try {
-//                StochasticNegativeTrainer.trainOut.write("Update for " + rowIter.key() + " is " + u + " : " + stepSize + "*" + rowIter.value() + "\n");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
                 DataPool.compactWeights.adjustOrPutValue(rowIter.key(), cellIter.key(), u, u);
             }
         }
@@ -238,12 +211,6 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
                     if (Double.isNaN(g)) {
                         System.out.println(rowIter.key() + " " + rowIter.value() + update);
                     }
-
-//                    try {
-//                        StochasticNegativeTrainer.trainOut.write("Update for " + rowIter.key() + " is " + update + "\n");
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
 
                     DataPool.compactWeights.adjustOrPutValue(rowIter.key(), cellIter.key(), update, update);
                 }

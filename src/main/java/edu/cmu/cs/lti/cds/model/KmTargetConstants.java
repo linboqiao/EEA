@@ -2,7 +2,9 @@ package edu.cmu.cs.lti.cds.model;
 
 import edu.cmu.cs.lti.ling.PropBankTagSet;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +17,8 @@ public class KmTargetConstants {
     //TODO very ugly class
 
     public static final Map<String, Integer> targetArguments;
+
+    public static final List<Integer> notNullArguments;
 
     public static int argMarkerToSlotIndex(int argMarker) {
         return argMarker - anchorArg0Marker;
@@ -37,6 +41,10 @@ public class KmTargetConstants {
         targetArguments.put(PropBankTagSet.ARG0, anchorArg0Marker);
         targetArguments.put(PropBankTagSet.ARG1, anchorArg1Marker);
         targetArguments.put(PropBankTagSet.ARG2, anchorArg2Marker);
+
+        notNullArguments = new ArrayList<>();
+        notNullArguments.addAll(targetArguments.values());
+        notNullArguments.add(otherMarker);
     }
 
     public static final String clozeBlankIndicator = "##blank##";

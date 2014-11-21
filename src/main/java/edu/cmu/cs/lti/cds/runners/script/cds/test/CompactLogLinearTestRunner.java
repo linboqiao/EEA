@@ -41,10 +41,11 @@ public class CompactLogLinearTestRunner {
         logger.info(className + " started...");
 
         Configuration config = new Configuration(new File(args[0]));
-        String subPath = args.length > 1 ? args[1] : "";
 
-        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.heldout.path") + "/" + subPath; //"data/02_event_tuples";
-        String clozePath = config.get("edu.cmu.cs.lti.cds.cloze.path") + "_" + subPath; // "cloze"
+        String subPath = args.length > 1 ? "_" + args[1] : "_ll";
+
+        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.heldout.path"); //"data/02_event_tuples";
+        String clozePath = config.get("edu.cmu.cs.lti.cds.cloze.path"); // "cloze"
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath");
         String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
@@ -75,7 +76,7 @@ public class CompactLogLinearTestRunner {
 
         //initialize eval parameter
         allK = config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k");
-        outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + "_" + subPath;
+        outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + subPath;
         recallCounts = new int[allK.length];
 
         AnalysisEngineDescription tester = CustomAnalysisEngineFactory.createAnalysisEngine(

@@ -167,7 +167,7 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
         }
 
         if (!oov) {
-            CompactLogLinearTestRunner.mrr += 1 / rank;
+            CompactLogLinearTestRunner.mrr += 1.0 / rank;
         } else {
             logger.info("Answer Predicate is OOV, contributing 0 MRRs");
         }
