@@ -34,6 +34,8 @@ public class MooneyUnigramCounterRunner {
         Configuration config = new Configuration(new File(args[0]));
         String occSuffix = args.length > 1 ? args[1] : "db"; //e.g. 00-02, full
 
+        System.out.println("Occ db suffix : " + occSuffix);
+
         String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path"); //"data/02_event_tuples";
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //data/_db
