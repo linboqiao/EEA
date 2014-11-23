@@ -95,11 +95,9 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
 
         logger.info("Loading from " + modelPath);
 
-
         try {
             compactWeights = (TLongBasedFeatureTable) SerializationHelper.read(modelPath);
             extractor = new CompactFeatureExtractor(compactWeights);
-//            System.out.println(weights.get("m_observe_0_0_-1_fight_0_-1_-1"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -195,15 +193,14 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
         }
         //represent 'other' unseen entity
         entities.add(Pair.of(-1, ""));
-
         Set<Integer> mooneyEntities = getRewritedEntitiesFromChain(mooneyChain);
 
         Sentence sent = regularChain.get(testIndex).getSent();
+        boolean debug = true;
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateMooeyEvms = MooneyEventRepre.generateTuples(head, mooneyEntities);
             for (MooneyEventRepre candidateEvm : candidateMooeyEvms) {
-//                logger.info("Change skip gram into " + skipGramN);
-                skipGramN = 50;
+//                skipGramN = 50;
                 TLongShortDoubleHashTable features = extractor.getFeatures(mooneyChain, candidateEvm, testIndex, skipGramN);
                 double score = compactWeights.dotProd(features);
 
@@ -226,9 +223,9 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
 //                        }
 //                    }
 
+                    logger.info("Answer candidate appears: " + candidateEvm);
                     logger.info("Feature score " + score);
                 }
-
 
                 rankedEvents.add(Pair.of(candidateEvm, score));
             }

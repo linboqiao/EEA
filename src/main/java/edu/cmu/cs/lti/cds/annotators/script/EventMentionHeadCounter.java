@@ -85,8 +85,9 @@ public class EventMentionHeadCounter extends AbstractLoggingAnnotator {
 
         for (String head : tfCounts.keySet()) {
             int localCount = tfCounts.get(head);
-
             Fun.Tuple2<Integer, Integer> counts = eventHeadTfDf.get(head);
+//            System.err.println("head: " + head);
+
             if (counts == null) {
                 eventHeadTfDf.put(head, new Fun.Tuple2<>(localCount, 1));
             } else {
@@ -106,6 +107,7 @@ public class EventMentionHeadCounter extends AbstractLoggingAnnotator {
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
+        logger.info("Total head words: "+ eventHeadTfDf.size());
         db.commit();
         db.compact();
         db.close();

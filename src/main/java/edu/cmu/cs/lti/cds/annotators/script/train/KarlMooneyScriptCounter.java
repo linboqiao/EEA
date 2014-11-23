@@ -106,12 +106,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         }
 
         if (ignoreLowFreq) {
-//            String countingDbFileName = (String) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAME);
-//            if (countingDbFileName != null) {
-//                DB headCountDb = DbManager.getDB(dbPath, countingDbFileName);
-//                headTfDfMap = headCountDb.getHashMap(EventMentionHeadCounter.defaultMentionHeadMapName);
-//            }
-
             String[] countingDbFileNames = (String[]) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAMES);
             headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
         }
@@ -122,7 +116,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         logger.info(progressInfo(aJCas));
-
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
 
         if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
@@ -150,18 +143,10 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
                     continue;
                 }
             }
-
-//            if (subsitutedBigram.a.a.equals("have")) {
-//                System.out.println(subsitutedBigram);
-//                System.out.println(compactEvmPairSubstituiton(subsitutedBigram, headIdMap));
-//            }
-
             cooccCounts.adjustOrPutValue(compactEvmPairSubstituiton(subsitutedBigram, headIdMap), 1, 1);
             occCounts.adjustOrPutValue(compactEvmSubstituiton(subsitutedBigram.a, headIdMap), 1, 1);
         }
 
-        //defrag from time to time
-        //debug compact
         counter++;
         if (counter % 4000 == 0) {
             Utils.printMemInfo(logger, "Memory info after loaded " + counter + " files");
@@ -202,6 +187,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         } else {
             id = headMap.size();
             headMap.put(head, id);
+//            System.err.println("head: " + head);
         }
         return id;
     }
@@ -313,9 +299,11 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
-//        tupleCountDb.commit();
-//        tupleCountDb.compact();
-//        tupleCountDb.close();
+
+        logger.info("Coocc counts: " + cooccCounts.size());
+        logger.info("Occ counts: " + occCounts.size());
+        logger.info("Head word counts : " + headIdMap.size());
+
         try {
             SerializationHelper.write(new File(dbPath, tupleCountDbFileName + "_" + defaultCooccMapName).getAbsolutePath(), cooccCounts);
         } catch (Exception e) {

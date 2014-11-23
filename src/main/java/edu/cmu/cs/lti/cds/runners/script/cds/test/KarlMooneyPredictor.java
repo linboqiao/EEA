@@ -170,6 +170,12 @@ public class KarlMooneyPredictor {
         double cooccCountSmoothed = counts.getRight() + laplacianSmoothingParameter;
         double formerOccCountSmoothed = counts.getLeft() + numTotalEvents * laplacianSmoothingParameter;
 
+
+        if (cooccCountSmoothed > laplacianSmoothingParameter) {
+            System.err.println("Probability of seeing " + former + " before " + latter);
+            System.err.println(cooccCountSmoothed / formerOccCountSmoothed+ " " + counts.getRight() + "/" + counts.getLeft());
+        }
+
         //add one smoothing
         return Math.log(cooccCountSmoothed / formerOccCountSmoothed);
     }
@@ -285,7 +291,7 @@ public class KarlMooneyPredictor {
             FileUtils.writeLines(outputFile, lines);
 
             if (!oov) {
-                mrr += 1 / rank;
+                mrr += 1.0 / rank;
             } else {
                 logger.info("Answer Predicate is OOV, assigning 0 MRRs");
             }

@@ -50,7 +50,7 @@ public class DataPool {
     public static Set<String> blackListedArticleId;
 
     //Load some of these large maps that will might be shared static
-    //use only one unified head id map here.
+
     public static void loadHeadIds(String dbPath, String dbName, String headIdMapName) throws Exception {
         String mapPath = new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath();
         headIdMap = (TObjectIntMap<String>) SerializationHelper.read(mapPath);
@@ -67,7 +67,6 @@ public class DataPool {
     private static void calUnigramSum() {
         for (TObjectIntIterator<String> iter = headIdMap.iterator(); iter.hasNext(); ) {
             iter.advance();
-//            System.out.println(iter.key() + " " + iter.value());
             predicateTotalCount += getPredicateFreq(iter.key());
             headWords[iter.value()] = iter.key();
         }
