@@ -4,7 +4,7 @@ import edu.cmu.cs.lti.cds.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.cds.ml.features.FeatureExtractor;
 import edu.cmu.cs.lti.cds.model.ChainElement;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
-import edu.cmu.cs.lti.cds.runners.script.cds.train.StochasticNceTrainer;
+import edu.cmu.cs.lti.cds.runners.script.train.StochasticNceTrainer;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.cds.utils.VectorUtils;
 import edu.cmu.cs.lti.script.type.Article;

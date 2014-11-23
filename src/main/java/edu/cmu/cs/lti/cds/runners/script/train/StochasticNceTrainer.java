@@ -1,6 +1,6 @@
-package edu.cmu.cs.lti.cds.runners.script.cds.train;
+package edu.cmu.cs.lti.cds.runners.script.train;
 
-import edu.cmu.cs.lti.cds.annotators.script.train.CompactNegativeTrainer;
+import edu.cmu.cs.lti.cds.annotators.script.train.NceTrainer;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
@@ -14,7 +14,10 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.core.SerializationHelper;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
@@ -23,8 +26,10 @@ import java.util.logging.Logger;
  * Date: 11/3/14
  * Time: 1:46 PM
  */
-public class StochasticNegativeTrainer {
-    private static Logger logger = Logger.getLogger(StochasticNegativeTrainer.class.getName());
+public class StochasticNceTrainer {
+    private static Logger logger = Logger.getLogger(StochasticNceTrainer.class.getName());
+
+    public static BufferedWriter trainOut;
 
     public static void main(String[] args) throws Exception {
         Configuration config = new Configuration(new File(args[0]));
@@ -34,14 +39,9 @@ public class StochasticNegativeTrainer {
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
         String[] countingDbFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files");
         String blackListFileName = config.get("edu.cmu.cs.lti.cds.blacklist");
-        String modelStoragePath = config.get("edu.cmu.cs.lti.cds.negative.model.path");
-        int noiseNum = config.getInt("edu.cmu.cs.lti.cds.negative.noisenum");
-        int miniBatchNum = config.getInt("edu.cmu.cs.lti.cds.minibatch");
-        String modelSuffix = config.get("edu.cmu.cs.lti.cds.model.suffix");
+        String modelStoragePath = config.get("edu.cmu.cs.lti.cds.nce.model.path");
 
         String paramTypeSystemDescriptor = "TypeSystem";
-
-//        trainOut = new BufferedWriter(new FileWriter(new File("neg_compact_train_out")));
 
         //prepare data
         logger.info("Loading data");
@@ -57,15 +57,14 @@ public class StochasticNegativeTrainer {
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
-        AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(CompactNegativeTrainer.class, typeSystemDescription,
-                CompactNegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum,
-                CompactNegativeTrainer.PARAM_MINI_BATCH_SIZE, miniBatchNum);
-//        NegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum);
+        AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(NceTrainer.class, typeSystemDescription);
 
-        Utils.printMemInfo(logger, "Beginning memory");
+        trainOut = new BufferedWriter(new FileWriter(new File("nce_train_out")));
 
         //possibly iterate this step
         for (int i = 0; i < maxIter; i++) {
+            Utils.printMemInfo(logger);
+
             SimplePipeline.runPipeline(reader, trainer);
             File modelDirParent = new File(modelStoragePath).getParentFile();
 
@@ -73,9 +72,14 @@ public class StochasticNegativeTrainer {
                 modelDirParent.mkdirs();
             }
 
-            SerializationHelper.write(modelStoragePath + i + modelSuffix, DataPool.compactWeights);
+            SerializationHelper.write(modelStoragePath + i + ".ser", DataPool.weights);
         }
 
-//        trainOut.close();
+        try {
+            StochasticNceTrainer.trainOut.write("Finished!");
+            StochasticNceTrainer.trainOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

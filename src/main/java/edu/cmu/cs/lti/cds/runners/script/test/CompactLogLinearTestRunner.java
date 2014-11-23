@@ -1,7 +1,7 @@
 /**
  *
  */
-package edu.cmu.cs.lti.cds.runners.script.cds.test;
+package edu.cmu.cs.lti.cds.runners.script.test;
 
 import edu.cmu.cs.lti.cds.annotators.script.test.CompactLogLinearTester;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;

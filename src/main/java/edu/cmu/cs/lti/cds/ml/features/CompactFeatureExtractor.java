@@ -4,7 +4,7 @@ import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.ChainElement;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
-import edu.cmu.cs.lti.cds.runners.script.cds.test.KarlMooneyPredictor;
+import edu.cmu.cs.lti.cds.runners.script.test.KarlMooneyPredictor;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.utils.BitUtils;

@@ -6,7 +6,7 @@ import edu.cmu.cs.lti.cds.model.ChainElement;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
-import edu.cmu.cs.lti.cds.runners.script.cds.test.LogLinearTestRunner;
+import edu.cmu.cs.lti.cds.runners.script.test.LogLinearTestRunner;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.cds.utils.DbManager;
 import edu.cmu.cs.lti.cds.utils.MultiMapUtils;

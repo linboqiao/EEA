@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.cds.ml.features;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.ChainElement;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
-import edu.cmu.cs.lti.cds.runners.script.cds.test.KarlMooneyPredictor;
+import edu.cmu.cs.lti.cds.runners.script.test.KarlMooneyPredictor;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
