@@ -145,10 +145,11 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
 
         PriorityQueue<Pair<MooneyEventRepre, Double>> results = predictMooneyStyle(regularChain, mooneyClozeTask.getLeft(), clozeIndex, numArguments, DataPool.headWords);
 
-        int rank;
+        int rank = 0;
         boolean oov = true;
         List<String> lines = new ArrayList<>();
-        for (rank = 1; rank <= results.size(); rank++) {
+        while (!results.isEmpty()) {
+            rank++;
             Pair<MooneyEventRepre, Double> resulti = results.poll();
             lines.add(resulti.getLeft() + "\t" + resulti.getRight());
             if (resulti.getKey().equals(mooneyStyleAnswer)) {
@@ -197,39 +198,26 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
 
         Sentence sent = regularChain.get(testIndex).getSent();
         boolean debug = true;
+
+        int count = 0;
+
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateMooeyEvms = MooneyEventRepre.generateTuples(head, mooneyEntities);
             for (MooneyEventRepre candidateEvm : candidateMooeyEvms) {
 //                skipGramN = 50;
                 TLongShortDoubleHashTable features = extractor.getFeatures(mooneyChain, candidateEvm, testIndex, skipGramN);
                 double score = compactWeights.dotProd(features);
-
+//                double score = 1;
                 if (candidateEvm.equals(answer)) {
-//                    logger.info(features.toString());
-//                    for (TLongObjectIterator<TShortDoubleMap> firstLevelIter = features.iterator(); firstLevelIter.hasNext(); ) {
-//                        firstLevelIter.advance();
-//                        long featureRowKey = firstLevelIter.key();
-//                        if (compactWeights.containsRow(featureRowKey)) {
-//                            System.out.println("Finding feature match under " + featureRowKey);
-//                            TShortDoubleMap weightsRow = compactWeights.getRow(featureRowKey);
-//                            TShortDoubleMap secondLevelFeatures = firstLevelIter.value();
-//                            for (TShortDoubleIterator secondLevelIter = secondLevelFeatures.iterator(); secondLevelIter.hasNext(); ) {
-//                                secondLevelIter.advance();
-//                                System.out.println("Answer feature " + secondLevelIter.key());
-//                                if (weightsRow.containsKey(secondLevelIter.key())) {
-//                                    System.out.println("Feature matched " + weightsRow.get(secondLevelIter.key()));
-//                                }
-//                            }
-//                        }
-//                    }
-
                     logger.info("Answer candidate appears: " + candidateEvm);
                     logger.info("Feature score " + score);
                 }
 
+                count++;
                 rankedEvents.add(Pair.of(candidateEvm, score));
             }
         }
+
         return rankedEvents;
     }
 
