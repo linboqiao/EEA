@@ -9,7 +9,6 @@ import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.Utils;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.pipeline.SimplePipeline;
@@ -64,9 +63,6 @@ public class CompactLogLinearTestRunner {
 //        DataPool.loadHeadCounts(dbPath, headCountFileNames, true);
         DataPool.readBlackList(new File(blackListFile));
         logger.info("# predicates " + DataPool.headIdMap.size());
-
-
-        Utils.pause();
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
