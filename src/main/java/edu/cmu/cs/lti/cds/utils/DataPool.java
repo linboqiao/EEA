@@ -51,6 +51,11 @@ public class DataPool {
 
     //Load some of these large maps that will might be shared static
 
+    public static void loadData(String dbPath, String dbName, String headIdMapName, String[] countingDbFileNames) throws Exception {
+        loadHeadIds(dbPath, dbName, headIdMapName);
+        loadHeadCounts(dbPath, countingDbFileNames, true);
+    }
+
     public static void loadHeadIds(String dbPath, String dbName, String headIdMapName) throws Exception {
         String mapPath = new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath();
         headIdMap = (TObjectIntMap<String>) SerializationHelper.read(mapPath);

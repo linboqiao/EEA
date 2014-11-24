@@ -5,6 +5,7 @@ import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
+import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.cds.utils.DbManager;
 import edu.cmu.cs.lti.cds.utils.MultiMapUtils;
 import edu.cmu.cs.lti.utils.Comparators;
@@ -19,7 +20,6 @@ import gnu.trove.set.hash.TIntHashSet;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
-import org.mapdb.Fun;
 
 import java.io.File;
 import java.io.IOException;
@@ -173,7 +173,7 @@ public class KarlMooneyPredictor {
 
         if (cooccCountSmoothed > laplacianSmoothingParameter) {
             System.err.println("Probability of seeing " + former + " before " + latter);
-            System.err.println(cooccCountSmoothed / formerOccCountSmoothed+ " " + counts.getRight() + "/" + counts.getLeft());
+            System.err.println(cooccCountSmoothed / formerOccCountSmoothed + " " + counts.getRight() + "/" + counts.getLeft());
         }
 
         //add one smoothing
@@ -232,21 +232,23 @@ public class KarlMooneyPredictor {
         int totalCount = 0;
         double mrr = 0;
 
-        Set<String> allPredicates = new HashSet<>();
+//        Set<String> allPredicates = new HashSet<>();
 
-        logger.info("Preparing predicates");
-        for (Map<String, Fun.Tuple2<Integer, Integer>> map : headTfDfMaps) {
-            for (Map.Entry<String, Fun.Tuple2<Integer, Integer>> entry : map.entrySet()) {
-                if (doFilter) {
-                    int tf = MultiMapUtils.getTf(headTfDfMaps, entry.getKey());
-                    if (!Utils.termFrequencyFilter(tf)) {
-                        allPredicates.add(entry.getKey());
-                    }
-                } else {
-                    allPredicates.add(entry.getKey());
-                }
-            }
-        }
+//        logger.info("Preparing predicates");
+//        for (Map<String, Fun.Tuple2<Integer, Integer>> map : headTfDfMaps) {
+//            for (Map.Entry<String, Fun.Tuple2<Integer, Integer>> entry : map.entrySet()) {
+//                if (doFilter) {
+//                    int tf = MultiMapUtils.getTf(headTfDfMaps, entry.getKey());
+//                    if (!Utils.termFrequencyFilter(tf)) {
+//                        allPredicates.add(entry.getKey());
+//                    }
+//                } else {
+//                    allPredicates.add(entry.getKey());
+//                }
+//            }
+//        }
+
+        List<String> allPredicates = Arrays.asList(DataPool.headWords);
 
         logger.info("Candidate predicates number : " + allPredicates.size());
 
@@ -334,6 +336,8 @@ public class KarlMooneyPredictor {
         String outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + subPath;
 
         boolean filter = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
+
+        DataPool.loadData(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, headCountFileNames);
 
         KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor(dbPath, dbNames, KarlMooneyScriptCounter.defaultOccMapName,
                 KarlMooneyScriptCounter.defaultCooccMapName, headCountFileNames, KarlMooneyScriptCounter.defaltHeadIdMapName);
