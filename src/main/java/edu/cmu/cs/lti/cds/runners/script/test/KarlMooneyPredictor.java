@@ -172,8 +172,8 @@ public class KarlMooneyPredictor {
 
 
         if (cooccCountSmoothed > laplacianSmoothingParameter) {
-            System.err.println("Probability of seeing " + former + " before " + latter);
-            System.err.println(cooccCountSmoothed / formerOccCountSmoothed + " " + counts.getRight() + "/" + counts.getLeft());
+            logger.fine("Probability of seeing " + former + " before " + latter);
+            logger.fine(cooccCountSmoothed / formerOccCountSmoothed + " " + counts.getRight() + "/" + counts.getLeft());
         }
 
         //add one smoothing
