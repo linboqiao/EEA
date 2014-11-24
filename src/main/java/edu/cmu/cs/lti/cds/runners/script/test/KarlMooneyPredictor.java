@@ -251,6 +251,7 @@ public class KarlMooneyPredictor {
         List<String> allPredicates = Arrays.asList(DataPool.headWords);
 
         logger.info("Candidate predicates number : " + allPredicates.size());
+        Utils.pause();
 
         while (hasNext()) {
             Triple<List<MooneyEventRepre>, Integer, String> clozeTask = readNext();
