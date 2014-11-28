@@ -82,24 +82,6 @@ public class CompactFeatureExtractor {
         return Joiner.on("_").join(argList);
     }
 
-//    private short[] getRegularArgumentFeatures(int[] args1, int[] args2) {
-//        TShortArrayList regularArgumentFeatures = new TShortArrayList();
-//        for (int slotId1 = 0; slotId1 < args1.length; slotId1++) {
-//            for (int slotId2 = 0; slotId2 < args2.length; slotId2++) {
-//                int slotId1Eid = args1[slotId1];
-//                int slotId2Eid = args2[slotId2];
-//
-//                if (slotId1Eid == slotId2Eid) {
-//                    String featureName = "r_arg" + "_" + slotId1 + "_" + slotId2;
-//                    short fIndex = featureTable.getOrPutFeatureIndex(featureName);
-//                    regularArgumentFeatures.add(fIndex);
-//                }
-//            }
-//        }
-//        return regularArgumentFeatures.toArray();
-//    }
-
-
     public <T extends Object> List<Pair<T, T>> getSkippedNgrams(List<T> sequence, T target, int index, int skipgramN) {
         List<Pair<T, T>> formerPairs = getFormerSkipGram(sequence, target, index, skipgramN);
         List<Pair<T, T>> latterPairs = getLatterSkipGram(sequence, target, index, skipgramN);

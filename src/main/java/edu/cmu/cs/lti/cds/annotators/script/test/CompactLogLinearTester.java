@@ -2,10 +2,7 @@ package edu.cmu.cs.lti.cds.annotators.script.test;
 
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
-import edu.cmu.cs.lti.cds.model.ChainElement;
-import edu.cmu.cs.lti.cds.model.KmTargetConstants;
-import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
-import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
+import edu.cmu.cs.lti.cds.model.*;
 import edu.cmu.cs.lti.cds.runners.script.test.CompactLogLinearTestRunner;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.cds.utils.DbManager;
@@ -137,19 +134,21 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
         List<MooneyEventRepre> mooneyChain = mooneyClozeTask.getLeft();
 
         if (mooneyChain.size() != regularChain.size()) {
-//            System.out.println(regularChain);
             throw new IllegalArgumentException("Test data and document have different size! " + mooneyChain.size() + " " + regularChain.size());
         }
 
+        //
         for (int i = 0; i < mooneyChain.size(); i++) {
             MooneyEventRepre mooneyEventRepre = mooneyChain.get(i);
             for (int slotId = 0; slotId < mooneyEventRepre.getAllArguments().length; slotId++) {
-                regularChain.get(i).getMention().getArg(slotId).setRewritedId((mooneyEventRepre.getAllArguments()[slotId]));
+                LocalArgumentRepre argument = regularChain.get(i).getMention().getArg(slotId);
+                if (argument != null) {
+                    argument.setRewritedId((mooneyEventRepre.getAllArguments()[slotId]));
+                }
             }
         }
 
         MooneyEventRepre mooneyStyleAnswer = mooneyChain.get(clozeIndex);
-
         PriorityQueue<Pair<MooneyEventRepre, Double>> results = predictMooneyStyle(regularChain, regularChain, clozeIndex, numArguments, DataPool.headWords);
 
         int rank = 0;
@@ -194,30 +193,26 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
         PriorityQueue<Pair<MooneyEventRepre, Double>> rankedEvents = new PriorityQueue<>(allPredicates.length,
                 new Comparators.DescendingScoredPairComparator<MooneyEventRepre, Double>());
 
-//        //extract full entities
-//        List<Pair<Integer, String>> entities = new ArrayList<>();
-//        for (ChainElement element : regularChain) {
-//            Collections.addAll(entities, element.getMention().getArgs());
-//        }
-//        //represent 'other' unseen entity
-//        entities.add(Pair.of(-1, ""));
-
         Set<Integer> mooneyEntities = LogLinearTester.getRewritedEntitiesFromChain(mooneyChain);
 
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateMooeyEvms = MooneyEventRepre.generateTuples(head, mooneyEntities);
             for (MooneyEventRepre candidateEvm : candidateMooeyEvms) {
-                TLongShortDoubleHashTable features = extractor.getFeatures(mooneyChain, ChainElement.fromMooney(candidateEvm), testIndex, skipGramN, false);
+                ChainElement candidate = ChainElement.fromMooney(candidateEvm);
+                TLongShortDoubleHashTable features = extractor.getFeatures(mooneyChain, candidate, testIndex, skipGramN, false);
+
+                System.out.println(features);
                 double score = compactWeights.dotProd(features);
-                if (candidateEvm.equals(answer)) {
+                System.out.println(score);
+                Utils.pause();
+
+                if (candidate.equals(answer)) {
                     logger.info("Answer candidate appears: " + candidateEvm);
                     logger.info("Feature score " + score);
                 }
-
                 rankedEvents.add(Pair.of(candidateEvm, score));
             }
         }
-
         return rankedEvents;
     }
 

@@ -52,6 +52,6 @@ public class ChainElement {
     }
 
     public String toString() {
-        return mention + "@" + sent.getId();
+        return mention + "@[sent:" + sent.getId() + "]";
     }
 }
