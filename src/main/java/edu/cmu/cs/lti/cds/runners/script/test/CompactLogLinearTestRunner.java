@@ -58,7 +58,7 @@ public class CompactLogLinearTestRunner {
 
         //prepare data
         logger.info("Loading data");
-        DataPool.loadData(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, headCountFileNames);
+        DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, headCountFileNames);
 //        DataPool.loadHeadIds(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName);
 //        DataPool.loadHeadCounts(dbPath, headCountFileNames, true);
         DataPool.readBlackList(new File(blackListFile));

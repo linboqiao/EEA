@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.cds.runners.script.train;
 
-import edu.cmu.cs.lti.cds.annotators.script.train.NceTrainer;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.cds.annotators.script.train.NceTrainer;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -45,8 +45,7 @@ public class StochasticNceTrainer {
 
         //prepare data
         logger.info("Loading data");
-        DataPool.loadHeadIds(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName);
-        DataPool.loadHeadCounts(dbPath, countingDbFileNames);
+        DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
         DataPool.readBlackList(new File(blackListFileName));
         logger.info("# predicates " + DataPool.headIdMap.size());
 

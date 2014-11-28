@@ -44,8 +44,7 @@ public class StochasticGlobalNegativeTrainer {
 
         //prepare data
         logger.info("Loading data");
-        DataPool.loadHeadIds(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName);
-        DataPool.loadHeadCounts(dbPath, countingDbFileNames);
+        DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
         DataPool.readBlackList(new File(blackListFileName));
         DataPool.loadCooccMap(dbPath, dbNames[0], KarlMooneyScriptCounter.defaultCooccMapName);
         logger.info("# predicates " + DataPool.headIdMap.size());

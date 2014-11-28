@@ -57,23 +57,31 @@ public class DataPool {
 
     //Load some of these large maps that might be shared static
 
-    public static void loadCooccMap(String dbPath, String dbName, String cooccName) throws Exception {
+    public static void loadCooccMap(String dbPath, String dbName, String cooccName) {
         String mapPath = new File(dbPath, dbName + "_" + cooccName).getAbsolutePath();
-        cooccCountMaps = (TObjectIntMap<TIntList>) SerializationHelper.read(mapPath);
+        try {
+            cooccCountMaps = (TObjectIntMap<TIntList>) SerializationHelper.read(mapPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void loadData(String dbPath, String dbName, String headIdMapName, String[] countingDbFileNames) throws Exception {
+    public static void loadHeadCounts(String dbPath, String dbName, String headIdMapName, String[] countingDbFileNames) throws Exception {
         loadHeadIds(dbPath, dbName, headIdMapName);
         loadHeadCounts(dbPath, countingDbFileNames);
     }
 
-    public static void loadHeadIds(String dbPath, String dbName, String headIdMapName) throws Exception {
+    public static void loadHeadIds(String dbPath, String dbName, String headIdMapName)  {
         String mapPath = new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath();
-        headIdMap = (TObjectIntMap<String>) SerializationHelper.read(mapPath);
+        try {
+            headIdMap = (TObjectIntMap<String>) SerializationHelper.read(mapPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         headWords = new String[headIdMap.size()];
     }
 
-    public static void loadHeadCounts(String dbPath, String[] countingDbFileNames) {
+    private static void loadHeadCounts(String dbPath, String[] countingDbFileNames) {
         headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
         for (TObjectIntIterator<String> iter = headIdMap.iterator(); iter.hasNext(); ) {
             iter.advance();

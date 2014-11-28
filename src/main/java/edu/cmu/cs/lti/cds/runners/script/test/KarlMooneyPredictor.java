@@ -337,7 +337,7 @@ public class KarlMooneyPredictor {
 
         boolean filter = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
 
-        DataPool.loadData(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, headCountFileNames);
+        DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, headCountFileNames);
 
         KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor(dbPath, dbNames, KarlMooneyScriptCounter.defaultOccMapName,
                 KarlMooneyScriptCounter.defaultCooccMapName, headCountFileNames, KarlMooneyScriptCounter.defaltHeadIdMapName);
