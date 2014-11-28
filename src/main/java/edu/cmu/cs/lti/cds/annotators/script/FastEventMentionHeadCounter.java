@@ -6,6 +6,7 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.iterator.TIntIntIterator;
 import gnu.trove.iterator.TLongIntIterator;
 import gnu.trove.map.TIntIntMap;
@@ -121,7 +122,7 @@ public class FastEventMentionHeadCounter extends AbstractLoggingAnnotator {
         counter++;
         if (counter % 4000 == 0) {
             logger.info("Processed " + counter + " documents");
-
+            Utils.printMemInfo(logger);
         }
     }
 
