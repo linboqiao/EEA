@@ -14,9 +14,25 @@ public class ChainElement {
 
     private LocalEventMentionRepre mention;
 
-    public ChainElement(Sentence sent, LocalEventMentionRepre mention) {
+    private final boolean isConcrete;
+
+    public ChainElement(Sentence sent, LocalEventMentionRepre mention, boolean isConcrete) {
         this.sent = sent;
         this.mention = mention;
+        this.isConcrete = isConcrete;
+    }
+
+
+    public boolean isConcrete() {
+        return isConcrete;
+    }
+
+    public ChainElement(Sentence sent, LocalEventMentionRepre mention) {
+        this(sent, mention, true);
+    }
+
+    public static ChainElement fromMooney(MooneyEventRepre mooneyEventRepre) {
+        return new ChainElement(null, LocalEventMentionRepre.fromMooneyMention(mooneyEventRepre), false);
     }
 
     public Sentence getSent() {
@@ -26,7 +42,6 @@ public class ChainElement {
     public void setSent(Sentence sent) {
         this.sent = sent;
     }
-
 
     public LocalEventMentionRepre getMention() {
         return mention;
@@ -39,13 +54,4 @@ public class ChainElement {
     public String toString() {
         return mention + "@" + sent.getId();
     }
-
-
-//    public boolean isBeginningOfDocument() {
-//        return isBeginningOfDocument;
-//    }
-//
-//    public boolean isEndOfDocument() {
-//        return isEndOfDocument;
-//    }
 }

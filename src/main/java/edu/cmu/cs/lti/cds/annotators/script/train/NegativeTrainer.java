@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.cds.annotators.script.train;
 import edu.cmu.cs.lti.cds.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.cds.ml.features.FeatureExtractor;
 import edu.cmu.cs.lti.cds.model.ChainElement;
+import edu.cmu.cs.lti.cds.model.LocalArgumentRepre;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.cds.utils.VectorUtils;
@@ -73,12 +74,12 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
 
         align.loadWord2Stanford(aJCas);
         List<ChainElement> chain = new ArrayList<>();
-        List<Pair<Integer, String>> arguments = new ArrayList<>();
+        List<LocalArgumentRepre> arguments = new ArrayList<>();
         for (Sentence sent : JCasUtil.select(aJCas, Sentence.class)) {
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sent)) {
                 LocalEventMentionRepre eventRep = LocalEventMentionRepre.fromEventMention(mention, align);
                 chain.add(new ChainElement(sent, eventRep));
-                for (Pair<Integer, String> arg : eventRep.getArgs()) {
+                for (LocalArgumentRepre arg : eventRep.getArgs()) {
                     arguments.add(arg);
                 }
             }
@@ -87,15 +88,17 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
         //for each sample
         for (int sampleIndex = 0; sampleIndex < chain.size(); sampleIndex++) {
             ChainElement realSample = chain.get(sampleIndex);
-            TObjectDoubleMap<String> features = extractor.getFeatures(chain, align, realSample, sampleIndex, skipGramN);
+            TObjectDoubleMap<String> features = extractor.getFeatures(chain, realSample, sampleIndex, skipGramN, false);
             Sentence sampleSent = realSample.getSent();
 
             //generate noise samples
             List<TObjectDoubleMap<String>> noiseSamples = new ArrayList<>();
             for (int i = 0; i < numNoise; i++) {
                 Pair<LocalEventMentionRepre, Double> noise = noiseDist.draw(arguments, numArguments);
-                TObjectDoubleMap<String> noiseFeature = extractor.getFeatures(chain, align, new ChainElement(sampleSent, noise.getLeft()), sampleIndex, skipGramN);
-                noiseSamples.add(noiseFeature);
+                TObjectDoubleMap<String> noiseFeature = extractor.getFeatures(chain, new ChainElement(sampleSent, noise.getLeft()), sampleIndex, skipGramN, true);
+                if (noiseFeature != null) {
+                    noiseSamples.add(noiseFeature);
+                }
             }
 
             //cumulative the gradient so far, and compute sample cost

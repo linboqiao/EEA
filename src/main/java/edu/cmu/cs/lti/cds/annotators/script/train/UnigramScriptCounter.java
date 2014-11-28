@@ -70,7 +70,6 @@ public class UnigramScriptCounter extends AbstractLoggingAnnotator {
         Utils.printMemInfo(logger, "Initial memory information ");
     }
 
-
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         logger.info(progressInfo(aJCas));
@@ -142,14 +141,6 @@ public class UnigramScriptCounter extends AbstractLoggingAnnotator {
                 previousPossibleRewrites.add(c);
             }
         }
-
-//        System.out.println("Not null arguments " + argumentLinks.size());
-//        System.out.println("Number of rewrites got : " + nextPossibleRewrites.size());
-//
-//        for (TIntList rewrite : nextPossibleRewrites) {
-//            System.out.println(rewrite);
-//        }
-//        Utils.pause();
 
         return nextPossibleRewrites;
     }

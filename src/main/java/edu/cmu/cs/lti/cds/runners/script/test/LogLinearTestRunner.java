@@ -57,7 +57,7 @@ public class LogLinearTestRunner {
         //prepare data
         logger.info("Loading data");
         DataPool.loadHeadIds(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName);
-        DataPool.loadHeadCounts(dbPath, headCountFileNames, true);
+        DataPool.loadHeadCounts(dbPath, headCountFileNames);
         DataPool.readBlackList(new File(blackListFile));
         logger.info("# predicates " + DataPool.headIdMap.size());
 

@@ -1,10 +1,8 @@
 package edu.cmu.cs.lti.cds.annotators.script.train;
 
-import edu.cmu.cs.lti.cds.dist.GlobalUnigrmHwLocalUniformArgumentDist;
+import edu.cmu.cs.lti.cds.dist.UnigramEventDist;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
-import edu.cmu.cs.lti.cds.model.ChainElement;
-import edu.cmu.cs.lti.cds.model.LocalArgumentRepre;
-import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
+import edu.cmu.cs.lti.cds.model.*;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.type.Article;
@@ -15,6 +13,8 @@ import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.iterator.TShortDoubleIterator;
+import gnu.trove.list.TIntList;
+import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.TShortDoubleMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
@@ -24,15 +24,19 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
+ * The global negative trainer only sample negative samples that are globally non-negative
+ * which means if there are observations of some features, it will not use them
+ * <p/>
  * Created with IntelliJ IDEA.
  * User: zhengzhongliu
  * Date: 10/31/14
  * Time: 5:52 PM
  */
-public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
+public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
     public static final String PARAM_NEGATIVE_NUMBERS = "negativeNumbers";
 
     public static final String PARAM_MINI_BATCH_SIZE = "miniBatchDocuments";
@@ -48,7 +52,7 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
 
     double stepSize = 0.01;
 
-    GlobalUnigrmHwLocalUniformArgumentDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist();
+    UnigramEventDist noiseDist = new UnigramEventDist();
 
     TLongShortDoubleHashTable cumulativeGradient = new TLongShortDoubleHashTable();
 
@@ -66,7 +70,6 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
 
         if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
-            //ignore this blacklisted file;
             logger.fine("Ignored black listed file : " + article.getArticleName());
             return;
         }
@@ -74,13 +77,13 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
         align.loadWord2Stanford(aJCas);
         List<ChainElement> chain = new ArrayList<>();
         List<LocalArgumentRepre> arguments = new ArrayList<>();
+
+
         for (Sentence sent : JCasUtil.select(aJCas, Sentence.class)) {
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sent)) {
                 LocalEventMentionRepre eventRep = LocalEventMentionRepre.fromEventMention(mention, align);
                 chain.add(new ChainElement(sent, eventRep));
-                for (LocalArgumentRepre arg : eventRep.getArgs()) {
-                    arguments.add(arg);
-                }
+                Collections.addAll(arguments, eventRep.getArgs());
             }
         }
 
@@ -90,14 +93,34 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
             TLongShortDoubleHashTable features = extractor.getFeatures(chain, realSample, sampleIndex, skipGramN, false);
             Sentence sampleSent = realSample.getSent();
 
+            TIntList realArgumentEntityIds = new TIntArrayList();
+            for (LocalArgumentRepre repre : realSample.getMention().getArgs()) {
+                realArgumentEntityIds.add(repre.getEntityId());
+            }
+
             //generate noise samples
             List<TLongShortDoubleHashTable> noiseSamples = new ArrayList<>();
             for (int i = 0; i < numNoise; i++) {
-                Pair<LocalEventMentionRepre, Double> noise = noiseDist.draw(arguments, numArguments);
-                TLongShortDoubleHashTable noiseFeature = extractor.getFeatures(chain, new ChainElement(sampleSent, noise.getLeft()), sampleIndex, skipGramN, true);
-                if (noiseFeature != null) {
-                    noiseSamples.add(noiseFeature);
+                Pair<MooneyEventRepre, Double> noise = noiseDist.draw();
+                MooneyEventRepre noiseMooneyRepre = noise.getKey();
+                int[] drawnArguments = noiseMooneyRepre.getAllArguments();
+                LocalArgumentRepre[] noiseArguments = new LocalArgumentRepre[drawnArguments.length];
+
+                for (int slotId = 0; slotId < drawnArguments.length; slotId++) {
+                    int drawnArgument = drawnArguments[slotId];
+                    if (drawnArgument == KmTargetConstants.nullArgMarker) {
+                        noiseArguments[slotId] = null;
+                    } else {
+                        int drawnEntityId = realArgumentEntityIds.get(KmTargetConstants.argMarkerToSlotIndex(drawnArguments[slotId]));
+                        //TODO might wanna use a real head word here
+                        noiseArguments[slotId] = new LocalArgumentRepre(drawnEntityId, "");
+                    }
                 }
+
+
+                LocalEventMentionRepre noiseRep = new LocalEventMentionRepre(noiseMooneyRepre.getPredicate(), noiseArguments);
+                TLongShortDoubleHashTable noiseFeature = extractor.getFeatures(chain, new ChainElement(sampleSent, noiseRep), sampleIndex, skipGramN, true);
+                noiseSamples.add(noiseFeature);
             }
 
             //cumulative the gradient so far, and compute sample cost
@@ -115,6 +138,14 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
             update();
         }
     }
+
+//    /**
+//     * Check whether we have seen this before
+//     * @return
+//     */
+//    private boolean isNegative(TLongShortDoubleHashTable noiseFeature) {
+//
+//    }
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
@@ -175,25 +206,8 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
     private void update() {
         Utils.printMemInfo(logger);
         logger.info("Updating");
-//        adaDeltaUpdate(1e-3, 0.95);
         adaGradUpdate(0.1);
         logger.info("Update Done");
-//        stepSizeUpdate();
-    }
-
-    private void stepSizeUpdate() {
-        // update parameters
-        for (TLongObjectIterator<TShortDoubleMap> rowIter = cumulativeGradient.iterator(); rowIter.hasNext(); ) {
-            rowIter.advance();
-            for (TShortDoubleIterator cellIter = rowIter.value().iterator(); cellIter.hasNext(); ) {
-                cellIter.advance();
-
-                double u = stepSize * cellIter.value();
-                DataPool.compactWeights.adjustOrPutValue(rowIter.key(), cellIter.key(), u, u);
-            }
-        }
-        // empty the cumulative gradient
-        cumulativeGradient.clear();
     }
 
     private void adaGradUpdate(double eta) {

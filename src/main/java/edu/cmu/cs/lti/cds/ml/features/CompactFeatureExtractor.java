@@ -3,14 +3,13 @@ package edu.cmu.cs.lti.cds.ml.features;
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.ChainElement;
-import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
-import edu.cmu.cs.lti.cds.runners.script.test.KarlMooneyPredictor;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
-import gnu.trove.list.array.TShortArrayList;
+import gnu.trove.list.TIntList;
+import gnu.trove.list.linked.TIntLinkedList;
+import gnu.trove.map.TObjectIntMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.mapdb.Fun;
 
@@ -27,23 +26,16 @@ import java.util.List;
 public class CompactFeatureExtractor {
     TLongBasedFeatureTable featureTable;
 
+    private TObjectIntMap<TIntList> positiveObservations;
+    private TObjectIntMap<String> headMap;
+
     public CompactFeatureExtractor(TLongBasedFeatureTable featureTable) {
         this.featureTable = featureTable;
+        this.positiveObservations = DataPool.cooccCountMaps;
+        this.headMap = DataPool.headIdMap;
     }
 
-    public TLongShortDoubleHashTable getFeatures(List<MooneyEventRepre> chain, MooneyEventRepre targetMention, int index, int skipGramN) {
-        TLongShortDoubleHashTable featureTable = new TLongShortDoubleHashTable();        //ngram features
-        List<Pair<MooneyEventRepre, MooneyEventRepre>> ngrams = getSkippedNgrams(chain, targetMention, index, skipGramN);
-        for (Pair<MooneyEventRepre, MooneyEventRepre> ngram : ngrams) {
-            Pair<MooneyEventRepre, MooneyEventRepre> subsibutedForm = KarlMooneyPredictor.formerBasedTransform(ngram.getKey(), ngram.getValue());
-
-            getMooneyLikeFeatures(featureTable, subsibutedForm.getKey().getPredicate(), subsibutedForm.getValue().getPredicate(),
-                    subsibutedForm.getKey().getAllArguments(), subsibutedForm.getValue().getAllArguments());
-        }
-        return featureTable;
-    }
-
-    public TLongShortDoubleHashTable getFeatures(List<ChainElement> chain, TokenAlignmentHelper align, ChainElement targetMention, int index, int skipGramN) {
+    public TLongShortDoubleHashTable getFeatures(List<ChainElement> chain, ChainElement targetMention, int index, int skipGramN, boolean breakOnConflict) {
         TLongShortDoubleHashTable featureTable = new TLongShortDoubleHashTable();
 
         //ngram features
@@ -51,7 +43,12 @@ public class CompactFeatureExtractor {
             Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedForm = KarlMooneyScriptCounter.
                     firstBasedSubstitution(ngram.getLeft().getMention(), ngram.getRight().getMention());
 
+            TIntLinkedList compactPair = FeatureExtractor.compactEvmPairSubstituiton(subsitutedForm, headMap);
             getMooneyLikeFeatures(featureTable, subsitutedForm.a.a, subsitutedForm.b.a, getLast3IntFromTuple(subsitutedForm.a), getLast3IntFromTuple(subsitutedForm.b));
+
+            if (breakOnConflict && positiveObservations.containsKey(compactPair)) {
+                return null;
+            }
         }
         return featureTable;
     }
@@ -85,22 +82,22 @@ public class CompactFeatureExtractor {
         return Joiner.on("_").join(argList);
     }
 
-    private short[] getRegularArgumentFeatures(int[] args1, int[] args2) {
-        TShortArrayList regularArgumentFeatures = new TShortArrayList();
-        for (int slotId1 = 0; slotId1 < args1.length; slotId1++) {
-            for (int slotId2 = 0; slotId2 < args2.length; slotId2++) {
-                int slotId1Eid = args1[slotId1];
-                int slotId2Eid = args2[slotId2];
-
-                if (slotId1Eid == slotId2Eid) {
-                    String featureName = "r_arg" + "_" + slotId1 + "_" + slotId2;
-                    short fIndex = featureTable.getOrPutFeatureIndex(featureName);
-                    regularArgumentFeatures.add(fIndex);
-                }
-            }
-        }
-        return regularArgumentFeatures.toArray();
-    }
+//    private short[] getRegularArgumentFeatures(int[] args1, int[] args2) {
+//        TShortArrayList regularArgumentFeatures = new TShortArrayList();
+//        for (int slotId1 = 0; slotId1 < args1.length; slotId1++) {
+//            for (int slotId2 = 0; slotId2 < args2.length; slotId2++) {
+//                int slotId1Eid = args1[slotId1];
+//                int slotId2Eid = args2[slotId2];
+//
+//                if (slotId1Eid == slotId2Eid) {
+//                    String featureName = "r_arg" + "_" + slotId1 + "_" + slotId2;
+//                    short fIndex = featureTable.getOrPutFeatureIndex(featureName);
+//                    regularArgumentFeatures.add(fIndex);
+//                }
+//            }
+//        }
+//        return regularArgumentFeatures.toArray();
+//    }
 
 
     public <T extends Object> List<Pair<T, T>> getSkippedNgrams(List<T> sequence, T target, int index, int skipgramN) {

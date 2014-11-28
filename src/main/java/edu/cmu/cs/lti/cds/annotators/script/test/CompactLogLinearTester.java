@@ -141,9 +141,16 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
             throw new IllegalArgumentException("Test data and document have different size! " + mooneyChain.size() + " " + regularChain.size());
         }
 
+        for (int i = 0; i < mooneyChain.size(); i++) {
+            MooneyEventRepre mooneyEventRepre = mooneyChain.get(i);
+            for (int slotId = 0; slotId < mooneyEventRepre.getAllArguments().length; slotId++) {
+                regularChain.get(i).getMention().getArg(slotId).setRewritedId((mooneyEventRepre.getAllArguments()[slotId]));
+            }
+        }
+
         MooneyEventRepre mooneyStyleAnswer = mooneyChain.get(clozeIndex);
 
-        PriorityQueue<Pair<MooneyEventRepre, Double>> results = predictMooneyStyle(regularChain, mooneyClozeTask.getLeft(), clozeIndex, numArguments, DataPool.headWords);
+        PriorityQueue<Pair<MooneyEventRepre, Double>> results = predictMooneyStyle(regularChain, regularChain, clozeIndex, numArguments, DataPool.headWords);
 
         int rank = 0;
         boolean oov = true;
@@ -180,40 +187,33 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
     }
 
     private PriorityQueue<Pair<MooneyEventRepre, Double>> predictMooneyStyle(
-            List<ChainElement> regularChain, List<MooneyEventRepre> mooneyChain, int testIndex, int numArguments, String[] allPredicates) {
-        MooneyEventRepre answer = mooneyChain.get(testIndex);
+            List<ChainElement> regularChain, List<ChainElement> mooneyChain, int testIndex, int numArguments, String[] allPredicates) {
+        ChainElement answer = mooneyChain.get(testIndex);
         logger.info("Answer is " + answer);
 
         PriorityQueue<Pair<MooneyEventRepre, Double>> rankedEvents = new PriorityQueue<>(allPredicates.length,
                 new Comparators.DescendingScoredPairComparator<MooneyEventRepre, Double>());
 
-        //extract full entities
-        List<Pair<Integer, String>> entities = new ArrayList<>();
-        for (ChainElement element : regularChain) {
-            Collections.addAll(entities, element.getMention().getArgs());
-        }
-        //represent 'other' unseen entity
-        entities.add(Pair.of(-1, ""));
-        Set<Integer> mooneyEntities = getRewritedEntitiesFromChain(mooneyChain);
+//        //extract full entities
+//        List<Pair<Integer, String>> entities = new ArrayList<>();
+//        for (ChainElement element : regularChain) {
+//            Collections.addAll(entities, element.getMention().getArgs());
+//        }
+//        //represent 'other' unseen entity
+//        entities.add(Pair.of(-1, ""));
 
-        Sentence sent = regularChain.get(testIndex).getSent();
-        boolean debug = true;
-
-        int count = 0;
+        Set<Integer> mooneyEntities = LogLinearTester.getRewritedEntitiesFromChain(mooneyChain);
 
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateMooeyEvms = MooneyEventRepre.generateTuples(head, mooneyEntities);
             for (MooneyEventRepre candidateEvm : candidateMooeyEvms) {
-//                skipGramN = 50;
-                TLongShortDoubleHashTable features = extractor.getFeatures(mooneyChain, candidateEvm, testIndex, skipGramN);
+                TLongShortDoubleHashTable features = extractor.getFeatures(mooneyChain, ChainElement.fromMooney(candidateEvm), testIndex, skipGramN, false);
                 double score = compactWeights.dotProd(features);
-//                double score = 1;
                 if (candidateEvm.equals(answer)) {
                     logger.info("Answer candidate appears: " + candidateEvm);
                     logger.info("Feature score " + score);
                 }
 
-                count++;
                 rankedEvents.add(Pair.of(candidateEvm, score));
             }
         }
@@ -261,17 +261,6 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
         return Triple.of(repres, blankIndex, fileName);
     }
 
-    private Set<Integer> getRewritedEntitiesFromChain(List<MooneyEventRepre> chain) {
-        Set<Integer> entities = new HashSet<>();
-        for (MooneyEventRepre rep : chain) {
-            for (int arg : rep.getAllArguments()) {
-                if (arg != KmTargetConstants.nullArgMarker && arg != KmTargetConstants.otherMarker) {
-                    entities.add(arg);
-                }
-            }
-        }
-        return entities;
-    }
 
     private List<ChainElement> getHighFreqEventMentions(JCas aJCas) {
         List<ChainElement> chain = new ArrayList<>();

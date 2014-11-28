@@ -5,8 +5,7 @@ import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
-import gnu.trove.map.hash.TIntIntHashMap;
-import org.apache.commons.lang3.tuple.Pair;
+import gnu.trove.map.TIntIntMap;
 
 /**
  * Although this is not so different from MooneyEventRepre in the form, we need
@@ -22,50 +21,62 @@ public class LocalEventMentionRepre {
     private final String mentionHead;
 
     //Note, this could be null! Means no argument at this position
-    //entity id (clustered mentions), head word pair
-    private final Pair<Integer, String>[] args;
+    private final LocalArgumentRepre[] args;
 
     //TODO: change mention head to an integer
-    public LocalEventMentionRepre(String mentionHead, Pair<Integer, String> arg0, Pair<Integer, String> arg1, Pair<Integer, String> arg2) {
+    public LocalEventMentionRepre(String mentionHead, LocalArgumentRepre arg0, LocalArgumentRepre arg1, LocalArgumentRepre arg2) {
         this.mentionHead = mentionHead;
-        this.args = new Pair[3];
+        this.args = new LocalArgumentRepre[3];
         this.args[0] = arg0;
         this.args[1] = arg1;
         this.args[2] = arg2;
     }
 
-    public LocalEventMentionRepre(String mentionHead, Pair<Integer, String>... args) {
+    public LocalEventMentionRepre(String mentionHead, LocalArgumentRepre... args) {
         this.mentionHead = mentionHead;
         this.args = args;
     }
 
+    public void rewrite(TIntIntMap entityIdRewriteMap) {
+        for (LocalArgumentRepre arg : args) {
+            arg.setRewritedId(entityIdRewriteMap.get(arg.getEntityId()));
+        }
+    }
+
     public static LocalEventMentionRepre fromEventMention(EventMention mention, TokenAlignmentHelper align) {
-        TIntIntHashMap evm1Args = new TIntIntHashMap();
-        TIntIntHashMap evm1Slots = new TIntIntHashMap();
-
-        Pair<Integer, String>[] args = new Pair[3];
-
+        LocalArgumentRepre[] args = new LocalArgumentRepre[3];
         for (EventMentionArgumentLink aLink : UimaConvenience.convertFSListToList(mention.getArguments(), EventMentionArgumentLink.class)) {
             String argumentRole = aLink.getArgumentRole();
             if (KmTargetConstants.targetArguments.containsKey(argumentRole)) {
                 int slotId = KmTargetConstants.targetArguments.get(argumentRole) - KmTargetConstants.anchorArg0Marker;
-                args[slotId] = Pair.of(Utils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId()), aLink.getArgument().getHead().getLemma());
-                evm1Slots.put(slotId, KmTargetConstants.otherMarker);
+                int entityId = Utils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId());
+                LocalArgumentRepre arg = new LocalArgumentRepre(entityId, aLink.getArgument().getHead().getLemma());
+                args[slotId] = arg;
             }
         }
-
         return new LocalEventMentionRepre(align.getLowercaseWordLemma(mention.getHeadWord()), args);
     }
+
+    public static LocalEventMentionRepre fromMooneyMention(MooneyEventRepre mention) {
+        LocalArgumentRepre[] args = new LocalArgumentRepre[3];
+        for (int slotId = 0; slotId < mention.getAllArguments().length; slotId++) {
+            int rewriteArgumentId = mention.getAllArguments()[slotId];
+            LocalArgumentRepre arg = new LocalArgumentRepre(-1, "", rewriteArgumentId, false);
+            arg.setRewritedId(rewriteArgumentId);
+        }
+        return new LocalEventMentionRepre(mention.getPredicate(), args);
+    }
+
 
     public String getMentionHead() {
         return mentionHead;
     }
 
-    public Pair<Integer, String> getArg(int i) {
+    public LocalArgumentRepre getArg(int i) {
         return args[i];
     }
 
-    public Pair<Integer, String>[] getArgs() {
+    public LocalArgumentRepre[] getArgs() {
         return args;
     }
 
@@ -79,7 +90,7 @@ public class LocalEventMentionRepre {
         sb.append(mentionHead).append(" : ");
         for (int i = 0; i < args.length; i++) {
             sb.append("\t");
-            Pair<Integer, String> arg = args[i];
+            LocalArgumentRepre arg = args[i];
             if (arg != null) {
                 sb.append("arg").append(i).append(" ").append(arg.toString());
             } else {

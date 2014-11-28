@@ -1,11 +1,9 @@
 package edu.cmu.cs.lti.cds.annotators.script.test;
 
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
+import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.ml.features.FeatureExtractor;
-import edu.cmu.cs.lti.cds.model.ChainElement;
-import edu.cmu.cs.lti.cds.model.KmTargetConstants;
-import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
-import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
+import edu.cmu.cs.lti.cds.model.*;
 import edu.cmu.cs.lti.cds.runners.script.test.LogLinearTestRunner;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.cds.utils.DbManager;
@@ -69,11 +67,15 @@ public class LogLinearTester extends AbstractLoggingAnnotator {
 
     private TokenAlignmentHelper align = new TokenAlignmentHelper();
 
-    private FeatureExtractor extractor = new FeatureExtractor();
+    private FeatureExtractor extractor;
 
     private String modelPath;
 
     private TObjectDoubleMap<String> weights;
+
+    private String[] dbNames;
+
+    private String cooccName = KarlMooneyScriptCounter.defaultCooccMapName;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -100,8 +102,8 @@ public class LogLinearTester extends AbstractLoggingAnnotator {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         clozeDir = new File((String) aContext.getConfigParameterValue(PARAM_CLOZE_DIR_PATH));
+        extractor = new FeatureExtractor(DataPool.cooccCountMaps, DataPool.headIdMap);
     }
 
     @Override
@@ -140,9 +142,16 @@ public class LogLinearTester extends AbstractLoggingAnnotator {
             throw new IllegalArgumentException("Test data and document have different size! " + mooneyChain.size() + " " + regularChain.size());
         }
 
+        for (int i = 0; i < mooneyChain.size(); i++) {
+            MooneyEventRepre mooneyEventRepre = mooneyChain.get(i);
+            for (int slotId = 0; slotId < mooneyEventRepre.getAllArguments().length; slotId++) {
+                regularChain.get(i).getMention().getArg(slotId).setRewritedId((mooneyEventRepre.getAllArguments()[slotId]));
+            }
+        }
+
         MooneyEventRepre mooneyStyleAnswer = mooneyChain.get(clozeIndex);
 
-        PriorityQueue<Pair<MooneyEventRepre, Double>> results = predictMooneyStyle(regularChain, mooneyClozeTask.getLeft(), clozeIndex, numArguments, DataPool.headWords);
+        PriorityQueue<Pair<MooneyEventRepre, Double>> results = predictMooneyStyle(regularChain, clozeIndex, numArguments, DataPool.headWords);
 
         int rank;
         boolean oov = true;
@@ -178,22 +187,14 @@ public class LogLinearTester extends AbstractLoggingAnnotator {
     }
 
     private PriorityQueue<Pair<MooneyEventRepre, Double>> predictMooneyStyle(
-            List<ChainElement> regularChain, List<MooneyEventRepre> mooneyChain, int testIndex, int numArguments, String[] allPredicates) {
-        MooneyEventRepre answer = mooneyChain.get(testIndex);
+            List<ChainElement> regularChain, int testIndex, int numArguments, String[] allPredicates) {
+        ChainElement answer = regularChain.get(testIndex);
         logger.info("Answer is " + answer);
 
         PriorityQueue<Pair<MooneyEventRepre, Double>> rankedEvents = new PriorityQueue<>(allPredicates.length,
                 new Comparators.DescendingScoredPairComparator<MooneyEventRepre, Double>());
 
-        //extract full entities
-        List<Pair<Integer, String>> entities = new ArrayList<>();
-        for (ChainElement element : regularChain) {
-            Collections.addAll(entities, element.getMention().getArgs());
-        }
-        //represent 'other' unseen entity
-        entities.add(Pair.of(-1, ""));
-
-        Set<Integer> mooneyEntities = getRewritedEntitiesFromChain(mooneyChain);
+        Set<Integer> mooneyEntities = getRewritedEntitiesFromChain(regularChain);
 
         Sentence sent = regularChain.get(testIndex).getSent();
         for (String head : allPredicates) {
@@ -201,7 +202,7 @@ public class LogLinearTester extends AbstractLoggingAnnotator {
             for (MooneyEventRepre candidateEvm : candidateMooeyEvms) {
                 skipGramN = 50; //basically take everything!
                 logger.info("Use skigramN " + 50);
-                TObjectDoubleMap<String> features = extractor.getFeaturesFromMooneyStyleEvents(mooneyChain, candidateEvm, testIndex, skipGramN);
+                TObjectDoubleMap<String> features = extractor.getFeatures(regularChain, ChainElement.fromMooney(candidateEvm), testIndex, skipGramN, false);
                 double score = VectorUtils.dotProd(features, weights);
 
                 if (candidateEvm.equals(answer)) {
@@ -262,12 +263,12 @@ public class LogLinearTester extends AbstractLoggingAnnotator {
         return Triple.of(repres, blankIndex, fileName);
     }
 
-    private Set<Integer> getRewritedEntitiesFromChain(List<MooneyEventRepre> chain) {
+    public static Set<Integer> getRewritedEntitiesFromChain(List<ChainElement> chain) {
         Set<Integer> entities = new HashSet<>();
-        for (MooneyEventRepre rep : chain) {
-            for (int arg : rep.getAllArguments()) {
-                if (arg != KmTargetConstants.nullArgMarker && arg != KmTargetConstants.otherMarker) {
-                    entities.add(arg);
+        for (ChainElement rep : chain) {
+            for (LocalArgumentRepre arg : rep.getMention().getArgs()) {
+                if (arg != null && !arg.isOther()) {
+                    entities.add(arg.getRewritedId());
                 }
             }
         }

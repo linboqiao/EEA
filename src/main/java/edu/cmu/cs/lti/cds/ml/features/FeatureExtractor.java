@@ -3,9 +3,11 @@ package edu.cmu.cs.lti.cds.ml.features;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.ChainElement;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
-import edu.cmu.cs.lti.cds.runners.script.test.KarlMooneyPredictor;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.cds.utils.DataPool;
+import gnu.trove.list.TIntList;
+import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.map.TObjectDoubleMap;
+import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.mapdb.Fun;
@@ -20,23 +22,31 @@ import java.util.List;
  * Time: 4:47 PM
  */
 public class FeatureExtractor {
-    public TObjectDoubleMap<String> getFeaturesFromMooneyStyleEvents(List<MooneyEventRepre> chain, MooneyEventRepre targetMention, int index, int skipGramN) {
-        TObjectDoubleMap<String> allFeatures = new TObjectDoubleHashMap<>();
-        //ngram features
-        List<Pair<MooneyEventRepre, MooneyEventRepre>> ngrams = getSkippedNgrams(chain, targetMention, index, skipGramN);
-        for (Pair<MooneyEventRepre, MooneyEventRepre> ngram : ngrams) {
-            Pair<MooneyEventRepre, MooneyEventRepre> subsibutedForm = KarlMooneyPredictor.formerBasedTransform(ngram.getKey(), ngram.getValue());
-            allFeatures.put("m_" + connectMooneyTuple(subsibutedForm.getLeft()) + "_" + connectMooneyTuple(subsibutedForm.getRight()), 1);
-        }
-        return allFeatures;
+    private TObjectIntMap<TIntList> positiveObservations;
+    private TObjectIntMap<String> headMap;
+
+    public FeatureExtractor() {
+        this.positiveObservations = DataPool.cooccCountMaps;
+        this.headMap = DataPool.headIdMap;
     }
 
-    public TObjectDoubleMap<String> getFeatures(List<ChainElement> chain, TokenAlignmentHelper align, ChainElement targetMention, int index, int skipGramN) {
+    public FeatureExtractor(TObjectIntMap<TIntList> cooccCounts, TObjectIntMap<String> headMap) {
+        this.positiveObservations = cooccCounts;
+        this.headMap = headMap;
+    }
+
+    public TObjectDoubleMap<String> getFeatures(List<ChainElement> chain, ChainElement targetMention, int index, int skipGramN, boolean breakOnConflict) {
         TObjectDoubleMap<String> allFeatures = new TObjectDoubleHashMap<>();
         //ngram features
         for (Pair<ChainElement, ChainElement> ngram : getSkippedNgrams(chain, targetMention, index, skipGramN)) {
             Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedForm = KarlMooneyScriptCounter.
                     firstBasedSubstitution(ngram.getLeft().getMention(), ngram.getRight().getMention());
+            TIntLinkedList compactPair = compactEvmPairSubstituiton(subsitutedForm, headMap);
+
+            if (breakOnConflict && positiveObservations.containsKey(compactPair)) {
+                return null;
+            }
+
             allFeatures.put("m_" + connectTuple(subsitutedForm.a) + "_" + connectTuple(subsitutedForm.b), 1);
         }
         return allFeatures;
@@ -88,5 +98,23 @@ public class FeatureExtractor {
             }
         }
         return skipGrams;
+    }
+
+
+    public static TIntLinkedList compactEvmPairSubstituiton(Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> evmPair,
+                                                            TObjectIntMap<String> headMap) {
+        TIntLinkedList compactRep = new TIntLinkedList();
+
+        compactRep.add(headMap.get(evmPair.a.a));
+        compactRep.add(evmPair.a.b);
+        compactRep.add(evmPair.a.c);
+        compactRep.add(evmPair.a.d);
+
+        compactRep.add(headMap.get(evmPair.b.a));
+        compactRep.add(evmPair.b.b);
+        compactRep.add(evmPair.b.c);
+        compactRep.add(evmPair.b.d);
+
+        return compactRep;
     }
 }

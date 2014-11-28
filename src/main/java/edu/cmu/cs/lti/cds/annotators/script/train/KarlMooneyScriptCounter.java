@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.cds.annotators.script.train;
 
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
+import edu.cmu.cs.lti.cds.model.LocalArgumentRepre;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.cds.utils.DbManager;
@@ -203,19 +204,19 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
         for (int i = 0; i < evm1.getNumArgs(); i++) {
             int argMarker = KmTargetConstants.slotIndexToArgMarker(i);
-            Pair<Integer, String> argi = evm1.getArg(i);
+            LocalArgumentRepre argi = evm1.getArg(i);
             if (argi != null) {
-                evm1Args.put(evm1.getArg(i).getKey(), argMarker);
+                evm1Args.put(argi.getEntityId(), argMarker);
                 evm1Slots.put(argMarker, KmTargetConstants.otherMarker);
             }
         }
 
         for (int i = 0; i < evm2.getNumArgs(); i++) {
             int argMarker = KmTargetConstants.slotIndexToArgMarker(i);
-            Pair<Integer, String> argi = evm2.getArg(i);
+            LocalArgumentRepre argi = evm2.getArg(i);
 
             if (argi != null) {
-                int entityId = argi.getKey();
+                int entityId = argi.getEntityId();
                 int substituteId;
                 if (evm1Args.containsKey(entityId)) {
                     substituteId = evm1Args.get(entityId);
