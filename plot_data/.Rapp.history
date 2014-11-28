@@ -1,0 +1,9 @@
+setdir("/Users/zhengzhongliu/Documents/projects/how-script/stats")
+setwd('/Users/zhengzhongliu/Documents/projects/cross-document-script')
+d <- read.table('n')ls
+setwd('plot_data/')
+d <- read.table('negative_train_10000_gain')
+dim(d)
+x <- 1:284
+matplot(x,d)
+matplot(x,d, type='l')
