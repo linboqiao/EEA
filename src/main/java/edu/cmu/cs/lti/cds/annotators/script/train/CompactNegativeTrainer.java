@@ -24,6 +24,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -78,9 +79,7 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sent)) {
                 LocalEventMentionRepre eventRep = LocalEventMentionRepre.fromEventMention(mention, align);
                 chain.add(new ChainElement(sent, eventRep));
-                for (LocalArgumentRepre arg : eventRep.getArgs()) {
-                    arguments.add(arg);
-                }
+                Collections.addAll(arguments, eventRep.getArgs());
             }
         }
 

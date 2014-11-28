@@ -48,10 +48,6 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
     int numNoise = 25;
     int skipGramN = 2;
 
-    int numArguments = 3;
-
-    double stepSize = 0.01;
-
     UnigramEventDist noiseDist = new UnigramEventDist();
 
     TLongShortDoubleHashTable cumulativeGradient = new TLongShortDoubleHashTable();
@@ -117,9 +113,11 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
                     }
                 }
 
-
                 LocalEventMentionRepre noiseRep = new LocalEventMentionRepre(noiseMooneyRepre.getPredicate(), noiseArguments);
                 TLongShortDoubleHashTable noiseFeature = extractor.getFeatures(chain, new ChainElement(sampleSent, noiseRep), sampleIndex, skipGramN, true);
+                if (noiseFeature != null) {
+                    noiseSamples.add(noiseFeature);
+                }
                 noiseSamples.add(noiseFeature);
             }
 
