@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.cds.dist;
 
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
-import edu.cmu.cs.lti.cds.annotators.script.train.UnigramScriptCounter;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -67,10 +66,12 @@ public class UnigramEventDist {
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
         String[] countingDbFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files");
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
+        String unigramEventFile = config.get("edu.cmu.cs.lti.cds.event_unigram");
+
 
         //prepare data
         DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
-        DataPool.loadEventUnigramCounts(dbPath, dbNames[0], UnigramScriptCounter.defaultUnigramMapName);
+        DataPool.loadEventUnigramCounts(unigramEventFile);
         UnigramEventDist noiseDist = new UnigramEventDist(DataPool.unigramCounts, DataPool.eventUnigramTotalCount);
 
         while (true) {

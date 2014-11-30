@@ -2,7 +2,6 @@ package edu.cmu.cs.lti.cds.runners.script.train;
 
 import edu.cmu.cs.lti.cds.annotators.script.train.CompactGlobalNegativeTrainer;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
-import edu.cmu.cs.lti.cds.annotators.script.train.UnigramScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -39,6 +38,7 @@ public class StochasticGlobalNegativeTrainer {
         int noiseNum = config.getInt("edu.cmu.cs.lti.cds.negative.noisenum");
         int miniBatchNum = config.getInt("edu.cmu.cs.lti.cds.minibatch");
         String modelSuffix = config.get("edu.cmu.cs.lti.cds.model.suffix");
+        String unigramEventFile = config.get("edu.cmu.cs.lti.cds.event_unigram");
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -48,7 +48,7 @@ public class StochasticGlobalNegativeTrainer {
         DataPool.readBlackList(new File(blackListFileName));
         DataPool.loadCooccMap(dbPath, dbNames[0], KarlMooneyScriptCounter.defaultCooccMapName);
         DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
-        DataPool.loadEventUnigramCounts(dbPath, dbNames[0], UnigramScriptCounter.defaultUnigramMapName);
+        DataPool.loadEventUnigramCounts(unigramEventFile);
 
         logger.info("# predicates " + DataPool.headIdMap.size());
 
