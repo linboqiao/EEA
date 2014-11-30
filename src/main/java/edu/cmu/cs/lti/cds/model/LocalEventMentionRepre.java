@@ -61,8 +61,11 @@ public class LocalEventMentionRepre {
         LocalArgumentRepre[] args = new LocalArgumentRepre[3];
         for (int slotId = 0; slotId < mention.getAllArguments().length; slotId++) {
             int rewriteArgumentId = mention.getAllArguments()[slotId];
-            LocalArgumentRepre arg = new LocalArgumentRepre(-1, "", rewriteArgumentId, false);
-            arg.setRewritedId(rewriteArgumentId);
+            if (rewriteArgumentId != KmTargetConstants.nullArgMarker) {
+                LocalArgumentRepre arg = new LocalArgumentRepre(-1, LocalArgumentRepre.UNKNOWN_HEAD, rewriteArgumentId, false);
+                arg.setRewritedId(rewriteArgumentId);
+                args[slotId] = arg;
+            }
         }
         return new LocalEventMentionRepre(mention.getPredicate(), args);
     }
@@ -84,19 +87,39 @@ public class LocalEventMentionRepre {
         return args.length;
     }
 
+    public boolean mooneyMatch(LocalEventMentionRepre repre) {
+        for (int i = 0; i < this.getNumArgs(); i++) {
+            if (args[i] == null) {
+                if (repre.getArg(i) != null) {
+                    return false;
+                }
+            } else {
+                if (repre.getArg(i) == null) {
+                    return false;
+                } else {
+                    if (!args[i].mooneyMatch(repre.getArg(i))) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(mentionHead).append(" : ");
+        String sep = "";
         for (int i = 0; i < args.length; i++) {
-            sb.append("\t");
+            sb.append(sep);
             LocalArgumentRepre arg = args[i];
             if (arg != null) {
                 sb.append("arg").append(i).append(" ").append(arg.toString());
             } else {
                 sb.append("arg").append(i).append(" null");
             }
-
+            sep = ",";
         }
 
         return sb.toString();

@@ -173,7 +173,6 @@ public class MooneyEventRepre {
         baseRepres.add(base);
 
         //add Null and Other entities
-
         List<Integer> baseEntities = new ArrayList<>();
         baseEntities.add(KmTargetConstants.nullArgMarker);
         baseEntities.add(KmTargetConstants.otherMarker);

@@ -37,15 +37,12 @@ public class CompactFeatureExtractor {
 
     public TLongShortDoubleHashTable getFeatures(List<ChainElement> chain, ChainElement targetMention, int index, int skipGramN, boolean breakOnConflict) {
         TLongShortDoubleHashTable featureTable = new TLongShortDoubleHashTable();
-
         //ngram features
         for (Pair<ChainElement, ChainElement> ngram : getSkippedNgrams(chain, targetMention, index, skipGramN)) {
             Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedForm = KarlMooneyScriptCounter.
                     firstBasedSubstitution(ngram.getLeft().getMention(), ngram.getRight().getMention());
-
             TIntLinkedList compactPair = FeatureExtractor.compactEvmPairSubstituiton(subsitutedForm, headMap);
             getMooneyLikeFeatures(featureTable, subsitutedForm.a.a, subsitutedForm.b.a, getLast3IntFromTuple(subsitutedForm.a), getLast3IntFromTuple(subsitutedForm.b));
-
             if (breakOnConflict && positiveObservations.containsKey(compactPair)) {
                 return null;
             }

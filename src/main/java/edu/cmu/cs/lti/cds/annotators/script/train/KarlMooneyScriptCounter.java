@@ -206,8 +206,13 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             int argMarker = KmTargetConstants.slotIndexToArgMarker(i);
             LocalArgumentRepre argi = evm1.getArg(i);
             if (argi != null) {
-                evm1Args.put(argi.getEntityId(), argMarker);
-                evm1Slots.put(argMarker, KmTargetConstants.otherMarker);
+                int defaultRewriteVal = argi.getRewritedId() == KmTargetConstants.nullArgMarker ? KmTargetConstants.nullArgMarker : KmTargetConstants.otherMarker;
+                int argiEntityId = argi.isConcrete() ? argi.getEntityId() : argi.getRewritedId();
+                if (argiEntityId == -1) {
+                    continue;
+                }
+                evm1Args.put(argiEntityId, argMarker);
+                evm1Slots.put(argMarker, defaultRewriteVal);
             }
         }
 
@@ -216,7 +221,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             LocalArgumentRepre argi = evm2.getArg(i);
 
             if (argi != null) {
-                int entityId = argi.getEntityId();
+                int entityId = argi.isConcrete() ? argi.getEntityId() : argi.getRewritedId();
                 int substituteId;
                 if (evm1Args.containsKey(entityId)) {
                     substituteId = evm1Args.get(entityId);

@@ -70,6 +70,7 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
     private String modelPath;
     private TLongBasedFeatureTable compactWeights;
 
+//    private TShortObjectMap<String> featureNames;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -95,6 +96,7 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
         try {
             compactWeights = (TLongBasedFeatureTable) SerializationHelper.read(modelPath);
             extractor = new CompactFeatureExtractor(compactWeights);
+//            featureNames = compactWeights.getFeatureNameIndices();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -140,16 +142,18 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
         //
         for (int i = 0; i < mooneyChain.size(); i++) {
             MooneyEventRepre mooneyEventRepre = mooneyChain.get(i);
+//            System.out.println(mooneyEventRepre);
             for (int slotId = 0; slotId < mooneyEventRepre.getAllArguments().length; slotId++) {
                 LocalArgumentRepre argument = regularChain.get(i).getMention().getArg(slotId);
                 if (argument != null) {
                     argument.setRewritedId((mooneyEventRepre.getAllArguments()[slotId]));
+//                    System.out.println("Rewrite to "+ argument.getRewritedId());
                 }
             }
         }
 
         MooneyEventRepre mooneyStyleAnswer = mooneyChain.get(clozeIndex);
-        PriorityQueue<Pair<MooneyEventRepre, Double>> results = predictMooneyStyle(regularChain, regularChain, clozeIndex, numArguments, DataPool.headWords);
+        PriorityQueue<Pair<MooneyEventRepre, Double>> results = predictMooneyStyle(regularChain, clozeIndex, numArguments, DataPool.headWords);
 
         int rank = 0;
         boolean oov = true;
@@ -185,29 +189,30 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
         }
     }
 
-    private PriorityQueue<Pair<MooneyEventRepre, Double>> predictMooneyStyle(
-            List<ChainElement> regularChain, List<ChainElement> mooneyChain, int testIndex, int numArguments, String[] allPredicates) {
-        ChainElement answer = mooneyChain.get(testIndex);
-        logger.info("Answer is " + answer);
+    private PriorityQueue<Pair<MooneyEventRepre, Double>> predictMooneyStyle(List<ChainElement> chain, int testIndex, int numArguments, String[] allPredicates) {
+        ChainElement answer = chain.get(testIndex);
+        logger.info("Answer is " + answer.getMention());
 
         PriorityQueue<Pair<MooneyEventRepre, Double>> rankedEvents = new PriorityQueue<>(allPredicates.length,
                 new Comparators.DescendingScoredPairComparator<MooneyEventRepre, Double>());
 
-        Set<Integer> mooneyEntities = LogLinearTester.getRewritedEntitiesFromChain(mooneyChain);
+        Set<Integer> mooneyEntities = LogLinearTester.getRewritedEntitiesFromChain(chain);
 
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateMooeyEvms = MooneyEventRepre.generateTuples(head, mooneyEntities);
             for (MooneyEventRepre candidateEvm : candidateMooeyEvms) {
                 ChainElement candidate = ChainElement.fromMooney(candidateEvm);
-                TLongShortDoubleHashTable features = extractor.getFeatures(mooneyChain, candidate, testIndex, skipGramN, false);
+                TLongShortDoubleHashTable features = extractor.getFeatures(chain, candidate, testIndex, skipGramN, false);
 
-                System.out.println(features);
                 double score = compactWeights.dotProd(features);
-                System.out.println(score);
-                Utils.pause();
 
-                if (candidate.equals(answer)) {
-                    logger.info("Answer candidate appears: " + candidateEvm);
+//                if (score > 0) {
+//                    System.out.println("candidate is " + candidate.getMention());
+//                    System.out.println("Score is " + score);
+//                }
+
+                if (candidate.getMention().mooneyMatch(answer.getMention())) {
+                    logger.info("Answer candidate appears: " + candidate.getMention());
                     logger.info("Feature score " + score);
                 }
                 rankedEvents.add(Pair.of(candidateEvm, score));

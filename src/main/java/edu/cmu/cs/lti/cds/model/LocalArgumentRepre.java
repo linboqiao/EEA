@@ -6,6 +6,8 @@ public class LocalArgumentRepre {
     Integer rewritedId;
     private final boolean isConcrete;
 
+    public static final String UNKNOWN_HEAD = "head";
+
     public LocalArgumentRepre(int entityId, String headWord, int rewritedId, boolean isConcrete) {
         this.entityId = entityId;
         this.headWord = headWord;
@@ -41,12 +43,15 @@ public class LocalArgumentRepre {
         return isConcrete;
     }
 
-
     public boolean isRewrite() {
         return rewritedId != null;
     }
 
     public boolean isOther() {
         return rewritedId == KmTargetConstants.otherMarker;
+    }
+
+    public boolean mooneyMatch(LocalArgumentRepre repre) {
+        return repre.getRewritedId() == this.rewritedId;
     }
 }
