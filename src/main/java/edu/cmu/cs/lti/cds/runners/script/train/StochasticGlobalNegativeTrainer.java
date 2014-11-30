@@ -1,8 +1,8 @@
 package edu.cmu.cs.lti.cds.runners.script.train;
 
 import edu.cmu.cs.lti.cds.annotators.script.train.CompactGlobalNegativeTrainer;
-import edu.cmu.cs.lti.cds.annotators.script.train.CompactNegativeTrainer;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.cds.annotators.script.train.UnigramScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -47,6 +47,9 @@ public class StochasticGlobalNegativeTrainer {
         DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
         DataPool.readBlackList(new File(blackListFileName));
         DataPool.loadCooccMap(dbPath, dbNames[0], KarlMooneyScriptCounter.defaultCooccMapName);
+        DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
+        DataPool.loadEventUnigramCounts(dbPath, dbNames[0], UnigramScriptCounter.defaultUnigramMapName);
+
         logger.info("# predicates " + DataPool.headIdMap.size());
 
         // Instantiate the analysis engine.
@@ -56,7 +59,9 @@ public class StochasticGlobalNegativeTrainer {
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
-        AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(CompactNegativeTrainer.class, typeSystemDescription,
+        logger.info("Running " + CompactGlobalNegativeTrainer.class.getName());
+
+        AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(CompactGlobalNegativeTrainer.class, typeSystemDescription,
                 CompactGlobalNegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum,
                 CompactGlobalNegativeTrainer.PARAM_MINI_BATCH_SIZE, miniBatchNum);
 

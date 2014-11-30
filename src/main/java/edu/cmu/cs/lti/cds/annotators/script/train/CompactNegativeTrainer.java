@@ -93,7 +93,7 @@ public class CompactNegativeTrainer extends AbstractLoggingAnnotator {
             List<TLongShortDoubleHashTable> noiseSamples = new ArrayList<>();
             for (int i = 0; i < numNoise; i++) {
                 Pair<LocalEventMentionRepre, Double> noise = noiseDist.draw(arguments, numArguments);
-                TLongShortDoubleHashTable noiseFeature = extractor.getFeatures(chain, new ChainElement(sampleSent, noise.getLeft()), sampleIndex, skipGramN, true);
+                TLongShortDoubleHashTable noiseFeature = extractor.getFeatures(chain, new ChainElement(sampleSent, noise.getLeft()), sampleIndex, skipGramN, false);
                 if (noiseFeature != null) {
                     noiseSamples.add(noiseFeature);
                 }

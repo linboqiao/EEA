@@ -2,7 +2,10 @@ package edu.cmu.cs.lti.cds.annotators.script.train;
 
 import edu.cmu.cs.lti.cds.dist.UnigramEventDist;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
-import edu.cmu.cs.lti.cds.model.*;
+import edu.cmu.cs.lti.cds.model.ChainElement;
+import edu.cmu.cs.lti.cds.model.LocalArgumentRepre;
+import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
+import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.type.Article;
@@ -48,7 +51,7 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
     int numNoise = 25;
     int skipGramN = 2;
 
-    UnigramEventDist noiseDist = new UnigramEventDist();
+    UnigramEventDist noiseDist = new UnigramEventDist(DataPool.unigramCounts, DataPool.eventUnigramTotalCount);
 
     TLongShortDoubleHashTable cumulativeGradient = new TLongShortDoubleHashTable();
 
@@ -91,7 +94,9 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
 
             TIntList realArgumentEntityIds = new TIntArrayList();
             for (LocalArgumentRepre repre : realSample.getMention().getArgs()) {
-                realArgumentEntityIds.add(repre.getEntityId());
+                if (repre != null) {
+                    realArgumentEntityIds.add(repre.getEntityId());
+                }
             }
 
             //generate noise samples
@@ -99,26 +104,28 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
             for (int i = 0; i < numNoise; i++) {
                 Pair<MooneyEventRepre, Double> noise = noiseDist.draw();
                 MooneyEventRepre noiseMooneyRepre = noise.getKey();
-                int[] drawnArguments = noiseMooneyRepre.getAllArguments();
-                LocalArgumentRepre[] noiseArguments = new LocalArgumentRepre[drawnArguments.length];
+//                int[] drawnArguments = noiseMooneyRepre.getAllArguments();
+//                LocalArgumentRepre[] noiseArguments = new LocalArgumentRepre[drawnArguments.length];
+//
+//
+//
+//                for (int slotId = 0; slotId < drawnArguments.length; slotId++) {
+//                    int drawnArgument = drawnArguments[slotId];
+//                    if (drawnArgument == KmTargetConstants.nullArgMarker) {
+//                        noiseArguments[slotId] = null;
+//                    } else {
+//                        int drawnEntityId = realArgumentEntityIds.get(KmTargetConstants.argMarkerToSlotIndex(drawnArguments[slotId]));
+//                        noiseArguments[slotId] = new LocalArgumentRepre(drawnEntityId, "");
+//                    }
+//                }
+//
+//                LocalEventMentionRepre noiseRep = new LocalEventMentionRepre(noiseMooneyRepre.getPredicate(), noiseArguments);
 
-                for (int slotId = 0; slotId < drawnArguments.length; slotId++) {
-                    int drawnArgument = drawnArguments[slotId];
-                    if (drawnArgument == KmTargetConstants.nullArgMarker) {
-                        noiseArguments[slotId] = null;
-                    } else {
-                        int drawnEntityId = realArgumentEntityIds.get(KmTargetConstants.argMarkerToSlotIndex(drawnArguments[slotId]));
-                        //TODO might wanna use a real head word here
-                        noiseArguments[slotId] = new LocalArgumentRepre(drawnEntityId, "");
-                    }
-                }
-
-                LocalEventMentionRepre noiseRep = new LocalEventMentionRepre(noiseMooneyRepre.getPredicate(), noiseArguments);
+                LocalEventMentionRepre noiseRep = LocalEventMentionRepre.fromMooneyMention(noiseMooneyRepre);
                 TLongShortDoubleHashTable noiseFeature = extractor.getFeatures(chain, new ChainElement(sampleSent, noiseRep), sampleIndex, skipGramN, true);
                 if (noiseFeature != null) {
                     noiseSamples.add(noiseFeature);
                 }
-                noiseSamples.add(noiseFeature);
             }
 
             //cumulative the gradient so far, and compute sample cost
@@ -128,7 +135,7 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
 
         DataPool.numSampleProcessed++;
         if (DataPool.numSampleProcessed % miniBatchDocNum == 0) {
-            logger.info("Features lexical pairs learnt " + DataPool.compactWeights.getNumRows());
+            logger.info("Features lexical pairs just learnt " + DataPool.compactWeights.getNumRows());
             logger.info("Processed " + DataPool.numSampleProcessed + " samples");
             logger.info("Average gain for previous batch is : " + cumulativeObjective / miniBatchDocNum);
             logger.info("Committing " + cumulativeGradient.getNumRows() + " lexical pairs");
@@ -158,7 +165,9 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         // g = x_w
         TLongShortDoubleHashTable gradient = dataSample;
 
+//        double scoreTrue = DataPool.compactWeights.dotProd(dataSample, extractor.getFeatureNamesByIndex());
         double scoreTrue = DataPool.compactWeights.dotProd(dataSample);
+
         double sigmoidTrue = sigmoid(scoreTrue);
 
         //multiple x_w by (1- sigmoid)
@@ -168,6 +177,11 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         //calculate local objective
         // log (sigmoid( score of true))
         double localObjective = Math.log(sigmoidTrue);
+
+//        if (scoreTrue < 0) {
+//            System.err.println(scoreTrue + " " + sigmoidTrue + " ");
+//            System.err.println(dataSample.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
+//        }
 
         for (TLongShortDoubleHashTable noiseSample : noiseSamples) {
             double scoreNoise = DataPool.compactWeights.dotProd(noiseSample);
@@ -182,6 +196,11 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
             //note that this directly change the noise feature itself
             noiseSample.multiplyBy(sigmoidNoise);
             gradient.minusBy(noiseSample);
+
+//            if (scoreNoise < 0) {
+//                System.err.println(scoreNoise + " " + sigmoidNoise);
+//                System.err.println(noiseSample.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
+//            }
         }
 
         //update the cumulative gradient;
@@ -192,6 +211,7 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
                 cumulativeGradient.adjustOrPutValue(rowIter.key(), cellIter.key(), cellIter.value(), cellIter.value());
             }
         }
+
 
         //return the objective
         return localObjective;

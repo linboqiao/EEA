@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.cds.ml.features;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.BiMap;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.ChainElement;
 import edu.cmu.cs.lti.cds.utils.DataPool;
@@ -51,11 +52,22 @@ public class CompactFeatureExtractor {
         return featureTable;
     }
 
+    public String getFeatureName(short featureIndex) {
+        return featureTable.getFeatureName(featureIndex);
+    }
+
+    public Short getFeatureIndex(String featureName) {
+        return featureTable.getFeatureIndex(featureName);
+    }
+
+    public BiMap<Short, String> getFeatureNamesByIndex() {
+        return featureTable.getFeatureNameMap();
+    }
+
     private void getMooneyLikeFeatures(TLongShortDoubleHashTable featureTable, String p1, String p2, int[] arg1s, int[] arg2s) {
         long predicatePair = getCompactPredicatePair(p1, p2);
         //mooney features
         featureTable.put(predicatePair, getMooneyArgumentFeature(arg1s, arg2s), 1);
-
 //        regular argument features
         for (short f : getRegularArgumentFeatures(arg1s, arg2s)) {
             featureTable.put(predicatePair, f, 1);
@@ -70,9 +82,16 @@ public class CompactFeatureExtractor {
     private short[] getRegularArgumentFeatures(int[] args1, int[] args2) {
         TShortArrayList regularArgumentFeatures = new TShortArrayList();
         for (int slotId1 = 0; slotId1 < args1.length; slotId1++) {
+            int slotId1Eid = args1[slotId1];
+            if (slotId1Eid == -1 || slotId1Eid == 0) {
+                continue;
+            }
             for (int slotId2 = 0; slotId2 < args2.length; slotId2++) {
-                int slotId1Eid = args1[slotId1];
                 int slotId2Eid = args2[slotId2];
+                if (slotId2Eid == -1 || slotId2Eid == 0) {
+                    continue;
+                }
+
                 if (slotId1Eid == slotId2Eid) {
                     String featureName = "r_arg" + "_" + slotId1 + "_" + slotId2;
                     short fIndex = featureTable.getOrPutFeatureIndex(featureName);

@@ -221,14 +221,6 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
         return rankedEvents;
     }
 
-    private Pair<Integer, String>[] getEntitiesFromMask(List<Pair<Integer, String>> entities, int[] mask) {
-        Pair<Integer, String>[] chosen = new Pair[mask.length];
-        for (int i = 0; i < mask.length; i++) {
-            chosen[i] = entities.get(mask[i]);
-        }
-        return chosen;
-    }
-
     private Triple<List<MooneyEventRepre>, Integer, String> getMooneyStyleCloze(JCas aJCas) {
         String fileName = UimaConvenience.getShortDocumentName(aJCas) + ".gz_" + UimaConvenience.getOffsetInSource(aJCas) + clozeExt;
         File clozeFile = new File(clozeDir, fileName);
@@ -264,7 +256,6 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
 
     private List<ChainElement> getHighFreqEventMentions(JCas aJCas) {
         List<ChainElement> chain = new ArrayList<>();
-
         //in principle, this iteration will get the same ordering as iterating event mention
         //hopefully this is valid
         for (Sentence sent : JCasUtil.select(aJCas, Sentence.class)) {

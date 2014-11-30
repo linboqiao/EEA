@@ -9,6 +9,7 @@ import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.list.TIntList;
 import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -27,17 +28,17 @@ public class UnigramEventDist {
 
     private static TIntObjectMap<TIntList> unigramId = new TIntObjectHashMap<>();
 
-    public UnigramEventDist() {
-        alias = new AliasMethod(unigramProb(), new Random());
+    public UnigramEventDist(TObjectIntMap<TIntList> unigramCounts, long eventUnigramTotalCount) {
+        alias = new AliasMethod(unigramProb(unigramCounts, eventUnigramTotalCount), new Random());
     }
 
-    private static double[] unigramProb() {
-        probabilities = new double[DataPool.unigramCounts.size()];
+    private static double[] unigramProb(TObjectIntMap<TIntList> unigramCounts, long eventUnigramTotalCount) {
+        probabilities = new double[unigramCounts.size()];
         int index = 0;
 
-        for (TObjectIntIterator<TIntList> iter = DataPool.unigramCounts.iterator(); iter.hasNext(); ) {
+        for (TObjectIntIterator<TIntList> iter = unigramCounts.iterator(); iter.hasNext(); ) {
             iter.advance();
-            probabilities[index] = iter.value() * 1.0 / DataPool.eventUnigramTotalCount;
+            probabilities[index] = iter.value() * 1.0 / eventUnigramTotalCount;
 
             unigramId.put(index, iter.key());
             index++;
@@ -70,7 +71,7 @@ public class UnigramEventDist {
         //prepare data
         DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
         DataPool.loadEventUnigramCounts(dbPath, dbNames[0], UnigramScriptCounter.defaultUnigramMapName);
-        UnigramEventDist noiseDist = new UnigramEventDist();
+        UnigramEventDist noiseDist = new UnigramEventDist(DataPool.unigramCounts, DataPool.eventUnigramTotalCount);
 
         while (true) {
             System.out.println(noiseDist.draw());
