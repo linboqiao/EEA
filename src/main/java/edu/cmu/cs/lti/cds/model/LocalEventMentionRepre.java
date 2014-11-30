@@ -88,6 +88,10 @@ public class LocalEventMentionRepre {
     }
 
     public boolean mooneyMatch(LocalEventMentionRepre repre) {
+        if (!mentionHead.equals(repre.getMentionHead())) {
+            return false;
+        }
+
         for (int i = 0; i < this.getNumArgs(); i++) {
             if (args[i] == null) {
                 if (repre.getArg(i) != null) {
