@@ -64,6 +64,9 @@ public class StochasticGlobalNegativeTrainer {
 
         //possibly iterate this step
         for (int i = 0; i < maxIter; i++) {
+            String modelOutputPath = modelStoragePath + i + modelSuffix;
+            logger.info("Storing this model to " + modelOutputPath);
+
             SimplePipeline.runPipeline(reader, trainer);
             File modelDirParent = new File(modelStoragePath).getParentFile();
 
@@ -71,7 +74,7 @@ public class StochasticGlobalNegativeTrainer {
                 modelDirParent.mkdirs();
             }
 
-            SerializationHelper.write(modelStoragePath + i + modelSuffix, DataPool.compactWeights);
+            SerializationHelper.write(modelOutputPath, DataPool.compactWeights);
         }
     }
 }
