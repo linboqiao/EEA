@@ -8,6 +8,7 @@ import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
 import gnu.trove.list.TIntList;
+import gnu.trove.list.array.TShortArrayList;
 import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.map.TObjectIntMap;
 import org.apache.commons.lang3.tuple.Pair;
@@ -55,15 +56,31 @@ public class CompactFeatureExtractor {
         //mooney features
         featureTable.put(predicatePair, getMooneyArgumentFeature(arg1s, arg2s), 1);
 
-        //regular argument features
-//        for (short f : getRegularArgumentFeatures(arg1s, arg2s)) {
-//            featureTable.put(predicatePair, f, 1);
-//        }
+//        regular argument features
+        for (short f : getRegularArgumentFeatures(arg1s, arg2s)) {
+            featureTable.put(predicatePair, f, 1);
+        }
     }
 
     private short getMooneyArgumentFeature(int[] args1, int[] args2) {
         String featureName = "m_arg" + "_" + asArgumentStr(args1) + "_" + asArgumentStr(args2);
         return featureTable.getOrPutFeatureIndex(featureName);
+    }
+
+    private short[] getRegularArgumentFeatures(int[] args1, int[] args2) {
+        TShortArrayList regularArgumentFeatures = new TShortArrayList();
+        for (int slotId1 = 0; slotId1 < args1.length; slotId1++) {
+            for (int slotId2 = 0; slotId2 < args2.length; slotId2++) {
+                int slotId1Eid = args1[slotId1];
+                int slotId2Eid = args2[slotId2];
+                if (slotId1Eid == slotId2Eid) {
+                    String featureName = "r_arg" + "_" + slotId1 + "_" + slotId2;
+                    short fIndex = featureTable.getOrPutFeatureIndex(featureName);
+                    regularArgumentFeatures.add(fIndex);
+                }
+            }
+        }
+        return regularArgumentFeatures.toArray();
     }
 
     private int[] getLast3IntFromTuple(Fun.Tuple4<String, Integer, Integer, Integer> t) {
