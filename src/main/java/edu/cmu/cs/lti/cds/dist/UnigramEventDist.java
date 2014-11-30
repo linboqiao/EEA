@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.cds.dist;
 
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.cds.annotators.script.train.UnigramScriptCounter;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -71,7 +72,7 @@ public class UnigramEventDist {
 
         //prepare data
         DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
-        DataPool.loadEventUnigramCounts(unigramEventFile);
+        DataPool.loadEventUnigramCounts(dbPath, dbNames[0], UnigramScriptCounter.defaultUnigramMapName);
         UnigramEventDist noiseDist = new UnigramEventDist(DataPool.unigramCounts, DataPool.eventUnigramTotalCount);
 
         while (true) {

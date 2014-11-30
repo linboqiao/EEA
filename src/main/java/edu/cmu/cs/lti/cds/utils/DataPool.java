@@ -71,7 +71,7 @@ public class DataPool {
         loadHeadCounts(dbPath, countingDbFileNames);
     }
 
-    public static void loadHeadIds(String dbPath, String dbName, String headIdMapName) {
+    public static void loadHeadIds(String dbPath, String dbName, String headIdMapName)  {
         String mapPath = new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath();
         try {
             headIdMap = (TObjectIntMap<String>) SerializationHelper.read(mapPath);
@@ -90,8 +90,8 @@ public class DataPool {
         }
     }
 
-    public static void loadEventUnigramCounts(String unigramFileName) throws Exception {
-        String mapPath = new File(unigramFileName).getAbsolutePath();
+    public static void loadEventUnigramCounts(String dbPath, String dbName, String unigramMapName) throws Exception {
+        String mapPath = new File(dbPath, dbName + "_" + unigramMapName).getAbsolutePath();
         unigramCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(mapPath);
         for (TObjectIntIterator<TIntList> iter = unigramCounts.iterator(); iter.hasNext(); ) {
             iter.advance();
