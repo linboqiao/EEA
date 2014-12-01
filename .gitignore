@@ -4,7 +4,7 @@ target/
 .settings/ 
 .classpath
 .project
-.R*
+.*
 *nohup*
 logs/
 debug/
