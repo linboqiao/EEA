@@ -2,7 +2,6 @@ package edu.cmu.cs.lti.cds.ml.features;
 
 import com.google.common.collect.BiMap;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
-import edu.cmu.cs.lti.cds.ml.features.impl.ArgumentCorefFeature;
 import edu.cmu.cs.lti.cds.ml.features.impl.MooneyFeature;
 import edu.cmu.cs.lti.cds.model.ChainElement;
 import edu.cmu.cs.lti.cds.utils.DataPool;
@@ -47,7 +46,7 @@ public class CompactFeatureExtractor {
     private static List<Feature> defaultFeatures() {
         List<Feature> featureImpls = new ArrayList<>();
         featureImpls.add(new MooneyFeature());
-        featureImpls.add(new ArgumentCorefFeature());
+//        featureImpls.add(new ArgumentCorefFeature());
         return featureImpls;
     }
 
@@ -57,6 +56,7 @@ public class CompactFeatureExtractor {
         for (Pair<ChainElement, ChainElement> ngram : getSkippedNgrams(chain, targetMention, index, skipGramN)) {
             Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedForm = KarlMooneyScriptCounter.
                     firstBasedSubstitution(ngram.getLeft().getMention(), ngram.getRight().getMention());
+
             TIntLinkedList compactPair = FeatureExtractor.compactEvmPairSubstituiton(subsitutedForm, headMap);
             extractFeatures(extractedFeatures, ngram.getLeft(), ngram.getRight());
             if (breakOnConflict && positiveObservations.containsKey(compactPair)) {
@@ -131,8 +131,8 @@ public class CompactFeatureExtractor {
 //    }
 
     public <T extends Object> List<Pair<T, T>> getSkippedNgrams(List<T> sequence, T target, int index, int skipgramN) {
-        List<Pair<T, T>> formerPairs = getFormerSkipGram(sequence, target, index, skipgramN);
-        List<Pair<T, T>> latterPairs = getLatterSkipGram(sequence, target, index, skipgramN);
+        List<Pair<T, T>> formerPairs = getSkipGramBefore(sequence, target, index, skipgramN);
+        List<Pair<T, T>> latterPairs = getSkipGramsAfter(sequence, target, index, skipgramN);
 
         List<Pair<T, T>> allPairs = new ArrayList<>();
         allPairs.addAll(formerPairs);
@@ -148,27 +148,26 @@ public class CompactFeatureExtractor {
         return BitUtils.store2Int(pre1, pre2);
     }
 
-    public <T extends Object> List<Pair<T, T>> getFormerSkipGram(List<T> sequence, T target, int index, int skipgramN) {
+    public <T extends Object> List<Pair<T, T>> getSkipGramsAfter(List<T> sequence, T target, int index, int k) {
         List<Pair<T, T>> skipGrams = new ArrayList<>();
 
         int count = 0;
         for (int i = index + 1; i < sequence.size(); i++) {
             skipGrams.add(Pair.of(target, sequence.get(i)));
             count++;
-            if (count > skipgramN) {
+            if (count > k) {
                 break;
             }
         }
         return skipGrams;
     }
 
-    private <T extends Object> List<Pair<T, T>> getLatterSkipGram(List<T> mentions,
-                                                                  T targetMention, int index, int k) {
+    private <T extends Object> List<Pair<T, T>> getSkipGramBefore(List<T> sequence, T target, int index, int k) {
         List<Pair<T, T>> skipGrams = new ArrayList<>();
 
         int count = 0;
         for (int i = index - 1; i > 0; i--) {
-            skipGrams.add(Pair.of(targetMention, mentions.get(i)));
+            skipGrams.add(Pair.of(sequence.get(i), target));
             count++;
             if (count > k) {
                 break;

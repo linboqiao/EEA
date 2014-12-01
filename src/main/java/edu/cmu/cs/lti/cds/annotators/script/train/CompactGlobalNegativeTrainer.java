@@ -78,7 +78,6 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         List<ChainElement> chain = new ArrayList<>();
         List<LocalArgumentRepre> arguments = new ArrayList<>();
 
-
         for (Sentence sent : JCasUtil.select(aJCas, Sentence.class)) {
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sent)) {
                 LocalEventMentionRepre eventRep = LocalEventMentionRepre.fromEventMention(mention, align);

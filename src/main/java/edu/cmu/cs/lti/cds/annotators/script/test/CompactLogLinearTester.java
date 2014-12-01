@@ -116,7 +116,8 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
             return;
         }
 
-        Triple<List<MooneyEventRepre>, Integer, String> mooneyClozeTask = getMooneyStyleCloze(aJCas);
+        String clozeFileName = UimaConvenience.getShortDocumentName(aJCas) + ".gz_" + UimaConvenience.getOffsetInSource(aJCas) + clozeExt;
+        Triple<List<MooneyEventRepre>, Integer, String> mooneyClozeTask = getMooneyStyleCloze(clozeFileName);
         if (mooneyClozeTask == null) {
             logger.info("Cloze file removed due to duplication or empty");
             return;
@@ -160,7 +161,7 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
             Pair<MooneyEventRepre, Double> resulti = results.poll();
             lines.add(resulti.getLeft() + "\t" + resulti.getRight());
             if (resulti.getKey().equals(mooneyStyleAnswer)) {
-                logger.info("Correct answer found at " + rank);
+                logger.info(String.format("For cloze task : %s, correct answer found at %d", clozeFileName, rank));
                 for (int kPos = 0; kPos < CompactLogLinearTestRunner.allK.length; kPos++) {
                     if (CompactLogLinearTestRunner.allK[kPos] >= rank) {
                         CompactLogLinearTestRunner.recallCounts[kPos]++;
@@ -195,7 +196,6 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
 
         Set<Integer> mooneyEntities = LogLinearTester.getRewritedEntitiesFromChain(chain);
 
-
         Sentence testSentence = chain.get(testIndex).getSent();
 
         for (String head : allPredicates) {
@@ -204,7 +204,7 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
                 ChainElement candidate = ChainElement.fromMooney(candidateEvm, testSentence);
                 TLongShortDoubleHashTable features = extractor.getFeatures(chain, candidate, testIndex, skipGramN, false);
 
-                double score = compactWeights.dotProd(features);
+                double score = compactWeights.dotProd(features, extractor.getFeatureNamesByIndex());
 
 //                if (score > 0) {
 //                    System.out.println("candidate is " + candidate.getMention());
@@ -221,8 +221,7 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
         return rankedEvents;
     }
 
-    private Triple<List<MooneyEventRepre>, Integer, String> getMooneyStyleCloze(JCas aJCas) {
-        String fileName = UimaConvenience.getShortDocumentName(aJCas) + ".gz_" + UimaConvenience.getOffsetInSource(aJCas) + clozeExt;
+    private Triple<List<MooneyEventRepre>, Integer, String> getMooneyStyleCloze(String fileName) {
         File clozeFile = new File(clozeDir, fileName);
 
         if (!clozeFile.exists()) {

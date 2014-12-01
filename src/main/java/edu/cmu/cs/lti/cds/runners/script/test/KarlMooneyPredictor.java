@@ -92,9 +92,11 @@ public class KarlMooneyPredictor {
         return evalPointer < allClozeFiles.size();
     }
 
-    private Triple<List<MooneyEventRepre>, Integer, String> readNext() throws IOException {
-        File clozeFile = allClozeFiles.get(evalPointer++);
+    private File getNextCloze() {
+        return allClozeFiles.get(evalPointer++);
+    }
 
+    private Triple<List<MooneyEventRepre>, Integer, String> parseCloze(File clozeFile) throws IOException {
         logger.info("Predicting cloze task : " + clozeFile.getName());
 
         List<String> lines = FileUtils.readLines(clozeFile);
@@ -170,7 +172,6 @@ public class KarlMooneyPredictor {
         double cooccCountSmoothed = counts.getRight() + laplacianSmoothingParameter;
         double formerOccCountSmoothed = counts.getLeft() + numTotalEvents * laplacianSmoothingParameter;
 
-
         if (cooccCountSmoothed > laplacianSmoothingParameter) {
             logger.fine("Probability of seeing " + former + " before " + latter);
             logger.fine(cooccCountSmoothed / formerOccCountSmoothed + " " + counts.getRight() + "/" + counts.getLeft());
@@ -188,7 +189,6 @@ public class KarlMooneyPredictor {
 
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateEvms = MooneyEventRepre.generateTuples(head, entities);
-
             int numTotalEvents = candidateEvms.size() * allPredicates.size();
 
             for (MooneyEventRepre candidateEvm : candidateEvms) {
@@ -232,28 +232,13 @@ public class KarlMooneyPredictor {
         int totalCount = 0;
         double mrr = 0;
 
-//        Set<String> allPredicates = new HashSet<>();
-
-//        logger.info("Preparing predicates");
-//        for (Map<String, Fun.Tuple2<Integer, Integer>> map : headTfDfMaps) {
-//            for (Map.Entry<String, Fun.Tuple2<Integer, Integer>> entry : map.entrySet()) {
-//                if (doFilter) {
-//                    int tf = MultiMapUtils.getTf(headTfDfMaps, entry.getKey());
-//                    if (!Utils.termFrequencyFilter(tf)) {
-//                        allPredicates.add(entry.getKey());
-//                    }
-//                } else {
-//                    allPredicates.add(entry.getKey());
-//                }
-//            }
-//        }
-
         List<String> allPredicates = Arrays.asList(DataPool.headWords);
 
         logger.info("Candidate predicates number : " + allPredicates.size());
 
         while (hasNext()) {
-            Triple<List<MooneyEventRepre>, Integer, String> clozeTask = readNext();
+            File clozeFile = getNextCloze();
+            Triple<List<MooneyEventRepre>, Integer, String> clozeTask = parseCloze(clozeFile);
 
             List<MooneyEventRepre> chain = clozeTask.getLeft();
             int clozeIndex = clozeTask.getMiddle();
@@ -278,6 +263,7 @@ public class KarlMooneyPredictor {
                 Pair<MooneyEventRepre, Double> r = fullResults.poll();
                 lines.add(r.getLeft() + "\t" + r.getRight());
                 if (r.getLeft().equals(answer)) {
+                    logger.info(String.format("For cloze task : %s, correct answer found at %d", clozeFile.getName(), rank));
                     logger.info("Correct answer found at " + rank);
                     for (int kPos = 0; kPos < allK.length; kPos++) {
                         if (allK[kPos] >= rank) {
