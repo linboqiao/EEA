@@ -139,15 +139,12 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
             throw new IllegalArgumentException("Test data and document have different size! " + mooneyChain.size() + " " + regularChain.size());
         }
 
-        //
         for (int i = 0; i < mooneyChain.size(); i++) {
             MooneyEventRepre mooneyEventRepre = mooneyChain.get(i);
-//            System.out.println(mooneyEventRepre);
             for (int slotId = 0; slotId < mooneyEventRepre.getAllArguments().length; slotId++) {
                 LocalArgumentRepre argument = regularChain.get(i).getMention().getArg(slotId);
                 if (argument != null) {
                     argument.setRewritedId((mooneyEventRepre.getAllArguments()[slotId]));
-//                    System.out.println("Rewrite to "+ argument.getRewritedId());
                 }
             }
         }
@@ -198,10 +195,13 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
 
         Set<Integer> mooneyEntities = LogLinearTester.getRewritedEntitiesFromChain(chain);
 
+
+        Sentence testSentence = chain.get(testIndex).getSent();
+
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateMooeyEvms = MooneyEventRepre.generateTuples(head, mooneyEntities);
             for (MooneyEventRepre candidateEvm : candidateMooeyEvms) {
-                ChainElement candidate = ChainElement.fromMooney(candidateEvm);
+                ChainElement candidate = ChainElement.fromMooney(candidateEvm, testSentence);
                 TLongShortDoubleHashTable features = extractor.getFeatures(chain, candidate, testIndex, skipGramN, false);
 
                 double score = compactWeights.dotProd(features);

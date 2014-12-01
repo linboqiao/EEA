@@ -58,7 +58,7 @@ public class MooneyUnigramCounterRunner {
         AnalysisEngineDescription unigramCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
                 UnigramScriptCounter.class, typeSystemDescription,
                 UnigramScriptCounter.PARAM_DB_DIR_PATH, dbPath,
-                UnigramScriptCounter.PARAM_DB_NAME, "occs_" + occSuffix,
+                UnigramScriptCounter.PARAM_DB_NAME, occSuffix,
                 UnigramScriptCounter.PARAM_KEEP_QUIET, false);
 
         SimplePipeline.runPipeline(reader, unigramCounter);

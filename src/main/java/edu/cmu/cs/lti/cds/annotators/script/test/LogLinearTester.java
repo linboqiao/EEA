@@ -202,7 +202,7 @@ public class LogLinearTester extends AbstractLoggingAnnotator {
             for (MooneyEventRepre candidateEvm : candidateMooeyEvms) {
                 skipGramN = 50; //basically take everything!
                 logger.info("Use skigramN " + 50);
-                TObjectDoubleMap<String> features = extractor.getFeatures(regularChain, ChainElement.fromMooney(candidateEvm), testIndex, skipGramN, false);
+                TObjectDoubleMap<String> features = extractor.getFeatures(regularChain, ChainElement.fromMooney(candidateEvm, sent), testIndex, skipGramN, false);
                 double score = VectorUtils.dotProd(features, weights);
 
                 if (candidateEvm.equals(answer)) {

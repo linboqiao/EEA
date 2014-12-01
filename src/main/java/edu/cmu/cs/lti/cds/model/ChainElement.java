@@ -31,8 +31,8 @@ public class ChainElement {
         this(sent, mention, true);
     }
 
-    public static ChainElement fromMooney(MooneyEventRepre mooneyEventRepre) {
-        return new ChainElement(null, LocalEventMentionRepre.fromMooneyMention(mooneyEventRepre), false);
+    public static ChainElement fromMooney(MooneyEventRepre mooneyEventRepre, Sentence sent) {
+        return new ChainElement(sent, LocalEventMentionRepre.fromMooneyMention(mooneyEventRepre), false);
     }
 
     public Sentence getSent() {
