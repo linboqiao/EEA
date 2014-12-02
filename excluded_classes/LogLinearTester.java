@@ -3,7 +3,6 @@ package edu.cmu.cs.lti.cds.annotators.script.test;
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.ml.features.FeatureExtractor;
-import edu.cmu.cs.lti.cds.model.*;
 import edu.cmu.cs.lti.cds.runners.script.test.LogLinearTestRunner;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.cds.utils.DbManager;
@@ -32,7 +31,6 @@ import weka.core.SerializationHelper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -126,7 +124,7 @@ public class LogLinearTester extends AbstractLoggingAnnotator {
 
         align.loadWord2Stanford(aJCas);
 
-        List<ChainElement> regularChain = getHighFreqEventMentions(aJCas);
+        List<ContextElement> regularChain = getHighFreqEventMentions(aJCas);
 
         if (regularChain.size() == 0) {
             return;
@@ -187,8 +185,8 @@ public class LogLinearTester extends AbstractLoggingAnnotator {
     }
 
     private PriorityQueue<Pair<MooneyEventRepre, Double>> predictMooneyStyle(
-            List<ChainElement> regularChain, int testIndex, int numArguments, String[] allPredicates) {
-        ChainElement answer = regularChain.get(testIndex);
+            List<ContextElement> regularChain, int testIndex, int numArguments, String[] allPredicates) {
+        ContextElement answer = regularChain.get(testIndex);
         logger.info("Answer is " + answer);
 
         PriorityQueue<Pair<MooneyEventRepre, Double>> rankedEvents = new PriorityQueue<>(allPredicates.length,
@@ -202,7 +200,7 @@ public class LogLinearTester extends AbstractLoggingAnnotator {
             for (MooneyEventRepre candidateEvm : candidateMooeyEvms) {
                 skipGramN = 50; //basically take everything!
                 logger.info("Use skigramN " + 50);
-                TObjectDoubleMap<String> features = extractor.getFeatures(regularChain, ChainElement.fromMooney(candidateEvm, sent), testIndex, skipGramN, false);
+                TObjectDoubleMap<String> features = extractor.getFeatures(regularChain, ContextElement.fromMooney(candidateEvm, sent), testIndex, skipGramN, false);
                 double score = VectorUtils.dotProd(features, weights);
 
                 if (candidateEvm.equals(answer)) {
@@ -263,9 +261,9 @@ public class LogLinearTester extends AbstractLoggingAnnotator {
         return Triple.of(repres, blankIndex, fileName);
     }
 
-    public static Set<Integer> getRewritedEntitiesFromChain(List<ChainElement> chain) {
+    public static Set<Integer> getRewritedEntitiesFromChain(List<ContextElement> chain) {
         Set<Integer> entities = new HashSet<>();
-        for (ChainElement rep : chain) {
+        for (ContextElement rep : chain) {
             for (LocalArgumentRepre arg : rep.getMention().getArgs()) {
                 if (arg != null && !arg.isOther()) {
                     entities.add(arg.getRewritedId());
@@ -275,8 +273,8 @@ public class LogLinearTester extends AbstractLoggingAnnotator {
         return entities;
     }
 
-    private List<ChainElement> getHighFreqEventMentions(JCas aJCas) {
-        List<ChainElement> chain = new ArrayList<>();
+    private List<ContextElement> getHighFreqEventMentions(JCas aJCas) {
+        List<ContextElement> chain = new ArrayList<>();
 
         //in principle, this iteration will get the same ordering as iterating event mention
         //hopefully this is valid
@@ -291,7 +289,7 @@ public class LogLinearTester extends AbstractLoggingAnnotator {
                     }
                 }
                 LocalEventMentionRepre eventRep = LocalEventMentionRepre.fromEventMention(mention, align);
-                chain.add(new ChainElement(sent, eventRep));
+                chain.add(new ContextElement(sent, eventRep));
             }
         }
         return chain;

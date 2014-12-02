@@ -1,6 +1,8 @@
 package edu.cmu.cs.lti.cds.model;
 
 import edu.cmu.cs.lti.script.type.Sentence;
+import edu.cmu.cs.lti.script.type.Word;
+import org.apache.uima.jcas.JCas;
 
 /**
  * Created with IntelliJ IDEA.
@@ -8,35 +10,35 @@ import edu.cmu.cs.lti.script.type.Sentence;
  * Date: 11/2/14
  * Time: 5:11 PM
  */
-public class ChainElement {
-
+public class ContextElement {
+    //some uima types
     private Sentence sent;
+    private Word head;
+    private JCas jcas;
 
     private LocalEventMentionRepre mention;
 
-    private final boolean isConcrete;
-
-    public ChainElement(Sentence sent, LocalEventMentionRepre mention, boolean isConcrete) {
+    public ContextElement(JCas jcas, Sentence sent, Word headWord, LocalEventMentionRepre mention) {
         this.sent = sent;
         this.mention = mention;
-        this.isConcrete = isConcrete;
+        this.jcas = jcas;
+        this.head = headWord;
     }
 
-
-    public boolean isConcrete() {
-        return isConcrete;
-    }
-
-    public ChainElement(Sentence sent, LocalEventMentionRepre mention) {
-        this(sent, mention, true);
-    }
-
-    public static ChainElement fromMooney(MooneyEventRepre mooneyEventRepre, Sentence sent) {
-        return new ChainElement(sent, LocalEventMentionRepre.fromMooneyMention(mooneyEventRepre), false);
+    public static ContextElement fromMooney(JCas aJCas, Sentence sent, Word headWord, MooneyEventRepre mooneyEventRepre) {
+        return new ContextElement(aJCas, sent, headWord, LocalEventMentionRepre.fromMooneyMention(mooneyEventRepre));
     }
 
     public Sentence getSent() {
         return sent;
+    }
+
+    public Word getHead() {
+        return head;
+    }
+
+    public JCas getJcas() {
+        return jcas;
     }
 
     public void setSent(Sentence sent) {

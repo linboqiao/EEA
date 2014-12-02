@@ -37,7 +37,7 @@ public class StochasticNegativeTrainer {
         String modelStoragePath = config.get("edu.cmu.cs.lti.cds.negative.model.path");
         int noiseNum = config.getInt("edu.cmu.cs.lti.cds.negative.noisenum");
         int miniBatchNum = config.getInt("edu.cmu.cs.lti.cds.minibatch");
-        String modelSuffix = config.get("edu.cmu.cs.lti.cds.model.suffix");
+        String modelSuffix = config.get("edu.cmu.cs.lti.cds.model.ext");
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -78,7 +78,7 @@ public class StochasticNegativeTrainer {
                 modelDirParent.mkdirs();
             }
 
-            SerializationHelper.write(modelOutputPath, DataPool.compactWeights);
+            SerializationHelper.write(modelOutputPath, DataPool.trainingUsedCompactWeights);
         }
 
 //        trainOut.close();

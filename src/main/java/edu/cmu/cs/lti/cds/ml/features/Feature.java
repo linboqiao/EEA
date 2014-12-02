@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.cds.ml.features;
 
-import edu.cmu.cs.lti.cds.model.ChainElement;
+import edu.cmu.cs.lti.cds.model.ContextElement;
 
 import java.util.Map;
 
@@ -11,7 +11,7 @@ import java.util.Map;
  * Time: 5:36 PM
  */
 public abstract class Feature {
-    public abstract Map<String, Double> getFeature(ChainElement elementLeft, ChainElement elementRight);
+    public abstract Map<String, Double> getFeature(ContextElement elementLeft, ContextElement elementRight, int skip);
 
     public abstract boolean isLexicalized();
 }

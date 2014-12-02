@@ -202,12 +202,31 @@ public class KarlMooneyPredictor {
                 for (int i = 0; i < missingIndex; i++) {
                     Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(clozeTask.get(i), candidateEvm);
                     double precedingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter, numTotalEvents);
+
+//                    if (transformedTuples.getRight().equals(answer)) {
+//                        System.out.println("Following " + transformedTuples.getLeft() + " " + precedingScore);
+//                    }
+//
+//                    if (transformedTuples.getRight().toString().equals("say(0,0,-1)")) {
+//                        System.out.println("Best following " + transformedTuples.getLeft() + " " + precedingScore);
+//                    }
+
                     score += precedingScore;
                 }
 
                 for (int i = missingIndex + 1; i < clozeTask.size(); i++) {
                     Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(candidateEvm, clozeTask.get(i));
                     double followingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter, numTotalEvents);
+
+//                    if (transformedTuples.getLeft().equals(answer)) {
+//                        System.out.println("Before " + transformedTuples.getRight() + " " + followingScore);
+//                    }
+//
+//                    if (transformedTuples.getLeft().toString().equals("say(0,0,-1)")) {
+//                        System.out.println("Best before " + transformedTuples.getLeft() + " " + followingScore);
+//                    }
+
+
                     score += followingScore;
                 }
 

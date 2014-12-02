@@ -31,7 +31,7 @@ public class DataPool {
     public static TObjectDoubleMap<String> adaGradDelGradientSq = new TObjectDoubleHashMap<>();
 
     //a more compact form in storing such parameters
-    public static final TLongBasedFeatureTable compactWeights = new TLongBasedFeatureTable();
+    public static final TLongBasedFeatureTable trainingUsedCompactWeights = new TLongBasedFeatureTable();
 
     //ada grad memory
     public static final TLongShortDoubleHashTable compactAdaGradMemory = new TLongShortDoubleHashTable();

@@ -164,6 +164,7 @@ public class GlobalUnigrmHwLocalUniformArgumentDist {
         LocalArgumentRepre[] arguments = new LocalArgumentRepre[numArguments];
         for (int i = 0; i < numArguments; i++) {
             LocalArgumentRepre randomArgument = candidateArguments.get(random.nextInt(candidateArguments.size()));
+            arguments[i] = randomArgument;
         }
         LocalEventMentionRepre repre = new LocalEventMentionRepre(predicate, arguments);
         return Pair.of(repre, probOf(repre, candidateArguments.size(), numArguments));

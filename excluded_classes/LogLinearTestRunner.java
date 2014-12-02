@@ -49,7 +49,7 @@ public class LogLinearTestRunner {
         String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         //use negative sampling models
-        String modelPath = config.get("edu.cmu.cs.lti.cds.negative.model.path") + (config.getInt("edu.cmu.cs.lti.cds.sgd.iter") - 1) + config.get("edu.cmu.cs.lti.cds.model.suffix");
+        String modelPath = config.get("edu.cmu.cs.lti.cds.negative.model.path") + (config.getInt("edu.cmu.cs.lti.cds.sgd.iter") - 1) + config.get("edu.cmu.cs.lti.cds.model.ext");
 //        String modelPath = config.get("edu.cmu.cs.lti.cds.nce.model.path") + config.get("edu.cmu.cs.lti.cds.testing.model");
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;

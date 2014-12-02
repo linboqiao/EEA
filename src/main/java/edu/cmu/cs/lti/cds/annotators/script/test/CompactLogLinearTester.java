@@ -49,6 +49,10 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
 
     public static final String PARAM_MODEL_PATH = "modelPath";
 
+    public static final String PARAM_FEATURE_NAMES = "featureNames";
+
+    public static final String PARAM_SKIP_GRAM_N = "skipgramn";
+
     private boolean ignoreLowFreq;
 
     private Map<String, Fun.Tuple2<Integer, Integer>>[] headTfDfMaps;
@@ -57,7 +61,6 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
 
     private File clozeDir;
 
-    //TODO make it parameter
     private int skipGramN = 2;
 
     //make it parameter
@@ -78,6 +81,9 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
 
         String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
 
+        skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
+
+
         if (aContext.getConfigParameterValue(PARAM_IGNORE_LOW_FREQ) != null) {
             ignoreLowFreq = (Boolean) aContext.getConfigParameterValue(PARAM_IGNORE_LOW_FREQ);
         } else {
@@ -95,8 +101,12 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
 
         try {
             compactWeights = (TLongBasedFeatureTable) SerializationHelper.read(modelPath);
-            extractor = new CompactFeatureExtractor(compactWeights);
-//            featureNames = compactWeights.getFeatureNameIndices();
+            String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
+            try {
+                extractor = new CompactFeatureExtractor(compactWeights, featureImplNames);
+            } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -125,7 +135,8 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
 
         align.loadWord2Stanford(aJCas);
 
-        List<ChainElement> regularChain = getHighFreqEventMentions(aJCas);
+        //the actual chain is got here
+        List<ContextElement> regularChain = getHighFreqEventMentions(aJCas);
 
         if (regularChain.size() == 0) {
             return;
@@ -170,7 +181,6 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
                 oov = false;
                 break;
             }
-//            System.out.println(resulti);
         }
 
         if (!oov) {
@@ -187,25 +197,29 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
         }
     }
 
-    private PriorityQueue<Pair<MooneyEventRepre, Double>> predictMooneyStyle(List<ChainElement> chain, int testIndex, int numArguments, String[] allPredicates) {
-        ChainElement answer = chain.get(testIndex);
+    private PriorityQueue<Pair<MooneyEventRepre, Double>> predictMooneyStyle(List<ContextElement> chain, int testIndex, int numArguments, String[] allPredicates) {
+        ContextElement answer = chain.get(testIndex);
         logger.info("Answer is " + answer.getMention());
 
         PriorityQueue<Pair<MooneyEventRepre, Double>> rankedEvents = new PriorityQueue<>(allPredicates.length,
                 new Comparators.DescendingScoredPairComparator<MooneyEventRepre, Double>());
 
-        Set<Integer> mooneyEntities = LogLinearTester.getRewritedEntitiesFromChain(chain);
+        Set<Integer> mooneyEntities = getRewritedEntitiesFromChain(chain);
 
-        Sentence testSentence = chain.get(testIndex).getSent();
+        ContextElement realElement = chain.get(testIndex);
 
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateMooeyEvms = MooneyEventRepre.generateTuples(head, mooneyEntities);
             for (MooneyEventRepre candidateEvm : candidateMooeyEvms) {
-                ChainElement candidate = ChainElement.fromMooney(candidateEvm, testSentence);
+                ContextElement candidate = ContextElement.fromMooney(realElement.getJcas(), realElement.getSent(), realElement.getHead(), candidateEvm);
                 TLongShortDoubleHashTable features = extractor.getFeatures(chain, candidate, testIndex, skipGramN, false);
 
-                double score = compactWeights.dotProd(features, extractor.getFeatureNamesByIndex());
-
+                double score = compactWeights.dotProd(features);
+                if (score > 0) {
+                    logger.info("Candidate is " + candidate.getMention());
+                    logger.info("Feature score " + score);
+                    compactWeights.dotProd(features, extractor.getFeatureNamesByIndex());
+                }
 //                if (score > 0) {
 //                    System.out.println("candidate is " + candidate.getMention());
 //                    System.out.println("Score is " + score);
@@ -214,6 +228,8 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
                 if (candidate.getMention().mooneyMatch(answer.getMention())) {
                     logger.info("Answer candidate appears: " + candidate.getMention());
                     logger.info("Feature score " + score);
+                    logger.info("Answer features : ");
+                    logger.info(features.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
                 }
                 rankedEvents.add(Pair.of(candidateEvm, score));
             }
@@ -253,8 +269,8 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
     }
 
 
-    private List<ChainElement> getHighFreqEventMentions(JCas aJCas) {
-        List<ChainElement> chain = new ArrayList<>();
+    private List<ContextElement> getHighFreqEventMentions(JCas aJCas) {
+        List<ContextElement> chain = new ArrayList<>();
         //in principle, this iteration will get the same ordering as iterating event mention
         //hopefully this is valid
         for (Sentence sent : JCasUtil.select(aJCas, Sentence.class)) {
@@ -268,9 +284,21 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
                     }
                 }
                 LocalEventMentionRepre eventRep = LocalEventMentionRepre.fromEventMention(mention, align);
-                chain.add(new ChainElement(sent, eventRep));
+                chain.add(new ContextElement(aJCas, sent, mention.getHeadWord(), eventRep));
             }
         }
         return chain;
+    }
+
+    public static Set<Integer> getRewritedEntitiesFromChain(List<ContextElement> chain) {
+        Set<Integer> entities = new HashSet<>();
+        for (ContextElement rep : chain) {
+            for (LocalArgumentRepre arg : rep.getMention().getArgs()) {
+                if (arg != null && !arg.isOther()) {
+                    entities.add(arg.getRewritedId());
+                }
+            }
+        }
+        return entities;
     }
 }

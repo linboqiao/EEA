@@ -23,14 +23,13 @@ public class LocalEventMentionRepre {
     //Note, this could be null! Means no argument at this position
     private final LocalArgumentRepre[] args;
 
-    //TODO: change mention head to an integer
-    public LocalEventMentionRepre(String mentionHead, LocalArgumentRepre arg0, LocalArgumentRepre arg1, LocalArgumentRepre arg2) {
-        this.mentionHead = mentionHead;
-        this.args = new LocalArgumentRepre[3];
-        this.args[0] = arg0;
-        this.args[1] = arg1;
-        this.args[2] = arg2;
-    }
+//    public LocalEventMentionRepre(String mentionHead, LocalArgumentRepre arg0, LocalArgumentRepre arg1, LocalArgumentRepre arg2) {
+//        this.mentionHead = mentionHead;
+//        this.args = new LocalArgumentRepre[3];
+//        this.args[0] = arg0;
+//        this.args[1] = arg1;
+//        this.args[2] = arg2;
+//    }
 
     public LocalEventMentionRepre(String mentionHead, LocalArgumentRepre... args) {
         this.mentionHead = mentionHead;

@@ -17,12 +17,12 @@ import java.util.Map;
  * Date: 11/30/14
  * Time: 5:36 PM
  */
-public class MooneyFeature extends Feature {
+public class LongMooneyFeature extends Feature {
     @Override
     public Map<String, Double> getFeature(ContextElement elementLeft, ContextElement elementRight, int skip) {
         Map<String, Double> features = new HashMap<>();
 
-        if (skip > 3) {
+        if (skip <= 3 || skip > 10) {
             return features;
         }
 
@@ -31,7 +31,7 @@ public class MooneyFeature extends Feature {
         int[] arg1s = getLast3IntFromTuple(subsitutedForm.a);
         int[] arg2s = getLast3IntFromTuple(subsitutedForm.b);
 
-        String featureName = "m_arg" + "_" + asArgumentStr(arg1s) + "_" + asArgumentStr(arg2s);
+        String featureName = "m_arg_long" + "_" + asArgumentStr(arg1s) + "_" + asArgumentStr(arg2s);
         features.put(featureName, 1.0);
         return features;
     }

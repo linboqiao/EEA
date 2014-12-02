@@ -2,9 +2,10 @@ package edu.cmu.cs.lti.cds.annotators.script.train;
 
 import edu.cmu.cs.lti.cds.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.cds.ml.features.FeatureExtractor;
-import edu.cmu.cs.lti.cds.model.ChainElement;
+import edu.cmu.cs.lti.cds.model.ContextElement;
 import edu.cmu.cs.lti.cds.model.LocalArgumentRepre;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
+import edu.cmu.cs.lti.cds.runners.script.train.StochasticNceTrainer;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.cds.utils.VectorUtils;
 import edu.cmu.cs.lti.script.type.Article;
@@ -22,6 +23,7 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +33,7 @@ import java.util.List;
  * Date: 10/31/14
  * Time: 5:52 PM
  */
-public class NegativeTrainer extends AbstractLoggingAnnotator {
-    public static final String PARAM_NEGATIVE_NUMBERS = "negativeNumbers";
-
+public class NceTrainer extends AbstractLoggingAnnotator {
     TokenAlignmentHelper align = new TokenAlignmentHelper();
     FeatureExtractor extractor = new FeatureExtractor();
 
@@ -43,7 +43,9 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
 
     int numArguments = 3;
 
-    double stepSize = 0.01;
+    double stepSize = 0.0001;
+
+    double globalNormalization = 1;
 
     GlobalUnigrmHwLocalUniformArgumentDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist();
 
@@ -54,17 +56,18 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
-        numNoise = (Integer) aContext.getConfigParameterValue(PARAM_NEGATIVE_NUMBERS);
     }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
-//        try {
-//            StochasticNegativeTrainer.trainOut.write(progressInfo(aJCas) + "\n");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
+
+        try {
+            StochasticNceTrainer.trainOut.write(progressInfo(aJCas) + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
             //ignore this blacklisted file;
@@ -73,12 +76,12 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
         }
 
         align.loadWord2Stanford(aJCas);
-        List<ChainElement> chain = new ArrayList<>();
+        List<ContextElement> chain = new ArrayList<>();
         List<LocalArgumentRepre> arguments = new ArrayList<>();
         for (Sentence sent : JCasUtil.select(aJCas, Sentence.class)) {
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sent)) {
                 LocalEventMentionRepre eventRep = LocalEventMentionRepre.fromEventMention(mention, align);
-                chain.add(new ChainElement(sent, eventRep));
+                chain.add(new ContextElement(sent, eventRep));
                 for (LocalArgumentRepre arg : eventRep.getArgs()) {
                     arguments.add(arg);
                 }
@@ -87,22 +90,23 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
 
         //for each sample
         for (int sampleIndex = 0; sampleIndex < chain.size(); sampleIndex++) {
-            ChainElement realSample = chain.get(sampleIndex);
+            ContextElement realSample = chain.get(sampleIndex);
             TObjectDoubleMap<String> features = extractor.getFeatures(chain, realSample, sampleIndex, skipGramN, false);
             Sentence sampleSent = realSample.getSent();
 
             //generate noise samples
-            List<TObjectDoubleMap<String>> noiseSamples = new ArrayList<>();
+            List<Pair<TObjectDoubleMap<String>, Double>> noiseSamples = new ArrayList<>();
             for (int i = 0; i < numNoise; i++) {
                 Pair<LocalEventMentionRepre, Double> noise = noiseDist.draw(arguments, numArguments);
-                TObjectDoubleMap<String> noiseFeature = extractor.getFeatures(chain, new ChainElement(sampleSent, noise.getLeft()), sampleIndex, skipGramN, true);
+                TObjectDoubleMap<String> noiseFeature = extractor.getFeatures(chain, new ContextElement(sampleSent, noise.getLeft()), sampleIndex, skipGramN, true);
                 if (noiseFeature != null) {
-                    noiseSamples.add(noiseFeature);
+                    noiseSamples.add(Pair.of(noiseFeature, noise.getRight()));
                 }
             }
 
             //cumulative the gradient so far, and compute sample cost
-            double cumulativeObjective = gradientAscent(noiseSamples, features);
+            double cumulativeObjective = gradientAscent(noiseSamples, Pair.of(features, noiseDist.probOf(realSample.getMention(), arguments.size(), numArguments)));
+//            logger.info("Sample cost " + c);
             this.cumulativeObjective += cumulativeObjective;
         }
 
@@ -125,74 +129,65 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
         update();
     }
 
-    private double gradientAscent(List<TObjectDoubleMap<String>> noiseSamples, TObjectDoubleMap<String> dataSample) {
+    private double gradientAscent(List<Pair<TObjectDoubleMap<String>, Double>> noiseSamples,
+                                  Pair<TObjectDoubleMap<String>, Double> dataSample) {
 
-        //start by assigning gradient as x_w
-        // g = x_w
-        TObjectDoubleMap<String> gradient = dataSample;
+        for (TObjectDoubleIterator<String> iter = dataSample.getKey().iterator(); iter.hasNext(); ) {
+            iter.advance();
+        }
 
-        double scoreTrue = VectorUtils.dotProd(dataSample, DataPool.weights);
-        double sigmoidTrue = sigmoid(scoreTrue);
+        //start by assigning gradient as  d/d\theta logP_\theta(w)
+        TObjectDoubleMap<String> gradient = unNormalizedLogLogisticDerivative(dataSample.getKey());
 
-//        try {
-//            StochasticNegativeTrainer.trainOut.write("Sigmoid true for  " + dataSample + "  is " + scoreTrue + "\n");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        //collect cost
+        double localObjective = 0;
 
-        //multiple x_w by (1- sigmoid)
-        // g = ( Lw(u) - sigmoid(\theta * x_w) ) x_w, where Lw(u) = 1
-        VectorUtils.vectorScalarProduct(gradient, (1 - sigmoidTrue));
+        //sample prob given the parameters
+        double estimatedLogisticSample = estimatedLogistic(dataSample.getKey());
+        //noise prob of the real sample
+        double kNoiseSampleProb = numNoise * dataSample.getValue();
 
-        //calculate local objective
-        // log (sigmoid( score of true))
-        double localObjective = Math.log(sigmoidTrue);
+        VectorUtils.vectorScalarProduct(gradient, (1 / (1 + estimatedLogisticSample / kNoiseSampleProb)));
 
-        for (TObjectDoubleMap<String> noiseSample : noiseSamples) {
-            double scoreNoise = VectorUtils.dotProd(noiseSample, DataPool.weights);
-            double sigmoidNoise = sigmoid(scoreNoise);
+        localObjective += 1 / (1 + kNoiseSampleProb / estimatedLogisticSample);
 
-//            try {
-//                StochasticNegativeTrainer.trainOut.write("Sigmoid noise for  " + noiseSample + "  is " + scoreNoise + "\n");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
-            TObjectDoubleMap<String> noiseFeatures = noiseSample;
-
-            // log (sigmoid( - score of noise))
-            // i.e  log ( 1 - sigmoid(score of noise))
-            localObjective += Math.log(1 - sigmoidNoise);
-
-            //multiple sigmiod_noise by noise features x_w'
-            // g += ( Lw'(u) - sigmoid(\theta * x_w') ) x_w', where Lw(u) = 0
-            //note that this directly change the noise feature itself
-            VectorUtils.vectorScalarProduct(noiseFeatures, sigmoidNoise);
-            VectorUtils.vectorMinus(gradient, noiseFeatures);
+        for (Pair<TObjectDoubleMap<String>, Double> noiseSample : noiseSamples) {
+            //noise sample prob given the parameters
+            double estimatedLogisticNoise = estimatedLogistic(noiseSample.getKey());
+            //noise prob of the noise * k
+            double kNoiseNoiseProb = numNoise * noiseSample.getValue();
+            TObjectDoubleMap<String> noiseGradient = unNormalizedLogLogisticDerivative(noiseSample.getKey());
+            VectorUtils.vectorScalarProduct(noiseGradient, (1 / (1 + kNoiseNoiseProb / estimatedLogisticNoise)));
+            VectorUtils.vectorMinus(gradient, noiseGradient);
+            localObjective += 1 / (1 + estimatedLogisticNoise / kNoiseNoiseProb);
         }
 
         //update the cumulative gradient;
         for (TObjectDoubleIterator<String> iter = gradient.iterator(); iter.hasNext(); ) {
             iter.advance();
             cumulativeGradient.adjustOrPutValue(iter.key(), iter.value(), iter.value());
-//            try {
-//                StochasticNegativeTrainer.trainOut.write(iter.key() + " " + iter.value() + "\n");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                StochasticNceTrainer.trainOut.write(iter.key() + " " + iter.value() + "\n");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-        //return the objective
         return localObjective;
     }
 
-    private double sigmoid(double x) {
-        return 1 / (1 + Math.exp(-x));
+    //TODO so trivial?
+    private TObjectDoubleMap<String> unNormalizedLogLogisticDerivative(TObjectDoubleMap<String> features) {
+        return features;
     }
 
+
+    private double estimatedLogistic(TObjectDoubleMap<String> features) {
+        return Math.exp(VectorUtils.dotProd(features, DataPool.weights)) - globalNormalization;
+    }
+
+    //TODO see AdaDelta
     private void update() {
 //        adaDeltaUpdate(1e-3, 0.95);
-//        adaGradUpdate(0.01);
         stepSizeUpdate();
     }
 
@@ -201,39 +196,12 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
         for (TObjectDoubleIterator<String> iter = cumulativeGradient.iterator(); iter.hasNext(); ) {
             iter.advance();
             double u = stepSize * iter.value();
-//            try {
-//                StochasticNegativeTrainer.trainOut.write("Update for " + iter.key() + " is " + u + " : " + stepSize + "*" + iter.value() + "\n");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
             DataPool.weights.adjustOrPutValue(iter.key(), u, u);
         }
         // empty the cumulative gradient
         cumulativeGradient.clear();
     }
 
-    private void adaGradUpdate(double eta) {
-        for (TObjectDoubleIterator<String> iter = cumulativeGradient.iterator(); iter.hasNext(); ) {
-            iter.advance();
-            double g = iter.value();
-
-            if (g != 0) {
-                double gSq = g * g;
-
-                double cumulativeGsq = DataPool.adaGradDelGradientSq.adjustOrPutValue(iter.key(), gSq, gSq);
-
-                double update = eta * g / Math.sqrt(cumulativeGsq);
-
-                if (Double.isNaN(g)) {
-                    System.out.println(iter.key() + " " + iter.value() + update);
-                }
-
-                DataPool.weights.adjustOrPutValue(iter.key(), update, update);
-            }
-        }
-    }
-
-    //this implementation has some problems
     private void adaDeltaUpdate(double decay, double epsilon) {
         // update parameters
         for (TObjectDoubleIterator<String> iter = cumulativeGradient.iterator(); iter.hasNext(); ) {
@@ -262,9 +230,9 @@ public class NegativeTrainer extends AbstractLoggingAnnotator {
                 DataPool.deltaVarSq.put(iter.key(), (1 - decay) * delta * delta);
             }
 
-            System.out.println("delta " + delta);
+//            System.out.println("delta "+ delta);
             //update weight for feature
-            DataPool.weights.adjustOrPutValue(iter.key(), delta, delta);
+            DataPool.weights.adjustOrPutValue(iter.key(), -delta, -delta);
         }
         // empty the cumulative gradient
         cumulativeGradient.clear();

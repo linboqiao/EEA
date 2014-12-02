@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.cds.ml.features.impl;
 
 import edu.cmu.cs.lti.cds.ml.features.Feature;
-import edu.cmu.cs.lti.cds.model.ChainElement;
+import edu.cmu.cs.lti.cds.model.ContextElement;
 import edu.cmu.cs.lti.cds.model.LocalArgumentRepre;
 
 import java.util.HashMap;
@@ -17,8 +17,12 @@ public class ArgumentCorefFeature extends Feature {
     String prefix = "r_arg_";
 
     @Override
-    public Map<String, Double> getFeature(ChainElement elementLeft, ChainElement elementRight) {
+    public Map<String, Double> getFeature(ContextElement elementLeft, ContextElement elementRight, int skip) {
         Map<String, Double> features = new HashMap<>();
+
+        if (skip > 3) {
+            return features;
+        }
 
         LocalArgumentRepre[] leftArgs = elementLeft.getMention().getArgs();
         LocalArgumentRepre[] rightArgs = elementRight.getMention().getArgs();

@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.cds.runners.script.train;
 
+import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.cds.annotators.script.train.CompactGlobalNegativeTrainer;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.annotators.script.train.UnigramScriptCounter;
@@ -38,7 +39,17 @@ public class StochasticGlobalNegativeTrainer {
         String modelStoragePath = config.get("edu.cmu.cs.lti.cds.negative.model.path");
         int noiseNum = config.getInt("edu.cmu.cs.lti.cds.negative.noisenum");
         int miniBatchNum = config.getInt("edu.cmu.cs.lti.cds.minibatch");
-        String modelSuffix = config.get("edu.cmu.cs.lti.cds.model.suffix");
+        String modelExt = config.get("edu.cmu.cs.lti.cds.model.ext");
+        String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
+        String featurePackage = config.get("edu.cmu.cs.lti.cds.features.packagename");
+        int skipgramN = config.getInt("edu.cmu.cs.lti.cds.skipgram.n");
+
+        String modelSuffix = Joiner.on("_").join(featureNames);
+
+        //make complete class name
+        for (int i = 0; i < featureNames.length; i++) {
+            featureNames[i] = featurePackage + "." + featureNames[i];
+        }
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -63,13 +74,15 @@ public class StochasticGlobalNegativeTrainer {
 
         AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(CompactGlobalNegativeTrainer.class, typeSystemDescription,
                 CompactGlobalNegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum,
-                CompactGlobalNegativeTrainer.PARAM_MINI_BATCH_SIZE, miniBatchNum);
+                CompactGlobalNegativeTrainer.PARAM_MINI_BATCH_SIZE, miniBatchNum,
+                CompactGlobalNegativeTrainer.PARAM_FEATURE_NAMES, featureNames,
+                CompactGlobalNegativeTrainer.PARAM_SKIP_GRAM_N, skipgramN);
 
         Utils.printMemInfo(logger, "Beginning memory");
 
         //possibly iterate this step
         for (int i = 0; i < maxIter; i++) {
-            String modelOutputPath = modelStoragePath + i + modelSuffix;
+            String modelOutputPath = modelStoragePath + "_" + modelSuffix + "_" + i + modelExt;
             logger.info("Storing this model to " + modelOutputPath);
 
             SimplePipeline.runPipeline(reader, trainer);
@@ -79,7 +92,7 @@ public class StochasticGlobalNegativeTrainer {
                 modelDirParent.mkdirs();
             }
 
-            SerializationHelper.write(modelOutputPath, DataPool.compactWeights);
+            SerializationHelper.write(modelOutputPath, DataPool.trainingUsedCompactWeights);
         }
     }
 }

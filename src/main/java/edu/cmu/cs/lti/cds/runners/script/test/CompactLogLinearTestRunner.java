@@ -39,9 +39,7 @@ public class CompactLogLinearTestRunner {
      */
     public static void main(String[] args) throws Exception {
         logger.info(className + " started...");
-
         Configuration config = new Configuration(new File(args[0]));
-
         String subPath = args.length > 1 ? "_" + args[1] : "_ll";
 
         String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.heldout.path"); //"data/02_event_tuples";
@@ -49,18 +47,21 @@ public class CompactLogLinearTestRunner {
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath");
         String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
-        //use negative sampling models
         String modelPath = config.get("edu.cmu.cs.lti.cds.negative.model.testing.path");
-//        String modelPath = config.get("edu.cmu.cs.lti.cds.negative.model.path") + (config.getInt("edu.cmu.cs.lti.cds.sgd.iter") - 1) + config.get("edu.cmu.cs.lti.cds.model.suffix");
-//        String modelPath = config.get("edu.cmu.cs.lti.cds.nce.model.path") + config.get("edu.cmu.cs.lti.cds.testing.model");
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
+        String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
+        String featurePackage = config.get("edu.cmu.cs.lti.cds.features.packagename");
+        int skipgramN = config.getInt("edu.cmu.cs.lti.cds.skipgram.n");
+
+        //make complete class name
+        for (int i = 0; i < featureNames.length; i++) {
+            featureNames[i] = featurePackage + "." + featureNames[i];
+        }
 
         //prepare data
         logger.info("Loading data");
         DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, headCountFileNames);
-//        DataPool.loadHeadIds(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName);
-//        DataPool.loadHeadCounts(dbPath, headCountFileNames, true);
         DataPool.readBlackList(new File(blackListFile));
         logger.info("# predicates " + DataPool.headIdMap.size());
 
@@ -87,7 +88,9 @@ public class CompactLogLinearTestRunner {
                 CompactLogLinearTester.PARAM_HEAD_COUNT_DB_NAMES, headCountFileNames,
                 CompactLogLinearTester.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
                 CompactLogLinearTester.PARAM_MODEL_PATH, modelPath,
-                CompactLogLinearTester.PARAM_KEEP_QUIET, false
+                CompactLogLinearTester.PARAM_KEEP_QUIET, false,
+                CompactLogLinearTester.PARAM_FEATURE_NAMES, featureNames,
+                CompactLogLinearTester.PARAM_SKIP_GRAM_N, skipgramN
         );
 
         SimplePipeline.runPipeline(reader, tester);

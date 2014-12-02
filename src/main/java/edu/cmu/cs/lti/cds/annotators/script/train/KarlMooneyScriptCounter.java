@@ -197,34 +197,42 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
     //TODO check correctness
     public static Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> firstBasedSubstitution(
             LocalEventMentionRepre evm1, LocalEventMentionRepre evm2) {
-        TIntIntHashMap evm1Args = new TIntIntHashMap();
+        TIntIntHashMap evm1BasedRewriteMap = new TIntIntHashMap();
 
         TIntIntHashMap evm1Slots = new TIntIntHashMap();
         TIntIntHashMap evm2Slots = new TIntIntHashMap();
 
-        for (int i = 0; i < evm1.getNumArgs(); i++) {
-            int argMarker = KmTargetConstants.slotIndexToArgMarker(i);
-            LocalArgumentRepre argi = evm1.getArg(i);
+        for (int slotId = 0; slotId < evm1.getNumArgs(); slotId++) {
+            int argMarker = KmTargetConstants.slotIndexToArgMarker(slotId);
+            LocalArgumentRepre argi = evm1.getArg(slotId);
             if (argi != null) {
-                int defaultRewriteVal = argi.getRewritedId() == KmTargetConstants.nullArgMarker ? KmTargetConstants.nullArgMarker : KmTargetConstants.otherMarker;
                 int argiEntityId = argi.isConcrete() ? argi.getEntityId() : argi.getRewritedId();
+                int defaultRewriteVal = argiEntityId == KmTargetConstants.nullArgMarker ? KmTargetConstants.nullArgMarker : KmTargetConstants.otherMarker;
                 if (argiEntityId == -1) {
                     continue;
                 }
-                evm1Args.put(argiEntityId, argMarker);
+                evm1BasedRewriteMap.put(argiEntityId, argMarker);
                 evm1Slots.put(argMarker, defaultRewriteVal);
             }
         }
 
-        for (int i = 0; i < evm2.getNumArgs(); i++) {
-            int argMarker = KmTargetConstants.slotIndexToArgMarker(i);
-            LocalArgumentRepre argi = evm2.getArg(i);
+//        if (evm1.getMentionHead().equals("receive")) {
+//            System.err.println("Checking arguments");
+//            System.err.println(evm1);
+//            System.err.println(evm2);
+//            System.err.println("Left slots: " + evm1Slots);
+//            System.err.println("Left args: " + evm1BasedRewriteMap);
+//        }
+
+        for (int slotIndex = 0; slotIndex < evm2.getNumArgs(); slotIndex++) {
+            LocalArgumentRepre argi = evm2.getArg(slotIndex);
+            int argMarker = KmTargetConstants.slotIndexToArgMarker(slotIndex);
 
             if (argi != null) {
                 int entityId = argi.isConcrete() ? argi.getEntityId() : argi.getRewritedId();
                 int substituteId;
-                if (evm1Args.containsKey(entityId)) {
-                    substituteId = evm1Args.get(entityId);
+                if (evm1BasedRewriteMap.containsKey(entityId)) {
+                    substituteId = evm1BasedRewriteMap.get(entityId);
                     evm1Slots.put(substituteId, substituteId);
                 } else {
                     substituteId = KmTargetConstants.otherMarker;
@@ -232,6 +240,11 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
                 evm2Slots.put(argMarker, substituteId);
             }
         }
+
+//        if (evm1.getMentionHead().equals("receive")) {
+//            System.err.println("Rewrited Left slots: " + evm1Slots);
+//            System.err.println("Rewrited Right slots: " + evm2Slots);
+//        }
 
         Fun.Tuple4<String, Integer, Integer, Integer> eventTuple1 = new Fun.Tuple4<>(evm1.getMentionHead(),
                 evm1Slots.containsKey(KmTargetConstants.anchorArg0Marker) ? evm1Slots.get(KmTargetConstants.anchorArg0Marker) : KmTargetConstants.nullArgMarker,
@@ -250,9 +263,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     public static Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> firstBasedSubstitution(
             TokenAlignmentHelper align, EventMention evm1, EventMention evm2) {
-
         TIntIntHashMap evm1Args = new TIntIntHashMap();
-
         TIntIntHashMap evm1Slots = new TIntIntHashMap();
 
         for (EventMentionArgumentLink aLink : UimaConvenience.convertFSListToList(evm1.getArguments(), EventMentionArgumentLink.class)) {

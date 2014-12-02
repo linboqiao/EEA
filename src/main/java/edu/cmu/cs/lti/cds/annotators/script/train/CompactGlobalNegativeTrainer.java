@@ -1,11 +1,10 @@
 package edu.cmu.cs.lti.cds.annotators.script.train;
 
-import edu.cmu.cs.lti.cds.dist.UnigramEventDist;
+import edu.cmu.cs.lti.cds.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
-import edu.cmu.cs.lti.cds.model.ChainElement;
+import edu.cmu.cs.lti.cds.model.ContextElement;
 import edu.cmu.cs.lti.cds.model.LocalArgumentRepre;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
-import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.type.Article;
@@ -16,8 +15,6 @@ import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.iterator.TShortDoubleIterator;
-import gnu.trove.list.TIntList;
-import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.TShortDoubleMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
@@ -44,14 +41,21 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
 
     public static final String PARAM_MINI_BATCH_SIZE = "miniBatchDocuments";
 
+    public static final String PARAM_FEATURE_NAMES = "featureNames";
+
+    public static final String PARAM_SKIP_GRAM_N = "skipgramn";
+
     TokenAlignmentHelper align = new TokenAlignmentHelper();
     CompactFeatureExtractor extractor;
 
     int miniBatchDocNum = 100;
     int numNoise = 25;
+    int numArguments = 3;
+
     int skipGramN = 2;
 
-    UnigramEventDist noiseDist = new UnigramEventDist(DataPool.unigramCounts, DataPool.eventUnigramTotalCount);
+    //    UnigramEventDist noiseDist = new UnigramEventDist(DataPool.unigramCounts, DataPool.eventUnigramTotalCount);
+    GlobalUnigrmHwLocalUniformArgumentDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist();
 
     TLongShortDoubleHashTable cumulativeGradient = new TLongShortDoubleHashTable();
 
@@ -62,7 +66,13 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         super.initialize(aContext);
         numNoise = (Integer) aContext.getConfigParameterValue(PARAM_NEGATIVE_NUMBERS);
         miniBatchDocNum = (Integer) aContext.getConfigParameterValue(PARAM_MINI_BATCH_SIZE);
-        extractor = new CompactFeatureExtractor(DataPool.compactWeights);
+        String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
+        skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
+        try {
+            extractor = new CompactFeatureExtractor(DataPool.trainingUsedCompactWeights, featureImplNames);
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -75,54 +85,28 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         }
 
         align.loadWord2Stanford(aJCas);
-        List<ChainElement> chain = new ArrayList<>();
+        List<ContextElement> chain = new ArrayList<>();
         List<LocalArgumentRepre> arguments = new ArrayList<>();
 
         for (Sentence sent : JCasUtil.select(aJCas, Sentence.class)) {
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sent)) {
                 LocalEventMentionRepre eventRep = LocalEventMentionRepre.fromEventMention(mention, align);
-                chain.add(new ChainElement(sent, eventRep));
+                chain.add(new ContextElement(aJCas, sent, mention.getHeadWord(), eventRep));
                 Collections.addAll(arguments, eventRep.getArgs());
             }
         }
 
         //for each sample
         for (int sampleIndex = 0; sampleIndex < chain.size(); sampleIndex++) {
-            ChainElement realSample = chain.get(sampleIndex);
+            ContextElement realSample = chain.get(sampleIndex);
             TLongShortDoubleHashTable features = extractor.getFeatures(chain, realSample, sampleIndex, skipGramN, false);
             Sentence sampleSent = realSample.getSent();
-
-            TIntList realArgumentEntityIds = new TIntArrayList();
-            for (LocalArgumentRepre repre : realSample.getMention().getArgs()) {
-                if (repre != null) {
-                    realArgumentEntityIds.add(repre.getEntityId());
-                }
-            }
-
             //generate noise samples
             List<TLongShortDoubleHashTable> noiseSamples = new ArrayList<>();
             for (int i = 0; i < numNoise; i++) {
-                Pair<MooneyEventRepre, Double> noise = noiseDist.draw();
-                MooneyEventRepre noiseMooneyRepre = noise.getKey();
-//                int[] drawnArguments = noiseMooneyRepre.getAllArguments();
-//                LocalArgumentRepre[] noiseArguments = new LocalArgumentRepre[drawnArguments.length];
-//
-//
-//
-//                for (int slotId = 0; slotId < drawnArguments.length; slotId++) {
-//                    int drawnArgument = drawnArguments[slotId];
-//                    if (drawnArgument == KmTargetConstants.nullArgMarker) {
-//                        noiseArguments[slotId] = null;
-//                    } else {
-//                        int drawnEntityId = realArgumentEntityIds.get(KmTargetConstants.argMarkerToSlotIndex(drawnArguments[slotId]));
-//                        noiseArguments[slotId] = new LocalArgumentRepre(drawnEntityId, "");
-//                    }
-//                }
-//
-//                LocalEventMentionRepre noiseRep = new LocalEventMentionRepre(noiseMooneyRepre.getPredicate(), noiseArguments);
-
-                LocalEventMentionRepre noiseRep = LocalEventMentionRepre.fromMooneyMention(noiseMooneyRepre);
-                TLongShortDoubleHashTable noiseFeature = extractor.getFeatures(chain, new ChainElement(sampleSent, noiseRep), sampleIndex, skipGramN, true);
+                Pair<LocalEventMentionRepre, Double> noise = noiseDist.draw(arguments, numArguments);
+                LocalEventMentionRepre noiseRep = noise.getKey();
+                TLongShortDoubleHashTable noiseFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getHead(), noiseRep), sampleIndex, skipGramN, true);
                 if (noiseFeature != null) {
                     noiseSamples.add(noiseFeature);
                 }
@@ -134,14 +118,17 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         }
 
         DataPool.numSampleProcessed++;
-        if (DataPool.numSampleProcessed % miniBatchDocNum == 0) {
-            logger.info("Features lexical pairs just learnt " + DataPool.compactWeights.getNumRows());
+        if (DataPool.numSampleProcessed % miniBatchDocNum == 0)
+
+        {
+            logger.info("Features lexical pairs just learnt " + DataPool.trainingUsedCompactWeights.getNumRows());
             logger.info("Processed " + DataPool.numSampleProcessed + " samples");
             logger.info("Average gain for previous batch is : " + cumulativeObjective / miniBatchDocNum);
             logger.info("Committing " + cumulativeGradient.getNumRows() + " lexical pairs");
             cumulativeObjective = 0;
             update();
         }
+
     }
 
 //    /**
@@ -155,9 +142,10 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
         logger.info("Finish one epoch, totally  " + DataPool.numSampleProcessed + " samples processed so far");
-        logger.info("Features lexical pairs learnt " + DataPool.compactWeights.getNumRows());
+        logger.info("Features lexical pairs learnt " + DataPool.trainingUsedCompactWeights.getNumRows());
         logger.info("Average cumulative gain for the residual batch: " + cumulativeObjective / (DataPool.numSampleProcessed % miniBatchDocNum));
         update();
+//        DataPool.trainingUsedCompactWeights.dump(new PrintWriter(System.err));
     }
 
     private double gradientAscent(List<TLongShortDoubleHashTable> noiseSamples, TLongShortDoubleHashTable dataSample) {
@@ -165,8 +153,8 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         // g = x_w
         TLongShortDoubleHashTable gradient = dataSample;
 
-//        double scoreTrue = DataPool.compactWeights.dotProd(dataSample, extractor.getFeatureNamesByIndex());
-        double scoreTrue = DataPool.compactWeights.dotProd(dataSample);
+//        double scoreTrue = DataPool.trainingUsedCompactWeights.dotProd(dataSample, extractor.getFeatureNamesByIndex());
+        double scoreTrue = DataPool.trainingUsedCompactWeights.dotProd(dataSample);
 
         double sigmoidTrue = sigmoid(scoreTrue);
 
@@ -179,12 +167,12 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         double localObjective = Math.log(sigmoidTrue);
 
 //        if (scoreTrue < 0) {
-//            System.err.println(scoreTrue + " " + sigmoidTrue + " ");
-//            System.err.println(dataSample.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
+//        System.err.println(scoreTrue + " " + sigmoidTrue + " ");
+//        System.err.println(dataSample.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
 //        }
 
         for (TLongShortDoubleHashTable noiseSample : noiseSamples) {
-            double scoreNoise = DataPool.compactWeights.dotProd(noiseSample);
+            double scoreNoise = DataPool.trainingUsedCompactWeights.dotProd(noiseSample);
             double sigmoidNoise = sigmoid(scoreNoise);
 
             // log (sigmoid( - score of noise))
@@ -198,21 +186,21 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
             gradient.minusBy(noiseSample);
 
 //            if (scoreNoise < 0) {
-//                System.err.println(scoreNoise + " " + sigmoidNoise);
-//                System.err.println(noiseSample.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
+//            System.err.println(scoreNoise + " " + sigmoidNoise);
+//            System.err.println(noiseSample.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
 //            }
         }
 
         //update the cumulative gradient;
         for (TLongObjectIterator<TShortDoubleMap> rowIter = gradient.iterator(); rowIter.hasNext(); ) {
             rowIter.advance();
+
+
             for (TShortDoubleIterator cellIter = rowIter.value().iterator(); cellIter.hasNext(); ) {
                 cellIter.advance();
                 cumulativeGradient.adjustOrPutValue(rowIter.key(), cellIter.key(), cellIter.value(), cellIter.value());
             }
         }
-
-
         //return the objective
         return localObjective;
     }
@@ -243,7 +231,7 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
                         System.out.println(rowIter.key() + " " + rowIter.value() + update);
                     }
 
-                    DataPool.compactWeights.adjustOrPutValue(rowIter.key(), cellIter.key(), update, update);
+                    DataPool.trainingUsedCompactWeights.adjustOrPutValue(rowIter.key(), cellIter.key(), update, update);
                 }
             }
         }

@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.cds.ml.features;
 
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
-import edu.cmu.cs.lti.cds.model.ChainElement;
+import edu.cmu.cs.lti.cds.model.ContextElement;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import gnu.trove.list.TIntList;
@@ -35,10 +35,10 @@ public class FeatureExtractor {
         this.headMap = headMap;
     }
 
-    public TObjectDoubleMap<String> getFeatures(List<ChainElement> chain, ChainElement targetMention, int index, int skipGramN, boolean breakOnConflict) {
+    public TObjectDoubleMap<String> getFeatures(List<ContextElement> chain, ContextElement targetMention, int index, int skipGramN, boolean breakOnConflict) {
         TObjectDoubleMap<String> allFeatures = new TObjectDoubleHashMap<>();
         //ngram features
-        for (Pair<ChainElement, ChainElement> ngram : getSkippedNgrams(chain, targetMention, index, skipGramN)) {
+        for (Pair<ContextElement, ContextElement> ngram : getSkippedNgrams(chain, targetMention, index, skipGramN)) {
             Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedForm = KarlMooneyScriptCounter.
                     firstBasedSubstitution(ngram.getLeft().getMention(), ngram.getRight().getMention());
             TIntLinkedList compactPair = compactEvmPairSubstituiton(subsitutedForm, headMap);

@@ -11,6 +11,7 @@ import gnu.trove.iterator.TShortDoubleIterator;
 import gnu.trove.map.TShortDoubleMap;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
@@ -150,12 +151,11 @@ public class TLongBasedFeatureTable implements Serializable {
                 TShortDoubleMap secondLevelFeatures = firstLevelIter.value();
                 for (TShortDoubleIterator secondLevelIter = secondLevelFeatures.iterator(); secondLevelIter.hasNext(); ) {
                     secondLevelIter.advance();
+                    Pair<Integer, Integer> wordIndexPair = BitUtils.get2IntFromLong(featureRowKey);
+//                    System.err.println("Feature is " + DataPool.headWords[wordIndexPair.getLeft()] + " " +
+//                            DataPool.headWords[wordIndexPair.getRight()] + " " + wordIndexPair.getLeft() + " " + wordIndexPair.getRight() + " " + featureNames.get(secondLevelIter.key()) + ":" + secondLevelIter.key());
                     if (weightsRow.containsKey(secondLevelIter.key())) {
                         dotProd += secondLevelIter.value() * weightsRow.get(secondLevelIter.key()).get();
-
-                        Pair<Integer, Integer> wordIndexPair = BitUtils.get2IntFromLong(featureRowKey);
-
-
                         System.err.println("Feature hit " + DataPool.headWords[wordIndexPair.getLeft()] + " " +
                                 DataPool.headWords[wordIndexPair.getRight()] + " " + featureNames.get(secondLevelIter.key()) + " : " +
                                 weightsRow.get(secondLevelIter.key()).get());
@@ -165,4 +165,24 @@ public class TLongBasedFeatureTable implements Serializable {
         }
         return dotProd;
     }
+
+    public Pair<Integer, Integer> dump(PrintWriter writer) {
+        int numFeatures = 0;
+        int numLexicalPairs = 0;
+        BiMap<Short, String> featureNames = getFeatureNameMap();
+        for (TLongObjectIterator<TreeMap<Short, MutableDouble>> rowIter = table.iterator(); rowIter.hasNext(); ) {
+            rowIter.advance();
+            numLexicalPairs++;
+            Pair<Integer, Integer> wordIds = BitUtils.get2IntFromLong(rowIter.key());
+            writer.write(DataPool.headWords[wordIds.getKey()] + " " + DataPool.headWords[wordIds.getValue()] + " " + wordIds.getKey() + " " + wordIds.getValue() + "\n");
+
+            for (Map.Entry<Short, MutableDouble> cell : rowIter.value().entrySet()) {
+                writer.write(featureNames.get(cell.getKey()) + " " + cell.getKey() + " " + cell.getValue() + "\n");
+                numFeatures++;
+            }
+        }
+//        System.out.println("Number of lexical pairs " + numLexicalPairs + " , num of features " + numFeatures);
+        return Pair.of(numFeatures, numLexicalPairs);
+    }
+
 }
