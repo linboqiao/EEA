@@ -48,7 +48,8 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
     TokenAlignmentHelper align = new TokenAlignmentHelper();
     CompactFeatureExtractor extractor;
 
-    int miniBatchDocNum = 100;
+    //some defaults, useless
+    int miniBatchSize = 100;
     int numNoise = 25;
     int numArguments = 3;
 
@@ -65,7 +66,7 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
         numNoise = (Integer) aContext.getConfigParameterValue(PARAM_NEGATIVE_NUMBERS);
-        miniBatchDocNum = (Integer) aContext.getConfigParameterValue(PARAM_MINI_BATCH_SIZE);
+        miniBatchSize = (Integer) aContext.getConfigParameterValue(PARAM_MINI_BATCH_SIZE);
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
         skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
         try {
@@ -73,6 +74,7 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        DataPool.numSampleProcessed = 0;
     }
 
     @Override
@@ -111,39 +113,28 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
                     noiseSamples.add(noiseFeature);
                 }
             }
-
             //cumulative the gradient so far, and compute sample cost
-            double cumulativeObjective = gradientAscent(noiseSamples, features);
-            this.cumulativeObjective += cumulativeObjective;
+            this.cumulativeObjective += gradientAscent(noiseSamples, features);
         }
 
+        //treat one chain as one sample
         DataPool.numSampleProcessed++;
-        if (DataPool.numSampleProcessed % miniBatchDocNum == 0)
 
-        {
+        if (DataPool.numSampleProcessed % miniBatchSize == 0) {
             logger.info("Features lexical pairs just learnt " + DataPool.trainingUsedCompactWeights.getNumRows());
             logger.info("Processed " + DataPool.numSampleProcessed + " samples");
-            logger.info("Average gain for previous batch is : " + cumulativeObjective / miniBatchDocNum);
+            logger.info("Average gain for previous batch is : " + cumulativeObjective / miniBatchSize);
             logger.info("Committing " + cumulativeGradient.getNumRows() + " lexical pairs");
-            cumulativeObjective = 0;
             update();
         }
-
     }
-
-//    /**
-//     * Check whether we have seen this before
-//     * @return
-//     */
-//    private boolean isNegative(TLongShortDoubleHashTable noiseFeature) {
-//
-//    }
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
         logger.info("Finish one epoch, totally  " + DataPool.numSampleProcessed + " samples processed so far");
+        logger.info("Processed " + DataPool.numSampleProcessed + " samples. Residual size is " + DataPool.numSampleProcessed % miniBatchSize);
         logger.info("Features lexical pairs learnt " + DataPool.trainingUsedCompactWeights.getNumRows());
-        logger.info("Average cumulative gain for the residual batch: " + cumulativeObjective / (DataPool.numSampleProcessed % miniBatchDocNum));
+        logger.info("Average cumulative gain for the residual batch: " + cumulativeObjective / (DataPool.numSampleProcessed % miniBatchSize));
         update();
 //        DataPool.trainingUsedCompactWeights.dump(new PrintWriter(System.err));
     }
@@ -166,14 +157,21 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         // log (sigmoid( score of true))
         double localObjective = Math.log(sigmoidTrue);
 
-//        if (scoreTrue < 0) {
-//        System.err.println(scoreTrue + " " + sigmoidTrue + " ");
-//        System.err.println(dataSample.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
+//        if (scoreTrue != 0) {
+//            System.err.println("True scores " + scoreTrue + " " + sigmoidTrue + " ");
+//            DataPool.trainingUsedCompactWeights.dotProd(dataSample, extractor.getFeatureNamesByIndex());
+//            System.err.println(dataSample.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
 //        }
 
         for (TLongShortDoubleHashTable noiseSample : noiseSamples) {
+//            double scoreNoise = DataPool.trainingUsedCompactWeights.dotProd(dataSample, extractor.getFeatureNamesByIndex());
             double scoreNoise = DataPool.trainingUsedCompactWeights.dotProd(noiseSample);
             double sigmoidNoise = sigmoid(scoreNoise);
+
+//            if (scoreNoise != 0) {
+//                System.err.println("Noise scores " + scoreTrue + " " + sigmoidTrue + " ");
+//                DataPool.trainingUsedCompactWeights.dotProd(dataSample, extractor.getFeatureNamesByIndex());
+//            }
 
             // log (sigmoid( - score of noise))
             // i.e  log ( 1 - sigmoid(score of noise))
@@ -194,8 +192,6 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         //update the cumulative gradient;
         for (TLongObjectIterator<TShortDoubleMap> rowIter = gradient.iterator(); rowIter.hasNext(); ) {
             rowIter.advance();
-
-
             for (TShortDoubleIterator cellIter = rowIter.value().iterator(); cellIter.hasNext(); ) {
                 cellIter.advance();
                 cumulativeGradient.adjustOrPutValue(rowIter.key(), cellIter.key(), cellIter.value(), cellIter.value());
@@ -210,6 +206,7 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
     }
 
     private void update() {
+        cumulativeObjective = 0;
         Utils.printMemInfo(logger);
         logger.info("Updating");
         adaGradUpdate(0.1);
@@ -230,7 +227,6 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
                     if (Double.isNaN(g)) {
                         System.out.println(rowIter.key() + " " + rowIter.value() + update);
                     }
-
                     DataPool.trainingUsedCompactWeights.adjustOrPutValue(rowIter.key(), cellIter.key(), update, update);
                 }
             }
