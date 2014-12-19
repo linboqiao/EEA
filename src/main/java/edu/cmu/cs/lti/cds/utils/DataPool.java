@@ -107,8 +107,8 @@ public class DataPool {
     }
 
     public static void loadHeadIds(String dbPath, String dbName, String headIdMapName) throws Exception {
-        System.err.println(String.format("Number of verb heads Loaded: %d", headIdMap.size()));
         headIdMap = (TObjectIntMap<String>) SerializationHelper.read(new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath());
+        System.err.println(String.format("Number of verb heads Loaded: %d", headIdMap.size()));
     }
 
     public static void loadEventUnigramCounts(String dbPath, String dbName, String unigramMapName) throws Exception {
