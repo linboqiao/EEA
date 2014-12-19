@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.cds.runners.script.chain;
 
 import edu.cmu.cs.lti.cds.annotators.script.chain.PmiBasedChainFinder;
-import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -35,11 +34,9 @@ public class PmiBasedChainFinderRunner {
 
         String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path"); //"data/02_event_tuples";
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
-        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //data/_db
-        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
 
         DataPool.readBlackList(new File(blackListFile));
-        DataPool.loadHeadStatistics(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, true);
+        DataPool.loadHeadStatistics(config, true);
 
         String paramTypeSystemDescriptor = "TypeSystem";
 

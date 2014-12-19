@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.cds.dist;
 
-import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.LocalArgumentRepre;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;
 import edu.cmu.cs.lti.cds.utils.DataPool;
@@ -184,11 +183,8 @@ public class GlobalUnigrmHwLocalUniformArgumentDist {
         //test the unigram draw
         Configuration config = new Configuration(new File(args[0]));
 
-        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
-        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
-
         //prepare data
-        DataPool.loadHeadStatistics(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, false);
+        DataPool.loadHeadStatistics(config, false);
         GlobalUnigrmHwLocalUniformArgumentDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist();
     }
 }

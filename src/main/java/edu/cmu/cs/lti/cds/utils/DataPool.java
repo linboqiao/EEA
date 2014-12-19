@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.cds.utils;
 
-import edu.cmu.cs.lti.cds.annotators.script.FastEventMentionHeadCounter;
+import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.cds.annotators.script.train.UnigramScriptCounter;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -63,16 +64,14 @@ public class DataPool {
     public static TIntLongMap headTfMap;
     public static TLongLongMap headPairMap;
 
-    public static void loadEventHeadTfMap(String dbPath, String dbName, String mentoinHeadTfName) throws Exception {
-        String mapPath = new File(dbPath, dbName + "_" + mentoinHeadTfName).getAbsolutePath();
-        headTfMap = (TIntLongMap) SerializationHelper.read(mapPath);
+    public static void loadEventHeadTfMap(String dbPath, String headCountMapName) throws Exception {
+        headTfMap = (TIntLongMap) SerializationHelper.read(new File(dbPath, headCountMapName).getAbsolutePath());
         System.err.println("Loaded " + headTfMap.size() + " predicate heads");
     }
 
-    public static void loadEventHeadPairMap(String dbPath, String dbName, String mentionHeadPairName) throws Exception {
-        String mapPath = new File(dbPath, dbName + "_" + mentionHeadPairName).getAbsolutePath();
-        System.err.println("Loading head word pair count from " + mapPath);
-        headPairMap = (TLongLongMap) SerializationHelper.read(mapPath);
+    public static void loadEventHeadPairMap(String dbPath, String headPairMapName) throws Exception {
+        System.err.println("Loading head word pair count from " + headPairMapName);
+        headPairMap = (TLongLongMap) SerializationHelper.read(new File(dbPath, headPairMapName).getAbsolutePath());
         System.err.println("Loaded " + headPairMap.size() + " predicate pairs");
     }
 
@@ -86,13 +85,18 @@ public class DataPool {
         }
     }
 
-    public static void loadHeadStatistics(String dbPath, String dbName, String headIdMapName, boolean loadHeadPair) throws Exception {
+    public static void loadHeadStatistics(Configuration config, boolean loadPairCount) throws Exception {
+        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath");
+        String dbName = config.getList("edu.cmu.cs.lti.cds.db.basenames")[0];
+        String headIdMapName = KarlMooneyScriptCounter.defaltHeadIdMapName;
+        String headCountMapName = config.get("edu.cmu.cs.lti.cds.db.predicate.count");
+
         //id to head word
         loadHeadIds(dbPath, dbName, headIdMapName);
         // word to id
         headWords = new String[headIdMap.size()];
 
-        loadEventHeadTfMap(dbPath, FastEventMentionHeadCounter.defaultDBName, FastEventMentionHeadCounter.defaultMentionHeadCountMapName+"_dev");
+        loadEventHeadTfMap(dbPath, headCountMapName);
         for (TObjectIntIterator<String> iter = headIdMap.iterator(); iter.hasNext(); ) {
             iter.advance();
             predicateTotalCount += getPredicateFreq(iter.value());
@@ -101,8 +105,9 @@ public class DataPool {
 
         System.err.println(String.format("Total predicate counts: %d", predicateTotalCount));
 
-        if (loadHeadPair) {
-            loadEventHeadPairMap(dbPath, FastEventMentionHeadCounter.defaultDBName, FastEventMentionHeadCounter.defaultMentionPairCountName+"_dev");
+        if (loadPairCount) {
+            String headPairCountMapName = config.get("edu.cmu.cs.lti.cds.db.predicte.pair.count");
+            loadEventHeadPairMap(dbPath, headPairCountMapName);
         }
     }
 
@@ -111,8 +116,12 @@ public class DataPool {
         System.err.println(String.format("Number of verb heads Loaded: %d", headIdMap.size()));
     }
 
-    public static void loadEventUnigramCounts(String dbPath, String dbName, String unigramMapName) throws Exception {
-        String mapPath = new File(dbPath, dbName + "_" + unigramMapName).getAbsolutePath();
+    public static void loadEventUnigramCounts(Configuration config) throws Exception {
+        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
+        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
+        String unigramMapName = UnigramScriptCounter.defaultUnigramMapName;
+
+        String mapPath = new File(dbPath, dbNames[0] + "_" + unigramMapName).getAbsolutePath();
         unigramCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(mapPath);
         for (TObjectIntIterator<TIntList> iter = unigramCounts.iterator(); iter.hasNext(); ) {
             iter.advance();

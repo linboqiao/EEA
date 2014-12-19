@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.cds.demo;
 
-import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -19,9 +18,7 @@ public class PmiDemo {
 
     public static void main(String args[]) throws Exception {
         Configuration config = new Configuration(new File(args[0]));
-        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //data/_db
-        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
-        DataPool.loadHeadStatistics(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, true);
+        DataPool.loadHeadStatistics(config, true);
 
         Scanner in = new Scanner(System.in);
 

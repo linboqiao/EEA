@@ -4,7 +4,6 @@
 package edu.cmu.cs.lti.cds.runners.script.test;
 
 import edu.cmu.cs.lti.cds.annotators.script.test.CompactLogLinearTester;
-import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -49,7 +48,6 @@ public class CompactLogLinearTestRunner {
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         String modelPath = config.get("edu.cmu.cs.lti.cds.negative.model.testing.path");
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
-        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
         String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
         String featurePackage = config.get("edu.cmu.cs.lti.cds.features.packagename");
         int skipgramN = config.getInt("edu.cmu.cs.lti.cds.skipgram.n");
@@ -61,7 +59,7 @@ public class CompactLogLinearTestRunner {
 
         //prepare data
         logger.info("Loading data");
-        DataPool.loadHeadStatistics(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, false);
+        DataPool.loadHeadStatistics(config, false);
         DataPool.readBlackList(new File(blackListFile));
         logger.info("# predicates " + DataPool.headIdMap.size());
 

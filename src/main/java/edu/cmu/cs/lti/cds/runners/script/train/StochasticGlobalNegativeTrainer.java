@@ -3,7 +3,6 @@ package edu.cmu.cs.lti.cds.runners.script.train;
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.cds.annotators.script.train.CompactGlobalNegativeTrainer;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
-import edu.cmu.cs.lti.cds.annotators.script.train.UnigramScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -55,10 +54,10 @@ public class StochasticGlobalNegativeTrainer {
 
         //prepare data
         logger.info("Loading data");
-        DataPool.loadHeadStatistics(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, false);
+        DataPool.loadHeadStatistics(config, false);
         DataPool.readBlackList(new File(blackListFileName));
         DataPool.loadKmCooccMap(dbPath, dbNames[0], KarlMooneyScriptCounter.defaultCooccMapName);
-        DataPool.loadEventUnigramCounts(dbPath, dbNames[0], UnigramScriptCounter.defaultUnigramMapName);
+        DataPool.loadEventUnigramCounts(config);
 
         logger.info("# predicates " + DataPool.headIdMap.size());
 

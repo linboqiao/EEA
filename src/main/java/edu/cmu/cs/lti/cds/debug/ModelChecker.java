@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.cds.debug;
 
 import com.google.common.collect.BiMap;
-import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.model.MutableDouble;
 import edu.cmu.cs.lti.utils.BitUtils;
@@ -38,7 +37,7 @@ public class ModelChecker {
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
 //        String[] countingDbFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files");
 
-        DataPool.loadHeadStatistics(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, false);
+        DataPool.loadHeadStatistics(config, false);
 
         BiMap<Short, String> featureNames = compactWeights.getFeatureNameMap();
 
