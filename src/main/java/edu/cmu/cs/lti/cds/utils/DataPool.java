@@ -71,6 +71,7 @@ public class DataPool {
 
     public static void loadEventHeadPairMap(String dbPath, String dbName, String mentionHeadPairName) throws Exception {
         String mapPath = new File(dbPath, dbName + "_" + mentionHeadPairName).getAbsolutePath();
+        System.err.println("Loading head word pair count from " + mapPath);
         headPairMap = (TLongLongMap) SerializationHelper.read(mapPath);
         System.err.println("Loaded " + headPairMap.size() + " predicate pairs");
     }
@@ -87,11 +88,9 @@ public class DataPool {
 
     public static void loadHeadStatistics(String dbPath, String dbName, String headIdMapName, boolean loadHeadPair) throws Exception {
         //id to head word
-        headIdMap = (TObjectIntMap<String>) SerializationHelper.read(new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath());
+        loadHeadIds(dbPath, dbName, headIdMapName);
         // word to id
         headWords = new String[headIdMap.size()];
-
-        System.err.println(String.format("Number of verb heads Loaded: %d", headIdMap.size()));
 
         loadEventHeadTfMap(dbPath, FastEventMentionHeadCounter.defaultDBName, FastEventMentionHeadCounter.defaultMentionHeadCountMapName);
         for (TObjectIntIterator<String> iter = headIdMap.iterator(); iter.hasNext(); ) {
@@ -104,11 +103,11 @@ public class DataPool {
 
         if (loadHeadPair) {
             loadEventHeadPairMap(dbPath, FastEventMentionHeadCounter.defaultDBName, FastEventMentionHeadCounter.defaultMentionPairCountName);
-            System.err.println(String.format("Number of event pairs loaded: %d", headPairMap.size()));
         }
     }
 
     public static void loadHeadIds(String dbPath, String dbName, String headIdMapName) throws Exception {
+        System.err.println(String.format("Number of verb heads Loaded: %d", headIdMap.size()));
         headIdMap = (TObjectIntMap<String>) SerializationHelper.read(new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath());
     }
 

@@ -32,11 +32,8 @@ public class PmiBasedChainFinder extends AbstractLoggingAnnotator {
         if (DataPool.isBlackList(aJCas, logger)) {
             return;
         }
-
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
-
         filterMentions(allMentions, aJCas);
-
         Utils.pause();
     }
 
@@ -82,6 +79,8 @@ public class PmiBasedChainFinder extends AbstractLoggingAnnotator {
         int id2 = DataPool.headIdMap.get(predicate2);
 
         double jointCount = DataPool.headPairMap.get(BitUtils.store2Int(id1, id2));
+        jointCount += DataPool.headPairMap.get(BitUtils.store2Int(id2, id1));
+
         double count1 = DataPool.getPredicateFreq(id1);
         double count2 = DataPool.getPredicateFreq(id2);
 
