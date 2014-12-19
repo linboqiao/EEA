@@ -6,8 +6,6 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
-import gnu.trove.map.TIntLongMap;
-import gnu.trove.map.TLongLongMap;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -22,10 +20,7 @@ import java.util.List;
  * Time: 2:50 PM
  */
 public class PmiBasedChainFinder extends AbstractLoggingAnnotator {
-    TLongLongMap eventHeadPairCount;
-    TIntLongMap eventHeadTfDf;
-
-    private static double log2Val = Math.log(2);
+    private static final double log2Val = Math.log(2);
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {

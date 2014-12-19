@@ -92,7 +92,7 @@ public class DataPool {
         // word to id
         headWords = new String[headIdMap.size()];
 
-        loadEventHeadTfMap(dbPath, FastEventMentionHeadCounter.defaultDBName, FastEventMentionHeadCounter.defaultMentionHeadCountMapName);
+        loadEventHeadTfMap(dbPath, FastEventMentionHeadCounter.defaultDBName, FastEventMentionHeadCounter.defaultMentionHeadCountMapName+"_dev");
         for (TObjectIntIterator<String> iter = headIdMap.iterator(); iter.hasNext(); ) {
             iter.advance();
             predicateTotalCount += getPredicateFreq(iter.value());
@@ -102,7 +102,7 @@ public class DataPool {
         System.err.println(String.format("Total predicate counts: %d", predicateTotalCount));
 
         if (loadHeadPair) {
-            loadEventHeadPairMap(dbPath, FastEventMentionHeadCounter.defaultDBName, FastEventMentionHeadCounter.defaultMentionPairCountName);
+            loadEventHeadPairMap(dbPath, FastEventMentionHeadCounter.defaultDBName, FastEventMentionHeadCounter.defaultMentionPairCountName+"_dev");
         }
     }
 
