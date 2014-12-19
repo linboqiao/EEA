@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.cds.annotators.script;
 
 import edu.cmu.cs.lti.cds.utils.DataPool;
-import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.BitUtils;
@@ -46,6 +45,7 @@ public class FastEventMentionHeadCounter extends AbstractLoggingAnnotator {
 
     public static final String defaultDBName = "predicate";
 
+    //the name is tf df, it is actually only tf
     public static final String defaultMentionHeadTfDfMapName = "tfdf";
 
     public static final String defaultMentionPairCountName = "coocc";
@@ -78,11 +78,7 @@ public class FastEventMentionHeadCounter extends AbstractLoggingAnnotator {
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         logger.info(progressInfo(aJCas));
 
-        Article article = JCasUtil.selectSingle(aJCas, Article.class);
-
-        if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
-            //ignore this blacklisted file;
-            logger.info("Ignored black listed file");
+        if (DataPool.isBlackList(aJCas, logger)) {
             return;
         }
 
