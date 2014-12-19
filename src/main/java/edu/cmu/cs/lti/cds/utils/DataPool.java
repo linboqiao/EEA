@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.cds.utils;
 
-import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
-import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.cds.annotators.script.FastEventMentionHeadCounter;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -21,7 +20,6 @@ import weka.core.SerializationHelper;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -57,20 +55,13 @@ public class DataPool {
     public static String[] headWords;
     public static TObjectIntMap<String> headIdMap;
     public static TObjectIntMap<TIntList> unigramCounts;
-    public static Map[] headTfDfMaps;
     public static Set<String> blackListedArticleId;
 
     public static TObjectIntMap<TIntList> cooccCountMaps;
 
     //global event head statistics
     public static TIntLongMap headTfMap;
-    private static TLongLongMap headPairMap;
-
-
-    public static void loadPmiStatistics(String dbPath, String dbName, String mentoinHeadTfName, String mentionHeadPairName) throws Exception {
-        loadEventHeadTfMap(dbPath, dbName, mentoinHeadTfName);
-        loadEventHeadPairMap(dbPath, dbName, mentionHeadPairName);
-    }
+    public static TLongLongMap headPairMap;
 
     public static void loadEventHeadTfMap(String dbPath, String dbName, String mentoinHeadTfName) throws Exception {
         String mapPath = new File(dbPath, dbName + "_" + mentoinHeadTfName).getAbsolutePath();
@@ -85,8 +76,7 @@ public class DataPool {
     }
 
     //Load some of these large maps that might be shared static
-
-    public static void loadCooccMap(String dbPath, String dbName, String cooccName) {
+    public static void loadKmCooccMap(String dbPath, String dbName, String cooccName) {
         String mapPath = new File(dbPath, dbName + "_" + cooccName).getAbsolutePath();
         try {
             cooccCountMaps = (TObjectIntMap<TIntList>) SerializationHelper.read(mapPath);
@@ -95,28 +85,31 @@ public class DataPool {
         }
     }
 
-    public static void loadHeadCounts(String dbPath, String dbName, String headIdMapName, String[] countingDbFileNames) throws Exception {
-        loadHeadIds(dbPath, dbName, headIdMapName);
-        loadHeadCounts(dbPath, countingDbFileNames);
-    }
-
-    public static void loadHeadIds(String dbPath, String dbName, String headIdMapName) {
-        String mapPath = new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath();
-        try {
-            headIdMap = (TObjectIntMap<String>) SerializationHelper.read(mapPath);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void loadHeadStatistics(String dbPath, String dbName, String headIdMapName, boolean loadHeadPair) throws Exception {
+        //id to head word
+        headIdMap = (TObjectIntMap<String>) SerializationHelper.read(new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath());
+        // word to id
         headWords = new String[headIdMap.size()];
-    }
 
-    private static void loadHeadCounts(String dbPath, String[] countingDbFileNames) {
-        headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
+        System.err.println(String.format("Number of verb heads Loaded: %d", headIdMap.size()));
+
+        loadEventHeadTfMap(dbPath, FastEventMentionHeadCounter.defaultDBName, FastEventMentionHeadCounter.defaultMentionHeadCountMapName);
         for (TObjectIntIterator<String> iter = headIdMap.iterator(); iter.hasNext(); ) {
             iter.advance();
-            predicateTotalCount += getPredicateFreq(iter.key());
+            predicateTotalCount += getPredicateFreq(iter.value());
             headWords[iter.value()] = iter.key();
         }
+
+        System.err.println(String.format("Total predicate counts: %d", predicateTotalCount));
+
+        if (loadHeadPair) {
+            loadEventHeadPairMap(dbPath, FastEventMentionHeadCounter.defaultDBName, FastEventMentionHeadCounter.defaultMentionPairCountName);
+            System.err.println(String.format("Number of event pairs loaded: %d", headPairMap.size()));
+        }
+    }
+
+    public static void loadHeadIds(String dbPath, String dbName, String headIdMapName) throws Exception {
+        headIdMap = (TObjectIntMap<String>) SerializationHelper.read(new File(dbPath, dbName + "_" + headIdMapName).getAbsolutePath());
     }
 
     public static void loadEventUnigramCounts(String dbPath, String dbName, String unigramMapName) throws Exception {
@@ -128,12 +121,20 @@ public class DataPool {
         }
     }
 
-    public static int getPredicateFreq(String predicate) {
-        return MultiMapUtils.getTf(headTfDfMaps, predicate);
+    public static long getPredicateFreq(int predicateId) {
+        return headTfMap.get(predicateId);
     }
 
-    public static double getPredicateProb(String predicate) {
-        return MultiMapUtils.getTf(headTfDfMaps, predicate) * 1.0 / predicateTotalCount;
+    public static long getPredicateFreq(String headWord) {
+        return getPredicateFreq(headIdMap.get(headWord));
+    }
+
+    public static double getPredicateProb(String headWord) {
+        return getPredicateFreq(headIdMap.get(headWord));
+    }
+
+    public static double getPredicateProb(int predicateId) {
+        return getPredicateFreq(predicateId) * 1.0 / predicateTotalCount;
     }
 
     public static void readBlackList(File blackListFile) throws IOException {
@@ -158,9 +159,5 @@ public class DataPool {
 
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
-
-        DataPool.loadHeadIds(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName);
-
-        System.out.println("Number of head words " + headIdMap.size());
     }
 }

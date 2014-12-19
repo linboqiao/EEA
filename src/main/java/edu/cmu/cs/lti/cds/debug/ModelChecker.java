@@ -36,9 +36,9 @@ public class ModelChecker {
 
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
-        String[] countingDbFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files");
+//        String[] countingDbFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files");
 
-        DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
+        DataPool.loadHeadStatistics(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, false);
 
         BiMap<Short, String> featureNames = compactWeights.getFeatureNameMap();
 

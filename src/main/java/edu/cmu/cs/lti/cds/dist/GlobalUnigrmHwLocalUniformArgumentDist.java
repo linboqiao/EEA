@@ -185,11 +185,10 @@ public class GlobalUnigrmHwLocalUniformArgumentDist {
         Configuration config = new Configuration(new File(args[0]));
 
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
-        String[] countingDbFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files");
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
 
         //prepare data
-        DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
+        DataPool.loadHeadStatistics(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, false);
         GlobalUnigrmHwLocalUniformArgumentDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist();
     }
 }

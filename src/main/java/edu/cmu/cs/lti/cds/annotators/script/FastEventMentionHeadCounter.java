@@ -46,7 +46,7 @@ public class FastEventMentionHeadCounter extends AbstractLoggingAnnotator {
     public static final String defaultDBName = "predicate";
 
     //the name is tf df, it is actually only tf
-    public static final String defaultMentionHeadTfDfMapName = "tfdf";
+    public static final String defaultMentionHeadCountMapName = "tfdf";
 
     public static final String defaultMentionPairCountName = "coocc";
 
@@ -127,7 +127,7 @@ public class FastEventMentionHeadCounter extends AbstractLoggingAnnotator {
         logger.info("Total head words: " + eventHeadTfDf.size());
         logger.info("Total pairs " + eventPairCount.size());
         try {
-            SerializationHelper.write(new File(dbPath, dbFileName + "_" + defaultMentionHeadTfDfMapName).getAbsolutePath(), eventHeadTfDf);
+            SerializationHelper.write(new File(dbPath, dbFileName + "_" + defaultMentionHeadCountMapName).getAbsolutePath(), eventHeadTfDf);
         } catch (Exception e) {
             e.printStackTrace();
         }
