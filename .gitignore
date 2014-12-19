@@ -7,5 +7,5 @@ target/
 .*
 *nohup*
 logs/
-debug/
+/debug/
 grad_compare/
