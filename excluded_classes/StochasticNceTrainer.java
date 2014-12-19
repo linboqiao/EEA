@@ -45,7 +45,7 @@ public class StochasticNceTrainer {
 
         //prepare data
         logger.info("Loading data");
-        DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
+        DataPool.loadHeadStatistics(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
         DataPool.readBlackList(new File(blackListFileName));
         logger.info("# predicates " + DataPool.headIdMap.size());
 

@@ -45,9 +45,9 @@ public class StochasticNegativeTrainer {
 
         //prepare data
         logger.info("Loading data");
-        DataPool.loadHeadCounts(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
+        DataPool.loadHeadStatistics(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName, countingDbFileNames);
         DataPool.readBlackList(new File(blackListFileName));
-        DataPool.loadCooccMap(dbPath, dbNames[0], KarlMooneyScriptCounter.defaultCooccMapName);
+        DataPool.loadKmCooccMap(dbPath, dbNames[0], KarlMooneyScriptCounter.defaultCooccMapName);
         logger.info("# predicates " + DataPool.headIdMap.size());
 
         // Instantiate the analysis engine.
