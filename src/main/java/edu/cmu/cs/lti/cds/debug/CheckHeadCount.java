@@ -35,10 +35,6 @@ public class CheckHeadCount {
 
         Collections.sort(headwords);
 
-//        for (String h : headwords) {
-//            System.out.println("head: " + h);
-//        }
-
-        System.out.println("Number of words "+ headwords.size());
+        System.out.println("Number of words " + headwords.size());
     }
 }

@@ -1,8 +1,10 @@
 package edu.cmu.cs.lti.cds.utils;
 
 import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
+import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.type.Article;
+import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.list.TIntList;
@@ -149,5 +151,16 @@ public class DataPool {
             return true;
         }
         return false;
+    }
+
+    public static void main(String[] args) throws Exception {
+        Configuration config = new Configuration(new File(args[0]));
+
+        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
+        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
+
+        DataPool.loadHeadIds(dbPath, dbNames[0], KarlMooneyScriptCounter.defaltHeadIdMapName);
+
+        System.out.println("Number of head words " + headIdMap.size());
     }
 }
