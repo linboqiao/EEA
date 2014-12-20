@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.cds.annotators.script;
+package edu.cmu.cs.lti.cds.annotators.stats;
 
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.script.type.Article;

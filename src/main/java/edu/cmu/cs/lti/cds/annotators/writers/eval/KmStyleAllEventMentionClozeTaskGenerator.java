@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.cds.annotators.writers.eval;
 
-import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
+import edu.cmu.cs.lti.cds.annotators.stats.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;
 import edu.cmu.cs.lti.cds.utils.DataPool;

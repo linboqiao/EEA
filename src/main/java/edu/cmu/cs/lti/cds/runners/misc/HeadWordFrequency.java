@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.cds.runners.misc;
 
-import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
+import edu.cmu.cs.lti.cds.annotators.stats.EventMentionHeadCounter;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.Fun;

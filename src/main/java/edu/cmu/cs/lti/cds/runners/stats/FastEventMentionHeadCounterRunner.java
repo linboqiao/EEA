@@ -1,6 +1,6 @@
-package edu.cmu.cs.lti.cds.runners.script;
+package edu.cmu.cs.lti.cds.runners.stats;
 
-import edu.cmu.cs.lti.cds.annotators.script.FastEventMentionHeadCounter;
+import edu.cmu.cs.lti.cds.annotators.stats.FastEventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;

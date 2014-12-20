@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.cds.annotators.script.train;
 
-import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
+import edu.cmu.cs.lti.cds.annotators.stats.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.model.LocalArgumentRepre;
 import edu.cmu.cs.lti.cds.model.LocalEventMentionRepre;

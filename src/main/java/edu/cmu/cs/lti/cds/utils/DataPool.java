@@ -162,6 +162,14 @@ public class DataPool {
         return false;
     }
 
+    public static boolean lowFreqFilter(int predicateId) {
+        return getPredicateFreq(predicateId) < 50;
+    }
+
+    public static boolean lowFreqFilter(String predicate) {
+        return lowFreqFilter(headIdMap.get(predicate));
+    }
+
     public static void main(String[] args) throws Exception {
         Configuration config = new Configuration(new File(args[0]));
 

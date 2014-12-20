@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.cds.runners.script.test;
 
 import com.google.common.base.Joiner;
-import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
+import edu.cmu.cs.lti.cds.annotators.stats.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.annotators.script.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.model.KmTargetConstants;
 import edu.cmu.cs.lti.cds.model.MooneyEventRepre;

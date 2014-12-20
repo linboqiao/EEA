@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.cds.runners.stats;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
+import edu.cmu.cs.lti.cds.annotators.stats.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.utils.DbManager;
 import org.apache.commons.io.FileUtils;
 import org.mapdb.DB;

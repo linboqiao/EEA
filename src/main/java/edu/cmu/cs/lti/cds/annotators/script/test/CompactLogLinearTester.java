@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.cds.annotators.script.test;
 
-import edu.cmu.cs.lti.cds.annotators.script.EventMentionHeadCounter;
+import edu.cmu.cs.lti.cds.annotators.stats.EventMentionHeadCounter;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
 import edu.cmu.cs.lti.cds.model.*;
 import edu.cmu.cs.lti.cds.runners.script.test.CompactLogLinearTestRunner;
