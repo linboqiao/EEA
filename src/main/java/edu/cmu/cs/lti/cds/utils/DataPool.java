@@ -169,11 +169,4 @@ public class DataPool {
     public static boolean lowFreqFilter(String predicate) {
         return lowFreqFilter(headIdMap.get(predicate));
     }
-
-    public static void main(String[] args) throws Exception {
-        Configuration config = new Configuration(new File(args[0]));
-
-        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
-        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
-    }
 }

@@ -30,7 +30,7 @@ public class PairPredicateFilter {
 
             Pair<Integer, Integer> wordIds = BitUtils.get2IntFromLong(pairId);
 
-            if (!(DataPool.lowFreqFilter(wordIds.getLeft()) || DataPool.lowFreqFilter(wordIds.getRight()))) {
+            if (!DataPool.lowFreqFilter(wordIds.getLeft()) && !DataPool.lowFreqFilter(wordIds.getRight())) {
                 trimedMap.put(pairId, iter.value());
             }
         }
