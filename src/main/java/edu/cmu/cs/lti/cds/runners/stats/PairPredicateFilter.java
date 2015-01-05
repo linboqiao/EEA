@@ -35,7 +35,6 @@ public class PairPredicateFilter {
             }
         }
 
-
         System.err.println("Total pairs after trimming: " + trimedMap.size());
         try {
             SerializationHelper.write(
