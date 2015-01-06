@@ -87,7 +87,6 @@ public class FastEventMentionHeadCounter extends AbstractLoggingAnnotator {
 
         align.loadWord2Stanford(aJCas);
 
-
         List<String> allPredicates = new ArrayList<>();
 
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {

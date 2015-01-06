@@ -1,6 +1,6 @@
-package edu.cmu.cs.lti.cds.runners.script.chain;
+package edu.cmu.cs.lti.cds.runners.writers;
 
-import edu.cmu.cs.lti.cds.annotators.script.chain.PmiBasedChainFinder;
+import edu.cmu.cs.lti.cds.annotators.writers.PredicatePmiCalculator;
 import edu.cmu.cs.lti.cds.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -19,8 +19,8 @@ import java.io.File;
  * Date: 12/18/14
  * Time: 8:57 PM
  */
-public class PmiBasedChainFinderRunner {
-    private static String className = PmiBasedChainFinderRunner.class.getSimpleName();
+public class PredicatePmiCalculatorRunner {
+    private static String className = PredicatePmiCalculatorRunner.class.getSimpleName();
 
     /**
      * @param args
@@ -48,7 +48,10 @@ public class PmiBasedChainFinderRunner {
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
         AnalysisEngineDescription pmiCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
-                PmiBasedChainFinder.class, typeSystemDescription
+                PredicatePmiCalculator.class, typeSystemDescription,
+                PredicatePmiCalculator.PARAM_PARENT_OUTPUT_DIR, "data",
+                PredicatePmiCalculator.PARAM_BASE_OUTPUT_DIR_NAME, "predicate_pmi",
+                PredicatePmiCalculator.PARAM_STEP_NUMBER, 1
         );
 
         SimplePipeline.runPipeline(reader, pmiCounter);
