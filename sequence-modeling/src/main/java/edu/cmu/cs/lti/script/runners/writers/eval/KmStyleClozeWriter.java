@@ -8,7 +8,6 @@ import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
-import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.pipeline.SimplePipeline;
@@ -16,7 +15,6 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
@@ -32,7 +30,7 @@ public class KmStyleClozeWriter {
      * @throws java.io.IOException
      * @throws org.apache.uima.UIMAException
      */
-    public static void main(String[] args) throws UIMAException, IOException {
+    public static void main(String[] args) throws Exception {
         System.out.println(className + " started...");
 
         Configuration config = new Configuration(new File(args[0]));
@@ -50,6 +48,7 @@ public class KmStyleClozeWriter {
         int stepNum = 3;
 
         DataPool.readBlackList(new File(blackListFile));
+        DataPool.loadHeadStatistics(config, false);
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
