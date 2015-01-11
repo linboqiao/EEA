@@ -1,6 +1,6 @@
-package edu.cmu.cs.lti.script.features.impl;
+package edu.cmu.cs.lti.cds.ml.features.impl;
 
-import edu.cmu.cs.lti.script.features.Feature;
+import edu.cmu.cs.lti.cds.ml.features.Feature;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import edu.cmu.cs.lti.script.type.Sentence;
 import org.apache.uima.fit.util.JCasUtil;

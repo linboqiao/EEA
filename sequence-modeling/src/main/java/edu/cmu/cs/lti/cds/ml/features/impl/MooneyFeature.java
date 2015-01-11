@@ -1,8 +1,8 @@
-package edu.cmu.cs.lti.script.features.impl;
+package edu.cmu.cs.lti.cds.ml.features.impl;
 
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
-import edu.cmu.cs.lti.script.features.Feature;
+import edu.cmu.cs.lti.cds.ml.features.Feature;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import org.mapdb.Fun;
 

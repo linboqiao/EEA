@@ -1,8 +1,8 @@
-package edu.cmu.cs.lti.script.features;
+package edu.cmu.cs.lti.cds.ml.features;
 
 import com.google.common.collect.BiMap;
 import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
-import edu.cmu.cs.lti.script.features.impl.MooneyFeature;
+import edu.cmu.cs.lti.cds.ml.features.impl.MooneyFeature;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;

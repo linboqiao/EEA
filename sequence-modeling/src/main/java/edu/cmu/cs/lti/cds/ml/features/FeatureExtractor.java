@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.script.features;
+package edu.cmu.cs.lti.cds.ml.features;
 
 import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.script.model.ContextElement;

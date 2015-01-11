@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.script.annotators.learn.train;
 
 import edu.cmu.cs.lti.script.dist.GlobalUnigrmHwLocalUniformArgumentDist;
-import edu.cmu.cs.lti.script.features.CompactFeatureExtractor;
+import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import edu.cmu.cs.lti.script.model.LocalArgumentRepre;
 import edu.cmu.cs.lti.script.model.LocalEventMentionRepre;
