@@ -41,7 +41,6 @@ public class KmStyleClozeWriter {
         String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.heldout.path") + "/" + subPath; //"data/02_event_tuples";
         String paramParentOutputDir = config.get("edu.cmu.cs.lti.cds.parent.output"); // "data";
         String paramBaseOutputDirName = config.get("edu.edu.cmu.cs.lti.cds.cloze.base") + "_" + subPath; // "cloze"
-        String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
         int clozeMinSize = config.getInt("edu.cmu.cs.lti.cds.cloze.minsize");
@@ -70,7 +69,6 @@ public class KmStyleClozeWriter {
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_STEP_NUMBER, stepNum,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_DB_DIR_PATH, "data/_db/",
-                KmStyleAllEventMentionClozeTaskGenerator.PARAM_HEAD_COUNT_DB_NAMES, headCountFileNames,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_CLOZE_MIN_SIZE, clozeMinSize
         );

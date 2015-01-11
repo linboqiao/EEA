@@ -39,8 +39,6 @@ public class MooneyScriptCounterRunner {
         String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path"); //"data/02_event_tuples";
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //data/_db
-        String dbName = config.get("edu.cmu.cs.lti.cds.db.basenames");
-        String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
         int skipGramN = config.getInt("edu.cmu.cs.lti.cds.skipgram.n");
 
@@ -62,7 +60,6 @@ public class MooneyScriptCounterRunner {
                 KarlMooneyScriptCounter.PARAM_DB_DIR_PATH, dbPath,
                 KarlMooneyScriptCounter.PARAM_SKIP_BIGRAM_N, skipGramN,
                 KarlMooneyScriptCounter.PARAM_DB_NAME, "occs_" + occSuffix,
-                KarlMooneyScriptCounter.PARAM_HEAD_COUNT_DB_NAMES, headCountFileNames,
                 KarlMooneyScriptCounter.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
                 AbstractLoggingAnnotator.PARAM_KEEP_QUIET, false);
 
