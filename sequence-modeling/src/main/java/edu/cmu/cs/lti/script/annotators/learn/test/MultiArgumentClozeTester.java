@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.script.annotators.learn.test;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.features.CompactFeatureExtractor;
 import edu.cmu.cs.lti.script.model.*;
-import edu.cmu.cs.lti.script.runners.script.test.CompactLogLinearTestRunner;
+import edu.cmu.cs.lti.script.runners.learn.test.CompactLogLinearTestRunner;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;

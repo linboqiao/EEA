@@ -1,7 +1,7 @@
 /**
  *
  */
-package edu.cmu.cs.lti.script.runners.script.train;
+package edu.cmu.cs.lti.script.runners.learn.train;
 
 import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.script.utils.DataPool;

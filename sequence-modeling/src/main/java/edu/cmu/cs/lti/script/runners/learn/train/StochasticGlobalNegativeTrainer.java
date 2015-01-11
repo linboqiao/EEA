@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.script.runners.script.train;
+package edu.cmu.cs.lti.script.runners.learn.train;
 
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.script.annotators.learn.train.CompactGlobalNegativeTrainer;

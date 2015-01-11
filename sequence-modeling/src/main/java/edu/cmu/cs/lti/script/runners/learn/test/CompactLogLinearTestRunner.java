@@ -1,7 +1,7 @@
 /**
  *
  */
-package edu.cmu.cs.lti.script.runners.script.test;
+package edu.cmu.cs.lti.script.runners.learn.test;
 
 import edu.cmu.cs.lti.script.annotators.learn.test.CompactLogLinearTester;
 import edu.cmu.cs.lti.script.utils.DataPool;

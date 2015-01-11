@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.script.runners.script.test;
+package edu.cmu.cs.lti.script.runners.learn.test;
 
 import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.script.model.KmTargetConstants;
