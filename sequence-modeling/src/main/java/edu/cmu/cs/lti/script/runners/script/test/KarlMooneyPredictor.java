@@ -1,12 +1,9 @@
 package edu.cmu.cs.lti.script.runners.script.test;
 
-import com.google.common.base.Joiner;
-import edu.cmu.cs.lti.script.annotators.stats.EventMentionHeadCounter;
 import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.script.model.KmTargetConstants;
 import edu.cmu.cs.lti.script.model.MooneyEventRepre;
 import edu.cmu.cs.lti.script.utils.DataPool;
-import edu.cmu.cs.lti.script.utils.DbManager;
 import edu.cmu.cs.lti.script.utils.MultiMapUtils;
 import edu.cmu.cs.lti.utils.Comparators;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -44,7 +41,7 @@ public class KarlMooneyPredictor {
 
     private TObjectIntMap<TIntList>[] occCountMaps;
 
-    private Map[] headTfDfMaps;
+//    private Map[] headTfDfMaps;
 
     private TObjectIntMap<String>[] headIdMaps;
 
@@ -52,7 +49,7 @@ public class KarlMooneyPredictor {
 
     private Logger logger = Logger.getLogger(className);
 
-    public KarlMooneyPredictor(String dbPath, String[] dbNames, String occName, String cooccName, String[] countingDbFileNames, String headIdMapName) throws Exception {
+    public KarlMooneyPredictor(String dbPath, String[] dbNames, String occName, String cooccName, String headIdMapName) throws Exception {
         logger.setLevel(Level.INFO);
         Utils.printMemInfo(logger, "Initial memory information ");
 
@@ -61,10 +58,6 @@ public class KarlMooneyPredictor {
         occCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, occName, logger, "Loading occ");
 
         headIdMaps = MultiMapUtils.loadMaps(dbPath, dbNames, headIdMapName, logger, "Loading head ids");
-
-        logger.info("Loading event head counts : " + dbPath + "/" + Joiner.on(",").join(countingDbFileNames));
-
-        headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
 
         Utils.printMemInfo(logger, "Memory info after all loading");
     }
@@ -333,19 +326,15 @@ public class KarlMooneyPredictor {
 
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
         String inputDir = config.get("edu.cmu.cs.lti.cds.cloze.path");
-        String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
-
         int[] allK = config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k");
-
         String outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + subPath;
-
         boolean filter = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
 
         DataPool.loadHeadStatistics(config, false);
 
         KarlMooneyPredictor kmPredictor = new KarlMooneyPredictor(dbPath, dbNames, KarlMooneyScriptCounter.defaultOccMapName,
-                KarlMooneyScriptCounter.defaultCooccMapName, headCountFileNames, KarlMooneyScriptCounter.defaltHeadIdMapName);
+                KarlMooneyScriptCounter.defaultCooccMapName, KarlMooneyScriptCounter.defaltHeadIdMapName);
 
         kmPredictor.logger.info("Predictor started, testing ...");
         kmPredictor.test(inputDir, outputPath, allK, 1, filter);

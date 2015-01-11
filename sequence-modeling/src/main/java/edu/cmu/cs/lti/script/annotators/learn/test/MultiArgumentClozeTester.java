@@ -1,16 +1,13 @@
 package edu.cmu.cs.lti.script.annotators.learn.test;
 
-import edu.cmu.cs.lti.script.annotators.stats.EventMentionHeadCounter;
+import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.features.CompactFeatureExtractor;
 import edu.cmu.cs.lti.script.model.*;
 import edu.cmu.cs.lti.script.runners.script.test.CompactLogLinearTestRunner;
-import edu.cmu.cs.lti.script.utils.DataPool;
-import edu.cmu.cs.lti.script.utils.DbManager;
-import edu.cmu.cs.lti.script.utils.MultiMapUtils;
-import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
+import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Comparators;
@@ -25,7 +22,6 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.mapdb.Fun;
 import weka.core.SerializationHelper;
 
 import java.io.File;
@@ -55,7 +51,7 @@ public class MultiArgumentClozeTester extends AbstractLoggingAnnotator {
 
     private boolean ignoreLowFreq;
 
-    private Map<String, Fun.Tuple2<Integer, Integer>>[] headTfDfMaps;
+//    private Map<String, Fun.Tuple2<Integer, Integer>>[] headTfDfMaps;
 
     private String clozeExt = ".txt";
 
@@ -92,7 +88,7 @@ public class MultiArgumentClozeTester extends AbstractLoggingAnnotator {
 
         if (ignoreLowFreq) {
             String[] countingDbFileNames = (String[]) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAMES);
-            headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
+//            headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
         }
 
         modelPath = (String) aContext.getConfigParameterValue(PARAM_MODEL_PATH);
@@ -276,7 +272,8 @@ public class MultiArgumentClozeTester extends AbstractLoggingAnnotator {
         for (Sentence sent : JCasUtil.select(aJCas, Sentence.class)) {
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sent)) {
                 if (ignoreLowFreq) {
-                    int evmTf = MultiMapUtils.getTf(headTfDfMaps, align.getLowercaseWordLemma(mention.getHeadWord()));
+//                    int evmTf = MultiMapUtils.getTf(headTfDfMaps, align.getLowercaseWordLemma(mention.getHeadWord()));
+                    long evmTf = DataPool.getPredicateFreq(align.getLowercaseWordLemma(mention.getHeadWord()));
                     //filter by low tf df counts
                     if (Utils.termFrequencyFilter(evmTf)) {
                         logger.info("Mention filtered because of low frequency: " + mention.getCoveredText() + " " + evmTf);

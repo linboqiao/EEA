@@ -1,15 +1,12 @@
 package edu.cmu.cs.lti.script.annotators.learn.train;
 
-import edu.cmu.cs.lti.script.annotators.stats.EventMentionHeadCounter;
 import edu.cmu.cs.lti.script.model.KmTargetConstants;
 import edu.cmu.cs.lti.script.model.LocalArgumentRepre;
 import edu.cmu.cs.lti.script.model.LocalEventMentionRepre;
-import edu.cmu.cs.lti.script.utils.DataPool;
-import edu.cmu.cs.lti.script.utils.DbManager;
-import edu.cmu.cs.lti.script.utils.MultiMapUtils;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
+import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.CollectionUtils;
@@ -32,7 +29,6 @@ import weka.core.SerializationHelper;
 import java.io.File;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -48,7 +44,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     public static final String PARAM_SKIP_BIGRAM_N = "skippedBigramN";
 
-    public static final String PARAM_HEAD_COUNT_DB_NAMES = "headCountDbName";
+//    public static final String PARAM_HEAD_COUNT_DB_NAMES = "headCountDbName";
 
     public static final String PARAM_IGNORE_LOW_FREQ = "ignoreLowFreq";
 
@@ -62,7 +58,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
 //    private Map<String, Fun.Tuple2<Integer, Integer>> headTfDfMap;
 
-    private Map<String, Fun.Tuple2<Integer, Integer>>[] headTfDfMaps;
+//    private Map<String, Fun.Tuple2<Integer, Integer>>[] headTfDfMaps;
 
     private int skippedBigramN;
 
@@ -106,10 +102,10 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             dbParentPath.mkdirs();
         }
 
-        if (ignoreLowFreq) {
-            String[] countingDbFileNames = (String[]) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAMES);
-            headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
-        }
+//        if (ignoreLowFreq) {
+//            String[] countingDbFileNames = (String[]) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAMES);
+//            headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
+//        }
 
         Utils.printMemInfo(logger, "Initial memory information ");
     }
@@ -136,8 +132,11 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
                     firstBasedSubstitution(align, bigram.getLeft(), bigram.getRight());
 
             if (ignoreLowFreq) {
-                int evm1Tf = MultiMapUtils.getTf(headTfDfMaps, align.getLowercaseWordLemma(bigram.getLeft().getHeadWord()));
-                int evm2Tf = MultiMapUtils.getTf(headTfDfMaps, align.getLowercaseWordLemma(bigram.getRight().getHeadWord()));
+//                int evm1Tf = MultiMapUtils.getTf(headTfDfMaps, align.getLowercaseWordLemma(bigram.getLeft().getHeadWord()));
+//                int evm2Tf = MultiMapUtils.getTf(headTfDfMaps, align.getLowercaseWordLemma(bigram.getRight().getHeadWord()));
+
+                long evm1Tf = DataPool.getPredicateFreq(align.getLowercaseWordLemma(bigram.getLeft().getHeadWord()));
+                long evm2Tf = DataPool.getPredicateFreq(align.getLowercaseWordLemma(bigram.getRight().getHeadWord()));
 
                 if (Utils.termFrequencyFilter(evm1Tf) || Utils.termFrequencyFilter(evm2Tf)) {
                     logger.info("Filtered because of low frequency: " + bigram.getLeft().getCoveredText() + " " + evm1Tf + " " + bigram.getRight().getCoveredText() + " " + evm2Tf);
