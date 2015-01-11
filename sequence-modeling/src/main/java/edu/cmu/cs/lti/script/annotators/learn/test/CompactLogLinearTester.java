@@ -273,9 +273,7 @@ public class CompactLogLinearTester extends AbstractLoggingAnnotator {
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sent)) {
                 if (ignoreLowFreq) {
 //                    int evmTf = MultiMapUtils.getTf(headTfDfMaps, align.getLowercaseWordLemma(mention.getHeadWord()));
-
                     long evmTf = DataPool.getPredicateFreq(align.getLowercaseWordLemma(mention.getHeadWord()));
-
                     //filter by low tf df counts
                     if (Utils.termFrequencyFilter(evmTf)) {
                         logger.info("Mention filtered because of low frequency: " + mention.getCoveredText() + " " + evmTf);

@@ -1,15 +1,15 @@
 package edu.cmu.cs.lti.script.annotators.learn.train;
 
-import edu.cmu.cs.lti.script.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
+import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
+import edu.cmu.cs.lti.script.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import edu.cmu.cs.lti.script.model.LocalArgumentRepre;
 import edu.cmu.cs.lti.script.model.LocalEventMentionRepre;
-import edu.cmu.cs.lti.script.utils.DataPool;
-import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
+import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
@@ -28,8 +28,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The global negative trainer only sample negative samples that are globally non-negative
- * which means if there are observations of some features, it will not use them
+ * The Negative Sampling Training:
+ * 1. The objective is to discriminate real samples with generated samples
+ * 2. It is not asymptotic consistent
+ * 3. A trick is used to help training: some samples are rejected if they consist of one correct feature being seen
+ * 4. The problem of the trick is: more and more will be rejected and the training will be slow; it requires to
  * <p/>
  * Created with IntelliJ IDEA.
  * User: zhengzhongliu

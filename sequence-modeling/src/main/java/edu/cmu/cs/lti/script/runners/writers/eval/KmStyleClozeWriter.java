@@ -40,7 +40,7 @@ public class KmStyleClozeWriter {
 
         String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.heldout.path") + "/" + subPath; //"data/02_event_tuples";
         String paramParentOutputDir = config.get("edu.cmu.cs.lti.cds.parent.output"); // "data";
-        String paramBaseOutputDirName = config.get("edu.edu.cmu.cs.lti.cds.cloze.base") + "_" + subPath; // "cloze"
+        String paramBaseOutputDirName = config.get("edu.cmu.cs.lti.cds.cloze.base") + "_" + subPath; // "cloze"
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
         int clozeMinSize = config.getInt("edu.cmu.cs.lti.cds.cloze.minsize");
