@@ -141,6 +141,8 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 rank++;
             }
 
+            logger.info("Real rank is " +realRank);
+
             if (realRank != 0) {
                 perceptronUpdate(correctFeatures, currentBestSampleFeature);
             }
