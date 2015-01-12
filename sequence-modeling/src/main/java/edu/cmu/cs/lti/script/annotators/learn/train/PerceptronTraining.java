@@ -70,13 +70,14 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         miniBatchSize = (Integer) aContext.getConfigParameterValue(PARAM_MINI_BATCH_SIZE);
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
         skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
+        trainingFeatureTable = new TLongBasedFeatureTable();
+        numSamplesProcessed = 0;
+
         try {
             extractor = new CompactFeatureExtractor(trainingFeatureTable, featureImplNames);
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        numSamplesProcessed = 0;
-        trainingFeatureTable = new TLongBasedFeatureTable();
     }
 
     @Override
