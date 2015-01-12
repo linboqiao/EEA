@@ -50,10 +50,10 @@ public class EventMentionHeadCounterRunner {
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
         //The coocc and occ counter
-//        AnalysisEngineDescription kmScriptCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
-//                FastEventMentionHeadCounter.class, typeSystemDescription,
-//                FastEventMentionHeadCounter.PARAM_DB_DIR_PATH, dbPath,
-//                FastEventMentionHeadCounter.PARAM_KEEP_QUIET, false);
+//        AnalysisEngineDescription evmCooccCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
+//                EventMentionCooccCounter.class, typeSystemDescription,
+//                EventMentionCooccCounter.PARAM_DB_DIR_PATH, dbPath,
+//                EventMentionCooccCounter.PARAM_KEEP_QUIET, false);
 
         // The Tf Df counter
         AnalysisEngineDescription headTfDfCounter = CustomAnalysisEngineFactory.createAnalysisEngine(

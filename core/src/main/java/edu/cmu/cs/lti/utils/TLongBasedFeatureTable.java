@@ -32,8 +32,6 @@ public class TLongBasedFeatureTable implements Serializable {
      * <p/>
      * Double is the feature value to be update
      */
-//    TLongShortDoubleHashTable table = new TLongShortDoubleHashTable();
-
     TLongShortDoubleTreeTable table = new TLongShortDoubleTreeTable();
 
     //    TObjectShortHashMap<String> secondaryFeatureLookupMap = new TObjectShortHashMap<>();
@@ -45,12 +43,18 @@ public class TLongBasedFeatureTable implements Serializable {
 
     }
 
+    public TLongBasedFeatureTable(TLongShortDoubleTreeTable table, BiMap<String, Short> secondaryFeatureLookupMap) {
+        this.table = table;
+        this.secondaryFeatureLookupMap = secondaryFeatureLookupMap;
+    }
+
+
     public int getNumRows() {
         return table.getNumRows();
     }
 
     /**
-     * Can use both negative and positive section of short to store value
+     * Will automatic assign a new numeric value for a new feature
      *
      * @param featureName
      * @return
@@ -80,6 +84,10 @@ public class TLongBasedFeatureTable implements Serializable {
 
     public String getFeatureName(short featureIndex) {
         return secondaryFeatureLookupMap.inverse().get(featureIndex);
+    }
+
+    public BiMap<String, Short> getFeatureMap() {
+        return secondaryFeatureLookupMap;
     }
 
     public BiMap<Short, String> getFeatureNameMap() {

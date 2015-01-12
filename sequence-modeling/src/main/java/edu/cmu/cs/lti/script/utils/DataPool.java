@@ -2,17 +2,13 @@ package edu.cmu.cs.lti.script.utils;
 
 import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.script.annotators.learn.train.UnigramScriptCounter;
-import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.list.TIntList;
 import gnu.trove.map.TIntLongMap;
 import gnu.trove.map.TLongLongMap;
-import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.TObjectIntMap;
-import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -31,24 +27,14 @@ import java.util.logging.Logger;
  * Time: 11:05 AM
  */
 public class DataPool {
-
-    //will be update by the trainer
-    //learnt parameters
-    public static final TObjectDoubleMap<String> weights = new TObjectDoubleHashMap<>();
-    public static TObjectDoubleMap<String> adaGradDelGradientSq = new TObjectDoubleHashMap<>();
-
-    //a more compact form in storing such parameters
-    public static final TLongBasedFeatureTable trainingUsedCompactWeights = new TLongBasedFeatureTable();
-
-    //ada grad memory
-    public static final TLongShortDoubleHashTable compactAdaGradMemory = new TLongShortDoubleHashTable();
-
-    //ada delta memory
-    public static TObjectDoubleMap<String> deltaVarSq = new TObjectDoubleHashMap<>();
-    public static TObjectDoubleMap<String> deltaGradientSq = new TObjectDoubleHashMap<>();
-
-    //sample counter
-    public static long numSampleProcessed = 0;
+//    //a more compact form in storing such parameters
+//    public static final TLongBasedFeatureTable trainingUsedCompactWeights = new TLongBasedFeatureTable();
+//
+//    //ada grad memory
+//    public static final TLongShortDoubleHashTable compactAdaGradMemory = new TLongShortDoubleHashTable();
+//
+//    //sample counter
+//    public static long numSampleProcessed = 0;
 
     //data used by the trainer
     public static long predicateTotalCount = 0;

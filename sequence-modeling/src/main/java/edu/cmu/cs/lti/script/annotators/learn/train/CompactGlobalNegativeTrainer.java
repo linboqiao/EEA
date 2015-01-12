@@ -11,6 +11,7 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.iterator.TLongObjectIterator;
@@ -51,6 +52,14 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
     TokenAlignmentHelper align = new TokenAlignmentHelper();
     CompactFeatureExtractor extractor;
 
+    //a more compact form in storing such parameters
+    public static final TLongBasedFeatureTable trainingUsedCompactWeights = new TLongBasedFeatureTable();
+    //ada grad memory
+    public static final TLongShortDoubleHashTable compactAdaGradMemory = new TLongShortDoubleHashTable();
+    //sample counter
+    public static long numSampleProcessed = 0;
+
+
     //some defaults
     int miniBatchSize = 100;
     int numNoise = 25;
@@ -73,11 +82,11 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
         skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
         try {
-            extractor = new CompactFeatureExtractor(DataPool.trainingUsedCompactWeights, featureImplNames);
+            extractor = new CompactFeatureExtractor(trainingUsedCompactWeights, featureImplNames);
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        DataPool.numSampleProcessed = 0;
+        numSampleProcessed = 0;
     }
 
     @Override
@@ -121,11 +130,11 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         }
 
         //treat one chain as one sample
-        DataPool.numSampleProcessed++;
+        numSampleProcessed++;
 
-        if (DataPool.numSampleProcessed % miniBatchSize == 0) {
-            logger.info("Features lexical pairs just learnt " + DataPool.trainingUsedCompactWeights.getNumRows());
-            logger.info("Processed " + DataPool.numSampleProcessed + " samples");
+        if (numSampleProcessed % miniBatchSize == 0) {
+            logger.info("Features lexical pairs just learnt " + trainingUsedCompactWeights.getNumRows());
+            logger.info("Processed " + numSampleProcessed + " samples");
             logger.info("Average gain for previous batch is : " + cumulativeObjective / miniBatchSize);
             logger.info("Committing " + cumulativeGradient.getNumRows() + " lexical pairs");
             update();
@@ -134,12 +143,12 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        logger.info("Finish one epoch, totally  " + DataPool.numSampleProcessed + " samples processed so far");
-        logger.info("Processed " + DataPool.numSampleProcessed + " samples. Residual size is " + DataPool.numSampleProcessed % miniBatchSize);
-        logger.info("Features lexical pairs learnt " + DataPool.trainingUsedCompactWeights.getNumRows());
-        logger.info("Average cumulative gain for the residual batch: " + cumulativeObjective / (DataPool.numSampleProcessed % miniBatchSize));
+        logger.info("Finish one epoch, totally  " + numSampleProcessed + " samples processed so far");
+        logger.info("Processed " + numSampleProcessed + " samples. Residual size is " + numSampleProcessed % miniBatchSize);
+        logger.info("Features lexical pairs learnt " + trainingUsedCompactWeights.getNumRows());
+        logger.info("Average cumulative gain for the residual batch: " + cumulativeObjective / (numSampleProcessed % miniBatchSize));
         update();
-//        DataPool.trainingUsedCompactWeights.dump(new PrintWriter(System.err));
+//        trainingUsedCompactWeights.dump(new PrintWriter(System.err));
     }
 
     private double gradientAscent(List<TLongShortDoubleHashTable> noiseSamples, TLongShortDoubleHashTable dataSample) {
@@ -148,7 +157,7 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         TLongShortDoubleHashTable gradient = dataSample;
 
 //        double scoreTrue = DataPool.trainingUsedCompactWeights.dotProd(dataSample, extractor.getFeatureNamesByIndex());
-        double scoreTrue = DataPool.trainingUsedCompactWeights.dotProd(dataSample);
+        double scoreTrue = trainingUsedCompactWeights.dotProd(dataSample);
 
         double sigmoidTrue = sigmoid(scoreTrue);
 
@@ -162,18 +171,18 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
 
 //        if (scoreTrue != 0) {
 //            System.err.println("True scores " + scoreTrue + " " + sigmoidTrue + " ");
-//            DataPool.trainingUsedCompactWeights.dotProd(dataSample, extractor.getFeatureNamesByIndex());
-//            System.err.println(dataSample.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
+//            trainingUsedCompactWeights.dotProd(dataSample, extractor.getFeatureNamesByIndex());
+//            System.err.println(dataSample.dump(headWords, extractor.getFeatureNamesByIndex()));
 //        }
 
         for (TLongShortDoubleHashTable noiseSample : noiseSamples) {
-//            double scoreNoise = DataPool.trainingUsedCompactWeights.dotProd(dataSample, extractor.getFeatureNamesByIndex());
-            double scoreNoise = DataPool.trainingUsedCompactWeights.dotProd(noiseSample);
+//            double scoreNoise = trainingUsedCompactWeights.dotProd(dataSample, extractor.getFeatureNamesByIndex());
+            double scoreNoise = trainingUsedCompactWeights.dotProd(noiseSample);
             double sigmoidNoise = sigmoid(scoreNoise);
 
 //            if (scoreNoise != 0) {
 //                System.err.println("Noise scores " + scoreTrue + " " + sigmoidTrue + " ");
-//                DataPool.trainingUsedCompactWeights.dotProd(dataSample, extractor.getFeatureNamesByIndex());
+//                trainingUsedCompactWeights.dotProd(dataSample, extractor.getFeatureNamesByIndex());
 //            }
 
             // log (sigmoid( - score of noise))
@@ -225,12 +234,12 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
                 double g = cellIter.value();
                 if (g != 0) {
                     double gSq = g * g;
-                    double cumulativeGsq = DataPool.compactAdaGradMemory.adjustOrPutValue(rowIter.key(), cellIter.key(), gSq, gSq);
+                    double cumulativeGsq = compactAdaGradMemory.adjustOrPutValue(rowIter.key(), cellIter.key(), gSq, gSq);
                     double update = eta * g / Math.sqrt(cumulativeGsq);
                     if (Double.isNaN(g)) {
                         System.out.println(rowIter.key() + " " + rowIter.value() + update);
                     }
-                    DataPool.trainingUsedCompactWeights.adjustOrPutValue(rowIter.key(), cellIter.key(), update, update);
+                    trainingUsedCompactWeights.adjustOrPutValue(rowIter.key(), cellIter.key(), update, update);
                 }
             }
         }

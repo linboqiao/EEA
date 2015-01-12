@@ -1,17 +1,19 @@
 package edu.cmu.cs.lti.script.annotators.learn.train;
 
-import edu.cmu.cs.lti.script.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
+import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
+import edu.cmu.cs.lti.script.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import edu.cmu.cs.lti.script.model.LocalArgumentRepre;
 import edu.cmu.cs.lti.script.model.LocalEventMentionRepre;
-import edu.cmu.cs.lti.script.utils.DataPool;
-import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
+import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.utils.Utils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -22,6 +24,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,6 +41,14 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
     public static final String PARAM_SKIP_GRAM_N = "skipgramn";
 
+    public static TLongBasedFeatureTable trainingFeatureTable;
+
+    private TLongShortDoubleHashTable previousParameters;
+
+    public static TLongShortDoubleHashTable sumOfFeatures;
+
+    public static long numSamplesProcessed = 0;
+
     TokenAlignmentHelper align = new TokenAlignmentHelper();
     CompactFeatureExtractor extractor;
 
@@ -48,12 +59,9 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
     int skipGramN = 2;
 
-    //    UnigramEventDist noiseDist = new UnigramEventDist(DataPool.unigramCounts, DataPool.eventUnigramTotalCount);
+    double averageRankPercentage = 0;
+
     GlobalUnigrmHwLocalUniformArgumentDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist();
-
-    TLongShortDoubleHashTable cumulativeGradient = new TLongShortDoubleHashTable();
-
-    double cumulativeObjective = 0;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -63,11 +71,12 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
         skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
         try {
-            extractor = new CompactFeatureExtractor(DataPool.trainingUsedCompactWeights, featureImplNames);
+            extractor = new CompactFeatureExtractor(trainingFeatureTable, featureImplNames);
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        DataPool.numSampleProcessed = 0;
+        numSamplesProcessed = 0;
+        trainingFeatureTable = new TLongBasedFeatureTable();
     }
 
     @Override
@@ -98,38 +107,105 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
             Sentence sampleSent = realSample.getSent();
 
             double bestSampleScore = Double.MIN_VALUE;
-            LocalEventMentionRepre bestSample = null;
             TLongShortDoubleHashTable currentBestSampleFeature = null;
 
-            for (LocalEventMentionRepre sample : sampleCandidiates(arguments, sampleSent)) {
+
+            double realSampleScore = Double.MIN_VALUE;
+            PriorityQueue<Double> scores = new PriorityQueue<>();
+
+            for (LocalEventMentionRepre sample : sampleCandidiatesWithReal(arguments, realSample.getMention())) {
                 TLongShortDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getHead(), sample), sampleIndex, skipGramN, true);
-                double sampleScore = DataPool.trainingUsedCompactWeights.dotProd(sampleFeature);
+
+                double sampleScore = trainingFeatureTable.dotProd(sampleFeature);
+                scores.add(sampleScore);
+
+                if (sample.mooneyMatch(realSample.getMention())) {
+                    realSampleScore = sampleScore;
+                }
+
                 if (currentBestSampleFeature == null || sampleScore > bestSampleScore) {
                     currentBestSampleFeature = sampleFeature;
-                    bestSample = sample;
                     bestSampleScore = sampleScore;
                 }
             }
 
-            if (!realSample.getMention().mooneyMatch(bestSample)) {
+            int realRank = -1;
+            int rank = 0;
+            while (!scores.isEmpty()) {
+                double nextScore = scores.poll();
+                if (nextScore == realSampleScore) {
+                    realRank = rank;
+                    break;
+                }
+                rank++;
+            }
+
+            if (realRank != 0) {
                 perceptronUpdate(correctFeatures, currentBestSampleFeature);
+            }
+
+            averageRankPercentage += realRank * 1.0 / rankListSize;
+
+            numSamplesProcessed++;
+
+            if (numSamplesProcessed % miniBatchSize == 0) {
+                logger.info("Features lexical pairs just learnt " + trainingFeatureTable.getNumRows());
+                logger.info("Processed " + numSamplesProcessed + " samples");
+                logger.info("Average rank position for previous batch is : " + averageRankPercentage / miniBatchSize);
+                averageRankPercentage = 0;
+                Utils.printMemInfo(logger);
             }
         }
     }
 
-    private List<LocalEventMentionRepre> sampleCandidiates(List<LocalArgumentRepre> arguments, Sentence sampleSent) {
+    /**
+     * Return a list of generated noise union with the real sample
+     *
+     * @param arguments
+     * @param realSample
+     * @return
+     */
+    private List<LocalEventMentionRepre> sampleCandidiatesWithReal(List<LocalArgumentRepre> arguments, LocalEventMentionRepre realSample) {
         List<LocalEventMentionRepre> samples = new ArrayList<>();
+        boolean containsReal = false;
 
         for (int i = 0; i < rankListSize; i++) {
             Pair<LocalEventMentionRepre, Double> noise = noiseDist.draw(arguments, numArguments);
             LocalEventMentionRepre noiseRep = noise.getKey();
+
+            if (noiseRep.mooneyMatch(realSample)) {
+                containsReal = true;
+            }
+
             samples.add(noiseRep);
+        }
+
+        if (!containsReal) {
+            //replace the last sample with the real one
+            samples.remove(samples.size() - 1);
+            samples.add(realSample);
         }
         return samples;
     }
 
+
     private void perceptronUpdate(TLongShortDoubleHashTable correctFeatures, TLongShortDoubleHashTable currentBest) {
-        DataPool.trainingUsedCompactWeights.adjustBy(correctFeatures, 1);
-        DataPool.trainingUsedCompactWeights.adjustBy(currentBest, -1);
+        trainingFeatureTable.adjustBy(correctFeatures, 1);
+        trainingFeatureTable.adjustBy(currentBest, -1);
+
+        previousParameters.adjustBy(correctFeatures, 1);
+        previousParameters.adjustBy(currentBest, -1);
+
+        sumOfFeatures.adjustBy(previousParameters, 1);
+    }
+
+    @Override
+    public void collectionProcessComplete() throws AnalysisEngineProcessException {
+        logger.info("Finish one epoch, totally  " + numSamplesProcessed + " samples processed so far");
+        logger.info("Processed " + numSamplesProcessed + " samples. Residual size is " + numSamplesProcessed % miniBatchSize);
+        logger.info("Features lexical pairs learnt " + trainingFeatureTable.getNumRows());
+        logger.info("Average rank position for the residual batch: " + averageRankPercentage / (numSamplesProcessed % miniBatchSize));
+        averageRankPercentage = 0;
+        Utils.printMemInfo(logger);
     }
 }

@@ -1,8 +1,10 @@
 package edu.cmu.cs.lti.script.runners.learn.train;
 
 import com.google.common.base.Joiner;
+import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.annotators.learn.train.CompactGlobalNegativeTrainer;
 import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
+import edu.cmu.cs.lti.script.annotators.learn.train.PerceptronTraining;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -21,10 +23,10 @@ import java.util.logging.Logger;
 /**
  * Created with IntelliJ IDEA.
  * User: zhengzhongliu
- * Date: 11/3/14
- * Time: 1:46 PM
+ * Date: 1/11/15
+ * Time: 11:29 PM
  */
-public class StochasticGlobalNegativeTrainer {
+public class PerceptronTrainingRunner {
     private static Logger logger = Logger.getLogger(StochasticGlobalNegativeTrainer.class.getName());
 
     public static void main(String[] args) throws Exception {
@@ -33,10 +35,8 @@ public class StochasticGlobalNegativeTrainer {
         int maxIter = config.getInt("edu.cmu.cs.lti.cds.sgd.iter");
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
-        String[] countingDbFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files");
         String blackListFileName = config.get("edu.cmu.cs.lti.cds.blacklist");
-        String modelStoragePath = config.get("edu.cmu.cs.lti.cds.negative.model.path");
-        int noiseNum = config.getInt("edu.cmu.cs.lti.cds.negative.noisenum");
+        String modelStoragePath = config.get("edu.cmu.cs.lti.cds.perceptron.model.path");
         int miniBatchNum = config.getInt("edu.cmu.cs.lti.cds.minibatch");
         String modelExt = config.get("edu.cmu.cs.lti.cds.model.ext");
         String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
@@ -71,16 +71,17 @@ public class StochasticGlobalNegativeTrainer {
         logger.info("Running " + CompactGlobalNegativeTrainer.class.getName());
 
         AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(CompactGlobalNegativeTrainer.class, typeSystemDescription,
-                CompactGlobalNegativeTrainer.PARAM_NEGATIVE_NUMBERS, noiseNum,
-                CompactGlobalNegativeTrainer.PARAM_MINI_BATCH_SIZE, miniBatchNum,
-                CompactGlobalNegativeTrainer.PARAM_FEATURE_NAMES, featureNames,
-                CompactGlobalNegativeTrainer.PARAM_SKIP_GRAM_N, skipgramN);
+                PerceptronTraining.PARAM_RANK_LIST_SIZE, 25,
+                PerceptronTraining.PARAM_MINI_BATCH_SIZE, miniBatchNum,
+                PerceptronTraining.PARAM_FEATURE_NAMES, featureNames,
+                PerceptronTraining.PARAM_SKIP_GRAM_N, skipgramN);
 
         Utils.printMemInfo(logger, "Beginning memory");
 
         for (int i = 0; i < maxIter; i++) {
             String modelOutputPath = modelStoragePath + "_" + modelSuffix + "_" + i + modelExt;
-            logger.info("Storing this model to " + modelOutputPath);
+            String averageModelOutputPath = modelOutputPath + "_average";
+
 
             SimplePipeline.runPipeline(reader, trainer);
             File modelDirParent = new File(modelStoragePath).getParentFile();
@@ -89,7 +90,13 @@ public class StochasticGlobalNegativeTrainer {
                 modelDirParent.mkdirs();
             }
 
-            SerializationHelper.write(modelOutputPath, CompactGlobalNegativeTrainer.trainingUsedCompactWeights);
+            TLongShortDoubleHashTable averageParameters = PerceptronTraining.sumOfFeatures;
+            averageParameters.multiplyBy(1.0 / PerceptronTraining.numSamplesProcessed);
+
+            logger.info("Storing this model to " + modelOutputPath);
+            SerializationHelper.write(modelOutputPath, PerceptronTraining.trainingFeatureTable);
+            logger.info("Storing the averaged model to " + modelOutputPath);
+            SerializationHelper.write(averageModelOutputPath, averageParameters);
         }
     }
 }

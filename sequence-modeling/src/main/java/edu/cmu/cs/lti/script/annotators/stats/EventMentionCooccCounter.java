@@ -33,7 +33,7 @@ import java.util.List;
  * Date: 11/28/14
  * Time: 3:44 PM
  */
-public class FastEventMentionHeadCounter extends AbstractLoggingAnnotator {
+public class EventMentionCooccCounter extends AbstractLoggingAnnotator {
 
     public static final String PARAM_DB_NAME = "dbName";
 
