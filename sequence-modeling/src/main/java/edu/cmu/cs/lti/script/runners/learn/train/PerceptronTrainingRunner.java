@@ -70,7 +70,7 @@ public class PerceptronTrainingRunner {
 
         logger.info("Running " + CompactGlobalNegativeTrainer.class.getName());
 
-        AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(CompactGlobalNegativeTrainer.class, typeSystemDescription,
+        AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(PerceptronTraining.class, typeSystemDescription,
                 PerceptronTraining.PARAM_RANK_LIST_SIZE, 25,
                 PerceptronTraining.PARAM_MINI_BATCH_SIZE, miniBatchNum,
                 PerceptronTraining.PARAM_FEATURE_NAMES, featureNames,
