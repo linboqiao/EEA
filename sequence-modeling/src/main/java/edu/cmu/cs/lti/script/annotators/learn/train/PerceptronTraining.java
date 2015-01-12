@@ -21,10 +21,7 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -60,6 +57,8 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
     int skipGramN = 2;
 
     double averageRankPercentage = 0;
+
+    Random randomGenerator = new Random();
 
     GlobalUnigrmHwLocalUniformArgumentDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist();
 
@@ -112,7 +111,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
 
             double realSampleScore = Double.MIN_VALUE;
-            PriorityQueue<Double> scores = new PriorityQueue<>();
+            PriorityQueue<Double> scores = new PriorityQueue<>(rankListSize, Collections.reverseOrder());
 
             for (LocalEventMentionRepre sample : sampleCandidiatesWithReal(arguments, realSample.getMention())) {
                 TLongShortDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getHead(), sample), sampleIndex, skipGramN, false);
@@ -141,7 +140,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 rank++;
             }
 
-            logger.info("Real rank is " +realRank);
+            logger.info("Real rank is " + realRank);
 
             if (realRank != 0) {
                 perceptronUpdate(correctFeatures, currentBestSampleFeature);
@@ -186,7 +185,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         if (!containsReal) {
             //replace the last sample with the real one
             samples.remove(samples.size() - 1);
-            samples.add(realSample);
+            samples.add(randomGenerator.nextInt(samples.size()), realSample);
         }
         return samples;
     }
