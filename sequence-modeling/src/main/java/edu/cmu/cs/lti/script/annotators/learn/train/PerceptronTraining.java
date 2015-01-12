@@ -115,7 +115,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
             PriorityQueue<Double> scores = new PriorityQueue<>();
 
             for (LocalEventMentionRepre sample : sampleCandidiatesWithReal(arguments, realSample.getMention())) {
-                TLongShortDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getHead(), sample), sampleIndex, skipGramN, true);
+                TLongShortDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getHead(), sample), sampleIndex, skipGramN, false);
 
                 double sampleScore = trainingFeatureTable.dotProd(sampleFeature);
                 scores.add(sampleScore);
