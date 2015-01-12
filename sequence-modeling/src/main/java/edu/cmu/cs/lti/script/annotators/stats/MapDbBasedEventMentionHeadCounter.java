@@ -25,7 +25,7 @@ import java.util.Map;
  * Date: 10/25/14
  * Time: 4:46 PM
  */
-public class EventMentionHeadCounter extends AbstractLoggingAnnotator {
+public class MapDbBasedEventMentionHeadCounter extends AbstractLoggingAnnotator {
 
     public static final String PARAM_DB_NAME = "dbName";
 
