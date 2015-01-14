@@ -90,15 +90,9 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         evalInfoFile = new File(evalDirPath, "eval_info_" + predictorName);
 
         try {
+            FileUtils.write(evalResultFile, "");
             logEvalInfo(String.format("Rank list output directory : [%s] , eval logging file : [%s], eval info file : [%s]",
                     rankListOutputDir.getCanonicalPath(), evalResultFile.getCanonicalPath(), evalInfoFile.getCanonicalPath()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            //ensure file is empty
-            FileUtils.write(evalResultFile, "");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -45,13 +45,13 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
 
         predictorName += "_" + Joiner.on(",").join(featureImplNames);
 
-        logEvalInfo("Initializing predictor : " + predictorName);
+        logger.info("Initializing predictor : " + predictorName);
 
         skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
 
         String modelPath = (String) aContext.getConfigParameterValue(PARAM_MODEL_PATH);
 
-        logEvalInfo("Loading from " + modelPath);
+        logger.info("Loading from " + modelPath);
 
         try {
             compactWeights = (TLongBasedFeatureTable) SerializationHelper.read(modelPath);
