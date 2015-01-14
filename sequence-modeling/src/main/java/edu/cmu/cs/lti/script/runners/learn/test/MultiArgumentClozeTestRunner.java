@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.script.runners.learn.test;
 
-import edu.cmu.cs.lti.script.annotators.learn.test.CompactLogLinearPredictor;
-import edu.cmu.cs.lti.script.annotators.learn.test.ConditionProbablityPredictor;
+import edu.cmu.cs.lti.script.annotators.learn.test.CompactLogLinearTester;
+import edu.cmu.cs.lti.script.annotators.learn.test.ConditionProbablityTester;
 import edu.cmu.cs.lti.script.annotators.learn.test.MultiArgumentClozeTest;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
@@ -83,17 +83,17 @@ public class MultiArgumentClozeTestRunner {
         for (String modelPath : modelPaths) {
 
             AnalysisEngineDescription logLinearPredictor = CustomAnalysisEngineFactory.createAnalysisEngine(
-                    CompactLogLinearPredictor.class, typeSystemDescription,
+                    CompactLogLinearTester.class, typeSystemDescription,
                     MultiArgumentClozeTest.PARAM_CLOZE_DIR_PATH, clozePath,
                     MultiArgumentClozeTest.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
                     MultiArgumentClozeTest.PARAM_EVAL_RESULT_PATH, evalResultBasePath,
                     MultiArgumentClozeTest.PARAM_EVAL_RANKS, allK,
 
-                    CompactLogLinearPredictor.PARAM_DB_DIR_PATH, dbPath,
-                    CompactLogLinearPredictor.PARAM_MODEL_PATH, modelPath,
-                    CompactLogLinearPredictor.PARAM_KEEP_QUIET, false,
-                    CompactLogLinearPredictor.PARAM_SKIP_GRAM_N, skipgramN,
-                    CompactLogLinearPredictor.PARAM_FEATURE_NAMES, featureNames
+                    CompactLogLinearTester.PARAM_DB_DIR_PATH, dbPath,
+                    CompactLogLinearTester.PARAM_MODEL_PATH, modelPath,
+                    CompactLogLinearTester.PARAM_KEEP_QUIET, false,
+                    CompactLogLinearTester.PARAM_SKIP_GRAM_N, skipgramN,
+                    CompactLogLinearTester.PARAM_FEATURE_NAMES, featureNames
             );
 
             SimplePipeline.runPipeline(reader, logLinearPredictor);
@@ -101,15 +101,15 @@ public class MultiArgumentClozeTestRunner {
         }
 
         AnalysisEngineDescription conditionalProbabilityPredictor = CustomAnalysisEngineFactory.createAnalysisEngine(
-                ConditionProbablityPredictor.class, typeSystemDescription,
+                ConditionProbablityTester.class, typeSystemDescription,
                 MultiArgumentClozeTest.PARAM_CLOZE_DIR_PATH, clozePath,
                 MultiArgumentClozeTest.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
                 MultiArgumentClozeTest.PARAM_EVAL_RESULT_PATH, evalResultBasePath,
                 MultiArgumentClozeTest.PARAM_EVAL_RANKS, allK,
 
-                ConditionProbablityPredictor.PARAM_DB_DIR_PATH, dbPath,
-                ConditionProbablityPredictor.PARAM_DB_NAMES, dbNames,
-                ConditionProbablityPredictor.PARAM_SMOOTHING, 1
+                ConditionProbablityTester.PARAM_DB_DIR_PATH, dbPath,
+                ConditionProbablityTester.PARAM_DB_NAMES, dbNames,
+                ConditionProbablityTester.PARAM_SMOOTHING, 1
         );
 
         SimplePipeline.runPipeline(reader, conditionalProbabilityPredictor);

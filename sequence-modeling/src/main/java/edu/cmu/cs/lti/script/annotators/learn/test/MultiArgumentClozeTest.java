@@ -76,8 +76,10 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
             ignoreLowFreq = true;
         }
         clozeDir = new File((String) aContext.getConfigParameterValue(PARAM_CLOZE_DIR_PATH));
-        allK = (Integer[]) aContext.getConfigParameterValue(PARAM_EVAL_RANKS);
 
+        //prepare evaluation statistics holder
+        allK = (Integer[]) aContext.getConfigParameterValue(PARAM_EVAL_RANKS);
+        recallCounts = new int[allK.length];
 
         //prepare paths for output
         String predictorName = initializePredictor(aContext);
@@ -286,7 +288,6 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        recallCounts = new int[allK.length];
         for (int kPos = 0; kPos < allK.length; kPos++) {
             logEvalResult(String.format("Recall at %d : %.4f", allK[kPos], recallCounts[kPos] * 1.0 / totalCount));
         }

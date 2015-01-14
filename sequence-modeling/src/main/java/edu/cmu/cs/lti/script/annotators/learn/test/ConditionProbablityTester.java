@@ -27,7 +27,7 @@ import java.util.Set;
  * Date: 1/14/15
  * Time: 1:53 AM
  */
-public class ConditionProbablityPredictor extends MultiArgumentClozeTest {
+public class ConditionProbablityTester extends MultiArgumentClozeTest {
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
 

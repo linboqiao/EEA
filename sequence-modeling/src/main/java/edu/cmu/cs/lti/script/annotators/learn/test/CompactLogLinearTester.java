@@ -24,7 +24,7 @@ import java.util.Set;
  * Date: 1/14/15
  * Time: 1:16 AM
  */
-public class CompactLogLinearPredictor extends MultiArgumentClozeTest {
+public class CompactLogLinearTester extends MultiArgumentClozeTest {
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
     public static final String PARAM_MODEL_PATH = "modelPath";
@@ -86,7 +86,10 @@ public class CompactLogLinearPredictor extends MultiArgumentClozeTest {
                 if (score > 0) {
                     logEvalInfo("Candidate is " + candidate.getMention());
                     logEvalInfo("Feature score " + score);
-                    compactWeights.dotProd(features, extractor.getFeatureNamesByIndex(), DataPool.headWords);
+                    compactWeights.dotProd(features);
+                    logEvalInfo("Candidate features : ");
+                    logEvalInfo(features.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
+//                    compactWeights.dotProd(features, extractor.getFeatureNamesByIndex(), DataPool.headWords);
                 }
 
                 if (candidate.getMention().mooneyMatch(answer.getMention())) {
