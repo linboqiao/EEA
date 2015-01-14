@@ -63,9 +63,9 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
     private TokenAlignmentHelper align = new TokenAlignmentHelper();
 
-    private List<String> evalResults;
+    private List<String> evalResults = new ArrayList<>();
 
-    private List<String> evalInfos;
+    private List<String> evalInfos = new ArrayList<>();
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -88,7 +88,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         evalInfoFile = new File(evalDirPath, "_eval_info_" + predictorName);
 
         try {
-            logger.info(String.format("Rank list output directory : [%s] , eval logging file : [%s], eval info file : [%s]",
+            logEvalInfo(String.format("Rank list output directory : [%s] , eval logging file : [%s], eval info file : [%s]",
                     rankListOutputDir.getCanonicalPath(), evalResultFile.getCanonicalPath(), evalInfoFile.getCanonicalPath()));
         } catch (IOException e) {
             e.printStackTrace();

@@ -78,7 +78,7 @@ public class ConditionProbablityPredictor extends MultiArgumentClozeTest {
 
         MooneyEventRepre answer = chain.get(testIndex).getMention().toMooneyMention();
 
-        logger.info("Answer is " + answer);
+        logEvalInfo("Answer is " + answer);
 
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateEvms = MooneyEventRepre.generateTuples(head, entities);
@@ -88,7 +88,7 @@ public class ConditionProbablityPredictor extends MultiArgumentClozeTest {
                 boolean sawAnswer = false;
                 if (answer.equals(candidateEvm)) {
                     sawAnswer = true;
-                    logger.info("Answer candidate appears: " + candidateEvm);
+                    logEvalInfo("Answer candidate appears: " + candidateEvm);
                 }
 
                 double score = 0;
@@ -106,7 +106,7 @@ public class ConditionProbablityPredictor extends MultiArgumentClozeTest {
 
                 if (sawAnswer) {
                     String record = String.format("Answer score for %s is %.2f", candidateEvm, score);
-                    logger.info(record);
+                    logEvalInfo(record);
                     logEvalResult(record);
                 }
                 rankedEvents.add(Pair.of(candidateEvm, score));
@@ -171,10 +171,10 @@ public class ConditionProbablityPredictor extends MultiArgumentClozeTest {
         double cooccCountSmoothed = counts.getRight() + laplacianSmoothingParameter;
         double formerOccCountSmoothed = counts.getLeft() + numTotalEvents * laplacianSmoothingParameter;
 
-        if (cooccCountSmoothed > laplacianSmoothingParameter) {
-            logger.fine("Probability of seeing " + former + " before " + latter);
-            logger.fine(cooccCountSmoothed / formerOccCountSmoothed + " " + counts.getRight() + "/" + counts.getLeft());
-        }
+//        if (cooccCountSmoothed > laplacianSmoothingParameter) {
+//            logger.fine("Probability of seeing " + former + " before " + latter);
+//            logger.fine(cooccCountSmoothed / formerOccCountSmoothed + " " + counts.getRight() + "/" + counts.getLeft());
+//        }
 
         //add one smoothing
         return Math.log(cooccCountSmoothed / formerOccCountSmoothed);
