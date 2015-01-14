@@ -66,7 +66,7 @@ public class CompactLogLinearPredictor extends MultiArgumentClozeTest {
 
 
     @Override
-    protected PriorityQueue<Pair<MooneyEventRepre, Double>> predict(List<ContextElement> chain, List entities, int testIndex, int numArguments) {
+    protected PriorityQueue<Pair<MooneyEventRepre, Double>> predict(List<ContextElement> chain, Set<Integer> entities, int testIndex, int numArguments) {
         ContextElement answer = chain.get(testIndex);
         logger.info("Answer is " + answer.getMention());
 
