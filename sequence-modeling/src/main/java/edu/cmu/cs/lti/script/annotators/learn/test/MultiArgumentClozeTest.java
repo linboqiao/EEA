@@ -86,8 +86,8 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
         rankListOutputDir = new File((String) aContext.getConfigParameterValue(PARAM_EVAL_RESULT_PATH), predictorName);
         String evalDirPath = (String) aContext.getConfigParameterValue(PARAM_EVAL_LOG_DIR);
-        evalResultFile = new File(evalDirPath + "_eval_results_" + predictorName);
-        evalInfoFile = new File(evalDirPath + "_eval_info_" + predictorName);
+        evalResultFile = new File(evalDirPath, "eval_results_" + predictorName);
+        evalInfoFile = new File(evalDirPath, "eval_info_" + predictorName);
 
         try {
             logEvalInfo(String.format("Rank list output directory : [%s] , eval logging file : [%s], eval info file : [%s]",

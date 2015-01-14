@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.script.annotators.learn.test;
 
-import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.model.ContextElement;
@@ -49,7 +48,12 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
         try {
             compactWeights = (TLongBasedFeatureTable) SerializationHelper.read(modelPath);
             String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
-            predictorName += "_" + Joiner.on("-").join(featureImplNames);
+
+            for (String featureImplName : featureImplNames) {
+                String[] nameParts = featureImplName.split(".");
+                predictorName += nameParts[nameParts.length - 1];
+            }
+
             try {
                 extractor = new CompactFeatureExtractor(compactWeights, featureImplNames);
             } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {

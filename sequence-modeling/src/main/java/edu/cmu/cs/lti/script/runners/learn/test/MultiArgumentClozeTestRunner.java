@@ -46,6 +46,7 @@ public class MultiArgumentClozeTestRunner {
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
 //        String modelPath = config.get("edu.cmu.cs.lti.cds.negative.model.testing.path");
         String[] modelPaths = config.getList("edu.cmu.cs.lti.cds.negative.model.testing.path");
+        String evalLogPath = config.get("edu.cmu.cs.lti.cds.eval.log.path");
 
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
         String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
@@ -88,6 +89,7 @@ public class MultiArgumentClozeTestRunner {
                     MultiArgumentClozeTest.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
                     MultiArgumentClozeTest.PARAM_EVAL_RESULT_PATH, evalResultBasePath,
                     MultiArgumentClozeTest.PARAM_EVAL_RANKS, allK,
+                    MultiArgumentClozeTest.PARAM_EVAL_LOG_DIR, evalLogPath,
 
                     CompactLogLinearTester.PARAM_DB_DIR_PATH, dbPath,
                     CompactLogLinearTester.PARAM_MODEL_PATH, modelPath,
@@ -106,6 +108,7 @@ public class MultiArgumentClozeTestRunner {
                 MultiArgumentClozeTest.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
                 MultiArgumentClozeTest.PARAM_EVAL_RESULT_PATH, evalResultBasePath,
                 MultiArgumentClozeTest.PARAM_EVAL_RANKS, allK,
+                MultiArgumentClozeTest.PARAM_EVAL_LOG_DIR, evalLogPath,
 
                 ConditionProbablityTester.PARAM_DB_DIR_PATH, dbPath,
                 ConditionProbablityTester.PARAM_DB_NAMES, dbNames,
