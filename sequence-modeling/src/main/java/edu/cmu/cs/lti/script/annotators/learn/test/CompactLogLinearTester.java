@@ -44,6 +44,7 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
 
         for (String featureImplName : featureImplNames) {
+            logger.info(featureImplName);
             String[] nameParts = featureImplName.split(".");
             predictorName += "_" + nameParts[nameParts.length - 1];
         }
