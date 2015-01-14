@@ -88,7 +88,8 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         evalInfoFile = new File(evalDirPath, "_eval_info_" + predictorName);
 
         try {
-            logEvalInfo(String.format("Rank list output directory : [%s] , eval logging file : [%s]", rankListOutputDir.getCanonicalPath(), evalResultFile.getCanonicalPath()));
+            logger.info(String.format("Rank list output directory : [%s] , eval logging file : [%s], eval info file : [%s]",
+                    rankListOutputDir.getCanonicalPath(), evalResultFile.getCanonicalPath(), evalInfoFile.getCanonicalPath()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -111,6 +112,9 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        evalResults = new ArrayList<>();
+        evalInfos = new ArrayList<>();
+
         logEvalInfo(progressInfo(aJCas));
 
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
@@ -121,8 +125,6 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
             return;
         }
 
-        evalResults = new ArrayList<>();
-        evalInfos = new ArrayList<>();
 
         String clozeFileName = UimaConvenience.getShortDocumentName(aJCas) + ".gz_" + UimaConvenience.getOffsetInSource(aJCas) + clozeExt;
         Triple<List<MooneyEventRepre>, Integer, String> mooneyClozeTask = getMooneyStyleCloze(clozeFileName);
