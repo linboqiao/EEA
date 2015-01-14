@@ -52,6 +52,7 @@ public class MultiArgumentClozeTestRunner {
         String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
         String featurePackage = config.get("edu.cmu.cs.lti.cds.features.packagename");
         int skipgramN = config.getInt("edu.cmu.cs.lti.cds.skipgram.n");
+        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
 
         //make complete class name
         for (int i = 0; i < featureNames.length; i++) {
@@ -95,8 +96,17 @@ public class MultiArgumentClozeTestRunner {
         );
 
         AnalysisEngineDescription conditionalProbabilityPredictor = CustomAnalysisEngineFactory.createAnalysisEngine(
-                ConditionProbablityPredictor.class, typeSystemDescription
+                ConditionProbablityPredictor.class, typeSystemDescription,
+                MultiArgumentClozeTest.PARAM_CLOZE_DIR_PATH, clozePath,
+                MultiArgumentClozeTest.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
+                MultiArgumentClozeTest.PARAM_EVAL_RESULT_PATH, outputPath,
+                MultiArgumentClozeTest.PARAM_EVAL_RANKS, allK,
+
+                ConditionProbablityPredictor.PARAM_DB_DIR_PATH, dbPath,
+                ConditionProbablityPredictor.PARAM_DB_NAMES, dbNames,
+                ConditionProbablityPredictor.PARAM_SMOOTHING, 1
         );
+
         SimplePipeline.runPipeline(reader, logLinearPredictor, conditionalProbabilityPredictor);
     }
 }
