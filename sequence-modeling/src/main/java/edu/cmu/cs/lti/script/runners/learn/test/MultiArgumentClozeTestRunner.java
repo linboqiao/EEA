@@ -44,20 +44,14 @@ public class MultiArgumentClozeTestRunner {
         String clozePath = config.get("edu.cmu.cs.lti.cds.cloze.path"); // "cloze"
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath");
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
-//        String modelPath = config.get("edu.cmu.cs.lti.cds.negative.model.testing.path");
         String[] modelPaths = config.getList("edu.cmu.cs.lti.cds.negative.model.testing.path");
+        String modelPathBase = config.get("edu.cmu.cs.lti.cds.negative.model.path");
         String evalLogPath = config.get("edu.cmu.cs.lti.cds.eval.log.path");
 
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
-        String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
         String featurePackage = config.get("edu.cmu.cs.lti.cds.features.packagename");
         int skipgramN = config.getInt("edu.cmu.cs.lti.cds.skipgram.n");
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
-
-        //make complete class name
-        for (int i = 0; i < featureNames.length; i++) {
-            featureNames[i] = featurePackage + "." + featureNames[i];
-        }
 
         //prepare data
         logger.info("Loading data");
@@ -82,6 +76,12 @@ public class MultiArgumentClozeTestRunner {
 
 
         for (String modelPath : modelPaths) {
+
+            String[] featureNames = modelPath.replace("^" + modelPathBase, "").replace("_\\(\\d+\\).ser$", "").split("_");
+            //make complete class name
+            for (int i = 0; i < featureNames.length; i++) {
+                featureNames[i] = featurePackage + "." + featureNames[i];
+            }
 
             AnalysisEngineDescription logLinearPredictor = CustomAnalysisEngineFactory.createAnalysisEngine(
                     CompactLogLinearTester.class, typeSystemDescription,
