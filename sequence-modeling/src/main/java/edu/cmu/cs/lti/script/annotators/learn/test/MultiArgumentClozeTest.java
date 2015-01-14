@@ -81,6 +81,12 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         evalLogFile = new File((String) aContext.getConfigParameterValue(PARAM_EVAL_LOG_DIR), predictorName);
 
         try {
+            logger.info(String.format("Rank list output directory : [%s] , eval logging file : [%s]", rankListOutputDir.getCanonicalPath(), evalLogFile.getCanonicalPath()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
             //ensure file is empty
             FileUtils.write(evalLogFile, "");
         } catch (IOException e) {
@@ -146,7 +152,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
         MooneyEventRepre mooneyStyleAnswer = mooneyChain.get(clozeIndex);
 
-        List<ContextElement> entities = getTestingEventMentions(aJCas);
+        Set<Integer> entities = getRewritedEntitiesFromChain(regularChain);
 
         PriorityQueue<Pair<MooneyEventRepre, Double>> results = predict(regularChain, entities, clozeIndex, numArguments);
 
@@ -202,7 +208,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
      * @param numArguments Number of arguments for each event
      * @return
      */
-    protected abstract PriorityQueue<Pair<MooneyEventRepre, Double>> predict(List<ContextElement> chain, List entities, int testIndex, int numArguments);
+    protected abstract PriorityQueue<Pair<MooneyEventRepre, Double>> predict(List<ContextElement> chain, Set<Integer> entities, int testIndex, int numArguments);
 
     private Triple<List<MooneyEventRepre>, Integer, String> getMooneyStyleCloze(String fileName) {
         File clozeFile = new File(clozeDir, fileName);

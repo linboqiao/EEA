@@ -19,6 +19,7 @@ import org.apache.uima.UimaContext;
 
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -74,7 +75,7 @@ public class ConditionProbablityPredictor extends MultiArgumentClozeTest {
     }
 
     @Override
-    protected PriorityQueue<Pair<MooneyEventRepre, Double>> predict(List<ContextElement> chain, List entities, int testIndex, int numArguments) {
+    protected PriorityQueue<Pair<MooneyEventRepre, Double>> predict(List<ContextElement> chain, Set<Integer> entities, int testIndex, int numArguments) {
         PriorityQueue<Pair<MooneyEventRepre, Double>> rankedEvents = new PriorityQueue<>(allPredicates.length, new Comparators.DescendingScoredPairComparator<MooneyEventRepre, Double>());
 
         MooneyEventRepre answer = chain.get(testIndex).getMention().toMooneyMention();

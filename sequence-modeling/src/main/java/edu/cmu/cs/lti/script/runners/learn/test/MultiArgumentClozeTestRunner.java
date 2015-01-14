@@ -29,9 +29,9 @@ public class MultiArgumentClozeTestRunner {
 
     private static Logger logger = Logger.getLogger(className);
 
-    public static List<Integer> allK;
-    public static String outputPath;
-    public static int[] recallCounts;
+//    public static List<Integer> allK;
+//    public static String outputPath;
+//    public static int[] recallCounts;
 
     /**
      * @param args
@@ -77,8 +77,8 @@ public class MultiArgumentClozeTestRunner {
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
         //initialize eval parameter
-        allK = Ints.asList(config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k"));
-        outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + subPath;
+        List<Integer> allK = Ints.asList(config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k"));
+        String outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + subPath;
 
         AnalysisEngineDescription logLinearPredictor = CustomAnalysisEngineFactory.createAnalysisEngine(
                 CompactLogLinearPredictor.class, typeSystemDescription,
