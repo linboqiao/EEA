@@ -1,9 +1,9 @@
-/**
- *
- */
 package edu.cmu.cs.lti.script.runners.learn.test;
 
-import edu.cmu.cs.lti.script.annotators.learn.test.CompactLogLinearTester;
+import com.google.common.primitives.Ints;
+import edu.cmu.cs.lti.script.annotators.learn.test.CompactLogLinearPredictor;
+import edu.cmu.cs.lti.script.annotators.learn.test.ConditionProbablityPredictor;
+import edu.cmu.cs.lti.script.annotators.learn.test.MultiArgumentClozeTest;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -15,20 +15,22 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.File;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * @author zhengzhongliu
+ * Created with IntelliJ IDEA.
+ * User: zhengzhongliu
+ * Date: 1/14/15
+ * Time: 1:51 AM
  */
-public class CompactLogLinearTestRunner {
-    private static String className = CompactLogLinearTestRunner.class.getSimpleName();
+public class MultiArgumentClozeTestRunner {
+    private static String className = MultiArgumentClozeTestRunner.class.getSimpleName();
 
     private static Logger logger = Logger.getLogger(className);
 
-    public static int[] allK;
+    public static List<Integer> allK;
     public static String outputPath;
-    public static double mrr = 0;
-    public static double totalCount = 0;
     public static int[] recallCounts;
 
     /**
@@ -44,7 +46,6 @@ public class CompactLogLinearTestRunner {
         String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.heldout.path"); //"data/02_event_tuples";
         String clozePath = config.get("edu.cmu.cs.lti.cds.cloze.path"); // "cloze"
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath");
-        String[] headCountFileNames = config.getList("edu.cmu.cs.lti.cds.headcount.files"); //"headcounts"
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         String modelPath = config.get("edu.cmu.cs.lti.cds.negative.model.testing.path");
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
@@ -75,31 +76,27 @@ public class CompactLogLinearTestRunner {
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
         //initialize eval parameter
-        allK = config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k");
+        allK = Ints.asList(config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k"));
         outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + subPath;
-        recallCounts = new int[allK.length];
 
-        AnalysisEngineDescription tester = CustomAnalysisEngineFactory.createAnalysisEngine(
-                CompactLogLinearTester.class, typeSystemDescription,
-                CompactLogLinearTester.PARAM_CLOZE_DIR_PATH, clozePath,
-                CompactLogLinearTester.PARAM_DB_DIR_PATH, dbPath,
-                CompactLogLinearTester.PARAM_HEAD_COUNT_DB_NAMES, headCountFileNames,
-                CompactLogLinearTester.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
-                CompactLogLinearTester.PARAM_MODEL_PATH, modelPath,
-                CompactLogLinearTester.PARAM_KEEP_QUIET, false,
-                CompactLogLinearTester.PARAM_FEATURE_NAMES, featureNames,
-                CompactLogLinearTester.PARAM_SKIP_GRAM_N, skipgramN
+        AnalysisEngineDescription logLinearPredictor = CustomAnalysisEngineFactory.createAnalysisEngine(
+                CompactLogLinearPredictor.class, typeSystemDescription,
+                MultiArgumentClozeTest.PARAM_CLOZE_DIR_PATH, clozePath,
+                MultiArgumentClozeTest.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
+                MultiArgumentClozeTest.PARAM_EVAL_RESULT_PATH, outputPath,
+                MultiArgumentClozeTest.PARAM_EVAL_RANKS, allK,
+
+                CompactLogLinearPredictor.PARAM_DB_DIR_PATH, dbPath,
+                CompactLogLinearPredictor.PARAM_MODEL_PATH, modelPath,
+                CompactLogLinearPredictor.PARAM_KEEP_QUIET, false,
+                CompactLogLinearPredictor.PARAM_SKIP_GRAM_N, skipgramN,
+                CompactLogLinearPredictor.PARAM_FEATURE_NAMES, featureNames
+
         );
 
-        SimplePipeline.runPipeline(reader, tester);
-
-
-        for (int kPos = 0; kPos < allK.length; kPos++) {
-            logger.info(String.format("Recall at %d : %.4f", allK[kPos], recallCounts[kPos] * 1.0 / totalCount));
-        }
-
-        logger.info(String.format("MRR is : %.4f", mrr / totalCount));
-
-        logger.info("Completed.");
+        AnalysisEngineDescription conditionalProbabilityPredictor = CustomAnalysisEngineFactory.createAnalysisEngine(
+                ConditionProbablityPredictor.class, typeSystemDescription
+        );
+        SimplePipeline.runPipeline(reader, logLinearPredictor, conditionalProbabilityPredictor);
     }
 }

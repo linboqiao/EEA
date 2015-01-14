@@ -61,6 +61,10 @@ public class LocalEventMentionRepre {
         return new LocalEventMentionRepre(mention.getPredicate(), args);
     }
 
+    public MooneyEventRepre toMooneyMention() {
+        return new MooneyEventRepre(mentionHead, args[0].getRewritedId(), args[1].getRewritedId(), args[2].getRewritedId());
+    }
+
 
     public String getMentionHead() {
         return mentionHead;

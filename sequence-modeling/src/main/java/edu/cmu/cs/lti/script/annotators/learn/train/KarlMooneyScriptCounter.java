@@ -48,8 +48,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     public static final String PARAM_IGNORE_LOW_FREQ = "ignoreLowFreq";
 
-    //TODO consider sentence or event distance
-
     private TObjectIntMap<String> headIdMap = new TObjectIntHashMap<>();
 
     private TObjectIntMap<TIntList> cooccCounts = new TObjectIntHashMap<>();
