@@ -49,9 +49,7 @@ public class ConditionProbablityPredictor extends MultiArgumentClozeTest {
 
         String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
 
-        List<String> dbNameList = ((List<String>) aContext.getConfigParameterValue(PARAM_DB_NAMES));
-
-        String[] dbNames = dbNameList.toArray(new String[dbNameList.size()]);
+        String[] dbNames = (String[]) aContext.getConfigParameterValue(PARAM_DB_NAMES);
 
         smoothingParameter = (Double) aContext.getConfigParameterValue(PARAM_SMOOTHING);
 
@@ -109,7 +107,7 @@ public class ConditionProbablityPredictor extends MultiArgumentClozeTest {
                 if (sawAnswer) {
                     String record = String.format("Answer score for %s is %.2f", candidateEvm, score);
                     logger.info(record);
-                    evalLog(record);
+                    logEvalResult(record);
                 }
                 rankedEvents.add(Pair.of(candidateEvm, score));
             }

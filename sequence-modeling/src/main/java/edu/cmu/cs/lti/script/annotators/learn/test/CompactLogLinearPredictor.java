@@ -32,7 +32,6 @@ public class CompactLogLinearPredictor extends MultiArgumentClozeTest {
     public static final String PARAM_FEATURE_NAMES = "featureNames";
 
     private CompactFeatureExtractor extractor;
-    private String modelPath;
     private TLongBasedFeatureTable compactWeights;
     private int skipGramN = 2;
     private String[] allPredicates;
@@ -41,9 +40,9 @@ public class CompactLogLinearPredictor extends MultiArgumentClozeTest {
     protected String initializePredictor(UimaContext aContext) {
         skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
 
-        modelPath = (String) aContext.getConfigParameterValue(PARAM_MODEL_PATH);
+        String modelPath = (String) aContext.getConfigParameterValue(PARAM_MODEL_PATH);
 
-        logger.info("Loading from " + modelPath);
+        logEvalInfo("Loading from " + modelPath);
 
         String predictorName = this.getClass().getSimpleName();
 
@@ -68,7 +67,7 @@ public class CompactLogLinearPredictor extends MultiArgumentClozeTest {
     @Override
     protected PriorityQueue<Pair<MooneyEventRepre, Double>> predict(List<ContextElement> chain, Set<Integer> entities, int testIndex, int numArguments) {
         ContextElement answer = chain.get(testIndex);
-        logger.info("Answer is " + answer.getMention());
+        logEvalInfo("Answer is " + answer.getMention());
 
         PriorityQueue<Pair<MooneyEventRepre, Double>> rankedEvents = new PriorityQueue<>(allPredicates.length,
                 new Comparators.DescendingScoredPairComparator<MooneyEventRepre, Double>());
@@ -85,16 +84,16 @@ public class CompactLogLinearPredictor extends MultiArgumentClozeTest {
 
                 double score = compactWeights.dotProd(features);
                 if (score > 0) {
-                    logger.info("Candidate is " + candidate.getMention());
-                    logger.info("Feature score " + score);
+                    logEvalInfo("Candidate is " + candidate.getMention());
+                    logEvalInfo("Feature score " + score);
                     compactWeights.dotProd(features, extractor.getFeatureNamesByIndex(), DataPool.headWords);
                 }
 
                 if (candidate.getMention().mooneyMatch(answer.getMention())) {
-                    logger.info("Answer candidate appears: " + candidate.getMention());
-                    logger.info("Feature score " + score);
-                    logger.info("Answer features : ");
-                    logger.info(features.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
+                    logEvalInfo("Answer candidate appears: " + candidate.getMention());
+                    logEvalInfo("Feature score " + score);
+                    logEvalInfo("Answer features : ");
+                    logEvalInfo(features.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
                 }
                 rankedEvents.add(Pair.of(candidateEvm, score));
             }

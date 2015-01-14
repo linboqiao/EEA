@@ -45,7 +45,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
     private File clozeDir;
 
-    private List<Integer> allK;
+    private Integer[] allK;
 
     private int[] recallCounts;
 
@@ -55,13 +55,17 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
     private File rankListOutputDir;
 
-    private File evalLogFile;
+    private File evalResultFile;
+
+    private File evalInfoFile;
 
     int numArguments = 3;
 
     private TokenAlignmentHelper align = new TokenAlignmentHelper();
 
     private List<String> evalResults;
+
+    private List<String> evalInfos;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -72,23 +76,26 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
             ignoreLowFreq = true;
         }
         clozeDir = new File((String) aContext.getConfigParameterValue(PARAM_CLOZE_DIR_PATH));
-        allK = (List<Integer>) aContext.getConfigParameterValue(PARAM_EVAL_RANKS);
+        allK = (Integer[]) aContext.getConfigParameterValue(PARAM_EVAL_RANKS);
+
 
         //prepare paths for output
         String predictorName = initializePredictor(aContext);
 
         rankListOutputDir = new File((String) aContext.getConfigParameterValue(PARAM_EVAL_RESULT_PATH), predictorName);
-        evalLogFile = new File((String) aContext.getConfigParameterValue(PARAM_EVAL_LOG_DIR), predictorName);
+        String evalDirPath = (String) aContext.getConfigParameterValue(PARAM_EVAL_LOG_DIR);
+        evalResultFile = new File(evalDirPath, "_eval_results_" + predictorName);
+        evalInfoFile = new File(evalDirPath, "_eval_info_" + predictorName);
 
         try {
-            logger.info(String.format("Rank list output directory : [%s] , eval logging file : [%s]", rankListOutputDir.getCanonicalPath(), evalLogFile.getCanonicalPath()));
+            logEvalInfo(String.format("Rank list output directory : [%s] , eval logging file : [%s]", rankListOutputDir.getCanonicalPath(), evalResultFile.getCanonicalPath()));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try {
             //ensure file is empty
-            FileUtils.write(evalLogFile, "");
+            FileUtils.write(evalResultFile, "");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,22 +111,23 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        logger.info(progressInfo(aJCas));
+        logEvalInfo(progressInfo(aJCas));
 
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
 
         if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
             //ignore this blacklisted file;
-            logger.info("Ignored black listed file");
+            logEvalInfo("Ignored black listed file");
             return;
         }
 
         evalResults = new ArrayList<>();
+        evalInfos = new ArrayList<>();
 
         String clozeFileName = UimaConvenience.getShortDocumentName(aJCas) + ".gz_" + UimaConvenience.getOffsetInSource(aJCas) + clozeExt;
         Triple<List<MooneyEventRepre>, Integer, String> mooneyClozeTask = getMooneyStyleCloze(clozeFileName);
         if (mooneyClozeTask == null) {
-            logger.info("Cloze file removed due to duplication or empty");
+            logEvalInfo("Cloze file removed due to duplication or empty");
             return;
         }
 
@@ -166,10 +174,10 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
             rankResults.add(resulti.getLeft() + "\t" + resulti.getRight());
             if (resulti.getKey().equals(mooneyStyleAnswer)) {
                 String evalRecord = String.format("For cloze task : %s, correct answer found at %d", clozeFileName, rank);
-                logger.info(evalRecord);
-                evalResults.add(evalRecord);
-                for (int kPos = 0; kPos < allK.size(); kPos++) {
-                    if (allK.get(kPos) >= rank) {
+                logEvalInfo(evalRecord);
+                logEvalResult(evalRecord);
+                for (int kPos = 0; kPos < allK.length; kPos++) {
+                    if (allK[kPos] >= rank) {
                         recallCounts[kPos]++;
                     }
                 }
@@ -183,21 +191,25 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         } else {
             String evalRecord = String.format("For cloze task : %s, correct answer is not found", clozeFileName);
             evalResults.add(evalRecord);
-            logger.info(evalRecord);
         }
         totalCount++;
 
         File rankListOutputFile = new File(rankListOutputDir, rankListOutputName);
         try {
             FileUtils.writeLines(rankListOutputFile, rankResults);
-            FileUtils.writeLines(evalLogFile, evalResults, true);
+            FileUtils.writeLines(evalResultFile, evalResults, true);
+            FileUtils.writeLines(evalInfoFile, evalInfos, true);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    protected void evalLog(String record) {
+    protected void logEvalResult(String record) {
         evalResults.add(record);
+    }
+
+    protected void logEvalInfo(String record) {
+        evalInfos.add(record);
     }
 
     /**
@@ -213,7 +225,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
     private Triple<List<MooneyEventRepre>, Integer, String> getMooneyStyleCloze(String fileName) {
         File clozeFile = new File(clozeDir, fileName);
         if (!clozeFile.exists()) {
-            logger.info("Cloze file does not exist: " + clozeFile.getPath());
+            logEvalInfo("Cloze file does not exist: " + clozeFile.getPath());
             return null;
         }
         List<String> lines = null;
@@ -247,7 +259,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
                 if (ignoreLowFreq) {
                     long evmTf = DataPool.getPredicateFreq(align.getLowercaseWordLemma(mention.getHeadWord()));
                     if (Utils.termFrequencyFilter(evmTf)) {
-                        logger.info("Mention filtered because of low frequency: " + mention.getCoveredText() + " " + evmTf);
+                        logEvalInfo("Mention filtered because of low frequency: " + mention.getCoveredText() + " " + evmTf);
                         continue;
                     }
                 }
@@ -272,12 +284,12 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        recallCounts = new int[allK.size()];
-        for (int kPos = 0; kPos < allK.size(); kPos++) {
-            logger.info(String.format("Recall at %d : %.4f", allK.get(kPos), recallCounts[kPos] * 1.0 / totalCount));
+        recallCounts = new int[allK.length];
+        for (int kPos = 0; kPos < allK.length; kPos++) {
+            logEvalResult(String.format("Recall at %d : %.4f", allK[kPos], recallCounts[kPos] * 1.0 / totalCount));
         }
-        logger.info(String.format("MRR is : %.4f", mrr / totalCount));
-        logger.info("Completed.");
+        logEvalResult(String.format("MRR is : %.4f", mrr / totalCount));
+        logEvalInfo("Completed.");
     }
 
 
