@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.script.annotators.learn.test;
 
-import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.model.ContextElement;
@@ -17,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Created with IntelliJ IDEA.
@@ -44,12 +44,9 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
 
         for (String featureImplName : featureImplNames) {
-            logger.info(featureImplName);
-            String[] nameParts = featureImplName.split(".");
+            String[] nameParts = featureImplName.split(Pattern.quote("."));
             predictorName += "_" + nameParts[nameParts.length - 1];
         }
-
-        predictorName += "_" + Joiner.on(",").join(featureImplNames);
 
         logger.info("Initializing tester : " + predictorName);
 

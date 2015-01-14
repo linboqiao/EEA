@@ -76,8 +76,7 @@ public class MultiArgumentClozeTestRunner {
 
 
         for (String modelPath : modelPaths) {
-
-            String[] featureNames = modelPath.replace("^" + modelPathBase, "").replace("_\\(\\d+\\).ser$", "").split("_");
+            String[] featureNames = modelPath.replaceAll("^" + modelPathBase + "_", "").replaceAll("_\\d.ser$", "").split("_");
             //make complete class name
             for (int i = 0; i < featureNames.length; i++) {
                 featureNames[i] = featurePackage + "." + featureNames[i];
