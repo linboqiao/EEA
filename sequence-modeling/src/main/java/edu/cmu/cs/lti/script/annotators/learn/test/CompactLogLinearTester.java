@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.script.annotators.learn.test;
 
+import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.model.ContextElement;
@@ -37,28 +38,24 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
 
     @Override
     protected String initializePredictor(UimaContext aContext) {
+
+        String predictorName = this.getClass().getSimpleName();
+
+        String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
+
+        predictorName += "_" + Joiner.on(",").join(featureImplNames);
+
+        logEvalInfo("Initializing predictor : " + predictorName);
+
         skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
 
         String modelPath = (String) aContext.getConfigParameterValue(PARAM_MODEL_PATH);
 
         logEvalInfo("Loading from " + modelPath);
 
-        String predictorName = this.getClass().getSimpleName();
-
         try {
             compactWeights = (TLongBasedFeatureTable) SerializationHelper.read(modelPath);
-            String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
-
-            for (String featureImplName : featureImplNames) {
-                String[] nameParts = featureImplName.split(".");
-                predictorName += nameParts[nameParts.length - 1];
-            }
-
-            try {
-                extractor = new CompactFeatureExtractor(compactWeights, featureImplNames);
-            } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            extractor = new CompactFeatureExtractor(compactWeights, featureImplNames);
         } catch (Exception e) {
             e.printStackTrace();
         }
