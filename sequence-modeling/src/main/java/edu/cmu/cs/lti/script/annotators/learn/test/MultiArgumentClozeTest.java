@@ -203,11 +203,21 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
     }
 
     protected void logEvalResult(String record) {
-        evalResults.add(record);
+        try {
+            FileUtils.write(evalResultFile,record+"\n", true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        evalResults.add(record);
     }
 
     protected void logEvalInfo(String record) {
-        evalInfos.add(record);
+        try {
+            FileUtils.write(evalResultFile,record+"\n", true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        evalInfos.add(record);
     }
 
     /**

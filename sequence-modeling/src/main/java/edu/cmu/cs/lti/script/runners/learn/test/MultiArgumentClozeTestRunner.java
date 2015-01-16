@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.script.runners.learn.test;
 
-import edu.cmu.cs.lti.script.annotators.learn.test.CompactLogLinearTester;
 import edu.cmu.cs.lti.script.annotators.learn.test.ConditionProbablityTester;
 import edu.cmu.cs.lti.script.annotators.learn.test.MultiArgumentClozeTest;
 import edu.cmu.cs.lti.script.utils.DataPool;
@@ -75,32 +74,32 @@ public class MultiArgumentClozeTestRunner {
         String evalResultBasePath = config.get("edu.cmu.cs.lti.cds.eval.result.path");
 
 
-        for (String modelPath : modelPaths) {
-            String[] featureNames = modelPath.replaceAll("^" + modelPathBase + "_", "").replaceAll("_\\d.ser$", "").split("_");
-            //make complete class name
-            for (int i = 0; i < featureNames.length; i++) {
-                featureNames[i] = featurePackage + "." + featureNames[i];
-            }
+//        for (String modelPath : modelPaths) {
+//            String[] featureNames = modelPath.replaceAll("^" + modelPathBase + "_", "").replaceAll("_\\d.ser$", "").split("_");
+//            //make complete class name
+//            for (int i = 0; i < featureNames.length; i++) {
+//                featureNames[i] = featurePackage + "." + featureNames[i];
+//            }
+//
+//            AnalysisEngineDescription logLinearPredictor = CustomAnalysisEngineFactory.createAnalysisEngine(
+//                    CompactLogLinearTester.class, typeSystemDescription,
+//                    MultiArgumentClozeTest.PARAM_CLOZE_DIR_PATH, clozePath,
+//                    MultiArgumentClozeTest.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
+//                    MultiArgumentClozeTest.PARAM_EVAL_RESULT_PATH, evalResultBasePath,
+//                    MultiArgumentClozeTest.PARAM_EVAL_RANKS, allK,
+//                    MultiArgumentClozeTest.PARAM_EVAL_LOG_DIR, evalLogPath,
+//
+//                    CompactLogLinearTester.PARAM_DB_DIR_PATH, dbPath,
+//                    CompactLogLinearTester.PARAM_MODEL_PATH, modelPath,
+//                    CompactLogLinearTester.PARAM_KEEP_QUIET, false,
+//                    CompactLogLinearTester.PARAM_SKIP_GRAM_N, skipgramN,
+//                    CompactLogLinearTester.PARAM_FEATURE_NAMES, featureNames
+//            );
+//
+//            SimplePipeline.runPipeline(reader, logLinearPredictor);
+//        }
 
-            AnalysisEngineDescription logLinearPredictor = CustomAnalysisEngineFactory.createAnalysisEngine(
-                    CompactLogLinearTester.class, typeSystemDescription,
-                    MultiArgumentClozeTest.PARAM_CLOZE_DIR_PATH, clozePath,
-                    MultiArgumentClozeTest.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
-                    MultiArgumentClozeTest.PARAM_EVAL_RESULT_PATH, evalResultBasePath,
-                    MultiArgumentClozeTest.PARAM_EVAL_RANKS, allK,
-                    MultiArgumentClozeTest.PARAM_EVAL_LOG_DIR, evalLogPath,
-
-                    CompactLogLinearTester.PARAM_DB_DIR_PATH, dbPath,
-                    CompactLogLinearTester.PARAM_MODEL_PATH, modelPath,
-                    CompactLogLinearTester.PARAM_KEEP_QUIET, false,
-                    CompactLogLinearTester.PARAM_SKIP_GRAM_N, skipgramN,
-                    CompactLogLinearTester.PARAM_FEATURE_NAMES, featureNames
-            );
-
-            SimplePipeline.runPipeline(reader, logLinearPredictor);
-
-        }
-
+        //mooney model
         AnalysisEngineDescription conditionalProbabilityPredictor = CustomAnalysisEngineFactory.createAnalysisEngine(
                 ConditionProbablityTester.class, typeSystemDescription,
                 MultiArgumentClozeTest.PARAM_CLOZE_DIR_PATH, clozePath,
@@ -111,7 +110,7 @@ public class MultiArgumentClozeTestRunner {
 
                 ConditionProbablityTester.PARAM_DB_DIR_PATH, dbPath,
                 ConditionProbablityTester.PARAM_DB_NAMES, dbNames,
-                ConditionProbablityTester.PARAM_SMOOTHING, 1
+                ConditionProbablityTester.PARAM_SMOOTHING, 1.0
         );
 
         SimplePipeline.runPipeline(reader, conditionalProbabilityPredictor);
