@@ -39,7 +39,7 @@ public class ConditionProbablityTester extends MultiArgumentClozeTest {
     private TObjectIntMap<TIntList>[] occCountMaps;
     private TObjectIntMap<String>[] headIdMaps;
 
-    private double smoothingParameter;
+    private float smoothingParameter;
 
     private String[] allPredicates = DataPool.headWords;
 
@@ -51,7 +51,7 @@ public class ConditionProbablityTester extends MultiArgumentClozeTest {
 
         String[] dbNames = (String[]) aContext.getConfigParameterValue(PARAM_DB_NAMES);
 
-        smoothingParameter = (Double) aContext.getConfigParameterValue(PARAM_SMOOTHING);
+        smoothingParameter = (Float) aContext.getConfigParameterValue(PARAM_SMOOTHING);
 
         String cooccName = KarlMooneyScriptCounter.defaultCooccMapName;
 
