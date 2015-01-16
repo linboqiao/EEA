@@ -203,21 +203,21 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
     }
 
     protected void logEvalResult(String record) {
-        try {
-            FileUtils.write(evalResultFile,record+"\n", true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        evalResults.add(record);
+//        try {
+//            FileUtils.write(evalResultFile,record+"\n", true);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        evalResults.add(record);
     }
 
     protected void logEvalInfo(String record) {
-        try {
-            FileUtils.write(evalResultFile,record+"\n", true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        evalInfos.add(record);
+//        try {
+//            FileUtils.write(evalResultFile,record+"\n", true);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        evalInfos.add(record);
     }
 
     /**
@@ -297,6 +297,13 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         }
         logEvalResult(String.format("MRR is : %.4f", mrr / totalCount));
         logEvalInfo("Completed.");
+
+        try {
+            FileUtils.writeLines(evalResultFile, evalResults, true);
+            FileUtils.writeLines(evalInfoFile, evalInfos, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
