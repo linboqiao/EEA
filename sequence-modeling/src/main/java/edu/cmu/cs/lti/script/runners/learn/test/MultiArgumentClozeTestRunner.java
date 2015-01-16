@@ -110,7 +110,7 @@ public class MultiArgumentClozeTestRunner {
 
                 ConditionProbablityTester.PARAM_DB_DIR_PATH, dbPath,
                 ConditionProbablityTester.PARAM_DB_NAMES, dbNames,
-                ConditionProbablityTester.PARAM_SMOOTHING, 1.0
+                ConditionProbablityTester.PARAM_SMOOTHING, (float) 1.0
         );
 
         SimplePipeline.runPipeline(reader, conditionalProbabilityPredictor);
