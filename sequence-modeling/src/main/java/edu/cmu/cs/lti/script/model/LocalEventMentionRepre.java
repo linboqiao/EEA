@@ -62,7 +62,9 @@ public class LocalEventMentionRepre {
     }
 
     public MooneyEventRepre toMooneyMention() {
-        return new MooneyEventRepre(mentionHead, args[0].getRewritedId(), args[1].getRewritedId(), args[2].getRewritedId());
+        return new MooneyEventRepre(mentionHead, args[0] == null ? KmTargetConstants.nullArgMarker : args[0].getRewritedId(),
+                args[1] == null ? KmTargetConstants.nullArgMarker : args[1].getRewritedId(),
+                args[2] == null ? KmTargetConstants.nullArgMarker : args[2].getRewritedId());
     }
 
 
