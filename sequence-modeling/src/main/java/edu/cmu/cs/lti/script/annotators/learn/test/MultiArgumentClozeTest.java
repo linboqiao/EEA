@@ -111,13 +111,13 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         evalResults = new ArrayList<>();
         evalInfos = new ArrayList<>();
 
-        logEvalInfo(progressInfo(aJCas));
+        logger.info(progressInfo(aJCas));
 
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
 
         if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
             //ignore this blacklisted file;
-            logEvalInfo("Ignored black listed file");
+            logger.info("Remove blacklisted file");
             return;
         }
 
@@ -125,7 +125,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         String clozeFileName = UimaConvenience.getShortDocumentName(aJCas) + ".gz_" + UimaConvenience.getOffsetInSource(aJCas) + clozeExt;
         Triple<List<MooneyEventRepre>, Integer, String> mooneyClozeTask = getMooneyStyleCloze(clozeFileName);
         if (mooneyClozeTask == null) {
-            logEvalInfo("Cloze file removed due to duplication or empty");
+            logger.info("Cloze file removed due to duplication or empty");
             return;
         }
 
@@ -137,7 +137,6 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
             return;
         }
 
-        String rankListOutputName = mooneyClozeTask.getRight() + "_ranklist";
 
         int clozeIndex = mooneyClozeTask.getMiddle();
         List<MooneyEventRepre> mooneyChain = mooneyClozeTask.getLeft();
@@ -188,35 +187,30 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
             mrr += 1.0 / rank;
         } else {
             String evalRecord = String.format("For cloze task : %s, correct answer is not found", clozeFileName);
-            evalResults.add(evalRecord);
+            logEvalResult(evalRecord);
+            logEvalInfo(evalRecord);
         }
         totalCount++;
 
+        String rankListOutputName = mooneyClozeTask.getRight() + "_ranklist";
+        String evalInfoOutputName = mooneyClozeTask.getRight() + "_evalinfo";
+
         File rankListOutputFile = new File(rankListOutputDir, rankListOutputName);
+        File evalInfoFile = new File(rankListOutputDir, evalInfoOutputName);
         try {
             FileUtils.writeLines(rankListOutputFile, rankResults);
+            FileUtils.writeLines(evalInfoFile, evalInfos);
             FileUtils.writeLines(evalResultFile, evalResults, true);
-            FileUtils.writeLines(evalInfoFile, evalInfos, true);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     protected void logEvalResult(String record) {
-//        try {
-//            FileUtils.write(evalResultFile,record+"\n", true);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         evalResults.add(record);
     }
 
     protected void logEvalInfo(String record) {
-//        try {
-//            FileUtils.write(evalResultFile,record+"\n", true);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         evalInfos.add(record);
     }
 
@@ -300,11 +294,8 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
         try {
             FileUtils.writeLines(evalResultFile, evalResults, true);
-            FileUtils.writeLines(evalInfoFile, evalInfos, true);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
 }

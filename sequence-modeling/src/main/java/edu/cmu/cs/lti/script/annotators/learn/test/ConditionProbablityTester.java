@@ -93,15 +93,25 @@ public class ConditionProbablityTester extends MultiArgumentClozeTest {
 
                 double score = 0;
                 for (int i = 0; i < testIndex; i++) {
-                    Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(chain.get(i).getMention().toMooneyMention(), candidateEvm);
+                    MooneyEventRepre previousMention = chain.get(i).getMention().toMooneyMention();
+                    Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(previousMention, candidateEvm);
                     double precedingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter, numTotalEvents);
                     score += precedingScore;
+
+                    if (sawAnswer) {
+                        logEvalInfo(String.format("Preceding score with %s is %.3f", previousMention, precedingScore));
+                    }
                 }
 
                 for (int i = testIndex + 1; i < chain.size(); i++) {
+                    MooneyEventRepre followingMention = chain.get(i).getMention().toMooneyMention();
                     Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(candidateEvm, chain.get(i).getMention().toMooneyMention());
                     double followingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter, numTotalEvents);
                     score += followingScore;
+
+                    if (sawAnswer) {
+                        logEvalInfo(String.format("Following score with %s is %.3f", followingMention, followingScore));
+                    }
                 }
 
                 if (sawAnswer) {
