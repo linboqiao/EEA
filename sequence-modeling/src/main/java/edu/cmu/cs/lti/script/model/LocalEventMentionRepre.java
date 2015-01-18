@@ -6,6 +6,7 @@ import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.map.TIntIntMap;
+import org.apache.commons.lang.builder.CompareToBuilder;
 
 /**
  * Although this is not so different from MooneyEventRepre, a new class is used to
@@ -17,7 +18,7 @@ import gnu.trove.map.TIntIntMap;
  * Date: 11/3/14
  * Time: 3:44 PM
  */
-public class LocalEventMentionRepre {
+public class LocalEventMentionRepre implements Comparable<LocalEventMentionRepre> {
     private final String mentionHead;
 
     //Note, this could be null! Means no argument at this position
@@ -130,5 +131,14 @@ public class LocalEventMentionRepre {
         }
 
         return sb.toString();
+    }
+
+    @Override
+    /**
+     * The comparison for this class is not important, just easy
+     */
+    public int compareTo(LocalEventMentionRepre o) {
+        if (this == o) return 0;
+        return new CompareToBuilder().append(this.mentionHead, o.mentionHead).toComparison();
     }
 }

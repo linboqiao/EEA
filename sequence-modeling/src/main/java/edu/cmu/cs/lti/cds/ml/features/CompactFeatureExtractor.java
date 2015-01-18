@@ -1,13 +1,13 @@
 package edu.cmu.cs.lti.cds.ml.features;
 
 import com.google.common.collect.BiMap;
-import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.ml.features.impl.MooneyFeature;
+import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
+import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import edu.cmu.cs.lti.script.utils.DataPool;
-import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.utils.BitUtils;
-import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
+import edu.cmu.cs.lti.utils.FeatureTable;
 import gnu.trove.list.TIntList;
 import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.map.TObjectIntMap;
@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  * Time: 4:47 PM
  */
 public class CompactFeatureExtractor {
-    TLongBasedFeatureTable featureTable;
+    FeatureTable featureTable;
 
     static Logger logger = Logger.getLogger(CompactFeatureExtractor.class.getName());
 
@@ -35,7 +35,7 @@ public class CompactFeatureExtractor {
 
     private List<Feature> featureImpls;
 
-    public CompactFeatureExtractor(TLongBasedFeatureTable featureTable, List<Feature> featureImpls) {
+    public CompactFeatureExtractor(FeatureTable featureTable, List<Feature> featureImpls) {
         this.featureTable = featureTable;
         this.positiveObservations = DataPool.cooccCountMaps;
         this.headMap = DataPool.headIdMap;
@@ -47,11 +47,11 @@ public class CompactFeatureExtractor {
         logger.info("Feature table feature type size: " + featureTable.getFeatureNameMap().size());
     }
 
-    public CompactFeatureExtractor(TLongBasedFeatureTable featureTable, String[] featureImplNames) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public CompactFeatureExtractor(FeatureTable featureTable, String[] featureImplNames) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         this(featureTable, featuresByName(featureImplNames));
     }
 
-    public CompactFeatureExtractor(TLongBasedFeatureTable featureTable) {
+    public CompactFeatureExtractor(FeatureTable featureTable) {
         this(featureTable, defaultFeatures());
     }
 

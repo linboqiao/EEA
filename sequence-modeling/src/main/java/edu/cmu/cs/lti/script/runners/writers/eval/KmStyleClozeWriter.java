@@ -34,11 +34,10 @@ public class KmStyleClozeWriter {
         System.out.println(className + " started...");
 
         Configuration config = new Configuration(new File(args[0]));
-        String subPath = args.length > 1 ? args[1] : "";
 
-        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.heldout.path") + "/" + subPath; //"data/02_event_tuples";
+        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.heldout.path"); //"data/02_event_tuples/dev";
         String paramParentOutputDir = config.get("edu.cmu.cs.lti.cds.parent.output"); // "data";
-        String paramBaseOutputDirName = config.get("edu.cmu.cs.lti.cds.cloze.base") + "_" + subPath; // "cloze"
+        String clozePath = config.get("edu.cmu.cs.lti.cds.cloze.base.path"); // "loze_dev"
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
         int clozeMinSize = config.getInt("edu.cmu.cs.lti.cds.cloze.minsize");
@@ -63,7 +62,7 @@ public class KmStyleClozeWriter {
 
         AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
                 KmStyleAllEventMentionClozeTaskGenerator.class, typeSystemDescription,
-                KmStyleAllEventMentionClozeTaskGenerator.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_BASE_OUTPUT_DIR_NAME, clozePath,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_STEP_NUMBER, stepNum,

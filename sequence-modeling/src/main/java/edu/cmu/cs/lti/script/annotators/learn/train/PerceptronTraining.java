@@ -11,7 +11,7 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
+import edu.cmu.cs.lti.utils.TLongBasedFeatureHashTable;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -38,9 +38,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
     public static final String PARAM_SKIP_GRAM_N = "skipgramn";
 
-    public static TLongBasedFeatureTable trainingFeatureTable;
-
-    private TLongShortDoubleHashTable previousParameters;
+    public static TLongBasedFeatureHashTable trainingFeatureTable;
 
     public static TLongShortDoubleHashTable sumOfFeatures;
 
@@ -49,12 +47,14 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
     TokenAlignmentHelper align = new TokenAlignmentHelper();
     CompactFeatureExtractor extractor;
 
-    //some defaults
+    //some defaults, will be changed by parameters anyway
     int miniBatchSize = 100;
-    int rankListSize = 25;
+    int rankListSize = 100;
     int numArguments = 3;
 
     int skipGramN = 2;
+
+    int topNegatives = 5;
 
     double averageRankPercentage = 0;
 
@@ -69,7 +69,8 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         miniBatchSize = (Integer) aContext.getConfigParameterValue(PARAM_MINI_BATCH_SIZE);
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
         skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
-        trainingFeatureTable = new TLongBasedFeatureTable();
+        trainingFeatureTable = new TLongBasedFeatureHashTable();
+        sumOfFeatures = new TLongShortDoubleHashTable();
         numSamplesProcessed = 0;
 
         try {
@@ -100,50 +101,48 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
             }
         }
 
+        Map<LocalEventMentionRepre, TLongShortDoubleHashTable> mention2Features = new HashMap<>();
+
         //for each sample
         for (int sampleIndex = 0; sampleIndex < chain.size(); sampleIndex++) {
             ContextElement realSample = chain.get(sampleIndex);
             TLongShortDoubleHashTable correctFeatures = extractor.getFeatures(chain, realSample, sampleIndex, skipGramN, false);
+
             Sentence sampleSent = realSample.getSent();
 
-            double bestSampleScore = Double.MIN_VALUE;
-            TLongShortDoubleHashTable currentBestSampleFeature = null;
 
+            PriorityQueue<Pair<Double, LocalEventMentionRepre>> scores = new PriorityQueue<>(rankListSize, Collections.reverseOrder());
 
-            double realSampleScore = Double.MIN_VALUE;
-            PriorityQueue<Double> scores = new PriorityQueue<>(rankListSize, Collections.reverseOrder());
-
-            for (LocalEventMentionRepre sample : sampleCandidiatesWithReal(arguments, realSample.getMention())) {
+            for (LocalEventMentionRepre sample : sampleCandidatesWithReal(arguments, realSample.getMention())) {
                 TLongShortDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getHead(), sample), sampleIndex, skipGramN, false);
-
                 double sampleScore = trainingFeatureTable.dotProd(sampleFeature);
-                scores.add(sampleScore);
-
-                if (sample.mooneyMatch(realSample.getMention())) {
-                    realSampleScore = sampleScore;
-                }
-
-                if (currentBestSampleFeature == null || sampleScore > bestSampleScore) {
-                    currentBestSampleFeature = sampleFeature;
-                    bestSampleScore = sampleScore;
-                }
+                scores.add(Pair.of(sampleScore, sample));
+                mention2Features.put(sample, sampleFeature);
             }
 
             int realRank = -1;
             int rank = 0;
+
+            int negativeCount = 0;
+
+            List<TLongShortDoubleHashTable> currentBestSampleFeatures = new ArrayList<>();
             while (!scores.isEmpty()) {
-                double nextScore = scores.poll();
-                if (nextScore == realSampleScore) {
+                Pair<Double, LocalEventMentionRepre> nextScoredItem = scores.poll();
+                if (nextScoredItem.getRight().mooneyMatch(realSample.getMention())) {
                     realRank = rank;
                     break;
+                } else {
+                    if (negativeCount < topNegatives) {
+                        currentBestSampleFeatures.add(mention2Features.get(nextScoredItem.getRight()));
+                        negativeCount++;
+                    }
                 }
                 rank++;
             }
 
-            logger.info("Real rank is " + realRank);
-
+//            logger.info(String.format("Real rank is %d  among %d", realRank, rankListSize));
             if (realRank != 0) {
-                perceptronUpdate(correctFeatures, currentBestSampleFeature);
+                perceptronUpdate(correctFeatures, currentBestSampleFeatures);
             }
 
             averageRankPercentage += realRank * 1.0 / rankListSize;
@@ -167,7 +166,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
      * @param realSample
      * @return
      */
-    private List<LocalEventMentionRepre> sampleCandidiatesWithReal(List<LocalArgumentRepre> arguments, LocalEventMentionRepre realSample) {
+    private List<LocalEventMentionRepre> sampleCandidatesWithReal(List<LocalArgumentRepre> arguments, LocalEventMentionRepre realSample) {
         List<LocalEventMentionRepre> samples = new ArrayList<>();
         boolean containsReal = false;
 
@@ -191,14 +190,12 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
     }
 
 
-    private void perceptronUpdate(TLongShortDoubleHashTable correctFeatures, TLongShortDoubleHashTable currentBest) {
+    private void perceptronUpdate(TLongShortDoubleHashTable correctFeatures, List<TLongShortDoubleHashTable> currentTops) {
         trainingFeatureTable.adjustBy(correctFeatures, 1);
-        trainingFeatureTable.adjustBy(currentBest, -1);
-
-        previousParameters.adjustBy(correctFeatures, 1);
-        previousParameters.adjustBy(currentBest, -1);
-
-        sumOfFeatures.adjustBy(previousParameters, 1);
+        for (TLongShortDoubleHashTable currentTop : currentTops) {
+            trainingFeatureTable.adjustBy(currentTop, -1);
+        }
+        sumOfFeatures.adjustBy(trainingFeatureTable.getUnderlyingTable(), 1);
     }
 
     @Override

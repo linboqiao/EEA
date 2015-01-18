@@ -50,11 +50,7 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
-
-        String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
-
         clozeMinSize = (Integer) aContext.getConfigParameterValue(PARAM_CLOZE_MIN_SIZE);
-
         if (aContext.getConfigParameterValue(PARAM_IGNORE_LOW_FREQ) != null) {
             ignoreLowFreq = (Boolean) aContext.getConfigParameterValue(PARAM_IGNORE_LOW_FREQ);
         } else {
@@ -180,8 +176,6 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
                 sb.append(evmRepre.toString()).append("\n");
             }
         }
-
-//        Utils.pause();
 
         return sb.toString();
     }

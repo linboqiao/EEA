@@ -3,8 +3,6 @@ package edu.cmu.cs.lti.utils;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
-import edu.cmu.cs.lti.collections.TLongShortDoubleTreeTable;
-import edu.cmu.cs.lti.model.MutableDouble;
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.iterator.TShortDoubleIterator;
 import gnu.trove.map.TShortDoubleMap;
@@ -12,7 +10,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.PrintWriter;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,7 +17,7 @@ import java.util.TreeMap;
  * Date: 11/11/14
  * Time: 3:49 PM
  */
-public class TLongBasedFeatureTable implements FeatureTable {
+public class TLongBasedFeatureHashTable implements FeatureTable {
     private static final long serialVersionUID = 1574621409197680994L;
     /**
      * Long is the main key, which can encode two integers (then map to two words)
@@ -31,22 +28,25 @@ public class TLongBasedFeatureTable implements FeatureTable {
      * <p/>
      * Double is the feature value to be update
      */
-    TLongShortDoubleTreeTable table = new TLongShortDoubleTreeTable();
+    TLongShortDoubleHashTable table = new TLongShortDoubleHashTable();
 
     //    TObjectShortHashMap<String> secondaryFeatureLookupMap = new TObjectShortHashMap<>();
     BiMap<String, Short> secondaryFeatureLookupMap = HashBiMap.create();
 
     short nextKey = Short.MIN_VALUE;
 
-    public TLongBasedFeatureTable() {
+    public TLongBasedFeatureHashTable() {
 
     }
 
-    public TLongBasedFeatureTable(TLongShortDoubleTreeTable table, BiMap<String, Short> secondaryFeatureLookupMap) {
+    public TLongBasedFeatureHashTable(TLongShortDoubleHashTable table, BiMap<String, Short> secondaryFeatureLookupMap) {
         this.table = table;
         this.secondaryFeatureLookupMap = secondaryFeatureLookupMap;
     }
 
+    public TLongShortDoubleHashTable getUnderlyingTable() {
+        return table;
+    }
 
     public int getNumRows() {
         return table.getNumRows();
@@ -73,7 +73,7 @@ public class TLongBasedFeatureTable implements FeatureTable {
         }
     }
 
-    public TLongObjectIterator<TreeMap<Short, MutableDouble>> iterator() {
+    public TLongObjectIterator<TShortDoubleMap> iterator() {
         return table.iterator();
     }
 
@@ -110,7 +110,7 @@ public class TLongBasedFeatureTable implements FeatureTable {
         return table.get(rowKey, colKey);
     }
 
-    public TreeMap<Short, MutableDouble> getRow(long rowKey) {
+    public TShortDoubleMap getRow(long rowKey) {
         return table.getRow(rowKey);
     }
 
@@ -157,18 +157,16 @@ public class TLongBasedFeatureTable implements FeatureTable {
             firstLevelIter.advance();
             long featureRowKey = firstLevelIter.key();
             if (table.containsRow(featureRowKey)) {
-                TreeMap<Short, MutableDouble> weightsRow = table.getRow(featureRowKey);
+                TShortDoubleMap weightsRow = table.getRow(featureRowKey);
                 TShortDoubleMap secondLevelFeatures = firstLevelIter.value();
                 for (TShortDoubleIterator secondLevelIter = secondLevelFeatures.iterator(); secondLevelIter.hasNext(); ) {
                     secondLevelIter.advance();
                     Pair<Integer, Integer> wordIndexPair = BitUtils.get2IntFromLong(featureRowKey);
-//                    System.err.println("Feature is " + DataPool.headWords[wordIndexPair.getLeft()] + " " +
-//                            DataPool.headWords[wordIndexPair.getRight()] + " " + wordIndexPair.getLeft() + " " + wordIndexPair.getRight() + " " + featureNames.get(secondLevelIter.key()) + ":" + secondLevelIter.key());
                     if (weightsRow.containsKey(secondLevelIter.key())) {
-                        dotProd += secondLevelIter.value() * weightsRow.get(secondLevelIter.key()).get();
+                        dotProd += secondLevelIter.value() * weightsRow.get(secondLevelIter.key());
                         System.err.println("Feature hit " + headWords[wordIndexPair.getLeft()] + " " +
                                 headWords[wordIndexPair.getRight()] + " " + featureNames.get(secondLevelIter.key()) + " : " +
-                                weightsRow.get(secondLevelIter.key()).get());
+                                weightsRow.get(secondLevelIter.key()));
                     }
                 }
             }
@@ -180,18 +178,18 @@ public class TLongBasedFeatureTable implements FeatureTable {
         int numFeatures = 0;
         int numLexicalPairs = 0;
         BiMap<Short, String> featureNames = getFeatureNameMap();
-        for (TLongObjectIterator<TreeMap<Short, MutableDouble>> rowIter = table.iterator(); rowIter.hasNext(); ) {
+        for (TLongObjectIterator<TShortDoubleMap> rowIter = table.iterator(); rowIter.hasNext(); ) {
             rowIter.advance();
             numLexicalPairs++;
             Pair<Integer, Integer> wordIds = BitUtils.get2IntFromLong(rowIter.key());
             writer.write(headWords[wordIds.getKey()] + " " + headWords[wordIds.getValue()] + " " + wordIds.getKey() + " " + wordIds.getValue() + "\n");
 
-            for (Map.Entry<Short, MutableDouble> cell : rowIter.value().entrySet()) {
-                writer.write(featureNames.get(cell.getKey()) + " " + cell.getKey() + " " + cell.getValue() + "\n");
+            for (TShortDoubleIterator cellIter = rowIter.value().iterator(); cellIter.hasNext(); ) {
+                cellIter.advance();
+                writer.write(featureNames.get(cellIter.key()) + " " + cellIter.key() + " " + cellIter.value() + "\n");
                 numFeatures++;
             }
         }
-//        System.out.println("Number of lexical pairs " + numLexicalPairs + " , num of features " + numFeatures);
         return Pair.of(numFeatures, numLexicalPairs);
     }
 

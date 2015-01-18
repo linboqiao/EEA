@@ -43,6 +43,8 @@ public class PerceptronTrainingRunner {
         String featurePackage = config.get("edu.cmu.cs.lti.cds.features.packagename");
         int skipgramN = config.getInt("edu.cmu.cs.lti.cds.skipgram.n");
 
+        int rankListSize = config.getInt("edu.cmu.cs.lti.cds.perceptron.ranklist.size");
+
         String modelSuffix = Joiner.on("_").join(featureNames);
 
         //make complete class name
@@ -71,7 +73,7 @@ public class PerceptronTrainingRunner {
         logger.info("Running " + CompactGlobalNegativeTrainer.class.getName());
 
         AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(PerceptronTraining.class, typeSystemDescription,
-                PerceptronTraining.PARAM_RANK_LIST_SIZE, 25,
+                PerceptronTraining.PARAM_RANK_LIST_SIZE, rankListSize,
                 PerceptronTraining.PARAM_MINI_BATCH_SIZE, miniBatchNum,
                 PerceptronTraining.PARAM_FEATURE_NAMES, featureNames,
                 PerceptronTraining.PARAM_SKIP_GRAM_N, skipgramN);
