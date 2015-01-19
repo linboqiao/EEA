@@ -84,7 +84,6 @@ public class PerceptronTrainingRunner {
             String modelOutputPath = modelStoragePath + "_" + modelSuffix + "_" + i + modelExt;
             String averageModelOutputPath = modelOutputPath + "_average";
 
-
             SimplePipeline.runPipeline(reader, trainer);
             File modelDirParent = new File(modelStoragePath).getParentFile();
 

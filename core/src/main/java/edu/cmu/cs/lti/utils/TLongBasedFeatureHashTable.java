@@ -9,6 +9,7 @@ import gnu.trove.map.TShortDoubleMap;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Map;
  * Date: 11/11/14
  * Time: 3:49 PM
  */
-public class TLongBasedFeatureHashTable implements FeatureTable {
+public class TLongBasedFeatureHashTable implements FeatureTable, Serializable {
     private static final long serialVersionUID = 1574621409197680994L;
     /**
      * Long is the main key, which can encode two integers (then map to two words)
