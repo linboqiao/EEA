@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.script.runners.writers;
 
 import edu.cmu.cs.lti.script.annotators.stats.EventMentionHeadTfDfCounter;
+import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.iterator.TIntIntIterator;
 import gnu.trove.map.TIntIntMap;
@@ -22,6 +23,8 @@ public class WordFrequencyPrinter {
         Configuration config = new Configuration(new File(args[0]));
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath");
 
+        DataPool.loadHeadStatistics(config, false);
+
         File tfPlainOut = new File(args[1]);
         File dfPlainOut = new File(args[2]);
 
@@ -36,12 +39,12 @@ public class WordFrequencyPrinter {
 
         for (TIntIntIterator iter = tfCounts.iterator(); iter.hasNext(); ) {
             iter.advance();
-            tfWriter.write(iter.key() + " " + iter.value() + "\n");
+            tfWriter.write(DataPool.headWords[iter.key()] + " " + iter.value() + "\n");
         }
 
         for (TIntIntIterator iter = dfCounts.iterator(); iter.hasNext(); ) {
             iter.advance();
-            dfWriter.write(iter.key() + " " + iter.value() + "\n");
+            dfWriter.write(DataPool.headWords[iter.key()] + " " + iter.value() + "\n");
         }
 
     }
