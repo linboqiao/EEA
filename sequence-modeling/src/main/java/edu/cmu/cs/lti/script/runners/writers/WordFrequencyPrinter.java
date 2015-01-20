@@ -47,5 +47,8 @@ public class WordFrequencyPrinter {
             dfWriter.write(DataPool.headWords[iter.key()] + " " + iter.value() + "\n");
         }
 
+
+        tfWriter.close();
+        dfWriter.close();
     }
 }

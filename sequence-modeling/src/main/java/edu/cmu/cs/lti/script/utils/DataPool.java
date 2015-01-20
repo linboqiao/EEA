@@ -89,9 +89,6 @@ public class DataPool {
             headWords[iter.value()] = iter.key();
         }
 
-        System.err.println("Head id map size : " + headIdMap.size());
-        System.err.println("Head words size : " + headWords.length);
-
         System.err.println(String.format("Total predicate counts: %d", predicateTotalCount));
 
         if (loadPairCount) {
