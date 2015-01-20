@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.script.runners.learn.train;
 
 import com.google.common.base.Joiner;
-import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import edu.cmu.cs.lti.script.annotators.learn.train.CompactGlobalNegativeTrainer;
 import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.script.annotators.learn.train.PerceptronTraining;
@@ -91,13 +90,13 @@ public class PerceptronTrainingRunner {
                 modelDirParent.mkdirs();
             }
 
-            TLongShortDoubleHashTable averageParameters = PerceptronTraining.sumOfFeatures;
-            averageParameters.multiplyBy(1.0 / PerceptronTraining.numSamplesProcessed);
-
             logger.info("Storing this model to " + modelOutputPath);
             SerializationHelper.write(modelOutputPath, PerceptronTraining.trainingFeatureTable);
-            logger.info("Storing the averaged model to " + modelOutputPath);
-            SerializationHelper.write(averageModelOutputPath, averageParameters);
+
+//            TLongShortDoubleHashTable averageParameters = PerceptronTraining.sumOfFeatures;
+//            averageParameters.multiplyBy(1.0 / PerceptronTraining.numSamplesProcessed);
+//            logger.info("Storing the averaged model to " + modelOutputPath);
+//            SerializationHelper.write(averageModelOutputPath, averageParameters);
         }
     }
 }

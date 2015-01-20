@@ -11,8 +11,9 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.utils.TLongBasedFeatureHashTable;
+import edu.cmu.cs.lti.utils.ArrayBasedTwoLevelFeatureTable;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.utils.TwoLevelFeatureTable;
 import edu.cmu.cs.lti.utils.Utils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
@@ -38,9 +39,9 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
     public static final String PARAM_SKIP_GRAM_N = "skipgramn";
 
-    public static TLongBasedFeatureHashTable trainingFeatureTable;
+    public static TwoLevelFeatureTable trainingFeatureTable;
 
-    public static TLongShortDoubleHashTable sumOfFeatures;
+//    public static TwoLevelFeatureTable sumOfFeatures;
 
     public static long numSamplesProcessed = 0;
 
@@ -69,8 +70,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         miniBatchSize = (Integer) aContext.getConfigParameterValue(PARAM_MINI_BATCH_SIZE);
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
         skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
-        trainingFeatureTable = new TLongBasedFeatureHashTable();
-        sumOfFeatures = new TLongShortDoubleHashTable();
+        trainingFeatureTable = new ArrayBasedTwoLevelFeatureTable(DataPool.headIdMap.size());
         numSamplesProcessed = 0;
 
         try {
@@ -195,7 +195,6 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         for (TLongShortDoubleHashTable currentTop : currentTops) {
             trainingFeatureTable.adjustBy(currentTop, -1);
         }
-        sumOfFeatures.adjustBy(trainingFeatureTable.getUnderlyingTable(), 1);
     }
 
     @Override

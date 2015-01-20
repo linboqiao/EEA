@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.script.runners.stats;
+package edu.cmu.cs.lti.script.runners.writers;
 
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.utils.Configuration;

@@ -1,19 +1,16 @@
 package edu.cmu.cs.lti.script.annotators.stats;
 
-import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.script.type.EventMention;
+import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
-import gnu.trove.iterator.TIntIntIterator;
 import gnu.trove.iterator.TLongIntIterator;
 import gnu.trove.map.TIntIntMap;
-import gnu.trove.map.TIntLongMap;
 import gnu.trove.map.TLongIntMap;
 import gnu.trove.map.TLongLongMap;
 import gnu.trove.map.hash.TIntIntHashMap;
-import gnu.trove.map.hash.TIntLongHashMap;
 import gnu.trove.map.hash.TLongIntHashMap;
 import gnu.trove.map.hash.TLongLongHashMap;
 import org.apache.uima.UimaContext;
@@ -33,20 +30,15 @@ import java.util.List;
  * Date: 11/28/14
  * Time: 3:44 PM
  */
-public class EventMentionCooccCounter extends AbstractLoggingAnnotator {
+public class EventMentionHeadCooccCounter extends AbstractLoggingAnnotator {
 
     public static final String PARAM_DB_NAME = "dbName";
-
-    private TIntLongMap eventHeadTfDf = new TIntLongHashMap();
 
     private TLongLongMap eventPairCount = new TLongLongHashMap();
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
 
     public static final String defaultDBName = "predicate";
-
-    //the name is tf df, it is actually only tf
-    public static final String defaultMentionHeadCountMapName = "tfdf";
 
     public static final String defaultMentionPairCountName = "coocc";
 
@@ -92,8 +84,6 @@ public class EventMentionCooccCounter extends AbstractLoggingAnnotator {
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
             String head = align.getLowercaseWordLemma(mention.getHeadWord());
             allPredicates.add(head);
-            int headId = DataPool.headIdMap.get(head);
-            tfCounts.adjustOrPutValue(headId, 1, 1);
         }
 
         for (int i = 0; i < allPredicates.size() - 1; i++) {
@@ -104,10 +94,6 @@ public class EventMentionCooccCounter extends AbstractLoggingAnnotator {
             }
         }
 
-        for (TIntIntIterator iter = tfCounts.iterator(); iter.hasNext(); ) {
-            iter.advance();
-            eventHeadTfDf.adjustOrPutValue(iter.key(), iter.value(), iter.value());
-        }
 
         for (TLongIntIterator iter = pairCounts.iterator(); iter.hasNext(); ) {
             iter.advance();
@@ -123,13 +109,7 @@ public class EventMentionCooccCounter extends AbstractLoggingAnnotator {
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        logger.info("Total head words: " + eventHeadTfDf.size());
         logger.info("Total pairs " + eventPairCount.size());
-        try {
-            SerializationHelper.write(new File(dbPath, dbFileName + "_" + defaultMentionHeadCountMapName).getAbsolutePath(), eventHeadTfDf);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         try {
             SerializationHelper.write(new File(dbPath, dbFileName + "_" + defaultMentionPairCountName).getAbsolutePath(), eventPairCount);

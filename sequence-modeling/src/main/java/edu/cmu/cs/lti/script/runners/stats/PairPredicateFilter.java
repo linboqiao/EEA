@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.script.runners.stats;
 
-import edu.cmu.cs.lti.script.annotators.stats.EventMentionCooccCounter;
+import edu.cmu.cs.lti.script.annotators.stats.EventMentionHeadCooccCounter;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -37,8 +37,8 @@ public class PairPredicateFilter {
         System.err.println("Total pairs after trimming: " + trimedMap.size());
         try {
             SerializationHelper.write(
-                    new File(dbPath, EventMentionCooccCounter.defaultDBName +
-                            "_" + EventMentionCooccCounter.defaultMentionPairCountName
+                    new File(dbPath, EventMentionHeadCooccCounter.defaultDBName +
+                            "_" + EventMentionHeadCooccCounter.defaultMentionPairCountName
                             + "_trimmed").getAbsolutePath(), trimedMap);
         } catch (Exception e) {
             e.printStackTrace();

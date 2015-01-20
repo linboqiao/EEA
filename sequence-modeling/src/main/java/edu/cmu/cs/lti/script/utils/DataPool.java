@@ -6,7 +6,7 @@ import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.list.TIntList;
-import gnu.trove.map.TIntLongMap;
+import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TLongLongMap;
 import gnu.trove.map.TObjectIntMap;
 import org.apache.commons.io.FileUtils;
@@ -47,11 +47,11 @@ public class DataPool {
     public static TObjectIntMap<TIntList> cooccCountMaps;
 
     //global event head statistics
-    public static TIntLongMap headTfMap;
+    public static TIntIntMap headTfMap;
     public static TLongLongMap headPairMap;
 
     public static void loadEventHeadTfMap(String dbPath, String headCountMapName) throws Exception {
-        headTfMap = (TIntLongMap) SerializationHelper.read(new File(dbPath, headCountMapName).getAbsolutePath());
+        headTfMap = (TIntIntMap) SerializationHelper.read(new File(dbPath, headCountMapName).getAbsolutePath());
         System.err.println("Loaded " + headTfMap.size() + " predicate heads");
     }
 

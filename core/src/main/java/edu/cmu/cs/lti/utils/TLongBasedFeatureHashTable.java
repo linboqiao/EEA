@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.utils;
 
 import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.iterator.TShortDoubleIterator;
@@ -9,7 +8,6 @@ import gnu.trove.map.TShortDoubleMap;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.PrintWriter;
-import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -18,7 +16,7 @@ import java.util.Map;
  * Date: 11/11/14
  * Time: 3:49 PM
  */
-public class TLongBasedFeatureHashTable implements FeatureTable, Serializable {
+public class TLongBasedFeatureHashTable extends TwoLevelFeatureTable {
     private static final long serialVersionUID = 1574621409197680994L;
     /**
      * Long is the main key, which can encode two integers (then map to two words)
@@ -31,18 +29,13 @@ public class TLongBasedFeatureHashTable implements FeatureTable, Serializable {
      */
     TLongShortDoubleHashTable table = new TLongShortDoubleHashTable();
 
-    //    TObjectShortHashMap<String> secondaryFeatureLookupMap = new TObjectShortHashMap<>();
-    BiMap<String, Short> secondaryFeatureLookupMap = HashBiMap.create();
-
-    short nextKey = Short.MIN_VALUE;
 
     public TLongBasedFeatureHashTable() {
 
     }
 
-    public TLongBasedFeatureHashTable(TLongShortDoubleHashTable table, BiMap<String, Short> secondaryFeatureLookupMap) {
-        this.table = table;
-        this.secondaryFeatureLookupMap = secondaryFeatureLookupMap;
+    public TLongBasedFeatureHashTable(TwoLevelFeatureTable table) {
+        super(table);
     }
 
     public TLongShortDoubleHashTable getUnderlyingTable() {
@@ -53,51 +46,8 @@ public class TLongBasedFeatureHashTable implements FeatureTable, Serializable {
         return table.getNumRows();
     }
 
-    /**
-     * Will automatic assign a new numeric value for a new feature
-     *
-     * @param featureName
-     * @return
-     */
-    public short getOrPutFeatureIndex(String featureName) {
-        if (secondaryFeatureLookupMap.containsKey(featureName)) {
-            return secondaryFeatureLookupMap.get(featureName);
-        } else {
-            secondaryFeatureLookupMap.put(featureName, nextKey);
-            short currentKey = nextKey;
-            nextKey++;
-            if (nextKey == Short.MIN_VALUE) {
-                //this will only happen when we circuit around
-                throw new IllegalStateException("You have used up all shorts for features!");
-            }
-            return currentKey;
-        }
-    }
-
     public TLongObjectIterator<TShortDoubleMap> iterator() {
         return table.iterator();
-    }
-
-    public Short getFeatureIndex(String featureName) {
-        return secondaryFeatureLookupMap.get(featureName);
-    }
-
-    public String getFeatureName(short featureIndex) {
-        return secondaryFeatureLookupMap.inverse().get(featureIndex);
-    }
-
-    public BiMap<String, Short> getFeatureMap() {
-        return secondaryFeatureLookupMap;
-    }
-
-    public BiMap<Short, String> getFeatureNameMap() {
-//        TShortObjectMap<String> featureNames = new TShortObjectHashMap<>();
-//        for (TObjectShortIterator<String> iter = secondaryFeatureLookupMap.iterator(); iter.hasNext(); ) {
-//            iter.advance();
-//            featureNames.put(iter.value(), iter.key());
-//        }
-//        return featureNames;
-        return secondaryFeatureLookupMap.inverse();
     }
 
     /**
