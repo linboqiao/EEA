@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.script.runners.stats;
 
 import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
-import edu.cmu.cs.lti.script.annotators.stats.EventMentoinHeadTfDfCounter;
+import edu.cmu.cs.lti.script.annotators.stats.EventMentionHeadTfDfCounter;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -57,9 +57,9 @@ public class EventMentionHeadCounterRunner {
 
         // The Tf Df counter
         AnalysisEngineDescription headTfDfCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
-                EventMentoinHeadTfDfCounter.class, typeSystemDescription,
-                EventMentoinHeadTfDfCounter.PARAM_DB_DIR_PATH, dbPath,
-                EventMentoinHeadTfDfCounter.PARAM_KEEP_QUIET, false);
+                EventMentionHeadTfDfCounter.class, typeSystemDescription,
+                EventMentionHeadTfDfCounter.PARAM_DB_DIR_PATH, dbPath,
+                EventMentionHeadTfDfCounter.PARAM_KEEP_QUIET, false);
 
         SimplePipeline.runPipeline(reader, headTfDfCounter);
         System.out.println(className + " completed.");

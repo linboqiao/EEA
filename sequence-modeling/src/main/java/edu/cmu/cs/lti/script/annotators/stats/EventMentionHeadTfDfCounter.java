@@ -26,7 +26,7 @@ import java.io.File;
  * Date: 1/11/15
  * Time: 9:06 PM
  */
-public class EventMentoinHeadTfDfCounter extends AbstractLoggingAnnotator {
+public class EventMentionHeadTfDfCounter extends AbstractLoggingAnnotator {
     public static final String PARAM_DB_NAME = "dbName";
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
