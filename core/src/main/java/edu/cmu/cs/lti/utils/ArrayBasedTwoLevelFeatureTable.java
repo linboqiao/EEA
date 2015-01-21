@@ -118,7 +118,7 @@ public class ArrayBasedTwoLevelFeatureTable extends TwoLevelFeatureTable {
 
             for (TShortDoubleIterator secondLevelIter = firstLevelIter.value().iterator(); secondLevelIter.hasNext(); ) {
                 secondLevelIter.advance();
-                row.adjustOrPutValue(secondLevelIter.key(), -secondLevelIter.value(), -secondLevelIter.value());
+                row.adjustOrPutValue(secondLevelIter.key(), secondLevelIter.value() * mul, secondLevelIter.value() * mul);
             }
         }
     }

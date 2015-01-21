@@ -11,10 +11,7 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.utils.ArrayBasedTwoLevelFeatureTable;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
-import edu.cmu.cs.lti.utils.TwoLevelFeatureTable;
-import edu.cmu.cs.lti.utils.Utils;
+import edu.cmu.cs.lti.utils.*;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -70,6 +67,8 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         miniBatchSize = (Integer) aContext.getConfigParameterValue(PARAM_MINI_BATCH_SIZE);
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
         skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
+
+//        trainingFeatureTable = new TLongBasedFeatureHashTable();
         trainingFeatureTable = new ArrayBasedTwoLevelFeatureTable(DataPool.headIdMap.size());
         numSamplesProcessed = 0;
 
