@@ -4,12 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>root</artifactId>
-        <groupId>edu.edu.cmu.cs.lti</groupId>
+        <groupId>edu.cmu.cs.lti</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>core</artifactId>
+    <version>0.0.1</version>
 
     <!-- Use local lib directory as a Maven repository -->
     <repositories>
@@ -26,21 +28,9 @@
             <version>0.0.1</version>
         </dependency>
         <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>3.3.1</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>3.3.1</version>
-            <classifier>models</classifier>
-        </dependency>
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>16.0.1</version>
+            <version>18.0</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -133,15 +123,9 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>edu.arizona.sista</groupId>
-            <artifactId>processors</artifactId>
-            <version>3.3</version>
-        </dependency>
-        <dependency>
-            <groupId>edu.arizona.sista</groupId>
-            <artifactId>processors</artifactId>
-            <version>3.3</version>
-            <classifier>models</classifier>
+            <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>discourse-parser</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.mapdb</groupId>

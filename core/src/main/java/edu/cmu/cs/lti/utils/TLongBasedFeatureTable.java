@@ -97,11 +97,12 @@ public class TLongBasedFeatureTable extends TwoLevelFeatureTable {
         return table.dotProd(features);
     }
 
+
     public void adjustBy(TLongShortDoubleHashTable adjustVect, double mul) {
         table.adjustBy(adjustVect, mul);
     }
 
-    public double dotProd(TLongShortDoubleHashTable features, Map<Short, String> featureNames, String[] headWords) {
+    public double dotProd(TLongShortDoubleHashTable features, String[] headWords) {
         double dotProd = 0;
         for (TLongObjectIterator<TShortDoubleMap> firstLevelIter = features.iterator(); firstLevelIter.hasNext(); ) {
             firstLevelIter.advance();
@@ -117,7 +118,7 @@ public class TLongBasedFeatureTable extends TwoLevelFeatureTable {
                     if (weightsRow.containsKey(secondLevelIter.key())) {
                         dotProd += secondLevelIter.value() * weightsRow.get(secondLevelIter.key()).get();
                         System.err.println("Feature hit " + headWords[wordIndexPair.getLeft()] + " " +
-                                headWords[wordIndexPair.getRight()] + " " + featureNames.get(secondLevelIter.key()) + " : " +
+                                headWords[wordIndexPair.getRight()] + " " + getFeatureName(secondLevelIter.key()) + " : " +
                                 weightsRow.get(secondLevelIter.key()).get());
                     }
                 }

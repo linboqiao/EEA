@@ -8,7 +8,6 @@ import gnu.trove.map.TShortDoubleMap;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.PrintWriter;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -102,21 +101,22 @@ public class TLongBasedFeatureHashTable extends TwoLevelFeatureTable {
         table.adjustBy(adjustVect, mul);
     }
 
-    public double dotProd(TLongShortDoubleHashTable features, Map<Short, String> featureNames, String[] headWords) {
+    public double dotProd(TLongShortDoubleHashTable features, String[] headWords) {
         double dotProd = 0;
         for (TLongObjectIterator<TShortDoubleMap> firstLevelIter = features.iterator(); firstLevelIter.hasNext(); ) {
             firstLevelIter.advance();
             long featureRowKey = firstLevelIter.key();
             if (table.containsRow(featureRowKey)) {
-                TShortDoubleMap weightsRow = table.getRow(featureRowKey);
+                Pair<Integer, Integer> wordIndexPair = BitUtils.get2IntFromLong(featureRowKey);
+
+                TShortDoubleMap weightsRow = getRow(featureRowKey);
                 TShortDoubleMap secondLevelFeatures = firstLevelIter.value();
                 for (TShortDoubleIterator secondLevelIter = secondLevelFeatures.iterator(); secondLevelIter.hasNext(); ) {
                     secondLevelIter.advance();
-                    Pair<Integer, Integer> wordIndexPair = BitUtils.get2IntFromLong(featureRowKey);
                     if (weightsRow.containsKey(secondLevelIter.key())) {
                         dotProd += secondLevelIter.value() * weightsRow.get(secondLevelIter.key());
                         System.err.println("Feature hit " + headWords[wordIndexPair.getLeft()] + " " +
-                                headWords[wordIndexPair.getRight()] + " " + featureNames.get(secondLevelIter.key()) + " : " +
+                                headWords[wordIndexPair.getRight()] + " " + secondaryFeatureLookupMap.get(secondLevelIter.key()) + " : " +
                                 weightsRow.get(secondLevelIter.key()));
                     }
                 }

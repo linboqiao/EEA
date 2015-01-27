@@ -102,5 +102,7 @@ public abstract class TwoLevelFeatureTable implements Serializable {
 
     public abstract double dotProd(TLongShortDoubleHashTable features);
 
+    public abstract double dotProd(TLongShortDoubleHashTable features, String[] headWords);
+
     public abstract void adjustBy(TLongShortDoubleHashTable adjustVect, double mul);
 }

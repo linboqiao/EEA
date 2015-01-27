@@ -109,6 +109,30 @@ public class ArrayBasedTwoLevelFeatureTable extends TwoLevelFeatureTable {
         return dotProd;
     }
 
+    public double dotProd(TLongShortDoubleHashTable features, String[] headWords) {
+        double dotProd = 0;
+        for (TLongObjectIterator<TShortDoubleMap> firstLevelIter = features.iterator(); firstLevelIter.hasNext(); ) {
+            firstLevelIter.advance();
+            long featureRowKey = firstLevelIter.key();
+            if (containsRow(featureRowKey)) {
+                Pair<Integer, Integer> wordIndexPair = BitUtils.get2IntFromLong(featureRowKey);
+
+                TShortDoubleMap weightsRow = getRow(featureRowKey);
+                TShortDoubleMap secondLevelFeatures = firstLevelIter.value();
+                for (TShortDoubleIterator secondLevelIter = secondLevelFeatures.iterator(); secondLevelIter.hasNext(); ) {
+                    secondLevelIter.advance();
+                    if (weightsRow.containsKey(secondLevelIter.key())) {
+                        dotProd += secondLevelIter.value() * weightsRow.get(secondLevelIter.key());
+                        System.err.println("Feature hit " + headWords[wordIndexPair.getLeft()] + " " +
+                                headWords[wordIndexPair.getRight()] + " " + getFeatureName(secondLevelIter.key()) + " : " +
+                                weightsRow.get(secondLevelIter.key()));
+                    }
+                }
+            }
+        }
+        return dotProd;
+    }
+
     @Override
     public void adjustBy(TLongShortDoubleHashTable adjustVect, double mul) {
         for (TLongObjectIterator<TShortDoubleMap> firstLevelIter = adjustVect.iterator(); firstLevelIter.hasNext(); ) {

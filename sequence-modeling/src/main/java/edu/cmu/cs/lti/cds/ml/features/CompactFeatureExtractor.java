@@ -35,7 +35,7 @@ public class CompactFeatureExtractor {
 
     private List<Feature> featureImpls;
 
-    public CompactFeatureExtractor(TwoLevelFeatureTable featureTable, List<Feature> featureImpls) {
+    public <T extends TwoLevelFeatureTable> CompactFeatureExtractor(T featureTable, List<Feature> featureImpls) {
         this.featureTable = featureTable;
         this.positiveObservations = DataPool.cooccCountMaps;
         this.headMap = DataPool.headIdMap;
@@ -47,11 +47,11 @@ public class CompactFeatureExtractor {
         logger.info("Feature table feature type size: " + featureTable.getFeatureNameMap().size());
     }
 
-    public CompactFeatureExtractor(TwoLevelFeatureTable featureTable, String[] featureImplNames) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public <T extends TwoLevelFeatureTable> CompactFeatureExtractor(T featureTable, String[] featureImplNames) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         this(featureTable, featuresByName(featureImplNames));
     }
 
-    public CompactFeatureExtractor(TwoLevelFeatureTable featureTable) {
+    public <T extends TwoLevelFeatureTable> CompactFeatureExtractor(T featureTable) {
         this(featureTable, defaultFeatures());
     }
 

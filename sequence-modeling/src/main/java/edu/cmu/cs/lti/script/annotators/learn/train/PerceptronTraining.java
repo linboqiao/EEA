@@ -11,7 +11,10 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.utils.*;
+import edu.cmu.cs.lti.utils.ArrayBasedTwoLevelFeatureTable;
+import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.utils.TwoLevelFeatureTable;
+import edu.cmu.cs.lti.utils.Utils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -106,18 +109,28 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         for (int sampleIndex = 0; sampleIndex < chain.size(); sampleIndex++) {
             ContextElement realSample = chain.get(sampleIndex);
             TLongShortDoubleHashTable correctFeatures = extractor.getFeatures(chain, realSample, sampleIndex, skipGramN, false);
-
             Sentence sampleSent = realSample.getSent();
-
 
             PriorityQueue<Pair<Double, LocalEventMentionRepre>> scores = new PriorityQueue<>(rankListSize, Collections.reverseOrder());
 
+            int originalRank = 0;
             for (LocalEventMentionRepre sample : sampleCandidatesWithReal(arguments, realSample.getMention())) {
                 TLongShortDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getHead(), sample), sampleIndex, skipGramN, false);
-                double sampleScore = trainingFeatureTable.dotProd(sampleFeature);
+                double sampleScore = trainingFeatureTable.dotProd(sampleFeature, DataPool.headWords);
                 scores.add(Pair.of(sampleScore, sample));
                 mention2Features.put(sample, sampleFeature);
+
+                if (sample.mooneyMatch(realSample.getMention())) {
+                    System.err.println(sample + " is correct, Original rank is " + originalRank + " score is " + sampleScore);
+                } else {
+                    if (sampleScore != 0) {
+                        System.err.println(sample + " is wrong, Original rank is " + originalRank + " score is " + sampleScore);
+                    }
+                }
+
+                originalRank++;
             }
+
 
             int realRank = -1;
             int rank = 0;
@@ -139,13 +152,12 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 rank++;
             }
 
-//            logger.info(String.format("Real rank is %d  among %d", realRank, rankListSize));
+            System.err.println(String.format("Real rank is %d  among %d", realRank, rankListSize));
             if (realRank != 0) {
                 perceptronUpdate(correctFeatures, currentBestSampleFeatures);
             }
 
             averageRankPercentage += realRank * 1.0 / rankListSize;
-
             numSamplesProcessed++;
 
             if (numSamplesProcessed % miniBatchSize == 0) {
@@ -191,6 +203,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
     private void perceptronUpdate(TLongShortDoubleHashTable correctFeatures, List<TLongShortDoubleHashTable> currentTops) {
         trainingFeatureTable.adjustBy(correctFeatures, 1);
+
         for (TLongShortDoubleHashTable currentTop : currentTops) {
             trainingFeatureTable.adjustBy(currentTop, -1);
         }
