@@ -22,14 +22,15 @@ public class EventMentionDataPreprocessor {
     public static void main(String[] args) throws UIMAException {
         System.out.println(className + " started...");
         String paramInputDir =
-                "event-mention-detection/data/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/data/";
+                "event-mention-detection/data/Event-mention-detection-2014" +
+                        "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/data/";
 
         String goldStandardFilePath = paramInputDir + "converted.tbf";
         String sourceDataPath = paramInputDir + "source";
         String tokenDataPath = paramInputDir + "token_offset";
 
         // Parameters for the writer
-        String paramParentOutputDir = "event-mention-detection/data/process";
+        String paramParentOutputDir = "event-mention-detection/data/Event-mention-detection-2014";
         String paramBaseOutputDirName = "semafor_processed";
 
         String paramTypeSystemDescriptor = "TypeSystem";
