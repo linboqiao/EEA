@@ -6,8 +6,8 @@ import edu.cmu.cs.lti.script.model.KmTargetConstants;
 import edu.cmu.cs.lti.script.model.MooneyEventRepre;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.script.utils.MultiMapUtils;
+import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.utils.Comparators;
-import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.list.TIntList;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TObjectIntMap;
@@ -45,7 +45,7 @@ public class ConditionProbablityTester extends MultiArgumentClozeTest {
 
     @Override
     protected String initializePredictor(UimaContext aContext) {
-        Utils.printMemInfo(logger, "Initial memory information ");
+        BasicConvenience.printMemInfo(logger, "Initial memory information ");
 
         String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
 
@@ -67,7 +67,7 @@ public class ConditionProbablityTester extends MultiArgumentClozeTest {
             e.printStackTrace();
         }
 
-        Utils.printMemInfo(logger, "Memory info after all loading");
+        BasicConvenience.printMemInfo(logger, "Memory info after all loading");
 
         return this.getClass().getSimpleName();
     }

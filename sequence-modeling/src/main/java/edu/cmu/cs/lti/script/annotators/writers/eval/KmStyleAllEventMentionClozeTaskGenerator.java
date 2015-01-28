@@ -7,6 +7,7 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalsysisEngine;
+import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
@@ -98,7 +99,7 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
                 String argumentRole = aLink.getArgumentRole();
                 if (KmTargetConstants.targetArguments.containsKey(argumentRole)) {
                     int argumentId = KmTargetConstants.targetArguments.get(argumentRole);
-                    int entityId = Utils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId());
+                    int entityId = UimaAnnotationUtils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId());
                     slots.put(argumentId, entityId);
                 }
             }

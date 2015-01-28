@@ -1,14 +1,14 @@
 package edu.cmu.cs.lti.script.annotators.learn.train;
 
 import edu.cmu.cs.lti.script.model.KmTargetConstants;
-import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
+import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
-import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.list.TIntList;
 import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.map.TObjectIntMap;
@@ -67,7 +67,7 @@ public class UnigramScriptCounter extends AbstractLoggingAnnotator {
             dbParentPath.mkdirs();
         }
 
-        Utils.printMemInfo(logger, "Initial memory information ");
+        BasicConvenience.printMemInfo(logger, "Initial memory information ");
     }
 
     @Override
@@ -94,7 +94,7 @@ public class UnigramScriptCounter extends AbstractLoggingAnnotator {
 
         counter++;
         if (counter % 4000 == 0) {
-            Utils.printMemInfo(logger, "Memory info after loaded " + counter + " files");
+            BasicConvenience.printMemInfo(logger, "Memory info after loaded " + counter + " files");
         }
     }
 

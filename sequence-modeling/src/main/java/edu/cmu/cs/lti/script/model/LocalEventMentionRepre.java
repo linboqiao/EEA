@@ -2,9 +2,9 @@ package edu.cmu.cs.lti.script.model;
 
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
+import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
-import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.map.TIntIntMap;
 import org.apache.commons.lang.builder.CompareToBuilder;
 
@@ -41,7 +41,7 @@ public class LocalEventMentionRepre implements Comparable<LocalEventMentionRepre
             String argumentRole = aLink.getArgumentRole();
             if (KmTargetConstants.targetArguments.containsKey(argumentRole)) {
                 int slotId = KmTargetConstants.targetArguments.get(argumentRole) - KmTargetConstants.anchorArg0Marker;
-                int entityId = Utils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId());
+                int entityId = UimaAnnotationUtils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId());
                 LocalArgumentRepre arg = new LocalArgumentRepre(entityId, aLink.getArgument().getHead().getLemma());
                 args[slotId] = arg;
             }

@@ -6,7 +6,6 @@ import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import edu.cmu.cs.lti.utils.Utils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.JCasUtil;
@@ -38,7 +37,7 @@ public class GoalMentionAnnotator extends AbstractLoggingAnnotator {
 //                System.out.println("Find goal for event "+evmHead.getCoveredText());
                 for (Pair<Word, String> goalHeadDepPair : verbGoalPairs.get(evmHead)) {
                     Word goalHead = goalHeadDepPair.getKey();
-                    Span goalHeadSpan = Utils.toSpan(goalHead);
+                    Span goalHeadSpan = UimaAnnotationUtils.toSpan(goalHead);
                     if (head2MaxTrees.containsKey(goalHeadSpan)) {
                         StanfordTreeAnnotation maxTree = head2MaxTrees.get(goalHeadSpan);
                         createGoalMention(aJCas, evm, maxTree.getBegin(), maxTree.getEnd(), goalHead);
@@ -67,7 +66,7 @@ public class GoalMentionAnnotator extends AbstractLoggingAnnotator {
     private Map<Span, StanfordTreeAnnotation> getHeadSpan2MaxTrees(JCas aJCas) {
         Map<Span, StanfordTreeAnnotation> headSpan2MaxTree = new HashMap<>();
         for (StanfordTreeAnnotation treeAnno : JCasUtil.select(aJCas, StanfordTreeAnnotation.class)) {
-            Span headSpan = Utils.toSpan(treeAnno.getHead());
+            Span headSpan = UimaAnnotationUtils.toSpan(treeAnno.getHead());
 
             if (headSpan2MaxTree.containsKey(headSpan)) {
                 StanfordTreeAnnotation oldTreeAnno = headSpan2MaxTree.get(headSpan);

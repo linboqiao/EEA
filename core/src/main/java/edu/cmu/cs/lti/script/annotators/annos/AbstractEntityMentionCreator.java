@@ -6,7 +6,6 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
-import edu.cmu.cs.lti.utils.Utils;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -33,7 +32,7 @@ public abstract class AbstractEntityMentionCreator extends AbstractLoggingAnnota
         head2EntityMention = new HashMap<>();
         Collection<EntityMention> entityMentions = JCasUtil.select(aJCas, EntityMention.class);
         for (EntityMention mention : entityMentions) {
-            head2EntityMention.put(Utils.toSpan(mention.getHead()), mention);
+            head2EntityMention.put(UimaAnnotationUtils.toSpan(mention.getHead()), mention);
         }
 
         subprocess(aJCas);
@@ -60,7 +59,7 @@ public abstract class AbstractEntityMentionCreator extends AbstractLoggingAnnota
     }
 
     protected EntityMention getOrCreateSingletonEntityMention(JCas jcas, Word headWord) {
-        EntityMention mention = head2EntityMention.get(Utils.toSpan(headWord));
+        EntityMention mention = head2EntityMention.get(UimaAnnotationUtils.toSpan(headWord));
         if (mention == null) {
             mention = UimaNlpUtils.createEntityMention(jcas, headWord.getBegin(), headWord.getEnd(),
                     getComponentId());
@@ -70,18 +69,18 @@ public abstract class AbstractEntityMentionCreator extends AbstractLoggingAnnota
             entity.setRepresentativeMention(mention);
             mention.setReferingEntity(entity);
             UimaAnnotationUtils.finishTop(entity, getComponentId(), null, jcas);
-            head2EntityMention.put(Utils.toSpan(headWord), mention);
+            head2EntityMention.put(UimaAnnotationUtils.toSpan(headWord), mention);
         }
         return mention;
     }
 
     protected EntityMention getOrCreateEntityMention(JCas jcas, Word headWord) {
-        EntityMention mention = head2EntityMention.get(Utils.toSpan(headWord));
+        EntityMention mention = head2EntityMention.get(UimaAnnotationUtils.toSpan(headWord));
         if (mention == null) {
             mention = UimaNlpUtils.createEntityMention(jcas, headWord.getBegin(), headWord.getEnd(),
                     getComponentId());
             UimaAnnotationUtils.finishAnnotation(mention, headWord.getBegin(), headWord.getEnd(), getComponentId(), null, jcas);
-            head2EntityMention.put(Utils.toSpan(headWord), mention);
+            head2EntityMention.put(UimaAnnotationUtils.toSpan(headWord), mention);
         }
         return mention;
     }

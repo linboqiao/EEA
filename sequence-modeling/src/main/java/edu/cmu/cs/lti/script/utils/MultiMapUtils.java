@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.script.utils;
 
 import edu.cmu.cs.lti.script.model.MooneyEventRepre;
-import edu.cmu.cs.lti.utils.Utils;
+import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import gnu.trove.list.TIntList;
 import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.map.TObjectIntMap;
@@ -35,9 +35,9 @@ public class MultiMapUtils {
         for (int i = 0; i < dbNames.length; i++) {
             String mapPath = new File(dbPath, dbNames[i] + "_" + mapName).getAbsolutePath();
             logger.info(msg + " " + mapPath);
-            Utils.printMemInfo(logger, "Before loading");
+            BasicConvenience.printMemInfo(logger, "Before loading");
             TObjectIntMap<T> map = (TObjectIntMap<T>) SerializationHelper.read(mapPath);
-            Utils.printMemInfo(logger, "After loading");
+            BasicConvenience.printMemInfo(logger, "After loading");
             maps[i] = map;
         }
         return maps;

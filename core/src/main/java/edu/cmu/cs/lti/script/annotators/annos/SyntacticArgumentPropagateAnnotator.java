@@ -5,7 +5,7 @@ import edu.cmu.cs.lti.ling.PennTreeTagSet;
 import edu.cmu.cs.lti.ling.PropBankTagSet;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.*;
-import edu.cmu.cs.lti.utils.Utils;
+import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.commons.lang3.tuple.Pair;
@@ -60,19 +60,19 @@ public class SyntacticArgumentPropagateAnnotator extends AbstractEntityMentionCr
             }
 
             if (arg0s.size() == 0) {
-                emptyAgentMentions.put(Utils.toSpan(evmHead), evm);
+                emptyAgentMentions.put(UimaAnnotationUtils.toSpan(evmHead), evm);
             } else {
                 for (EventMentionArgumentLink arg0Link : arg0s) {
-                    eventHead2Arg0.put(Utils.toSpan(evmHead), arg0Link.getArgument());
+                    eventHead2Arg0.put(UimaAnnotationUtils.toSpan(evmHead), arg0Link.getArgument());
                 }
             }
 
 
             if (arg1s.size() == 0) {
-                emptyPatientMentions.put(Utils.toSpan(evmHead), evm);
+                emptyPatientMentions.put(UimaAnnotationUtils.toSpan(evmHead), evm);
             } else {
                 for (EventMentionArgumentLink arg1Link : arg1s) {
-                    eventHead2Arg1.put(Utils.toSpan(evmHead), arg1Link.getArgument());
+                    eventHead2Arg1.put(UimaAnnotationUtils.toSpan(evmHead), arg1Link.getArgument());
                 }
             }
         }
@@ -147,7 +147,7 @@ public class SyntacticArgumentPropagateAnnotator extends AbstractEntityMentionCr
             List<Span> patientShareeSpans = new ArrayList<>();
 
             for (Word verb : conjVerbs) {
-                Span verbSpan = Utils.toSpan(verb);
+                Span verbSpan = UimaAnnotationUtils.toSpan(verb);
 
                 if (emptyAgentMentions.containsKey(verbSpan)) {
                     agentShareeSpans.add(verbSpan);
@@ -275,7 +275,7 @@ public class SyntacticArgumentPropagateAnnotator extends AbstractEntityMentionCr
             if (shareSubjDeps.contains(dep.getDependencyType())) {
                 Word head = dep.getHead();
                 Word child = dep.getChild();
-                shareSubjVerbPairs.put(Utils.toSpan(head), Pair.of(Utils.toSpan(child), dep.getDependencyType()));
+                shareSubjVerbPairs.put(UimaAnnotationUtils.toSpan(head), Pair.of(UimaAnnotationUtils.toSpan(child), dep.getDependencyType()));
             }
         }
 
@@ -285,8 +285,8 @@ public class SyntacticArgumentPropagateAnnotator extends AbstractEntityMentionCr
                 Word head = dep.getHead();
                 Word child = dep.getChild();
 
-                Span headSpan = Utils.toSpan(head);
-                Span childSpan = Utils.toSpan(child);
+                Span headSpan = UimaAnnotationUtils.toSpan(head);
+                Span childSpan = UimaAnnotationUtils.toSpan(child);
 
 //                if (dep.getDependencyType().equals("vch")){
 //                    System.out.println("vch "+head.getCoveredText()+" "+child.getCoveredText());

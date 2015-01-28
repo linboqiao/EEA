@@ -4,8 +4,8 @@ import edu.cmu.cs.lti.ling.PennTreeTagSet;
 import edu.cmu.cs.lti.ling.PropBankTagSet;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import edu.cmu.cs.lti.utils.Utils;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -64,13 +64,13 @@ public class SyntacticDirectArgumentFixer extends AbstractEntityMentionCreator {
                 Map<Span, EventMentionArgumentLink> head2Arg1Links = new HashMap<>();
                 for (EventMentionArgumentLink arg1Link : arg1s) {
                     EntityMention arg1 = arg1Link.getArgument();
-                    head2Arg1Links.put(Utils.toSpan(arg1.getHead()), arg1Link);
+                    head2Arg1Links.put(UimaAnnotationUtils.toSpan(arg1.getHead()), arg1Link);
                 }
 
                 for (Dependency childDep : evmChildDependencies) {
                     if (childDep.getDependencyType().contains("subj")) {
                         Word depChild = childDep.getChild();
-                        Span childSpan = Utils.toSpan(depChild);
+                        Span childSpan = UimaAnnotationUtils.toSpan(depChild);
 //                        System.out.println("Investigating " + evm.getCoveredText());
                         if (head2Arg1Links.containsKey(childSpan)) {
 //                            System.out.println("Found wrong arg1 link " + depChild.getCoveredText());

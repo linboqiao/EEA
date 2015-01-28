@@ -128,7 +128,6 @@ public class EventMentionTupleExtractor extends AbstractEntityMentionCreator {
         Word headToken;
         Word argumentToken;
 
-
         if (relation.endsWith(invertedSign)) {
             relation = relation.substring(0, relation.length() - invertedSign.length());
             headToken = fsr.getChild();
@@ -140,10 +139,6 @@ public class EventMentionTupleExtractor extends AbstractEntityMentionCreator {
             headToken = fsr.getHead();
             argumentToken = fsr.getChild();
         }
-
-//        if (nonEntityModifiers.contains(relation)) {
-//            return;
-//        }
 
         Word verbPrep = null;
 
@@ -157,32 +152,4 @@ public class EventMentionTupleExtractor extends AbstractEntityMentionCreator {
             addEventArgumentPair(headToken, argumentToken, relation, verbPrep);
         }
     }
-
-//    private EventMentionArgumentLink createArgumentLink(JCas aJCas, EventMention evm, String roleName, Word argument, Word prep) {
-//        EventMentionArgumentLink link = new EventMentionArgumentLink(aJCas);
-//        EntityMention argumentEntity = getOrCreateSingletonEntityMention(aJCas, argument);
-//        link.setVerbPreposition(prep);
-//        link.setArgument(argumentEntity);
-//        link.setArgumentRole(roleName);
-//        link.setEventMention(evm);
-//        UimaAnnotationUtils.finishTop(link, COMPONENT_ID, null, aJCas);
-//        argumentEntity.setArgumentLinks(UimaConvenience.appendFSList(aJCas, argumentEntity.getArgumentLinks(), link, EventMentionArgumentLink.class));
-//        return link;
-//    }
-//
-//    private EntityMention getOrCreateSingletonEntityMention(JCas jcas, Word headWord) {
-//        EntityMention mention = head2EntityMention.get(Utils.toSpan(headWord));
-//        if (mention == null) {
-//            mention = UimaNlpUtils.createEntityMention(jcas, headWord.getBegin(), headWord.getEnd(),
-//                    COMPONENT_ID);
-//            Entity entity = new Entity(jcas);
-//            entity.setEntityMentions(new FSArray(jcas, 1));
-//            entity.setEntityMentions(0, mention);
-//            entity.setRepresentativeMention(mention);
-//            mention.setReferingEntity(entity);
-//            UimaAnnotationUtils.finishTop(entity, COMPONENT_ID, null, jcas);
-//            head2EntityMention.put(Utils.toSpan(headWord), mention);
-//        }
-//        return mention;
-//    }
 }

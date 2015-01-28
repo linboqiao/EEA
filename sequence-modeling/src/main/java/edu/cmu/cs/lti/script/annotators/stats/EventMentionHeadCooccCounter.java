@@ -3,9 +3,9 @@ package edu.cmu.cs.lti.script.annotators.stats;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
-import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.iterator.TLongIntIterator;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TLongIntMap;
@@ -103,7 +103,7 @@ public class EventMentionHeadCooccCounter extends AbstractLoggingAnnotator {
         counter++;
         if (counter % 4000 == 0) {
             logger.info("Processed " + counter + " documents");
-            Utils.printMemInfo(logger);
+            BasicConvenience.printMemInfo(logger);
         }
     }
 

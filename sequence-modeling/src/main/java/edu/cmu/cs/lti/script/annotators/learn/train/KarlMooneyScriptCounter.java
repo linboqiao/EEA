@@ -8,6 +8,8 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.util.BasicConvenience;
+import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.CollectionUtils;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
@@ -105,7 +107,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 //            headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
 //        }
 
-        Utils.printMemInfo(logger, "Initial memory information ");
+        BasicConvenience.printMemInfo(logger, "Initial memory information ");
     }
 
     @Override
@@ -147,7 +149,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
         counter++;
         if (counter % 4000 == 0) {
-            Utils.printMemInfo(logger, "Memory info after loaded " + counter + " files");
+            BasicConvenience.printMemInfo(logger, "Memory info after loaded " + counter + " files");
         }
     }
 
@@ -267,7 +269,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             String argumentRole = aLink.getArgumentRole();
             if (KmTargetConstants.targetArguments.containsKey(argumentRole)) {
                 int slotId = KmTargetConstants.targetArguments.get(argumentRole);
-                evm1Args.put(Utils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId()), slotId);
+                evm1Args.put(UimaAnnotationUtils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId()), slotId);
                 //initialize with other
                 evm1Slots.put(slotId, KmTargetConstants.otherMarker);
             }
@@ -278,7 +280,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             String argumentRole = aLink.getArgumentRole();
 
             if (KmTargetConstants.targetArguments.containsKey(argumentRole)) {
-                int entityId = Utils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId());
+                int entityId = UimaAnnotationUtils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId());
                 int slotId = KmTargetConstants.targetArguments.get(argumentRole);
 
                 //substitution for the second event is based on the first event mention

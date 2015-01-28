@@ -11,10 +11,10 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.utils.ArrayBasedTwoLevelFeatureTable;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.TwoLevelFeatureTable;
-import edu.cmu.cs.lti.utils.Utils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -165,7 +165,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 logger.info("Processed " + numSamplesProcessed + " samples");
                 logger.info("Average rank position for previous batch is : " + averageRankPercentage / miniBatchSize);
                 averageRankPercentage = 0;
-                Utils.printMemInfo(logger);
+                BasicConvenience.printMemInfo(logger);
             }
         }
     }
@@ -216,6 +216,6 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         logger.info("Features lexical pairs learnt " + trainingFeatureTable.getNumRows());
         logger.info("Average rank position for the residual batch: " + averageRankPercentage / (numSamplesProcessed % miniBatchSize));
         averageRankPercentage = 0;
-        Utils.printMemInfo(logger);
+        BasicConvenience.printMemInfo(logger);
     }
 }

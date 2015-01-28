@@ -11,9 +11,9 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
-import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.iterator.TShortDoubleIterator;
 import gnu.trove.map.TShortDoubleMap;
@@ -219,7 +219,7 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
 
     private void update() {
         cumulativeObjective = 0;
-        Utils.printMemInfo(logger);
+        BasicConvenience.printMemInfo(logger);
         logger.info("Updating");
         adaGradUpdate(0.1);
         logger.info("Update Done");

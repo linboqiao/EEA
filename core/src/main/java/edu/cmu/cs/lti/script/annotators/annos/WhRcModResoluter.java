@@ -9,7 +9,6 @@ import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.model.AnnotationCondition;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import edu.cmu.cs.lti.utils.Utils;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -46,7 +45,7 @@ public class WhRcModResoluter extends AbstractEntityMentionCreator {
         head2EntityMention = new HashMap<>();
         Collection<EntityMention> entityMentions = JCasUtil.select(aJCas, EntityMention.class);
         for (EntityMention mention : entityMentions) {
-            head2EntityMention.put(Utils.toSpan(mention.getHead()), mention);
+            head2EntityMention.put(UimaAnnotationUtils.toSpan(mention.getHead()), mention);
         }
 
         for (Map.Entry<EntityMention, Collection<EntityMention>> entry : findWhAndNounPair(aJCas).asMap().entrySet()) {

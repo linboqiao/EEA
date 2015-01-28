@@ -9,16 +9,15 @@ import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
-import org.uimafit.pipeline.SimplePipeline;
 
 /**
  * This pipeline runs FanseAnnotator.
  */
-public class Preprocessor {
-
-    private static String className = Preprocessor.class.getSimpleName();
+public class EventMentionDataPreprocessor {
+    private static String className = EventMentionDataPreprocessor.class.getSimpleName();
 
     public static void main(String[] args) throws UIMAException {
         System.out.println(className + " started...");

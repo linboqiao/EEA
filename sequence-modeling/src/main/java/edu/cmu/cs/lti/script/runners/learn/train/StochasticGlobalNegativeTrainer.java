@@ -6,8 +6,8 @@ import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
+import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.Utils;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.pipeline.SimplePipeline;
@@ -76,7 +76,7 @@ public class StochasticGlobalNegativeTrainer {
                 CompactGlobalNegativeTrainer.PARAM_FEATURE_NAMES, featureNames,
                 CompactGlobalNegativeTrainer.PARAM_SKIP_GRAM_N, skipgramN);
 
-        Utils.printMemInfo(logger, "Beginning memory");
+        BasicConvenience.printMemInfo(logger, "Beginning memory");
 
         for (int i = 0; i < maxIter; i++) {
             String modelOutputPath = modelStoragePath + "_" + modelSuffix + "_" + i + modelExt;
