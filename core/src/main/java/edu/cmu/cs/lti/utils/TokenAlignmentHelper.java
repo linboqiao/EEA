@@ -14,15 +14,41 @@ import java.util.Map;
 public class TokenAlignmentHelper {
     Map<FanseToken, StanfordCorenlpToken> f2s;
 
+    Map<StanfordCorenlpToken, FanseToken> s2f;
+
     Map<Word, StanfordCorenlpToken> w2s;
+
+    Map<StanfordCorenlpToken, Word> s2w;
+
+    Map<Word, FanseToken> w2f;
+
+    Map<FanseToken, Word> f2w;
 
     public void loadFanse2Stanford(JCas aJCas) {
         f2s = getType2TypeMapping(aJCas, FanseToken.class, StanfordCorenlpToken.class);
+
+    }
+
+    public void loadStanford2Fanse(JCas aJCas) {
+        s2f = getType2TypeMapping(aJCas, StanfordCorenlpToken.class, FanseToken.class);
     }
 
     public void loadWord2Stanford(JCas aJCas) {
         w2s = getType2TypeMapping(aJCas, Word.class, StanfordCorenlpToken.class);
+        s2w = new HashMap<>();
+        for (Map.Entry<Word, StanfordCorenlpToken> ws : w2s.entrySet()) {
+            s2w.put(ws.getValue(), ws.getKey());
+        }
     }
+
+    public void loadWord2Fanse(JCas aJCas) {
+        w2f = getType2TypeMapping(aJCas, Word.class, FanseToken.class);
+        f2w = new HashMap<>();
+        for (Map.Entry<Word, FanseToken> wf : w2f.entrySet()) {
+            f2w.put(wf.getValue(), wf.getKey());
+        }
+    }
+
 
     public String getLowercaseWordLemma(Word token) {
         StanfordCorenlpToken s = w2s.get(token);
@@ -33,21 +59,21 @@ public class TokenAlignmentHelper {
         }
     }
 
-//    public String getWordLemma(Word token) {
-//        StanfordCorenlpToken s = w2s.get(token);
-//        if (s != null) {
-//            return s.getLemma().toLowerCase();
-//        } else {
-//            return token.getCoveredText().toLowerCase();
-//        }
-//    }
-
     public StanfordCorenlpToken getStanfordToken(FanseToken t) {
         return f2s.get(t);
     }
 
     public StanfordCorenlpToken getStanfordToken(Word t) {
         return w2s.get(t);
+    }
+
+
+    public Word getWord(FanseToken t) {
+        return f2w.get(t);
+    }
+
+    public Word getWord(StanfordCorenlpToken t) {
+        return s2w.get(t);
     }
 
     private <ToType extends ComponentAnnotation, FromType extends ComponentAnnotation> Map<FromType, ToType> getType2TypeMapping(
@@ -58,13 +84,14 @@ public class TokenAlignmentHelper {
         Map<ToType, Collection<FromType>> tokenCoveringWord = JCasUtil.indexCovering(aJCas, clazzTo,
                 clazzFrom);
 
-        Map<FromType, ToType> word2Token = new HashMap<FromType, ToType>();
+        Map<FromType, ToType> word2Token = new HashMap<>();
 
         for (ToType token : JCasUtil.select(aJCas, clazzTo)) {
             if (token.getBegin() == 0 && token.getEnd() == 0 || token.getBegin() < 0)
                 continue;
 
             Collection<FromType> coveredWords = tokenCoveredWord.get(token);
+
             if (coveredWords.size() > 0) {
                 for (FromType word : coveredWords) {
                     word2Token.put(word, token);

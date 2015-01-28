@@ -19,6 +19,11 @@
         </dependency>
         <dependency>
             <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>zl-utils</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs.lti</groupId>
             <artifactId>semafor-uima</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
@@ -55,6 +60,11 @@
             <artifactId>stanford-corenlp</artifactId>
             <version>3.4.1</version>
             <classifier>models</classifier>
+        </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

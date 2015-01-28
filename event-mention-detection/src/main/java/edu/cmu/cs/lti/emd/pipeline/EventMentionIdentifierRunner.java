@@ -20,11 +20,12 @@ public class EventMentionIdentifierRunner {
                 "event-mention-detection/data/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/data/";
 
         // Parameters for the writer
-        String paramParentOutputDir = "event-mention-detection/data/process";
+        String paramParentOutputDir = "event-mention-detection/data/Event-mention-detection-2014";
         String paramBaseOutputDirName = "semafor_processed";
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
+        String semLinkDataPath = "data/resources/SemLink_1.2.2c";
 
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
@@ -34,8 +35,8 @@ public class EventMentionIdentifierRunner {
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(paramParentOutputDir, paramBaseOutputDirName, 0, false);
 
         AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
-                EventMentionCandidateIdentifier.class, typeSystemDescription);
-
+                EventMentionCandidateIdentifier.class, typeSystemDescription,
+                EventMentionCandidateIdentifier.PARAM_SEM_LINK_DIR, semLinkDataPath);
 
         // Run the pipeline.
         try {
@@ -44,8 +45,6 @@ public class EventMentionIdentifierRunner {
             e.printStackTrace();
             System.exit(1);
         }
-
         System.out.println(className + " successfully completed.");
     }
-
 }
