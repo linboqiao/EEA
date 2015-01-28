@@ -27,7 +27,7 @@ public class ACEDataPreprocessor {
 
         // Parameters for the writer
         String paramParentOutputDir = "event-mention-detection/data/ACE2005_Training/";
-        String paramBaseOutputDirName = "goldstandard";
+        String paramBaseOutputDirName = "semafor_processed";
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
