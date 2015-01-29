@@ -39,6 +39,15 @@ public class TokenAlignmentHelper {
         }
     }
 
+
+    public void loadWord2Stanford(JCas aJCas) {
+        w2s = getType2TypeMapping(aJCas, Word.class, StanfordCorenlpToken.class);
+        s2w = new HashMap<>();
+        for (Map.Entry<Word, StanfordCorenlpToken> ws : w2s.entrySet()) {
+            s2w.put(ws.getValue(), ws.getKey());
+        }
+    }
+
     public void loadWord2Fanse(JCas aJCas, String targetComponentId) {
         w2f = getType2TypeMapping(aJCas, Word.class, FanseToken.class, targetComponentId);
         f2w = new HashMap<>();

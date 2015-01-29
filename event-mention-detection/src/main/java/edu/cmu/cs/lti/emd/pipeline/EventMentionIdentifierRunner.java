@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.emd.pipeline;
 
-import edu.cmu.cs.lti.emd.annotators.EventMentionCandidateIdentifier;
+import edu.cmu.cs.lti.emd.annotators.EventMentionCandidateFeatureGenerator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
@@ -35,8 +35,8 @@ public class EventMentionIdentifierRunner {
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(paramParentOutputDir, paramBaseOutputDirName, 0, false);
 
         AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
-                EventMentionCandidateIdentifier.class, typeSystemDescription,
-                EventMentionCandidateIdentifier.PARAM_SEM_LINK_DIR, semLinkDataPath);
+                EventMentionCandidateFeatureGenerator.class, typeSystemDescription,
+                EventMentionCandidateFeatureGenerator.PARAM_SEM_LINK_DIR, semLinkDataPath);
 
         // Run the pipeline.
         try {

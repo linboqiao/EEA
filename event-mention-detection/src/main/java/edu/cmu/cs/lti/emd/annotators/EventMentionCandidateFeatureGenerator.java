@@ -28,9 +28,11 @@ import java.util.*;
  * Date: 1/27/15
  * Time: 12:03 PM
  */
-public class EventMentionCandidateIdentifier extends AbstractLoggingAnnotator {
+public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnotator {
 
     public static final String PARAM_SEM_LINK_DIR = "semLinkDir";
+
+//    public static Map<String>
 
     @ConfigurationParameter(name = PARAM_SEM_LINK_DIR)
     String semLinkDirPath;
