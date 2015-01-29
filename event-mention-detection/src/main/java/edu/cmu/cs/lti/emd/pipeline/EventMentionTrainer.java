@@ -99,16 +99,15 @@ public class EventMentionTrainer {
             trainingInstance.setValue(featureConfiguration.get(featureConfiguration.size() - 1), rawData.getValue2());
             dataSet.add(trainingInstance);
         }
+        dataSet.setClassIndex(dataSet.numAttributes() - 1);
         return dataSet;
     }
 
     public static void main(String[] args) throws Exception {
         System.out.println(className + " started...");
-        String paramInputDir =
-                "event-mention-detection/data/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/data/";
 
         // Parameters for the writer
-        String paramParentOutputDir = "event-mention-detection/data/Event-mention-detection-2014";
+        String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
         String paramBaseOutputDirName = "semafor_processed";
 
         String paramTypeSystemDescriptor = "TypeSystem";
@@ -120,7 +119,7 @@ public class EventMentionTrainer {
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(paramParentOutputDir, paramBaseOutputDirName, 0, false);
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, paramBaseOutputDirName, 0, false);
 
         AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionCandidateFeatureGenerator.class, typeSystemDescription,
