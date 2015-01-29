@@ -22,6 +22,16 @@ public class TokenAlignmentHelper {
 
     Map<FanseToken, Word> f2w;
 
+    private final boolean verbose;
+
+    public TokenAlignmentHelper() {
+        this(false);
+    }
+
+    public TokenAlignmentHelper(boolean verbose) {
+        this.verbose = verbose;
+    }
+
     public void loadFanse2Stanford(JCas aJCas) {
         f2s = getType2TypeMapping(aJCas, FanseToken.class, StanfordCorenlpToken.class);
 
@@ -145,12 +155,16 @@ public class TokenAlignmentHelper {
             } else {// in case the token range is larger than the word, use its covering token
                 Collection<FromType> coveringToken = filterByComponentId(tokenCoveringWord.get(token), targetComponentId);
                 if (coveringToken.size() == 0) {
-                    System.err
-                            .println(String.format("The word : %s [%d, %d] cannot be associated with a %s",
-                                    token.getCoveredText(), token.getBegin(), token.getEnd(),
-                                    clazzTo.getSimpleName()));
+                    if (verbose) {
+                        System.err
+                                .println(String.format("The word : %s [%d, %d] cannot be associated with a %s",
+                                        token.getCoveredText(), token.getBegin(), token.getEnd(),
+                                        clazzTo.getSimpleName()));
+                    }
                 } else {
-                    System.err.println("Use covering for alignment");
+                    if (verbose) {
+                        System.err.println("Use covering for alignment");
+                    }
                     for (FromType word : coveringToken) {
                         word2Token.put(word, token);
                     }
