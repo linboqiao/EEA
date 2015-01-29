@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.emd.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
+import edu.cmu.cs.lti.collection_reader.EventMentionDetectionDataReader;
 import edu.cmu.cs.lti.ling.FrameDataReader;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
@@ -38,6 +39,10 @@ public class EventMentionCandidateIdentifier extends AbstractLoggingAnnotator {
     Map<String, String> pb2Vn;
 
     TokenAlignmentHelper align = new TokenAlignmentHelper();
+    TObjectIntMap<String> typeCount = new TObjectIntHashMap<>();
+
+    double averageCoverage = 0;
+    int docCount = 0;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -50,8 +55,8 @@ public class EventMentionCandidateIdentifier extends AbstractLoggingAnnotator {
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         UimaConvenience.printProcessLog(aJCas, logger);
 
-        align.loadWord2Fanse(aJCas);
-        align.loadWord2Stanford(aJCas);
+        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
+        align.loadFanse2Stanford(aJCas);
 
         Map<Word, String> semaforCandidates = semaforCandidateFinder(aJCas);
         Map<Word, String> fanseCandidates = fanseCandidateFinder(aJCas);
@@ -62,33 +67,52 @@ public class EventMentionCandidateIdentifier extends AbstractLoggingAnnotator {
 
         int coverage = 0;
 
-        TObjectIntMap<String> typeCount = new TObjectIntHashMap<>();
-
         Map<EventMention, Collection<Word>> goldAnnos = getGoldAnnotations(aJCas).asMap();
 
         for (Map.Entry<EventMention, Collection<Word>> gold : goldAnnos.entrySet()) {
             EventMention goldEventMention = gold.getKey();
-            Collection<Word> goldWids = gold.getValue();
+            Collection<Word> goldWords = gold.getValue();
+
+            boolean found = false;
 
             for (Map.Entry<Word, String> candidate : allCandidates.entrySet()) {
                 Word candidateHeadWord = candidate.getKey();
                 String candidateType = candidate.getValue();
 
-                if (goldWids.contains(candidateHeadWord)) {
+                if (goldWords.contains(candidateHeadWord)) {
+//                    logger.info("Found by " + candidateHeadWord.getCoveredText());
+                    found = true;
                     coverage++;
                     typeCount.adjustOrPutValue(candidateType, 1, 1);
                     break;
                 }
             }
+
+            if (!found) {
+                logger.info(String.format("Mention [%s]-%s is not covered, it has type [%s]",
+                        goldEventMention.getCoveredText(), goldEventMention.getId(), goldEventMention.getEventType()));
+
+                for (Word w : goldWords) {
+                    System.err.println(w.getCoveredText() + " " + w.getBegin() + " " + w.getEnd() + " " + w.getId());
+                }
+            }
         }
 
         logger.info("Coverage : " + coverage * 1.0 / goldAnnos.size());
+        averageCoverage += coverage * 1.0 / goldAnnos.size();
+        docCount++;
+    }
+
+
+    public void collectionProcessComplete() throws AnalysisEngineProcessException {
         for (TObjectIntIterator<String> iter = typeCount.iterator(); iter.hasNext(); ) {
             iter.advance();
             System.err.println(iter.key() + " " + iter.value());
         }
 
+        System.err.println("Average coverage " + averageCoverage / docCount);
     }
+
 
     private ArrayListMultimap<EventMention, Word> getGoldAnnotations(JCas aJCas) {
         JCas goldStandard = UimaConvenience.getView(aJCas, "goldStandard");
@@ -98,7 +122,10 @@ public class EventMentionCandidateIdentifier extends AbstractLoggingAnnotator {
         for (EventMention mention : JCasUtil.select(goldStandard, EventMention.class)) {
             System.err.println(mention.getCoveredText() + " " + mention.getId());
             for (Word word : FSCollectionFactory.create(mention.getMentionTokens(), Word.class)) {
-                eid2Wid.put(mention, word);
+//                StanfordCorenlpToken goldWord = UimaNlpUtils.findHeadFromTreeAnnotation(aJCas, word);
+                StanfordCorenlpToken goldWord = align.getStanfordToken(word);
+                eid2Wid.put(mention, goldWord);
+                System.err.println("Gold word : " + goldWord.getCoveredText());
             }
         }
 
@@ -119,9 +146,7 @@ public class EventMentionCandidateIdentifier extends AbstractLoggingAnnotator {
 
         for (SemaforAnnotationSet annoSet : JCasUtil.select(aJCas, SemaforAnnotationSet.class)) {
             String frameName = annoSet.getFrameName();
-
             SemaforLabel targetLabel = null;
-
             List<SemaforLabel> frameElements = new ArrayList<SemaforLabel>();
 
             for (SemaforLayer layer : FSCollectionFactory.create(annoSet.getLayers(), SemaforLayer.class)) {
@@ -139,10 +164,8 @@ public class EventMentionCandidateIdentifier extends AbstractLoggingAnnotator {
             }
 
             if (targetLabel != null) {
-                List<SingleEventFeature> allFeatures = new ArrayList<>();
                 StanfordCorenlpToken labelHeadWord = UimaNlpUtils.findHeadFromTreeAnnotation(aJCas, targetLabel);
-
-                word2Frame.put(align.getWord(labelHeadWord), frameName);
+                word2Frame.put(labelHeadWord, frameName);
             }
         }
         return word2Frame;
@@ -156,9 +179,7 @@ public class EventMentionCandidateIdentifier extends AbstractLoggingAnnotator {
 
             if (propbankSense != null) {
                 String frameName = getFrameFromPropBankSense(propbankSense);
-
-                Word candidateTrigger = align.getWord(token);
-
+                Word candidateTrigger = align.getStanfordToken(token);
                 word2Frame.put(candidateTrigger, frameName);
             }
 

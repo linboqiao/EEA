@@ -7,9 +7,7 @@ import edu.cmu.cs.lti.script.type.Word;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TokenAlignmentHelper {
     Map<FanseToken, StanfordCorenlpToken> f2s;
@@ -33,16 +31,16 @@ public class TokenAlignmentHelper {
         s2f = getType2TypeMapping(aJCas, StanfordCorenlpToken.class, FanseToken.class);
     }
 
-    public void loadWord2Stanford(JCas aJCas) {
-        w2s = getType2TypeMapping(aJCas, Word.class, StanfordCorenlpToken.class);
+    public void loadWord2Stanford(JCas aJCas, String targetComponentId) {
+        w2s = getType2TypeMapping(aJCas, Word.class, StanfordCorenlpToken.class, targetComponentId);
         s2w = new HashMap<>();
         for (Map.Entry<Word, StanfordCorenlpToken> ws : w2s.entrySet()) {
             s2w.put(ws.getValue(), ws.getKey());
         }
     }
 
-    public void loadWord2Fanse(JCas aJCas) {
-        w2f = getType2TypeMapping(aJCas, Word.class, FanseToken.class);
+    public void loadWord2Fanse(JCas aJCas, String targetComponentId) {
+        w2f = getType2TypeMapping(aJCas, Word.class, FanseToken.class, targetComponentId);
         f2w = new HashMap<>();
         for (Map.Entry<Word, FanseToken> wf : w2f.entrySet()) {
             f2w.put(wf.getValue(), wf.getKey());
@@ -104,7 +102,7 @@ public class TokenAlignmentHelper {
                                     token.getCoveredText(), token.getBegin(), token.getEnd(),
                                     clazzTo.getSimpleName()));
                 } else {
-                    System.out.println("Use covering");
+                    System.err.println("Use covering");
                     for (FromType word : coveringToken) {
                         word2Token.put(word, token);
                     }
@@ -113,5 +111,55 @@ public class TokenAlignmentHelper {
         }
 
         return word2Token;
+    }
+
+    private <ToType extends ComponentAnnotation, FromType extends ComponentAnnotation> Map<FromType, ToType> getType2TypeMapping(
+            JCas aJCas, Class<FromType> clazzFrom, Class<ToType> clazzTo, String targetComponentId) {
+        Map<ToType, Collection<FromType>> tokenCoveredWord = JCasUtil.indexCovered(aJCas, clazzTo,
+                clazzFrom);
+
+        Map<ToType, Collection<FromType>> tokenCoveringWord = JCasUtil.indexCovering(aJCas, clazzTo,
+                clazzFrom);
+
+        Map<FromType, ToType> word2Token = new HashMap<>();
+
+        for (ToType token : JCasUtil.select(aJCas, clazzTo)) {
+            if (token.getBegin() == 0 && token.getEnd() == 0 || token.getBegin() < 0)
+                continue;
+
+            Collection<FromType> coveredWords = filterByComponentId(tokenCoveredWord.get(token), targetComponentId);
+
+            if (coveredWords.size() > 0) {
+                for (FromType word : coveredWords) {
+                    word2Token.put(word, token);
+                }
+            } else {// in case the token range is larger than the word, use its covering token
+                Collection<FromType> coveringToken = filterByComponentId(tokenCoveringWord.get(token), targetComponentId);
+                if (coveringToken.size() == 0) {
+                    System.err
+                            .println(String.format("The word : %s [%d, %d] cannot be associated with a %s",
+                                    token.getCoveredText(), token.getBegin(), token.getEnd(),
+                                    clazzTo.getSimpleName()));
+                } else {
+                    System.err.println("Use covering for alignment");
+                    for (FromType word : coveringToken) {
+                        word2Token.put(word, token);
+                    }
+                }
+            }
+        }
+
+        return word2Token;
+    }
+
+    private <T extends ComponentAnnotation> List<T> filterByComponentId(Collection<T> origin, String targetComponentId) {
+        List<T> targets = new ArrayList<>();
+        for (T originToken : origin) {
+            if (originToken.getComponentId().equals(targetComponentId)) {
+                targets.add(originToken);
+            }
+        }
+
+        return targets;
     }
 }
