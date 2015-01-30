@@ -142,12 +142,20 @@ public class EventMentionTrainer {
         ArrayList<String> allClasses = new ArrayList<>(EventMentionCandidateFeatureGenerator.allTypes);
 
         EventMentionTrainer trainer = new EventMentionTrainer();
+
+        System.out.println("Preparing dataset");
+
         Instances dataset = trainer.prepareDataSet(featureNameMap, allClasses, instances);
+
+        System.out.println("Saving");
 
         ArffSaver saver = new ArffSaver();
         saver.setInstances(dataset);
         saver.setFile(new File("event-mention-detection/data/Event-mention-detection-2014/training.arff"));
         saver.writeBatch();
+
+        System.out.println("Conducting CV");
+
 
         trainer.crossValidation(allClasses, dataset);
     }

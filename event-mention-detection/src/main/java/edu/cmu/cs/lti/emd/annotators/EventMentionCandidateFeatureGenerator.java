@@ -92,7 +92,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
             Word headWord = candidate.getKey();
             TIntDoubleMap f = candidate.getValue();
             addHeadWordFeatures(headWord, f);
-            addSurroundingWordFeatures(headWord, 2, f);
+//            addSurroundingWordFeatures(headWord, 2, f);
         }
 
         instances = new ArrayList<>();
@@ -121,19 +121,19 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         addFeature("TriggerHeadLemma_" + triggerWord, features);
         addFeature("HeadPOS_" + triggerWord.getPos(), features);
 
-        if (triggerWord.getHeadDependencyRelations() != null) {
-            for (Dependency dep : FSCollectionFactory.create(triggerWord.getHeadDependencyRelations(), Dependency.class)) {
-                addFeature("HeadDepType_" + dep.getDependencyType(), features);
-                addFeature("HeadDepLemma_" + dep.getHead().getLemma(), features);
-            }
-        }
-
-        if (triggerWord.getChildDependencyRelations() != null) {
-            for (Dependency dep : FSCollectionFactory.create(triggerWord.getChildDependencyRelations(), Dependency.class)) {
-                addFeature("ChildDepType_" + dep.getDependencyType(), features);
-                addFeature("ChildDepLemma_" + dep.getHead().getLemma(), features);
-            }
-        }
+//        if (triggerWord.getHeadDependencyRelations() != null) {
+//            for (Dependency dep : FSCollectionFactory.create(triggerWord.getHeadDependencyRelations(), Dependency.class)) {
+//                addFeature("HeadDepType_" + dep.getDependencyType(), features);
+//                addFeature("HeadDepLemma_" + dep.getHead().getLemma(), features);
+//            }
+//        }
+//
+//        if (triggerWord.getChildDependencyRelations() != null) {
+//            for (Dependency dep : FSCollectionFactory.create(triggerWord.getChildDependencyRelations(), Dependency.class)) {
+//                addFeature("ChildDepType_" + dep.getDependencyType(), features);
+//                addFeature("ChildDepLemma_" + dep.getHead().getLemma(), features);
+//            }
+//        }
     }
 
     private void addSurroundingWordFeatures(Word word, int windowSize, TIntDoubleMap features) {
