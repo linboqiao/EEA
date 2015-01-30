@@ -50,6 +50,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     boolean hasGold;
 
     Map<String, String> vn2Fn;
+
     Map<String, String> pb2Vn;
 
     TokenAlignmentHelper align = new TokenAlignmentHelper();
@@ -173,12 +174,12 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         ArrayListMultimap<EventMention, Word> eid2Wid = ArrayListMultimap.create();
 
         for (EventMention mention : JCasUtil.select(goldStandard, EventMention.class)) {
-            System.err.println(mention.getCoveredText() + " " + mention.getId());
+//            System.err.println(mention.getCoveredText() + " " + mention.getId());
             for (Word word : FSCollectionFactory.create(mention.getMentionTokens(), Word.class)) {
 //                StanfordCorenlpToken goldWord = UimaNlpUtils.findHeadFromTreeAnnotation(aJCas, word);
                 StanfordCorenlpToken goldWord = align.getStanfordToken(word);
                 eid2Wid.put(mention, goldWord);
-                System.err.println("Gold word : " + goldWord.getCoveredText());
+//                System.err.println("Gold word : " + goldWord.getCoveredText());
             }
         }
 

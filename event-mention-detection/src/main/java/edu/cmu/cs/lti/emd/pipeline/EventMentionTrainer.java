@@ -18,7 +18,9 @@ import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
+import weka.core.converters.ArffSaver;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -118,7 +120,6 @@ public class EventMentionTrainer {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, paramBaseOutputDirName, 0, false);
 
         AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
@@ -142,6 +143,12 @@ public class EventMentionTrainer {
 
         EventMentionTrainer trainer = new EventMentionTrainer();
         Instances dataset = trainer.prepareDataSet(featureNameMap, allClasses, instances);
+
+        ArffSaver saver = new ArffSaver();
+        saver.setInstances(dataset);
+        saver.setFile(new File("event-mention-detection/data/Event-mention-detection-2014/training.arff"));
+        saver.writeBatch();
+
         trainer.crossValidation(allClasses, dataset);
     }
 }
