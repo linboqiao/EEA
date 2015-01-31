@@ -116,6 +116,8 @@ public class UsefulFramDetector extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        UimaConvenience.printProcessLog(aJCas, logger);
+
         JCas goldView = UimaConvenience.getView(aJCas, goldStandardViewName);
 
         TokenAlignmentHelper align = new TokenAlignmentHelper();
@@ -159,20 +161,19 @@ public class UsefulFramDetector extends AbstractLoggingAnnotator {
     private List<StanfordCorenlpToken> getUsefulTokens(EventMention mention, JCas aJCas, TokenAlignmentHelper align) {
         List<StanfordCorenlpToken> contentTokens = new ArrayList<>();
 
-        Collection<Word> goldWords;
+        List<StanfordCorenlpToken> goldWords = new ArrayList<>();
         if (mention.getMentionTokens() != null) {
-            goldWords = FSCollectionFactory.create(mention.getMentionTokens(), Word.class);
+            for (Word word : FSCollectionFactory.create(mention.getMentionTokens(), Word.class)) {
+                goldWords.add(align.getStanfordToken(JCasUtil.selectCovered(aJCas, Word.class, word.getBegin(), word.getEnd()).get(0)));
+            }
         } else {
-            goldWords = JCasUtil.selectCovered(Word.class, mention);
+            goldWords.addAll(JCasUtil.selectCovered(aJCas, StanfordCorenlpToken.class, mention.getBegin(), mention.getEnd()));
         }
 
-        for (Word goldWord : goldWords) {
-            Word goldWordSystemSide = JCasUtil.selectCovered(aJCas, Word.class, goldWord.getBegin(), goldWord.getEnd()).get(0);
-
-            StanfordCorenlpToken token = align.getStanfordToken(goldWordSystemSide);
+        for (StanfordCorenlpToken goldWord : goldWords) {
             for (String usefulPos : usefulPartOfSpeech) {
-                if (token.getPos().startsWith(usefulPos)) {
-                    contentTokens.add(token);
+                if (goldWord.getPos().startsWith(usefulPos)) {
+                    contentTokens.add(goldWord);
                 }
             }
         }
