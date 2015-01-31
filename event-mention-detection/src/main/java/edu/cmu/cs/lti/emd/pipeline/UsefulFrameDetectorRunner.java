@@ -25,7 +25,7 @@ public class UsefulFrameDetectorRunner {
 
         // Parameters for the writer
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
-        String paramBaseOutputDirName = "semafor_processed";
+        String paramBaseInputDirName = "split_train";
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -39,7 +39,7 @@ public class UsefulFrameDetectorRunner {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, paramBaseOutputDirName, 0, false);
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, paramBaseInputDirName, 0, false);
 
         AnalysisEngineDescription detector = CustomAnalysisEngineFactory.createAnalysisEngine(
                 UsefulFramDetector.class, typeSystemDescription,
