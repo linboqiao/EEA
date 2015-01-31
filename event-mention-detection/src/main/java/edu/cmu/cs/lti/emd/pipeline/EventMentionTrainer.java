@@ -148,7 +148,7 @@ public class EventMentionTrainer {
         EventMentionTrainer trainer = new EventMentionTrainer();
 
         System.out.println("Preparing dataset");
-
+        System.out.println("Number of training instances : " + featuresAndClass.size());
         Instances dataset = trainer.prepareDataSet(featureNameMap, allClasses, featuresAndClass);
 
         System.out.println("Saving");
