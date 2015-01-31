@@ -28,6 +28,7 @@ public class TokenAlignmentHelper {
         this(false);
     }
 
+
     public TokenAlignmentHelper(boolean verbose) {
         this.verbose = verbose;
     }
@@ -68,7 +69,13 @@ public class TokenAlignmentHelper {
 
 
     public String getLowercaseWordLemma(Word token) {
-        StanfordCorenlpToken s = w2s.get(token);
+        StanfordCorenlpToken s;
+        if (token instanceof FanseToken) {
+            s = f2s.get(token);
+        } else {
+            s = w2s.get(token);
+        }
+
         if (s != null) {
             return s.getLemma().toLowerCase();
         } else {
@@ -84,7 +91,7 @@ public class TokenAlignmentHelper {
         }
     }
 
-    public FanseToken getStanfordToken(StanfordCorenlpToken t) {
+    public FanseToken getFanseToken(StanfordCorenlpToken t) {
         return s2f.get(t);
     }
 

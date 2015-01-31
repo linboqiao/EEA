@@ -202,8 +202,9 @@ public class UsefulFramDetector extends AbstractLoggingAnnotator {
     }
 
     private List<String> searchForFrames(String word, String wordPos) {
-        if (lexicon2Frame.containsKey(word + "." + wordPos)) {
-            return lexicon2Frame.get(word + '.' + wordPos);
+        String shortPos = wordPos.substring(0, 1);
+        if (lexicon2Frame.containsKey(word + "." + shortPos)) {
+            return lexicon2Frame.get(word + '.' + shortPos);
         } else {
             Set<String> potentialFrames = new HashSet<>();
             for (POS pos : targetPos) {
