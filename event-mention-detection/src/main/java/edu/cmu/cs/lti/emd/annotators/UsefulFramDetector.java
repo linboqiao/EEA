@@ -158,7 +158,15 @@ public class UsefulFramDetector extends AbstractLoggingAnnotator {
 
     private List<StanfordCorenlpToken> getUsefulTokens(EventMention mention, JCas aJCas, TokenAlignmentHelper align) {
         List<StanfordCorenlpToken> contentTokens = new ArrayList<>();
-        for (Word goldWord : FSCollectionFactory.create(mention.getMentionTokens(), Word.class)) {
+
+        Collection<Word> goldWords;
+        if (mention.getMentionTokens() != null) {
+            goldWords = FSCollectionFactory.create(mention.getMentionTokens(), Word.class);
+        } else {
+            goldWords = JCasUtil.selectCovered(Word.class, mention);
+        }
+
+        for (Word goldWord : goldWords) {
             Word goldWordSystemSide = JCasUtil.selectCovered(aJCas, Word.class, goldWord.getBegin(), goldWord.getEnd()).get(0);
 
             StanfordCorenlpToken token = align.getStanfordToken(goldWordSystemSide);
