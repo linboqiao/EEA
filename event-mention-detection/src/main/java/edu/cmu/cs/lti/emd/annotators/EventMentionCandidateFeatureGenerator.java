@@ -279,7 +279,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
         for (FanseToken token : JCasUtil.select(aJCas, FanseToken.class)) {
             String propbankSense = token.getLexicalSense();
-            String frameName = getFrameFromPropBankSense(propbankSense);
+            String frameName = FrameDataReader.getFrameFromPropBankSense(propbankSense, pb2Vn, vn2Fn);
 
             if (frameName != null) {
                 addFeature("FrameName_" + frameName, fanseFeatures);
@@ -295,17 +295,6 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
             }
         }
         return word2Frame;
-    }
-
-    private String getFrameFromPropBankSense(String propBankSense) {
-        if (propBankSense == null) {
-            return null;
-        }
-        String vnFrame = pb2Vn.get(propBankSense);
-        if (vnFrame != null) {
-            return vn2Fn.get(vnFrame);
-        }
-        return null;
     }
 
     private Map<Word, String> calCoverage(JCas aJCas, Set<Word> candidateHeads) {

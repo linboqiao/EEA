@@ -76,6 +76,19 @@ public class TokenAlignmentHelper {
         }
     }
 
+    public FanseToken getFanseToken(Word t) {
+        if (t instanceof StanfordCorenlpToken) {
+            return s2f.get(t);
+        } else {
+            return w2f.get(t);
+        }
+    }
+
+    public FanseToken getStanfordToken(StanfordCorenlpToken t) {
+        return s2f.get(t);
+    }
+
+
     public StanfordCorenlpToken getStanfordToken(FanseToken t) {
         return f2s.get(t);
     }
