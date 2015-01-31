@@ -12,12 +12,15 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.javatuples.Pair;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.classifiers.Classifier;
+import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.evaluation.Evaluation;
-import weka.classifiers.functions.Logistic;
+import weka.classifiers.functions.SMO;
+import weka.classifiers.trees.J48;
+import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
-import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
+import weka.core.SparseInstance;
 import weka.core.converters.ArffSaver;
 
 import java.io.File;
@@ -39,46 +42,80 @@ public class EventMentionTrainer {
     }
 
     private void declareFeatures(ArrayList<Map.Entry<String, Integer>> featureNames, List<Attribute> featureVector) {
+        Attribute[] featureArray = new Attribute[featureNames.size()];
         for (BiMap.Entry<String, Integer> featureEntry : featureNames) {
-            featureVector.add(new Attribute(featureEntry.getKey()));
+            featureArray[featureEntry.getValue()] = new Attribute(featureEntry.getKey());
+        }
+
+        for (Attribute featureAttr : featureArray) {
+            featureVector.add(featureAttr);
         }
     }
 
     private void declareClass(List<String> allClasses, List<Attribute> featureVector) {
-        featureVector.add(new Attribute("event_types", allClasses));
+        List<String> fixedClasses = new ArrayList<>();
+
+        //a bug related to the sparse vector
+        fixedClasses.add("dummy_class");
+
+        fixedClasses.addAll(allClasses);
+
+        featureVector.add(new Attribute("event_types", fixedClasses));
     }
 
-    private void crossValidation(List<String> allClasses, Instances dataSet) throws Exception {
+    private List<Classifier> getClassifiers() {
+        List<Classifier> classifiers = new ArrayList<>();
+        classifiers.add(new RandomForest());
+        classifiers.add(new SMO());
+        classifiers.add(new NaiveBayes());
+        classifiers.add(new J48());
+        return classifiers;
+    }
+
+    private void crossValidation(Instances dataSet) throws Exception {
         Random rand = new Random(0);   // create seeded number generator
         Instances randData = new Instances(dataSet);   // create copy of original data
         randData.randomize(rand);
 
-        Classifier classifier = new Logistic();
+        int folds = 10;
+        Evaluation eval = new Evaluation(randData);
 
-        for (int n = 0; n < 10; n++) {
-            Instances trainSplit = randData.trainCV(10, n);
-            Instances testSplit = randData.testCV(10, n);
+        for (Classifier classifier : getClassifiers()) {
+            for (int n = 0; n < folds; n++) {
+                Instances trainSplit = randData.trainCV(folds, n);
+                Instances testSplit = randData.testCV(folds, n);
 
-            classifier.buildClassifier(trainSplit);
+                System.out.println("Building model for fold " + n);
 
-            Evaluation eval = new Evaluation(trainSplit);
-            eval.evaluateModel(classifier, testSplit);
+                classifier.buildClassifier(trainSplit);
 
-            System.out.println("==================");
-            System.out.println("CV iter %d : " + n);
+                System.out.println("Evaluating model for fold " + n);
 
-            for (int i = 0; i < allClasses.size(); i++) {
-                System.out.println(
-                        String.format("Class [%s], f-score: [%.4f], TP [%.2f], FP [%.2f], TN [%.2f], FN [%.2f]",
-                                allClasses.get(i),
-                                eval.fMeasure(i),
-                                eval.truePositiveRate(i),
-                                eval.falsePositiveRate(i),
-                                eval.trueNegativeRate(i),
-                                eval.falseNegativeRate(i)
-                        ));
+                eval.evaluateModel(classifier, testSplit);
+
+//                System.out.println("==================");
+//                for (int i = 0; i < allClasses.size(); i++) {
+//                    System.out.println("CV iter %d : " + n);
+//
+//                    System.out.println(
+//                            String.format("Class [%s], f-score: [%.4f], TP [%.2f], FP [%.2f], TN [%.2f], FN [%.2f]",
+//                                    allClasses.get(i),
+//                                    eval.fMeasure(i),
+//                                    eval.truePositiveRate(i),
+//                                    eval.falsePositiveRate(i),
+//                                    eval.trueNegativeRate(i),
+//                                    eval.falseNegativeRate(i)
+//                            ));
+//                }
+//                System.out.println("==================");
             }
-            System.out.println("==================");
+            System.out.println("=== Setup ===");
+            System.out.println("Classifier: " + classifier.getClass().getName());
+            System.out.println("Data set size: " + dataSet.numInstances());
+            System.out.println("Folds: " + folds);
+            System.out.println();
+            System.out.println(eval.toSummaryString("=== " + folds + "-fold Cross-validation ===", false));
+
         }
     }
 
@@ -91,22 +128,28 @@ public class EventMentionTrainer {
         System.out.println("Number of features : " + featureNames.size() + ". Number of classes : " + allClasses.size());
 
         Instances dataSet = new Instances("event_type_detection", featureConfiguration, featuresAndClass.size());
+        dataSet.setClass(featureConfiguration.get(featureConfiguration.size() - 1));
 
         for (Pair<TIntDoubleMap, String> rawData : featuresAndClass) {
-            Instance trainingInstance = new DenseInstance(featureConfiguration.size());
+            Instance trainingInstance = new SparseInstance(featureConfiguration.size());
             TIntDoubleMap featureValues = rawData.getValue0();
-            for (int i = 0; i < featureNames.size(); i++) {
-                int featureId = featureNames.get(i).getValue();
-                double featureValue = featureValues.containsValue(featureId) ? featureValues.get(featureId) : 0;
-                trainingInstance.setValue(featureConfiguration.get(i), featureValue);
+            trainingInstance.setDataset(dataSet);
+            String classValue = rawData.getValue1();
+
+            for (int featureId = 0; featureId < featureConfiguration.size() - 1; featureId++) {
+                if (featureValues.containsKey(featureId)) {
+                    trainingInstance.setValue(featureConfiguration.get(featureId), featureValues.get(featureId));
+                } else {
+                    trainingInstance.setValue(featureConfiguration.get(featureId), 0);
+                }
             }
-            trainingInstance.setValue(featureConfiguration.get(featureConfiguration.size() - 1), rawData.getValue1());
+
+            //set class
+            trainingInstance.setClassValue(classValue);
             dataSet.add(trainingInstance);
         }
 
-        System.out.println("Number of instances " + dataSet.size());
-
-        dataSet.setClassIndex(dataSet.numAttributes() - 1);
+        System.out.println("Number of instances stored : " + dataSet.size());
         return dataSet;
     }
 
@@ -161,6 +204,6 @@ public class EventMentionTrainer {
         System.out.println("Conducting CV");
 
 
-        trainer.crossValidation(allClasses, dataset);
+        trainer.crossValidation(dataset);
     }
 }

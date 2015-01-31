@@ -246,10 +246,8 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
                 candidate.setGoldStandardMentionType(goldWords.get(triggerHead));
             }
 
-
             if (frameName != null) {
                 candidate.setPotentialFrames(UimaConvenience.appendStringList(aJCas, candidate.getPotentialFrames(), frameName));
-
             } else {
                 for (String searchedFrame : searchForFrames(triggerHead.getLemma().toLowerCase(), triggerHead.getPos())) {
                     candidate.setPotentialFrames(UimaConvenience.appendStringList(aJCas, candidate.getPotentialFrames(), searchedFrame));
@@ -261,7 +259,6 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
                     String argX = relation.getSemanticAnnotation().replace("ARG", "");
 
                     Word role = relation.getChild();
-                    String labelHeadLemma = align.getLowercaseWordLemma(role);
                     CandidateEventMentionArgument argument = new CandidateEventMentionArgument(aJCas, role.getBegin(), role.getEnd());
                     UimaAnnotationUtils.finishAnnotation(argument, COMPONENT_ID, 0, aJCas);
 
