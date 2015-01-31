@@ -9,7 +9,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.javatuples.Triplet;
+import org.javatuples.Pair;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.classifiers.Classifier;
 import weka.classifiers.evaluation.Evaluation;
@@ -82,25 +82,30 @@ public class EventMentionTrainer {
         }
     }
 
-    private Instances prepareDataSet(BiMap<String, Integer> featureNameMap, List<String> allClasses, List<Triplet<String, TIntDoubleMap, String>> data) throws Exception {
+    private Instances prepareDataSet(BiMap<String, Integer> featureNameMap, List<String> allClasses, List<Pair<TIntDoubleMap, String>> featuresAndClass) throws Exception {
         //fix the iteration sequence;
         ArrayList<Map.Entry<String, Integer>> featureNames = new ArrayList<>(featureNameMap.entrySet());
 
         declareFeatureVector(featureNames, allClasses);
 
-        Instances dataSet = new Instances("event_type_detection", featureConfiguration, data.size());
+        System.out.println("Number of features : " + featureNames.size() + ". Number of classes : " + allClasses.size());
 
-        for (Triplet<String, TIntDoubleMap, String> rawData : data) {
+        Instances dataSet = new Instances("event_type_detection", featureConfiguration, featuresAndClass.size());
+
+        for (Pair<TIntDoubleMap, String> rawData : featuresAndClass) {
             Instance trainingInstance = new DenseInstance(featureConfiguration.size());
-            TIntDoubleMap featureValues = rawData.getValue1();
+            TIntDoubleMap featureValues = rawData.getValue0();
             for (int i = 0; i < featureNames.size(); i++) {
                 int featureId = featureNames.get(i).getValue();
                 double featureValue = featureValues.containsValue(featureId) ? featureValues.get(featureId) : 0;
                 trainingInstance.setValue(featureConfiguration.get(i), featureValue);
             }
-            trainingInstance.setValue(featureConfiguration.get(featureConfiguration.size() - 1), rawData.getValue2());
+            trainingInstance.setValue(featureConfiguration.get(featureConfiguration.size() - 1), rawData.getValue1());
             dataSet.add(trainingInstance);
         }
+
+        System.out.println("Number of instances " + dataSet.size());
+
         dataSet.setClassIndex(dataSet.numAttributes() - 1);
         return dataSet;
     }
@@ -110,7 +115,7 @@ public class EventMentionTrainer {
 
         // Parameters for the writer
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
-        String paramBaseOutputDirName = "semafor_processed";
+        String paramBaseOutputDirName = "candidate_annotated";
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -120,12 +125,12 @@ public class EventMentionTrainer {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, paramBaseOutputDirName, 0, false);
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, paramBaseOutputDirName, 1, false);
 
         AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionCandidateFeatureGenerator.class, typeSystemDescription,
                 EventMentionCandidateFeatureGenerator.PARAM_SEM_LINK_DIR, semLinkDataPath,
-                EventMentionCandidateFeatureGenerator.PARAM_HAS_GOLD, true);
+                EventMentionCandidateFeatureGenerator.PARAM_IS_TRAINING, true);
 
         // Run the pipeline.
         try {
@@ -136,16 +141,15 @@ public class EventMentionTrainer {
         }
 
         //start training
-
         BiMap<String, Integer> featureNameMap = EventMentionCandidateFeatureGenerator.featureNameMap;
-        List<Triplet<String, TIntDoubleMap, String>> instances = EventMentionCandidateFeatureGenerator.instances;
+        List<Pair<TIntDoubleMap, String>> featuresAndClass = EventMentionCandidateFeatureGenerator.featuresAndClass;
         ArrayList<String> allClasses = new ArrayList<>(EventMentionCandidateFeatureGenerator.allTypes);
 
         EventMentionTrainer trainer = new EventMentionTrainer();
 
         System.out.println("Preparing dataset");
 
-        Instances dataset = trainer.prepareDataSet(featureNameMap, allClasses, instances);
+        Instances dataset = trainer.prepareDataSet(featureNameMap, allClasses, featuresAndClass);
 
         System.out.println("Saving");
 

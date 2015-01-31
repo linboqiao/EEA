@@ -11,8 +11,7 @@ import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.mit.jwi.item.POS;
-import gnu.trove.map.TObjectIntMap;
-import gnu.trove.map.hash.TObjectIntHashMap;
+import org.apache.commons.io.FileUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -22,6 +21,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.javatuples.Pair;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -44,7 +44,9 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
 
     public static final String PARAM_SEM_LINK_PATH = "semLinkPath";
 
-    public static final String PARAM_OUTPUT_DIR = "outputDirPath";
+    public static final String PARAM_USEFUL_FRAME_DIR = "usefulFrameDir";
+
+    public static final String PARAM_FOR_TRAINING = "forTraining";
 
     public static final String COMPONENT_ID = CandidateEventMentionDetector.class.getSimpleName();
 
@@ -60,11 +62,11 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_SEM_LINK_PATH)
     private String semLinkDirPath;
 
-    @ConfigurationParameter(name = PARAM_OUTPUT_DIR)
-    private String outputDirPath;
+    @ConfigurationParameter(name = PARAM_USEFUL_FRAME_DIR)
+    private String usefulFrameDir;
 
-    TObjectIntMap<String> frameCounter = new TObjectIntHashMap<>();
-    TObjectIntMap<String> headCounter = new TObjectIntHashMap<>();
+    @ConfigurationParameter(name = PARAM_FOR_TRAINING)
+    private boolean forTraining;
 
     private ArrayListMultimap<String, String> lexicon2Frame;
 
@@ -73,21 +75,14 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
     private POS[] targetPos = {POS.VERB, POS.NOUN};
     private Map<String, String> vn2Fn;
     private Map<String, String> pb2Vn;
-
-    private int totalFoundByFrame = 0;
-    private int totalMentions = 0;
-
-    public static String frameFileName = "usefulFrames";
-
-    public static String headFileName = "usefulHeads";
-
-    private File outputDir;
+    private Map<Pair<String, String>, Pair<String, String>> pb2VnRoles;
+    private Map<Pair<String, String>, Pair<String, String>> vn2fnRoles;
 
     private String[] usefulPartOfSpeech = {"FW", "JJ", "NN", "V"};
 
-    private Set<StanfordCorenlpToken> goldWords;
+    private Map<StanfordCorenlpToken, String> goldWords;
 
-    private Map<StanfordCorenlpToken, CandidateEventMention> candidates;
+    private Map<StanfordCorenlpToken, CandidateEventMention> token2Candidates;
 
     Set<String> usefulFrames;
     Set<String> usefulHeads;
@@ -113,42 +108,68 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
 
         logger.info("Loading SemLink");
 
-        vn2Fn = FrameDataReader.getFN2VNFrameMap(semLinkDirPath + "/vn-fn/VN-FNRoleMapping.txt", true);
+        vn2Fn = FrameDataReader.getFN2VNFrameMap(semLinkDirPath + "/vn-fn/VN-FNRoleMapping.txt", false);
         pb2Vn = FrameDataReader.getFN2VNFrameMap(semLinkDirPath + "/vn-pb/vnpbMappings", true);
 
-        logger.info("Done loading");
+        pb2VnRoles = FrameDataReader.getVN2PBRoleMap(semLinkDirPath + "/vn-pb/vnpbMappings", true);
+        vn2fnRoles = FrameDataReader.getFN2VNRoleMap(semLinkDirPath + "/vn-fn/VN-FNRoleMapping.txt", false);
 
-        outputDir = new File(outputDirPath);
 
-        if (!outputDir.isDirectory()) {
-            outputDir.mkdirs();
+        logger.info("Loading useful frames");
+
+        try {
+            readUsefulFrames();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        logger.info("Done loading");
+    }
+
+    private void readUsefulFrames() throws IOException {
+        usefulFrames = new HashSet<>();
+        usefulHeads = new HashSet<>();
+
+        for (String line : FileUtils.readLines(new File(usefulFrameDir, UsefulFramDetector.frameFileName))) {
+            usefulFrames.add(line.split(" ")[0]);
+        }
+
+        for (String line : FileUtils.readLines(new File(usefulFrameDir, UsefulFramDetector.headFileName))) {
+            usefulHeads.add(line.split(" ")[0]);
+        }
     }
 
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        JCas goldView = UimaConvenience.getView(aJCas, goldStandardViewName);
+        UimaConvenience.printProcessLog(aJCas, logger);
+        token2Candidates = new HashMap<>();
 
-        TokenAlignmentHelper align = new TokenAlignmentHelper();
+
+        align = new TokenAlignmentHelper();
         align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
         align.loadStanford2Fanse(aJCas);
         align.loadFanse2Stanford(aJCas);
 
-        goldWords = new HashSet<>();
-
-        for (EventMention mention : JCasUtil.select(goldView, EventMention.class)) {
-            List<StanfordCorenlpToken> contentWords = getUsefulTokens(mention, aJCas, align);
-            goldWords.addAll(contentWords);
+        if (forTraining) {
+            JCas goldView = UimaConvenience.getView(aJCas, goldStandardViewName);
+            goldWords = new HashMap<>();
+            for (EventMention mention : JCasUtil.select(goldView, EventMention.class)) {
+                List<StanfordCorenlpToken> contentWords = getUsefulTokens(mention, aJCas, align);
+                for (StanfordCorenlpToken contentWord : contentWords) {
+                    goldWords.put(contentWord, mention.getEventType());
+                }
+            }
         }
 
         semaforMentionFinder(aJCas);
-
+        fanseMentionFinder(aJCas);
     }
 
     public void semaforMentionFinder(JCas aJCas) {
         for (SemaforAnnotationSet annoSet : JCasUtil.select(aJCas, SemaforAnnotationSet.class)) {
+            String frameName = annoSet.getFrameName();
+
             SemaforLabel trigger = null;
             List<SemaforLabel> frameElements = new ArrayList<>();
 
@@ -169,14 +190,22 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
 
             StanfordCorenlpToken triggerHead = UimaNlpUtils.findHeadFromTreeAnnotation(aJCas, trigger);
 
-            CandidateEventMention candidate;
-            if (candidates.containsKey(triggerHead)) {
-                candidate = candidates.get(triggerHead);
-            } else {
-                candidate = new CandidateEventMention(aJCas, trigger.getBegin(), trigger.getEnd());
-                UimaAnnotationUtils.finishAnnotation(candidate, COMPONENT_ID, 0, aJCas);
-                candidates.put(triggerHead, candidate);
+            if (!usefulFrames.contains(frameName) || !usefulHeads.contains(triggerHead.getLemma().toLowerCase())) {
+                continue;
             }
+
+            CandidateEventMention candidate;
+            if (token2Candidates.containsKey(triggerHead)) {
+                candidate = token2Candidates.get(triggerHead);
+            } else {
+                candidate = createCandidateMention(aJCas, trigger.getBegin(), trigger.getEnd(), triggerHead);
+            }
+
+            if (forTraining && goldWords.containsKey(triggerHead)) {
+                candidate.setGoldStandardMentionType(goldWords.get(triggerHead));
+            }
+
+            candidate.setPotentialFrames(UimaConvenience.appendStringList(aJCas, candidate.getPotentialFrames(), frameName));
 
             for (SemaforLabel frameElement : frameElements) {
                 String feName = frameElement.getName();
@@ -184,28 +213,74 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
                 UimaAnnotationUtils.finishAnnotation(argument, COMPONENT_ID, 0, aJCas);
                 argument.setRoleName(feName);
                 argument.setHeadWord(UimaNlpUtils.findHeadFromTreeAnnotation(aJCas, argument));
-                UimaConvenience.appendFSList(aJCas, candidate.getArgument(), argument, CandidateEventMentionArgument.class);
+                candidate.setArguments(UimaConvenience.appendFSList(aJCas, candidate.getArguments(), argument, CandidateEventMentionArgument.class));
             }
         }
     }
 
 
-    public void fanseMentionFinder(JCas aJCas, Set<String> targetFrames) {
+    public void fanseMentionFinder(JCas aJCas) {
         for (FanseToken token : JCasUtil.select(aJCas, FanseToken.class)) {
+            StanfordCorenlpToken triggerHead = align.getStanfordToken(token);
+
             String propbankSense = token.getLexicalSense();
+            if (propbankSense == null) {
+                propbankSense = triggerHead.getLemma().toLowerCase() + ".01";
+            }
+
             String frameName = FrameDataReader.getFrameFromPropBankSense(propbankSense, pb2Vn, vn2Fn);
             FSList childSemantics = token.getChildSemanticRelations();
 
-            StanfordCorenlpToken sToken = align.getStanfordToken(token);
+            if (!usefulFrames.contains(frameName) || !usefulHeads.contains(triggerHead.getLemma().toLowerCase())) {
+                continue;
+            }
 
+            CandidateEventMention candidate;
+            if (token2Candidates.containsKey(triggerHead)) {
+                candidate = token2Candidates.get(triggerHead);
+            } else {
+                candidate = createCandidateMention(aJCas, token.getBegin(), token.getEnd(), triggerHead);
+            }
 
-            if (frameName == null) {
-                searchForFrames(sToken.getLemma().toLowerCase(), sToken.getPos());
+            if (forTraining && goldWords.containsKey(triggerHead)) {
+                candidate.setGoldStandardMentionType(goldWords.get(triggerHead));
             }
 
 
-            if (childSemantics != null) {
+            if (frameName != null) {
+                candidate.setPotentialFrames(UimaConvenience.appendStringList(aJCas, candidate.getPotentialFrames(), frameName));
 
+            } else {
+                for (String searchedFrame : searchForFrames(triggerHead.getLemma().toLowerCase(), triggerHead.getPos())) {
+                    candidate.setPotentialFrames(UimaConvenience.appendStringList(aJCas, candidate.getPotentialFrames(), searchedFrame));
+                }
+            }
+
+            if (childSemantics != null) {
+                for (FanseSemanticRelation relation : FSCollectionFactory.create(childSemantics, FanseSemanticRelation.class)) {
+                    String argX = relation.getSemanticAnnotation().replace("ARG", "");
+
+                    Word role = relation.getChild();
+                    String labelHeadLemma = align.getLowercaseWordLemma(role);
+                    CandidateEventMentionArgument argument = new CandidateEventMentionArgument(aJCas, role.getBegin(), role.getEnd());
+                    UimaAnnotationUtils.finishAnnotation(argument, COMPONENT_ID, 0, aJCas);
+
+                    Pair<String, String> pbRolePair = new Pair<>(propbankSense, argX);
+
+                    Pair<String, String> fnRolePair = null;
+
+                    if (pb2VnRoles.containsKey(pbRolePair)) {
+                        Pair<String, String> vnRolePair = pb2VnRoles.get(pbRolePair);
+                        if (vnRolePair != null) {
+                            fnRolePair = vn2fnRoles.get(vnRolePair);
+                        }
+                    }
+
+                    if (fnRolePair != null) {
+                        argument.setRoleName(fnRolePair.getValue1());
+                    }
+                    candidate.setArguments(UimaConvenience.appendFSList(aJCas, candidate.getArguments(), argument, CandidateEventMentionArgument.class));
+                }
             }
         }
     }
@@ -256,5 +331,13 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
             }
             return new ArrayList<>(potentialFrames);
         }
+    }
+
+    private CandidateEventMention createCandidateMention(JCas aJCas, int begin, int end, StanfordCorenlpToken triggerHead) {
+        CandidateEventMention candidate = new CandidateEventMention(aJCas, begin, end);
+        candidate.setHeadWord(triggerHead);
+        UimaAnnotationUtils.finishAnnotation(candidate, COMPONENT_ID, 0, aJCas);
+        token2Candidates.put(triggerHead, candidate);
+        return candidate;
     }
 }
