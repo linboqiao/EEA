@@ -9,8 +9,6 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import java.io.File;
-
 /**
  * Created with IntelliJ IDEA.
  * User: zhengzhongliu
@@ -41,7 +39,7 @@ public class UsefulFrameDetectorRunner {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(paramParentInputDir, new File(paramParentInputDir, paramBaseInputDirName).getCanonicalPath(), 0, false);
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(paramParentInputDir, paramBaseInputDirName, 0, false);
 
         AnalysisEngineDescription detector = CustomAnalysisEngineFactory.createAnalysisEngine(
                 UsefulFramDetector.class, typeSystemDescription,
