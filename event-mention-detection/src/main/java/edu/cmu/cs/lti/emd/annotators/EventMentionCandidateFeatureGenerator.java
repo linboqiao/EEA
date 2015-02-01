@@ -101,6 +101,9 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     private void addHeadWordFeatures(StanfordCorenlpToken triggerWord, TIntDoubleMap features) {
         addFeature("TriggerHeadLemma_" + triggerWord.getLemma().toLowerCase(), features);
         addFeature("HeadPOS_" + triggerWord.getPos(), features);
+        if (triggerWord.getNerTag() != null) {
+            addFeature("HeadNer_" + triggerWord.getNerTag(), features);
+        }
 
         if (triggerWord.getHeadDependencyRelations() != null) {
             for (Dependency dep : FSCollectionFactory.create(triggerWord.getHeadDependencyRelations(), Dependency.class)) {
@@ -137,11 +140,21 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         for (Word word : allWords) {
             wordIds.put(word, i++);
         }
+
+        for (StanfordEntityMention mention : JCasUtil.select(aJCas, StanfordEntityMention.class)) {
+            String entityType = mention.getEntityType();
+            for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, mention)) {
+                token.setNerTag(entityType);
+            }
+        }
     }
 
-    private void addWordFeature(Word word, TIntDoubleMap features) {
+    private void addWordFeature(StanfordCorenlpToken word, TIntDoubleMap features) {
         addFeature("WindowPOS_" + word.getPos(), features);
         addFeature("WindowLemma_" + word.getLemma(), features);
+        if (word.getNerTag() != null) {
+            addFeature("WindowNer_" + word.getNerTag(), features);
+        }
     }
 
     private void addFrameFeatures(CandidateEventMention mention, TIntDoubleMap features) {

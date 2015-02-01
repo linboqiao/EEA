@@ -4,6 +4,7 @@ import com.google.common.collect.BiMap;
 import edu.cmu.cs.lti.emd.annotators.EventMentionCandidateFeatureGenerator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
+import gnu.trove.iterator.TIntDoubleIterator;
 import gnu.trove.map.TIntDoubleMap;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -72,7 +73,7 @@ public class EventMentionTrainer {
         Instances randData = new Instances(dataSet);   // create copy of original data
         randData.randomize(rand);
 
-        int folds = 10;
+        int folds = 5;
         Evaluation eval = new Evaluation(randData);
 
         for (Classifier classifier : getClassifiers()) {
@@ -111,30 +112,32 @@ public class EventMentionTrainer {
 
         //TODO add data point is too slow
         System.out.println("Adding instance");
-        int fcounter = 0;
+//        int fcounter = 0;
+
+        double[] emptyVector = new double[featureConfiguration.size()];
+
         for (Pair<TIntDoubleMap, String> rawData : featuresAndClass) {
-            Instance trainingInstance = new SparseInstance(featureConfiguration.size());
+            //initialize the sparse vector to be empty
+            Instance trainingInstance = new SparseInstance(1, emptyVector);
             TIntDoubleMap featureValues = rawData.getValue0();
             trainingInstance.setDataset(dataSet);
             String classValue = rawData.getValue1();
 
-            for (int featureId = 0; featureId < featureConfiguration.size() - 1; featureId++) {
-                if (featureValues.containsKey(featureId)) {
-                    trainingInstance.setValue(featureConfiguration.get(featureId), featureValues.get(featureId));
-                } else {
-                    trainingInstance.setValue(featureConfiguration.get(featureId), 0);
-                }
+            for (TIntDoubleIterator fIter = featureValues.iterator(); fIter.hasNext(); ) {
+                fIter.advance();
+                int featureId = fIter.key();
+                double featureVal = fIter.value();
+                trainingInstance.setValue(featureConfiguration.get(featureId), featureVal);
             }
 
-            System.out.print(" " + fcounter++);
-
+//            System.out.print(" " + fcounter++);
 
             //set class
             trainingInstance.setClassValue(classValue);
             dataSet.add(trainingInstance);
         }
 
-        System.out.println();
+//        System.out.println();
         System.out.println("Number of instances stored : " + dataSet.numInstances());
         return dataSet;
     }
