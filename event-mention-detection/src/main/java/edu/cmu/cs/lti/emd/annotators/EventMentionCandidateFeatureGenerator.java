@@ -79,7 +79,6 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
         align.loadFanse2Stanford(aJCas);
 
-
         for (CandidateEventMention candidateEventMention : JCasUtil.select(aJCas, CandidateEventMention.class)) {
             String goldType = candidateEventMention.getGoldStandardMentionType();
             TIntDoubleMap features = new TIntDoubleHashMap();

@@ -325,8 +325,10 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
         if (forTraining && goldWords.containsKey(triggerHead)) {
             String goldType = goldWords.get(triggerHead);
             if (goldType.equals("Movement_Transport")) {
+                System.err.println("Correct transport type");
                 goldType = "Movement_Transport-Person";
             } else if (goldType.equals("Contact_Phone-Write")) {
+                System.err.println("Correct communicate type");
                 goldType = "Contact_Communicate";
             }
             candidate.setGoldStandardMentionType(goldType);
