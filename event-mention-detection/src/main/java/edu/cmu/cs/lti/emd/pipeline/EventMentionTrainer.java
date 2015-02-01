@@ -6,6 +6,7 @@ import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import gnu.trove.iterator.TIntDoubleIterator;
 import gnu.trove.map.TIntDoubleMap;
+import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.pipeline.SimplePipeline;
@@ -22,6 +23,7 @@ import weka.core.*;
 import weka.core.converters.ArffSaver;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +68,26 @@ public class EventMentionTrainer {
         classifiers.add(new NaiveBayes());
         classifiers.add(new J48());
         return classifiers;
+    }
+
+    private void trainAndTest(Instances trainingSet, Instances testSet, File modelOutDir) throws Exception {
+        for (Classifier classifier : getClassifiers()) {
+            Evaluation eval = new Evaluation(trainingSet);
+            System.out.println("Building model");
+            classifier.buildClassifier(trainingSet);
+            System.out.println("Evaluating model");
+            eval.evaluateModel(classifier, testSet);
+
+            String classifierName = classifier.getClass().getName();
+
+            System.out.println("=== Setup ===");
+            System.out.println("Classifier: " + classifier.getClass().getName());
+            System.out.println("Training set size: " + trainingSet.numInstances());
+            System.out.println("Test set size: " + testSet.numInstances());
+            System.out.println();
+            System.out.println(eval.toSummaryString("=== Evaluation Results ===", false));
+            SerializationHelper.write(new File(modelOutDir, classifierName).getCanonicalPath(), classifier);
+        }
     }
 
     private void crossValidation(Instances dataSet, File modelOutDir) throws Exception {
@@ -142,61 +164,66 @@ public class EventMentionTrainer {
         return dataSet;
     }
 
+    private void generateFeatures(TypeSystemDescription typeSystemDescription,
+                                  String inputDir, String baseInputDirName,
+                                  int stepNum, String semLinkDataPath,
+                                  BiMap<String, Integer> featureNameMap) throws UIMAException, IOException {
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(inputDir, baseInputDirName, stepNum, false);
+        AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
+                EventMentionCandidateFeatureGenerator.class, typeSystemDescription,
+                EventMentionCandidateFeatureGenerator.PARAM_SEM_LINK_DIR, semLinkDataPath,
+                EventMentionCandidateFeatureGenerator.PARAM_IS_TRAINING, featureNameMap == null
+        );
+        SimplePipeline.runPipeline(reader, ana);
+    }
+
     public static void main(String[] args) throws Exception {
         System.out.println(className + " started...");
 
-        // Parameters for the writer
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
-        String paramBaseOutputDirName = "candidate_annotated";
-
+        String trainingBaseDir = "train_data";
+        String testBaseDir = "test_data";
         String paramTypeSystemDescriptor = "TypeSystem";
-
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
 
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, paramBaseOutputDirName, 1, false);
+        EventMentionTrainer trainer = new EventMentionTrainer();
+        trainer.generateFeatures(typeSystemDescription, paramInputDir, trainingBaseDir, 1, semLinkDataPath, null);
 
-        AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
-                EventMentionCandidateFeatureGenerator.class, typeSystemDescription,
-                EventMentionCandidateFeatureGenerator.PARAM_SEM_LINK_DIR, semLinkDataPath,
-                EventMentionCandidateFeatureGenerator.PARAM_IS_TRAINING, true);
-
-        // Run the pipeline.
-        try {
-            SimplePipeline.runPipeline(reader, ana);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
-
-        //start training
         BiMap<String, Integer> featureNameMap = EventMentionCandidateFeatureGenerator.featureNameMap;
-        List<Pair<TIntDoubleMap, String>> featuresAndClass = EventMentionCandidateFeatureGenerator.featuresAndClass;
+        List<Pair<TIntDoubleMap, String>> trainingFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
         ArrayList<String> allClasses = new ArrayList<>(EventMentionCandidateFeatureGenerator.allTypes);
 
-        EventMentionTrainer trainer = new EventMentionTrainer();
+        System.out.println("Preparing training dataset");
+        System.out.println("Number of training instances : " + trainingFeatures.size());
+        Instances trainingDataset = trainer.prepareDataSet(featureNameMap, allClasses, trainingFeatures);
 
-        System.out.println("Preparing dataset");
-        System.out.println("Number of training instances : " + featuresAndClass.size());
-        Instances dataset = trainer.prepareDataSet(featureNameMap, allClasses, featuresAndClass);
-
-        System.out.println("Saving");
+        System.out.println("Saving training data");
 
         ArffSaver saver = new ArffSaver();
-        saver.setInstances(dataset);
+        saver.setInstances(trainingDataset);
         saver.setFile(new File("event-mention-detection/data/Event-mention-detection-2014/training.arff"));
         saver.writeBatch();
 
-        System.out.println("Conducting CV");
+        trainer.generateFeatures(typeSystemDescription, paramInputDir, testBaseDir, 1, semLinkDataPath, featureNameMap);
+        List<Pair<TIntDoubleMap, String>> testFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
+        Instances testDataset = trainer.prepareDataSet(featureNameMap, allClasses, testFeatures);
 
+        System.out.println("Saving test data");
+        saver.setInstances(testDataset);
+        saver.setFile(new File("event-mention-detection/data/Event-mention-detection-2014/test.arff"));
+        saver.writeBatch();
+
+        System.out.println("Conducting evaluation");
         File modelOutputDir = new File("event-mention-detection/data/Event-mention-detection-2014/models");
         if (!modelOutputDir.exists() || !modelOutputDir.isDirectory()) {
             modelOutputDir.mkdirs();
         }
 
-        trainer.crossValidation(dataset, modelOutputDir);
+//        trainer.crossValidation(trainingDataset, modelOutputDir);
+        trainer.trainAndTest(trainingDataset, testDataset, modelOutputDir);
     }
 }

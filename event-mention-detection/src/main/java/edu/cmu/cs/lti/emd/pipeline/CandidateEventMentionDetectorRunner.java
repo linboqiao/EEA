@@ -25,7 +25,7 @@ public class CandidateEventMentionDetectorRunner {
 
         // Parameters for the writer
         String paramParentInputDir = "event-mention-detection/data/Event-mention-detection-2014";
-        String paramBaseInputDirName = "split_train";
+        String paramBaseInputDirName = "split_dev";
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -35,7 +35,7 @@ public class CandidateEventMentionDetectorRunner {
 
         String frameDataPath = "data/resources/fndata-1.5/frame";
 
-        String outputBase = "candidate_annotated";
+        String outputBase = "test_data";
 
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory

@@ -33,9 +33,9 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     public static final String PARAM_SEM_LINK_DIR = "semLinkDir";
 
-    public static final String PARAM_IS_TRAINING = "hasGoldStandard";
+    public static final String PARAM_IS_TRAINING = "isTraining";
 
-    public static BiMap<String, Integer> featureNameMap = HashBiMap.create();
+    public static BiMap<String, Integer> featureNameMap;
 
     public static List<Pair<TIntDoubleMap, String>> featuresAndClass;
 
@@ -68,6 +68,15 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         allTypes = new HashSet<>();
         allTypes.add(OTHER_TYPE);
         featuresAndClass = new ArrayList<>();
+
+        if (isTraining) {
+            featureNameMap = HashBiMap.create();
+        } else {
+            if (featureNameMap == null) {
+                throw new ResourceInitializationException(new IllegalStateException("Must provide feature names if using testing mode"));
+            }
+        }
+
     }
 
     @Override
@@ -87,13 +96,11 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
             addSurroundingWordFeatures(candidateHead, 2, features);
             addFrameFeatures(candidateEventMention, features);
 
-            if (isTraining) {
-                if (goldType != null) {
-                    featuresAndClass.add(Pair.with(features, goldType));
-                    allTypes.add(goldType);
-                } else {
-                    featuresAndClass.add(Pair.with(features, OTHER_TYPE));
-                }
+            if (goldType != null) {
+                featuresAndClass.add(Pair.with(features, goldType));
+                allTypes.add(goldType);
+            } else {
+                featuresAndClass.add(Pair.with(features, OTHER_TYPE));
             }
         }
     }
@@ -176,23 +183,36 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     private int getFeatureId(String featureName) {
         int featureId;
-        if (featureNameMap.containsKey(featureName)) {
-            featureId = featureNameMap.get(featureName);
+
+        if (isTraining) {
+            if (featureNameMap.containsKey(featureName)) {
+                featureId = featureNameMap.get(featureName);
+            } else {
+                featureId = nextFeatureId;
+                nextFeatureId++;
+                featureNameMap.put(featureName, featureId);
+            }
         } else {
-            featureId = nextFeatureId;
-            nextFeatureId++;
-            featureNameMap.put(featureName, featureId);
+            if (featureNameMap.containsKey(featureName)) {
+                featureId = featureNameMap.get(featureName);
+            } else {
+                return -1;//no such feature
+            }
         }
         return featureId;
     }
 
     private void addFeature(String featureName, double featureVal, TIntDoubleMap features) {
-        features.adjustOrPutValue(getFeatureId(featureName), featureVal, featureVal);
+        int featureId = getFeatureId(featureName);
+        if (featureId >= 0) {
+            features.adjustOrPutValue(featureId, featureVal, featureVal);
+        }
     }
 
     private void addFeature(String featureName, TIntDoubleMap features) {
-        features.adjustOrPutValue(getFeatureId(featureName), 1.0, 1.0);
+        int featureId = getFeatureId(featureName);
+        if (featureId >= 0) {
+            features.adjustOrPutValue(featureId, 1.0, 1.0);
+        }
     }
-
-
 }
