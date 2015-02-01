@@ -3,11 +3,13 @@ package edu.cmu.cs.lti.emd.annotators;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import edu.cmu.cs.lti.collection_reader.EventMentionDetectionDataReader;
+import edu.cmu.cs.lti.emd.pipeline.EventMentionTrainer;
 import edu.cmu.cs.lti.ling.FrameDataReader;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import gnu.trove.iterator.TIntDoubleIterator;
 import gnu.trove.map.TIntDoubleMap;
 import gnu.trove.map.hash.TIntDoubleHashMap;
 import org.apache.uima.UimaContext;
@@ -20,7 +22,13 @@ import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.jcas.cas.StringList;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.javatuples.Pair;
+import weka.classifiers.Classifier;
+import weka.core.Attribute;
+import weka.core.Instance;
+import weka.core.SerializationHelper;
+import weka.core.SparseInstance;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -35,17 +43,30 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     public static final String PARAM_IS_TRAINING = "isTraining";
 
+    public static final String PARAM_MODEL_FOLDER = "modelDir";
+
+    public static final String PARAM_MODEL_FOR_TEST = "pretrainedTestModelName";
+
     public static BiMap<String, Integer> featureNameMap;
 
     public static List<Pair<TIntDoubleMap, String>> featuresAndClass;
 
+
     public static Set<String> allTypes;
+
+    private double[] emptyVector;
 
     @ConfigurationParameter(name = PARAM_SEM_LINK_DIR)
     String semLinkDirPath;
 
     @ConfigurationParameter(name = PARAM_IS_TRAINING)
     boolean isTraining;
+
+    @ConfigurationParameter(name = PARAM_MODEL_FOLDER, mandatory = false)
+    String modelDirPath;
+
+    @ConfigurationParameter(name = PARAM_MODEL_FOR_TEST, mandatory = false)
+    String modelName;
 
     Map<String, String> vn2Fn;
 
@@ -57,8 +78,12 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     Map<Word, Integer> wordIds;
     ArrayList<StanfordCorenlpToken> allWords;
-
     public static final String OTHER_TYPE = "other_event";
+
+
+    //in case of test
+    private ArrayList<Attribute> featureConfiguration;
+    private Classifier pretrainedClassifier;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -72,11 +97,26 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         if (isTraining) {
             featureNameMap = HashBiMap.create();
         } else {
-            if (featureNameMap == null) {
-                throw new ResourceInitializationException(new IllegalStateException("Must provide feature names if using testing mode"));
+            if (modelDirPath == null) {
+                throw new ResourceInitializationException(new IllegalStateException("Must model files if using testing mode"));
+            } else {
+                try {
+                    loadModel();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
+    }
+
+
+    private void loadModel() throws Exception {
+        featureNameMap = (BiMap<String, Integer>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.featureNamePath).getCanonicalPath());
+        allTypes = (Set<String>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.predictionLabels).getCanonicalPath());
+        featureConfiguration = (ArrayList<Attribute>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.featureConfigOutputName).getCanonicalPath());
+        pretrainedClassifier = (Classifier) SerializationHelper.read(new File(modelDirPath, modelName).getCanonicalPath());
+        emptyVector = new double[featureConfiguration.size()];
     }
 
     @Override
@@ -96,13 +136,37 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
             addSurroundingWordFeatures(candidateHead, 2, features);
             addFrameFeatures(candidateEventMention, features);
 
-            if (goldType != null) {
-                featuresAndClass.add(Pair.with(features, goldType));
-                allTypes.add(goldType);
+            if (isTraining) {
+                if (goldType != null) {
+                    featuresAndClass.add(Pair.with(features, goldType));
+                    allTypes.add(goldType);
+                } else {
+                    featuresAndClass.add(Pair.with(features, OTHER_TYPE));
+                }
             } else {
-                featuresAndClass.add(Pair.with(features, OTHER_TYPE));
+                try {
+                    predict(features);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
+    }
+
+    private void predict(TIntDoubleMap features) throws Exception {
+        double prediction = pretrainedClassifier.classifyInstance(createInstance(features));
+        System.out.println("Prediction is " + prediction);
+    }
+
+    private Instance createInstance(TIntDoubleMap features) {
+        Instance instance = new SparseInstance(1, emptyVector);
+        for (TIntDoubleIterator fIter = features.iterator(); fIter.hasNext(); ) {
+            fIter.advance();
+            int featureId = fIter.key();
+            double featureVal = fIter.value();
+            instance.setValue(featureConfiguration.get(featureId), featureVal);
+        }
+        return instance;
     }
 
     private void addHeadWordFeatures(StanfordCorenlpToken triggerWord, TIntDoubleMap features) {

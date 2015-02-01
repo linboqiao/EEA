@@ -20,13 +20,11 @@ import weka.classifiers.functions.SMO;
 import weka.classifiers.trees.J48;
 import weka.classifiers.trees.RandomForest;
 import weka.core.*;
+import weka.core.converters.ArffSaver;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 
 public class EventMentionTrainer {
@@ -34,10 +32,39 @@ public class EventMentionTrainer {
 
     private ArrayList<Attribute> featureConfiguration;
 
-    private void declareFeatureVector(ArrayList<Map.Entry<String, Integer>> featureNames, List<String> allClasses) {
+    private ArffSaver saver = new ArffSaver();
+
+    public static final String featureConfigOutputName = "featureConfig";
+
+    public static final String featureNamePath = "featureNames";
+
+    public static final String predictionLabels = "labelNames";
+
+    public void configFeatures(BiMap<String, Integer> featureNameMap, List<String> allClasses) throws Exception {
         featureConfiguration = new ArrayList<>();
+        ArrayList<Map.Entry<String, Integer>> featureNames = new ArrayList<>(featureNameMap.entrySet());
         declareFeatures(featureNames, featureConfiguration);
         declareClass(allClasses, featureConfiguration);
+        System.out.println("Number of features : " + featureNames.size() + ". Number of classes : " + allClasses.size());
+    }
+
+    public void configFeatures(BiMap<String, Integer> featureNameMap, List<String> allClasses, File outputDir) throws Exception {
+        featureConfiguration = new ArrayList<>();
+        ArrayList<Map.Entry<String, Integer>> featureNames = new ArrayList<>(featureNameMap.entrySet());
+        declareFeatures(featureNames, featureConfiguration);
+        declareClass(allClasses, featureConfiguration);
+        System.out.println("Number of features : " + featureNames.size() + ". Number of classes : " + allClasses.size());
+
+        if (outputDir != null) {
+            System.out.println("Saving feature names");
+            SerializationHelper.write(new File(outputDir, featureNamePath).getCanonicalPath(), featureNameMap);
+
+            System.out.println("Saving class names");
+            SerializationHelper.write(new File(outputDir, predictionLabels).getCanonicalPath(), allClasses);
+
+            System.out.println("Saving feature config");
+            SerializationHelper.write(new File(outputDir, featureConfigOutputName).getCanonicalPath(), featureConfiguration);
+        }
     }
 
     private void declareFeatures(ArrayList<Map.Entry<String, Integer>> featureNames, List<Attribute> featureVector) {
@@ -45,15 +72,11 @@ public class EventMentionTrainer {
         for (BiMap.Entry<String, Integer> featureEntry : featureNames) {
             featureArray[featureEntry.getValue()] = new Attribute(featureEntry.getKey());
         }
-
-        for (Attribute featureAttr : featureArray) {
-            featureVector.add(featureAttr);
-        }
+        Collections.addAll(featureVector, featureArray);
     }
 
     private void declareClass(List<String> allClasses, List<Attribute> featureVector) {
         List<String> fixedClasses = new ArrayList<>();
-
         //a bug related to the sparse vector
         fixedClasses.add("dummy_class");
         fixedClasses.addAll(allClasses);
@@ -69,7 +92,7 @@ public class EventMentionTrainer {
         return classifiers;
     }
 
-    private void trainAndTest(Instances trainingSet, Instances testSet, File modelOutDir) throws Exception {
+    private void trainAndTest(Instances trainingSet, Instances testSet, File modelOutPath) throws Exception {
         for (Classifier classifier : getClassifiers()) {
             Evaluation eval = new Evaluation(trainingSet);
             System.out.println("Building model");
@@ -85,8 +108,17 @@ public class EventMentionTrainer {
             System.out.println("Test set size: " + testSet.numInstances());
             System.out.println();
             System.out.println(eval.toSummaryString("=== Evaluation Results ===", false));
-            SerializationHelper.write(new File(modelOutDir, classifierName).getCanonicalPath(), classifier);
+
+            if (modelOutPath != null) {
+                System.out.println("Storing model to disk");
+                SerializationHelper.write(new File(modelOutPath, classifierName).getCanonicalPath(), classifier);
+            }
         }
+    }
+
+    private void test(Instances testSet, String pretrainedModelPath) throws Exception {
+        Classifier classifier = (Classifier) SerializationHelper.read(pretrainedModelPath);
+
     }
 
     private void crossValidation(Instances dataSet, File modelOutDir) throws Exception {
@@ -120,21 +152,12 @@ public class EventMentionTrainer {
         }
     }
 
-    private Instances prepareDataSet(BiMap<String, Integer> featureNameMap, List<String> allClasses, List<Pair<TIntDoubleMap, String>> featuresAndClass) throws Exception {
-        //fix the iteration sequence;
-        ArrayList<Map.Entry<String, Integer>> featureNames = new ArrayList<>(featureNameMap.entrySet());
 
-        declareFeatureVector(featureNames, allClasses);
-
-        System.out.println("Number of features : " + featureNames.size() + ". Number of classes : " + allClasses.size());
-
+    private Instances prepareDataSet(List<Pair<TIntDoubleMap, String>> featuresAndClass, String outputPath) throws Exception {
         Instances dataSet = new Instances("event_type_detection", featureConfiguration, featuresAndClass.size());
         dataSet.setClass(featureConfiguration.get(featureConfiguration.size() - 1));
 
-        //TODO add data point is too slow
         System.out.println("Adding instance");
-//        int fcounter = 0;
-
         double[] emptyVector = new double[featureConfiguration.size()];
 
         for (Pair<TIntDoubleMap, String> rawData : featuresAndClass) {
@@ -151,16 +174,24 @@ public class EventMentionTrainer {
                 trainingInstance.setValue(featureConfiguration.get(featureId), featureVal);
             }
 
-//            System.out.print(" " + fcounter++);
-
             //set class
             trainingInstance.setClassValue(classValue);
             dataSet.add(trainingInstance);
         }
 
-//        System.out.println();
         System.out.println("Number of instances stored : " + dataSet.numInstances());
+
+        if (outputPath != null) {
+            System.out.println("Saving dataset to disk...");
+            saveDataSet(dataSet, outputPath);
+        }
         return dataSet;
+    }
+
+    public void saveDataSet(Instances dataset, String path) throws IOException {
+        saver.setInstances(dataset);
+        saver.setFile(new File(path));
+        saver.writeBatch();
     }
 
     private void generateFeatures(TypeSystemDescription typeSystemDescription,
@@ -176,61 +207,75 @@ public class EventMentionTrainer {
         SimplePipeline.runPipeline(reader, ana);
     }
 
-    public static void main(String[] args) throws Exception {
-        System.out.println(className + " started...");
 
-        String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
-        String trainingBaseDir = "train_data";
-        String testBaseDir = "test_data";
-        String paramTypeSystemDescriptor = "TypeSystem";
-        String semLinkDataPath = "data/resources/SemLink_1.2.2c";
+    private void trainAndDev(TypeSystemDescription typeSystemDescription,
+                             String parentInput,
+                             String trainingBaseDir,
+                             String devBaseDir,
+                             String semLinkDataPath) throws Exception {
+        File modelOutputDir = new File(parentInput, "models");
+        if (!modelOutputDir.exists() || !modelOutputDir.isDirectory()) {
+            modelOutputDir.mkdirs();
+        }
 
-        // Instantiate the analysis engine.
-        TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
-                .createTypeSystemDescription(paramTypeSystemDescriptor);
-
-        EventMentionTrainer trainer = new EventMentionTrainer();
-        trainer.generateFeatures(typeSystemDescription, paramInputDir, trainingBaseDir, 1, semLinkDataPath, null);
-
+        System.out.println("Preparing training dataset");
+        generateFeatures(typeSystemDescription, parentInput, trainingBaseDir, 1, semLinkDataPath, null);
         BiMap<String, Integer> featureNameMap = EventMentionCandidateFeatureGenerator.featureNameMap;
         List<Pair<TIntDoubleMap, String>> trainingFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
         ArrayList<String> allClasses = new ArrayList<>(EventMentionCandidateFeatureGenerator.allTypes);
+        configFeatures(featureNameMap, allClasses, modelOutputDir);
+        System.out.println("Number of training instances : " + trainingFeatures.size());
+        Instances trainingDataset = prepareDataSet(trainingFeatures, new File(parentInput, "training.arff").getCanonicalPath());
 
+//        System.out.println("Preparing dev dataset");
+//        generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1, semLinkDataPath, featureNameMap);
+//        List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
+//        Instances devDataset = prepareDataSet(devFeatures, new File(parentInput, "test.arff").getCanonicalPath());
+//        System.out.println("Number of dev instances : " + devFeatures.size());
+//
+//        System.out.println("Conducting evaluation on dev");
+//        trainAndTest(trainingDataset, devDataset, modelOutputDir);
+    }
 
-//        System.out.println("Preparing training dataset");
-//        System.out.println("Number of training instances : " + trainingFeatures.size());
-//        Instances trainingDataset = trainer.prepareDataSet(featureNameMap, allClasses, trainingFeatures);
-//
-//        System.out.println("Saving training data");
-//
-//        ArffSaver saver = new ArffSaver();
-//        saver.setInstances(trainingDataset);
-//        saver.setFile(new File("event-mention-detection/data/Event-mention-detection-2014/training.arff"));
-//        saver.writeBatch();
-//
-//        trainer.generateFeatures(typeSystemDescription, paramInputDir, testBaseDir, 1, semLinkDataPath, featureNameMap);
-//        List<Pair<TIntDoubleMap, String>> testFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
-//        Instances testDataset = trainer.prepareDataSet(featureNameMap, allClasses, testFeatures);
-//
-//        System.out.println("Saving test data");
-//        saver.setInstances(testDataset);
-//        saver.setFile(new File("event-mention-detection/data/Event-mention-detection-2014/test.arff"));
-//        saver.writeBatch();
-//
+    private void test(TypeSystemDescription typeSystemDescription,
+                      String parentInput,
+                      String testBaseDir,
+                      String semLinkDataPath,
+                      String pretrainedModelPath,
+                      String featureNamePath,
+                      String classNamePath) throws Exception {
+        BiMap<String, Integer> featureNameMap = (BiMap) SerializationHelper.read(featureNamePath);
+        ArrayList<String> allClasses = (ArrayList) SerializationHelper.read(classNamePath);
 
-        System.out.println("Saving feature names");
+        configFeatures(featureNameMap, allClasses);
+
+        System.out.println("Preparing test dataset");
+        generateFeatures(typeSystemDescription, parentInput, testBaseDir, 1, semLinkDataPath, featureNameMap);
+        Instances testDataset = prepareDataSet(EventMentionCandidateFeatureGenerator.featuresAndClass, new File(parentInput, "test.arff").getCanonicalPath());
+        System.out.println("Number of test instances : " + testDataset.size());
+
+        System.out.println("Conducting evaluation on test");
+        test(testDataset, pretrainedModelPath);
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println(predictionLabels + " started...");
+
+        String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
+        String trainingBaseDir = "train_data";
+        String devBaseDir = "dev_data";
+        String paramTypeSystemDescriptor = "TypeSystem";
+        String semLinkDataPath = "data/resources/SemLink_1.2.2c";
 
         File modelOutputDir = new File("event-mention-detection/data/Event-mention-detection-2014/models");
         if (!modelOutputDir.exists() || !modelOutputDir.isDirectory()) {
             modelOutputDir.mkdirs();
         }
 
-        SerializationHelper.write(new File(modelOutputDir, "featureNames").getCanonicalPath(), featureNameMap);
+        TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
+                .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-//        System.out.println("Conducting evaluation");
-
-//
-////        trainer.crossValidation(trainingDataset, modelOutputDir);
-//        trainer.trainAndTest(trainingDataset, testDataset, modelOutputDir);
+        EventMentionTrainer trainer = new EventMentionTrainer();
+        trainer.trainAndDev(typeSystemDescription, paramInputDir, trainingBaseDir, devBaseDir, semLinkDataPath);
     }
 }
