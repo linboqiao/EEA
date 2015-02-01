@@ -109,6 +109,8 @@ public class EventMentionTrainer {
         Instances dataSet = new Instances("event_type_detection", featureConfiguration, featuresAndClass.size());
         dataSet.setClass(featureConfiguration.get(featureConfiguration.size() - 1));
 
+        System.out.println("Adding instance");
+        int fcounter = 0;
         for (Pair<TIntDoubleMap, String> rawData : featuresAndClass) {
             Instance trainingInstance = new SparseInstance(featureConfiguration.size());
             TIntDoubleMap featureValues = rawData.getValue0();
@@ -122,6 +124,8 @@ public class EventMentionTrainer {
                     trainingInstance.setValue(featureConfiguration.get(featureId), 0);
                 }
             }
+
+            System.out.print("\r" + fcounter++);
 
             //set class
             trainingInstance.setClassValue(classValue);
@@ -181,7 +185,6 @@ public class EventMentionTrainer {
         saver.writeBatch();
 
         System.out.println("Conducting CV");
-
 
         File modelOutputDir = new File("event-mention-detection/data/Event-mention-detection-2014/models");
         if (!modelOutputDir.exists() || !modelOutputDir.isDirectory()) {
