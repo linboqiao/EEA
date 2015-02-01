@@ -48,9 +48,13 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
         for (CandidateEventMention mention : JCasUtil.select(aJCas, CandidateEventMention.class)) {
             String t = mention.getGoldStandardMentionType();
 
+            if (t == null) {
+                continue;
+            }
+
             allClasses.add(t);
 
-            if (mention.getGoldStandardMentionType().equals("Movement_Transport")) {
+            if (t.equals("Movement_Transport")) {
                 System.out.println(t);
                 System.out.println(mention.getCoveredText());
             } else if (t.equals("Contact_Phone-Write")) {
