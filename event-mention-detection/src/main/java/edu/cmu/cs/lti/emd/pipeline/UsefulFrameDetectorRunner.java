@@ -51,8 +51,6 @@ public class UsefulFrameDetectorRunner {
                 UsefulFramDetector.PARAM_SEM_LINK_PATH, semLinkDataPath,
                 UsefulFramDetector.PARAM_WORDNET_PATH, wordnetDataPath);
 
-
-
         // Run the pipeline.
         try {
             SimplePipeline.runPipeline(reader, detector);

@@ -139,12 +139,10 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
         }
     }
 
-
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         UimaConvenience.printProcessLog(aJCas, logger);
         token2Candidates = new HashMap<>();
-
 
         align = new TokenAlignmentHelper();
         align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
@@ -201,10 +199,6 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
                 candidate = createCandidateMention(aJCas, trigger.getBegin(), trigger.getEnd(), triggerHead);
             }
 
-            if (forTraining && goldWords.containsKey(triggerHead)) {
-                candidate.setGoldStandardMentionType(goldWords.get(triggerHead));
-            }
-
             candidate.setPotentialFrames(UimaConvenience.appendStringList(aJCas, candidate.getPotentialFrames(), frameName));
 
             for (SemaforLabel frameElement : frameElements) {
@@ -240,10 +234,6 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
                 candidate = token2Candidates.get(triggerHead);
             } else {
                 candidate = createCandidateMention(aJCas, token.getBegin(), token.getEnd(), triggerHead);
-            }
-
-            if (forTraining && goldWords.containsKey(triggerHead)) {
-                candidate.setGoldStandardMentionType(goldWords.get(triggerHead));
             }
 
             if (frameName != null) {
@@ -285,7 +275,6 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
     public void frameLookupMentionFinder(JCas aJCas, Set<String> targetFrames) {
 
     }
-
 
     public void brownClusteringMentionFinder(JCas aJCas, Set<String> targetFrames) {
 
@@ -333,6 +322,15 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
     private CandidateEventMention createCandidateMention(JCas aJCas, int begin, int end, StanfordCorenlpToken triggerHead) {
         CandidateEventMention candidate = new CandidateEventMention(aJCas, begin, end);
         candidate.setHeadWord(triggerHead);
+        if (forTraining && goldWords.containsKey(triggerHead)) {
+            String goldType = goldWords.get(triggerHead);
+            if (goldType.equals("Movement_Transport")) {
+                goldType = "Movement_Transport-Person";
+            } else if (goldType.equals("Contact_Phone-Write")) {
+                goldType = "Contact_Communicate";
+            }
+            candidate.setGoldStandardMentionType(goldType);
+        }
         UimaAnnotationUtils.finishAnnotation(candidate, COMPONENT_ID, 0, aJCas);
         token2Candidates.put(triggerHead, candidate);
         return candidate;
