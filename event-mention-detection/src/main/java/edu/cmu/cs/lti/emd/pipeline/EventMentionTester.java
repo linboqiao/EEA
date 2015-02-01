@@ -20,6 +20,7 @@ import weka.classifiers.functions.SMO;
 import weka.classifiers.trees.J48;
 import weka.classifiers.trees.RandomForest;
 import weka.core.*;
+import weka.core.converters.ArffSaver;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,8 +30,8 @@ import java.util.Map;
 import java.util.Random;
 
 
-public class EventMentionTrainer {
-    private static String className = EventMentionTrainer.class.getSimpleName();
+public class EventMentionTester {
+    private static String className = EventMentionTester.class.getSimpleName();
 
     private ArrayList<Attribute> featureConfiguration;
 
@@ -189,48 +190,40 @@ public class EventMentionTrainer {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        EventMentionTrainer trainer = new EventMentionTrainer();
+        EventMentionTester trainer = new EventMentionTester();
         trainer.generateFeatures(typeSystemDescription, paramInputDir, trainingBaseDir, 1, semLinkDataPath, null);
 
         BiMap<String, Integer> featureNameMap = EventMentionCandidateFeatureGenerator.featureNameMap;
         List<Pair<TIntDoubleMap, String>> trainingFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
         ArrayList<String> allClasses = new ArrayList<>(EventMentionCandidateFeatureGenerator.allTypes);
 
+        System.out.println("Preparing training dataset");
+        System.out.println("Number of training instances : " + trainingFeatures.size());
+        Instances trainingDataset = trainer.prepareDataSet(featureNameMap, allClasses, trainingFeatures);
 
-//        System.out.println("Preparing training dataset");
-//        System.out.println("Number of training instances : " + trainingFeatures.size());
-//        Instances trainingDataset = trainer.prepareDataSet(featureNameMap, allClasses, trainingFeatures);
-//
-//        System.out.println("Saving training data");
-//
-//        ArffSaver saver = new ArffSaver();
-//        saver.setInstances(trainingDataset);
-//        saver.setFile(new File("event-mention-detection/data/Event-mention-detection-2014/training.arff"));
-//        saver.writeBatch();
-//
-//        trainer.generateFeatures(typeSystemDescription, paramInputDir, testBaseDir, 1, semLinkDataPath, featureNameMap);
-//        List<Pair<TIntDoubleMap, String>> testFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
-//        Instances testDataset = trainer.prepareDataSet(featureNameMap, allClasses, testFeatures);
-//
-//        System.out.println("Saving test data");
-//        saver.setInstances(testDataset);
-//        saver.setFile(new File("event-mention-detection/data/Event-mention-detection-2014/test.arff"));
-//        saver.writeBatch();
-//
+        System.out.println("Saving training data");
 
-        System.out.println("Saving feature names");
+        ArffSaver saver = new ArffSaver();
+        saver.setInstances(trainingDataset);
+        saver.setFile(new File("event-mention-detection/data/Event-mention-detection-2014/training.arff"));
+        saver.writeBatch();
 
+        trainer.generateFeatures(typeSystemDescription, paramInputDir, testBaseDir, 1, semLinkDataPath, featureNameMap);
+        List<Pair<TIntDoubleMap, String>> testFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
+        Instances testDataset = trainer.prepareDataSet(featureNameMap, allClasses, testFeatures);
+
+        System.out.println("Saving test data");
+        saver.setInstances(testDataset);
+        saver.setFile(new File("event-mention-detection/data/Event-mention-detection-2014/test.arff"));
+        saver.writeBatch();
+
+        System.out.println("Conducting evaluation");
         File modelOutputDir = new File("event-mention-detection/data/Event-mention-detection-2014/models");
         if (!modelOutputDir.exists() || !modelOutputDir.isDirectory()) {
             modelOutputDir.mkdirs();
         }
 
-        SerializationHelper.write(new File(modelOutputDir, "featureNames").getCanonicalPath(), featureNameMap);
-
-//        System.out.println("Conducting evaluation");
-
-//
-////        trainer.crossValidation(trainingDataset, modelOutputDir);
-//        trainer.trainAndTest(trainingDataset, testDataset, modelOutputDir);
+//        trainer.crossValidation(trainingDataset, modelOutputDir);
+        trainer.trainAndTest(trainingDataset, testDataset, modelOutputDir);
     }
 }
