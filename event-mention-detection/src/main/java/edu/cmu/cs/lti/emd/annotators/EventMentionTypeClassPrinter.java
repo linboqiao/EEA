@@ -34,7 +34,18 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
         JCas goldView = UimaConvenience.getView(aJCas, "goldStandard");
 
         for (EventMention mention : JCasUtil.select(goldView, EventMention.class)) {
-            allClasses.add(mention.getEventType());
+            String t = mention.getEventType();
+
+            allClasses.add(t);
+
+            if (mention.getEventType().equals("Movement_Transport")) {
+                System.out.println(t);
+                System.out.println(mention.getMentionContext().getCoveredText());
+            } else if (t.equals("Contact_Phone-Write")) {
+                System.out.println(t);
+                System.out.println(mention.getMentionContext().getCoveredText());
+            }
+
         }
     }
 
