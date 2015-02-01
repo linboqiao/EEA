@@ -1,10 +1,9 @@
 package edu.cmu.cs.lti.emd.annotators;
 
-import edu.cmu.cs.lti.script.type.EventMention;
+import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -31,21 +30,33 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        JCas goldView = UimaConvenience.getView(aJCas, "goldStandard");
+//        JCas goldView = UimaConvenience.getView(aJCas, "goldStandard");
+//        for (EventMention mention : JCasUtil.select(goldView, EventMention.class)) {
+//            String t = mention.getEventType();
+//
+//            allClasses.add(t);
+//
+//            if (mention.getEventType().equals("Movement_Transport")) {
+//                System.out.println(t);
+//                System.out.println(mention.getMentionContext().getCoveredText());
+//            } else if (t.equals("Contact_Phone-Write")) {
+//                System.out.println(t);
+//                System.out.println(mention.getMentionContext().getCoveredText());
+//            }
+//        }
 
-        for (EventMention mention : JCasUtil.select(goldView, EventMention.class)) {
-            String t = mention.getEventType();
+        for (CandidateEventMention mention : JCasUtil.select(aJCas, CandidateEventMention.class)) {
+            String t = mention.getGoldStandardMentionType();
 
             allClasses.add(t);
 
-            if (mention.getEventType().equals("Movement_Transport")) {
+            if (mention.getGoldStandardMentionType().equals("Movement_Transport")) {
                 System.out.println(t);
-                System.out.println(mention.getMentionContext().getCoveredText());
+                System.out.println(mention.getCoveredText());
             } else if (t.equals("Contact_Phone-Write")) {
                 System.out.println(t);
-                System.out.println(mention.getMentionContext().getCoveredText());
+                System.out.println(mention.getCoveredText());
             }
-
         }
     }
 
