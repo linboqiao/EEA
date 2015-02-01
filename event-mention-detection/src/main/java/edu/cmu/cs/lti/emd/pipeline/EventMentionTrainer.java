@@ -109,6 +109,7 @@ public class EventMentionTrainer {
         Instances dataSet = new Instances("event_type_detection", featureConfiguration, featuresAndClass.size());
         dataSet.setClass(featureConfiguration.get(featureConfiguration.size() - 1));
 
+        //TODO add data point is too slow
         System.out.println("Adding instance");
         int fcounter = 0;
         for (Pair<TIntDoubleMap, String> rawData : featuresAndClass) {
@@ -125,13 +126,15 @@ public class EventMentionTrainer {
                 }
             }
 
-            System.out.print("\r" + fcounter++);
+            System.out.print(" " + fcounter++);
+
 
             //set class
             trainingInstance.setClassValue(classValue);
             dataSet.add(trainingInstance);
         }
 
+        System.out.println();
         System.out.println("Number of instances stored : " + dataSet.numInstances());
         return dataSet;
     }
