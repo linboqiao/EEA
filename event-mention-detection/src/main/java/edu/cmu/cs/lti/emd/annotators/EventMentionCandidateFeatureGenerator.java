@@ -98,8 +98,8 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         }
     }
 
-    private void addHeadWordFeatures(Word triggerWord, TIntDoubleMap features) {
-        addFeature("TriggerHeadLemma_" + triggerWord, features);
+    private void addHeadWordFeatures(StanfordCorenlpToken triggerWord, TIntDoubleMap features) {
+        addFeature("TriggerHeadLemma_" + triggerWord.getLemma().toLowerCase(), features);
         addFeature("HeadPOS_" + triggerWord.getPos(), features);
 
         if (triggerWord.getHeadDependencyRelations() != null) {
