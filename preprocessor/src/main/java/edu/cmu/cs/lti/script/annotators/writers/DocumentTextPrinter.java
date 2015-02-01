@@ -3,9 +3,8 @@
  */
 package edu.cmu.cs.lti.script.annotators.writers;
 
-import org.apache.uima.jcas.JCas;
-
 import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalsysisEngine;
+import org.apache.uima.jcas.JCas;
 
 /**
  * @author zhengzhongliu

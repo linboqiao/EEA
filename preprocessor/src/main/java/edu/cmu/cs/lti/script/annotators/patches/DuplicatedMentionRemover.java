@@ -1,17 +1,15 @@
 package edu.cmu.cs.lti.script.annotators.patches;
 
-import java.util.List;
-
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
+import edu.cmu.cs.lti.script.type.EntityMention;
+import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.jcas.JCas;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
-
-import edu.cmu.cs.lti.script.type.EntityMention;
-import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import java.util.List;
 
 public class DuplicatedMentionRemover extends JCasAnnotator_ImplBase {
 

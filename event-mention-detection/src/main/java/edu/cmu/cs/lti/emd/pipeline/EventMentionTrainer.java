@@ -12,15 +12,12 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.javatuples.Pair;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.classifiers.Classifier;
+import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
-import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.functions.SMO;
 import weka.classifiers.trees.J48;
 import weka.classifiers.trees.RandomForest;
-import weka.core.Attribute;
-import weka.core.Instance;
-import weka.core.Instances;
-import weka.core.SparseInstance;
+import weka.core.*;
 import weka.core.converters.ArffSaver;
 
 import java.io.File;
@@ -57,9 +54,7 @@ public class EventMentionTrainer {
 
         //a bug related to the sparse vector
         fixedClasses.add("dummy_class");
-
         fixedClasses.addAll(allClasses);
-
         featureVector.add(new Attribute("event_types", fixedClasses));
     }
 
@@ -72,7 +67,7 @@ public class EventMentionTrainer {
         return classifiers;
     }
 
-    private void crossValidation(Instances dataSet) throws Exception {
+    private void crossValidation(Instances dataSet, File modelOutDir) throws Exception {
         Random rand = new Random(0);   // create seeded number generator
         Instances randData = new Instances(dataSet);   // create copy of original data
         randData.randomize(rand);
@@ -84,31 +79,14 @@ public class EventMentionTrainer {
             for (int n = 0; n < folds; n++) {
                 Instances trainSplit = randData.trainCV(folds, n);
                 Instances testSplit = randData.testCV(folds, n);
-
                 System.out.println("Building model for fold " + n);
-
                 classifier.buildClassifier(trainSplit);
-
                 System.out.println("Evaluating model for fold " + n);
-
                 eval.evaluateModel(classifier, testSplit);
-
-//                System.out.println("==================");
-//                for (int i = 0; i < allClasses.size(); i++) {
-//                    System.out.println("CV iter %d : " + n);
-//
-//                    System.out.println(
-//                            String.format("Class [%s], f-score: [%.4f], TP [%.2f], FP [%.2f], TN [%.2f], FN [%.2f]",
-//                                    allClasses.get(i),
-//                                    eval.fMeasure(i),
-//                                    eval.truePositiveRate(i),
-//                                    eval.falsePositiveRate(i),
-//                                    eval.trueNegativeRate(i),
-//                                    eval.falseNegativeRate(i)
-//                            ));
-//                }
-//                System.out.println("==================");
             }
+
+            String classifierName = classifier.getClass().getName();
+
             System.out.println("=== Setup ===");
             System.out.println("Classifier: " + classifier.getClass().getName());
             System.out.println("Data set size: " + dataSet.numInstances());
@@ -116,6 +94,7 @@ public class EventMentionTrainer {
             System.out.println();
             System.out.println(eval.toSummaryString("=== " + folds + "-fold Cross-validation ===", false));
 
+            SerializationHelper.write(new File(modelOutDir, classifierName).getCanonicalPath(), classifier);
         }
     }
 
@@ -149,7 +128,7 @@ public class EventMentionTrainer {
             dataSet.add(trainingInstance);
         }
 
-        System.out.println("Number of instances stored : " + dataSet.size());
+        System.out.println("Number of instances stored : " + dataSet.numInstances());
         return dataSet;
     }
 
@@ -204,6 +183,11 @@ public class EventMentionTrainer {
         System.out.println("Conducting CV");
 
 
-        trainer.crossValidation(dataset);
+        File modelOutputDir = new File("event-mention-detection/data/Event-mention-detection-2014/models");
+        if (!modelOutputDir.exists() || !modelOutputDir.isDirectory()) {
+            modelOutputDir.mkdirs();
+        }
+
+        trainer.crossValidation(dataset, modelOutputDir);
     }
 }

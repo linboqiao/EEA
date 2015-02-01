@@ -1,7 +1,6 @@
-/**
+package edu.cmu.cs.lti.script.runners; /**
  * 
  */
-package edu.cmu.cs.lti.script.runners;
 
 import edu.cmu.cs.lti.annotators.FanseAnnotator;
 import edu.cmu.cs.lti.collection_reader.AgigaCollectionReader;
@@ -27,9 +26,9 @@ public class PreparationPipeline {
 
   /**
    * @param args
-   * @throws IOException
-   * @throws ResourceInitializationException
-   * @throws UIMAException
+   * @throws java.io.IOException
+   * @throws org.apache.uima.resource.ResourceInitializationException
+   * @throws org.apache.uima.UIMAException
    */
   public static void main(String[] args) throws IOException, ResourceInitializationException {
     System.out.println(className + " started...");

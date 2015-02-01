@@ -25,6 +25,7 @@
         <module>sequence-modeling</module>
         <module>core</module>
         <module>event-mention-detection</module>
+        <module>preprocessor</module>
     </modules>
 
     <dependencies>

@@ -22,11 +22,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>edu.cmu.cs.lti</groupId>
-            <artifactId>corpusReader</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>18.0</version>
@@ -97,16 +92,6 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>edu.cmu.cs.lti</groupId>
-            <artifactId>fanse-parser</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>edu.cmu.cs.lti</groupId>
-            <artifactId>corpus-reader</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>
             <version>4.9.0</version>
@@ -122,19 +107,14 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>edu.cmu.cs.lti</groupId>
-            <artifactId>discourse-parser</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.mapdb</groupId>
             <artifactId>mapdb</artifactId>
             <version>1.0.6</version>
         </dependency>
         <dependency>
             <groupId>nz.ac.waikato.cms.weka</groupId>
-            <artifactId>weka-stable</artifactId>
-            <version>3.6.6</version>
+            <artifactId>weka-dev</artifactId>
+            <version>3.7.12</version>
         </dependency>
         <dependency>
             <groupId>edu.mit</groupId>

@@ -1,7 +1,6 @@
-/**
+package edu.cmu.cs.lti.script.runners; /**
  *
  */
-package edu.cmu.cs.lti.script.runners;
 
 import edu.cmu.cs.lti.script.annotators.annos.*;
 import edu.cmu.cs.lti.script.annotators.patches.HeadWordFixer;
@@ -26,8 +25,8 @@ public class EventMentionTupleExtractorRunner {
 
     /**
      * @param args
-     * @throws IOException
-     * @throws UIMAException
+     * @throws java.io.IOException
+     * @throws org.apache.uima.UIMAException
      */
     public static void main(String[] args) throws UIMAException, IOException {
         System.out.println(className + " started...");

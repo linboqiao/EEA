@@ -1,6 +1,8 @@
-package edu.cmu.cs.lti.script.runners.validator;
+package edu.cmu.cs.lti.script.runners; /**
+ *
+ */
 
-import edu.cmu.cs.lti.script.annotators.validators.EntityHeadValidator;
+import edu.cmu.cs.lti.script.annotators.annos.SingletonAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
@@ -12,13 +14,16 @@ import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.IOException;
 
-public class EntityHeadValidatorRunner {
-    private static String className = EntityHeadValidatorRunner.class.getSimpleName();
+/**
+ * @author zhengzhongliu
+ */
+public class SingletonRunner {
+    private static String className = SingletonRunner.class.getSimpleName();
 
     /**
      * @param args
-     * @throws IOException
-     * @throws UIMAException
+     * @throws java.io.IOException
+     * @throws org.apache.uima.UIMAException
      */
     public static void main(String[] args) throws UIMAException, IOException {
         System.out.println(className + " started...");
@@ -27,11 +32,12 @@ public class EntityHeadValidatorRunner {
         // Note that you should change the parameters below for your configuration.
         // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
-        String parentInputDirPath = "data";
-        String baseInputDirName = "event_tuples";
-        String inputFileSuffix = null;
-        int inputStepNumber = 2;
+        String paramInputDir = "data/01_event_tuples";
 
+        // Parameters for the writer
+        String paramParentOutputDir = "data";
+        String paramBaseOutputDirName = "singleton_annotated";
+        String paramOutputFileSuffix = null;
         // ////////////////////////////////////////////////////////////////
 
         String paramTypeSystemDescriptor = "TypeSystem";
@@ -43,12 +49,16 @@ public class EntityHeadValidatorRunner {
         // Instantiate a collection reader to get XMI as input.
         // Note that you should change the following parameters for your setting.
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createStepBasedGzippedXmiReader(parentInputDirPath, baseInputDirName, inputStepNumber, false);
+                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
 
-        AnalysisEngineDescription validator = CustomAnalysisEngineFactory.createAnalysisEngine(
-                EntityHeadValidator.class, typeSystemDescription);
 
-        SimplePipeline.runPipeline(reader, validator);
+        AnalysisEngineDescription singletonCreator = CustomAnalysisEngineFactory.createAnalysisEngine(
+                SingletonAnnotator.class, typeSystemDescription);
+
+        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(
+                paramParentOutputDir, paramBaseOutputDirName, 2, paramOutputFileSuffix);
+
+        SimplePipeline.runPipeline(reader, singletonCreator, writer);
 
         System.out.println(className + " completed.");
     }
