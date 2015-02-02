@@ -134,8 +134,10 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
             logger.info("Loading data set");
             trainingDataSet = arff.getData();
+            int classId = featureConfiguration.get(featureConfiguration.size() - 1).index();
             trainingDataSet.setClass(featureConfiguration.get(featureConfiguration.size() - 1));
             trainingDataSet.classAttribute();
+            logger.info("Training class id : " + classId);
         }
     }
 
