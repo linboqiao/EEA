@@ -19,12 +19,13 @@ public class EventMentionTester {
     public static void main(String[] args) throws Exception {
         System.out.println(className + " started...");
 
+        String modelBase = args[0]; // train_split
+
+        String testBaseDir = args[1]; // "dev_data"
+
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
-        String testBaseDir = "dev_data";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
-
-        String modelBase = "models_large";
 
         String modelPath = new File(paramInputDir, modelBase).getCanonicalPath();
 
