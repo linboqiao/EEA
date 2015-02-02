@@ -245,14 +245,8 @@ public class EventMentionTrainer {
         String devBaseDir = "dev_data";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
-        String modelBasePath = "models_new";
-
         String trainingBaseDir = args[0];//"train_data";
-        File modelOutputDir = new File(args[1]);
-//                new File("event-mention-detection/data/Event-mention-detection-2014/models");
-        if (!modelOutputDir.exists() || !modelOutputDir.isDirectory()) {
-            modelOutputDir.mkdirs();
-        }
+        String modelBasePath = args[1]; //"models";
 
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
