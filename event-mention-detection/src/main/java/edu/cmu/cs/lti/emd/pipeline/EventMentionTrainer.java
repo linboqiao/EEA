@@ -237,7 +237,7 @@ public class EventMentionTrainer {
         System.out.println(className + " started...");
 
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
-        String trainingBaseDir = "train_data";
+        String trainingBaseDir = "all_training_data";
         String devBaseDir = "dev_data";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
