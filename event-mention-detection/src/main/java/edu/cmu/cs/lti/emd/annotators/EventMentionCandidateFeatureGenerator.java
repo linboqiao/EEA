@@ -155,7 +155,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
         align.loadFanse2Stanford(aJCas);
 
-        System.out.println("Number of candidates " + JCasUtil.select(aJCas, CandidateEventMention.class));
+        System.out.println("Number of candidates " + JCasUtil.select(aJCas, CandidateEventMention.class).size());
 
         for (CandidateEventMention candidateEventMention : JCasUtil.select(aJCas, CandidateEventMention.class)) {
             String goldType = candidateEventMention.getGoldStandardMentionType();
@@ -165,19 +165,21 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
             addSurroundingWordFeatures(candidateHead, 2, features);
             addFrameFeatures(candidateEventMention, features);
 
-            if (isTraining) {
-                if (goldType != null) {
-                    featuresAndClass.add(Pair.with(features, goldType));
-                    allTypes.add(goldType);
-                } else {
-                    featuresAndClass.add(Pair.with(features, OTHER_TYPE));
-                }
-            } else if (isOnlineTest) {
+            if (isOnlineTest) {
                 try {
                     candidateEventMention.setPredictedType(predict(features));
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.exit(1);
+                }
+            } else {
+                if (goldType != null) {
+                    featuresAndClass.add(Pair.with(features, goldType));
+                    if (isTraining) {
+                        allTypes.add(goldType);
+                    }
+                } else {
+                    featuresAndClass.add(Pair.with(features, OTHER_TYPE));
                 }
             }
         }
