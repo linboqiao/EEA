@@ -188,6 +188,13 @@ public class EventMentionRealisFeatureGenerator extends AbstractLoggingAnnotator
 
             TIntDoubleMap features = new TIntDoubleHashMap();
             StanfordCorenlpToken candidateHead = candidateEventMention.getHeadWord();
+
+            if (isTraining) {
+                addFeature("MentionType_" + candidateEventMention.getGoldStandardMentionType(), 1, features);
+            } else {
+                addFeature("MentionType_" + candidateEventMention.getPredictedType(), 1, features);
+            }
+
             addHeadWordFeatures(candidateHead, features);
             addSurroundingWordFeatures(candidateHead, 2, features);
             addFrameFeatures(candidateEventMention, features);

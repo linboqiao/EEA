@@ -21,14 +21,14 @@ public class EventMentionTester {
 
         String modelBase = args[0]; // models_train_split
 
-        String testBaseDir = args[1]; // "dev_data"
-
-        String modelName = args[2]; // "weka.classifiers.functions.SMO" "weka.classifiers.trees.RandomForest"
+        String modelName = args[1]; // "weka.classifiers.functions.SMO" "weka.classifiers.trees.RandomForest"
 
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
         String brownClusteringDataPath = "data/resources/TDT5_BrownWC.txt";
+        String wordnetDataPath = "data/resources/wnDict";
+
 
         String modelPath = new File(paramInputDir, modelBase).getCanonicalPath();
 
@@ -46,7 +46,8 @@ public class EventMentionTester {
                 EventMentionCandidateFeatureGenerator.PARAM_MODEL_NAME_FOR_TEST, modelName,
                 EventMentionCandidateFeatureGenerator.PARAM_ONLINE_TEST, true,
                 EventMentionCandidateFeatureGenerator.PARAM_TRAINING_DATASET_PATH, new File(paramInputDir, modelBase + "/training.arff").getCanonicalPath(),
-                EventMentionCandidateFeatureGenerator.PARAM_BROWN_CLUSTERING_PATH, brownClusteringDataPath
+                EventMentionCandidateFeatureGenerator.PARAM_BROWN_CLUSTERING_PATH, brownClusteringDataPath,
+                EventMentionCandidateFeatureGenerator.PARAM_WORDNET_PATH, wordnetDataPath
         );
 
         AnalysisEngineDescription devResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,

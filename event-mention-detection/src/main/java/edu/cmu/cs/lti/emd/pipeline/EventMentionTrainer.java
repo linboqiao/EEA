@@ -15,7 +15,7 @@ import org.javatuples.Pair;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
-import weka.classifiers.functions.SMO;
+import weka.classifiers.trees.RandomForest;
 import weka.core.*;
 import weka.core.converters.ArffSaver;
 
@@ -73,8 +73,8 @@ public class EventMentionTrainer {
 
     private List<Classifier> getClassifiers() {
         List<Classifier> classifiers = new ArrayList<>();
-        classifiers.add(new SMO());
-//        classifiers.add(new RandomForest());
+//        classifiers.add(new SMO());
+        classifiers.add(new RandomForest());
 //        classifiers.add(new Logistic());
 //        classifiers.add(new NaiveBayes());
 //        classifiers.add(new J48());
@@ -112,11 +112,6 @@ public class EventMentionTrainer {
                 SerializationHelper.write(modelStoringPath, classifier);
             }
         }
-    }
-
-    private void test(Instances testSet, String pretrainedModelPath) throws Exception {
-        Classifier classifier = (Classifier) SerializationHelper.read(pretrainedModelPath);
-
     }
 
     private void crossValidation(Instances dataSet, File modelOutDir) throws Exception {
@@ -195,8 +190,8 @@ public class EventMentionTrainer {
     private void generateFeatures(TypeSystemDescription typeSystemDescription,
                                   String inputDir, String baseInputDirName,
                                   int stepNum, String semLinkDataPath,
-                                  String bwClusterPath, boolean isTraining,
-                                  String modelDir, boolean keep_quite) throws UIMAException, IOException {
+                                  String bwClusterPath, String wordnetDataPath,
+                                  boolean isTraining, String modelDir, boolean keep_quite) throws UIMAException, IOException {
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(inputDir, baseInputDirName, stepNum, false);
         AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionCandidateFeatureGenerator.class, typeSystemDescription,
@@ -205,6 +200,7 @@ public class EventMentionTrainer {
                 EventMentionCandidateFeatureGenerator.PARAM_ONLINE_TEST, false,
                 EventMentionCandidateFeatureGenerator.PARAM_MODEL_FOLDER, modelDir,
                 EventMentionCandidateFeatureGenerator.PARAM_BROWN_CLUSTERING_PATH, bwClusterPath,
+                EventMentionCandidateFeatureGenerator.PARAM_WORDNET_PATH, wordnetDataPath,
                 EventMentionCandidateFeatureGenerator.PARAM_KEEP_QUIET, keep_quite
         );
         SimplePipeline.runPipeline(reader, ana);
@@ -217,14 +213,15 @@ public class EventMentionTrainer {
                              String trainingBaseDir,
                              String devBaseDir,
                              String semLinkDataPath,
-                             String bwClusterPath) throws Exception {
+                             String bwClusterPath,
+                             String wordnetDataPath) throws Exception {
         File modelOutputDir = new File(parentInput, modelBaseDir);
         if (!modelOutputDir.exists() || !modelOutputDir.isDirectory()) {
             modelOutputDir.mkdirs();
         }
 
         System.out.println("Preparing training dataset");
-        generateFeatures(typeSystemDescription, parentInput, trainingBaseDir, 1, semLinkDataPath, bwClusterPath, true, null, true);
+        generateFeatures(typeSystemDescription, parentInput, trainingBaseDir, 1, semLinkDataPath, bwClusterPath, wordnetDataPath, true, null, true);
         BiMap<String, Integer> featureNameMap = EventMentionCandidateFeatureGenerator.featureNameMap;
         List<Pair<TIntDoubleMap, String>> trainingFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
         ArrayList<String> allClasses = new ArrayList<>(EventMentionCandidateFeatureGenerator.allTypes);
@@ -238,7 +235,7 @@ public class EventMentionTrainer {
 
         System.out.println("Preparing dev dataset");
         generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1,
-                semLinkDataPath, bwClusterPath, false, modelOutputDir.getCanonicalPath(), true);
+                semLinkDataPath, bwClusterPath, wordnetDataPath, false, modelOutputDir.getCanonicalPath(), true);
         List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
         Instances devDataset = prepareDataSet(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath());
         System.out.println("Number of dev instances : " + devFeatures.size());
@@ -254,6 +251,7 @@ public class EventMentionTrainer {
         String devBaseDir = "dev_data";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
+        String wordnetDataPath = "data/resources/wnDict";
         String brownClusteringDataPath = "data/resources/TDT5_BrownWC.txt";
         String trainingBaseDir = args[0];//"train_data";
         String modelBasePath = args[1]; //"models";
@@ -262,7 +260,7 @@ public class EventMentionTrainer {
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
         EventMentionTrainer trainer = new EventMentionTrainer();
-        trainer.buildModels(typeSystemDescription, paramInputDir, modelBasePath, trainingBaseDir, devBaseDir, semLinkDataPath, brownClusteringDataPath);
+        trainer.buildModels(typeSystemDescription, paramInputDir, modelBasePath, trainingBaseDir, devBaseDir, semLinkDataPath, brownClusteringDataPath, wordnetDataPath);
 
         System.out.println(className + " finished...");
     }

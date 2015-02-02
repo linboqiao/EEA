@@ -5,6 +5,7 @@ import com.google.common.collect.HashBiMap;
 import edu.cmu.cs.lti.collection_reader.EventMentionDetectionDataReader;
 import edu.cmu.cs.lti.emd.pipeline.EventMentionTrainer;
 import edu.cmu.cs.lti.ling.FrameDataReader;
+import edu.cmu.cs.lti.ling.WordNetSearcher;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
@@ -55,6 +56,8 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     public static final String PARAM_BROWN_CLUSTERING_PATH = "brownClusteringPath";
 
+    public static final String PARAM_WORDNET_PATH = "wordNetPath";
+
     public static BiMap<String, Integer> featureNameMap;
 
     public static List<Pair<TIntDoubleMap, String>> featuresAndClass;
@@ -63,11 +66,16 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     private double[] emptyVector;
 
+    private WordNetSearcher wns;
+
     @ConfigurationParameter(name = PARAM_BROWN_CLUSTERING_PATH)
     String brownClusteringPath;
 
     @ConfigurationParameter(name = PARAM_SEM_LINK_DIR)
     String semLinkDirPath;
+
+    @ConfigurationParameter(name = PARAM_WORDNET_PATH)
+    private String wnDictPath;
 
     @ConfigurationParameter(name = PARAM_ONLINE_TEST)
     boolean isOnlineTest;
@@ -106,6 +114,8 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     private int numDocuments = 0;
 
+    private String[] interestingWordNetTypes = {"body_part"};
+
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
@@ -116,6 +126,15 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        try {
+            logger.info("Loading wordnet dictionary");
+            wns = new WordNetSearcher(wnDictPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         allTypes = new HashSet<>();
         allTypes.add(OTHER_TYPE);
         featuresAndClass = new ArrayList<>();
@@ -136,6 +155,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     }
 
     private void readBrownCluster() throws IOException {
+        logger.info("Loading Brown clusters");
         brownClusters = new HashMap<>();
         for (String line : FileUtils.readLines(new File(brownClusteringPath))) {
             String[] parts = line.split("\t");
@@ -182,6 +202,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
             String goldType = candidateEventMention.getGoldStandardMentionType();
             TIntDoubleMap features = new TIntDoubleHashMap();
             StanfordCorenlpToken candidateHead = candidateEventMention.getHeadWord();
+
             addHeadWordFeatures(candidateHead, features);
             addSurroundingWordFeatures(candidateHead, 2, features);
             addFrameFeatures(candidateEventMention, features);
@@ -194,12 +215,16 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
                     candidateEventMention.setPredictedType(predictedType);
                     candidateEventMention.setTypePredictionConfidence(predictionConfidence);
 
-                    if (!prediction.equals(OTHER_TYPE)) {
+                    if (!predictedType.equals(OTHER_TYPE)) {
                         CandidateEventMention annotateMention =
                                 new CandidateEventMention(goldView, candidateEventMention.getBegin(), candidateEventMention.getEnd());
                         annotateMention.setPredictedType(predictedType);
                         annotateMention.setTypePredictionConfidence(predictionConfidence);
                         annotateMention.addToIndexes();
+                    }
+
+                    if (goldType != null && goldType.equals("Life_Injure")) {
+                        System.err.println(goldType + " " + predictedType);
                     }
 
 //                    System.err.println(candidateEventMention.getCoveredText());
@@ -245,11 +270,17 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         }
 
         Pair<Double, String> currentBest = rankList.poll();
+        Pair<Double, String> secondBest = rankList.poll();
+        Pair<Double, String> thirdBest = rankList.poll();
+
+
+        if (secondBest.getValue1().equals("Life_Injure")) {
+            System.err.println("Current Best" + currentBest);
+            System.err.println("Second Best" + secondBest);
+            System.err.println("Third Best" + thirdBest);
+        }
 
         if (currentBest.getValue1().equals(OTHER_TYPE) && currentBest.getValue0() < 0.8) {
-            Pair<Double, String> secondBest = rankList.poll();
-            Pair<Double, String> thirdBest = rankList.poll();
-
             if (secondBest.getValue0() > thirdBest.getValue0() * 2) {
                 return secondBest;
             } else {
@@ -295,7 +326,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         }
 
         if (brownClusters.containsKey(triggerWord.getCoveredText())) {
-            addFeature("HeadWordSurfaceBrownCluster_" + brownClusters.get(lemma), features);
+            addFeature("HeadWordSurfaceBrownCluster_" + brownClusters.get(triggerWord.getCoveredText()), features);
         }
 
         if (triggerWord.getNerTag() != null) {
@@ -306,8 +337,33 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
             for (Dependency dep : FSCollectionFactory.create(triggerWord.getHeadDependencyRelations(), Dependency.class)) {
 //                addFeature("HeadDepType_" + dep.getDependencyType(), features);
 //                addFeature("HeadDepLemma_" + dep.getHead().getLemma(), features);
+                String headLemma = dep.getHead().getLemma();
+                String headSurface = dep.getHead().getCoveredText();
+
+                addFeature("HeadDepLemma_" + dep.getDependencyType() + "_" + headLemma, features);
                 if (dep.getHead().getNerTag() != null) {
-                    addFeature("HeadDep_" + dep.getDependencyType() + "_" + dep.getHead().getLemma(), features);
+                    addFeature("HeadDepNer_" + dep.getDependencyType() + "_" + dep.getHead().getNerTag(), features);
+                }
+
+                addFeature("HeadDepPos" + dep.getDependencyType() + "_" + dep.getHead().getPos(), features);
+
+                if (brownClusters.containsKey(headLemma)) {
+                    addFeature("HeadDepLemmaBrownCluster_" + brownClusters.get(headLemma), features);
+                }
+
+                if (brownClusters.containsKey(headSurface)) {
+                    addFeature("HeadDepSurfaceBrownCluster_" + brownClusters.get(headSurface), features);
+                }
+
+                for (String superType : getInterestingSupertype(headLemma.toLowerCase())) {
+                    addFeature("HeadDepLemmaSuperType_" + superType, features);
+                    String superTypeWordFeatupre = "HeadLemmaSuperType_" + superType +
+                            "_get_" + triggerWord.getLemma().toLowerCase();
+                    String superTypeDepWordFeature = "HeadDepLemmaSuperType_" + superType + "_" +
+                            dep.getDependencyType() + "_" + triggerWord.getLemma().toLowerCase();
+
+                    addFeature(superTypeDepWordFeature, features);
+                    addFeature(superTypeWordFeatupre, features);
                 }
             }
         }
@@ -316,12 +372,57 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
             for (Dependency dep : FSCollectionFactory.create(triggerWord.getChildDependencyRelations(), Dependency.class)) {
 //                addFeature("ChildDepType_" + dep.getDependencyType(), features);
 //                addFeature("ChildDepLemma_" + dep.getChild().getLemma(), features);
-                addFeature("ChildDep_" + dep.getDependencyType() + "_" + dep.getChild().getLemma(), features);
+
+                String childLemma = dep.getChild().getLemma();
+                String childSurface = dep.getChild().getCoveredText();
+
+                addFeature("ChildDepLemma_" + dep.getDependencyType() + "_" + childLemma, features);
                 if (dep.getChild().getNerTag() != null) {
                     addFeature("ChildDepNer_" + dep.getDependencyType() + "_" + dep.getChild().getNerTag(), features);
                 }
+
+
+                if (brownClusters.containsKey(childLemma)) {
+                    addFeature("ChildDepLemmaBrownCluster_" + brownClusters.get(childLemma), features);
+                }
+
+                if (brownClusters.containsKey(childSurface)) {
+                    addFeature("ChildDepSurfaceBrownCluster_" + brownClusters.get(childSurface), features);
+                }
+
+                for (String superType : getInterestingSupertype(childLemma.toLowerCase())) {
+                    String superTypeFeature = "ChildDepLemmaSuperType_" + superType;
+                    addFeature(superTypeFeature, features);
+
+                    String superTypeAndWordFeature = "ChildDepLemmaSuperType_" + superType + "_get_" + triggerWord.getLemma().toLowerCase();
+                    addFeature(superTypeAndWordFeature, features);
+                    System.err.println(triggerWord.getCoveredText() + " " + superTypeAndWordFeature);
+
+                    String superTypeDepWordFeature = "ChildDepLemmaSuperType_" + superType + "_" +
+                            dep.getDependencyType() + "_" + triggerWord.getLemma().toLowerCase();
+
+                    addFeature(superTypeDepWordFeature, features);
+                    //                    System.err.println(triggerWord.getCoveredText() + " " + superTypeFeature);
+//                    System.err.println(triggerWord.getCoveredText() + " " + superTypeDepWordFeature);
+//                    System.err.println(childLemma);
+
+                    addFeature("ChildDepPos" + dep.getDependencyType() + "_" + dep.getChild().getPos(), features);
+
+                }
             }
         }
+    }
+
+    private List<String> getInterestingSupertype(String word) {
+        List<String> interestTypes = new ArrayList<>();
+        for (String interestingWordType : interestingWordNetTypes) {
+            for (Set<String> hypernyms : wns.getAllHypernymsForAllSense(word)) {
+                if (hypernyms.contains(interestingWordType)) {
+                    interestTypes.add(interestingWordType);
+                }
+            }
+        }
+        return interestTypes;
     }
 
     private void addSurroundingWordFeatures(Word word, int windowSize, TIntDoubleMap features) {
@@ -329,10 +430,10 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         int leftLimit = centerId - windowSize > 0 ? centerId - windowSize : 0;
         int rightLimit = centerId + windowSize < allWords.size() - 1 ? centerId + windowSize : allWords.size() - 1;
         for (int i = centerId; i >= leftLimit; i--) {
-            addWordFeature(allWords.get(i), features);
+            addWindowWordFeature(allWords.get(i), features);
         }
         for (int i = centerId; i <= rightLimit; i++) {
-            addWordFeature(allWords.get(i), features);
+            addWindowWordFeature(allWords.get(i), features);
         }
     }
 
@@ -353,11 +454,15 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         }
     }
 
-    private void addWordFeature(StanfordCorenlpToken word, TIntDoubleMap features) {
-        addFeature("WindowPOS_" + word.getPos(), features);
+    private void addWindowWordFeature(StanfordCorenlpToken word, TIntDoubleMap features) {
+//        addFeature("WindowPOS_" + word.getPos(), features);
         addFeature("WindowLemma_" + word.getLemma(), features);
         if (word.getNerTag() != null) {
             addFeature("WindowNer_" + word.getNerTag(), features);
+        }
+
+        for (String wordType : getInterestingSupertype(word.getLemma().toLowerCase())) {
+            addFeature("WindowSuperType_" + wordType, features);
         }
     }
 
