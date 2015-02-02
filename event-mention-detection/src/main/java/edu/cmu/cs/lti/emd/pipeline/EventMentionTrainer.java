@@ -98,8 +98,9 @@ public class EventMentionTrainer {
             System.out.println(eval.toSummaryString("=== Evaluation Results ===", false));
 
             if (modelOutPath != null) {
-                System.out.println("Storing model to disk");
-                SerializationHelper.write(new File(modelOutPath, classifierName).getCanonicalPath(), classifier);
+                String modelStoringPath = new File(modelOutPath, classifierName).getCanonicalPath();
+                System.out.println("Saving model to : " + modelStoringPath);
+                SerializationHelper.write(modelStoringPath, classifier);
             }
         }
     }
@@ -217,19 +218,16 @@ public class EventMentionTrainer {
         ArrayList<String> allClasses = new ArrayList<>(EventMentionCandidateFeatureGenerator.allTypes);
         configFeatures(featureNameMap, allClasses, modelOutputDir);
 
-        System.out.println("Number of training instances : " + trainingFeatures.size());
         Instances trainingDataset = prepareDataSet(trainingFeatures, new File(modelOutputDir, "training.arff").getCanonicalPath());
-        System.out.println("Generated dev instances : " + trainingDataset.size());
+        System.out.println("Number of training instances : " + trainingFeatures.size());
 
         System.out.println("Saving feature config");
         SerializationHelper.write(new File(modelOutputDir, featureConfigOutputName).getCanonicalPath(), featureConfiguration);
 
         System.out.println("Preparing dev dataset");
-        generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1, semLinkDataPath, false, modelOutputDir.getCanonicalPath(), false);
+        generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1, semLinkDataPath, false, modelOutputDir.getCanonicalPath(), true);
         List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
-        System.out.println("Generated dev instances : " + devFeatures.size());
         Instances devDataset = prepareDataSet(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath());
-
         System.out.println("Number of dev instances : " + devFeatures.size());
 
         System.out.println("Conducting evaluation on dev");
