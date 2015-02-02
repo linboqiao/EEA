@@ -81,29 +81,30 @@ public class EventMentionTrainer {
         return classifiers;
     }
 
-    private void trainAndTest(Instances trainingSet, Instances testSet, File modelOutPath, List<String> allClasses) throws Exception {
+    private void trainAndTest(Instances trainingSet, List<Instances> testSets, File modelOutPath, List<String> allClasses) throws Exception {
         for (Classifier classifier : getClassifiers()) {
             Evaluation eval = new Evaluation(trainingSet);
             System.out.println("Building model");
             classifier.buildClassifier(trainingSet);
-            System.out.println("Evaluating model");
-            eval.evaluateModel(classifier, testSet);
-
             String classifierName = classifier.getClass().getName();
 
-            System.out.println("=== Setup ===");
-            System.out.println("Classifier: " + classifier.getClass().getName());
-            System.out.println("Training set size: " + trainingSet.numInstances());
-            System.out.println("Test set size: " + testSet.numInstances());
-            System.out.println();
-            System.out.println(eval.toSummaryString("=== Evaluation Results ===", false));
+            System.out.println("Evaluating model");
+            for (Instances testSet : testSets) {
+                eval.evaluateModel(classifier, testSet);
+                System.out.println("=== Setup ===");
+                System.out.println("Classifier: " + classifierName);
+                System.out.println("Training set size: " + trainingSet.numInstances());
+                System.out.println("Test set size: " + testSet.numInstances());
+                System.out.println();
+                System.out.println(eval.toSummaryString("=== Evaluation Results ===", false));
 
-            System.out.println("Prec\tRecall\tF1\tTotal");
-            for (int i = 0; i < allClasses.size(); i++) {
-                int realClassIndex = i + 1;
-                double numInThisClass = eval.numTruePositives(realClassIndex) + eval.numFalseNegatives(realClassIndex);
-                System.out.println(String.format("%.4f\t%.4f\t%.4f\t%.2f\t%s",
-                        eval.precision(realClassIndex), eval.recall(realClassIndex), eval.fMeasure(realClassIndex), numInThisClass, allClasses.get(i)));
+                System.out.println("Prec\tRecall\tF1\tTotal");
+                for (int i = 0; i < allClasses.size(); i++) {
+                    int realClassIndex = i + 1;
+                    double numInThisClass = eval.numTruePositives(realClassIndex) + eval.numFalseNegatives(realClassIndex);
+                    System.out.println(String.format("%.4f\t%.4f\t%.4f\t%.2f\t%s",
+                            eval.precision(realClassIndex), eval.recall(realClassIndex), eval.fMeasure(realClassIndex), numInThisClass, allClasses.get(i)));
+                }
             }
 
             if (modelOutPath != null) {
@@ -211,7 +212,7 @@ public class EventMentionTrainer {
                              String parentInput,
                              String modelBaseDir,
                              String trainingBaseDir,
-                             String devBaseDir,
+                             String[] devBaseDirs,
                              String semLinkDataPath,
                              String bwClusterPath,
                              String wordnetDataPath) throws Exception {
@@ -233,28 +234,32 @@ public class EventMentionTrainer {
         System.out.println("Saving feature config");
         SerializationHelper.write(new File(modelOutputDir, featureConfigOutputName).getCanonicalPath(), featureConfiguration);
 
-        System.out.println("Preparing dev dataset");
-        generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1,
-                semLinkDataPath, bwClusterPath, wordnetDataPath, false, modelOutputDir.getCanonicalPath(), true);
-        List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
-        Instances devDataset = prepareDataSet(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath());
-        System.out.println("Number of dev instances : " + devFeatures.size());
-
-        System.out.println("Conducting evaluation on dev");
-        trainAndTest(trainingDataset, devDataset, modelOutputDir, allClasses);
+        System.out.println("Preparing dev datasets");
+        List<Instances> testSets = new ArrayList<>();
+        for (String devBaseDir : devBaseDirs) {
+            generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1,
+                    semLinkDataPath, bwClusterPath, wordnetDataPath, false, modelOutputDir.getCanonicalPath(), true);
+            List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
+            Instances devDataset = prepareDataSet(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath());
+            testSets.add(devDataset);
+            System.out.println("Number of dev instances : " + devFeatures.size());
+        }
+        System.out.println("Conducting evaluation on dev sets");
+        trainAndTest(trainingDataset, testSets, modelOutputDir, allClasses);
     }
 
     public static void main(String[] args) throws Exception {
         System.out.println(className + " started...");
 
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
-        String devBaseDir = "dev_data";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
         String wordnetDataPath = "data/resources/wnDict";
         String brownClusteringDataPath = "data/resources/TDT5_BrownWC.txt";
         String trainingBaseDir = args[0];//"train_data";
         String modelBasePath = args[1]; //"models";
+
+        String[] devBaseDir = {"dev_data", "test_data"};
 
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
