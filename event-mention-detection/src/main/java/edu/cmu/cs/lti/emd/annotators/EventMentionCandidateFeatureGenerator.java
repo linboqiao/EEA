@@ -155,6 +155,8 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
         align.loadFanse2Stanford(aJCas);
 
+        System.out.println("Number of candidates " + JCasUtil.select(aJCas, CandidateEventMention.class));
+
         for (CandidateEventMention candidateEventMention : JCasUtil.select(aJCas, CandidateEventMention.class)) {
             String goldType = candidateEventMention.getGoldStandardMentionType();
             TIntDoubleMap features = new TIntDoubleHashMap();
@@ -180,7 +182,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
             }
         }
 
-        logger.info("Number of instances now : "+featuresAndClass.size());
+        logger.info("Number of instances now : " + featuresAndClass.size());
     }
 
     private String predict(TIntDoubleMap features) throws Exception {
