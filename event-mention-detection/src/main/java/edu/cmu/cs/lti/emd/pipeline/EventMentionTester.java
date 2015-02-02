@@ -19,25 +19,25 @@ public class EventMentionTester {
     public static void main(String[] args) throws Exception {
         System.out.println(className + " started...");
 
-        String modelBase = args[0]; // train_split
+        String modelBase = args[0]; // models_train_split
 
         String testBaseDir = args[1]; // "dev_data"
 
-        String modelName = args[2]; // "weka.classifiers.functions.SMO"
+        String modelName = args[2]; // "weka.classifiers.functions.SMO" "weka.classifiers.trees.RandomForest"
 
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
         String brownClusteringDataPath = "data/resources/TDT5_BrownWC.txt";
 
-        String resultXmiOutput = "processed";
-
         String modelPath = new File(paramInputDir, modelBase).getCanonicalPath();
 
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, testBaseDir, 1, false);
+        CollectionReaderDescription dev_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, "dev_data", 1, false);
+        CollectionReaderDescription test_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, "test_data", 1, false);
+
         AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionCandidateFeatureGenerator.class, typeSystemDescription,
                 EventMentionCandidateFeatureGenerator.PARAM_SEM_LINK_DIR, semLinkDataPath,
@@ -49,13 +49,19 @@ public class EventMentionTester {
                 EventMentionCandidateFeatureGenerator.PARAM_BROWN_CLUSTERING_PATH, brownClusteringDataPath
         );
 
-        AnalysisEngineDescription results = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
-                EvaluationResultWriter.PARAM_OUTPUT_PATH, "dev_prediction.tbf");
+        AnalysisEngineDescription devResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
+                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/dev_prediction.tbf");
 
-        AnalysisEngineDescription outputPrediction = CustomAnalysisEngineFactory.createXmiWriter(paramInputDir, resultXmiOutput, 2, null);
+        AnalysisEngineDescription testResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
+                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/test_prediction.tbf");
 
-        SimplePipeline.runPipeline(reader, ana, results, outputPrediction);
+        AnalysisEngineDescription devOutputPrediction = CustomAnalysisEngineFactory.createXmiWriter(paramInputDir, "dev_predicted", 2, null);
+
+        AnalysisEngineDescription testOutputPrediction = CustomAnalysisEngineFactory.createXmiWriter(paramInputDir, "test_predicted", 2, null);
+
+        SimplePipeline.runPipeline(dev_reader, ana, devResults, devOutputPrediction);
+
+        SimplePipeline.runPipeline(test_reader, ana, testResults, testOutputPrediction);
         System.err.println(className + " finished");
-
     }
 }

@@ -15,7 +15,6 @@ import org.javatuples.Pair;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
-import weka.classifiers.functions.Logistic;
 import weka.classifiers.functions.SMO;
 import weka.classifiers.trees.RandomForest;
 import weka.core.*;
@@ -77,7 +76,7 @@ public class EventMentionTrainer {
         List<Classifier> classifiers = new ArrayList<>();
         classifiers.add(new SMO());
         classifiers.add(new RandomForest());
-        classifiers.add(new Logistic());
+//        classifiers.add(new Logistic());
 //        classifiers.add(new NaiveBayes());
 //        classifiers.add(new J48());
         return classifiers;
@@ -240,7 +239,6 @@ public class EventMentionTrainer {
         System.out.println("Conducting evaluation on dev");
         trainAndTest(trainingDataset, devDataset, modelOutputDir);
     }
-
 
     public static void main(String[] args) throws Exception {
         System.out.println(className + " started...");
