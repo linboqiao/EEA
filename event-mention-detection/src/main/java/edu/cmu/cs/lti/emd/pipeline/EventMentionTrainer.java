@@ -15,7 +15,9 @@ import org.javatuples.Pair;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
+import weka.classifiers.functions.Logistic;
 import weka.classifiers.functions.SMO;
+import weka.classifiers.trees.RandomForest;
 import weka.core.*;
 import weka.core.converters.ArffSaver;
 
@@ -73,7 +75,8 @@ public class EventMentionTrainer {
 
     private List<Classifier> getClassifiers() {
         List<Classifier> classifiers = new ArrayList<>();
-//        classifiers.add(new RandomForest());
+        classifiers.add(new RandomForest());
+        classifiers.add(new Logistic());
         classifiers.add(new SMO());
 //        classifiers.add(new NaiveBayes());
 //        classifiers.add(new J48());
@@ -239,13 +242,14 @@ public class EventMentionTrainer {
         System.out.println(className + " started...");
 
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
-        String trainingBaseDir = "train_data";
         String devBaseDir = "dev_data";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
         String modelBasePath = "models_new";
 
-        File modelOutputDir = new File("event-mention-detection/data/Event-mention-detection-2014/models");
+        String trainingBaseDir = args[0];//"train_data";
+        File modelOutputDir = new File(args[1]);
+//                new File("event-mention-detection/data/Event-mention-detection-2014/models");
         if (!modelOutputDir.exists() || !modelOutputDir.isDirectory()) {
             modelOutputDir.mkdirs();
         }

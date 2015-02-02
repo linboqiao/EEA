@@ -20,7 +20,7 @@ public class EventMentionTester {
         System.out.println(className + " started...");
 
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
-        String testBaseDir = "test_data";
+        String testBaseDir = "dev_data";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
 
@@ -43,10 +43,10 @@ public class EventMentionTester {
         );
 
         AnalysisEngineDescription results = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
-                EvaluationResultWriter.PARAM_OUTPUT_PATH, "test_prediction.tbf");
+                EvaluationResultWriter.PARAM_OUTPUT_PATH, "dev_prediction.tbf");
 
         SimplePipeline.runPipeline(reader, ana, results);
-        System.out.println(className + " finished");
+        System.err.println(className + " finished");
 
     }
 }

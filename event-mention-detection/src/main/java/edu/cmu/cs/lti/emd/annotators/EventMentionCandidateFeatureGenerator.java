@@ -12,6 +12,7 @@ import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import gnu.trove.iterator.TIntDoubleIterator;
 import gnu.trove.map.TIntDoubleMap;
 import gnu.trove.map.hash.TIntDoubleHashMap;
+import org.apache.commons.io.FileUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -29,6 +30,7 @@ import weka.core.converters.ArffLoader.ArffReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -51,6 +53,8 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     public static final String PARAM_TRAINING_DATASET_PATH = "trainingDataSetPath";
 
+    public static final String PARAM_BROWN_CLUSTERING_PATH = "brownClusteringPath";
+
     public static BiMap<String, Integer> featureNameMap;
 
     public static List<Pair<TIntDoubleMap, String>> featuresAndClass;
@@ -58,6 +62,9 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     public static Set<String> allTypes;
 
     private double[] emptyVector;
+
+    @ConfigurationParameter(name = PARAM_BROWN_CLUSTERING_PATH)
+    String brownClusteringPath;
 
     @ConfigurationParameter(name = PARAM_SEM_LINK_DIR)
     String semLinkDirPath;
@@ -89,6 +96,8 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     ArrayList<StanfordCorenlpToken> allWords;
     public static final String OTHER_TYPE = "other_event";
 
+    Map<String, String> brownClusters;
+
     //in case of test
     private ArrayList<Attribute> featureConfiguration;
     private Classifier pretrainedClassifier;
@@ -102,6 +111,11 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         super.initialize(aContext);
         vn2Fn = FrameDataReader.getFN2VNFrameMap(semLinkDirPath + "/vn-fn/VN-FNRoleMapping.txt", true);
         pb2Vn = FrameDataReader.getFN2VNFrameMap(semLinkDirPath + "/vn-pb/vnpbMappings", true);
+        try {
+            readBrownCluster();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         allTypes = new HashSet<>();
         allTypes.add(OTHER_TYPE);
         featuresAndClass = new ArrayList<>();
@@ -117,6 +131,15 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        }
+    }
+
+    private void readBrownCluster() throws IOException {
+        for (String line : FileUtils.readLines(new File(brownClusteringPath))) {
+            String[] parts = line.split("\t");
+            if (parts.length > 2) {
+                brownClusters.put(parts[1], parts[0]);
             }
         }
     }
@@ -161,7 +184,13 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
             if (isOnlineTest) {
                 try {
-                    candidateEventMention.setPredictedType(predict(features));
+                    System.err.println(candidateEventMention.getCoveredText());
+                    System.err.println("Gold type is " + goldType);
+                    String prediction = predict(features);
+                    candidateEventMention.setPredictedType(prediction);
+                    if (goldType == null) {
+                        edu.cmu.cs.lti.utils.Utils.pause();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.exit(1);
@@ -181,8 +210,25 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     private String predict(TIntDoubleMap features) throws Exception {
         Instance instance = createInstance(features);
+
+        double[] dist = pretrainedClassifier.distributionForInstance(instance);
+
+        PriorityQueue<Pair<Double, String>> rankList = new PriorityQueue<>();
+
+        for (int i = 1; i < dist.length; i++) {
+            rankList.add(Pair.with(-dist[i], classesToPredict.get(i - 1)));
+        }
+
+        for (int i = 0; i < 5; i++) {
+            System.err.println("Best " + (i + 1) + " " + rankList.poll());
+        }
+
         double prediction = pretrainedClassifier.classifyInstance(instance);
         return classesToPredict.get((int) prediction - 1);
+//
+//        rankList.poll();
+//
+//        return rankList.poll().getValue1();
     }
 
     private Instance createInstance(TIntDoubleMap features) {
@@ -201,8 +247,19 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     }
 
     private void addHeadWordFeatures(StanfordCorenlpToken triggerWord, TIntDoubleMap features) {
-        addFeature("TriggerHeadLemma_" + triggerWord.getLemma().toLowerCase(), features);
+        String lemma = triggerWord.getLemma().toLowerCase();
+
+        addFeature("TriggerHeadLemma_" + lemma, features);
         addFeature("HeadPOS_" + triggerWord.getPos(), features);
+
+        if (brownClusters.containsKey(lemma)) {
+            addFeature("HeadWordLemmaBrownCluster_" + brownClusters.get(lemma), features);
+        }
+
+        if (brownClusters.containsKey(triggerWord.getCoveredText())) {
+            addFeature("HeadWordSurfaceBrownCluster_" + brownClusters.get(lemma), features);
+        }
+
         if (triggerWord.getNerTag() != null) {
             addFeature("HeadNer_" + triggerWord.getNerTag(), features);
         }
