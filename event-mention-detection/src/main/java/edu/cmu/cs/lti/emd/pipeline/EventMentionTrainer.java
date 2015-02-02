@@ -75,9 +75,9 @@ public class EventMentionTrainer {
 
     private List<Classifier> getClassifiers() {
         List<Classifier> classifiers = new ArrayList<>();
+        classifiers.add(new SMO());
         classifiers.add(new RandomForest());
         classifiers.add(new Logistic());
-        classifiers.add(new SMO());
 //        classifiers.add(new NaiveBayes());
 //        classifiers.add(new J48());
         return classifiers;
