@@ -23,12 +23,12 @@ import org.apache.uima.jcas.cas.StringList;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.javatuples.Pair;
 import weka.classifiers.Classifier;
-import weka.core.Attribute;
-import weka.core.Instance;
-import weka.core.SerializationHelper;
-import weka.core.SparseInstance;
+import weka.core.*;
+import weka.core.converters.ArffLoader.ArffReader;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.*;
 
 /**
@@ -45,12 +45,15 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     public static final String PARAM_MODEL_FOLDER = "modelDir";
 
-    public static final String PARAM_MODEL_FOR_TEST = "pretrainedTestModelName";
+    public static final String PARAM_MODEL_NAME_FOR_TEST = "pretrainedTestModelName";
+
+    public static final String PARAM_ONLINE_TEST = "isOnlineTest";
+
+    public static final String PARAM_TRAINING_DATASET_PATH = "trainingDataSetPath";
 
     public static BiMap<String, Integer> featureNameMap;
 
     public static List<Pair<TIntDoubleMap, String>> featuresAndClass;
-
 
     public static Set<String> allTypes;
 
@@ -59,14 +62,20 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     @ConfigurationParameter(name = PARAM_SEM_LINK_DIR)
     String semLinkDirPath;
 
+    @ConfigurationParameter(name = PARAM_ONLINE_TEST)
+    boolean isOnlineTest;
+
     @ConfigurationParameter(name = PARAM_IS_TRAINING)
     boolean isTraining;
 
     @ConfigurationParameter(name = PARAM_MODEL_FOLDER, mandatory = false)
     String modelDirPath;
 
-    @ConfigurationParameter(name = PARAM_MODEL_FOR_TEST, mandatory = false)
-    String modelName;
+    @ConfigurationParameter(name = PARAM_MODEL_NAME_FOR_TEST, mandatory = false)
+    String modelNameForTest;
+
+    @ConfigurationParameter(name = PARAM_TRAINING_DATASET_PATH, mandatory = false)
+    String trainingDataSetPath;
 
     Map<String, String> vn2Fn;
 
@@ -80,10 +89,11 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     ArrayList<StanfordCorenlpToken> allWords;
     public static final String OTHER_TYPE = "other_event";
 
-
     //in case of test
     private ArrayList<Attribute> featureConfiguration;
     private Classifier pretrainedClassifier;
+    private Instances trainingDataSet;
+    private List<String> classesToPredict;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -98,7 +108,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
             featureNameMap = HashBiMap.create();
         } else {
             if (modelDirPath == null) {
-                throw new ResourceInitializationException(new IllegalStateException("Must model files if using testing mode"));
+                throw new ResourceInitializationException(new IllegalStateException("Must provide model files if using test mode"));
             } else {
                 try {
                     loadModel();
@@ -107,16 +117,26 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
                 }
             }
         }
-
     }
-
 
     private void loadModel() throws Exception {
         featureNameMap = (BiMap<String, Integer>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.featureNamePath).getCanonicalPath());
-        allTypes = (Set<String>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.predictionLabels).getCanonicalPath());
-        featureConfiguration = (ArrayList<Attribute>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.featureConfigOutputName).getCanonicalPath());
-        pretrainedClassifier = (Classifier) SerializationHelper.read(new File(modelDirPath, modelName).getCanonicalPath());
-        emptyVector = new double[featureConfiguration.size()];
+
+        if (isOnlineTest) {
+            featureConfiguration = (ArrayList<Attribute>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.featureConfigOutputName).getCanonicalPath());
+            pretrainedClassifier = (Classifier) SerializationHelper.read(new File(modelDirPath, modelNameForTest).getCanonicalPath());
+            emptyVector = new double[featureConfiguration.size()];
+            classesToPredict = (List<String>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.predictionLabels).getCanonicalPath());
+
+            BufferedReader reader =
+                    new BufferedReader(new FileReader(trainingDataSetPath));
+            ArffReader arff = new ArffReader(reader);
+
+            logger.info("Loading data set");
+            trainingDataSet = arff.getData();
+            trainingDataSet.setClass(featureConfiguration.get(featureConfiguration.size() - 1));
+            trainingDataSet.classAttribute();
+        }
     }
 
     @Override
@@ -143,29 +163,35 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
                 } else {
                     featuresAndClass.add(Pair.with(features, OTHER_TYPE));
                 }
-            } else {
+            } else if (isOnlineTest) {
                 try {
-                    predict(features);
+                    candidateEventMention.setPredictedType(predict(features));
                 } catch (Exception e) {
                     e.printStackTrace();
+                    System.exit(1);
                 }
             }
         }
     }
 
-    private void predict(TIntDoubleMap features) throws Exception {
-        double prediction = pretrainedClassifier.classifyInstance(createInstance(features));
-        System.out.println("Prediction is " + prediction);
+    private String predict(TIntDoubleMap features) throws Exception {
+        Instance instance = createInstance(features);
+        double prediction = pretrainedClassifier.classifyInstance(instance);
+        return classesToPredict.get((int) prediction - 1);
     }
 
     private Instance createInstance(TIntDoubleMap features) {
         Instance instance = new SparseInstance(1, emptyVector);
+        instance.setDataset(trainingDataSet);
+        instance.setClassMissing();
+
         for (TIntDoubleIterator fIter = features.iterator(); fIter.hasNext(); ) {
             fIter.advance();
             int featureId = fIter.key();
             double featureVal = fIter.value();
             instance.setValue(featureConfiguration.get(featureId), featureVal);
         }
+
         return instance;
     }
 
