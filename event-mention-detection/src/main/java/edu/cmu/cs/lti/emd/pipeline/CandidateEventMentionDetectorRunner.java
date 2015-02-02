@@ -23,9 +23,11 @@ public class CandidateEventMentionDetectorRunner {
     public static void main(String[] args) throws Exception {
         System.out.println(className + " started...");
 
+        String paramBaseInputDirName = args[0];// "split_train";
+        String outputBase = args[1]; //"test_data";
+
         // Parameters for the writer
-        String paramParentInputDir = "event-mention-detection/data/Event-mention-detection-2014/test";
-        String paramBaseInputDirName = "00_semafor_processed";
+        String paramParentInputDir = "event-mention-detection/data/Event-mention-detection-2014";
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -35,7 +37,6 @@ public class CandidateEventMentionDetectorRunner {
 
         String frameDataPath = "data/resources/fndata-1.5/frame";
 
-        String outputBase = "submission_data";
 
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory

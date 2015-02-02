@@ -16,7 +16,6 @@ import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.SMO;
-import weka.classifiers.trees.RandomForest;
 import weka.core.*;
 import weka.core.converters.ArffSaver;
 
@@ -75,14 +74,14 @@ public class EventMentionTrainer {
     private List<Classifier> getClassifiers() {
         List<Classifier> classifiers = new ArrayList<>();
         classifiers.add(new SMO());
-        classifiers.add(new RandomForest());
+//        classifiers.add(new RandomForest());
 //        classifiers.add(new Logistic());
 //        classifiers.add(new NaiveBayes());
 //        classifiers.add(new J48());
         return classifiers;
     }
 
-    private void trainAndTest(Instances trainingSet, Instances testSet, File modelOutPath) throws Exception {
+    private void trainAndTest(Instances trainingSet, Instances testSet, File modelOutPath, List<String> allClasses) throws Exception {
         for (Classifier classifier : getClassifiers()) {
             Evaluation eval = new Evaluation(trainingSet);
             System.out.println("Building model");
@@ -98,6 +97,14 @@ public class EventMentionTrainer {
             System.out.println("Test set size: " + testSet.numInstances());
             System.out.println();
             System.out.println(eval.toSummaryString("=== Evaluation Results ===", false));
+
+            System.out.println("Prec\tRecall\tF1\tTotal");
+            for (int i = 0; i < allClasses.size(); i++) {
+                int realClassIndex = i + 1;
+                double numInThisClass = eval.numTruePositives(realClassIndex) + eval.numFalseNegatives(realClassIndex);
+                System.out.println(String.format("%.4f\t%.4f\t%.4f\t%.2f\t%s",
+                        eval.precision(realClassIndex), eval.recall(realClassIndex), eval.fMeasure(realClassIndex), numInThisClass, allClasses.get(i)));
+            }
 
             if (modelOutPath != null) {
                 String modelStoringPath = new File(modelOutPath, classifierName).getCanonicalPath();
@@ -237,7 +244,7 @@ public class EventMentionTrainer {
         System.out.println("Number of dev instances : " + devFeatures.size());
 
         System.out.println("Conducting evaluation on dev");
-        trainAndTest(trainingDataset, devDataset, modelOutputDir);
+        trainAndTest(trainingDataset, devDataset, modelOutputDir, allClasses);
     }
 
     public static void main(String[] args) throws Exception {
@@ -256,5 +263,7 @@ public class EventMentionTrainer {
 
         EventMentionTrainer trainer = new EventMentionTrainer();
         trainer.buildModels(typeSystemDescription, paramInputDir, modelBasePath, trainingBaseDir, devBaseDir, semLinkDataPath, brownClusteringDataPath);
+
+        System.out.println(className + " finished...");
     }
 }

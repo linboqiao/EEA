@@ -80,7 +80,7 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
 
     private String[] usefulPartOfSpeech = {"FW", "JJ", "NN", "V"};
 
-    private Map<StanfordCorenlpToken, String> goldWords;
+    private Map<StanfordCorenlpToken, EventMention> goldWords;
 
     private Map<StanfordCorenlpToken, CandidateEventMention> token2Candidates;
 
@@ -155,7 +155,7 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
             for (EventMention mention : JCasUtil.select(goldView, EventMention.class)) {
                 List<StanfordCorenlpToken> contentWords = getUsefulTokens(mention, aJCas, align);
                 for (StanfordCorenlpToken contentWord : contentWords) {
-                    goldWords.put(contentWord, mention.getEventType());
+                    goldWords.put(contentWord, mention);
                 }
             }
         }
@@ -323,7 +323,8 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
         CandidateEventMention candidate = new CandidateEventMention(aJCas, begin, end);
         candidate.setHeadWord(triggerHead);
         if (forTraining && goldWords.containsKey(triggerHead)) {
-            String goldType = goldWords.get(triggerHead);
+            EventMention goldMention = goldWords.get(triggerHead);
+            String goldType = goldMention.getEventType();
             if (goldType.equals("Movement_Transport")) {
                 System.err.println("Correct transport type");
                 goldType = "Movement_Transport-Person";
@@ -332,6 +333,7 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
                 goldType = "Contact_Communicate";
             }
             candidate.setGoldStandardMentionType(goldType);
+            candidate.setGoldRealis(goldMention.getRealisType());
         }
         UimaAnnotationUtils.finishAnnotation(candidate, COMPONENT_ID, 0, aJCas);
         token2Candidates.put(triggerHead, candidate);
