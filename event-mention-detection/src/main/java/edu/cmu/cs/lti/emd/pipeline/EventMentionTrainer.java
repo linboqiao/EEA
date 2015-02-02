@@ -250,7 +250,6 @@ public class EventMentionTrainer {
 
     public static void main(String[] args) throws Exception {
         System.out.println(className + " started...");
-
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";

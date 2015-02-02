@@ -356,14 +356,15 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
                 }
 
                 for (String superType : getInterestingSupertype(headLemma.toLowerCase())) {
-                    addFeature("HeadDepLemmaSuperType_" + superType, features);
-                    String superTypeWordFeatupre = "HeadLemmaSuperType_" + superType +
+                    String superTypeWordFeatupre = "HeadDepLemmaSuperType_" + superType +
                             "_get_" + triggerWord.getLemma().toLowerCase();
                     String superTypeDepWordFeature = "HeadDepLemmaSuperType_" + superType + "_" +
                             dep.getDependencyType() + "_" + triggerWord.getLemma().toLowerCase();
 
+                    addFeature("HeadDepLemmaSuperType_" + superType, features);
                     addFeature(superTypeDepWordFeature, features);
                     addFeature(superTypeWordFeatupre, features);
+
                 }
             }
         }
@@ -381,6 +382,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
                     addFeature("ChildDepNer_" + dep.getDependencyType() + "_" + dep.getChild().getNerTag(), features);
                 }
 
+                addFeature("ChildDepPos" + dep.getDependencyType() + "_" + dep.getChild().getPos(), features);
 
                 if (brownClusters.containsKey(childLemma)) {
                     addFeature("ChildDepLemmaBrownCluster_" + brownClusters.get(childLemma), features);
@@ -392,22 +394,13 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
                 for (String superType : getInterestingSupertype(childLemma.toLowerCase())) {
                     String superTypeFeature = "ChildDepLemmaSuperType_" + superType;
-                    addFeature(superTypeFeature, features);
-
                     String superTypeAndWordFeature = "ChildDepLemmaSuperType_" + superType + "_get_" + triggerWord.getLemma().toLowerCase();
-                    addFeature(superTypeAndWordFeature, features);
-                    System.err.println(triggerWord.getCoveredText() + " " + superTypeAndWordFeature);
-
                     String superTypeDepWordFeature = "ChildDepLemmaSuperType_" + superType + "_" +
                             dep.getDependencyType() + "_" + triggerWord.getLemma().toLowerCase();
 
+                    addFeature(superTypeFeature, features);
+                    addFeature(superTypeAndWordFeature, features);
                     addFeature(superTypeDepWordFeature, features);
-                    //                    System.err.println(triggerWord.getCoveredText() + " " + superTypeFeature);
-//                    System.err.println(triggerWord.getCoveredText() + " " + superTypeDepWordFeature);
-//                    System.err.println(childLemma);
-
-                    addFeature("ChildDepPos" + dep.getDependencyType() + "_" + dep.getChild().getPos(), features);
-
                 }
             }
         }
