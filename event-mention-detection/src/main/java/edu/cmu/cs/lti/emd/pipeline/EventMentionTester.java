@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.emd.pipeline;
 
+import edu.cmu.cs.lti.emd.annotators.EvaluationResultWriter;
 import edu.cmu.cs.lti.emd.annotators.EventMentionCandidateFeatureGenerator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -19,7 +20,7 @@ public class EventMentionTester {
         System.out.println(className + " started...");
 
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
-        String testBaseDir = "dev_data";
+        String testBaseDir = "test_data";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
 
@@ -39,7 +40,10 @@ public class EventMentionTester {
                 EventMentionCandidateFeatureGenerator.PARAM_TRAINING_DATASET_PATH, new File(paramInputDir, "training_large.arff").getCanonicalPath()
         );
 
-        SimplePipeline.runPipeline(reader, ana);
+        AnalysisEngineDescription results = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
+                EvaluationResultWriter.PARAM_OUTPUT_PATH, "test_prediction.tbf");
+
+        SimplePipeline.runPipeline(reader, ana, results);
         System.out.println(className + " finished");
 
     }

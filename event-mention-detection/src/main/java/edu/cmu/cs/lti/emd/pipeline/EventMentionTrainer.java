@@ -214,7 +214,7 @@ public class EventMentionTrainer {
         configFeatures(featureNameMap, allClasses, modelOutputDir);
 
         System.out.println("Number of training instances : " + trainingFeatures.size());
-        Instances trainingDataset = prepareDataSet(trainingFeatures, new File(parentInput, "training.arff").getCanonicalPath());
+        Instances trainingDataset = prepareDataSet(trainingFeatures, new File(modelOutputDir, "training.arff").getCanonicalPath());
 
         System.out.println("Saving feature config");
         SerializationHelper.write(new File(modelOutputDir, featureConfigOutputName).getCanonicalPath(), featureConfiguration);
@@ -223,7 +223,7 @@ public class EventMentionTrainer {
         System.out.println("Preparing dev dataset");
         generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1, semLinkDataPath, false, modelOutputDir.getCanonicalPath());
         List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
-        Instances devDataset = prepareDataSet(devFeatures, new File(parentInput, "test.arff").getCanonicalPath());
+        Instances devDataset = prepareDataSet(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath());
 
 
         System.out.println("Number of dev instances : " + devFeatures.size());
