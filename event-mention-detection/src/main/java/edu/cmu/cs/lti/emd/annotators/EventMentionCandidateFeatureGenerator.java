@@ -95,6 +95,8 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     private Instances trainingDataSet;
     private List<String> classesToPredict;
 
+    private int numDocuments = 0;
+
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
@@ -146,6 +148,8 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         UimaConvenience.printProcessLog(aJCas, logger);
 
         indexWords(aJCas);
+
+        numDocuments++;
 
         align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
         align.loadFanse2Stanford(aJCas);
@@ -306,5 +310,10 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         if (featureId >= 0) {
             features.adjustOrPutValue(featureId, 1.0, 1.0);
         }
+    }
+
+
+    public void collectionProcessComplete() throws AnalysisEngineProcessException {
+        logger.info("Processed " + numDocuments + " documents for " + (isTraining ? "training" : "testing"));
     }
 }

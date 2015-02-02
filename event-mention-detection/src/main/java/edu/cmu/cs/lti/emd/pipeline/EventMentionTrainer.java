@@ -219,7 +219,6 @@ public class EventMentionTrainer {
         System.out.println("Saving feature config");
         SerializationHelper.write(new File(modelOutputDir, featureConfigOutputName).getCanonicalPath(), featureConfiguration);
 
-
         System.out.println("Preparing dev dataset");
         generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1, semLinkDataPath, false, modelOutputDir.getCanonicalPath());
         List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
