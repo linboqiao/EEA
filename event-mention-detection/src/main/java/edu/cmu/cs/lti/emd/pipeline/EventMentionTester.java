@@ -30,6 +30,8 @@ public class EventMentionTester {
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
         String brownClusteringDataPath = "data/resources/TDT5_BrownWC.txt";
 
+        String resultXmiOutput = "processed";
+
         String modelPath = new File(paramInputDir, modelBase).getCanonicalPath();
 
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
@@ -50,7 +52,9 @@ public class EventMentionTester {
         AnalysisEngineDescription results = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
                 EvaluationResultWriter.PARAM_OUTPUT_PATH, "dev_prediction.tbf");
 
-        SimplePipeline.runPipeline(reader, ana, results);
+        AnalysisEngineDescription outputPrediction = CustomAnalysisEngineFactory.createXmiWriter(paramInputDir, resultXmiOutput, 2, null);
+
+        SimplePipeline.runPipeline(reader, ana, results, outputPrediction);
         System.err.println(className + " finished");
 
     }

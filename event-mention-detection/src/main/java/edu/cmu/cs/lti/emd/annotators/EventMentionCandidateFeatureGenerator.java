@@ -189,7 +189,14 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
                     System.err.println("Gold type is " + goldType);
                     String prediction = predict(features);
                     candidateEventMention.setPredictedType(prediction);
-                    if (goldType == null) {
+                    if (goldType != null && !prediction.equals(goldType)) {
+                        for (CandidateEventMentionArgument argument : FSCollectionFactory.
+                                create(candidateEventMention.getArguments(), CandidateEventMentionArgument.class)) {
+                            System.err.println("Argument : ");
+                            System.err.println(argument.getCoveredText());
+                            System.err.println("Argument : ");
+                            System.err.println(argument.getCoveredText());
+                        }
                         edu.cmu.cs.lti.utils.Utils.pause();
                     }
                 } catch (Exception e) {
