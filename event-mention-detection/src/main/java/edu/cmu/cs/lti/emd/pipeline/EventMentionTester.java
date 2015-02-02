@@ -24,7 +24,9 @@ public class EventMentionTester {
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
 
-        String modelPath = new File(paramInputDir, "models_large").getCanonicalPath();
+        String modelBase = "models_large";
+
+        String modelPath = new File(paramInputDir, modelBase).getCanonicalPath();
 
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
@@ -37,7 +39,7 @@ public class EventMentionTester {
                 EventMentionCandidateFeatureGenerator.PARAM_MODEL_FOLDER, modelPath,
                 EventMentionCandidateFeatureGenerator.PARAM_MODEL_NAME_FOR_TEST, "weka.classifiers.functions.SMO",
                 EventMentionCandidateFeatureGenerator.PARAM_ONLINE_TEST, true,
-                EventMentionCandidateFeatureGenerator.PARAM_TRAINING_DATASET_PATH, new File(paramInputDir, "training_large.arff").getCanonicalPath()
+                EventMentionCandidateFeatureGenerator.PARAM_TRAINING_DATASET_PATH, new File(paramInputDir, modelBase + "/training.arff").getCanonicalPath()
         );
 
         AnalysisEngineDescription results = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,

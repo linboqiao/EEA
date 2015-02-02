@@ -123,6 +123,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     private void loadModel() throws Exception {
         featureNameMap = (BiMap<String, Integer>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.featureNamePath).getCanonicalPath());
+        logger.info("Number of features in total: " + featureNameMap.size());
 
         if (isOnlineTest) {
             featureConfiguration = (ArrayList<Attribute>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.featureConfigOutputName).getCanonicalPath());
@@ -139,7 +140,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
             int classId = featureConfiguration.get(featureConfiguration.size() - 1).index();
             trainingDataSet.setClass(featureConfiguration.get(featureConfiguration.size() - 1));
             trainingDataSet.classAttribute();
-            logger.info("Training class id : " + classId);
+            logger.info("Training class id : " + classId + ". Number of attributes : " + trainingDataSet.numAttributes());
         }
     }
 
@@ -167,6 +168,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
                     featuresAndClass.add(Pair.with(features, goldType));
                     allTypes.add(goldType);
                 } else {
+                    System.out.println("adding");
                     featuresAndClass.add(Pair.with(features, OTHER_TYPE));
                 }
             } else if (isOnlineTest) {

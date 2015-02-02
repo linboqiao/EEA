@@ -190,7 +190,8 @@ public class EventMentionTrainer {
                 EventMentionCandidateFeatureGenerator.PARAM_SEM_LINK_DIR, semLinkDataPath,
                 EventMentionCandidateFeatureGenerator.PARAM_IS_TRAINING, isTraining,
                 EventMentionCandidateFeatureGenerator.PARAM_ONLINE_TEST, false,
-                EventMentionCandidateFeatureGenerator.PARAM_MODEL_FOLDER, modelDir
+                EventMentionCandidateFeatureGenerator.PARAM_MODEL_FOLDER, modelDir,
+                EventMentionCandidateFeatureGenerator.PARAM_KEEP_QUIET, true
         );
         SimplePipeline.runPipeline(reader, ana);
     }
@@ -215,6 +216,8 @@ public class EventMentionTrainer {
 
         System.out.println("Number of training instances : " + trainingFeatures.size());
         Instances trainingDataset = prepareDataSet(trainingFeatures, new File(modelOutputDir, "training.arff").getCanonicalPath());
+        System.out.println("Generated dev instances : " + trainingDataset.size());
+
 
         System.out.println("Saving feature config");
         SerializationHelper.write(new File(modelOutputDir, featureConfigOutputName).getCanonicalPath(), featureConfiguration);
@@ -222,6 +225,7 @@ public class EventMentionTrainer {
         System.out.println("Preparing dev dataset");
         generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1, semLinkDataPath, false, modelOutputDir.getCanonicalPath());
         List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
+        System.out.println("Generated dev instances : " + devFeatures.size());
         Instances devDataset = prepareDataSet(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath());
 
 

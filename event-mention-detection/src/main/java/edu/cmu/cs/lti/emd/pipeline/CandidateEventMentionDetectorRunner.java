@@ -24,8 +24,8 @@ public class CandidateEventMentionDetectorRunner {
         System.out.println(className + " started...");
 
         // Parameters for the writer
-        String paramParentInputDir = "event-mention-detection/data/Event-mention-detection-2014";
-        String paramBaseInputDirName = "split_test";
+        String paramParentInputDir = "event-mention-detection/data/Event-mention-detection-2014/test";
+        String paramBaseInputDirName = "00_semafor_processed";
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -35,7 +35,7 @@ public class CandidateEventMentionDetectorRunner {
 
         String frameDataPath = "data/resources/fndata-1.5/frame";
 
-        String outputBase = "test_data";
+        String outputBase = "submission_data";
 
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory

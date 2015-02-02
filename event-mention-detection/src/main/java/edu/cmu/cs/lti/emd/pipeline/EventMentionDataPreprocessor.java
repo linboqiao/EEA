@@ -30,7 +30,6 @@ public class EventMentionDataPreprocessor {
 
         String goldStandardFilePath = args.length > 2 ? paramInputDir + args[2] : null; // "converted.tbf"
 
-
         String sourceDataPath = paramInputDir + "source";
         String tokenDataPath = paramInputDir + "token_offset";
 
