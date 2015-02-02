@@ -23,6 +23,8 @@ public class EventMentionTester {
 
         String testBaseDir = args[1]; // "dev_data"
 
+        String modelName = args[2]; // "weka.classifiers.functions.SMO"
+
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
@@ -39,7 +41,7 @@ public class EventMentionTester {
                 EventMentionCandidateFeatureGenerator.PARAM_SEM_LINK_DIR, semLinkDataPath,
                 EventMentionCandidateFeatureGenerator.PARAM_IS_TRAINING, false,
                 EventMentionCandidateFeatureGenerator.PARAM_MODEL_FOLDER, modelPath,
-                EventMentionCandidateFeatureGenerator.PARAM_MODEL_NAME_FOR_TEST, "weka.classifiers.functions.SMO",
+                EventMentionCandidateFeatureGenerator.PARAM_MODEL_NAME_FOR_TEST, modelName,
                 EventMentionCandidateFeatureGenerator.PARAM_ONLINE_TEST, true,
                 EventMentionCandidateFeatureGenerator.PARAM_TRAINING_DATASET_PATH, new File(paramInputDir, modelBase + "/training.arff").getCanonicalPath(),
                 EventMentionCandidateFeatureGenerator.PARAM_BROWN_CLUSTERING_PATH, brownClusteringDataPath
