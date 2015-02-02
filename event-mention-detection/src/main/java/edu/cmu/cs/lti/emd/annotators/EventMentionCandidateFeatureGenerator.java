@@ -147,16 +147,10 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         UimaConvenience.printProcessLog(aJCas, logger);
-
         indexWords(aJCas);
-
         numDocuments++;
-
         align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
         align.loadFanse2Stanford(aJCas);
-
-        System.out.println("Number of candidates " + JCasUtil.select(aJCas, CandidateEventMention.class).size());
-
         for (CandidateEventMention candidateEventMention : JCasUtil.select(aJCas, CandidateEventMention.class)) {
             String goldType = candidateEventMention.getGoldStandardMentionType();
             TIntDoubleMap features = new TIntDoubleHashMap();
@@ -183,8 +177,6 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
                 }
             }
         }
-
-        logger.info("Number of instances now : " + featuresAndClass.size());
     }
 
     private String predict(TIntDoubleMap features) throws Exception {

@@ -45,11 +45,13 @@ public class EventMentionTrainer {
         System.out.println("Number of features : " + featureNames.size() + ". Number of classes : " + allClasses.size());
 
         if (outputDir != null) {
-            System.out.println("Saving feature names");
+            String featureNameSavingPath = new File(outputDir, featureNamePath).getCanonicalPath();
+            System.out.println("Saving feature names to : " + featureNameSavingPath);
             SerializationHelper.write(new File(outputDir, featureNamePath).getCanonicalPath(), featureNameMap);
 
+            String classNameSavingPath = new File(outputDir, predictionLabels).getCanonicalPath();
             System.out.println("Saving class names");
-            SerializationHelper.write(new File(outputDir, predictionLabels).getCanonicalPath(), allClasses);
+            SerializationHelper.write(classNameSavingPath, allClasses);
         }
     }
 
@@ -143,7 +145,7 @@ public class EventMentionTrainer {
         Instances dataSet = new Instances("event_type_detection", featureConfiguration, featuresAndClass.size());
         dataSet.setClass(featureConfiguration.get(featureConfiguration.size() - 1));
 
-        System.out.println("Adding instance");
+        System.out.println("Adding instances");
         double[] emptyVector = new double[featureConfiguration.size()];
 
         for (Pair<TIntDoubleMap, String> rawData : featuresAndClass) {
@@ -168,7 +170,7 @@ public class EventMentionTrainer {
         System.out.println("Number of instances stored : " + dataSet.numInstances());
 
         if (dataSetOutputPath != null) {
-            System.out.println("Saving dataset to disk...");
+            System.out.println("Saving dataset to : " + dataSetOutputPath);
             saveDataSet(dataSet, dataSetOutputPath);
         }
         return dataSet;
@@ -199,10 +201,11 @@ public class EventMentionTrainer {
 
     private void buildModels(TypeSystemDescription typeSystemDescription,
                              String parentInput,
+                             String modelBaseDir,
                              String trainingBaseDir,
                              String devBaseDir,
                              String semLinkDataPath) throws Exception {
-        File modelOutputDir = new File(parentInput, "models");
+        File modelOutputDir = new File(parentInput, modelBaseDir);
         if (!modelOutputDir.exists() || !modelOutputDir.isDirectory()) {
             modelOutputDir.mkdirs();
         }
@@ -242,6 +245,7 @@ public class EventMentionTrainer {
         String devBaseDir = "dev_data";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
+        String modelBasePath = "models_new";
 
         File modelOutputDir = new File("event-mention-detection/data/Event-mention-detection-2014/models");
         if (!modelOutputDir.exists() || !modelOutputDir.isDirectory()) {
@@ -252,6 +256,6 @@ public class EventMentionTrainer {
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
         EventMentionTrainer trainer = new EventMentionTrainer();
-        trainer.buildModels(typeSystemDescription, paramInputDir, trainingBaseDir, devBaseDir, semLinkDataPath);
+        trainer.buildModels(typeSystemDescription, paramInputDir, modelBasePath, trainingBaseDir, devBaseDir, semLinkDataPath);
     }
 }
