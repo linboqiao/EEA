@@ -136,6 +136,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     }
 
     private void readBrownCluster() throws IOException {
+        brownClusters = new HashMap<>();
         for (String line : FileUtils.readLines(new File(brownClusteringPath))) {
             String[] parts = line.split("\t");
             if (parts.length > 2) {
