@@ -168,7 +168,6 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
                     featuresAndClass.add(Pair.with(features, goldType));
                     allTypes.add(goldType);
                 } else {
-                    System.out.println("adding");
                     featuresAndClass.add(Pair.with(features, OTHER_TYPE));
                 }
             } else if (isOnlineTest) {
@@ -180,6 +179,8 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
                 }
             }
         }
+
+        logger.info("Number of instances now : "+featuresAndClass.size());
     }
 
     private String predict(TIntDoubleMap features) throws Exception {

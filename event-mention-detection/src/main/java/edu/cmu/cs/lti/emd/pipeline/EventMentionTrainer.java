@@ -183,7 +183,7 @@ public class EventMentionTrainer {
     private void generateFeatures(TypeSystemDescription typeSystemDescription,
                                   String inputDir, String baseInputDirName,
                                   int stepNum, String semLinkDataPath, boolean isTraining,
-                                  String modelDir) throws UIMAException, IOException {
+                                  String modelDir, boolean keep_quite) throws UIMAException, IOException {
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(inputDir, baseInputDirName, stepNum, false);
         AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionCandidateFeatureGenerator.class, typeSystemDescription,
@@ -191,7 +191,7 @@ public class EventMentionTrainer {
                 EventMentionCandidateFeatureGenerator.PARAM_IS_TRAINING, isTraining,
                 EventMentionCandidateFeatureGenerator.PARAM_ONLINE_TEST, false,
                 EventMentionCandidateFeatureGenerator.PARAM_MODEL_FOLDER, modelDir,
-                EventMentionCandidateFeatureGenerator.PARAM_KEEP_QUIET, true
+                EventMentionCandidateFeatureGenerator.PARAM_KEEP_QUIET, keep_quite
         );
         SimplePipeline.runPipeline(reader, ana);
     }
@@ -208,7 +208,7 @@ public class EventMentionTrainer {
         }
 
         System.out.println("Preparing training dataset");
-        generateFeatures(typeSystemDescription, parentInput, trainingBaseDir, 1, semLinkDataPath, true, null);
+        generateFeatures(typeSystemDescription, parentInput, trainingBaseDir, 1, semLinkDataPath, true, null, true);
         BiMap<String, Integer> featureNameMap = EventMentionCandidateFeatureGenerator.featureNameMap;
         List<Pair<TIntDoubleMap, String>> trainingFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
         ArrayList<String> allClasses = new ArrayList<>(EventMentionCandidateFeatureGenerator.allTypes);
@@ -223,7 +223,7 @@ public class EventMentionTrainer {
         SerializationHelper.write(new File(modelOutputDir, featureConfigOutputName).getCanonicalPath(), featureConfiguration);
 
         System.out.println("Preparing dev dataset");
-        generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1, semLinkDataPath, false, modelOutputDir.getCanonicalPath());
+        generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1, semLinkDataPath, false, modelOutputDir.getCanonicalPath(), false);
         List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
         System.out.println("Generated dev instances : " + devFeatures.size());
         Instances devDataset = prepareDataSet(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath());
