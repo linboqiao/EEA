@@ -188,7 +188,8 @@ public class EventMentionTrainer {
 
     private void generateFeatures(TypeSystemDescription typeSystemDescription,
                                   String inputDir, String baseInputDirName,
-                                  int stepNum, String semLinkDataPath, boolean isTraining,
+                                  int stepNum, String semLinkDataPath,
+                                  String bwClusterPath, boolean isTraining,
                                   String modelDir, boolean keep_quite) throws UIMAException, IOException {
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(inputDir, baseInputDirName, stepNum, false);
         AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
@@ -197,6 +198,7 @@ public class EventMentionTrainer {
                 EventMentionCandidateFeatureGenerator.PARAM_IS_TRAINING, isTraining,
                 EventMentionCandidateFeatureGenerator.PARAM_ONLINE_TEST, false,
                 EventMentionCandidateFeatureGenerator.PARAM_MODEL_FOLDER, modelDir,
+                EventMentionCandidateFeatureGenerator.PARAM_BROWN_CLUSTERING_PATH, bwClusterPath,
                 EventMentionCandidateFeatureGenerator.PARAM_KEEP_QUIET, keep_quite
         );
         SimplePipeline.runPipeline(reader, ana);
@@ -208,14 +210,15 @@ public class EventMentionTrainer {
                              String modelBaseDir,
                              String trainingBaseDir,
                              String devBaseDir,
-                             String semLinkDataPath) throws Exception {
+                             String semLinkDataPath,
+                             String bwClusterPath) throws Exception {
         File modelOutputDir = new File(parentInput, modelBaseDir);
         if (!modelOutputDir.exists() || !modelOutputDir.isDirectory()) {
             modelOutputDir.mkdirs();
         }
 
         System.out.println("Preparing training dataset");
-        generateFeatures(typeSystemDescription, parentInput, trainingBaseDir, 1, semLinkDataPath, true, null, true);
+        generateFeatures(typeSystemDescription, parentInput, trainingBaseDir, 1, semLinkDataPath, bwClusterPath, true, null, true);
         BiMap<String, Integer> featureNameMap = EventMentionCandidateFeatureGenerator.featureNameMap;
         List<Pair<TIntDoubleMap, String>> trainingFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
         ArrayList<String> allClasses = new ArrayList<>(EventMentionCandidateFeatureGenerator.allTypes);
@@ -228,7 +231,8 @@ public class EventMentionTrainer {
         SerializationHelper.write(new File(modelOutputDir, featureConfigOutputName).getCanonicalPath(), featureConfiguration);
 
         System.out.println("Preparing dev dataset");
-        generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1, semLinkDataPath, false, modelOutputDir.getCanonicalPath(), true);
+        generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1,
+                semLinkDataPath, bwClusterPath, false, modelOutputDir.getCanonicalPath(), true);
         List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
         Instances devDataset = prepareDataSet(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath());
         System.out.println("Number of dev instances : " + devFeatures.size());
@@ -245,6 +249,7 @@ public class EventMentionTrainer {
         String devBaseDir = "dev_data";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
+        String brownClusteringDataPath = "data/resources/TDT5_BrownWC.txt";
         String trainingBaseDir = args[0];//"train_data";
         String modelBasePath = args[1]; //"models";
 
@@ -252,6 +257,6 @@ public class EventMentionTrainer {
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
         EventMentionTrainer trainer = new EventMentionTrainer();
-        trainer.buildModels(typeSystemDescription, paramInputDir, modelBasePath, trainingBaseDir, devBaseDir, semLinkDataPath);
+        trainer.buildModels(typeSystemDescription, paramInputDir, modelBasePath, trainingBaseDir, devBaseDir, semLinkDataPath, brownClusteringDataPath);
     }
 }
