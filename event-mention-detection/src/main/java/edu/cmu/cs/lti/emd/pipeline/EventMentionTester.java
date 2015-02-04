@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.emd.pipeline;
 
 import edu.cmu.cs.lti.emd.annotators.EvaluationResultWriter;
 import edu.cmu.cs.lti.emd.annotators.EventMentionCandidateFeatureGenerator;
+import edu.cmu.cs.lti.emd.annotators.EventMentionRealisFeatureGenerator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -23,6 +24,11 @@ public class EventMentionTester {
 
         String modelName = args[1]; // "weka.classifiers.functions.SMO" "weka.classifiers.trees.RandomForest"
 
+        String realisModelBase = args[2];
+
+        String realisModelName = args[3];
+
+
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
@@ -32,11 +38,15 @@ public class EventMentionTester {
 
         String modelPath = new File(paramInputDir, modelBase).getCanonicalPath();
 
+        String realisModelPath = new File(paramInputDir, realisModelBase).getCanonicalPath();
+
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        CollectionReaderDescription dev_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, "dev_data", 1, false);
-        CollectionReaderDescription test_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, "test_data", 1, false);
+        CollectionReaderDescription final_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir + "/test", "submission_data", 1, false);
+
+//        CollectionReaderDescription dev_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, "dev_data", 1, false);
+//        CollectionReaderDescription test_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, "test_data", 1, false);
 
         AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionCandidateFeatureGenerator.class, typeSystemDescription,
@@ -50,19 +60,37 @@ public class EventMentionTester {
                 EventMentionCandidateFeatureGenerator.PARAM_WORDNET_PATH, wordnetDataPath
         );
 
-        AnalysisEngineDescription devResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
-                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/dev_prediction.tbf");
 
-        AnalysisEngineDescription testResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
-                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/test_prediction.tbf");
+        AnalysisEngineDescription realis = CustomAnalysisEngineFactory.createAnalysisEngine(
+                EventMentionRealisFeatureGenerator.class, typeSystemDescription,
+                EventMentionRealisFeatureGenerator.PARAM_SEM_LINK_DIR, semLinkDataPath,
+                EventMentionRealisFeatureGenerator.PARAM_IS_TRAINING, false,
+                EventMentionRealisFeatureGenerator.PARAM_MODEL_FOLDER, realisModelPath,
+                EventMentionRealisFeatureGenerator.PARAM_MODEL_NAME_FOR_TEST, realisModelName,
+                EventMentionRealisFeatureGenerator.PARAM_ONLINE_TEST, true,
+                EventMentionRealisFeatureGenerator.PARAM_TRAINING_DATASET_PATH, new File(paramInputDir, realisModelBase + "/training.arff").getCanonicalPath(),
+                EventMentionRealisFeatureGenerator.PARAM_BROWN_CLUSTERING_PATH, brownClusteringDataPath
+        );
 
-        AnalysisEngineDescription devOutputPrediction = CustomAnalysisEngineFactory.createXmiWriter(paramInputDir, "dev_predicted", 2, null);
+//        AnalysisEngineDescription devResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
+//                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/dev_prediction.tbf");
+//
+//        AnalysisEngineDescription testResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
+//                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/test_prediction.tbf");
 
-        AnalysisEngineDescription testOutputPrediction = CustomAnalysisEngineFactory.createXmiWriter(paramInputDir, "test_predicted", 2, null);
+//        AnalysisEngineDescription devOutputPrediction = CustomAnalysisEngineFactory.createXmiWriter(paramInputDir, "dev_predicted", 2, null);
+//
+//        AnalysisEngineDescription testOutputPrediction = CustomAnalysisEngineFactory.createXmiWriter(paramInputDir, "test_predicted", 2, null);
 
-        SimplePipeline.runPipeline(dev_reader, ana, devResults, devOutputPrediction);
+//        SimplePipeline.runPipeline(dev_reader, ana, realis, devResults, devOutputPrediction);
+//
+//        SimplePipeline.runPipeline(test_reader, ana, realis, testResults, testOutputPrediction);
 
-        SimplePipeline.runPipeline(test_reader, ana, testResults, testOutputPrediction);
+        AnalysisEngineDescription finalResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
+                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/CMU-TWO-STEP.tbf");
+        AnalysisEngineDescription finalOutputPrediction = CustomAnalysisEngineFactory.createXmiWriter(paramInputDir + "/test", "final_predicted", 2, null);
+        SimplePipeline.runPipeline(final_reader, ana, realis, finalResults, finalOutputPrediction);
+
         System.err.println(className + " finished");
     }
 }

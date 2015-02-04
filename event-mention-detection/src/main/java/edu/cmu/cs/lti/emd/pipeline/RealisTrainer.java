@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.emd.pipeline;
 
 import com.google.common.collect.BiMap;
-import edu.cmu.cs.lti.emd.annotators.EventMentionCandidateFeatureGenerator;
+import edu.cmu.cs.lti.emd.annotators.EventMentionRealisFeatureGenerator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import gnu.trove.iterator.TIntDoubleIterator;
@@ -21,11 +21,14 @@ import weka.core.converters.ArffSaver;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 
-public class EventMentionTrainer {
-    private static String className = EventMentionTrainer.class.getSimpleName();
+public class RealisTrainer {
+    private static String className = RealisTrainer.class.getSimpleName();
 
     private ArrayList<Attribute> featureConfiguration;
 
@@ -121,37 +124,6 @@ public class EventMentionTrainer {
         }
     }
 
-    private void crossValidation(Instances dataSet, File modelOutDir) throws Exception {
-        Random rand = new Random(0);   // create seeded number generator
-        Instances randData = new Instances(dataSet);   // create copy of original data
-        randData.randomize(rand);
-
-        int folds = 5;
-        Evaluation eval = new Evaluation(randData);
-
-        for (Classifier classifier : getClassifiers()) {
-            for (int n = 0; n < folds; n++) {
-                Instances trainSplit = randData.trainCV(folds, n);
-                Instances testSplit = randData.testCV(folds, n);
-                System.out.println("Building model for fold " + n);
-                classifier.buildClassifier(trainSplit);
-                System.out.println("Evaluating model for fold " + n);
-                eval.evaluateModel(classifier, testSplit);
-            }
-
-            String classifierName = classifier.getClass().getName();
-
-            System.out.println("=== Setup ===");
-            System.out.println("Classifier: " + classifier.getClass().getName());
-            System.out.println("Data set size: " + dataSet.numInstances());
-            System.out.println("Folds: " + folds);
-            System.out.println();
-            System.out.println(eval.toSummaryString("=== " + folds + "-fold Cross-validation ===", false));
-
-            SerializationHelper.write(new File(modelOutDir, classifierName).getCanonicalPath(), classifier);
-        }
-    }
-
 
     private Instances prepareDataSet(List<Pair<TIntDoubleMap, String>> featuresAndClass, String dataSetOutputPath) throws Exception {
         Instances dataSet = new Instances("event_type_detection", featureConfiguration, featuresAndClass.size());
@@ -200,14 +172,13 @@ public class EventMentionTrainer {
                                   boolean isTraining, String modelDir, boolean keep_quite) throws UIMAException, IOException {
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(inputDir, baseInputDirName, stepNum, false);
         AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
-                EventMentionCandidateFeatureGenerator.class, typeSystemDescription,
-                EventMentionCandidateFeatureGenerator.PARAM_SEM_LINK_DIR, semLinkDataPath,
-                EventMentionCandidateFeatureGenerator.PARAM_IS_TRAINING, isTraining,
-                EventMentionCandidateFeatureGenerator.PARAM_ONLINE_TEST, false,
-                EventMentionCandidateFeatureGenerator.PARAM_MODEL_FOLDER, modelDir,
-                EventMentionCandidateFeatureGenerator.PARAM_BROWN_CLUSTERING_PATH, bwClusterPath,
-                EventMentionCandidateFeatureGenerator.PARAM_WORDNET_PATH, wordnetDataPath,
-                EventMentionCandidateFeatureGenerator.PARAM_KEEP_QUIET, keep_quite
+                EventMentionRealisFeatureGenerator.class, typeSystemDescription,
+                EventMentionRealisFeatureGenerator.PARAM_SEM_LINK_DIR, semLinkDataPath,
+                EventMentionRealisFeatureGenerator.PARAM_IS_TRAINING, isTraining,
+                EventMentionRealisFeatureGenerator.PARAM_ONLINE_TEST, false,
+                EventMentionRealisFeatureGenerator.PARAM_MODEL_FOLDER, modelDir,
+                EventMentionRealisFeatureGenerator.PARAM_BROWN_CLUSTERING_PATH, bwClusterPath,
+                EventMentionRealisFeatureGenerator.PARAM_KEEP_QUIET, keep_quite
         );
         SimplePipeline.runPipeline(reader, ana);
     }
@@ -228,9 +199,9 @@ public class EventMentionTrainer {
 
         System.out.println("Preparing training dataset");
         generateFeatures(typeSystemDescription, parentInput, trainingBaseDir, 1, semLinkDataPath, bwClusterPath, wordnetDataPath, true, null, true);
-        BiMap<String, Integer> featureNameMap = EventMentionCandidateFeatureGenerator.featureNameMap;
-        List<Pair<TIntDoubleMap, String>> trainingFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
-        ArrayList<String> allClasses = new ArrayList<>(EventMentionCandidateFeatureGenerator.allTypes);
+        BiMap<String, Integer> featureNameMap = EventMentionRealisFeatureGenerator.featureNameMap;
+        List<Pair<TIntDoubleMap, String>> trainingFeatures = EventMentionRealisFeatureGenerator.featuresAndClass;
+        ArrayList<String> allClasses = new ArrayList<>(EventMentionRealisFeatureGenerator.allTypes);
         configFeatures(featureNameMap, allClasses, modelOutputDir);
 
         Instances trainingDataset = prepareDataSet(trainingFeatures, new File(modelOutputDir, "training.arff").getCanonicalPath());
@@ -244,7 +215,7 @@ public class EventMentionTrainer {
         for (String devBaseDir : devBaseDirs) {
             generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1,
                     semLinkDataPath, bwClusterPath, wordnetDataPath, false, modelOutputDir.getCanonicalPath(), true);
-            List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
+            List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionRealisFeatureGenerator.featuresAndClass;
             Instances devDataset = prepareDataSet(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath());
             testSets.add(devDataset);
             System.out.println("Number of dev instances : " + devFeatures.size());
@@ -268,7 +239,7 @@ public class EventMentionTrainer {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        EventMentionTrainer trainer = new EventMentionTrainer();
+        RealisTrainer trainer = new RealisTrainer();
         trainer.buildModels(typeSystemDescription, paramInputDir, modelBasePath, trainingBaseDir, devBaseDir, semLinkDataPath, brownClusteringDataPath, wordnetDataPath);
 
         System.out.println(className + " finished...");

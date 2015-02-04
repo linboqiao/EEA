@@ -17,7 +17,6 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
@@ -39,7 +38,9 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
         targetClasses = new HashSet<>();
 //        targetClasses.add("Life_Injure");
 //        targetClasses.add("Business_Start-Org");
-        targetClasses.add("Personnel_Start-Position");
+//        targetClasses.add("Personnel_Start-Position");
+//        targetClasses.add("Contact_Meet");
+        targetClasses.add("Transaction_Transfer-Money");
     }
 
     @Override
@@ -94,13 +95,21 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
     public static void main(String args[]) throws IOException, UIMAException {
 //        String inputDir = args[0];
         String inputDir = "/Users/zhengzhongliu/Documents/projects/cmu-script" +
-                "/event-mention-detection/data/Event-mention-detection-2014/" +
-                "01_dev_data";
+                "/event-mention-detection/data/Event-mention-detection-2014/";
+        String inputTest = inputDir + "01_test_data";
+        String inputDev = inputDir + "01_dev_data";
+        String inputTrain = inputDir + "01_train_data";
+
         String paramTypeSystemDescriptor = "TypeSystem";
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, new File(inputDir).getCanonicalPath(), false);
+        CollectionReaderDescription testReader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, inputTest, false);
+        CollectionReaderDescription devReader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, inputDev, false);
+        CollectionReaderDescription trainReader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, inputTrain, false);
+
         AnalysisEngineDescription runner = CustomAnalysisEngineFactory.createAnalysisEngine(EventMentionTypeClassPrinter.class, typeSystemDescription);
-        SimplePipeline.runPipeline(reader, runner);
+        SimplePipeline.runPipeline(testReader, runner);
+        SimplePipeline.runPipeline(devReader, runner);
+        SimplePipeline.runPipeline(trainReader, runner);
     }
 }

@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.emd.annotators;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.Iterables;
 import edu.cmu.cs.lti.collection_reader.EventMentionDetectionDataReader;
 import edu.cmu.cs.lti.emd.pipeline.EventMentionTrainer;
 import edu.cmu.cs.lti.ling.FrameDataReader;
@@ -117,7 +118,7 @@ public class EventMentionRealisFeatureGenerator extends AbstractLoggingAnnotator
             e.printStackTrace();
         }
         allTypes = new HashSet<>();
-        allTypes.add(OTHER_TYPE);
+//        allTypes.add(OTHER_TYPE);
         featuresAndClass = new ArrayList<>();
 
         if (isTraining) {
@@ -178,6 +179,10 @@ public class EventMentionRealisFeatureGenerator extends AbstractLoggingAnnotator
         numDocuments++;
         align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
         align.loadFanse2Stanford(aJCas);
+
+        Map<StanfordCorenlpToken, Collection<Sentence>> token2Sentences =
+                JCasUtil.indexCovering(aJCas, StanfordCorenlpToken.class, Sentence.class);
+
         for (CandidateEventMention candidateEventMention : JCasUtil.select(aJCas, CandidateEventMention.class)) {
 //            String goldType = candidateEventMention.getGoldStandardMentionType();
             if (candidateEventMention.getGoldStandardMentionType() == null) {
@@ -199,36 +204,14 @@ public class EventMentionRealisFeatureGenerator extends AbstractLoggingAnnotator
             addSurroundingWordFeatures(candidateHead, 2, features);
             addFrameFeatures(candidateEventMention, features);
 
+
             if (isOnlineTest) {
                 try {
                     Pair<Double, String> prediction = predict(features);
-                    String predictedType = prediction.getValue1();
+                    String realisPrediction = prediction.getValue1();
                     double predictionConfidence = prediction.getValue0();
-                    candidateEventMention.setPredictedType(predictedType);
-                    candidateEventMention.setTypePredictionConfidence(predictionConfidence);
+                    candidateEventMention.setPredictedRealis(realisPrediction);
 
-                    if (!prediction.equals(OTHER_TYPE)) {
-                        CandidateEventMention annotateMention =
-                                new CandidateEventMention(goldView, candidateEventMention.getBegin(), candidateEventMention.getEnd());
-                        annotateMention.setPredictedType(predictedType);
-                        annotateMention.setTypePredictionConfidence(predictionConfidence);
-                        annotateMention.addToIndexes();
-                    }
-
-//                    System.err.println(candidateEventMention.getCoveredText());
-//                    System.err.println("Gold type is " + goldType);
-//                    if (goldType != null && !prediction.equals(goldType)) {
-//                        if (candidateEventMention.getArguments() != null) {
-//                            for (CandidateEventMentionArgument argument : FSCollectionFactory.
-//                                    create(candidateEventMention.getArguments(), CandidateEventMentionArgument.class)) {
-//                                System.err.println("Argument : ");
-//                                System.err.println(argument.getCoveredText());
-//                                System.err.println("Argument : ");
-//                                System.err.println(argument.getCoveredText());
-//                            }
-//                        }
-//                        edu.cmu.cs.lti.utils.Utils.pause();
-//                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.exit(1);
@@ -295,11 +278,26 @@ public class EventMentionRealisFeatureGenerator extends AbstractLoggingAnnotator
         return instance;
     }
 
+    private void addSentenceWordFeatures(StanfordCorenlpToken triggerWord,
+                                         TIntDoubleMap features,
+                                         Map<StanfordCorenlpToken, Collection<Sentence>> token2Sentences) {
+        Sentence sent = Iterables.get(token2Sentences.get(triggerWord), 0);
+        for (Word word : JCasUtil.selectCovered(Word.class, sent)) {
+            if (word.getPos().equals("IN")) {
+                addFeature("SentenceWord_" + word.getLemma(), features);
+            }
+        }
+    }
+
     private void addHeadWordFeatures(StanfordCorenlpToken triggerWord, TIntDoubleMap features) {
         String lemma = triggerWord.getLemma().toLowerCase();
 
         addFeature("TriggerHeadLemma_" + lemma, features);
         addFeature("HeadPOS_" + triggerWord.getPos(), features);
+
+        if (triggerWord.getPos().equals("VBN")) {
+            addFeature("HeadWordIsPastTense", features);
+        }
 
         if (brownClusters.containsKey(lemma)) {
             addFeature("HeadWordLemmaBrownCluster_" + brownClusters.get(lemma), features);
