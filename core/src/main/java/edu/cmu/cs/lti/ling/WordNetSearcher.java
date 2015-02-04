@@ -100,5 +100,24 @@ public class WordNetSearcher {
 
 
         System.out.println(wns.getAllHypernymsForAllSense("jaw"));
+
+        System.out.println("Money?");
+
+        System.out.println(wns.getAllHypernymsForAllSense("insurance"));
+        System.out.println(wns.getAllHypernymsForAllSense("pension"));
+        System.out.println(wns.getAllHypernymsForAllSense("revenue"));
+        System.out.println(wns.getAllHypernymsForAllSense("bribe"));
+        System.out.println(wns.getAllHypernymsForAllSense("bill"));
+        System.out.println(wns.getAllHypernymsForAllSense("tax"));
+
+        System.out.println("Ownerships");
+
+        System.out.println(wns.getAllHypernymsForAllSense("name"));
+        System.out.println(wns.getAllHypernymsForAllSense("jewelry"));
+        System.out.println(wns.getAllHypernymsForAllSense("item"));
+        System.out.println(wns.getAllHypernymsForAllSense("bracelet"));
+        System.out.println(wns.getAllHypernymsForAllSense("gun"));
+
+
     }
 }

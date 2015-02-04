@@ -6,22 +6,32 @@ import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.script.utils.DataPool;
+import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalsysisEngine;
+import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.map.hash.TIntIntHashMap;
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
 import org.apache.uima.UimaContext;
+import org.apache.uima.analysis_engine.AnalysisEngineDescription;
+import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.uimafit.factory.TypeSystemDescriptionFactory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -209,5 +219,61 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
         } else {
             return KmTargetConstants.nullArgMarker;
         }
+    }
+
+
+    /**
+     * @param args
+     * @throws java.io.IOException
+     * @throws org.apache.uima.UIMAException
+     */
+    public static void main(String[] args) throws Exception {
+        String className = KmStyleAllEventMentionClozeTaskGenerator.class.getSimpleName();
+        Logger logger = Logger.getLogger(className);
+
+        System.out.println(className + " started...");
+
+        Configuration config = new Configuration(new File(args[0]));
+
+        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.heldout.path"); //"data/02_event_tuples/dev";
+        String paramParentOutputDir = config.get("edu.cmu.cs.lti.cds.parent.output"); // "data";
+        String clozePath = config.get("edu.cmu.cs.lti.cds.cloze.base.path"); // "loze_dev"
+        String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
+        boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
+        int clozeMinSize = config.getInt("edu.cmu.cs.lti.cds.cloze.minsize");
+
+        String paramOutputFileSuffix = ".txt";
+
+        int stepNum = 3;
+
+        DataPool.readBlackList(new File(blackListFile));
+        DataPool.loadHeadStatistics(config, false);
+
+        String paramTypeSystemDescriptor = "TypeSystem";
+
+        // Instantiate the analysis engine.
+        TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
+                .createTypeSystemDescription(paramTypeSystemDescriptor);
+
+        // Instantiate a collection reader to get XMI as input.
+        // Note that you should change the following parameters for your setting.
+        CollectionReaderDescription reader =
+                CustomCollectionReaderFactory.createGzippedXmiReader(typeSystemDescription, inputDir, false);
+
+        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
+                KmStyleAllEventMentionClozeTaskGenerator.class, typeSystemDescription,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_BASE_OUTPUT_DIR_NAME, clozePath,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_STEP_NUMBER, stepNum,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_DB_DIR_PATH, "data/_db/",
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_CLOZE_MIN_SIZE, clozeMinSize
+        );
+
+        SimplePipeline.runPipeline(reader, writer);
+
+        logger.info("Completed.");
+        logger.info("Remeber to clean out empty cloze using the shell scripts");
     }
 }

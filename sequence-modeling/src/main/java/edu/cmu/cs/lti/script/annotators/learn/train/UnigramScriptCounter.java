@@ -6,18 +6,26 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
+import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import gnu.trove.list.TIntList;
 import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.uima.UimaContext;
+import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.core.SerializationHelper;
 
 import java.io.File;
@@ -147,12 +155,58 @@ public class UnigramScriptCounter extends AbstractLoggingAnnotator {
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        logger.info("Totally events stored "+ unigramEventCounts.size());
+        logger.info("Totally events stored " + unigramEventCounts.size());
         try {
             SerializationHelper.write(new File(dbPath, tupleCountDbFileName + "_" + defaultUnigramMapName).getAbsolutePath(), unigramEventCounts);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+
+    /**
+     * @param args
+     * @throws java.io.IOException
+     * @throws org.apache.uima.UIMAException
+     */
+    public static void main(String[] args) throws Exception {
+        String className = UnigramScriptCounter.class.getSimpleName();
+
+        System.out.println(className + " started...");
+
+        Configuration config = new Configuration(new File(args[0]));
+        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path"); //"data/02_event_tuples";
+        String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
+        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //data/_db
+
+        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
+        String occSuffix = dbNames[0]; //e.g. 00-02, full
+
+        String headIdMapName = KarlMooneyScriptCounter.defaltHeadIdMapName;
+
+        // ////////////////////////////////////////////////////////////////
+
+        DataPool.readBlackList(new File(blackListFile));
+        DataPool.loadHeadIds(dbPath, dbNames[0], headIdMapName);
+
+        String paramTypeSystemDescriptor = "TypeSystem";
+
+        // Instantiate the analysis engine.
+        TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
+                .createTypeSystemDescription(paramTypeSystemDescriptor);
+
+        CollectionReaderDescription reader =
+                CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
+
+        AnalysisEngineDescription unigramCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
+                UnigramScriptCounter.class, typeSystemDescription,
+                UnigramScriptCounter.PARAM_DB_DIR_PATH, dbPath,
+                UnigramScriptCounter.PARAM_DB_NAME, occSuffix,
+                UnigramScriptCounter.PARAM_KEEP_QUIET, false);
+
+        SimplePipeline.runPipeline(reader, unigramCounter);
+
+        System.out.println(className + " completed.");
     }
 }

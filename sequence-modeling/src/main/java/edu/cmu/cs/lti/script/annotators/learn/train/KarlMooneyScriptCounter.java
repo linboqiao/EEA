@@ -8,10 +8,13 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
+import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.CollectionUtils;
+import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.list.TIntList;
@@ -20,15 +23,22 @@ import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
+import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.mapdb.Fun;
+import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.core.SerializationHelper;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -337,5 +347,51 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * @param args
+     * @throws java.io.IOException
+     * @throws org.apache.uima.UIMAException
+     */
+    public static void main(String[] args) throws UIMAException, IOException {
+        String className = KarlMooneyScriptCounter.class.getSimpleName();
+
+        System.out.println(className + " started...");
+
+        Configuration config = new Configuration(new File(args[0]));
+        String occSuffix = args.length > 1 ? args[1] : "db"; //e.g. 00-02, full
+
+        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path"); //"data/02_event_tuples";
+        String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
+        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //data/_db
+        boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
+        int skipGramN = config.getInt("edu.cmu.cs.lti.cds.skipgram.n");
+
+        // ////////////////////////////////////////////////////////////////
+
+        DataPool.readBlackList(new File(blackListFile));
+
+        String paramTypeSystemDescriptor = "TypeSystem";
+
+        // Instantiate the analysis engine.
+        TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
+                .createTypeSystemDescription(paramTypeSystemDescriptor);
+
+        CollectionReaderDescription reader =
+                CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
+
+        AnalysisEngineDescription kmScriptCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
+                KarlMooneyScriptCounter.class, typeSystemDescription,
+                KarlMooneyScriptCounter.PARAM_DB_DIR_PATH, dbPath,
+                KarlMooneyScriptCounter.PARAM_SKIP_BIGRAM_N, skipGramN,
+                KarlMooneyScriptCounter.PARAM_DB_NAME, "occs_" + occSuffix,
+                KarlMooneyScriptCounter.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
+                AbstractLoggingAnnotator.PARAM_KEEP_QUIET, false);
+
+        SimplePipeline.runPipeline(reader, kmScriptCounter);
+
+        System.out.println(className + " completed.");
     }
 }

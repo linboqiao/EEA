@@ -67,7 +67,6 @@ public class TokenAlignmentHelper {
         }
     }
 
-
     public String getLowercaseWordLemma(Word token) {
         StanfordCorenlpToken s;
         if (token instanceof FanseToken) {
