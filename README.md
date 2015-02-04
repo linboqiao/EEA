@@ -1,6 +1,6 @@
 # README #
 
-### A cross document script###
+### A script project ###
 
 * Quick summary
-A research prototype that induce script from multiple documents (Or not)
+A research prototype that induce script knowledge and its general component (events) from text, from multiple documents (Or not)
