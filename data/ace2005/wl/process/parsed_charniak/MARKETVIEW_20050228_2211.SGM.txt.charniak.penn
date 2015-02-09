@@ -1,0 +1,14 @@
+(S1 (S (S (NP (PRP You)) (VP (MD 'd) (VP (VB think) (SBAR (S (NP (PRP he)) (VP (AUX was) (ADJP (JJ busy)) (ADVP (RB enough)) (PP (IN with) (NP (NNP Blockbuster) (CC and) (NNP Hollywood))))))))) (, ,) (CC but) (S (NP (NNP Carl) (NNP Icahn)) (VP (AUX is) (ADVP (RB once) (RB again)) (VP (VBG going) (PP (IN after) (NP (NNP Mylan) (NNS labs)))))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (MD 'd) (VP (VB love) (S (VP (TO to) (VP (VB call) (S (NP (PRP it)) (NP (DT a) (JJ classic) (NN raid))))))))) (: --) (S (NP (PRP he)) (VP (AUX 's) (VP (VP (VBG making) (NP (NP (DT an) (NN offer)) (PP (IN for) (NP (DT the) (NN company))))) (, ,) (VP (VBG nominating) (NP (PRP$ his) (JJ own) (NN board))) (, ,) (VP (VBG claiming) (SBAR (S (NP (NN management)) (VP (MD can) (VP (VB accept) (NP (NP (CD one)) (CC or) (NP (DT the) (JJ other)) (CC or) (NP (DT both)))))))) (, ,) (CC and) (VP (VBG hinting) (SBAR (IN that) (S (SBAR (IN if) (S (NP (PRP they)) (VP (VBD paid) (NP (PRP him)) (ADVP (RB enough))))) (, ,) (NP (PRP he)) (VP (MD 'd) (ADVP (RB probably)) (VP (VB go) (PRT (RP away)))))))))) (. .)))
+
+(S1 (S (CC But) (S (NP (NP (DT the) (JJ whole) (NN point)) (PP (IN of) (NP (NN raiding)))) (VP (AUX is) (S (VP (TO to) (VP (VB outsmart) (NP (DT an) (NN opponent))))))) (, ,) (CC and) (S (NP (DT that)) (VP (VBZ means) (SBAR (S (NP (DT the) (NN strategy)) (VP (VBZ changes) (ADVP (RB constantly))))))) (. .)))
+
+(S1 (S (S (PP (IN In) (NP (DT this) (NN case))) (, ,) (NP (DT the) (ADJP (RBS most) (JJ interesting)) (NN twist)) (VP (AUX is) (SBAR (IN that) (S (NP (PRP he)) (VP (AUX 's) (VP (VBG shorting) (NP (NP (NNS shares)) (PP (IN of) (NP (NP (NP (NNP Mylan) (POS 's)) (NN acquisition) (NN target)) (, ,) (NP (NNP King) (NNP Pharmaceuticals))))))))))) (: ;) (S (NP (PRP he)) (VP (AUX 's) (VP (ADVP (RB basically)) (VBG doubling) (PRT (RP down)) (PP (IN on) (NP (DT the) (NN bet) (SBAR (IN that) (S (NP (PRP they)) (VP (MD wo) (RB n't) (VP (VB acquire)))))))))) (. .)))
+
+(S1 (S (SBAR (ADVP (RB Not) (RB only)) (IN that) (, ,) (CC but) (SBAR (IN if) (S (NP (NNP Mylan)) (VP (VBD bought) (NP (PRP him)) (PRT (RP out)))))) (, ,) (NP (PRP they)) (VP (MD 'd) (VP (AUX have) (NP (JJR less) (NN money)) (S (VP (TO to) (VP (VB fund) (NP (NP (DT a) (NN purchase)) (PP (IN of) (NP (NNP King) (NNPS Pharmaceuticals))))))))) (. .)))
+
+(S1 (S (NP (DT Either) (NN way)) (, ,) (NP (PRP he)) (VP (AUX 's) (VP (VBG showing) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NN confidence)))))) (. .)))
+
+(S1 (S (PP (VBN Given) (NP (PRP$ his) (NN record))) (, ,) (NP (PRP it)) (VP (AUX 's) (ADJP (JJ warranted))) (. .)))
+

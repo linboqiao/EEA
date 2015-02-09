@@ -1,0 +1,38 @@
+(S1 (S (NP (PRP we)) (VP (AUX are) (ADVP (RB back))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (VP (AUX been) (NP (NP (DT a) (JJ few) (NNS days)) (SBAR (IN since) (S (NP (PRP we)) (VP (AUX had) (NP (NP (DT any) (JJ new) (NNS developments)) (PP (IN in) (NP (DT the) (NNP laci) (NNP peterson) (NN case)))))))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (VBZ appears) (SBAR (S (NP (PRP we)) (VP (AUX do) (VP (AUX have) (NP (NP (NN something)) (SBAR (S (VP (TO to) (VP (VB talk) (PP (IN about) (NP (DT this) (NN morning))))))))))))) (. .)))
+
+(S1 (FRAG (ADVP (RB perhaps)) (NP (NP (DT a) (NN search)) (PP (IN for) (NP (NP (DT some) (JJ new) (NN evidence)) (PP (IN under) (NP (NN way)))))) (. .)))
+
+(S1 (S (VP (VB let) (S (VP (POS 's) (VP (VB check) (PRT (RP in)) (PP (IN with) (NP (PRP$ our) (JJ rusty) (NN dornin))) (, ,) (PP (IN out) (PP (IN in) (NP (NP (NNP modesto)) (, ,) (NP (NNP california))))) (, ,) (PP (IN with) (NP (NP (DT the) (JJS latest)) (PP (IN on) (NP (DT that))))))))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (NP (PRP we)) (VP (VBD knew) (SBAR (S (NP (PRP it)) (VP (AUX was) (NP (NP (DT a) (NN matter)) (PP (IN of) (NP (NN time)))) (SBAR (IN before) (S (NP (NNS police)) (VP (VBD got) (ADVP (RB back) (PP (IN into) (NP (DT the) (NN water)))) (PP (IN in) (NP (NNP san) (NNP francisco) (NN bay))) (S (VP (VBG looking) (PP (IN for) (NP (NP (JJR more) (NN evidence)) (PP (IN in) (NP (DT the) (NNP laci) (NNP peterson) (NN case))))))))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (VBD happened) (NP (DT this) (NN morning))) (. .)))
+
+(S1 (S (NP (JJ numerous) (NN agency) (NN r) (NNS agencies)) (VP (NNS boats) (PP (IN with) (NP (NN sonar) (NN technology) (CC and) (NNS divers))) (PP (IN into) (NP (NNP san) (NNP francisco) (NN bay)))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (VBD came) (PP (IN from) (NP (DT the) (NNP richmond) (NNP marina) (CONJP (RB as) (RB well) (IN as)) (NP (DT the) (NN urbuinano) (NN island)) (, ,) (NP (DT the) (JJ coast) (NN guard) (NN station))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (VP (AUXG being) (VP (VBN used) (PP (IN as) (NP (DT a) (NN staging) (NN area)))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX are) (VP (VBG going) (S (VP (TO to) (VP (AUX be) (VP (VBG launching) (NP (NP (DT a) (NN search)) (PP (IN for) (SBAR (WHNP (WP what)) (S (VP (MD may) (VP (AUX be) (VP (VBN left) (PP (IN in) (NP (DT the) (NN bay))) (ADVP (RB here)) (ADVP (RB now))))))))))))))) (. .)))
+
+(S1 (S (SBAR (IN as) (S (NP (PRP you)) (VP (VBP know) (PP (IN about) (NP (DT a) (NN month)))))) (ADVP (RB ago)) (NP (NP (NNP laci) (NNP peterson) (POS 's)) (NN body)) (VP (VBN washed) (PRT (RP up)) (ADVP (RB right) (RB here))) (. .)))
+
+(S1 (S (NP (DT an) (NN area)) (VP (VBD called) (S (NP (NN point)) (ADJP (JJ isabelle)))) (. .)))
+
+(S1 (S (ADVP (RB right) (RB across)) (NP (NP (DT the) (NN channel)) (ADVP (RB here))) (VP (AUX is) (NP (NP (DT an) (NN area)) (VP (VBN known) (PP (IN as) (NP (NNP brooks) (NN island)))))) (. .)))
+
+(S1 (S (S (NP (PRP they)) (VP (VBP believe))) (: --) (S (NP (NNS police)) (VP (VBP say) (SBAR (S (NP (DT that)) (VP (AUX is) (SBAR (WHADVP (WRB where)) (S (NP (NNP scott) (NNP peterson)) (VP (VBD told) (NP (PRP them)) (SBAR (IN that) (S (NP (PRP he)) (VP (AUX did) (VP (VB go) (NP (NN fishing)) (NP (NP (DT the) (NN day)) (SBAR (WHNP (WDT that)) (S (NP (NNP laci) (NNP peterson)) (VP (AUX did) (VP (VB disappear)))))))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB now)) (, ,) (NP (NP (DT a) (NN source)) (ADJP (JJ close) (PP (TO to) (NP (DT the) (NN investigation))))) (VP (AUX has) (VP (VBN told) (NP (PRP me)) (SBAR (IN that) (SBAR (WHNP (WP what)) (S (NP (PRP they)) (VP (AUX are) (ADVP (RB really)) (VP (VBG looking) (SBAR (IN for) (SINV (AUX are) (NP (NP (JJ concrete) (NNS anchors) (CC or) (NNS weights)) (SBAR (WHNP (WDT which)) (S (VP (MD may) (VP (AUX have) (S (NP (NP (NNS parts)) (PP (IN of) (NP (NP (NNP laci) (NNP peterson) (POS 's)) (NN body) (CC or) (NN clothing) (CC or) (NN something)))) (VP (VBN attached) (PP (TO to) (NP (PRP it))))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (NP (PRP they)) (VP (AUX did) (VP (VB discover) (NP (DT a) (JJ concrete) (NN weight)) (PP (IN in) (NP (NP (NNP scott) (NNP peterson) (POS 's)) (NN wearhouse))))) (. .)))
+
+(S1 (S (S (SBAR (IN if) (S (NP (PRP it)) (VP (VBD matched)))) (, ,) (NP (DT that)) (VP (MD would) (VP (AUX be) (NP (NP (NN something)) (SBAR (WHNP (WDT that)) (S (VP (MD could) (VP (VB link) (NP (NNP scott) (NNP peterson)))))))))) (: --) (S (NP (PRP it)) (VP (MD would) (VP (AUX be) (PP (IN like) (NP (NP (DT a) (NN smoking) (NN gun)) (PP (IN in) (NP (DT this) (NN case)))))))) (. .)))
+
+(S1 (S (ADVP (RB inevitably)) (NP (PRP they)) (VP (AUX are) (VP (VBG looking) (PP (IN for) (NP (NP (NN something)) (VP (VBN linked) (S (VP (TO to) (VP (VB laci) (NP (NP (NNP peterson)) (, ,) (NP (IN whether)))))))))))))
+

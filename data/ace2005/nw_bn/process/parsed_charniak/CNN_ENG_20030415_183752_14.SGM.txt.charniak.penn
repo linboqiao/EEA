@@ -1,0 +1,62 @@
+(S1 (S (NP (NP (DT the) (NN coroner)) (VP (VBG examining) (NP (NP (DT the) (NNS remains)) (PP (IN of) (NP (NP (CD two) (NNS bodies)) (VP (VBN recovered) (PP (IN near) (NP (NNP san) (NNP francisco) (NN bay))) (NP (NN yesterday)))))))) (VP (AUX was) (ADJP (JJ unable) (S (VP (TO to) (VP (VB determine) (NP (NP (DT the) (NN cause)) (PP (IN of) (NP (NN death))))))))) (. .)))
+
+(S1 (S (NP (NNS police)) (VP (AUX are) (ADVP (RB now)) (VP (VBG considering) (NP (DT the) (NN possibility) (SBAR (IN that) (S (NP (DT the) (NNS remains)) (VP (AUX are) (NP (NP (DT those)) (PP (IN of) (NP (NP (NNP laci) (NNP peterson)) (CC and) (NP (PRP$ her) (JJ unborn) (NN child))))))))))) (. .)))
+
+(S1 (S (NP (NNP peterson)) (VP (VBD disappeared) (PP (IN on) (NP (NP (NNP christmas) (NN eve)) (PP (IN of) (NP (JJ last) (NN year)))))) (. .)))
+
+(S1 (S (NP (NNP paul) (NNP vercammen)) (VP (VBZ joins) (NP (PRP me)) (ADVP (RB now)) (PP (IN from) (NP (NP (NNP martinez)) (, ,) (NP (NNP california)))) (, ,) (PP (IN with) (NP (NP (DT the) (JJS latest)) (PP (IN for) (NP (PRP us)))))) (. .)))
+
+(S1 (NP (NNP paul) (. ?)))
+
+(S1 (FRAG (NP (NN reporter)) (: :) (FRAG (INTJ (UH well)) (, ,) (NP (NNP lou)) (, ,) (NP (NP (NP (CD one) (NN thing)) (SBAR (WHNP (WDT that)) (S (NP (DT the) (NN coroner)) (VP (AUX has) (VP (AUX been) (ADJP (JJ able) (S (VP (TO to) (VP (VB determine) (SBAR (S (VP (AUX is) (SBAR (IN that) (S (NP (DT the) (JJ skeletal) (NNS remains)) (VP (AUX are) (NP (NP (DT those)) (PP (IN of) (NP (CD one))))))))))))))))))) (, ,) (NP (DT an) (NN adult) (NN female)) (, ,) (CC and) (NP (NP (CD two)) (, ,) (NP (NP (DT the) (NNS remains)) (PP (IN of) (NP (DT the) (ADJP (RB almost) (JJ full-term)) (NN baby) (NN boy))))))) (. .)))
+
+(S1 (S (CC and) (PP (IN of) (NP (NN course))) (, ,) (NP (DT this)) (VP (AUX is) (ADJP (JJ significant)) (SBAR (IN because) (S (NP (NP (NNP laci) (NNP peterson)) (, ,) (SBAR (WHADVP (WRB when)) (S (NP (PRP she)) (VP (VBD disappeared) (PP (IN from) (NP (PRP$ her) (JJ modesto) (NN home)))))) (, ,)) (VP (AUX was) (NP (CD 7)))))) (. ?)))
+
+(S1 (NP (NP (CD 1\/2) (NNS months)) (ADJP (JJ pregnant)) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX was) (PP (IN on) (NP (NNP christmas) (NN eve)))) (. .)))
+
+(S1 (S (NP (NP (PRP$ her) (NN husband)) (, ,) (NP (NNP scott)) (, ,) (PP (IN at) (NP (DT the) (NN time)))) (VP (VBD said) (SBAR (IN that) (S (NP (PRP he)) (VP (AUX was) (VP (VBG fishing) (PP (IN in) (NP (DT the) (NNP berkeley) (NNP marina)))))))) (. .)))
+
+(S1 (S (ADVP (RB now)) (, ,) (PP (IN in) (NP (NP (DT a) (JJ strange) (NN twist)) (PP (IN in) (NP (NP (DT all)) (PP (IN of) (NP (DT this))))))) (, ,) (NP (NP (RB just) (NN yesterday)) (ADJP (JJ separate) (PP (IN from) (NP (DT the) (NN skeletal))))) (VP (VBZ remains) (SBAR (S (S (NP (PRP i)) (VP (VBD alluded) (PP (TO to) (NP (NP (RBR earlier) (DT a) (NN man) (NN hiking)) (PP (IN near) (NP (NP (DT the) (NN berkeley)) (SBAR (S (NP (NNP marina)) (VP (VBD found) (NP (DT a) (NN bone))))))))))) (, ,) (CC and) (S (NP (PRP they)) (VP (AUX are) (ADVP (RB now)) (VP (VBG looking) (PP (IN at) (NP (DT that))) (PP (IN as) (NP (NP (DT another) (JJ possible) (NN lead)) (PP (IN in) (NP (DT this) (NN case))))))))))) (. .)))
+
+(S1 (S (NP (DT this) (NN person)) (VP (VBD came) (PP (IN across) (NP (DT the) (NN bone))) (PP (IN at) (NP (DT the) (NN shore)))) (. .)))
+
+(S1 (S (S (NP (PRP he)) (VP (VP (VBD brought) (NP (PRP it)) (ADVP (RB home))) (CC and) (VP (VBD contacted) (NP (DT the) (NNS authorities))))) (, ,) (CC and) (S (NP (PRP we)) (VP (VBD took) (NP (NN possession)) (PP (IN of) (NP (PRP it))))) (. .)))
+
+(S1 (S (S (CC and) (NP (PRP you)) (VP (AUX 're) (VP (VBG trying) (S (VP (TO to) (VP (VB connect) (NP (PRP it)) (PP (TO to) (NP (DT the) (JJ other))))))))) (: --) (S (INTJ (UH well)) (, ,) (NP (PRP we)) (VP (AUX 're) (VP (VBG trying) (S (VP (TO to) (VP (VB find) (PRT (RP out)) (SBAR (SBAR (IN if) (S (NP (PRP it)) (VP (AUX 's) (NP (DT a) (JJ human) (NN bone))))) (CC and) (SBAR (IN whether) (CC or) (RB not) (S (NP (PRP it)) (VP (AUX is) (VP (VBN related) (PP (TO to) (NP (DT the) (NNS others)))))))))))))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (CC and) (ADVP (RB yet)) (NP (NP (DT another) (NN reason)) (SBAR (WHADVP (WRB why)) (S (NP (DT that) (NN bone)) (VP (MD could) (VP (AUX be) (NP (DT a) (JJ key) (NN link))))))) (, ,) (NP (EX there)) (VP (AUX are) (NP (NP (NNS reports)) (SBAR (WHNP (WDT that)) (S (VP (AUX have) (VP (VBN surfaced) (SBAR (IN that) (S (PP (IN in) (NP (NP (NNS terms)) (PP (IN of) (NP (NP (DT the) (JJ female) (NNS remains)) (SBAR (WHNP (WDT that)) (S (VP (AUX were) (VP (VBN found) (NP (DT the) (NN skeleton)))))))))) (VP (AUX was) (RB not) (ADJP (RB completely) (JJ intact)))))))))))) (. .)))
+
+(S1 (S (ADVP (RB now)) (NP (DT this) (NN case)) (VP (AUX is) (ADVP (RB also)) (VP (VBG taking) (PRT (RP on)) (NP (NP (NP (DT a) (RB rather)) (, ,) (SBAR (S (NP (PRP we)) (VP (MD should) (VP (VB say)))))) (, ,) (RB almost) (NP (DT a) (NN tv) (JJ episodic) (JJ forensic) (NN pathology) (NN angle))) (SBAR (IN because) (S (NP (PRP they)) (VP (AUX 're) (VP (VBG going) (S (VP (TO to) (VP (VB bring) (PRT (RP in)) (NP (NP (DT an) (NN expert)) (PP (IN on) (SBAR (SBAR (WHNP (WP what)) (S (VP (AUX 's) (VP (VBN called) (S (VP (VBG alufating) (NP (NN decay)))))))) (, ,) (CC and) (SBAR (RB basically) (S (NP (DT this) (NN person)) (VP (AUX is) (VP (VBG going) (S (VP (TO to) (VP (VP (VB come) (PRT (RP in)) (ADVP (RB here))) (CC and) (VP (VB look) (PP (IN at) (NP (DT the) (NN body))))))))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT this)) (VP (AUX is) (PP (IN in) (NP (NP (DT the) (NN damage) (NN aspect)) (PP (IN of) (NP (PRP it)))))) (. .)))
+
+(S1 (S (CC and) (NP (PRP they)) (VP (VBP say) (SBAR (SBAR (S (NP (DT these) (NNS experts)) (VP (MD will) (VP (AUX be) (ADJP (JJ able) (S (VP (TO to) (VP (VB tell) (SBAR (WHADVP (WRB how) (RB long)) (S (NP (DT the) (NN body)) (VP (AUX had) (VP (AUX been) (PP (IN in) (NP (RB there))))))))))))))) (CC and) (SBAR (IN if) (S (NP (NP (DT the) (NNS remains)) (PP (IN of) (NP (DT the) (ADJP (RB almost) (JJ full-term)) (NN baby) (NN boy)))) (VP (AUX were) (PP (IN inside) (NP (NP (DT the) (NN female) (POS 's)) (NNS remains))) (PP (IN at) (NP (NP (DT the) (NN time)) (PP (IN of) (NP (NN death)))))))))) (. .)))
+
+(S1 (S (ADVP (RB also)) (, ,) (NP (DT the) (NN coroner)) (VP (VP (MD could) (VP (VB know) (ADVP (RB right) (RB now)))) (CC but) (VP (AUX is) (RB not) (VP (VBG saying) (SBAR (IN if) (S (NP (EX there)) (VP (AUX was) (NP (NP (DT some) (NN sort)) (PP (IN of) (NP (NN trauma)))) (PP (TO to) (NP (NP (DT either)) (PP (IN of) (NP (DT these) (NNS skeletons))))) (, ,) (PP (IN for) (NP (NN example)))))) (, ,) (SBAR (IN if) (S (NP (PRP they)) (VP (MD could) (VP (VB see) (NP (NP (DT the) (NN bone)) (VP (VBN compromised) (PP (IN in) (NP (NP (DT some) (NN way)) (SBAR (S (NP (PRP they)) (VP (MD could) (VP (VB tell) (SBAR (IN if) (S (NP (EX there)) (VP (AUX had) (VP (AUX been) (NP (NP (DT a) (NN stab)) (CC or) (NP (DT a) (NN shooting)))))))))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (MD may) (VP (VB learn) (NP (NP (DT a) (NN lot) (JJR more)) (PP (IN on) (NP (DT this)))) (PP (IN in) (NP (QP (RB just) (CD 15)) (NNS minutes))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (SBAR (IN because) (S (S (NP (JJ modesto) (NNS police)) (VP (AUX have) (VP (VBN scheduled) (NP (DT a) (NN news) (NN conference))))) (CC and) (S (SBAR (IN while) (S (NP (PRP they)) (VP (MD may) (RB not) (VP (VB say) (NP (JJ much)))))) (ADVP (IN at) (DT all)) (NP (PRP they)) (VP (MD could) (ADVP (RB also)) (VP (VB drop) (NP (NP (DT some) (JJ major) (NN bomb) (NNS shells)) (, ,) (NP (NNP lou))))))))) (. .)))
+
+(S1 (S (S (VP (VBG reporting) (ADVP (RB live)) (PP (IN from) (NP (NP (NNP martinez)) (, ,) (NP (NNP california)))))) (, ,) (NP (PRP i)) (VP (AUX 'm) (NP (NNP paul) (CD vercammen)) (, ,) (ADVP (RB now)) (ADVP (RB back) (PP (TO to) (NP (PRP you))))) (. .)))
+
+(S1 (S (NP (NNP paul)) (PRN (, ,) (S (VP (VB let) (S (NP (PRP me)) (VP (VB ask) (NP (PRP you)) (, ,) (SBAR (IN if) (S (NP (PRP i)) (VP (MD may)))))))) (, ,) (SQ (ADVP (RB quickly)) (, ,) (AUX are) (NP (PRP we)) (VP (VBG expecting))) (: --)) (VP (AUX is) (ADVP (RB there)) (NP (NP (DT any) (NN reason)) (SBAR (IN for) (S (NP (PRP us)) (VP (TO to) (VP (VB expect) (SBAR (IN that) (S (NP (EX there)) (VP (MD would) (VP (AUX be) (NP (DT the) (NN ability) (S (VP (TO to) (VP (VB identify) (NP (DT those) (NNS remains)) (PP (IN as) (NP (NP (DT a) (NN result)) (PP (IN of) (NP (DT these) (NNS autopsies))))) (NP (DT this) (NN afternoon)))))))))))))))) (. ?)))
+
+(S1 (FRAG (NP (NN reporter)) (: :) (S (S (NP (PRP it)) (VP (VBZ sounds) (SBAR (IN like) (S (NP (NP (DT all)) (PP (IN of) (NP (DT this)))) (VP (MD will) (VP (AUX be) (ADJP (RB too) (JJ quick)))))))) (, ,) (CC and) (S (NP (PRP it)) (VP (VBZ seems) (SBAR (S (NP (VBG underlying) (PDT all) (DT this)) (VP (AUX is) (SBAR (S (NP (EX there)) (VP (MD could) (VP (AUX be) (NP (NP (DT an) (NN absence)) (PP (IN of) (NP (JJ dental) (NNS records)))))))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (ADJP (RB particularly) (JJ important)) (SBAR (IN for) (S (NP (DT the) (NN adult) (NN female)) (VP (VBZ remains))))) (. .)))
+
+(S1 (S (ADVP (RB so) (RB now)) (S (NP (PRP they)) (VP (AUX 're) (VP (VBG going) (S (VP (TO to) (VP (AUX have) (S (VP (TO to) (VP (VB turn) (PP (TO to) (NP (NN dna)))))))))))) (, ,) (CC and) (S (NP (DT that)) (VP (AUX 's) (SBAR (WHADVP (WRB why)) (S (NP (PRP they)) (VP (AUX 're) (VP (VBG calling) (PP (IN in) (NP (DT these) (NNS experts))))))))) (. .)))
+
+(S1 (S (S (NP (DT some) (NN dna) (NN testing)) (VP (MD can) (VP (AUX be) (ADJP (RB very) (JJ quick))))) (, ,) (CC but) (S (ADVP (RB sometimes)) (NP (PRP it)) (VP (MD can) (VP (VB take) (PRT (RP up)) (PP (TO to) (NP (NNS weeks))) (, ,) (ADVP (RB even) (RBR more)) (, ,) (NP (NNP lou))))) (. .)))
+
+(S1 (INTJ (UH okay) (. .)))
+
+(S1 (S (NP (NNP paul) (NNS vercammen)) (, ,) (VP (VB thank) (NP (PRP you)) (ADVP (RB very) (RB much))) (. .)))
+
+(S1 (S (SBAR (IN as) (S (NP (NNP paul)) (ADVP (RB just)) (VP (VBN reported)))) (, ,) (S (NP (DT the) (JJ modesto) (, ,) (JJ california) (NN police) (NN department)) (VP (MD will) (VP (AUX be) (VP (VBG holding) (NP (NP (DT a) (NN news) (NN conference)) (ADVP (RB just) (NP (DT a) (JJ few) (NNS minutes)) (PP (IN from) (NP (RB now))))))))) (, ,) (CC and) (S (NP (NP (NNP cnn)) (PP (IN of) (NP (NN course)))) (VP (MD will) (VP (AUX be) (VP (VBG carrying) (NP (DT that) (NN news) (NN conference)) (ADVP (RB live)))))) (. .)))
+
+(S1 (S (VP (VB stay) (PP (IN with) (NP (PRP us)))) (. .)))
+

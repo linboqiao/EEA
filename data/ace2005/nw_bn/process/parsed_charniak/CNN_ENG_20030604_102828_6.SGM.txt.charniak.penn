@@ -1,0 +1,22 @@
+(S1 (S (PP (IN in) (NP (NP (DT the) (JJ african) (NN nation)) (PP (IN of) (NP (NNP nigeria))))) (, ,) (NP (DT an) (JJ islamic) (NN court)) (VP (VBD delayed) (NP (NP (DT the) (NN appeal)) (PP (IN of) (NP (NP (DT a) (NN woman)) (VP (VBN condemned) (PP (TO to) (NP (NN death))) (PP (IN by) (NP (NN stoning)))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN court)) (VP (VBZ says) (SBAR (S (NP (PRP it)) (VP (MD will) (RB not) (VP (VB hear) (NP (DT this) (NN case)) (PP (IN until) (NP (JJ late) (NNP August)))))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (JJ 31-year-old) (NN mother)) (PP (IN of) (NP (CD three)))) (VP (AUX was) (VP (VBN convicted) (PP (IN in) (NP (NNP march))) (PP (IN of) (S (VP (AUXG having) (NP (NN sex)) (ADVP (IN outside) (PP (IN of) (NP (NN marriage))))))))) (. .)))
+
+(S1 (S (NP (CD three) (JJ other) (NNS nigerians)) (ADVP (RB also)) (VP (VBP face) (NP (NP (JJ stoning) (NNS deaths)) (PP (IN for) (NP (DT the) (JJ same) (NN crime))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NN prosecution)) (PP (IN of) (NP (ADJP (JJ premarital) (CC or) (JJ extramarital)) (NN sex)))) (VP (AUX is) (RB not) (ADJP (ADJP (RB quite) (RB as) (JJ rare)) (SBAR (IN as) (S (NP (PRP you)) (VP (MD might) (VP (VB think))))))) (. .)))
+
+(S1 (S (NP (PRP$ our) (JJ next) (NN guest)) (NP (DT this) (NN morning)) (VP (VBD faced) (NP (CD 100) (NNS lashes)) (PP (IN for) (NP (NP (JJ premarital) (NN sex)) (PP (IN in) (NP (NNP pakistan)))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (AUX was) (ADVP (RB there)) (PP (IN as) (NP (DT a) (NN journalist))) (PP (IN in) (NP (NP (DT the) (NN wake)) (PP (IN of) (NP (DT the) (CD 9\/11) (NNS attacks)))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (AUX has) (VP (VBN written) (PP (IN about) (NP (NP (PRP$ her) (NN experience)) (PP (IN in) (NP (NP (DT the) (NN book)) (`` ``) (FW tantrika) ('' '') (VP (VBG traveling) (NP (NP (DT the) (NN road)) (PP (IN of) (NP (NNP divine) (NN love))))))))))) (. .)))
+
+(S1 (S (NP (DT a) (VBG traveling) (NN reporter)) (ADVP (RB now)) (VP (ADVP (RB on)) (VB leave) (CC and) (VBZ joins) (NP (PRP us)) (S (VP (TO to) (VP (VB tell) (NP (PRP$ her) (NN story)))))) (. .)))
+
+(S1 (S (VP (VB thank) (NP (PRP you)) (PP (IN for) (S (VP (VBG coming) (ADVP (RB in)) (S (VP (TO to) (VP (VB share) (NP (DT this)) (PP (IN with) (NP (PRP us)))))))))) (. .)))
+
+(S1 (S (SBAR (IN as) (S (NP (PRP i)) (VP (VBP understand) (NP (PRP it))))) (PRN (, ,) (S (NP (PRP you)) (VP (VBP say) (SBAR (S (NP (PRP you)) (VP (AUX were) (VP (VBG facing) (NP (NP (DT a) (NN sentence)) (PP (IN of) (NP (CD 100) (NNS lashes)))))))))) (, ,)) (VP (AUX had) (RB not) (ADVP (RB yet)) (VP (AUX been) (VP (VBN sentenced) (NP (DT that))))) (. ?)))
+

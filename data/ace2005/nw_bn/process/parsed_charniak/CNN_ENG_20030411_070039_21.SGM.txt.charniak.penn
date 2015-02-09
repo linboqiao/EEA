@@ -1,0 +1,52 @@
+(S1 (S (SBAR (ADVP (RB now)) (IN that) (S (NP (NP (JJ saddam) (NN hussein) (POS 's)) (NN regime)) (VP (AUX has) (VP (VBN fallen))))) (VP (AUX is) (VP (NN democracy) (NP (DT the) (NN answer)) (PP (TO to) (NP (NP (NNP iraq)) (CC and) (NP (PRP$ its) (NNS people)))))) (. .)))
+
+(S1 (S (PP (IN in) (NP (PRP$ his) (NN book))) (, ,) (NP (JJ fareed) (NN zakar)) (VP (VBZ ericks) (NP (NP (DT a) (VBZ joins)) (SBAR (S (NP (PRP us)) (ADVP (RB now)) (VP (TO to) (VP (VB talk) (PP (IN about) (NP (NP (NN democracy)) (CC and) (NP (NP (NNP iraq) (POS 's)) (NN future)))))))))) (. .)))
+
+(S1 (FRAG (ADJP (JJ good) (S (VP (TO to) (VP (VB see) (NP (PRP you)))))) (. .)))
+
+(S1 (S (VP (VB thank) (NP (PRP you)) (, ,) (ADVP (RB paula))) (. .)))
+
+(S1 (FRAG (ADJP (JJ good) (S (VP (TO to) (VP (VB see) (NP (PRP you)) (PP (IN on) (NP (NP (DT a) (JJ different) (NN network)) (PP (IN for) (NP (DT a) (NN change))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (SBAR (WHNP (WP what)) (S (VP (VBZ happens)))) (SBAR (WHADVP (WRB when)) (S (NP (PRP you)) (VP (VBP sell) (NP (NNS books)))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (VBP know)) (. .)))
+
+(S1 (S (VP (VB let) (S (NP (PRP 's)) (VP (VB talk) (PP (IN about) (SBAR (WHNP (WP what)) (S (NP (NNP barbara) (NNP starr)) (VP (AUX was) (VP (VBG reporting) (PP (IN from) (NP (DT the) (NNP pentagon))))))))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (VBZ says) (SBAR (S (NP (EX there)) (VP (AUX is) (NP (NP (DT an) (NN acknowledgment)) (PP (IN from) (NP (DT those) (NNS officials))) (SBAR (IN that) (S (NP (EX there)) (VP (AUX are) (RB not) (NP (NP (JJ enough) (NN ground) (NNS troops)) (PP (PP (IN in) (NP (NN place))) (CC and) (PP (ADVP (RB particularly)) (IN in) (NP (NP (NN baghdad)) (SBAR (S (VP (TO to) (VP (VB control) (SBAR (WHNP (WP what)) (S (NP (PRP$ our) (JJ nic) (NNP robertson)) (VP (AUX is) (VP (VBG saying) (SBAR (S (VP (AUX is) (NP (NP (DT a) (NN stage)) (PP (IN of) (NP (NP (NN anarchy)) (PP (IN in) (NP (NP (DT some) (NNS parts)) (PP (IN of) (NP (NNP iraq))))))))))))))))))))))))))))))) (. .)))
+
+(S1 (SQ (AUX do) (NP (PRP you)) (VP (VB think) (SBAR (S (NP (DT the) (NN administration)) (VP (VBD underestimated) (NP (DT the) (NN day)) (ADVP (RB after)))))) (. ?)))
+
+(S1 (S (NP (PRP i)) (VP (VBP think) (SBAR (IN because) (S (NP (DT the) (NN day)) (ADVP (RB after)) (VP (VBD came) (ADVP (ADVP (RB so) (RB fast)) (CC and) (ADVP (RB so) (RB suddenly))) (PP (IN in) (NP (NN way))))))) (. .)))
+
+(S1 (S (S (NP (PRP i)) (VP (VBP think) (SBAR (IN that) (S (NP (EX there)) (VP (AUX 's) (VP (AUX been) (NP (NP (DT a) (NN pattern)) (ADVP (RB here)) (PP (ADVP (RB not) (RB just)) (IN with) (NP (DT this) (NN administration)))))))))) (, ,) (CC but) (S (PP (IN over) (NP (NP (DT the) (JJ last) (CD ten) (NNS years)) (, ,) (NP (NNP bosnia) (, ,) (NNP kosovo) (, ,) (NNP afghanistan)) (, ,) (SBAR (WHADVP (WRB where)) (S (NP (PRP we)) (VP (AUX do) (RB n't) (ADVP (RB quite)) (VP (VB recognize) (SBAR (WHADVP (WRB when)) (S (NP (DT the) (JJ old) (NN order)) (VP (VBZ collapses)))))))))) (, ,) (NP (PRP you)) (ADVP (RB very) (RB quickly)) (VP (AUX have) (S (VP (TO to) (VP (VP (VB rush) (PRT (RP in))) (CC and) (VP (VB fill) (NP (PRP it)) (PP (IN with) (NP (NP (DT some) (NN kind)) (PP (IN of) (NP (JJ new) (NN order))))))))))) (. .)))
+
+(S1 (S (PP (IN in) (NP (DT the) (NN short-term))) (, ,) (NP (DT that)) (VP (AUX 's) (VP (VBG going) (S (VP (TO to) (VP (AUX have) (S (VP (TO to) (VP (VB mean) (NP (DT the) (JJ american) (NN military)))))))))) (. .)))
+
+(S1 (S (CC but) (NP (NP (DT the) (JJ key) (NN question)) (, ,) (SBAR (WHNP (WDT which)) (S (NP (PRP i)) (VP (VBP try) (S (VP (TO to) (VP (VB address) (PP (IN in) (NP (DT the) (NN book))))))))) (, ,)) (VP (AUX is) (SBARQ (WHNP (WP what)) (SQ (AUX do) (NP (PRP you)) (VP (AUX do) (PP (IN after) (NP (DT that))))))) (. ?)))
+
+(S1 (SBARQ (WHNP (WHNP (WDT what) (NN kind)) (PP (IN of) (NP (NN authority)))) (SQ (AUX do) (NP (PRP you)) (VP (VB create) (PP (IN in) (NP (NP (DT a) (NN society)) (VP (VBG going) (PP (IN through) (NP (NP (DT this) (NN kind)) (PP (IN of) (NP (NN transition)))))))))) (. .)))
+
+(S1 (SBARQ (CC and) (WHADVP (WRB how)) (SQ (AUX do) (NP (PRP you)) (VP (VB know) (SBAR (IN that) (S (NP (DT the) (JJ local) (JJ iraqi) (NNS citizens)) (VP (MD will) (VP (VP (VB make) (PRT (RP up)) (NP (DT this) (NN government))) (CC or) (PRN (, ,) (PP (IN in) (NP (NN fact))) (, ,)) (ADJP (JJ interested) (PP (IN in) (NP (NN democracy)))))))))) (. ?)))
+
+(S1 (S (NP (EX there)) (VP (AUX 's) (NP (NP (DT no) (NN proof)) (PP (IN of) (NP (DT that))))) (. .)))
+
+(S1 (S (ADVP (RB well)) (, ,) (NP (NP (DT the) (NN key)) (ADVP (RB here))) (VP (AUX is) (NP (NP (DT the) (JJ only) (NN way)) (SBAR (S (VP (TO to) (VP (VB get) (SBAR (IN that) (S (NP (NP (NN kind)) (PP (IN of) (NP (JJ legitimate) (NN government) (S (VP (TO to) (VP (AUX have) (S (NP (PRP it)) (VP (VB look) (ADJP (JJ good)))))))))) (VP (AUX is) (S (VP (TO to) (VP (VB hold) (NP (NNS elections)))))))))))))) (. .)))
+
+(S1 (S (CC but) (SBAR (IN if) (S (NP (PRP you)) (VP (VBP hold) (NP (NNS elections))))) (, ,) (NP (PRP you)) (VP (VB stop) (NP (NP (DT the) (JJ whole) (NN process)) (PP (IN of) (S (VP (VBG building) (NP (NP (DT a) (NN rule)) (PP (IN of) (NP (NN law)))))))) (, ,) (S (VP (VBG creating) (NP (NNS courts)))) (, ,) (S (VP (VBG creating) (NP (NN administration))))) (. .)))
+
+(S1 (S (S (NP (PRP we)) (VP (AUX 've) (VP (VBN seen) (PP (IN in) (NP (DT the) (NN past))) (PP (IN in) (NP (NP (NN bosnia)) (PP (IN for) (NP (NN example)))))))) (, ,) (S (NP (PRP you)) (VP (VBD held) (NP (NNS elections)))) (CC and) (S (NP (NP (DT all)) (PP (IN of) (NP (DT the) (JJ old) (JJ ethnic) (NNS thugs)))) (VP (VBP get) (PP (IN into) (NP (NN power))) (SBAR (IN because) (S (S (NP (PRP they)) (VP (AUX have) (NP (NN organization)))) (CC and) (S (S (NP (PRP they)) (VP (AUX have) (NP (NN money)))) (CC and) (S (NP (PRP they)) (VP (VBP stop) (NP (NP (DT the) (NN process)) (PP (IN of) (NP (NP (JJ genuine) (NN building)) (PP (IN of) (NP (NN democracy))))))))))))) (. .)))
+
+(S1 (S (NP (EX there)) (VP (AUX is) (NP (NP (DT this) (NN tension)) (ADVP (RB here)) (SBAR (WHNP (WDT which)) (S (VP (AUX is) (NP (NP (DT the) (JJ only) (NN way)) (SBAR (S (VP (TO to) (VP (VB make) (S (S (NP (DT this)) (VP (VBP look) (ADJP (JJ good)) (SBAR (S (VP (AUX is) (PP (IN in) (NP (NP (DT some) (NN way)) (SBAR (S (VP (VBP get) (NP (JJ legitimate) (JJ iraqi) (NN authority)))))))))))) (, ,) (CC but) (S (SBAR (X (DT the) (RBR faster)) (S (NP (PRP you)) (VP (VBP get) (NP (DT that))))) (, ,) (X (DT the) (ADJP (RBR more) (JJ likely))) (NP (PRP you)) (VP (VBP stop) (NP (DT this) (NN process))))))))))))))) (. .)))
+
+(S1 (SBARQ (RB so) (WHNP (WP what)) (SQ (AUX do) (NP (PRP you)) (VP (VB think) (PP (IN of) (NP (DT this) (JJ interim) (NN government))))) (. ?)))
+
+(S1 (S (NP (PRP you)) (VP (VBD got) (NP (NP (NP (JJ deputy) (NN defense) (NN secretary)) (NNP paul) (NN wolfowitz)) (VP (VBG saying) (SBAR (IN that) (S (NP (ADJP (JJ american) (CC and) (JJ british)) (JJ military) (NNS forces)) (VP (MD would) (VP (VP (VB play) (NP (DT a) (JJ leading) (NN role)) (PP (IN in) (S (VP (VBG setting) (PRT (RP up)) (NP (DT an) (JJ iraqi) (NN government)))))) (CC and) (RB then) (VP (ADVP (RB later)) (VB draw) (NP (NNS civilians)) (PP (IN into) (NP (DT the) (NN process))))))))))) (. .)))
+
+(S1 (SQ (AUX is) (NP (DT that)) (VP (VBG going) (S (VP (TO to) (VP (VB work))))) (. ?)))
+
+(S1 (S (NP (PRP i)) (VP (VBP think) (SBAR (S (NP (PRP it)) (VP (MD will) (VP (VB work) (SBAR (IN if) (S (NP (PRP it)) (VP (VP (POS 's) (ADJP (ADJP (RB truly) (JJ broad-based)) (CC and) (ADJP (RB truly) (JJ consensual)))) (, ,) (VP (VB try) (CC and) (VB include) (NP (DT all) (JJ different) (NNS people))) (CC and) (VP (VBG including) (NP (PRP them)) (PP (IN in) (S (VP (VBG creating) (NP (NP (DT a) (NN constitution)) (SBAR (WHNP (WDT which)) (S (VP (MD would) (VP (VB take) (NP (DT a) (JJ few) (NNS years))))))))))))))))))) (. .)))
+
+(S1 (S (SBAR (WHNP (WP what)) (S (NP (PRP i)) (VP (VBP point) (PRT (RP out))))) (VP (AUX is) (NP (NP (DT the) (NNS plays)) (SBAR (WHADVP (WRB where)) (S (NP (PRP you)) (VP (AUX 've) (VP (AUX had) (NP (JJ quick) (NNS transitions))))))))))
+

@@ -1,0 +1,70 @@
+(S1 (S (VP (VB welcome) (PRT (RP back)) (PP (TO to) (`` ``) (NP (NP (NNS people)) (PP (IN in) (NP (DT the) (NN news)))))) (. .) ('' '')))
+
+(S1 (S (NP (NP (DT the) (NN intifada)) (, ,) (NP (NP (DT the) (JJ spontaneous) (CD 1987) (JJ palestinian) (NN uprising)) (PP (IN against) (NP (DT the) (JJ israeli) (NN occupation)))) (, ,)) (VP (VBN heralded) (NP (NP (DT the) (NN rise)) (PP (IN of) (NP (DT the) (NN muslim) (NN fundamentalism))))) (. .)))
+
+(S1 (FRAG (PP (IN in) (SBAR (WHNP (WP what)) (S (VP (AUX had) (VP (AUX been) (NP (DT a) (ADJP (RB mostly) (JJ secular)) (JJ palestinian) (NN movement))))))) (. .)))
+
+(S1 (NP (NP (NP (DT the) (RBS most) (JJ popular)) (PP (IN of) (NP (DT these) (NNS groups) (NNS hamas)))) (, ,) (NP (NP (DT an) (NN acronym)) (PP (IN for) (NP (JJ islamic) (NN resistance) (NN movement)))) (. .)))
+
+(S1 (S (PP (IN in) (NP (NNP english))) (NP (PRP it)) (VP (VBZ means) (NP (NP (NNP zeal)) (, ,) (NP (NP (PRP$ its) (NN aim)) (: --) (NP (NP (DT the) (NN destruction)) (PP (IN of) (NP (NNP israel))))))) (. .)))
+
+(S1 (S (NP (NNPS hamas)) (VP (AUX is) (NP (DT an) (JJ islamic) (NN movement))) (. .)))
+
+(S1 (S (PP (IN at) (NP (DT the) (JJ very) (NN beginning))) (, ,) (NP (PRP it)) (VP (AUX was) (VP (VBN encouraged) (PP (IN by) (NP (NNP israel))) (SBAR (IN because) (S (NP (PRP they)) (VP (VBD thought) (SBAR (S (NP (PRP it)) (VP (AUX was) (NP (NP (DT a) (JJ counter) (NN weight)) (PP (TO to) (NP (JJ palestinian) (NN nationalism))) (SBAR (WHNP (WDT which)) (S (VP (AUX is) (, ,) (PP (IN of) (NP (NN course))) (, ,) (NP (DT a) (JJ secular) (NN movement)))))))))))))) (. .)))
+
+(S1 (S (S (NP (NNP hamas)) (VP (AUX was) (VP (VBN founded) (PP (IN in) (NP (CD 1988))) (PP (IN by) (NP (NP (DT a) (JJ blind) (JJ paraplegic) (NN cleric)) (SBAR (WHNP (WP who)) (S (VP (AUX was) (VP (VBN influenced) (PP (IN by) (NP (DT the) (JJ islamic) (JJ muslim) (NNP brotherhood))))))))) (, ,) (PP (IN with) (NP (NP (NN backing)) (PP (IN from) (NP (NNP israel)))))))) (, ,) (NP (PRP he)) (VP (VBD set) (PRT (RP up)) (NP (NNS sharities)) (PP (IN in) (NP (DT the) (JJ improverished) (NN strip))) (PP (IN in) (NP (DT the) (CD 1970s)))) (. .)))
+
+(S1 (S (ADVP (RB slowly)) (NP (PRP it)) (VP (VBD became) (ADJP (ADJP (ADVP (RBR more) (CC and) (RBR more)) (VBN politicized)) (, ,) (CC and) (ADJP (ADJP (JJR more)) (CC and) (ADJP (RBR more) (JJ extreme)))) (PP (IN in) (NP (NP (PRP$ its) (NNS demands)) (PP (IN for) (NP (DT an) (JJ islamic) (NN state)))))) (. .)))
+
+(S1 (S (NP (DT the) (NN extremism)) (VP (VBD took) (NP (NP (DT the) (NN form)) (PP (IN of) (NP (NP (NN suicide) (NNS bombings)) (CC and) (NP (JJ terrorist) (NNS attacks)))))) (. .)))
+
+(S1 (S (CC but) (S (NP (NNS hamas)) (VP (AUX had) (ADVP (RB already)) (VP (VBN become) (NP (NP (DT an) (JJ important) (NN part)) (PP (IN of) (NP (JJ palestinian) (NN society)))) (PP (IN through) (NP (PRP$ its) (NN charity) (NN work)))))) (CC and) (S (NP (PRP$ its) (NN influence)) (VP (VBN increased) (PP (IN over) (NP (NN time))) (PP (IN by) (S (VP (VBG providing) (NP (NN community) (NNS services)) (SBAR (WHADVP (WRB when)) (S (NP (DT the) (JJ palestinian) (NN authority)) (VP (AUX did) (RB not))))))))) (. .)))
+
+(S1 (S (NP (NNP hamas)) (VP (VBZ plays) (PP (IN on) (NP (NP (DT the) (JJ palestinian) (NN authority) (POS 's)) (NN failure) (S (VP (TO to) (VP (VB produce))))))) (. .)))
+
+(S1 (S (S (NP (PRP$ its) (JJ basic) (NN message)) (, ,) (NP (DT the) (JJ palestinian) (NN authority)) (VP (AUX is) (ADJP (JJ corrupt)))) (, ,) (S (NP (PRP it)) (VP (VBZ fails) (S (VP (TO to) (VP (VB deliver)))))) (, ,) (S (NP (NNS hamas)) (VP (AUX is) (RB not) (ADJP (JJ corrupt)))) (. .)))
+
+(S1 (S (S (NP (NNP hamas)) (VP (VBZ cares) (PP (IN about) (NP (NP (DT the) (NN person)) (PP (IN on) (NP (DT the) (NN street))))))) (CC and) (S (NP (PRP it)) (VP (AUX does) (VP (VB deliver)))) (. .)))
+
+(S1 (S (ADVP (RB unfortunately)) (, ,) (NP (NP (DT those) (JJ same) (JJ charitable) (NNS organizations)) (, ,) (NP (NP (DT those) (JJ same) (NN charity) (NNS committees)) (SBAR (WHNP (WDT that)) (S (VP (VB funnel) (NP (DT the) (NNS funds)) (PP (TO to) (NP (NN needier) (NNS palestinians))))))) (, ,)) (ADVP (RB also)) (VP (VBP serve) (S (VP (TO to) (VP (VB support) (NP (JJ terrorist) (NNS attacks)))))) (. .)))
+
+(S1 (S (NP (NP (NNP israel)) (CC and) (NP (DT the) (VBN united) (NNS states))) (VP (VBP say) (SBAR (S (NP (NNP arafat)) (VP (VP (AUX has) (RB not) (VP (AUX been) (ADJP (JJ tough) (RB enough)) (PP (IN on) (NP (NN terrorism))))) (, ,) (CC and) (VP (AUX have) (VP (VBN attempted) (S (VP (TO to) (VP (VB force) (NP (PRP him)) (PP (IN out) (PP (IN of) (NP (DT the) (JJ current) (NN peace) (NN process))))))))))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (JJ prime) (NN minister)) (VP (VBN known) (PP (IN as) (NP (NNP abu) (NNS mazen))))) (VP (MD must) (ADVP (RB now)) (VP (VB contend) (PP (IN with) (NP (NP (DT the) (NN rejection)) (PP (IN of) (NP (NN side))) (PP (IN by) (NP (JJ side) (ADJP (JJ palestinian) (CC and) (JJ israeli)) (NNS states))))))) (. .)))
+
+(S1 (NP (NP (DT a) (NN cornerstone)) (PP (IN of) (NP (DT the) (JJ new) (NN peace) (NN plan))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX 's) (VP (VBG trying) (S (VP (TO to) (VP (VB get) (NP (NNS hamas)) (PP (TO to) (NP (NNP co))) (: -) (S (VP (VBP exist) (PP (IN with) (NP (NNP israel)))))))))) (. .)))
+
+(S1 (S (NP (JJ conservative) (NNS israelis)) (VP (AUX are) (ADJP (JJ skeptical))) (. .)))
+
+(S1 (S (S (NP (PRP he)) (VP (AUX is) (RB not) (VP (VBG working) (PP (IN against) (NP (NNS hamas)))))) (, ,) (NP (PRP he)) (VP (AUX is) (VP (VBG working) (PP (IN in) (NP (NN tandem))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX is) (VP (VBG negotiating) (PP (IN with) (NP (PRP them))))) (. .)))
+
+(S1 (S (S (NP (PRP he)) (VP (AUX is) (RB not) (VP (VBG telling) (NP (PRP them)) (S (VP (TO to) (VP (VB disband) (CC and) (VB regulate) (NP (PRP$ their) (NNS weapons)))))))) (, ,) (CC so) (S (NP (PRP i)) (VP (AUX have) (NP (NP (DT no) (NN faith)) (PP (IN in) (NP (NP (DT the) (NN ability)) (PP (IN of) (NP (NNP abu) (NNS mazen))) (S (VP (TO to) (VP (VB put) (NP (NN terror)) (ADVP (RB aside)))))))))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (NP (NNS settlers)) (VP (VP (VBP call) (NP (NP (DT the) (RB just) (VBN concluded) (NN israeli-american)) (: -) (NP (NP (JJ palestinian) (NN summit)) (NP (DT a) (NN surrender))))) (, ,) (CC and) (VP (AUX were) (RB not) (VP (VBN impressed))))) (. .)))
+
+(S1 (NP (NP (NN translator)) (: :) (S (S (NP (DT the) (JJ armed) (NN intifada)) (VP (MD must) (VP (VB end)))) (CC and) (S (NP (PRP we)) (VP (MD must) (VP (VP (VB use)) (CC and) (VP (VB resort) (PP (TO to) (NP (JJ peaceful) (NNS means))) (PP (IN in) (NP (PRP$ our) (NN quest) (S (VP (VP (TO to) (VP (VB end) (NP (NP (DT the) (NN occupation)) (CC and) (NP (NP (DT the) (NN suffering)) (PP (IN of) (NP (NP (DT the) (NN palestinians)) (, ,) (CC and) (NP (DT the) (NN israelis)) (, ,))))))) (CC and) (VP (TO to) (VP (VB establish) (NP (DT the) (JJ palestinian) (NN state))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNP hamas)) (CC and) (NP (JJ other) (JJ palestinian) (JJ militant) (NN group))) (VP (VBD rejected) (NP (NP (NNS abbas) (POS ')) (NN call) (S (VP (TO to) (VP (VB end) (NP (NP (PRP$ their) (NNS attacks)) (PP (IN with) (NP (NP (DT a) (JJ deadly) (NN raid)) (PP (IN on) (NP (NP (DT an) (JJ israeli) (NN army) (NN outpost)) (PP (IN in) (NP (NNP gaza))))))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX are) (DT all) (VP (VBG saying) (SBAR (IN that) (S (NP (DT the) (NN resistance)) (VP (MD will) (VP (VB continue) (PP (IN despite) (NP (NP (DT the) (NN summit)) (PP (IN in) (NP (CD aqaba))))))))))) (. .)))
+
+(S1 (S (S (NP (NNP israel)) (VP (VBN retaliated) (PP (IN on) (NP (NP (NNS hamas)) (, ,) (ADVP (RB namely)) (NP (NNS al-rantissi)))))) (, ,) (NP (PRP it)) (VP (VP (VBD missed) (NP (PRP him))) (CC and) (VP (VBD killed) (NP (NNS civilians)))) (. .)))
+
+(S1 (NP (NP (NN translator)) (: :) (S (NP (NNS hamas)) (VP (MD will) (RB not) (VP (VB drop) (NP (PRP$ our) (NNS weapons)) (, ,) (SBAR (RB even) (IN if) (S (NP (DT all) (NNS leaders)) (VP (AUX are) (VP (VBN assassinated)))))))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (SBAR (IN since) (S (NP (DT the) (JJ second) (NN intifada)) (VP (VBD began) (PP (IN in) (NP (CD 2000)))))) (, ,) (NP (QP (IN over) (CD 700)) (NNS israelis)) (VP (AUX have) (VP (AUX been) (VP (VBN killed) (, ,) (PP (IN during) (NP (NP (DT the) (JJ same) (NN time)) (SBAR (S (NP (EX there)) (VP (AUX have) (VP (AUX been) (NP (QP (JJR more) (IN than) (CD 2,000)) (JJ palestinian) (NNS deaths)) (PP (VBG according) (PP (TO to) (NP (DT the) (JJ red) (NN crescent)))))))))))))) (. .)))
+
+(S1 (S (NP (VBG including) (NNS hamas) (NNS leaders)) (VP (VBD targeted) (PP (IN for) (NP (NN assassination)))) (. .)))
+
+(S1 (S (SBAR (IN if) (S (NP (PRP you)) (VP (VBP want) (NP (NP (DT an) (NN end)) (PP (TO to) (NP (NN terrorism))))))) (, ,) (SBAR (IN if) (S (NP (PRP you)) (VP (VBP want) (NP (NP (DT an) (NN end)) (PP (TO to) (NP (NN violence))))))) (, ,) (S (NP (PRP you)) (VP (AUX have) (VP (TO to) (VP (VB give) (NP (NNS people)) (NP (NN hope)))))) (CC and) (S (NP (PRP you)) (VP (AUX have) (S (VP (TO to) (VP (VB give) (NP (PRP them)) (NP (NP (DT a) (NN stake)) (PP (IN in) (NP (DT the) (JJ political) (NN process))))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (VBP think) (SBAR (IN that) (S (NP (NNS hamas)) (VP (AUX is) (ADJP (JJ ready) (S (VP (TO to) (VP (VB join) (NP (DT the) (JJ political) (NN process))))))))) (, ,) (S (ADVP (RB however)) (, ,) (SBAR (IN if) (S (NP (NP (DT the) (JJ only) (NN price)) (PP (IN for) (NP (DT the) (JJ political) (NN price)))) (VP (AUX is) (SBAR (S (NP (PRP you)) (VP (MD must) (VP (VB fight) (NP (NNS hamas))))))))) (, ,) (SBAR (IN if) (S (NP (DT that)) (VP (AUX 's) (SBAR (WHNP (WP what)) (S (NP (PRP they)) (VP (AUX are) (VP (VBG requiring) (S (NP (NNP abu) (NNS mazen)) (VP (TO to) (VP (AUX do))))))))))) (, ,) (NP (PRP they)) (VP (AUX are) (ADVP (RB almost)) (VP (VBG mandating) (SBAR (IN that) (S (NP (PRP he)) (VP (MD will) (VP (VB fail))))))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (JJ main) (NN test)) (PP (IN of) (NP (NNP mahmoud) (NNS abbas)))) (, ,) (VP (MD will) (VP (AUX be) (S (VP (TO to) (VP (VB establish) (NP (NP (DT an) (JJ overall) (NN command)) (PP (IN of) (NP (DT all) (VBN armed) (NNS groups))))))) (, ,) (SBAR (IN if) (S (RB not) (, ,) (NP (PRP it)) (VP (AUX does) (RB n't) (VP (AUX have) (NP (DT a) (NN chance)))))))) (. .)))
+
+(S1 (S (S (NP (PRP you)) (VP (VBP know))) (, ,) (S (NP (NNS leaders)) (VP (AUX have) (S (VP (TO to) (VP (AUX do) (NP (NNS things)))))))))
+

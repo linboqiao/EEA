@@ -1,0 +1,120 @@
+(S1 (S (S (NP (NP (NP (NNP NEW) (NNP DELHI)) (, ,) (NP (NNP June) (CD 7))) (PRN (-LRB- -LRB-) (NP (NNP AFP)) (-RRB- -RRB-)) (NP (NP (DT A) (JJ provincial) (NN chief)) (PP (IN from) (NP (NP (NNP India) (POS 's)) (JJ main) (NN opposition) (NNP Congress) (NN party))))) (VP (AUX has) (VP (VBN told) (NP (DT an) (NN election) (NN rally)) (SBAR (IN that) (S (NP (NNP India)) (VP (AUX is) (VP (VBG suffering) (NP (NP (NN nature) (POS 's)) (`` ``) (NX (FW curse)) ('' '')) (SBAR (IN because) (S (NP (PDT both) (NP (DT the) (NN president)) (CC and) (NP (JJ prime) (NN minister))) (VP (AUX are) (ADJP (JJ bachelors)))))))))))) (, ,) (NP (DT a) (NN report)) (VP (VBD said) (NP (NNP Saturday))) (. .)))
+
+(S1 (S (NP (DT The) (NAC (NNP Times) (PP (IN of) (NP (NNP India)))) (NN newspaper)) (VP (VBD quoted) (NP (NP (NNP Digvijay) (NNP Singh)) (, ,) (NP (NP (JJ chief) (NN minister)) (PP (IN of) (NP (NP (DT the) (JJ central) (JJ Indian) (NN state)) (PP (IN of) (NP (NNP Madhya) (NNP Pradesh)))))) (, ,)) (PP (IN as) (S (VP (VBG saying) (SBAR (IN that) (S (NP (NP (NNP Prime) (NNP Minister) (NNP Atal) (NNP Behari) (NNP Vajpayee)) (CC and) (NP (NNP President) (NNP Abdul) (NNP Kalam))) (VP (AUX had) (VP (VBN offended) (NP (DT the) (NNP Hindu) (NN rain) (NNP God) (NNP Varuna)) (PP (IN by) (NP (VBG remaining) (NNS bachelors))))))))))) (. .)))
+
+(S1 (S (`` ``) (NP (DT The) (NN country)) (VP (AUX is) (VP (AUXG being) (VP (VBN ruled) (PP (IN by) (NP (NP (DT a) (NN bachelor) (NN president)) (CC and) (NP (DT an) (JJ unmarried) (JJ prime) (NN minister))))))) (. .)))
+
+(S1 (SINV (S (S (NP (NP (DT This) (VBG according)) (PP (TO to) (NP (NP (DT the) (NNP Hindu) (NNS shastras)) (PRN (-LRB- -LRB-) (NP (NNS books)) (-RRB- -RRB-))))) (VP (AUX is) (ADJP (RB very) (JJ inauspicious)))) (CC and) (S (NP (DT that)) (VP (AUX is) (NP (NP (DT the) (NN reason)) (SBAR (S (NP (EX there)) (VP (AUX is) (NP (DT a) (JJ widespread) (NN heatwave) (CC and) (NN drought))))))))) (, ,) ('' '') (VP (VBD said)) (NP (NNP Singh)) (. .)))
+
+(S1 (S (`` ``) (S (NP (RB Not) (RB just) (NP (NNP Prime) (NNP Minister) (NNP Vajpayee) (CC but) (NNP President) (NNP Kalam) (POS 's)) (NN bachelor) (NN status)) (VP (AUX is) (VP (VBG making) (S (NP (DT the) (NN country)) (ADJP (JJ dry) (, ,) (JJ arid) (CC and) (JJ infertile)))))) (, ,) ('' '') (NP (PRP he)) (VP (VBD added)) (. .)))
+
+(S1 (S (NP (NP (DT The) (JJ general) (NN secretary)) (PP (IN of) (NP (NP (NP (NNP Vajpayee) (POS 's)) (JJ ruling) (NNP Bharatiya) (NNP Janata) (NNP Party)) (, ,) (NP (NNP Pramod) (NNP Mahajan)) (, ,)))) (VP (VBD retorted) (SBAR (IN that) (S (NP (NP (NNP Singh) (POS 's)) (NN statement)) (VP (AUX was) (`` ``) (PP (IN beneath) (NP (NN contempt))))))) (. .) ('' '')))
+
+(S1 (S (NP (NNP India) (POS 's)) (VP (AUX has) (VP (AUX been) (VP (VBG reeling) (PP (IN under) (NP (NP (DT a) (NN heatwave)) (PP (IN since) (NP (NN mid-May))) (SBAR (WHNP (WDT which)) (S (VP (AUX has) (VP (VBD killed) (NP (CD 1,403) (NNS people))))))))))) (. .)))
+
+(S1 (S (NP (NP (NP (DT The) (NN country) (POS 's)) (JJ western) (NN desert) (NN state)) (PP (IN of) (NP (NNP Rajasthan)))) (VP (AUX is) (ADVP (RB also)) (VP (VBG bracing) (PP (IN for) (NP (NP (PRP$ its) (JJ fifth) (JJ straight) (NN year)) (PP (IN of) (NP (NN drought))))))) (. .)))
+
+(S1 (S (NP (DT a) (JJ federal) (NNS appeals) (NN court)) (VP (MD will) (VP (VB decide) (SBAR (SBAR (WHADVP (WRB how) (RB long)) (S (NP (JJ dirty) (NN bomb) (NN suspect) (NNP jose) (NNP padilla)) (VP (MD can) (VP (AUX be) (VP (VBN retained)))))) (CC and) (SBAR (IN whether) (S (NP (PRP he)) (VP (MD can) (VP (VB meet) (PP (IN with) (NP (NNS attorneys)))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NNP u.s.) (NN attorney)) (VP (VBZ says) (SBAR (S (NP (NN padilla)) (VP (AUX is) (NP (NP (DT an) (NN enemy)) (ADJP (ADJP (JJ combattant)) (CC and) (ADJP (RB not) (VBN entitled) (PP (TO to) (NP (NN counsel)))))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX is) (VP (VBN accused) (PP (IN of) (S (VP (VBG attempting) (S (VP (TO to) (VP (VB ignite) (NP (DT a) (JJ dirty) (NN bomb)) (PP (IN in) (NP (DT this) (NN country))))))))))) (. .)))
+
+(S1 (INTJ (UH welcome) (PP (TO to) (NP (DT the) (JJ second) (NN hour))) (. .)))
+
+(S1 (NP (NP (JJ good) (NN morning)) (PP (TO to) (NP (PRP you))) (. .)))
+
+(S1 (S (NP (DT a) (JJ new) (NNP al) (NN qaeda) (NN videotape)) (, ,) (NP (DT no) (NN doubt)) (VP (VBG chilling) (PP (TO to) (NP (NP (DT the) (NNS families)) (PP (IN of) (NP (DT the) (NNS victims)))))) (. .)))
+
+(S1 (S (NP (NP (CD two)) (PP (IN of) (NP (NP (DT the) (CD four) (NNS pilots)) (SBAR (WHNP (WP who)) (S (VP (VBD took) (NP (NP (NN control)) (PP (IN of) (NP (DT the) (NNS planes)))) (PP (IN on) (NP (CD 9\/11))))))))) (VP (VBD attended) (NP (NP (DT a) (NN wedding) (NN party)) (PP (IN in) (NP (NP (NNP hamburg)) (, ,) (NP (NNP germany)) (, ,)))) (ADVP (NP (CD four) (NNS years)) (RB ago)) (SBAR (S (NP (CD 1999)) (NP (DT this)) (VP (AUX is))))) (. .)))
+
+(S1 (S (NP (NP (NP (DT another) (CD one)) (PP (IN of) (NP (DT the) (NNS pilots)))) (, ,) (NP (JJ mohammed) (NN atta)) (, ,)) (ADVP (RB also)) (VP (VBD believed) (S (VP (TO to) (VP (AUX be) (ADJP (JJ present)) (PP (IN at) (NP (DT this) (NN meeting))))))) (. .)))
+
+(S1 (S (PP (IN throughout) (NP (DT the) (NN morning))) (, ,) (NP (PRP we)) (VP (AUX 're) (VP (VBG looking) (PP (IN at) (NP (DT a) (JJ remarkable) (NN tape))) (ADVP (RB right) (RB now)))) (. .)))
+
+(S1 (S (NP (WP what)) (VP (AUX 's) (VP (VBN believed) (S (VP (TO to) (VP (AUX be) (NP (NP (DT the) (NN terror) (NN cell)) (ADJP (JJ responsible) (PP (IN for) (NP (CD 9\/11)))))))))) (. .)))
+
+(S1 (S (NP (NP (JJ many) (NNS members)) (PP (IN on) (NP (DT that) (NN tape))) (VP (VBG working) (ADVP (RB together)) (PP (IN through) (NP (NP (DT a) (NN cell)) (PP (IN in) (NP (NNP germany))) (VP (VBN known) (PP (IN as) (NP (DT the) (NNP hamburg) (NN cell)))))))) (VP (VBN seen) (PP (IN in) (NP (DT the) (JJ same) (NN room))) (PP (IN at) (NP (DT the) (JJ same) (NN time)))) (. .)))
+
+(S1 (NP (NNP arthritis) (. .)))
+
+(S1 (S (X (SYM \*)) (X (SYM \*)) (NP (PRP we)) (VP (VBD liberated) (NP (NP (DT the) (NNS people)) (PP (IN of) (NP (NNP iraq)))) (PP (IN from) (NP (DT a) (JJ brutal) (NN dictatorship)))) (. .)))
+
+(S1 (S (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-) (NP (PRP we)) (VP (VBD brought) (NP (JJR greater) (NN security)) (PP (TO to) (NP (NP (NNS people)) (PP (IN of) (NP (DT all) (NNS nations)))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (VBP want) (S (VP (TO to) (VP (VB thank) (NP (DT the) (NN president)) (PP (IN for) (NP (NP (NP (NNP spain) (POS 's)) (JJ diplomatic) (NN support)) (PP (IN before) (NP (DT the) (NN conflict))))))))) (. .)))
+
+(S1 (FRAG (PRN (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-)) (CC and) (PP (IN for) (NP (NP (DT the) (NN use)) (PP (IN of) (NP (NP (JJ spanish) (NN air) (NN space)) (CC and) (NP (NNS bases) (SBAR (IN as) (S (NP (DT the) (NN war)) (VP (VBD grew) (ADVP (RBR closer)))))))))) (. .)))
+
+(S1 (S (PRN (-LRB- -LRB-) (NN translator) (NN speaking) (-RRB- -RRB-)) (NP (PRP i)) (ADVP (RB also)) (VP (VBP offer) (NP (PRP$ my) (NNS condolences)) (PP (TO to) (NP (NP (DT the) (NN family) (CC and) (NNS friends)) (PP (IN of) (NP (NP (DT the) (CD two) (NNS members)) (PP (IN of) (NP (DT the) (JJ spanish) (NNS media))) (SBAR (WHNP (WP who)) (S (VP (VBD lost) (NP (PRP$ their) (NNS lives)) (SBAR (IN while) (S (VP (VBG covering) (NP (DT the) (NNS hostilities))))))))))))) (. .)))
+
+(S1 (S (NP (NP (PRN (-LRB- -LRB-) (NN translator) (NN speaking) (-RRB- -RRB-)) (CC both) (NNP spain)) (CC and) (NP (DT the) (VBN united) (NNS states))) (VP (AUX are) (VP (VBN committed) (PP (TO to) (NP (NP (DT a) (ADJP (JJ stable) (, ,) (JJ democratic) (CC and) (JJ peaceful)) (NN future)) (PP (IN for) (NP (NP (DT the) (NNS people)) (PP (IN of) (NP (NNP iraq))))))))) (. .)))
+
+(S1 (S (NP (PRN (-LRB- -LRB-) (NN translator) (NN speaking) (-RRB- -RRB-)) (NNP spain)) (VP (AUX has) (VP (VBN shown) (NP (DT that) (NN commitment)) (PP (IN by) (S (VP (VBG sending) (NP (UCP (NN engineering) (CC and) (JJ medical)) (NNS units)) (S (VP (TO to) (VP (VB help) (NP (NP (DT the) (NNS people)) (PP (IN of) (NP (NNP iraq)))))))))))) (. .)))
+
+(S1 (S (PRN (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-)) (CC and) (S (NP (PRP i)) (VP (VBP thank) (NP (PRP you)) (PP (IN for) (NP (DT that) (NN help))))) (. .)))
+
+(S1 (S (S (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-) (NP (NN today))) (, ,) (NP (PRP i)) (VP (AUX have) (VP (VBN moved) (S (VP (TO to) (VP (VB ease) (NP (NP (NNS sanctions)) (VP (VBN imposed) (PP (IN by) (NP (DT the) (VBN united) (NNS states))) (PP (IN against) (NP (NP (NNP iraq) (POS 's)) (JJ old) (NN government)))))))))) (. .)))
+
+(S1 (SINV (PRN (-LRB- -LRB-) (NN translator) (NN speaking) (-RRB- -RRB-)) (VP (ADVP (RB first)) (VBN based) (PP (IN on) (NP (NP (DT the) (NN authority)) (VP (ADVP (RB recently)) (VBN given) (PP (TO to) (NP (PRP me))) (PP (IN by) (NP (NNP congress))))))) (S (NP (PRP i)) (VP (AUX 'm) (VP (VBG suspending) (NP (NP (NP (DT the) (NNP iraq) (POS 's)) (NNS sanctions) (NN act)) (, ,) (SBAR (WHNP (WDT which)) (S (VP (VBZ restricts) (NP (NP (DT the) (NN export)) (PP (IN of) (NP (JJ certain) (NN commitment))) (ADJP (JJ necessary) (PP (IN for) (NP (NP (NNP iraq) (POS 's)) (NN reconstruction)))))))))))) (. .)))
+
+(S1 (S (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-) (ADVP (RB secondly)) (, ,) (VP (AUX 'm) (VP (VBG directing) (S (NP (DT the) (NN secretary)) (VP (TO to) (VP (VB relax) (NP (NP (NNS sanctions)) (PP (IN on) (NP (NP (JJ american) (NNS countries) (CC and) (NNS citizens)) (VP (VBG conducting) (NP (NN business)) (PP (IN in) (NP (NNP iraq)))))) (SBAR (WHNP (WDT that)) (S (VP (VBD contributed) (PP (TO to) (NP (JJ humanitarian) (NN reconstruction)))))))))))) (. .)))
+
+(S1 (S (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-) (ADVP (RB soon)) (, ,) (PP (IN at) (NP (DT the) (NNP u.n.) (NN security) (NN council))) (, ,) (NP (NP (DT the) (JJ united) (NNS states)) (, ,) (NP (NP (JJ great) (NNP britain)) (CC and) (NP (NNP spain)))) (VP (MD will) (VP (VB introduce) (NP (NP (DT a) (JJ new) (NN resolution)) (SBAR (S (VP (TO to) (VP (VB lift) (NP (NP (DT the) (NNS sanctions)) (VP (VBN imposed) (PP (IN by) (NP (DT the) (VBN united) (NNS nations)))))))))))) (. .)))
+
+(S1 (FRAG (PRN (-LRB- -LRB-) (NN translator) (NN speaking) (-RRB- -RRB-)) (NP (DT the) (NN regime) (SBAR (IN that) (S (NP (DT the) (NNS sanctions)) (VP (AUX were) (VP (VBN directed) (PP (IN against) (NP (NP (DT no) (JJR longer) (NNS rules)) (VP (NNP iraq))))))))) (. .)))
+
+(S1 (S (NP (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-) (CC and) (NP (NP (DT no) (NN country)) (PP (IN in) (NP (JJ good) (NN conscience))))) (VP (MD can) (VP (VB support) (S (VP (VBG using) (NP (NNS sanctions)) (S (VP (TO to) (VP (VB hold) (PRT (RP back)) (NP (NP (DT the) (NNS hopes)) (PP (IN of) (NP (DT the) (JJ iraqi) (NNS people))))))))))) (. .)))
+
+(S1 (S (PRN (-LRB- -LRB-) (S (NP (NNP trance)) (VP (VB lay) (FRAG (CC or) (NP (DT the) (NN speaking))))) (-RRB- -RRB-)) (PP (IN across) (NP (DT the) (NN globe))) (, ,) (NP (NNP spain) (CC and) (NNP america)) (VP (MD will) (VP (VB continue) (PP (IN as) (NP (NP (JJ strong) (NNS allys)) (PP (IN in) (NP (NP (DT the) (NN war)) (PP (IN against) (NP (NN terror))))))))) (. .)))
+
+(S1 (S (S (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-) (NP (NN today))) (, ,) (NP (DT the) (VBN united) (NNS states)) (VP (VBD took) (NP (NNS steps)) (S (VP (TO to) (VP (VB cut) (PRT (RP off)) (NP (NP (NN financing)) (PP (IN for) (NP (DT the) (NN organization)))) (PP (IN because) (IN of) (NP (NP (PRP$ its) (NNS ties)) (PP (TO to) (NP (DT the) (NNP eta))))))))) (. .)))
+
+(S1 (S (PRN (-LRB- -LRB-) (NN translator) (NN speaking) (-RRB- -RRB-)) (NP (PRP we)) (VP (VBP believe) (SBAR (IN that) (S (NP (NP (DT the) (NNS people)) (PP (IN of) (NP (NNP spain))) (PP (IN like) (NP (RB everywhere)))) (VP (AUX have) (NP (DT a) (NN right) (S (VP (TO to) (VP (VB live) (ADVP (JJ free)) (PP (IN from) (NP (NN terror))))))))))) (. .)))
+
+(S1 (S (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-) (NP (PRP we)) (VP (MD 'll) (ADVP (RB also)) (VP (VB work) (PP (IN for) (NP (NP (DT a) (JJR better) (NN world)) (PP (IN beyond) (NP (NP (DT the) (NN war)) (PP (IN on) (NP (NN terror))))))))) (. .)))
+
+(S1 (S (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-) (NP (PRP we)) (VP (AUX 're) (VP (VBN committed) (PP (TO to) (S (VP (VBG expanding) (NP (NP (NN trade)) (SBAR (WHNP (WDT which)) (S (VP (VBZ builds) (NP (NP (NN prosperity)) (PP (IN on) (NP (NP (DT both) (NNS sides)) (PP (IN of) (NP (DT the) (NNP atlantic))))))))))))))) (. .)))
+
+(S1 (S (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-) (NP (PRP we)) (VP (MD 'll) (VP (VB work) (ADVP (RB together)) (S (VP (TO to) (VP (VB address) (NP (JJ global) (NN poverty)) (PP (IN in) (NP (NP (DT the) (JJ terrible) (NNS diseases)) (PP (JJ such) (IN as) (NP (NN hiv) (NNS aids)))))))))) (. .)))
+
+(S1 (S (NP (NP (PRN (-LRB- -LRB-) (NN translator) (NN speaking) (-RRB- -RRB-)) (NNP spain)) (CC and) (NP (DT the) (VBN united) (NNS states))) (VP (MD will) (VP (VB stand) (PP (IN on) (NP (NP (DT the) (NN side)) (PP (IN of) (NP (NP (NNS people)) (VP (ADVP (RB everywhere)) (VBG striving) (PP (IN for) (NP (JJR greater) (NN freedom) (, ,) (NN tolerance) (CC and) (NN opportunity)))))))))) (. .)))
+
+(S1 (S (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-) (NP (PRP we)) (VP (AUX 're) (VP (VBN determined) (S (VP (TO to) (VP (VB help) (S (VP (VB build) (NP (NP (NN peace)) (PP (IN between) (NP (NP (DT the) (NN israelis)) (CC and) (NP (DT the) (NN palestinians)))))))))))) (. .)))
+
+(S1 (S (NP (NP (NP (PRN (-LRB- -LRB-) (NN translator) (NN speaking) (-RRB- -RRB-)) (JJ last) (NN week) (POS 's)) (NN confirmation)) (PP (IN of) (NP (NNS mazen)))) (VP (VBD permitted) (NP (DT the) (NN road) (NN map)) (PP (IN for) (NP (NP (NN peace)) (, ,) (VP (VBN developed) (PP (IN with) (NP (NP (NNP russia)) (, ,) (NP (DT the) (JJ european) (NN union)) (CC and) (NP (DT the) (VBN united) (NNS states)))))))) (. .)))
+
+(S1 (S (NP (NP (PRN (-LRB- -LRB-) (NN translator) (NN speaking) (-RRB- -RRB-)) (NNP spain)) (CC and) (NP (DT the) (VBN united) (NNS states))) (VP (AUX are) (VP (VBN determined) (S (VP (TO to) (VP (VB take) (NP (NN advantage)) (PP (IN of) (NP (NP (DT this) (NN moment)) (PP (IN of) (NP (NN opportunity))))) (PP (IN for) (NP (NN peace)))))))) (. .)))
+
+(S1 (S (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-) (NP (PRP i)) (VP (AUX 'm) (ADJP (JJ grateful) (PP (IN for) (NP (NP (DT the) (JJ wise) (NN council) (CC and) (NN friendship)) (PP (IN of) (NP (NNP jose) (NNP maria) (NN aznar))))))) (. .)))
+
+(S1 (NP (-LRB- -LRB-) (NP (NN translator) (NN speaking)) (-RRB- -RRB-) (-LRB- -LRB-) (NP (NN speaking) (JJ spanish)) (-RRB- -RRB-)))
+
+(S1 (S (NP (NP (DT the) (NX (NX (NN founder)) (CC and) (NX (JJ former) (NN ceo)))) (PP (IN of) (NP (NN imclone)))) (ADVP (RB just)) (VP (VBD learned) (NP (DT the) (NN penalty)) (PP (IN for) (NP (NP (PRP$ his) (NN role)) (PP (IN in) (NP (NP (DT the) (JJ pharmaceutical) (NN company) (POS 's)) (NN insider) (NN trading) (NN scandal)))))) (. .)))
+
+(S1 (S (NP (NNP sam) (NN waksal)) (VP (AUX was) (VP (VBN sentenced) (PP (TO to) (NP (NP (NP (CD seven) (NNS years)) (CC and) (NP (CD three) (NNS months))) (PP (IN in) (NP (JJ federal) (NN prison))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX 's) (ADVP (RB also)) (VP (AUXG being) (VP (VP (VBN fined) (NP (QP ($ $) (CD 3) (CD million)))) (CC and) (VP (AUX was) (VP (VBN ordered) (S (VP (TO to) (VP (VB pay) (NP (NP (QP ($ $) (CD 1.2) (CD million))) (PP (IN in) (NP (NN restitution)))) (PP (TO to) (NP (DT the) (JJ new) (NNP york) (NN state) (NN tax) (NN commission))))))))))) (. .)))
+
+(S1 (S (NP (NNP waksal)) (VP (VBD pleaded) (NP (JJ guilty) (JJ last) (NN fall)) (PP (TO to) (NP (NP (CD six) (NNS counts)) (PP (IN of) (NP (NP (NN security) (NN fraud)) (, ,) (NP (NN bank) (NN fraud)) (, ,) (NP (NP (NN conspiracy)) (PP (TO to) (NP (VBP obstruct) (NN justice)))) (CC and) (NP (NN perjury))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX 's) (VP (AUXG being) (VP (VBN released) (PP (IN on) (NP (PRP$ his) (JJ own) (NNS cog))) (PP (IN in) (NP (DT a) (NNS sans))) (SBAR (IN before) (S (NP (PRP he)) (VP (AUX 's) (S (VP (TO to) (VP (VB report) (PP (TO to) (NP (NN jail)))))))))))) (. .)))
+
+(S1 (S (NP (NNP waksal)) (VP (VBD admitted) (PP (TO to) (S (VP (VBG tipping) (S (NP (PRP$ his) (NN daughter)) (VP (TO to) (VP (VB dump) (NP (JJ imclone) (NN stock) (NN market)) (ADVP (RB just) (RB ahead) (PP (IN of) (NP (NP (DT a) (NN drug) (NN rejection)) (SBAR (S (S (NP (DT the) (NN company)) (VP (AUX was) (VP (VBG developing)))) (CC and) (S (NP (PRP he)) (VP (VBD pleaded) (ADJP (JJ guilty)) (PP (TO to) (NP (NN bank) (NN fraud))) (PP (IN by) (S (VP (VBG forging) (NP (NP (DT a) (NN signature)) (PP (IN on) (NP (DT a) (ADJP (QP ($ $) (CD 44) (CD million))) (NN loan))))))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (JJ imclone) (NN scandal)) (VP (VBD led) (PP (TO to) (NP (NP (NNS charges)) (PP (IN against) (NP (NP (NP (NNP waksal) (POS 's)) (NN friend)) (, ,) (NP (NNP martha) (NNP stewart)) (, ,))))) (NP (JJ last) (NN week)) (PP (IN over) (NP (NP (PRP$ her) (NN sale)) (PP (IN of) (NP (DT the) (NN stock))) (NP (DT the) (NN day)) (SBAR (IN before) (S (NP (DT the) (NN price)) (VP (VBD collapsed))))))) (. .)))
+
+(S1 (S (NP (DT a) (NN pizza) (NN delivery)) (VP (VBD helped) (S (NP (NNS police)) (VP (NN nab) (NP (DT the) (NN suspect)) (PP (IN in) (NP (NP (DT the) (NN kidnapping)) (PP (IN of) (NP (DT a) (JJ 9-year-old) (JJ california) (NN girl)))))))) (. .)))
+
+(S1 (S (NP (NP (JJ 24-year-old) (NNP enrique) (NNP alvarez)) (, ,) (VP (ADVP (RB also)) (VBN known) (PP (IN as) (NP (NNP david) (NNP cruz)))) (, ,)) (VP (AUX was) (VP (VBN arrested) (NP (NNP Monday)) (PP (IN in) (NP (NNP san) (NNP jose))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX is) (VP (VBN expected) (S (VP (TO to) (VP (AUX be) (VP (VBN arraigned) (NP (NNP Wednesday)))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX 's) (VP (VBN charged) (PP (IN with) (NP (NP (NN kidnapping)) (, ,) (NP (NN felony) (NN assault)) (CC and) (NP (JJ sexual) (NN assault)))))) (. .)))
+
+(S1 (S (NP (DT the) (NN girl)) (VP (AUX was) (VP (VBN found) (NP (JJ late) (NNP Sunday)) (PP (IN at) (NP (NP (DT a) (NN convenience) (NN store)) (PP (IN in) (NP (JJ east) (NNP palo) (NNP alto))))))) (. .)))
+
+(S1 (S (NP (NNS police)) (VP (VBP say) (SBAR (S (NP (PRP she)) (VP (VBD told) (NP (PRP them)) (SBAR (S (NP (DT a) (JJ pepperoni) (NN pizza)) (VP (AUX had) (VP (AUX been) (VP (VBN delivered) (PP (TO to) (NP (NP (DT the) (NN house)) (SBAR (WHADVP (WRB where)) (S (NP (PRP she)) (VP (AUX was) (VP (VBN held)))))))))))))))) (. .)))
+
+(S1 (S (NP (NNS detectives)) (VP (AUX were) (ADJP (JJ able) (S (VP (TO to) (VP (VB track) (NP (DT the) (NN order)) (PP (TO to) (NP (NP (DT the) (NN house)) (, ,) (SBAR (WHADVP (WRB where)) (S (NP (PRP they)) (VP (VBD found) (NP (CD alvarez) (NN hiding)) (PP (IN in) (NP (DT the) (NN attic))))))))))))) (. .)))
+

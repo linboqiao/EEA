@@ -1,0 +1,122 @@
+(S1 (S (PRN (-LRB- -LRB-) (NP (NNP NEWSBREAK)) (-RRB- -RRB-)) (PP (IN With) (S (NP (NNP U.S.) (NNS forces)) (VP (VBG rolling) (ADVP (RBR closer) (CC and) (RBR closer)) (PP (TO to) (NP (NNP Baghdad)))))) (, ,) (NP (DT the) (NN military)) (VP (VBZ seems) (S (VP (TO to) (VP (AUX be) (VP (VBG zeroing) (PRT (RP in)) (PP (IN on) (NP (DT the) (NN ground) (NN war)))))))) (. .)))
+
+(S1 (S (CC But) (, ,) (SBAR (IN as) (S (NP (PRP it)) (VP (AUX has) (PP (IN from) (NP (DT the) (NN beginning)))))) (, ,) (NP (NN air) (NN power)) (VP (VBZ remains) (NP (NP (DT an) (JJ important) (NN part)) (PP (IN of) (NP (DT the) (NN battle))))) (. .)))
+
+(S1 (S (VP (VB Let) (S (VP (POS 's) (VP (VB check) (PRT (RP in)) (PP (IN with) (NP (NP (NNP CNN) (POS 's)) (NNP Gary) (NNP Tuchman))) (PP (IN at) (NP (NP (DT an) (NN air) (NN base)) (PP (IN near) (NP (NNP Iraq))))))))) (. .)))
+
+(S1 (S (NP (NNP Gary)) (NP (PRP you)) (VP (AUX 've) (VP (VBN seen) (NP (PRP it)) (ADVP (RB firsthand)) (PP (IN from) (NP (DT the) (JJ first) (NNS moments))))) (. .)))
+
+(S1 (S (INTJ (UH Well)) (, ,) (NP (DT that)) (VP (AUX 's) (ADJP (JJ right)) (, ,) (NP (NNP Judy))) (. .)))
+
+(S1 (S (PP (IN In) (NP (NP (CD two) (NNS weeks)) (SBAR (IN after) (S (NP (DT the) (NN air) (NN war)) (VP (VBD began)))))) (, ,) (NP (EX there)) (VP (AUX is) (NP (NP (DT no) (ADJP (ADJP (JJ let-up)) (CC and) (ADJP (RB no) (JJ effective))) (NN response)) (PP (IN from) (NP (DT the) (NNP Iraqis))))) (. .)))
+
+(S1 (S (PP (VBG According) (PP (TO to) (NP (DT the) (NNP Air) (NNP Force)))) (, ,) (PP (IN at) (NP (DT any) (VBN given) (NN time))) (, ,) (NP (EX there)) (VP (AUX are) (NP (QP (RB more) (CD 200)) (NN coalition) (NNS aircraft)) (ADVP (RB either)) (PP (IN over) (NP (NNP Iraq))) (, ,) (S (VP (VP (VBG flying) (PP (TO to) (NP (NNP Iraq)))) (CC or) (VP (VBG flying) (PP (IN from) (NP (NNP Iraq))))))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (VBP come) (PP (TO to) (NP (PRP you))) (PP (IN from) (NP (NP (DT a) (NN base)) (PP (IN near) (NP (DT the) (JJ Iraqi) (NN border)))))) (. .)))
+
+(S1 (S (NP (JJ Many) (NNS pilots)) (VP (AUX are) (VP (VBG flying) (NP (DT these) (JJ A-10) (NN attack) (NNS planes)) (PP (IN behind) (NP (PRP me))))) (. .)))
+
+(S1 (S (NP (PRP They)) (ADVP (RB also)) (VP (VBP fly) (NP (NNS F-16s))) (. .)))
+
+(S1 (S (NP (EX There)) (VP (AUX are) (ADVP (RB also)) (NP (NP (NNP Marine) (NNP FA-18s)) (CC and) (NP (NNP Marine) (NNP Heriers))) (PP (IN at) (NP (DT this) (NN base)))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (MD can) (VP (VB tell) (NP (PRP you)) (SBAR (IN that) (S (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NNS pilots))) (PP (IN of) (NP (DT this) (NN base)))) (VP (AUX are) (RB not) (VP (VBG flying) (PP (TO to) (NP (NP (DT another) (NN base)) (PP (IN in) (NP (NNP Iraq))))))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (NP (NP (DT a) (NN base)) (SBAR (WHNP (WDT that)) (S (VP (AUX was) (VP (VBN taken) (PRT (RP over)) (PP (IN by) (NP (DT the) (NN coalition))) (NP (JJ last) (NN week)))))))) (. .)))
+
+(S1 (S (CC And) (NP (PRP we)) (VP (VBD spent) (NP (NP (NN part)) (PP (IN of) (NP (DT the) (NN day)))) (PP (IN at) (NP (DT that) (NN base)))) (. .)))
+
+(S1 (S (CC And) (SBAR (WHADVP (WRB when)) (S (NP (PRP you)) (VP (VBP arrive) (ADVP (RB there))))) (, ,) (NP (PRP you)) (VP (AUX are) (VP (VBN greeted) (PP (IN in) (NP (DT a) (NN sense))) (PP (IN by) (NP (NNP Saddam) (NNP Hussein))))) (. .)))
+
+(S1 (S (NP (DT This)) (VP (AUX is) (NP (NP (NNP Talil)) (, ,) (NP (NNP Iraq)))) (. .)))
+
+(S1 (NP (DT The) (NNP Talil) (NNP Air) (NNP Base) (. .)))
+
+(S1 (S (S (CC But) (NP (DT the)) (VP (AUX are) (ADVP (RB no) (RBR more)) (NP (NNPS Iraqis)) (ADVP (RB here)))) (, ,) (NP (DT the) (NN coalition)) (VP (VBD took) (PRT (RP over)) (NP (DT this) (NN base)) (NP (JJ last) (NN week))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (ADVP (RB now)) (NP (DT a) (JJ major) (NN staging) (NN point))) (. .)))
+
+(S1 (S (NP (PRP You)) (VP (VBP know) (SBAR (S (NP (PRP you)) (VP (AUX are) (PP (IN in) (NP (NNP Iraq))) (SBAR (WHADVP (WRB when)) (S (NP (PRP you)) (VP (VP (VB drive) (PRT (RP down)) (NP (NP (DT the) (NN road)) (VP (VBG coming) (PP (IN into) (NP (DT the) (NN base)))))) (CC and) (VP (VB see) (NP (NP (DT the) (NN portrait)) (PP (IN of) (NP (NNP Saddam) (NNP Hussein)))))))))))) (. .)))
+
+(S1 (S (SBAR (WHNP (WP What)) (S (VP (AUX 's) (VP (VB happen))))) (VP (AUX is) (SBAR (S (NP (NP (DT the) (JJ military) (NNS personnel)) (SBAR (WHNP (WP who)) (S (VP (AUX have) (VP (VBN arrived) (ADVP (RB here))))))) (VP (VP (AUX have) (VP (VBN taken) (PRT (RP out)) (NP (PRP$ their) (NNS markers)))) (CC and) (VP (AUX are) (VP (VBG writing) (NP (NNS messages)) (PP (IN on) (NP (NP (NNP Saddam) (NNP Hussein) (POS 's)) (NN portrait))))))))) (. .)))
+
+(S1 (S (S (NP (PRP You)) (VP (MD can) (VP (VB see) (NP (DT the) (JJ main) (NN one)) (ADVP (RB here)) (PP (IN on) (NP (DT the) (NN bottom)))))) (CC and) (S (ADVP (RB also)) (ADVP (RB here)) (NP (NNS messages)) (VP (VBP like) (PRN (, ,) (S (NP (PRP we)) (VP (VBD won))) (, ,)) (NP (NNP April) (CD 1) (, ,) (CD 2003)))) (. .)))
+
+(S1 (S (VP (VB Want) (S (VP (TO to) (VP (VB give) (NP (PRP you)) (NP (DT a) (NN look)))))) (. .)))
+
+(S1 (S (NP (EX There)) (VP (AUX 's) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NN security) (NNS personnel)))) (ADVP (RB here))) (. .)))
+
+(S1 (S (S (NP (PRP You)) (VP (MD can) (VP (VB look) (PP (IN over) (NP (RB there)))))) (CC and) (S (NP (PRP you)) (VP (MD can) (VP (VB see) (NP (DT the) (JJ military) (NNS vehicles))))) (. .)))
+
+(S1 (S (NP (DT These)) (VP (AUX are) (NP (NNP Air) (NNP Force) (NNP Security) (NNPS Forces)) (SBAR (IN with) (S (NP (PRP$ their) (NNS rifles)) (VP (NN patrolling) (NP (DT the) (NN entrance)))))) (. .)))
+
+(S1 (S (NP (EX There)) (VP (AUX is) (NP (NP (DT a) (NN lot)) (PP (IN of) (S (VP (VBG fighting) (PP (IN in) (NP (DT this) (NN area)))))))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (AUX 're) (PP (IN near) (NP (NP (DT the) (NN town)) (PP (IN of) (NP (NNP Nasiriya)))))) (. .)))
+
+(S1 (S (CC But) (NP (DT this) (NN base)) (ADVP (RB now)) (VP (AUX is) (VP (VBN considered) (S (ADJP (JJ secure) (RB enough) (S (VP (TO to) (VP (VB make) (S (NP (PRP it)) (NP (NP (DT a) (JJ major) (NN staging) (NN point)) (PP (IN for) (NP (DT the) (NN coalition)))))))))))) (. .)))
+
+(S1 (S (S (ADVP (NP (DT A) (JJ short) (NN time)) (RB ago)) (NP (PRP we)) (VP (VBD talked) (PP (TO to) (NP (DT a) (NN pilot))) (PP (IN at) (NP (NP (DT this) (NN base)) (SBAR (WHNP (WP who)) (S (VP (AUX has) (VP (AUX been) (PP (TO to) (NP (DT that) (JJ Iraqi) (NN base))))))))))) (CC and) (S (NP (PRP he)) (ADVP (RB too)) (VP (VBZ says) (SBAR (S (NP (PRP he)) (VP (AUX has) (VP (VBN signed) (NP (DT that) (NN mural)) (PP (ADVP (RB right)) (IN on) (NP (NP (NNP Saddam) (NNP Hussein) (POS 's)) (NN sash))))))))) (. .)))
+
+(S1 (S (SBAR (IN After) (S (S (NP (PRP he)) (VP (VBD told) (NP (PRP us)) (SBAR (IN that) (, ,) (S (NP (PRP we)) (VP (VBD asked) (NP (PRP him)) (PP (IN during) (NP (PRP$ his) (NNS missions)))))))) (, ,) (CC and) (S (NP (PRP he)) (VP (AUX 's) (VP (VBN flown) (NP (QP (RB about) (CD 30))) (PP (IN in) (NP (DT the) (JJ last) (CD two) (NNS weeks)))))))) (, ,) (NP (PRP we)) (VP (VBD asked) (SBAR (S (NP (PRP him)) (VP (AUX does) (SBAR (S (NP (PRP he)) (ADVP (RB still)) (VP (AUX have) (NP (NP (DT any) (NN artillery)) (VP (AUXG being) (VP (VBD fired) (PP (IN at) (NP (PRP him))))))))))))) (. ?)))
+
+(S1 (S (PRN (-LRB- -LRB-) (VP (VB BEGIN) (NP (JJ VIDEO) (NN CLIP))) (-RRB- -RRB-)) (S (NP (NN Yesterday)) (NP (PRP I)) (VP (AUX was) (ADVP (RB up)) (ADVP (RB just) (RB south) (PP (IN of) (NP (NNP Baghdad)))) (PP (IN by) (NP (CD 30) (NNS miles))))) (CC and) (S (NP (PRP we)) (VP (VP (AUX were) (VP (VBG fighting) (NP (NNS SA-2s) (CC and) (NNS SA-6s)))) (CC and) (VP (ADJP (JJ AAA)) (PP (IN on) (NP (DT the) (NN ground)))))) (. .)))
+
+(S1 (S (ADVP (RB So)) (NP (PRP they)) (VP (AUX 're) (ADVP (RB still)) (ADVP (RB out) (RB there))) (. .)))
+
+(S1 (S (CC But) (NP (NP (DT the) (NN air) (NN power)) (CC and) (NP (NP (DT the) (NN air) (NN package)) (SBAR (WHNP (WDT that)) (S (NP (PRP we)) (VP (VBP take) (PP (TO to) (NP (DT the) (NN fight)))))))) (, ,) (NP (PRP we)) (VP (VBP continue) (S (VP (TO to) (VP (AUX be) (ADJP (JJ effective)))))) (. .)))
+
+(S1 (S (CC And) (NP (PRP we)) (VP (VBP attrit) (NP (DT the) (NNP Medina) (NNS forces)) (ADVP (RB down) (PP (TO to) (NP (QP (JJR less) (IN than) (CD 50)) (NN percent))))) (. .)))
+
+(S1 (S (CC And) (SBAR (WHADVP (WRB when)) (S (S (NP (PRP we)) (VP (VBP put) (NP (PRP$ our) (NN power) (NN punch)) (PP (TO to) (NP (PRP them))))) (CC and) (RB then) (S (NP (NP (DT the) (NNP Army)) (CC and) (NP (DT the) (NNPS Marines))) (VP (VBP move) (ADVP (RB forward)))))) (NP (PRP it)) (VP (AUX 's) (NP (DT a) (ADJP (ADJP (RB very) (JJ effective)) (, ,) (VBN coordinated)) (NN effort))) (. .)))
+
+(S1 (S (NP (NP (PRN (-LRB- -LRB-) (NN END) (NN VIDEO) (NN CLIP) (-RRB- -RRB-)) (NN Lieutenant) (NNP Colonel) (NNP Webb)) (PRN (-LRB- -LRB-) (NP (CD ph)) (-RRB- -RRB-))) (VP (AUX is) (VP (VBG telling) (NP (PRP us)) (SBAR (S (NP (PRP he)) (VP (AUX has) (NP (DT a) (NN mission)) (NP (DT this) (JJ very) (NN evening))))))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (VBP want) (S (VP (TO to) (VP (VB tell) (NP (PRP you)) (SBAR (S (NP (DT the) (NNP Air) (NNP Force)) (VP (AUX has) (ADVP (RB just)) (VP (VBN informed) (NP (PRP us)) (SBAR (IN that) (S (PP (IN between) (NP (DT this) (NN morning) (CC and) (NN tomorrow) (NN morning))) (, ,) (NP (PRP it)) (VP (MD will) (VP (VB fly) (NP (CD 1,900) (NNS sorties)) (PP (IN into) (NP (NNP Iraq))))))))))))))) (. .)))
+
+(S1 (NP (NP (DT A) (NN total)) (PP (IN over) (NP (DT the) (JJ last) (CD two) (NNS weeks))) (PP (ADVP (RB now)) (IN of) (NP (QP (RB close) (TO to) (CD 24,000)) (NNS sorties))) (. .)))
+
+(S1 (S (SBAR (IN Before) (S (NP (PRP we)) (VP (VBP go)))) (, ,) (NP (NP (CD one) (JJR more) (NN thing)) (SBAR (S (NP (PRP we)) (VP (VBP want) (S (VP (TO to) (VP (VB tell) (NP (PRP you)) (PP (IN about))))))))) (, ,) (VP (VBZ superstitions)) (. .)))
+
+(S1 (S (NP (JJ Military) (NNS people)) (VP (AUX are) (ADJP (RB very) (JJ superstitious)) (, ,) (SBAR (IN like) (S (NP (NP (JJ many)) (PP (IN of) (NP (PRP us)))) (VP (AUX are))))) (. .)))
+
+(S1 (S (PP (ADVP (RB Here)) (IN at) (NP (NP (DT this) (JJ particular) (NN base)) (SBAR (S (NP (PRP they)) (VP (VBP get) (NP (PRP$ their) (NNS MREs))))))) (, ,) (NP (PRP$ their) (NNS MREs)) (VP (AUX are) (S (NP (PRP$ their) (NNS Meals)) (ADJP (JJ Ready) (S (VP (TO to) (VP (VB Eat))))))) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (VBP come) (PP (IN in) (NP (DT a) (NN bag)))) (. .)))
+
+(S1 (S (CC And) (SBAR (WHADVP (WRB when)) (S (NP (PRP you)) (VP (VBP get) (NP (DT an) (NN MRE))))) (S (NP (PRP you)) (VP (VBP get) (NP (PRP$ your) (NN meal)))) (CC and) (S (NP (PRP you)) (VP (VBP get) (NP (DT a) (JJ little) (NN treat)) (PP (IN with) (NP (PRP it))))) (. .)))
+
+(S1 (S (S (SBAR (WHNP (WP What)) (S (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NNS people))) (ADVP (RB here)) (PP (IN at) (NP (DT this) (NN base)))) (VP (AUX do)))) (, ,) (SBAR (WHADVP (WRB when)) (S (NP (PRP$ their) (NN treat)) (VP (VBZ happens) (S (VP (TO to) (VP (AUX be) (NP (DT this) (NN one)))))))) (, ,) (NP (DT this)) (VP (AUX is) (NP (NP (DT the) (NN candy)) (VP (VBN called) (NP (NNP Charms)))))) (, ,) (NP (NP (JJ many)) (PP (IN of) (NP (DT the) (NNS people)))) (VP (VBP refuse) (S (VP (TO to) (VP (VB eat) (NP (PRP$ their) (NNS Charms)))))) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (VBP consider) (S (NP (PRP it)) (NP (NP (DT a) (JJ good) (NN luck) (NN charm)) (SBAR (S (VP (VP (TO to) (VP (VB keep) (NP (PRP$ their) (NNS Charms)) (PP (IN in) (NP (PRP$ their) (NNS clothes))))) (CC and) (RB not) (VP (TO to) (VP (VB eat) (NP (PRP them)))))))))) (. .)))
+
+(S1 (FRAG (PP (IN So) (NP (NP (CD one) (JJ little) (JJ superstitious) (NN tale)) (PP (IN for) (NP (PRP you))))) (, ,) (NP (NNP Judy)) (. .)))
+
+(S1 (FRAG (ADVP (RB Back) (PP (TO to) (NP (PRP you)))) (. .)))
+
+(S1 (S (INTJ (UH Well)) (, ,) (NP (PRP I)) (VP (AUX 'm) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT those)) (SBAR (WHNP (WP who)) (S (VP (VBZ thinks) (SBAR (IN that) (S (NP (PRP we)) (VP (AUX need) (S (VP (TO to) (VP (VB pay) (NP (NN attention)) (PP (TO to) (NP (PRP$ our) (NNS superstitions)))))))))))))))) (. .)))
+
+(S1 (S (NP (NNP Gary)) (, ,) (VP (NN one) (NP (DT another) (JJ quick) (NN question)) (PP (IN for) (NP (PRP you)))) (. .)))
+
+(S1 (S (NP (DT That) (NN air)) (VP (VBP base) (SBAR (IN that) (S (NP (NN coalition) (NNS forces)) (VP (AUX have) (ADVP (RB now)) (VP (VBN taken) (NP (NP (NN control)) (PP (IN of) (NP (JJ near) (NNP Nasiriya))))))))) (. .)))
+
+(S1 (SQ (AUX Are) (NP (PRP you)) (ADJP (JJ able) (S (VP (TO to) (VP (VB say) (, ,) (SQ (AUX are) (NP (PRP they)) (VP (VP (ADVP (RB actually)) (VBG using) (NP (PRP it))) (CC or) (VP (VBG getting) (NP (JJ much) (NN use)) (PP (IN out) (PP (IN of) (NP (PRP it))))))))))) (. ?)))
+
+(S1 (S (SBAR (WHNP (WP What)) (S (NP (PRP they)) (VP (AUX are) (VP (VBG doing))))) (, ,) (NP (NNP Judy)) (PRN (, ,) (S (NP (NP (DT some)) (PP (IN of) (NP (NP (DT these) (NNS A-10s)) (PP (IN behind) (NP (PRP me)))))) (VP (VBP go) (ADVP (RB there)) (S (VP (TO to) (VP (VB refuel)))))) (, ,)) (VP (TO to) (VP (VB stage) (NP (NNS operations)) (ADVP (RBR further) (RB north)))) (. .)))
+
+(S1 (S (S (NP (PRP They)) (ADVP (RB also)) (VP (VB fly) (NP (DT these) (CD HH-60) (NNS helicopters)))) (, ,) (S (NP (PRP they)) (VP (AUX 're) (NP (DT the) (NN search)))) (CC and) (S (NP (NN rescue) (NNS helicopters)) (VP (VBD used) (SBAR (IN in) (NN case) (S (NP (PRP they)) (VP (AUX have) (S (VP (TO to) (VP (VB search) (CC and) (VB find) (NP (NP (NN somebody)) (PP (IN on) (NP (DT the) (NN ground)))))))))))) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (VP (VB stage) (ADVP (RB there))) (CC and) (VP (VB refuel))) (. .)))
+
+(S1 (S (CC But) (ADVP (RB right) (RB now)) (, ,) (NP (NP (NN none)) (PP (IN of) (NP (PRP them)))) (VP (AUX are) (VP (ADVP (RB permanently)) (VBN based) (ADVP (RB there)) (, ,) (SBAR (IN although) (S (NP (DT the) (NN plan)) (VP (AUX is) (SBAR (IN for) (S (NP (DT that)) (VP (TO to) (ADVP (RB eventually)) (VP (VB happen)))))))))) (. .)))
+
+(S1 (FRAG (ADVP (RB All) (RB right)) (, ,) (NP (NP (NNP Gary) (NNP Tuchman)) (PP (IN with) (NP (DT some) (NNPS Charms)))) (. .)))
+
+(S1 (S (NP (PRP You)) (VP (VBD saw) (S (NP (PRP him)) (VP (VBG holding) (NP (PRP it))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (MD will) (VP (AUX be) (VP (VBG talking) (PP (IN with) (NP (NP (DT a) (JJ ranking) (NN member)) (PP (IN of) (NP (NP (DT the) (NNP Senate) (NNP Foreign) (NNP Relations) (NNP Committee)) (, ,) (NP (NNP Senator) (NNP Joe) (NNP Biden)) (, ,))))) (ADVP (RB just) (RB ahead)) (, ,) (PP (IN for) (NP (NP (PRP$ his) (NN take)) (PP (IN on) (SBAR (WHADVP (WRB how)) (S (NP (DT the) (NN war)) (VP (AUX is) (VP (VBG going))))))))))) (. .)))
+
+(S1 (SQ (MD Could) (NP (NNP Tony) (NNP Blair)) (VP (AUX be) (PP (IN in) (NP (NP (NN line)) (PP (IN for) (NP (DT a) (JJ gold) (NN medal)))))) (. ?)))
+
+(S1 (NP (NP (NNS Tales)) (PP (IN of) (SBAR (WHADVP (WRB how)) (S (NP (NP (DT some)) (PP (IN in) (NP (NNP Congress)))) (VP (VBP want) (S (VP (TO to) (VP (VB honor) (NP (DT the) (JJ British) (JJ prime) (NN minister))))))))) (. .)))
+

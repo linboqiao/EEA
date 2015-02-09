@@ -1,0 +1,24 @@
+(S1 (S (NP (PRP he)) (VP (VBD went) (PP (TO to) (NP (NN scapegoat))) (PP (IN at) (NP (JJ breath-taking) (NN speed)))) (. .)))
+
+(S1 (S (NP (NN today)) (, ,) (NP (NNP steve)) (VP (NN case) (ADVP (RB officially)) (PRT (RP out)) (PP (IN at) (NP (NN aol) (NN time) (NNP warner)))) (. .)))
+
+(S1 (S (NP (DT the) (NNS media) (NN giant)) (VP (VBZ remains) (PP (IN in) (NP (DT a) (NN rut)))) (. .)))
+
+(S1 (S (NP (NNS investigators)) (VP (VBG looking) (PP (IN for) (NP (NNS answers))) (NP (NN today)) (PP (IN at) (NP (NP (DT a) (NNS shareholders) (NN meeting)) (NP (NN today)) (PP (IN in) (NP (NNP virginia)))))) (. .)))
+
+(S1 (S (SBAR (IN as) (S (NP (PRP we)) (VP (VBP turn) (PP (TO to) (NP (NNP greg) (NNP clarkin)))))) (, ,) (NP (PRP we)) (VP (AUX 're) (VP (VBG talking) (PP (IN about) (NP (DT the) (NN home) (NN team))) (ADVP (RB here)) (, ,) (NP (NP (NNP cnn) (POS 's)) (NN parent) (NN company)) (, ,) (ADJP (RB not) (JJ easy) (SBAR (IN for) (S (NP (NP (DT any)) (PP (IN of) (NP (PRP us)))) (VP (TO to) (VP (VB talk) (PP (IN about))))))))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (NP (NN hi) (, ,) (NN kyra)) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX is) (ADJP (JJ right))) (. .)))
+
+(S1 (FRAG (ADVP (RB here) (PP (IN in) (NP (JJ northern) (NNP virginia)))) (, ,) (NP (NP (DT a) (JJ few) (NNS miles)) (PP (IN from) (NP (JJ aol) (NNS headquarters)))) (. .)))
+
+(S1 (SINV (S (NP (DT these)) (VP (AUX are) (NP (DT a) (NN chance) (SBAR (IN for) (S (NP (DT the) (JJ individual) (NN investor)) (VP (TO to) (VP (AUX have) (NP (DT a) (NN chance) (S (VP (TO to) (VP (VB vent) (PP (TO to) (NP (NP (NN management)) (PP (IN of) (NP (DT the) (NN company)))))))))))))))) (, ,) (VP (AUX have)) (NP (NP (PRP$ their) (NN case)) (PP (IN about) (SBAR (WHADVP (WRB where)) (S (NP (DT the) (NN company)) (VP (AUX is) (VP (VBG going))))))) (. .)))
+
+(S1 (S (NP (NN today)) (NP (PRP we)) (VP (VBD heard) (PP (IN from) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NP (JJ small) (NNS investors)) (SBAR (WHNP (WP who)) (S (VP (AUX are) (ADVP (RB still)) (ADJP (VBN upset) (PP (IN over) (NP (NP (DT the) (VBG sinking) (NN stock) (NN price)) (PP (IN of) (NP (NN aol) (NN time) (NNP warner)))))))))))))) (. .)))
+
+(S1 (S (NP (DT this)) (VP (AUX is) (NP (NP (DT a) (NN stock)) (PP (IN down) (NP (NP (QP (JJR more) (IN than) (CD 70)) (NN %)) (PP (IN over) (NP (DT the) (JJ last) (CD three) (NNS years))))))) (. .)))
+
+(S1 (S (ADVP (RB now)) (, ,) (NP (PRP we)) (VP (VBD spoke) (PP (TO to) (NP (NP (DT a) (NN number)) (PP (IN of) (NP (NP (JJ individual) (NNS investors)) (SBAR (WHNP (WP who)) (S (VP (VBD voiced) (NP (PRP$ their) (NN con))))))))))))
+

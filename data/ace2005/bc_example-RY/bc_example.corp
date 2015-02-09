@@ -1,0 +1,1016 @@
+3	O	0	O	POS	Welcome	O	O	O
+3	O	1	O	POS	back	O	O	O
+3	O	2	O	POS	.	O	O	O
+
+16	O	0	O	POS	Orders	O	O	O
+16	O	1	O	POS	went	O	O	O
+16	O	2	O	POS	out	O	O	O
+16	O	3	O	POS	today	O	O	O
+16	O	4	O	POS	to	O	O	O
+16	O	5	O	POS	deploy	O	O	O
+16	O	6	O	POS	17,000	O	O	O
+16	GPE_NAM	7	O	POS	U.S.	O	O	O
+16	ORG_NAM	8	O	POS	Army	O	O	O
+16	PER_NOM	9	O	POS	soldiers	O	O	O
+16	O	10	O	POS	in	O	O	O
+16	O	11	O	POS	the	O	O	O
+16	LOC_NAM	12	O	POS	Persian/Gulf	O	O	O
+16	LOC_NOM	13	O	POS	region	O	O	O
+16	O	14	O	POS	.	O	O	O
+
+9	8	ORG-AFF
+8	7	PART-WHOLE
+12	13	PART-WHOLE
+9	13	PHYS
+
+26	O	0	O	POS	The	O	O	O
+26	ORG_NOM	1	O	POS	army	O	O	O
+26	O	2	O	POS	's	O	O	O
+26	O	3	O	POS	entire	O	O	O
+26	ORG_NAM	4	O	POS	first/Calvary/division	O	O	O
+26	O	5	O	POS	based	O	O	O
+26	O	6	O	POS	at	O	O	O
+26	GPE_NAM	7	O	POS	Fort/Hood	O	O	O
+26	O	8	O	POS	,	O	O	O
+26	GPE_NAM	9	O	POS	Texas	O	O	O
+26	O	10	O	POS	,	O	O	O
+26	O	11	O	POS	would	O	O	O
+26	O	12	O	POS	join	O	O	O
+26	O	13	O	POS	the	O	O	O
+26	O	14	O	POS	quarter	O	O	O
+26	O	15	O	POS	million	O	O	O
+26	GPE_NAM	16	O	POS	U.S.	O	O	O
+26	PER_NOM	17	O	POS	forces	O	O	O
+26	O	18	O	POS	already	O	O	O
+26	O	19	O	POS	in	O	O	O
+26	O	20	O	POS	the	O	O	O
+26	LOC_NOM	21	O	POS	region	O	O	O
+26	O	22	O	POS	.	O	O	O
+
+4	1	PART-WHOLE
+7	9	PART-WHOLE
+17	16	ORG-AFF
+17	21	PHYS
+4	7	GEN-AFF
+
+19	PER_PRO	0	O	POS	We	O	O	O
+19	O	1	O	POS	're	O	O	O
+19	O	2	O	POS	talking	O	O	O
+19	O	3	O	POS	about	O	O	O
+19	O	4	O	POS	possibilities	O	O	O
+19	O	5	O	POS	of	O	O	O
+19	O	6	O	POS	full	O	O	O
+19	O	7	O	POS	scale	O	O	O
+19	O	8	O	POS	war	O	O	O
+19	O	9	O	POS	with	O	O	O
+19	O	10	O	POS	former	O	O	O
+19	PER_NOM	11	O	POS	Congressman	O	O	O
+19	PER_NAM	12	O	POS	Tom/Andrews	O	O	O
+19	O	13	O	POS	,	O	O	O
+19	PER_NOM	14	O	POS	Democrat	O	O	O
+19	O	15	O	POS	of	O	O	O
+19	GPE_NAM	16	O	POS	Maine	O	O	O
+19	O	17	O	POS	.	O	O	O
+
+14	16	GEN-AFF
+
+20	PER_PRO	0	O	POS	He	O	O	O
+20	O	1	O	POS	's	O	O	O
+20	O	2	O	POS	now	O	O	O
+20	O	3	O	POS	national	O	O	O
+20	PER_NOM	4	O	POS	director	O	O	O
+20	O	5	O	POS	of	O	O	O
+20	ORG_NAM	6	O	POS	Win/Without/War	O	O	O
+20	O	7	O	POS	,	O	O	O
+20	O	8	O	POS	and	O	O	O
+20	O	9	O	POS	former	O	O	O
+20	PER_NOM	10	O	POS	Congressman	O	O	O
+20	PER_NAM	11	O	POS	Bob/Dornan	O	O	O
+20	O	12	O	POS	,	O	O	O
+20	PER_NOM	13	O	POS	Republican	O	O	O
+20	O	14	O	POS	of	O	O	O
+20	GPE_NAM	15	O	POS	California	O	O	O
+20	O	16	O	POS	.	O	O	O
+
+4	6	ORG-AFF
+13	15	GEN-AFF
+
+42	PER_NAM	0	O	POS	Bob	O	O	O
+42	O	1	O	POS	,	O	O	O
+42	O	2	O	POS	one	O	O	O
+42	O	3	O	POS	of	O	O	O
+42	O	4	O	POS	the	O	O	O
+42	O	5	O	POS	reasons	O	O	O
+42	PER_PRO	6	O	POS	I	O	O	O
+42	O	7	O	POS	think	O	O	O
+42	O	8	O	POS	so	O	O	O
+42	O	9	O	POS	many	O	O	O
+42	PER_NOM	10	O	POS	Americans	O	O	O
+42	O	11	O	POS	are	O	O	O
+42	O	12	O	POS	worried	O	O	O
+42	O	13	O	POS	about	O	O	O
+42	O	14	O	POS	this	O	O	O
+42	O	15	O	POS	war	O	O	O
+42	O	16	O	POS	and	O	O	O
+42	O	17	O	POS	so	O	O	O
+42	O	18	O	POS	many	O	O	O
+42	PER_NOM	19	O	POS	people	O	O	O
+42	O	20	O	POS	around	O	O	O
+42	O	21	O	POS	the	O	O	O
+42	LOC_NOM	22	O	POS	world	O	O	O
+42	O	23	O	POS	do	O	O	O
+42	O	24	O	POS	n't	O	O	O
+42	O	25	O	POS	want	O	O	O
+42	O	26	O	POS	to	O	O	O
+42	O	27	O	POS	go	O	O	O
+42	O	28	O	POS	is	O	O	O
+42	O	29	O	POS	there	O	O	O
+42	O	30	O	POS	have	O	O	O
+42	O	31	O	POS	been	O	O	O
+42	O	32	O	POS	a	O	O	O
+42	O	33	O	POS	lot	O	O	O
+42	O	34	O	POS	of	O	O	O
+42	O	35	O	POS	problems	O	O	O
+42	O	36	O	POS	with	O	O	O
+42	O	37	O	POS	credibility	O	O	O
+42	O	38	O	POS	from	O	O	O
+42	O	39	O	POS	this	O	O	O
+42	ORG_NOM	40	O	POS	administration	O	O	O
+42	O	41	O	POS	.	O	O	O
+
+19	22	GEN-AFF
+
+37	GPE_PRO	0	O	POS	Our	O	O	O
+37	PER_NOM	1	O	POS	president	O	O	O
+37	O	2	O	POS	has	O	O	O
+37	O	3	O	POS	repeatedly	O	O	O
+37	O	4	O	POS	,	O	O	O
+37	O	5	O	POS	for	O	O	O
+37	O	6	O	POS	example	O	O	O
+37	O	7	O	POS	,	O	O	O
+37	O	8	O	POS	relied	O	O	O
+37	O	9	O	POS	on	O	O	O
+37	O	10	O	POS	a	O	O	O
+37	O	11	O	POS	man	O	O	O
+37	PER_PRO	12	O	POS	whom	O	O	O
+37	PER_PRO	13	O	POS	you	O	O	O
+37	O	14	O	POS	're	O	O	O
+37	O	15	O	POS	aware	O	O	O
+37	O	16	O	POS	,	O	O	O
+37	PER_NAM	17	O	POS	Hussein/Kamel	O	O	O
+37	O	18	O	POS	,	O	O	O
+37	PER_NAM	19	O	POS	Saddam/Hussein	O	O	O
+37	O	20	O	POS	's	O	O	O
+37	PER_NOM	21	O	POS	son-in-law	O	O	O
+37	O	22	O	POS	,	O	O	O
+37	PER_NOM	23	O	POS	leader	O	O	O
+37	O	24	O	POS	of	O	O	O
+37	O	25	O	POS	the	O	O	O
+37	GPE_NAM	26	O	POS	Iraq	O	O	O
+37	O	27	O	POS	arms	O	O	O
+37	ORG_NOM	28	O	POS	program	O	O	O
+37	PER_PRO	29	O	POS	who	O	O	O
+37	O	30	O	POS	defected	O	O	O
+37	O	31	O	POS	for	O	O	O
+37	O	32	O	POS	a	O	O	O
+37	O	33	O	POS	time	O	O	O
+37	O	34	O	POS	.	O	O	O
+
+1	0	ORG-AFF
+19	21	PER-SOC
+23	28	ORG-AFF
+28	26	PART-WHOLE
+
+18	O	0	O	POS	And	O	O	O
+18	O	1	O	POS	gave	O	O	O
+18	GPE_PRO	2	O	POS	us	O	O	O
+18	O	3	O	POS	a	O	O	O
+18	O	4	O	POS	whole	O	O	O
+18	O	5	O	POS	lot	O	O	O
+18	O	6	O	POS	of	O	O	O
+18	O	7	O	POS	information	O	O	O
+18	O	8	O	POS	and	O	O	O
+18	O	9	O	POS	then	O	O	O
+18	O	10	O	POS	went	O	O	O
+18	GPE_NOM	11	O	POS	home	O	O	O
+18	O	12	O	POS	and	O	O	O
+18	PER_PRO	13	O	POS	his	O	O	O
+18	PER_NOM	14	O	POS	father-in-law	O	O	O
+18	O	15	O	POS	killed	O	O	O
+18	PER_PRO	16	O	POS	him	O	O	O
+18	O	17	O	POS	.	O	O	O
+
+14	13	PER-SOC
+
+3	O	0	O	POS	Bad	O	O	O
+3	O	1	O	POS	move	O	O	O
+3	O	2	O	POS	.	O	O	O
+
+15	O	0	O	POS	But	O	O	O
+15	O	1	O	POS	while	O	O	O
+15	PER_PRO	2	O	POS	he	O	O	O
+15	O	3	O	POS	was	O	O	O
+15	GPE_PRO	4	O	POS	here	O	O	O
+15	O	5	O	POS	,	O	O	O
+15	PER_PRO	6	O	POS	he	O	O	O
+15	O	7	O	POS	gave	O	O	O
+15	GPE_PRO	8	O	POS	us	O	O	O
+15	O	9	O	POS	a	O	O	O
+15	O	10	O	POS	whole	O	O	O
+15	O	11	O	POS	lot	O	O	O
+15	O	12	O	POS	of	O	O	O
+15	O	13	O	POS	information	O	O	O
+15	O	14	O	POS	.	O	O	O
+
+2	4	PHYS
+
+8	O	0	O	POS	Gave	O	O	O
+8	GPE_PRO	1	O	POS	us	O	O	O
+8	O	2	O	POS	a	O	O	O
+8	O	3	O	POS	whole	O	O	O
+8	O	4	O	POS	lot	O	O	O
+8	O	5	O	POS	of	O	O	O
+8	O	6	O	POS	information	O	O	O
+8	O	7	O	POS	.	O	O	O
+
+20	O	0	O	POS	Well	O	O	O
+20	O	1	O	POS	,	O	O	O
+20	GPE_PRO	2	O	POS	our	O	O	O
+20	PER_NOM	3	O	POS	president	O	O	O
+20	O	4	O	POS	told	O	O	O
+20	GPE_PRO	5	O	POS	us	O	O	O
+20	O	6	O	POS	that	O	O	O
+20	O	7	O	POS	information	O	O	O
+20	O	8	O	POS	proves	O	O	O
+20	O	9	O	POS	that	O	O	O
+20	O	10	O	POS	the	O	O	O
+20	PER_NOM	11	O	POS	dictator	O	O	O
+20	O	12	O	POS	had	O	O	O
+20	O	13	O	POS	chemical	O	O	O
+20	WEA_NOM	14	O	POS	weapons	O	O	O
+20	O	15	O	POS	,	O	O	O
+20	O	16	O	POS	which	O	O	O
+20	O	17	O	POS	is	O	O	O
+20	O	18	O	POS	true	O	O	O
+20	O	19	O	POS	.	O	O	O
+
+3	2	ORG-AFF
+11	14	ART
+
+33	O	0	O	POS	But	O	O	O
+33	O	1	O	POS	what	O	O	O
+33	GPE_PRO	2	O	POS	we	O	O	O
+33	O	3	O	POS	just	O	O	O
+33	O	4	O	POS	learned	O	O	O
+33	O	5	O	POS	this	O	O	O
+33	O	6	O	POS	week	O	O	O
+33	O	7	O	POS	from	O	O	O
+33	O	8	O	POS	``	O	O	O
+33	ORG_NAM	9	O	POS	Newsweek/''/magazine	O	O	O
+33	O	10	O	POS	which	O	O	O
+33	O	11	O	POS	got	O	O	O
+33	O	12	O	POS	a	O	O	O
+33	O	13	O	POS	hold	O	O	O
+33	O	14	O	POS	of	O	O	O
+33	O	15	O	POS	the	O	O	O
+33	O	16	O	POS	debriefings	O	O	O
+33	O	17	O	POS	,	O	O	O
+33	O	18	O	POS	is	O	O	O
+33	O	19	O	POS	that	O	O	O
+33	PER_PRO	20	O	POS	he	O	O	O
+33	O	21	O	POS	also	O	O	O
+33	O	22	O	POS	told	O	O	O
+33	GPE_PRO	23	O	POS	us	O	O	O
+33	WEA_PRO	24	O	POS	it	O	O	O
+33	O	25	O	POS	was	O	O	O
+33	O	26	O	POS	destroyed	O	O	O
+33	O	27	O	POS	back	O	O	O
+33	O	28	O	POS	in	O	O	O
+33	O	29	O	POS	1995	O	O	O
+33	O	30	O	POS	.	O	O	O
+
+9	O	0	O	POS	Why	O	O	O
+9	O	1	O	POS	has	O	O	O
+9	O	2	O	POS	n't	O	O	O
+9	GPE_PRO	3	O	POS	our	O	O	O
+9	PER_NOM	4	O	POS	president	O	O	O
+9	O	5	O	POS	told	O	O	O
+9	GPE_PRO	6	O	POS	us	O	O	O
+9	O	7	O	POS	that	O	O	O
+9	O	8	O	POS	?	O	O	O
+
+12	O	0	O	POS	Why	O	O	O
+12	O	1	O	POS	do	O	O	O
+12	GPE_PRO	2	O	POS	we	O	O	O
+12	O	3	O	POS	have	O	O	O
+12	O	4	O	POS	to	O	O	O
+12	O	5	O	POS	learn	O	O	O
+12	O	6	O	POS	it	O	O	O
+12	O	7	O	POS	from	O	O	O
+12	O	8	O	POS	``	O	O	O
+12	ORG_NAM	9	O	POS	Newsweek	O	O	O
+12	O	10	O	POS	''	O	O	O
+12	O	11	O	POS	?	O	O	O
+
+12	PER_PRO	0	O	POS	I	O	O	O
+12	O	1	O	POS	do	O	O	O
+12	O	2	O	POS	n't	O	O	O
+12	O	3	O	POS	believe	O	O	O
+12	O	4	O	POS	that	O	O	O
+12	PER_PRO	5	O	POS	he	O	O	O
+12	O	6	O	POS	believed	O	O	O
+12	WEA_PRO	7	O	POS	it	O	O	O
+12	O	8	O	POS	was	O	O	O
+12	O	9	O	POS	all	O	O	O
+12	O	10	O	POS	destroyed	O	O	O
+12	O	11	O	POS	.	O	O	O
+
+28	O	0	O	POS	The	O	O	O
+28	O	1	O	POS	fact	O	O	O
+28	O	2	O	POS	that	O	O	O
+28	O	3	O	POS	this	O	O	O
+28	PER_NOM	4	O	POS	guy	O	O	O
+28	O	5	O	POS	was	O	O	O
+28	O	6	O	POS	such	O	O	O
+28	O	7	O	POS	an	O	O	O
+28	PER_NOM	8	O	POS	idiot	O	O	O
+28	O	9	O	POS	to	O	O	O
+28	O	10	O	POS	go	O	O	O
+28	O	11	O	POS	back	O	O	O
+28	O	12	O	POS	and	O	O	O
+28	O	13	O	POS	let	O	O	O
+28	PER_PRO	14	O	POS	his	O	O	O
+28	PER_NOM	15	O	POS	father-in-law	O	O	O
+28	O	16	O	POS	kill	O	O	O
+28	PER_PRO	17	O	POS	him	O	O	O
+28	O	18	O	POS	shows	O	O	O
+28	PER_PRO	19	O	POS	he	O	O	O
+28	O	20	O	POS	was	O	O	O
+28	O	21	O	POS	n't	O	O	O
+28	O	22	O	POS	the	O	O	O
+28	O	23	O	POS	most	O	O	O
+28	O	24	O	POS	stable	O	O	O
+28	O	25	O	POS	of	O	O	O
+28	PER_NOM	26	O	POS	people	O	O	O
+28	O	27	O	POS	.	O	O	O
+
+15	14	PER-SOC
+
+8	O	0	O	POS	But	O	O	O
+8	O	1	O	POS	the	O	O	O
+8	O	2	O	POS	things	O	O	O
+8	O	3	O	POS	that	O	O	O
+8	O	4	O	POS	...	O	O	O
+8	O	5	O	POS	Good	O	O	O
+8	O	6	O	POS	point	O	O	O
+8	O	7	O	POS	.	O	O	O
+
+14	O	0	O	POS	But	O	O	O
+14	O	1	O	POS	should	O	O	O
+14	O	2	O	POS	n't	O	O	O
+14	GPE_PRO	3	O	POS	our	O	O	O
+14	PER_NOM	4	O	POS	president	O	O	O
+14	O	5	O	POS	have	O	O	O
+14	O	6	O	POS	told	O	O	O
+14	GPE_PRO	7	O	POS	us	O	O	O
+14	O	8	O	POS	what	O	O	O
+14	O	9	O	POS	the	O	O	O
+14	ORG_NAM	10	O	POS	CIA	O	O	O
+14	O	11	O	POS	told	O	O	O
+14	PER_PRO	12	O	POS	him	O	O	O
+14	O	13	O	POS	.	O	O	O
+
+4	3	ORG-AFF
+
+8	O	0	O	POS	Why	O	O	O
+8	O	1	O	POS	do	O	O	O
+8	GPE_PRO	2	O	POS	we	O	O	O
+8	O	3	O	POS	learn	O	O	O
+8	O	4	O	POS	from	O	O	O
+8	O	5	O	POS	``	O	O	O
+8	ORG_NAM	6	O	POS	Newsweek	O	O	O
+8	O	7	O	POS	?	O	O	O
+
+7	O	0	O	POS	``	O	O	O
+7	O	1	O	POS	Should	O	O	O
+7	PER_PRO	2	O	POS	he	O	O	O
+7	O	3	O	POS	level	O	O	O
+7	O	4	O	POS	with	O	O	O
+7	GPE_PRO	5	O	POS	us	O	O	O
+7	O	6	O	POS	?	O	O	O
+
+17	PER_NAM	0	O	POS	Paul	O	O	O
+17	O	1	O	POS	,	O	O	O
+17	O	2	O	POS	look	O	O	O
+17	O	3	O	POS	,	O	O	O
+17	O	4	O	POS	the	O	O	O
+17	O	5	O	POS	problem	O	O	O
+17	O	6	O	POS	is	O	O	O
+17	PER_PRO	7	O	POS	I	O	O	O
+17	O	8	O	POS	would	O	O	O
+17	O	9	O	POS	stipulate	O	O	O
+17	O	10	O	POS	all	O	O	O
+17	O	11	O	POS	four	O	O	O
+17	O	12	O	POS	of	O	O	O
+17	PER_PRO	13	O	POS	us	O	O	O
+17	O	14	O	POS	hates	O	O	O
+17	O	15	O	POS	war	O	O	O
+17	O	16	O	POS	.	O	O	O
+
+6	O	0	O	POS	Any	O	O	O
+6	O	1	O	POS	rational	O	O	O
+6	PER_NOM	2	O	POS	person	O	O	O
+6	O	3	O	POS	hates	O	O	O
+6	O	4	O	POS	war	O	O	O
+6	O	5	O	POS	.	O	O	O
+
+21	PER_NAM	0	O	POS	Bush	O	O	O
+21	O	1	O	POS	is	O	O	O
+21	O	2	O	POS	n't	O	O	O
+21	O	3	O	POS	sitting	O	O	O
+21	O	4	O	POS	in	O	O	O
+21	O	5	O	POS	that	O	O	O
+21	FAC_NAM	6	O	POS	White/House	O	O	O
+21	O	7	O	POS	not	O	O	O
+21	O	8	O	POS	thinking	O	O	O
+21	O	9	O	POS	about	O	O	O
+21	O	10	O	POS	the	O	O	O
+21	O	11	O	POS	body	O	O	O
+21	O	12	O	POS	bags	O	O	O
+21	O	13	O	POS	coming	O	O	O
+21	GPE_PRO	14	O	POS	home	O	O	O
+21	O	15	O	POS	with	O	O	O
+21	O	16	O	POS	great	O	O	O
+21	O	17	O	POS	young	O	O	O
+21	PER_NOM	18	O	POS	men	O	O	O
+21	O	19	O	POS	.	O	O	O
+
+0	6	PHYS
+
+26	PER_NAM	0	O	POS	Clinton	O	O	O
+26	O	1	O	POS	suffered	O	O	O
+26	O	2	O	POS	greatly	O	O	O
+26	O	3	O	POS	over	O	O	O
+26	O	4	O	POS	the	O	O	O
+26	O	5	O	POS	19	O	O	O
+26	PER_NOM	6	O	POS	Rangers	O	O	O
+26	PER_PRO	7	O	POS	that	O	O	O
+26	O	8	O	POS	died	O	O	O
+26	O	9	O	POS	,	O	O	O
+26	PER_PRO	10	O	POS	18	O	O	O
+26	O	11	O	POS	on	O	O	O
+26	O	12	O	POS	the	O	O	O
+26	O	13	O	POS	3rd	O	O	O
+26	O	14	O	POS	of	O	O	O
+26	O	15	O	POS	October	O	O	O
+26	O	16	O	POS	and	O	O	O
+26	PER_NAM	17	O	POS	Matt/Reersen	O	O	O
+26	O	18	O	POS	(	O	O	O
+26	O	19	O	POS	ph	O	O	O
+26	O	20	O	POS	)	O	O	O
+26	O	21	O	POS	three	O	O	O
+26	O	22	O	POS	days	O	O	O
+26	O	23	O	POS	later	O	O	O
+26	O	24	O	POS	.	O	O	O
+
+6	PER_PRO	0	O	POS	I	O	O	O
+6	O	1	O	POS	visited	O	O	O
+6	O	2	O	POS	all	O	O	O
+6	PER_PRO	3	O	POS	their	O	O	O
+6	PER_NOM	4	O	POS	families	O	O	O
+6	O	5	O	POS	.	O	O	O
+
+4	3	PER-SOC
+
+12	PER_PRO	0	O	POS	I	O	O	O
+12	O	1	O	POS	was	O	O	O
+12	O	2	O	POS	at	O	O	O
+12	O	3	O	POS	the	O	O	O
+12	O	4	O	POS	medal	O	O	O
+12	O	5	O	POS	of	O	O	O
+12	O	6	O	POS	honor	O	O	O
+12	O	7	O	POS	ceremony	O	O	O
+12	O	8	O	POS	for	O	O	O
+12	O	9	O	POS	the	O	O	O
+12	PER_NOM	10	O	POS	kids	O	O	O
+12	O	11	O	POS	.	O	O	O
+
+31	O	0	O	POS	Let	O	O	O
+31	PER_PRO	1	O	POS	me	O	O	O
+31	O	2	O	POS	tell	O	O	O
+31	PER_PRO	3	O	POS	you	O	O	O
+31	O	4	O	POS	,	O	O	O
+31	O	5	O	POS	what	O	O	O
+31	O	6	O	POS	trips	O	O	O
+31	O	7	O	POS	to	O	O	O
+31	FAC_NAM	8	O	POS	Walter/Reed	O	O	O
+31	O	9	O	POS	taught	O	O	O
+31	PER_PRO	10	O	POS	me	O	O	O
+31	O	11	O	POS	was	O	O	O
+31	O	12	O	POS	,	O	O	O
+31	O	13	O	POS	that	O	O	O
+31	PER_PRO	14	O	POS	whoever	O	O	O
+31	O	15	O	POS	thought	O	O	O
+31	O	16	O	POS	up	O	O	O
+31	O	17	O	POS	the	O	O	O
+31	O	18	O	POS	term	O	O	O
+31	O	19	O	POS	,	O	O	O
+31	O	20	O	POS	the	O	O	O
+31	O	21	O	POS	law	O	O	O
+31	O	22	O	POS	of	O	O	O
+31	O	23	O	POS	unintended	O	O	O
+31	O	24	O	POS	consequences	O	O	O
+31	O	25	O	POS	it	O	O	O
+31	O	26	O	POS	pertains	O	O	O
+31	O	27	O	POS	to	O	O	O
+31	O	28	O	POS	war	O	O	O
+31	O	29	O	POS	.	O	O	O
+
+1	8	PHYS
+
+7	PER_PRO	0	O	POS	I	O	O	O
+7	O	1	O	POS	am	O	O	O
+7	O	2	O	POS	shook	O	O	O
+7	O	3	O	POS	over	O	O	O
+7	O	4	O	POS	the	O	O	O
+7	O	5	O	POS	aftermath	O	O	O
+7	O	6	O	POS	.	O	O	O
+
+12	O	0	O	POS	But	O	O	O
+12	O	1	O	POS	,	O	O	O
+12	O	2	O	POS	this	O	O	O
+12	PER_NOM	3	O	POS	guy	O	O	O
+12	O	4	O	POS	is	O	O	O
+12	O	5	O	POS	a	O	O	O
+12	PER_NOM	6	O	POS	monster	O	O	O
+12	O	7	O	POS	,	O	O	O
+12	O	8	O	POS	a	O	O	O
+12	PER_NOM	9	O	POS	mini-me	O	O	O
+12	PER_NOM	10	O	POS	Hitler	O	O	O
+12	O	11	O	POS	.	O	O	O
+
+24	PER_PRO	0	O	POS	He	O	O	O
+24	O	1	O	POS	will	O	O	O
+24	O	2	O	POS	blow	O	O	O
+24	O	3	O	POS	a	O	O	O
+24	GPE_NOM	4	O	POS	city	O	O	O
+24	O	5	O	POS	off	O	O	O
+24	O	6	O	POS	the	O	O	O
+24	LOC_NOM	7	O	POS	earth	O	O	O
+24	O	8	O	POS	in	O	O	O
+24	O	9	O	POS	a	O	O	O
+24	O	10	O	POS	minute	O	O	O
+24	O	11	O	POS	if	O	O	O
+24	PER_PRO	12	O	POS	he	O	O	O
+24	O	13	O	POS	can	O	O	O
+24	O	14	O	POS	get	O	O	O
+24	O	15	O	POS	the	O	O	O
+24	O	16	O	POS	hold	O	O	O
+24	O	17	O	POS	of	O	O	O
+24	O	18	O	POS	the	O	O	O
+24	O	19	O	POS	means	O	O	O
+24	O	20	O	POS	to	O	O	O
+24	O	21	O	POS	do	O	O	O
+24	O	22	O	POS	it	O	O	O
+24	O	23	O	POS	.	O	O	O
+
+4	7	PART-WHOLE
+
+22	PER_NAM	0	O	POS	Tom/Andrews	O	O	O
+22	O	1	O	POS	,	O	O	O
+22	PER_PRO	2	O	POS	I	O	O	O
+22	O	3	O	POS	think	O	O	O
+22	GPE_PRO	4	O	POS	we	O	O	O
+22	O	5	O	POS	all	O	O	O
+22	O	6	O	POS	realize	O	O	O
+22	O	7	O	POS	that	O	O	O
+22	O	8	O	POS	a	O	O	O
+22	GPE_NOM	9	O	POS	government	O	O	O
+22	O	10	O	POS	does	O	O	O
+22	O	11	O	POS	n't	O	O	O
+22	O	12	O	POS	go	O	O	O
+22	O	13	O	POS	to	O	O	O
+22	O	14	O	POS	war	O	O	O
+22	O	15	O	POS	a	O	O	O
+22	GPE_NOM	16	O	POS	nation	O	O	O
+22	O	17	O	POS	goes	O	O	O
+22	O	18	O	POS	to	O	O	O
+22	O	19	O	POS	war	O	O	O
+22	O	20	O	POS	.	O	O	O
+
+40	O	0	O	POS	And	O	O	O
+40	O	1	O	POS	so	O	O	O
+40	PER_PRO	2	O	POS	I	O	O	O
+40	O	3	O	POS	would	O	O	O
+40	O	4	O	POS	like	O	O	O
+40	PER_PRO	5	O	POS	you	O	O	O
+40	O	6	O	POS	to	O	O	O
+40	O	7	O	POS	take	O	O	O
+40	O	8	O	POS	a	O	O	O
+40	O	9	O	POS	look	O	O	O
+40	O	10	O	POS	at	O	O	O
+40	O	11	O	POS	the	O	O	O
+40	ORG_NAM	12	O	POS	CNN	O	O	O
+40	O	13	O	POS	\/	O	O	O
+40	O	14	O	POS	``	O	O	O
+40	ORG_NAM	15	O	POS	USA/TODAY	O	O	O
+40	O	16	O	POS	''	O	O	O
+40	O	17	O	POS	\/	O	O	O
+40	ORG_NAM	18	O	POS	Gallup	O	O	O
+40	O	19	O	POS	poll	O	O	O
+40	O	20	O	POS	,	O	O	O
+40	O	21	O	POS	taken	O	O	O
+40	O	22	O	POS	last	O	O	O
+40	O	23	O	POS	week	O	O	O
+40	O	24	O	POS	,	O	O	O
+40	O	25	O	POS	should	O	O	O
+40	GPE_NAM	26	O	POS	U.S.	O	O	O
+40	PER_NOM	27	O	POS	troops	O	O	O
+40	O	28	O	POS	to	O	O	O
+40	O	29	O	POS	go	O	O	O
+40	O	30	O	POS	to	O	O	O
+40	GPE_NAM	31	O	POS	Iraq	O	O	O
+40	O	32	O	POS	to	O	O	O
+40	O	33	O	POS	remove	O	O	O
+40	PER_NAM	34	O	POS	Saddam/Hussein	O	O	O
+40	O	35	O	POS	from	O	O	O
+40	O	36	O	POS	power	O	O	O
+40	O	37	O	POS	.	O	O	O
+
+27	26	ORG-AFF
+27	31	PHYS
+34	31	PHYS
+
+6	O	0	O	POS	Take	O	O	O
+6	O	1	O	POS	a	O	O	O
+6	O	2	O	POS	look	O	O	O
+6	O	3	O	POS	at	O	O	O
+6	O	4	O	POS	it	O	O	O
+6	O	5	O	POS	.	O	O	O
+
+32	O	0	O	POS	Favor	O	O	O
+32	O	1	O	POS	59	O	O	O
+32	O	2	O	POS	%	O	O	O
+32	O	3	O	POS	,	O	O	O
+32	O	4	O	POS	opposed	O	O	O
+32	O	5	O	POS	37	O	O	O
+32	O	6	O	POS	%	O	O	O
+32	O	7	O	POS	,	O	O	O
+32	O	8	O	POS	that	O	O	O
+32	O	9	O	POS	's	O	O	O
+32	O	10	O	POS	a	O	O	O
+32	O	11	O	POS	vastly	O	O	O
+32	O	12	O	POS	larger	O	O	O
+32	O	13	O	POS	support	O	O	O
+32	O	14	O	POS	than	O	O	O
+32	PER_NOM	15	O	POS	President	O	O	O
+32	PER_NAM	16	O	POS	Bush	O	O	O
+32	PER_NOM	17	O	POS	Senior	O	O	O
+32	O	18	O	POS	had	O	O	O
+32	O	19	O	POS	in	O	O	O
+32	O	20	O	POS	getting	O	O	O
+32	O	21	O	POS	the	O	O	O
+32	GPE_NAM	22	O	POS	U.S.	O	O	O
+32	PER_NOM	23	O	POS	troops	O	O	O
+32	O	24	O	POS	out	O	O	O
+32	O	25	O	POS	of	O	O	O
+32	GPE_NAM	26	O	POS	Kuwait	O	O	O
+32	O	27	O	POS	before	O	O	O
+32	O	28	O	POS	that	O	O	O
+32	O	29	O	POS	war	O	O	O
+32	O	30	O	POS	started	O	O	O
+32	O	31	O	POS	.	O	O	O
+
+23	26	PHYS
+23	22	ORG-AFF
+
+9	O	0	O	POS	That	O	O	O
+9	O	1	O	POS	's	O	O	O
+9	O	2	O	POS	pretty	O	O	O
+9	O	3	O	POS	good	O	O	O
+9	O	4	O	POS	support	O	O	O
+9	O	5	O	POS	is	O	O	O
+9	O	6	O	POS	n't	O	O	O
+9	O	7	O	POS	it	O	O	O
+9	O	8	O	POS	?	O	O	O
+
+13	O	0	O	POS	Now	O	O	O
+13	O	1	O	POS	,	O	O	O
+13	PER_NAM	2	O	POS	Bob	O	O	O
+13	O	3	O	POS	,	O	O	O
+13	O	4	O	POS	come	O	O	O
+13	O	5	O	POS	on	O	O	O
+13	PER_PRO	6	O	POS	you	O	O	O
+13	O	7	O	POS	do	O	O	O
+13	O	8	O	POS	n't	O	O	O
+13	O	9	O	POS	really	O	O	O
+13	O	10	O	POS	buy	O	O	O
+13	O	11	O	POS	this	O	O	O
+13	O	12	O	POS	.	O	O	O
+
+14	PER_PRO	0	O	POS	I	O	O	O
+14	O	1	O	POS	mean	O	O	O
+14	O	2	O	POS	,	O	O	O
+14	O	3	O	POS	listen	O	O	O
+14	O	4	O	POS	,	O	O	O
+14	O	5	O	POS	this	O	O	O
+14	O	6	O	POS	is	O	O	O
+14	O	7	O	POS	the	O	O	O
+14	O	8	O	POS	oldest	O	O	O
+14	O	9	O	POS	trick	O	O	O
+14	O	10	O	POS	in	O	O	O
+14	O	11	O	POS	the	O	O	O
+14	O	12	O	POS	book	O	O	O
+14	O	13	O	POS	.	O	O	O
+
+28	PER_PRO	0	O	POS	You	O	O	O
+28	O	1	O	POS	can	O	O	O
+28	O	2	O	POS	have	O	O	O
+28	O	3	O	POS	a	O	O	O
+28	O	4	O	POS	general	O	O	O
+28	O	5	O	POS	question	O	O	O
+28	O	6	O	POS	like	O	O	O
+28	O	7	O	POS	this	O	O	O
+28	O	8	O	POS	that	O	O	O
+28	O	9	O	POS	could	O	O	O
+28	O	10	O	POS	mean	O	O	O
+28	O	11	O	POS	anything	O	O	O
+28	O	12	O	POS	and	O	O	O
+28	O	13	O	POS	ask	O	O	O
+28	PER_NOM	14	O	POS	people	O	O	O
+28	O	15	O	POS	and	O	O	O
+28	PER_PRO	16	O	POS	they	O	O	O
+28	O	17	O	POS	give	O	O	O
+28	PER_PRO	18	O	POS	you	O	O	O
+28	O	19	O	POS	what	O	O	O
+28	O	20	O	POS	comes	O	O	O
+28	O	21	O	POS	off	O	O	O
+28	O	22	O	POS	the	O	O	O
+28	O	23	O	POS	top	O	O	O
+28	O	24	O	POS	of	O	O	O
+28	PER_PRO	25	O	POS	their	O	O	O
+28	O	26	O	POS	head	O	O	O
+28	O	27	O	POS	.	O	O	O
+
+22	O	0	O	POS	But	O	O	O
+22	O	1	O	POS	,	O	O	O
+22	O	2	O	POS	ask	O	O	O
+22	PER_PRO	3	O	POS	them	O	O	O
+22	O	4	O	POS	another	O	O	O
+22	O	5	O	POS	question	O	O	O
+22	O	6	O	POS	,	O	O	O
+22	O	7	O	POS	ask	O	O	O
+22	PER_PRO	8	O	POS	them	O	O	O
+22	O	9	O	POS	what	O	O	O
+22	PER_PRO	10	O	POS	they	O	O	O
+22	O	11	O	POS	think	O	O	O
+22	O	12	O	POS	about	O	O	O
+22	O	13	O	POS	spending	O	O	O
+22	O	14	O	POS	$	O	O	O
+22	O	15	O	POS	1.3	O	O	O
+22	O	16	O	POS	trillion	O	O	O
+22	O	17	O	POS	in	O	O	O
+22	O	18	O	POS	destroying	O	O	O
+22	O	19	O	POS	this	O	O	O
+22	O	20	O	POS	economy	O	O	O
+22	O	21	O	POS	.	O	O	O
+
+42	O	0	O	POS	Ask	O	O	O
+42	PER_PRO	1	O	POS	them	O	O	O
+42	O	2	O	POS	about	O	O	O
+42	O	3	O	POS	going	O	O	O
+42	O	4	O	POS	and	O	O	O
+42	O	5	O	POS	not	O	O	O
+42	O	6	O	POS	just	O	O	O
+42	O	7	O	POS	a	O	O	O
+42	O	8	O	POS	war	O	O	O
+42	O	9	O	POS	,	O	O	O
+42	PER_NAM	10	O	POS	Bob	O	O	O
+42	O	11	O	POS	,	O	O	O
+42	O	12	O	POS	but	O	O	O
+42	O	13	O	POS	an	O	O	O
+42	O	14	O	POS	invasion	O	O	O
+42	O	15	O	POS	and	O	O	O
+42	O	16	O	POS	occupying	O	O	O
+42	O	17	O	POS	for	O	O	O
+42	O	18	O	POS	up	O	O	O
+42	O	19	O	POS	to	O	O	O
+42	O	20	O	POS	10	O	O	O
+42	O	21	O	POS	years	O	O	O
+42	O	22	O	POS	a	O	O	O
+42	O	23	O	POS	sovereign	O	O	O
+42	PER_NAM	24	O	POS	Arab	O	O	O
+42	GPE_NOM	25	O	POS	nation	O	O	O
+42	O	26	O	POS	in	O	O	O
+42	O	27	O	POS	the	O	O	O
+42	O	28	O	POS	midst	O	O	O
+42	O	29	O	POS	of	O	O	O
+42	LOC_PRO	30	O	POS	one	O	O	O
+42	O	31	O	POS	of	O	O	O
+42	O	32	O	POS	the	O	O	O
+42	O	33	O	POS	most	O	O	O
+42	O	34	O	POS	distable	O	O	O
+42	O	35	O	POS	and	O	O	O
+42	O	36	O	POS	volatile	O	O	O
+42	LOC_NOM	37	O	POS	regions	O	O	O
+42	O	38	O	POS	in	O	O	O
+42	O	39	O	POS	the	O	O	O
+42	LOC_NOM	40	O	POS	world	O	O	O
+42	O	41	O	POS	.	O	O	O
+
+37	40	PART-WHOLE
+25	30	PART-WHOLE
+
+10	O	0	O	POS	Ask	O	O	O
+10	PER_PRO	1	O	POS	them	O	O	O
+10	O	2	O	POS	how	O	O	O
+10	PER_PRO	3	O	POS	they	O	O	O
+10	O	4	O	POS	feel	O	O	O
+10	O	5	O	POS	about	O	O	O
+10	O	6	O	POS	getting	O	O	O
+10	O	7	O	POS	bogged	O	O	O
+10	O	8	O	POS	down	O	O	O
+10	O	9	O	POS	.	O	O	O
+
+10	O	0	O	POS	Well	O	O	O
+10	O	1	O	POS	,	O	O	O
+10	PER_PRO	2	O	POS	I	O	O	O
+10	O	3	O	POS	've	O	O	O
+10	O	4	O	POS	seen	O	O	O
+10	O	5	O	POS	some	O	O	O
+10	O	6	O	POS	of	O	O	O
+10	O	7	O	POS	the	O	O	O
+10	O	8	O	POS	figures	O	O	O
+10	O	9	O	POS	.	O	O	O
+
+17	O	0	O	POS	Once	O	O	O
+17	PER_PRO	1	O	POS	you	O	O	O
+17	O	2	O	POS	start	O	O	O
+17	O	3	O	POS	telling	O	O	O
+17	GPE_NOM	4	O	POS	Americans	O	O	O
+17	O	5	O	POS	the	O	O	O
+17	O	6	O	POS	story	O	O	O
+17	O	7	O	POS	,	O	O	O
+17	O	8	O	POS	--	O	O	O
+17	O	9	O	POS	the	O	O	O
+17	ORG_NOM	10	O	POS	administration	O	O	O
+17	O	11	O	POS	refuse	O	O	O
+17	O	12	O	POS	today	O	O	O
+17	O	13	O	POS	tell	O	O	O
+17	GPE_PRO	14	O	POS	us	O	O	O
+17	O	15	O	POS	story	O	O	O
+17	O	16	O	POS	.	O	O	O
+
+47	ORG_PRO	0	O	POS	They	O	O	O
+47	O	1	O	POS	're	O	O	O
+47	O	2	O	POS	not	O	O	O
+47	O	3	O	POS	coming	O	O	O
+47	O	4	O	POS	forward	O	O	O
+47	O	5	O	POS	and	O	O	O
+47	O	6	O	POS	telling	O	O	O
+47	GPE_PRO	7	O	POS	us	O	O	O
+47	O	8	O	POS	what	O	O	O
+47	O	9	O	POS	the	O	O	O
+47	O	10	O	POS	risks	O	O	O
+47	O	11	O	POS	are	O	O	O
+47	O	12	O	POS	,	O	O	O
+47	O	13	O	POS	what	O	O	O
+47	O	14	O	POS	the	O	O	O
+47	O	15	O	POS	costs	O	O	O
+47	O	16	O	POS	are	O	O	O
+47	O	17	O	POS	,	O	O	O
+47	O	18	O	POS	how	O	O	O
+47	O	19	O	POS	many	O	O	O
+47	O	20	O	POS	years	O	O	O
+47	GPE_PRO	21	O	POS	we	O	O	O
+47	O	22	O	POS	might	O	O	O
+47	O	23	O	POS	be	O	O	O
+47	O	24	O	POS	in	O	O	O
+47	O	25	O	POS	,	O	O	O
+47	O	26	O	POS	the	O	O	O
+47	O	27	O	POS	possibility	O	O	O
+47	O	28	O	POS	of	O	O	O
+47	GPE_PRO	29	O	POS	us	O	O	O
+47	O	30	O	POS	getting	O	O	O
+47	O	31	O	POS	bogged	O	O	O
+47	O	32	O	POS	down	O	O	O
+47	O	33	O	POS	,	O	O	O
+47	O	34	O	POS	because	O	O	O
+47	O	35	O	POS	what	O	O	O
+47	PER_NOM	36	O	POS	Americans	O	O	O
+47	O	37	O	POS	know	O	O	O
+47	O	38	O	POS	that	O	O	O
+47	O	39	O	POS	,	O	O	O
+47	PER_PRO	40	O	POS	they	O	O	O
+47	O	41	O	POS	're	O	O	O
+47	O	42	O	POS	opposed	O	O	O
+47	O	43	O	POS	to	O	O	O
+47	O	44	O	POS	this	O	O	O
+47	O	45	O	POS	war	O	O	O
+47	O	46	O	POS	.	O	O	O
+
+22	O	0	O	POS	The	O	O	O
+22	O	1	O	POS	more	O	O	O
+22	PER_PRO	2	O	POS	they	O	O	O
+22	O	3	O	POS	learn	O	O	O
+22	O	4	O	POS	about	O	O	O
+22	O	5	O	POS	this	O	O	O
+22	O	6	O	POS	invasion	O	O	O
+22	O	7	O	POS	,	O	O	O
+22	O	8	O	POS	the	O	O	O
+22	O	9	O	POS	more	O	O	O
+22	PER_PRO	10	O	POS	they	O	O	O
+22	O	11	O	POS	learn	O	O	O
+22	O	12	O	POS	about	O	O	O
+22	O	13	O	POS	this	O	O	O
+22	O	14	O	POS	occupation	O	O	O
+22	O	15	O	POS	,	O	O	O
+22	O	16	O	POS	the	O	O	O
+22	O	17	O	POS	less	O	O	O
+22	PER_PRO	18	O	POS	they	O	O	O
+22	O	19	O	POS	support	O	O	O
+22	O	20	O	POS	it	O	O	O
+22	O	21	O	POS	.	O	O	O
+
+8	PER_NAM	0	O	POS	Tom	O	O	O
+8	O	1	O	POS	,	O	O	O
+8	PER_PRO	2	O	POS	you	O	O	O
+8	O	3	O	POS	know	O	O	O
+8	O	4	O	POS	what	O	O	O
+8	PER_NOM	5	O	POS	liberals	O	O	O
+8	O	6	O	POS	want	O	O	O
+8	O	7	O	POS	.	O	O	O
+
+14	PER_PRO	0	O	POS	They	O	O	O
+14	O	1	O	POS	do	O	O	O
+14	O	2	O	POS	n't	O	O	O
+14	O	3	O	POS	want	O	O	O
+14	O	4	O	POS	a	O	O	O
+14	O	5	O	POS	smoking	O	O	O
+14	O	6	O	POS	gun	O	O	O
+14	O	7	O	POS	,	O	O	O
+14	PER_PRO	8	O	POS	they	O	O	O
+14	O	9	O	POS	want	O	O	O
+14	O	10	O	POS	a	O	O	O
+14	O	11	O	POS	smoking	O	O	O
+14	GPE_NOM	12	O	POS	city	O	O	O
+14	O	13	O	POS	.	O	O	O
+
+37	O	0	O	POS	The	O	O	O
+37	PER_NAM	1	O	POS	Clinton	O	O	O
+37	PER_NOM	2	O	POS	people	O	O	O
+37	O	3	O	POS	all	O	O	O
+37	O	4	O	POS	say	O	O	O
+37	O	5	O	POS	...	O	O	O
+37	O	6	O	POS	That	O	O	O
+37	O	7	O	POS	's	O	O	O
+37	O	8	O	POS	going	O	O	O
+37	O	9	O	POS	to	O	O	O
+37	O	10	O	POS	have	O	O	O
+37	O	11	O	POS	to	O	O	O
+37	O	12	O	POS	be	O	O	O
+37	O	13	O	POS	last	O	O	O
+37	O	14	O	POS	war	O	O	O
+37	O	15	O	POS	,	O	O	O
+37	O	16	O	POS	unfair	O	O	O
+37	O	17	O	POS	and	O	O	O
+37	O	18	O	POS	unfortunate	O	O	O
+37	O	19	O	POS	as	O	O	O
+37	O	20	O	POS	that	O	O	O
+37	O	21	O	POS	is	O	O	O
+37	O	22	O	POS	,	O	O	O
+37	PER_PRO	23	O	POS	I	O	O	O
+37	O	24	O	POS	am	O	O	O
+37	O	25	O	POS	sorry	O	O	O
+37	O	26	O	POS	,	O	O	O
+37	PER_PRO	27	O	POS	they	O	O	O
+37	O	28	O	POS	're	O	O	O
+37	O	29	O	POS	telling	O	O	O
+37	PER_PRO	30	O	POS	us	O	O	O
+37	PER_PRO	31	O	POS	we	O	O	O
+37	O	32	O	POS	're	O	O	O
+37	O	33	O	POS	out	O	O	O
+37	O	34	O	POS	of	O	O	O
+37	O	35	O	POS	time	O	O	O
+37	O	36	O	POS	.	O	O	O
+
+18	O	0	O	POS	Former	O	O	O
+18	PER_NOM	1	O	POS	Congressman	O	O	O
+18	O	2	O	POS	,	O	O	O
+18	PER_NAM	3	O	POS	Bob/Dornan	O	O	O
+18	O	4	O	POS	from	O	O	O
+18	GPE_NAM	5	O	POS	California	O	O	O
+18	O	6	O	POS	...	O	O	O
+18	PER_PRO	7	O	POS	You	O	O	O
+18	O	8	O	POS	're	O	O	O
+18	O	9	O	POS	not	O	O	O
+18	O	10	O	POS	going	O	O	O
+18	O	11	O	POS	to	O	O	O
+18	O	12	O	POS	get	O	O	O
+18	O	13	O	POS	a	O	O	O
+18	O	14	O	POS	smoking	O	O	O
+18	GPE_NOM	15	O	POS	city	O	O	O
+18	O	16	O	POS	.	O	O	O
+
+3	5	GEN-AFF
+

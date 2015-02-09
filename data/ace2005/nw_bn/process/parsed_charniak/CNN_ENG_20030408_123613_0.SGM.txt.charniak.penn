@@ -1,0 +1,28 @@
+(S1 (FRAG (X (SYM \*)) (X (SYM \*)) (NP (NP (NNP hamburg)) (, ,) (NP (NNP germany))) (. .)))
+
+(S1 (S (NP (NNP central) (NNP command)) (VP (VBZ says) (SBAR (S (NP (DT the) (NN iraqis)) (VP (VBD shot) (PRT (RP down)) (NP (DT an) (JJ a-10) (NN tank) (NN killer)) (NP (NN today)))))) (. .)))
+
+(S1 (S (NP (NNS officials)) (VP (VBP report) (SBAR (IN that) (S (NP (DT the) (NN plane)) (VP (AUX was) (ADVP (RB apparently)) (ADVP (RB down)) (PP (IN with) (NP (NP (DT a) (NN surface)) (PP (TO to) (NP (NN air) (NN missile))))))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (VBD happened) (PP (IN near) (NP (NP (DT the) (JJ baghdad) (NN airport)) (SBAR (WHNP (WDT which)) (S (VP (AUX is) (PP (IN in) (NP (JJ u.s.) (NNS hands))))))))) (. .)))
+
+(S1 (S (NP (NN pilot)) (VP (VBD said) (SBAR (S (NP (PRP they)) (VP (AUX 're) (VP (VBG doing) (ADVP (RB well))))))) (. .)))
+
+(S1 (NP (DT all) (NN right) (. .)))
+
+(S1 (S (NP (NNP u.s.) (NNS marines)) (VP (VP (VBD entered) (NP (JJ southeastern) (NN baghdad)) (NP (NN today))) (CC and) (VP (VBD found) (NP (NP (NNS dozens)) (PP (IN of) (NP (NN chemical) (NNS suits) (NX (NX (NNS masks)) (CC and) (NX (NN atropine) (NNS injecters)))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (VBD found) (NP (PRP it)) (PP (IN at) (NP (DT an) (JJ industrial) (NN complex)))) (. .)))
+
+(S1 (S (NP (NNP material)) (VP (AUX has) (VP (AUX been) (NP (RB haiftly) (VB abandon)))) (. .)))
+
+(S1 (S (NP (DT the) (JJ iraqi) (NN government)) (VP (VBZ reports) (SBAR (S (NP (CD 1252) (NNS civilians)) (VP (AUX have) (VP (AUX been) (VP (VBN killed) (PP (IN in) (NP (DT the) (NN war))))))))) (. .)))
+
+(S1 (S (NP (DT these) (NNS figures)) (VP (VBD come) (PP (TO to) (NP (PRP us))) (PP (IN from) (NP (NNP abu) (JJ dhabi) (NN television)))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (MD can) (RB not) (VP (AUX be) (VP (VBN verified) (PP (IN by) (NP (NNP cnn)))))) (. .)))
+
+(S1 (S (NP (DT the) (JJ iraqi) (NN government)) (VP (AUX has) (RB not) (VP (VBN released) (NP (NP (DT the) (NN information)) (CC or) (NP (JJ military) (NNS casualties))) (ADVP (IN at) (DT all)))) (. .)))
+
+(S1 (FRAG (ADVP (RB now)) (RB back) (PP (TO to) (NP (NP (NNP wolf) (NN blitzer)) (CC and) (NP (NP (PRP$ our) (VBG continuing) (NN coverage)) (PP (IN of) (NP (NP (DT the) (NN war)) (PP (IN in) (NP (NNP iraq)))))))) (. .)))
+

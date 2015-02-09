@@ -1,0 +1,22 @@
+(S1 (S (NP (NP (NP (NNP ATHENS)) (, ,) (NP (NNP Greece))) (PRN (-LRB- -LRB-) (NP (NNP AP)) (-RRB- -RRB-)) (NP (NP (DT A) (JJ retired) (NN navy) (NN officer)) (VP (VBG facing) (NP (NP (NN life)) (PP (IN in) (NP (NN prison)))) (PP (IN over) (NP (DT a) (JJ failed) (NN effort) (S (VP (TO to) (VP (VB protect) (NP (NNP Kurdish) (NN rebel) (NN leader) (NNP Abdullah) (NNP Ocalan))))))))) (, ,)) (VP (VBD told) (NP (DT a) (NN court)) (NP (NNP Thursday)) (SBAR (S (NP (PRP he)) (VP (VBD felt) (NP (NN remorse)) (PP (IN for) (NP (PRP$ his) (NN part))) (PP (IN in) (NP (DT the) (CD 1999) (NN plot))))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (PRP I)) (VP (AUX have) (NP (DT a) (JJ guilty) (NN conscience)))) (, ,) ('' '') (NP (NNP Andonis) (NNP Naxakis)) (VP (VBD said) (PP (IN during) (NP (PRP$ his) (JJ two-hour) (NN testimony)))) (. .)))
+
+(S1 (S (NP (NNP Naxakis)) (VP (AUX is) (NP (NP (CD one)) (PP (IN of) (NP (NP (CD 13) (NNS people)) (PP (IN on) (NP (NN trial)))))) (PP (IN for) (S (VP (VBG bringing) (NP (DT the) (JJ fugitive) (NN guerrilla) (NN leader)) (PP (TO to) (NP (NNP Greece))))))) (. .)))
+
+(S1 (S (NP (NNP Ocalan)) (VP (AUX was) (VP (VBN moved) (PP (IN by) (NP (DT the) (NN government))) (PP (TO to) (NP (NP (PRP$ its) (NN embassy) (NN compound)) (PP (IN in) (NP (NP (NNP Kenya)) (, ,) (SBAR (WHADVP (WRB where)) (S (NP (PRP he)) (VP (AUX was) (VP (VBN captured) (PP (IN by) (NP (JJ Turkish) (NNS commandos))))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (JJ retired) (JJ Greek) (NN officer)) (VP (VBD said) (SBAR (S (NP (PRP he)) (VP (AUX had) (VP (AUX been) (VP (VBG trying) (S (VP (TO to) (VP (VB get) (NP (NNP Ocalan)) (PP (TO to) (NP (DT The) (NNP Netherlands)))))) (, ,) (ADVP (NN home) (PP (TO to) (NP (DT a) (JJ large) (JJ Kurdish) (NN community)))))))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (VBD claimed) (SBAR (S (NP (PRP he)) (VP (AUX had) (VP (AUX been) (VP (VBN manipulated) (PP (IN by) (NP (DT the) (NN government))))))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (PRP I)) (VP (VBP believe) (SBAR (S (NP (PRP I)) (VP (AUX was) (ADVP (RB unwittingly)) (VP (VBN used) (PP (IN as) (NP (NN bait))) (PP (IN for) (NP (NP (PRP$ its) (JJ disgraceful) (NN plan)) (: ...) (NP (NP (DT an) (VBN organized) (NN move)) (PP (IN by) (NP (DT the) (NN government)))))) (S (VP (TO to) (VP (VB hand) (NP (NNP Ocalan)) (PRT (RP over)) (PP (TO to) (NP (NNP Turkey)))))))))))) (, ,) ('' '') (NP (PRP he)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (NP (NNPS Naxakis) (CC and) (CD two)) (PP (IN of) (NP (NP (NNP Ocalan) (POS 's)) (JJ Kurdish) (NNS associates)))) (VP (AUX are) (VP (AUXG being) (VP (VBD tried) (PP (IN on) (NP (NP (JJ criminal) (NNS charges)) (PP (IN of) (NP (JJ endangering) (JJ national) (NN security)))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Ocalan)) (, ,) (VP (AUXG being) (VP (VBD tried) (PP (IN in) (NP (NN absentia))))) (, ,)) (VP (AUX was) (VP (VBN indicted) (PP (IN for) (S (VP (VBG entering) (NP (DT the) (NN country)) (ADVP (RB illegally)) (, ,) (NP (DT a) (NN misdemeanor))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Ocalan)) (, ,) (NP (NP (NN leader)) (PP (IN of) (NP (NP (DT the) (NNP Kurdistan) (NNPS Workers) (NNP Party)) (, ,) (CC or) (NP (NNP PKK))))) (, ,)) (VP (AUX is) (VP (VBG serving) (NP (DT a) (NN life) (NN sentence)) (PP (IN in) (NP (NNP Turkey))) (PP (IN for) (S (VP (VBG leading) (NP (NP (DT a) (JJ 15-year) (NN insurgency)) (PP (IN against) (NP (DT the) (NN country))) (SBAR (WHNP (WDT that)) (S (VP (VBD left) (S (NP (CD 37,000) (NNS people)) (ADJP (JJ dead)))))))))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (AUX is) (VP (AUXG being) (VP (VBD tried) (PP (IN in) (NP (NNP Greece))) (PP (IN in) (NP (NN absentia)))))) (. .)))
+

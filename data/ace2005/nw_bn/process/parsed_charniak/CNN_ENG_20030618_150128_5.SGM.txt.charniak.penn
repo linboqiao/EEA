@@ -1,0 +1,8 @@
+(S1 (S (NP (NP (DT the) (NN head)) (PP (IN of) (NP (NP (DT the) (JJ catholic) (NN church)) (PP (IN in) (NP (NAC (NNP phoenix) (, ,) (NNP arizona) (, ,)) (NN bishop) (NNP thomas) (NNP o'brien)))))) (VP (AUX has) (VP (VBN resigned))) (. .)))
+
+(S1 (S (NP (NP (QP (RB just) (CD one)) (NN day)) (PP (IN after) (NP (AUXG being)))) (VP (VBN charged) (PP (IN with) (NP (DT a) (NN felony)))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX is) (VP (VBN accused) (PP (IN of) (S (VP (VBG leaving) (NP (NP (DT the) (NN scene)) (PP (IN of) (NP (DT a) (JJ fatal) (NN accident))))))))) (. .)))
+
+(S1 (S (NP (RBR earlier) (DT this) (NN month)) (NP (NNP o'brien)) (ADVP (RB narrowly)) (VP (VBD escaped) (NP (NP (NN prosecution)) (PP (IN over) (NP (NP (PRP$ his) (NN handling)) (PP (IN of) (NP (NP (JJ sexual) (NN abuse) (NNS allegations)) (PP (IN against) (NP (NNS priests))))))))) (. .)))
+

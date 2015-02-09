@@ -1,0 +1,20 @@
+(S1 (S (NP (PRP it)) (VP (AUX is) (NP (NP (CD 11:00) (RB a.m.)) (PP (IN on) (NP (DT the) (JJ east) (NN coast))))) (. .)))
+
+(S1 (S (PP (IN from) (NP (NP (DT the) (NNP cnn) (NN center)) (PP (IN in) (NP (NNP atlanta))))) (, ,) (NP (PRP i)) (VP (AUX 'm) (NP (NNP fred) (NNP fred))) (. .)))
+
+(S1 (NP (NP (DT a) (JJ first)) (ADVP (RB here)) (PP (IN on) (S (`` ``) (S (NP (NNP cnn)) (VP (VBP live) (NP (NN today)))) (, ,) ('' '') (NP (NP (DT a) (JJ spiraling) (NN cycle)) (PP (IN of) (NP (NN violence)))) (VP (VBG threatening) (NP (DT the) (JJS latest) (JJ middle) (JJ east) (NN peace) (NNS efforts))) (. .)))))
+
+(S1 (S (NP (DT this) (NN morning) (NN hamas)) (VP (VBZ vows) (NP (NN revenge)) (PP (IN for) (NP (DT an) (JJ israeli) (NN missile) (NN attack)))) (. .)))
+
+(S1 (S (NP (JJ israeli) (NN hospital) (NN gun) (NNS ships)) (VP (VBD fired) (PP (IN on) (NP (DT a) (NN jeep))) (PP (IN in) (NP (NNP gaza)))) (. .)))
+
+(S1 (S (NP (DT the) (NN strike)) (VP (VBD targeted) (NP (DT a) (JJ hamas) (NN leader))) (. .)))
+
+(S1 (S (CC and) (NP (CD two) (JJ other) (NNS people)) (VP (AUX were) (VP (VBN killed) (PP (VBG including) (NP (DT a) (NN mother) (CC and) (NN bodyguard))))) (. .)))
+
+(S1 (S (NP (NNP mike) (NNP hanna)) (VP (AUX is) (VP (VBG tracking) (NP (NP (DT the) (JJS latest) (NNS developments)) (PP (IN from) (NP (EX there)))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (VBZ joins) (NP (PRP us)) (ADVP (RB live)) (PP (IN with) (NP (DT the) (NNS details)))) (. .)))
+
+(S1 (NP (NNP mike) (. ?)))
+

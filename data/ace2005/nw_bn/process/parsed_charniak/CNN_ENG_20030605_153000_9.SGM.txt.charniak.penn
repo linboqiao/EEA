@@ -1,0 +1,30 @@
+(S1 (S (VP (VB let) (S (NP (PRP 's)) (VP (VB look) (ADVP (RB now)) (PP (IN at) (NP (NP (DT a) (JJ potential) (VBG rising) (NN star)) (PP (IN from) (NP (NP (DT the) (JJ next) (NN generation)) (PP (IN in) (NP (DT the) (NNS sports) (NN realm)))))))))) (. .)))
+
+(S1 (S (NP (DT the) (JJ national) (NN basketball) (NN association)) (VP (VBZ holds) (NP (NP (PRP$ its) (NN draft)) (PP (IN on) (NP (NP (DT the) (JJ 26th)) (PP (IN of) (NP (DT this) (NN month))))))) (. .)))
+
+(S1 (S (NP (NP (NNP ohio) (JJ high) (NN school) (NN player)) (, ,) (NP (NP (JJ high) (NN school)) (PRN (, ,) (S (NP (PRP we)) (VP (VBD said))) (, ,)) (NP (JJ lebron) (NNP james))) (, ,)) (VP (MD will) (VP (AUX be) (NP (DT the) (JJ top) (NN dog)))) (. .)))
+
+(S1 (S (NP (NP (JJS most)) (VP (ADVP (RB likely)) (VBN drafted) (PP (IN by) (NP (DT the) (NN cleveland) (NNS cavaliers))))) (VP (VBP get) (NP (DT the) (JJ first) (NN pick)) (PP (IN because) (IN of) (NP (PRP$ their) (NN status)))) (. .)))
+
+(S1 (S (NP (NNP james)) (ADVP (RB already)) (VP (VBD scored) (ADVP (RB back)) (PP (IN in) (NP (DT a) (ADJP (QP ($ $) (CD 90) (CD million))) (NNP nike) (NN deal)))) (. .)))
+
+(S1 (NP (QP ($ $) (CD 90) (CD million)) (. .)))
+
+(S1 (S (CC but) (SBAR (WHADVP (WRB when)) (S (NP (JJ bafblgt) (NN ball) (NNS fans)) (VP (AUX were) (VP (VBN asked) (PP (IN in) (NP (DT a) (NNP cnn) (CD \/) (`` ``) (NNP usa) (NN today) ('' '') (NN poll))) (SBAR (WHADJP (RB just) (WRB how) (JJ good)) (S (NP (NNP james)) (VP (MD will) (VP (AUX be))))))))) (, ,) (NP (CD 18) (NN %)) (VP (VBP say) (SBAR (S (NP (PRP he)) (VP (MD 'll) (VP (AUX be) (PP (IN among) (NP (DT the) (JJS best)))))))) (. .)))
+
+(S1 (NP (JJ slim) (NN margin) (. .)))
+
+(S1 (S (NP (JJS most)) (VP (VBP think) (SBAR (S (NP (PRP he)) (VP (MD 'll) (VP (AUX be) (ADJP (RB very) (JJ good))))))) (. .)))
+
+(S1 (S (NP (DT another) (CD 18) (NN %)) (VP (AUX are) (ADJP (JJ convinced) (SBAR (S (NP (PRP he)) (VP (MD 'll) (VP (AUX be) (UCP (ADJP (RB just) (JJ average)) (CC or) (PP (IN below))))))))) (. .)))
+
+(S1 (NP (JJ skeptical) (NNS fans) (. .)))
+
+(S1 (S (PP (IN as) (PP (IN for) (NP (NP (DT that) (ADJP (QP ($ $) (CD 90) (CD million))) (NN shoe) (NN contract)) (PP (IN with) (NP (NNP nike)))))) (, ,) (NP (PRP it)) (VP (MD may) (VP (AUX be) (NP (NP (DT a) (JJ good) (NN deal)) (PP (IN for) (NP (NNP james)))))) (. .)))
+
+(S1 (NP (NP (DT no) (NN doubt)) (PP (IN about) (NP (DT that))) (. .)))
+
+(S1 (S (NP (NP (CD 33) (NN %)) (PP (IN of) (NP (NN basketball) (NNS fans)))) (VP (VBP see) (NP (PRP it)) (PP (IN as) (NP (NP (DT a) (JJ bad) (NN deal)) (PP (IN for) (NP (NNP nike)))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (MD must) (VP (VB know) (NP (NP (NN something)) (PP (IN about) (NP (NNS shoes)))))) (. .)))
+

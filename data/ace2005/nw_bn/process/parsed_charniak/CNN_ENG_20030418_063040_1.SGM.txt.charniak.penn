@@ -1,0 +1,24 @@
+(S1 (S (NP (NNP general) (NNP brooks)) (VP (VBG talking) (NP (QP (RB about) (CD three)) (JJ major) (NNS points))) (. .)))
+
+(S1 (S (NP (CD one)) (VP (AUX is) (NP (NP (DT the) (NN capture)) (PP (IN of) (NP (NN number) (CD 24)))) (SBAR (IN as) (S (NP (PRP it)) (VP (AUX 's) (VP (VBN described) (, ,) (NP (NP (NN samir)) (SBAR (WHNP (WP who)) (S (VP (AUX is) (ADJP (JJ responsible) (PP (IN for) (NP (NP (DT the) (JJ baghdad) (NN district)) (, ,) (SBAR (S (NP (NNS indications)) (VP (AUX are) (NP (NP (DT the) (NNS kurds)) (PP (IN in) (NP (NP (DT the) (NN north)) (VP (VBD handed) (NP (DT this) (NN man)) (PRT (RP over)) (SBAR (IN so) (S (NP (DT this)) (VP (AUX is) (NP (NN number) (CD 4)) (PP (IN out) (PP (IN of) (NP (NP (DT that) (NN playing) (NN card) (NN deck)) (PP (IN of) (NP (CD 55)))))) (SBAR (IN that) (S (NP (DT the) (NNP u.s.)) (VP (AUX is) (ADJP (IN after))))))))))))))))))))))))))) (. .)))
+
+(S1 (NP (NP (JJ top) (NNS leaders)) (PP (IN in) (NP (NNP iraq))) (. .)))
+
+(S1 (S (ADVP (RB also)) (NP (NP (DT that) (NN bomb) (NN site)) (PP (IN in) (NP (NN baghdad)))) (VP (VBD hit) (NP (NP (RB about) (DT a) (NN week)) (CC and) (NP (DT a) (NN half))) (ADVP (RB ago)) (, ,) (NP (DT the) (JJ mansor) (NN district))) (. .)))
+
+(S1 (S (S (S (NP (DT no) (NNS remains)) (VP (VBN identified) (ADVP (RB just) (RB yet)))) (, ,) (NP (JJ general) (NNP brooks)) (VP (VBZ says))) (, ,) (CC but) (S (NP (RB only) (DT the) (JJ initial) (NNS surveys)) (VP (AUX have) (VP (AUX been) (VP (VBN completed) (ADVP (RB so) (RB far)))))) (. .)))
+
+(S1 (S (NP (EX there)) (VP (AUX is) (NP (JJ strong) (NN speculation) (SBAR (IN that) (S (NP (FW saddam) (FW hussein)) (VP (VP (MD may) (VP (AUX be) (NP (NP (PRP$ his) (CD two) (NNS sons)) (VP (AUX were) (PP (IN inside) (PP (IN of) (NP (DT that) (NN building)))))) (SBAR (WHADVP (WRB when)) (S (NP (PRP it)) (VP (AUX was) (VP (VBN hit) (PP (IN by) (NP (NN coalition) (NNS bombs))))))))) (, ,) (CC or) (VP (MD may) (VP (AUX have) (VP (VBN left) (ADVP (RB prior) (PP (TO to) (NP (NP (DT the) (NN bombing)) (VP (VBG taking) (NP (NN place)))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB again)) (, ,) (NP (PDT all) (DT this)) (VP (AUX is) (NP (DT an) (JJ outstanding) (NN issue)) (ADVP (RB right) (RB now))) (. .)))
+
+(S1 (S (PP (IN in) (NP (DT the) (NN north))) (, ,) (NP (PRP you)) (VP (AUX 're) (VP (VBG going) (S (VP (TO to) (VP (VB hear) (NP (NP (DT a) (NN lot)) (PP (IN about) (NP (DT the) (JJ shallow) (NNP graves) (NN today))))))))) (. .)))
+
+(S1 (S (PP (IN at) (NP (JJS least) (CD 1500))) (, ,) (NP (QP (RB maybe) (CD 1600)) (NNP graves)) (VP (VBN located) (PP (IN in) (NP (DT the) (NN north)))) (. .)))
+
+(S1 (S (S (NP (NNP jane) (NN arraf)) (VP (AUX has) (VP (VBN made) (NP (PRP$ her) (NN way)) (PP (TO to) (NP (DT that) (NN location)))))) (CC and) (S (NP (PRP we)) (VP (VBD heard) (NP (PRP$ her) (JJ first) (JJ live) (NN report)) (PP (IN about) (NP (DT an) (NN hour))) (ADVP (RB ago)))) (CC and) (S (NP (PRP we)) (VP (MD will) (VP (VB talk) (PP (IN with) (NP (NNP jane))) (ADVP (RB again))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (VBP know) (SBAR (SBAR (IN that) (S (PRN (, ,) (INTJ (VB quote)) (, ,)) (NP (NN work)) (VP (MD will) (VP (AUX be) (VP (AUX done) (PP (IN with) (NP (DT the) (NN iraqis)))))))) (CC and) (SBAR (IN that) (S (NP (NN work)) (VP (MD will) (VP (VB come))))) (, ,) (S (NP (PRP we)) (VP (AUX are) (VP (VBN told) (, ,) (PP (IN in) (NP (DT the) (VBG coming) (NNS days)))))))) (. .)))
+
+(S1 (S (NP (NP (DT a) (NN wrap)) (PP (PP (IN from) (NP (NN centcom))) (CC and) (ADVP (RB here)))) (VP (AUX is) (VP (VBG fredricka) (ADVP (RB whitfield)) (PP (IN at) (NP (DT the) (NNP cnn) (NN center))))) (. .)))
+

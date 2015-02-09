@@ -1,0 +1,18 @@
+(S1 (S (NP (NP (NP (NNP CANBERRA)) (, ,) (NP (NNP Australia))) (PRN (-LRB- -LRB-) (NP (NNP AP)) (-RRB- -RRB-)) (NP (NNP Australia))) (VP (MD will) (VP (VB keep) (PRT (RP open)) (NP (NP (PRP$ its) (NN embassy)) (PP (IN in) (NP (NNP Saudi) (NNP Arabia)))) (PP (IN despite) (NP (NP (NNS decisions)) (PP (IN by) (NP (NP (DT the) (NNP United) (NNPS States)) (, ,) (NP (NNP Britain)) (CC and) (NP (NNP Germany)))) (S (VP (TO to) (VP (VB close) (NP (PRP$ their) (JJ diplomatic) (NNS outposts)) (PP (IN in) (NP (DT the) (NN country))) (PP (IN amid) (NP (VBG growing) (NN terror) (NNS fears)))))))))) (. .)))
+
+(S1 (S (PP (IN On) (NP (NP (DT the) (NN eve)) (PP (IN of) (NP (NP (DT a) (NN visit)) (PP (TO to) (NP (DT the) (NNP Saudi) (NN capital))))))) (, ,) (NP (NNP Foreign) (NNP Minister) (NNP Alexander) (NNP Downer)) (VP (VBD said) (SBAR (S (NP (NP (NN security)) (PP (IN at) (NP (DT the) (JJ Australian) (NN embassy)))) (VP (VBD appeared) (S (VP (TO to) (VP (AUX be) (ADJP (JJ sufficient))))))))) (. .)))
+
+(S1 (S (`` ``) (S (S (NP (PRP We)) (VP (AUX have) (NP (PDT quite) (DT a) (JJ substantial) (NN security) (NN presence)) (PP (IN at) (NP (NP (DT the) (JJ Australian) (NN embassy)) (PP (IN in) (NP (NNP Riyadh))))))) (CC and) (S (NP (DT the) (NN ambassador)) (VP (VBZ thinks) (SBAR (IN that) (S (NP (DT that) (NN security) (NN presence)) (VP (AUX is) (ADJP (JJ sufficient)))))))) (, ,) ('' '') (NP (NNP Downer)) (VP (VBD told) (NP (DT the) (NNP Australian) (NNP Broadcasting) (NNP Corp.))) (. .)))
+
+(S1 (S (NP (NNP Australia)) (VP (AUX is) (NP (NP (CD one)) (PP (IN of) (NP (NP (NNP Washington) (POS 's)) (JJS staunchest) (NNS allies))))) (. .)))
+
+(S1 (S (NP (NNP Canberra)) (VP (VBD sent) (S (NP (NNS troops)) (VP (TO to) (VP (VB fight) (PP (IN in) (NP (NP (DT the) (NN war)) (PP (IN on) (NP (NN terror))) (PP (PP (IN in) (NP (NNP Afghanistan))) (CC and) (PP (IN alongside) (NP (NP (NNP U.S.) (CC and) (NNP British) (NNS forces)) (PP (IN in) (NP (NNP Iraq)))))))))))) (. .)))
+
+(S1 (S (NP (NNP New) (NNP Zealand)) (ADVP (RB also)) (VP (AUX has) (NP (DT no) (JJ immediate) (NNS plans) (S (VP (TO to) (VP (VB close) (NP (PRP$ its) (NNP Saudi) (NN embassy))))))) (. .)))
+
+(S1 (S (PP (IN On) (NP (NNP Tuesday))) (, ,) (NP (JJ Saudi) (NN security) (NNS officials)) (VP (VBD said) (SBAR (S (NP (CD three) (VBN suspected) (NN al-Qaida) (NNS militants)) (VP (AUX were) (VP (VBN arrested) (PP (IN in) (NP (NP (NNP Jiddah)) (, ,) (NP (NNP Saudi) (NNP Arabia)) (, ,))) (PP (IN in) (NP (NP (NNS sweeps)) (VP (VBG following) (NP (NP (DT the) (JJ near-simultaneous) (NN suicide) (NNS attacks)) (PP (IN on) (NP (CD three) (JJ residential) (NNS compounds))) (PP (IN on) (NP (NP (DT the) (NNS outskirts)) (PP (IN of) (NP (NNP Riyadh)))))) (PP (IN on) (NP (NNP May) (CD 12))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NNS bombings)) (VP (VP (VBD killed) (NP (CD 34) (NNS people)) (ADVP (RB _)) (PP (VBG including) (NP (NP (CD nine) (NNS attackers)) (, ,) (NP (CD eight) (NNPS Americans)) (CC and) (NP (CD two) (NNP Britons) (NNS _))))) (CC and) (VP (VBN wounded) (NP (QP (RB nearly) (CD 200)) (NNS others)))) (. .)))
+
+(S1 (S (ADVP (RBR Earlier) (NP (DT this) (NN week))) (, ,) (NP (NNP Saudi) (CC and) (NNP U.S.) (NNS officials)) (VP (VBD said) (SBAR (S (NP (PRP they)) (VP (AUX had) (NP (NP (JJ new) (NN intelligence)) (VP (VBG pointing) (PP (TO to) (NP (NP (NP (NP (NNP Osama)) (ADJP (RB bin) (JJ Laden)) (POS 's)) (NN al-Qaida) (NN group)) (VP (ADVP (RB possibly)) (VBG launching) (NP (JJ fresh) (NNS attacks)) (PP (PP (IN in) (NP (DT the) (NNP United) (NNPS States))) (CC or) (PP (IN against) (NP (NP (NNP American) (NNS interests)) (ADVP (RB overseas)))))))))))))) (. .)))
+

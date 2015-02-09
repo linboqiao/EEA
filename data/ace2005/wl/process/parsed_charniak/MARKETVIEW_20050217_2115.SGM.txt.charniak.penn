@@ -1,0 +1,12 @@
+(S1 (SQ (AUX Has) (NP (DT the) (NN EU)) (ADVP (RB once) (RB again)) (VP (VBD lost) (NP (PRP$ its) (NN mind))) (. ?)))
+
+(S1 (S (NP (NP (DT The) (CD one) (NN industry)) (SBAR (WHPP (IN in) (WHNP (WDT which))) (S (NP (NNP Europe)) (ADVP (RB incontrovertibly)) (VP (VBZ beats) (NP (DT the) (NNP US)))))) (VP (AUX is) (NP (PRP$ their) (NN aviation) (NN industry)) (, ,) (NP (NP (NNS thanks)) (PP (ADVP (RB mainly)) (TO to) (NP (DT the) (NN fact) (SBAR (IN that) (S (NP (PRP$ their) (NNS lawmakers)) (VP (AUX have) (VP (VP (VBN left) (NP (NP (DT the) (NN operation)) (PP (IN of) (NP (DT the) (NN industry)))) (PP (IN up) (PP (TO to) (NP (NP (DT the) (NNS people)) (SBAR (WHNP (WP who)) (S (VP (VBP own) (NP (PRP it))))))))) (, ,) (CC and) (VP (VBD left) (NP (NP (NN passenger) (POS 's)) (NNS rights)) (PP (IN in) (NP (NP (DT the) (NNS hands)) (PP (IN of) (NP (JJ choosy) (NNS passengers)))))))))))))) (. .)))
+
+(S1 (S (CC And) (ADVP (RB now)) (NP (PRP they)) (VP (AUX 're) (ADJP (JJ ready) (S (VP (TO to) (VP (`` `) (VB fix) ('' ') (NP (DT that)) (PP (IN with) (NP (NP (DT a) (JJ new) (NN package)) (PP (IN of) (NP (NP (JJ ill-advised) (NNS rules)) (VP (ADVP (RB completely)) (VBG changing) (NP (NP (DT the) (NN nature)) (PP (IN of) (NP (NNS airlines)))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB Before)) (, ,) (NP (DT a) (JJ potential) (NN customer)) (VP (MD could) (VP (VB choose) (PP (IN between) (NP (NP (NP (DT a) (JJ cosy) (, ,) (JJ near-certain) (NN ride)) (PP (IN from) (NP (DT an) (JJ expensive) (NN company)))) (CC or) (NP (NP (DT a) (ADJP (ADJP (JJ hustled)) (, ,) (ADJP (JJ uncomfortable)) (, ,) (CC and) (ADJP (RB absurdly) (JJ cheap))) (NN one)) (PP (IN from) (NP (DT a) (JJR smaller) (NN competitor)))))))) (. .)))
+
+(S1 (FRAG (CC And) (ADVP (RB now)) (. ?)))
+
+(S1 (NP (RB Not) (DT a) (NN chance) (. .)))
+

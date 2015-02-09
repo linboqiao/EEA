@@ -1,0 +1,208 @@
+(S1 (NP (CD 2) (. .)))
+
+(S1 (S (NP (NNP Workplace) (NNP Culture)) (VP (VB Describe) (NP (NP (DT the) (JJ organizational) (NN structure)) (PP (IN of) (NP (PRP$ your) (ADJP (JJ current) (CC or) (JJ former)) (NN workplace))))) (. .)))
+
+(S1 (SBARQ (SBAR (WHADVP (WRB How)) (S (NP (JJ many) (NNS people)) (VP (VBP work) (ADVP (RB there))))) (, ,) (CC and) (WHNP (WP what)) (SQ (AUX is) (NP (DT the) (NN hierarchy))) (. ?)))
+
+(S1 (SBARQ (WHNP (WP Who)) (SQ (VP (VBZ works) (PP (IN for) (WHNP (WP whom))))) (. ?)))
+
+(S1 (SBARQ (WHNP (WHNP (WDT What) (NN kind)) (PP (IN of) (NP (NN job)))) (SQ (AUX do) (NP (PRP you)) (VP (AUX have))) (. ?)))
+
+(S1 (S (VP (VB Describe) (NP (NP (DT some)) (PP (IN of) (NP (NP (NP (DT the) (NNS people)) (SBAR (WHNP (WDT that)) (S (NP (PRP you)) (VP (VBP work) (PP (IN with)))))) (CC and) (NP (NP (DT the) (NNS jobs)) (SBAR (S (NP (PRP they)) (VP (AUX do))))))))) (. .)))
+
+(S1 (SQ (AUX Do) (NP (PRP you)) (VP (VB think) (SBAR (S (NP (PRP$ your) (NN company)) (VP (AUX is) (ADJP (JJ well-run)))))) (. ?)))
+
+(S1 (SBARQ (SBAR (IN If) (FRAG (RB not))) (, ,) (WHNP (WP what)) (SQ (VP (MD could) (VP (VB make) (S (NP (PRP it)) (ADJP (JJR better)))))) (. ?)))
+
+(S1 (INTJ (UH Hello) (. .)))
+
+(S1 (FRAG (INTJ (UH Hello)) (, ,) (INTJ (UH hello)) (. .)))
+
+(S1 (S (NP (NNP Hey)) (, ,) (NP (PRP I)) (VP (AUX 'm) (S (NP (PRP I)) (VP (AUX 'm) (NP (NNP Jim))))) (. .)))
+
+(S1 (INTJ (UH Hi) (. .)))
+
+(S1 (S (S (VP (VBG Hi) (NP (NNP Jim)))) (, ,) (NP (PRP I)) (VP (AUX 'm) (NP (NNP Mark))) (. .)))
+
+(S1 (NP (NNP Hey) (NNP Mark) (. .)))
+
+(S1 (SBARQ (WHADVP (WRB How)) (SQ (AUX 're) (NP (PRP you)) (VP (VBG doing))) (. ?)))
+
+(S1 (INTJ (UH Okay) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP guess) (SBAR (S (NP (PRP it)) (VP (AUX 's) (NP (UH uh) (: --)) (PP (IN about) (NP (NP (WDT what) (PRP$ your) (NN workplace)) (, ,) (NP (NN something)))))))) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX did) (RB n't) (ADVP (RB quite)) (VP (VB hear) (NP (NP (DT all)) (PP (IN of) (NP (PRP it)))))) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (S (ADVP (RB Well)) (PRN (, ,) (S (NP (PRP I)) (VP (VBP guess))) (, ,)) (NP (UH uh) (NN workplace) (NN culture)) (VP (AUX is) (NP (DT the) (UH Yeah))) (. .)))
+
+(S1 (S (S (SBAR (WHNP (WP what)) (S (NP (PRP$ your) (NN position)) (VP (AUX is) (PP (IN with) (NP (DT the) (NN company))) (, ,) (SBAR (WHNP (WHNP (WDT what) (NN kind)) (PP (IN of) (NP (NNS people)))) (S (VP (AUX are) (PP (IN in) (NP (DT the) (NNS jobs))))))))) (NP (PRP you)) (VP (AUX have) (PP (IN with) (NP (NP (DT the) (NNS people)) (SBAR (WHNP (WDT that)) (S (VP (VBP work) (ADVP (RB there))))))))) (, ,) (CC and) (S (NP (PRP I)) (VP (VBP guess))) (: --) (S (NP (PRP I)) (VP (VBP guess) (NP (DT the) (NN environment)) (ADVP (RB too)))) (, ,) (S (NP (PRP I)) (VP (AUX 'm) (RB not) (VP (JJ sure) (NP (UH Yeah))))) (. .)))
+
+(S1 (FRAG (INTJ (UH Uh)) (NP (NP (DT the) (NN point)) (PP (IN of) (NP (DT the) (NN question)))) (. .)))
+
+(S1 (S (S (INTJ (UH Yeah)) (, ,) (NP (PRP it)) (VP (AUX was) (NP (NP (NN kind)) (PP (IN of))) (: --) (ADVP (RB off)))) (: --) (S (S (VP (NN bag) (NP (DT a) (JJ little) (NN bit)) (PP (TO to) (NP (PRP me))))) (, ,) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB know)))) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (S (VP (AUX did) (RB n't) (VP (ADVP (RB quite)) (VB understand) (NP (NP (DT all)) (PP (IN of) (NP (PRP it)))))) (. .)))
+
+(S1 (S (ADVP (RB Um) (RB well)) (NP (PRP I)) (VP (VBP work) (S (NP (PRP I)) (VP (VB work) (SBAR (S (NP (PRP I)) (VP (AUX 'm) (NP (PRP i))))) (: -) (PP (IN in) (NP (NP (NN work)) (PP (IN in) (NP (NNS sales)))))))) (. .)))
+
+(S1 (S (NP (UH Uh) (: --)) (VP (VBP work) (PP (IN for) (NP (NP (DT a) (NN company)) (, ,) (VP (VBN called) (S (NP (NNP Pacesetters) (NNP Corporation))))))) (. .)))
+
+(S1 (S (S (VP (VBG Um) (: --) (S (NP (PRP it)) (VP (AUX 's) (NP (DT a) (NNS sales) (NN company)))))) (, ,) (NP (PRP you)) (VP (VBP know)) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (AUX do) (NP (NP (NN home) (NNS improvements)) (, ,) (PP (IN like) (NP (NNP Sears) (INTJ (UH Okay)))))) (. .)))
+
+(S1 (S (ADVP (RB Actually)) (, ,) (NP (PRP they)) (VP (AUX 're) (NP (DT the) (ADJP (ADJP (JJS largest)) (PRN (: --) (NP (NN home) (NN improvement)) (: --))) (NN company)) (PP (IN in) (NP (DT the) (NNP United) (NNPS States)))) (. .)))
+
+(S1 (NP (NNP Aha) (. .)))
+
+(S1 (S (INTJ (UH Oh)) (, ,) (NP (PRP I)) (VP (AUX 'm) (PP (IN from) (NP (NNP West) (NNP Virginia)))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB know) (SBARQ (WHADVP (WRB where) (WRB where)) (SQ (AUX 're) (NP (PRP you)) (ADJP (IN from))) (. ?))))))
+
+(S1 (S (NP (PRP I)) (VP (AUX 'm) (PP (IN from) (NP (NNP Connecticut)))) (. .)))
+
+(S1 (NP (NNP Connecticut) (. .)))
+
+(S1 (FRAG (ADJP (JJ Nice) (CC and) (JJ cold)) (ADVP (RB up) (RB there)) (ADVP (RB right) (RB now)) (, ,) (NP (NNP huh)) (. ?)))
+
+(S1 (S (CC But) (NP (PRP It)) (VP (AUX 's) (RB not) (ADJP (RB too) (JJ bad))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (AUX 're) (VP (VBN used) (PP (TO to) (NP (PRP it))))) (. .)))
+
+(S1 (S (ADVP (IN at) (JJS least)) (NP (PRP it)) (VP (AUX 's) (RB not) (NP (NP (CD twenty)) (ADVP (RB below)))) (. .)))
+
+(S1 (FRAG (ADVP (RB Not) (RB yet)) (. .)))
+
+(S1 (S (S (CC But) (ADVP (RB um)) (NP (DT that)) (VP (AUX 's) (ADVP (RB basically)) (SBAR (WHNP (WP what)) (S (NP (PRP I)) (VP (AUX do)))))) (, ,) (CC and) (S (: --) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB know)))) (. .)))
+
+(S1 (SINV (ADVP (RB Um) (RB So)) (AUX do) (NP (PRP you)) (VP (AUX have) (UCP (PP (IN like) (NP (NP (DT an) (NN office)) (SBAR (WHNP (WDT that)) (S (NP (PRP you)) (VP (AUX 're) (PP (IN in) (NP (DT a) (NN lot)))))))) (, ,) (CC or) (NP (NNP Hm)))) (. ?)))
+
+(S1 (S (INTJ (UH Well)) (INTJ (UH yeah)) (, ,) (NP (PRP I)) (VP (AUX have) (NP (DT an) (NN office))) (. .)))
+
+(S1 (S (INTJ (UH Uh)) (NP (RB not) (NP (PRP me)) (ADVP (RB personally))) (, ,) (S (CC but) (NP (PRP we)) (ADVP (UH uh)) (NP (NP (PRP we)) (NP (DT all))) (VP (VBP meet) (ADVP (RB there)))) (CC and) (S (NP (PRP we)) (NP (PRP we)) (VP (AUX have) (NP (PRP$ our) (JJ little) (JJ sales) (NNS meetings)) (NP (DT every) (NN morning)))) (. .)))
+
+(S1 (INTJ (JJ right) (. .)))
+
+(S1 (INTJ (UH Uh-huh) (. .)))
+
+(S1 (S (CC And) (NP (DT that)) (VP (AUX 's) (ADVP (RB pretty) (RB much)) (NP (PRP it))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (VBP mean))) (, ,) (S (NP (PRP we)) (VP (VBP go) (PP (IN over) (SBAR (WHNP (WDT whatever)) (PRN (: --) (SBAR (WHNP (WDT whatever)) (S (VP (AUX has) (S (VP (TO to) (VP (AUX be))))))) (: --)) (S (VP (VBD talked) (PP (IN about) (NP (DT that) (NN day))))))))) (, ,) (CC and) (S (ADVP (RB then)) (NP (PRP they)) (VP (AUX 're) (ADVP (RB all)) (S (NP (PRP we)) (NP (NP (RB just) (NN kind)) (PP (IN of) (PRN (: --) (S (VP (VP (VB go) (PRT (RP out))) (CC and) (VP (AUX do) (NP (PRP$ our) (NNS appointments)) (PP (IN in) (NP (DT the) (NN afternoon)))))) (, ,)) (CC or) (PP (IN in) (NP (DT the) (NNS evenings)))))))) (. .)))
+
+(S1 (S (S (NP (PRP You)) (VP (VBP know))) (, ,) (S (NP (PRP we)) (VP (AUX have) (S (VP (TO to) (VP (VB meet) (PP (IN with) (NP (UH uh) (: --))) (NP (NP (NNS people)) (SBAR (WHNP (WDT that)) (S (VP (VBP come) (PP (TO to) (NP (NP (NNP ~) (NNP K) (NNP Mart)) (CC or) (NP (NP (NNP Sam) (POS 's)) (NNP Club))))))))))))) (. .)))
+
+(S1 (S (S (NP (PRP They)) (: --) (VP (AUX have) (NP (NP (DT a) (NN interest)) (PP (IN in) (NP (NN home) (NNS improvements)))))) (, ,) (CC and) (S (NP (PRP they)) (VP (VBP fill) (PRT (RP out)) (NP (NN stuff)))) (. .)))
+
+(S1 (INTJ (UH Ah) (. .)))
+
+(S1 (S (NP (DT That)) (VP (AUX 's) (SBAR (WHADVP (WRB how)) (S (NP (PRP they)) (VP (VBP get) (NP (PRP$ their) (NNS leads)))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (RB not) (NP (DT any) (NN cold-calling))) (. .)))
+
+(S1 (NP (NNP Mhm) (. .)))
+
+(S1 (S (NP (PRP We)) (ADVP (RB just)) (VP (ADVP (RB pretty) (RB much)) (VBP go) (NP (DT that) (NN way))) (. .)))
+
+(S1 (S (CC And) (PRN (: --) (S (NP (PRP you)) (VP (VBP know))) (, ,)) (NP (PRP we)) (VP (AUX have)) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (VBD said) (SBAR (S (VP (AUX does) (SBAR (WHADVP (WRB how)) (S (NP (JJ many) (NNS people)) (VP (VBP work) (ADVP (RB there))))))))) (. .)))
+
+(S1 (S (PP (IN In) (NP (PRP$ our) (JJ local) (NN office))) (NP (PRP we)) (ADVP (RB probably)) (VP (AUX have) (NP (QP (RB about) (CD ten)))) (. .)))
+
+(S1 (FRAG (PP (IN With) (NP (PRP$ our) (JJ sales) (NN manager))) (. .)))
+
+(S1 (FRAG (NP (NN Branch) (NN manager)) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (NP (QP (RB about) (CD ten))) (PP (IN in) (NP (DT the) (: --) (NN office)))) (. .)))
+
+(S1 (S (S (NP (DT That)) (VP (AUX 's) (PP (IN in) (NP (NP (NNP Fairmont)) (, ,) (NP (NNP West) (NNP Virginia)))))) (, ,) (S (NP (PRP it)) (VP (AUX 's) (PP (IN like) (PRN (: --) (INTJ (UH oh)) (, ,)) (PP (IN between) (NP (NNP Charleston) (CC and) (NNP Pittsburgh)))))) (. .)))
+
+(S1 (FRAG (INTJ (UH Oh)) (, ,) (INTJ (UH okay)) (. .)))
+
+(S1 (S (INTJ (UH Okay)) (, ,) (ADVP (RB so)) (NP (DT the) (NN ice)) (VP (MD will) (VP (AUX be) (ADJP (JJ annoying)) (ADVP (RB soon)))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP see)) (. .)))
+
+(S1 (FRAG (-LRB- -LRB-) (-LRB- -LRB-) (-RRB- -RRB-) (-RRB- -RRB-) (: --) (S (INTJ (UH Yeah)) (, ,) (NP (PRP I)) (VP (AUX 'm) (PP (IN from) (NP (NNP Morgantown))))) (. .)))
+
+(S1 (INTJ (UH Ah) (. .)))
+
+(S1 (FRAG (SBAR (IN If) (S (NP (PRP you)) (VP (AUX 're) (ADJP (JJ familiar) (PP (IN with) (NP (DT that) (NN area))))))) (. .)))
+
+(S1 (FRAG (ADVP (RB Vaguely)) (, ,) (INTJ (UH yeah)) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (MD would) (VP (AUX be) (NP (NP (NN kind)) (PP (IN of) (NP (NP (NN south)) (PP (IN of) (NP (PRP you)))))))) (. .)))
+
+(S1 (S (ADVP (RB Actually) (JJ south)) (PRN (: --) (ADVP (RB south)) (ADVP (RB So)) (, ,)) (NP (PRP it)) (VP (AUX 's) (ADJP (ADJP (JJ West) (PP (IN from) (SBAR (WHADVP (WRB where)) (S (NP (PRP I)) (VP (AUX am)))))) (, ,) (CC but) (ADJP (JJ y)) (: -) (ADJP (ADJP (JJ south) (JJ southwest)) (PP (IN of) (NP (PRP you)))))) (. .)))
+
+(S1 (FRAG (CC So) (INTJ (UH yeah)) (. .)))
+
+(S1 (INTJ (JJ Right) (. .)))
+
+(S1 (S (CC But) (NP (PRP I)) (VP (AUX have) (VP (AUX been) (PP (TO to) (NP (NNP Pittsburgh))) (, ,) (ADVP (RB so)))) (. .)))
+
+(S1 (NP (NNP Mhm) (. .)))
+
+(S1 (FRAG (CC So) (INTJ (UH yeah)) (. .)))
+
+(S1 (S (CC So) (S (NP (PRP you)) (VP (AUX were) (PP (IN in) (NP (NNP Pittsburgh))))) (, ,) (CC and) (S (NP (PRP you)) (VP (VBD went) (ADVP (NP (NP (NP (DT a) (CD hundred) (NNS miles)) (PP (TO to) (NP (DT the) (NN south)))) (, ,) (CC or) (NP (NN eighty) (NNS miles))) (RB south)) (, ,) (SBAR (S (NP (PRP you)) (VP (MD 'd) (VP (AUX be) (PP (IN in) (NP (NNP Fairmont))))))))) (. .)))
+
+(S1 (INTJ (UH Okay) (. .)))
+
+(S1 (S (INTJ (UH Yeah)) (, ,) (NP (PRP I)) (VP (AUX did) (VP (VB go) (PP (IN through) (NP (: --) (NNP West) (NNP Virginia))) (, ,) (ADVP (ADVP (NP (CD one) (NN time)) (RB through)) (: --) (PP (IN from) (NP (NNP Pittsburgh)))))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (AUX had) (NP (NP (NNS relatives)) (SBAR (WHNP (WDT that)) (S (VP (VBD lived) (ADVP (IN outside) (PP (IN of) (NP (NNP Pittsburgh)))))))) (, ,) (ADVP (RB once)))) (, ,) (CC and) (S (S (NP (PRP I)) (VP (VBD went) (PP (TO to) (NP (NNP Florida))) (PP (IN from) (NP (RB there))))) (, ,) (CC so) (S (NP (PRP I)) (VP (AUX did) (VP (VB go) (PP (IN through) (NP (NNP West) (NNP Virginia))))))) (. .)))
+
+(S1 (NP (NNP Mhm) (. .)))
+
+(S1 (INTJ (UH Mm) (. .)))
+
+(S1 (S (ADVP (RB Unfortunately)) (, ,) (NP (PRP I)) (VP (AUX did) (RB n't) (VP (VB get) (S (VP (TO to) (VP (VB see) (NP (NP (RB too) (JJ much)) (PP (IN of) (NP (PRP it))))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (NP (PRP It)) (VP (AUX 's) (UCP (NP (DT all) (NN country)) (, ,) (CC and) (ADVP (DT all) (IN out)) (PP (IN in) (NP (NP (DT the) (NN middle)) (PP (IN of) (NP (RB nowhere))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBD noticed) (ADVP (RB that) (RB too)) (, ,) (INTJ (UH yeah))) (. .)))
+
+(S1 (NP (NNP Mhm) (. .)))
+
+(S1 (FRAG (NP (PRN (-LRB- -LRB-) (-LRB- -LRB-) (S (NP (PRP It)) (VP (AUX 's) (ADVP (RB no)))) (-RRB- -RRB-) (-RRB- -RRB-)) (JJ Beautiful) (NN country)) (ADVP (RB though)) (. .)))
+
+(S1 (S (INTJ (UH Yeah)) (, ,) (NP (PRP it)) (VP (AUX 's) (UCP (JJ pretty) (CC and) (NN stuff))) (. .)))
+
+(S1 (S (SBAR (IN If) (S (NP (PRP you)) (VP (AUX 're) (UCP (PP (IN in) (NP (NP (DT the)) (PP (IN like) (NP (DT a) (JJ big) (NN city))))) (CC or) (SBAR (ADVP (RB even)) (IN in) (PRN (: --) (S (INTJ (UH oh) (UH well)) (, ,) (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB know) (SBAR (WHADVP (WRB where)) (S (NP (PRP you)) (VP (VBP live) (PP (IN in) (NP (NNP Connecticut))))))))) (CC but) (: --) (S (NP (PRP I)) (VP (VBP mean)))) (, ,) (SQ (AUX are) (NP (PRP you)) (VP (VB like) (FRAG (PP (IN near) (NP (NNP New) (NNP Haven))) (CC or) (INTJ (UH Uh)) (, ,) (INTJ (UH no))))))))))) (, ,) (NP (PRP I)) (VP (AUX 'm) (ADVP (DT a) (CC or) (ADVP (RB out) (RBR more))) (PP (IN in) (NP (DT the) (NN country)))) (. ?)))
+
+(S1 (FRAG (PP (IN between) (NP (NNP Waterbury) (CC and) (NNP Hartford))) (. .)))
+
+(S1 (FRAG (NP (NNP Hartford)) (, ,) (INTJ (UH yeah)) (. .)))
+
+(S1 (NP (PDT Such) (DT a) (JJ big) (JJ er) (NN city) (. .)))
+
+(S1 (FRAG (NP (NNP Hartford) (POS 's)) (ADJP (RB pretty) (JJ big)) (, ,) (ADVP (RB right)) (. ?)))
+
+(S1 (S (INTJ (UH Yeah)) (, ,) (NP (PRP it)) (VP (AUX 's) (NP (DT a) (JJ good) (NN size))) (. .)))
+
+(S1 (S (S (CC But) (NP (PRP I)) (VP (VBP mean))) (, ,) (NP (PRP I)) (VP (VBP think) (SBAR (S (NP (NP (PRP$ our) (JJS largest) (NN city)) (PP (IN in) (NP (NNP West) (NNP Virginia)))) (VP (AUX 's) (PP (IN like) (: --) (NP (QP (JJR less) (IN than) (DT a) (CD hundred) (CD thousand)) (NNS people))))))) (. .)))
+
+(S1 (S (NP (DT That)) (VP (AUX 's) (NP (NP (NNP Charleston)) (, ,) (NP (DT the) (NN capital)))) (. .)))
+
+(S1 (SQ (AUX Is) (NP (DT that)) (ADVP (RB right)) (. ?)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (FRAG (ADJP (ADJP (JJR Bigger)) (PP (IN than) (NP (NN Wheeling)))) (, ,) (NP (NNP huh)) (. ?)))
+
+(S1 (S (S (NP (PRP We)) (ADVP (RB only)) (VP (AUX have))) (, ,) (NP (PRP we)) (ADVP (RB only)) (VP (AUX have) (NP (NP (CD one) (NN point)) (NP (QP (CD eight) (CD million)) (NNS people)) (PP (IN in) (NP (PRP$ our) (JJ whole) (NN state))))) (. .)))
+
+(S1 (FRAG (INTJ (UH Oh)) (, ,) (INTJ (UH okay)) (. .)))
+

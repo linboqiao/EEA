@@ -1,0 +1,26 @@
+(S1 (S (NP (NNP bob) (NNP novak)) (VP (AUX 's) (ADVP (RB here)) (PP (IN with) (NP (DT the) (`` ``) (JJ inside) (NN buzz)))) (. .) ('' '')))
+
+(S1 (S (NP (PRP i)) (VP (VBP understand) (SBAR (S (NP (EX there)) (VP (MD may) (VP (AUX be) (NP (NP (DT a) (NN rift)) (PP (IN among) (NP (NP (DT the) (JJ republican) (NN leadership)) (PP (IN in) (NP (DT the) (NNS houses))))))))))) (. ?)))
+
+(S1 (S (INTJ (UH yeah)) (, ,) (NP (EX there)) (VP (AUX 's) (NP (NP (DT a) (JJ little) (NN tension)) (PP (IN between) (NP (NP (DT the) (NN house) (NN majority) (NN leader)) (, ,) (NP (NNP tom) (NN delay)) (, ,) (CC and) (NP (NP (PRP$ his) (NN successor)) (PP (IN as) (NP (NP (NN house) (NN majority) (NN whip)) (CC and) (NP (NP (PRP$ his) (JJ former) (NN deputy)) (, ,) (NP (NN lloyd) (JJ blunt)) (, ,) (SBAR (S (ADVP (NN kind) (IN of)) (VP (VBD came) (S (VP (TO to) (VP (VB light) (SBAR (WHADVP (WRB when)) (S (`` ``) (NP (DT the) (NNP washington) (NN post)) ('' '') (VP (AUX had) (NP (NP (DT a) (JJ front-page) (NN story)) (VP (VBG showing) (NP (NP (NN disagreement)) (PP (IN on) (NP (DT the) (NN provision))) (, ,) (SBAR (S (NP (NN delay)) (VP (AUX had) (NP (PRP it)) (VP (VBN taken) (PRT (RP out)))))))))))))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX 've) (VP (AUX been) (VP (VBG disagreeing) (PP (IN on) (NP (ADJP (NN union) (VBN opposed)) (NN bill))) (PP (IN on) (NP (NN flex) (NN time)))))) (. .)))
+
+(S1 (S (NP (EX there)) (VP (AUX 's) (NP (NP (RB just) (DT a) (NN lot)) (PP (IN of) (S (VP (VBG feeling) (SBAR (IN that) (S (NP (NN delay)) (VP (AUX does) (RB n't) (VP (VB feel) (SBAR (S (NP (JJ blunt)) (VP (AUX is) (VP (VBG doing) (NP (DT the) (NN job)) (ADVP (ADVP (RB as) (RB well)) (SBAR (IN as) (S (NP (PRP he)) (VP (AUX did) (NP (PRP it))))))))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB maybe)) (NP (PRP they)) (VP (AUX 're) (VP (VBG jossling) (PP (IN for) (SBAR (WHNP (WP who)) (S (VP (AUX 's) (VP (VBG going) (S (VP (TO to) (VP (AUX be) (NP (DT the) (JJ next) (NN speaker)))))))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (NNP dennis) (NNP hastert)) (VP (VBZ plans) (S (VP (TO to) (VP (VB step) (PRT (RP down)) (ADVP (RB soon) (RB anyway)))))))))) (. .)))
+
+(S1 (S (VP (VBG moving) (PP (IN onto) (NP (DT the) (NNS democrats)))) (. .)))
+
+(S1 (SBARQ (WHNP (WP what)) (SQ (AUX 's) (NP (NP (DT the) (NN speculation)) (PP (IN about) (NP (NNP john) (NNP edwards))))) (. ?)))
+
+(S1 (S (NP (NP (DT some)) (PP (IN of) (NP (DT the) (JJ national) (JJ democratic) (NNS operatives)))) (VP (VBP think) (SBAR (SBAR (S (NP (NNP john) (NNP edwards)) (VP (AUX is) (VP (VBG going) (S (VP (TO to) (VP (VB run) (PP (IN for) (NP (NN president)))))))))) (CC and) (SBAR (IN that) (S (NP (PRP he)) (VP (MD ought) (S (VP (TO to) (VP (VP (VB get) (PRT (RP out))) (CC and) (VP (VB concentrate) (PP (IN on) (S (VP (AUXG being) (NP (NP (JJ reelected) (NN senator)) (PP (IN of) (NP (NNP north) (NNP carolina))) (SBAR (WHNP (WDT which)) (S (VP (MD wo) (RB n't) (VP (AUX be) (ADJP (JJ easy))))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT some) (NNS people)) (VP (VBP think) (SBAR (S (NP (NP (JJ white) (NN house) (NN chief)) (PP (IN of) (NP (NN staff)))) (VP (MD would) (VP (AUX be) (NP (DT a) (JJR stronger) (NN candidate)) (ADVP (RB anyway))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (AUX 'm) (RB not) (ADJP (JJ sure)) (SBAR (IN if) (S (NP (DT that)) (VP (AUX 's) (ADJP (JJ true)))))) (. .)))
+
+(S1 (S (CC but) (NP (EX there)) (VP (AUX 's) (NP (NP (DT a) (NN lot)) (PP (IN of) (S (VP (VBG feeling) (NP (DT this) (JJ presidental) (NN race)))))))))
+

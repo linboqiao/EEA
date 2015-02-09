@@ -1,0 +1,36 @@
+(S1 (S (NP (NP (DT a) (JJ former) (NNP fbi) (NN informant)) (VP (VBN accused) (PP (IN of) (S (VP (AUXG being) (NP (DT a) (JJ double) (NN agent))))))) (VP (AUX has) (VP (AUX been) (VP (VBN indicted)))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NNS charges)) (PP (IN against) (NP (JJ katrina) (NN leung)))) (VP (AUX are) (NP (NP (DT the) (JJS latest)) (PP (IN in) (NP (NP (DT an) (JJ alleged) (NN case)) (PP (IN of) (NP (NP (NN sex)) (, ,) (NP (NNS spies)) (, ,) (CC and) (NP (JJ international) (NN intrigue)))))))) (. .)))
+
+(S1 (S (NP (NNP charles) (NNP feldman)) (VP (AUX is) (PP (IN in) (NP (NNP los) (NNP angeles))) (PP (IN with) (NP (NP (NNS details)) (PP (IN on) (NP (DT this) (CD one)))))) (. .)))
+
+(S1 (NP (NN reporter) (: :) (S (NP (DT this)) (VP (AUX is) (NP (NP (DT a) (NN story)) (SBAR (WHNP (WDT that)) (S (VP (AUX has) (VP (VBN made) (S (NP (DT the) (NNP fbi)) (VP (VB look)))))))) (: --) (FRAG (INTJ (UH well)) (, ,) (NP (NP (NN kind)) (PP (IN of) (NP (NN dopey)))) (. .))))))
+
+(S1 (S (NP (PRP it)) (VP (AUX has) (VP (VBN put) (NP (DT a) (NN spotlight)) (PP (IN on) (NP (NNP u.s.) (NN \/) (NN china) (NNS relations))))) (. .)))
+
+(S1 (S (PP (IN like) (NP (DT any) (JJ good) (NN spy) (NN movie))) (, ,) (NP (PRP it)) (VP (AUX 's) (ADVP (RB already)) (VP (AUX had) (NP (NP (NP (DT a) (NN sequel)) (PP (IN with) (NP (NP (DT the) (JJ first) (NN indictment)) (ADVP (RBR earlier) (PP (IN in) (NP (DT the) (NN week))))))) (CC and) (NP (DT another) (NN one))) (ADVP (RB just)) (NP (NN yesterday)))) (. .)))
+
+(S1 (S (PP (IN on) (NP (NNP Thursday))) (, ,) (NP (DT the) (JJ other) (NN shoe)) (VP (VBD dropped)) (. .)))
+
+(S1 (S (NP (NP (QP (RB just) (CD one)) (NN day)) (PP (IN after) (NP (DT a) (JJ former) (NNP fbi) (NN counterintelligence) (NN agent)))) (VP (AUX was) (VP (VBN indicted) (PP (IN on) (NP (NP (NNS charges)) (PP (IN of) (NP (NP (JJ gross) (NN negligence)) (, ,) (NP (NP (PRP$ his) (NN mistress)) (PP (IN of) (NP (CD two) (NNS decades)))) (, ,) (NP (NN katrina) (NN leung)) (, ,) (SBAR (SINV (AUX was) (NP (PRP herself)) (VP (VBN indicted) (PP (IN on) (NP (NP (RBR more) (JJ serious) (NNS charges)) (PP (IN of) (S (VP (VBG copying) (CC and) (VBG possessing) (NP (NP (NNS documents)) (VP (VBG relating) (PP (TO to) (NP (NP (DT the) (JJ national) (NN security)) (PP (IN of) (NP (DT the) (VBN united) (NNS states))))))))))))))))))))) (. .)))
+
+(S1 (S (NP (NNS documents)) (NP (PRP she)) (ADVP (RB allegedly)) (VP (VBD lifted) (PP (IN on) (NP (JJ many) (NNS occasions))) (PP (IN from) (NP (NP (DT the) (NN briefcase)) (PP (IN of) (NP (NP (PRP$ her) (JJ ex-fbi) (NN handler)) (, ,) (NP (NNP james) (NNP smith))))))) (. .)))
+
+(S1 (S (NP (NP (NNP leung) (POS 's)) (NNS lawyers)) (VP (VBD wasted) (NP (NP (JJ little) (NN time)) (VP (VBG responding) (PP (TO to) (NP (DT the) (JJ grand) (NN jury) (NN indictment)))))) (. .)))
+
+(S1 (S (NP (NNP katrina) (NN leung)) (VP (AUX is) (NP (DT no) (NNP matt) (NN aharry)) (, ,) (SBAR (IN as) (S (NP (NNS people)) (VP (AUX have) (VP (VBN suggested)))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (AUX was) (VP (VBN recruited) (ADVP (RB actively)) (PP (IN by) (NP (DT the) (NNP fbi))) (PP (PP (IN because) (IN of) (SBAR (WHNP (WP what)) (S (NP (PRP she)) (VP (MD could) (VP (AUX do)))))) (CC and) (PP (IN because) (IN of) (SBAR (WHNP (WP what)) (S (NP (PRP she)) (VP (VBD knew)))))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (SYM d) (RB not) (VP (VB go) (PRT (RP out)) (S (VP (TO to) (VP (VB get) (NP (DT this) (NN job))))))) (. .)))
+
+(S1 (FRAG (NP (NN reporter)) (: :) (S (NP (NP (NN leung)) (, ,) (NP (DT a) (JJ prominent) (NN chinese-american)) (, ,)) (VP (AUX was) (RB practically) (NP (NP (DT the) (NN toast)) (PP (IN of) (NP (NNP l.a.))) (SBAR (S (NP (PRP she)) (VP (AUX was) (ADJP (RB seemingly) (JJ present)) (PP (IN for) (NP (NP (RB just) (IN about) (DT every) (NN event)) (VP (VBG involving) (NP (NP (JJ local) (NNS politicians)) (, ,) (NP (ADJP (RB sometimes) (JJ national)) (NNS ones)) (, ,) (CC and) (NP (NP (JJ various) (JJ high-ranking) (NNS officials)) (PP (IN of) (NP (DT the) (JJ chinese) (NN government)))))))))))))) (. .)))
+
+(S1 (S (NP (DT that) (NN part)) (, ,) (ADVP (IN at) (JJS least)) (, ,) (VP (AUX was) (PP (IN by) (NP (NN design)))) (. .)))
+
+(S1 (S (NP (NN leung)) (VP (AUX was) (VP (VP (VBN hired) (PP (IN by) (NP (DT the) (NNP fbi)))) (CC and) (VP (VBN paid) (NP (QP (RB almost) ($ $) (CD 2) (CD million))) (PP (IN over) (NP (CD 20) (NNS years))) (S (VP (TO to) (VP (VB spy) (PP (IN on) (NP (DT the) (JJ chinese))))))))) (. .)))
+
+(S1 (S (NP (JJ federal) (NNS prosecutors)) (ADVP (RB now)) (VP (VBP say) (SBAR (S (NP (PRP she)) (VP (VP (VBD pulled) (NP (DT a) (JJ fast) (NN one))) (CC and) (VP (ADVP (RB actually)) (VBD spied) (PP (IN on) (NP (DT the) (NNP u.s.))) (PP (IN for) (NP (DT the) (NNP chinese)))))))) (. .)))
+
+(S1 (S (NP (DT this) (NN case)) (VP (AUX is) (NP (DT a) (JJ major) (NN embarrassment)))))
+

@@ -1,0 +1,12 @@
+(S1 (S (NP (NP (JJ Microscopic) (NN microcap) (NNP Everlast)) (, ,) (ADVP (RB mainly)) (NP (NP (DT a) (NN maker)) (PP (IN of) (NP (JJ boxing) (NN equipment)))) (, ,)) (VP (AUX has) (VP (VBN soared) (PP (IN over) (NP (DT the) (JJ last) (JJ several) (NNS days))) (NP (NP (NNS thanks)) (PP (TO to) (NP (NP (DT a) (NN licensing) (NN deal)) (PP (IN with) (NP (NNP Jacques) (NNP Moret))) (VP (VBG allowing) (S (NP (NNP Moret)) (VP (TO to) (VP (VB buy) (PRT (RP out)) (NP (NP (PRP$ their) (NNS women) (POS 's)) (NN apparel) (NN license)) (PP (IN for) (NP (QP ($ $) (CD 30) (CD million)))) (, ,) (PP (IN on) (NP (NP (NN top)) (PP (IN of) (NP (NP (DT a) (ADJP (QP ($ $) (CD 12.5) (CD million))) (NN payment)) (ADVP (RB now))))))))))))))) (. .)))
+
+(S1 (S (PP (IN In) (NP (JJ other) (NNS words))) (, ,) (NP (DT a) (NN competitor)) (VP (AUX has) (VP (VBN decided) (SBAR (IN that) (S (NP (NP (CD one) (NN segment)) (PP (IN of) (NP (NP (DT the) (NN company) (POS 's)) (NN business)))) (VP (AUX is) (ADVP (RB potentially)) (ADJP (JJ worth) (NP (QP ($ $) (CD 42.5) (CD million))))))))) (. .)))
+
+(S1 (S (NP (NNS Investors)) (VP (AUX have) (ADVP (RB prudently)) (VP (VBN valued) (NP (NP (DT the) (VBG remaining) (NN business)) (PRN (: --) (NP (NP (DT the) (ADJP (RB extremely) (JJ well-known)) (NNP Everlast) (NN brand)) (, ,) (NP (DT the) (JJ possible) (JJ new) (NN reality) (NN TV) (NN show)) (, ,) (CC and) (NP (NP (JJS most)) (PP (IN of) (NP (NP (DT the) (NN company) (POS 's)) (NNS assets))))) (: --))) (PP (IN at) (NP (DT a) (JJ negative) (QP ($ $) (CD 16.5) (CD million)))))) (. .)))
+
+(S1 (S (NP (NP (DT The) (NN company) (POS 's)) (NN stock)) (VP (MD would) (VP (AUX have) (S (VP (TO to) (VP (VB rise) (NP (QP (JJR more) (IN than) (CD 50)) (NN %)) (PP (IN from) (NP (DT the) (JJ current) (NN level)))))) (S (VP (TO to) (VP (VB put) (NP (DT a) (CD zero) (NN value)) (PP (IN on) (NP (DT that) (NN business)))))))) (. .)))
+
+(S1 (SBARQ (CC And) (, ,) (WHNP (WP who)) (SQ (VP (VBZ knows))) (. ?)))
+
+(S1 (S (NP (PRP It)) (VP (MD might)) (. .)))
+

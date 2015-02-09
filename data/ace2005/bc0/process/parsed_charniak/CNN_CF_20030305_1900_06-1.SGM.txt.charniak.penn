@@ -1,0 +1,78 @@
+(S1 (S (VP (VB Welcome) (PRT (RP back)) (PP (TO to) (NP (NN CROSSFIRE)))) (. .)))
+
+(S1 (S (S (ADVP (RB Maybe)) (NP (PRP it)) (VP (AUX 's) (ADVP (RB just)) (NP (PRP me)))) (, ,) (CC but) (S (NP (PRP I)) (VP (VBP think) (S (NP (NP (NNP Michael) (NNP Jackson)) (, ,) (NP (NP (PRP he) (POS 's)) (NN kooky)) (, ,)) (ADJP (JJ wacky))))) (. .)))
+
+(S1 (NP (NP (NN Time)) (PP (ADVP (RB now)) (IN for) (NP (`` ``) (NP (NNP Fireback)) (, ,) ('' '') (SBAR (WHADVP (WRB where)) (S (NP (NP (PRP$ our) (ADJP (JJ wacky) (CC and) (JJ kooky)) (NNS fans)) (CC and) (NP (NNS friends) (CC and) (NNS critics))) (VP (NN right) (PRT (RP in))))))) (. .)))
+
+(S1 (S (NP (NNP Don)) (PP (IN from) (NP (NNP Denver))) (, ,) (NP (NNP Colorado)) (VP (VBZ writes) (, ,) (`` ``) (S (NP (NNP Paul)) (, ,) (NP (PRP you)) (VP (VB keep) (S (VP (VBG referencing) (NP (JJ Halliburton) (NN selling) (NN equipment)) (PP (TO to) (NP (NNP Iraq))))))) ('' '') (PRN (: --) (SBAR (WHNP (WDT which)) (S (NP (PRP I)) (VP (AUX do)))))) (. .)))
+
+(S1 (S (`` ``) (NP (PRP I)) (VP (VBP recall) (, ,) (SBAR (IN as) (S (VP (VBN reported) (PP (IN in) (`` `) (NP (DT The) (NNP Wall) (NNP Street) (NNP Journal))) (, ,) ('' ') (SBAR (IN that) (S (NP (DT the) (NNS transactions)) (VP (AUX were) (ADJP (JJ legal))))))))) (. .)))
+
+(S1 (SQ (AUX Is) (NP (PRP it)) (ADJP (JJ possible)) (SBAR (IN that) (S (NP (DT the) (NN equipment)) (VP (VBD allowed) (S (NP (NNP Iraq)) (VP (TO to) (VP (VB produce) (NP (NP (NN oil)) (PP (IN for) (NP (DT the) (NN Oil)))) (PP (IN for) (NP (NP (NNP Food) (NN program)) (VP (VBN authorized) (PP (IN by) (NP (DT the) (NNP U.N.)))))))))))) (. ?) ('' '')))
+
+(S1 (S (NP (PRP They)) (VP (AUX were) (ADJP (JJ legal)) (SBAR (IN because) (S (NP (NP (NNP Mr.) (NNP Cheney) (POS 's)) (NN company)) (VP (VBD used) (NP (DT a) (NN loophole)))))) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (VBD went) (PP (IN through) (NP (DT a) (JJ foreign) (NN subsidiary)))) (. .)))
+
+(S1 (S (CC But) (S (NP (PRP they)) (AUX did) (VP (VBP enrich) (NP (NP (NNP Saddam) (NNP Hussein)) (CC and) (NP (PRP$ his) (JJ evil) (, ,) (JJ ruthless) (NN regime))))) (, ,) (CC and) (S (NP (PRP they)) (VP (AUX were) (ADJP (JJ immoral)))) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (AUX were) (ADJP (JJ wrong))) (. .)))
+
+(S1 (S (NP (NNP Dick) (NNP Cheney)) (VP (MD should) (VP (AUX have) (ADVP (RB never)) (VP (VBN profited) (PRT (RP off)) (PP (IN of) (S (VP (VBG doing) (NP (NN business)) (PP (IN with) (NP (NNP Saddam) (NNP Hussein))))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (MD would) (VP (VB agree) (PP (IN with) (NP (DT that))))) (. .)))
+
+(S1 (SBARQ (WHNP (WP What)) (SQ (AUX does) (NP (DT that)) (VP (AUX have) (S (VP (TO to) (VP (AUX do) (PP (IN with) (NP (NP (DT the) (NN war)) (PP (IN in) (NP (NNP Iraq)))))))))) (. ?)))
+
+(S1 (S (NP (PRP It)) (VP (VBZ means) (SBAR (S (NP (NNP Cheney)) (VP (AUX is) (NP (DT a) (NN hypocrite)))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (AUX 's) (VP (VBG trying) (S (VP (TO to) (VP (VB lead) (NP (PRP us)) (PP (IN into) (NP (NP (DT a) (NN war)) (PP (IN against) (NP (NP (CD one)) (PP (IN of) (NP (PRP$ his) (VBN valued) (NNS customers)))))))))))) (. .)))
+
+(S1 (S (ADVP (RB Well)) (NP (PRP it)) (VP (AUX 's) (NP (NP (DT a) (JJ complete)) (PRN (: ...) (-LRB- -LRB-) (NP (NNP CROSSTALK)) (-RRB- -RRB-)) (SBAR (S (NP (PRP You)) (VP (AUX 're) (VP (VBG attacking) (NP (DT the) (NN man)))))))) (. .)))
+
+(S1 (S (NP (DT That)) (VP (AUX 's) (ADJP (JJ irrelevant) (PP (TO to) (NP (DT the) (NN argument))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 'm) (VP (VBG attacking) (NP (PRP$ his) (NN business) (NNS practices)))) (. .)))
+
+(S1 (FRAG (INTJ (UH No)) (, ,) (INTJ (UH no)) (, ,) (S (NP (PRP you)) (VP (AUX 're) (VP (VBG attacking)))) (: --) (INTJ (UH OK)) (ADJP (JJ great)) (. .)))
+
+(S1 (S (NP (DT That)) (VP (AUX 's) (ADJP (JJ great))) (. .)))
+
+(S1 (S (CC But) (NP (PRP it)) (VP (AUX has) (NP (NP (NN nothing)) (SBAR (S (VP (TO to) (VP (AUX do) (SBAR (IN whether) (S (NP (PRP we)) (VP (MD should) (VP (VB go) (PP (TO to) (NP (NN war))) (PP (IN with) (NP (NNP Iraq)))))) (CC or) (RB not)))))))) (. .)))
+
+(S1 (S (NP (RB Well) (NN yesterday)) (NP (PRP he)) (VP (AUX was) (NP (NP (DT a) (VBN valued) (NN customer)) (, ,) (NP (NP (NN today)) (SBAR (S (NP (PRP he)) (VP (AUX 's) (NP (DT an) (JJ even) (NN villain)))))))) (. .)))
+
+(S1 (NP (PRN (-LRB- -LRB-) (NP (NNP CROSSTALK)) (-RRB- -RRB-)) (NNP Right) (. .)))
+
+(S1 (S (ADVP (RB So)) (S (NP (PRP we)) (VP (AUX 're) (PP (IN against) (NP (NNP Dick) (NNP Cheney))))) (, ,) (CC but) (S (NP (DT that)) (VP (AUX does) (RB n't) (VP (AUX have) (NP (NP (NN anything)) (SBAR (S (VP (TO to) (VP (AUX do) (PP (IN with) (NP (NNP Saddam) (NNP Hussein))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Chad) (NNP Hensley)) (, ,) (PP (IN from) (NP (NP (NNP Fairfax)) (, ,) (NP (NNP Virginia)))) (, ,)) (VP (VBZ writes) (, ,) (`` ``) (S (NP (NNP France) (, ,) (NNP Russia) (CC and) (NNP German)) (VP (AUX have) (NP (NP (DT all) (JJ multi-billion) (NN dollar) (NN oil) (NNS deals)) (PP (IN with) (NP (NNP Saddam)))) (PP (IN in) (NP (NNP Iraq)))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP wonder) (SBAR (WHADVP (WRB why)) (S (NP (PRP they)) (VP (VB protest) (NP (DT the) (NN war)) (PP (IN with) (NP (NNP Iraq))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (MD must) (VP (AUX be) (NP (DT the) (JJ humanitarian) (NNS reasons)))) (. .) ('' '')))
+
+(S1 (S (INTJ (INTJ (UH Well)) (, ,) (INTJ (UH Chad))) (, ,) (NP (DT that)) (VP (AUX 's) (SBAR (WHNP (WP what)) (S (NP (NNS liberals)) (VP (VBP assume))))) (. .)))
+
+(S1 (S (S (NP (DT That) (NNP Europe)) (VP (AUX is) (PP (IN against) (NP (NP (DT the) (NN war)) (PP (IN on) (NP (ADJP (JJ humanitarian) (CC and) (JJ moral)) (NNS grounds))))))) (, ,) (CC but) (S (NP (DT the) (NNP U.S.)) (VP (AUX is) (PP (IN for) (NP (DT the) (NN war))) (SBAR (IN because) (S (NP (PRP it)) (VP (VBZ wants) (S (VP (TO to) (VP (VB profit) (PP (IN for) (NP (DT the) (NN oil) (NNS companies))))))))))) (. .)))
+
+(S1 (SQ (SBAR (S (NP (PRP It)) (VP (AUX is) (NP (DT a) (JJ weird) (NN assumption))))) (, ,) (AUX do) (RB n't) (NP (PRP you)) (VP (VB think)) (. ?)))
+
+(S1 (S (SBAR (IN As) (S (NP (PRP you)) (VP (VBP know)))) (, ,) (NP (PRP I)) (VP (AUX 've) (ADVP (RB never)) (VP (VBD said) (NP (DT that)))) (. .)))
+
+(S1 (S (NP (PRP You)) (VP (AUX have) (RB n't)) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB believe) (PP (IN for) (NP (NP (DT a) (NN minute)) (SBAR (WHNP (WDT that)) (S (NP (DT this)) (VP (AUX is) (NP (NP (DT a) (NN war)) (PP (IN for) (NP (NN oil))))))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP think) (SBAR (S (S (NP (PRP it)) (VP (AUX 's) (ADJP (JJ unwise)))) (, ,) (S (NP (PRP it)) (VP (AUX 's) (ADJP (JJ unjust)))) (, ,) (S (NP (PRP it)) (VP (AUX 's) (ADJP (JJ unwarranted)))) (, ,) (CC but) (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (PRP it)) (VP (AUX 's) (PP (IN about) (NP (NN oil)))))))))))) (. .)))
+
+(S1 (S (ADVP (RB Now)) (, ,) (NP (NP (DT the) (NN reason)) (SBAR (WHNP (WDT that)) (S (NP (NNP France) (, ,) (NNP Russia) (CC and) (NNP Germany)) (VP (AUX are) (PP (IN against) (NP (NN war))))))) (VP (AUX is) (SBAR (IN because) (S (NP (PRP they)) (VP (AUX have) (NP (NNS democracies)))))) (. .)))
+
+(S1 (S (NP (DT The) (NNS people)) (VP (AUX are) (PP (IN against) (NP (PRP it)))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (VP (VBN called) (S (NP (NN democracy))))) (. .)))
+
+(S1 (S (NP (DT Those) (NNS leaders)) (VP (AUX are) (VP (VBG reflecting) (NP (NP (DT the) (NNS views)) (PP (IN of) (NP (PRP$ their) (NNS people)))))) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (VBP hate) (NP (NP (NNP America)) (, ,) (NP (NNP Paul)))) (. .)))
+

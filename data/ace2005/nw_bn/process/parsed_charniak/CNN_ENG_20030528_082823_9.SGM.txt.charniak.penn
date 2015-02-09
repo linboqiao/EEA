@@ -1,0 +1,20 @@
+(S1 (S (NP (PRP it)) (VP (AUX 's) (VP (AUX been) (NP (CD four) (NNS years)) (SBAR (IN since) (S (NP (NP (DT the) (JJ u.s.) (NNS women) (POS 's)) (NN soccer) (NN team)) (VP (VBD made) (NP (NP (NN history)) (VP (VBG winning) (NP (DT the) (NN world) (NN cup)))) (PP (IN before) (NP (QP (JJR more) (IN than) (CD 90,000)) (NNS fans))) (PP (IN at) (NP (DT the) (NN rose) (NN bowl)))))))) (. .)))
+
+(S1 (S (NP (NN everybody)) (VP (VBZ remembers) (NP (DT that) (NN scene))) (. .)))
+
+(S1 (S (NP (NN brandy) (NN chastain) (POS 's) (NN kick) (CC and) (NN mia) (NN hamm)) (VP (VBD ripping) (NP (DT the) (NN shirt)) (PRT (RP off))) (. .)))
+
+(S1 (S (NP (NP (DT the) (JJ super) (NN bowl)) (PP (IN of) (NP (NP (NNS women) (POS 's)) (NN soccer)))) (VP (AUX is) (VP (VBG returning) (PP (TO to) (NP (DT the) (NNP u.s.))) (SBAR (IN after) (S (NP (NP (NNS concerns)) (PP (IN about) (NP (NP (NNS sars)) (PP (IN in) (NP (NN china)))))) (VP (VBD prompted) (NP (NP (DT a) (NN change)) (PP (IN in) (NP (NN venue))) (PP (IN for) (NP (NP (DT this) (NN year) (POS 's)) (NN tournament))))))))) (. .)))
+
+(S1 (S (NP (NP (NNP lynn) (NNP morgan)) (NP (NP (NN president)) (PP (IN of) (NP (DT the) (NN soccer) (NN association))))) (VP (AUX is) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT those)) (SBAR (WHNP (WP who)) (S (VP (AUX has) (NP (NP (DT the) (NN job)) (PP (IN of) (S (VP (VBG organizing) (NP (DT this) (JJ global) (NN event))))) (SBAR (WHNP (WDT that)) (S (VP (AUX has) (ADVP (RB only)) (VP (VBD got) (S (S (NP (CD four) (NNS months)) (VP (TO to) (VP (VB get) (VP (VBN put) (PRT (RP together)) (PP (RB instead) (IN of) (NP (CD four) (NNS years))) (PP (IN as) (ADJP (JJ usual))))))) (CC and) (S (NP (PRP she)) (VP (VBZ joins) (NP (PRP us)) (PP (IN from) (NP (NNP atlanta) (DT this) (NN morning)))))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (VBP see) (NP (PRP her)) (ADVP (RB there))) (. .)))
+
+(S1 (FRAG (PP (IN in) (NP (NNP washington))) (, ,) (SBAR (IN with) (S (NP (PRP us)) (ADVP (RB now)) (VP (AUX is) (NP (NP (NN mia) (CD hamm) (, ,) (CD one)) (PP (IN of) (NP (NP (DT the) (NNS stars)) (PP (IN of) (NP (DT the) (CD '99) (NNP u.s.) (NN team))))))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (AUX 's) (ADVP (RB now)) (VP (VBG playing) (PP (IN for) (NP (NP (DT the) (NNP washington) (NN freedom)) (PP (IN of) (NP (DT the) (FW wusa))))))) (. .)))
+
+(S1 (FRAG (NNS ladies) (, ,) (NP (NP (NNS thanks)) (PP (IN for) (S (VP (VP (VBG coming) (PRT (RP out))) (CC and) (VP (VBG talking) (PP (IN with) (NP (PRP us)))) (NP (DT this) (NN morning)))))) (. .)))
+
+(S1 (S (NP (NP (NNP mia)) (, ,) (SBAR (WHADVP (WRB when)) (S (NP (PRP you)) (VP (VBD heard) (NP (DT the) (NN news)) (PP (IN about) (S (NP (NNP china)) (ADVP (RB now)) (VP (VBG saying) (SBAR (S (NP (PRP they)) (VP (VBP want) (S (NP (DT the) (NNP u.s.)) (VP (TO to) (VP (VB run) (NP (DT the) (NN tournament))))))))))) (, ,) (SBAR (WHADVP (WRB when)) (S (NP (PRP you)) (VP (VBD heard) (NP (DT that)))))))) (, ,)) (VP (AUX did) (S (S (NP (PRP you)) (VP (VB think) (SBAR (S (NP (DT this)) (VP (AUX is) (NP (DT a) (JJ pleasant) (NN surprise))))))) (CC or) (S (NP (PRP you)) (VP (VBP got) (S (VP (TO to) (VP (AUX be) (VP (VBG kidding))))))))) (. ?)))
+

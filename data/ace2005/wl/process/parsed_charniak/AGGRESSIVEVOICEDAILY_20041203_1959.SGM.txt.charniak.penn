@@ -1,0 +1,20 @@
+(S1 (SINV (ADVP (RB Here)) (VP (AUX 's)) (NP (NP (DT an) (JJ incredible) (NN story)) (PP (IN about) (NP (NP (DT an) (VBG unsung) (NN hero)) (PP (IN until) (NP (RB now)))))) (. .)))
+
+(S1 (S (PP (IN From) (NP (NNP BBC) (NNP News))) (: :) (NP (DT A) (JJ retired) (JJ Italian) (NN doctor)) (VP (AUX has) (VP (VBN revealed) (PP (IN for) (NP (NP (DT the) (JJ first) (NN time)) (SBAR (WHADVP (WRB how)) (S (NP (PRP he)) (VP (VBD invented) (NP (NP (DT a) (JJ fictitious) (NN disease)) (SBAR (WHNP (WDT which)) (S (VP (VBN fooled) (NP (DT the) (NNPS Nazis)) (PP (IN during) (NP (NNP World) (NNP War) (NNP II)))))))))))))) (. .)))
+
+(S1 (NP (NP (DT The) (NN trick)) (PP (IN of) (NP (JJ prescribing) (NNPS Jews))) (PP (IN with) (NP (NP (DT a) (JJ mysterious) (NN illness)) (VP (VP (VBN terrified) (NP (DT the) (NNPS Nazis))) (CC and) (VP (VBN saved) (NP (CD 45) (NNPS Roman) (NNPS Jews)))))) (. .)))
+
+(S1 (S (NP (NNP Dr) (NNP Vittorio) (NNP Sacerdoti)) (VP (AUX has) (VP (VBN told) (NP (NP (PRP$ his) (JJ remarkable) (NN tale)) (PP (IN on) (NP (NP (DT the) (JJ 60th) (NN anniversary)) (PP (IN of) (NP (NP (NN liberation)) (PP (IN of) (NP (NNP Rome)))))))))) (. .)))
+
+(S1 (S (S (ADJP (NP (QP (RB Just) (CD 28)) (NNS years)) (JJ old)) (PP (IN at) (NP (DT the) (NN time)))) (, ,) (NP (PRP he)) (VP (VBD used) (NP (NN courage) (CC and) (NN ingenuity)) (S (VP (TO to) (VP (VB save) (NP (CD 45) (NNS people)) (PP (IN from) (NP (JJ certain) (NN death))))))) (. .)))
+
+(S1 (S (SBAR (IN As) (S (NP (JJ other) (NNPS Jews)) (VP (AUX were) (VP (AUXG being) (VP (VBN rounded) (PRT (RP up))))))) (, ,) (NP (NNP Dr) (NNP Sacerdoti)) (VP (VP (VBD admitted) (NP (NP (NN anyone)) (SBAR (WHNP (WP who)) (S (VP (MD could) (VP (VB reach) (NP (DT the) (NN hospital)) (PP (IN as) (NP (NNS patients))))))))) (: -) (CC and) (VP (VBD diagnosed) (NP (PRP them)) (PP (IN with) (NP (DT a) (JJ dangerous) (NN disease))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (PRP We)) (VP (MD would) (VP (VB write) (PP (IN on) (NP (PRP$ their) (JJ medical) (NNS forms))) (SBAR (IN that) (S (NP (DT the) (NN patient)) (VP (AUX was) (VP (VBG suffering) (PP (IN from) (NP (NNP K) (NN Syndrome)))))))))) (, ,) ('' '') (NP (PRP he)) (VP (VBD said)) (. .)))
+
+(S1 (S (`` ``) (S (NP (PRP We)) (VP (VBD called) (S (NP (PRP it)) (VP (NN K) (PP (IN after) (NP (DT the) (NNP German) (NN commander) (NN Kesserling))))))) (: -) (S (NP (DT the) (NNPS Nazis)) (VP (VBD thought) (SBAR (S (NP (PRP it)) (VP (AUX was) (NP (NN cancer) (CC or) (NN tuberculosis))))))) (, ,) (CC and) (S (NP (PRP they)) (VP (VBD fled) (PP (IN like) (NP (NNS rabbits))))) (. .) ('' '')))
+
+(S1 (S (NP (NNP K) (NN Syndrome)) (VP (VBD saved) (NP (NP (PRP$ his) (NN cousin)) (, ,) (NP (NNP Luciana) (NNP Sacerdoti)) (, ,) (SBAR (WHNP (WP who)) (S (VP (AUX was) (ADJP (NP (QP (RB just) (CD 10)) (NNS years)) (JJ old))))))) (. .)))
+
+(S1 (S (`` ``) (NP (NP (DT The) (NN day)) (SBAR (S (NP (DT the) (NNPS Nazis)) (VP (VBD came) (PP (TO to) (NP (DT the) (NN hospital))))))) (, ,) (NP (NN someone)) (VP (VP (VBD came) (PP (TO to) (NP (PRP$ our) (NN room)))) (CC and) (VP (VBD said) (: :) (`` `) (S (NP (PRP You)) (VP (AUX have) (S (VP (TO to) (VP (VB cough) (, ,) (S (S (NP (PRP you)) (VP (AUX have) (S (VP (TO to) (VP (VB cough) (NP (DT a) (NN lot))))) (SBAR (IN because) (S (NP (PRP they)) (VP (AUX are) (ADJP (JJ afraid) (PP (IN of) (NP (DT the) (VBG coughing))))))))) (, ,) (S (NP (PRP they)) (VP (AUX do) (RB n't) (VP (VB want) (S (VP (TO to) (VP (VB catch) (NP (DT an) (JJ awful) (NN disease)))))))) (CC and) (S (NP (PRP they)) (VP (MD wo) (RB n't) (VP (VB enter) ('' ')))))))))))) (. .) ('' '')))
+

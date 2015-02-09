@@ -1,0 +1,54 @@
+(S1 (S (NP (NP (NP (NP (NP (NNP MOSCOW)) (, ,) (NP (NNP April) (CD 13)) (PRN (-LRB- -LRB-) (NP (NNP AFP)) (-RRB- -RRB-))) (NNP Russian) (NNP President) (NNP Vladimir) (NNP Putin) (POS 's)) (NN summit)) (PP (IN with) (NP (NP (DT the) (NNS leaders)) (PP (IN of) (NP (NP (NNP Germany)) (CC and) (NP (NNP France))))))) (VP (MD may) (VP (AUX have) (VP (AUX been) (NP (NP (DT a) (NN failure)) (SBAR (WHNP (WDT that)) (S (VP (VBZ proves) (SBAR (S (NP (EX there)) (VP (MD can) (VP (AUX be) (NP (NP (DT no) (JJ long-term) (`` ``) (NN peace) (NN camp) ('' '') (NN alliance)) (SBAR (S (PP (VBG following) (NP (NP (DT the) (NN end)) (PP (IN of) (NP (NP (NN war)) (PP (IN in) (NP (NNP Iraq))))))) (, ,) (NP (NN government) (NNS sources)) (VP (AUX were) (VP (VBN quoted) (PP (IN as) (S (VP (VBG saying) (PP (IN at) (NP (DT the) (NN weekend)))))))))))))))))))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (JJ Senior) (NN government) (NNS officials)) (, ,) (S (VP (VBG speaking) (PP (IN in) (NP (NP (DT the) (NNS corridors)) (PP (IN of) (NP (NN power))) (PP (IN in) (NP (NNP Moscow))))))) (, ,) (VP (AUX have) (NP (NP (DT no) (NNS illusions)) (PP (IN about) (NP (NP (DT any) (JJ long-term) (NNS perspectives)) (PP (IN for) (NP (DT the) (PRN (-LRB- -LRB-) (NNP Russian-German-French) (-RRB- -RRB-)) (NN axis)))))))) (, ,) ('' '') (NP (DT the) (JJ respected) (NNP Izvestia) (NNP daily)) (VP (VBD reported)) (. .)))
+
+(S1 (S (`` ``) (S (S (ADVP (RB Sooner) (CC or) (RB later)) (NP (NNP Iraq)) (VP (MD will) (VP (VB fall)))) (CC and) (S (NP (NP (NNP Russia)) (CC and) (NP (DT the) (NNP United) (NNPS Sates))) (VP (MD will) (VP (VB resume) (NP (JJ normal) (NNS relations)))))) (, ,) ('' '') (NP (NP (DT the) (JJ senior) (NNP Moscow) (NN official)) (, ,) (SBAR (WHNP (WP who)) (S (VP (AUX was) (VP (VBN reported) (S (VP (TO to) (VP (AUX be) (ADJP (JJ close) (PP (TO to) (NP (NNP Putin))))))))))) (, ,)) (VP (VBD told) (NP (DT the) (NN paper))) (. .)))
+
+(S1 (S (`` ``) (NP (NP (DT The) (NN situation)) (PP (IN in) (NP (NNP Iraq)))) (VP (AUX does) (RB not) (VP (VB mean) (SBAR (IN that) (S (NP (PRP we)) (VP (VBP intend) (S (VP (TO to) (VP (VB get) (PP (IN into) (NP (NP (DT an) (NN argument)) (PP (IN with) (NP (DT the) (NNP United) (NNPS States))))))))))))) (. .) ('' '')))
+
+(S1 (S (NP (DT The) (NNS comments)) (VP (VBP indicate) (SBAR (IN that) (S (NP (NP (NP (NNP Russia) (POS 's)) (JJ nuanced) (NN position)) (PP (IN over) (NP (NP (DT the) (NN war)) (PP (IN in) (NP (NNP Iraq)))))) (VP (AUX was) (VP (VBG becoming) (NP (NP (RB ever) (JJR more)) (VP (VBD scrambled))) (, ,) (PP (IN with) (S (NP (NNP Putin)) (VP (VBG pushing) (S (VP (TO to) (VP (VB protect) (NP (NP (PRP$ his) (JJ budding) (NN friendship)) (PP (IN with) (NP (NP (NP (NNP US) (NNP President) (NNP George) (NNP W.) (NNP Bush)) (PP (IN in) (NP (NP (DT the) (NN face)) (PP (IN of) (NP (NP (JJ strident) (NN opposition)) (PP (IN from) (NP (DT the) (JJ Russian) (NNS media)))))))) (CC and) (NP (JJ other) (JJ top) (NNP Kremlin) (NNS officials)))))))))))))))) (. .)))
+
+(S1 (S (NP (NNS Analysts)) (VP (AUX have) (ADVP (RB long)) (VP (VBN argued) (SBAR (IN that) (S (NP (NNP Putin)) (VP (AUX is) (ADJP (ADJP (RB far) (JJR keener) (S (VP (TO to) (VP (VB preserve) (NP (NP (JJ friendly) (NNS relations)) (PP (IN with) (NP (DT the) (NNP United) (NNPS States)))))))) (PP (IN than) (NP (NP (DT the) (JJ pro-European) (, ,) (JJ anti-war) (NNS camps)) (VP (VBN embedded) (PP (IN in) (NP (NP (JJ much)) (PP (IN of) (NP (NP (DT the) (NNP Russian) (NNS media)) (CC and) (NP (DT the) (JJ foreign) (CC and) (NN defense) (NNS ministries))))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Russia) (POS 's)) (JJ foreign) (NN minister)) (VP (VBD expressed) (NP (NP (NN outrage)) (PP (IN at) (NP (NNS suggestions)))) (PP (IN from) (NP (DT a) (JJ top) (NNP Washington) (NN official))) (NP (JJ last) (NN week)) (SBAR (IN that) (S (NP (NNP Moscow)) (VP (MD should) (VP (VB forgive) (NP (NP (DT the) (QP (CD eight) (CD billion)) (NNS dollars)) (PP (IN in) (NP (NNP Soviet-era) (NN debt))) (SBAR (IN that) (S (NP (NNP Baghdad)) (VP (VBZ owes) (NP (PRP it)))))) (, ,) (PP (IN as) (NP (NP (DT a) (NN gesture)) (PP (IN of) (NP (JJ good) (NN will)))))))))) (. .)))
+
+(S1 (S (S (NP (JJ Kommersant) (NN business) (NN daily)) (VP (VBD joined) (PRT (RP in)) (, ,) (S (VP (VBG declaring) (PP (IN in) (NP (DT a) (JJ furious) (JJ front-page) (NN headline))))))) (: :) (`` ``) (S (NP (DT The) (NNP United) (NNPS States)) (VP (AUX is) (VP (VBG demanding) (SBAR (IN that) (S (NP (NNP Russia) (, ,) (NNP France) (CC and) (NNP Germany)) (VP (VB pay) (PP (IN for) (NP (DT the) (JJ Iraqi) (NN war))))))))) (. .) ('' '')))
+
+(S1 (FRAG (CC And) (NP (DT the) (JJ popular) (NNP Gazeta)) (. .)))
+
+(S1 (S (NP (CD ru) (NN news) (NN website)) (VP (VBD stormed) (: :) (`` ``) (S (NP (PRP We)) (VP (MD should) (VP (AUX have) (VP (VBN expected) (NP (DT this))))) (. !)) (. .)) (. .)))
+
+(S1 (S (NP (DT This)) (VP (AUX is) (NP (NP (RB only) (DT the) (NN start)) (PP (IN of) (NP (NP (DT a) (JJ massive) (NNP US) (NN campaign)) (PRN (-LRB- -LRB-) (S (VP (TO to) (VP (VB decide) (NP (NP (NNP Iraq) (POS 's)) (JJ future) (NNS finances))))) (-RRB- -RRB-)))))) (. .) ('' '')))
+
+(S1 (S (ADVP (RB Yet)) (NP (NNP Putin)) (VP (AUX has) (VP (AUX been) (ADJP (ADVP (RB far) (RBR more)) (JJ reserved)))) (. .)))
+
+(S1 (S (NP (NP (PRP He)) (CC and) (NP (PRP$ his) (JJ loyal) (NN finance) (NN minister))) (VP (VBD suggested) (NP (NNP Friday)) (SBAR (IN that) (S (NP (NNP Moscow)) (VP (MD might) (VP (AUX be) (ADJP (JJ prepared) (S (VP (TO to) (VP (NN waiver) (NP (NP (DT some)) (PP (IN of) (NP (NP (DT the) (JJ Iraqi) (NNS debts)) (PP (IN in) (NP (NP (NN return)) (PP (IN for) (NP (JJR better) (JJ Russia-US) (NNS relations))))))))))))))))) (. .)))
+
+(S1 (S (`` ``) (S (PP (IN On) (NP (DT the) (NN whole))) (NP (DT the) (NN proposal)) (VP (AUX is) (ADJP (JJ understandable) (CC and) (JJ legitimate)))) (, ,) ('' '') (NP (NNP Putin)) (VP (VBD said)) (. .)))
+
+(S1 (S (`` ``) (NP (NNP Russia)) (VP (AUX has) (NP (NP (DT no) (NNS objections)) (PP (TO to) (NP (PDT such) (DT a) (NN proposal))))) (. .) ('' '')))
+
+(S1 (S (NP (NNP Putin)) (VP (VBD concluded) (NP (NP (PRP$ his) (CD two) (NNS days)) (PP (IN of) (NP (NP (NNS talks)) (PP (IN in) (NP (NNP Saint) (NNP Petersburg))) (PP (IN with) (NP (NP (NP (NNP Jacques) (NNP Chirac)) (PP (IN of) (NP (NNP France)))) (CC and) (NP (NP (NNP German) (NNP Chancellor) (NNP Gerhard) (NNP Schroeder)) (PP (IN on) (NP (NNP Saturday))) (VP (ADVP (RB still)) (VBG urging) (PP (IN for) (NP (NP (DT a) (JJ central) (NN role)) (PP (IN for) (NP (DT the) (NNP United) (NNPS Nations))))) (PP (IN in) (NP (NP (DT a) (JJ post-war) (NN revival)) (PP (IN of) (NP (NNP Iraq))))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN call)) (VP (VBD reflected) (NP (NP (DT the) (JJ insistent) (NN demand)) (VP (VBN made) (PP (IN by) (NP (NP (DT the) (CD three) (NNS leaders)) (PP (IN before) (NP (NP (DT the) (JJ US-British) (NN invasion)) (PP (IN of) (NP (NNP Iraq))) (SBAR (IN that) (S (NP (JJ UN) (NN approval)) (VP (AUX was) (ADJP (JJ essential)) (SBAR (IN for) (S (NP (DT any) (NN mission)) (VP (TO to) (VP (VB topple) (NP (JJ Iraqi) (NNP President) (NNP Saddam) (NNP Hussein)))))))))))))))) (. .)))
+
+(S1 (S (CC But) (NP (DT the) (NNP Saint) (NNP Petersburg) (NN summit)) (VP (VBD ended) (PP (IN without) (NP (NP (DT any) (JJ formal) (NN declaration)) (PP (IN on) (NP (NNP Iraq)))))) (. .)))
+
+(S1 (S (CC And) (NP (NNS diplomats)) (VP (VBD noted) (SBAR (IN that) (S (NP (NNP Putin)) (VP (VBD appeared) (ADJP (JJ uncomfortable) (PP (IN at) (S (VP (AUXG being) (VP (ADVP (RB so) (RB closely)) (VBN associated) (PP (IN with) (NP (NP (DT the) (JJ anti-Washington) (NN stance)) (PP (IN of) (NP (NNP Schroeder) (CC and) (NNP Chirac))))) (PP (IN amid) (NP (NP (PRP$ his) (JJ developing) (NN friendship)) (PP (IN with) (NP (NNP Bush)))))))))))))) (. .)))
+
+(S1 (S (NP (NNP Putin)) (VP (AUX had) (RB even) (ADVP (RB secretly)) (VP (VBN invited) (NP (NP (NNP British) (NNP Prime) (NNP Minister) (NNP Tony) (NNP Blair)) (, ,) (NP (NP (NP (NNP Bush) (POS 's)) (JJS staunchest) (NN backer)) (PP (IN in) (NP (NP (DT the) (NN war)) (PP (IN on) (NP (NNP Iraq)))))) (, ,)) (S (VP (TO to) (VP (VB attend) (NP (NP (DT the) (NN pow-wow)) (PP (IN in) (NP (NP (NNP Saint) (NNP Petersburg) (POS 's)) (NNP Grand) (NNP Hotel) (NNP Europe))))))) (, ,) (SBAR (IN although) (S (NP (NNS diplomats)) (VP (VBD said) (SBAR (S (NP (NNP Blair)) (VP (VBD turned) (NP (DT the) (NN offer)) (PRT (RP down)))))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (VBZ remains) (S (VP (TO to) (VP (AUX be) (VP (VBN seen))))) (SBAR (WHADJP (WRB how) (JJ successful)) (S (NP (NP (NP (NNP Putin) (POS 's)) (NNS overtures)) (PP (TO to) (NP (NNP Washington)))) (VP (MD will) (VP (AUX be) (PP (IN in) (NP (NP (DT the) (NN face)) (PP (IN of) (NP (NP (DT the) (JJ fervent) (JJ internal) (NN hostility)) (PP (TO to) (NP (DT the) (NNP US) (NN war) (NN stance)))))))))))) (. .)))
+
+(S1 (S (NP (DT A) (JJ senior) (NN lawmaker)) (VP (VBN seen) (SBAR (IN as) (S (VP (ADVP (RB close) (PP (TO to) (NP (DT the) (NNP Kremlin)))) (VBN ridiculed) (NP (DT the) (NNP United) (NNPS States) (NNP Sunday)) (PP (IN for) (S (VP (VBG failing) (S (VP (TO to) (VP (VB find) (NP (NP (DT any) (NNS weapons)) (PP (IN of) (NP (NP (JJ mass) (NN destruction)) (PP (IN in) (NP (NNP Iraq)))))))))))))))) (. .)))
+
+(S1 (SINV (`` ``) (S (NP (PRP We)) (VP (AUX do) (RB not) (VP (VB think) (SBAR (IN that) (S (NP (NNP America)) (VP (VBD won))))))) (, ,) ('' '') (VP (VBD said)) (NP (NP (NNP Dmitry) (NNP Rogozin)) (, ,) (NP (NP (DT the) (NN head)) (PP (IN of) (NP (NP (DT the) (JJR lower) (NN house)) (PP (IN of) (NP (NP (NP (NNP parliament) (POS 's)) (JJ foreign) (NNS affairs) (NN committee)) (, ,) (VP (VBD told) (NP (NNP Rossia) (NNP television))))))))) (. .)))
+
+(S1 (SBARQ (`` ``) (WHADVP (WRB Where)) (SQ (AUX are) (NP (DT those) (NN chemical) (NNS weapons))) (. ?) ('' '')))
+
+(S1 (S (NP (PRP he)) (VP (VBD demanded)) (. .)))
+
+(S1 (S (CC And) (NP (NP (NP (NNP Putin) (POS 's)) (NNS media) (NN aide)) (, ,) (NP (NNP Sergei) (NNP Yastrzhembsky)) (, ,)) (VP (VBD told) (SBAR (S (NP (NNP Kommersant) (NNP Russia)) (VP (MD would) (RB not) (VP (VB forgive) (NP (DT the) (JJ Iraqi) (NN debt))))))) (. .) ('' '')))
+
+(S1 (S (S (-LRB- -LRB-) (NP (NNP Washington)) (-RRB- -RRB-) (VP (MD should) (RB not) (VP (AUX be) (ADJP (RB so) (JJ generous)) (PP (IN at) (NP (NP (JJ other) (NNS people) (POS 's)) (NN expense)))))) (, ,) ('' '') (NP (PRP he)) (VP (VBD said)) (. .)))
+

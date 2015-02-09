@@ -1,0 +1,14 @@
+(S1 (S (NP (PRP i)) (VP (AUX 'm) (VP (VBG alisha) (NP (NNP davis)))) (. .)))
+
+(S1 (S (VP (VBN used) (S (VP (TO to) (VP (AUX be) (NP (NP (DT the) (NN king)) (PP (IN of) (NP (NN pop)))))))) (. .)))
+
+(S1 (S (ADVP (RB now)) (NP (PRP you)) (VP (MD could) (VP (VB call) (S (NP (PRP him)) (NP (NP (DT the) (NN king)) (PP (IN of) (NP (NNS lawsuits))))))) (. .)))
+
+(S1 (S (NP (NNP michael) (NNP jackson)) (VP (VBD filed) (NP (NN suit)) (PP (IN against) (NP (JJ universal) (NN music))) (, ,) (S (NP (NP (DT the) (NN parent) (NN company)) (PP (IN of) (NP (JJ motown) (NNS records)))) (VP (VBG saying) (SBAR (S (NP (PRP he)) (VP (VBP owe) (NP (PRP him)) (PP (IN for) (NP (NP (NN music)) (SBAR (S (NP (PRP he)) (VP (VBD recorded) (PP (IN with) (NP (DT the) (NNP jackson) (CD five) (NN back))) (PP (IN in) (NP (DT the) (CD 1970s)))))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (JJ gloved) (NN one)) (VP (VBZ claims) (SBAR (S (NP (DT the) (NN label)) (VP (AUX has) (VP (AUX been) (VP (VBG releasing) (NP (NP (JJ new) (NNS albums)) (CC and) (NP (NNP jackson) (CD five) (NN merchandise))) (PP (IN without) (S (VP (VBG giving) (S (NP (PRP him)) (`` ``) (NP (DT a) (JJ single) (NN dollar)))))))))))) (. .) ('' '')))
+
+(S1 (S (NP (NNP jackson)) (VP (AUX has) (VP (AUX been) (PP (IN in) (CC and) (IN out) (PP (IN of) (NP (NNS courtrooms)))) (ADVP (RB lately)))) (. .)))
+
+(S1 (S (PP (IN in) (NP (JJ recent) (NNS months))) (, ,) (NP (PRP he)) (VP (AUX 's) (VP (AUX been) (VP (VBN sued) (PP (PP (IN by) (NP (NP (DT an) (NN auction) (NN house)) (PP (IN for) (NP (NN non-payment))))) (, ,) (CC and) (PP (IN by) (NP (NP (DT a) (NN concert) (NN promoter)) (PP (IN for) (S (ADVP (RB allegedly)) (VP (VBG backing) (PRT (RP out)) (PP (IN of) (NP (CD two) (NN millennium) (NNS performances)))))))))))) (. .)))
+

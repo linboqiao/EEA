@@ -1,0 +1,10 @@
+(S1 (S (VP (VB Read) (NP (DT this) (NN report)) (PP (IN on) (NP (DT the) (NNP U.S.-Russia) (NNP Technology) (NNP Symposium)))) (. .)))
+
+(S1 (S (S (NP (PRP It)) (VP (AUX 's) (NP (NP (DT a) (JJ great) (NN summary)) (PP (IN of) (NP (NP (DT the) (NNS paradoxes)) (PP (IN of) (NP (DT the) (NNP Russian) (NN economy)))))))) (: :) (S (NP (PRP They)) (VP (AUX have) (NP (NP (DT a) (JJ huge) (JJ untapped) (NN supply)) (PP (IN of) (NP (ADJP (JJ valuable) (NP (PRP IT))) (NN labor)))))) (, ,) (CC but) (S (NP (PRP$ their) (PRP IT) (NNS exports)) (VP (AUX are) (NP (NP (RB only) (DT a) (NN tenth)) (PP (IN of) (NP (NP (PRP$ their) (JJ military) (NNS exports)) (PRN (-LRB- -LRB-) (CC and) (ADVP (RB only)) (NP (NP (DT a) (NN thirtieth)) (PP (IN of) (NP (NP (NP (NNP India) (POS 's)) (NP (PRP IT))) (NNS exports)))) (-RRB- -RRB-))))))) (. .)))
+
+(S1 (S (S (NP (PRP They)) (VP (VBP develop) (NP (NP (NNS lots)) (PP (IN of) (NP (JJ new) (NN technology)))))) (, ,) (CC but) (S (NP (NN nobody)) (VP (MD can) (VP (VB tell) (SBAR (WHNP (WP who)) (S (VP (VBZ owns) (NP (WP what)))))))) (. .)))
+
+(S1 (S (S (CC And) (, ,) (PP (IN of) (NP (NN course))) (, ,) (NP (NP (PRP$ their) (NNS securities) (NNS laws)) (CC and) (NP (NN property) (NNS rights))) (VP (AUX are) (ADJP (ADJP (RB even) (JJR flimsier)) (PP (IN than) (NP (NNP China) (POS 's)))))) (: --) (S (SBAR (IN after) (S (NP (DT the) (NNP Putin) (NN administration)) (VP (VBD mugged) (NP (NNP Yukos)) (PP (IN on) (NP (DT the) (NNS grounds))) (SBAR (IN that) (S (NP (PRP it)) (VP (AUX was) (ADJP (RB too) (JJ attractive)) (S (NP (DT a) (NN target)) (VP (TO to) (VP (VB leave) (ADVP (RB alone))))))))))) (, ,) (NP (PRP they)) (VP (VBD lost) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NN trust)))))) (. .)))
+
+(S1 (S (ADVP (RB Still)) (, ,) (NP (PRP they)) (VP (AUX have) (NP (NP (DT an) (JJ unbelieveable) (NN amount)) (PP (IN of) (NP (JJ untapped) (NN potential))))) (. .)))
+

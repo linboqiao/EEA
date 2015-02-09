@@ -1,0 +1,54 @@
+(S1 (S (NP (DT that)) (VP (AUX is) (NP (NP (DT the) (ADJP (RB very) (JJ joyous)) (NN town)) (PP (IN of) (NP (NP (NNP palestine)) (, ,) (NP (NNP west) (NNP virginia)) (, ,))) (PP (IN on) (NP (DT the) (NN news) (SBAR (IN that) (S (NP (NNP jessica) (NNP lynch)) (VP (AUX is) (ADVP (RB eventually)) (VP (VBG going) (S (VP (TO to) (VP (VB come) (ADVP (RB home))))))))))))) (. .)))
+
+(S1 (FRAG (WHNP (WP what) (NP (DT a) (JJ brave) (JJ young) (NN woman))) (. .)))
+
+(S1 (SQ (AUX did) (NP (PRP you)) (VP (VB hear) (PP (IN about) (NP (NP (DT the) (NNS injuries)) (SBAR (S (NP (PRP she)) (VP (VBD sustained))))))) (. .)))
+
+(S1 (SQ (AUX did) (NP (PRP you)) (VP (VB hear) (PP (IN about) (NP (NP (DT the) (NN firing)) (SBAR (S (NP (PRP she)) (VP (AUX did))))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (AUX was) (VP (VBG going) (S (VP (TO to) (VP (VB fight) (PP (TO to) (NP (DT the) (NN death)))))))) (. .)))
+
+(S1 (S (S (NP (PRP she)) (VP (AUX was) (VP (VBN captured)))) (CC but) (S (NP (PRP she)) (VP (AUX was) (NP (CD one) (JJ tough) (NN cookie)) (, ,) (ADVP (RB apparently)))) (. .)))
+
+(S1 (S (NP (NNP god)) (VP (VB bless) (ADVP (RB here))) (. .)))
+
+(S1 (S (S (CC and) (NP (PRP she)) (VP (AUX 's) (VP (VBG going) (S (VP (TO to) (VP (AUX be) (ADJP (RB all) (JJ right)))))))) (, ,) (NP (PRP it)) (VP (VBZ looks) (PP (IN like))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX have) (NP (NP (DT some) (JJ other) (NNS items)) (, ,) (SBAR (WHNP (NP (NNS voices)) (PP (IN of) (NP (NNP america)))) (S (NP (PRP they)) (VP (AUX 're) (VP (VBD called) (NP (PRP her)) (PP (IN on) (NP (JJ american) (NN morning))))))))) (. .)))
+
+(S1 (NP (NP (NN home) (NN front) (NNS responses)) (PP (TO to) (NP (NP (DT the) (JJ ongoing) (NN war)) (PP (IN in) (NP (NNP iraq))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (VBP begin) (PP (IN in) (NP (NNP oklahoma))) (, ,) (NP (NP (DT a) (NN story)) (PP (IN of) (NP (NN sacrifice))) (PP (IN in) (NP (NN wartime))))) (. .)))
+
+(S1 (S (NP (NNP cass) (NNP apd) (NNP ra)) (VP (VBD gave) (NP (NN birth)) (PP (TO to) (NP (PRP$ her) (JJ first) (NN daughter)))) (. .)))
+
+(S1 (FRAG (NP (NNP alexis) (NNP jane) (NNP denise)) (, ,) (CC but) (PP (IN without) (NP (PRP$ her) (NN husband))) (. .)))
+
+(S1 (S (NP (NNP john) (NNP scottsdale)) (VP (AUX is) (PP (IN on) (NP (NP (DT the) (JJ front) (NNS lines)) (PP (IN in) (NP (NNP iraq)))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (AUX do) (RB n't) (VP (VB know) (SBAR (WHNP (WP what)) (S (VP (TO to) (VP (AUX do))))))) (. .)))
+
+(S1 (S (IN since) (NP (PRP$ her) (NN husband)) (VP (MD could) (RB n't) (VP (AUX be) (ADVP (RB there)) (PP (IN for) (NP (NP (NNS alexis) (POS ')) (NN birth))))) (. .)))
+
+(S1 (S (S (NP (PRP$ his) (NNS parents)) (VP (AUX have) (VP (VBN stepped) (PRT (RP in)) (S (VP (TO to) (VP (VB help) (PP (IN with) (NP (PRP$ their) (JJ new) (NN granddaughter))))))))) (CC and) (S (NP (PRP it)) (VP (VBZ looks) (SBAR (IN as) (IN though) (S (NP (NN mother) (CC and) (NN daughter)) (VP (AUX are) (VP (VBG doing) (ADVP (RB well)))))))) (. .)))
+
+(S1 (NP (NP (NNS voices)) (PP (IN of) (NP (NNP america))) (PP (IN on) (NP (NP (DT a) (NN morning)) (SBAR (WHADVP (WRB where)) (S (NP (PRP it)) (VP (VBZ looks) (PP (IN like) (S (NP (NNS things)) (VP (VBG gring) (ADVP (RB well)) (PP (IN for) (NP (DT the) (NN coalition) (NNS members))))))))))) (. .)))
+
+(S1 (SQ (AUX did) (NP (PRP you)) (VP (VB hear) (NP (NP (DT the) (NN family) (NNS members)) (PP (IN of) (NP (NNP jessica) (NNP lynch)))) (NP (NN yesterday))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (VBD said) (SBAR (S (NP (PRP it)) (VP (AUX was) (NP (DT a) (JJ miraculous) (NN thing)))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX was) (NP (NP (DT the) (JJ first) (JJ american) (NN prisoner)) (PP (IN of) (NP (NN war)))) (ADVP (RB ever)) (VP (VBD rescued) (PP (IN since) (NP (NN world) (NN war) (NNP ii))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (VP (AUX 've) (VP (VBN tried) (NP (DT these) (NNS things)) (ADVP (RB before)))) (, ,) (CC but) (ADVP (RB never)) (PP (IN with) (NP (DT the) (NN success)))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (VBP guess) (SBAR (S (NP (NN miracle)) (VP (AUX is) (RB n't) (NP (ADJP (RB too) (JJ strong)) (DT a) (NN word)))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (NP (DT a) (JJ great) (NN word))) (. .)))
+
+(S1 (S (SBAR (WHADVP (WRB when)) (S (NP (PRP you)) (VP (VBD heard) (NP (PRP$ her) (NN father))))) (VP (VB talk)) (. .)))
+
+(S1 (S (VP (VB welcome) (S (NP (NNP jeffrey)) (VP (TO to) (VP (AUX be) (PP (IN in)))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (VBD thought) (NP (PRP it)))))
+

@@ -1,0 +1,38 @@
+(S1 (S (NP (CD five) (NNS motions)) (VP (AUX are) (VP (AUXG being) (VP (VBN heard) (NP (NN today)) (PP (IN in) (NP (NP (DT the) (NN case)) (PP (IN of) (NP (NP (NNP lee) (NNP boyd) (NNP malvo)) (, ,) (NP (DT the) (JJ teenage) (NNP sniper) (NN suspect))))))))) (. .)))
+
+(S1 (NP (NP (NN one)) (PP (IN for) (NP (NP (DT a) (NN change)) (PP (IN of) (NP (NN venue))))) (. .)))
+
+(S1 (S (NP (NN defense) (NNS attorneys)) (VP (VBP argue) (SBAR (IN that) (S (NP (EX there)) (VP (AUX has) (VP (AUX been) (NP (NP (ADJP (RB so) (JJ much)) (JJ pretrial) (NN publicity)) (, ,) (PP (VBG including) (NP (NP (DT an) (JJ alleged) (NN confession)) (PP (IN from) (NP (NN malvo))))) (, ,) (SBAR (IN that) (S (NP (DT this)) (VP (AUX has) (VP (VBN tainted) (NP (DT the) (NN jury) (NN pool)))))))))))) (. .)))
+
+(S1 (S (NP (PRP$ their) (ADJP (RBR more) (JJ intriguing)) (NN argument)) (VP (AUX is) (SBAR (IN that) (S (S (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (NNS charges)) (PP (IN against) (NP (NN malvo)))))) (VP (AUX is) (PP (IN under) (NP (NP (NNP virginia) (POS 's)) (NN anti-terrorism) (NN statute))))) (CC and) (S (NP (PRP they)) (VP (VBP argue) (SBAR (IN that) (S (NP (NP (DT every) (NN resident)) (PP (IN of) (NP (NN fairfax) (NN county)))) (VP (AUX is) (ADVP (RB potentially)) (NP (NP (DT a) (NN member)) (PP (IN of) (NP (NP (DT the) (NN victim) (POS 's)) (NN class)))))))))))) (. .)))
+
+(S1 (S (CC and) (ADVP (RB therefore)) (, ,) (VP (VBN disqualified) (PP (IN from) (S (VP (VBG serving) (PP (IN as) (NP (DT a) (NN juror))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN prosecutor)) (VP (MD will) (VP (VB argue) (PP (IN against) (NP (DT this) (NN motion))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (VBZ calls) (S (NP (PRP it)) (NP (ADJP (RB factually) (JJ pro)) (NNS pos) (NN truss)))) (. .)))
+
+(S1 (S (SBAR (IN if) (S (NP (NN history)) (VP (AUX is) (NP (DT any) (NN guide))))) (, ,) (NP (DT this) (NN motion)) (VP (MD will) (VP (AUX have) (NP (DT a) (JJ tough) (NN time)))) (. .)))
+
+(S1 (S (NP (DT no) (NN case)) (VP (AUX has) (VP (AUX been) (VP (VBN moved) (PP (IN out) (PP (IN of) (NP (NN fairfax) (NN county)))) (PP (IN since) (NP (CD 1974)))))) (. .)))
+
+(S1 (S (NP (EX there)) (ADVP (RB also)) (VP (AUX is) (NP (NP (DT a) (NN motion)) (SBAR (S (VP (TO to) (VP (VB dismiss) (NP (DT this) (NN case)))))))) (. .)))
+
+(S1 (S (NP (NN defense) (NNS attorneys)) (VP (VBP argue) (SBAR (IN that) (S (NP (DT an) (NN individual)) (VP (MD can) (RB not) (VP (AUX be) (VP (VBN charged) (PP (IN under) (NP (NP (JJ federal) (NN law)) (CC and) (ADVP (RB then)) (NP (NN state) (NN law)))) (PP (IN for) (NP (DT the) (JJ same) (NN act))))))))) (. .)))
+
+(S1 (S (NP (NNS prosecutors)) (ADVP (RB again)) (VP (MD will) (VP (VB argue) (PP (IN against) (NP (DT the) (NN motion))))) (. .)))
+
+(S1 (FRAG (NP (CD three) (JJ other) (NNS motions)) (ADVP (RB as) (RB well)) (. .)))
+
+(S1 (S (NP (NP (CD one)) (PP (IN of) (NP (NP (DT those)) (PP (IN for) (NP (DT a) (NN handwriting) (NN expert)))))) (, ,) (NP (DT the) (JJ other) (NNS motions)) (VP (VBP relate) (PP (TO to) (S (VP (VBG getting) (NP (NP (NN background) (NN information)) (VP (VBG relating) (PP (TO to) (NP (NP (NN ballistics) (NN testing)) (CC and) (NP (NN dna) (NN testing)))))))))) (. .)))
+
+(S1 (NP (NP (NN malvo)) (PP (IN on) (NP (NP (NN trial)) (ADVP (RB here) (PP (IN in) (NP (NN fairfax) (NN county)))))) (PP (IN for) (NP (NP (DT the) (NN murder)) (PP (IN of) (NP (NP (NNP linda) (NNP franklin)) (, ,) (NP (NP (DT the) (NNP fbi) (NN analyst)) (SBAR (WHNP (WP who)) (S (VP (AUX was) (VP (VBN gunned) (ADVP (RB down)) (PP (IN in) (NP (DT a) (NN home) (NN depot) (NN parking) (NN lot)))))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (NP (NP (RB just) (CD one)) (PP (IN of) (NP (NP (DT the) (CD ten) (NNP sniper) (NNS shootings)) (ADVP (RB here) (PP (IN in) (NP (DT the) (JJR greater) (NNP washington) (NN area)))))))) (. .)))
+
+(S1 (S (NP (NN today)) (VP (AUX 's) (NP (NP (NNS motions)) (VP (VBG hearing) (NP (NP (RB just) (NN part)) (PP (IN of) (NP (DT the) (JJ preliminary) (NN skirmishing))))))) (. .)))
+
+(S1 (S (NP (DT the) (JJ actual) (NN trial)) (VP (MD will) (VP (AUX be) (VP (VBG getting) (PP (IN under) (NP (NN way))) (NP (DT this) (NN fall))))) (. .)))
+
+(S1 (NP (NNP jeanne) (CD meserve) (, ,) (NP (NNP cnn)) (, ,) (NP (NN fairfax) (NN county)) (, ,) (NP (NNP virginia)) (. .)))
+

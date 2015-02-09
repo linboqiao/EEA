@@ -1,0 +1,18 @@
+(S1 (S (SBAR (IN as) (S (NP (NNP bob)) (VP (VBD pointed) (PRT (RP out))))) (, ,) (NP (DT the) (JJ next) (NN battle) (NN ground)) (VP (AUX is) (NP (NP (DT a) (NN bill)) (SBAR (S (VP (TO to) (VP (VB block) (NP (NP (NNS lawsuits)) (PP (IN by) (NP (NP (NP (NNS victims)) (PP (IN of) (NP (NN gun) (NN violence)))) (CC or) (NP (NP (NNS families)) (PP (IN against) (NP (NNS gunmakers) (CC and) (NNS dealers))))))))))))) (. .)))
+
+(S1 (S (CC and) (NP (NP (CD one) (NN person)) (SBAR (WHNP (WP$ whose) (NN suit)) (S (VP (MD would) (VP (AUX be) (VP (VBN blocked))))))) (VP (AUX is) (NP (NP (NP (NNP denise) (NNP johnson)) (SBAR (IN if) (S (NP (DT the) (NN legislation)) (VP (VBZ goes) (ADVP (RB through)))))) (, ,) (NP (NP (DT the) (NN widow)) (PP (IN of) (NP (NN bus) (NN driver) (NN conrad) (NNP johnson)))) (, ,) (NP (NP (DT the) (JJ last) (NN person)) (VP (VBN killed) (PP (IN in) (NP (DT the) (NNP washington))))) (, ,) (NP (NNP d.c.) (NNP sniper) (NNS attacks)))) (. .)))
+
+(S1 (S (NP (NNP jonathan) (NNP lowe)) (VP (AUX is) (NP (NP (DT an) (NN attorney)) (PP (IN with) (NP (DT the) (NNP brady) (NN center))) (S (VP (TO to) (VP (VB prevent) (NP (NP (NN gun) (NN violence)) (SBAR (WHNP (WP who)) (S (VP (VBD filed) (NP (DT the) (NN suit)) (PP (IN on) (NP (NP (NN behalf)) (PP (IN of) (NP (NNP johnson) (CC and) (NP (JJ other) (NNS victims) (POS ')) (NNS families)))))))))))))) (. .)))
+
+(S1 (FRAG (ADJP (JJ good) (PP (IN of) (NP (PRP you))) (S (VP (TO to) (VP (VB join) (NP (PRP us)))))) (. .)))
+
+(S1 (S (VP (VB let) (S (NP (PRP 's)) (VP (VB talk) (PP (IN about) (SBAR (WHNP (WP what)) (S (NP (NNP ms.) (NNP johnson)) (VP (VBD wrote) (PP (IN in) (NP (DT the) (`` ``) (NNP washington) (NN post) ('' ''))) (NP (NN today))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (MD 'll) (VP (VB put) (NP (NP (DT a) (JJ small) (NN part)) (PP (IN of) (NP (DT that)))) (PRT (RP up)) (PP (IN on) (NP (DT the) (NN screen))) (ADVP (RB right) (RB now)) (SBAR (WHADVP (WRB where)) (S (NP (PRP she)) (VP (VBD said) (, ,) (`` ``) (S (NP (PRP i)) (VP (AUX am) (ADJP (JJ confident) (SBAR (IN that) (S (NP (DT the) (JJ criminal) (NN justice) (NN system)) (VP (MD will) (VP (VB work) (S (VP (TO to) (VP (VB punish) (NP (NP (DT the) (NNS people)) (SBAR (WHNP (WP who)) (S (VP (VBD killed) (NP (PRP$ my) (NN husband))))))))))))))))))))) (. .)))
+
+(S1 (S (CC but) (NP (DT the) (JJ civil) (NN justice) (NN system)) (VP (MD must) (ADVP (RB also)) (VP (AUX be) (VP (VBN allowed) (S (VP (TO to) (VP (VB work))))))) (. .)))
+
+(S1 (S (NP (NP (DT those)) (SBAR (WHNP (WP who)) (S (VP (VBP share) (NP (NP (NN responsibility)) (PP (IN for) (NP (NP (PRP$ my) (NN husband) (POS 's)) (NN death)))))))) (VP (MD must) (ADVP (RB also)) (VP (AUX be) (VP (VBN held) (S (ADJP (JJ accountable)))))) (. .) ('' '')))
+
+(S1 (SBARQ (WHNP (WP what)) (SQ (AUX does) (NP (PRP she)) (VP (VB mean))) (. ?)))
+

@@ -1,0 +1,26 @@
+(S1 (S (ADVP (RB first)) (NP (NP (NP (DT an) (NN update)) (PP (IN on) (NP (NP (DT a) (JJ long) (JJ running) (NN air) (NN safety) (NN investigation)) (NP (DT a) (NN year))))) (CC and) (NP (NP (DT a) (NN half)) (PP (IN near) (NP (DT an) (NN airline))))) (VP (VBD crashed) (PP (IN near) (NP (NP (JJ new) (NNP york) (POS 's)) (NNP kennedy) (NN airport))) (SBAR (S (NP (EX there)) (VP (AUX is) (NP (NP (NN controversy)) (SBAR (IN whether) (S (NP (DT the) (NN disaster)) (VP (MD could) (VP (AUX have) (VP (AUX been) (VP (VBN averted)))))))))))) (. .)))
+
+(S1 (S (NP (CD 265) (NNS people)) (VP (VBD died) (PP (IN in) (NP (NP (DT the) (NNP November) (CD 2001) (NN crash)) (PP (IN of) (NP (NN flight) (CD 587)))))) (. .)))
+
+(S1 (FRAG (ADJP (JJ hard)) (S (VP (TO to) (VP (VB forget) (NP (DT those) (NNS images))))) (. .)))
+
+(S1 (S (SBAR (IN after) (S (NP (DT the) (NNS pilots)) (VP (VBD lost) (NP (NP (NN control)) (PP (IN of) (NP (DT the) (NN plane))))))) (, ,) (CC and) (S (NP (NP (DT the) (NN jet) (POS 's)) (NN tail) (NN fin)) (VP (VBD broke) (PRT (RP off)))) (. .)))
+
+(S1 (S (NP (NNP airbus)) (VP (ADVP (RB strongly)) (VBZ denies) (NP (NP (NNS claims)) (SBAR (S (NP (PRP it)) (VP (VBD failed) (S (VP (TO to) (VP (VB provide) (NP (JJ sufficient) (NN warning)))))))))) (. .)))
+
+(S1 (S (CC but) (NP (NNS critics)) (VP (VBP say) (SBAR (S (NP (NNP airbus)) (VP (MD should) (VP (AUX have) (VP (VBD sounded) (NP (DT a) (JJR stronger) (NN alarm)) (SBAR (IN after) (S (NP (DT a) (JJ similar) (NN incident)) (VP (VBD occurred) (PP (IN in) (NP (CD 1997)))))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX is) (SBAR (WHADVP (WRB when)) (S (NP (JJ american) (NNS airlines) (NN flight) (NNS 903)) (VP (VBD ran) (PP (IN into) (NP (NN trouble))) (PP (IN on) (NP (NP (DT a) (NN trip)) (PP (IN from) (NP (NNP boston))) (PP (TO to) (NP (NNP miami))))))))) (. .)))
+
+(S1 (S (S (NP (NP (DT the) (NNS pilots)) (PP (IN of) (NP (DT that) (NN plane)))) (ADVP (RB forcibly)) (VP (VBD applied) (NP (PRP$ their) (NN rudder)) (S (VP (TO to) (VP (VB recover) (PP (IN from) (NP (DT a) (NN stall)))))))) (, ,) (CC and) (S (PP (IN as) (NP (DT a) (NN result))) (NP (NP (DT the) (NN plane) (POS 's)) (NN tail) (NN section)) (VP (VBP exceed) (NP (PRP$ its) (NN design) (NNS limits)))) (. .)))
+
+(S1 (S (NP (NNPS pilots)) (VP (VBD managed) (S (VP (TO to) (VP (VB land) (ADVP (RB safely))))) (, ,) (PP (ADVP (RB only)) (IN after) (NP (NP (DT a) (JJ terrifying) (NN ordeal)) (PP (IN for) (NP (NNS passengers)))))) (. .)))
+
+(S1 (S (NP (NNP melanie) (NN joyceon)) (VP (VBZ joins) (NP (PRP us)) (PP (IN from) (NP (NNP dallas)))) (. .)))
+
+(S1 (NP (NP (NNS thanks)) (PP (IN for) (S (VP (AUXG being) (PP (IN with) (NP (PRP us)))))) (. .)))
+
+(S1 (SQ (MD can) (NP (PRP you)) (VP (VB tell) (NP (PRP me)) (PP (IN about) (NP (NP (DT the) (NN flight)) (ADVP (NP (CD five) (NNS years)) (RB ago))))) (. .)))
+
+(S1 (SBARQ (WHNP (WP what)) (SQ (VP (VBD happened) (PP (TO to) (NP (PRP you))))) (. ?)))
+

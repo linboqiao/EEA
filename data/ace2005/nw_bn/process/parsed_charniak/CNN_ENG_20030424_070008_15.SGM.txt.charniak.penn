@@ -1,0 +1,48 @@
+(S1 (S (NP (EX there)) (VP (AUX is) (NP (NP (JJR more) (NN outrage)) (PP (IN about) (NP (NP (NNS perks)) (PP (IN for) (NP (NP (NNS executives)) (, ,) (PP (DT both) (PP (IN from) (NP (JJ angry) (NNS employees))) (CC and) (PP (IN from) (NP (NNS shareholders)) (ADVP (RB as) (RB well)))))))))) (. .)))
+
+(S1 (S (NP (NNP andy) (NN serwer)) (`` ``) (VP (VBG minding) (NP (PRP$ your) (NN business))) (. .) ('' '')))
+
+(S1 (NP (NP (NN shame)) (PP (IN on) (NP (PRP them))) (. .)))
+
+(S1 (S (S (S (S (NP (DT the) (JJ big) (NN focus)) (VP (AUX is) (NP (JJ american) (NNS airlines)))) (, ,) (NP (NP (DT the) (NN board)) (PP (IN of) (NP (DT the) (NN company)))) (VP (VBG meeting) (NP (NN today)))) (, ,) (ADVP (RB possibly)) (VP (VBG discussing) (S (NP (NP (DT the) (NN future)) (PP (IN of) (NP (NN ceo)))) (VP (VB don) (NP (NN carty)))))) (, ,) (NP (PRP he)) (VP (VBD got) (PP (IN in) (NP (NN trouble))) (SBAR (WHADVP (WRB when)) (S (NP (PRP he)) (VP (VBD jacked) (PRT (RP up)) (NP (NP (NNS pensions)) (PP (IN of) (NP (DT the) (NNS guys)))) (PP (IN in) (NP (NN top))) (SBAR (IN while) (S (VP (VBG asking) (NP (NNS employees)) (S (VP (TO to) (VP (VB take) (NP (JJ big) (NN pay) (NNS cuts)))))))))))) (. .)))
+
+(S1 (NP (QP ($ $) (CD 1.8) (CD billion)) (. .)))
+
+(S1 (S (NP (JJ last) (NN night)) (, ,) (NP (JJ former) (JJ general) (JJ electric) (NN ceo) (NNP jack) (NNP welch)) (VP (VBD talked) (PP (TO to) (NP (NN paula) (NNS zahn))) (PP (IN about) (NP (NP (DT this) (NN issue)) (PP (IN of) (NP (JJ corporate) (NN greed)))))) (. .)))
+
+(S1 (S (VP (VB let) (S (NP (PRP 's)) (VP (VB listen) (PP (TO to) (SBAR (WHNP (WP what)) (S (NP (PRP he)) (VP (AUX had) (S (VP (TO to) (VP (VB say))))))))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (NNS parts)) (PP (IN of) (NP (NNP america))) (SBAR (WHNP (WDT that)) (S (VP (AUX is) (ADJP (JJ great))))))))) (. .)))
+
+(S1 (S (S (NP (NNS people)) (VP (VBP want) (NP (JJR more)))) (CC and) (S (NP (PRP they)) (VP (VBP want) (S (NP (JJ other) (NNS people)) (VP (TO to) (VP (AUX have) (NP (JJR less))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (NP (NP (NN part)) (PP (IN of) (NP (DT the) (NN system))))) (. .)))
+
+(S1 (S (CC and) (NP (JJ annual) (NN meeting)) (, ,) (NP (DT every) (NN year)) (, ,) (NP (PRP i)) (VP (VBD went) (SBAR (S (NP (PRP they)) (VP (VBD complained) (PP (IN about) (NP (NN executive) (NNS salaries)))))) (, ,) (SBAR (RB even) (IN though) (S (NP (NP (DT the) (NN team)) (SBAR (WHNP (WDT that)) (S (NP (PRP i)) (VP (VBD managed) (S (VP (VB increase) (NP (NN shareholder) (NN value)) (PP (TO to) (NP (QP ($ $) (CD 600) (CD billion)))) (SBAR (IN that) (S (NP (NNS sharoners)) (VP (VBD received) (, ,) (S (NP (DT the) (JJR larger) (NN share) (NNS orns)) (VP (AUXG being) (NP (NNS employees)))))))))))))))) (. .)))
+
+(S1 (S (S (NP (PRP i)) (VP (VBP think) (SBAR (S (NP (PRP it)) (VP (AUX 's) (ADVP (RB really)) (NP (NP (DT a) (NN question)) (PP (IN of) (NP (NN degree))))))))) (, ,) (S (NP (PRP i)) (VP (VBP mean))) (, ,) (S (NP (PRP i)) (VP (VBP think) (SBAR (IN that) (S (NP (NNS ceos)) (VP (MD should) (VP (VB make) (NP (NP (NNS millions)) (PP (IN of) (NP (NNS dollars))) (VP (VBG running) (NP (NNS companies)))))))))) (, ,) (S (NP (EX there)) (VP (AUX are) (NP (NP (NNS tens)) (PP (IN of) (NP (NP (CD thousand) (NNS employees)) (, ,) (NP (NP (NNS billions)) (PP (IN of) (NP (NP (NNS dollars)) (PP (IN of) (NP (NN revenue))))))))))) (. .)))
+
+(S1 (S (NP (DT a) (CD million) (NNS dollars)) (VP (AUX is) (NP (UH okay) (, ,) (NP (RB maybe) (CD 5) (CD million)) (, ,) (NP (NP (QP ($ $) (CD 100) (CD million))) (PP (TO to) (NP (PRP me))) (SBAR (WHNP (WDT that)) (S (VP (AUX is) (NP (ADJP (RB too) (JJ much)) (NN money)))))))) (. .)))
+
+(S1 (SBARQ (WHNP (WP who)) (SQ (VP (VBZ decides) (NP (DT that)))) (. ?)))
+
+(S1 (S (VP (VBZ seems) (ADJP (JJ subjective))) (. .)))
+
+(S1 (S (S (NP (DT the) (NN board)) (VP (AUX is) (SBAR (WHNP (WP who)) (S (VP (VBZ decides) (SBAR (IN that) (S (NP (CC and) (NN board)) (VP (AUX is) (ADVP (RB so) (RB often)) (ADJP (RB chock) (JJ full) (PP (IN of) (NP (DT the) (NNS ceos) (NN golfing) (NNS buddies)))))))))))) (, ,) (NP (PRP they)) (VP (VBP serve) (PP (IN on) (NP (NP (DT each) (JJ other) (POS 's)) (NNS boards))) (SBAR (S (CC and) (NP (NN problem)) (ADVP (RB here)) (VP (AUX is) (NP (NP (NN gap)) (PP (IN between) (SBAR (WHNP (WP what)) (S (S (NP (DT the) (JJ average) (NN worker)) (VP (VBZ makes))) (CC and) (S (NP (NN ceo)) (VP (AUX is) (VP (VBG making) (S (VP (AUX is) (VP (VBG increasing))))))) (CC and) (S (NP (NN everyone)) (VP (VBZ agrees) (SBAR (IN that) (S (S (VP (AUX is) (RB not) (NP (NP (NP (DT a) (JJ good) (NN thing)) (PP (IN for) (NP (DT this) (NN country)))) (, ,) (CC plus) (NP (DT the) (NN fact)) (, ,)) (SBAR (WHADVP (WRB when)) (S (NP (DT the) (NNS guys)) (VP (VBP get) (NP (DT the) (JJ big) (NNS packageses))))))) (, ,) (CC so) (S (ADVP (RB often)) (NP (PRP you)) (VP (VBP see) (S (NP (DT the) (NNS companies)) (VP (VBG going) (PRT (RP down)) (SBAR (S (NP (DT the) (NNS zblubs)) (VP (VBP thank) (NP (PRP you)) (PP (IN for) (S (VP (VBG updating) (NP (PRP us)))))))))))))))))))))))) (. .)))
+
+(S1 (S (VP (VB back) (PRT (RP over)) (PP (TO to) (NP (NN bill))) (. .)) (. .)))
+
+(S1 (S (VP (VB thank) (NP (PRP you))) (. .)))
+
+(S1 (S (NP (NNP jack)) (VP (VBG looking) (PP (IN at) (NP (NNS sars)))) (. .)))
+
+(S1 (S (S (VP (VBG talking) (PP (IN about) (NP (DT the) (NNS sars) (NN threat))))) (VP (NNP worldwide) (NP (DT this) (NN morning))) (. .)))
+
+(S1 (S (NP (DT the) (NN world) (NN health) (NN organization)) (VP (VBZ says) (SBAR (S (S (NP (EX there)) (VP (AUX are) (NP (CD 4200) (NNS sars) (NNS cases)) (ADVP (RB so) (RB far)) (, ,) (NP (NP (QP (JJR more) (IN than) (CD 250)) (NNS deaths)) (PP (IN in) (NP (CD 27) (NNS countries)))))) (CC and) (S (NP (EX there)) (VP (AUX is) (NP (DT no) (NN cure))))))) (. .)))
+
+(S1 (S (CC and) (NP (NN nobody)) (VP (VBZ knows) (SBAR (WHNP (WP what)) (S (VP (AUX is) (VP (VBG causing) (NP (PRP it))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN question)) (VP (AUX is) (, ,) (SQ (MD would) (NP (PRP you)) (VP (VB change) (NP (PRP$ your) (NNS plans)) (PP (IN because) (IN of) (NP (NP (DT the) (NN threat)) (PP (IN of) (NP (NNS sars)))))))) (. ?)))
+
+(S1 (S (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NNS responses)))) (, ,) (PP (IN as) (PP (IN in) (NP (NP (NNS hundreds)) (CC and) (NP (NP (NNS hundreds)) (PP (IN of) (NP (PRP them))))))) (, ,) (VP (VBG beginning))))
+

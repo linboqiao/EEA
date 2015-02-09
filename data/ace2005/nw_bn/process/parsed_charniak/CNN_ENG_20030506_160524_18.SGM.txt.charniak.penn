@@ -1,0 +1,66 @@
+(S1 (S (NP (PRP we)) (VP (MD 'll) (VP (VB continue) (S (VP (TO to) (VP (VB watch) (NP (DT this) (NN cramma)) (VP (VB unfold) (PRT (RP off)) (NP (NP (JJ key) (NN largo)) (PP (IN in) (NP (NNP florida)))))))))) (. .)))
+
+(S1 (S (VP (VB let) (NP (PRP 's)) (ADVP (RB much)) (PRT (RP on)) (PP (TO to) (NP (DT another) (JJ important) (NN story)))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (VP (VBN happened) (, ,) (PP (IN of) (NP (NN course))) (, ,) (NP (NP (JJ several) (NNS times)) (PP (IN during) (NP (NP (DT the) (NN war)) (PP (IN in) (NP (NNP iraq)))))) (, ,) (S (NP (NNS journalists)) (VP (VP (VBN caught) (PP (IN in) (NP (NP (DT the) (NN line)) (PP (IN of) (NP (NN fire)))))) (CC and) (VP (VBN killed)))))) (. .)))
+
+(S1 (S (NP (JJ israeli) (NNS troops)) (VP (AUX are) (VP (VBG facing) (NP (DT a) (JJ similar) (NN situation)) (PP (IN with) (NP (NP (CD two) (NNS journalists)) (VP (VBN killed) (PP (IN in) (NP (RB just) (DT the) (JJ past) (CD two) (NNS weeks)))))))) (. .)))
+
+(S1 (SINV (ADVP (RB here)) (VP (AUX 's)) (NP (NP (NNP cnn) (POS 's)) (JJ cly) (NNP wallace)) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (NP (NP (NP (NNP Friday) (NN night)) (PP (IN in) (NP (DT the) (NNP gaza) (NN strip)))) (CC and) (NP (DT a) (NN journalist))) (VP (AUX is) (VP (IN about) (S (VP (TO to) (VP (VB lose) (NP (PRP$ his) (NN life)))))))) (. .)))
+
+(S1 (S (SBAR (ADVP (RB shortly)) (IN after) (S (NP (JJ several) (NNS shots)) (VP (AUX are) (VP (VBN heard))))) (NP (DT an) (JJ israeli) (NN bulldozer)) (VP (MD can) (VP (AUX be) (VP (VBN seen) (S (VP (VBG uncovering) (NP (NP (DT the) (JJ israelis) (NN say)) (, ,) (NP (NP (DT a) (NN tunnel)) (VP (VBN used) (S (VP (TO to) (VP (VB smuggle) (NP (NNS weapons))))))))))))) (. .)))
+
+(S1 (S (ADVP (NP (NNS moments)) (RB later)) (, ,) (NP (NP (CD three) (NNS journalists)) (SBAR (WHNP (WP who)) (S (VP (AUX were) (VP (VBG covering) (NP (DT that) (JJ israeli) (NN action))))))) (VP (VBP appear)) (. .)))
+
+(S1 (S (NP (NP (CD one)) (PP (IN with) (NP (NN tv)))) (VP (VBD labeled) (PP (IN on) (NP (NP (DT the) (NN back)) (PP (IN of) (NP (NP (DT a) (JJ bullet-proof) (NN vest)) (, ,) (NP (NP (DT another)) (VP (VBG carrying) (NP (DT a) (JJ white) (NN flag))))))))) (. .)))
+
+(S1 (S (S (VP (VBG judging) (PP (IN from) (NP (DT the) (NN videotape))))) (, ,) (NP (PRP they)) (VP (VBP appear) (ADJP (JJ difficult) (S (VP (TO to) (VP (VB see) (PP (IN in) (NP (DT the) (NN darkness)))))))) (. .)))
+
+(S1 (FRAG (CC and) (ADJP (JJ difficult) (S (VP (TO to) (VP (VB hear))))) (. .)))
+
+(S1 (FRAG (PP (IN after) (NP (DT the) (NNS journalists) (NN shout))) (, ,) (NP (DT another) (NN gunshot)) (. .)))
+
+(S1 (NP (NP (NP (NNS moments)) (ADVP (RB later))) (, ,) (NP (NP (DT another) (NN shot)) (CC and) (NP (NP (DT the) (NN sound)) (PP (IN of) (NP (NP (NN someone)) (PP (IN in) (NP (NN pain))))))) (. .)))
+
+(S1 (S (S (NP (JJ 34-year-old) (JJ british) (NN journalist) (NNP james) (NNP miller)) (VP (VBD died) (PP (IN on) (NP (DT the) (NN scene))) (SBAR (IN after) (S (NP (JJ israeli) (NNS soldiers)) (VP (VBN come) (PP (TO to) (NP (PRP$ his) (NN aid)))))))) (, ,) (NP (DT the) (JJ israeli) (NN defense) (NNS sources)) (VP (VBZ says)) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX is) (ADVP (RB best)) (VP (VBN known) (PP (IN for) (NP (NP (PRP$ his) (NN work)) (PP (IN on) (NP (NP (CD two) (JJ award-winning) (NNS documentaries)) (SBAR (WHNP (WDT which)) (S (VP (VBD appeared) (PP (IN on) (NP (NNP cnn))) (S (VP (VBG exposing) (NP (DT the) (NN world)) (PP (TO to) (NP (NP (DT the) (JJ taliban) (NN rule)) (PP (IN in) (NP (NNP afghanistan)))))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB now)) (NP (NP (DT the) (JJ foreign) (NN press) (NN association)) (PP (IN in) (NP (NNP israel)))) (VP (AUX is) (VP (VBG calling) (PP (IN for) (NP (DT an) (JJ independent) (NN investigation))))) (. .)))
+
+(S1 (S (S (NP (NNP james)) (VP (AUX was) (RB not) (VP (VBG shooting)))) (CC and) (S (NP (PRP he)) (VP (AUX was) (RB not) (PP (IN with) (S (NP (NN somebody)) (VP (VBG shooting)))))) (. .)))
+
+(S1 (S (ADVP (RB so)) (, ,) (ADVP (RB again)) (, ,) (VP (TO to) (VP (VB know) (SBAR (WHNP (RB exactly) (WP what)) (S (VP (VBD happened) (SBAR (S (NP (PRP we)) (VP (AUX need) (NP (DT a) (JJ full-fledged) (NN inquiry)))))))))) (. .)))
+
+(S1 (S (NP (DT the) (JJ israeli) (NN government)) (VP (VBD said) (SBAR (SBAR (S (NP (PRP$ its) (NNS forces)) (VP (AUX were) (VP (VBG returning) (NP (NN fire)))))) (CC and) (SBAR (IN that) (S (NP (NNP miller)) (VP (AUX was) (VP (VBN shot) (PP (IN in) (NP (DT the) (NN back))) (, ,) (S (VP (VBG suggesting) (SBAR (S (NP (PRP he)) (VP (MD could) (VP (AUX have) (VP (AUX been) (VP (VBN hit) (PP (IN by) (NP (JJ palestinian) (NNS gunmen))))))))))))))))) (. .)))
+
+(S1 (S (NP (NP (DT those)) (ADJP (JJ close) (PP (TO to) (NP (NNP miller))))) (VP (VBP believe) (SBAR (S (NP (PRP he)) (VP (AUX was) (VP (VBN shot) (PP (IN by) (NP (DT an) (JJ armored) (JJ israeli) (NNS personnel) (NN carrier)))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (VBP know) (SBAR (S (NP (DT the) (NN israelis)) (VP (VBD fired))))) (. .)))
+
+(S1 (S (SBAR (IN whether) (CC or) (RB not) (S (NP (PRP he)) (VP (AUX was) (VP (VBN shot) (PP (IN by) (NP (JJ israelis) (NN gunfire))))))) (, ,) (NP (PRP we)) (VP (AUX are) (RB not) (ADJP (JJ certain)) (PP (IN at) (NP (DT this) (NN time)))) (. .)))
+
+(S1 (S (NP (NNP miller)) (VP (VBZ becomes) (NP (DT the) (JJ second) (NN journalist)) (PP (IN in) (NP (QP (RB just) (CD two)) (NNS weeks))) (S (VP (TO to) (VP (AUX be) (VP (VBN killed) (S (VP (VBG covering) (NP (DT the) (JJ israeli-palestinian) (NN conflict))))))))) (. .)))
+
+(S1 (S (PP (IN with) (NP (JJ palestinian) (NNS cameramen))) (, ,) (VP (VBN shot) (CC and) (VBN killed) (PP (IN by) (NP (NP (DT an) (JJ israeli) (NN soldier)) (PP (IN on) (NP (NP (DT the) (JJ west) (NN bank)) (PP (IN in) (NP (NN mid-april)))))))) (. .)))
+
+(S1 (FRAG (PP (IN with) (NP (NP (JJ back-to-back) (NNS deaths)) (VP (VBG making) (NP (NP (DT a) (NN total)) (PP (IN of) (NP (NP (QP (IN at) (JJS least) (CD seven)) (NNS journalists)) (VP (VBN killed) (S (VP (VBG covering) (NP (DT the) (NN conflict)))) (PP (IN in) (NP (DT the) (JJ past) (CD two) (CC and) (DT a) (JJ half) (NNS years)))))))))) (. .)))
+
+(S1 (S (S (NP (DT this)) (VP (AUX is) (ADJP (RB very) (JJ worrying)))) (CC and) (S (NP (PRP i)) (VP (VBP believe) (SBAR (S (NP (DT the) (JJ israeli) (NN army)) (VP (MD should) (VP (VB take) (NP (JJ special) (NNS measures)) (S (VP (TO to) (VP (VB prevent) (NP (DT this))))))))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NN message)) (PP (IN from) (NP (DT the) (JJ israeli) (NN government)))) (VP (AUX is) (SBAR (SBAR (IN that) (S (NP (PRP$ its) (NNS soldiers)) (VP (AUX are) (RB not) (VP (VBG targeting) (NP (NNS journalists)))))) (, ,) (CC but) (SBAR (IN that) (S (NP (NP (NNS journalists)) (SBAR (WHNP (WP who)) (S (VP (VBP travel) (PP (TO to) (NP (NP (NNS places)) (SBAR (WHADVP (WRB where)) (S (NP (EX there)) (VP (MD could) (VP (AUX be) (NP (NP (JJ live) (NN fire) (NN exchange)) (PP (IN between) (NP (NP (JJ israeli) (NNS forces)) (CC and) (NP (JJ palestinian) (NNS gunmen))))))))))))))) (VP (AUX have) (NP (DT a) (NN responsibility) (S (VP (TO to) (VP (VB take) (NP (JJR greater) (NNS precautions))))))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX have) (S (VP (TO to) (VP (VB realize) (SBAR (IN that) (S (NP (DT this)) (VP (AUX is) (RB not) (NP (NP (DT a) (NN game)) (VP (VBG going) (PP (IN on) (NP (RB there)))))))))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (NP (DT a) (NN life) (CC and) (NN death) (NN situation))) (. .)))
+
+(S1 (S (NP (NNS soldiers)) (VP (AUX are) (ADVP (RB basically)) (VP (VBG thinking) (PP (IN about) (NP (PRP$ their) (JJ own) (NNS lives))) (PP (IN at) (NP (DT that) (NN moment))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX do) (RB n't) (VP (AUX have) (NP (NP (NN time)) (SBAR (S (VP (TO to) (VP (VB hesitate)))))))) (. .)))
+
+(S1 (S (NP (DT the) (JJ israeli) (NN spokesman)) (VP (VP (VBZ says) (NP (DT the) (NN soldier)) (NP (PRP his)) (NP (DT no) (NN choice))) (, ,) (CC but) (VP (TO to) (VP (AUX be) (ADVP (RB there))))) (. .)))
+
+(S1 (S (NP (NNS journalists)) (VP (VBP say))))
+

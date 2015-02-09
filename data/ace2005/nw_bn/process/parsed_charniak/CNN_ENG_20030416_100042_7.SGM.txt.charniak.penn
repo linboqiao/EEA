@@ -1,0 +1,32 @@
+(S1 (S (NP (NP (DT all) (CD one)) (PP (IN of) (NP (DT the) (JJ many) (JJ young)))) (VP (VBZ faces) (NP (DT that) (NN bear)) (NP (NP (DT the) (JJ heavy) (NN mark)) (PP (IN of) (NP (NN war))))) (. .)))
+
+(S1 (NP (NP (DT the) (NN story)) (PP (IN of) (NP (CD one) (NN boy))) (SBAR (WHNP (WP who)) (S (VP (AUX 's) (ADJP (JJ lucky) (RB enough) (S (VP (TO to) (VP (AUX be) (ADJP (JJ alive))))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (AUX 'm) (NP (NNP mary) (NN snow)) (PP (IN with) (NP (NP (DT this) (NN check)) (PP (IN of) (NP (NN head) (NNS lines)))))) (. .)))
+
+(S1 (S (NP (NP (NNP american) (NNS airlines) (POS ')) (NN fate)) (VP (AUX is) (VP (VBG hanging) (PP (IN on) (NP (PRP$ its) (NN flight))) (S (VP (VB attend) (NP (NP (NN attendant) (POS 's)) (NN union)))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (ADVP (RB narrowly)) (VP (VBN rejected) (NP (NN union)) (NP (NN today)))) (. .)))
+
+(S1 (S (SBAR (IN if) (S (NP (DT the) (NNS workers)) (VP (AUX do) (RB n't) (VP (VB approve) (NP (DT the) (JJ steep) (VBN cut) (NNS backs) (JJ american)))))) (VP (VBZ says) (SBAR (S (NP (PRP it)) (VP (MD will) (VP (VB file) (PP (IN for) (NP (NN bankruptcy)))))))) (. .)))
+
+(S1 (S (NP (NN yesterday)) (NP (JJ american) (NNS pilots) (NNS mechanics)) (VP (VBD approved) (NP (PRP$ their) (NN share)) (NP (NP (QP ($ $) (CD 1.8) (CD billion))) (PP (IN in) (NP (NN labor) (NN concession))))) (. .)))
+
+(S1 (S (NP (NNP america)) (VP (VBZ warns) (SBAR (S (NP (PRP it)) (VP (MD will) (VP (VB seek) (NP (JJR more) (NNS layoffs)) (SBAR (IN if) (S (NP (PRP it)) (VP (AUX does) (VP (VB file) (PP (IN for) (NP (NN chapter) (CD 11)))))))))))) (. .)))
+
+(S1 (S (NP (NP (NN number)) (PP (IN of) (NP (NNS companies)))) (VP (AUX are) (VP (VBG planning) (S (VP (TO to) (VP (VB cut) (NP (PRP$ their) (NNS payrolls))))))) (. .)))
+
+(S1 (S (NP (NNP motorola)) (VP (VBG saying) (SBAR (S (NP (PRP it)) (VP (MD will) (VP (VB eliminate) (NP (NP (QP (DT another) (CD 3,000)) (NNS jobs)) (, ,) (NP (NP (CD 3) (NN %)) (PP (IN of) (NP (PRP$ its) (NN work) (NN force)))))))))) (. .)))
+
+(S1 (S (VP (VB let) (S (VP (POS 's) (VP (VB look) (PP (IN at) (NP (NP (DT the) (JJS latest) (NNS numbers)) (PP (IN on) (NP (DT the) (NNP dow))))))))) (. .)))
+
+(S1 (S (NP (NNP wall) (NN street) (NNS stocks)) (VP (AUX are) (ADJP (JJ mixed))) (. .)))
+
+(S1 (S (NP (DT the) (NNP dow) (NNS industrials)) (VP (VBP down) (NP (CD 64) (NNS points))) (. .)))
+
+(S1 (S (VP (NNP nasdaq) (PRT (RP up)) (NP (QP (RB about) (CD 13)) (NNS points))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (NP (NP (DT the) (JJS latest)) (PP (IN from) (NP (NNP wall) (NNP street))))) (. .)))
+
+(S1 (S (NP (NNP cnn)) (VP (VBP live) (SBAR (S (NP (NN today)) (VP (VBZ continues) (PP (IN after) (NP (DT this))))))) (. .)))
+

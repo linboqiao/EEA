@@ -1,0 +1,22 @@
+(S1 (S (CC So) (NP (NP (NNP Oracle) (CC and) (NNP Peoplesoft)) (, ,) (SBAR (WHNP (WP who)) (S (VP (VBD spent) (NP (NP (DT the) (JJ last) (CD 18) (NNS months)) (ADJP (JJ insulting) (NP (CD one) (DT another)))) (PP (IN in) (NP (DT every) (JJ imaginable) (NN way)))))) (, ,)) (VP (AUX are) (ADVP (RB finally)) (VP (VBG tying) (NP (DT the) (NN knot)))) (. ?)))
+
+(S1 (S (S (NP (NP (DT The) (JJ final) (NN price)) (, ,) (NP (NP ($ $) (CD 26.50)) (PP (IN per) (NP (NN share)))) (, ,)) (VP (VBZ beats) (NP (NP (PDT all) (DT the) (JJ previous) (NNS bids)) (PP (IN by) (NP (DT a) (JJ huge) (NN margin)))))) (: --) (S (PP (IN of) (NP (NN course))) (, ,) (NP (NNP Oracle)) (VP (VP (VBD lowballed) (NP (PRP$ their) (JJR earlier) (NNS offers))) (, ,) (CC and) (VP (VBD ended) (PRT (RP up)) (ADVP (RB basically)) (VP (VBG bidding) (PP (IN against) (NP (NP (PRP themselves)) (CC and) (NP (NP (DT the) (NN optimism)) (PP (IN of) (NP (JJ other) (NNP Peoplesoft) (NNS shareholders)))))) (PP (IN for) (NP (NP (DT a) (NN year)) (CC and) (NP (DT a) (NN half)))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (VP (AUX been) (NP (DT a) (ADJP (RB pretty) (JJ grueling)) (NN fight)) (-LRB- -LRB-) (SQ (AUX was) (NP (PRP it)) (ADJP (JJ worth) (NP (PRP it)))))) (. ?)))
+
+(S1 (SBARQ (WHNP (WHNP (WRB How) (JJ much)) (PP (IN of) (NP (NP (NNP Peoplesoft) (POS 's)) (ADJP (ADJP (RBS most) (JJ valuable)) (PRN (: --) (ADJP (JJ human)) (: --))) (NNS resources)))) (SQ (VP (MD will) (VP (VB walk) (PP (IN out) (NP (NP (DT the) (NN door)) (NP (DT the) (NN day)))) (NP (PRP$ their) (NNS options) (NN vest))))) (. ?) (-RRB- -RRB-)))
+
+(S1 (S (VP (VBN made) (ADVP (PDT all) (DT the) (RBR more) (RB so)) (PP (IN by) (NP (NP (DT the) (JJ widely-held) (NN assumption)) (SBAR (WHNP (WDT that)) (S (NP (NNP Larry) (NNP Ellison)) (VP (AUX was) (VP (VP (ADVP (RB either)) (VBG bluffing)) (CC or) (VP (VBG screwing) (ADVP (RB around)))))))))) (. .)))
+
+(S1 (S (ADVP (RB So)) (NP (PRP it)) (VP (AUX 's) (ADVP (RB over))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (AUX have) (NP (NP (NNP Oracle\/Peoplesoft) (POS 's)) (NN spat) (S (VP (TO to) (VP (VB kick) (PRT (RP around)) (ADVP (RB anymore)))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (MD 'll) (VP (AUX have) (S (VP (TO to) (VP (VB stick) (PP (IN with) (S (VP (VBG condemning) (NP (DT the) (NN merger)) (PP (IN as) (NP (NP (DT a) (ADJP (RB totally) (JJ unworkable)) (NN deal)) (PP (IN between) (NP (NP (CD two) (NNS sides)) (SBAR (WHNP (WP who)) (S (ADVP (RB absolutely)) (VP (VBP hate) (NP (DT each) (JJ other))))))))))))))))) (. .)))
+
+(S1 (S (CC And) (NP (PRP I)) (VP (MD wo) (RB n't) (VP (VB dwell) (PP (IN on) (NP (NP (DT the) (NN irony)) (PP (IN of) (NP (NP (DT an) (NNP Oracle) (NN employee)) (VP (AUXG being) (VP (VBN driven) (PRT (RP out)) (PP (IN of) (NP (NNP Oracle))))))))) (, ,) (S (VP (VP (VBG starting) (NP (PRP$ his) (JJ own) (NN company))) (, ,) (CC and) (VP (VBG forcing) (S (NP (NNP Ellison)) (VP (TO to) (VP (VB spend) (NP (QP ($ $) (CD 10.3) (CD billion))) (S (VP (TO to) (VP (VB get) (NP (PRP$ his) (NN company)) (: --) (FRAG (CC but) (RB not) (NP (PRP him))) (PRN (: --) (RB back) (-LRB- -LRB-) (SBAR (IN though) (S (NP (PRP it)) (VP (AUX does) (RB rather) (ADVP (RB delightfully)) (VP (VB remind) (S (NP (NP (PRP me)) (PP (IN of) (S (NP (NNP Coca-Cola)) (ADVP (RB basically)) (VP (VP (VBG giving) (PRT (RP away)) (NP (DT the) (NN bottling) (NN franchise))) (CC and) (VP (ADVP (RB then)) (VBG spending) (NP (NNS billions))))))) (VP (TO to) (VP (VB buy) (NP (PRP it)) (ADVP (RB back))))))))) (-RRB- -RRB-))))))))))))) (. .)))
+
+(S1 (S (S (NP (NNP Ellison)) (VP (AUX is) (ADJP (JJ brilliant) (RB enough) (S (VP (TO to) (VP (VB make) (NP (DT this) (NN merger) (NN work)))))))) (, ,) (CC but) (S (NP (PRP he)) (VP (AUX 's) (ADJP (JJ crazy) (RB enough) (S (VP (TO to) (VP (VB wreck) (NP (NP (RB even) (DT the) (NN soundest)) (PP (IN of) (NP (NNS deals)))))))))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (MD shall) (VP (VB see))) (. .)))
+

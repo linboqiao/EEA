@@ -1,0 +1,10 @@
+(S1 (S (NP (JJ german) (NNS police)) (VP (VBP say) (SBAR (S (NP (NP (DT a) (JJ teenage) (JJ lebanese) (NN gunman)) (, ,) (SBAR (WHNP (WP who)) (S (VP (VBD hijacked) (NP (DT a) (NN bus)) (NP (NN today))))) (, ,)) (VP (AUX was) (VP (VBG hoping) (S (VP (TO to) (VP (VB free) (NP (DT a) (JJ key) (NNP September) (JJ 11th) (NN suspect)))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN gunman)) (VP (AUX is) (VP (VBN accused) (PP (IN of) (S (VP (VP (VBG commandeering) (NP (DT the) (NN bus)) (PP (IN in) (NP (NP (DT the) (ADJP (JJ north) (JJ german)) (NN city)) (PP (IN of) (NP (NNP bremen)))))) (CC and) (VP (VBG holding) (NP (CD 16) (NNS people) (NN hostage)) (PP (IN during) (NP (NP (DT a) (JJ 75-mile) (NN police) (NN chase)) (PP (IN down) (NP (DT the) (NN autobahn))))))))))) (. .)))
+
+(S1 (S (NP (NNS negotiators)) (VP (VBP say) (SBAR (S (NP (PRP he)) (VP (VBD demanded) (NP (NP (DT the) (NN release)) (PP (IN of) (NP (NP (CD four) (NNS prisoners)) (, ,) (PP (VBG including) (NP (NP (JJ ramzi) (NN binalshibh)) (, ,) (NP (NP (DT a) (NNP September) (JJ 11th) (NN suspect)) (VP (VBN apprehended) (NP (JJ last) (NN year)) (PP (IN in) (NP (NNP pakistan)))))))))))))) (. .)))
+
+(S1 (S (NP (NNS police)) (VP (VBN captured) (NP (DT the) (JJ 17-year-old) (VBG hijacking) (NN suspect)) (PP (IN without) (S (VP (NN firing) (NP (DT a) (NN shot)))))) (. .)))
+
+(S1 (S (NP (DT all) (NNS hostages)) (VP (AUX were) (VP (VBN released) (ADJP (JJ unharmed)))) (. .)))
+

@@ -1,0 +1,18 @@
+(S1 (S (S (NP (NNP MADRID) (, ,) (NNP Spain) (PRN (-LRB- -LRB-) (NP (NNP AP)) (-RRB- -RRB-)) (NNP Police)) (VP (VBN intercepted) (NP (NP (CD 33) (JJ African) (NNS immigrants)) (SBAR (WHNP (WP who)) (S (VP (VBD came) (ADVP (RB ashore)) (NP (NNP Thursday)) (PP (IN in) (NP (JJ southern) (NNP Spain))) (PP (IN aboard) (NP (DT an) (JJ overcrowded) (NN boat)))))) (, ,) (PP (VBG including) (NP (NP (NP (JJ several) (JJ pregnant) (NNS women)) (CC and) (NP (JJ other) (NNS travelers))) (VP (VBG suffering) (PP (IN from) (NP (NN hypothermia))))))))) (, ,) (NP (NNS police)) (VP (VBD said)) (. .)))
+
+(S1 (S (S (NP (JJ Spanish) (NNS media)) (VP (VBD showed) (NP (NP (JJ dramatic) (NNS photos)) (PP (IN of) (S (NP (NNS police)) (VP (VBG struggling) (S (VP (TO to) (VP (VB carry) (NP (NNS women)) (PP (IN on) (NP (NP (DT the) (NN verge)) (PP (IN of) (NP (NN fainting)))))))))))) (SBAR (IN after) (S (NP (PRP they)) (VP (AUX were) (VP (VBN found) (S (VP (VBG wandering) (PP (IN through) (NP (NP (NNP Tarifa)) (, ,) (NP (NP (NNP Spain) (POS 's)) (JJ windswept) (JJ southern) (NN tip)))))))))))) (, ,) (NP (NNP Civil) (NNP Guard) (NNS officials)) (VP (VBD told) (NP (JJ Spanish) (NN news) (NNS agencies))) (. .)))
+
+(S1 (S (S (NP (NNS Police)) (ADVP (RB also)) (VP (VP (VBN arrested) (NP (NP (CD two) (NNP Moroccan) (NNS men)) (VP (VBN suspected) (PP (IN of) (NP (NN trafficking))) (PP (IN in) (NP (JJ human) (NNS beings)))))) (CC and) (VP (VBG navigating) (NP (DT the) (NNP Zodiac) (NN boat)) (ADVP (IN across) (PP (IN from) (NP (NNP Africa))))))) (, ,) (NP (NNP Efe)) (VP (VBD said)) (. .)))
+
+(S1 (S (S (S (NP (NP (NN Twenty-six)) (PP (IN of) (NP (DT the) (JJ would-be) (NNS immigrants)))) (VP (AUX were) (PP (IN from) (NP (JJ sub-Saharan) (NNP Africa))))) (, ,) (S (NP (NP (CD six)) (PP (IN of) (NP (PRP them)))) (VP (NNS women))) (, ,) (CC and) (S (NP (DT the) (JJ other) (CD seven)) (VP (AUX were) (NP (NP (NNS males)) (PP (IN from) (NP (ADJP (NNP North) (NNP African)) (NNS countries))))))) (, ,) (NP (NNS police)) (VP (VBD said)) (. .)))
+
+(S1 (S (S (NP (NNP Red) (NNP Cross) (NNS officials)) (VP (VBN administered) (NP (JJ first) (NN aid)) (PP (IN on) (NP (DT the) (NN scene))))) (, ,) (CC and) (S (NP (DT the) (NNS detainees)) (VP (AUX were) (VP (VBN taken) (PP (TO to) (NP (DT a) (NN processing) (NN center))) (SBAR (IN for) (S (NP (DT the) (NN government)) (VP (TO to) (VP (VB begin) (NP (NN expulsion) (NNS proceedings))))))))) (. .)))
+
+(S1 (S (NP (NP (QP (NNS Tens) (IN of) (NNS thousands))) (PP (IN of) (NP (JJ destitute) (NNPS Africans)))) (VP (VBP try) (S (VP (TO to) (VP (VB enter) (NP (NNP Spain)) (ADVP (RB illegally) (NP (DT each) (NN year))) (PP (IN by) (S (VP (VBG crossing) (NP (NP (DT the) (JJ perilous) (NNP Strait)) (PP (IN of) (NP (NNP Gibraltar)))) (S (VP (TO to) (VP (VB reach) (UCP (DT the) (ADJP (JJ southern) (JJ mainland)) (CC or) (PP (IN by) (S (VP (VBG sailing) (NP (NN northwest)) (PP (TO to) (NP (DT the) (NNP Canary) (NNPS Islands))) (PP (IN out) (PP (IN in) (NP (DT the) (NNP Atlantic)))))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (VP (VB seek) (NP (NP (DT a) (JJR better) (NN life)) (VP (VBG doing) (NP (JJ menial) (NNS jobs)) (PP (IN in) (NP (NNP Spain)))))) (CC or) (VP (VB hope) (S (VP (TO to) (VP (VB use) (NP (DT the) (NN country)) (PP (IN as) (NP (NP (DT a) (JJ stepping) (NN stone)) (PP (TO to) (NP (NP (JJ other) (NNS points)) (PP (IN in) (NP (NNP Europe)))))))))))) (. .)))
+
+(S1 (S (S (NP (JJS Most)) (VP (AUX are) (VP (VBN caught) (VP (VBG trying) (S (VP (TO to) (VP (VBP sneak) (PRT (RP in))))))))) (CC and) (S (NP (DT some)) (VP (VBP die) (PP (IN in) (NP (DT the) (NN attempt))))) (. .)))
+
+(S1 (NP (-LRB- -LRB-) (NP (NNP dw)) (-RRB- -RRB-)))
+

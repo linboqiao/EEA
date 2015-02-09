@@ -1,0 +1,14 @@
+(S1 (S (NP (DT a) (NN pizza) (NN delivery)) (VP (VBD helped) (S (NP (NNS police)) (VP (NN nab) (NP (DT the) (NN suspect)) (PP (IN in) (NP (NP (DT the) (NN kidnapping)) (PP (IN of) (NP (DT a) (JJ 9-year-old) (JJ california) (NN girl)))))))) (. .)))
+
+(S1 (S (NP (NP (JJ 24-year-old) (NNP enrique) (NNP alvarez)) (, ,) (VP (ADVP (RB also)) (VBN known) (PP (IN as) (NP (NNP david) (NNP cruz)))) (, ,)) (VP (AUX was) (VP (VBN arrested) (NP (NNP Monday)) (PP (IN in) (NP (NNP san) (NNP jose))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX is) (VP (VBN expected) (S (VP (TO to) (VP (AUX be) (VP (VBN arraigned) (NP (NNP Wednesday)))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX 's) (VP (VBN charged) (PP (IN with) (NP (NP (NN kidnapping)) (, ,) (NP (NN felony) (NN assault)) (CC and) (NP (JJ sexual) (NN assault)))))) (. .)))
+
+(S1 (S (NP (DT the) (NN girl)) (VP (AUX was) (VP (VBN found) (NP (JJ late) (NNP Sunday)) (PP (IN at) (NP (NP (DT a) (NN convenience) (NN store)) (PP (IN in) (NP (JJ east) (NNP palo) (NNP alto))))))) (. .)))
+
+(S1 (S (NP (NNS police)) (VP (VBP say) (SBAR (S (NP (PRP she)) (VP (VBD told) (NP (PRP them)) (SBAR (S (NP (DT a) (JJ pepperoni) (NN pizza)) (VP (AUX had) (VP (AUX been) (VP (VBN delivered) (PP (TO to) (NP (NP (DT the) (NN house)) (SBAR (WHADVP (WRB where)) (S (NP (PRP she)) (VP (AUX was) (VP (VBN held)))))))))))))))) (. .)))
+
+(S1 (S (NP (NNS detectives)) (VP (AUX were) (ADJP (JJ able) (S (VP (TO to) (VP (VB track) (NP (DT the) (NN order)) (PP (TO to) (NP (NP (DT the) (NN house)) (, ,) (SBAR (WHADVP (WRB where)) (S (NP (PRP they)) (VP (VBD found) (NP (CD alvarez) (NN hiding)) (PP (IN in) (NP (DT the) (NN attic))))))))))))) (. .)))
+

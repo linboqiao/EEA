@@ -1,0 +1,8 @@
+(S1 (S (RB Just) (VP (VBD reported) (PP (IN from) (NP (NNP AP))) (SBAR (IN that) (S (NP (NNP Condi) (NNP Rice)) (VP (AUX has) (VP (AUX been) (VP (VBN chosen) (PP (IN by) (NP (NNP President) (NNP Bush))) (S (VP (TO to) (VP (VB become) (NP (NP (DT the) (JJ new) (NNP Secretary)) (PP (IN of) (NP (NNP State)))) (PP (IN for) (NP (PRP$ his) (JJ second) (NN term)))))))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VP (VBP agree) (PP (IN with) (NP (PRP$ his) (NN choice)))) (CC and) (VP (VBP think) (SBAR (S (NP (PRP she)) (VP (MD will) (VP (VB make) (NP (DT a) (ADJP (RB much) (JJR better)) (NN Secretary)) (SBAR (IN then) (S (NP (NNP Powell)) (VP (AUX did)))))))))) (. .)))
+
+(S1 (S (NP (PRP$ Her) (NNS views)) (VP (AUX are) (ADVP (RB much) (RBR more)) (PP (IN in) (NP (NP (NN step)) (PP (IN with) (NP (NP (DT the) (NNP President)) (PP (IN then) (NP (NNP Powell))))))) (, ,) (SBAR (IN although) (S (NP (PRP he)) (VP (VP (AUX was) (NP (DT a) (JJ true) (NN soldier))) (CC and) (VP (VBD carried) (NP (DT the) (NN message))))))) (. .)))
+
+(S1 (S (ADVP (CC Plus)) (, ,) (NP (NP (DT any) (NN lady)) (SBAR (WHNP (WP who)) (S (VP (VP (VBZ works) (PRT (RP out)) (PP (TO to) (NP (VBN Led) (NNP Zeppelin)))) (CC and) (VP (AUX is) (NP (DT a) (NNP Football) (NNP nut))))))) (VP (AUX is) (VP (VBN alright) (PP (IN in) (NP (PRP$ my) (NN book))))) (. .)))
+

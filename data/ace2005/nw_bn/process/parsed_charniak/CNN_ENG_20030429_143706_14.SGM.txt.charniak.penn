@@ -1,0 +1,28 @@
+(S1 (FRAG (ADVP (RB now)) (NP (NP (DT an) (NN update)) (PP (IN on) (NP (NP (DT a) (NN story)) (SBAR (WHNP (WDT that)) (S (VP (VBD touched) (NP (DT all) (PRP$ our) (NNS lives)))))))) (. .)))
+
+(S1 (SQ (VP (VB remember) (NP (NP (NP (NNP ali) (NNS abbas)) (SBAR (WHNP (WP who)) (S (VP (VBD lost) (NP (PDT both) (PRP$ his) (NNS arms)))))) (, ,) (NP (PRP$ his) (NN home)) (, ,) (NP (NP (JJ many)) (PP (IN of) (NP (PRP$ his) (NNS relatives))))) (PP (IN in) (NP (NP (DT a) (NN bombing)) (PP (IN on) (NP (NN baghdad)))))) (. ?)))
+
+(S1 (S (SBAR (IN as) (S (NP (PRP you)) (VP (MD might) (VP (VB imagine))))) (, ,) (NP (NP (PRP$ his) (NN will) (S (VP (TO to) (VP (VB live))))) (PRN (MD would) (RB not) (: --))) (VP (AUX was) (RB not) (ADJP (RB very) (JJ strong)) (PP (IN at) (ADJP (JJ first)))) (. .)))
+
+(S1 (S (NP (NP (NNP mark) (NNP webster)) (PP (IN of) (NP (NNS itn)))) (VP (AUX has) (NP (NP (DT an) (NN update)) (PP (IN for) (NP (PRP us))))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (PP (IN after) (NP (ADJP (RB so) (JJ much)) (NN suffering))) (, ,) (NP (PRP$ his) (JJ gentle) (NN smile)) (VP (VBD said) (NP (NP (PRP it)) (NP (DT all))))) (. .)))
+
+(S1 (S (NP (NP (CD two) (NNS weeks)) (PP (IN in) (NP (NNP hospital) (CC and) (NNP ali)))) (VP (AUX is) (VP (VBG recovering) (ADVP (RB fast)))) (. .)))
+
+(S1 (S (VP (ADVP (RB happily)) (VBG watching) (NP (NNP tom) (CC and) (NNP jerry)) (PP (IN on) (NP (NP (PRP$ his) (JJ mini) (NN television)) (, ,) (NP (NP (PRP$ his) (NN transformation)) (PP (IN from) (NP (NP (DT the) (JJ pain-racked) (NN boy)) (SBAR (WHNP (WP who)) (S (VP (VBD left) (NP (NN baghdad))))))))))) (. .)))
+
+(S1 (S (PP (IN with) (NP (NP (DT the) (NN encouragement)) (PP (IN of) (NP (PRP$ his) (NNS doctors))))) (, ,) (NP (PRP we)) (VP (VBD visited) (NP (PRP him)) (PP (IN in) (NP (DT the) (JJ intensive) (NN care) (NN unit)))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX 're) (ADJP (JJ confident) (SBAR (S (NP (PRP he)) (VP (MD wo) (RB n't) (VP (AUX be) (ADVP (RB here)) (ADVP (RB much) (RB longer)))))))) (. .)))
+
+(S1 (S (S (NP (PRP i)) (VP (MD will) (VP (VB say) (SBAR (S (NP (PRP he)) (VP (MD will) (VP (VB come) (PP (IN out) (PP (IN of) (NP (DT the) (ADJP (ADJP (VB burn) (NN unit)) (PP (IN in) (NP (CD three) (NNS weeks)))) (NN time))))))))))) (, ,) (CC but) (S (NP (PRP he)) (VP (MD will) (VP (AUX be) (PRN (, ,) (S (NP (PRP you)) (VP (VBP know))) (, ,)) (PP (IN in) (NP (NNP kuwait))) (SBAR (IN until) (S (NP (PRP we)) (VP (VBP find) (NP (PRP him)) (NP (NP (ADJP (RB really) (JJ constructive)) (NN plan)) (SBAR (WHNP (WDT that)) (S (VP (VBZ takes) (PP (IN into) (NP (NN consideration))) (NP (NP (DT all) (NNS aspects)) (PP (IN of) (NP (PRP$ his) (NNS needs)))) (, ,) (NP (ADJP (JJ psychological) (, ,) (JJ social) (CC and) (JJ future)) (NN plan)))))))))))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (SBAR (IN since) (S (NP (NNP ali)) (VP (AUX is) (NP (DT an) (JJ ardent) (NN football) (NN fan))))) (, ,) (NP (PRP we)) (VP (VBD gave) (NP (PRP him)) (NP (NP (DT a) (NNP manchester) (NNP united) (NN shirt)) (VP (ADVP (RB specially)) (VBN signed) (PP (IN by) (NP (PDT all) (DT the) (NNS players))))))) (. .)))
+
+(S1 (S (NP (NP (NN pride)) (PP (IN of) (NP (NN face)))) (VP (VBD went) (PP (TO to) (NP (NP (PRP$ his) (JJ favorite) (NN player)) (, ,) (NP (NNP david) (NNP beckham)) (, ,) (SBAR (WHNP (WP who)) (S (VP (VBD surprised) (NP (NN everyone)) (PP (IN with) (NP (PRP$ his) (NN response))))))))) (. .)))
+
+(S1 (S (VP (VB thank) (NP (PRP you)) (ADVP (RB very) (RB much))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (NP (NNS gifts))))
+

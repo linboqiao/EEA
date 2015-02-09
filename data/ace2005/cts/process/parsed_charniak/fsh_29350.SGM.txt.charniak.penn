@@ -1,0 +1,96 @@
+(S1 (NP (CD 5) (. .)))
+
+(S1 (S (NP (NP (NN Death)) (PP (IN of) (NP (NNP Arafat)))) (PRN (-LRB- -LRB-) (NP (CD 1)) (-RRB- -RRB-)) (NP (JJ Controversial) (NNP PLO) (NN leader) (NNP Yasser) (NNP Arafat)) (VP (VBD died) (PP (IN in) (NP (DT a) (NNP Paris) (NN hospital))) (NP (JJ last) (NN week))) (. .)))
+
+(S1 (SQ (AUX Do) (NP (PRP you)) (VP (VB think) (SBAR (S (NP (NP (NNP Arafat) (POS 's)) (NN death)) (VP (MD will) (VP (VP (VB help)) (CC or) (VP (VB hurt) (NP (DT the) (JJ Israeli-Palestinian) (NN peace) (NN process)))))))) (. ?)))
+
+(S1 (SQ (AUX Was) (NP (NNP Arafat)) (NP (DT a) (JJ good) (NN leader)) (. ?)))
+
+(S1 (SBARQ (WHNP (WP What)) (SQ (AUX do) (NP (PRP you)) (VP (VB think) (SBAR (S (NP (NNP US) (NN policy)) (VP (MD should) (VP (AUX be) (PP (IN toward) (NP (NNP Palestine))) (ADVP (RB now)) (SBAR (IN that) (S (NP (NNP Arafat)) (VP (AUX has) (VP (VBN died))))))))))) (. ?)))
+
+(S1 (SBARQ (WHNP (WHNP (WP What)) (PRN (, ,) (PP (IN if) (NP (NN anything))) (, ,))) (SQ (MD should) (NP (DT the) (NNP US)) (VP (AUX do) (S (VP (TO to) (VP (AUX be) (VP (VBN involved) (PP (IN in) (NP (DT the) (NNP Middle) (NNP East) (NN peace) (NN process))))))))) (. ?)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 'm) (NP (NNP Barb)) (PP (IN from) (NP (NNP Indiana)))) (. .)))
+
+(S1 (S (INTJ (UH Okay)) (, ,) (NP (PRP I)) (VP (AUX 'm) (NP (NNP Roger)) (PP (IN from) (PRN (, ,) (INTJ (UH um)) (, ,)) (NP (NNP Atlanta)))) (. .)))
+
+(S1 (INTJ (UH Hi) (. .)))
+
+(S1 (SBARQ (RB So) (, ,) (WHNP (WP what)) (SQ (AUX do) (NP (PRP you)) (VP (VB think) (PP (IN about)) (: --) (NP (NNP Arafat)))) (. ?)))
+
+(S1 (S (S (VP (AUX Was) (S (NP (PRP he)) (NP (DT a) (NNP h))))) (: -) (S (INTJ (UH Uh)) (, ,) (NP (PRP I)) (VP (VBP think) (SBAR (IN that) (S (, ,) (ADVP (RB um)) (, ,) (NP (PRP I)) (VP (VBP bet) (SBAR (S (NP (PRP he)) (VP (AUX was) (RB n't) (NP (DT a) (ADJP (RB really) (JJ good)) (NN leader)))))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP think) (SBAR (IN that) (, ,) (S (VP (VBZ um) (, ,) (SBAR (IN that) (S (NP (NP (PRP$ his) (NN situation)) (PRN (: --) (: --) (ADVP (RB well)) (, ,))) (VP (VBP see) (S (S (NP (PRP I)) (VP (VBD got) (PP (TO to) (NP (DT the))) (: --) (PP (TO to)) (: -) (PP (TO to) (NP (NP (DT the) (NN level)) (PP (IN of) (NP (NN power))) (SBAR (WHNP (WDT that)) (S (NP (PRP he)) (VP (AUX was) (PP (IN in))))))) (: --) (ADVP (RB back) (PP (IN in) (NP (DT the) (NNS eighties)))))) (: --) (CC and) (ADVP (RB once)) (S (NP (PRP he)) (, ,) (ADVP (RB um)) (, ,) (S (NP (PRP you)) (VP (VBP know))) (, ,) (VP (VP (VBD started) (S (VP (VBG getting) (ADJP (JJ wealthy))))) (CC and) (VP (VBD started) (VP (VBG getting) (VP (VBN known) (, ,) (SBAR (IN that) (S (NP (NP (PRP$ his) (NN agenda) (NN ch)) (PRN (: -) (INTJ (UH uh)) (, ,))) (VP (VBD changed) (NP (NNP Mhm)))))))))))))))))) (. .)))
+
+(S1 (S (CC but) (NP (PRP it)) (VP (VP (AUX was) (RB n't) (ADVP (RB actually)) (PP (IN for) (NP (NN peace)))) (CC but) (VP (AUX was) (S (VP (TO to) (VP (VB try) (S (VP (TO to) (VP (VB find) (NP (DT a) (NN way)) (PP (TO to) (PRN (-LRB- -LRB-) (-LRB- -LRB-) (INTJ (VB send)) (-RRB- -RRB-) (-RRB- -RRB-)) (NP (DT the) (NNPS Israelis))) (PP (IN out) (PP (IN of) (NP (NP (NNP Jerusalem)) (PP (IN in) (NP (NP (DT the) (NNS areas)) (SBAR (WHNP (WDT that)) (S (NP (PRP they)) (VP (VBD wanted))))))))))))))))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (ADVP (RB really)) (VP (AUX do) (RB n't) (VP (VB think) (NP (DT that))))) (: --) (S (NP (PRP they)) (VP (VBD wanted) (S (VP (TO to) (VP (VB coexist)))))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (VBP think) (SBAR (IN that) (S (, ,) (ADVP (RB um)) (, ,) (NP (PRP he)) (VP (VBD wanted)))))) (: --) (S (S (NP (PRP you)) (VP (VBP know))) (, ,) (NP (PDT all) (PRP$ his) (NNS people)) (: --) (S (NP (PDT all) (PRP$ his) (NNS people)) (VP (VBD wanted) (S (VP (TO to) (VP (VB coexist) (PP (IN with) (NP (DT the)))))))) (: --) (NP (NNPS Israelis))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP think) (SBAR (IN that) (S (, ,) (ADVP (RB um)) (, ,) (NP (PRP$ his) (NN death)) (: --) (VP (VBZ marks) (NP (NP (DT a) (NN beginning)) (PP (IN of) (S (VP (VBG trying) (S (VP (TO to) (VP (VB find) (NP (NP (NN somebody)) (SBAR (WHNP (WDT that)) (S (: --) (ADVP (RB really)) (VP (VBZ wants) (NP (NN peace))))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (IN that) (S (PP (IN in) (NP (NP (DT that) (NN area)) (PP (IN of) (NP (DT the))))) (, ,) (ADVP (RB um)) (, ,) (VP (NN world) (SBAR (IN that) (S (NP (PRP you)) (VP (MD could) (ADVP (RB actually)) (VP (AUX have) (NP (NN peace))))))))))) (. .)))
+
+(S1 (S (SBAR (IN If) (S (NP (PRP you)) (VP (VBP know) (NP (DT the) (NNP Bible)) (ADVP (RB well))))) (NP (PRP you)) (VP (MD would) (VP (VB know) (SBAR (IN that) (S (NP (EX there)) (VP (AUX 's) (ADVP (RB always)) (VP (VBG going) (S (VP (TO to) (VP (AUX be) (NP (DT a) (NN conflict)) (ADVP (RB there))))))))))) (. .)))
+
+(S1 (S (ADVP (RB Um)) (, ,) (NP (PRP I)) (VP (VBP think) (SBAR (DT that) (PRN (, ,) (INTJ (UH uh)) (, ,)) (S (NP (DT the) (NNP United) (NNPS States)) (VP (MD should) (VP (VP (VB open) (PRT (RP up)) (NP (PRN (: --) (NP (PRP$ their)) (: --)) (NNS doors)) (PP (TO to))) (: --) (RB not) (VP (VB help) (, ,) (CC but) (VP (VB support) (NP (DT any) (PRN (, ,) (INTJ (UH um)) (, ,)) (NN process)) (PP (IN for) (NP (NP (NN peace)) (PP (IN in) (NP (DT the) (NN area))))) (, ,) (ADVP (RB though))))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (IN that) (S (NP (PRP we)) (VP (MD should) (VP (VB get) (ADJP (VBN involved) (PP (TO to) (NP (NP (DT a) (NN level)) (, ,) (NP (NP (DT a) (NN point)) (SBAR (WHADVP (WRB where)) (S (NP (PRP we)) (VP (AUX 're) (VP (VP (VBG sending) (NP (NNS people)) (PP (IN over) (NP (RB there)))) (CC and) (, ,) (ADVP (RB um)) (, ,) (S (VP (VBG trying) (S (VP (TO to) (VP (: --) (VB help) (S (VP (VB keep) (NP (NP (DT the) (NN peace) (CC or) (NN anything)) (PP (IN like) (NP (DT that)))))))))))))))) (, ,) (NP (NN um))))))))))) (. .)))
+
+(S1 (S (S (NP (EX There)) (VP (AUX 's) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NN stuff))) (SBAR (WHNP (WDT that)) (S (VP (MD can) (VP (AUX be) (VP (AUX done))))))) (PRN (: --) (PP (IN by) (NP (RB just) (JJ verbal) (NN suppo))) (: -)))) (: --) (S (NP (PRP you)) (VP (VBP know))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (VBP think) (SBAR (IN that) (S (ADVP (RB now)) (NP (PRP he)) (VP (AUX 's) (VP (VBN gone))))))) (, ,) (S (NP (PRP$ his) (NN family)) (VP (AUX is) (ADVP (RB still)) (ADVP (RB around)))) (, ,) (CC and) (FRAG (INTJ (UH Yeah)) (. .))))
+
+(S1 (FRAG (INTJ (UH uh)) (, ,) (NP (NP (NNS millions) (CC and) (NNS millions)) (PP (IN of) (NP (NNS dollars))) (SBAR (IN that) (S (NP (PRP he)) (VP (AUX had) (VP (AUX is) (ADVP (RB still)) (PP (IN around) (S (CC but) (S (NP (PRP they)) (PRN (: --) (SBAR (IN if) (S (NP (PRP they)) (VP (VBP bring) (NP (NNS people)) (PP (IN in) (SBAR (WHNP (WDT that)) (S (VP (AUX was) (RB n't) (VP (VBN involved) (PP (IN with) (NP (NP (PRP$ his) (NN cabinet)) (, ,) (NP (NNP n)))))))))))) (: -)) (NP (NNS um)) (, ,) (VP (VP (AUX have) (NP (JJ different) (NNS views)) (PP (IN than) (NP (PRP him)))) (, ,) (NP (NP (NN somebody)) (SBAR (IN that) (S (NP (NP (NN gener)) (PRN (: -) (S (RB genuinely) (VP (MD can) (VP (VB accept) (NP (NP (DT the) (NN fact)) (PP (IN that) (NP (DT the) (NNP Israel))))))) (: -)) (: --)) (VP (AUX Is))))))) (: -) (S (NP (NNPS Israelis)) (VP (AUX are) (ADVP (RB there)))) (CC and) (S (NP (PRP they)) (VP (AUX 're) (ADVP (RB there)) (VP (TO to) (VP (VB stay)))))))) (: --) (CC and) (, ,) (VP (VBZ um) (, ,) (S (NP (PRP we)) (VP (VBG going) (S (VP (TO to) (VP (AUX have) (S (VP (TO to) (VP (VB find) (NP (DT a) (NN way)) (PP (TO to) (NP (NN coexist)))))))))))))))) (. .)))
+
+(S1 (S (SBAR (IN If) (S (NP (PRP they)) (VP (MD can) (VP (VB find) (NP (NP (NN somebody)) (PP (IN like) (NP (DT that)))))))) (, ,) (ADVP (RB then)) (NP (PRP I)) (VP (VBP think) (SBAR (IN that) (S (NP (PRP they)) (VP (MD should) (VP (X (SYM f)) (: -) (VP (VB support) (NP (PRP him))) (CC and) (, ,) (ADVP (RB um)) (, ,) (CC and) (VP (VB back) (NP (PRP him)) (ADVP (RB up)) (: --) (PP (IN in) (S (VP (VBG trying) (S (VP (TO to) (VP (VB help) (S (VP (VB define) (: --) (NP (NP (NN peace)) (PP (IN in) (NP (NP (DT the) (NN area)) (SBAR (WHADVP (WRB where)) (S (NP (NN peace)) (VP (AUX is) (ADJP (JJ impossible)))))))))))))))))))))) (. .)))
+
+(S1 (SBARQ (WHNP (WP What)) (SQ (AUX do) (NP (PRP you)) (VP (VB think) (PP (IN about) (NP (PRP it))))) (. ?)))
+
+(S1 (S (NP (PRP I)) (VP (VBP agree) (PP (IN with) (NP (PRP you)))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (AUX did) (RB n't) (VP (VB know) (NP (DT that) (JJ much)) (PP (IN about) (NP (PRP it)))))) (, ,) (S (NP (PRP I)) (VP (AUX was) (RB n't) (PP (RB much) (IN into) (NP (NNS politics))) (ADVP (RB back)) (PP (IN in) (NP (DT the) (NNS eighties))))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (AUX was) (NP (JJR more)) (, ,) (ADVP (RB um)) (, ,) (NP (NP (NN kind)) (PP (IN of) (NP (NNP a)))))) (: --) (S (NP (PRP I)) (VP (AUX was) (NP (NP (DT a) (NN kid)) (PP (IN on) (NP (DT the) (NN run))) (PP (IN from) (NP (JJ abusive) (NNS parents)))) (ADVP (ADVP (RB back) (RB then)) (SBAR (IN so) (S (SBAR (WHNP (WDT that)) (S (VP (AUX was) (RB n't) (NP (NP (DT a) (PRN (, ,) (S (NP (PRP you)) (VP (VBP know))) (, ,)) (NN one)) (PP (IN of) (NP (NP (PRP$ my) (NNS topics)) (PP (IN of) (NP (NN interest)))))) (PP (IN at) (NP (DT the) (NN time)))))) (, ,) (NP (PRP it)) (VP (AUX is) (ADVP (RB now)))))))) (. .)))
+
+(S1 (S (S (ADVP (RB Um)) (, ,) (NP (PRP I)) (PRN (: --) (NP (PRP$ my) (NN roommate)) (, ,) (CC and) (S (NP (PRP I)) (ADVP (RB still)) (VP (AUX do) (RB n't) (VP (VB know) (NP (DT that) (JJ much)) (PP (IN about))))) (: --)) (NP (PRP I)) (VP (MD 'd) (VP (VB love) (S (VP (TO to) (VP (VB know) (NP (NP (JJR more)) (PP (IN about) (NP (NNS politics)))))))))) (CC and) (S (NP (PRP I)) (VP (AUX 'm) (VP (VBG trying) (S (VP (TO to) (VP (VB learn) (NP (NP (JJR more)) (, ,) (SBAR (S (S (INTJ (UH uh)) (, ,) (VP (VBZ tells) (NP (PRP me)))) (, ,) (S (NP (PRP you)) (VP (VBP know))) (, ,) (S (NP (PRP he)) (VP (AUX was) (NP (PDT such) (DT a) (JJ terrible) (NN man)))) (CC but) (, ,) (S (ADVP (RB eh)) (, ,) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB listen) (PP (TO to) (NP (NP (NN everything)) (SBAR (S (NP (PRP he)) (VP (VBZ says)))))))))))))))))) (. .)))
+
+(S1 (S (CC And) (S (S (NP (PRP I)) (VP (VBP think) (NP (PRP it)))) (: --) (: --) (S (NP (PRP I)) (VP (VBP mean) (, ,) (SBAR (S (NP (PRP it)) (VP (MD would) (VP (AUX be) (ADJP (JJ nice) (S (VP (TO to) (VP (AUX have) (NP (NN peace)) (PP (IN over) (NP (RB there))))))))))))) (, ,) (CC but) (S (NP (PRP I)) (VP (VBP agree) (PP (IN with) (NP (PRP you)))))) (, ,) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (PRP it)) (VP (AUX 's) (ADVP (RB ever)) (VP (VBG going) (S (VP (TO to) (VP (VB happen)))))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP mean) (PRN (, ,) (RB not) (NP (NP (DT the) (NN way)) (PRN (: --) (: --) (RB not) (NP (NP (DT the) (NN way)) (SBAR (S (NP (PRP they)) (VP (MD 'll))))) (: --))) (: --)) (SBAR (RB not) (IN like) (S (NP (PRP it)) (VP (AUX is) (ADVP (RB here)))))) (. .)))
+
+(S1 (S (CC And) (NP (PRP I)) (VP (VBP agree) (SBAR (IN that) (S (NP (PRP we)) (VP (MD should) (RB n't) (VP (VB send) (NP (NNS people)) (ADVP (RB over) (RB there))))))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (AUX 've) (VP (VBN got) (NP (NP (JJ enough) (NN stuff)) (VP (VBG going) (ADVP (RB on)) (PP (IN with) (NP (UH Yeah))))))) (. .)))
+
+(S1 (NP (NP (NP (NNP Iraq)) (CC and) (NP (PRP I))) (: -) (CC and) (PRN (, ,) (INTJ (UH um)) (, ,)) (NP (NP (DT the)) (PRN (: --) (ADJP (JJ other)) (: --))) (: --) (NP (DT the) (JJ other) (NN guy)) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (S (S (NP (PRP We)) (VP (VBD got) (VP (ADVP (RB way) (RB too) (RB much)) (VBG going)))) (CC and) (S (NP (ADJP (RB too) (JJ much)) (NN expense)) (, ,) (S (NP (PRP I)) (VP (VBP mean))) (, ,) (NP (PRP we)) (NP (PRP we)) (VP (MD ca) (RB n't) (, ,) (SBAR (S (NP (DT the) (DT that)) (VP (AUX 's) (NP (UH Yeah))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (MD would) (VP (AUX be) (ADVP (RB just)) (VP (VBG putting) (NP (PRP it)) (PP (IN over) (NP (DT the) (NN edge))) (ADVP (RB right) (RB there))))) (. .)))
+
+(S1 (S (CC But) (NP (PRP I)) (VP (VBP think) (SBAR (S (VP (MD ought) (S (VP (VB support) (PRN (, ,) (S (NP (PRP you)) (VP (VBP know))) (, ,)) (NP (NP (DT a) (NN man)) (SBAR (WHNP (WDT that)) (, ,) (NP (NNP Mhm)))))))))) (. .)))
+
+(S1 (S (SBAR (IN like) (S (NP (PRP you)) (VP (VBD said)))) (, ,) (VP (AUX is) (PRN (: --) (VP (MD would) (VP (VB like) (S (VP (TO to) (VP (VB coexist)))))) (: --)) (PP (IN with) (NP (NP (NN everybody) (CC and) (NN somebody)) (SBAR (WHNP (WDT that)) (S (VP (AUX is) (NP (UH Yeah)))))))) (. .)))
+
+(S1 (S (S (ADJP (JJ peaceful)) (: --) (CC and) (, ,) (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB know))))) (, ,) (NP (PRP I)) (VP (MD 'd) (VP (VB like) (S (VP (TO to) (VP (VB learn) (NP (NP (JJR more)) (PP (IN about) (NP (DT the) (NNP Bible))))))))) (. .)))
+
+(S1 (S (NP (PRP$ My) (NNS parents)) (ADVP (RB never)) (VP (VBD took) (NP (PRP me)) (PP (TO to) (NP (NN church) (CC or) (NN anything)))) (. .)))
+
+(S1 (FRAG (CC But) (, ,) (INTJ (UH um)) (, ,) (INTJ (UH Yeah)) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (MD 'd) (VP (VB like) (S (VP (TO to)))))) (: --) (S (S (NP (PRP I)) (VP (VBP know) (NP (DT that)))) (, ,) (S (NP (PRP you)) (VP (VBP know))) (, ,) (S (NP (EX there)) (VP (AUX 's) (VP (AUX been) (NP (NNS problems)) (, ,) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NP (NN conflict)) (PP (IN over) (NP (RB there))))))))) (, ,) (CC and) (S (NP (PRP it)) (VP (VBZ seems) (PP (IN like) (NP (NP (DT no) (NN matter)) (FRAG (WHNP (WP what)) (, ,) (INTJ (UH Ah)))))))) (. .)))
+
+(S1 (S (PP (ADVP (RB just)) (IN like) (NP (NP (NNP Iraq) (NNS ye)) (: -) (NP (CD eh)))) (, ,) (NP (PRP we)) (VP (VP (VP (VBP try) (S (VP (TO to) (VP (VP (VB go) (ADVP (RB in))) (CC and) (VP (VB get) (NP (NN peace))))))) (CC and) (: -) (SBARQ (CC and) (WHADVP (WRB how) (RB long)) (SQ (AUX has) (NP (PRP it)) (VP (AUX been))))) (CC and) (PRN (, ,) (S (NP (PRP I)) (VP (VBP mean))) (, ,)) (SBAR (S (NP (PRP I)) (VP (VBP think) (S (S (NP (NNP Saddam)) (VP (VBD needed) (S (VP (TO to) (VP (AUX be) (VP (VBN removed))))))) (CC but) (S (NP (PRP it)) (VP (AUX 's) (: -) (PRN (: --) (S (NP (EX there)) (VP (AUX 's) (ADVP (RB just)))) (: --)) (FRAG (NP (PRP s)) (: -) (NP (NP (PDT all) (DT these) (NNS people)) (SBAR (WHNP (WDT that)) (S (VP (AUX are) (VP (VBG going) (S (VP (TO to) (VP (VB follow) (NP (PRP him)))))))))) (NP (DT no) (NN matter)) (WHNP (WP what)))))))))) (. .)))
+
+(S1 (S (INTJ (UH Yeah)) (, ,) (CC and) (PRN (, ,) (S (VP (VBZ um))) (, ,)) (NP (PRP I)) (ADVP (RB only)) (VP (VP (VBP know) (PP (IN about) (NP (NNP Yasser) (NNP Arafat))) (PP (IN because) (NP (NP (NP (PRP I)) (, ,) (NP (CD um)) (, ,)) (NN study) (JJ international) (NNS affairs))) (NP (DT a) (JJ little) (NN bit))) (PRN (: --) (CC and) (S (NP (PRP I)) (VP (VBP know))) (: --)) (NP (DT a) (ADJP (RB very) (JJ little)) (NN bit)) (PP (IN about) (NP (PRP him))) (SBAR (IN because) (, ,) (PP (IN of) (NP (NN course))) (S (NP (PRP he)) (VP (AUX was) (UCP (DT a) (, ,) (NP (CD um)) (, ,) (NP (NP (NN leader)) (PP (IN for) (NP (DT a) (JJ long) (NN time)))) (, ,) (ADVP (RB longer) (PP (IN than) (NP (DT the) (NN age) (SBAR (IN that) (S (NP (PRP I)) (VP (AUX am) (: --) (S (ADVP (JJ old)) (, ,) (ADVP (RB so)) (, ,) (S (CC but) (NP (PRP I)) (VP (PRN (: -) (NP (NP (PRP I)) (: -) (NP (PRP I)) (: -) (SBAR (S (NP (PRP I)) (VP (AUX 've) (VP (VBN noticed) (PRN (: --) (PP (IN on) (PP (IN throughout) (NP (NP (PRP$ my) (NNS studies)) (SBAR (WHNP (WDT that)) (PRN (: --) (SBAR (WHNP (WP what)) (S (NP (PRP he)) (VP (VBD represented) (PP (TO to) (NP (DT the) (NN public)))))) (: --)) (S (VP (AUX was))))))) (: --)) (SBAR (WHNP (WP what)) (S (NP (PRP he)) (VP (VBD represented) (PP (TO to) (NP (DT the) (JJ international) (NN public))))))))))) (: --)) (AUX was) (RB not) (SBAR (WHNP (WP what)) (S (NP (PRP he)) (VP (AUX was) (VP (VBG representing) (PP (TO to) (NP (PRP$ his) (NNS people))))))))) (: --) (CC and) (S (NP (PRP he)) (VP (AUX was) (VP (VBG representing) (, ,) (SBAR (S (NP (NP (NN um)) (, ,) (NP (NP (NN peace)) (PP (IN with) (NP (DT the) (NNPS Israelis)))) (CC and) (NP (PRP he))) (VP (AUX was) (VP (VBG representing) (S (VP (VBG trying) (S (VP (TO to) (VP (VB find) (SBAR (S (PRN (-LRB- -LRB-) (-LRB- -LRB-) (NP (DT the) (NNS whites)) (CC or) (-RRB- -RRB-) (-RRB- -RRB-)) (VP (VBP divide) (NP (DT the) (NN land)) (SBAR (RB so) (IN that) (S (NP (PRP it)) (VP (MD would) (VP (AUX be) (, ,) (INTJ (NN um) (, ,) (VB stop) (, ,) (NN um) (, ,) (UH uh)) (, ,) (NP (NP (NN war) (CC and) (NNS terrorists)) (PP (IN in) (NP (DT the) (NN area))))))))))))))))))))))))))))))))))) (. .)))
+
+(S1 (S (CC But) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (IN that) (S (NP (PRP he)) (VP (AUX had) (NP (NP (DT the) (JJ same) (NN image)) (X (TO to) (: -) (PP (TO to) (NP (PRP$ his) (NNS people)))))))))) (. .)))
+
+(S1 (S (S (S (NP (PRP I)) (VP (VBP think) (SBAR (IN that) (S (NP (PRP it)) (VP (AUX was) (NP (DT a) (NN front)) (: --) (SBAR (IN for) (S (NP (PRP him)) (VP (TO to) (VP (VB allow) (S (VP (TO to) (VP (TO to) (VP (AUX be) (VP (VBN accepted) (PP (IN in) (NP (DT an) (JJ international) (NN community))))))))))))))))) (, ,) (CC but) (S (NP (PRP I)) (VP (VBP think) (: --) (SBAR (IN that) (S (NP (PRP$ his) (JJ ultimate) (NNS plans) (CC and) (NNS goals)) (VP (AUX were) (S (VP (TO to) (VP (VP (TO to) (VP (VB run) (NP (DT the) (NNPS Israelis)) (PP (IN out) (PRN (: --) (ADVP (ADVP (RB maybe) (RBR closer) (PP (TO to) (NP (DT the) (NNP Gaza) (NN strip)))) (, ,) (CC and) (PP (TO to) (NP (JJ re-take) (NNP Jerusalem)))) (: --)) (CC and) (NP (JJ other) (NNS cities))) (PP (IN near) (NP (NNP Jerusalem))))) (, ,) (CC and) (VP (TO to) (VP (PRN (, ,) (INTJ (UH uh)) (, ,)) (VB uplift) (NP (PRP$ his) (NNS people)) (PP (IN in) (NP (DT a) (NN way))) (PP (IN that)))))))))))) (: --) (S (NP (PRP they)) (VP (MD could) (VP (VB say)))) (, ,) (S (NP (PRP you)) (VP (VBP know)))) (, ,) (NP (PRP we)) (VP (VBD conquered) (NP (DT the) (NNPS Israelis))) (. .)))
+
+(S1 (S (S (NP (PRP It)) (VP (AUX 's) (NP (NP (DT a) (NN matter)) (PP (IN of) (PRN (, ,) (INTJ (UH uh))))))) (: --) (S (S (NP (PRP I)) (VP (VBP mean))) (, ,) (S (NP (PRP it)) (VP (AUX 's) (NP (NP (JJR more)) (PP (IN than) (NP (JJ just) (NN land)))))) (, ,) (S (NP (PRP it)) (VP (AUX 's) (NP (NP (DT a) (PRN (, ,) (ADVP (RB um)) (, ,)) (NN conflict)) (PP (IN of) (: -)))))) (: --) (S (PP (IN of) (PRN (, ,) (INTJ (NN um) (, ,) (NN hatred) (, ,) (UH uh)) (, ,)) (CC and) (NP (NN racism))) (, ,) (NP (PRP I)) (VP (VBP mean) (, ,) (NP (NP (NNS eh)) (, ,) (NP (NP (JJ different) (NNS types)) (PP (IN of) (NP (NNS people)))) (, ,) (NP (NNS um)) (, ,) (SBAR (S (NP (PRP they)) (VP (AUX do) (RB n't) (VP (VB like) (NP (DT each) (JJ other))))))) (, ,) (INTJ (UH Yeah)))) (. .)))
+

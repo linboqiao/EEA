@@ -1,0 +1,16 @@
+(S1 (S (NP (NP (CD Two) (NNPS Americans)) (SBAR (WHNP (WP who)) (S (VP (VBD gave) (NP (PRP$ their) (NNS lives)) (PP (TO to) (NP (NN Operation))) (NP (JJ Iraqi) (NNP Freedom)))))) (VP (AUX were) (VP (VBN buried) (PP (IN at) (NP (NNP Arlington) (NNP National) (NNP Cemetery))) (NP (NN today)))) (. .)))
+
+(S1 (S (NP (NNP Marine) (NNP Lance) (NNP Corporal) (NNP Patrick) (NNP Nixon)) (VP (AUX was) (NP (NP (CD one)) (PP (IN of) (NP (NP (CD 17)) (VP (VBN killed) (PP (IN in) (NP (NP (DT an) (NN ambush)) (PP (IN near) (NP (NNP Nasiriyah))) (PP (IN on) (NP (NNP March) (CD 23)))))))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (AUX was) (UCP (ADJP (NP (CD 21) (NNS years)) (JJ old)) (CC and) (NP (NP (DT the) (JJ first) (NNP Tennessean)) (SBAR (S (VP (TO to) (VP (VB die) (PP (IN in) (NP (DT the) (NN war)))))))))) (. .)))
+
+(S1 (S (CC And) (NP (NNP Idaho) (NNP Air) (NNP National) (NNP Guardsman) (NNP Major) (NNP Gregory) (NNP Stone)) (VP (AUX was) (VP (VBN buried) (PP (IN with) (NP (NNP honors))) (PP (IN at) (NP (NNP Arlington))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (VBD died) (PP (IN of) (NP (NNS injuries))) (PP (IN from) (NP (NP (DT a) (JJ grenade) (NN attack)) (PP (IN by) (NP (DT a) (JJ fellow) (NN soldier)))))) (. .)))
+
+(S1 (S (CC And) (NP (DT that)) (VP (AUX is) (NP (PRP it)) (PP (IN for) (NP (NP (DT this) (JJ special) (NN edition)) (PP (IN of) (NP (JJ INSIDE) (NNS POLITICS)))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 'm) (NP (NNP Judy) (NNP Woodruff))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (VBP thank) (NP (PRP you)) (PP (IN for) (S (VP (VBG joining) (NP (PRP us)))))) (. .)))
+

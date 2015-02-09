@@ -1,0 +1,12 @@
+(S1 (S (NP (NP (DT another) (CD six) (NNS executives)) (PP (IN from) (NP (NNP enron)))) (VP (MD could) (VP (AUX be) (VP (VBN charged) (PP (IN with) (NP (NP (NNS securities) (NN fraud)) (CC and) (NP (JJ other) (NNS crimes))))))) (. .)))
+
+(S1 (S (NP (JJ federal) (NNS prosecutors)) (VP (VBD notified) (NP (DT the) (JJ former) (NNS employees)) (SBAR (IN that) (S (NP (PRP they)) (VP (MD could) (VP (VB face) (NP (NNS charges)) (ADVP (ADVP (RB as) (RB early)) (PP (IN as) (NP (DT this) (NN week))))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (MD would) (VP (VB join) (NP (NP (CD seven) (JJ other) (NNS executives)) (VP (ADVP (RB already)) (VBN charged) (S (NP (NNP abe)) (NP (NP (PRP$ our) (NNP enron) (JJ corporate) (NNP america) (NN score) (NN board) (NNS sets)) (VP (ADVP (NP (CD 50) (NNS executives)) (RB now)) (VBN charged) (PP (IN in) (NP (NNP america)))))))))) (. .)))
+
+(S1 (NP (NP (NP (CD seven)) (PP (IN of) (NP (PRP them))) (, ,) (SBAR (IN as) (S (NP (PRP i)) (VP (VBD said)))) (, ,)) (PP (IN at) (NP (NNP enron))) (. .)))
+
+(S1 (S (NP (DT no) (NN one)) (, ,) (NP (DT no) (NN one)) (VP (AUX is) (VP (VBN sent) (PP (TO to) (NP (NN prison))))) (. .)))
+
+(S1 (SINV (AUX been) (NP (NP (CD 511) (NNS days)) (SBAR (IN since) (S (NP (NNP enron)) (VP (VBD filed) (PP (IN for) (NP (NNS bankruptcies))))))) (. .)))
+

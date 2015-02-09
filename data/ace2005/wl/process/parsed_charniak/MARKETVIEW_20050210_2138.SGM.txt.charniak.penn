@@ -1,0 +1,10 @@
+(S1 (S (ADVP (RB Apparently)) (NP (NNP Carly)) (VP (VBD made) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (JJ journalistic) (NNS enemies)))) (PP (IN during) (NP (NP (PRP$ her) (CD six) (VBZ hears)) (PP (IN at) (NP (NNP HP)))))) (. .)))
+
+(S1 (S (S (CONJP (RB Not) (RB only)) (VP (AUX was) (NP (NP (DT the) (NN catalyst)) (PP (IN for) (NP (NP (PRP$ her) (NN fall)) (PP (IN from) (NP (NN grace))) (NP (NP (DT a) (NNP Fortune) (NN article)) (PP (IN by) (NP (NNP Carol) (NNP Loomis)))) (PRN (-LRB- -LRB-) (SBAR (WHNP (WP who)) (S (ADVP (RB as) (RB far) (SBAR (IN as) (S (NP (PRP I)) (VP (VBP know))))) (VP (AUX is) (ADJP (JJ immortal)) (: --) (S (NP (PRP she)) (VP (AUX 's) (VP (AUX been) (VP (VBG writing) (PP (IN for) (NP (NNP Fortune))) (PP (IN since) (NP (CD 1954)))))))))) (-RRB- -RRB-))))))) (, ,) (CC but) (S (NP (DT the) (JJ anti-Carly) (NNS brigades)) (VP (AUX are) (ADVP (RB out)) (PP (IN in) (NP (JJ full) (NN force))) (PP (IN at) (NP (NNP Salon.com))))) (. .)))
+
+(S1 (S (S (NP (DT This)) (VP (AUX is) (VP (VBG getting) (ADJP (NP (DT a) (JJ little)) (JJ harsh))))) (: ;) (S (S (NP (PRP she)) (VP (MD might) (VP (AUX have) (VP (VBN messed) (PRT (RP up)) (PP (IN at) (NP (NNP HP))) (PRN (-LRB- -LRB-) (S (NP (PRP I)) (VP (VBP refuse) (S (VP (TO to) (VP (VB call) (NP (PRP it)) (PP (IN by) (NP (DT the) (JJ new) (NN name))) (, ,) (PP (IN for) (NP (RB now)))))))) (-RRB- -RRB-)))))) (, ,) (CC but) (S (NP (PRP she)) (VP (AUX was) (RB n't) (VP (ADVP (RB actively)) (VBG trying) (S (VP (TO to) (VP (VP (VB destroy) (NP (DT a) (JJ great) (NN company))) (CC and) (VP (VB wreck) (NP (DT the) (NNS shareholders)))))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (ADVP (RB just)) (, ,) (INTJ (UH well)) (, ,) (VP (VBD happened)) (. .)))
+
+(S1 (S (ADVP (RB So)) (, ,) (ADVP (RB right)) (, ,) (S (NP (NNP Carly)) (VP (AUX was) (NP (DT a) (JJ bad) (NN manager)))) (, ,) (CC and) (S (NP (PRP she)) (ADVP (RB eventually)) (VP (VBD got) (SBAR (WHNP (WP what)) (S (NP (PRP she)) (VP (VBD deserved)))))) (, ,) (CC but) (S (NP (PRP she)) (VP (AUX is) (RB n't) (NP (JJ evil) (NN incarnate)))) (. .)))
+

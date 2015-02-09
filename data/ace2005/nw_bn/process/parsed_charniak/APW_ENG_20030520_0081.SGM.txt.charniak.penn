@@ -1,0 +1,22 @@
+(S1 (S (S (NP (NP (NNP ANKARA) (, ,) (NNP Turkey)) (PRN (-LRB- -LRB-) (NP (NNP AP)) (-RRB- -RRB-))) (NP (NP (DT An) (NN explosion)) (PP (IN in) (NP (NP (DT a) (NN cafe)) (PP (IN at) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (NN capital) (POS 's)) (JJS busiest) (NNS intersections)))))))) (VP (VP (VBD killed) (NP (CD one) (NN woman))) (CC and) (VP (VBD injured) (NP (DT another) (NNP Tuesday))))) (, ,) (NP (NNS police)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (NNS Police)) (VP (AUX were) (VP (VBG investigating) (NP (NP (DT the) (NN cause)) (PP (IN of) (NP (NP (DT the) (NN explosion)) (PP (IN in) (NP (NP (DT the) (NN restroom)) (PP (IN of) (NP (NP (DT the) (JJ multistory) (NNP Crocodile) (NNP Cafe)) (PP (IN in) (NP (NP (DT the) (JJ commercial) (NN district)) (PP (IN of) (NP (NNP Kizilay))) (PP (IN during) (NP (DT the) (NN morning) (NN rush) (NN hour)))))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN blast)) (VP (VBD shattered) (NP (NNS walls) (CC and) (NNS windows)) (PP (IN in) (NP (DT the) (NN building)))) (. .)))
+
+(S1 (S (NP (NNS Police)) (VP (VP (VBD recovered) (NP (NP (DT the) (NN body)) (PP (IN of) (NP (NP (DT a) (NN woman)) (PP (IN from) (NP (NP (DT the) (NN debris)) (PP (IN of) (NP (DT the) (NN restroom))))))))) (CC and) (VP (VBD carried) (NP (PRP it)) (PRT (RP away)) (PP (IN in) (NP (DT a) (NN bodybag))))) (. .)))
+
+(S1 (S (S (NP (NN News) (NNS reports)) (VP (VBD suggested) (SBAR (IN that) (S (NP (DT the) (NN woman)) (VP (VP (MD may) (VP (AUX have) (VP (AUX been) (NP (DT a) (NN suicide) (NN bomber))))) (CC or) (VP (MD may) (VP (AUX have) (VP (VBN died) (SBAR (WHADVP (WRB when)) (S (NP (NP (DT the) (NN bomb)) (SBAR (S (NP (PRP she)) (VP (AUX was) (VP (VBG planting)))))) (VP (VBD exploded) (ADVP (RB prematurely))))))))))))) (, ,) (CC but) (S (NP (NN police) (CC and) (JJ interior) (NN ministry) (NNS officials)) (VP (VBD refused) (S (VP (TO to) (VP (VB confirm) (NP (DT the) (NNS reports))))))) (. .)))
+
+(S1 (S (NP (NNP Ankara) (NN police) (NN chief) (NNP Ercument) (NNP Yilmaz)) (VP (VP (VBD visited) (NP (NP (DT the) (NN site)) (PP (IN of) (NP (DT the) (NN morning) (NN blast))))) (CC but) (VP (VBD refused) (S (VP (TO to) (VP (VB say) (SBAR (IN if) (S (NP (DT a) (NN bomb)) (VP (AUX had) (VP (VBN caused) (NP (DT the) (NN explosion))))))))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (PRP$ Our) (NNS colleagues)) (VP (AUX are) (VP (VBG carrying) (PRT (RP out)) (NP (NNS inspections))))) (, ,) ('' '') (NP (PRP he)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (EX There)) (VP (AUX was) (NP (NP (DT no) (NN information)) (PP (IN on) (NP (NP (DT the) (NN identity)) (PP (IN of) (NP (DT the) (JJ injured) (NN person))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX was) (RB not) (ADJP (JJ clear)) (SBAR (WHADVP (WRB how)) (S (NP (JJ many) (NNS people)) (VP (AUX were) (PP (IN in) (NP (DT the) (NN cafe))) (PP (IN at) (NP (NP (DT the) (NN time)) (PP (IN of) (NP (DT the) (NN blast))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN explosion)) (VP (VBZ comes) (SBAR (NP (DT a) (NN month)) (IN after) (S (NP (DT a) (NN bomb)) (VP (VBD exploded) (PP (IN at) (NP (NP (NP (DT a) (NNP McDonald) (POS 's)) (NN restaurant)) (PP (IN in) (NP (NNP Istanbul))))) (, ,) (S (VP (VBG causing) (NP (NP (NN damage)) (CC but) (NP (DT no) (NNS injuries))))))))) (. .)))
+
+(S1 (S (NP (JJ Radical) (ADJP (JJ leftist) (, ,) (JJ Kurdish) (CC and) (JJ Islamic)) (NNS groups)) (VP (VP (AUX are) (ADJP (JJ active)) (PP (IN in) (NP (DT the) (NN country)))) (CC and) (VP (AUX have) (VP (VBN carried) (PRT (RP out)) (NP (NNS bombings)) (PP (IN in) (NP (DT the) (NN past)))))) (. .)))
+

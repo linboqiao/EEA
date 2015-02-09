@@ -1,0 +1,14 @@
+(S1 (S (INTJ (UH well)) (, ,) (S (NP (NP (NN sex) (NN abuse)) (PP (IN by) (NP (NNS priests)))) (VP (VBZ remains) (NP (NP (DT an) (NN issue)) (PP (IN in) (NP (NP (DT the) (JJ catholic) (NN church)) (PP (IN in) (NP (DT the) (VBN united) (NNS states)))))))) (CC and) (S (NP (PRP it)) (VP (AUX is) (ADJP (JJ certain) (S (VP (TO to) (VP (AUX be) (NP (DT an) (NN issue)) (SBAR (IN as) (S (NP (NNS bishops)) (VP (VBP gather) (NP (NN tomorrow)) (PP (IN in) (NP (NNP st.) (NNP louis))) (PP (IN for) (NP (PRP$ their) (JJ semiannual) (NN meeting)))))))))))) (. .)))
+
+(S1 (S (PP (IN under) (NP (NP (DT a) (NN charter)) (VP (VBN approved) (NP (JJ last) (NN year)) (PP (IN by) (NP (NP (DT the) (JJ national) (NN conference)) (PP (IN of) (NP (JJ catholic) (NNS bishops)))))))) (, ,) (NP (JJ diocese) (NNS officials)) (VP (MD will) (VP (VB report) (NP (NP (NNS allegations)) (PP (IN of) (NP (NP (JJ sexual) (NN abuse)) (PP (IN of) (NP (DT a) (JJ minor))) (PP (TO to) (NP (JJ public) (NNS authorities)))))))) (. .)))
+
+(S1 (S (NP (NP (JJ past) (, ,) (JJ present) (CC or) (JJ future) (JJ sexual) (NN abuse)) (PP (IN of) (NP (DT a) (JJ minor)))) (VP (MD will) (VP (VB lead) (PP (TO to) (NP (NP (NN removal)) (PP (IN from) (NP (DT the) (NN ministry))))))) (. .)))
+
+(S1 (S (NP (NP (DT no) (NN priest) (CC or) (NNS deacons)) (SBAR (WHNP (WP who)) (S (ADVP (RB sexually)) (VP (VB abuse) (NP (DT a) (JJ minor)))))) (VP (MD may) (VP (AUX be) (VP (VBN transferred) (PP (TO to) (NP (DT another) (NNS desies)))))) (. .)))
+
+(S1 (S (SBAR (IN with) (S (NP (PRP me)) (ADVP (RB now)) (VP (TO to) (VP (VB talk) (ADVP (RBR more)) (PP (IN about) (NP (NP (DT the) (NNP o'brien) (NN case)) (CC and) (NP (NP (DT the) (NNS divisions)) (VP (ADVP (RB still)) (VBG dividing) (NP (DT the) (NN church)))))))))) (VP (AUX are) (NP (NP (NNP barbara) (NN blain)) (, ,) (NP (NP (DT the) (NN founder)) (PP (IN of) (NP (NP (DT the) (NNS survivors) (NN network)) (UCP (PP (IN in) (NP (NNP st.) (NNP louis))) (CC and) (S (ADVP (RB also)) (VP (VBG joining) (NP (PRP us)) (PP (IN from) (NP (NNP detroit) (NNP joe) (NN mayor))))))))) (, ,) (NP (NP (DT the) (NN founder)) (PP (IN of) (NP (DT a) (NN priest) (NN support) (NN group)))))) (. .)))
+
+(S1 (FRAG (NP (NNP barbara)) (, ,) (PP (TO to) (NP (PRP you))) (ADVP (RB first)) (. .)))
+
+(S1 (SQ (SBAR (IN as) (S (NP (DT the) (NNS bishops)) (VP (VBP get) (ADJP (JJ ready) (PP (IN for) (NP (DT this) (JJ important) (NN meeting) (NN tomorrow))))))) (, ,) (AUX are) (NP (PRP you)) (ADJP (JJ satisfied)) (SBAR (IN that) (S (NP (PRP they)) (VP (AUX have) (VP (VBN taken) (NP (NP (PDT all) (DT the) (JJ appropriate) (NNS steps)) (SBAR (S (VP (TO to) (VP (VB deal) (PP (IN with) (NP (DT the) (NN abuse) (NN issue)))))))))))) (. ?)))
+

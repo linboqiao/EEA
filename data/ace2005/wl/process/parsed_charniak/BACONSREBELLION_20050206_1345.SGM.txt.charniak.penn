@@ -1,0 +1,14 @@
+(S1 (S (NP (JJ Former) (NNP Senator) (NNP Chuck) (NNP Robb)) (VP (AUX has) (RB n't) (VP (AUX been) (VP (VBN heard) (PP (IN from)) (ADVP (RB lately))))) (. .)))
+
+(S1 (S (NP (NNP Parade) (NN magazine)) (VP (VBZ reminds) (NP (PRP us)) (NP (NN today)) (SBAR (IN that) (S (NP (PRP he)) (VP (AUX 's) (NP (NP (DT a) (NN co-chair)) (PP (IN of) (NP (DT the) (NNP Commission))) (PP (IN on) (NP (NP (DT the) (NNP Intelligence) (NNS Capabilities)) (PP (IN of) (NP (DT the) (NNP United) (NNPS States))) (VP (VBG Regarding) (NP (NP (NNS Weapons)) (PP (IN of) (NP (JJ Mass) (NN Destruction)))))))))))) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (MD will) (VP (VB report) (PP (IN on) (NP (NNP March) (CD 31))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP suspect) (SBAR (S (NP (NNP Rob)) (VP (MD will) (VP (VB speak) (PRT (RP out)) (PP (IN after) (NP (DT that) (NN date))))))) (, ,) (SBAR (IN although) (S (NP (NP (JJ much)) (PP (IN of) (NP (NP (DT the) (NNP Committee) (POS 's)) (NN report)))) (VP (MD will) (VP (AUX be) (VP (VBN classified))))))) (. .)))
+
+(S1 (S (NP (NNP Virginia)) (VP (AUX is) (VP (VBN blessed) (S (VP (TO to) (VP (AUX have) (NP (ADJP (RB so) (JJ many)) (JJ respected) (JJ foreign) (NN policy) (CC and) (NN security) (NN policy) (JJ public) (NNS servants))))) (, ,) (ADJP (JJ past) (CC and) (JJ present)))) (. .)))
+
+(S1 (FRAG (NP (JJ Good) (JJ old) (NNP Chuck) (NNP Robb)) (: ...) (S (NP (PRP I)) (VP (VB assume) (SBAR (S (NP (NP (NN everyone)) (PP (IN on) (NP (RB here)))) (VP (AUX has) (VP (VBN seen) (S (`` ``) (NP (DT The) (NNP Perfect) (NN Candidate)) ('' '')))))))) (. ?)))
+
+(S1 (FRAG (NP (PDT Quite) (DT a) (NN treat)) (. .)))
+

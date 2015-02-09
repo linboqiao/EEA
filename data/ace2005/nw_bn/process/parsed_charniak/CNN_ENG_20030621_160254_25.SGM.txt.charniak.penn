@@ -1,0 +1,40 @@
+(S1 (S (INTJ (UH well)) (, ,) (ADVP (RB also)) (PP (IN in) (NP (NNP england))) (, ,) (S (NP (PRP he)) (VP (AUX 's) (ADJP (JJ rich)) (, ,) (ADVP (JJ handsome)) (, ,) (VP (VBN got) (NP (NP (NNS millions)) (PP (IN of) (NP (JJ adoring) (NNS fans))))))) (, ,) (CC and) (S (NP (NN today)) (NP (PRP he)) (VP (VBZ celebrates) (NP (NP (DT a) (NN birthday)) (, ,) (ADJP (JJ big) (CD 21))))) (. .)))
+
+(S1 (S (S (ADJP (NNP prince) (NNP william) (, ,) (JJ second)) (PP (IN in) (NP (NP (NN line)) (PP (TO to) (NP (DT the) (JJ british) (NN throne)))))) (, ,) (NP (NP (NNP cnn) (POS 's)) (NNP walter) (NNP rodgers)) (VP (AUX has) (NP (DT the) (NN story))) (. .)))
+
+(S1 (FRAG (NP (NN reporter)) (: :) (S (PP (IN in) (NP (NP (NNS days)) (PP (IN of) (NP (NP (NN yore)) (, ,) (NP (DT an) (JJ english) (NN prince)))))) (, ,) (NP (NP (DT a) (NN king)) (PP (IN in) (NP (VBG waiting)))) (VP (MD would) (VP (AUX be) (VP (VBG charging) (PRT (RP off)) (S (VP (TO to) (VP (VB battle) (PP (IN on) (NP (DT a) (NN horse)))))) (, ,) (SBAR (RB just) (IN before) (S (NP (NP (PRP$ his) (JJ 21st) (NN birthday)) (, ,) (NP (NNP prince) (NNP william))) (VP (AUX is) (VP (VBG chasing) (NP (NP (DT a) (NNP polo) (NN ball)) (, ,) (PP (JJ such) (IN of) (SBAR (WHNP (WP what)) (S (VP (AUX has) (VP (VBN become) (PP (IN of) (NP (DT the) (JJ british) (NN monarchy))) (PP (IN over) (NP (NN time))))))))))))))))) (. .)))
+
+(S1 (S (NP (NNP buckingham) (NNP palace)) (VP (VBN released) (NP (NP (PRP$ his) (NNS pictures)) (PP (IN of) (NP (NP (NNP william)) (, ,) (NP (NN brother) (NNP harry)) (CC and) (NP (NP (PRP$ their) (NN father)) (, ,) (NP (NNP prince) (NNP charles)))))) (PP (IN in) (SBAR (WHNP (WP what)) (S (NP (DT some)) (VP (VBP see) (PP (IN as) (NP (NP (DT a) (JJ skilled) (NN marketing) (NN campaign)) (SBAR (S (VP (TO to) (VP (VB sell) (NP (DT the) (NN monarchy)) (PP (TO to) (NP (NP (DT the) (JJ next) (NN generation)) (PP (IN of) (NP (NNS britains)))))))))))))))) (. .)))
+
+(S1 (S (PP (IN after) (NP (NP (CD 15) (NNS years)) (PP (IN of) (NP (NNS scandals) (CC and) (NN embarrassment))))) (, ,) (NP (DT many)) (VP (VBP see) (NP (NNP prince) (NNP william)) (PP (IN as) (NP (NP (DT the) (NN house)) (PP (IN of) (NP (NP (NNP windsor) (POS 's)) (JJ only) (NN hope)))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (NP (NP (DT the) (JJ young) (NNS people)) (SBAR (S (NP (PRP he)) (VP (VBZ needs) (S (VP (TO to) (VP (VB appeal) (PP (TO to)))))))))) (. .)))
+
+(S1 (S (PP (IN by) (NP (NP (DT the) (NN time)) (SBAR (S (NP (PRP he)) (VP (VBZ gets) (PP (TO to) (NP (DT the) (NN throne)))))))) (, ,) (NP (PRP it)) (VP (AUX 's) (VP (VBG going) (S (VP (TO to) (VP (AUX be) (PP (IN in) (NP (CD 40) (NNS years))) (, ,) (NP (NP (DT the) (JJ young) (NNS people)) (PP (IN of) (NP (NN today))) (SBAR (WHNP (WDT that)) (S (VP (AUX need) (S (VP (TO to) (VP (AUX be) (NP (PRP$ his) (NNS fans)))))))))))))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (NP (NNP william)) (VP (AUX does) (RB not) (VP (NN lack) (PP (IN for) (NP (NNS fans)))))) (. .)))
+
+(S1 (S (NP (NP (DT those)) (SBAR (WHNP (WP who)) (S (VP (VBD wept) (SBAR (WHADVP (WRB when)) (S (NP (NP (PRP$ his) (NN mother)) (, ,) (NP (NNP princess) (FW di) (NNP anna)) (, ,)) (VP (VBD died)))))))) (, ,) (ADVP (RB apparently)) (VP (VBD transfered) (NP (PRP$ their) (NN affection)) (PP (TO to) (NP (PRP$ her) (JJS eldest) (NN son)))) (. .)))
+
+(S1 (S (S (NP (PRP he)) (VP (AUX is) (NP (NP (NN part) (NN teen) (NN idol)) (, ,) (NP (NP (NN part) (NN king)) (PP (IN in) (NP (DT the) (NN making))))))) (, ,) (CC but) (S (PP (IN unlike) (NP (NP (PRP$ his) (NN father)) (, ,) (NP (NNP prince) (NNP charles)) (, ,) (SBAR (WHNP (WP who)) (S (VP (AUX is) (ADJP (JJ likely) (S (VP (TO to) (VP (VB precede) (NP (PRP him)) (PP (TO to) (NP (DT the) (NN throne)))))))))))) (, ,) (NP (DT this) (NN prince)) (VP (VBZ sustains) (: --) (NP (NP (NNS disdains)) (VP (AUXG being) (VP (VBD called) (NP (PRP$ your) (NN royal) (NN highness)) (, ,) (S (VP (VBG signing) (NP (NP (PRP$ his) (NN name)) (, ,) (NP (NNP william) (NNP wales)))))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (MD would) (VP (VB think) (SBAR (IN that) (S (SBAR (IN if) (S (NP (PRP you)) (VP (VBD asked) (NP (NN anyone)) (SBAR (IN if) (S (NP (NNP william)) (VP (AUX is) (ADJP (JJ normal)))))))) (, ,) (NP (DT every) (JJ single) (NN person)) (VP (MD would) (VP (VB say) (, ,) (ADVP (RB absolutely) (RB normal)))))))) (. .)))
+
+(S1 (FRAG (CC but) (ADJP (ADJP (RB slightly) (RBR more) (JJ serious)) (PP (IN than) (NP (NP (JJS most) (JJ young) (NNS men)) (NP (PRP$ his) (NN age))))) (. .)))
+
+(S1 (FRAG (NP (NN reporter)) (: :) (S (NP (NNP prince) (NNP william)) (VP (AUX is) (ADVP (RBS most)) (PP (IN at) (NP (NP (NN ease)) (PP (IN with) (NP (NP (DT those) (JJS closest)) (PP (TO to) (NP (PRP him))))))))) (. .)))
+
+(S1 (S (NP (DT those)) (NP (PRP he)) (VP (MD can) (VP (VB trust) (S (RB not) (VP (TO to) (VP (VB run) (PP (TO to) (NP (NP (NP (NNP britain) (POS 's)) (JJ gossipy) (NN feed)) (NP (PRP ya))))))))) (. .)))
+
+(S1 (S (PP (IN despite) (NP (NP (NP (NNP prince) (NNP charles) (POS ')) (JJ ugly) (NN divorce)) (PP (IN with) (NP (NNP princess) (FW di) (NNP anna))))) (, ,) (NP (NP (DT the) (NN affection)) (PP (IN between) (NP (NN father) (CC and) (NN son)))) (VP (AUX is) (ADVP (RB now)) (ADJP (JJ palpable) (CC and) (JJ enviable))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (AUX 're) (DT all) (ADJP (RB very) (JJ good))) (. .)))
+
+(S1 (FRAG (NP (NN reporter)) (: :) (S (NP (NP (DT the) (JJR younger) (NN king)) (PP (IN in) (NP (DT the) (NN making)))) (VP (VBZ calls) (NP (NP (NNP britain) (POS 's)) (JJ next) (NNP king) (NNP pa.) (NNP william)) (, ,) (SBAR (IN once) (S (NP (NP (PRP$ his) (NN mother) (POS 's)) (NN confidante) (CC and) (NN protector)) (ADVP (RB now)) (VP (VBZ sees) (NP (NP (DT the) (NN apple)) (PP (IN of) (NP (NP (PRP$ his) (NN father) (POS 's)) (NN eye))))))))) (. .)))
+
+(S1 (S (S (VP (AUX was) (VP (VBG chasing) (NP (PRP him)) (PP (IN with) (NP (DT a) (NN stick)))))) (, ,) (CC and) (S (NP (DT the) (NN horse)) (VP (AUX was) (VP (VBG ducking)))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (NP (EX there)) (VP (AUX 's) (NP (NP (NP (DT a) (JJ huge) (NN birthday) (NN bash)) (PP (IN for) (NP (NNP william))) (PP (IN at) (NP (NNP windsor) (NN castle)))) (, ,) (NP (NP (QP (JJR more) (IN than) (CD 300)) (NNS guests)) (VP (VBN invited))) (, ,) (NP (DT all) (NNS ffk)) (, ,) (NP (NP (NNS friends)) (PP (IN of) (NP (DT the) (NN future) (NN king))))))) (. .)))
+
+(S1 (S (NP (DT that) (NN birthday) (NN party)) (VP (AUX has) (ADVP (RB now)) (VP (AUX been) (PP (IN under) (NP (NN way))) (PP (IN about))))))
+

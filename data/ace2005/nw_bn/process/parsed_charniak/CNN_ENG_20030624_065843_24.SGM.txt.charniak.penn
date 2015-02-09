@@ -1,0 +1,40 @@
+(S1 (FRAG (WHADVP (WRB how)) (NP (RB about) (DT the) (JJ former) (NN mayor)) (. ?)))
+
+(S1 (S (NP (PRP he)) (VP (VBD got) (VP (VBN married))) (. .)))
+
+(S1 (SBARQ (WHNP (WP what) (RB else)) (SQ (AUX has) (NP (JJ rudy) (NNP giuliani)) (VP (AUX be) (ADVP (RB up)) (X (TO to)))) (. ?)))
+
+(S1 (S (NP (PRP he)) (VP (VBD spoke) (PP (IN with) (NP (NNP paul) (NN paula) (NNS zahn)))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX was) (NP (PRP$ her) (JJ first) (NN night)) (ADVP (RB back))) (. .)))
+
+(S1 (SINV (ADVP (RB here)) (VP (AUX 's)) (NP (NP (DT a) (NN bit)) (PP (IN of) (SBAR (WHNP (WP what)) (S (NP (PRP she)) (VP (AUX had) (S (VP (TO to) (VP (VB say))))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX had) (S (VP (TO to) (VP (VB say) (PP (TO to) (NP (PRP her))))))) (. .)))
+
+(S1 (S (S (NP (PRP$ my) (NN focus)) (VP (AUX is) (PP (IN on) (NP (JJ re-electing) (NN president) (NNP bush) (CC and) (NNP dick) (NNP cheney))) (NP (JJ next) (NN year)))) (, ,) (NP (DT the) (NN convention)) (VP (AUX is) (VP (VBG going) (S (VP (TO to) (VP (AUX be) (ADVP (RB here)) (PP (IN in) (NP (NP (DT the) (NN city)) (PP (IN of) (NP (JJ new) (NNP york)))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (RB not) (NP (NP (DT the) (NN question)) (SBAR (S (NP (PRP i)) (VP (VBD asked) (NP (PRP you))))))) (. .)))
+
+(S1 (SBARQ (WHNP (WP what)) (SQ (NP (PRP i)) (VP (AUX 'm) (VP (VBG going) (S (VP (TO to) (VP (AUX do))))))) (. ?)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (ADVP (RB so) (RB far)) (PP (IN in) (NP (DT the) (NN future)))) (. .)))
+
+(S1 (SQ (MD would) (NP (PRP you)) (VP (VB consider) (NP (DT a) (NN run)) (PP (IN for) (NP (NN governor)))) (. .)))
+
+(S1 (S (ADVP (RB sure)) (, ,) (NP (PRP i)) (VP (MD would) (VP (VB consider) (S (VP (VBG running) (PP (IN for) (NP (JJ public) (NN office))) (ADVP (RB again)) (PP (IN in) (NP (NP (DT a) (NN couple)) (PP (IN of) (NP (NNS years))))))) (SBAR (IN because) (S (, ,) (ADVP (RB first) (PP (IN of) (NP (DT all)))) (, ,) (S (NP (PRP i)) (VP (VBP enjoy) (NP (JJ public) (NN service)))) (CC and) (S (NP (PRP i)) (VP (VBP enjoy) (NP (NN campaigning)))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (AUX was) (PP (IN in) (NP (NP (CD 30) (NNS states)) (SBAR (S (NP (PRP i)) (VP (VBP think) (NP (JJ last) (NN year)))))))) (. .)))
+
+(S1 (S (PP (IN on) (NP (NP (NN behal)) (PP (IN of) (NP (JJ republican) (NNS candidates))))) (CC and) (NP (PRP i)) (VP (VBP tend) (S (VP (TO to) (VP (AUX do) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NN campaigning)))) (PP (IN in) (NP (NP (DT the) (JJ next) (NN year)) (PP (IN for) (NP (DT the) (NN president))))))))) (. .)))
+
+(S1 (S (PP (IN at) (NP (DT some) (NN point))) (, ,) (NP (PRP i)) (VP (AUX 'm) (VP (VBG going) (S (VP (TO to) (VP (VB want) (S (VP (TO to) (VP (AUX do) (NP (PRP it)) (NP (PRP myself)))))))))) (. .)))
+
+(S1 (S (S (VP (VBG speaking) (PP (IN of) (NP (DT the) (NN presidency))))) (, ,) (NP (PRP you)) (VP (VBD said) (SBAR (S (NP (PRP it)) (VP (MD would) (VP (AUX be) (ADJP (JJ arrogant) (S (VP (TO to) (VP (VB talk) (PP (IN about) (NP (DT that) (NN office))))))) (SBAR (WHADVP (WRB when)) (S (NP (PRP it)) (VP (AUX 's) (RB not) (PP (IN under) (NP (JJ serious) (NN consideration))))))))))) (. .)))
+
+(S1 (SQ (AUX is) (NP (DT that) (NN something)) (SBAR (IN that) (S (NP (PRP you)) (VP (AUX 've) (ADVP (RB ever)) (VP (VBN given) (NP (NP (DT a) (NN glancing)) (VP (VBN thought) (S (VP (TO to))))))))) (. ?)))
+
+(S1 (S (NP (PRP i)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (PRP you)) (VP (AUX do) (SBAR (IN unless) (S (NP (PRP it)) (VP (AUX 's) (ADJP (JJ realistic)))))))))) (. .)))
+
+(S1 (S (PP (IN at) (NP (DT this) (NN point))) (, ,) (NP (PRP$ my) (NN candidate))))
+

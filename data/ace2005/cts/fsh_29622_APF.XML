@@ -1,0 +1,2164 @@
+<?xml version="1.0"?>
+<!DOCTYPE source_file SYSTEM "apf.v5.1.1.dtd">
+<source_file URI="fsh_29622.sgm" SOURCE="telephone" TYPE="text" AUTHOR="LDC" ENCODING="UTF-8">
+<document DOCID="fsh_29622">
+<entity ID="fsh_29622-E1" TYPE="PER" SUBTYPE="Individual" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E1-3" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="508" END="510">you</charseq>
+    </extent>
+    <head>
+      <charseq START="508" END="510">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E1-4" TYPE="NAM" LDCTYPE="NAM">
+    <extent>
+      <charseq START="518" END="521">Jane</charseq>
+    </extent>
+    <head>
+      <charseq START="518" END="521">Jane</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E1-5" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="528" END="530">you</charseq>
+    </extent>
+    <head>
+      <charseq START="528" END="530">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E1-14" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="818" END="819">My</charseq>
+    </extent>
+    <head>
+      <charseq START="818" END="819">My</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E1-19" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="923" END="925">you</charseq>
+    </extent>
+    <head>
+      <charseq START="923" END="925">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E1-21" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1002" END="1002">I</charseq>
+    </extent>
+    <head>
+      <charseq START="1002" END="1002">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E1-22" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1029" END="1029">I</charseq>
+    </extent>
+    <head>
+      <charseq START="1029" END="1029">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E1-28" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1179" END="1181">you</charseq>
+    </extent>
+    <head>
+      <charseq START="1179" END="1181">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E1-50" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2027" END="2029">you</charseq>
+    </extent>
+    <head>
+      <charseq START="2027" END="2029">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E1-52" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2061" END="2061">I</charseq>
+    </extent>
+    <head>
+      <charseq START="2061" END="2061">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E1-136" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="5472" END="5472">I</charseq>
+    </extent>
+    <head>
+      <charseq START="5472" END="5472">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name NAME="Jane">
+      <charseq START="518" END="521">Jane</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<entity ID="fsh_29622-E2" TYPE="GPE" SUBTYPE="Population-Center" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E2-7" TYPE="NAM" LDCTYPE="NAM" ROLE="LOC">
+    <extent>
+      <charseq START="605" END="617">New York
+City</charseq>
+    </extent>
+    <head>
+      <charseq START="605" END="617">New York
+City</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E2-11" TYPE="PRO" LDCTYPE="PRO" ROLE="GPE">
+    <extent>
+      <charseq START="731" END="734">that</charseq>
+    </extent>
+    <head>
+      <charseq START="731" END="734">that</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E2-12" TYPE="NAM" LDCTYPE="NAM" ROLE="LOC">
+    <extent>
+      <charseq START="808" END="815">New York</charseq>
+    </extent>
+    <head>
+      <charseq START="808" END="815">New York</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E2-17" TYPE="NOM" LDCTYPE="NOM" ROLE="LOC">
+    <extent>
+      <charseq START="851" END="858">the city</charseq>
+    </extent>
+    <head>
+      <charseq START="855" END="858">city</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E2-179" TYPE="NAM" LDCTYPE="NAM" ROLE="GPE">
+    <extent>
+      <charseq START="738" END="745">New York</charseq>
+    </extent>
+    <head>
+      <charseq START="738" END="745">New York</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name NAME="New York City">
+      <charseq START="605" END="617">New York
+City</charseq>
+    </name>
+    <name NAME="New York">
+      <charseq START="808" END="815">New York</charseq>
+    </name>
+    <name NAME="New York">
+      <charseq START="738" END="745">New York</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<entity ID="fsh_29622-E3" TYPE="PER" SUBTYPE="Group" CLASS="GEN">
+  <entity_mention ID="fsh_29622-E3-8" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="683" END="694">crazy people</charseq>
+    </extent>
+    <head>
+      <charseq START="689" END="694">people</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E4" TYPE="PER" SUBTYPE="Individual" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E4-2" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4953" END="4955">she</charseq>
+    </extent>
+    <head>
+      <charseq START="4953" END="4955">she</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E4-20" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="4878" END="4887">the mother</charseq>
+    </extent>
+    <head>
+      <charseq START="4882" END="4887">mother</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E4-24" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4980" END="4982">she</charseq>
+    </extent>
+    <head>
+      <charseq START="4980" END="4982">she</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E5" TYPE="PER" SUBTYPE="Individual" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E5-13" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="818" END="834">My brother-in-law</charseq>
+    </extent>
+    <head>
+      <charseq START="821" END="834">brother-in-law</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E6" TYPE="PER" SUBTYPE="Group" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E6-15" TYPE="NOM" LDCTYPE="BAR" LDCATR="TRUE">
+    <extent>
+      <charseq START="872" END="889">Long Island people</charseq>
+    </extent>
+    <head>
+      <charseq START="884" END="889">people</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E6-16" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="864" END="865">we</charseq>
+    </extent>
+    <head>
+      <charseq START="864" END="865">we</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E8" TYPE="GPE" SUBTYPE="Population-Center" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E8-18" TYPE="NAM" LDCTYPE="NAMPRE" ROLE="GPE">
+    <extent>
+      <charseq START="872" END="882">Long Island</charseq>
+    </extent>
+    <head>
+      <charseq START="872" END="882">Long Island</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name NAME="Long Island">
+      <charseq START="872" END="882">Long Island</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<entity ID="fsh_29622-E9" TYPE="PER" SUBTYPE="Group" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E9-23" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1102" END="1103">we</charseq>
+    </extent>
+    <head>
+      <charseq START="1102" END="1103">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E9-42" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1815" END="1816">we</charseq>
+    </extent>
+    <head>
+      <charseq START="1815" END="1816">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E9-53" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2102" END="2103">We</charseq>
+    </extent>
+    <head>
+      <charseq START="2102" END="2103">We</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E9-89" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3103" END="3104">us</charseq>
+    </extent>
+    <head>
+      <charseq START="3103" END="3104">us</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E9-90" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1845" END="1846">we</charseq>
+    </extent>
+    <head>
+      <charseq START="1845" END="1846">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E9-128" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4177" END="4178">we</charseq>
+    </extent>
+    <head>
+      <charseq START="4177" END="4178">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E9-129" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4211" END="4212">we</charseq>
+    </extent>
+    <head>
+      <charseq START="4211" END="4212">we</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E10" TYPE="PER" SUBTYPE="Group" CLASS="USP">
+  <entity_mention ID="fsh_29622-E10-25" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1052" END="1078">about six different clients</charseq>
+    </extent>
+    <head>
+      <charseq START="1072" END="1078">clients</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E11" TYPE="PER" SUBTYPE="Group" CLASS="USP">
+  <entity_mention ID="fsh_29622-E11-29" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1190" END="1230">a lot of
+people to see and do things with</charseq>
+    </extent>
+    <head>
+      <charseq START="1199" END="1204">people</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E12" TYPE="PER" SUBTYPE="Group" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E12-33" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1468" END="1482">the little kids</charseq>
+    </extent>
+    <head>
+      <charseq START="1479" END="1482">kids</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E12-54" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1687" END="1701">the little kids</charseq>
+    </extent>
+    <head>
+      <charseq START="1698" END="1701">kids</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E13" TYPE="PER" SUBTYPE="Indeterminate" CLASS="USP">
+  <entity_mention ID="fsh_29622-E13-1" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="138" END="140">you</charseq>
+    </extent>
+    <head>
+      <charseq START="138" END="140">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-72" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2566" END="2568">you</charseq>
+    </extent>
+    <head>
+      <charseq START="2566" END="2568">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-81" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="189" END="191">you</charseq>
+    </extent>
+    <head>
+      <charseq START="189" END="191">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-93" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3169" END="3171">you</charseq>
+    </extent>
+    <head>
+      <charseq START="3169" END="3171">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-94" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2485" END="2487">you</charseq>
+    </extent>
+    <head>
+      <charseq START="2485" END="2487">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-95" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1486" END="1488">You</charseq>
+    </extent>
+    <head>
+      <charseq START="1486" END="1488">You</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-96" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2354" END="2356">you</charseq>
+    </extent>
+    <head>
+      <charseq START="2354" END="2356">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-97" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="968" END="970">You</charseq>
+    </extent>
+    <head>
+      <charseq START="968" END="970">You</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-99" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3606" END="3608">you</charseq>
+    </extent>
+    <head>
+      <charseq START="3606" END="3608">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-100" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3303" END="3305">you</charseq>
+    </extent>
+    <head>
+      <charseq START="3303" END="3305">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-101" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4296" END="4298">you</charseq>
+    </extent>
+    <head>
+      <charseq START="4296" END="4298">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-104" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3466" END="3468">you</charseq>
+    </extent>
+    <head>
+      <charseq START="3466" END="3468">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-113" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3822" END="3824">you</charseq>
+    </extent>
+    <head>
+      <charseq START="3822" END="3824">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-127" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4202" END="4204">you</charseq>
+    </extent>
+    <head>
+      <charseq START="4202" END="4204">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-130" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4286" END="4288">you</charseq>
+    </extent>
+    <head>
+      <charseq START="4286" END="4288">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-152" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4698" END="4700">you</charseq>
+    </extent>
+    <head>
+      <charseq START="4698" END="4700">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-155" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="288" END="290">you</charseq>
+    </extent>
+    <head>
+      <charseq START="288" END="290">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-162" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="757" END="759">you</charseq>
+    </extent>
+    <head>
+      <charseq START="757" END="759">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-163" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="5643" END="5645">You</charseq>
+    </extent>
+    <head>
+      <charseq START="5643" END="5645">You</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-164" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3284" END="3286">you</charseq>
+    </extent>
+    <head>
+      <charseq START="3284" END="3286">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-165" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1556" END="1558">you</charseq>
+    </extent>
+    <head>
+      <charseq START="1556" END="1558">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-170" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="321" END="323">you</charseq>
+    </extent>
+    <head>
+      <charseq START="321" END="323">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-172" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="367" END="369">you</charseq>
+    </extent>
+    <head>
+      <charseq START="367" END="369">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-174" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="442" END="444">you</charseq>
+    </extent>
+    <head>
+      <charseq START="442" END="444">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E13-175" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="460" END="462">you</charseq>
+    </extent>
+    <head>
+      <charseq START="460" END="462">you</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E14" TYPE="PER" SUBTYPE="Individual" CLASS="USP">
+  <entity_mention ID="fsh_29622-E14-41" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1660" END="1672">somebody else</charseq>
+    </extent>
+    <head>
+      <charseq START="1660" END="1667">somebody</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E15" TYPE="PER" SUBTYPE="Group" CLASS="USP">
+  <entity_mention ID="fsh_29622-E15-46" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1832" END="1843">which family</charseq>
+    </extent>
+    <head>
+      <charseq START="1838" END="1843">family</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E16" TYPE="GPE" SUBTYPE="Population-Center" CLASS="GEN">
+  <entity_mention ID="fsh_29622-E16-47" TYPE="NOM" LDCTYPE="BAR" ROLE="GPE">
+    <extent>
+      <charseq START="651" END="654">city</charseq>
+    </extent>
+    <head>
+      <charseq START="651" END="654">city</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E17" TYPE="PER" SUBTYPE="Group" CLASS="USP">
+  <entity_mention ID="fsh_29622-E17-49" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1963" END="1966">them</charseq>
+    </extent>
+    <head>
+      <charseq START="1963" END="1966">them</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E18" TYPE="PER" SUBTYPE="Group" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E18-35" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1442" END="1451">the family</charseq>
+    </extent>
+    <head>
+      <charseq START="1446" END="1451">family</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E18-55" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="2215" END="2223">my family</charseq>
+    </extent>
+    <head>
+      <charseq START="2218" END="2223">family</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E18-58" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2268" END="2271">them</charseq>
+    </extent>
+    <head>
+      <charseq START="2268" END="2271">them</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E19" TYPE="PER" SUBTYPE="Group" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E19-56" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="2233" END="2239">parents</charseq>
+    </extent>
+    <head>
+      <charseq START="2233" END="2239">parents</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E19-105" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="3483" END="3492">my parents</charseq>
+    </extent>
+    <head>
+      <charseq START="3486" END="3492">parents</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E19-107" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3510" END="3513">they</charseq>
+    </extent>
+    <head>
+      <charseq START="3510" END="3513">they</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E20" TYPE="PER" SUBTYPE="Individual" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E20-57" TYPE="NAM" LDCTYPE="NAM">
+    <extent>
+      <charseq START="1130" END="1134">Allan</charseq>
+    </extent>
+    <head>
+      <charseq START="1130" END="1134">Allan</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name NAME="Allan">
+      <charseq START="1130" END="1134">Allan</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<entity ID="fsh_29622-E21" TYPE="PER" SUBTYPE="Group" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E21-59" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="2290" END="2300">my brothers</charseq>
+    </extent>
+    <head>
+      <charseq START="2293" END="2300">brothers</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E21-77" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="3542" END="3553">the
+brothers</charseq>
+    </extent>
+    <head>
+      <charseq START="3546" END="3553">brothers</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E22" TYPE="PER" SUBTYPE="Group" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E22-61" TYPE="NOM" LDCTYPE="NOM" LDCATR="FALSE">
+    <extent>
+      <charseq START="2315" END="2324">her family</charseq>
+    </extent>
+    <head>
+      <charseq START="2319" END="2324">family</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E22-116" TYPE="NOM" LDCTYPE="NOM" LDCATR="FALSE">
+    <extent>
+      <charseq START="3877" END="3886">her family</charseq>
+    </extent>
+    <head>
+      <charseq START="3881" END="3886">family</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E22-121" TYPE="NOM" LDCTYPE="NOMPRE" LDCATR="TRUE">
+    <extent>
+      <charseq START="4051" END="4056">family</charseq>
+    </extent>
+    <head>
+      <charseq START="4051" END="4056">family</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E22-151" TYPE="NOM" LDCTYPE="BAR" LDCATR="FALSE">
+    <extent>
+      <charseq START="4646" END="4651">family</charseq>
+    </extent>
+    <head>
+      <charseq START="4646" END="4651">family</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E23" TYPE="PER" SUBTYPE="Individual" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E23-34" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="5159" END="5161">her</charseq>
+    </extent>
+    <head>
+      <charseq START="5159" END="5161">her</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E23-62" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="2315" END="2317">her</charseq>
+    </extent>
+    <head>
+      <charseq START="2315" END="2317">her</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E23-63" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="2384" END="2386">She</charseq>
+    </extent>
+    <head>
+      <charseq START="2384" END="2386">She</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E23-64" TYPE="NOM" LDCTYPE="NOM" LDCATR="TRUE">
+    <extent>
+      <charseq START="2390" END="2399">the oldest</charseq>
+    </extent>
+    <head>
+      <charseq START="2394" END="2399">oldest</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E23-68" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="2426" END="2428">she</charseq>
+    </extent>
+    <head>
+      <charseq START="2426" END="2428">she</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E23-76" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="2736" END="2738">her</charseq>
+    </extent>
+    <head>
+      <charseq START="2736" END="2738">her</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E23-117" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="3877" END="3879">her</charseq>
+    </extent>
+    <head>
+      <charseq START="3877" END="3879">her</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E23-148" TYPE="NOM" LDCTYPE="NOM" LDCATR="FALSE">
+    <extent>
+      <charseq START="4607" END="4613">my wife</charseq>
+    </extent>
+    <head>
+      <charseq START="4610" END="4613">wife</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E23-149" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="4626" END="4628">her</charseq>
+    </extent>
+    <head>
+      <charseq START="4626" END="4628">her</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E25" TYPE="PER" SUBTYPE="Individual" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E25-6" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="562" END="562">I</charseq>
+    </extent>
+    <head>
+      <charseq START="562" END="562">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-30" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="1296" END="1298">you</charseq>
+    </extent>
+    <head>
+      <charseq START="1296" END="1298">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-31" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="1310" END="1312">you</charseq>
+    </extent>
+    <head>
+      <charseq START="1310" END="1312">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-37" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="1609" END="1609">I</charseq>
+    </extent>
+    <head>
+      <charseq START="1609" END="1609">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-38" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="1585" END="1585">I</charseq>
+    </extent>
+    <head>
+      <charseq START="1585" END="1585">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-39" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="1633" END="1633">I</charseq>
+    </extent>
+    <head>
+      <charseq START="1633" END="1633">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-48" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="1953" END="1953">I</charseq>
+    </extent>
+    <head>
+      <charseq START="1953" END="1953">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-51" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="2052" END="2054">you</charseq>
+    </extent>
+    <head>
+      <charseq START="2052" END="2054">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-60" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="2290" END="2291">my</charseq>
+    </extent>
+    <head>
+      <charseq START="2290" END="2291">my</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-66" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="2405" END="2405">I</charseq>
+    </extent>
+    <head>
+      <charseq START="2405" END="2405">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-67" TYPE="NOM" LDCTYPE="NOM" LDCATR="TRUE">
+    <extent>
+      <charseq START="2409" END="2420">the youngest</charseq>
+    </extent>
+    <head>
+      <charseq START="2413" END="2420">youngest</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-69" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="2495" END="2496">my</charseq>
+    </extent>
+    <head>
+      <charseq START="2495" END="2496">my</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-83" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="2961" END="2961">I</charseq>
+    </extent>
+    <head>
+      <charseq START="2961" END="2961">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-88" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="2479" END="2479">I</charseq>
+    </extent>
+    <head>
+      <charseq START="2479" END="2479">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-103" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="3446" END="3446">I</charseq>
+    </extent>
+    <head>
+      <charseq START="3446" END="3446">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-106" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="3483" END="3484">my</charseq>
+    </extent>
+    <head>
+      <charseq START="3483" END="3484">my</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-122" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="4069" END="4069">I</charseq>
+    </extent>
+    <head>
+      <charseq START="4069" END="4069">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-123" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="4240" END="4240">I</charseq>
+    </extent>
+    <head>
+      <charseq START="4240" END="4240">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-124" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="4254" END="4254">I</charseq>
+    </extent>
+    <head>
+      <charseq START="4254" END="4254">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-131" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="4409" END="4409">I</charseq>
+    </extent>
+    <head>
+      <charseq START="4409" END="4409">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-132" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="4430" END="4430">I</charseq>
+    </extent>
+    <head>
+      <charseq START="4430" END="4430">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-133" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="4516" END="4516">I</charseq>
+    </extent>
+    <head>
+      <charseq START="4516" END="4516">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-134" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="4619" END="4619">I</charseq>
+    </extent>
+    <head>
+      <charseq START="4619" END="4619">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-135" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="4756" END="4756">I</charseq>
+    </extent>
+    <head>
+      <charseq START="4756" END="4756">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-137" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="5004" END="5004">I</charseq>
+    </extent>
+    <head>
+      <charseq START="5004" END="5004">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-138" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="5072" END="5072">I</charseq>
+    </extent>
+    <head>
+      <charseq START="5072" END="5072">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-139" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="5180" END="5180">I</charseq>
+    </extent>
+    <head>
+      <charseq START="5180" END="5180">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-140" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="5497" END="5497">I</charseq>
+    </extent>
+    <head>
+      <charseq START="5497" END="5497">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-141" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="5500" END="5500">I</charseq>
+    </extent>
+    <head>
+      <charseq START="5500" END="5500">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-142" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="5572" END="5572">I</charseq>
+    </extent>
+    <head>
+      <charseq START="5572" END="5572">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-143" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="5675" END="5675">I</charseq>
+    </extent>
+    <head>
+      <charseq START="5675" END="5675">I</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-145" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="2215" END="2216">my</charseq>
+    </extent>
+    <head>
+      <charseq START="2215" END="2216">my</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-150" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="4607" END="4608">my</charseq>
+    </extent>
+    <head>
+      <charseq START="4607" END="4608">my</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-161" TYPE="NAM" LDCTYPE="NAM" LDCATR="FALSE">
+    <extent>
+      <charseq START="489" END="490">Ed</charseq>
+    </extent>
+    <head>
+      <charseq START="489" END="490">Ed</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E25-177" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="481" END="484">this</charseq>
+    </extent>
+    <head>
+      <charseq START="481" END="484">this</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name NAME="Ed">
+      <charseq START="489" END="490">Ed</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<entity ID="fsh_29622-E26" TYPE="PER" SUBTYPE="Group" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E26-26" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="5106" END="5107">we</charseq>
+    </extent>
+    <head>
+      <charseq START="5106" END="5107">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-27" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="5110" END="5111">we</charseq>
+    </extent>
+    <head>
+      <charseq START="5110" END="5111">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-44" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="5191" END="5192">we</charseq>
+    </extent>
+    <head>
+      <charseq START="5191" END="5192">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-65" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2187" END="2188">we</charseq>
+    </extent>
+    <head>
+      <charseq START="2187" END="2188">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-70" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2183" END="2184">we</charseq>
+    </extent>
+    <head>
+      <charseq START="2183" END="2184">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-73" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2659" END="2660">we</charseq>
+    </extent>
+    <head>
+      <charseq START="2659" END="2660">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-74" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2678" END="2679">we</charseq>
+    </extent>
+    <head>
+      <charseq START="2678" END="2679">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-109" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3667" END="3668">we</charseq>
+    </extent>
+    <head>
+      <charseq START="3667" END="3668">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-111" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3761" END="3763">our</charseq>
+    </extent>
+    <head>
+      <charseq START="3761" END="3763">our</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-112" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3813" END="3814">us</charseq>
+    </extent>
+    <head>
+      <charseq START="3813" END="3814">us</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-114" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3908" END="3909">we</charseq>
+    </extent>
+    <head>
+      <charseq START="3908" END="3909">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-115" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3915" END="3916">we</charseq>
+    </extent>
+    <head>
+      <charseq START="3915" END="3916">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-144" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1373" END="1374">we</charseq>
+    </extent>
+    <head>
+      <charseq START="1373" END="1374">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-146" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4495" END="4496">we</charseq>
+    </extent>
+    <head>
+      <charseq START="4495" END="4496">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-147" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4569" END="4570">we</charseq>
+    </extent>
+    <head>
+      <charseq START="4569" END="4570">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-153" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4708" END="4709">we</charseq>
+    </extent>
+    <head>
+      <charseq START="4708" END="4709">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E26-154" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4825" END="4826">we</charseq>
+    </extent>
+    <head>
+      <charseq START="4825" END="4826">we</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E27" TYPE="PER" SUBTYPE="Individual" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E27-43" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="5159" END="5168">her sister</charseq>
+    </extent>
+    <head>
+      <charseq START="5163" END="5168">sister</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E27-75" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="2736" END="2745">her sister</charseq>
+    </extent>
+    <head>
+      <charseq START="2740" END="2745">sister</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E28" TYPE="PER" SUBTYPE="Group" CLASS="USP">
+  <entity_mention ID="fsh_29622-E28-78" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="2369" END="2381">the odd sides</charseq>
+    </extent>
+    <head>
+      <charseq START="2377" END="2381">sides</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E29" TYPE="PER" SUBTYPE="Group" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E29-71" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4900" END="4901">we</charseq>
+    </extent>
+    <head>
+      <charseq START="4900" END="4901">we</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E29-79" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="2816" END="2827">local family</charseq>
+    </extent>
+    <head>
+      <charseq START="2822" END="2827">family</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E29-80" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2864" END="2867">they</charseq>
+    </extent>
+    <head>
+      <charseq START="2864" END="2867">they</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E30" TYPE="PER" SUBTYPE="Indeterminate" CLASS="USP">
+  <entity_mention ID="fsh_29622-E30-82" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2903" END="2905">who</charseq>
+    </extent>
+    <head>
+      <charseq START="2903" END="2905">who</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E31" TYPE="PER" SUBTYPE="Group" CLASS="USP">
+  <entity_mention ID="fsh_29622-E31-84" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3007" END="3010">They</charseq>
+    </extent>
+    <head>
+      <charseq START="3007" END="3010">They</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E32" TYPE="PER" SUBTYPE="Group" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E32-85" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="3056" END="3066">his parents</charseq>
+    </extent>
+    <head>
+      <charseq START="3060" END="3066">parents</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E32-86" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3071" END="3074">they</charseq>
+    </extent>
+    <head>
+      <charseq START="3071" END="3074">they</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E32-91" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3111" END="3114">they</charseq>
+    </extent>
+    <head>
+      <charseq START="3111" END="3114">they</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E32-92" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3155" END="3158">they</charseq>
+    </extent>
+    <head>
+      <charseq START="3155" END="3158">they</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E33" TYPE="PER" SUBTYPE="Individual" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E33-87" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3056" END="3058">his</charseq>
+    </extent>
+    <head>
+      <charseq START="3056" END="3058">his</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E34" TYPE="PER" SUBTYPE="Group" CLASS="USP">
+  <entity_mention ID="fsh_29622-E34-45" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="5312" END="5320">everybody</charseq>
+    </extent>
+    <head>
+      <charseq START="5312" END="5320">everybody</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E34-98" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="3226" END="3231">people</charseq>
+    </extent>
+    <head>
+      <charseq START="3226" END="3231">people</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E34-102" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3372" END="3375">they</charseq>
+    </extent>
+    <head>
+      <charseq START="3372" END="3375">they</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E34-158" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="3394" END="3403">each other</charseq>
+    </extent>
+    <head>
+      <charseq START="3394" END="3403">each other</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E35" TYPE="PER" SUBTYPE="Indeterminate" CLASS="USP">
+  <entity_mention ID="fsh_29622-E35-108" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="4296" END="4298">you</charseq>
+    </extent>
+    <head>
+      <charseq START="4296" END="4298">you</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E36" TYPE="GPE" SUBTYPE="Nation" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E36-110" TYPE="NOM" LDCTYPE="NOM" ROLE="LOC">
+    <extent>
+      <charseq START="3738" END="3748">the country</charseq>
+    </extent>
+    <head>
+      <charseq START="3742" END="3748">country</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E37" TYPE="GPE" SUBTYPE="Nation" CLASS="USP">
+  <entity_mention ID="fsh_29622-E37-118" TYPE="NOM" LDCTYPE="NOM" ROLE="LOC">
+    <extent>
+      <charseq START="3964" END="3978">another country</charseq>
+    </extent>
+    <head>
+      <charseq START="3972" END="3978">country</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E38" TYPE="PER" SUBTYPE="Individual" CLASS="GEN">
+  <entity_mention ID="fsh_29622-E38-119" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="3984" END="3991">a person</charseq>
+    </extent>
+    <head>
+      <charseq START="3986" END="3991">person</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E39" TYPE="LOC" SUBTYPE="Region-General" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E39-120" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="4029" END="4041">the
+Northeast</charseq>
+    </extent>
+    <head>
+      <charseq START="4033" END="4041">Northeast</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E41" TYPE="PER" SUBTYPE="Group" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E41-125" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="4193" END="4200">the kids</charseq>
+    </extent>
+    <head>
+      <charseq START="4197" END="4200">kids</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E42" TYPE="PER" SUBTYPE="Group" CLASS="GEN">
+  <entity_mention ID="fsh_29622-E42-126" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="221" END="227">friends</charseq>
+    </extent>
+    <head>
+      <charseq START="221" END="227">friends</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E42-171" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="404" END="410">friends</charseq>
+    </extent>
+    <head>
+      <charseq START="404" END="410">friends</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E42-173" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="1769" END="1775">friends</charseq>
+    </extent>
+    <head>
+      <charseq START="1769" END="1775">friends</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E43" TYPE="PER" SUBTYPE="Group" CLASS="SPC">
+  <entity_mention ID="fsh_29622-E43-156" TYPE="PRO" LDCTYPE="PTV">
+    <extent>
+      <charseq START="2258" END="2271">most of ((them</charseq>
+    </extent>
+    <head>
+      <charseq START="2258" END="2261">most</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E44" TYPE="LOC" SUBTYPE="Region-General" CLASS="USP">
+  <entity_mention ID="fsh_29622-E44-157" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="2668" END="2672">there</charseq>
+    </extent>
+    <head>
+      <charseq START="2668" END="2672">there</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E45" TYPE="PER" SUBTYPE="Group" CLASS="GEN">
+  <entity_mention ID="fsh_29622-E45-160" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="5508" END="5528">the -- smiling people</charseq>
+    </extent>
+    <head>
+      <charseq START="5523" END="5528">people</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E46" TYPE="PER" SUBTYPE="Group" CLASS="GEN">
+  <entity_mention ID="fsh_29622-E46-159" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="230" END="238">neighbors</charseq>
+    </extent>
+    <head>
+      <charseq START="230" END="238">neighbors</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E47" TYPE="PER" SUBTYPE="Group" CLASS="GEN">
+  <entity_mention ID="fsh_29622-E47-166" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="241" END="250">co-workers</charseq>
+    </extent>
+    <head>
+      <charseq START="241" END="250">co-workers</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E48" TYPE="PER" SUBTYPE="Group" CLASS="GEN">
+  <entity_mention ID="fsh_29622-E48-167" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="255" END="268">family
+members</charseq>
+    </extent>
+    <head>
+      <charseq START="262" END="268">members</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E49" TYPE="PER" SUBTYPE="Group" CLASS="USP">
+  <entity_mention ID="fsh_29622-E49-168" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="281" END="286">people</charseq>
+    </extent>
+    <head>
+      <charseq START="281" END="286">people</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E50" TYPE="PER" SUBTYPE="Group" CLASS="GEN">
+  <entity_mention ID="fsh_29622-E50-9" TYPE="NOM" LDCTYPE="BAR" LDCATR="FALSE">
+    <extent>
+      <charseq START="394" END="399">family</charseq>
+    </extent>
+    <head>
+      <charseq START="394" END="399">family</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E50-10" TYPE="NOM" LDCTYPE="BAR" LDCATR="FALSE">
+    <extent>
+      <charseq START="1332" END="1337">family</charseq>
+    </extent>
+    <head>
+      <charseq START="1332" END="1337">family</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E50-32" TYPE="NOM" LDCTYPE="BAR" LDCATR="FALSE">
+    <extent>
+      <charseq START="1755" END="1760">family</charseq>
+    </extent>
+    <head>
+      <charseq START="1755" END="1760">family</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E50-36" TYPE="NOM" LDCTYPE="NOM" LDCATR="FALSE">
+    <extent>
+      <charseq START="2543" END="2552">the family</charseq>
+    </extent>
+    <head>
+      <charseq START="2547" END="2552">family</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E50-40" TYPE="NOM" LDCTYPE="NOM" LDCATR="FALSE">
+    <extent>
+      <charseq START="2523" END="2532">the family</charseq>
+    </extent>
+    <head>
+      <charseq START="2527" END="2532">family</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E50-169" TYPE="NOM" LDCTYPE="NOMPRE" LDCATR="FALSE">
+    <extent>
+      <charseq START="255" END="260">family</charseq>
+    </extent>
+    <head>
+      <charseq START="255" END="260">family</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="fsh_29622-E50-178" TYPE="NOM" LDCTYPE="NOMPRE" LDCATR="TRUE">
+    <extent>
+      <charseq START="5141" END="5146">family</charseq>
+    </extent>
+    <head>
+      <charseq START="5141" END="5146">family</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="fsh_29622-E52" TYPE="PER" SUBTYPE="Indeterminate" CLASS="USP">
+  <entity_mention ID="fsh_29622-E52-176" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="453" END="455">who</charseq>
+    </extent>
+    <head>
+      <charseq START="453" END="455">who</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<timex2 ID="fsh_29622-T1">
+  <timex2_mention ID="fsh_29622-T1-1">
+    <extent>
+      <charseq START="5276" END="5283">one year</charseq>
+    </extent>
+  </timex2_mention>
+</timex2>
+<timex2 ID="fsh_29622-T2">
+  <timex2_mention ID="fsh_29622-T2-1">
+    <extent>
+      <charseq START="29" END="45">20041216-14:27:04</charseq>
+    </extent>
+  </timex2_mention>
+</timex2>
+<timex2 ID="fsh_29622-T3">
+  <timex2_mention ID="fsh_29622-T3-1">
+    <extent>
+      <charseq START="84" END="101">The holiday season</charseq>
+    </extent>
+  </timex2_mention>
+</timex2>
+<timex2 ID="fsh_29622-T4">
+  <timex2_mention ID="fsh_29622-T4-1">
+    <extent>
+      <charseq START="172" END="183">the holidays</charseq>
+    </extent>
+  </timex2_mention>
+</timex2>
+<timex2 ID="fsh_29622-T5">
+  <timex2_mention ID="fsh_29622-T5-1">
+    <extent>
+      <charseq START="303" END="314">the holidays</charseq>
+    </extent>
+  </timex2_mention>
+</timex2>
+<timex2 ID="fsh_29622-T6">
+  <timex2_mention ID="fsh_29622-T6-1">
+    <extent>
+      <charseq START="342" END="361">the rest of the year</charseq>
+    </extent>
+  </timex2_mention>
+</timex2>
+<timex2 ID="fsh_29622-T7">
+  <timex2_mention ID="fsh_29622-T7-1">
+    <extent>
+      <charseq START="419" END="430">the holidays</charseq>
+    </extent>
+  </timex2_mention>
+</timex2>
+<timex2 ID="fsh_29622-T8">
+  <timex2_mention ID="fsh_29622-T8-1">
+    <extent>
+      <charseq START="575" END="592">the holiday season</charseq>
+    </extent>
+  </timex2_mention>
+</timex2>
+<timex2 ID="fsh_29622-T9">
+  <timex2_mention ID="fsh_29622-T9-1">
+    <extent>
+      <charseq START="3315" END="3338">the next couple of years</charseq>
+    </extent>
+  </timex2_mention>
+</timex2>
+<timex2 ID="fsh_29622-T10">
+  <timex2_mention ID="fsh_29622-T10-1">
+    <extent>
+      <charseq START="3628" END="3636">Christmas</charseq>
+    </extent>
+  </timex2_mention>
+</timex2>
+<timex2 ID="fsh_29622-T11">
+  <timex2_mention ID="fsh_29622-T11-1">
+    <extent>
+      <charseq START="3694" END="3702">Christmas</charseq>
+    </extent>
+  </timex2_mention>
+</timex2>
+<timex2 ID="fsh_29622-T12">
+  <timex2_mention ID="fsh_29622-T12-1">
+    <extent>
+      <charseq START="3679" END="3702">two days
+after Christmas</charseq>
+    </extent>
+  </timex2_mention>
+</timex2>
+<relation ID="fsh_29622-R1" TYPE="PER-SOC" SUBTYPE="Family" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E1" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E5" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R1-1" LEXICALCONDITION="Possessive">
+    <extent>
+      <charseq START="818" END="834">My brother-in-law</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E1-14" ROLE="Arg-1">
+      <extent>
+        <charseq START="818" END="819">My</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E5-13" ROLE="Arg-2">
+      <extent>
+        <charseq START="818" END="834">My brother-in-law</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R5" TYPE="PER-SOC" SUBTYPE="Lasting-Personal" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E13" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E42" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R5-1" LEXICALCONDITION="Other">
+    <extent>
+      <charseq START="186" END="268">Do you go
+to a lot of parties with friends, neighbors, co-workers or family
+members</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E13-81" ROLE="Arg-1">
+      <extent>
+        <charseq START="189" END="191">you</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E42-126" ROLE="Arg-2">
+      <extent>
+        <charseq START="221" END="227">friends</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R6" TYPE="PER-SOC" SUBTYPE="Lasting-Personal" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E13" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E46" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R6-1" LEXICALCONDITION="Other">
+    <extent>
+      <charseq START="186" END="268">Do you go
+to a lot of parties with friends, neighbors, co-workers or family
+members</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E13-81" ROLE="Arg-1">
+      <extent>
+        <charseq START="189" END="191">you</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E46-159" ROLE="Arg-2">
+      <extent>
+        <charseq START="230" END="238">neighbors</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R7" TYPE="PER-SOC" SUBTYPE="Business" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E13" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E47" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R7-1" LEXICALCONDITION="Other">
+    <extent>
+      <charseq START="186" END="268">Do you go
+to a lot of parties with friends, neighbors, co-workers or family
+members</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E13-81" ROLE="Arg-1">
+      <extent>
+        <charseq START="189" END="191">you</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E47-166" ROLE="Arg-2">
+      <extent>
+        <charseq START="241" END="250">co-workers</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R8" TYPE="PER-SOC" SUBTYPE="Family" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E13" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E48" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R8-1" LEXICALCONDITION="Other">
+    <extent>
+      <charseq START="186" END="268">Do you go
+to a lot of parties with friends, neighbors, co-workers or family
+members</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E13-81" ROLE="Arg-1">
+      <extent>
+        <charseq START="189" END="191">you</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E48-167" ROLE="Arg-2">
+      <extent>
+        <charseq START="255" END="268">family
+members</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R9" TYPE="PER-SOC" SUBTYPE="Family" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E50" ROLE="Arg-2"/>
+  <relation_argument REFID="fsh_29622-E13" ROLE="Arg-1"/>
+  <relation_mention ID="fsh_29622-R9-1" LEXICALCONDITION="Other">
+    <extent>
+      <charseq START="364" END="430">Do you travel to meet up with family or
+friends during the holidays</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E50-9" ROLE="Arg-2">
+      <extent>
+        <charseq START="394" END="399">family</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E13-172" ROLE="Arg-1">
+      <extent>
+        <charseq START="367" END="369">you</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R10" TYPE="PHYS" SUBTYPE="Located" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E25" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E2" ROLE="Arg-2"/>
+  <relation_argument REFID="fsh_29622-T8" ROLE="Time-Within"/>
+  <relation_mention ID="fsh_29622-R10-1" LEXICALCONDITION="Other">
+    <extent>
+      <charseq START="525" END="621">if you hear noise in
+the background, I'm enjoying the holiday season walking in New York
+City, so</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E25-6" ROLE="Arg-1">
+      <extent>
+        <charseq START="562" END="562">I</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E2-7" ROLE="Arg-2">
+      <extent>
+        <charseq START="605" END="617">New York
+City</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-T8-1" ROLE="Time-Within">
+      <extent>
+        <charseq START="575" END="592">the holiday season</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R11" TYPE="GEN-AFF" SUBTYPE="Citizen-Resident-Religion-Ethnicity" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E5" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E2" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R11-1" LEXICALCONDITION="Verbal">
+    <extent>
+      <charseq START="818" END="889">My brother-in-law still
+lives in the city but we were Long Island people</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E5-13" ROLE="Arg-1">
+      <extent>
+        <charseq START="818" END="834">My brother-in-law</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E2-17" ROLE="Arg-2">
+      <extent>
+        <charseq START="851" END="858">the city</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R12" TYPE="GEN-AFF" SUBTYPE="Citizen-Resident-Religion-Ethnicity" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E6" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E8" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R12-1" LEXICALCONDITION="PreMod">
+    <extent>
+      <charseq START="872" END="889">Long Island people</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E6-15" ROLE="Arg-1">
+      <extent>
+        <charseq START="872" END="889">Long Island people</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E8-18" ROLE="Arg-2">
+      <extent>
+        <charseq START="872" END="882">Long Island</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R13" TYPE="PER-SOC" SUBTYPE="Family" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E15" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E9" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R13-1" LEXICALCONDITION="Other">
+    <extent>
+      <charseq START="1787" END="1907">Well, that's kind of where- we're in between which family we're going
+to see and when and how and get all that worked out</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E15-46" ROLE="Arg-1">
+      <extent>
+        <charseq START="1832" END="1843">which family</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E9-90" ROLE="Arg-2">
+      <extent>
+        <charseq START="1845" END="1846">we</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R14" TYPE="PER-SOC" SUBTYPE="Family" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E25" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E18" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R14-1" LEXICALCONDITION="Possessive">
+    <extent>
+      <charseq START="2215" END="2223">my family</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E25-145" ROLE="Arg-1">
+      <extent>
+        <charseq START="2215" END="2216">my</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E18-55" ROLE="Arg-2">
+      <extent>
+        <charseq START="2215" END="2223">my family</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R15" TYPE="PER-SOC" SUBTYPE="Family" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E25" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E19" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R15-1" LEXICALCONDITION="Other">
+    <extent>
+      <charseq START="2215" END="2381">my family's, uh,  parents are deceased and most of ((them)) is, uh,
+passed my brothers all over, so her family's still younger -- and, uh,
+you know, just the odd sides</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E25-145" ROLE="Arg-1">
+      <extent>
+        <charseq START="2215" END="2216">my</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E19-56" ROLE="Arg-2">
+      <extent>
+        <charseq START="2233" END="2239">parents</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+  <relation_mention ID="fsh_29622-R15-2" LEXICALCONDITION="Possessive">
+    <extent>
+      <charseq START="3483" END="3492">my parents</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E25-106" ROLE="Arg-1">
+      <extent>
+        <charseq START="3483" END="3484">my</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E19-105" ROLE="Arg-2">
+      <extent>
+        <charseq START="3483" END="3492">my parents</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R16" TYPE="PER-SOC" SUBTYPE="Family" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E25" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E21" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R16-1" LEXICALCONDITION="Possessive">
+    <extent>
+      <charseq START="2290" END="2300">my brothers</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E25-60" ROLE="Arg-1">
+      <extent>
+        <charseq START="2290" END="2291">my</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E21-59" ROLE="Arg-2">
+      <extent>
+        <charseq START="2290" END="2300">my brothers</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R17" TYPE="PER-SOC" SUBTYPE="Family" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E23" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E22" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R17-1" LEXICALCONDITION="Possessive">
+    <extent>
+      <charseq START="2315" END="2324">her family</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E23-62" ROLE="Arg-1">
+      <extent>
+        <charseq START="2315" END="2317">her</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E22-61" ROLE="Arg-2">
+      <extent>
+        <charseq START="2315" END="2324">her family</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+  <relation_mention ID="fsh_29622-R17-2" LEXICALCONDITION="Possessive">
+    <extent>
+      <charseq START="3877" END="3886">her family</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E23-117" ROLE="Arg-1">
+      <extent>
+        <charseq START="3877" END="3879">her</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E22-116" ROLE="Arg-2">
+      <extent>
+        <charseq START="3877" END="3886">her family</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R18" TYPE="PER-SOC" SUBTYPE="Family" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E25" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E43" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R18-1" LEXICALCONDITION="Other">
+    <extent>
+      <charseq START="2215" END="2381">my family's, uh,  parents are deceased and most of ((them)) is, uh,
+passed my brothers all over, so her family's still younger -- and, uh,
+you know, just the odd sides</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E25-145" ROLE="Arg-1">
+      <extent>
+        <charseq START="2215" END="2216">my</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E43-156" ROLE="Arg-2">
+      <extent>
+        <charseq START="2258" END="2271">most of ((them</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R19" TYPE="PER-SOC" SUBTYPE="Family" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E27" ROLE="Arg-2"/>
+  <relation_argument REFID="fsh_29622-E23" ROLE="Arg-1"/>
+  <relation_mention ID="fsh_29622-R19-1" LEXICALCONDITION="Possessive">
+    <extent>
+      <charseq START="2736" END="2745">her sister</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E23-76" ROLE="Arg-1">
+      <extent>
+        <charseq START="2736" END="2738">her</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E27-75" ROLE="Arg-2">
+      <extent>
+        <charseq START="2736" END="2745">her sister</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+  <relation_mention ID="fsh_29622-R19-2" LEXICALCONDITION="Possessive">
+    <extent>
+      <charseq START="5159" END="5168">her sister</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E27-43" ROLE="Arg-2">
+      <extent>
+        <charseq START="5159" END="5168">her sister</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E23-34" ROLE="Arg-1">
+      <extent>
+        <charseq START="5159" END="5161">her</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R20" TYPE="PER-SOC" SUBTYPE="Family" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E33" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E32" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R20-1" LEXICALCONDITION="Possessive">
+    <extent>
+      <charseq START="3056" END="3066">his parents</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E33-87" ROLE="Arg-1">
+      <extent>
+        <charseq START="3056" END="3058">his</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E32-85" ROLE="Arg-2">
+      <extent>
+        <charseq START="3056" END="3066">his parents</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R21" TYPE="PER-SOC" SUBTYPE="Family" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E21" ROLE="Arg-2"/>
+  <relation_argument REFID="fsh_29622-E19" ROLE="Arg-1"/>
+  <relation_mention ID="fsh_29622-R21-1" LEXICALCONDITION="Other">
+    <extent>
+      <charseq START="3446" END="3621">I've already seen,  you know, ((in))
+my parents ((' bed)) until they ((got)) less and less that the
+brothers got together -- and then now when there's an event you try to
+do it</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E21-77" ROLE="Arg-2">
+      <extent>
+        <charseq START="3542" END="3553">the
+brothers</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E19-105" ROLE="Arg-1">
+      <extent>
+        <charseq START="3483" END="3492">my parents</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<relation ID="fsh_29622-R22" TYPE="PER-SOC" SUBTYPE="Family" TENSE="Unspecified" MODALITY="Asserted">
+  <relation_argument REFID="fsh_29622-E25" ROLE="Arg-1"/>
+  <relation_argument REFID="fsh_29622-E23" ROLE="Arg-2"/>
+  <relation_mention ID="fsh_29622-R22-1" LEXICALCONDITION="Possessive">
+    <extent>
+      <charseq START="4607" END="4613">my wife</charseq>
+    </extent>
+    <relation_mention_argument REFID="fsh_29622-E25-150" ROLE="Arg-1">
+      <extent>
+        <charseq START="4607" END="4608">my</charseq>
+      </extent>
+    </relation_mention_argument>
+    <relation_mention_argument REFID="fsh_29622-E23-148" ROLE="Arg-2">
+      <extent>
+        <charseq START="4607" END="4613">my wife</charseq>
+      </extent>
+    </relation_mention_argument>
+  </relation_mention>
+</relation>
+<event ID="fsh_29622-EV1" TYPE="Movement" SUBTYPE="Transport" MODALITY="Asserted" POLARITY="Positive" GENERICITY="Generic" TENSE="Unspecified">
+  <event_argument REFID="fsh_29622-E26" ROLE="Person"/>
+  <event_argument REFID="fsh_29622-E44" ROLE="Destination"/>
+  <event_mention ID="fsh_29622-EV1-1">
+    <extent>
+      <charseq START="2659" END="2672">we go up there</charseq>
+    </extent>
+    <ldc_scope>
+      <charseq START="2576" END="2689">So -- keep it together through thick and thin and -- when it comes
+to Thanksgiving we go up there and we celebrate</charseq>
+    </ldc_scope>
+    <anchor>
+      <charseq START="2662" END="2663">go</charseq>
+    </anchor>
+    <event_mention_argument REFID="fsh_29622-E26-73" ROLE="Person">
+      <extent>
+        <charseq START="2659" END="2660">we</charseq>
+      </extent>
+    </event_mention_argument>
+    <event_mention_argument REFID="fsh_29622-E44-157" ROLE="Destination">
+      <extent>
+        <charseq START="2668" END="2672">there</charseq>
+      </extent>
+    </event_mention_argument>
+  </event_mention>
+</event>
+<event ID="fsh_29622-EV2" TYPE="Life" SUBTYPE="Die" MODALITY="Asserted" POLARITY="Positive" GENERICITY="Specific" TENSE="Past">
+  <event_argument REFID="fsh_29622-E19" ROLE="Victim"/>
+  <event_mention ID="fsh_29622-EV2-1">
+    <extent>
+      <charseq START="2233" END="2252">parents are deceased</charseq>
+    </extent>
+    <ldc_scope>
+      <charseq START="2215" END="2381">my family's, uh,  parents are deceased and most of ((them)) is, uh,
+passed my brothers all over, so her family's still younger -- and, uh,
+you know, just the odd sides</charseq>
+    </ldc_scope>
+    <anchor>
+      <charseq START="2245" END="2252">deceased</charseq>
+    </anchor>
+    <event_mention_argument REFID="fsh_29622-E19-56" ROLE="Victim">
+      <extent>
+        <charseq START="2233" END="2239">parents</charseq>
+      </extent>
+    </event_mention_argument>
+  </event_mention>
+</event>
+<event ID="fsh_29622-EV3" TYPE="Movement" SUBTYPE="Transport" MODALITY="Asserted" POLARITY="Positive" GENERICITY="Specific" TENSE="Unspecified">
+  <event_argument REFID="fsh_29622-E26" ROLE="Person"/>
+  <event_argument REFID="fsh_29622-E36" ROLE="Origin"/>
+  <event_mention ID="fsh_29622-EV3-1">
+    <extent>
+      <charseq START="3728" END="3763">go out of the country as part of our</charseq>
+    </extent>
+    <ldc_scope>
+      <charseq START="3725" END="3774">to go out of the country as part of our New Year's</charseq>
+    </ldc_scope>
+    <anchor>
+      <charseq START="3728" END="3729">go</charseq>
+    </anchor>
+    <event_mention_argument REFID="fsh_29622-E26-111" ROLE="Person">
+      <extent>
+        <charseq START="3761" END="3763">our</charseq>
+      </extent>
+    </event_mention_argument>
+    <event_mention_argument REFID="fsh_29622-E36-110" ROLE="Origin">
+      <extent>
+        <charseq START="3738" END="3748">the country</charseq>
+      </extent>
+    </event_mention_argument>
+  </event_mention>
+</event>
+</document>
+</source_file>

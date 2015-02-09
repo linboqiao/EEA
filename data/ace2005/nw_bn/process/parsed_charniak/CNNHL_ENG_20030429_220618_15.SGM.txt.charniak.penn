@@ -1,0 +1,4 @@
+(S1 (S (NP (NNP president) (NNP bush)) (VP (AUX is) (VP (VBG pushing) (S (NP (NNP congress)) (VP (TO to) (VP (VB pass) (NP (NP (PRP$ his) (ADJP (QP ($ $) (CD 15) (CD billion))) (NNP worldwide) (NN program)) (PP (IN for) (S (VP (VBG fighting) (NP (NNS aids))))))))))) (. .)))
+
+(S1 (S (PP (IN at) (NP (NP (DT a) (JJ white) (NN house) (NN gathering)) (PP (IN of) (NP (NP (NNS aids) (NNS activists)) (CC and) (NP (NP (NNS lawmakers)) (PP (IN from) (PP (IN around) (NP (DT the) (NN world))))))))) (, ,) (NP (DT the) (NN president)) (VP (VBD said) (SBAR (S (NP (JJ hir) (NN plan)) (VP (MD could) (VP (VP (VB prevent) (NP (QP (CD 7) (CD million)) (JJ new) (NN hiv) (NNS infections))) (: --) (CC and) (VP (VB treat) (NP (QP (IN at) (JJS least) (CD 2) (CD million)) (NNS people)) (PP (IN over) (NP (DT the) (JJ next) (NN decade))))))))) (. .)))
+

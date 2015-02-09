@@ -1,0 +1,14 @@
+(S1 (S (VP (VB want) (S (VP (TO to) (VP (VB get) (PP (TO to) (NP (NNP florida))))))) (. .)))
+
+(S1 (NP (NP (DT a) (JJ massive) (JJ manhunt) (NN underway)) (SBAR (WHADVP (WRB where)) (S (NP (DT a) (NN rapist)) (VP (AUX is) (VP (VBG targeting) (NP (NNS children)))))) (. .)))
+
+(S1 (S (NP (NN dna) (NN testing)) (VP (AUX has) (VP (ADVP (RB conclusively)) (VBN linked) (NP (CD one) (NN man)))) (. .)))
+
+(S1 (NP (NP (DT the) (CD two) (ADJP (RBS most) (JJ recent)) (NNS victims)) (, ,) (NP (NN age) (CD 11) (CC and) (CD 13)) (. .)))
+
+(S1 (S (NP (PRP they)) (ADVP (RB also)) (VP (VBD believed) (SBAR (S (NP (NP (CD one)) (PP (IN of) (NP (NP (DT those)) (VP (VBN attacked) (PP (IN in) (NP (DT this) (NN string))))))) (VP (AUX is) (NP (NN age) (CD 79)) (ADVP (RB as) (RB well)))))) (. .)))
+
+(S1 (S (S (NP (PRP we)) (VP (VBD talked) (PP (IN with) (NP (DT the) (NN lieutenant))) (PP (IN in) (NP (NNP miami))))) (CC and) (S (NP (EX there)) (VP (AUX is) (NP (JJ big) (NN time) (NN concern)) (PP (IN in) (NP (DT the) (NN shenandoah) (NN neighborhood))) (, ,) (NP (NP (JJ southwestern) (NN portion)) (PP (IN of) (NP (NNP miami)))))) (. .)))
+
+(S1 (FRAG (ADVP (JJ overseas) (PP (IN in) (NP (NNP iraq)))) (, ,) (NP (DT a) (JJ major) (NN operation) (NN underway)) (. .)))
+

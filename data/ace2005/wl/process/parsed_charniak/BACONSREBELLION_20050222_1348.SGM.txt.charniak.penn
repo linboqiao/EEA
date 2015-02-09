@@ -1,0 +1,34 @@
+(S1 (S (NP (NP (NN Anyone)) (SBAR (WHNP (WP who)) (S (VP (AUX has) (VP (VBN spent) (NP (DT any) (NN time)) (PP (IN in) (NP (NNP NVA))) (PP (IN over) (NP (DT the) (JJ last) (CD 40) (NNS years)))))))) (VP (AUX is) (ADJP (JJ familiar) (PP (IN with) (NP (DT the) (NNP Giant) (NN grocery) (NN store) (NN chain))))) (. .)))
+
+(S1 (S (SBAR (WHADVP (WRB When)) (S (NP (DT the) (NN chain)) (VP (VBD passed) (PP (IN from) (NP (PRP$ its) (JJ private) (NNS owners))) (ADVP (NP (DT a) (JJ few) (NNS years)) (RB ago))))) (, ,) (NP (NNS problems)) (VP (VBD began)) (. .)))
+
+(S1 (S (NP (DT These) (NNS problems)) (VP (VBN multiplied) (SBAR (WHADVP (WRB when)) (S (NP (NP (DT the) (NNP New) (NNP England) (NN chain) (NNP Stop) (NNP n) (POS ')) (NN Shop)) (VP (VBD acquired) (NP (NNP Giant)))))) (. .)))
+
+(S1 (S (S (VP (VB Add) (NP (NP (JJ new) (NN competition)) (PRN (: --) (NP (NP (NNP Food) (NNP Lion)) (, ,) (NP (NNP Harris) (NNP Teeter)) (, ,) (CC and) (NP (NNP Wegman) (POS 's))) (: --))))) (CC and) (S (NP (NP (NN loyalty)) (PP (TO to) (NP (NNP Giant)))) (, ,) (PP (IN once) (NP (NP (DT an) (NN article)) (PP (IN of) (NP (NN faith))))) (, ,) (VP (AUX is) (VP (VBG dissipating)))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (NP (NP (DT a) (JJ cautionary) (NN tale)) (PP (PP (IN for) (NP (NN business))) (CC and) (PP (IN for) (NP (NP (DT any) (JJ long-standing) (NN organization)) (VP (VBG seeking) (S (VP (TO to) (VP (VB change)))))))))) (. .)))
+
+(S1 (S (S (NP (NNP Michael) (NNP Barbaro)) (VP (AUX has) (NP (NP (DT an) (NN article)) (PP (IN on) (NP (NP (NNP Giant) (POS 's)) (JJ recent) (NNS problems))) (PP (IN in) (NP (DT the) (NNP Washington) (NNP Post)))))) (, ,) (CC plus) (S (NP (PRP he)) (VP (VBD took) (S (NP (NNS questions)) (VP (VB online) (NP (NN today)))))) (. .)))
+
+(S1 (NP (NP (CD One) (JJ interesting) (NN note)) (: :) (S (NP (NP (JJS most)) (PP (IN of) (NP (NP (DT the) (JJ online) (JJ negative) (NNS comments)) (PP (IN about) (NP (NNP Giant)))))) (VP (VBD come) (PP (IN from) (NP (NNP Maryland) (NNS residents))))) (. .)))
+
+(S1 (S (NP (NP (JJS Most)) (PP (IN of) (NP (NP (DT the) (JJ new) (NNS stores)) (VP (VBG competing) (PP (IN with) (NP (NNP Giant))))))) (VP (AUX are) (PP (IN in) (NP (NNP Virginia)))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 'm) (ADJP (JJ new) (PP (TO to) (NP (DT this) (NN area)))) (PRN (-LRB- -LRB-) (NP (CD 1) (NN year)) (-RRB- -RRB-)) (SBAR (IN so) (S (NP (PRP I)) (VP (MD ca) (RB n't) (ADVP (RB really)) (VP (VB comment) (PP (IN on) (NP (NNP Giant)))))))) (. .)))
+
+(S1 (S (S (VP (VBZ Seems) (PP (IN like) (NP (DT an) (JJ ok) (NN store))))) (: ...) (S (NP (PRP I)) (VP (VBP prefer) (NP (NNP Harris) (NNP Teeter)))) (. .)))
+
+(S1 (FRAG (ADVP (RB Now)) (NP (NNP Ukrops)) (. !)))
+
+(S1 (S (NP (DT That)) (VP (AUX 's) (NP (DT a) (ADJP (RB well) (VBN run)) (NN enterprise))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (VBZ Richmonders) (, ,) (S (NP (PRP we)) (VP (AUX do) (VP (VB love) (NP (PRP$ our) (NNS Ukrops)))))) (. !)))
+
+(S1 (S (NP (PRP We)) (VP (AUX 're) (ADJP (RB fiercely) (JJ loyal))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBD worked) (ADVP (RB there)) (PP (IN as) (NP (NP (DT a) (NN youngster)) (ADVP (NP (JJ many) (NNS years)) (RB back))))) (. .)))
+
+(S1 (FRAG (NP (JJ Bagged) (NNS groceries)) (. .)))
+
+(S1 (S (CC And) (NP (PRP I)) (VP (VBP remember) (NP (NP (CD one) (NN day)) (SBAR (S (NP (PRP they)) (VP (AUX had) (NP (NP (DT a) (NN dozen)) (SBAR (S (NP (JJ japanese) (NNS businessmen)) (VP (VBG touring) (NP (NP (DT the) (NN place)) (VP (VBG trying) (S (VP (TO to) (VP (VB figure) (PRT (RP out)) (SBAR (WHADVP (WRB how)) (S (NP (PRP they)) (VP (AUX did) (NP (PRP it))))))))))))))))))) (: ...)))
+

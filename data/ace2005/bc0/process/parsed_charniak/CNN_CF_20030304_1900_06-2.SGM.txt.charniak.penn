@@ -1,0 +1,64 @@
+(S1 (NP (NN Question) (. ?)))
+
+(S1 (INTJ (UH Hi) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 'm) (NP (NNP Christa) (NNP Demore)) (PRN (-LRB- -LRB-) (ADVP (RB ph)) (-RRB- -RRB-)) (PP (IN from) (NP (NP (NNP Monrovia)) (, ,) (NP (NNP Maryland))))) (. .)))
+
+(S1 (SBARQ (S (CC And) (NP (PRP I)) (VP (AUX 'm) (ADJP (JJ curious)))) (, ,) (WHADVP (WRB how)) (SQ (MD can) (NP (NNPS Democrats)) (VP (VBP claim) (SBAR (IN that) (S (NP (NNP President) (NNP Bush)) (VP (AUX is) (VP (VBG ignoring) (NP (NP (DT the) (NN war)) (PP (IN on) (NP (NN terror)))) (SBAR (IN if) (S (NP (NP (NNP al) (NNP Qaeda) (POS 's)) (JJ second) (JJ key) (NN operative)) (VP (AUX was) (ADVP (RB just)) (VP (VBN caught))))))))))) (. ?)))
+
+(S1 (S (CC And) (NP (PRP it)) (ADVP (RB also)) (VP (VBZ proves) (SBAR (S (NP (PRP you)) (VP (MD can) (ADVP (RB even)) (VP (VP (VB chew) (NP (NN gum))) (CC and) (VP (VB walk) (PP (IN at) (NP (DT the) (JJ same) (NN time))))))))) (. .)))
+
+(S1 (SQ (AUX Does) (RB n't) (NP (PRP it)) (VP (VB show) (NP (DT that))) (. ?)))
+
+(S1 (S (NP (PRP He)) (VP (MD can) (RB not) (VP (VP (VB eat) (NP (DT a) (NN pretzel))) (CC and) (VP (VB watch) (NP (NP (DT a) (NN football)) (VP (VBD became) (PP (IN at) (NP (DT the) (JJ same) (NN time)))))))) (. .)))
+
+(S1 (S (S (ADVP (RB So)) (NP (PRP I)) (VP (AUX 'm) (ADVP (RB still)) (ADJP (JJ doubtful) (PP (IN of))))) (: --) (S (INTJ (UH no)) (, ,) (S (ADVP (RB here)) (VP (AUX 's) (FRAG (WHADVP (WRB why)))))) (. .)))
+
+(S1 (S (S (NP (DT This)) (VP (AUX is) (NP (DT a) (JJ serious) (NN point)))) (CC and) (S (NP (PRP you)) (VP (VBP deserve) (NP (DT a) (JJ serious) (NN answer)))) (. .)))
+
+(S1 (S (NP (NP (DT The) (NN way)) (SBAR (S (NP (PRP we)) (VP (VBD caught) (NP (DT that) (NN guy)))))) (VP (AUX was) (PP (IN by) (S (VP (VBG coordinating) (PP (IN with) (NP (PRP$ our) (NNS allies))))))) (. .)))
+
+(S1 (S (NP (PRP We)) (ADVP (RB now)) (VP (AUX have) (NP (NP (DT a) (JJ foreign) (NN policy)) (PP (IN in) (NP (NNP Iraq))) (SBAR (WHNP (WDT that)) (S (VP (AUX is) (VP (VBG putting) (NP (JJ enormous) (NN strain)) (PP (IN on) (NP (DT those) (NNS allies))))))))) (. .)))
+
+(S1 (S (NP (NP (DT The) (JJ same) (NN weekend)) (SBAR (S (NP (PRP they)) (VP (VBN arrested) (NP (DT the) (NN guy)))))) (, ,) (NP (PRP we)) (VP (AUX had) (: ...) (PRN (-LRB- -LRB-) (NP (NNP CROSSTALK)) (-RRB- -RRB-)) (SBAR (S (NP (PRP We)) (VP (AUX had) (NP (DT no) (NN part)) (PP (IN in) (NP (PRP it))))))) (. .)))
+
+(S1 (S (INTJ (UH No)) (, ,) (NP (PRP it)) (VP (AUX was) (NP (NP (DT a) (JJ joint) (NN effort)) (PP (IN by) (NP (NNP Pakistan))))) (. .)))
+
+(S1 (SBARQ (WHADVP (WRB Why)) (SQ (AUX do) (NP (PRP we)) (VP (VB want) (S (VP (TO to) (VP (VB sever) (NP (DT that) (NN relationship)) (PP (IN with) (NP (NP (DT this) (JJ idiotic) (NN war)) (PP (IN in) (NP (NNP Iraq)))))))))) (. ?)))
+
+(S1 (S (NP (PRP We)) (VP (AUX 're) (RB not) (VP (VBG severing) (NP (PRP it)) (: --) (NP (NN question)))) (. .)))
+
+(S1 (INTJ (UH Hi) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 'm) (NP (NNP Ben) (NNP Charlton)) (PRN (-LRB- -LRB-) (ADVP (RB ph)) (-RRB- -RRB-)) (PP (IN from) (NP (NP (NNP East) (NNP Lansing)) (, ,) (NP (NNP Michigan))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX was) (: --) (SQ (SBAR (IN if) (S (NP (PRP we)) (VP (VBP wait) (PP (IN for) (NP (NP (NNP U.N.) (NN approval)) (PP (IN for) (NP (NN action))))) (PP (IN in) (NP (NNP Iraq)))))) (, ,) (AUX do) (RB n't) (NP (PRP we)) (VP (VB sacrifice) (NP (NP (DT some)) (PP (IN of) (NP (PRP$ our) (JJ national) (NN sovereignty))))))) (. ?)))
+
+(S1 (SBARQ (RB Well) (, ,) (WHADVP (WRB where)) (SQ (VP (AUX are) (NP (NP (DT all)) (PP (IN of) (NP (DT the) (JJ conservative) (NNS questions)))))) (. ?)))
+
+(S1 (S (NP (PRP We)) (ADVP (RB never)) (VP (AUX have) (NP (NP (NNS conservatives)) (PP (IN in) (NP (DT the) (NN audience))))) (. .)))
+
+(S1 (S (NP (EX There)) (VP (AUX 's) (NP (DT no) (NN question))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP think) (SBAR (S (NP (RB even) (NNP Paul)) (VP (MD would) (VP (VB agree) (PP (IN with) (NP (PRP me)))))))) (. .)))
+
+(S1 (S (NP (NP (DT The) (NN question)) (PP (IN of) (SBAR (IN whether) (S (NP (PRP we)) (VP (VBP go) (PP (TO to) (NP (NN war))))) (CC or) (RB not)))) (VP (AUX is) (ADVP (RB strictly)) (NP (DT a) (JJ national) (NN question))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (RB not) (NP (DT a) (NNP United) (NNPS Nations) (NN question))) (. .)))
+
+(S1 (S (NP (DT That)) (VP (AUX is) (ADJP (JJ correct))) (. .)))
+
+(S1 (S (NP (DT The) (NN president)) (VP (AUX has) (VP (VBN got) (NP (NP (DT all)) (PP (IN of) (NP (NP (DT the) (JJ legal) (NNS authorities)) (SBAR (S (NP (PRP he)) (VP (VBZ needs))))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (ADVP (RB just)) (VP (VB pray) (PP (TO to) (NP (NNP god))) (SBAR (S (NP (PRP he)) (VP (AUX does) (RB n't) (VP (VB use) (NP (PRP it))))))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (AUX need) (S (VP (TO to) (VP (VB go) (PP (TO to) (NP (DT the) (NNP U.N.)))))) (SBAR (IN because) (S (NP (PRP we)) (VP (VBP want) (S (VP (TO to) (VP (VB build) (NP (NNS coalitions)) (SBAR (SBAR (IN so) (S (NP (PRP we)) (VP (AUX have) (NP (NP (NN support)) (PP (IN around) (NP (DT the) (NN world))))))) (CC and) (SBAR (IN so) (IN that) (S (NP (PRP we)) (VP (AUX do) (RB n't) (VP (AUX have) (S (VP (TO to) (VP (VB carry) (NP (DT the) (NN burden)) (NP (PRP ourselves))))))))))))))))) (. .)))
+
+(S1 (S (CC But) (ADVP (RB legally)) (NP (PRP he)) (VP (AUX has) (NP (DT no) (NN obligation) (S (VP (TO to) (VP (VB go) (ADVP (RB back) (PP (TO to) (NP (DT the) (NNP U.N.)))) (PP (IN From) (NP (NP (DT the) (NN left)) (SBAR (S (NP (PRP I)) (VP (AUX am) (NP (NNP Paul) (NNP Begala)))))))))))) (. .)))
+
+(S1 (NP (NP (NN Goodnight)) (PP (IN for) (NP (NN CROSSFIRE))) (. .)))
+
+(S1 (S (PP (IN From) (NP (DT the) (NN right))) (, ,) (NP (PRP I)) (VP (AUX 'm) (NP (NNP Robert) (NNP Novak))) (. .)))
+
+(S1 (S (VP (VB Join) (NP (PRP us)) (NP (NP (JJ next) (NN time)) (PP (IN for) (NP (NP (DT another) (NN edition)) (PP (IN of) (NP (NN CROSSFIRE))))))) (. .)))
+

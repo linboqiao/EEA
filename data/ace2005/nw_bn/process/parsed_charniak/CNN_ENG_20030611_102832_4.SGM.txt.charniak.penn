@@ -1,0 +1,56 @@
+(S1 (S (NP (PRP we)) (VP (AUX 're) (VP (VBG getting) (NP (JJ breaking) (NN news)) (PP (TO to) (NP (PRP us))) (, ,) (PP (IN from) (NP (NNP jerusalem))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (VBP understand) (SBAR (S (NP (EX there)) (VP (AUX has) (VP (AUX been) (NP (DT an) (NN explosion)) (ADVP (RB there))))))) (. .)))
+
+(S1 (S (ADVP (DT this) (RB right) (RB now)) (, ,) (ADVP (RB again)) (, ,) (VP (VBG following) (PRT (RP up)) (PP (IN in) (NP (NP (DT the) (JJ last) (JJ few) (NNS days)) (PP (IN of) (NP (NP (JJ violent) (NN activity)) (SBAR (S (NP (PRP we)) (VP (AUX 've) (VP (VBN seen) (PP (IN in) (NP (NP (DT the) (NN wake)) (PP (IN of) (SBAR (WHNP (WP what)) (S (VP (AUX was) (ADVP (RB widely)) (VP (VBN perceived) (S (VP (TO to) (VP (AUX be) (PP (IN as) (NP (NP (NN progress)) (PP (IN in) (NP (DT the) (NN peace) (NN process)))))))))))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (VBP understand) (SBAR (IN that) (S (NP (DT a) (NN bus)) (VP (AUX has) (VP (AUX been) (: --) (VP (VBN exploded))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX are) (VP (VBG hearing) (SBAR (S (NP (PRP it)) (VP (VBD happened) (NP (JJ indown) (NN town) (NNP jerusalem))))))) (. .)))
+
+(S1 (SQ (AUX do) (NP (PRP we)) (VP (AUX have) (S (NP (NNP mike) (NNS hanna)) (ADJP (JJ available)))) (. ?)))
+
+(S1 (S (VP (VBG trying) (S (VP (TO to) (VP (VB get) (ADVP (NP (NP (NNP mike) (NNP hanna) (CC or) (NNP jerusalem) (NN bureau) (NN chief)) (, ,) (SBAR (WHNP (WP who)) (S (VP (AUX was) (ADVP (RB just)) (PP (IN on) (NP (DT the) (NN air))) (PP (IN with) (NP (PRP us))) (NP (NP (DT a) (NN matter)) (PP (IN of) (NP (NNS minutes)))))))) (IN ago)))))) (. .)))
+
+(S1 (FRAG (PP (IN with) (NP (NP (DT the) (JJS latest) (NN update)) (PP (IN on) (SBAR (SBAR (WHNP (WP what)) (S (VP (AUX was) (VP (VBG happening) (ADVP (RB there)))))) (CC and) (SBAR (S (NP (PRP it)) (VP (VBZ appears) (PP (IN in) (NP (DT the) (NN time))) (SBAR (IN since) (S (NP (PRP we)) (VP (AUX 've) (VP (VP (VBN talked) (PP (TO to) (NP (NNP mike)))) (CC and) (VP (ADVP (RB also)) (VBN talked) (PP (TO to) (NP (NN professor))) (PP (IN about) (NP (NP (DT the) (NN peace) (NN process)) (, ,) (NP (NN evidence) (SBAR (ADVP (RB again)) (IN that) (S (NP (NP (DT the) (NN resistance)) (PP (TO to) (NP (DT any) (NN progress)))) (VP (AUX does) (VP (VB continue)))))))))))))))))))) (. .)))
+
+(S1 (S (S (NP (PRP we)) (VP (AUX are) (ADVP (RB now)) (VP (VBG hearing) (ADVP (RB once) (RB again))))) (, ,) (S (NP (NP (DT this)) (VP (VBG coming) (PP (TO to) (NP (PRP us))) (PP (IN off) (NP (JJ associated) (NN press) (NNS wires))))) (NP (EX there)) (VP (AUX was) (NP (NP (DT an) (NN explosion)) (ADVP (RB there))))) (CC and) (S (NP (PRP we)) (VP (VBP understand) (SBAR (IN that) (S (NP (JJ several) (NNS people)) (VP (AUX have) (VP (AUX been) (VP (VBN killed)))))))) (. .)))
+
+(S1 (S (ADVP (RB again)) (, ,) (NP (DT this)) (VP (AUX is) (SBAR (WHNP (WP what)) (S (NP (PRP we)) (VP (AUX 're) (VP (VBG getting) (PP (IN from) (NP (DT the) (VBN associated) (NN press)))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX 're) (VP (VBG trying) (S (VP (TO to) (VP (VB get) (NP (NP (NN ahold)) (PP (IN of) (NP (PRP$ our) (NNS reporters)))) (PP (IN in) (NP (NNP jerusalem))) (S (VP (TO to) (VP (VB give) (NP (PRP us)) (NP (DT the) (JJS latest)))))))))) (. .)))
+
+(S1 (S (CC and) (NP (DT this)) (VP (AUXG being) (NP (NP (DT the) (JJS latest)) (PP (IN in) (NP (NP (DT a) (NN series)) (PP (IN of) (SBAR (WHNP (WP what)) (S (VP (AUX has) (VP (VBN become) (NP (DT an) (ADJP (RB almost) (JJ customary)) (NN tit)) (PP (IN for) (NP (NP (JJR tat) (NN exchange)) (PP (IN of) (NP (JJ violent) (NN activity)))))))))))))) (. .)))
+
+(S1 (S (NP (JJ last) (NN week)) (, ,) (SBAR (IN if) (S (NP (PRP you)) (VP (MD may) (VP (VB recall))))) (, ,) (NP (EX there)) (VP (AUX was) (NP (NP (DT a) (NN strike)) (PP (IN on) (NP (NP (JJ afraid)) (SBAR (WHPP (IN in) (WHNP (WDT which))) (S (NP (NP (DT a) (NN number)) (PP (IN of) (NP (JJ israeli) (NNS soldiers)))) (VP (VBD killed) (, ,) (SBAR (IN that) (S (VP (VBN executed) (PP (IN by) (NP (NP (VBN coordinated) (NN group)) (PP (IN of) (NP (JJ islamic) (NNP jihad))))) (ADVP (ADVP (RB as) (RB well)) (SBAR (IN as) (S (S (NP (NNP al)) (VP (VBD ak) (VP (VB satisfy) (NP (NP (JJ martyr) (NNS brigades)) (, ,) (CC and) (NP (NNS hamas))) (NP (NP (DT all) (VBG claiming) (NN responsibility)) (PP (IN for) (NP (DT that))))))) (CC and) (S (NP (DT the) (NN strike)) (VP (VBN ordered) (PP (IN by) (NP (NNP sharon))) (PP (IN against) (S (NP (DT the) (JJ palestinian) (NN leadership)) (VP (VBG going)))) (, ,) (S (VP (VBG targeting) (NP (NP (DT a) (JJ top) (NN leader)) (, ,) (NP (NP (NNP mr.) (NNP rantissi)) (SBAR (WHNP (WP who)) (S (VP (VBD escaped) (NP (NP (DT the) (NN helicopter) (NN rocket) (NN attack)) (PP (IN on) (NP (PRP$ his) (NN motorcade)))))))))))))))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB however)) (, ,) (NP (NP (CD two) (NNS others)) (SBAR (WHNP (WP who)) (S (VP (AUX were) (ADVP (RB there)))))) (VP (AUX did) (VP (VB die))) (. .)))
+
+(S1 (S (NP (DT this)) (ADVP (RB now)) (PRN (, ,) (S (NP (DT this)) (VP (VP (VBD happened) (PP (IN over) (NP (DT the) (NN weekend)))) (CC and) (RB then) (NP (DT this) (NN morning)))) (, ,)) (VP (VB ware) (VP (VBG hearing) (S (NP (PRP it)) (VP (VB appear) (SBAR (IN as) (IN though) (S (ADVP (RB perhaps)) (NP (EX there)) (VP (AUX has) (VP (AUX been) (NP (NP (DT another) (NN retaler)) (PP (TO to) (NP (NN strike))) (PP (IN of) (NP (DT some) (NN kind)))))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (MD ca) (RB n't) (VP (VB con) (NP (NP (NN foirm)) (SBAR (WHNP (WDT that)) (S (VP (AUX is) (SBAR (WHNP (WP what)) (S (VP (VBD happened)))))))))) (. .)))
+
+(S1 (S (NP (NP (DT all)) (SBAR (S (NP (PRP we)) (VP (MD can) (VP (VB tell) (NP (PRP you))))))) (, ,) (NP (EX there)) (VP (AUX was) (NP (NP (NP (DT an) (NN explosion)) (PP (IN on) (NP (DT a) (NN bus))) (PP (IN in) (NP (NNP jerusalem))) (PP (IN in) (NP (NN ventral)))) (: --) (NP (JJ central) (NNP jerusalem)))) (. .)))
+
+(S1 (S (NP (NP (DT a) (NN number)) (PP (IN of) (NP (NNS people)))) (VP (VBD killed) (, ,) (S (ADVP (RB perhaps)) (NP (JJ several) (NNS people)) (VP (AUXG being) (VP (VBD killed) (PP (IN in) (NP (NP (DT the) (NN explosion)) (, ,) (SBAR (WHNP (WDT which)) (S (VP (VBD happened) (ADVP (NP (RB just) (NNS moments)) (RB ago))))))))))) (. .)))
+
+(S1 (S (ADVP (RB once) (RB again)) (, ,) (NP (PRP we)) (VP (AUX 're) (VP (VBG trying) (S (VP (TO to) (VP (VB get) (NP (NP (NN ahold)) (PP (IN of) (NP (NP (PRP$ our) (NNP mike) (NNS hanna)) (, ,) (SBAR (WHNP (WP who)) (S (VP (AUX was) (ADVP (RB just)) (PP (IN with) (NP (PRP us))) (PP (IN on) (NP (DT the) (NN phone)))))))))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (VBP believe) (SBAR (S (NP (NNP mike)) (VP (AUX is) (ADVP (RB over)) (PP (IN in) (NP (NNP jerusalem))) (PP (IN in) (NP (NP (DT the) (NN bureau)) (VP (VBG working) (NP (DT the) (NNS telephones))))) (, ,) (S (VP (VBG trying) (S (VP (TO to) (VP (VB get) (NP (NP (IN as) (JJ much) (NN information)) (SBAR (SBAR (IN as) (S (NP (PRP he)) (VP (MD can)))) (CC and) (SBAR (IN once) (S (NP (NN behe)) (VP (VBZ gets) (NP (NP (NN something)) (SBAR (S (NP (PRP we)) (VP (MD 'll) (VP (VB deliver) (NP (PRP it)) (PP (TO to) (NP (PRP you)))))))))))))))))))))) (. .)))
+
+(S1 (S (S (NP (PRP we)) (VP (MD 'll) (VP (VB take) (NP (DT a) (NN break))))) (CC and) (S (SBAR (WHADVP (WRB when)) (S (NP (PRP we)) (VP (VBP come) (PRT (RP back))))) (, ,) (NP (PRP we)) (VP (MD 'll) (VP (VB pick) (PRT (RP up)) (NP (NP (NN coverage)) (PP (IN of) (NP (NP (DT this) (NN development)) (PP (IN in) (NP (NNP jerusalem))) (PP (IN with) (NP (NNP mike) (NNP hanna))))))))) (. .)))
+
+(S1 (SBARQ (WHADVP (WRB how)) (SQ (AUX 's) (NP (DT that) (JJ new) (NN analyst)) (VP (VBG doing))) (. ?)))
+
+(S1 (S (NP (PRP he)) (VP (AUX 's) (ADVP (RB really)) (VP (VB hit) (S (NP (DT the) (NN ground)) (VP (VBG running))))) (. .)))
+
+(S1 (S (NP (RB even) (DT the) (NNS traders)) (VP (AUX are) (VP (VBG complimenting) (NP (PRP him)))) (. .)))
+
+(S1 (S (NP (PRN (-LRB- -LRB-) (NN crash) (-RRB- -RRB-)) (JJ interesting) (NN stock)) (VP (NN presentation) (NP (DT this) (NN morning))) (. .)))
+
+(S1 (S (PRN (-LRB- -LRB-) (VP (VBP whoosh)) (-RRB- -RRB-)) (SBAR (WHNP (WRB when)) (S (NP (PRP you)) (VP (VBP manage) (NP (NP (DT the) (NN kind)) (PP (IN of) (NP (NN money))) (SBAR (S (NP (PRP we)) (VP (AUX do)))))))) (, ,) (NP (PRP you)) (VP (VBP tend) (S (VP (TO to) (VP (AUX be) (ADJP (NP (DT a) (JJ little)) (RBR more) (VBG demanding)))))) (. .)))
+
+(S1 (INTJ (UH evergreen) (. .)))
+
+(S1 (NP (NP (NNS investments)) (SBAR (WHNP (WDT that)) (S (VP (VBP stand) (NP (NP (DT the) (NN test)) (PP (IN of) (NP (NN time))))))) (. .)))
+

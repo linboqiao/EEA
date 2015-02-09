@@ -1,0 +1,48 @@
+(S1 (FRAG (X (SYM \*)) (X (SYM \*)) (NP (DT the) (`` ``) (NNP uss) (NNP abraham) (NN lincoln)) (. .) ('' '')))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (NP (DT a) (VBN guided) (NN missile) (NN destroyer))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (VBD fired) (PRT (RP off)) (NP (CD 50) (NN tomahawk) (NNS missiles)) (PP (IN during) (`` ``) (NP (NN operation) (JJ iraqi) (NN freedom)))) (. .) ('' '')))
+
+(S1 (S (NP (PRP you)) (VP (VBP talk) (PP (IN about) (NP (NP (DT the) (NN capability)) (PP (IN of) (NP (DT this) (NN ship)))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (JJ other) (NN mission)) (SBAR (WHNP (WDT that)) (S (NP (PRP it)) (VP (VBD took) (NP (NN part)) (PP (IN in)))))) (VP (AUX was) (NP (DT the) (NNS operations)) (PP (IN before) (NP (NP (NP (CD t) (NN fall)) (PP (IN of) (NP (DT the) (NN saddam) (NN hussein)))) (CC and) (NP (PRP$ his) (NN regime))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX were) (ADVP (RB out) (RB there)) (VP (VP (VBG taking) (PRT (RP down)) (NP (JJ illegal) (NNS smugglers))) (CC and) (VP (VP (VBG going) (PRT (RP out))) (CC and) (VP (VBG boarding) (NP (DT the) (NNS ships)))))) (. .)))
+
+(S1 (S (ADVP (RB now)) (, ,) (ADVP (RB also)) (, ,) (S (NP (DT this) (NN ship)) (VP (VBD played) (NP (NP (DT an) (JJ important) (NN part)) (PP (IN within) (NP (DT the) (NN war)))))) (CC and) (S (NP (DT that)) (VP (AUX 's) (PP (IN because) (IN of) (NP (DT the) (NN radar) (NN system))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (MD could) (VP (VB detect) (NP (NP (NNS objects)) (ADJP (ADJP (JJR smaller)) (PP (IN than) (NP (DT a) (NN honey) (NNP bee))))))) (. .)))
+
+(S1 (SBARQ (WHNP (WP what)) (SQ (AUX does) (NP (DT that)) (VP (VB mean))) (. ?)))
+
+(S1 (S (NP (PRP it)) (VP (MD can) (VP (VP (VB detect) (NP (NN enemy) (NN radar) (CC or) (NNS missiles))) (CC and) (VP (VB destroy) (NP (PRP them)) (ADVP (RB instantly))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX were) (NP (NP (DT a) (JJ big) (NN part)) (PP (IN in) (`` ``) (NP (NN operation) (JJ iraqi) (NN freedom))))) (. .) ('' '')))
+
+(S1 (S (S (NP (PRP you)) (VP (AUX are) (VP (VBG seeing) (NP (DT the) (NNS pictures))))) (, ,) (NP (NN everybody)) (VP (AUX is) (ADVP (RB home))) (. .)))
+
+(S1 (S (NP (NNS friends) (CC and) (NN family)) (VP (VBG connecting)) (. .)))
+
+(S1 (S (VP (AUX have) (RB n't) (VP (VBN seen) (NP (DT each) (JJ other)) (PP (IN in) (NP (QP (RB almost) (CD 10)) (NNS months))) (ADVP (RB now)))) (. .)))
+
+(S1 (S (NP (CD 14) (NNS fathers)) (VP (AUX have) (RB not) (VP (VBN seen) (NP (PRP$ their) (NNS babies)))) (. .)))
+
+(S1 (S (NP (NP (PRP they)) (NP (DT all))) (VP (VBD reunited) (PP (IN with) (NP (PRP$ their) (NNS families)))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (VBD got) (S (VP (TO to) (VP (VB meet) (PRT (RP up)) (PP (IN with) (NP (CD one) (JJ such) (NN family))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (MD 'll) (VP (VB show) (NP (PRP you)) (NP (NP (NNS pictures)) (PP (IN of) (NP (DT the) (JJ galetta) (NN family)))))) (. .)))
+
+(S1 (S (NP (NNP katie)) (VP (AUX was) (VP (VBN born) (PP (IN on) (NP (NP (NNP christmas) (NN day)) (, ,) (NP (NNP anderson)))))) (. .)))
+
+(S1 (S (NP (DT this)) (VP (AUX is) (NP (NP (DT the) (JJ first) (NN time)) (SBAR (S (NP (PRP$ her) (NN father)) (VP (VBD got) (S (VP (TO to) (VP (VP (VB hold) (NP (PRP her))) (CC and) (VP (VB look) (PP (IN in) (NP (PRP$ her) (NNS eyes))) (SBAR (IN since) (S (NP (PRP he)) (VP (VBD came) (ADVP (RB back)) (PP (IN from) (`` ``) (NP (NP (NN operation)) (NP (JJ iraqi) (NN freedom)))))))))))))))) (. .) ('' '')))
+
+(S1 (S (NP (CD 130) (NNS sailors)) (ADVP (RB really)) (VP (VBN excited) (S (VP (TO to) (VP (AUX be) (ADVP (RB home)) (ADVP (RB back)) (PP (IN on) (NP (NN land))) (PP (IN after) (S (VP (AUXG being) (PP (IN at) (NP (NN sea))) (PP (IN for) (NP (NP (QP (RB nearly) (CD 10)) (NNS months)) (VP (VBG carrying) (PRT (RP out)) (`` ``) (NP (NN operation) (JJ iraqi) (NN freedom)))))))))))) (. .) ('' '')))
+
+(S1 (FRAG (NP (DT some) (JJ remarkable) (NNS stories)) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX 're) (VP (VBG looking) (PP (IN at) (NP (RB now))) (, ,) (S (NP (DT a) (NN sailor)) (VP (VBG seeing) (NP (PRP$ his) (NN baby)) (PP (IN for) (NP (NP (DT the) (JJ first) (NN time)) (, ,) (ADJP (RB just) (JJ remarkable)))))))) (. .)))
+
+(S1 (S (NP (NN kyra) (NNS phillips)) (, ,) (NP (PRP we)) (VP (VBP appreciate) (S (NP (PRP you)) (VP (VBG bringing) (NP (PRP it)) (PP (TO to) (NP (PRP us))) (NP (NN today))))) (. .)))
+

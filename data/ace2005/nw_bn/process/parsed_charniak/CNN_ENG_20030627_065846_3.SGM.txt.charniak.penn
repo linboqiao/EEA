@@ -1,0 +1,14 @@
+(S1 (S (NP (PRP we)) (VP (VBP begin) (PP (IN with) (NP (NNP strom) (NNP thurmond))) (NP (NP (DT the) (NN man)) (SBAR (WHNP (WP who)) (S (VP (VBD set) (NP (NP (DT an) (JJ endureance) (NN record)) (PP (IN for) (NP (NNS politics))) (VP (VBN died) (NP (JJ last) (NN night)) (PP (IN in) (NP (NP (PRP$ his) (NN hometown)) (PP (IN of) (NP (JJ edgefield) (, ,) (JJ south) (NNP carolina)))))))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (VP (VBD won) (NP (PRP$ his) (JJ first) (NN election)) (PP (IN in) (NP (CD 1928)))) (, ,) (NP (NP (DT the) (NN office)) (PP (IN of) (NP (DT the) (NN county) (NN superintendent))))) (. .)))
+
+(S1 (S (PP (IN from) (NP (RB there))) (, ,) (NP (PRP he)) (VP (AUX had) (NP (NP (DT a) (JJ 36-year) (NN career)) (VP (VBN affiliated) (PP (IN with) (NP (DT the) (JJ democratic) (NN party))))) (SBAR (IN before) (S (NP (PRP he)) (VP (VBD switched) (NP (NNS parties)) (PP (IN in) (NP (CD 1964))) (S (VP (TO to) (VP (VB support) (NP (NP (NP (NNP barry) (NNP goldwater) (POS 's)) (NN campaign)) (PP (IN for) (NP (NN president))))))))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (VBD started) (NP (NP (DT a) (JJ 36-year) (NN career)) (PP (IN of) (NP (DT the) (JJ republican) (NN party))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (VBD gained) (NP (JJ national) (NN recognition)) (PP (IN as) (NP (DT a) (NN segregationist)))) (. .)))
+
+(S1 (FRAG (RB much) (ADVP (RBR more) (RB ahead)) (PP (IN on) (NP (NP (PRP$ his) (ADJP (JJ legendary) (CC and) (JJ controversial)) (NN career)) (PP (IN in) (NP (RB just) (DT a) (JJ few) (NNS minutes))))) (. .)))
+
+(S1 (NP (NP (DT a) (NN man)) (SBAR (WHNP (WP who)) (S (VP (VP (AUX had) (NP (NN controversy))) (, ,) (CC but) (VP (VBD knew) (SBAR (WHADVP (WRB how)) (S (VP (TO to) (VP (VB change) (PP (IN with) (NP (DT the) (NNS times))))))))))) (. .)))
+

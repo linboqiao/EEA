@@ -1,0 +1,20 @@
+(S1 (S (PP (IN At) (ADJP (JJ first))) (, ,) (NP (PRP I)) (VP (AUX was) (ADJP (RB pretty) (JJ skeptical) (PP (IN of) (NP (NNP Gmail)))) (: --) (NP (NP (DT an) (NN announcement)) (PP (IN of) (NP (NN something))) (ADJP (JJ new) (, ,) (JJ cool) (, ,) (CC and) (JJ free)) (, ,) (PP (IN from) (NP (DT a) (JJ quirky) (NN company))) (, ,) (PP (IN on) (NP (NP (NNP April) (NN Fool) (POS 's)) (NNP Day))))) (. ?)))
+
+(S1 (S (S (VP (VBZ Turns) (PRT (RP out)) (SBAR (S (NP (PRP$ my) (JJ initial) (NN attitude)) (VP (AUX was) (RB n't) (ADJP (JJ justified)) (, ,) (PP (IN of) (NP (NN course)))))))) (, ,) (CC and) (S (NP (NNP Gmail)) (VP (AUX has) (VP (AUX been) (NP (DT a) (JJ popular) (NN success))))) (. .)))
+
+(S1 (S (NP (RB Just) (DT this) (NN weekend)) (, ,) (NP (NNP Google)) (VP (VBD gave) (NP (JJ many) (NNS users)) (NP (DT another) (JJ fifty) (NNS invitations)) (, ,) (S (VP (VBG prompting) (S (NP (DT some)) (VP (TO to) (VP (VB speculate) (SBAR (IN that) (S (NP (PRP it)) (VP (MD could) (VP (AUX be) (NP (NP (DT the) (NN start)) (PP (IN of) (NP (NP (NNP Gmail) (POS 's)) (JJ final) (NN move)))) (PP (IN out) (PP (IN of) (NP (NN beta)))))))))))))) (. .)))
+
+(S1 (S (S (NP (PRP$ Their) (NN marketing)) (VP (AUX was) (ADJP (RB absolutely) (JJ brilliant)) (: :) (PP (ADVP (RB Simply)) (IN through) (NP (NP (NN association)) (PP (IN with) (NP (NNP Google))))))) (, ,) (CC and) (S (S (PP (IN because) (IN of) (NP (DT the) (JJ invitation-only) (NN membership))) (, ,) (NP (PRP they)) (VP (VBD created) (NP (DT a) (NN product)) (PP (IN with) (NP (JJ instant) (NN cachet))))) (: --) (S (NP (NN something)) (ADVP (RB so) (PP (IN in) (NP (NN demand) (NNS invitations)))) (VP (VBD went) (PP (IN for) (NP ($ $) (CD 50))) (PP (IN on) (NP (NN eBay))))) (, ,) (CC and) (S (NP (CD one) (JJ enterprising) (NN site)) (ADVP (RB even)) (VP (VBD offered) (NP (NP (DT a) (NN kidney)) (PP (IN for) (NP (DT an) (VB invite))))))) (. .)))
+
+(S1 (FRAG (CC And) (ADVP (RB now)) (. ?)))
+
+(S1 (S (S (NP (NP (NN Everyone)) (SBAR (WHNP (WP who)) (S (VP (VBZ wants) (NP (DT a) (NNP Gmail) (NN account)))))) (VP (AUX has) (NP (CD one)))) (, ,) (CC and) (S (ADVP (RB yet)) (NP (NP (NNS people)) (PP (IN with) (NP (VBZ invites)))) (VP (AUX have) (NP (DT an) (ADJP (RB almost) (JJ pathological)) (NN desire) (S (VP (TO to) (VP (VB give) (NP (PRP them)) (PRT (RP away)))))))) (. .)))
+
+(S1 (S (S (NP (PRP It)) (VP (AUX 's) (VP (AUX been) (NP (RB nearly) (DT a) (NN year))))) (, ,) (S (NP (DT the) (NN service)) (VP (AUX is) (ADJP (RB nearly) (JJ ubiquitous)))) (, ,) (CC and) (S (ADVP (RB somehow)) (NP (NNP Google)) (VP (AUX has) (VP (VBN kept) (S (NP (PRP us)) (VP (VBN obsessed) (PP (IN with) (NP (NNP Gmail)))))))) (. .)))
+
+(S1 (S (VP (VB Want) (NP (DT an) (VB invite))) (. ?)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 've) (VP (VBN got) (NP (DT a) (NN dozen)))) (. .)))
+
+(S1 (S (NP (DT This) (NN post)) (VP (AUX has) (VP (AUX been) (VP (VBN removed) (PP (IN by) (NP (DT a) (JJ blog) (NN administrator)))))) (. .)))
+

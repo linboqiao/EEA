@@ -1,0 +1,22 @@
+(S1 (S (NP (NNP TOKYO) (PRN (-LRB- -LRB-) (NP (NNP AP)) (-RRB- -RRB-)) (NNP Toyota) (NNP Motor) (NNP Corp.)) (VP (VBD said) (NP (NNP Tuesday)) (SBAR (S (NP (PRP it)) (VP (MD will) (VP (VB promote) (NP (NP (NNP Akio) (NNP Toyoda)) (, ,) (NP (NP (DT a) (NN grandson)) (PP (IN of) (NP (NP (DT the) (NN company) (POS 's)) (NN founder))) (SBAR (WHNP (WP who)) (S (VP (AUX is) (ADVP (RB widely)) (VP (VBN viewed) (PP (IN as) (NP (DT a) (NN candidate))) (PP (TO to) (NP (DT some) (NN day) (NN head))) (NP (NP (NNP Japan) (POS 's)) (JJS largest) (NN automaker))))))))))))) (. .)))
+
+(S1 (S (S (NP (NP (NN Managing) (NN director) (NNP Toyoda)) (, ,) (NP (CD 46)) (, ,) (NP (NP (NP (NN grandson)) (PP (IN of) (NP (NNP Kiichiro) (NNP Toyoda)))) (CC and) (NP (NP (DT the) (JJS eldest) (NN son)) (PP (IN of) (NP (NNP Toyota) (JJ honorary) (NN chairman) (NNP Shoichiro) (NNP Toyoda))))) (, ,)) (VP (MD will) (VP (VB become) (NP (NP (CD one)) (PP (IN of) (NP (CD 14) (JJ senior) (VBG managing) (NNS directors)))) (PP (IN under) (NP (NP (DT a) (JJ streamlined) (NN management) (NN system)) (VP (VBN set) (S (VP (TO to) (VP (AUX be) (VP (VBN introduced) (PP (IN after) (NP (NP (NP (DT a) (NNS shareholders) (POS ')) (NN meeting)) (PP (IN in) (NP (NNP June))))))))))))))) (, ,) (NP (DT the) (NN company)) (VP (VBD said) (PP (IN in) (NP (DT a) (NN statement)))) (. .)))
+
+(S1 (S (NP (NP (NNP Toyoda)) (, ,) (SBAR (WHNP (WP who)) (S (VP (VBD joined) (NP (NP (NNP Toyota)) (, ,) (VP (VBN based) (PP (IN in) (NP (NP (NNP Toyota) (NNP city)) (, ,) (NP (JJ central) (NNP Japan))))) (, ,)) (PP (IN in) (NP (CD 1984)))))) (, ,)) (VP (VBD spearheaded) (NP (NP (DT the) (NN automaker) (POS 's)) (NN Internet) (CC and) (NNS telematics) (NN business)) (S (VP (VBG _) (NP (NP (DT a) (NN technology)) (SBAR (WHNP (WDT that)) (S (VP (VBZ puts) (NP (NNP wireless) (NNS communications)) (PP (IN into) (NP (NNS vehicles)))))))))) (. .)))
+
+(S1 (S (S (VP (VBN Considered) (S (NP (NP (DT a) (NN candidate)) (PP (IN for) (NP (JJ future) (NNP Toyota) (NN president))))))) (, ,) (NP (NNP Toyoda)) (VP (VBZ oversees) (NP (NP (PRP$ its) (NNP China) (NN business)) (, ,) (NP (NP (DT a) (JJ critical) (NN market)) (PP (IN for) (NP (DT the) (NN automaker)))))) (. .)))
+
+(S1 (S (NP (NNP Toyoda)) (VP (AUX has) (VP (AUX been) (PP (IN on) (NP (DT the) (NN star) (NN track))) (PP (IN for) (NP (NNS years))))) (. .)))
+
+(S1 (S (SBAR (WHADVP (WRB When)) (S (NP (PRP he)) (VP (VBD joined) (NP (DT the) (NN board)) (PP (IN in) (NP (CD 2000)))))) (, ,) (NP (PRP he)) (VP (AUX was) (NP (PRP$ its) (JJS youngest) (NN member))) (. .)))
+
+(S1 (S (PP (IN Under) (NP (NP (DT a) (NN reform)) (VP (VBN led) (PP (IN by) (NP (NNP President) (NNP Fujio) (NNP Cho)))))) (, ,) (NP (NP (DT the) (NN membership)) (PP (IN of) (NP (NP (NP (NNP Toyota) (POS 's)) (NN board)) (PP (IN of) (NP (NNS directors)))))) (VP (MD will) (VP (AUX be) (VP (VBN slashed) (PP (TO to) (NP (CD 27))) (PP (IN from) (NP (CD 58)))))) (. .)))
+
+(S1 (S (NP (JJ Executive) (NN vice) (NNS presidents)) (VP (MD will) (VP (AUX be) (VP (VBN reduced) (PP (TO to) (NP (CD seven))) (PP (IN from) (NP (CD nine)))))) (. .)))
+
+(S1 (S (S (NP (DT The) (JJ new) (NN system)) (VP (AUX is) (VP (VBN designed) (S (VP (TO to) (`` ``) (VP (VB speed) (PRT (RP up)) (NP (NN decision-making) (CC and) (NNS operations)))))))) (, ,) ('' '') (NP (NNP Toyota) (NN spokesman) (NNP Shigeru) (NNP Hayakawa)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (NP (NP (NNP Toyota) (POS 's)) (JJ top) (NNS posts)) (VP (VBN held) (PP (IN by) (NP (NP (NNP Cho)) (CC and) (NP (NNP Chairman) (NNP Hiroshi) (NNP Okuda)))))) (VP (VBP remain) (ADJP (JJ unchanged))) (. .)))
+
+(S1 (S (NP (NNP Kiichiro) (NNP Toyoda)) (VP (VBD founded) (NP (DT the) (NN automaker)) (PP (IN in) (NP (CD 1937))) (, ,) (S (VP (VBG transforming) (S (NP (DT the) (NNP loom) (NN manufacturer)) (VP (VBN started) (PP (IN by) (NP (NP (PRP$ his) (NN father)) (PP (IN into) (NP (DT an) (NN automaker)))))))))) (. .)))
+

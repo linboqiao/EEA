@@ -1,0 +1,48 @@
+(S1 (S (VP (VB Remember) (SBAR (WHADVP (WRB how)) (S (NP (PRP you)) (VP (VBP stress) (NP (DT every) (NN year)) (S (VP (TO to) (VP (VB get) (NP (NP (DT those) (QP (# #) (NN %) (CD ^) (CD ^) ($ $) (NN %) (# #) (NN tax)) (NNS forms)) (VP (VBN filed) (PP (IN on) (NP (NN time)))))))))))) (. ?)))
+
+(S1 (S (ADVP (RB Just)) (VP (VB imagine) (SBAR (WHADVP (WRB how)) (S (NP (NNP Nortel)) (VP (VBZ feels))))) (. .)))
+
+(S1 (S (ADVP (RB Early) (PP (IN on) (NP (NNP Tuesday)))) (NP (NNP Nortel)) (VP (MD will) (VP (AUX be) (VP (VBG filing) (NP (PRP$ its) (CD 2003) (JJ financial) (NNS statements))))) (. .)))
+
+(S1 (S (NP (PRP It)) (ADVP (RB also)) (VP (VBZ expects) (S (VP (TO to) (VP (VB restate) (NP (QP (CD 2001) (CC and) (CD 2002)) (NNS earnings)))))) (. .)))
+
+(S1 (S (NP (NP (NN None)) (PP (IN of) (NP (DT this)))) (VP (AUX is) (ADVP (RB really)) (NP (JJ new) (NN information))) (. .)))
+
+(S1 (S (CC So) (NP (DT the) (JJS worst)) (VP (AUX is) (PP (IN behind) (NP (PRP them))) (ADJP (JJ right))) (. ?)))
+
+(S1 (FRAG (ADVP (RB Maybe)) (. .)))
+
+(S1 (S (NP (NP (JJ Late) (NN filing)) (PP (IN of) (NP (JJ audited) (JJ financial) (NNS statements) (CC and) (VBG earning)))) (VP (VBZ restatements) (NP (DT both) (NN factor)) (PP (IN into) (NP (PRP$ my) (NNP External) (NNP Reporting) (JJ organizational) (NN indicator)))) (. .)))
+
+(S1 (S (PP (IN As) (NP (DT a) (NN rule))) (, ,) (NP (PRP I)) (VP (AUX am) (ADJP (JJ wary) (PP (IN of) (NP (NP (NNS companies)) (SBAR (WHNP (WDT that)) (S (VP (AUX do) (NP (NP (DT either)) (PP (IN of) (NP (DT these) (NNS things)))) (SBAR (IN until) (S (NP (PRP I)) (VP (AUX am) (ADJP (JJ confident) (SBAR (IN that) (S (NP (PRP they)) (VP (AUX have) (VP (VBN changed) (NP (PRP$ their) (JJ standard) (NN business) (NNS practices))))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (MD may) (VP (VB take) (NP (NP (DT a) (JJ couple) (NNS years)) (, ,) (CC and) (NP (NP (JJ several) (ADJP (RBR more) (JJ financial)) (NNS filings)) (PRN (-LRB- -LRB-) (PP (IN on) (NP (NP (NN time)) (PP (IN of) (NP (NN course))))) (-RRB- -RRB-))) (, ,)) (SBAR (IN before) (S (NP (PRP I)) (VP (AUX am) (VP (VBN persuaded) (S (VP (TO to) (VP (VB take) (NP (NP (DT a) (JJ second) (NN look)) (PP (IN at) (NP (DT the) (NN company))))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (JJ bottom) (NN line)) (VP (AUX is) (SBAR (IN that) (S (S (NP (PRP I)) (VP (VBP rely) (PP (IN on) (NP (NNP SEC) (NNS filings))) (S (VP (TO to) (VP (VB assess) (NP (NNS companies))))))) (CC and) (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB want) (S (VP (TO to) (VP (AUX have) (NP (NP (DT any) (NN doubt)) (PP (IN about) (NP (NP (DT the) (NN veracity)) (PP (IN of) (NP (NP (DT the) (NN information)) (VP (VBN contained) (PP (IN in) (NP (DT these) (NNS documents)))))))))))))))))) (. .)))
+
+(S1 (S (PP (IN In) (NP (NP (NNP Nortel) (POS 's)) (NN defense))) (, ,) (NP (PRP they)) (VP (AUX have) (ADVP (RB just)) (VP (VBN gone) (PP (IN through) (NP (DT the) (JJ perfect) (NN storm))) (PP (IN in) (NP (DT the) (NNS telecommunications) (NN equipment) (NN sector))))) (. .)))
+
+(S1 (S (NP (NP (DT The) (JJ whole) (NN industry)) (ADJP (JJ overbuilt) (CC and) (VBN got))) (VP (VBN blindsided) (PP (IN by) (NP (DT the) (NNP tech) (NN downturn)))) (. .)))
+
+(S1 (S (NP (DT This)) (VP (MD could) (VP (AUX be) (VP (VBN described) (PP (IN as) (NP (NP (DT a) (NN growth) (NN industry)) (SBAR (WHNP (WDT that)) (S (VP (VP (VBD went) (PP (IN on) (NP (DT a) (NN bender)))) (CC and) (VP (AUX is) (ADVP (RB now)) (VP (VBG trying) (S (VP (TO to) (VP (VB recover) (PP (IN from) (NP (DT the) (NN hangover)))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 've) (ADVP (RB always)) (VP (VBN felt) (SBAR (IN that) (S (NP (PRP you)) (VP (VBP learn) (NP (NP (DT a) (NN lot)) (PP (IN about) (NP (NN someone)))) (SBAR (WHADVP (WRB when)) (S (NP (PRP you)) (VP (VBP see) (SBAR (WHADVP (WRB how)) (S (NP (PRP they)) (VP (VBP try) (S (VP (TO to) (VP (VB recover) (PP (IN from) (NP (NP (DT a) (NN hangover)) (PRN (-LRB- -LRB-) (NP (NP (NN pause)) (PP (IN for) (NP (JJ brief) (NN college) (NN flashback)))) (-RRB- -RRB-)))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT This)) (VP (AUX is) (NP (NP (DT a) (JJ great) (NN time)) (SBAR (S (VP (TO to) (VP (VB assess) (NP (NP (JJ organizational) (NN effectiveness)) (PP (IN in) (NP (DT the) (NN telecommunications) (NN equipment) (NN industry)))))))))) (. .)))
+
+(S1 (S (NP (NNP Nortel) (CC and) (NNP Lucent)) (VP (VBD attempted) (S (VP (TO to) (VP (VB hide) (NP (NP (DT the) (NN damage)) (SBAR (-LRB- -LRB-) (SBARQ (WHNP (WP What)) (SQ (AUX do) (NP (PRP you)) (VP (VB mean)))))))))) (. ?)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 'm) (RB not) (ADJP (JJ drunk))) (. !) (-RRB- -RRB-)))
+
+(S1 (S (CC and) (VP (VB hope) (PP (IN for) (NP (NP (DT an) (NN uptick)) (PP (IN in) (NP (NN demand))))) (SBAR (IN before) (S (NP (PRP they)) (VP (MD would) (VP (AUX have) (S (VP (TO to) (VP (VB come) (ADJP (JJ clean)))))))))) (. .)))
+
+(S1 (S (NP (DT Both) (NNS companies)) (VP (VP (AUX have) (VP (AUX been) (VP (VBN penalized) (PP (IN for) (NP (DT these) (NNS actions)))))) (CC and) (VP (AUX have) (VP (VBN continued) (S (VP (TO to) (VP (VP (VB restructure) (NP (NNS operations))) (, ,) (VP (VB sell) (NP (NNS assets))) (, ,) (CC and) (VP (NN layoff) (NP (NNS employees))))))))) (. .)))
+
+(S1 (S (NP (NNP Cisco)) (, ,) (PP (IN on) (NP (DT the) (JJ other) (NN hand))) (, ,) (VP (AUX was) (ADJP (JJ able) (S (VP (TO to) (VP (VP (VB take) (NP (CD one) (JJ huge) (NN restructuring) (NN charge)) (PP (IN in) (NP (CD 2001)))) (CC and) (VP (VB move) (PRT (RP forward)))))))) (. .)))
+
+(S1 (S (NP (PRP$ Their) (NN ability) (S (VP (TO to) (VP (VP (AUX do) (NP (DT this))) (CC and) (VP (AUX have) (NP (PRP it))) (NP (NN work)) (PRN (-LRB- -LRB-) (ADVP (RB so) (RB far)) (-RRB- -RRB-)))))) (VP (VBZ indicates) (NP (NP (DT a) (ADJP (RB very) (JJ deep) (CC and) (JJ impressive)) (NN understanding)) (PP (IN of) (NP (PRP$ their) (NN organization))))) (. .)))
+
+(S1 (S (SBAR (ADVP (RB Especially)) (WHADVP (WRB when)) (S (VP (VBN compared) (PP (TO to) (NP (PRP$ its) (NNS competitors)))))) (, ,) (NP (NNP Cisco)) (VP (VBZ seems) (S (VP (TO to) (VP (AUX be) (ADVP (RB back)) (PP (IN in) (S (VP (VBG fighting) (NP (NP (NN form)) (ADJP (JJ due) (PP (TO to) (NP (NP (PRP it) (POS 's)) (NN ability) (S (VP (TO to) (VP (VP (ADVP (RB rapidly)) (VB assess) (NP (PRP$ its) (JJ organizational) (NN structure))) (CC and) (VP (NN reconfigure) (S (VP (TO to) (VP (VB meet) (NP (DT the) (VBG changing) (NN market)))))))))))))))))))) (. .)))
+
+(S1 (FRAG (RB Not) (ADJP (JJ bad) (PP (IN for) (NP (NP (DT a) (NN company)) (PP (IN with) (NP (DT a) (NN hangover)))))) (. !)))
+

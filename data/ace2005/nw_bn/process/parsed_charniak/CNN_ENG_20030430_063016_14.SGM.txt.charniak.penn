@@ -1,0 +1,36 @@
+(S1 (S (NP (NNP colorado) (NN woman)) (VP (VBZ wants) (S (VP (TO to) (VP (VB thank) (CC and) (VB reward) (NP (NP (DT the) (NN person)) (SBAR (WHNP (WP who)) (S (VP (VBD found) (NP (NP (PRP$ her) (ADJP ($ $) (CD 7,000)) (NN ring)) (SBAR (S (NP (PRP she)) (VP (VBD lost) (PP (IN at) (NP (DT the) (NN beach))))))))))))))) (. .)))
+
+(S1 (S (NP (JJ tony) (NN kurran)) (VP (AUX had) (VP (VBN lost) (NP (NP (DT the) (NN ring)) (SBAR (S (S (NP (PRP$ her) (NN husband)) (VP (AUX had) (VP (VBN given) (NP (PRP her))))) (CC and) (S (ADVP (NP (DT a) (JJ few) (NNS days)) (RB later)) (, ,) (NP (DT the) (NN ring)) (VP (AUX was) (VP (VBN wrapped) (PP (IN in) (NP (NP (DT a) (NN letter)) (VP (VBN written) (PP (IN in) (NP (JJ green) (NN pencil))) (PP (IN at) (NP (DT the) (NN police) (NN department)))))))))))))) (. .)))
+
+(S1 (S (S (NP (DT the) (NN letter)) (VP (VBD said))) (: --) (S (NP (PRP he)) (VP (VBD said) (SBAR (S (NP (PRP he)) (VP (VP (VBD found) (NP (DT the) (NN ring))) (, ,) (VP (VBD gave) (NP (PRP it)) (PP (TO to) (NP (PRP$ his) (NN mother))) (PP (IN as) (NP (DT a) (NN present))))))))) (. .)))
+
+(S1 (INTJ (JJ touching) (. .)))
+
+(S1 (S (SBAR (WHNP (WP what)) (S (NP (PRP he)) (VP (AUX did) (ADVP (RB right))))) (VP (AUX was) (VP (VB give) (NP (PRP it)) (ADVP (RB back)))) (. ?)))
+
+(S1 (S (NP (PRP i)) (VP (VBD got) (ADJP (VBN lost))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (VBD felt) (ADJP (JJ bad)) (ADVP (RB because))) (. ?)))
+
+(S1 (S (NP (PRP i)) (VP (MD 'll) (VP (VB give) (NP (PRP you)) (NP (DT a) (JJ written) (NN copy)))) (. .)))
+
+(S1 (NP (DT a) (NN quiz) (. ?)))
+
+(S1 (S (NP (DT the) (NN copy)) (VP (AUX does) (VP (VB exist))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX 're) (VP (VBG getting) (NP (NN word) (VBG developing) (NN news)) (PP (IN on) (NP (DT this) (JJ middle) (JJ east) (NN situation))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX are) (VP (VBG getting) (NP (NP (NN word)) (SBAR (WHNP (IN that)) (S (NP (NP (NNP u.s.) (NN ambassador)) (PP (TO to) (NP (NNP israel)))) (VP (AUX has) (VP (VBN delivered) (NP (DT the) (JJ white) (NN house) (JJ middle) (NNS east) (NN road) (NN map)) (PP (IN for) (NP (NP (NN peace)) (PP (TO to) (NP (NP (NNP ariel) (NNP sharon)) (, ,) (NP (DT the) (JJ israeli) (JJ prime) (NN minister))))))))))))) (. .)))
+
+(S1 (S (S (PP (IN in) (NP (NN part))) (, ,) (NP (PRP it)) (VP (VBZ declares) (NP (NP (DT the) (JJ palestinian) (NN state)) (VP (VBG working) (PP (IN towards) (NP (DT that) (NN end))))))) (CC and) (S (PP (IN within) (NP (CD three) (NNS years)) (, ,) (NP (DT the) (NN year) (CD 2005))) (, ,) (NP (PRP you)) (VP (AUX 're) (VP (VBG going) (S (VP (TO to) (VP (VB hear) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NP (NN talk)) (PP (PP (IN about) (NP (DT this) (JJ later) (NN today))) (CC and) (PP (IN throughout) (NP (NP (DT the) (NN morning)) (PP (IN on) (NP (NNP cnn))))))))))))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (JJ other) (NN thing)) (SBAR (S (NP (PRP we)) (VP (AUX 're) (VP (VBG watching) (ADVP (RB right) (RB now))))))) (, ,) (VP (VB take) (NP (PRP you)) (ADVP (RB live)) (S (VP (TO to) (VP (VB baghdad) (PP (IN inside) (SBAR (WHNP (WP what)) (S (VP (VBD used) (S (VP (TO to) (VP (AUX be) (NP (DT the) (ADJP (FW saddam) (FW hussein)) (JJ international) (NN airport))))))))))))) (. .)))
+
+(S1 (SINV (ADVP (RB now)) (VP (VBN named)) (NP (DT the) (JJ baghdad) (JJ international) (NN airport)) (. .)))
+
+(S1 (S (S (NP (PRP we)) (VP (VBP anticipate) (PP (IN in) (NP (NP (DT a) (NN matter)) (PP (IN of) (NP (NNS moments))))))) (, ,) (S (NP (NP (NP (DT the) (NN secretary)) (PP (IN of) (NP (NN defense)))) (, ,) (NP (NNP donald) (NNP rumsfeld)) (, ,)) (VP (TO to) (VP (VB arrive) (ADVP (RB inside) (PP (IN of) (NP (DT this) (NN hangar))))))) (CC and) (S (NP (PRP we)) (VP (MD 'll) (VP (VB carry) (S (NP (PRP$ his) (NN speech)) (VP (VB live) (SBAR (WHADVP (WRB when)) (S (NP (DT that)) (VP (VBZ gets) (ADJP (JJ underway)))))))))) (. .)))
+
+(S1 (NP (: --) (NP (NP (NNS captions)) (PP (IN by) (NP (NN vitac)))) (: --) (NP (NP (NN www.vitac.com)) (SBAR (S (SBAR (RB just) (IN because) (S (NP (DT a) (JJ toothbrush) (NN t)) (VP (AUX is) (ADJP (JJ electric))))) (, ,) (VP (AUX does) (RB n't) (VP (VB mean) (SBAR (S (NP (PRP it)) (VP (VBZ works) (ADVP (RB t)) (PP (IN like) (NP (DT a) (NN sonicare))))))))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX has) (VP (VBN patented) (NP (NN r) (NN sonic))))))
+

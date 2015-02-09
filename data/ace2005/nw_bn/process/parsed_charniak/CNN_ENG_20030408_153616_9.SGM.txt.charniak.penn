@@ -1,0 +1,20 @@
+(S1 (S (NP (CD 2:58)) (, ,) (ADVP (RB a.m.)) (, ,) (NP (NNS explosions)) (VP (VBN reported) (PP (IN around) (NP (NP (DT the) (NNP palestine) (NN hotel)) (SBAR (WHADVP (WRB where)) (S (NP (JJ international) (NNS journalists)) (VP (AUX are) (VP (VBG staying)))))))) (. .)))
+
+(S1 (S (NP (DT a) (NNP u.s.) (NN tank)) (VP (VBD shelled) (NP (DT the) (NN hotel)) (PP (IN in) (NP (NP (NN response)) (PP (TO to) (NP (NNP sniper) (NN fire)))))) (. .)))
+
+(S1 (S (NP (DT the) (NN blast)) (VP (VBZ kills) (NP (NP (CD two) (NNS cameramen)) (, ,) (NP (NP (NP (CD one)) (PP (IN from) (NP (JJ spanish) (NN tv)))) (, ,) (NP (NP (DT another)) (PP (IN from) (NP (NNP reuters))))))) (. .)))
+
+(S1 (S (NP (CD three) (NNP reuters) (NN journalist)) (VP (AUX were) (VP (VBN killed))) (. .)))
+
+(S1 (S (NP (NP (CD 5:33) (NN a.m.)) (, ,) (NP (NNP martin) (NNP savidge))) (VP (VBZ says) (SBAR (S (NP (DT the) (NN marines)) (VP (AUX have) (VP (VBN found) (NP (NP (NN chemical) (NN protection) (NNS suits)) (CC and) (NP (NP (NNS antidotes)) (PP (IN for) (NP (JJ chemical) (NNS weapons))))) (PP (IN in) (NP (DT a) (NN field))) (PP (IN beside) (NP (NP (DT an) (JJ industrial) (NN complex)) (PP (IN in) (NP (JJ southeast) (NN baghdad)))))))))) (. .)))
+
+(S1 (S (ADVP (RB nearby)) (NP (PRP they)) (VP (VBD found) (NP (NP (VBN abandoned) (NNS weapons) (CC and) (NN artillery) (NN case)) (, ,) (SBAR (WHNP (WDT which)) (S (NP (PRP they)) (VP (VBD demolished)))))) (. .)))
+
+(S1 (S (NP (NP (CD 7:00) (NN a.m.)) (, ,) (NP (JJ u.s.) (JJ central) (NN command))) (VP (VBZ says) (SBAR (S (NP (DT the) (NN coalition)) (VP (MD may) (ADVP (RB never)) (VP (VB know) (SBAR (IN if) (S (NP (JJ iraqi) (NN president) (NN saddam) (NN hussein)) (VP (VBD survived) (NP (DT a) (NNP u.s.) (NN air) (NN strike)) (NP (NN yesterday)))))))))) (. .)))
+
+(S1 (S (NP (DT a) (JJ b-1) (NN bomber)) (VP (VBD dropped) (NP (CD four) (JJ 2,000-pound) (NNS bombs)) (PP (IN on) (NP (DT a) (NN building))) (PP (IN in) (NP (NP (DT a) (JJ residential) (NN area)) (PP (IN of) (NP (NN baghdad))))) (PP (IN after) (S (VP (VBG getting) (NP (NP (NN intelligence) (NNS reports)) (SBAR (S (NP (JJ senior) (NNS officials)) (VP (AUX were) (VP (VBG meeting) (ADVP (RB there)) (, ,) (PP (ADVP (RB possibly)) (VBG including) (NP (NP (NN saddam) (NN hussein)) (CC and) (NP (PRP$ his) (NNS sons))))))))))))) (. .)))
+
+(S1 (S (NP (NNP brigadier) (NN general) (NN vince) (NNP brooks)) (VP (VBD confirmed) (SBAR (S (NP (DT a) (JJ usa-10) (NN warthog) (NN aircraft)) (VP (AUX was) (VP (VBN shot) (PRT (RP down)) (PP (IN by) (NP (DT an) (JJ iraqi) (NN missile) (NN today)))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN pilot)) (VP (VP (VBN ejected)) (CC and) (AUX was) (VP (VBD rescued))) (. .)))
+

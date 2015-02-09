@@ -1,0 +1,110 @@
+(S1 (S (NP (NP (DT the) (NNP nasa)) (CC and) (NP (DT the) (JJ european) (NN space) (NN agency))) (DT both) (VP (VB launch) (NP (NP (NNS missions)) (PP (TO to) (NP (NNP mars)))) (NP (DT this) (NN month)) (S (VP (VBG sending) (NP (NNS rovers) (CC and) (NNS ashters)) (S (VP (TO to) (VP (VB probe) (NP (DT the) (JJ red) (NN planet)))))))) (. .)))
+
+(S1 (S (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (JJ big) (NNS questions)) (PP (IN about) (NP (NNP mars)))))) (VP (AUX is) (UCP (WHADVP (WRB when)) (CC or) (SBAR (IN whether) (S (NP (NNS humans)) (VP (MD will) (ADVP (RB ever)) (VP (AUX be) (ADJP (JJ able) (S (VP (TO to) (VP (VB visit))))))))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (NP (NP (DT an) (NN idea)) (VP (VBN plagued) (PP (IN with) (NP (NNP unsolved) (NNS problems)))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (JJS latest) (NN issue)) (PP (IN of) (NP (`` ``) (JJ popular) (NN science) (NN magazine) ('' '')))) (VP (VBZ takes) (NP (NP (DT a) (NN look)) (PP (IN at) (NP (NP (DT the) (NNS challenges)) (SBAR (S (NP (NNP nasa)) (VP (AUX is) (VP (VBG facing))))))))) (. .)))
+
+(S1 (S (S (VP (VBG joining) (NP (PRP us)))) (VP (AUX is) (NP (DT the) (VBG contributing) (NN editor))) (. .)))
+
+(S1 (FRAG (ADJP (JJ good) (S (VP (TO to) (VP (VB see) (NP (PRP you)))))) (, ,) (NP (NNP jeff)) (. .)))
+
+(S1 (S (VP (VB thank) (NP (PRP you))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX was) (ADVP (NP (QP (RB only) (RB about) (CD 30)) (NNS years)) (RB ago)) (SBAR (WHADVP (WRB when)) (S (NP (PRP we)) (VP (VBD went) (PP (TO to) (NP (DT the) (NN moon))))))) (. .)))
+
+(S1 (SBARQ (RB so) (WHNP (WP what)) (SQ (VP (AUX 's) (NP (NP (DT the) (NN difficulty)) (PP (IN in) (S (VP (AUXG being) (ADJP (JJ able) (S (VP (TO to) (VP (VB go) (PP (TO to) (NP (NNP mars))))))))))))) (. ?)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (ADJP (RB unimaginably) (JJ difficult) (CC and) (JJ different))) (. .)))
+
+(S1 (S (NP (NNP mars)) (VP (AUX is) (PP (IN at) (NP (JJS most) (NNS times))) (ADVP (NP (QP (CD 100) (CD million)) (NNS miles)) (RB away) (PP (IN from) (NP (PRP us))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (NP (DT a) (JJ nine-month) (NN trip))) (. .)))
+
+(S1 (S (RB then) (SBAR (IN if) (S (NP (PRP we)) (VP (VBP stay) (ADVP (RB there)) (PP (IN for) (NP (RB about) (DT a) (NN year) (QP (CC or) (CD two))))))) (, ,) (NP (DT the) (JJ whole) (NN trip)) (VP (MD could) (VP (VB last) (NP (QP (RB about) (CD three)) (NNS years)))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX 're) (VP (VBG talking) (PP (IN about) (NP (NP (NNS conditions)) (SBAR (WHADVP (WRB where)) (S (NP (EX there)) (VP (AUX 's) (NP (NP (NN radiation)) (PP (IN in) (NP (NN space) (JJ cosmic) (NN radiation))) (SBAR (WHNP (WDT that)) (S (VP (MD could) (VP (VB cause) (NP (NN cancer)))))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NNS communications) (NNS conditions)) (SBAR (IN once) (S (NP (PRP you)) (VP (AUX 're) (PP (IN on) (NP (NNP mars))) (, ,) (S (ADVP (RB just)) (VP (TO to) (VP (VB talk) (PP (TO to) (NP (NNS people))) (PP (IN on) (NP (NN earth))))))))) (, ,) (NP (EX there)) (VP (POS 's) (NP (NP (DT a) (ADJP (CD 20) (NN minute)) (NN delay)) (PP (IN in) (NP (DT the) (NN conversation))))) (. .)))
+
+(S1 (S (ADVP (IN so) (DT the)) (PRN (: --) (S (NP (PRP you)) (VP (VBP know))) (, ,)) (NP (DT the) (NNS issues)) (VP (AUX are) (ADJP (ADJP (ADVP (RB so) (RB much)) (JJR larger)) (PP (IN than) (S (VP (VBG going) (PP (TO to) (NP (DT the) (NN moon)))))))) (. .)))
+
+(S1 (S (CC and) (PP (IN for) (NP (RB now))) (, ,) (NP (PRP it)) (VP (AUX 's) (NP (NP (CD 250) (NNS days)) (, ,) (SBAR (WHNP (WDT which)) (S (VP (VBZ seems) (S (VP (TO to) (VP (AUX be) (NP (NP (DT the) (NN maximum)) (PP (IN for) (NP (NNS astronauts)))) (PP (IN in) (NP (NN space))) (ADVP (RB anyway)))))))))) (. .)))
+
+(S1 (S (CC but) (SBAR (IN as) (S (NP (PRP you)) (VP (VBP say)))) (, ,) (NP (PRP it)) (VP (AUX 's) (NP (DT a) (JJ much) (JJ further) (NN travel))) (. .)))
+
+(S1 (S (CC but) (VP (VB let) (S (NP (PRP 's)) (VP (VB talk) (PP (IN about) (NP (NP (DT some)) (PP (IN of) (NP (NP (DT the) (NNS hurdles)) (SBAR (WHNP (WDT that)) (S (VP (VB hamper) (S (NP (NNS humans)) (VP (TO to) (VP (AUX be) (ADJP (JJ able) (S (VP (TO to) (VP (VB survive) (ADVP (RB there))))))))))))))))))) (. .)))
+
+(S1 (FRAG (NP (DT the) (NN dust)) (, ,) (PP (IN for) (NP (CD one) (NN thing))) (. .)))
+
+(S1 (NP (NP (NNS cataracts)) (NP (DT another)) (. .)))
+
+(S1 (S (VP (VB let) (S (NP (PRP 's)) (VP (VB talk) (PP (IN about) (NP (NP (DT the) (JJ right) (NN kind)) (PP (IN of) (NP (NN spacecraft))) (SBAR (WHNP (WDT that)) (S (VP (MD would) (VP (AUX be) (ADJP (JJ able) (S (VP (TO to) (VP (VB allow) (S (NP (NNS humans)) (VP (VP (TO to) (ADVP (RB actually)) (VP (VB get) (ADVP (RB that) (RB far)))) (CC and) (VP (TO to) (VP (VB survive)))))))))))))))))) (. .)))
+
+(S1 (INTJ (JJ right) (. .)))
+
+(S1 (S (ADVP (RB well)) (, ,) (ADVP (RB first) (PP (IN of) (NP (DT all)))) (, ,) (NP (DT the) (NN spacecraft)) (VP (MD would) (RB not) (VP (AUX be) (VP (VBN launched) (PP (IN from) (NP (NN earth)))))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (MD 'd) (VP (AUX have) (S (VP (TO to) (VP (VB launch) (SBAR (S (VP (AUX is) (PP (IN from) (PP (IN in) (NP (NN space)))) (ADVP (RB already)) (, ,) (SBAR (WHNP (WDT which)) (S (VP (VBZ means) (SBAR (S (NP (PRP we)) (VP (MD would) (VP (AUX have) (S (VP (TO to) (VP (VB build) (NP (PRP it)) (PP (IN in) (NP (NN space))))))))))))))))))))) (. .)))
+
+(S1 (S (CC so) (NP (DT that)) (VP (VBZ means) (SBAR (S (NP (PRP we)) (VP (AUX need) (NP (NP (DT a) (JJ good) (NN shuttle)) (SBAR (WHNP (WDT that)) (S (VP (AUX 's) (VP (VBG going) (S (VP (TO to) (VP (VB take) (NP (PRP us)) (ADVP (RB back) (CC and) (RB forth)) (S (VP (TO to) (VP (VB build) (NP (DT the) (NN spacecraft))))))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB then)) (NP (PRP we)) (VP (AUX have) (S (VP (TO to) (VP (VB come) (PRT (RP up)) (PP (IN with) (NP (NP (DT the) (NN fuel)) (SBAR (WHNP (WDT that)) (S (VP (MD will) (VP (VB take) (NP (PRP it)) (PP (IN out) (PP (IN of) (NP (NP (DT the) (NN earth) (POS 's)) (NN orbit)))) (NP (NP (PDT all) (DT the) (NN way)) (PP (TO to) (NP (NNP mars)))))))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (ADVP (RB probably)) (VP (VBG going) (S (VP (TO to) (VP (AUX be) (NP (NP (JJ nuclear) (NN propulsion)) (PP (IN at) (NP (DT this) (NN point)))) (ADVP (RB again)) (NP (NP (NN something)) (SBAR (S (NP (PRP we)) (VP (AUX have) (RB n't) (ADVP (RB really)) (VP (VBN developed) (ADVP (RB yet))))))) (, ,) (SBAR (IN because) (S (NP (PRP we)) (VP (MD could) (RB n't) (VP (VB carry) (NP (DT that) (JJ much) (NN fuel)) (, ,) (ADVP (RB obviously))))))))))) (. .)))
+
+(S1 (S (NP (JJ liquid) (NN oxygen)) (VP (MD would) (VP (AUX be) (ADJP (RB way) (RB too) (JJ heavy)) (S (VP (TO to) (VP (VB carry) (NP (NP (PDT all) (DT the) (NN way)) (PP (TO to) (NP (NNP mars))))))))) (. .)))
+
+(S1 (S (S (NP (DT the) (JJR bigger) (NN issue)) (VP (AUX is) (SBAR (IN once) (S (NP (PRP we)) (VP (VBP get) (ADVP (RB there))))))) (, ,) (S (NP (PRP we)) (VP (MD ca) (RB n't) (VP (VB carry) (NP (NN oxygen) (CC or) (NN water) (CC or) (NN food)) (S (VP (TO to) (VP (VB stay) (ADVP (RB there) (NP (CD three) (NNS years))))))))) (, ,) (CC so) (S (NP (PRP we)) (VP (AUX 're) (VP (VBG going) (S (VP (TO to) (VP (AUX have) (S (VP (TO to) (VP (AUX do) (NP (NP (DT all)) (PP (IN of) (NP (DT that)))) (PP (IN on) (NP (NP (DT the) (NN surface)) (PP (IN of) (NP (DT the) (NN planet)))))))))))))) (. .)))
+
+(S1 (S (CC and) (VP (VB think) (PP (IN of) (NP (PRP it)))) (. .)))
+
+(S1 (S (NP (NNP mars)) (VP (AUX is) (NP (NN carbon) (NN dioxide))) (. .)))
+
+(S1 (S (CC so) (NP (PRP we)) (VP (MD ca) (RB n't) (VP (VB breathe) (ADVP (RB there)))) (. .)))
+
+(S1 (S (ADVP (RB so)) (NP (PRP we)) (VP (AUX 're) (VP (VBG going) (S (VP (TO to) (VP (AUX have) (S (VP (TO to) (VP (VB come) (PRT (RP up)) (PP (IN with) (NP (NP (DT some) (NN conversion) (NN technique)) (SBAR (S (VP (TO to) (VP (VB create) (NP (NN water)) (, ,) (S (VP (TO to) (VP (VB create) (NP (NP (NN oxygen)) (CC and) (ADVP (RB then)) (NP (NP (DT some) (NN way)) (PP (IN of) (NP (NP (VBG growing) (NN food)) (PP (IN on) (NP (NP (DT the) (NN planet)) (NP (PRP itself))))))))))))))))))))))))) (. .)))
+
+(S1 (S (S (NP (NP (DT all)) (PP (IN of) (NP (DT this)))) (VP (AUX is) (PP (IN in) (NP (DT the) (NNS works))) (ADVP (RB now)))) (, ,) (CC but) (S (NP (PRP i)) (VP (VBP think) (SBAR (S (NP (PRP it)) (VP (AUX 's) (VP (VBG going) (S (VP (TO to) (VP (VB take) (NP (PDT quite) (DT a) (JJ few) (NNS years)) (S (VP (TO to) (VP (VB develop) (NP (PRP it)))))))))))))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (VBP talk) (PP (IN about) (NP (DT the) (JJ cosmic) (NN radiation)))) (. .)))
+
+(S1 (S (RB then) (PP (IN of) (NP (NN course))) (NP (EX there)) (VP (AUX is) (NP (DT the) (CD zero) (NNP g) (NN bone) (NN loss)) (, ,) (PP (ADVP (RB almost)) (IN like) (NP (NP (DT the) (VBG eroding)) (PP (IN of) (NP (NN bone))) (PP (TO to) (NP (NP (NNS humans)) (SBAR (WHNP (WDT that)) (S (VP (MD would) (VP (AUX be) (PP (IN at) (NP (NN risk))) (ADVP (RB as) (RB well))))))))))) (. .)))
+
+(S1 (FRAG (ADVP (RB absolutely)) (. .)))
+
+(S1 (S (NP (EX there)) (VP (MD could) (VP (AUX be) (NP (NP (ADJP (QP (RB as) (JJ much) (IN as) (CD 50)) (NN %)) (NN bone) (NN loss)) (PP (IN in) (NP (NNS astronauts))) (PP (IN in) (NP (NNP mars)))))) (. .)))
+
+(S1 (FRAG (WRB why) (. ?)))
+
+(S1 (FRAG (PP (IN during) (NP (NP (DT the) (NN time)) (PP (IN in) (NP (NNP mars))))) (. .)))
+
+(S1 (S (SBAR (IN because) (WHADVP (WRB when)) (S (NP (DT the) (NN body)) (VP (AUX has)))) (: --) (SBAR (WHADVP (WRB when)) (S (NP (EX there)) (VP (AUX is) (NP (DT no) (NN dpravity)) (SBAR (IN as) (S (NP (EX there)) (VP (AUX is) (PP (IN on) (NP (NNP mars))))))))) (, ,) (NP (DT the) (NN body)) (VP (AUX does) (RB n't) (VP (VB pick) (PRT (RP up)) (NP (DT the) (NN calcium)) (PP (IN in) (NP (DT the) (NNS bones))) (, ,) (SBAR (IN so) (S (NP (PRP it)) (VP (AUX does) (RB n't) (VP (VB keep) (S (VP (VBG getting) (NP (DT the) (NNS bones)) (ADJP (JJR stronger) (CC and) (JJR stronger)))))))))) (. .)))
+
+(S1 (S (CC so) (NP (PRP they)) (VP (MD will) (ADVP (RB just)) (VP (VB lose) (NP (PRP it)))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (MD will) (VP (AUX be) (PP (ADVP (RB almost)) (IN like) (NP (JJ old) (NNS people))) (PP (ADVP (RB even)) (IN at) (NP (NP (DT the) (NN age)) (PP (IN of) (NP (CD 40))))))) (. .)))
+
+(S1 (S (NP (NNP jeff)) (VP (VB rothfeder)) (. .)))
+
+(S1 (S (VP (VB thank) (NP (PRP you)) (PP (IN for) (S (VP (VBG joining) (NP (PRP us)))))) (. .)))
+
+(S1 (S (VP (VBZ looks) (SBAR (IN like) (S (NP (PRP it)) (VP (MD will) (VP (AUX be) (NP (DT some) (NN time)) (SBAR (IN before) (S (NP (PRP we)) (VP (VBP make) (NP (NP (PRP$ our) (NN way)) (PP (TO to) (NP (NNP mars)))))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (NP (PRP it)) (PP (IN for) (NP (PRP us)))) (. .)))
+
+(S1 (S (CC but) (ADVP (RB before)) (NP (PRP we)) (VP (VBP go) (, ,) (NP (NP (DT a) (NN look)) (PP (IN at) (SBAR (WHNP (WP what)) (S (VP (AUX 's) (VP (VBG coming) (PRT (RP up)) (NP (JJ next) (NN week))))))))) (. .)))
+
+(S1 (S (NP (NP (DT a) (JJ controversial) (NN incinerator)) (ADVP (RB just) (RB about))) (VP (JJ ready) (S (VP (TO to) (VP (VB destroy) (NP (NNS weapons)) (PP (IN at) (NP (DT an) (NAC (NNP anniston) (, ,) (NNP alabama) (, ,)) (NN military) (NN facility))))))) (. .)))
+
+(S1 (S (NP (WP what)) (VP (MD might) (VP (AUX be) (NP (NP (DT the) (NN risk)) (PP (TO to) (NP (NP (NNS people)) (ADVP (RB downwind))))))) (. .)))
+
+(S1 (S (NP (NP (DT that) (NN story)) (CC and) (NP (JJ much) (JJR more))) (VP (VBG coming) (PRT (RP up)) (NP (JJ next) (NN week))) (. .)))
+
+(S1 (SINV (VP (VBG coming) (PRT (RP up)) (ADVP (RB next)) (PP (IN on) (`` ``) (NP (NNP cnn)))) (VP (VB live) (NP (NNP Sunday)) ('' '')) (NP (NP (DT a) (NN look)) (PP (IN at) (NP (NP (NP (NNP america) (POS 's)) (NN storage)) (PP (IN of) (NP (NN gas)))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (VP (VBN followed) (PP (IN by) (NP (`` ``) (NP (NNS people)) (PP (IN in) (NP (DT the) (NN news))) ('' '') (VP (VBG profiling) (NP (NP (NNP harrison) (NNP ford)) (CC and) (NP (NNP harry) (NNP potter)))))))) (. .)))
+
+(S1 (S (PP (IN at) (NP (CD 8:00) (JJ eastern))) (, ,) (NP (NNP cnn)) (VP (VBZ presents) (NP (NP (NN road)) (PP (TO to) (NP (NN baghdad))))) (. .)))
+

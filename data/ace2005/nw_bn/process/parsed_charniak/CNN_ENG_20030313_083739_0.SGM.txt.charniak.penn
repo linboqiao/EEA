@@ -1,0 +1,20 @@
+(S1 (S (SBAR (IN that) (S (NP (NP (PRP$ her) (JJR younger) (NN sister)) (, ,) (NP (NNP mary) (NNP katherine)) (, ,)) (VP (AUX was) (NP (NP (DT the) (NN one)) (SBAR (WHNP (WP who)) (S (VP (VP (VBD went) (PP (TO to) (NP (PRP$ her) (NN father)))) (CC and) (VP (VBD said) (, ,) (`` ``) (NP (NN dad)))))))))) (, ,) (NP (PRP i)) (VP (VBP think) (SBAR (S (NP (PRP i)) (VP (VBP know) (SBAR (WHNP (WP who)) (S (VP (AUX did) (NP (DT this))))))))) (. .) ('' '')))
+
+(S1 (S (CC but) (NP (PRP it)) (VP (VBD took) (NP (QP (DT some) (CD four)) (NNS months)) (SBAR (IN before) (S (NP (PRP they)) (VP (AUX were) (ADJP (JJ able) (S (VP (TO to) (VP (VP (VB get) (NP (DT a) (NN picture))) (CC and) (VP (VB identify) (NP (DT the) (NN picture)) (PP (IN as) (NP (NP (DT this) (NNP brian) (NNP david) (NNP mitchell)) (CC and) (ADVP (RB then)) (NP (NP (PRP$ his) (NN wife)) (, ,) (NP (NNP wanda) (CD barzee)))))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (JJ other) (NNS questions)) (, ,) (PP (IN of) (NP (NN course))) (, ,) (VP (AUX are) (SBARQ (WHADVP (WRB why)) (SQ (AUX did) (RB n't) (NP (NNP elizabeth) (NNP smart)) (VP (VB try) (PP (TO to) (NP (CD escae))))) (. ?)))))
+
+(S1 (SQ (AUX were) (RB there) (NP (NNS opportunities)) (ADJP (ADJP (RB perhaps) (SBAR (IN that) (S (NP (PRP she)) (VP (MD might) (VP (NNP ab) (VP (VB vible) (PP (TO to)))))))) (: --) (ADJP (JJ able) (S (VP (TO to) (VP (VB get) (PRT (RP away)) (PP (IN from) (NP (PRP$ her) (NNS abductors)))))))) (. ?)))
+
+(S1 (S (NP (DT the) (NN police)) (VP (AUX are) (VP (VBG saying) (SBAR (S (NP (PRP she)) (VP (VP (AUX was) (VP (NN abducted) (PP (IN by) (NP (NN knife) (NN point))))) (CC and) (VP (AUX was) (NP (DT an) (NN opportunity))) (CC and) (VP (MD may) (VP (AUX have) (VP (AUX been) (NP (NP (DT some) (NN kind)) (PP (IN of) (NP (NP (NN fear) (NN factor)) (VP (VBG going) (ADVP (RB on)))))))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX are) (VP (VBG seeing) (NP (DT a) (NN lot)) (ADVP (RB locally)) (ADVP (RB here)) (NP (NP (DT some) (NNS photographs)) (SBAR (WHNP (WDT that)) (S (VP (AUX are) (VP (VBG coming) (PRT (RP out)) (SBAR (WHNP (WDT that)) (S (VP (VBP show) (NP (NP (DT the) (CD three)) (, ,) (SBAR (WHNP (WDT that)) (S (VP (VBP show) (NP (NP (NNP mitchell)) (, ,) (NP (PRP$ his) (NN wife)) (, ,) (CC and) (SBAR (WHNP (WP who)) (S (NP (PRP they)) (VP (VBP believe) (S (VP (TO to) (VP (AUX be) (ADJP (NNP elizabeth) (JJ smart)) (PP (IN at) (NP (DT a) (NN party))) (PP (IN in) (NP (NNP September)))))))))))))))))))))))) (. .)))
+
+(S1 (S (NP (EX there)) (VP (AUX were) (NP (NP (NNS times)) (SBAR (S (ADVP (RB perhaps)) (NP (PRP they)) (VP (AUX were) (PP (IN in) (NP (DT a) (NN park))) (ADVP (RB somewhere)) (PP (IN in) (NP (NP (NN salt) (NN lake) (NN city)) (VP (ADVP (RB completely)) (VBN robed) (PP (IN in) (NP (DT these) (VBN veiled) (CC and) (NNS robes)))))) (SBAR (IN so) (S (NP (PRP you)) (VP (MD could) (RB not) (VP (VB see) (NP (PRP$ her) (NN face))))))))))) (. .)))
+
+(S1 (S (NP (EX there)) (VP (AUX are) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NP (NNS questions)) (VP (VBG coming) (PRT (RP out)) (PP (IN about) (SBAR (WHADVP (WRB why)) (S (NP (PRP she)) (VP (MD could) (RB not) (VP (VB get) (ADVP (RB away) (PP (IN from) (NP (PRP them)))))))))))) (, ,) (SBAR (WHNP (WDT that)) (S (VP (VBZ remains) (S (VP (TO to) (VP (AUX be) (VP (VBN answered)))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN police)) (VP (AUX are) (VP (VBG going) (S (VP (TO to) (VP (AUX be) (S (VP (VBG holding) (NP (DT a) (NN press) (NN conference)) (ADVP (RB later)) (NP (NN today))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX 're) (VP (VBG hoping) (S (VP (TO to) (VP (VB get) (NP (NP (JJR more) (NNS details)) (PP (IN about) (NP (DT that))))))))) (. .)))
+

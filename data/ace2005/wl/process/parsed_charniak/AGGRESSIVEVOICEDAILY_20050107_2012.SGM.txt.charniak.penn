@@ -1,0 +1,20 @@
+(S1 (S (NP (NP (DT The) (NN blood) (JJ red) (NN nation)) (PP (IN of) (NP (NNP China)))) (VP (AUX is) (VP (VBG trying) (S (VP (TO to) (VP (VB curb) (NP (NP (DT the) (NNS effects)) (PP (IN of) (NP (NP (DT a) (JJ devastating) (JJ 20-year-old) (NN policy)) (SBAR (WHNP (WDT that)) (S (VP (VBD outlawed) (NP (NNS women)) (PP (IN from) (S (VP (AUXG having) (NP (QP (JJR more) (IN than) (CD one)) (NN child)))))))))))))))) (. .)))
+
+(S1 (S (PP (IN As) (NP (DT a) (NN result))) (, ,) (NP (QP (RB only) (RB about) (CD 100)) (NNS girls)) (VP (AUX are) (VP (VBN born) (PP (IN for) (NP (DT every) (CD 119) (NNS boys))) (, ,) (SBAR (IN because) (S (NP (NNS couples)) (ADVP (RB traditionally)) (VP (VBP favor) (NP (NNS males))))))) (. .)))
+
+(S1 (S (S (NP (NNP Beijing)) (VP (AUX has) (VP (VBN set) (NP (NP (DT a) (NN goal)) (PP (IN of) (S (VP (VBG reversing) (NP (DT the) (NN imbalance)) (PP (IN by) (NP (CD 2010)))))))))) (, ,) (CC and) (S (S (VP (TO to) (VP (AUX do) (NP (DT this))))) (NP (PRP they)) (VP (MD will) (VP (VB outlaw) (NP (NP (DT the) (JJ selective) (NN abortion)) (PP (IN of) (NP (JJ female) (NNS fetuses)))) (S (VP (TO to) (VP (VB correct) (NP (DT an) (NN imbalance)) (PP (IN in) (NP (NP (DT the) (NN ratio)) (PP (IN of) (NP (NNS boys))) (PP (TO to) (NP (NNS girls))))))))))) (. .)))
+
+(S1 (S (CC So) (ADVP (RB now)) (PP (IN by) (S (VP (VBG killing) (NP (DT the) (NNS males))))) (NP (PRP they)) (VP (MD can) (ADVP (RB hopefully)) (VP (VB narrow) (NP (DT the) (NN gender) (NN gap)))) (. .)))
+
+(S1 (FRAG (WHNP (WP What) (NP (DT a) (NN country))) (. !)))
+
+(S1 (S (PP (IN From) (NP (NNP Reuters))) (: :) (S (NP (JJ Sex-selective) (NN abortion)) (VP (AUX is) (ADVP (RB already)) (VP (VBN banned)))) (CC but) (S (NP (NP (NNS technologies)) (PP (JJ such) (IN as) (NP (NN ultrasound)))) (VP (AUX have) (VP (VBN made) (S (NP (PRP it)) (ADJP (JJR easier)) (S (VP (TO to) (VP (VB know) (NP (NP (NP (DT a) (NN baby) (POS 's)) (NN gender)) (PP (IN in) (NP (NN advance)))))))) (, ,) (S (VP (VBG increasing) (NP (NP (DT the) (NNS chances)) (PP (IN for) (S (VP (VBG aborting) (NP (NNS girls))))))))))) (. .)))
+
+(S1 (S (PP (IN Despite) (NP (NP (DT a) (NN desire) (S (VP (TO to) (VP (VB curb) (NP (DT the) (NN sex) (NN imbalance)))))) (CC and) (NP (NP (DT a) (NN relaxation)) (PP (IN in) (NP (JJ recent) (NNS years))) (SBAR (WHNP (WDT that)) (S (VP (VBZ allows) (S (NP (JJ rural) (NNS families)) (VP (TO to) (VP (AUX have) (NP (CD two) (NNS children)) (SBAR (IN if) (S (NP (DT the) (JJ first)) (VP (AUX is) (NP (DT a) (NN girl)))))))))))))) (, ,) (NP (NNP China)) (VP (AUX has) (VP (VBN shown) (NP (NP (DT no) (NN sign)) (PP (IN of) (S (VP (VBG abandoning) (NP (DT the) (JJ one-child) (NN policy) (CC and) (NNS cracks)) (PRT (RP down)) (PP (IN on) (NP (NP (DT those)) (SBAR (WHNP (WP who)) (S (VP (VBP advocate) (PP (IN against) (NP (PRP it)))))))))))))) (. .)))
+
+(S1 (S (NP (CD One) (JJ such) (NN activist)) (VP (AUX is) (NP (NP (NNP Mao) (NNP Hengfeng)) (, ,) (SBAR (WHNP (WP who)) (S (VP (AUX was) (VP (VBN dismissed) (PP (IN in) (NP (CD 1988))) (PP (IN from) (NP (PRP$ her) (NN job))) (PP (IN at) (NP (DT a) (NNP Shanghai) (NN soap) (NN factory))) (PP (IN after) (S (VP (VBG becoming) (ADJP (JJ pregnant)) (NP (DT a) (JJ second) (NN time))))))))))) (. .)))
+
+(S1 (S (NP (JJ Last) (NNP April)) (, ,) (NP (DT the) (NNP Shanghai) (JJ public) (NN security) (NN bureau)) (VP (VBD sentenced) (NP (PRP her)) (PP (TO to) (NP (CD 18) (NNS months))) (PP (IN in) (NP (NP (DT a) (NN labor) (NN camp)) (PP (IN for) (S (VP (VBG campaigning) (PP (IN against) (NP (DT the) (JJ one-child) (NN policy))))))))) (. .)))
+
+(S1 (S (PP (IN In) (NP (JJ other) (NN news))) (: :) (NP (NNS feminists)) (ADVP (RB still)) (VP (VB believe) (SBAR (S (NP (PRP they)) (VP (AUX 're) (NP (JJ second-class) (NNS citizens)) (PP (IN in) (NP (DT the) (NNP United) (NNPS States))))))) (. .)))
+

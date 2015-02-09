@@ -1,0 +1,38 @@
+(S1 (S (S (NP (DT The) (NN market)) (VP (AUX did) (RB n't) (VP (AUX have) (NP (NP (DT an) (JJ intelligent) (NN way)) (SBAR (S (VP (TO to) (VP (VB react) (PP (TO to) (NP (DT this) (NN news))) (PRN (-LRB- -LRB-) (SBAR (IN except) (S (VP (TO to) (VP (VB send) (NP (NP (NNP NASDAQ)) (, ,) (SBAR (WHNP (WDT which)) (S (NP (PRP I)) (VP (AUX 've) (VP (AUX been) (VP (VBG cheerleading) (PP (IN for) (NP (DT a) (NN while)))))))) (, ,)) (ADVP (RB up) (NP (CD 10.46) (NN %))) (PP (IN in) (NP (NN sympathy))))))) (-RRB- -RRB-)))))))))) (, ,) (CC but) (S (NP (DT the) (NNP New) (NNP York) (NNP Stock) (NNP Exchange)) (VP (MD may) (ADVP (RB actually)) (VP (VB convert) (PP (TO to) (NP (DT a) (JJ for-profit) (NN entity)))))) (. .)))
+
+(S1 (S (S (NP (PRP It)) (VP (AUX 's) (ADJP (RB far) (RB too) (JJ clubby)) (ADVP (RB now)))) (, ,) (CC and) (S (SBAR (IN while) (S (NP (DT this) (NN move)) (VP (MD would) (RB n't) (VP (VB get) (ADJP (JJ rid) (PP (IN of) (NP (JJ nine-figure) (NNS paydays)))))))) (, ,) (NP (PRP it)) (VP (MD might) (VP (VB ensure) (SBAR (IN that) (S (NP (PRP they)) (ADVP (RB only)) (VP (VBP happen) (SBAR (WHADVP (WRB when)) (S (VP (VBN well-deserved)))))))))) (. .)))
+
+(S1 (S (RB Not) (VP (TO to) (VP (VB name) (NP (NNS names) (CC or) (NN anything)))) (. .)))
+
+(S1 (S (S (NP (DT The) (NN exchange)) (VP (VBZ needs) (NP (DT this)))) (: :) (S (S (NP (PRP it)) (VP (AUX 's) (VP (VBN ossified)))) (, ,) (S (NP (NP (DT the) (JJ real) (NNS owners)) (: --) (NP (NP (NNS holders)) (PP (IN of) (NP (NN exchange) (NNS seats)))) (: --)) (VP (AUX have) (VP (VBN seen) (NP (PRP$ their) (NN investment)) (VP (VB lose) (NP (CD 40) (NN %)) (PP (IN in) (NP (DT a) (NN year))) (PRN (-LRB- -LRB-) (SBAR (IN though) (S (NP (PRP they)) (VP (MD can) (ADVP (RB still)) (VP (VB earn) (S (NP (NP (DT an) (NN income)) (PP (IN from) (NP (PRP it)))) (VP (TO to) (VP (VB offset) (NP (DT the) (NNS losses))))))))) (-RRB- -RRB-)))))) (, ,) (CC and) (S (NP (DT the) (NNP NASDAQ)) (VP (AUX has) (VP (VBN undercut) (NP (NP (PRP$ their) (JJ traditional) (NN dominance)) (PP (IN among) (NP (NN growth) (NN companies-turned-blue) (NNS chips)))))))) (. .)))
+
+(S1 (S (INTJ (UH Heck)) (, ,) (NP (PRP they)) (VP (AUX 're) (ADVP (RB down) (PP (TO to) (NP (NP (QP (RB just) (IN over) (NN half))) (PP (IN of) (NP (PRP$ their) (JJ single-letter) (NNS symbols))))))) (. !)))
+
+(S1 (S (S (NP (PRP It)) (VP (AUX 's) (NP (DT a) (VBG dying) (NN organization)))) (, ,) (CC and) (S (NP (DT this)) (VP (MD will) (VP (AUX be) (NP (NP (RB just) (DT the) (NN jolt)) (SBAR (S (NP (PRP it)) (VP (VBZ needs) (PP (IN for) (NP (DT another) (NN couple))) (NP (NP (NNS decades)) (PP (IN of) (NP (NN somnambulant))) (VP (VBG staggering) (PP (IN before) (S (VP (AUXG being) (VP (ADVP (RB ultimately)) (VBN replaced) (PP (IN by) (NP (ADJP (ADVP (RB far) (RBR more)) (JJ efficient)) (NNS companies)))))))))))))))) (. .)))
+
+(S1 (NP (NP (JJ Full) (NN Disclosure)) (: :) (S (NP (`` ``) (NP (ADJP (ADVP (RB Far) (RBR more)) (JJ efficient)) (NNS companies)) (, ,) ('' '') (SBAR (S (ADVP (RB basically)) (VP (VBZ means) (S (`` ``) (NP (DT The) (NNP NASDAQ)))))) (, ,) ('' '')) (ADVP (RB so)) (VP (VB take) (NP (PRP it)) (PP (IN with) (NP (NP (DT a) (JJ gigantic) (NN grain)) (PP (IN of) (NP (NN salt))))))) (. .)))
+
+(S1 (NP (NP (JJ Secondary) (NN Disclosure)) (: :) (S (S (NP (PRP You)) (VP (MD can) (VP (VB take) (NP (DT the) (JJ above)) (PP (IN at) (NP (NN face) (NN value)))))) (: ;) (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB own) (NP (NN stock)) (PP (IN in) (NP (DT a) (NN salt) (NN company))))))) (. .)))
+
+(S1 (S (NP (NN Everything)) (VP (VBZ comes) (PP (IN with) (NP (NP (NNS lots)) (PP (IN of) (NP (NP (NNS grains)) (PP (IN of) (NP (NN salt)))))))) (. .)))
+
+(S1 (S (ADVP (RB Ever)) (VP (VB read) (NP (DT the) (NN label)) (PP (IN on) (NP (DT a) (NN soup) (NN can)))) (. ?)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (ADJP (JJ amazing) (SBAR (S (NP (PRP they)) (VP (MD can) (VP (VB squeeze) (NP (DT any) (NN liquid)) (PP (IN in) (NP (RB there))))))))) (. .)))
+
+(S1 (S (CC And) (SBAR (IN if) (S (NP (PRP you)) (VP (VB crumble) (PRT (RP up)) (NP (NP (NNS crackers)) (PP (IN in) (NP (RB there))))))) (, ,) (NP (DT that)) (VP (AUX 's) (NP (ADJP (RB even) (JJR more)) (NN salt))) (. .)))
+
+(S1 (S (INTJ (UH Well)) (, ,) (NP (PRP I)) (VP (AUX 'm) (RB not) (ADJP (JJ sure) (SBAR (WHADVP (WRB how)) (S (NP (PRP I)) (VP (VBP take) (NP (DT the) (NNP NYSE) (NNS news))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP think) (SBAR (S (NP (PRP I)) (VP (VBP agree) (PP (IN with) (NP (PRP you))) (PP (IN on) (NP (DT the) (JJ wreckless) (NN compensation) (NN thing))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (ADVP (RB also)) (VP (VBP think) (SBAR (IN that) (S (NP (NNP Sears-Kmart)) (VP (MD should) (VP (VB come) (PRT (RP up)) (PP (IN with) (NP (DT a) (JJ new) (NN name))) (ADVP (RB altogether))))))) (. .)))
+
+(S1 (S (S (NP (DT Those) (NNS stores)) (VP (AUX are) (ADJP (JJ deadzones)))) (, ,) (CC and) (S (NP (PRP they)) (VP (AUX need) (NP (DT some) (NN buzz)))) (. .)))
+
+(S1 (S (VP (VP (VB Change) (NP (DT the) (NNS names))) (, ,) (VP (VB paint) (NP (DT the) (NNS buildings))) (, ,) (VP (VB reorganize) (NP (DT a) (JJ little))) (, ,) (CC and) (VP (VB hire) (NP (NP (NNS strippers)) (PP (IN for) (NP (NNS cashiers)))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 'm) (RB not) (ADJP (JJ sure) (SBAR (WHADVP (WRB how)) (S (NP (DT that) (JJ last) (NN idea)) (VP (VBD got) (PRT (RP in)) (ADVP (RB there))))))) (. .)))
+
+(S1 (S (VP (MD Must) (VP (AUX be) (NP (NNP Friday)))) (. .)))
+

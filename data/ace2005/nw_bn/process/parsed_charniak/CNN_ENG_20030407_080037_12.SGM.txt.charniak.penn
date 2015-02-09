@@ -1,0 +1,6 @@
+(S1 (S (NP (NNP walt) (NNP rodgers)) (, ,) (NP (JJ 3-7th) (NN cavalry)) (VP (VBZ says) (NP (NP (JJ iraqi) (NN missile) (NN hit) (NN operation) (NN center)) (PP (IN for) (NP (NP (JJ 2nd) (NN brigade) (NN 3rd) (NN infantry) (NNS zrigs)) (ADJP (JJ south) (JJ baghdad)) (, ,) (NP (QP (IN at) (JJS least) (CD four)) (JJ dead)) (, ,) (NP (CD two) (NNS soldiers)) (CC and) (NP (CD two) (NNS journalists)))))) (. .)))
+
+(S1 (S (NP (JJ other) (NN report) (QP (IN at) (JJS least) (CD 15))) (VP (AUX are) (ADJP (JJ wounded))) (. .)))
+
+(S1 (S (NP (NP (DT some)) (PP (IN of) (NP (PRP them)))) (VP (ADVP (RB critically)) (, ,) (VP (VBP hope) (S (VP (TO to) (VP (VB get) (NP (NNP walt)) (PRT (RP up)) (PP (IN in) (NP (DT a) (JJ couple) (NNS minutes))) (S (VP (TO to) (VP (VB get) (NP (NP (JJR more) (NN information)) (PP (IN on) (SBAR (WHNP (WP what)) (S (VP (AUX is) (VP (VBG happening) (ADVP (RB there)))))))))))))))) (. .)))
+

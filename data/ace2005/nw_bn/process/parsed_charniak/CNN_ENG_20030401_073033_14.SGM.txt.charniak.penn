@@ -1,0 +1,50 @@
+(S1 (S (ADVP (RB meanwhile)) (, ,) (SBAR (IN as) (S (NP (NN war)) (VP (AUX is) (VP (VBN fought) (ADVP (NP (DT a) (NN world)) (RB away)))))) (, ,) (NP (UCP (JJ federal) (, ,) (NN state) (CC and) (JJ local)) (NNS authorities)) (VP (VBP face) (NP (NP (PRP$ their) (JJ own) (NN battle)) (VP (VBG keeping) (S (NP (NNS americans)) (ADJP (JJ safe) (PP (IN at) (NP (NN home)))))))) (. .)))
+
+(S1 (S (NP (NNP president) (NNP bush)) (VP (VBD said) (NP (NN yesterday)) (SBAR (S (NP (NP (DT the) (NN threat)) (PP (IN of) (NP (JJ domestic) (NN terrorism)))) (VP (VBZ remains) (ADJP (JJ high)))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (VBG dying) (NN regime)) (PP (IN if) (NP (NNP iraq)))) (VP (MD may) (VP (VB try) (S (VP (TO to) (VP (VB bring) (NP (NN terror)) (PP (TO to) (NP (PRP$ our) (NN shore) (NNS shores)))))))) (. .)))
+
+(S1 (S (NP (NP (JJ other) (NNS parts)) (PP (IN of) (NP (DT the) (JJ global) (NN terror) (NN network)))) (VP (MD may) (VP (VB view) (NP (DT this)) (PP (IN as) (NP (NP (DT a) (NN moment)) (SBAR (S (VP (TO to) (VP (VB strike))))))) (, ,) (S (VP (VBG thinking) (SBAR (IN that) (S (NP (PRP we)) (VP (AUX 're) (VP (VBN distracted))))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX 're) (ADJP (JJ wrong))) (. .)))
+
+(S1 (S (SBAR (WHNP (WP what)) (S (ADVP (RB still)) (VP (VBZ needs) (S (VP (TO to) (VP (AUX be) (VP (AUX done) (S (VP (TO to) (VP (VB keep) (S (NP (NNS americans)) (ADJP (JJ safe) (PP (IN at) (NP (NN home))))))))))))))) (, ,) (NP (NNP steven) (NNP berle)) (VP (VBZ tacks) (NP (DT that) (NN issue)) (PP (IN in) (`` ``) (PP (IN after) (SBAR (WHADVP (WRB how)) (S (NP (NNP america)) (VP (VBN confronted) (NP (DT the) (NNP September) (JJ 12th) (NN era)))))))) (. .) ('' '')))
+
+(S1 (NP (NNS congratulations) (. .)))
+
+(S1 (S (VP (VB thank) (NP (PRP you))) (. .)))
+
+(S1 (S (NP (WP what)) (VP (VBZ comes) (PRT (RP out)) (NP (NN yesterday)) (, ,) (PP (IN on) (NP (CD two) (NNS best-sellers) (NN list)))) (. .)))
+
+(S1 (FRAG (ADVP (RB so) (RB far)) (, ,) (ADVP (RB so) (RB good)) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (AUX 've) (VP (VBN spent) (PP (IN over) (NP (NP (DT a) (NN year)) (VP (VBG investigating) (NP (DT the) (NN subject))))))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (AUX had) (NP (NP (NP (JJ unprecedented) (NN access)) (PP (CONJP (RB not) (RB only)) (PP (TO to) (NP (NNP secretary) (NNP ridge))) (CC but) (NP (DT the) (NN attorney) (NN general)))) (CC and) (NP (NP (JJ other) (NN player)) (PP (IN in) (NP (DT this) (JJ post-september) (JJ 11th) (NN environment)))))) (. .)))
+
+(S1 (SBARQ (WHNP (WRB how) (JJ vulnerable)) (SQ (AUX do) (NP (PRP we)) (VP (VBP continue) (S (VP (TO to) (VP (AUX be)))))) (. ?)))
+
+(S1 (S (ADVP (RB well)) (, ,) (S (ADJP (RB quite) (JJ vulnerable)) (PP (IN in) (NP (DT some) (NNS places)))) (CC and) (S (ADVP (RB yet)) (NP (PRP we)) (VP (AUX 've) (VP (VBN made) (NP (JJ great) (NNS strides))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NN access)) (SBAR (S (NP (PRP i)) (VP (AUX had))))) (VP (AUX was) (RB not) (PP (ADVP (RB only)) (IN at) (NP (NP (NN top)) (PP (IN but) (NP (NP (DT the) (NNS people)) (SBAR (WHNP (WP who)) (S (VP (AUX were) (PP (IN on) (NP (DT the) (JJ front) (NNS lines))))))))))) (. .)))
+
+(S1 (S (CC and) (NP (DT this)) (VP (AUX is) (ADVP (RB really)) (NP (NP (DT the) (PP (IN behind) (NP (DT the) (NNS scenes))) (NN story)) (PP (IN of) (NP (NP (NN everything)) (SBAR (S (NP (PRP they)) (VP (AUX had) (VP (AUX been) (VP (VBG doing) (S (VP (TO to) (VP (VB make) (S (NP (DT this) (NN country)) (ADJP (JJR safer))))))))))))))) (. .)))
+
+(S1 (S (S (NP (PRP i)) (VP (VBP think) (SBAR (S (NP (PRP we)) (VP (VBD decided) (PP (IN on) (NP (NP (DT the) (NN morning)) (PP (IN of) (NP (NNP September) (JJ 12th))) (SBAR (S (NP (PRP we)) (VP (AUX 're) (RB not) (VP (VBG going) (S (VP (TO to) (VP (AUX be) (NP (NN victim)))))))))))))))) (, ,) (NP (PRP we)) (VP (AUX 're) (RB not) (ADVP (RB just)) (VP (VBG going) (S (VP (TO to) (VP (VB sit) (ADVP (RB there))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX 're) (VP (VBG going) (S (VP (TO to) (VP (VB try) (S (VP (TO to) (VP (AUX do) (NP (NN something)))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX 're) (RB not) (ADVP (RB just)) (VP (VBG going) (S (VP (TO to) (VP (VB say) (SBAR (S (NP (PRP we)) (VP (AUX 're) (ADJP (JJ lucky) (SBAR (S (NP (PRP we)) (VP (AUX did) (RB n't) (VP (VB get) (VP (VBN attacked) (NP (NN today)))))))))))))))) (. .)))
+
+(S1 (S (PP (PP (IN in) (NP (DT the) (NNS ports))) (, ,) (PP (IN at) (NP (DT the) (NNS airports))) (, ,) (RB even) (PP (IN with) (NP (PRP$ our) (NN food) (NN supply)))) (, ,) (NP (PRP we)) (VP (AUX have) (VP (VBN taken) (NP (NP (DT all) (NNS kinds)) (PP (IN of) (NP (NNS steps)))))) (. .)))
+
+(S1 (S (CC but) (NP (PRP we)) (VP (AUX are) (ADJP (JJ vulnerable))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX 're) (ADJP (JJ vulnerable)) (ADVP (RB right) (RB out)) (PP (IN on) (NP (DT the) (NNS streets))) (ADVP (RB here))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX 're) (ADJP (JJ vulnerable)) (PP (IN in) (NP (JJ mass) (NN transit) (NNS systems))) (SBAR (IN because) (S (NP (PRP we)) (VP (MD ca) (RB n't) (VP (VB involve) (S (NP (DT this) (NN problem)) (VP (VB infin) (NP (NP (DT any) (NN lu)) (SBAR (S (NP (PRP we)) (VP (AUX 've) (VP (VBN made) (NP (JJ good) (NNS strides)) (PP (IN in) (NP (NP (DT the) (JJ last)) (SBAR (S (NP (PRP we)) (VP (AUX 're)))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (NP (NP (DT the) (NN story)) (SBAR (S (NP (PRP i)) (VP (VBP try) (S (TO to) (VP (TO to) (VP (VB tell) (PP (IN about) (NP (NP (DT the) (NNS men) (CC and) (NNS women)) (SBAR (WHNP (WP who)) (S (VP (AUX have) (VP (VBN brought) (NP (PRP us)) (NP (DT this) (NN point)))))))))))))))) (. .)))
+
+(S1 (S (VP (MD can) (VP (VB the)))))
+

@@ -1,0 +1,74 @@
+(S1 (SBARQ (RB so) (WHNP (WP what)) (SQ (AUX are) (NP (NP (DT the) (NNS clintons) (, ,) (NNP ford) (CC and) (NNP arnold) (NN schwarzenegger)) (CC and) (NP (NP (DT the) (NN cast)) (PP (IN of) (NP (`` ``) (NNS friends) ('' ''))))) (VP (AUX have) (PP (IN in) (NP (NN common))))) (. ?)))
+
+(S1 (S (NP (NP (PRP they)) (NP (DT all))) (VP (VBP love) (NP (NNP california))) (. .)))
+
+(S1 (S (S (NP (DT that)) (VP (VP (AUX is) (ADVP (RB certainly)) (ADJP (JJ true))) (CC and) (VP (VBP know) (NP (NNP aaron) (NNP tonkin))))) (CC and) (S (S (VP (VBG according) (S (VP (TO to) (S (VP (TO to) (`` ``) (ADJP (NN vanity) (JJ fair)))))))) (, ,) ('' '') (NP (PRP he)) (VP (AUX 's) (PP (IN at) (NP (NP (DT the) (NN heart)) (PP (IN of) (NP (NP (PDT half) (DT a) (NN dozen) (NNS investigations)) (PP (IN with) (NP (NP (NN fraud)) (CC and) (NP (JJ angry) (NN investor) (NN lawsuits) (NN a-plenty)))))))))) (. .)))
+
+(S1 (S (S (VP (VBG joining) (NP (PRP us)))) (VP (AUX is) (NP (NNP brian) (NN burrow) (S (VP (TO to) (VP (VB explain) (NP (PRP it)) (PP (IN for) (NP (PRP us)))))))) (. .)))
+
+(S1 (FRAG (WHNP (WP who)) (NP (DT this) (NN guy)) (. ?)))
+
+(S1 (NP (NNP garn) (NNP tonkin) (. ?)))
+
+(S1 (SQ (NNP brian) (, ,) (MD can) (NP (PRP you)) (VP (VB hear) (NP (PRP me))) (. ?)))
+
+(S1 (S (NP (PRP i)) (VP (VBP think) (S (VP (VBD heard) (S (NP (NN someone)) (VP (VB say) (NP (NN something))))))) (. .)))
+
+(S1 (SQ (MD can) (NP (PRP you)) (VP (VB hear) (NP (PRP me))) (. ?)))
+
+(S1 (S (NP (PRP you)) (VP (AUX 're) (PP (IN on) (NP (DT the) (NN air)))) (. .)))
+
+(S1 (S (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (JJ great) (NNS moments)) (PP (IN of) (NP (JJ live) (NN television)))))) (, ,) (VP (AUX is) (RB n't) (NP (PRP it))) (. ?)))
+
+(S1 (SQ (NNP bliian) (, ,) (MD can) (NP (PRP you)) (VP (VB hear) (NP (PRP me))) (. ?)))
+
+(S1 (NP (DT all) (NN right) (. .)))
+
+(S1 (S (S (NP (PRP we)) (VP (MD 'll) (VP (VB take) (NP (DT a))))) (: --) (S (NP (PRP i)) (VP (MD can) (VP (VB hear) (NP (PRP you)) (ADVP (RB now)) (, ,) (NP (NNP anderson))))) (. .)))
+
+(S1 (FRAG (INTJ (UH well)) (, ,) (RB maybe) (RB not) (NP (NP (NNP k.)) (SBAR (S (NP (PRP you)) (VP (VBP hear) (NP (DT many)))))) (. ?)))
+
+(S1 (FRAG (ADVP (RB just) (RB barely)) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (MD 'll) (VP (VB take) (NP (DT a) (JJ short) (NN break)))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (MD 'll) (VP (AUX be) (ADJP (JJ right)) (ADVP (RB back)))) (. .)))
+
+(S1 (S (VP (VB become) (NP (NP (DT a) (NN member)) (PP (IN of) (: ...))) (: ...) (PP (IN at) (NP (NN westin.com)))) (. .)))
+
+(S1 (S (PP (IN jooirx) (S (VP (VBG joining) (NP (PRP us))))) (, ,) (NP (NNP brian)) (VP (VBZ burrow)) (. .)))
+
+(S1 (SBARQ (WHNP (WP who)) (SQ (AUX is) (NP (NNP aaron) (NNP tonkin))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX is) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (JJS biggest)) (PP (IN if) (NP (NP (RB not) (DT the) (JJS biggest) (NNS names)) (PP (IN in) (NP (NP (DT the) (NN world)) (PP (IN of) (NP (NNP hollywood) (NNS fund-raisers))))))))))) (. .)))
+
+(S1 (S (NP (NP (DT a) (NN person)) (SBAR (WHNP (WP who)) (S (VP (MD would) (VP (VB put) (PRT (RP together)) (NP (NNS celebrities)) (PP (IN with) (NP (NNS charities)))))))) (VP (TO to) (VP (VB raise) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NN money)))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX was) (ADVP (RB perhaps)) (VP (ADVP (RB best)) (VBN known) (PP (IN as) (NP (NP (NN kind)) (PP (IN of) (NP (NP (DT the) (JJ focal) (NN point)) (PP (IN between) (NP (NP (NNP bill) (CC and) (NNP hillary) (NNP clinton)) (PP (IN in) (NP (DT the) (NNP hollywood) (NN community))))))))))) (. .)))
+
+(S1 (S (SBAR (WHNP (WP what)) (S (VP (AUX 's) (ADJP (JJ interesting))))) (, ,) (NP (PRP i)) (VP (VBP mean) (, ,) (S (VP (VBG reading) (NP (NP (DT the) (NN article)) (PRN (, ,) (ADVP (RB basically)) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (DT the) (NNS celebrities))) (VP (VBN paid) (PP (IN by) (NP (PRP him))) (S (VP (TO to) (VP (VB attend) (NP (NN charity) (NNS functions)))))))))))) (. .)))
+
+(S1 (INTJ (UH yeah) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (NNS things)) (SBAR (WHNP (WDT that)) (S (VP (AUX was) (ADJP (RBS most) (JJ surprising) (PP (TO to) (NP (PRP me))))) (VP (AUX was) (PP (IN in) (S (VP (VBG learning) (SBAR (IN that) (S (PP (IN in) (NP (NP (NP (CD one)) (PP (IN of) (NP (DT the)))) (: --) (NP (NP (CD one) (JJ major) (NN fund-raiser)) (, ,) (PP (IN for) (NP (NN instance))) (, ,) (VP (VBG honoring) (NP (JJ former) (NN president) (NNP clinton)))))) (, ,) (S (NP (JJ former) (NN president) (NNP ford)) (VP (VBN paid) (PP (IN by) (NP (NNP mr.) (NNP tonkin))))) (CC and) (S (NP (NNP sylvester) (NN stl) (NN loan)) (VP (AUX was) (VP (VBN paid)))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (VBD thought) (SBAR (S (NP (PRP it)) (VP (AUX was) (PP (IN for) (NP (NN charity))))))) (. .)))
+
+(S1 (INTJ (UH yeah) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (VBP guess) (ADVP (RB apparently)) (NP (NP (RB not) (CC and) (DT a) (NN lot)) (PP (IN of) (NP (NP (DT the) (NNS celebrities)) (VP (VBG making) (NP (NN money)) (PP (IN from) (NP (DT this)))))))) (. .)))
+
+(S1 (SQ (AUX are) (NP (PRP they)) (VP (VBG reporting) (NP (PRP it)) (PP (TO to) (NP (DT the) (NNP irs)))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (VBP guess) (NP (NP (QP (IN at) (JJS least) (CD one)) (NNP irs) (NN investigation)) (PP (IN about) (NP (DT this))))) (. .)))
+
+(S1 (S (ADVP (RB right) (RB now)) (, ,) (NP (NNP aaron) (NNP tonkin)) (VP (NNS factors) (PP (IN in) (NP (QP (DT no) (JJR fewer) (IN than) (CD seven)) (JJ different) (UCP (JJ federal) (CC and) (NN state)) (NNS investigations)))) (. .)))
+
+(S1 (S (NP (NP (CD one)) (PP (IN of) (NP (PRP them)))) (VP (AUXG being) (NP (NP (DT an) (NNP irs) (NN investigation)) (PP (IN into) (NP (NP (QP (JJ several) (CD million)) (NNS dollars)) (ADJP (JJ worth) (PP (IN of) (NP (NN cash) (CC and) (NN gift)))))) (SBAR (WHNP (WDT that)) (S (VP (AUX is) (SBAR (S (NP (PRP he)) (VP (VBD gave) (PP (TO to) (NP (JJ many) (JJ many) (NNP hollywood) (NNS celebrities))))))))))) (. .)))
+
+(S1 (S (ADVP (RB now)) (, ,) (NP (PRP$ his) (NN attorney)) (VP (VBD gave) (NP (PRP us)) (NP (NP (DT a) (NN statement)) (SBAR (S (NP (PRP i)) (VP (MD 'll) (VP (VB put) (NP (PRP it)) (PP (IN on) (NP (DT the) (NN screen))))))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (VBZ says) (: --) (SQ (AUX is) (NP (DT that)) (ADJP (JJ possible)))) (. ?)))
+
+(S1 (S (PP (IN in) (NP (NN fact))) (, ,) (INTJ (VB allege)) (VP (VBD ledged) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (NN principle) (NNS reasons)) (SBAR (S (NP (PRP he)) (VP (VBD took) (NP (ADJP (RB so) (JJ much)) (NN fun)) (PP (IN from)))))))))))
+

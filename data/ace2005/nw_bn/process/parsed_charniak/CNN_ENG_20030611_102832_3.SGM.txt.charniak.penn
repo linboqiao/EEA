@@ -1,0 +1,14 @@
+(S1 (S (NP (PRP we)) (VP (AUX are) (ADVP (RB now)) (VP (VBG hitting) (NP (CD 33)) (PP (IN after) (NP (DT the) (NN hour))) (NP (DT this) (NN morning)))) (. .)))
+
+(S1 (S (NP (JJ embattled) (NN imclone) (NN founder) (NNP sam) (NNP waksal)) (VP (VBN sentenced) (PP (TO to) (NP (QP (JJR more) (IN than) (CD seven)) (NNS years))) (PP (IN in) (NP (NN prison))) (PP (IN for) (NP (NN insider) (NN trading)))) (. .)))
+
+(S1 (S (NP (DT the) (NN scandal)) (VP (VBD drew) (NP (JJ national) (NNS headlines)) (SBAR (WHADVP (WRB when)) (S (NP (PRP it)) (VP (VBD ensnared) (NP (JJ domestic) (NN diva) (NNP martha) (NNP stewart)))))) (. .)))
+
+(S1 (S (NP (NNP waksal)) (VP (VBD admitted) (S (VP (VBG advising) (S (S (NP (PRP$ his) (NN daughter)) (VP (TO to) (VP (VB dump) (NP (PRP$ her) (NN stock))))) (, ,) (S (NP (NNP stewart)) (VP (AUX is) (VP (AUXG being) (VP (VBN accused) (PP (IN of) (S (VP (VBG unloading) (NP (PRP$ her) (NN stock)) (PP (IN after) (S (ADVP (RB also)) (VP (VBG learning) (NP (DT some) (JJ inside) (NN information)))))))))))))))) (. .)))
+
+(S1 (S (S (NP (NNP waksal)) (VP (AUX is) (NP (NP (DT the) (JJ first) (NN chief) (NN executive)) (SBAR (S (VP (TO to) (VP (AUX be) (VP (VBN sentenced) (PP (IN in) (NP (NP (DT a) (NN wave)) (PP (IN of) (NP (JJ corporate) (NNS scandals))))))))))))) (CC and) (S (NP (DT that)) (VP (VBD started) (PP (IN with) (NP (DT the) (JJ big) (NNP enron) (NN bankruptcy))) (PP (IN into) (NP (CD 2001))))) (. .)))
+
+(S1 (S (NP (NP (JJ top) (NNS executives)) (PP (IN at) (NP (DT the) (NN company)))) (VP (VBD accused) (PP (IN of) (S (VP (VBG cooking) (NP (DT the) (NNS books)) (S (VP (TO to) (VP (VB hide) (NP (NP (NNS billions)) (PP (IN of) (NP (NNS dollars))) (PP (IN in) (NP (NN debt))))))))))) (. .)))
+
+(S1 (S (NP (NP (JJ former) (NNP enron) (NN vice) (NN president) (NN sherron) (NNP watkins)) (SBAR (WHNP (WP who)) (S (VP (VBD wrote) (NP (NP (DT that) (JJ now-famous) (NN memo)) (VP (VP (VBG questioning) (NP (DT the) (NN accounting) (NN practice))) (CC and) (VP (VBG joining) (NP (PRP us)) (ADVP (RB now)) (PP (IN from) (NP (NNP houston)))))) (, ,) (S (NP (PRP we)) (VP (VBP want) (S (VP (TO to) (VP (VB talk) (PP (TO to) (NP (PRP her))) (PP (IN about) (NP (NP (DT the) (NN fate)) (PP (IN of) (NP (PRP$ her) (NN form)))))))))))))) (VP (AUX are) (NP (NN company)) (SBAR (IN as) (S (NP (NN justice) (NN department)) (VP (VBZ continues) (S (VP (TO to) (VP (VB build) (NP (NP (PRP$ its) (NN case)) (PP (IN against) (NP (NP (JJ key) (JJ enroan) (NNS executives)) (CC and) (NP (NNP insight))))) (PP (IN on) (NP (NP (RB maybe) (DT some) (JJ other) (NNS headlines)) (SBAR (S (NP (PRP we)) (VP (AUX are) (VP (VBG seeing) (NP (DT this) (NN morning))))))))))))))) (. .)))
+

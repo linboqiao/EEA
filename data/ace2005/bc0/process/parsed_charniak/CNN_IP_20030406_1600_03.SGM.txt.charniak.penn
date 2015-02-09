@@ -1,0 +1,56 @@
+(S1 (S (NP (NP (DT An) (JJ apparent) (JJ friendly) (NN fire) (NN incident)) (PP (IN in) (NP (JJ northern) (NNP Iraq)))) (VP (AUX is) (VP (VBG taking) (NP (NP (JJR more)) (PP (IN of) (NP (NP (DT a) (NN toll)) (PP (IN on) (NP (JJ Kurdish) (NNS leaders))))) (SBAR (IN than) (S (NP (PRP we)) (VP (VBD knew) (PP (IN at) (ADVP (JJ first))))))))) (. .)))
+
+(S1 (S (NP (CD Eighteen) (NNS people)) (VP (AUX are) (ADVP (RB now)) (VP (VBN reported) (S (ADJP (JJ dead))))) (. .)))
+
+(S1 (S (CC And) (NP (EX there)) (VP (AUX are) (NP (NP (JJ late) (NNS reports)) (SBAR (WHNP (WDT that)) (S (NP (DT the) (CD 45) (JJ wounded)) (VP (VBP include) (NP (NP (DT the) (NN brother)) (CC and) (NP (NP (DT a) (NN son)) (PP (IN of) (NP (DT a) (JJ Kurdish) (JJ political) (NN leader)))))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Julian) (NNP Manyon)) (PP (IN of) (NP (NNP ITN)))) (VP (AUX has) (NP (NP (JJR more)) (PP (IN from) (NP (NNP Northern) (NNP Iraq))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX is) (NP (DT another) (JJ friendly) (NN fire) (NN disaster))) (. .)))
+
+(S1 (S (NP (DT This) (NN morning)) (, ,) (NP (DT an) (NNP American) (NN bomb)) (VP (VBD destroyed) (NP (NP (DT a) (NN convoy)) (VP (VBG carrying) (NP (NP (JJ high) (NNS officials)) (PP (IN of) (NP (NP (DT the) (NNP Kurdish) (NNP Peshmerga) (NNS forces)) (, ,) (SBAR (WHNP (WDT which)) (S (VP (AUX have) (VP (AUX been) (VP (VBG fighting) (PP (IN alongside) (NP (DT the) (NNPS Americans))) (PP (IN on) (NP (DT the) (JJ northern) (NN front)))))))))))))) (. .)))
+
+(S1 (S (NP (NP (QP (IN At) (JJS least) (CD 17)) (NNP Kurdish) (NNS commanders)) (CC and) (NP (PRP$ their) (NNS guards))) (VP (AUX were) (VP (VBN killed) (, ,) (ADVP (IN along) (PP (IN with) (NP (NP (DT an) (NN interpreter)) (VP (VBG working) (PP (IN for) (NP (DT the) (NNP BBC))))))))) (. .)))
+
+(S1 (S (NP (QP (JJR More) (IN than) (CD 40))) (VP (AUX were) (VP (VBN injured))) (. .)))
+
+(S1 (S (NP (NP (NP (DT The) (JJ military) (NN chief)) (PP (IN of) (NP (NP (DT the) (NNP Kurdish) (NNP KDP)) (, ,) (NP (NP (DT the) (NN brother)) (PP (IN of) (NP (PRP$ their) (NN leader))))))) (, ,) (NP (NP (NNP Massud) (NNP Barzani)) (PRN (-LRB- -LRB-) (NP (CD ph)) (-RRB- -RRB-))) (, ,)) (VP (AUX was) (VP (ADVP (RB gravely)) (VBN hurt))) (. .)))
+
+(S1 (S (PRN (-LRB- -LRB-) (PP (IN on) (NP (NN camera))) (-RRB- -RRB-)) (: :) (S (S (VP (VBG Trying) (S (VP (TO to) (VP (VB organize) (NP (DT a) (JJ northern) (NN front)) (PP (IN with) (NP (NP (QP (RB just) (DT a) (JJ few) (CD hundred)) (NNP U.S.) (JJ Special) (NNP Forces) (NNS troops)) (CC and) (NP (DT the) (ADJP (RB poorly) (VBN armed)) (NNP Kurdish) (NNP Peshmerga) (NNS guerrillas))))))))) (VP (AUX was) (ADVP (RB always)) (VP (VBG going) (S (VP (TO to) (VP (AUX be) (NP (DT a) (JJ high-risk) (NN exercise)))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN idea)) (VP (AUX was) (S (VP (TO to) (VP (VB open) (NP (DT the) (NN way)) (PP (IN with) (NP (NP (JJ heavy) (JJ sustained) (JJ American) (NN bombing)) (PP (IN of) (NP (JJ Iraqi) (NNS positions))))))))) (. .)))
+
+(S1 (S (CC But) (NP (NN today)) (, ,) (NP (NP (PRP it)) (NP (DT all))) (VP (VBD went) (ADJP (RB disastrously) (JJ wrong))) (. .)))
+
+(S1 (S (-LRB- -LRB-) (NP (NNP voice-over)) (-RRB- -RRB-) (: :) (SBAR (RB Even) (IN as) (S (NP (PRP we)) (VP (VBN filmed) (NP (DT the) (NN wreckage))))) (, ,) (NP (NNP U.S.) (NNS jets)) (VP (AUX were) (ADVP (RB still)) (VP (VBG dropping) (NP (PRP$ their) (NNS bombs)) (ADVP (RB nearby)))) (. .)))
+
+(S1 (S (NP (NN Giant) (NNS explosions)) (VP (VBD erupted) (PP (IN down) (NP (DT the) (NN road)))) (. .)))
+
+(S1 (S (ADVP (RB Earlier)) (, ,) (NP (PRP we)) (VP (AUX had) (VP (VBN joined) (NP (NP (DT another) (NN convoy)) (PP (IN of) (NP (NP (NNP U.S.) (JJ Special) (NNS Forces) (NNS troops)) (CC and) (NP (JJ Kurdish) (NNS fighters))))) (SBAR (IN as) (S (NP (PRP they)) (VP (VBD tried) (S (VP (TO to) (VP (VB move) (ADVP (RB south)) (PP (IN through) (NP (NP (NN country)) (VP (VBN abandoned) (PP (IN by) (NP (DT the) (JJ Iraqi) (NN army)))))))))))))) (. .)))
+
+(S1 (S (PP (IN At) (ADJP (JJ first))) (, ,) (NP (DT all)) (VP (AUX was) (ADJP (JJ calm))) (. .)))
+
+(S1 (S (NP (JJ American) (NNS troops)) (VP (VBD controlled) (NP (DT the) (NN operation)) (PP (IN from) (NP (DT a) (NN rooftop)))) (. .)))
+
+(S1 (S (ADVP (RB Then)) (, ,) (SBAR (IN as) (S (NP (DT the) (NNPS Kurds)) (VP (VBD advanced) (ADVP (RB again))))) (, ,) (NP (DT the) (NNP Iraqis)) (VP (VBD opened) (PRT (RP up))) (. .)))
+
+(S1 (S (PRN (-LRB- -LRB-) (PP (IN on) (NP (NN camera))) (-RRB- -RRB-)) (: :) (ADVP (RB Now)) (NP (PRP we)) (VP (AUX 're) (VP (VBG hearing) (NP (NP (DT the) (NN boom)) (PP (IN of) (NP (JJ Iraqi) (NNS guns)))) (SBAR (IN as) (S (NP (PRP they)) (VP (VB fire) (PP (IN towards) (NP (PRP$ our) (NNS positions)))))))) (. .)))
+
+(S1 (S (S (NP (DT All) (NN morning)) (, ,) (NP (DT the) (NNPS Kurds)) (VP (AUX have) (VP (AUX been) (VP (VBG trying) (S (VP (TO to) (VP (VB advance)))))))) (, ,) (CC and) (S (NP (DT that)) (VP (AUX was) (NP (NP (DT the) (NN shell)) (VP (VBG going) (ADVP (RB off)))))) (. .)))
+
+(S1 (S (S (PRN (-LRB- -LRB-) (NP (NNP voice-over)) (-RRB- -RRB-)) (: :) (NP (DT The) (JJ Iraqi) (NNS gunners)) (ADVP (RB rapidly)) (VP (VBD found) (NP (PRP$ our) (NN range)))) (, ,) (CC and) (S (NP (PRP we)) (VP (VBD took) (NP (NN refuge)) (PP (IN in) (NP (DT an) (JJ abandoned) (NN farm) (NN house))))) (. .)))
+
+(S1 (S (VP (VB Get) (PRT (RP down))) (. .)))
+
+(S1 (S (VP (VB Get) (PRT (RP down))) (. !)))
+
+(S1 (S (NP (PRP We)) (ADVP (RB finally)) (VP (VBD managed) (S (VP (TO to) (VP (VB get) (PRT (RP out)) (PP (IN by) (NP (NN car))))))) (. .)))
+
+(S1 (S (ADVP (RB Here) (PP (IN in) (NP (DT the) (NN north)))) (, ,) (S (NP (JJ Iraqi) (NNS tanks) (CC and) (NNS guns)) (VP (AUX are) (ADVP (RB still)) (NP (NN firing)))) (, ,) (CC and) (S (NP (DT the) (NNP American) (NN effort)) (VP (AUX is) (VP (VBG looking) (NP (DT a) (JJ little) (JJ ragged))))) (. .)))
+
+(S1 (NP (NP (NNP Julian) (NNP Manyon)) (, ,) (NP (NNP ITV) (NNP News)) (, ,) (PP (IN on) (NP (DT the) (JJ northern) (NN front))) (. .)))
+
+(S1 (S (NP (NP (NNP Julian) (NNP Manyon)) (PP (IN with) (NP (NP (DT some)) (ADJP (RB very) (JJ dramatic))))) (VP (VBZ pictures) (SBAR (IN as) (S (NP (PRP we)) (VP (VBP look) (PP (IN at) (NP (NP (DT the) (JJ live) (NNS pictures)) (PP (IN of) (NP (NNP Baghdad))))) (PP (IN at) (NP (NN night))))))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (MD will) (VP (VB take) (NP (NP (DT a) (JJ short) (NN break)) (, ,) (NP (PRP$ our) (JJ live) (NN coverage) (VBZ continues))))) (. .)))
+

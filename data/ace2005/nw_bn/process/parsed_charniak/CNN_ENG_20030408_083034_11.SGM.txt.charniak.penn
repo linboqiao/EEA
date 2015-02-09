@@ -1,0 +1,40 @@
+(S1 (S (NP (NP (DT a) (JJ live) (NN picture)) (PP (IN of) (NP (DT the) (NN president)))) (VP (VBN united) (NP (NP (NNS states)) (VP (VBG landing) (PP (IN at) (NP (NP (DT an) (NN air) (NN field)) (PP (IN in) (NP (JJ northern) (NNP ireland)))))))) (. .)))
+
+(S1 (S (SBAR (IN once) (S (NP (PRP he)) (VP (VBZ gets) (PP (IN out) (PP (IN of) (NP (DT the) (NN helicopter))))))) (NP (PRP he)) (VP (MD 'll) (VP (VB transfer) (PP (TO to) (NP (NN air) (NN force))) (S (NP (PRP one)) (VP (TO to) (VP (VB come) (ADVP (RB home)) (PP (IN after) (NP (NP (DT a) (JJ 20-hour) (NN visit)) (PP (IN with) (NP (NP (DT the) (JJ prime) (NN minister)) (PP (IN of) (NP (JJ great) (NNP britain)))))))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (VBD talked) (PP (IN about) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NNS things))))) (, ,) (PP (IN about) (SBAR (WHNP (WP what) (NN peace) (PP (IN in) (NP (DT the) (NN middle))) (NNS east)) (S (VP (MD could) (VP (VB look) (PP (IN like)) (, ,) (SBAR (WHNP (WP what)) (S (NP (JJ post-war) (NNP iraq)) (VP (MD could) (VP (VB look) (PP (IN like)))))))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (VBD talked) (PP (IN about) (NP (NP (NNS problems)) (PP (IN in) (NP (JJ northern) (NNP ireland)))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX 're) (VP (VBG going) (S (VP (TO to) (VP (NN pause) (PP (IN for) (NP (DT a) (NN second) (S (VP (TO to) (VP (VB see) (SBAR (IN if) (S (NP (PRP we)) (VP (VBP see) (S (NP (DT the) (NN president)) (VP (VBG hopping) (PRT (RP off)) (NP (DT this) (NN chopper))))))))))))))))) (. .)))
+
+(S1 (S (SBAR (IN as) (S (NP (PRP you)) (ADVP (RB probably)) (VP (VBP know)))) (, ,) (NP (NP (DT the) (JJ prime) (NN minister)) (PP (IN of) (NP (DT the) (JJ great) (NNP britain)))) (VP (AUX has) (VP (AUX been) (PP (IN under) (NP (JJ great) (NN pressure))) (PP (IN at) (NP (NP (NN home)) (CC and) (NP (NP (JJ much)) (PP (IN of) (NP (NNP europe)))))) (S (VP (TO to) (VP (VB support) (S (VP (VBG giving) (NP (DT the) (VBN united) (NNS nations)) (NP (NP (DT a) (ADJP (RB very) (JJ strong)) (NN role)) (PP (IN in) (S (VP (VBG stabilizing) (NP (NNP iraq))))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (JJ white) (NN house)) (VP (AUX had) (VP (VBN signaled) (ADVP (RB consistently)) (SBAR (S (NP (PRP it)) (VP (VBZ wants) (S (NP (NP (DT the) (VBN united) (NNS states)) (CC and) (NP (JJ great) (NNP britain))) (VP (TO to) (VP (VB create) (NP (DT a) (JJ lead) (NN role)))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (VBD learned) (PP (IN from) (NP (NNP john) (NN king))) (, ,) (S (VP (VBG traveling) (PP (IN with) (NP (DT the) (NN president))))) (, ,) (SBAR (IN that) (S (NP (DT the) (JJ new) (NNP iraq)) (VP (VBN run) (PP (RB neither) (PP (IN by) (NP (NP (JJ u.s.) (JJ \/) (JJ british) (NN coalition)) (CC or) (NP (VBN united) (NNS nations)))) (, ,) (CC but) (PP (IN by) (NP (DT the) (JJ iraqi) (NNS people)))))))) (. .)))
+
+(S1 (FRAG (PP (IN that) (NP (NP (DT some)) (PP (IN of) (SBAR (WHNP (WP what)) (S (NP (NP (DT the) (JJ prime) (NN minister)) (CC and) (NP (NN president))) (VP (VBN shared) (PP (IN with) (NP (NP (NNS reporters)) (PP (IN at) (NP (NN news) (NN conference))) (PP (VBG following) (NP (PRP$ their) (NNS meetings))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN president)) (VP (VBD went) (PRT (RP on)) (S (VP (TO to) (VP (VB say) (SBAR (IN that) (S (NP (NP (DT an) (JJ interim) (NN authority)) (VP (VBN composed) (PP (IN of) (NP (NP (NNP iraq) (NNS grs)) (PP (IN inside) (CC and) (IN outside) (NP (DT the) (NN country))))))) (VP (MD will) (VP (VB run) (NP (NNP iraq)) (SBAR (IN until) (S (NP (DT a) (JJ permanent) (NN government)) (VP (MD can) (VP (AUX be) (VP (VBN established)))))))))))))) (. .)))
+
+(S1 (SQ (AUX do) (NP (PRP you)) (VP (VB want) (S (VP (TO to) (VP (VB hang) (PP (IN with) (NP (DT the) (NN shot))))))) (. ?)))
+
+(S1 (S (INTJ (UH okay)) (, ,) (NP (PRP we)) (VP (AUX 're) (VP (VBG going) (S (VP (TO to) (VP (VB stay) (PP (IN with) (NP (DT this) (NN shot)))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (MD 'll) (VP (VB talk) (ADVP (RBR more)) (PP (IN about) (SBAR (WHNP (WP what)) (S (NP (DT the) (CD two) (NNS leaders)) (VP (VBN discussed) (PP (IN at) (NP (DT the) (JJ joint) (NN news) (NN conference))))))) (PP (VBG following) (NP (NP (PRP$ their) (NN series)) (PP (IN of) (NP (NNS meetings))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (ADVP (RB really)) (VP (VBD wanted) (S (VP (TO to) (VP (VB let) (NP (NP (NNS folks)) (SBAR (WHNP (WP who)) (S (VP (AUX had) (NP (NP (DT any) (NNS concerns)) (PP (IN about) (SBAR (WHNP (WP what)) (S (NP (DT the) (NNP u.n.) (NN involvement)) (VP (MD might) (VP (AUX be) (S (VP (TO to) (VP (RB not) (VB worry)))))))))))))))))) (. .)))
+
+(S1 (S (S (NP (PRP they)) (VP (VBD said) (SBAR (S (NP (EX there)) (VP (MD will) (ADVP (RB definitely)) (VP (AUX be) (NP (NP (DT some) (NN kind)) (PP (IN of) (NP (NP (NN role)) (PP (IN for) (NP (DT the) (VBN united) (NNS nations)))))))))))) (, ,) (S (NP (PRP they)) (VP (VBP think) (SBAR (S (NP (PRP it)) (VP (AUX 's) (ADJP (RB very) (JJ important)) (SBAR (IN for) (S (NP (DT the) (JJ european) (NNS nations)) (VP (TO to) (VP (AUX be) (PP (IN on) (NP (NP (NN board)) (PP (IN with) (NP (DT the) (NN plan)))))))))))))) (, ,) (CC but) (S (ADVP (RB once) (RB again)) (, ,) (NP (PRP they)) (VP (ADVP (RB very) (RB much)) (VBP view) (NP (NP (DT the) (NN future)) (PP (IN of) (NP (NNP iraq)))) (PP (IN as) (S (VP (AUXG being) (ADJP (RB that)) (PP (IN in) (NP (JJ iraqi) (NNS hands)))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN president)) (VP (VBG greeting) (NP (NP (DT a) (NN number)) (PP (IN of) (NP (NNS dignitaries)))) (SBAR (IN as) (S (NP (PRP he)) (VP (VBZ gets) (ADJP (JJ ready)) (ADVP (RB here)) (S (VP (TO to) (VP (VB board) (NP (NN air) (NN force) (CD one)) (PP (IN on) (NP (PRP$ his) (NN way) (NN home)))))))))) (. .)))
+
+(S1 (S (ADVP (NP (DT a) (RB little)) (RBR earlier)) (NP (DT this) (NN morning)) (, ,) (NP (PRP i)) (VP (VBD spoke) (PP (IN with) (NP (NP (DT an) (JJ iraqi) (NN dissident)) (SBAR (WHNP (WP who)) (S (VP (VBZ teaches) (PP (IN at) (NP (VBZ writes))) (ADVP (RB extensively)) (PP (IN on) (NP (NP (DT the) (NN middle)) (ADVP (RB east)))))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (VBD wrote) (NP (NP (DT a) (NN book)) (VP (VBN called) (S (NP (NP (DT the) (NN republic)) (PP (IN of) (NP (NN fear)))))))) (. .)))
+
+(S1 (NP (NP (DT the) (NNS politics)) (PP (IN of) (NP (JJ modern) (NNP iraq))) (. .)))
+
+(S1 (S (CC and) (NP (PRP i)) (VP (VBD asked) (NP (PRP him)) (PP (IN about) (NP (DT the) (NN news) (SBAR (SBAR (IN that) (S (NP (JJ saddam) (NN hussein)) (VP (AUX was) (VP (VBN targeted) (PP (IN in) (NP (NP (NN yesterday) (POS 's)) (NN strike))))))) (CC and) (SBAR (WHADVP (WRB how)) (S (NP (NNS iraqis)) (VP (MD would) (VP (VB react) (SBAR (IN if) (S (NP (NN saddam)) (VP (AUX was) (VP (VBN killed))))))))))))) (. .)))
+

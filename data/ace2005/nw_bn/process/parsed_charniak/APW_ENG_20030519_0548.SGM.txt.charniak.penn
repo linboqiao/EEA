@@ -1,0 +1,22 @@
+(S1 (S (NP (NP (NNP AMMAN) (, ,) (NNP Jordan) (PRN (-LRB- -LRB-) (NP (NNP AP)) (-RRB- -RRB-)) (NNP Jordanian) (NNS authorities)) (PP (IN on) (NP (NNP Monday)))) (VP (VBD said) (SBAR (S (NP (NP (NNP Jordan) (POS 's)) (JJ first) (JJ female) (NN lawmaker)) (VP (AUX was) (ADJP (JJ ineligible) (S (VP (TO to) (VP (VB run) (PP (IN in) (NP (NNP June) (CD 17))) (NP (JJ parliamentary) (NNS elections)))))) (PP (VBG following) (NP (NP (PRP$ her) (NN conviction)) (NP (JJ last) (NN year)) (PP (IN over) (S (VP (VBG publishing) (NP (NP (NN information)) (SBAR (WHNP (WDT that)) (S (VP (VBD harmed) (NP (NP (DT the) (NN government) (POS 's)) (NN reputation))))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Toujan) (NNP Faisal)) (, ,) (NP (CD 54)) (, ,)) (VP (VBD said) (SBAR (S (NP (PRP she)) (VP (AUX was) (VP (VBN informed) (PP (IN of) (NP (DT the) (NN refusal))) (PP (IN by) (NP (NP (DT an) (NNP Interior) (NNP Ministry) (NN committee)) (VP (VBG overseeing) (NP (NN election) (NNS preparations)))))))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (DT The) (NN excuse)) (VP (AUX is) (ADJP (JJ invalid)) (SBAR (IN because) (S (NP (PRP I)) (VP (AUX 've) (VP (AUX been) (VP (VBN convicted) (PP (IN on) (NP (NP (JJ political) (RB not) (JJ criminal) (NNS grounds)) (, ,) (SBAR (WHNP (WDT which)) (S (VP (AUX does) (RB n't) (VP (VB violate) (NP (NP (PRP$ my) (NN right)) (PP (IN for) (S (VP (VBG contesting) (NP (DT the) (NNS elections))))))))))))))))))) (, ,) ('' '') (NP (NNP Faisal)) (VP (VBD told) (NP (NNP The) (NNP Associated) (NNP Press))) (. .)))
+
+(S1 (S (NP (NNP Faisal)) (VP (AUX was) (VP (VBN convicted) (PP (IN in) (NP (NNP May) (CD 2002))) (PP (IN for) (S (VP (VBG publishing) (NP (NP (ADJP (JJ false) (CC and) (JJ exaggerated)) (NN information)) (ADVP (RB abroad)) (SBAR (WHNP (WDT that)) (S (VP (VBD harmed) (NP (NP (DT the) (NN government) (POS 's)) (NN reputation) (CC and) (NN dignity))))))))))) (. .)))
+
+(S1 (S (NP (PRP She)) (VP (AUX was) (VP (VBN sentenced) (PP (TO to) (NP (NP (CD 1) (-LRB- -LCB-) (NNS years)) (PP (IN in) (NP (NN jail))))))) (. .)))
+
+(S1 (S (CC But) (PP (IN after) (S (VP (VBG spending) (NP (CD 40) (NNS days)) (PP (IN in) (NP (NN prison)))))) (, ,) (NP (NP (NNP Jordan) (POS 's)) (NNP King) (NNP Abdullah) (NNP II)) (VP (VBD pardoned) (NP (NP (DT the) (JJ former) (NN legislator)) (VP (VBN known) (PP (IN for) (NP (NP (PRP$ her) (JJ harsh) (NN criticism)) (PP (IN of) (NP (DT the) (NN state)))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Jordan) (POS 's)) (JJ electoral) (NN law)) (VP (VBZ bans) (NP (NNP Jordanians)) (PP (IN from) (S (VP (VBG contesting) (NP (DT the) (NNS polls)) (SBAR (IN if) (S (NP (PRP they)) (VP (AUX were) (VP (VP (VBN convicted) (PP (IN of) (NP (DT any) (NN crime))) (PRN (, ,) (SBAR (IN except) (FRAG (ADJP (JJ political)))) (, ,))) (CC and) (VP (VBN sentenced) (PP (TO to) (NP (QP (JJR more) (IN than) (CD one)) (NN year))) (PP (IN in) (NP (NN jail)))))))))))) (. .)))
+
+(S1 (S (NP (NN Government) (NNS officials)) (VP (AUX were) (RB not) (ADJP (RB immediately) (JJ available) (PP (IN for) (NP (NN comment))))) (. .)))
+
+(S1 (S (PP (IN During) (NP (NP (NP (NNP Faisal) (POS 's)) (JJ 1993-97) (NN stint)) (PP (IN in) (NP (NN parliament))))) (, ,) (NP (PRP she)) (VP (VBD became) (VP (VBN known) (PP (IN as) (NP (NP (NP (DT a) (JJ fierce) (NN critic)) (PP (IN of) (NP (NP (DT the) (NN government)) (CC and) (NP (NNP Muslim) (NNS extremists))))) (CC and) (NP (NP (DT a) (NN champion)) (PP (IN of) (NP (NP (JJ liberal) (NNS views)) (PP (IN in) (NP (JJ conservative) (NNP Jordan)))))))))) (. .)))
+
+(S1 (S (NP (PRP She)) (VP (VBD lost) (NP (PRP$ her) (NN seat)) (PP (IN in) (NP (DT the) (CD 1997) (NN election)))) (. .)))
+
+(S1 (NP (NNP snm-jjh\/pg)))
+

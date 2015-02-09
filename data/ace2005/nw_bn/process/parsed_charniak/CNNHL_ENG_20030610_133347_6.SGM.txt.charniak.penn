@@ -1,0 +1,14 @@
+(S1 (S (NP (NP (DT the) (NX (NX (NN founder)) (CC and) (NX (JJ former) (NN ceo)))) (PP (IN of) (NP (NN imclone)))) (ADVP (RB just)) (VP (VBD learned) (NP (DT the) (NN penalty)) (PP (IN for) (NP (NP (PRP$ his) (NN role)) (PP (IN in) (NP (NP (DT the) (JJ pharmaceutical) (NN company) (POS 's)) (NN insider) (NN trading) (NN scandal)))))) (. .)))
+
+(S1 (S (NP (NNP sam) (NN waksal)) (VP (AUX was) (VP (VBN sentenced) (PP (TO to) (NP (NP (NP (CD seven) (NNS years)) (CC and) (NP (CD three) (NNS months))) (PP (IN in) (NP (JJ federal) (NN prison))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX 's) (ADVP (RB also)) (VP (AUXG being) (VP (VP (VBN fined) (NP (QP ($ $) (CD 3) (CD million)))) (CC and) (VP (AUX was) (VP (VBN ordered) (S (VP (TO to) (VP (VB pay) (NP (NP (QP ($ $) (CD 1.2) (CD million))) (PP (IN in) (NP (NN restitution)))) (PP (TO to) (NP (DT the) (JJ new) (NNP york) (NN state) (NN tax) (NN commission))))))))))) (. .)))
+
+(S1 (S (NP (NNP waksal)) (VP (VBD pleaded) (NP (JJ guilty) (JJ last) (NN fall)) (PP (TO to) (NP (NP (CD six) (NNS counts)) (PP (IN of) (NP (NP (NN security) (NN fraud)) (, ,) (NP (NN bank) (NN fraud)) (, ,) (NP (NP (NN conspiracy)) (PP (TO to) (NP (VBP obstruct) (NN justice)))) (CC and) (NP (NN perjury))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX 's) (VP (AUXG being) (VP (VBN released) (PP (IN on) (NP (PRP$ his) (JJ own) (NNS cog))) (PP (IN in) (NP (DT a) (NNS sans))) (SBAR (IN before) (S (NP (PRP he)) (VP (AUX 's) (S (VP (TO to) (VP (VB report) (PP (TO to) (NP (NN jail)))))))))))) (. .)))
+
+(S1 (S (NP (NNP waksal)) (VP (VBD admitted) (PP (TO to) (S (VP (VBG tipping) (S (NP (PRP$ his) (NN daughter)) (VP (TO to) (VP (VB dump) (NP (JJ imclone) (NN stock) (NN market)) (ADVP (RB just) (RB ahead) (PP (IN of) (NP (NP (DT a) (NN drug) (NN rejection)) (SBAR (S (S (NP (DT the) (NN company)) (VP (AUX was) (VP (VBG developing)))) (CC and) (S (NP (PRP he)) (VP (VBD pleaded) (ADJP (JJ guilty)) (PP (TO to) (NP (NN bank) (NN fraud))) (PP (IN by) (S (VP (VBG forging) (NP (NP (DT a) (NN signature)) (PP (IN on) (NP (DT a) (ADJP (QP ($ $) (CD 44) (CD million))) (NN loan))))))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (JJ imclone) (NN scandal)) (VP (VBD led) (PP (TO to) (NP (NP (NNS charges)) (PP (IN against) (NP (NP (NP (NNP waksal) (POS 's)) (NN friend)) (, ,) (NP (NNP martha) (NNP stewart)) (, ,))))) (NP (JJ last) (NN week)) (PP (IN over) (NP (NP (PRP$ her) (NN sale)) (PP (IN of) (NP (DT the) (NN stock))) (NP (DT the) (NN day)) (SBAR (IN before) (S (NP (DT the) (NN price)) (VP (VBD collapsed))))))) (. .)))
+

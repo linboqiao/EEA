@@ -1,0 +1,22 @@
+(S1 (S (NP (NP (NN coalition) (NNS forces)) (PP (IN in) (NP (NNP iraq)))) (VP (AUX have) (VP (VBN captured) (NP (NP (DT a) (NN member)) (PP (IN of) (NP (NP (DT a) (JJ terrorist) (NN group)) (PP (IN with) (NP (NP (NNS links)) (PP (TO to) (NP (NNP al) (NNP qaeda)))))))))) (. .)))
+
+(S1 (S (NP (NNS sources)) (VP (VBP tell) (NP (NP (PRP$ our) (JJ national) (NN security) (NN correspondent)) (, ,) (NP (NNP david) (NNP ensor)) (, ,)) (SBAR (IN that) (S (NP (DT the) (JJ terrorist)) (VP (AUX is) (NP (NP (DT a) (NN member)) (PP (IN of) (NP (NP (DT a) (NN group)) (VP (VBG operating) (PP (IN in) (NP (NP (DT the) (NN west)) (PP (IN of) (NP (NN baghdad))))))))))))) (. .)))
+
+(S1 (S (NP (DT that) (NN group)) (VP (AUX is) (VP (VBN led) (PP (IN by) (NP (NNP abu) (NN musab) (NN zarqawi))))) (. .)))
+
+(S1 (S (NP (NNP u.s.) (NNS officials)) (VP (VBP believe) (SBAR (S (NP (PRP zarqawi)) (VP (VBD planned) (NP (NP (DT the) (NN assassination)) (PP (IN of) (NP (NNP u.s.) (NN diplomat) (NNP lawrence) (NNP foley))) (PP (IN in) (NP (NNP jordan)))) (NP (JJ last) (NNP October)))))) (. .)))
+
+(S1 (S (NP (NN coalition) (NNS forces)) (ADVP (RB also)) (VP (VBD said) (SBAR (S (NP (NP (JJ saddam) (NN hussein) (POS 's)) (JJ former) (NN oil) (NN minister)) (VP (AUX has) (VP (VBN surrendered)))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX was) (NP (NP (DT an) (NN expert)) (PP (IN on) (NP (NP (NNP iraq) (POS 's)) (NN missile) (NNS systems)))) (ADVP (RB as) (RB well))) (. .)))
+
+(S1 (S (NP (NP (DT the) (JJ former) (NN minister)) (, ,) (NP (NP (DT the) (CD 6)) (PP (IN of) (NP (NP (NNS spades)) (PP (IN in) (NP (NP (DT the) (NN deck)) (PP (IN of) (NP (NNS cards)))))))) (, ,)) (VP (VBG showing) (NP (NP (DT the) (ADJP (RBS most) (JJ wanted)) (NNS members)) (PP (IN of) (NP (DT the) (FW saddam) (FW hussein) (NN regime))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX is) (VP (VBN married) (PP (TO to) (NP (NP (DT the) (JJ iraqi) (NN microbiologist)) (VP (VBN known) (PP (IN as) (NP (NNP dr.) (NN germ)))))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (AUX was) (PP (IN in) (NP (NP (NN charge)) (PP (IN of) (NP (NP (DT the) (JJ iraqi) (NN facility)) (SBAR (WHNP (WDT that)) (S (VP (VBD weaponized) (NP (NN anthrax)))))))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (JJ former) (NN governor)) (PP (IN of) (NP (NNP basra) (NN province)))) (ADVP (RB also)) (VP (VBN surrendered) (PP (TO to) (NP (NN coalition) (NNS forces))) (NP (NN today))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX was) (NP (NP (DT the) (CD 8)) (PP (IN of) (NP (NNS clubs))))) (. .)))
+

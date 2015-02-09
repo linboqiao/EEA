@@ -1,0 +1,26 @@
+(S1 (S (NP (NNP by) (NNP Steven) (NNP Sisson) (NN Choir) (NN boy) (NNP Tim) (NNP Kaine)) (VP (AUX is) (NP (NP (DT a) (JJ political) (JJ moderate)) (VP (VBN informed) (PP (IN by) (NP (PRP$ his) (JJ Catholic) (NNS beliefs)))))) (. .)))
+
+(S1 (S (CC But) (VP (VB look) (SBAR (IN for) (S (NP (DT the) (NNP Kilgore) (NN team)) (VP (TO to) (VP (VB paint) (NP (PRP him)) (PP (IN as) (NP (NP (DT a) (NN liberal)) (PP (IN for) (NP (NP (PRP$ his) (NN record)) (PP (IN on) (NP (NP (NN tax) (NNS hikes)) (CC and) (NP (DT the) (NN death) (NN penalty))))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NNP Blue) (NNP Dog)) (ADVP (RB personally)) (VP (VBZ views) (NP (NNP Lt.) (NNP Gov.) (NNP Tim) (NNP Kaine)) (PP (IN as) (NP (DT a) (JJ moderate-to-conservative) (NN politician)))) (. .)))
+
+(S1 (S (S (NP (NNP Kaine)) (VP (AUX has) (ADVP (RB never)) (VP (AUX been) (NP (DT an) (NNP Amway) (NNP Christian))))) (, ,) (CC nor) (SINV (AUX does) (NP (PRP he)) (VP (VB hold) (NP (DT a) (NN lifetime) (NN membership)) (PP (TO to) (NP (DT the) (NNP C-E) (NNP Club))) (PRN (-LRB- -LRB-) (FW i.e.) (, ,) (VP (ADVP (RB only)) (VBG attending) (NP (NP (NN church) (NN service)) (PP (IN on) (NP (NNP Christmas) (CC and) (NNP Easter) (NNS holidays))))) (-RRB- -RRB-)))) (. .)))
+
+(S1 (FRAG (ADJP (RBR More) (JJ Kaine)) (NP (DT a) (ADJP (`` ``) (JJ moderate) (TO to) (JJ conservative) ('' ''))) (. ?)))
+
+(S1 (SBARQ (WHNP (WP Who)) (SQ (AUX is) (NP (DT this) (NN guy)) (VP (VBG trying) (PP (TO to) (NP (NN kid))))) (. ?)))
+
+(S1 (S (NP (NNP Kaine)) (VP (AUX is) (ADJP (RB as) (JJ liberal)) (SBAR (IN as) (S (NP (PRP they)) (VP (VBP come))))) (. .)))
+
+(S1 (S (NP (WP Who)) (ADVP (JJ other) (PP (IN than) (NP (DT a) (JJ left-wing) (NN liberal)))) (VP (MD would) (VP (VB agree) (S (VP (TO to) (VP (VB represent) (NP (NP (DT a) (JJ two-time) (NN murderer)) (PRN (-LRB- -LRB-) (NP (NNP Lem) (NNP Tugle)) (-RRB- -RRB-))) (PP (IN for) (ADJP (JJ free)))))) (, ,) (S (VP (TO to) (VP (VB try) (CC and) (VB keep) (NP (PRP him)) (PP (IN from) (S (VP (VBG getting) (NP (DT the) (NN death) (NN penalty)))))))))) (. .)))
+
+(S1 (S (NP (NNP Tugle)) (VP (AUX was) (PP (IN on) (NP (NN trial))) (PP (IN for) (S (VP (VP (VBG raping)) (CC and) (VP (VBG killing) (NP (DT a) (JJ southwest) (NNP Virginia) (NN grandmother))))))) (. .)))
+
+(S1 (S (PP (IN After) (S (VP (VBG killing) (NP (PRP her))))) (, ,) (NP (PRP he)) (VP (VBD dumped) (NP (PRP$ her) (NN body)) (PP (IN down) (NP (NP (DT the) (JJ same) (NN ditch)) (SBAR (WHADVP (WRB where)) (S (NP (PRP he)) (VP (VBD dumped) (NP (NP (DT the) (JJ 17-year-old) (NN girl)) (SBAR (S (NP (PRP he)) (VP (AUX had) (ADVP (RB previously)) (VP (AUX been) (VP (VBN convicted) (PP (IN of) (S (VP (VBG murdering)))))))))))))))) (. .)))
+
+(S1 (S (NP (NNP Tugle)) (VP (AUX was) (PP (IN on) (NP (NP (NN parole)) (PP (IN for) (NP (DT this) (NN crime))))) (SBAR (WHADVP (WRB when)) (S (NP (PRP he)) (VP (VBD killed) (NP (DT the) (NN grandmother)))))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (VBP understand) (SBAR (IN that) (S (S (VP (VBG representing) (NP (NNS people)))) (VP (AUX is) (SBAR (WHNP (WP what) (NNS attorneys)) (S (VP (AUX do))))))))) (CC but) (S (NP (RB even) (NNS attorneys)) (VP (AUX have) (NP (NP (DT some) (NN choice)) (SBAR (WHPP (IN in) (WHNP (WP whom))) (S (NP (PRP they)) (VP (VBP represent))))))) (. .)))
+
+(S1 (S (NP (NP (DT The) (NN line)) (PP (IN of) (NP (NP (NN defense) (NN Kaine)) (VP (VBN used))))) (VP (AUX was) (SBAR (IN that) (S (NP (NNP Tugle)) (VP (AUX had) (RB not) (ADVP (RB really)) (VP (VBN raped) (NP (DT the) (NN grandmother)) (SBAR (IN because) (`` ``) (S (NP (JJ forcable) (NN sodomy)) (VP (AUX was) (RB not) (VP (NN rape) (PP (VBG according) (PP (TO to) (NP (DT the) (NN law)))) (PP (IN at) (NP (DT the) (NN time)))))))))))) (. .) ('' '')))
+

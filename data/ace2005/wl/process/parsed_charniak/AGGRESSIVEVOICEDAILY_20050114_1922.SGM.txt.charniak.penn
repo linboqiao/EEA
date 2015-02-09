@@ -1,0 +1,12 @@
+(S1 (S (PP (IN From) (NP (DT the) (NNP Associated) (NNP Press))) (: :) (NP (NP (DT An) (NN atheist)) (SBAR (WHNP (WP who)) (S (VP (VBD tried) (S (VP (TO to) (VP (VB remove) (`` ``) (PP (IN under) (NP (NNP God))) ('' '') (PP (IN from) (NP (NP (DT the) (NN Pledge)) (PP (IN of) (NP (NN Allegiance)))))))))))) (VP (VBD lost) (NP (DT a) (NN bid)) (NP (NNP Friday)) (S (VP (TO to) (VP (NN bar) (NP (NP (DT the) (NN saying)) (PP (IN of) (NP (NP (DT a) (NNP Christian) (NN prayer)) (PP (IN at) (NP (NP (NNP President) (NNP Bush) (POS 's)) (NN inauguration)))))))))) (. .)))
+
+(S1 (S (NP (NNP Newdow)) (VP (VBD argued) (SBAR (IN that) (S (S (VP (VBG saying) (NP (DT a) (NNP Christian) (NN prayer)) (PP (IN at) (NP (DT the) (NNP Jan.) (CD 20) (NN ceremony))))) (VP (MD would) (VP (VB violate) (NP (DT the) (NNP Constitution)) (PP (IN by) (S (VP (VBG forcing) (S (NP (PRP him)) (VP (TO to) (VP (VB accept) (NP (JJ unwanted) (JJ religious) (NNS beliefs))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NP (NNS Attorneys)) (VP (VBG representing) (NP (NNP Bush)))) (CC and) (NP (PRP$ his) (JJ inaugural) (NN committee))) (VP (VBD argued) (SBAR (SBAR (IN that) (S (NP (NNS prayers)) (VP (AUX have) (VP (AUX been) (ADVP (RB widely)) (VP (VBN accepted) (PP (IN at) (NP (NP (NNS inaugurals)) (PP (IN for) (NP (QP (JJR more) (IN than) (CD 200)) (NNS years)))))))))) (CC and) (SBAR (IN that) (S (NP (NP (NNP Bush) (POS 's)) (NN decision) (S (VP (TO to) (VP (AUX have) (NP (DT a) (NN minister) (NN recite)) (NP (DT the) (NN invocation)))))) (VP (AUX was) (NP (NP (DT a) (JJ personal) (NN choice)) (SBAR (S (NP (DT the) (NN court)) (VP (AUX had) (NP (DT no) (NN power) (S (VP (TO to) (VP (VB prevent)))))))))))))) (. .)))
+
+(S1 (S (VP (VBG Forcing) (S (NP (PRP him)) (VP (TO to) (VP (VB accept) (NP (JJ unwanted) (JJ religious) (NNS beliefs)))))) (. ?)))
+
+(S1 (NP (DT No) (NN wonder) (SBAR (S (NP (PRP you)) (VP (MD ca) (RB n't) (VP (VB win) (NP (NP (DT an) (NN argument)) (PP (IN against) (NP (DT a) (NN secularist)))))))) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (VBP believe) (SBAR (S (NP (NP (DT any) (NN inclusion)) (PP (IN of) (NP (JJ religious) (NNS beliefs))) (PP (IN in) (NP (NP (CD one) (POS 's)) (JJ own) (JJ personal) (NN ceremony)))) (VP (AUX is) (ADVP (RB somehow)) (NP (NP (DT an) (NN operation)) (SBAR (S (VP (TO to) (VP (VB indoctrinate) (NP (DT the) (FW hoi) (FW polloi))))))))))) (. .)))
+

@@ -1,0 +1,26 @@
+(S1 (SBARQ (WHADVP (WRB how)) (SQ (MD could) (RB so) (NP (JJ many) (NNS people)) (VP (VB end) (PRT (RP up)) (PP (IN in) (NP (NN prison))) (PP (IN for) (NP (NP (NNS crimes)) (SBAR (S (NP (PRP they)) (VP (AUX did) (RB n't) (VP (VB commit))))))))) (. ?)))
+
+(S1 (S (NP (NP (DT the) (NN story)) (PP (IN behind) (NP (NP (DT the) (NNS defendants)) (PP (IN of) (NP (NP (NNP tulia)) (, ,) (NP (NNP texas)) (, ,)))))) (VP (AUX is) (NP (PRP$ our) (`` ``) (NNS headlines) (NN timeline))) (. .) ('' '')))
+
+(S1 (NP (NNP July) (CD 23rd) (, ,) (CD 1999) (: --) (S (NP (EX there)) (VP (AUX was) (NP (DT a) (JJ massive) (NN drug) (NN bust)) (PP (IN in) (NP (NP (DT a) (ADJP (RB predominately) (JJ african-american)) (NN neighborhood)) (PP (IN in) (NP (NN tulia))))))) (. .)))
+
+(S1 (S (PP (IN of) (NP (NP (DT the) (CD 46) (NNS people)) (VP (VBN arrested)))) (, ,) (NP (CD 39)) (VP (AUX are) (ADJP (JJ african-american))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NN case)) (PP (IN against) (NP (PRP them)))) (VP (AUX was) (VP (VBN based) (PP (IN on) (NP (NP (DT the) (NN testimony)) (PP (IN of) (NP (JJ undercover) (NN officer) (NNP thomas) (NNP coleman))))))) (. .)))
+
+(S1 (S (NP (NNP coleman)) (VP (VP (VBD claimed) (SBAR (S (NP (PRP he)) (VP (VBD bought) (NP (NNS drugs)) (PP (IN from) (NP (DT the) (NNS defendants))))))) (, ,) (CC but) (VP (VBD offered) (NP (ADJP (JJ little) (CC or) (RB no) (VBG supporting)) (NN evidence)))) (. .)))
+
+(S1 (S (PP (IN after) (NP (NP (DT the) (JJ first)) (PP (IN of) (NP (JJ several) (NNS trials))) (VP (VBN ended) (PP (IN with) (NP (NP (NNS convictions)) (CC and) (NP (JJ harsh) (NNS sentences))))))) (, ,) (NP (NP (JJS most)) (PP (IN of) (NP (DT the) (JJ other) (NNS defendants)))) (VP (VBD pleaded) (ADJP (JJ guilty) (S (VP (TO to) (VP (VB avoid) (NP (JJ hard) (NN time))))))) (. .)))
+
+(S1 (NP (NNP march) (CD 17) (, ,) (CD 2003) (: --) (S (PP (IN with) (NP (NP (NP (NNP coleman) (POS 's)) (NN credibility)) (PP (IN under) (NP (JJ serious) (NN attack))))) (, ,) (NP (NP (JJ new) (NNS hearings)) (PP (IN for) (NP (DT the) (NN tulia) (NNS defendants)))) (VP (VBP get) (PP (IN under) (NP (NN way))))) (. .)))
+
+(S1 (S (NP (DT the) (NNS hearings)) (VP (AUX are) (VP (VBN stopped) (SBAR (WHADVP (WRB when)) (S (NP (NP (DT the) (NN judge)) (, ,) (NP (NN defense) (NNS attorneys)) (CC and) (NP (NNS prosecutors))) (VP (VBP agree) (SBAR (IN that) (S (NP (NNP coleman)) (VP (VP (VBD lied) (PP (IN under) (NP (NN oath)))) (CC and) (VP (AUX is) (NP (DT a) (NN racist))))))))))) (. .)))
+
+(S1 (S (NP (NNP coleman)) (VP (VBZ denies) (VP (VBG doing) (NP (NP (NN anything)) (ADJP (JJ wrong))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (VBD took) (NP (NP (DT a) (JJ special) (NN act)) (PP (IN of) (NP (DT the) (JJ texas) (NN legislature)))) (S (VP (TO to) (VP (VB clear) (NP (DT the) (NN way)) (PP (IN for) (NP (NP (NNP Monday) (POS 's)) (NN release))))))) (. .)))
+
+(S1 (S (CC but) (NP (NP (NP (DT these) (NNS men)) (CC and) (NP (DT the) (NNS others))) (VP (VBN caught) (PRT (RP up)) (PP (IN in) (NP (DT the) (NN tulia) (NN tragedy))))) (VP (AUX are) (ADVP (RB still)) (NP (VBN convicted) (NNS criminals))) (. .)))
+
+(S1 (S (ADVP (RB now)) (NP (PRP it)) (VP (VP (AUX 's) (PRT (RP up)) (PP (TO to) (NP (NP (DT the) (NNS appeals) (NN court)) (CC and) (NP (NP (DT the) (NN board)) (PP (IN of) (NP (NN pardon))))))) (CC and) (VP (VBZ paroles) (S (VP (TO to) (ADVP (RB officially)) (VP (VB clear) (NP (PRP$ their) (NNS names))))))) (. .)))
+

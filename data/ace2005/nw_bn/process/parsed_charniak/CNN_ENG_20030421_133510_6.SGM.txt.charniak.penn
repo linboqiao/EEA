@@ -1,0 +1,26 @@
+(S1 (S (NP (JJ american) (NNS airlines)) (VP (MD may) (ADVP (RB soon)) (VP (AUX have) (NP (DT a) (JJ new) (NN destination)) (SBAR (IN as) (FRAG (INTJ (UH well)) (, ,) (NP (NN bankruptcy) (NN court)))))) (. .)))
+
+(S1 (S (NP (DT the) (NNS airlines) (NN flight) (NNS attendants) (NN union)) (VP (AUX is) (VP (VBG calling) (PP (IN for) (NP (NP (DT a) (JJ new) (NN vote)) (PP (IN on) (NP (NP (QP ($ $) (CD 340) (CD million))) (PP (IN in) (NP (NN wage) (NNS concessions))))))) (PP (IN after) (NP (NP (DT the) (NN disclosure)) (NP (JJ last) (NN year)) (PP (IN of) (NP (DT an) (JJ executive) (NN compensation) (NN plan))))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NN world) (POS 's)) (JJS largest) (NN airline)) (VP (VBZ needs) (NP (DT the) (NNS concessions)) (S (VP (TO to) (VP (VB avoid) (NP (DT a) (NN bankruptcy) (NN filing)))))) (. .)))
+
+(S1 (S (NP (NP (NNP amr)) (, ,) (NP (NP (DT the) (NN parent)) (PP (IN of) (NP (JJ american) (NNS airlines)))) (, ,)) (VP (VBD canceled) (NP (DT the) (NX (NX (NN bonus) (NN program)) (CC and) (NX (NNP ceo) (NNP donald) (NN carty)))) (SBAR (IN as) (S (NP (NN apoll)) (VP (VBD cized) (PP (TO to) (NP (NNS employees))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN share)) (VP (VBG plunging) (NP (CD 40) (NN %)) (ADVP (RB here)) (PP (IN at) (NP (DT the) (NNP nyse)))) (. .)))
+
+(S1 (NP (NP (DT the) (JJ overall) (NN market)) (NP (DT a) (ADJP (RB fairly) (JJ quiet)) (NN session)) (. .)))
+
+(S1 (S (NP (NN volume)) (VP (AUX is) (ADJP (JJ thin)) (SBAR (IN as) (S (NP (DT some) (NNS traders)) (VP (VBP take) (NP (DT an) (JJ extended) (NN holiday) (NN weekend)))))) (. .)))
+
+(S1 (S (PP (IN over) (NP (NP (DT the) (JJ next) (NN couple)) (PP (IN of) (NP (NNS days))))) (NP (PRP we)) (VP (MD 'll) (VP (VB continue) (S (VP (TO to) (VP (VB get) (NP (NNS earnings) (NNS reports))))))) (. .)))
+
+(S1 (S (NP (NN today)) (NP (NP (QP (RB only) (DT a) (JJ few)) (JJ corporate) (NNS reports)) (CC and) (NP (JJ little) (JJ economic) (NN news))) (VP (TO to) (VP (VB move) (NP (DT the) (NN market)))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (SBAR (WHADVP (WRB why)) (S (NP (DT the) (NNP dow)) (VP (AUX has) (VP (AUX been) (ADJP (RB fairly) (NN range) (VBN bound))))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NNP nasdaq)) (PP (IN at) (NP (DT this) (NN point)))) (VP (ADVP (RB little)) (VBN changed)) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX is) (NP (NP (DT the) (JJS latest)) (PP (IN from) (NP (DT the) (JJ new) (NNP york) (NN stock) (NN exchange))))) (. .)))
+
+(S1 (S (NP (EX there)) (VP (AUX is) (ADJP (NP (NNS lots)) (RBR more) (`` ``) (JJ live) (PP (IN from) ('' '') (S (VP (VBG coming) (PRT (RP up)) (PP (IN after) (NP (DT the) (NN break)))))))) (. .)))
+

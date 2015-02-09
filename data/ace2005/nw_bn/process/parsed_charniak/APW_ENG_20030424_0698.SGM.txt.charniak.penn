@@ -1,0 +1,42 @@
+(S1 (S (NP (NNP NEW) (NNP YORK) (PRN (-LRB- -LRB-) (NP (NNP AP)) (-RRB- -RRB-)) (NNP Rudolph) (NNP Giuliani)) (VP (MD will) (VP (VBN wed) (NP (NP (PRP$ his) (NN companion)) (, ,) (NP (NNP Judith) (NNP Nathan)) (, ,)) (PP (IN on) (NP (NNP May) (CD 24))) (PP (IN in) (NP (NP (NP (DT the) (NN ex-mayor) (POS 's)) (JJ old) (NN home)) (, ,) (NP (NNP Gracie) (NNP Mansion)))))) (. .)))
+
+(S1 (S (NP (DT The) (NN news)) (VP (AUX was) (VP (VBN announced) (NP (NNP Thursday)) (PP (IN by) (NP (NP (NNP Giuliani) (NN spokeswoman)) (JJ Sunny) (NNP Mindel))))) (. .)))
+
+(S1 (S (NP (NP (PRP$ His) (NN successor)) (, ,) (NP (NNP Mayor) (NNP Michael) (NNP Bloomberg)) (, ,)) (VP (MD will) (VP (VB perform) (NP (DT the) (NN ceremony)))) (. .)))
+
+(S1 (S (NP (NP (NNP Giuliani)) (, ,) (NP (CD 58)) (, ,)) (VP (VBD proposed) (PP (TO to) (NP (NP (NNP Nathan)) (, ,) (NP (DT a) (JJ former) (NN nurse)) (, ,))) (PP (IN during) (NP (NP (DT a) (NNP November) (NN business) (NN trip)) (PP (TO to) (NP (NNP Paris))))) (SBAR (NP (QP (CD _) (CD five)) (NNS months)) (IN after) (S (NP (PRP he)) (VP (VBD finalized) (NP (PRP$ his) (NN divorce)) (PP (IN from) (NP (NNP Donna) (NNP Hanover))) (PP (IN after) (NP (NP (CD 20) (NNS years)) (PP (IN of) (NP (NN marriage))))))))) (. .)))
+
+(S1 (S (PP (IN In) (NP (NNS interviews))) (NP (JJ last) (NN year)) (, ,) (NP (NNP Giuliani)) (VP (VBD said) (SBAR (SBAR (S (NP (NNP Nathan)) (VP (VBD gave) (NP (PRP him)) (`` ``) (NP (JJ tremendous) (JJ emotional) (NN support)) ('' '') (PP (IN through) (NP (NP (PRP$ his) (NN treatment)) (PP (IN for) (NP (NN prostate) (NN cancer)))))))) (CC and) (SBAR (IN as) (S (NP (PRP he)) (VP (VBD led) (NP (DT the) (NN city)) (PP (IN during) (NP (NP (DT the) (NN aftermath)) (PP (IN of) (NP (NP (DT the) (NNP Sept.) (CD 11) (JJ terrorist) (NN attack)) (PP (IN on) (NP (DT the) (NNP World) (NNP Trade) (NNP Center)))))))))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (PRP We)) (VP (AUX were) (ADJP (JJ close)) (ADVP (RB already)))) (, ,) ('' '') (NP (NNP Giuliani)) (VP (VBD said)) (. .)))
+
+(S1 (S (`` ``) (CC And) (ADVP (RB then)) (NP (PRP we)) (VP (VBD went) (PP (IN through) (NP (NN hell))) (ADVP (RB together))) (. .) ('' '')))
+
+(S1 (S (NP (NNP Giuliani) (CC and) (NNP Nathan)) (VP (VBD began) (S (VP (VBG appearing) (PP (IN in) (NP (NN public))) (ADVP (RB together)) (PP (IN in) (NP (NNP May) (CD 2000)))))) (. .)))
+
+(S1 (S (ADVP (RB Soon) (RB after)) (, ,) (NP (PRP he)) (VP (VBD announced) (SBAR (IN that) (S (NP (NP (PRP he)) (CC and) (NP (NNP Hanover))) (VP (AUX were) (VP (VBG moving) (PP (IN toward) (NP (JJ legal) (NN separation)))))))) (. .)))
+
+(S1 (S (PP (IN During) (NP (NP (DT the) (JJ legal) (NNS proceedings)) (VP (VBG leading) (ADVP (RB up)) (PP (TO to) (NP (DT the) (NN divorce)))))) (, ,) (NP (DT a) (NN judge)) (VP (VBD ruled) (SBAR (IN that) (S (NP (NNP Nathan)) (VP (MD could) (RB not) (VP (VB visit) (NP (NP (NNP Gracie) (NNP Mansion)) (, ,) (NP (DT the) (JJ official) (JJ mayoral) (NN residence)) (, ,)) (ADVP (ADVP (RB as) (RB long)) (SBAR (IN as) (S (NP (NP (NNP Giuliani) (POS 's)) (NNS children)) (VP (VBD lived) (NP (EX there))))))))))) (. .)))
+
+(S1 (S (NP (NNP Giuliani) (CC and) (NNP Hanover)) (VP (AUX have) (NP (NP (CD two) (JJ teenage) (NNS children)) (, ,) (NP (NNP Andrew) (CC and) (NNP Caroline)))) (. .)))
+
+(S1 (S (NP (DT The) (NN divorce) (NN settlement)) (VP (VBD called) (SBAR (IN for) (S (NP (NNP Giuliani)) (VP (TO to) (VP (VB pay) (NP (NNP Hanover)) (NP (QP (JJR more) (IN than) ($ $) (CD 6.8) (CD million)))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Hanover)) (, ,) (NP (CD 53)) (, ,)) (VP (AUX is) (NP (NP (NN host)) (PP (IN of) (NP (NP (DT a) (JJ syndicated) (NN television) (NN show)) (, ,) (`` ``) (NP (NNP Famous) (NNPS Homes) (CC and) (NNPS Hideaways)))))) (. .) ('' '')))
+
+(S1 (S (NP (JJ Last) (NN month)) (, ,) (NP (NP (PRP she)) (CC and) (NP (NP (PRP$ her) (NN fiance) (NNS _)) (NP (DT an) (JJ old) (JJ high) (NN school) (NN sweetheart) (NN _)))) (VP (VBD invited) (NP (DT the) (NN press)) (ADVP (RB along)) (SBAR (IN as) (S (NP (PRP they)) (VP (VBD went) (VP (VBG shopping) (PP (IN for) (NP (NN wedding) (NNS bands))) (, ,) (S (VP (VBG saying) (SBAR (S (NP (PRP they)) (VP (AUX are) (VP (VBG planning) (NP (NP (DT a) (NN wedding)) (PP (IN in) (NP (DT the) (NNP New) (NNP York) (NNP City) (NN area)))) (NP (DT this) (NN summer))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NP (NNP Giuliani) (POS 's)) (JJ first) (NN marriage)) (PP (TO to) (NP (NP (PRP$ his) (JJ second) (NN cousin)) (, ,) (NP (NNP Regina) (NNP Peruggi)) (, ,)))) (VP (VBD lasted) (NP (QP (RB about) (CD 14)) (NNS years))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX was) (VP (VBN annulled) (PP (IN by) (NP (DT the) (NNP Catholic) (NNP Church))) (SBAR (IN because) (S (NP (DT the) (NN couple)) (VP (AUX had) (RB not) (VP (VBN obtained) (NP (NP (DT a) (NN church) (NN dispensation)) (VP (VBN required) (SBAR (WHADVP (WRB when)) (S (NP (JJ second) (NNS cousins)) (VP (VB marry)))))))))))) (. .)))
+
+(S1 (S (NP (NNP Nathan)) (VP (VBD divorced) (NP (NN wallpaper) (NN salesman) (NNP Bruce) (NNP Nathan)) (PP (IN in) (NP (CD 1992)))) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (AUX have) (NP (DT a) (JJ teenage) (NN daughter))) (. .)))
+
+(S1 (SINV (S (NP (DT The) (NNP Giuliani-Nathan) (NNS nuptials)) (VP (MD will) (VP (AUX be) (NP (NP (DT a) (JJ first)) (PP (IN for) (NP (NP (NNP Bloomberg)) (, ,) (SBAR (WHNP (WP who)) (S (VP (AUX is) (VP (VBG making) (NP (DT an) (NN exception)) (PP (IN from) (NP (NP (PRP$ his) (NN policy)) (PP (IN of) (NP (RB not) (VBG performing) (NNS weddings))))))))))))))) (, ,) (VP (VBD said)) (NP (NNP Bloomberg) (NN spokesman) (NNP Ed) (NNP Skyler)) (. .)))
+
+(S1 (S (NP (NNP Giuliani)) (ADVP (RB regularly)) (VP (VBD officiated) (PP (IN at) (NP (NNS weddings))) (SBAR (IN while) (S (PP (IN in) (NP (NN office)))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (DT The) (NN mayor)) (VP (AUX is) (VP (VBN honored) (PP (IN by) (NP (PRP$ their) (NN request)))))) (, ,) ('' '') (NP (NNP Skyler)) (VP (VBD said)) (. .)))
+

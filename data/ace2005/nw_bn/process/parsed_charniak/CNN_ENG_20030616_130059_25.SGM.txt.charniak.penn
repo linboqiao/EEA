@@ -1,0 +1,14 @@
+(S1 (S (NP (NP (NNS reports)) (VP (VBG showing) (NP (NP (DT a) (NN rebound)) (PP (IN in) (NP (NP (JJ new) (NNP york) (POS 's)) (NN manufacturing) (NN sector)))))) (VP (AUX is) (VP (VBG helping) (S (VP (TO to) (VP (VB fuel) (NP (DT that) (NN optimism)) (NP (NN today))))))) (. .)))
+
+(S1 (FRAG (ADVP (RB right) (RB now)) (NP (NP (DT the) (NNP dow) (NNP jones) (JJ industrial) (NN average)) (PP (IN with) (NP (NP (DT a) (JJ triple-digit) (NN gain)) (, ,) (ADVP (RB up) (NP (CD 137)))))) (. .)))
+
+(S1 (S (NP (DT the) (JJ blue) (NN chip) (NN advance)) (VP (AUX is) (VP (AUXG being) (VP (VBN led) (PP (IN by) (NP (NP (NNS manufacturers) (NNP 3m) (CC and) (NNP caterpillar)) (, ,) (CONJP (RB as) (RB well) (IN as)) (NP (NP (NNP merck)) (CC and) (NP (NNP johnson) (CC &) (NNP johnson)))))))) (. .)))
+
+(S1 (S (CC and) (NP (DT the) (NNP nasdaq) (NN composite)) (VP (AUX is) (VP (VBG adding) (NP (QP (JJR more) (IN than) (CD 1.5)) (NN %)))) (. .)))
+
+(S1 (S (ADVP (RB meantime)) (, ,) (NP (NP (NNS shares)) (PP (IN of) (NP (NN kmart)))) (VP (AUX are) (VP (VBG surging) (NP (QP (RB nearly) ($ $) (CD 3))))) (. .)))
+
+(S1 (S (S (NP (PRP it)) (VP (VBD lost) (NP (QP ($ $) (CD 862) (CD million))) (PP (IN in) (NP (DT the) (JJ first) (NN quarter))))) (, ,) (CC but) (S (NP (DT that)) (VP (AUX 's) (ADJP (ADJP (RB much) (JJR better)) (SBAR (IN than) (S (NP (DT the) (NN retailer)) (VP (AUX did) (ADVP (NP (DT a) (NN year)) (RB ago)) (SBAR (WHADVP (WRB when)) (S (NP (PRP it)) (VP (AUX was) (PP (IN under) (NP (NN bankruptcy) (NN protection)))))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (NP (NP (DT the) (RB very) (JJS latest)) (PP (IN from) (NP (NNP wall) (NNP street))))) (. .)))
+

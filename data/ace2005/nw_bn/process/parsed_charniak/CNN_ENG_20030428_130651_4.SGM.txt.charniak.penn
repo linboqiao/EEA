@@ -1,0 +1,18 @@
+(S1 (S (NP (NP (DT an) (JJ international) (NN tourist)) (PP (IN in) (NP (JJ new) (NNP york) (NN city)))) (VP (AUX did) (NP (NP (JJS most)) (PP (IN of) (NP (PRP$ his) (NN sight)))) (S (VP (VBG seeing) (PP (IN inside) (NP (DT a) (NN hospital)))))) (. .)))
+
+(S1 (S (NP (NN health) (NNS officials)) (VP (VBP say) (SBAR (S (NP (PRP they)) (VP (AUX had) (S (VP (TO to) (VP (ADVP (RB forcibly)) (VB detain) (NP (NP (DT the) (NN man)) (SBAR (WHNP (WP who)) (S (VP (VBD exhibited) (NP (JJ possible) (NNS sars) (NNS symptoms))))))))))))) (. .)))
+
+(S1 (S (NP (NNS officials)) (VP (VBP say) (SBAR (S (NP (DT the) (JJ unnamed) (NN tourist)) (VP (VP (AUX had) (NP (JJ knicks) (NNS tickets))) (CC and) (VP (AUX was) (VP (VBN determined) (S (VP (TO to) (VP (VB use) (NP (PRP them))))))))))) (. .)))
+
+(S1 (SINV (ADVP (RB here)) (VP (AUX are)) (NP (NP (DT some) (NNS numbers)) (SBAR (S (VP (TO to) (VP (VB put) (NP (NP (DT the) (NN spread)) (PP (IN of) (NP (NNS sars)))) (PP (IN in) (NP (NN perspective))) (PP (IN for) (NP (PRP you)))))))) (. .)))
+
+(S1 (S (PP (IN across) (NP (DT the) (NN globe))) (, ,) (NP (EX there)) (VP (AUX have) (VP (AUX been) (NP (NP (QP (RB almost) (CD 5,000)) (VBN documented) (NNS cases)) (PP (IN of) (NP (NNS sars))) (PP (IN in) (NP (CD 27) (JJ different) (NNS countries)))))) (. .)))
+
+(S1 (S (NP (NP (NNP china)) (, ,) (NP (NP (DT the) (NN country)) (SBAR (WHADVP (WRB where)) (S (NP (NNS sars)) (VP (VBP originated))))) (, ,)) (VP (AUX has) (VP (AUX been) (NP (DT the) (JJS hardest) (NN hit)) (, ,) (PP (IN with) (NP (NP (NP (NNS thousands)) (PP (IN of) (NP (NNS cases)))) (CC and) (NP (QP (JJR more) (IN than) (CD 100)) (NNS deaths)))))) (. .)))
+
+(S1 (S (ADVP (RB here) (PP (IN in) (NP (DT the) (VBN united) (NNS states)))) (, ,) (ADVP (RB however)) (, ,) (NP (EX there)) (VP (AUX have) (VP (AUX been) (NP (NP (DT no) (NNS deaths)) (PP (IN among) (NP (NP (DT the) (CD 41) (JJ probable) (NNS cases)) (PP (IN of) (NP (NNS sars)))))))) (. .)))
+
+(S1 (S (NP (CD 17) (NNS states)) (VP (AUX have) (NP (JJ probable) (NNS cases)) (SBAR (IN while) (S (NP (DT another) (CD 21) (NNS states)) (VP (AUX have) (VP (VBN suspected) (NP (NNS cases))))))) (. .)))
+
+(S1 (S (CC but) (S (ADVP (RB just)) (VP (TO to) (VP (VB put) (NP (NP (DT the) (NN threat)) (PP (IN of) (NP (NNS sars)))) (PP (IN in) (NP (NN perspective))) (, ,) (PP (IN in) (NP (DT the) (VBN united) (NNS states)))))) (, ,) (NP (CD 284) (NNS people)) (VP (VBN died) (NP (JJ last) (NN year)) (PP (IN from) (NP (DT the) (JJ west) (NNP nile) (NN virus))) (SBAR (IN while) (S (NP (CD 36,000) (NNS people)) (VP (VBP die) (NP (DT every) (NN year)) (PP (IN from) (NP (DT the) (NN flu))))))) (. .)))
+

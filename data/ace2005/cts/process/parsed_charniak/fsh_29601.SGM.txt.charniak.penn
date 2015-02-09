@@ -1,0 +1,198 @@
+(S1 (NP (CD 10) (. .)))
+
+(S1 (S (NP (NP (NN Death)) (PP (IN of) (NP (NNP Arafat) (PRN (-LRB- -LRB-) (NP (CD 2)) (-RRB- -RRB-)) (NNP PLO) (NN leader) (NNP PLO) (NN leader) (NNP Yasser) (NNP Arafat)))) (VP (VBD died) (PP (IN in) (NP (DT a) (NNP Paris) (NN hospital))) (NP (JJ last) (NN week)) (, ,) (PP (IN after) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NP (NN controversy)) (VP (VBG surrounding) (NP (PRP$ his) (NN illness) (CC and) (NN death)))))))) (. .)))
+
+(S1 (SBARQ (WHNP (WP What)) (SQ (SQ (AUX do) (NP (PRP you)) (VP (VB think) (VP (VBN caused) (NP (PRP$ his) (NN illness))))) (, ,) (CC and) (SQ (MD could) (NP (PRP it)) (VP (AUX have) (VP (AUX been) (NP (NN something) (JJ malicious) (PRN (-LRB- -LRB-) (PP (IN like) (NP (NN poisoning))) (-RRB- -RRB-))))))) (. ?)))
+
+(S1 (SBARQ (WHNP (WP What)) (SQ (AUX do) (NP (PRP you)) (VP (VB think) (PP (IN of) (NP (NP (NP (NNP Israel) (POS 's)) (NNS policies)) (VP (VBG surrounding) (NP (NP (NNP Arafat) (POS 's)) (NN illness) (CC and) (NN death))))))) (. ?)))
+
+(S1 (SQ (MD Should) (NP (NP (NNP President) (NNP Bush)) (CC or) (NP (DT a) (JJ senior) (NNP US) (NN official))) (VP (AUX have) (VP (VBN attended) (NP (NP (NNP Arafat) (POS 's)) (NN funeral)))) (. ?)))
+
+(S1 (SQ (MD Should) (NP (NNP Israel)) (VP (AUX have) (S (VP (VB let) (S (NP (NNP Arafat)) (VP (AUX be) (VP (VBN buried) (PP (IN in) (NP (NNP Jerusalem))))))))) (. ?)))
+
+(S1 (INTJ (UH Hello) (. ?)))
+
+(S1 (S (INTJ (UH Hello)) (, ,) (NP (PRP$ my) (NN name)) (VP (AUX is) (NP (NNP Joe))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 'm) (NP (NNP James)) (PP (IN from) (NP (NNP Detroit)))) (. .)))
+
+(S1 (FRAG (INTJ (UH Uh)) (, ,) (PP (IN from)) (, ,) (INTJ (UH uh)) (, ,) (NP (NNP New) (NNP Jersey)) (, ,) (CC but) (S (NP (PRP I)) (VP (AUX 'm) (VP (VBG living) (PP (IN in) (NP (NNP Atlanta))) (ADVP (RB now)) (, ,) (S (VP (VBG going) (PP (TO to) (NP (NN college)))))))) (. .)))
+
+(S1 (FRAG (INTJ (UH Oh)) (, ,) (INTJ (UH okay)) (. .)))
+
+(S1 (NP (DT All) (NN right) (. .)))
+
+(S1 (PRN (-LRB- -LRB-) (-LRB- -LRB-) (S (NP (PRP I)) (VP (AUX 'm) (ADJP (JJ sorry)))) (. .) (-RRB- -RRB-) (-RRB- -RRB-)))
+
+(S1 (SBARQ (RB So) (, ,) (INTJ (UH uh)) (, ,) (WHNP (WP what)) (SQ (AUX do) (NP (PRP you)) (VP (VB think) (PP (IN about) (NP (NNP Arafat))))) (. ?)))
+
+(S1 (S (S (ADVP (RB Well)) (: --) (NP (PRP I)) (, ,) (INTJ (UH uh)) (, ,) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (EX there)) (VP (AUX was) (ADJP (NN anything) (JJ malicious)) (, ,) (INTJ (UH uh)) (, ,) (PP (IN in) (NP (NP (NNS terms)) (PP (IN of) (NP (PRP$ his) (NN death))))))))))) (: --) (S (INTJ (UH uh)) (, ,) (S (ADVP (RB just)) (VP (VBG looking) (PP (IN at) (NP (PRP him))) (NP (NP (DT these) (JJ last) (PRN (, ,) (INTJ (UH uh)) (, ,)) (NN couple)) (PP (IN of) (NP (NNS years))) (ADVP (UH uh))))) (, ,) (NP (PRP it)) (VP (VBZ seems) (SBAR (IN like) (S (NP (PRP he)) (VP (AUX had) (NP (NP (NNP Alzheimer) (POS 's)) (CC or) (NP (NN something)))))))) (. .)))
+
+(S1 (S (INTJ (UH Yeah)) (, ,) (NP (PRP he)) (VP (AUX has) (VP (AUX been) (VP (VBG getting) (ADJP (JJR older))))) (. .)))
+
+(S1 (FRAG (INTJ (UH Yeah)) (, ,) (SBAR (IN because) (S (S (NP (PRP he)) (VP (AUX was) (VP (VBG quivering) (PP (IN at) (NP (DT the) (NN mouth)))))) (CC and) (S (CC and) (NP (NNS hands)) (VP (AUX were) (VP (VBG shaking)))))) (. .)))
+
+(S1 (S (CC And) (: --) (NP (PRP I)) (VP (MD would) (VP (VB imagine) (SBAR (IN that) (S (S (VP (VBG living) (PP (IN in) (NP (DT that) (NN compound))))) (VP (MD could) (RB n't) (VP (AUX have) (VP (AUX been) (ADJP (RB that) (JJ conducive) (PP (TO to) (NP (PRP$ his) (NN health))))))))))) (. .)))
+
+(S1 (S (INTJ (UH Yeah)) (, ,) (NP (PRP he)) (ADVP (RB probably)) (VP (MD should) (VP (AUX have) (VP (AUX been) (PP (IN in) (NP (DT a) (NN hospital) (CC or) (DT a) (JJ hospice) (CC or) (JJ Right)))))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (VBP know) (, ,) (SBAR (IN if) (S (NP (PRP it)) (VP (AUX was) (ADJP (RB that) (JJ bad)))))) (. .)))
+
+(S1 (INTJ (JJ Right) (. .)))
+
+(S1 (S (ADVP (RB Right)) (, ,) (NP (PRP I)) (VP (AUX 'm) (ADJP (JJ sure) (SBAR (IN that) (S (NP (PRP they)) (, ,) (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB know) (ADVP (RB about))))) (, ,) (S (NP (NP (NN bout)) (: --) (NP (NP (DT the) (NNP uh) (JJ sanitary) (NNS conditions)) (ADVP (ADVP (RB there)) (, ,) (CC but))) (: --) (NP (PRP I))) (NP (PRP I)) (ADVP (RB just)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (PRP it)) (VP (MD could) (VP (AUX have) (VP (AUX been) (, ,) (INTJ (UH uh)) (, ,) (ADJP (JJ conducive) (PP (TO to) (NP (PRP$ his) (NN health)))))))))))))))) (. .)))
+
+(S1 (S (CC And) (ADVP (RB as) (RB far)) (PP (IN as) (PRN (, ,) (INTJ (UH uh)) (, ,)) (NP (NNP Israel))) (, ,) (INTJ (UH uh)) (, ,) (VP (VBG allowing) (S (: --) (S (NP (PRP him)) (VP (TO to) (VP (AUX be) (VP (VBN buried))))) (: --) (S (INTJ (UH uh)) (, ,) (PP (IN in) (NP (NNP Jerusalem))) (NP (DT That)) (VP (AUX 's) (VP (VB accept) (NP (NNP huh))))))) (. ?)))
+
+(S1 (S (NP (DT That)) (VP (AUX 's) (ADJP (JJ acceptable) (PP (TO to) (NP (PRP me))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP mean) (S (INTJ (UH Well)) (, ,) (NP (PRP it)) (, ,) (S (NP (PRP it)) (VP (AUX 's) (ADJP (JJ acceptable) (PP (TO to) (NP (PRP me)))))) (, ,) (CC but) (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (PRP it)) (VP (AUX was) (ADJP (JJ feasible)))))))))) (. .)))
+
+(S1 (S (INTJ (JJ feasible) (UH Yeah)) (, ,) (VP (VBN given) (NP (DT the) (NN circumstance)) (PP (IN in) (NP (DT that) (NN area))) (ADVP (RB right) (RB now))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (AUX do) (RB n't) (ADVP (RB even)) (VP (VB know) (SBAR (IN if) (S (NP (PRP they)) (VP (MD would) (VP (AUX have) (VP (AUX been) (ADJP (JJ able) (S (VP (TO to) (VP (VB pull) (NP (PRP it)) (ADVP (RB off)))))))))))))) (, ,) (NP (PRP you)) (VP (VBP know)) (. ?)))
+
+(S1 (S (INTJ (INTJ (UH Well)) (, ,) (INTJ (UH uh))) (, ,) (ADVP (RB so)) (NP (PRP he)) (, ,) (PP (IN in) (NP (NN fact))) (NP (PRP he)) (VP (AUX was) (RB n't) (VP (NN Pardon) (NP (PRP me)))) (. ?)))
+
+(S1 (S (ADVP (RB so)) (, ,) (ADVP (RB um)) (: --) (INTJ (UH no)) (, ,) (ADVP (RB so)) (NP (PRP he)) (VP (AUX was) (RB n't) (VP (VBN buried) (PP (IN in) (NP (NNP Jerusalem))))) (. .)))
+
+(S1 (NP (NN No.) (. .)))
+
+(S1 (S (INTJ (UH No)) (, ,) (NP (PRP they)) (VP (VBD buried) (NP (PRP him)) (PRN (: --) (INTJ (UH uh)) (, ,)) (PP (IN inside) (NP (DT that) (NN compound)))) (. .)))
+
+(S1 (S (INTJ (UH Oh)) (, ,) (NP (PRP I)) (VP (VBP see)) (. .)))
+
+(S1 (S (INTJ (UH Yeah)) (, ,) (NP (PRP they)) (VP (VBD buried) (NP (PRP him)) (PP (IN inside) (NP (DT that) (NN compound)))) (. .)))
+
+(S1 (S (CC But) (SBAR (IN like) (S (NP (PRP you)) (VP (VBP say)))) (, ,) (S (NP (PRP I)) (VP (AUX do) (RB n't))) (, ,) (S (NP (PRP I)) (VP (AUX do) (RB n't))) (: --) (S (NP (PRP I)) (ADVP (RB personally)) (VP (PRN (: --) (NP (UH uh)) (: --)) (MD would) (RB n't) (VP (AUX have) (VP (VBN seen) (NP (NP (DT a) (NN problem)) (PP (IN with) (NP (PRP it)))))))) (, ,) (CC but) (S (: --) (NP (PRP I)) (ADVP (RB just)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (PRP it)) (VP (AUX was) (ADJP (JJ feasible)))))))) (. .)))
+
+(S1 (S (S (S (NP (PRP I)) (VP (AUX do) (RB n't))) (, ,) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (IN that) (S (NP (PRP they)) (VP (MD would) (VP (AUX have) (VP (AUX been))))))))) (: --) (S (INTJ (UH uh)) (, ,) (VP (VB secure) (NP (JJ enough) (S (VP (TO to) (ADVP (RB really)) (VP (AUX do) (NP (PRP it)))))))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (DT either) (NN side)) (VP (MD would) (VP (VP (AUX have) (ADVP (RB really))) (: --) (VP (VB let) (S (NP (PRP it)) (VP (VB happen)))) (: --) (CC and) (PRN (: --) (CC and) (ADVP (RB as) (RB far))) (SBAR (IN as) (S (NP (DT a) (JJ senior) (NNP U.S.) (NN official)) (VP (VBG going))))))))))) (, ,) (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (DT that)) (VP (MD would) (VP (AUX have) (VP (AUX been) (ADJP (JJ necessary)) (ADVP (RB either)))))))))) (. .)))
+
+(S1 (S (S (NP (NNS Um)) (, ,) (NP (PRP I)) (VP (VBP know) (SBAR (S (NP (NNP President) (NNP Bush)) (VP (MD should) (RB n't) (VP (AUX have) (VP (VBD went)))))))) (: --) (CC and) (S (NP (PRP he)) (VP (AUX was) (RB n't) (VP (VBG going)))) (. .)))
+
+(S1 (S (S (INTJ (UH Well)) (, ,) (NP (PRP I)) (ADVP (RB kind) (IN of)) (VP (VBP feel))) (, ,) (NP (PRP I)) (ADVP (RB kind) (IN of)) (VP (VBP feel) (NP (DT another) (NN way))) (. .)))
+
+(S1 (S (S (S (NP (PRP I)) (VP (VBP think) (SBAR (S (NP (NP (DT a) (JJ senior) (NNP U.S.) (NN service)) (PP (IN in) (NP (RB there)))) (, ,) (VP (MD should) (VP (AUX have) (VP (AUX been) (ADVP (RB there)) (, ,) (SBAR (IN because) (S (NP (PRP I)) (VP (VBP mean) (PRN (: --) (S (NP (PRP he)) (, ,) (NP (NNP Arafat) (POS 's)) (VP (AUX been))) (: --)) (VP (AUX been) (NP (NP (DT the) (NN one)) (VP (VBG coming) (PP (TO to) (NP (PDT all) (DT these) (NN peace) (NNS talks)))))))))))))))) (, ,) (NP (PRP you)) (VP (VBP know) (, ,) (PP (IN with) (NP (NNP President) (NNP Clinton))))) (CC and) (, ,) (S (NP (PRP you)) (VP (VBP know) (, ,) (NP (JJ other) (NNP Mhm)))) (. .)))
+
+(S1 (NP (NP (JJ other) (NNS um)) (: --) (NP (NP (NNS litigations)) (PP (IN towards) (NP (DT that)))) (. .)))
+
+(S1 (NP (NNP Mhm) (. .)))
+
+(S1 (S (S (NP (PRP You)) (VP (VBP know))) (, ,) (S (NP (PRP I)) (VP (VBP think))) (, ,) (S (NP (PRP I)) (VP (VBP think) (SBAR (S (NP (PRP we)) (VP (MD could) (VP (AUX have) (ADVP (RB just)) (VP (VBD showed) (NP (PRP$ our) (NN face))) (CC and) (VP (VBD said) (SBAR (S (NP (PRP you)) (VP (VBP know)))) (, ,) (S (INTJ (UH yeah)) (, ,) (NP (PRP we)) (VP (AUX do) (VP (VB recognize) (NP (DT this) (NN man)))))))))))) (. .)))
+
+(S1 (NP (NNP Mhm) (. .)))
+
+(S1 (S (INTJ (UH Well)) (NP (PRP it)) (, ,) (NP (PRP they)) (VP (VBD sent) (NP (NN someone))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB know) (SBAR (WHNP (WP who)) (S (NP (PRP it)) (VP (AUX was) (PRN (: --) (-LRB- -LRB-) (-LRB- -LRB-) (S (NP (PRP It)) (VP (AUX was) (RB n't) (-RRB- -RRB-))) (-RRB- -RRB-)) (NP (PRP It)) (ADVP (RB probably)))))))) (, ,) (S (NP (PRP it)) (VP (AUX was) (RB n't) (ADJP (NN anybody) (JJ important)))) (. .)))
+
+(S1 (S (S (NP (PRP It)) (VP (AUX was) (SBAR (RB just) (IN like) (S (NP (DT a) (UH Yeah) (PRP it)) (VP (AUX was) (NP (DT an) (JJ under) (NN secretary))))))) (, ,) (NP (EX there)) (VP (POS 's) (NP (NP (DT no) (NN doubt)) (PP (IN about) (NP (PRP it))))) (. .)))
+
+(S1 (S (NP (EX There)) (VP (AUX was) (SBAR (S (NP (DT no) (JJ senior) (EX there)) (VP (AUX was) (NP (DT no) (JJ senior) (NNP U.S.) (NN official)) (ADVP (RB there)))))) (. .)))
+
+(S1 (S (NP (EX There)) (AUX 's) (NP (EX there)) (VP (AUX 's) (NP (NP (DT no) (NN question)) (PP (IN about) (NP (DT that))))) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (S (S (CC But) (PRN (, ,) (INTJ (UH uh)) (: --)) (NP (PRP you)) (VP (VBP know) (, ,) (INTJ (UH uh)) (, ,) (NP (NP (NNP Bush) (POS 's)) (NN policy)))) (: --) (S (ADVP (IN towards)) (, ,) (INTJ (UH uh)) (, ,) (NP (NNP Yasser) (NNP Arafat)) (VP (AUX has) (VP (AUX been) (NP (NNS hands)) (PP (IN off) (NP (UH Yeah)))))) (. .)))
+
+(S1 (S (PP (IN from) (PP (IN from) (NP (NP (DT the) (VBG beginning) (NN cause)) (SBAR (S (NP (PRP I)) (VP (AUX do) (RB n't))))))) (, ,) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (PRP he)) (ADVP (RB ever)) (ADVP (RB even)) (VP (VBD met) (PP (IN with) (NP (PRP him)))))))) (. .)))
+
+(S1 (SQ (AUX Did) (NP (PRP he)) (. ?)))
+
+(S1 (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (ADVP (RB so)))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (ADVP (RB so)))) (. .)))
+
+(S1 (S (INTJ (UH Yeah)) (, ,) (NP (NP (PRP I)) (NP (PRP I)) (NNP Bush)) (VP (AUX is) (NP (NP (NN kind)) (PP (IN of) (NP (JJ like)))) (, ,) (S (VP (VP (VBG staying) (ADVP (RB away) (PP (IN from) (NP (DT the) (JJ whole) (NNP Israel))))) (: --) (NP (JJ Palestinian) (NNP Mhm))))) (. .)))
+
+(S1 (S (ADVP (RB Now)) (PP (IN on) (NP (PRP$ his) (NN part))) (NP (PRP I)) (VP (VBP think) (SBAR (S (NP (DT that)) (VP (AUX was) (NP (DT a) (NN mistake)))))) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (S (INTJ (UH Yeah)) (, ,) (NP (PRP you)) (VP (VBP know) (SBAR (S (NP (PRP you)) (VP (VBD got) (S (VP (TO to) (VP (VB engage) (NP (NNS people)) (PP (IN in) (NP (NP (DT some) (NN type)) (PP (IN of) (NP (NN dialogue)))))))) (PRN (CC And) (SBAR (IN if) (S (NP (NP (NP (PRP you)) (PP (TO to) (NP (PRP me)))) (, ,) (NP (DT the) (NN talk)) (, ,) (NP (DT the) (NN peace) (NNS talks))) (VP (MD should) (VP (AUX have) (VP (VBN continued)))))) (: --)) (SBAR (IN after) (S (NP (NP (NNP Clinton) (POS 's)) (NN administration)) (VP (VBD left)))))))) (. .)))
+
+(S1 (INTJ (UH True) (. .)))
+
+(S1 (S (S (VP (VB Cause) (PP (IN at) (NP (DT the) (NN cause))) (PP (IN at) (NP (NP (DT the) (NN end)) (SBAR (S (NP (NNP Clinton)) (VP (AUX was) (VP (VBG doing) (NP (PDT all) (DT this) (NN peace) (NN talk)) (PP (IN with) (NP (NNP Arafat))))))))))) (CC and) (, ,) (S (VP (VB um) (ADJP (JJ True)))) (. .)))
+
+(S1 (NP (NNP Mhm) (. .)))
+
+(S1 (S (PRN (-LRB- -LRB-) (-LRB- -LRB-) (VB forget) (-RRB- -RRB-) (-RRB- -RRB-)) (S (NP (DT the) (JJ um) (, ,) (JJ prime) (NN minister)) (PP (IN in) (NP (NNP Israel)))) (, ,) (CC but) (S (NP (PRP he)) (VP (AUX was) (VP (VBG talking) (PP (TO to) (NP (PRP him)))))) (. .)))
+
+(S1 (FRAG (INTJ (UH Uh)) (, ,) (NP (NNP Sharon)) (. .)))
+
+(S1 (FRAG (NP (NNP Sharon)) (, ,) (INTJ (UH yeah)) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (NP (NNP Mhm) (. .)))
+
+(S1 (S (S (S (NP (PRP They)) (VP (AUX were) (VP (VBG doing) (NP (PDT all) (DT these) (NNS talks)) (PP (IN in) (NP (NNP Camp) (NNP David)))))) (CC and) (S (CC and) (NP (PRP it)) (VP (MD should) (VP (AUX have) (ADVP (RB just)) (VP (VBN continued) (SBAR (WHADVP (WRB when)) (FRAG (ADJP (JJ Br))))))))) (: -) (S (NP (NNP Bush)) (VP (VBD came) (PP (IN into) (NP (NN office))))) (. .)))
+
+(S1 (S (NP (PRP You)) (VP (AUX 're) (ADJP (RB absolutely) (JJ right))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP agree)) (. .)))
+
+(S1 (S (SBAR (IN Like) (S (NP (PRP I)) (VP (VBD said)))) (, ,) (NP (PRP I)) (VP (VBP think) (SBAR (S (NP (DT that)) (VP (AUX was) (NP (NP (NP (CD one)) (PP (IN of) (NP (NP (NNP Bush) (POS 's)) (JJS biggest) (NNS mistakes)))) (, ,) (NP (NNP Mhm))))))) (. .)))
+
+(S1 (FRAG (RB not) (VP (VP (VBG continuing)) (: --) (NP (DT the) (NNS talks))) (. .)))
+
+(S1 (FRAG (SBAR (IN Because) (S (NP (NNP Clinton)) (VP (AUX had) (VP (VBD came) (ADVP (RB so) (RB very) (RB close)))))) (INTJ (UH Yes)) (. .)))
+
+(S1 (S (S (S (VP (TO to) (VP (TO to) (VP (ADVP (RB maybe)) (VBG getting) (NP (NP (DT some) (NN type)) (PP (IN of) (NP (NN agreement) (NN No.)))))))) (CC but) (, ,) (INTJ (UH uh))) (, ,) (NP (NNP Bush)) (ADVP (RB just)) (VP (VBD took) (NP (DT a) (NNS hands)) (PP (IN off) (NP (NN approach)))) (. .)))
+
+(S1 (S (NP (PRP He)) (ADVP (ADVP (RB just)) (: --) (ADVP (NN kind) (IN of))) (VP (VBD took) (NP (DT a) (NNS hands)) (PP (IN off) (NP (NN approach)))) (. .)))
+
+(S1 (S (CC And) (ADVP (RB now)) (NP (NP (DT the) (NN situation)) (PP (IN in) (PRN (, ,) (S (NP (PRP you)) (VP (VBP know))) (, ,)) (NP (NP (NNP Jerusalem)) (CC and) (NP (DT the) (NNP West) (NNP Bank))))) (VP (AUX is) (ADJP (RB just) (: --) (JJ escalated))) (. .)))
+
+(S1 (FRAG (ADVP (RB Absolutely)) (. .)))
+
+(S1 (S (CC And) (S (NP (PRP I)) (VP (VBP think) (ADVP (RB too)))) (: --) (S (NP (NP (NNP Israel) (POS 's)) (PRN (: --) (NP (NP (NN position)) (PP (IN toward) (NP (NNP Arafat)))) (: --))) (PP (IN in) (NP (NP (NNS terms)) (PP (IN of) (S (VP (VBG keeping) (S (NP (PRP him)) (VP (VB sort) (PP (IN of) (SBAR (IN like) (PRN (: --) (NP (UH uh) (: --) (VP (VBN surrounded) (PP (IN in) (NP (DT that) (NN compound))))) (: --)) (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (DT that)) (VP (AUX was) (NP (DT a) (JJ good) (NN idea)))))))))))))))))) (. .)))
+
+(S1 (NP (NN No.) (. .)))
+
+(S1 (S (NP (PRP You)) (VP (VBP know) (, ,) (SBAR (IN because) (S (NP (DT that)) (, ,) (NP (PRP you)) (VP (MD ca) (RB n't) (VP (VB pick) (NP (NP (DT a) (NN leader)) (PP (IN for) (NP (DT a) (NNS people))))))))) (. .)))
+
+(S1 (S (SBAR (IN Whether) (S (NP (PRP you)) (VP (VB like) (NP (PRP them)) (CC or) (RB not)))) (: --) (NP (NNS people)) (VP (VBP get) (S (VP (TO to) (VP (VB choose) (SBAR (WHNP (WP who)) (S (NP (PRP they)) (VP (VBP want) (S (VP (TO to) (VP (VB follow)))))))))) (, ,) (ADVP (RB Exactly))) (. .)))
+
+(S1 (S (CC and) (NP (DT the) (NNPS Palestinians)) (VP (AUX had) (VP (VBN made) (S (NP (PRP it)) (ADJP (JJ clear) (: --)) (SBAR (IN that) (S (NP (NNP Arafat)) (VP (AUX was) (NP (PRP$ their) (NN leader)))))))) (. .)))
+
+(S1 (FRAG (ADVP (RB Exactly)) (. .)))
+
+(S1 (S (ADVP (RB So)) (, ,) (NP (PRP I)) (VP (VBP think) (SBAR (IN that) (S (NP (PRP they)) (, ,) (NP (PRP we)) (VP (MD should) (VP (AUX have) (VP (VBN found) (NP (NP (DT a) (NN way)) (PRN (: --) (S (NP (NNP Israel)) (VP (MD should) (VP (AUX have) (VP (VBN found) (NP (DT a) (NN way)))))) (: --)) (SBAR (S (VP (TO to) (VP (: --) (VB keep) (NP (NP (DT some) (NN type)) (PP (IN of) (NP (NN dialogue)))) (: --) (S (VP (VBG going) (PRT (RP along))))))))))))))) (. .)))
+
+(S1 (S (S (INTJ (VB Cause) (UH uh)) (, ,) (NP (PRP I)) (VP (VBP mean))) (, ,) (NP (PRP you)) (VP (VBP look) (PP (IN at) (SBAR (WHNP (WP what)) (S (VP (AUX 's) (VP (VBG going) (PRT (RP on)) (ADVP (RB now)))))))) (. .)))
+
+(S1 (NP (NNP Mhm) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (VBP mean))) (, ,) (NP (NP (PRP$ their) (NN policy)) (PP (IN toward) (NP (PRP him)))) (VP (AUX did) (RB n't) (VP (VB get) (NP (PRP them)) (NP (NN anything)))) (. .)))
+
+(S1 (S (S (CC And) (ADVP (RB then)) (NP (PRP you)) (VP (VBP got) (NP (NN suicide) (NN bombing)) (PP (IN on) (NP (DT the) (CD one) (NN side))))) (, ,) (CC and) (S (ADVP (RB then)) (NP (PRP you)) (VP (VBP got) (NP (NNP Israel)))) (: --) (S (NP (PRP you)) (VP (VBP know))) (, ,) (S (NP (PRP it)) (VP (AUX 's) (PP (IN like) (NP (CD one) (NN day))))) (, ,) (S (NP (PRP you)) (VP (MD 'll) (X (NP (PRP he)) (: -) (S (NP (DT a) (NN bomb)) (VP (MD will) (VP (VB go) (PRT (RP off)) (, ,) (NP (NP (NP (DT the) (JJ next) (NN day)) (SBAR (S (NP (NNP Israel)) (VP (MD will) (VP (AUX do)))))) (CC and) (NP (NN air) (NN strike)))))) (CC and)))) (: --) (S (NP (PRP you)) (VP (VBP know) (, ,) (SBAR (S (NP (PRP it)) (VP (AUX 's) (PP (IN like) (S (VP (VBG going) (ADVP (RB around)) (PP (IN in) (NP (DT a) (NN circle))))))))))) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (PP (IN like) (S (VP (VBG going) (ADVP (RB around)) (PP (IN in) (NP (DT a) (NN circle))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (ADVP (RB really)) (NP (DT a) (JJ bad) (NN situation))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX is)) (. .)))
+
+(S1 (S (S (NP (PRP It)) (VP (AUX is))) (, ,) (CC and) (S (NP (PRP it)) (VP (AUX 's))) (, ,) (S (NP (PRP it)) (VP (AUX 's) (VP (AUX been) (ADJP (RB so) (JJ long)) (: --) (S (VP (VBG going) (PRT (RP on))))))) (, ,) (S (NP (PRP I)) (VP (VBP mean))) (, ,) (S (NP (PRP you)) (VP (AUX 're) (VP (VBG talking) (PP (IN about) (NP (NP (NN something)) (SBAR (WHNP (WDT that)) (S (VP (AUX 's) (VP (AUX been) (VP (VBG going) (PRT (RP on)) (ADVP (RB historically)) (PP (IN for) (NP (NP (NNS hundreds)) (PP (IN of) (NP (NNS years))))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNS Hundreds)) (PP (IN of) (NP (NNS years)))) (CC and) (ADVP (RB then)) (, ,) (NP (PRP it)) (ADVP (RB just) (RB recently)) (VP (ADVP (RB really)) (VBN come) (PP (IN into) (NP (NP (NN spectrum)) (, ,) (NP (NNP Mhm))))) (. .)))
+
+(S1 (FRAG (WHNP (WP what)) (, ,) (NP (JJ nineteen) (CD forty) (CD nine)) (. ?)))
+
+(S1 (NP (NNP Mhm) (. .)))
+
+(S1 (NP (NNP Mhm) (. .)))
+
+(S1 (SINV (SBAR (WHADVP (WRB When)) (S (NP (NP (CD um)) (: --) (NP (DT the) (NNP Israel) (NN state)) (: --)) (VP (VBD came) (PP (IN into) (NP (AUXG being)))))) (, ,) (CC or) (NP (WDT whatever)) (. .)))
+
+(S1 (INTJ (JJ Right) (. .)))
+
+(S1 (INTJ (JJ Right) (. .)))
+

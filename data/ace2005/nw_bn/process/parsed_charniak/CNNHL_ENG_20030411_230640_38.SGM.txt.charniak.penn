@@ -1,0 +1,12 @@
+(S1 (S (NP (NNP sharon) (NN osbourne)) (VP (AUX did) (RB not) (VP (VB enjoy) (NP (PRP$ her) (NN meal)) (PP (IN at) (NP (DT a) (NNP los) (NNP angeles) (NN restaurant))) (NP (JJ last) (NN night)))) (. .)))
+
+(S1 (S (NP (NP (NNP ozzy) (POS 's)) (NN wife)) (ADVP (RB reportedly)) (VP (VBD got) (PP (IN into) (NP (NP (DT a) (NN fight)) (PP (IN with) (NP (NNP hollywood) (NN agent) (NNP renee) (NN tab)))))) (. .)))
+
+(S1 (S (NP (NNP sharon)) (VP (VP (VBD spit) (PP (IN on) (NP (NN tab)))) (CC and) (VP (VBD called) (NP (PRP$ her) (NNS names)))) (. .)))
+
+(S1 (S (NP (NP (NNP osbourne) (POS 's)) (NN spokeswomen)) (VP (VBZ says) (SBAR (S (NP (NNP sharon)) (VP (AUX was) (UCP (NN quote) (, ,) (ADJP (`` ``) (RB viciously) (JJ assaulted)) (CC and) (VP (VBN treated) (PP (IN at) (NP (DT a) (NN hospital))))))))) (. .) ('' '')))
+
+(S1 (S (NP (NP (NN disagreement)) (PP (IN between) (NP (DT the) (NNS women)))) (VP (VBD began) (ADVP (NP (NNS months)) (RB ago)) (SBAR (WHADVP (WRB when)) (S (NP (NN osbourne)) (VP (VBD said) (SBAR (S (NP (NN tab)) (VP (VP (VBD atended) (S (NP (NP (NP (PRP$ her) (NN family) (POS 's)) (JJ new) (NN year) (POS 's)) (NN eve) (NN party)) (ADJP (JJ uninvited)))) (CC and) (RB then) (VP (VP (VBD won) (NP (DT the) (NN door)) (NP (NN prize))) (, ,) (NP (DT a) (ADJP ($ $) (CD 15,000)) (NN necklace)))))))))) (. .)))
+
+(S1 (S (NP (DT a) (NN spokesman)) (VP (VBZ says) (SBAR (IN that) (S (SBAR (IN if) (S (NP (DT any) (NNS charges)) (VP (AUX are) (VP (VBN filed))))) (, ,) (NP (PRP they)) (VP (MD will) (VP (AUX be) (PP (IN on) (NP (NP (DT the) (JJ low) (NN end)) (PP (IN of) (NP (DT the) (NN misdemeanor) (NN scale)))))))))) (. .)))
+

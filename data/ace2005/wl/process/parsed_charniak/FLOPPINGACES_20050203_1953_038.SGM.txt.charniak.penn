@@ -1,0 +1,92 @@
+(S1 (S (NP (NP (JJ Interesting) (NN article)) (PP (IN at) (NP (NP (DT the) (NN Accuracy)) (PP (IN In) (NP (NNP Media)))))) (VP (VBD website) (NP (NN yesterday))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (VBZ seems) (SBAR (S (NP (NP (DT a) (JJ supposed) (JJ straight) (NN shooting) (NN reporter)) (PP (IN with) (NP (NNP NBC)))) (VP (AUX was) (VP (VBG taking) (NP (NN money)) (S (VP (TO to) (VP (VB fund) (NP (NP (DT a) (NN book)) (SBAR (WHNP (WDT that)) (S (VP (AUX is) (NP (ADJP (RB so) (JJ pro-united)) (NNS nations) (SBAR (IN that) (S (NP (PRP$ its) (RB almost) (JJ sickening)) (VP (TO to) (VP (VB read)))))))))))))))))) (. .)))
+
+(S1 (S (-LRB- -LRB-) (NP (NP (NN hat) (NN tip)) (ADJP (JJ Clear) (CC and) (JJ Present))) (-RRB- -RRB-) (NP (NP (NP (NNP One)) (PP (IN of) (NP (NP (DT the) (JJS hottest) (NNS stories)) (ADVP (RB around))))) (, ,) (NP (DT the) (NNP U.N.) (NN corruption) (NN scandal)) (, ,) (NP (NNP NBC))) (VP (AUX has) (VP (AUX been) (PP (IN out) (PP (TO to) (NP (NN lunch)))))) (. .)))
+
+(S1 (FRAG (WRB Why) (. ?)))
+
+(S1 (S (NP (PRP$ Its) (NNP U.N.) (NN reporter)) (VP (AUX has) (VP (AUX been) (PP (IN on) (NP (NP (DT the) (NN payroll)) (PP (IN of) (NP (DT the) (NNP U.N.) (NN lobby))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Linda) (NNP Fasulo)) (, ,) (NP (NP (DT the) (NNP U.N.) (NN correspondent)) (PP (IN for) (NP (NP (NNP NBC) (NNP News)) (CC and) (NP (NNP MSNBC))))) (, ,)) (VP (AUX has) (VP (VBN written) (NP (NP (DT a) (JJ pro-U.N.) (NN book)) (, ,) (NP (NP (NP (DT An) (NNP Insider) (POS 's)) (NN Guide)) (PP (TO to) (NP (NP (DT the) (NNP U.N.)) (, ,) (SBAR (WHNP (WDT which)) (S (VP (VBZ reads) (SBAR (IN like) (S (NP (DT the) (NNP U.N.)) (VP (VBD paid) (PP (IN for) (NP (PRP it))))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB Actually)) (, ,) (NP (DT the) (JJ pro-U.N.) (NN lobby)) (VP (VBD paid) (PP (IN for) (NP (PRP it)))) (. .)))
+
+(S1 (S (PP (IN In) (NP (NP (DT a) (JJ monstrous) (NN conflict)) (PP (IN of) (NP (NN interest))) (PP (IN for) (NP (DT a) (JJ supposed) (JJ straight) (NN news) (NN reporter))))) (, ,) (NP (NNP Fasulo)) (VP (VBZ acknowledges) (NP (NP (NP (NNP Ted) (NNP Turner) (POS 's)) (NNP U.N.) (NNP Foundation)) (CC and) (NP (NNP Better) (NNP World) (NNP Campaign))) (PP (IN for) (NP (`` ``) (NP (PRP$ their) (JJ generous) (JJ financial) (NN support)) ('' '') (PP (IN of) (NP (PRP$ her) (NN book) (NN project)))))) (. .)))
+
+(S1 (S (NP (PRP She)) (ADVP (RB also)) (VP (NNS thanks) (NP (NP (DT the) (NNP Rockefeller) (NNPS Brothers) (NNP Fund)) (`` ``) (PP (IN for) (S (VP (VBG helping) (S (VP (TO to) (VP (VB fund) (NP (DT the) (NN project)))))))))) (. .) ('' '')))
+
+(S1 (S (S (NP (DT The) (NN book)) (VP (AUX is) (PP (IN about) (`` ``) (NP (NP (CD one)) (PP (IN of) (NP (DT the) (ADJP (ADJP (JJS finest)) (CC and) (ADJP (RBS most) (JJ important))) (NN governing) (NNS bodies))))))) (, ,) ('' '') (NP (PRP she)) (VP (VBZ says)) (. .)))
+
+(S1 (S (PP (IN Of) (NP (DT the) (NNP U.N.) (NN chief))) (, ,) (NP (PRP she)) (VP (VBZ writes) (PP (IN like) (NP (NP (DT a) (NN school) (NN girl)) (PP (IN with) (NP (DT a) (NN crush)))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (PRP It)) (VP (AUX is) (ADJP (JJ hard)) (S (VP (TO to) (VP (VB find) (NP (NP (NN anyone)) (SBAR (WHNP (WP who)) (S (VP (MD can) (VP (VB mount) (NP (NP (DT a) (JJ serious) (NN criticism)) (PP (IN of) (PRN (-LRB- -LRB-) (NP (NNP Kofi)) (-RRB- -RRB-)) (NP (NP (NNP Annan) (POS 's)) (NN performance)))) (PP (IN as) (NP (NNP Secretary) (NNP General))))))))))))) (, ,) ('' '') (NP (PRP she)) (VP (VBZ claims)) (. .)))
+
+(S1 (S (NP (PRP$ His) (NN performance)) (VP (AUX is) (ADJP (RB so) (`` ``) (JJ impressive) ('' '') (SBAR (IN that) (S (NP (PRP she)) (VP (VBZ wonders) (SBAR (IN if) (S (NP (NP (DT a) (`` ``) (NN cult)) (PP (IN of) (NP (NN personality))) ('' '')) (VP (AUX has) (VP (VBN risen) (PRT (RP up)) (PP (IN around) (NP (PRP him)))))))))))) (. .)))
+
+(S1 (S (NP (CD One) (NNP U.S.) (NN official)) (VP (AUX is) (VP (VBN reported) (S (VP (TO to) (VP (AUX be) (`` ``) (VP (VBN astonished) (PP (IN by) (SBAR (WHADJP (RB just) (WRB how) (JJ good)) (S (NP (DT a) (NNP Secretary) (NNP General) (NNP Kofi) (NNP Annan)) (VP (AUX has) (VP (AUX been)))))))))))) (. .) ('' '')))
+
+(S1 (S (ADVP (RB Yup)) (, ,) (NP (PRP you)) (VP (VBP read) (NP (DT that) (NN right))) (. .)))
+
+(S1 (S (NP (NP (NNP Kofi) (POS 's)) (NN performance)) (VP (AUX is) (ADJP (RB soooooo) (JJ impressive))) (. .)))
+
+(S1 (NP (NNP Gag) (. .)))
+
+(S1 (S (VP (VBP Guess) (SBAR (S (NP (DT the) (NNS democrats)) (VP (AUX have) (NP (NP (PRP$ their) (JJ own) (NNP Armstrong) (NN conspiracy)) (SBAR (S (VP (TO to) (VP (VB deal) (PP (IN with))))))))))) (. .)))
+
+(S1 (SBARQ (WHADVP (WRB Why)) (SQ (MD would) (NP (NP (DT an) (NNP NBC) (NN reporter)) (PRN (-LRB- -LRB-) (SBAR (WHNP (WP who)) (S (ADVP (RB also)) (VP (VBZ reports) (PP (IN on) (NP (DT the) (NNP U.N.))) (PP (IN for) (NP (NNP National) (NNP Public) (NNP Radio)))))) (-RRB- -RRB-))) (VP (VB take) (NP (NN money)) (PP (IN from) (NP (DT the) (NNP U.N.) (NN lobby))))) (. ?)))
+
+(S1 (FRAG (ADVP (RB Perhaps)) (SBAR (IN because) (S (NP (JJ longtime) (NNP NBC) (NNP News)) (VP (VB anchor) (S (NP (NNP Tom) (NNP Brokaw)) (VP (VB put) (NP (NP (PRP$ his) (NN stamp)) (PP (IN of) (NP (NP (NN approval)) (PP (IN on) (NP (DT the) (NNP UNA-USA) (CC and) (NNP BCUN)))))) (PP (IN by) (S (VP (VBG acting) (PP (IN as) (NP (NP (NN master)) (PP (IN of) (NP (NP (NNS ceremonies)) (PP (IN at) (NP (PRP$ their) (CD 2001) (JJ Global) (NN Leadership) (NN Dinner))))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB Not) (RB surprisingly)) (, ,) (NP (NNP Brokaw)) (VP (AUX is) (VP (VBN listed) (PP (IN on) (NP (DT the) (NNP Fasulo) (NN book) (NN jacket))) (PP (IN as) (S (VP (VBG saying) (SBAR (S (NP (PRP it)) (VP (AUX is) (NP (DT a) (`` ``) (NN must-read)))))))))) (. .) ('' '')))
+
+(S1 (S (NP (NP (DT Another) (NN endorsement)) (PP (IN of) (NP (DT the) (NN book)))) (VP (VBZ comes) (PP (IN from) (NP (NP (NNP Barbara) (NNP Crossette)) (, ,) (NP (NP (JJ former) (JJ New) (NNP York) (NNP Times) (NN bureau) (NN chief)) (PP (IN at) (NP (DT the) (NNP U.N.))) (SBAR (WHNP (WP who)) (S (ADVP (RB now)) (VP (VBZ writes) (PP (IN for) (NP (NP (NNP U.N.) (NN Wire)) (, ,) (NP (NP (DT a) (NNP Ted) (JJ Turner-funded) (NN online) (NN news) (NN service)) (SBAR (WHNP (WDT that)) (S (VP (VBZ covers) (NP (DT the) (NNP U.N.))))))))))))))) (. .)))
+
+(S1 (S (NP (NP (DT A) (JJ fascinating) (NN part)) (PP (IN of) (NP (DT the) (NN book)))) (VP (AUX is) (SBAR (WHADVP (WRB how)) (S (NP (NNP Fasulo)) (VP (VBZ manages) (S (VP (TO to) (VP (VB gloss) (PP (IN over) (NP (NP (NP (NNP Annan) (POS 's)) (NN role)) (PP (IN in) (NP (NP (DT the) (CD 1994) (NN genocide)) (PP (IN in) (NP (NNP Rwanda)))))))))))))) (. .)))
+
+(S1 (S (NP (PRP She)) (VP (VBZ tries) (S (VP (TO to) (VP (VB blame) (NP (NP (DT the) (NNP U.S.)) (CC and) (NP (NP (JJ other) (NNS members)) (PP (IN of) (NP (DT the) (NNP Security) (NNP Council))))) (PP (IN for) (S (RB not) (VP (VBG sending) (NP (JJ enough) (NNS troops)) (S (VP (TO to) (VP (VB stop) (NP (PRP it)))))))))))) (. .)))
+
+(S1 (S (NP (PRP She)) (VP (VBZ admits) (, ,) (ADVP (RB however)) (, ,) (SBAR (IN that) (, ,) (`` ``) (S (NP (DT The) (NNP Rwanda) (NNS massacres)) (VP (VBD occurred) (SBAR (SBAR (IN while) (S (NP (NNP Annan)) (VP (AUX was) (NP (NNP U.N.) (NNP Undersecretary) (NNP General)) (PP (IN for) (NP (NN peacekeeping)))))) (, ,) ('' '') (CC and) (SBAR (IN that) (S (`` ``) (SBAR (IN After) (S (NP (PRP he)) (VP (VBD became) (NP (NP (NNP SG)) (PRN (-LRB- -LRB-) (NP (NNP Secretary) (NNP General)) (-RRB- -RRB-)))))) (, ,) (NP (NNP Annan)) (VP (VBD commissioned) (NP (DT a) (NN report)) (S (VP (TO to) (VP (VB examine) (SBAR (WHNP (WP what)) (S (VP (VP (AUX had) (VP (VBN happened))) (CC and) (VP (VBP suggest) (NP (NNS remedies))))))))))))))))) (. .) ('' '')))
+
+(S1 (S (S (ADVP (RB Later)) (, ,) (`` ``) (NP (NNP Annan)) (VP (VBD accepted) (NP (NP (NN responsibility)) (PP (IN for) (S (VP (VBG failing) (S (VP (TO to) (VP (VB act) (ADVP (RBR more) (RB quickly))))))))))) (, ,) ('' '') (NP (PRP she)) (VP (VBZ writes)) (. .)))
+
+(S1 (FRAG (CC But) (NP (NP (NN responsibility)) (PP (IN for) (WHNP (WP what)))) (. ?)))
+
+(S1 (S (NP (DT The) (NN truth)) (VP (AUX is) (SBAR (IN that) (S (, ,) (PP (IN as) (NP (NP (NN director)) (PP (IN of) (NP (NNP U.N.) (NN peacekeeping))))) (, ,) (NP (NNP Annan)) (ADVP (RB personally)) (VP (VBD refused) (NP (NNS requests) (S (VP (TO to) (VP (VB authorize) (NP (NNP U.N.) (NNS peacekeepers)) (PP (IN in) (NP (NNP Rwanda))) (S (VP (TO to) (VP (VP (VB seize) (NP (NNS weapons))) (CC and) (VP (VB prevent) (NP (NN genocide)))))))))))))) (. .)))
+
+(S1 (S (NP (NN Writer) (CC and) (NN author) (NNP Philip) (NNP Gourevitch)) (VP (AUX has) (VP (VBD described) (PP (IN in) (NP (NN detail))) (SBAR (WHADVP (WRB how)) (, ,) (NP (NP (CD three) (NNS months)) (PP (IN before) (NP (DT the) (NN genocide)))) (, ,) (S (NP (NP (NNP Major) (NNP General) (NNP Romeo) (NNP Dallaire)) (, ,) (NP (NP (DT the) (NN commander)) (PP (IN of) (NP (NP (QP (JJ several) (CD thousand)) (NNP U.N.) (NNS troops)) (PP (IN in) (NP (NNP Rwanda)))))) (, ,)) (VP (VBD sent) (NP (DT a) (NN fax)) (PP (TO to) (NP (NP (NNP Kofi) (NNP Annan) (POS 's)) (NN office))) (, ,) (S (VP (VBG saying) (SBAR (S (NP (PRP he)) (VP (AUX had) (VP (VBN received) (NP (NN evidence)) (PP (IN from) (NP (NP (DT a) (NNP Rwandan) (NN government) (NN informant)) (SBAR (WHNP (WDT that)) (S (NP (NN genocide)) (VP (AUX was) (VP (AUXG being) (VP (VBN planned))))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN informant)) (VP (VBD offered) (S (VP (TO to) (VP (VB help) (NP (NNP U.N.) (NNS forces)) (SBAR (IN in) (NN raiding) (S (NP (DT the) (NN government) (NNS stockpiles)) (VP (TO to) (VP (AUX be) (VP (VBN used) (PP (IN in) (NP (DT the) (NN genocide) (NN campaign)))))))))))) (. .)))
+
+(S1 (S (NP (NP (DT All)) (SBAR (IN that) (S (NP (DT the) (NN informant)) (VP (VBD wanted) (PP (IN in) (NP (NN return))))))) (VP (AUX was) (NP (NP (NN protection)) (PP (IN for) (NP (NP (PRP himself)) (CC and) (NP (PRP$ his) (NN family)))))) (. .)))
+
+(S1 (S (CC But) (NP (DT the) (NN general)) (VP (VBD needed) (NP (NNP U.N.) (NN authorization)) (S (VP (TO to) (VP (VP (VB conduct) (NP (PDT such) (DT a) (NN raid))) (CC and) (VP (VB save) (NP (NNS lives))))))) (. .)))
+
+(S1 (S (S (NP (PRP He)) (VP (VBD asked) (PP (IN for) (NP (DT that) (NN approval))))) (CC but) (S (NP (DT the) (NN answer)) (VP (VBD came) (PRT (RP back)) (PP (IN in) (NP (DT a) (JJ now-infamous) (`` ``) (NN genocide) (NN fax) ('' ''))) (PP (IN from) (NP (NP (NNP Annan) (POS 's)) (NN office))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (VP (VBD denied) (NP (NN authorization)) (PP (IN for) (NP (DT the) (NN mission)))) (CC and) (VP (VBD told) (NP (PRP him)) (SBAR (IN that) (S (NP (PRP he)) (VP (MD should) (VP (VB turn) (NP (NP (DT the) (NN information)) (VP (VBN provided) (PP (IN by) (NP (DT the) (JJ confidential) (NN witness))))) (ADVP (RB over)) (PP (TO to) (NP (NP (DT the) (NNP Rwandan) (NN government)) (SBAR (WHNP (WDT which)) (S (VP (AUX was) (VP (VBG planning) (NP (DT the) (NN genocide)))))))))))))) (. !)))
+
+(S1 (S (NP (DT The) (NN result)) (VP (AUX was) (SBAR (IN that) (S (S (NP (DT the) (NN information)) (VP (VBD dried) (PRT (RP up)))) (CC and) (S (NP (DT the) (NN genocide)) (VP (VBD took) (NP (NN place))))))) (. .)))
+
+(S1 (S (ADVP (RB Yup)) (, ,) (NP (JJ good) (NN ole) (NNP Kofi)) (VP (VBD told) (NP (DT this) (JJ poor) (NN guy)) (S (VP (TO to) (VP (VB give) (NP (DT the) (JJ secret) (NN info)) (PRT (RP over)) (PP (TO to) (NP (NP (DT the) (JJ very) (NN government)) (SBAR (WHNP (WDT that)) (S (VP (AUX was) (VP (VBG planning) (NP (DT the) (NN genocide)))))))))))) (. .)))
+
+(S1 (S (SBAR (WHNP (WP What) (DT a) (JJ great) (NN guy)) (S (NP (PRP he)) (VP (AUX is)))) (VP (AUX is) (RB n't) (NP (PRP he))) (. .)))
+
+(S1 (FRAG (CC Or) (WHADVP (WRB how)) (RB about) (NP (NP (DT the) (JJ ongoing) (NN prostitution)) (SBAR (WHNP (WDT that)) (S (VP (AUX 's) (VP (VBG going) (PRT (RP on)) (PP (IN in) (NP (DT the) (NNP Congo)))))))) (. ?)))
+
+(S1 (S (ADVP (RB Now)) (NP (DT the) (NN report)) (VP (VBZ comes) (PRT (RP out)) (NP (NN today)) (PP (IN on) (NP (NP (DT the) (NN Oil)) (PP (IN for) (NP (NNP Food) (NN scandal)))))) (. .)))
+
+(S1 (S (INTJ (UH Yeah)) (: ...) (NP (DT this) (NN guy)) (VP (AUX is) (NP (PDT such) (DT a) (JJ good) (NN SG))) (. .)))
+
+(S1 (NP (NP (NNP Eff)) (NP (PRP him)) (. .)))
+
+(S1 (S (S (NP (DT The) (NN article)) (VP (VBZ ends) (PP (IN with) (NP (DT the) (NN following))) (: :) (PP (IN In) (NP (DT an) (NP (NNP April) (CD 30) (, ,) (CD 2001) (, ,)) (NNP Washington) (NNP Times) (NN column))))) (, ,) (NP (NNP Nat) (NNP Hentoff)) (VP (VBD noted) (SBAR (IN that) (S (NP (DT the) (NNS media)) (VP (AUX have) (VP (VBN devoted) (`` ``) (NP (JJ scant) (NN mention)) ('' '') (PP (TO to) (NP (NP (DT the) (`` ``) (JJ plain) (NN fact)) (SBAR (IN that) (S (NP (PRP it)) (VP (AUX was) (NP (NP (NNP Mr.) (NNP Annan)) (, ,) (SBAR (WHADVP (WRB when)) (S (NP (PRP he)) (VP (AUX was) (NP (NP (NN head)) (PP (IN of) (NP (NP (NP (DT the) (NNP United) (NN Nation) (POS 's)) (JJ peacekeeping) (NN office)) (, ,) (SBAR (WHNP (WP who)) (S (VP (MD could) (VP (AUX have) (VP (VBN prevented) (NP (NP (DT the) (NN slaughter)) (PP (IN of) (NP (NP (CD 800,000) (NNPS Tutsis)) (CC and) (NP (NP (PRP$ their) (NNS sympathizers)) (PP (IN in) (NP (NNP Rwanda))))))) (PP (IN in) (NP (CD 1994))))))))))))))))))))))))) (. .) ('' '')))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (ADJP (JJ true)) (PRN (, ,) (S (NP (NNP Hentoff)) (VP (VBD said))) (, ,)) (SBAR (IN that) (S (NP (DT the) (NNP U.N.)) (VP (VBD issued) (NP (NP (DT a) (NN report)) (PP (IN in) (NP (CD 1999))) (SBAR (WHNP (WDT that)) (S (VP (VBD acknowledged) (, ,) (PP (TO to) (NP (DT some) (NN extent))) (, ,) (NP (NP (PRP$ its) (NN role)) (PP (IN in) (NP (DT the) (NNS killings)))))))))))) (. .)))
+
+(S1 (S (CC But) (PP (IN for) (NP (CD five) (CC and) (DT a) (JJ half) (NNS years))) (PRN (, ,) (S (NP (PRP he)) (VP (VBD noted))) (, ,)) (NP (NNP Annan)) (`` ``) (VP (VBD refused) (S (VP (TO to) (VP (VB accept) (NP (NP (DT any) (NN responsibility)) (PP (IN for) (NP (DT the) (NNP Rwandan) (NN holocaust))))))) (SBAR (IN until) (S (NP (NP (NNP Mr.) (NNP Gourevitch)) (CC and) (NP (NNS others))) (VP (VBD revealed) (SBAR (IN that) (S (NP (QP (JJR less) (IN than) (CD 5,000)) (NNP U.N.) (NNS troops)) (VP (MD could) (VP (AUX have) (VP (VBN stopped) (NP (DT the) (NNS killings)) (SBAR (IN if) (S (NP (NNP Mr.) (NNP Annan)) (VP (AUX had) (RB not) (VP (VBN closed) (NP (PRP$ his) (NNS eyes))))))))))))))) (. .) ('' '')))
+
+(S1 (S (NP (PRP It)) (VP (AUX is) (ADJP (JJ astonishing)) (SBAR (IN that) (S (NP (NP (DT a) (NN journalist)) (PP (IN for) (NP (NNP NBC) (NNPS New)))) (VP (MD would) (VP (VB close) (NP (PRP$ her) (NNS eyes)) (PP (TO to) (NP (NP (NNP Annan) (POS 's)) (NN role)))))))) (. .)))
+
+(S1 (S (CC But) (NP (DT that)) (VP (AUX is) (SBAR (WHNP (WP what)) (S (NP (PRP she)) (VP (AUX was) (ADVP (RB apparently)) (VP (VBN paid) (S (VP (TO to) (VP (AUX do))))))))) (. .)))
+

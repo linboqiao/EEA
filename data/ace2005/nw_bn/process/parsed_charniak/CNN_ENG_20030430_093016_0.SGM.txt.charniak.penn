@@ -1,0 +1,106 @@
+(S1 (S (NP (NP (NNPS senators)) (CC and) (NP (DT a) (JJ good) (NN teacher))) (VP (VBZ believes) (PP (IN in) (NP (NP (DT the) (NNS possibilities)) (PP (IN of) (NP (DT every) (NN boy) (CC and) (NN girl)))))) (. .)))
+
+(S1 (S (NP (DT the) (JJ good) (NN teacher)) (VP (VBZ sees) (SBAR (WHNP (WP what)) (S (VP (AUX is) (ADJP (JJ possible)))))) (. .)))
+
+(S1 (S (NP (DT a) (JJ good) (NN teacher)) (VP (VBZ believes) (PP (IN in) (NP (NP (DT the) (NN responsibility)) (PP (IN of) (NP (DT every) (NN school) (S (VP (TO to) (VP (VB bring) (PRT (RP out)) (NP (NP (DT the) (JJS best)) (PP (IN in) (NP (DT every) (NN student)))))))))))) (. .)))
+
+(S1 (S (CC and) (NP (CD 2001)) (, ,) (NP (PRP we)) (VP (VBD passed) (SBAR (WHNP (WP what)) (S (VP (AUX 's) (VP (VBN called) (NP (NP (DT the) (DT no) (NN child)) (VP (VBN left) (PP (IN behind) (NP (NN legislation)))))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (VBP love) (NP (NN tha) (NN phrase)) (, ,) (SBAR (IN because) (S (NP (PRP it)) (VP (AUX 's) (NP (NP (DT a) (NN commitment)) (PP (IN of) (NP (PRP$ our) (NN nation) (S (VP (TO to) (VP (VB make) (S (ADJP (JJ sure)) (SBAR (IN that) (S (CONJP (RB not) (RB only)) (SINV (AUX does) (NP (DT every) (NN child) (S (VP (VBP excel))))) (, ,) (CC but) (S (NP (DT no) (NN child)) (VP (VBZ gets) (VP (VBN left) (PRT (RP behind)))))))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNS members)) (PP (IN of) (NP (NP (DT both) (NNS parties)) (, ,) (SBAR (S (NP (DT both) (NNS republicans) (CC and) (NNS democrats)) (VP (VBD came) (ADVP (RB together)) (S (VP (TO to) (VP (VB pass) (NP (NP (DT this) (NN law)) (ADJP (JJ inherent) (PP (IN in) (NP (DT the) (NN law)))))))))))))) (VP (AUX is) (NP (NP (DT the) (NN vision)) (PP (IN of) (NP (JJ high) (NNS standards))))) (. .)))
+
+(S1 (S (CC and) (NP (NN money)) (VP (TO to) (VP (VB meet) (NP (DT the) (NNS standards)))) (. .)))
+
+(S1 (FRAG (NP (DT an) (JJ historic) (NNS reforms)) (. .)))
+
+(S1 (S (NP (NP (DT all)) (WHPP (IN of) (WHNP (WDT which)))) (VP (VBD put) (NP (NP (DT the) (NN education) (NNS decisions)) (PP (IN of) (NP (NNP america)))) (PP (IN in) (NP (NP (DT the) (NNS hands)) (PP (IN of) (NP (NP (NNS teachers) (CC and) (NNS principals)) (CC and) (NP (JJ local) (NNS officials))))))) (. .)))
+
+(S1 (S (CC but) (NP (PRP we)) (ADVP (RB also)) (VP (VBD said) (SBAR (IN that) (S (SBAR (IN as) (S (NP (PRP we)) (VP (VBP seek) (NP (NP (NN excellence)) (PP (IN for) (NP (DT every) (NN child))))))) (, ,) (NP (PRP we)) (VP (MD must) (VP (VB design) (NP (NN accountability) (NNS systems)) (PP (IN at) (NP (DT the) (NN state) (NN level))) (S (VP (TO to) (VP (VB determine) (SBAR (IN whether) (CC or) (RB not) (S (NP (DT each) (NN child)) (VP (AUX is) (VP (VBG learning))))))))))))) (. .)))
+
+(S1 (S (SBAR (IN in) (NN order) (S (VP (TO to) (VP (VB make) (ADJP (JJ sure) (SBAR (S (NP (DT no) (NN child)) (VP (VBZ gets) (VP (VBN left) (ADVP (IN behind))))))))))) (, ,) (NP (PRP we)) (VP (MD must) (VP (VB understand) (SBAR (IN whether) (CC or) (RB not) (S (NP (DT each) (NN child)) (VP (AUX is) (VP (VBG learning) (S (VP (TO to) (VP (VB read) (CC and) (VB write) (CC and) (VB add) (CC and) (VB subtract)))))))))) (. .)))
+
+(S1 (S (SBAR (IN if) (S (NP (EX there)) (VP (AUX are)))) (, ,) (NP (EX there)) (VP (MD will) (VP (AUX be) (NP (NP (NN plenty)) (PP (IN of) (NP (NN praise)))))) (. .)))
+
+(S1 (S (SBAR (IN if) (FRAG (RB not))) (, ,) (NP (PRP we)) (VP (MD will) (VP (VB work) (S (VP (TO to) (VP (VB design) (NP (NP (NNS programs)) (SBAR (S (VP (TO to) (VP (VB make) (ADJP (JJ sure) (SBAR (S (NP (DT no) (NN child)) (VP (VBZ gets) (VP (VBN left) (ADVP (IN behind))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (NP (NP (DT the) (NN crux)) (PP (IN of) (NP (DT the) (NN law))))) (. .)))
+
+(S1 (S (NP (DT every) (NN state)) (VP (VBD met) (NP (NP (DT the) (NNS laws) (NNP January) (NN 31st) (NN deadline)) (PP (IN for) (S (VP (VBG submitting) (NP (PRP$ their) (NN accountability) (NNS plans)) (PP (IN for) (NP (NN approval)))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (AUX 'm) (ADJP (JJ pleased) (S (VP (TO to) (VP (VB announce) (SBAR (IN that) (S (NP (NN secretary) (NN page)) (VP (AUX has) (VP (VBN approved) (NP (NP (NNS plans)) (PP (IN from) (NP (NNP arkansas) (, ,) (NNP missouri) (CC and) (NNP washington) (NN state))))))))))))) (. .)))
+
+(S1 (FRAG (WHNP (WDT which)) (S (VP (VB bring) (NP (DT the) (PRN (: --) (SBAR (WHNP (WDT which)) (S (VP (VBP bring) (NP (NP (DT the) (JJ total) (NN number)) (PP (IN of) (NP (VBN approved) (NNS plans)))) (PP (TO to) (NP (NP (CD 16)) (VP (VBG covering) (NP (NP (QP (CD 16) (CD million)) (NNS children)) (PP (IN in) (NP (NP (JJ public) (NNS schools)) (PP (IN across) (NP (NNP america)))))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NN secretary) (NN page)) (CC and) (NP (PRP$ his) (NN department))) (VP (MD will) (VP (VB continue) (S (VP (VBG working) (PP (IN with) (NP (NP (DT the) (NN rest)) (PP (IN of) (NP (DT the) (NNS states))) (S (VP (TO to) (VP (VB get) (S (NP (DT the) (NNS plans)) (VP (VBN approved) (ADVP (ADVP (RB as) (RB quickly)) (PP (IN as) (ADJP (JJ possible))))))))))))))) (. .)))
+
+(S1 (S (NP (NNS people)) (VP (AUX are) (VP (VBG responding) (PP (TO to) (NP (DT the) (NN challenge))) (PP (IN at) (NP (DT the) (JJ local) (NN level))))) (. .)))
+
+(S1 (S (NP (NNS people)) (VP (AUX are) (VP (VBG beginning) (S (VP (TO to) (VP (VB develop) (NP (NP (NP (DT the) (NN accountability) (NNS systems)) (SBAR (S (VP (TO to) (VP (VB show) (NP (PRP$ your) (NNS states))))))) (CC and) (NP (NP (PRP$ your) (NNS communities)) (SBAR (IN that) (S (NP (PRP you)) (VP (AUX 're) (VP (VBG doing) (NP (PRP$ your) (NN job))))))))))))) (. .)))
+
+(S1 (S (S (VP (VBG leaving) (NP (DT no) (NN doubt)) (PP (IN in) (NP (NP (DT the) (NNS minds)) (PP (IN of) (NP (NP (DT the) (NNS parents) (CC and) (NNS taxpayers) (CC and) (NNS citizens)) (, ,) (SBAR (WHNP (DT some) (WHPP (IN of) (WHNP (WP whom)))) (S (VP (VBP praise) (NP (JJ public) (NNS schools))))))))))) (, ,) (NP (DT some)) (VP (AUX are) (ADJP (JJ critical) (PP (IN of) (NP (JJ public) (NNS schools)))) (, ,) (SBAR (IN that) (S (NP (PRP you)) (VP (AUX 're) (VP (VBG performing)))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (MD will) (VP (VB understand) (SBAR (WHADVP (WRB why)) (S (NP (PRP you)) (VP (AUX 're) (ADVP (RB here)) (VP (AUXG being) (VP (VBN honored) (PP (IN in) (NP (NP (NNP washington)) (, ,) (NP (NNP d.c.)))) (PP (IN as) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (JJ top) (CD 54) (NNS teachers)) (PP (IN around) (NP (PRP$ our) (NN country)))))))))))))) (. .)))
+
+(S1 (S (S (NP (NN education) (NN reform)) (VP (VBZ depends) (PP (IN on) (NP (NP (JJ good) (NNS laws)) (CC and) (NP (JJ good) (NNS plans)))))) (CC but) (S (NP (PRP you) (CC and) (PRP i)) (VP (VBP know) (SBAR (S (NP (PRP it)) (ADVP (RB ultimately)) (VP (VBZ depends) (PP (IN on) (NP (JJ good) (NNS teachers)))))))) (. .)))
+
+(S1 (S (NP (JJ last) (NNP June)) (VP (VBZ states) (VP (VBN submitted) (PP (TO to) (NP (NP (DT the) (NN department)) (PP (IN of) (NP (NN education) (NNS strategies))))) (PP (IN for) (S (VP (VBG ensuring) (SBAR (IN that) (S (NP (DT all) (NNS teachers)) (VP (AUX are) (ADJP (RB highly) (JJ qualified)))))))))) (. .)))
+
+(S1 (S (PP (IN by) (NP (DT this) (NNP September))) (, ,) (NP (NNS states)) (VP (MD will) (VP (VB assess) (NP (NP (DT the) (NNS programs)) (SBAR (S (NP (PRP they)) (VP (VBP expect) (S (VP (TO to) (VP (VB make) (PP (IN by) (NP (CD 2005) (CC and) (CD 2006) (NN school) (NN year)))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN department)) (VP (AUX is) (VP (VBG working) (PP (IN with) (NP (NNS states))) (S (VP (TO to) (VP (VB help) (S (NP (NNS teachers)) (VP (VB meet) (NP (NP (JJ new) (NNS definitions)) (PP (IN of) (NP (NN teacher) (NN quality))))))))) (, ,) (SBAR (RB so) (IN that) (S (NP (DT every) (NN classroom)) (VP (MD will) (VP (AUX have) (NP (NP (DT a) (JJ well-trained) (ADJP (RB highly) (JJ effective)) (NN teacher)) (PP (IN like) (NP (NP (PRP you)) (NP (DT all))))))))))) (. .)))
+
+(S1 (S (NP (NP (PRP$ our) (CD 2003) (JJ national) (NN teacher)) (PP (IN of) (NP (DT the) (NN year)))) (VP (AUX is) (NP (NP (DT an) (NN example)) (PP (IN of) (NP (DT the) (JJS highest) (JJ professional) (NNS standards))))) (. .)))
+
+(S1 (FRAG (CC and) (NP (DT the) (JJS finest) (JJ personal) (NNS qualities)) (. .)))
+
+(S1 (S (NP (NNP betsy) (NNP rogers)) (VP (VP (VBZ teaches) (NP (ADJP (JJ first) (CC and) (JJ second)) (NN grade) (NNS students))) (CC and) (VP (VBZ leads) (NP (NNP alabama)))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (AUX is) (NP (NP (DT an) (JJ accomplished) (NN teacher)) (PP (IN with) (NP (NP (CD 22) (NNS years)) (PP (IN in) (NP (DT the) (NN profession))))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (MD could) (VP (AUX have) (NP (NP (PRP$ her) (NN pick)) (PP (IN of) (NP (DT any) (NN school)))))) (. .)))
+
+(S1 (S (ADVP (RB yet)) (NP (PRP she)) (VP (VBZ chooses) (S (VP (TO to) (VP (VB teach) (PP (IN in) (NP (DT the) (NN school))) (PP (IN in) (NP (DT an) (JJ underprivileged) (JJ rural) (NN area))) (SBAR (IN because) (S (NP (PRP she)) (VP (VBZ believes) (SBAR (IN that) (S (NP (JJ devoted) (NNS teachers) (CC and) (NNS principals)) (VP (MD can) (VP (VB make) (NP (DT a) (NN difference)) (PP (IN in) (NP (NP (DT the) (NNS lives)) (PP (IN of) (NP (NP (NNS students)) (PP (IN from) (NP (DT every) (NN background)))))))))))))))))) (. .)))
+
+(S1 (S (NP (NN teaching)) (VP (AUX is) (NP (NP (DT a) (NN tradition)) (PP (IN in) (NP (NP (NNP betsy) (POS 's)) (NN family))))) (. .)))
+
+(S1 (S (NP (PRP$ her) (NN grandmother)) (VP (AUX was) (NP (DT a) (NN teacher))) (. .)))
+
+(S1 (S (NP (PRP$ her) (NN mother)) (VP (VBD taught) (NP (NNP Sunday) (NN school)) (PP (IN for) (NP (CD 50) (NNS years)))) (. .)))
+
+(S1 (S (CC and) (NP (PRP$ her) (JJ own) (NN career) (NNP betsy) (NNP rogers)) (VP (AUX is) (VP (VBN known) (PP (IN for) (NP (NP (DT a) (NN commitment)) (PP (TO to) (NP (NNS students))) (SBAR (WHNP (WDT that)) (S (VP (VBZ goes) (PP (IN beyond) (NP (NN school) (NNS hours)))))))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (VBZ gives) (PP (IN before) (NP (NN school) (NN tutoring))) (PP (TO to) (NP (NP (NNS students)) (SBAR (WHNP (WP who)) (S (VP (AUX need) (NP (NP (JJ extra) (NN help)) (VP (VBG learning) (S (VP (TO to) (VP (VB read)))))))))))) (. .)))
+
+(S1 (S (CC and) (VP (NNS volunteers) (PP (IN on) (NP (NN school) (NNS committees))) (PP (IN after) (NP (NNS hours)))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (VBZ attends) (NP (NP (NN sporting) (NNS events)) (CC and) (NP (NN birthday) (NNS parties))) (PP (IN for) (NP (PRP$ her) (NNS students)))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (VBZ helps) (NP (NP (DT the) (JJ familiar) (NN list)) (PP (IN of) (NP (JJ disadvantaged) (NNS students)))) (PP (IN through) (NP (JJ local) (NN church) (CC and) (NN community) (NNS groups)))) (. .)))
+
+(S1 (S (NP (NNP betsy)) (ADVP (RB also)) (VP (VBZ encourages) (S (NP (PRP$ her) (NNS students)) (VP (TO to) (VP (VB help) (NP (DT each) (JJ other)) (ADVP (DT no) (NN matter) (SBAR (WHNP (WP what)) (S (S (NP (PRP$ your) (NNS circumstances)) (PP (IN in) (NP (NN life)))) (, ,) (S (NP (PRP you)) (VP (MD can) (ADVP (RB always)) (VP (VB give))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNS teachers)) (PP (IN like) (NP (NNP betsy) (NNP rogers)))) (VP (VBN put) (NP (NNS children)) (PP (IN on) (NP (NP (DT the) (NN road)) (PP (TO to) (S (VP (VBG becoming) (NP (JJ good) (NNS citizens)))))))) (. .)))
+
+(S1 (FRAG (ADVP (RB as) (RB importantly)) (, ,) (NP (JJ successful) (NNS adults)) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (VBP show) (S (NP (NP (NNS students)) (SBAR (WHNP (WDT that)) (S (NP (EX there)) (VP (AUX are) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (JJ caring) (NNS people)))))))) (ADJP (JJ ready) (S (VP (TO to) (VP (VB help) (PP (IN along) (NP (DT the) (NN way))))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (VBP thank) (NP (NP (DT every) (CD one)) (PP (IN of) (NP (NP (PRP$ our) (NNS teachers)) (PP (IN of) (NP (DT the) (NN year)))))) (PP (IN for) (NP (NP (PRP$ your) (NN determination)) (CC and) (NP (PRP$ your) (NN love))))) (. .)))
+
+(S1 (S (NP (NP (DT each)) (PP (IN of) (NP (PRP you)))) (VP (AUX is) (NP (NP (DT an) (NN example)) (PP (IN of) (NP (NP (NN excellence)) (PP (IN in) (NP (DT the) (NN classroom))))))) (. .)))
+
+(S1 (S (NP (NP (DT each)) (PP (IN of) (NP (PRP you)))) (VP (AUX is) (NP (NP (DT a) (NN model)) (SBAR (IN for) (S (NP (DT a) (JJ young) (NN teacher)) (VP (TO to) (VP (VB follow))))))) (. .)))
+
+(S1 (S (CC and) (NP (PRP$ your) (NNS students)) (VP (AUX are) (ADJP (JJ fortunate) (S (VP (TO to) (VP (AUX have) (NP (ADJP (JJ talented) (CC and) (JJ good-hearted)) (NNS people)) (PP (IN in) (NP (PRP$ their) (NNS lives)))))))) (. .)))
+
+(S1 (S (CC and) (NP (PRP$ our) (NN nation)) (VP (AUX is) (ADJP (JJ fortunate) (S (VP (TO to) (VP (AUX have) (NP (PRP you)) (PP (IN in) (NP (DT the) (NN classroom)))))))) (. .)))
+
+(S1 (S (VP (VB thank) (NP (PRP you)) (PP (IN for) (NP (PRP$ your) (NN work)))) (. .)))
+
+(S1 (SQ (MD may) (NP (NNP god)) (VP (VB bless) (SBAR (WHNP (WP what)) (S (NP (PRP you)) (VP (AUX do))))) (. .)))
+
+(S1 (S (CC and) (ADVP (RB now)) (NP (PRP i)) (VP (AUX 'm) (ADJP (JJ pleased) (S (VP (TO to) (VP (VB introduce) (NP (NP (DT the) (JJ national) (NN teacher)) (PP (IN of) (NP (DT the) (NN year)))) (NP (NNP betsy) (NNP rogers))))))) (. .)))
+
+(S1 (PRN (-LRB- -LRB-) (NN applause) (-RRB- -RRB-)))
+

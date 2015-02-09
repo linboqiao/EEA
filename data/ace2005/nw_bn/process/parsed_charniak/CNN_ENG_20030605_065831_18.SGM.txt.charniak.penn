@@ -1,0 +1,32 @@
+(S1 (S (NP (NNP martha) (NNP stewart)) (VP (AUX is) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT those) (NNS stories)) (SBAR (WHNP (WDT that)) (S (VP (AUX is) (PP (IN in) (NP (DT the) (NN news) (JJ big) (NN time))) (ADVP (RB again))))))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (VBD resigned) (PP (IN as) (NP (NP (NP (NN chairman)) (CC and) (NP (NP (NN ceo)) (PP (IN of) (NP (NNP martha) (NNP stewart) (NN living))))) (, ,) (NP (NP (NNP omnimedia)) (, ,) (NP (NP (DT the) (NN company)) (SBAR (WHNP (WDT that)) (S (VP (VBZ bears) (NP (PRP$ her) (NN name)))))))))) (. .)))
+
+(S1 (S (PP (IN after) (S (VP (VBG pleading) (ADJP (RB not) (JJ guilty) (PP (TO to) (NP (NP (DT a) (NN laundry) (NN list)) (PP (IN of) (NP (NP (NNS charges)) (VP (VBN brought) (PP (IN by) (NP (NP (NP (DT the) (NN justice) (NN department)) (CC and) (NP (DT the) (NNP sec))) (, ,) (NP (NN insider) (NN trading)) (, ,) (NP (NP (NN obstruction)) (PP (IN of) (NP (NN justice)))) (, ,) (NP (NN conspiracy)))) (S (VP (TO to) (VP (VB hide) (SBAR (WHNP (WP what)) (S (NP (PRP they)) (VP (VBP say) (SBAR (S (VP (AUX is) (NP (DT an) (JJ illegal) (NN stock) (NN sale)))))))))))))))))))) (, ,) (NP (PRP we)) (VP (AUX 're) (VP (VBG talking) (PP (IN about) (NP (NP (CD 4,000) (NNS shares)) (PP (IN of) (NP (NN stock))) (SBAR (WHNP (IN that)) (S (VP (VBN netted) (NP (PRP her)) (PP (IN about) (NP ($ $) (CD 225,000)))))))))) (. .)))
+
+(S1 (SBARQ (WHADVP (WRB how)) (SQ (AUX does) (NP (DT this)) (VP (VBP compare) (PP (IN with) (NP (JJ other) (JJ corporate) (NNS scandals))))) (. ?)))
+
+(S1 (S (NP (NP (NP (NP (NNP enron) (POS 's)) (NN bankruptcy) (NN cost) (NNS thousands)) (PP (IN of) (NP (NP (NNS people)) (SBAR (S (NP (NP (PRP$ their) (NNS jobs)) (CC and) (NP (PRP$ their) (NN life) (NNS savings) (CC and) (NNS kenny))) (VP (VBP lay))))))) (CC and) (NP (DT the) (NN chairman) (CC and) (NN president))) (, ,) (NP (NP (DT both)) (PP (IN of) (NP (DT that) (NN company)))) (VP (VBP remain) (ADJP (JJ unindicted))) (. .)))
+
+(S1 (S (NP (DT the) (JJ chief) (JJ financial) (NN officer)) (VP (AUX is) (NP (DT the) (JJ only) (CD one)) (ADVP (RB there)) (VP (VBG taking) (NP (DT the) (NN fall)))) (. .)))
+
+(S1 (S (NP (NNP worldcom)) (VP (VP (ADVP (RB once)) (VBN employed) (NP (CD 80,000) (NNS people))) (CC and) (VP (VBD went) (ADVP (RB broke)) (PP (IN on) (NP (NP (DT the) (JJS largest) (JJ corporate) (NN bankruptcy)) (PP (IN in) (NP (DT the) (VBN united) (NNS states))))))) (. .)))
+
+(S1 (S (NP (NNP bernie) (NNS evers)) (VP (AUX is) (VP (VBG living) (NP (PRP$ his) (NN life) (CC and) (NN unindicted)))) (. .)))
+
+(S1 (S (NP (DT the) (NN ceo)) (VP (VBD took) (NP (DT the) (NN fall)) (ADVP (RB there))) (. .)))
+
+(S1 (S (NP (NP (NP (NNP tyco) (POS 's)) (NN ceo) (CC and) (NN president) (NNP dennis) (NNP kozlowski)) (CC and) (NP (NP (DT the) (JJ last) (NN time)) (SBAR (S (NP (PRP i)) (VP (VBD looked)))))) (, ,) (NP (PRP he)) (VP (AUX was) (VP (VBG sailing) (PP (IN around) (NP (NNP martha))) (ADVP (RB vinyard)) (PP (IN on) (NP (PRP$ his) (NN yacht))))) (. .)))
+
+(S1 (S (PP (IN at) (NP (DT the) (NN time))) (, ,) (NP (NNP martha) (NNP stewart)) (VP (AUX was) (ADJP (JJ worth)) (PP (IN in) (NP (NP (DT the) (NN neighborhood)) (PP (IN of) (NP (QP ($ $) (CD 1) (CD billion)))))) (, ,) (SBAR (IN so) (S (NP (PRP you)) (VP (MD could) (VP (VB make) (NP (DT the) (NN argument)) (SBAR (S (NP (PRP she)) (VP (MD might) (VP (AUX have) (VP (AUX been) (ADJP (JJ guilty) (PP (IN of) (NP (NN stupidity)))))))))))))) (. .)))
+
+(S1 (S (CC but) (NP (DT the) (NN question)) (VP (AUX is) (S (NP (PRP she)) (VP (AUXG being) (VP (ADVP (RB unfairly)) (VBD singled) (PRT (RP out)) (PP (IN for) (NP (NN prosecution))))))) (. ?)))
+
+(S1 (S (NP (DT the) (NN e-mail) (NN address)) (VP (AUX is) (ADJP (JJ am@cnn.com))) (. .)))
+
+(S1 (S (CC and) (S (NP (PRP i)) (VP (AUX 'm) (ADJP (JJ sure) (SBAR (S (NP (PRP we)) (VP (MD 'll) (VP (VB hear) (PP (IN from) (NP (NP (JJ many)) (PP (IN of) (NP (PRP you)))))))))))) (CC and) (S (NP (PRP we)) (VP (MD will) (VP (VP (VB select) (NP (NP (DT some)) (PP (IN of) (NP (DT the) (NNS responses))))) (CC and) (VP (VB share) (NP (PRP them)) (PP (IN with) (NP (PRP you))) (ADVP (NP (DT a) (NN bit)) (RBR later)))))) (. .)))
+
+(S1 (SBARQ (WHNP (WP what)) (SQ (VP (VBZ makes)) (NP (NP (NN something)) (ADJP (JJ worth) (NP (DT a) (CD billion) (NNS dollars)))) (VP (AUX have) (S (VP (TO to) (VP (VB grab) (NP (DT the) (NN phone)) (PP (IN after) (S (VP (VBG losing) (NP (CD two) (JJ grand)) (PP (IN with) (NP (DT a) (VBG falling) (NN stock) (NN price))))))))))) (. ?)))
+
+(S1 (S (NP (PRP it)) (VP (MD could) (VP (AUX be) (NP (NP (NN arrogance)) (CC or) (NP (NP (NNS factors)) (PP (IN of) (S (VP (AUXG being) (NP (NP (DT a) (JJ powerful) (NN woman)) (CC and) (NP (DT the) (NN celebrity))))))))))))
+

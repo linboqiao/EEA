@@ -1,0 +1,74 @@
+(S1 (S (INTJ (UH Well)) (, ,) (NP (NP (DT the) (NNS journalists) (POS ')) (NN death)) (VP (VBP raise) (NP (NP (NNS questions)) (PP (IN about) (NP (NP (DT the) (NNS tactics)) (PP (IN of) (NP (NP (NNP U.S.) (NNS troops)) (VP (VBG trying) (S (VP (TO to) (VP (VB take) (NP (NP (NN control)) (PP (IN of) (NP (NNP Baghdad)))))))))))))) (. .)))
+
+(S1 (S (NP (PRP They)) (ADVP (RB also)) (VP (VBP serve) (PP (IN as) (NP (DT a) (NN reminder) (SBAR (IN that) (S (NP (NP (JJ many)) (PP (IN of) (NP (NP (PRP$ our) (NNS colleagues)) (VP (VBG covering) (NP (DT this) (NN war)))))) (VP (AUX are) (VP (VBG putting) (NP (PRP$ their) (NNS lives)) (PP (IN on) (NP (DT the) (NN line))) (NP (DT every) (NN day))))))))) (. .)))
+
+(S1 (S (NP (DT Some)) (VP (NNS thoughts) (ADVP (RB now)) (PP (IN on) (NP (NP (DT the) (NNS dangers)) (PP (IN from) (NP (NP (PRP$ our) (JJ senior) (NN analyst)) (, ,) (NP (NNP Jeff) (NNP Greenfield))))))) (. .)))
+
+(S1 (S (SBAR (WHADVP (WRB When)) (S (NP (DT an) (ADJP (NNP Al) (: -) (NNP Jazeera)) (NN reporter)) (VP (AUX was) (VP (VBN killed) (NP (NN today)))))) (, ,) (NP (DT the) (NN network)) (VP (VBD charged) (SBAR (S (NP (PRP it)) (VP (AUX had) (VP (AUX been) (VP (VBN targeted) (PP (IN by) (NP (NNP U.S.) (NN force))))))))) (. .)))
+
+(S1 (S (NP (NNP Central) (NNP Command)) (VP (VBD said) (, ,) (INTJ (UH no)) (, ,) (SBAR (S (NP (PRP$ its) (NNS forces)) (VP (AUX were) (VP (VBG trading) (NP (NN fire)) (PP (IN from) (NP (NP (DT a) (NN hotel)) (SBAR (WHADVP (WRB where)) (S (NP (DT the) (NN network)) (VP (AUX was) (VP (VBN housed)))))))))))) (. .)))
+
+(S1 (S (PP (IN At) (NP (NP (DT a) (JJ nearby) (NN hotel)) (, ,) (NP (CD two) (JJ other) (NNS journalists)) (, ,) (NP (NP (DT a) (NN photographer)) (PP (IN from) (NP (NNP Reuters)))) (CC and) (NP (NP (DT another)) (PP (IN from) (NP (NNP Tele) (CD 5)))))) (NP (NNP Spain)) (VP (VP (VBN died)) (, ,) (NP (NP (DT another) (NN case)) (PRN (, ,) (S (NP (NNP CENTCOM)) (VP (VBZ says))) (, ,)) (PP (IN of) (NP (NP (NN coalition) (NNS forces)) (VP (VBG returning) (NP (NN fire))))))) (. .)))
+
+(S1 (S (NP (DT A) (NNP Kurdish) (NN journalist)) (VP (VBD died) (PP (IN in) (NP (NP (DT a) (NNP U.S.) (JJ friendly-fire) (NN accident)) (PP (IN in) (NP (DT the) (NN north)))))) (. .)))
+
+(S1 (S (CC And) (NP (NP (DT an) (NNP American) (NN writer\/editor)) (, ,) (NP (`` ``) (NNP Washington) (NNP Post) ('' '') (NP (NN editorial) (NN columnist) (NNP Michael) (NNP Kelly))) (, ,)) (VP (AUX was) (VP (VBN killed) (SBAR (WHADVP (WRB when)) (S (NP (PRP$ his) (NN Humvee)) (VP (VBD plunged) (PP (IN into) (NP (DT a) (NN canal))) (SBAR (IN while) (S (VP (VBG evading) (NP (JJ Iraqi) (NN fire)))))))))) (. .)))
+
+(S1 (S (PRN (-LRB- -LRB-) (PP (IN on) (NP (NN camera))) (-RRB- -RRB-)) (: :) (NP (PRP It)) (VP (AUX is) (NP (NP (NP (DT an) (JJ elementary) (NN fact)) (PP (IN of) (NP (NN life))) (PP (IN during) (NP (NN wartime)))) (: :) (NP (NP (DT A) (NN press) (NN pass)) (SBAR (S (VP (VBZ provides) (NP (DT no) (NN protection)))))))) (. .)))
+
+(S1 (FRAG (PRN (-LRB- -LRB-) (NP (NNP voice-over)) (-RRB- -RRB-)) (: :) (S (NP (NP (JJ Famed) (NNP World) (NNP War) (NNP II)) (NN reporter) (NNP Ernie) (NNP Pyle)) (VP (AUX was) (VP (VBN killed) (PP (IN by) (NP (DT a) (NNP sniper))) (PP (IN on) (NP (NP (DT an) (NN island)) (PP (IN in) (NP (DT the) (NNP Pacific)))))))) (. .)))
+
+(S1 (S (NP (NP (JJ Famed) (NN combat) (NN photographer) (NNP Robert) (NNP Capa)) (, ,) (SBAR (WHNP (WP who)) (S (VP (VBD took) (NP (NP (DT a) (JJ classic) (NN photo)) (PP (IN of) (NP (NP (DT a) (NN fighter) (POS 's)) (NN death)))) (PP (IN during) (NP (DT the) (NNP Spanish) (NNP Civil) (NNP War)))))) (, ,)) (NP (PRP himself)) (VP (VBD died) (PP (IN from) (NP (NP (DT a) (NN land) (NN mine)) (PP (IN in) (NP (NNP Indochina)))))) (. .)))
+
+(S1 (S (NP (NP (NNP Sean) (NNP Flynn)) (, ,) (NP (NP (NN son)) (PP (IN of) (NP (DT the) (JJ famous) (NN actor) (NNP Errol) (NNP Flynn)))) (, ,)) (VP (VBD disappeared) (PP (IN in) (NP (NNP Cambodia))) (PP (IN in) (NP (CD 1970)))) (. .)))
+
+(S1 (S (NP (NP (QP (JJR More) (IN than) (CD 65)) (NNS journalists)) (PP (IN of) (NP (JJ many) (NNS nationalities)))) (VP (VBD died) (PP (IN in) (NP (NNP Southeast) (NNP Asia)))) (. .)))
+
+(S1 (S (NP (NNP ABC) (NNP News) (NN producer) (NNP David) (NNP Kaplan)) (VP (AUX was) (VP (VBN killed) (PP (IN by) (NP (NNP sniper) (NN fire))) (PP (IN in) (NP (DT the) (NNPS Balkans))) (PP (IN in) (NP (CD 1992))))) (. .)))
+
+(S1 (S (ADVP (RB Sometimes)) (NP (NNS reporters)) (, ,) (SBAR (IN like) (S (`` ``) (NP (DT The) (NNP Wall) (NNP Street) (NNP Journal)) ('' '') (VP (AUX 's) (NP (NNP Danny) (NNP Pearl))))) (, ,) (VP (VB die) (PRT (RP in)) (S (VP (VBG covering) (NP (NP (DT a) (JJ different) (NN kind)) (PP (IN of) (NP (NN war))))))) (. .)))
+
+(S1 (S (NP (NNP Pearl)) (VP (AUX was) (VP (VBN murdered) (PP (IN by) (NP (NP (NNS terrorists)) (PP (IN in) (NP (NNP Pakistan))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN casualty) (NN count)) (VP (VBZ helps) (S (VP (VB put) (NP (NP (DT the) (JJ ongoing) (NN debate)) (PP (IN about) (NP (JJ journalistic) (NN neutrality)))) (PP (IN into) (NP (DT a) (JJR sharper) (NN light)))))) (. .)))
+
+(S1 (S (NP (NP (DT The) (CD 600) (NNS journalists)) (VP (VBN embedded) (PP (IN with) (NP (JJ American) (NNS troops))) (PP (IN in) (NP (NNP Iraq))))) (VP (MD will) (VP (AUX be) (VP (VBN threatened) (PP (IN by) (NP (DT the) (JJ same) (NN fire))) (SBAR (IN as) (S (NP (DT the) (NNS troops)) (NP (PRP they)) (VP (AUX are) (VP (VBG covering)))))))) (. .)))
+
+(S1 (S (NP (NP (PRP$ Their) (NN safety)) (, ,) (NP (PRP$ their) (NNS lives)) (, ,)) (VP (MD may) (VP (VB depend) (PP (IN on) (NP (DT those) (NNS troops))))) (. .)))
+
+(S1 (FRAG (NP (NN Neutrality)) (PP (IN in) (NP (DT a) (NN firefight))) (. ?)))
+
+(S1 (FRAG (RB Not) (ADJP (JJ likely)) (. .)))
+
+(S1 (S (CC And) (NP (DT that)) (VP (VBZ raises) (NP (DT a) (JJR bigger) (NN question))) (. .)))
+
+(S1 (SQ (AUX Are) (NP (PRP they)) (VP (VBN supposed) (S (VP (TO to) (VP (AUX be) (ADJP (JJ neutral)) (PP (IN on) (NP (NP (DT the) (NN outcome)) (PP (IN of) (NP (DT the) (NN war))))))))) (. ?)))
+
+(S1 (S (PP (IN In) (NP (NP (DT an) (NN interview)) (PP (IN with) (NP (NN broadcasting) (CC and) (NN cable) (NN magazine))))) (, ,) (NP (NNP CBS) (NNP News) (NNP President) (NNP Andrew) (NNP Heyward)) (VP (VBD said) (SBAR (S (PP (IN of) (NP (DT the) (JJ neutrality) (NN notion))) (PRN (: --) (VP (VBP quote)) (: --)) (`` ``) (NP (PRP It)) (VP (AUX 's) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (JJS stupidest) (NNS things)) (SBAR (S (NP (PRP I)) (VP (AUX 've) (ADVP (RB ever)) (VP (VBN heard)))))))))))) (. .)))
+
+(S1 (S (NP (DT This) (NN story)) (VP (AUX is) (VP (VBG going) (S (VP (TO to) (VP (AUX be) (VP (VBN told) (PP (IN from) (NP (NP (DT a) (NNP U.S.) (NN point)) (PP (IN of) (NP (NN view))))))))))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (AUX are) (NP (NP (JJ American) (NNS reporters)) (, ,) (NP (NP (DT the) (NNS ones)) (PP (IN with) (NP (DT the) (NNS troops)))))) (. .) ('' '')))
+
+(S1 (FRAG (PRN (-LRB- -LRB-) (PP (IN on) (NP (NN camera))) (-RRB- -RRB-)) (: :) (S (ADVP (RB Now)) (, ,) (NP (NP (NN none)) (PP (IN of) (NP (DT this)))) (VP (VBZ means) (SBAR (S (NP (NNS journalists)) (VP (MD will) (VP (VB ignore) (NP (NP (JJ unsettling) (NN news)) (: :) (NP (JJ military) (NNS setbacks)) (, ,) (NP (NP (NN lack)) (PP (IN of) (NP (NNS supplies)))) (, ,) (NP (NP (DT the) (NN infliction)) (PP (IN of) (NP (JJ civilian) (NNS casualties))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNS Reporters)) (SBAR (WHNP (WP who)) (S (VP (VBP ignore) (CC or) (VBP distort) (NP (NNS facts)))))) (VP (AUX are) (VP (VBG betraying) (NP (PRP$ their) (NN craft)) (ADVP (DT no) (NN matter) (SBAR (WHNP (WP what)) (FRAG (CC and) (NP (NP (DT no) (NN matter)) (SBAR (WHADVP (WRB how) (RB much)) (S (NP (DT that)) (VP (MD may) (VP (NN anger) (NP (NP (DT the) (NNS people)) (VP (VBG running) (NP (DT a) (NN war)))))))))))))) (. .)))
+
+(S1 (S (CC But) (SBAR (IN whether) (FRAG (PP (IN in) (NP (NP (DT the) (JJ old) (NNP Soviet) (NNP Union)) (CC or) (NP (NNP Nazi) (NNP Germany)) (CC or) (NP (NNP South) (NNP Africa)) (CC or) (NP (NNP Iraq)))))) (, ,) (NP (NP (NN respect)) (PP (IN for) (NP (DT the) (NNS facts)))) (VP (AUX does) (RB not) (VP (VB require) (NP (DT a) (NN reporter)) (S (VP (TO to) (VP (VB throw) (NP (PRP$ his) (NNS values)) (PP (IN over) (NP (DT the) (NN side)))))))) (. .)))
+
+(S1 (NP (NP (NNP Jeff) (NNP Greenfield)) (, ,) (NP (NNP CNN)) (, ,) (NP (NNP New) (NNP York)) (. .)))
+
+(S1 (S (CC And) (NP (NP (NN tonight)) (PP (IN on) (NP (`` ``) (NP (NNP LARRY) (NNP KING) (NNP LIVE)) (, ,) ('' '') (NP (NNP Al-Jazeera) (NN correspondent) (NNP Omar) (NNP Al) (NNP Issawi))))) (VP (MD will) (VP (VB talk) (PP (TO to) (NP (NNP Larry))) (PP (IN about) (NP (NP (NP (DT the) (NN death)) (PP (IN of) (NP (PRP$ his) (NN colleague)))) (CC and) (NP (NP (DT the) (VBG continuing) (NN plight)) (PP (IN of) (NP (NNS journalists))) (PP (IN in) (NP (DT a) (NN war) (NN zone)))))))) (. .)))
+
+(S1 (S (NP (DT That)) (VP (AUX 's) (NP (NN tonight)) (PP (IN at) (NP (NP (NP (CD 9:00) (NN p.m.)) (NP (NNP Eastern))) (, ,) (NP (CD 6:00) (NNP Pacific))))) (. .)))
+
+(S1 (S (ADVP (RB Just) (RB now)) (, ,) (NP (PRP we)) (VP (VBP want) (S (VP (TO to) (VP (VB show) (NP (NP (PRP you) (NNS scenes)) (PP (IN from) (NP (NNP Andrews) (NNP Air) (NNP Force) (NNP Base)))) (ADVP (RB just)) (S (ADVP (NP (NNS moments)) (RB ago)) (, ,) (S (NP (NNP President) (NNP Bush)) (VP (VBG returning) (PP (TO to) (NP (DT the) (NNP United) (NNPS States))) (PP (IN from) (NP (NP (PRP$ his) (NN summit)) (PP (IN in) (NP (NNP Northern) (NNP Ireland))) (PP (IN in) (NP (NNP Belfast))) (PP (IN with) (NP (NP (NNP British) (NNP Prime) (NNP Minister) (NNP Tony) (NNP Blair)) (, ,) (NP (NP (DT the) (NN president)) (PP (ADVP (RB back)) (IN on) (NP (NP (NP (NNP American) (NN soil)) (PP (IN after) (NP (NP (DT a) (JJ quick) (JJ two-day) (NN trip)) (, ,) (ADJP (JJR less) (PP (IN than) (NP (NP (JJ two-day) (NN trip)) (PP (TO to) (NP (NP (NNP Belfast)) (, ,) (NP (PRP he)) (CC and) (NP (NP (DT the) (JJ prime) (NN minister)) (VP (VBG discussing) (, ,) (PP (IN of) (NP (NN course))) (, ,) (NP (NP (DT the) (NN war)) (PP (IN in) (NP (NNP Iraq))))))))))) (, ,) (SBAR (WHNP (WP what)) (S (VP (VBZ happens) (PP (IN after)))))))) (, ,) (CONJP (RB as) (RB well) (IN as)) (NP (NP (DT the) (NN peace) (NN process)) (PP (IN in) (NP (DT the) (NNP Middle) (NNP East))))))))))))) (, ,) (CC and) (S (VP (VBG restarting) (NP (DT the) (NN peace) (NN process)) (PP (IN in) (NP (NNP Northern) (NNP Ireland)))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN president)) (ADVP (RB then)) (VP (VBD climbed) (PP (IN aboard) (NP (NP (NNP Marine) (NNP One)) (, ,) (NP (DT the) (NN helicopter)))) (, ,) (S (VP (VBG heading) (ADVP (RB back) (PP (TO to) (NP (NP (DT the) (NNP White) (NNP House)) (, ,) (SBAR (WHADVP (WRB where)) (S (NP (PRP he)) (VP (MD will) (VP (VB arrive) (ADVP (RB pretty) (RB soon)))))))))))) (. .)))
+
+(S1 (FRAG (ADVP (RB Still)) (ADVP (RB ahead)) (: :) (SBARQ (WHADVP (WRB How)) (SQ (AUX is) (NP (DT the) (NN world)) (VP (VBG reacting) (PP (TO to) (NP (NP (DT the) (NN war)) (PP (IN in) (NP (NNP Iraq))))))) (. ?))))
+
+(S1 (S (SBAR (WHADVP (WRB When)) (S (NP (PRP we)) (VP (VBP return)))) (, ,) (NP (PRP$ our) (NNP Richard) (NNP Quest)) (VP (VBZ takes) (NP (DT a) (NN look))) (. .)))
+
+(S1 (S (VP (VB Stay) (PP (IN with) (NP (PRP us)))) (. .)))
+

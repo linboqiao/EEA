@@ -1,0 +1,8 @@
+(S1 (S (NP (NP (DT an) (NN airport)) (PP (IN in) (NP (NP (JJ key) (NN west)) (, ,) (NP (NNP florida)) (, ,))) (NP (NN today))) (VP (VBD became) (NP (NP (DT the) (NN setting)) (PP (IN of) (SBAR (WHNP (WP what)) (S (VP (VBD appeared) (S (VP (TO to) (VP (AUX be) (NP (DT a) (JJ desperate) (NN attempt) (S (VP (TO to) (VP (VB enter) (NP (DT the) (NNP u.s.)) (PP (IN by) (NP (DT a) (JJ cuban) (JJ national)))))))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN man)) (VP (AUX was) (VP (VBN arrested) (ADVP (RB there)) (SBAR (IN after) (S (NP (NNS authorities)) (VP (VBP say) (SBAR (S (NP (PRP he)) (VP (VBD hijacked) (NP (NP (DT a) (JJ cuban) (NN plane)) (VP (VBG using) (SBAR (WHNP (WP what)) (S (VP (AUX was) (VP (VBN reported) (S (VP (TO to) (VP (AUX be) (NP (NNS grenades))))))))))) (, ,) (S (VP (VBG ordering) (NP (DT the) (NNS pilots)) (S (VP (TO to) (VP (VB fly) (PP (TO to) (NP (NNP florida)))))))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN hijacker)) (VP (VBD got) (PP (IN off) (NP (NP (DT the) (NN plane)) (VP (VBG wearing) (NP (NP (DT a) (NN jacket)) (SBAR (WHNP (WDT that)) (S (VP (VBD said) (, ,) (NP (NNP america)) (PP (IN across) (NP (DT the) (NN back))))))))))) (. .)))
+
+(S1 (S (CC and) (NP (DT a) (JJ small) (NN child)) (VP (VBD clinging) (PP (TO to) (NP (PRP$ his) (NN leg)))) (. .)))
+

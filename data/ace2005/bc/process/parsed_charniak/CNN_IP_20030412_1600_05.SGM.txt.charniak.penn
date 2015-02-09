@@ -1,0 +1,40 @@
+(S1 (S (NP (NP (CD One)) (PP (IN of) (NP (NP (DT the) (JJS toughest) (NNS jobs)) (PP (IN in) (NP (NNP Iraq)))))) (ADVP (RB right) (RB now)) (VP (AUX is) (NP (NP (DT that)) (PP (IN of) (NP (DT the) (JJ military) (NN doctor))))) (. .)))
+
+(S1 (S (S (NP (NP (NNP CNN) (JJ medical) (NN correspondent)) (, ,) (NP (NNP Dr.) (NNP Sanjay) (NNP Gupta)) (, ,)) (VP (AUX has) (VP (AUX been) (VP (VBG traveling) (PP (IN with) (NP (DT the) (NNP Devil) (NNPS Docs))) (PP (IN throughout) (NP (DT the) (NN war))))))) (CC and) (S (ADVP (RB now)) (NP (PRP they)) (VP (AUX are) (ADJP (JJ close) (PP (TO to) (NP (NNP Baghdad)))))) (. .)))
+
+(S1 (S (S (NP (NP (DT Each)) (PP (IN of) (NP (DT these)))) (VP (VBZ bangs))) (CC and) (S (NP (NNS explosions)) (VP (VBZ comes) (PP (IN with) (NP (DT a) (NN story))))) (. .)))
+
+(S1 (S (NP (DT Some)) (NP (PRP we)) (VP (MD 'll) (ADVP (RB never)) (VP (VB know))) (. .)))
+
+(S1 (S (PP (IN For) (NP (NNS others))) (, ,) (NP (DT the) (NNS stories)) (VP (MD can) (VP (AUX be) (VP (VBN seen) (PP (IN in) (NP (PRP$ their) (NNS injuries)))))) (. .)))
+
+(S1 (S (NP (NN Nobody)) (VP (VP (VBZ knows) (NP (DT these) (NNS stories)) (ADVP (ADVP (RBR better)) (PP (IN than) (NP (NP (DT the) (NNP Devil) (NNPS Docs)) (, ,) (NP (NP (JJ Naval) (NN corpsmen)) (SBAR (WHNP (WP who)) (S (ADVP (RB never)) (VP (VB look) (NP (DT the) (JJ other) (NN way)))))) (, ,))))) (CONJP (CC but) (RB rather)) (VP (VBP face) (SBAR (WHNP (WP what)) (S (VP (VBZ needs) (S (VP (TO to) (VP (AUX be) (VP (AUX done) (PP (IN without) (S (VP (VBG flinching))))))))))))) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (AUX are) (ADVP (RB often)) (NP (DT the) (JJ first) (UCP (SBAR (S (VP (VBZ faces) (NP (DT the) (JJ injured) (VB see))))) (, ,) (SINV (AUX be) (NP (PRP they)) (ADJP (JJ Iraqi))) (CC or) (NN coalition)) (NN force) (NNS members))) (. .)))
+
+(S1 (S (SBAR (RB Even) (IN while) (S (S (NP (NNS statutes)) (VP (AUX were) (VP (VBG coming) (ADVP (RB down))))) (CC and) (S (NP (EX there)) (VP (AUX was) (VP (VBG dancing) (PP (IN in) (NP (DT the) (NNS streets)))))))) (, ,) (NP (NP (DT the) (NNS consequences)) (PP (IN of) (NP (VBG continuing) (NNS firefights)))) (VP (AUX are) (VP (VBN seen) (ADVP (RB here)))) (. .)))
+
+(S1 (S (NP (NP (DT The) (NN work)) (PP (IN of) (NP (DT the) (NNP Devil) (NNPS Docs)))) (VP (AUX is) (PP (IN by) (NP (DT no) (NNS means))) (ADVP (RB over))) (. .)))
+
+(S1 (S (NP (DT The) (NNP Navy)) (VP (AUX has) (VP (VBN set) (PRT (RP up)) (NP (NP (DT a) (NN helicopter) (NN landing) (NN zone)) (ADVP (RB just) (NP (DT a) (CD 100) (NNS meters)) (PP (IN from) (NP (DT a) (JJ mobile) (NN operating) (NN room))))) (, ,) (PP (ADVP (RB just)) (IN on) (NP (NP (DT the) (NNS outskirts)) (PP (IN of) (NP (NNP Baghdad))))))) (. .)))
+
+(S1 (S (NP (DT This)) (VP (AUX is) (NP (DT the) (JJS closest) (JJ front) (NN line)) (NP (JJ surgical) (NN company))) (. .)))
+
+(S1 (S (NP (NNS Corpsmen)) (VP (ADVP (RB quickly)) (VBP take) (NP (NP (NNS patients)) (PP (IN by) (NP (NN ambulance)))) (ADVP (RB away) (PP (IN from) (NP (DT the) (VBG blowing) (NN sand)))) (PP (TO to) (NP (DT a) (NN triage) (NN tent)))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX is) (SBAR (RB there) (S (NP (DT the) (NNS doctors)) (VP (VBP begin) (NP (PRP$ their) (NN work)))))) (. .)))
+
+(S1 (S (PP (IN Over) (NP (NP (NP (CD 45) (NNS minutes)) (SBAR (IN as) (S (S (NP (PRP we)) (VP (VBD watched))) (, ,) (S (NP (CD 32) (NNS patients)) (VP (AUX were) (VP (VBN delivered) (ADVP (RB here)) (, ,) (S (VP (VBN evaluated)))))) (CC and) (S (NP (CD nine) (NNS operations)) (VP (VBN started)))))) (: ;) (NP (NP (CD 29)) (PP (IN of) (NP (NP (DT those)) (VP (VBN delivered))))))) (, ,) (NP (NNPS Marines)) (VP (VBN involved) (PP (IN in) (NP (NP (DT a) (NN firefight)) (PP (IN in) (NP (NP (DT the) (NN center)) (PP (IN of) (NP (NNP Baghdad)))))))) (. .)))
+
+(S1 (S (NP (PRP$ Their) (NNS stories)) (VP (MD could) (VP (AUX be) (VP (VBN seen) (PP (IN in) (NP (NP (DT the) (JJ shrapnel) (NNS wounds)) (PP (IN of) (NP (NP (JJ rocket-propelled) (NNS grenades)) (CC and) (NP (NN bullet) (NNS wounds)))) (PP (IN from) (NP (JJ semi-automatic) (NNS weapons)))))))) (. .)))
+
+(S1 (S (NP (DT The) (NNS operations)) (VP (AUX are) (PP (IN on) (NP (NP (PRP$ their) (NNS hands)) (, ,) (ADJP (JJ abdomen) (CC and) (JJ face))))) (. .)))
+
+(S1 (S (NP (NP (CD Two)) (PP (IN of) (NP (DT the) (NNPS Marines)))) (, ,) (ADVP (RB too) (RB far)) (VP (VBN gone)) (. .)))
+
+(S1 (S (PP (IN For) (NP (NP (DT many)) (PP (IN of) (NP (DT the) (NNS survivors))))) (, ,) (NP (DT that) (NN news)) (VP (AUX is) (NP (NP (DT the) (ADJP (RBS most) (JJ difficult))) (SBAR (S (VP (TO to) (VP (VB handle))))))) (. .)))
+
+(S1 (S (S (PP (IN Along) (PP (IN with) (NP (DT the) (JJ medical) (NN care)))) (, ,) (NP (NNS hands)) (VP (AUX are) (VP (VBN held)))) (, ,) (NP (NNS spirits)) (VP (AUX are) (VP (VBN lifted))) (. .)))
+
+(S1 (NP (NP (NNP Dr.) (NNP Sanjay) (NNP Gupta)) (, ,) (NP (NP (NNP CNN)) (PP (IN with) (NP (NP (DT the) (NNP Devil) (NNPS Docs)) (PP (IN outside) (NP (NNP Baghdad)))))) (. .)))
+

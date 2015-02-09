@@ -1,0 +1,76 @@
+(S1 (NP (NP (NNP President) (NNP Bush)) (PP (IN aboard) (NP (NP (DT the) (NNP USS) (NNP Abraham) (NNP Lincoln)) (PP (IN on) (NP (NNP Thursday))))) (, ,) (VP (ADVP (RB formally)) (VBG declaring) (NP (NP (DT the) (JJ successful) (NN accomplishment)) (PP (IN of) (NP (NP (DT the) (JJ military) (NN mission)) (PP (IN in) (NP (NNP Iraq))))))) (. .)))
+
+(S1 (S (VP (VB Welcome) (PRT (RP back)) (PP (TO to) (NP (JJ LATE) (NN EDITION)))) (. .)))
+
+(S1 (SINV (VP (VBG Joining) (NP (PRP us)) (ADVP (RB now))) (VP (AUX are)) (NP (NP (CD two) (JJ key) (NNS members)) (PP (IN of) (NP (DT the) (NNP United) (NNP States) (NNP Senate) (NNP Foreign) (NNPS Relations) (NNP Committee)))) (. .)))
+
+(S1 (FRAG (PP (IN In) (NP (NP (PRP$ his) (NN home) (NN state)) (PP (IN of) (NP (NNP Indiana))))) (, ,) (NP (NP (NP (DT the) (NN committee) (POS 's)) (NN chairman)) (, ,) (NP (NNP Republican) (NNP Senator) (NNP Richard) (NNP Lugar))) (. .)))
+
+(S1 (FRAG (CC And) (ADVP (RB here)) (PP (IN in) (NP (NP (NNP Washington)) (, ,) (NP (NP (JJ Democratic) (NNP Senator) (NNP Christopher) (NNP Dodd)) (PP (IN of) (NP (NNP Connecticut)))))) (. .)))
+
+(S1 (S (NP (NNS Senators)) (, ,) (VP (VB welcome) (PRT (RP back)) (PP (TO to) (NP (JJ LATE) (NN EDITION)))) (. .)))
+
+(S1 (S (NP (NNP Mr.) (NNP Chairman)) (, ,) (VP (VB let) (S (NP (PRP me)) (VP (VB begin) (PP (IN with) (NP (PRP you)))))) (. .)))
+
+(S1 (SQ (AUX Are) (NP (PRP you)) (PP (IN among) (NP (NP (DT those)) (SBAR (WHNP (WP who)) (S (VP (AUX are) (VP (VBG beginning) (S (VP (TO to) (VP (VB conclude) (SBAR (IN that) (S (, ,) (SBAR (WHADVP (WRB when)) (S (NP (PDT all) (DT the) (NN dust)) (VP (VBZ settles)))) (, ,) (NP (DT the) (NNP U.S.)) (VP (MD may) (RB not) (VP (VB find) (NP (NP (NNS weapons)) (PP (IN of) (NP (NP (JJ mass) (NN destruction)) (PP (IN in) (NP (NNP Iraq))))))))))))))))))) (. ?)))
+
+(S1 (S (INTJ (UH No)) (, ,) (NP (PRP I)) (VP (VB concur) (PP (IN with) (NP (NP (NNP Secretary) (NNP Powell)) (, ,) (NP (NNP Secretary) (NNP Rumsfeld)) (, ,) (NP (DT the) (NN president)) (, ,))) (SBAR (SBAR (IN that) (S (NP (NP (NNS weapons)) (PP (IN of) (NP (JJ mass) (NN destruction)))) (VP (AUX are) (ADVP (RB there))))) (, ,) (CC and) (ADVP (RB likewise)) (, ,) (SBAR (IN that) (S (NP (PRP we)) (VP (MD will) (VP (AUX be) (VP (VBN led) (PP (TO to) (NP (PRP them))) (PP (IN by) (NP (NP (NNS people)) (ADJP (JJ knowledgeable) (PP (IN in) (NP (DT the) (NN country))) (PP (IN as) (PP (TO to) (SBAR (WHADVP (WRB where)) (S (NP (PRP they)) (VP (AUX are)))))))))))))))) (. .)))
+
+(S1 (FRAG (SBAR (SBAR (WHNP (WP What)) (S (VP (VBP form) (SBAR (S (NP (PRP we)) (VP (MD may) (VP (VB find) (NP (PRP them))))))))) (CC and) (SBAR (WHNP (WP what)) (S (NP (NP (NP (NNS traces)) (PP (IN of) (NP (NN destruction)))) (CC and) (NP (NP (PDT all) (DT the) (NN rest)) (PP (IN of) (NP (PRP it))))) (VP (MD will) (VP (VP (AUX be) (ADJP (RB very) (JJ interesting))) (CC and) (, ,) (ADVP (RB likewise)) (, ,) (NP (NP (DT the) (JJ intellectual) (NN capital)) (SBAR (WHNP (WDT that)) (S (VP (AUX is) (ADVP (RB there)) (S (VP (TO to) (VP (VB produce) (NP (JJR more)))))))))))))) (. .)))
+
+(S1 (S (SBAR (IN Because) (FRAG (RB not) (ADJP (RB much) (RB else) (AUX is)))) (: --) (NP (PRP you)) (VP (AUX do) (RB n't) (VP (AUX need) (ADVP (RB much)) (S (VP (TO to) (VP (VB get) (S (NP (PRP it)) (VP (VBG going) (ADVP (RB again))))))))) (. .)))
+
+(S1 (S (CC And) (NP (DT that)) (, ,) (S (NP (PRP I)) (VP (VBP think))) (, ,) (NP (PRP we)) (VP (AUX have) (S (VP (TO to) (VP (AUX be) (VP (VBG working) (PP (IN with) (NP (NP (DT these) (NNS people)) (SBAR (WHNP (WP who)) (S (VP (AUX are) (PP (IN in) (NP (DT the) (NN business))) (S (VP (TO to) (VP (VB make) (ADJP (JJ sure) (SBAR (S (NP (PRP they)) (VP (AUX do) (RB n't) (VP (VB re-enter) (NP (DT the) (NN business)))))))))) (, ,) (SBAR (ADVP (RB much)) (IN as) (S (NP (PRP we)) (VP (AUX did) (PP (IN with) (NP (NP (JJ Russian) (NNS scientists)) (PP (IN under) (NP (DT the) (JJ Nunn-Lugar) (NN program)))))))))))))))))) (. .)))
+
+(S1 (SBARQ (WHNP (WHNP (WHNP (WP What)) (PP (IN about) (NP (PRP you)))) (, ,) (NP (NNP Senator) (NNP Dodd)) (, ,)) (SQ (AUX do) (NP (PRP you)) (VP (VB believe) (, ,) (PP (IN in) (NP (DT the) (NN end))) (, ,) (SBAR (S (NP (PRP they)) (VP (MD will) (VP (VB find) (NP (NP (NNS weapons)) (PP (IN of) (NP (JJ mass) (NN destruction)))))))))) (. ?)))
+
+(S1 (S (NP (PRP I)) (VP (AUX have) (NP (NP (DT no) (NN evidence)) (PP (TO to) (NP (DT the) (NN contrary))))) (. .)))
+
+(S1 (S (CC And) (ADVP (RB certainly)) (, ,) (NP (PRP they)) (VP (AUX have) (VP (VBN used) (NP (PRP them)) (PP (IN in) (NP (DT the) (NN past))))) (. .)))
+
+(S1 (S (NP (EX There)) (VP (AUX 's) (NP (NP (DT no) (NN doubt)) (PP (IN about) (NP (DT that)))) (ADVP (IN at) (DT all)) (, ,) (PP (DT both) (PP (IN in) (NP (NNP Iran))) (CC and) (PP (IN against) (NP (DT the) (NNP Kurdish) (NN population))))) (. .)))
+
+(S1 (S (RB So) (, ,) (SBAR (IN whether) (FRAG (CC or) (RB not) (SBAR (S (NP (PRP they)) (VP (VBP find) (NP (PRP them)) (PP (IN in) (NP (NP (DT the) (JJ exact) (NN form)) (SBAR (IN that) (S (NP (JJ many)) (VP (MD would) (VP (VB assume) (SBAR (S (NP (PRP they)) (VP (MD would) (VP (AUX be) (NP (DT the) (NN case))))))))))))))))) (: --) (ADVP (RB possibly)) (NP (DT some)) (VP (VBP got) (PP (IN out) (PP (IN of) (NP (DT the) (NN country))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (MD would) (RB n't) (VP (VB surprise) (NP (PRP me)) (S (VP (TO to) (VP (VB hear) (NP (DT that))))))) (. .)))
+
+(S1 (S (CC But) (NP (PRP I)) (VP (AUX 'm) (VP (VBG going) (S (VP (TO to) (VP (VB work) (PP (IN on) (NP (DT the) (NN assumption))) (, ,) (PP (VBN based) (PP (IN on) (NP (NP (DT the) (NN intelligence)) (SBAR (WHNP (WDT that)) (S (VP (AUX has) (VP (AUX been) (VP (VBN gathered))))))))) (, ,) (SBAR (IN that) (S (NP (NP (DT the) (NNS weapons)) (PP (IN of) (NP (NN mass) (NN destruction)))) (VP (VBD existed))))))))) (. .)))
+
+(S1 (FRAG (WHNP (WP What)) (SBAR (IN if) (S (NP (PRP they)) (VP (AUX do) (RB n't)))) (. ?)))
+
+(S1 (S (ADVP (RB Well)) (, ,) (S (NP (PRP you)) (VP (VBP know))) (, ,) (S (NP (PRP they)) (VP (AUX 've) (VP (VBN used) (NP (PRP it)) (PP (IN in) (NP (DT the) (NN past)))))) (, ,) (CC and) (S (NP (PRP I)) (VP (VBP think) (NP (DT the) (NN point) (SBAR (IN that) (S (NP (NNP Senator) (NNP Lugar)) (VP (ADVP (RB just)) (VBN made))))) (: --) (S (ADVP (RB certainly)) (VP (AUXG having) (S (NP (DT the) (JJ intellectual) (NN capacity) (S (VP (TO to) (VP (AUX do) (NP (DT this)))))) (VP (AUX was) (VP (VBN proven) (ADVP (RB already)) (PP (IN by) (NP (DT the) (NN fact) (SBAR (S (NP (PRP they)) (VP (AUX 've) (VP (VBN used) (NP (PRP them)) (PP (IN in) (NP (DT the) (NN past)))))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB So)) (, ,) (NP (PRP I)) (VP (MD would) (RB n't) (VP (VB dwell) (PP (IN on) (NP (DT that) (NN point))) (ADVP (RB specifically)) (, ,) (SBAR (IN because) (S (NP (NNP Saddam) (NNP Hussein)) (ADVP (RB clearly)) (VP (AUX was) (NP (NP (DT a) (NN producer)) (CC and) (NP (NP (DT a) (NN user)) (PP (IN of) (NP (ADJP (JJ biological) (CC and) (JJ chemical)) (NNS weapons)))))))))) (. .)))
+
+(S1 (S (S (NP (PRP He)) (ADVP (RB clearly)) (VP (AUX was) (PP (IN on) (NP (NP (DT the) (NN track)) (SBAR (S (VP (TO to) (VP (VB acquire) (NP (DT a) (JJ nuclear) (NN capacity)))))))))) (, ,) (CC and) (S (NP (DT the) (NN world)) (VP (AUX is) (NP (DT a) (JJR safer) (NN place)) (NP (NN today)) (SBAR (IN because) (S (NP (PRP he)) (VP (AUX 's) (RB not) (VP (VBG ruling) (NP (NNP Iraq)))))))) (. .)))
+
+(S1 (SQ (MD Will) (NP (DT the) (NNP U.S.)) (VP (VB lose) (NP (NP (NN creditability)) (, ,) (NP (NNP Mr.) (NNP Chairman)) (, ,)) (SBAR (IN if) (, ,) (SBAR (IN if) (S (NP (DT the) (NNP U.S.)) (VP (VBZ finds) (NP (NP (DT no) (JJ hard) (NN evidence)) (, ,) (NP (DT no) (JJ so-called) (NN smoking) (NN gun)))))))) (. ?)))
+
+(S1 (S (INTJ (UH No)) (, ,) (NP (PRP we)) (VP (AUX have) (NP (JJ full) (NN credibility)) (PP (IN in) (NP (NNP Iraq)))) (. .)))
+
+(S1 (S (S (NP (PRP We)) (VP (AUX 've) (VP (VBN prosecuted) (PP (IN with) (NP (DT the) (NN alliance))) (NP (NP (DT a) (JJ successful) (NN liberation)) (PP (IN of) (NP (DT the) (JJ Iraqi) (NNS people))))))) (, ,) (CC and) (S (NP (PRP we)) (VP (AUX have) (ADVP (RB clearly)) (VP (VBN caused) (S (NP (NNP Saddam)) (VP (VP (TO to) (VP (VB destroy) (NP (NP (NNS weapons)) (PP (IN of) (NP (JJ mass) (NN destruction)))))) (, ,) (CC or) (ADVP (IN at) (JJS least)) (VP (TO to) (VP (VB suppress) (NP (NP (NN evidence)) (PP (IN of) (NP (PRP them))))))))))) (. .)))
+
+(S1 (S (NP (DT That)) (VP (AUX is) (NP (NP (DT a) (NN victory)) (PP (IN of) (NP (NNS sorts))))) (. .)))
+
+(S1 (S (NP (DT This)) (VP (AUX is) (NP (NP (DT a) (NN facet)) (SBAR (WHNP (WDT that)) (S (VP (AUX 's) (ADJP (JJ important))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (ADJP (JJ important)) (PP (IN in) (NP (NP (DT the) (NN war)) (PP (IN against) (NP (NN terrorism))))) (SBAR (IN that) (S (NP (PRP we)) (VP (NN rout) (PP (IN out) (SBAR (WHNP (WDT whatever)) (S (VP (VP (AUX is) (ADVP (RB there))) (CC and) (PRN (, ,) (S (ADVP (RB likewise)) (, ,) (NP (DT the) (NNS people)) (VP (VBN involved))) (, ,)) (SBAR (IN because) (S (NP (PRP they)) (VP (MD might) (VP (VB help) (VP (VB supply) (NP (NP (NNP al) (NNP Qaeda)) (CC or) (NP (JJ other) (NNS terrorists))) (PP (IN along) (NP (DT the) (NN trail)))))))))))))))) (. .)))
+
+(S1 (FRAG (NP (NNP Senator) (NNP Dodd)) (, ,) (SBAR (WHADJP (WRB how) (JJ important)) (S (VP (AUX is) (NP (PRP it)) (SBAR (IN for) (S (NP (DT the) (NNP U.S.)) (VP (TO to) (VP (ADVP (RB conclusively)) (VB learn) (SBAR (WHNP (WP what)) (S (VP (VBD happened) (PP (TO to) (NP (NNP Saddam) (NNP Hussein))))))))))))) (. ?)))
+
+(S1 (S (INTJ (UH Well)) (, ,) (NP (PRP it)) (VP (AUX 's) (ADJP (JJ important))) (. .)))
+
+(S1 (S (CC But) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (PRP it)) (VP (AUX 's) (ADJP (ADJP (RB as) (JJ important)) (PP (IN as) (S (VP (VBG finding) (S (NP (NNP Osama)) (ADJP (RB bin) (JJ Laden))))))) (, ,) (SBAR (IN for) (S (NP (DT the) (JJ simple) (NN reason) (SBAR (IN that) (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (NP (NNP Saddam) (NNP Hussein) (NN today))))))) (VP (VBZ poses) (NP (DT any) (NN threat))))) (, ,) (SBAR (WHADVP (WRB wherever)) (S (NP (PRP he)) (VP (AUX is))))))))) (. .)))
+
+(S1 (S (SBAR (IN If) (S (NP (PRP he)) (VP (AUX is) (ADJP (JJ alive))))) (, ,) (ADVP (RB obviously)) (, ,) (NP (PRP he)) (VP (AUX does) (RB n't) (VP (VB pose) (NP (NP (DT the) (NN kind)) (PP (IN of) (NP (NN threat))) (SBAR (WHNP (WDT that)) (S (NP (NP (DT an) (NNP Osama) (NN bin)) (ADJP (JJ Laden))) (VP (AUX does) (PP (IN with) (NP (NP (PRP$ his) (JJ cellular) (NN network)) (PP (IN around) (NP (DT the) (NN world))))) (S (VP (TO to) (VP (VB reactivate) (NP (NP (NNP al) (NNP Qaeda)) (CC and) (NP (JJ international) (NN terrorism)))))))))))) (. .)))
+
+(S1 (S (ADVP (RB So)) (, ,) (NP (PRP it)) (VP (MD would) (ADVP (RB certainly)) (VP (AUX be) (ADJP (JJ good)) (S (VP (TO to) (VP (VB know) (SBAR (WHADVP (WRB where)) (S (NP (PRP he)) (VP (AUX is))))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (MD would) (VP (AUX be) (, ,) (S (ADVP (RB certainly)) (, ,) (S (VP (TO to) (VP (VB know)))) (, ,) (S (VP (TO to) (VP (VB apprehend) (NP (PRP him))))) (, ,) (S (VP (TO to) (VP (VB bring) (NP (PRP him)) (PP (IN before) (NP (NP (DT a) (NN court)) (PP (IN of) (NP (NN justice))))))))))) (. .)))
+
+(S1 (S (CC But) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (PRP it)) (VP (AUX 's) (ADJP (RB absolutely) (JJ critical) (PP (IN for) (NP (NP (DT the) (JJ ultimate) (NN success)) (PP (IN of) (NP (DT this) (NN mission)))))) (SBAR (IN that) (S (NP (PRP we)) (VP (VP (VB apprehend) (NP (PRP him))) (CC or) (VP (VB find) (PRT (RP out)) (SBAR (WHNP (WP what)) (S (VP (VBD happened) (PP (TO to) (NP (PRP him))))))))))))))) (. .)))
+
+(S1 (S (CC And) (NP (PRP you)) (VP (VBP agree) (PP (IN with) (NP (NP (DT that) (NN assessment)) (, ,) (NP (NNP Mr.) (NNP Chairman))))) (. ?)))
+
+(S1 (S (INTJ (UH Yes)) (, ,) (NP (PRP I)) (VP (VBP think) (SBAR (IN that) (S (NP (NNP Senator) (NNP Dodd)) (VP (AUX is) (ADVP (RB right) (RB on)))))) (. .)))
+

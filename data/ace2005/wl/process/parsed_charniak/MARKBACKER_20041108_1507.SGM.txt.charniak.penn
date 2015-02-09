@@ -1,0 +1,38 @@
+(S1 (S (NP (PRP It)) (VP (AUX 's) (NP (NNP Auburn-Georgia) (NN week) (, ,) (NNS ladies) (CC and) (NNS gentlemen))) (. .)))
+
+(S1 (S (SBAR (IN After) (S (NP (PDT all) (DT the)) (ADVP (RB smack)) (VP (VBP talk) (SBAR (S (S (NP (DT that)) (VP (AUX 's) (VP (VBN gone) (PRT (RP on)) (PP (IN for) (NP (DT the) (JJ last) (CD 360) (NNS days)))))) (, ,) (CC and) (S (NP (NP (DT all)) (PP (IN of) (NP (NP (NP (DT the) (NNS games)) (SBAR (WHNP (WDT that)) (S (NP (DT both) (NNS teams)) (VP (AUX have) (VP (VBN played)))))) (CC and) (NP (NP (DT the) (NNS hopes)) (NP (DT each)))))) (VP (AUX had) (PP (IN for) (NP (DT the) (CD 2004) (NN season)))))))))) (, ,) (NP (PRP it)) (VP (AUX 's) (VP (VBN come) (PRT (RP down)) (PP (TO to) (NP (DT this))))) (. .)))
+
+(S1 (S (S (VP (TO To) (VP (VB stay) (ADJP (JJ undefeated) (CC and) (JJ alive)) (PP (IN for) (NP (NP (DT a) (NN chance)) (PP (IN at) (NP (DT the) (NNP BCS) (NN title) (NN game)))))))) (, ,) (NP (NNP Auburn)) (VP (MD must) (VP (VB win) (NP (NP (DT this) (NNP Saturday) (PP (IN in) (NP (PRP it))) (POS 's)) (CD 3:30) (NNP EST) (NN game)) (PP (IN on) (NP (NNP CBS))) (PP (IN against) (NP (DT the) (NNP Georgia) (NNPS Bulldogs))))) (. .)))
+
+(S1 (S (SBAR (IN If) (S (NP (PRP they)) (VP (VBP hope) (S (VP (TO to) (VP (VP (VB move) (PRT (RP up)) (PP (IN from) (NP (PRP$ their) (JJ current) (NN number))) (NP (CD five) (NN ranking))) (CC and) (VP (VB keep) (S (NP (DT the) (NN hope)) (ADJP (JJ alive) (PP (IN of) (S (VP (VBG playing) (PP (IN in) (NP (DT the) (NNP SEC) (NNP Title) (NNP Game))) (PP (IN in) (NP (NNP December))))))))))))))) (, ,) (NP (NNP Georgia)) (VP (MD must) (VP (VB beat) (NP (NNP Auburn)))) (. .)))
+
+(S1 (S (NP (DT This) (NN game)) (VP (AUX is) (ADJP (ADJP (RB as) (JJ good)) (SBAR (IN as) (S (NP (PRP it)) (VP (VBZ gets)))))) (. .)))
+
+(S1 (S (S (ADJP (JJ Sure)) (, ,) (NP (NP (NNP Auburn) (POS 's)) (JJ in-state) (NN rival)) (VP (AUX is) (NP (NNP Alabama)))) (, ,) (CC but) (S (NP (NP (NP (NN year)) (PP (IN in))) (CC and) (NP (NP (NN year) (RP out)) (, ,) (NP (DT this) (NN game)) (, ,) (NP (DT the) (JJ Auburn-UGA) (NN game)) (, ,))) (VP (VBZ seems) (PP (IN like) (NP (NP (DT the) (NN one)) (SBAR (WHNP (WDT that)) (S (VP (VBZ matters) (ADVP (RBR more))))))))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (CONJP (RB seldom) (IN if) (RB ever)) (VP (VBP root) (PP (IN for) (NP (NNP Bama))))) (, ,) (CC but) (S (NP (PRP I)) (ADVP (RB always)) (VP (VBP root) (SBAR (IN for) (S (NP (NNP UGA)) (VP (TO to) (VP (AUX be) (ADJP (JJ undefeated)) (SBAR (WHADVP (WRB when)) (S (NP (DT the) (NN play)) (VP (VBN Auburn)))))))))) (. .)))
+
+(S1 (S (S (NP (DT The) (NN game)) (VP (AUX is) (ADJP (JJ big) (RB enough)) (ADVP (RB already)))) (, ,) (CC but) (S (NP (PRP it)) (VP (VBZ seems) (ADJP (RB even) (JJR bigger)) (SBAR (WHADVP (WRB when)) (S (NP (QP (CD one) (CC or) (CD both)) (NNS teams)) (VP (AUX have) (NP (NN something)) (PP (IN on) (NP (DT the) (NN line)))))))) (. .)))
+
+(S1 (S (S (INTJ (UH Yes)) (, ,) (NP (DT both) (NNS teams)) (VP (AUX have) (NP (NP (JJ other) (NNS games)) (VP (VBN left) (S (VP (TO to) (VP (VB play)))))))) (CC and) (S (S (INTJ (UH yes)) (, ,) (NP (NP (JJ other) (NNS teams) (POS ')) (NNS results)) (VP (MD may) (VP (VB affect) (SBAR (WHNP (WP what)) (S (VP (VBZ happens) (PP (TO to) (NP (NP (DT both)) (PP (IN of) (NP (DT these) (NNS teams))))))))))) (, ,) (CC but) (S (PP (IN in) (NP (RB just) (CD five) (NNS days))) (, ,) (NP (DT these) (CD two) (NNS teams)) (VP (MD will) (VP (VB play) (NP (NP (DT the) (ADJP (ADJP (JJS biggest)) (CC and) (ADJP (RBS most) (JJ important))) (NN game)) (PP (IN of) (NP (PRP$ their) (NN season)))))))) (. .)))
+
+(S1 (S (CC So) (ADVP (RB now)) (NP (PRP it)) (VP (AUX 's) (NP (NP (NN time)) (PP (IN for) (NP (NP (DT all)) (PP (IN of) (NP (NP (DT the) (VBG yapping) (CC and) (VBG jawing) (CC and) (VBG talking) (NN shit)) (SBAR (WHNP (WDT that)) (S (VP (VBZ goes) (PP (IN with) (NP (DT this) (NN game)))))))))))) (. .)))
+
+(S1 (S (IN Except) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (AUX do) (NP (DT that)))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (MD ca) (RB n't) (VP (AUX do) (NP (DT that)))) (. .)))
+
+(S1 (S (SBAR (RB Anytime) (S (NP (PRP I)) (VP (VBP try) (S (VP (TO to) (VP (VB talk) (NP (NN shit)))))))) (, ,) (NP (PRP I)) (VP (VP (VBP get) (NP (DT all) (NNS nauseous))) (CC and) (VP (VBP worry) (PP (IN about) (SBAR (WHNP (WP what)) (S (VP (VBZ happens) (SBAR (RB not) (IN if) (CC but) (SBAR (WHADVP (WRB WHEN)) (S (NP (PRP we)) (VP (VBP lose))))))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB know) (SBAR (SBAR (IN if) (S (NP (PRP it)) (VP (AUX 's) (ADVP (RB just)) (NP (PRP me))))) (CC or) (SBAR (IN if) (S (S (VP (AUXG being) (ADJP (RB this) (JJ pragmatic)))) (VP (AUX is) (SBAR (WHNP (WP what)) (S (NP (PRP it)) (VP (VBZ means) (S (VP (TO to) (VP (AUX be) (NP (DT an) (NNP Auburn) (NN fan)))))))))))))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (VBP wonder) (SBAR (IN if) (S (ADJP (JJ deep)) (SBAR (IN down) (S (NP (DT THIS)) (VP (AUX is) (SBAR (WHNP (WP what)) (S (NP (PRP it)) (VP (VBZ feels) (SBAR (IN like) (S (VP (TO to) (VP (AUX be) (NP (DT a) (NNP Red) (NNPS Sox) (NN fan)))))))))))))))) (: :) (S (ADVP (RB regardless) (PP (IN of) (SBAR (SBAR (WHADVP (WRB where)) (S (NP (PRP you)) (VP (AUX are)))) (CC or) (SBAR (WHNP (WP what)) (S (VP (AUX is) (VP (VBG happening) (PP (TO to) (NP (PRP$ your) (NN team))) (, ,) (SBAR (RB deep) (IN down) (S (NP (PRP you)) (VP (AUX do) (RB n't) (ADVP (RB just)) (VP (VB think)))))))))))) (, ,) (NP (PRP you)) (VP (VBP KNOW) (SBAR (S (NP (NN something) (JJ bad)) (VP (AUX is) (VP (VBG going) (S (VP (TO to) (VP (VB happen)))))))))) (. .)))
+
+(S1 (S (ADVP (RB Anyway)) (, ,) (S (NP (PRP I)) (VP (AUX am) (VP (VBG flying) (NP (PRP$ my) (NN flag)) (PP (IN on) (NP (NP (PRP$ my) (NN house)) (PP (IN with) (NP (NN pride)))))))) (CC and) (S (NP (PRP I)) (VP (AUX am) (VP (VBG looking) (ADVP (RB forward)) (PP (TO to) (NP (NP (DT the) (NN game)) (SBAR (WHNP (WDT that)) (S (, ,) (ADVP (NN year) (IN in) (CC and) (NN year) (IN out)) (, ,) (VP (VBZ gives) (NP (PRP us)) (NP (NP (DT the) (ADJP (ADJP (JJS best) (VBG hitting)) (CC and) (ADJP (RB mos) (JJ entertaining))) (NN football)) (VP (VBN played) (PP (IN on) (NP (DT the) (JJS highest) (NN level))))))))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (NP (NNP SEC) (NN football)) (PP (IN at) (NP (NP (PRP it) (POS 's)) (NN core)))) (. .)))
+
+(S1 (NP (NNP War) (NNP Eagle) (. .)))
+
+(S1 (NP (NNS balls)))
+

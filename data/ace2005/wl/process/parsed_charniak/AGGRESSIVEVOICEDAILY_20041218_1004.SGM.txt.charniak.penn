@@ -1,0 +1,32 @@
+(S1 (FRAG (PP (IN From) (NP (DT the) (NNP Associated) (NNP Press))) (: :) (S (S (NP (NP (DT A) (NN baby) (NN girl)) (SBAR (WHNP (WP who)) (S (VP (AUX had) (VP (AUX been) (VP (VBN cut) (PRT (RP out)) (PP (IN of) (NP (NP (PRP$ her) (NN mother) (POS 's)) (NN womb))))))))) (VP (AUX was) (VP (VBN found) (PP (IN after) (NP (DT a) (JJ frantic) (NN search)))))) (, ,) (CC and) (S (NP (NNS authorities)) (VP (VP (VBN arrested) (NP (NP (DT the) (NN woman)) (SBAR (S (NP (PRP they)) (VP (VBP say) (S (VP (VBN strangled) (NP (DT the) (NN mother))))))))) (CC and) (VP (VBD stole) (NP (DT the) (NN child)))))) (. .)))
+
+(S1 (S (NP (DT The) (NN baby)) (VP (AUX was) (PP (IN in) (NP (JJ good) (NN condition))) (NP (NNP Saturday))) (. .)))
+
+(S1 (S (NP (NP (NNP Lisa) (NNP M.) (NNP Montgomery)) (, ,) (NP (CD 36)) (, ,) (PP (IN of) (NP (NP (NNP Melvern)) (, ,) (NP (NNP Kan.)))) (, ,)) (VP (AUX was) (VP (VP (VBN arrested) (ADVP (RB later)) (NP (NNP Friday))) (CC and) (VP (VBD charged) (PP (IN with) (NP (NN kidnapping))) (S (VP (VBG resulting) (PP (IN in) (NP (NN death)))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Bobbie) (NNP Jo) (NNP Stinnett)) (, ,) (NP (CD 23)) (, ,)) (VP (AUX was) (VP (VBN found) (NP (NNP Thursday)) (PP (IN in) (NP (NP (DT a) (NN pool)) (PP (IN of) (NP (NN blood))) (PP (IN inside) (NP (NP (PRP$ her) (JJ small) (JJ white) (NN home)) (PP (IN in) (NP (NP (NNP Skidmore)) (, ,) (NP (NP (DT a) (NN town)) (PP (IN in) (NP (NNP northwest) (NNP Missouri)))))))))))) (. .)))
+
+(S1 (S (S (NP (NP (NNP Stinnett)) (, ,) (SBAR (WHNP (WP who)) (S (VP (AUX was) (ADJP (NP (CD eight) (NNS months)) (JJ pregnant))))) (, ,)) (VP (VP (AUX had) (ADVP (RB earlier)) (VP (AUX been) (VP (VBG talking) (PP (IN with) (NP (PRP$ her) (NN mother))) (PP (IN on) (NP (DT the) (NN phone)))))) (, ,) (CC and) (VP (VBD hung) (PRT (RP up)) (S (VP (VBG saying) (NP (NP (DT a) (NN woman)) (SBAR (S (NP (PRP she)) (VP (AUX had) (VP (VBN chatted) (SBAR (IN with) (S (NP (NN online)) (VP (AUX had) (ADVP (RB just)) (VP (VBN arrived) (PP (IN at) (NP (PRP$ her) (NN door))))))))))))))))) (, ,) (NP (NNS authorities)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (NNP U.S.) (NNP Attorney) (NNP Todd) (NNP Graves)) (VP (VBD said) (SBAR (S (S (NP (NNP Montgomery)) (VP (VBD contacted) (NP (NNP Stinnett)) (PP (IN through) (NP (DT an) (JJ online) (NN message) (NN board))))) (, ,) (CC and) (S (NP (NNS authorities)) (VP (VBD zeroed) (PRT (RP in)) (PP (IN on) (NP (PRP her))) (S (VP (VBG using) (NP (NN computer) (NNS forensics))))))))) (. .)))
+
+(S1 (S (S (NP (NNP Montgomery)) (VP (AUX was) (VP (VBG seeking) (S (VP (TO to) (VP (VB buy) (NP (DT a) (NN dog)) (PP (IN from) (NP (NP (NNP Stinnett)) (, ,) (SBAR (WHNP (WP who)) (S (VP (VBD raised) (NP (NN rat) (NNS terriers))))))))))))) (, ,) (NP (PRP he)) (VP (VBD said)) (. .)))
+
+(S1 (S (PP (VBG According) (PP (TO to) (NP (DT the) (JJ criminal) (NN complaint)))) (, ,) (NP (NNP Montgomery)) (VP (VBD traveled) (NP (QP (RB about) (CD 40)) (NNS miles)) (PP (TO to) (NP (NP (NNP Topeka)) (, ,) (NP (NNP Kan.)) (, ,))) (PP (IN on) (NP (NNP Thursday))) (S (VP (TO to) (VP (VB go) (NP (NN shopping)))))) (. .)))
+
+(S1 (S (NP (PRP$ Her) (NN husband)) (VP (VBD received) (NP (DT a) (NN call)) (PP (IN from) (NP (PRP her))) (S (VP (VBG saying) (SBAR (S (NP (PRP she)) (VP (AUX had) (VP (VBN gone) (PP (IN into) (NP (NN labor) (CC and) (VBN given) (NN birth)))))))))) (. .)))
+
+(S1 (S (NP (DT The) (JJ next) (NN day)) (PRN (, ,) (S (NP (NNS authorities)) (VP (VBP say))) (, ,)) (NP (NNP Montgomery)) (VP (VBD confessed) (SBAR (IN that) (S (NP (PRP she)) (VP (VP (VBN strangled) (NP (NNP Stinnett)) (PP (IN from) (NP (NN behind)))) (, ,) (VP (VBN cut) (S (NP (PRP her)) (ADJP (JJ open)))) (, ,) (VP (VBN removed) (NP (DT the) (NN baby))) (CC and) (VP (VBN cut) (NP (PRP$ her) (JJ umbilical) (NN cord))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB understand) (SBAR (WHADVP (WRB how)) (S (NP (PRP we)) (VP (MD can) (VP (VB call) (NP (NP (DT this) (NN fetus-thing)) (SBAR (WHNP (WDT that)) (S (VP (AUX was) (VP (VBN ripped) (PP (IN from) (NP (NP (DT a) (NN mother) (POS 's)) (ADJP (JJ womb) (NP (NP (DT a) (`` ``) (NN child) ('' '') (CC or) (`` ``) (NN girl) ('' '')) (PP (IN in) (NP (DT a) (NN society)))) (PP (IN that) (NP (NNS sanctions)))) (JJ partial-birth) (NN abortion)))))))))))))) (. .)))
+
+(S1 (S (SBAR (IN If) (S (NP (PRP you)) (VP (MD ca) (RB n't) (VP (VB charge) (NP (NN someone)) (PP (IN for) (S (VP (VBG killing) (NP (NP (DT a) (NN fetus)) (PP (IN via) (NP (NN abortion)))) (PP (IN during) (NP (DT the) (JJ eighth) (NN month)))))))))) (, ,) (RB then) (ADVP (RB surely)) (NP (PRP you)) (VP (MD ca) (RB n't) (VP (VB make) (NP (DT a) (JJ big) (NN deal)) (PP (IN about) (NP (NP (DT a) (NN woman)) (SBAR (WHNP (WP who)) (S (VP (VBD kidnapped) (NP (NP (DT a) (NN fetus)) (SBAR (WHNP (WDT that)) (S (VP (VBD survived) (NP (DT the) (NN knifing))))))))))))) (. .)))
+
+(S1 (S (PP (IN On) (NP (DT a) (JJ less-sarcastic) (NN note))) (, ,) (NP (PRP I)) (VP (VBP pray) (PP (IN for) (NP (NP (DT the) (NN family)) (PP (IN of) (NP (DT the) (JJ 23-year-old) (NN woman)))))) (. .)))
+
+(S1 (S (NP (DT No) (NN one)) (VP (MD should) (VP (AUX have) (S (VP (TO to) (VP (VB die) (SBAR (IN because) (S (NP (DT some) (JJ crazy) (NNP nut)) (VP (VP (VBD wanted) (NP (DT a) (NN child))) (CC and) (VP (VBD decided) (S (VP (TO to) (VP (VB kill) (PP (IN for) (NP (PRP it))))))))))))))) (. .)))
+
+(S1 (S (SBAR (IN If) (S (NP (EX there)) (VP (AUX 's) (NP (DT any) (JJ good) (NN news)) (PP (IN in) (NP (DT this) (NN story)))))) (, ,) (NP (PRP it)) (VP (AUX 's) (SBAR (IN that) (S (NP (NNP Victoria) (NNP Jo)) (VP (MD will) (VP (VP (VB live) (PRT (RP on))) (CC and) (VP (VB carry) (NP (NP (PRP$ her) (NN mother) (POS 's)) (NN memory)))))))) (. .)))
+
+(S1 (SQ (S (NP (NP (NN Question)) (PP (IN for) (NP (DT the) (NNS pro-choicers)))) (: :) (VP (AUXG Being) (SBAR (IN that) (S (NP (PRP it)) (VP (AUX is) (RB n't) (ADVP (RB yet)) (NP (DT the) (JJ ninth) (NN month))))))) (, ,) (MD can) (NP (PRP we)) (ADVP (RB still)) (VP (VB charge) (NP (DT the) (NN killer)) (PP (IN with) (NP (NN kidnapping)))) (. ?)))
+

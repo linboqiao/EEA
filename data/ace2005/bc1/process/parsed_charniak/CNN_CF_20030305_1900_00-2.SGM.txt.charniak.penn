@@ -1,0 +1,40 @@
+(S1 (S (INTJ (UH Well)) (, ,) (NP (NP (DT those)) (PP (IN of) (NP (PRP you))) (SBAR (WHNP (WP who)) (S (ADVP (RB still)) (VP (VBP believe) (SBAR (S (NP (NP (DT the) (NN myth)) (PP (IN of) (NP (DT the) (JJ liberal) (NNS media)))) (VP (MD should) (VP (VB consider) (NP (DT this)))))))))) (: :) (NP (NP (NNP MSNBC)) (, ,) (NP (DT an) (JJ obscure) (NN cable) (NN channel)) (, ,)) (VP (AUX has) (VP (VBN fired) (NP (NP (NNP Phil) (NNP Donahue)) (, ,) (NP (NP (DT the) (NN host)) (PP (IN of) (NP (PRP$ its) (JJ highest-rated) (NN show))))))) (. .)))
+
+(S1 (S (NP (NP (NP (DT A) (NN memo)) (PP (IN from) (PP (IN inside) (NP (NNP NBC)))) (, ,) (VP (VBN reported) (PP (IN on) (NP (DT the) (NNP Web) (NN site) (NN allyourtv.com)))) (, ,)) (CC and) (NP (NP (NN today)) (PP (IN in) (`` ``) (NP (DT The) (NNP Washington) (NNP Post))))) (, ,) ('' '') (VP (VBZ shows) (SBAR (S (NP (NNP NBC) (JJ big) (NNS wigs)) (VP (VBD feared) (SBAR (IN that) (S (NP (DT the) (JJ liberal) (NNP Mr.) (NNP Donahue)) (VP (VBD represented) (PP (IN in) (NP (NP (DT the) (NNS words)) (PP (IN of) (NP (DT the) (NNP NBC) (NN memo))) (PRN (: --) (NP (NN quote)) (: --)) (`` ``) (NP (DT a) (JJ difficult) (JJ public) (NN face)) (PP (IN for) (NP (NNP NBC))))) (PP (IN at) (NP (NP (DT a) (NN time)) (PP (IN of) (NP (NN war))))) (, ,) (SBAR (IN while) (S (NP (PRP$ our) (NNS competitors)) (VP (AUX are) (VP (VBG waving) (NP (DT the) (NN flag)) (PP (IN at) (NP (DT every) (NN opportunity))) (SBAR (IN because) (S (NP (PRP he)) (VP (VBZ seems) (S (VP (TO to) (VP (VB delight) (PP (IN in) (S (VP (VBG presenting) (NP (NP (NNS guests)) (SBAR (WHNP (WP who)) (S (VP (AUX are) (ADJP (JJ anti-war) (, ,) (JJ anti-Bush) (CC and) (JJ skeptical) (PP (IN of) (NP (NP (DT the) (NN administration) (POS 's)) (NNS motives)))))))))))))))))))))))))))) (. .) ('' '')))
+
+(S1 (S (ADVP (RB So) (RB there)) (NP (PRP it)) (VP (AUX is) (, ,) (PP (VBG according) (PP (TO to) (NP (NNP NBC))))) (. .)))
+
+(S1 (S (NP (NNP Phil) (NNP Donahue)) (VP (AUX was) (VP (VBN fired) (SBAR (IN because) (S (NP (PRP he)) (VP (AUX 's) (NP (DT a) (NN liberal))))))) (. .)))
+
+(S1 (S (PP (IN In) (NP (NN fact))) (, ,) (NP (NP (DT the) (JJ only) (NN liberal)) (PP (IN with) (NP (DT the) (NN solo) (NN cable) (NN talk)))) (VP (VBP show)) (. .)))
+
+(S1 (S (NP (NNP NBC)) (, ,) (PP (IN of) (NP (NN course))) (, ,) (VP (AUX is) (NP (NP (DT a) (NN division)) (PP (IN of) (NP (NP (DT the) (JJ conglomerate) (NNP GE)) (, ,) (SBAR (WHADVP (WRB where)) (S (NP (PRP they)) (ADVP (RB apparently)) (ADVP (RB only)) (VP (VBP bring) (NP (JJ right) (NN wing) (NNS things)) (PP (TO to) (NP (NN life)))))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (ADVP (RB actually)) (VP (VBP like) (NP (NNP Phil) (NNP Donahue))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 've) (VP (VBN interviewed) (NP (PRP him)) (NP (NP (DT a) (NN number)) (PP (IN of) (NP (NNS times)))))) (. .)))
+
+(S1 (S (NP (PRP$ His) (NNS arguments)) (VP (AUX are) (ADJP (RB really) (JJ dumb))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB know) (SBAR (IN if) (S (NP (PRP you)) (VP (AUX 've) (VP (VBD listened) (PP (TO to) (NP (NNP Phil) (NNP Donahue))))))))) (. .)))
+
+(S1 (S (S (NP (NP (JJ Delightful) (NN guy)) (, ,) (CC but) (NP (PRP$ his) (NNS arguments))) (VP (AUX do) (RB n't) (VP (VB make) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NN sense))))))) (CC and) (S (NP (PRP I)) (VP (VBP think) (SBAR (S (NP (DT that)) (VP (AUX is) (NP (NP (DT the) (NN problem)) (PP (IN with) (NP (NP (JJ liberal) (NN talk) (NN show) (NNS hosts)) (PRN (: --) (S (NP (PRP you)) (VP (VBN excluded))) (, ,) (PP (IN of) (NP (NN course))) (, ,)) (CC and) (NP (NNP James)))))))))) (. .)))
+
+(S1 (S (CC But) (NP (DT the) (NNS arguments)) (, ,) (ADVP (RB actually)) (, ,) (VP (AUX do) (RB n't) (VP (VB hold) (PRT (RP up)) (ADVP (RB very) (RB well)))) (. .)))
+
+(S1 (SQ (AUX Have) (NP (PRP you)) (VP (VBN noticed) (NP (DT that))) (. ?)))
+
+(S1 (S (S (NP (PRP You)) (VP (VBP know))) (, ,) (S (NP (PRP you)) (VP (MD can) (VP (VB argue) (ADVP (RB back) (CC and) (RB forth))))) (, ,) (CC but) (S (NP (PRP you)) (VP (MD should) (RB n't) (VP (VB fire) (NP (NN someone)) (PP (IN because) (IN of) (NP (PRP$ their) (JJ political) (NNS views)))))) (CC and) (S (NP (DT that)) (VP (AUX 's) (NP (SBAR (WHNP (WP what)) (S (NP (NNP NBC)) (VP (AUX has) (VP (AUX done))))) (CC and) (NN shame)) (PP (IN on) (NP (DT the) (NNP General) (NNP Electric) (NN corporation))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (AUX had) (NP (NP (DT the) (JJ highest-rated) (NN show)) (PP (IN on) (NP (DT the) (NN network))))) (. .)))
+
+(S1 (SBARQ (WHNP (WDT Which)) (SQ (AUX is) (VP (VBG saying) (NP (WP what)))) (. ?)))
+
+(S1 (S (NP (PRP I)) (VP (VBD used) (S (VP (TO to) (VP (VB work) (ADVP (RB there)))))) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (AUX 're) (ADJP (JJ good) (PP (TO to) (NP (PRP me))))) (. .)))
+
+(S1 (S (S (NP (PRP They)) (VP (AUX 're) (NP (ADJP (RB very) (JJ nice)) (NNS people)))) (CC and) (S (NP (PRP they)) (VP (AUX 're) (ADJP (RB very) (JJ good) (PP (TO to) (NP (PRP me)))))) (: ...) (S (INTJ (INTJ (UH OK)) (, ,) (INTJ (UH OK))) (, ,) (NP (PRP I)) (VP (AUX 'm) (RB not) (VP (VB beat) (PRT (RP up)) (PP (IN on) (NP (NNP MSNBC)))))) (. .)))
+
+(S1 (S (: ...) (CC but) (NP (PRP they)) (VP (MD should) (RB n't) (VP (VB fire) (NP (NP (DT a) (NN guy)) (PP (IN for) (NP (PRP$ his) (JJ political) (NNS views)))))) (. .)))
+

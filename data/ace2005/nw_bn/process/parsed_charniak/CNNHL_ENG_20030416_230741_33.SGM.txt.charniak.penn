@@ -1,0 +1,10 @@
+(S1 (S (VP (VB call) (S (NP (PRP him)) (NP (NP (DT the) (NN man)) (PP (IN with) (NP (DT the) (JJ golden) (NNS guns)))))) (. .)))
+
+(S1 (S (NP (NP (NNP saddam) (NNP hussein) (POS 's)) (NN son) (NN uday)) (VP (AUX was) (ADVP (RB apparently)) (NP (NP (DT the) (NN owner)) (PP (IN of) (NP (CD 74) (JJ golden) (NNS guns))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NNP ak-47) (POS 's)) (PP (IN in) (NP (DT the) (VB stash)))) (VP (AUX were) (ADJP (JJ gold-plated))) (. .)))
+
+(S1 (S (NP (EX there)) (ADVP (RB also)) (VP (AUX were) (NP (ADJP (JJ silver) (CC and) (JJ nickel-plated)) (NNS weapons))) (. .)))
+
+(S1 (S (NP (NP (CD one)) (SBAR (WHNP (WDT that)) (S (VP (AUX was) (NP (DT a) (NN gift)) (PP (IN from) (NP (NN saddam))))))) (VP (AUX had) (NP (NP (DT an) (NN engraving)) (PP (IN from) (NP (DT the) (JJ former) (JJ iraqi) (NN leader))))) (. .)))
+

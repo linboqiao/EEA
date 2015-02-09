@@ -1,0 +1,38 @@
+(S1 (S (NP (NP (NP (NNP CAPE) (NNP CANAVERAL)) (, ,) (NP (NNP Florida))) (PRN (-LRB- -LRB-) (NP (NNP AP)) (-RRB- -RRB-)) (NP (NP (DT A) (NN rocket)) (VP (VBG holding) (NP (NP (DT the) (JJ first)) (PP (IN of) (NP (CD two) (NNP Mars) (NNS rovers))))))) (VP (VBD blasted) (PRT (RP off)) (NP (NNP Tuesday)) (PP (IN on) (NP (NP (DT a) (JJ seven-month) (NN voyage)) (PP (TO to) (NP (NP (DT the) (JJ red) (NN planet)) (SBAR (WHADVP (WRB where)) (S (NP (DT the) (JJ golf-cart-sized) (NNS vehicles)) (VP (MD will) (VP (VB search) (PP (IN for) (NP (NN evidence) (SBAR (IN that) (S (NP (EX there)) (VP (AUX was) (ADVP (RB once)) (NP (JJ enough) (NN water) (S (VP (TO to) (VP (VB support) (NP (NP (NN life)) (PP (IN on) (NP (NNP Mars)))))))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NNP rover)) (VP (VBD named) (SBAR (S (NP (NNP Spirit)) (VP (VP (VBD lifted) (PRT (RP off)) (PP (IN from) (NP (DT the) (NNP Cape) (NNP Canaveral) (NNP Air) (NNP Force) (NNP Station))) (PP (IN aboard) (NP (NP (DT a) (NNP Boeing) (NNP Delta) (NNP II) (NN rocket)) (PP (IN at) (NP (CD 1:58) (NN p.m.)))))) (PRN (-LRB- -LRB-) (NP (CD 1758) (NN GMT)) (-RRB- -RRB-)))))) (. .)))
+
+(S1 (S (S (NP (NNPS Thunderstorms)) (VP (VBD delayed) (NP (DT the) (NN launch)) (PP (IN by) (NP (CD two) (NNS days))))) (, ,) (CC and) (S (NP (NN launch) (NNS officials)) (VP (VBD contended) (PP (IN with) (NP (NP (DT a) (JJ last-minute) (NNS communications) (NN glitch)) (PP (IN between) (NP (NP (NNS stations)) (SBAR (WHNP (WDT that)) (S (VP (MD will) (VP (VB track) (NP (DT the) (NN spacecraft)))))))))))) (. .)))
+
+(S1 (S (S (NP (NP (DT The) (JJ second) (NNP rover)) (, ,) (VP (VBN named) (S (NP (NNP Opportunity)))) (, ,)) (VP (MD will) (VP (AUX be) (VP (VBN launched) (NP (RBR later) (DT this) (NN month)))))) (, ,) (CC and) (S (NP (DT both)) (VP (AUX are) (VP (VBN expected) (S (VP (TO to) (VP (VB arrive) (PP (IN at) (NP (NNP Mars))) (PP (IN in) (NP (NNP January))))))))) (. .)))
+
+(S1 (S (S (VP (VBG Moving) (PP (IN on) (NP (CD six) (NNS wheels))))) (, ,) (NP (DT the) (ADJP (QP ($ $) (CD 800) (CD million))) (NNS rovers)) (VP (VBP act) (PP (IN as) (NP (JJ robotic) (NNS geologists)))) (. .)))
+
+(S1 (S (NP (DT Each)) (VP (AUX is) (VP (VBN equipped) (PP (IN with) (NP (NP (DT a) (JJ panoramic) (NN camera)) (, ,) (NP (NP (DT a) (NN camera)) (PP (IN for) (NP (NP (NN close-up) (NNS views)) (PP (IN of) (NP (NNS rocks)))))) (CC and) (NP (DT a) (NN drill) (S (VP (TO to) (VP (VB cut) (PP (IN into) (NP (NNS rocks))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NNS data)) (VP (MD will) (VP (AUX be) (VP (VBN transmitted) (PRT (RP back)) (PP (TO to) (NP (NNP Earth)))))) (. .)))
+
+(S1 (S (S (NP (JJ Previous) (NNS missions)) (VP (AUX have) (VP (VBN shown) (SBAR (S (NP (NNP Mars)) (VP (AUX had) (NP (NN water)) (PP (IN in) (NP (DT the) (NN past))))))))) (, ,) (CC but) (S (NP (NNS scientists)) (VP (VBP want) (S (VP (TO to) (VP (VB find) (PRT (RP out)) (SBAR (WHADVP (WRB how) (RB long)) (S (NP (DT the) (NN water)) (VP (AUX was) (UCP (ADVP (RB there)) (CC and) (PP (IN in) (NP (WDT what) (NNS quantities)))))))))))) (. .)))
+
+(S1 (S (NP (NNS Scientists)) (VP (VBP believe) (SBAR (S (NP (DT the) (NN water)) (VP (MD may) (VP (VB show) (SBAR (IN that) (S (NP (NNP Mars)) (ADVP (RB once)) (VP (AUX was) (ADJP (JJ able) (S (VP (TO to) (VP (VB support) (NP (NN life)))))))))))))) (. .)))
+
+(S1 (S (NP (NP (DT The) (NNS rovers) (POS ')) (NN landing) (NNS sites)) (, ,) (PP (IN on) (NP (NP (JJ opposite) (NNS sides)) (PP (IN of) (NP (DT the) (NN planet))))) (, ,) (VP (AUX were) (VP (VBN chosen) (PP (IN for) (NP (NP (PRP$ their) (NN likelihood)) (PP (IN of) (S (VP (VBG holding) (NP (NP (NN evidence)) (PP (IN of) (NP (NN water))))))))))) (. .)))
+
+(S1 (S (S (VP (VBG Studying) (NP (NP (DT the) (NNS minerals)) (PP (IN in) (NP (NNS rocks)))))) (VP (MD can) (VP (VB tell) (NP (NNS scientists)) (SBAR (WHADVP (WRB how)) (S (NP (DT the) (NNS rocks)) (VP (AUX were) (VP (VBN formed))))) (, ,) (SBAR (SBAR (IN whether) (S (NP (PRP they)) (VP (AUX were) (ADVP (RB ever)) (VP (VBN submerged) (PP (IN in) (NP (NN water))))))) (, ,) (CC and) (SBAR (IN whether) (S (NP (JJ hot) (NN water)) (ADVP (RB ever)) (VP (VBD ran) (PP (IN over) (NP (PRP them))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NNS rovers)) (VP (AUX are) (VP (VBN expected) (S (VP (TO to) (VP (VB travel) (PRT (RP up)) (PP (TO to) (NP (NP (NP (CD 132) (NNS feet)) (PRN (-LRB- -LRB-) (NP (CD 39.6) (NNS meters)) (-RRB- -RRB-))) (NP (DT each) (NNP Martian) (NN day)) (, ,) (SBAR (WHNP (WDT which)) (S (VP (AUX is) (NP (NP (CD 24) (NNS hours)) (CC and) (NP (CD 39) (-LRB- -LCB-) (NNS minutes))) (ADVP (RB long)))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NNS missions)) (VP (VP (AUX are) (VP (VBN expected) (S (VP (TO to) (VP (VB last) (NP (CD three) (NNS months))))))) (CC but) (VP (MD could) (VP (VB run) (ADVP (RBR longer))))) (. .)))
+
+(S1 (S (NP (DT The) (NNS rovers)) (ADVP (RB eventually)) (VP (MD will) (VP (VB shut) (PRT (RP down)) (SBAR (IN as) (S (S (NP (NN dust)) (VP (VBZ builds) (PRT (RP up)) (PP (IN on) (NP (PRP$ their) (JJ solar) (NNS panels))))) (CC and) (S (NP (PRP they)) (VP (MD will) (VP (VB remain) (PP (IN on) (NP (DT the) (NN planet)))))))))) (. .)))
+
+(S1 (S (S (NP (NP (QP (RB Only) (CD 12))) (PP (IN out) (PP (IN of) (NP (CD 30) (JJ previous) (NNS attempts))))) (VP (AUX have) (VP (VBN reached) (NP (NNP Mars))))) (, ,) (CC and) (S (NP (NP (RB only) (CD three)) (PP (IN out) (PP (IN of) (NP (CD nine) (NNS attempts))))) (VP (AUX have) (VP (VBN succeeded) (PP (IN in) (NP (NN landing))) (PP (IN on) (NP (DT the) (NN planet)))))) (. .)))
+
+(S1 (S (NP (NNP NASA)) (VP (VBD revamped) (NP (PRP$ its) (NNP Mars) (NN program)) (PP (IN after) (NP (NP (DT the) (NN failure)) (PP (IN of) (NP (NP (CD two) (JJ unmanned) (NNS missions)) (PP (TO to) (NP (NNP Mars))) (ADVP (NP (CD four) (NNS years)) (RB ago))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN space) (NN agency)) (VP (AUX has) (VP (AUX been) (PP (IN under) (NP (JJ intense) (NN scrutiny))) (PP (IN since) (NP (NP (NNP February)) (SBAR (WHADVP (WRB when)) (S (NP (DT the) (NN space) (NN shuttle) (NNP Columbia)) (VP (VBD disintegrated) (PP (IN over) (NP (NNP Texas)))))))) (, ,) (S (VP (VBG killing) (NP (DT all) (CD seven) (NN crew) (NNS members)))))) (. .)))
+
+(S1 (S (NP (NP (DT A) (NN logo) (NN patch)) (PP (IN of) (NP (DT that) (JJ last) (NNP Columbia) (NN mission)))) (VP (AUX was) (VP (VBN attached) (PP (TO to) (NP (DT both) (NNP Mars) (NNS rovers))))) (. .)))
+
+(S1 (NP (NP (NNP _) (NNP _) (NNP _) (SYM =) (PP (IN On) (NP (DT the) (NN Net)))) (: :) (NP (NNP Rover) (NNP Mission)) (: :) (NP (NN http:\/\/mars.jpl.nasa.gov\/mer))))
+

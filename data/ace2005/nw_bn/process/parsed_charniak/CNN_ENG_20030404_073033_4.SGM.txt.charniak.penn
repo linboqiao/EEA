@@ -1,0 +1,10 @@
+(S1 (S (NP (NNP central) (NNP command)) (VP (AUX has) (VP (VBN determined) (SBAR (IN that) (S (NP (JJ baghdad) (NN airport)) (VP (AUX is) (ADJP (JJ unusable)) (PP (IN for) (NP (JJ normal) (NN air) (NNS operations)))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN airport)) (, ,) (PP (IN for) (NP (DT the) (JJS most) (NN part))) (, ,) (VP (AUX is) (ADVP (RB now)) (PP (IN under) (NP (JJ u.s.) (NN control)))) (. .)))
+
+(S1 (S (S (NP (JJ military) (NNS officials)) (VP (MD will) (RB not) (VP (VB say) (SBAR (IN whether) (S (NP (NP (NN damage)) (PP (TO to) (NP (DT the) (NNS runways)))) (VP (AUX is) (VP (VBG going) (S (VP (TO to) (VP (VB limit) (NP (NN operation)) (ADVP (RB there)))))))))))) (, ,) (CC but) (S (NP (PRP they)) (VP (VBP know) (SBAR (S (NP (EX there)) (VP (AUX are) (NP (NP (NP (JJ underground) (NNS bunkers)) (ADVP (RB there))) (CC and) (NP (NP (DT some) (JJ other) (NNS areas)) (SBAR (WHNP (WDT that)) (S (VP (MD may) (VP (AUX be) (PP (IN of) (NP (NN use)))))))))))))) (. .)))
+
+(S1 (S (NP (NNP centcom)) (ADVP (RB also)) (VP (VBZ says) (SBAR (S (NP (CD 2500) (JJ republican) (NN guard) (NNS troops)) (VP (AUX have) (VP (VBN surrendered) (PP (TO to) (NP (NP (JJ u.s.) (NNS marines)) (PP (IN between) (NP (NN kut) (CC and) (NN baghdad)))))))))) (. .)))
+
+(S1 (S (NP (JJ military) (NNS officials)) (VP (VBP say) (SBAR (S (NP (DT the) (JJ baghdad) (JJ republican) (NN guard) (NN division)) (VP (AUX is) (ADVP (RB no) (RB longer)) (NP (DT an) (JJ effective) (NN fighting) (NN force)))))) (. .)))
+

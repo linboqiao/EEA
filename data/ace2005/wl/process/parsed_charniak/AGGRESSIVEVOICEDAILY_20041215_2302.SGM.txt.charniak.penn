@@ -1,0 +1,32 @@
+(S1 (S (PP (IN From) (NP (DT the) (NNP Associated) (NNP Press))) (: :) (NP (NNP City) (NNS residents)) (VP (MD will) (VP (VB vote) (NP (JJ next) (NN year)) (PP (IN on) (NP (NP (DT a) (VBN proposed) (NNS weapons) (NN ban)) (SBAR (WHNP (WDT that)) (S (VP (MD would) (VP (VB deny) (NP (NNS handguns)) (PP (TO to) (NP (NP (NN everyone)) (PP (IN except) (NP (NP (NN law) (NN enforcement) (NNS officers)) (, ,) (NP (NP (NNS members)) (PP (IN of) (NP (DT the) (NN military)))) (CC and) (NP (NN security) (NNS guards)))))))))))))) (. .)))
+
+(S1 (S (SBAR (IN If) (S (VP (VBN passed) (NP (JJ next) (NNP November))))) (, ,) (NP (NNS residents)) (VP (MD would) (VP (AUX have) (NP (CD 90) (NNS days)) (S (VP (TO to) (VP (VB give) (PRT (RP up)) (NP (NP (NNS firearms)) (SBAR (S (NP (PRP they)) (VP (VBP keep) (PRT (RP in)) (NP (PRP$ their) (NNS homes) (CC or) (NNS businesses))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN proposal)) (VP (AUX was) (ADVP (RB immediately)) (VP (VBN dismissed) (PP (IN as) (ADJP (JJ illegal))) (PP (IN by) (NP (DT a) (NN gun) (NNS owners) (NN group))))) (. .)))
+
+(S1 (S (S (NP (NNPS Firearms)) (VP (MD would) (VP (AUX be) (VP (VBN allowed) (PP (ADVP (RB only)) (IN for) (NP (NP (NN police) (NNS officers)) (, ,) (NP (NN security) (NNS guards)) (, ,) (NP (NP (NNS members)) (PP (IN of) (NP (DT the) (NN military)))))))))) (, ,) (CC and) (S (NP (NN anyone)) (ADVP (RB else)) (`` ``) (VP (VP (ADVP (RB actually)) (VBN employed)) (CC and) (VP (VBN engaged) (PP (IN in) (S (VP (VBG protecting) (CC and) (VBG preserving) (NP (NN property) (CC or) (NN life)) (PP (IN within) (NP (NP (DT the) (NN scope)) (PP (IN of) (NP (PRP$ his) (CC or) (PRP$ her) (NN employment)))))))))) (, ,) ('' '')) (PP (VBG according) (PP (TO to) (NP (DT the) (NN measure)))) (. .)))
+
+(S1 (S (NP (NP (NN Gun) (NNS Owners)) (PP (IN of) (NP (NP (NNP California)) (, ,) (NP (DT a) (JJ Sacramento-based) (NN lobbying) (NN group)) (, ,)))) (ADVP (RB quickly)) (VP (VBD called) (S (NP (DT the) (NN ban)) (ADJP (JJ illegal)))) (. .)))
+
+(S1 (S (NP (NP (NNP Sam) (NNP Paredes)) (, ,) (NP (NP (DT the) (NN group) (POS 's)) (JJ executive) (NN director)) (, ,)) (VP (VBD said) (SBAR (S (NP (NN state) (NN law)) (VP (VBZ bars) (NP (JJ local) (NNS governments)) (PP (IN from) (S (VP (VBG usurping) (NP (NP (DT the) (NN state) (POS 's)) (NN authority) (S (VP (TO to) (VP (VB regulate) (NP (NN firearms))))))))))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (DT The) (JJ amazing) (NN thing)) (VP (AUX is) (SBAR (S (NP (PRP they)) (VP (AUX are) (VP (VBG going) (S (VP (TO to) (VP (VB turn) (NP (NNP San) (NNP Francisco)) (PP (IN into) (NP (NP (NN ground) (CD zero)) (PP (IN for) (NP (NP (DT every) (NN criminal)) (SBAR (WHNP (WP who)) (S (VP (VBZ wants) (S (VP (TO to) (VP (VB profit) (PP (IN at) (NP (PRP$ their) (VBN chosen) (NN profession)))))))))))))))))))))) (, ,) ('' '') (NP (NNP Paredes)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (NP (NNP Washington)) (, ,) (NP (NNP D.C.)) (, ,)) (VP (AUX is) (NP (NP (DT the) (JJ only) (JJ major) (JJ American) (NN city)) (SBAR (WHNP (WDT that)) (S (ADVP (RB currently)) (VP (VBZ bans) (NP (JJ handgun) (NN possession)) (PP (IN by) (NP (JJ private) (NNS citizens)))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Andrew) (NNP Arulanandam)) (, ,) (NP (NP (NN director)) (PP (IN of) (NP (JJ public) (NNS affairs))) (PP (IN for) (NP (DT the) (NNP National) (NNP Rifle) (NNP Association)))) (, ,)) (VP (VBD said) (SBAR (S (NP (NNP San) (NNP Francisco)) (VP (MD would) (VP (AUX be) (ADJP (JJ remiss) (S (VP (TO to) (VP (VB use) (NP (DT that) (NN city)) (PP (IN as) (NP (DT a) (NN model)))))))))))) (. .)))
+
+(S1 (S (`` ``) (SBAR (IN If) (S (NP (NN gun) (NN control)) (VP (VBD worked)))) (, ,) (NP (NP (NNP Washington)) (, ,) (NP (NNP D.C.)) (, ,)) (VP (MD would) (VP (AUX be) (NP (DT the) (NNP beacon)))) (. .)))
+
+(S1 (S (S (ADVP (RB However)) (, ,) (NP (PRP it)) (VP (AUX 's) (NP (NP (DT the) (NN murder) (NN capital)) (PP (IN of) (NP (DT the) (NNP United) (NNPS States)))))) (, ,) ('' '') (NP (PRP he)) (VP (VBD said)) (. .)))
+
+(S1 (S (SBAR (IN If) (S (VP (VBN approved)))) (, ,) (NP (DT the) (NNS weapons) (NN ban)) (VP (MD would) (VP (VB take) (NP (NN effect)) (PP (IN in) (NP (NNP January) (CD 2006))))) (. .)))
+
+(S1 (FRAG (NP (NP (NN Quote)) (PP (IN of) (NP (DT the) (NN day)))) (: :) (`` ``) (S (S (NP (NNPS Firearms)) (VP (MD would) (VP (AUX be) (VP (VBN allowed) (PP (ADVP (RB only)) (IN for) (NP (NP (NN police) (NNS officers)) (, ,) (NP (NN security) (NNS guards)) (, ,) (NP (NP (NNS members)) (PP (IN of) (NP (DT the) (NN military)))))))))) (, ,) (CC and) (S (NP (NN anyone)) (ADVP (RB else)) (VP (VP (ADVP (RB actually)) (VBN employed)) (CC and) (VP (VBN engaged) (PP (IN in) (S (VP (VBG protecting) (CC and) (VBG preserving) (NP (NN property) (CC or) (NN life)) (PP (IN within) (NP (NP (DT the) (NN scope)) (PP (IN of) (NP (PRP$ his) (CC or) (PRP$ her) (NN employment)))))))))))) (. .) ('' '')))
+
+(S1 (S (CC So) (S (VP (VBG preserving) (NP (NN property) (CC or) (NN life)) (PP (IN within) (NP (NP (DT the) (NN scope)) (PP (IN of) (NP (NP (NN self-defense) (CC and) (NN protection)) (PP (IN of) (NP (DT the) (NN home))))))))) (VP (AUX is) (RB not) (VP (VBN allowed))) (. .)))
+
+(S1 (NP (DT No) (NNS thanks) (. .)))
+
+(S1 (S (S (SBAR (IN If) (S (NP (DT the) (NNS people)) (VP (VB vote) (PP (IN for) (NP (DT this) (NN measure)))))) (NP (PRP it)) (VP (MD will) (VP (AUX be) (ADJP (JJ hard)) (S (VP (TO to) (VP (VBP sympathize) (PP (IN with) (NP (PRP them))) (SBAR (WHADVP (WRB when)) (S (NP (NN robbery) (CC and) (NN rape) (NNS rates)) (VP (VBP skyrocket))))))) (, ,) (SBAR (IN because) (S (NP (NNS burgulars)) (VP (MD will) (VP (VB know) (S (NP (NNS homes)) (VP (AUX are) (RB not) (VP (VBN guarded))))))))))) (, ,) (CC and) (S (NP (NNS rapists)) (VP (MD will) (VP (VB know) (NP (NP (DT the) (JJ only) (NN thing)) (VP (VBG stopping) (NP (PRP them)) (PP (IN from) (NP (NP (DT the) (NN victim)) (SBAR (S (NP (PRP they)) (VP (VBP desire) (SBAR (S (VP (AUX is) (NP (PRP$ their) (JJ own) (NNS inhibitions))))))))))))))) (. .)))
+

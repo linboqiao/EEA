@@ -1,0 +1,32 @@
+(S1 (S (S (NP (DT the) (NN slogan)) (VP (VBZ makes) (PP (IN for) (NP (DT a) (JJ powerful) (NN bumper) (NN sticker))))) (: --) (S (S (NP (NNS guns)) (VP (AUX do) (RB n't) (VP (VB kill) (NP (NNS people))))) (, ,) (NP (NNS people)) (VP (AUX do))) (. !)))
+
+(S1 (S (CC but) (NP (DT this) (JJ next) (NN story)) (VP (VBZ makes) (NP (DT the) (NN case)) (SBAR (S (NP (DT the) (NN slogan)) (VP (AUX does) (RB n't) (VP (VB go) (ADVP (RB far) (RB enough))))))) (. .)))
+
+(S1 (S (S (NP (DT a) (JJR better) (CD one)) (VP (MD might) (VP (AUX be)))) (, ,) (S (NP (NNS people)) (VP (AUX do))) (CC and) (S (S (NP (NNS people)) (VP (VB die))) (CC and) (S (ADVP (RB still)) (NP (JJ other) (NNS people)) (VP (VP (VB search) (NP (PRP$ their) (NNS souls))) (CC and) (VP (VB struggle) (PP (IN for) (NP (NN redemption))))))) (. .)))
+
+(S1 (NP (NP (DT the) (NN story)) (PP (IN from) (NP (`` ``) (NP (NNP newsnight) (POS 's)) ('' '') (NNP beth) (NNS nissen))) (. .)))
+
+(S1 (FRAG (NP (NN reporter)) (: :) (S (NP (PRP it)) (VP (AUX was) (NP (NP (DT the) (NN lead) (NN story)) (PP (IN across) (NP (NNP connecticut))) (PP (IN in) (NP (JJ early) (NNP April)))) (PRN (, ,) (S (NP (NNS police)) (VP (VBP say) (SBAR (S (NP (NP (NNP jennifer) (NNP o'conner)) (, ,) (NP (NP (DT a) (NNP connecticut) (NN woman)) (PP (IN with) (NP (NP (DT a) (NN history)) (PP (IN of) (NP (JJ psychiatric) (NNS problems))))))) (VP (VBD confessed) (S (VP (TO to) (VP (VBG shooting) (NP (PRP$ her) (NN daughter))))) (NP (CD 7))))))) (, ,)) (SBAR (IN while) (S (NP (DT the) (CD 7)) (: -) (NP (JJ year-old) (NN girl)) (VP (VBD lay) (NP (NN sleeping))))))) (. .)))
+
+(S1 (S (S (NP (NNP o'conner)) (VP (VBD told) (NP (NNS police)) (SBAR (S (NP (PRP she)) (VP (MD could) (ADVP (RB no) (RB longer)) (VP (VB cope) (PP (IN with) (S (NP (PRP$ her) (NN daughter) (NN daughter) (POS 's)) (VP (VBG learning)))))))))) (, ,) (NP (NN disability)) (VP (VBZ prps) (NP (NNP sara) (NNP dade)) (ADVP (NP (CD three) (NNS days)) (RB later))) (. .)))
+
+(S1 (S (NP (NP (NNP thomas)) (, ,) (NP (NN owner) (DT a) (NX (NX (JJ local) (NN gun)) (CC and) (NX (NN motorcycle) (NN shop)))) (, ,)) (VP (VBD said) (SBAR (S (NP (PRP he)) (VP (VBD felt) (VP (VBN gutted) (SBAR (WHADVP (WRB when)) (S (NP (PRP he)) (VP (VBD saw) (NP (NP (DT the) (NN news) (NNS reports)) (PP (IN of) (NP (NP (NNP o'conner) (POS 's)) (NN vest)))) (PP (IN on) (NP (NN murder) (NNS charges))))))))))) (. .)))
+
+(S1 (S (ADVP (ADVP (RB as) (RB soon)) (SBAR (IN as) (S (NP (DT the) (NN police) (NNS officers)) (VP (VP (VBD pulled) (NP (DT the) (NN gun)) (PRT (RP out))) (CC and) (VP (VBD held) (NP (PRP it)) (PRT (RP up))))))) (, ,) (NP (PRP i)) (VP (VBD knew) (SBAR (S (NP (PRP it)) (VP (AUX was) (NP (PRP$ my) (NNP rifle)))))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (VP (AUX had) (VP (VBN sold) (S (ADJP (JJR oconer)) (NP (DT the) (NNP rifle))) (ADVP (NP (DT a) (JJ few) (NNS months)) (IN before))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (VBD explained) (PP (TO to) (NP (PRP me))) (NP (PRP she))) (. .)))
+
+(S1 (NP (NP (NNP ed)) (NP (NP (DT a) (JJR lighter) (, ,) (JJR smaller) (JJ caliber) (NN hunting) (NN gun)) (PP (IN for) (NP (NP (NNS deer)) (VP (VBG hunting) (, ,) (PP (IN for) (NP (JJ medium-size) (NN game) (NN hunting))))))) (. .)))
+
+(S1 (FRAG (NP (NN reporter)) (: :) (S (VP (VBD followed) (NP (NP (DT the) (NN letter)) (PP (IN of) (NP (NN law)))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (VBD sent) (NP (NP (NNP oconeor) (POS 's)) (NN information)) (PP (TO to) (NP (DT the) (NN state) (NNS authoritys))) (PP (IN for) (NP (DT a) (NN background) (NN check)))) (. .)))
+
+(S1 (S (SBAR (IN once) (S (NP (PRP she)) (VP (AUX was) (VP (VBN cleared))))) (, ,) (NP (PRP he)) (VP (VBD made) (NP (JJR o'conner) (NN wait)) (PP (IN for) (NP (DT a) (NN minimum)))) (. .)))
+
+(S1 (NP (CD two) (NNS weeks) (. .)))
+
+(S1 (NP (PRP he)))
+

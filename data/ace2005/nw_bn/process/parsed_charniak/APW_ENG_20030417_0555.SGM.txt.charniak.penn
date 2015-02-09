@@ -1,0 +1,88 @@
+(S1 (S (NP (NP (NNP BAGHDAD) (, ,) (NNP Iraq)) (PRN (-LRB- -LRB-) (NP (NNP AP)) (-RRB- -RRB-))) (NP (JJ American) (NNS commandos)) (VP (VP (VBN captured) (NP (NP (DT a) (JJ half) (NN brother)) (PP (IN of) (NP (NNP Saddam) (NNP Hussein)))) (PP (IN on) (NP (NNP Thursday)))) (, ,) (NP (NP (DT the) (JJS latest) (NN success)) (PP (IN in) (NP (DT a) (NN campaign) (S (VP (TO to) (VP (VB round) (PRT (RP up)) (NP (NP (NNS insiders)) (PP (IN from) (NP (DT the) (JJ former) (NN regime))))))))))) (. .)))
+
+(S1 (S (NP (NNP U.S.) (NNS troops)) (VP (VBD thwarted) (NP (DT a) (NNP Baghdad) (NN bank) (NN robbery)) (PP (IN over) (NP (NP (DT the) (NNS protests)) (PP (IN of) (NP (NNP Iraqis))) (ADJP (JJ eager) (S (VP (TO to) (VP (VB share) (PP (IN in) (NP (DT the) (NN loot)))))))))) (. .)))
+
+(S1 (S (SBAR (IN As) (S (NP (NNP U.S.) (NNS forces)) (VP (VBD struggled) (S (VP (TO to) (VP (VB restore) (NP (NN order)) (PP (IN in) (NP (NNP Iraq))))))))) (, ,) (NP (NNP FBI) (NNP Director) (NNP Robert) (NNP Mueller)) (VP (VBD announced) (SBAR (IN that) (S (NP (NNS agents)) (VP (AUX had) (VP (AUX been) (VP (VBN detailed) (S (VP (TO to) (VP (VB help) (S (VP (VB recover) (NP (NP (NNS antiquities)) (VP (VBN looted) (PP (IN from) (NP (NP (NNS museums)) (UCP (PP (IN in) (NP (NNP Baghdad))) (CC and) (ADVP (RB elsewhere)))))))))))))))))) (. .)))
+
+(S1 (S (S (NP (NNPS Agents)) (VP (MD will) (VP (VB aid) (NP (JJ international) (NNS efforts) (S (VP (TO to) (VP (VB recover) (NP (VBN stolen) (NNS items)) (`` ``) (PP (IN on) (NP (DT both) (DT the) (JJ open) (CC and) (JJ black) (NNS markets)))))))))) (, ,) ('' '') (NP (PRP he)) (VP (VBD said)) (. .)))
+
+(S1 (S (SBAR (IN With) (S (NP (DT the) (NN fighting)) (ADVP (RB all) (CC but) (RB over)))) (, ,) (NP (DT the) (NNP USS) (NNP Constellation)) (VP (VBD steamed) (PP (IN from) (NP (DT the) (NNP Persian) (NNP Gulf))) (PP (IN for) (NP (PRP$ its) (NN home) (NN port))) (, ,) (S (VP (VBG carrying) (NP (NP (NNS dozens)) (PP (IN of) (NP (NP (NNS warplanes)) (VP (ADVP (RB no) (RB longer)) (VBN needed)))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX was) (NP (NP (DT the) (JJ second) (NN aircraft) (NN carrier)) (VP (VBN ordered) (ADVP (RB home)) (PP (IN in) (NP (JJ recent) (NNS days)))))) (. .)))
+
+(S1 (S (S (NP (NP (NP (DT The) (NNP U.S.) (NN military) (POS 's)) (NN search)) (PP (IN for) (NP (ADJP (JJ chemical) (CC and) (JJ biological)) (NNS weapons)))) (VP (AUX is) (ADJP (JJ unlikely) (S (VP (TO to) (VP (VB succeed) (SBAR (IN until) (S (NP (NNPS Iraqis)) (VP (VBP lead) (NP (NNP American) (NNS forces)) (PP (TO to) (NP (PRP them)))))))))))) (, ,) (NP (NNP Defense) (NNP Secretary) (NNP Donald) (NNP H.) (NNP Rumsfeld)) (VP (VBD said) (NP (NNP Thursday))) (. .)))
+
+(S1 (S (`` ``) (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (PRP we)) (VP (MD 'll) (VP (VB discover) (NP (NN anything)) (, ,) (NP (PRP myself))))))))) (, ,) ('' '') (NP (NNP Rumsfeld)) (VP (VBD said) (PP (IN at) (NP (NP (DT a) (NN meeting)) (PP (IN with) (NP (NNP Pentagon) (NNS employees)))))) (. .)))
+
+(S1 (S (`` ``) (NP (PRP I)) (VP (VBP think) (SBAR (S (SBAR (WHNP (WP what)) (S (VP (MD will) (VP (VB happen))))) (VP (AUX is) (SBAR (S (NP (PRP we)) (VP (MD 'll) (VP (VB discover) (S (NP (NP (NNS people)) (SBAR (WHNP (WP who)) (S (VP (MD will) (VP (VB tell) (NP (PRP us)) (SBAR (WHADVP (WRB where)) (S (VP (TO to) (VP (VB go)))))))))) (VP (VB find) (NP (PRP it)))))))))))) (. .) ('' '')))
+
+(S1 (S (S (NP (NNP U.S.) (NNS troops)) (VP (AUX have) (VP (VBN found) (NP (JJ suspicious) (NNS chemicals) (CC and) (NNS facilities)) (PP (IN at) (NP (NP (DT a) (NN number)) (PP (IN of) (NP (NNS sites)))))))) (CC but) (S (NP (NP (NNS tests)) (PP (IN on) (NP (DT the) (NNS materials)))) (VP (AUX have) (VP (VBN proved) (ADJP (JJ negative) (CC or) (JJ inconclusive))))) (. .)))
+
+(S1 (S (S (VP (VBG Eliminating) (NP (JJ such) (NNS weapons)))) (VP (AUX was) (NP (NP (DT a) (JJ chief) (NN reason)) (SBAR (S (NP (NNP President) (NNP George) (NNP W.) (NNP Bush)) (VP (VBD gave) (PP (IN for) (NP (NP (DT the) (JJ U.S.-led) (NN invasion)) (PP (IN of) (NP (NNP Iraq))) (SBAR (WHNP (WDT that)) (S (VP (VBD began) (NP (NNP March) (CD 20)))))))))))) (. .)))
+
+(S1 (S (NP (NNP Brig.) (NNP Gen.) (NNP Vincent) (NNP Brooks)) (VP (VBD announced) (NP (NP (DT the) (NN capture)) (PP (IN of) (NP (NNP Barzan) (NNP Ibrahim) (NNP Hasan) (NNS al-Tikriti)))) (, ,) (S (VP (VBG telling) (NP (NNS reporters)) (SBAR (S (NP (PRP he)) (VP (AUX was) (NP (NP (DT an) (NN adviser)) (PP (TO to) (NP (NNP Saddam)))) (`` ``) (PP (IN with) (NP (NP (JJ extensive) (NN knowledge)) (PP (IN of) (NP (NP (DT the) (NN regime) (POS 's)) (JJ inner) (NNS workings))))))))))) (. .) ('' '')))
+
+(S1 (S (NP (DT A) (NNP U.S.) (NN intelligence) (NN official)) (, ,) (S (VP (VBG speaking) (PP (IN on) (NP (NP (NN condition)) (PP (IN of) (NP (NN anonymity))))))) (, ,) (VP (VBD said) (SBAR (S (NP (NNP Barzan) (NNP Ibrahim)) (VP (VP (AUX had) (VP (AUX been) (NP (NP (DT a) (JJ presidential) (NN adviser)) (PP (TO to) (NP (NP (NNP Saddam) (POS 's)) (NN regime)))) (PP (IN since) (NP (CD 1998))))) (, ,) (CC but) (VP (VP (AUX had) (NP (NP (DT a) (JJ shaky) (NN relationship)) (PP (IN with) (NP (PRP$ his) (JJ half) (NN brother))))) (CC and) (VP (AUX was) (RB not) (NP (NP (NN part)) (PP (IN of) (NP (NP (DT the) (NN regime) (POS 's)) (JJ inner) (NN circle)))))))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (AUX was) (NP (NP (DT a) (NN representative)) (PP (TO to) (NP (NP (DT the) (NNP United) (NNPS Nations)) (PP (IN in) (NP (NNP Geneva))))) (PP (PP (IN from) (NP (CD 1989))) (PP (TO to) (NP (CD 1998)))))) (. .)))
+
+(S1 (S (S (ADVP (RBR Earlier)) (, ,) (PP (IN from) (NP (CD 1979) (TO to) (CD 1983))) (, ,) (NP (PRP he)) (VP (VBD headed) (NP (NP (NP (NNP Iraq) (POS 's)) (NN Mukhabarat)) (, ,) (CC or) (NP (NN intelligence) (NN service)) (, ,) (NP (NP (DT a) (NN period)) (SBAR (WHADVP (WRB when)) (S (NP (DT the) (NN organization)) (VP (VBD arranged) (NP (NP (NNS executions)) (PP (IN of) (NP (NP (NN regime) (NNS opponents)) (UCP (PP (IN in) (NP (NNP Iraq))) (CC and) (ADVP (RB overseas))))))))))))) (, ,) (NP (DT the) (NN official)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (NNP Brooks)) (VP (VBD provided) (NP (NP (JJ scant) (NNS details)) (PP (IN of) (NP (NP (DT the) (NN operation)) (SBAR (WHNP (WDT that)) (S (VP (VBN netted) (NP (NNP Barzan) (NNP Ibrahim)))))))) (, ,) (S (VP (VBG saying) (SBAR (SBAR (S (NP (PRP he)) (VP (AUX was) (VP (VBN taken) (PP (IN inside) (NP (NNP Baghdad))))))) (CC and) (SBAR (IN that) (S (NP (NNP U.S.) (JJ special) (NNS forces)) (VP (AUX were) (VP (VBN aided) (PP (IN by) (NP (NNPS Marines))))))))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (VBD said) (SBAR (S (NP (EX there)) (VP (AUX were) (NP (DT no) (NNS casualties)))))) (. .)))
+
+(S1 (S (NP (NP (NP (DT Another)) (PP (IN of) (NP (NP (NNP Saddam) (POS 's)) (CD three) (JJ half) (NNS brothers)))) (, ,) (NP (NNP Watban) (NNP Ibrahim) (NNP Hasan) (NNP al-Tikriti)) (, ,)) (VP (AUX was) (VP (VBN captured) (ADVP (RBR earlier)) (PP (IN by) (NP (NNP U.S.) (NNS forces))))) (. .)))
+
+(S1 (S (NP (DT The) (NN third)) (VP (AUX has) (RB not) (VP (AUX been) (VP (VBN found)))) (. .)))
+
+(S1 (S (S (NP (JJ American) (NNS forces)) (VP (AUX have) (VP (AUX been) (VP (VBN criticized) (PP (IN for) (S (VP (VBG failing) (S (VP (TO to) (VP (VB stop) (NP (NN looting)) (PP (IN in) (NP (JJ several) (JJ Baghdad) (NNS cities))))))))))))) (, ,) (CC and) (S (NP (EX there)) (VP (AUX have) (VP (AUX been) (NP (NNS complaints)) (, ,) (ADVP (RB as) (RB well)) (, ,) (SBAR (IN that) (S (NP (JJ humanitarian) (NN relief)) (VP (AUX has) (VP (AUX been) (ADJP (JJ slow)) (PP (IN in) (NP (VBG arriving)))))))))) (. .)))
+
+(S1 (S (CC But) (NP (NNPS Marines)) (VP (VBD foiled) (NP (NP (DT a) (VB brazen) (NN act)) (PP (IN of) (NP (NN lawlessness)))) (PP (IN during) (NP (DT the) (NN day))) (SBAR (WHADVP (WRB when)) (S (NP (PRP they)) (VP (VP (VBN interrupted) (NP (DT a) (NN robbery-in-progress)) (PP (IN at) (NP (NP (DT a) (NN branch)) (PP (IN of) (NP (DT the) (JJ al-Rashid) (NNP Bank)))))) (CC and) (VP (VBD took) (PRT (RP away)) (NP (NP (QP ($ US$) (CD 4) (CD million))) (PP (IN for) (NP (NN safekeeping))))))))) (. .)))
+
+(S1 (S (NP (NNS Thieves)) (VP (VP (AUX had) (VP (VBN blown) (NP (DT a) (NN hole)) (PP (IN in) (NP (DT the) (NN vault))))) (CC and) (VP (VBD dropped) (NP (NNS children)) (PRT (RP in)) (S (VP (TO to) (VP (VB bring) (PRT (RP out)) (NP (NP (NNS fistfuls)) (PP (IN of) (NP (NN cash))))))))) (. .)))
+
+(S1 (S (SBAR (IN As) (S (NP (NN word)) (VP (VBD spread) (SBAR (IN that) (S (NP (DT the) (NN robbery)) (VP (AUX was) (PP (IN under) (NP (NN way))))))))) (, ,) (S (NP (NNP Iraqis)) (VP (VBD gathered) (, ,) (S (VP (VBG saying) (SBAR (S (NP (PRP they)) (VP (AUX had) (NP (NP (NNS accounts)) (PP (IN at) (NP (DT the) (NN branch))))))))))) (, ,) (CC and) (S (NP (DT a) (NN riot)) (VP (VBD broke) (PRT (RP out)))) (. .)))
+
+(S1 (S (S (NP (NNPS Marines)) (VP (VBD broke) (NP (PRP it)) (PRT (RP up)) (ADVP (RB _)) (PP (IN over) (NP (NP (DT the) (NNS protests)) (PP (IN of) (NP (NNP Iraqis))) (VP (RB not) (VBN involved) (PP (IN in) (NP (DT the) (NN robbery) (NN _)))))))) (CC and) (S (NP (DT the) (NNS thieves)) (VP (AUX were) (VP (VBN arrested)))) (. .)))
+
+(S1 (SINV (`` ``) (S (S (NP (DT These) (NNS people)) (VP (VBP want) (NP (DT the) (NN money)))) (CC and) (S (NP (PRP they)) (VP (VBP believe) (SBAR (S (NP (PRP it)) (VP (AUX is) (ADVP (RB rightfully)) (NP (PRP$ their) (NN money))))))) (, ,) (CC but) (S (NP (PRP they)) (VP (AUX do) (RB n't) (VP (VB understand) (SBAR (IN that) (S (NP (DT the) (JJ proper) (NN distribution)) (VP (AUX is) (RB not) (ADJP (JJ first-come) (, ,) (JJ first-served))))))))) (, ,) ('' '') (VP (VBD said)) (NP (NP (NNP Col.) (NNP Philip) (NNP DeCamp)) (, ,) (NP (DT a) (NN battalion) (NN commander))) (. .)))
+
+(S1 (S (NP (NP (NNP Gen.) (NNP Tommy) (NNP Franks)) (, ,) (NP (NP (DT the) (NN commander)) (PP (IN of) (NP (NN Operation))) (NP (JJ Iraqi) (NNP Freedom))) (, ,)) (VP (VBD told) (NP (NNS reporters)) (PP (IN during) (NP (NP (DT a) (NN visit)) (PP (TO to) (NP (NNP Kuwait))))) (SBAR (IN that) (`` ``) (S (S (NP (DT the) (NN looting)) (VP (VBZ goes) (PRT (RP down)) (NP (DT every) (NN day)))) (CC and) (S (NP (PRP I)) (VP (VBP think) (SBAR (S (NP (PRP you)) (VP (MD will) (VP (VB continue) (S (VP (TO to) (VP (VB see) (S (NP (PRP it)) (VP (VB go) (PRT (RP down)) (SBAR (IN because) (S (NP (DT the) (NNPS Iraqis)) (VP (AUX are) (ADVP (RB now)) (VP (VP (VBG stepping) (PRT (RP up))) (CC and) (VP (VBG controlling) (NP (DT the) (NNS problems)) (PP (IN for) (NP (PRP themselves)))))))))))))))))))))) (. .) ('' '')))
+
+(S1 (S (NP (EX There)) (VP (AUX was) (NP (NP (NN evidence)) (PP (IN of) (NP (JJ slow) (NN progress))))) (. .)))
+
+(S1 (S (NP (NN Baghdad) (NNS residents)) (VP (VBD gathered) (PP (IN outside) (NP (NP (DT the) (NN city) (POS 's)) (NN police) (NN academy))) (SBAR (WHADVP (WRB when)) (S (NP (NN word)) (VP (VBD spread) (SBAR (IN that) (S (NP (NP (DT some)) (PP (IN of) (NP (DT the) (NNS cars))) (VP (VBN looted) (PP (IN in) (NP (JJ recent) (NNS days))))) (VP (AUX had) (VP (AUX been) (VP (VBN recovered)))))))))) (. .)))
+
+(S1 (S (S (ADVP (RB Still)) (, ,) (NP (NP (QP (JJR more) (IN than) (DT a)) (NN week)) (PP (IN after) (NP (DT the) (NN regime)))) (VP (VBD collapsed))) (, ,) (NP (NNP Marine) (NNP Staff) (NNP Sgt.) (NNP Jose) (NNP Guillen)) (VP (VBD said) (SBAR (S (NP (NN power)) (VP (AUX has) (VP (AUX been) (VP (VBN restored) (ADVP (RB _)) (PP (IN by) (NP (NP (NN use)) (PP (IN of) (NP (NP (JJ diesel) (NNS plants)) (VP (VBN _) (PP (TO to) (NP (QP (RB only) (RB about) (CD 500)) (NNS homes))) (PP (IN in) (NP (NP (NNP Baghdad)) (, ,) (NP (NP (DT a) (NN city)) (PP (IN of) (NP (QP (RB roughly) (CD 5) (CD million)))))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (VBD said) (SBAR (S (NP (NNP U.S.) (NNS forces)) (VP (VBP expect) (S (VP (TO to) (VP (VB get) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (NN city) (POS 's)) (NN power) (NNS grids)))) (PP (IN on) (NP (NN line))) (PP (IN by) (NP (NNP Friday)))))))))) (. .)))
+
+(S1 (S (NP (NN Unrest)) (VP (VBD continued) (PP (IN in) (NP (NP (JJ other) (NNS parts)) (PP (IN of) (NP (DT the) (NN country)))))) (. .)))
+
+(S1 (S (NP (NNPS Americans)) (VP (VBD sought) (S (VP (TO to) (VP (VB bring) (NP (NN calm)) (PP (TO to) (NP (NP (NNP Mosul)) (, ,) (SBAR (WHADVP (WRB where)) (S (NP (NNP U.S.) (NNS troops)) (VP (VBD killed) (NP (CD 17) (NNS people)) (PP (IN in) (NP (NNS clashes))) (ADVP (RBR earlier) (PP (IN in) (NP (DT the) (NN week))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Brooks)) (, ,) (NP (NP (NN briefing) (NNS reporters)) (PP (IN at) (NP (DT the) (NNP U.S.) (NNP Central) (NNP Command) (NN headquarters)))) (, ,)) (ADVP (RB also)) (VP (VBD disclosed) (SBAR (IN that) (S (NP (NNPS Marines)) (VP (AUX had) (VP (VBN broken) (PRT (RP up)) (NP (JJ violent) (NNS clashes)) (PP (IN on) (NP (NNP Wednesday))) (PP (IN in) (NP (NP (NNP Tikrit)) (, ,) (NP (NP (NNP Saddam) (POS 's)) (NN hometown))))))))) (. .)))
+
+(S1 (S (S (NP (DT The) (NN fighting)) (VP (VBD broke) (PRT (RP out)) (PP (IN between) (NP (NP (NP (JJ club-wielding) (NNS members)) (PP (IN of) (NP (NP (DT the) (JJ former) (NN ruler) (POS 's)) (NN clan)))) (CC and) (NP (DT a) (JJ rival) (NN group)))))) (, ,) (NP (PRP he)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (NN Clan) (NNS rivalries)) (ADVP (RB aside)) (, ,) (NP (EX there)) (VP (AUX are) (NP (NP (JJ numerous) (JJ other) (NNS resentments)) (VP (VBG shaping) (NP (NP (NNS events)) (PP (IN in) (NP (DT the) (JJ post-Saddam) (NN era))))))) (. .)))
+
+(S1 (S (NP (NNP Majority) (NNP Shiite) (NNPS Muslims)) (VP (AUX are) (ADJP (JJ eager) (PP (IN for) (NP (NN power)))) (PP (IN after) (NP (NP (NNS decades)) (PP (IN of) (NP (NNP Saddam))) (VP (VBG favoring) (NP (NNP Sunni) (NNPS Muslims))))) (, ,) (PP (IN for) (NP (NN example)))) (. .)))
+
+(S1 (S (CC And) (NP (NNPS Kurds)) (VP (VP (AUX are) (ADJP (JJ eager) (S (VP (TO to) (VP (VB claim) (SBAR (WHNP (WP what)) (S (NP (PRP they)) (VP (VBP say) (SBAR (S (NP (NNP Saddam)) (VP (VBD took) (PP (IN from) (NP (PRP them)))))))))))))) (CC and) (VP (VBD gave) (PP (TO to) (NP (NNPS Arabs))) (PP (IN in) (NP (NP (DT the) (JJ northern) (NN part)) (PP (IN of) (NP (DT the) (NN country))))))) (. .)))
+
+(S1 (S (NP (NP (JJ International) (NNS experts)) (, ,) (VP (VBN appalled) (PP (IN at) (NP (NP (DT the) (NN looting)) (PP (IN of) (NP (JJ Iraqi) (JJ historical) (NNS artifacts)))))) (, ,)) (VP (VP (VBD met) (PP (IN in) (NP (NNP Paris))) (PP (IN under) (NP (NNP U.N.) (NNS auspices)))) (CC and) (VP (VBD called) (PP (IN for) (NP (DT a) (JJ temporary) (NN embargo))) (PP (IN on) (NP (JJ Iraqi) (JJ cultural) (NNS objects))))) (. .)))
+
+(S1 (S (S (NP (NP (DT Some)) (PP (IN of) (NP (NP (DT the) (NNS participants)) (PP (IN at) (NP (DT the) (NN meeting)))))) (VP (VBD said) (SBAR (S (NP (PRP it)) (VP (VBD appeared) (SBAR (S (NP (DT the) (NN looting)) (VP (AUX was) (VP (VBN organized)))))))))) (, ,) (CC and) (S (NP (NP (DT some)) (PP (IN of) (NP (NP (DT those)) (VP (VBN involved))))) (VP (VP (AUX had) (NP (NP (NNS keys)) (PP (TO to) (NP (NN museum) (NNS vaults))))) (CC and) (VP (AUX were) (ADJP (JJ able) (S (VP (TO to) (VP (VB remove) (NP (NNS items)) (PP (IN from) (NP (NNS safes)))))))))) (. .)))
+
+(S1 (S (NP (PRP One)) (VP (VBD suggested) (SBAR (S (NP (DT the) (NN effort)) (VP (AUX was) (VP (VBN organized) (PP (IN from) (PP (IN outside) (NP (NNP Iraq))))))))) (. .)))
+
+(S1 (SINV (`` ``) (S (NP (PRP It)) (VP (VBZ looks) (SBAR (IN as) (IN if) (S (NP (NP (NN part)) (PP (IN of) (NP (DT the) (NN looting)))) (VP (AUX was) (NP (DT a) (JJ deliberate) (JJ planned) (NN action))))))) (, ,) ('' '') (VP (VBD said)) (NP (NP (NNP McGuire) (NNP Gibson)) (, ,) (NP (NP (DT a) (NAC (NNP University) (PP (IN of) (NP (NNP Chicago)))) (NN professor)) (CC and) (NP (NP (NN president)) (PP (IN of) (NP (NP (DT the) (NNP American) (NNP Association)) (PP (IN for) (NP (NNP Research))) (PP (IN in) (NP (NNP Baghdad)))))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (PRP I)) (VP (AUX have) (NP (NP (DT a) (NN suspicion)) (SBAR (SBAR (S (NP (PRP it)) (VP (AUX was) (VP (VBN organized) (PP (IN outside) (NP (DT the) (NN country))))))) (, ,) (PP (IN in) (NP (NN fact))) (S (NP (PRP I)) (VP (AUX 'm) (ADJP (RB pretty) (JJ sure) (SBAR (S (NP (PRP it)) (VP (AUX was))))))))))) (, ,) ('' '') (NP (NNP Gibson)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (VBD added) (SBAR (IN that) (S (SBAR (IN if) (S (NP (DT a) (JJ good) (NN police) (NN team)) (VP (AUX was) (VP (VBN put) (ADVP (RB together)))))) (, ,) (`` ``) (NP (PRP I)) (VP (VBP think) (SBAR (S (NP (PRP it)) (VP (MD could) (VP (AUX be) (VP (VBN cracked) (PP (IN in) (NP (DT no) (NN time)))))))))))) (. .) ('' '')))
+
+(S1 (S (NP (DT The) (NNP Baghdad) (NN museum)) (VP (VBN housed) (NP (NP (JJ irreplaceable) (NNP Babylonian) (, ,) (NNP Sumerian) (CC and) (NNP Assyrian) (NNS collections)) (SBAR (WHNP (WDT that)) (S (VP (VBD chronicled) (NP (JJ ancient) (NN life)) (PP (IN in) (NP (NP (DT the) (NN cradle)) (PP (IN of) (NP (NN civilization))))) (, ,) (NP (NP (DT the) (NN area)) (PP (IN around) (NP (DT the) (NNP Tigris) (CC and) (NNP Euphrates) (NNS rivers))))))))) (. .)))
+

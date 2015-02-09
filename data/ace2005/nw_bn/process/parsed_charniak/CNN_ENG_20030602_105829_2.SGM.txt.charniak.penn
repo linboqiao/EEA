@@ -1,0 +1,124 @@
+(S1 (S (NP (PRP we)) (VP (AUX 're) (VP (VBG coming) (PRT (RP up)) (PP (IN on) (NP (CD 23))) (PP (IN after) (NP (NP (DT the) (NN hour)) (PP (IN on) (SBAR (WHNP (WP what)) (S (VP (AUX is) (VP (VBG shaping) (ADVP (RB up)) (S (VP (TO to) (VP (AUX be) (NP (DT a) (JJ busy) (NN day)) (ADVP (RB here)))))))))))))) (. .)))
+
+(S1 (S (CC but) (NP (NP (DT a) (JJ joyous) (NN day)) (PP (IN for) (NP (NP (NP (CD 5,000) (NNS sailors) (CC and) (NNS marines)) (CC and) (NP (NNS friends) (CC and) (NN family))) (PP (IN in) (NP (NP (DT the) (JJ san) (JJ diego) (, ,) (JJ california) (NN area)) (PP (IN because) (NP (DT the) (JJ giant) (NNP u.s.) (NN carrier) (NN constellation)))))))) (VP (AUX is) (ADVP (RB now)) (VP (VBG returning) (NP (NN home)) (PP (IN from) (NP (NP (DT the) (NN war)) (PP (IN in) (NP (NNP iraq))))))) (. .)))
+
+(S1 (S (NP (NNP frank) (NNP buckley)) (VP (VP (AUX is) (PP (IN in) (NP (NNP san) (NNP diego)))) (CC and) (VP (VBZ joins) (NP (PRP us)) (ADVP (RB now)) (PP (IN with) (NP (NP (NP (DT the) (JJS latest) (NNS scenes)) (PP (IN from) (NP (EX there)))) (CC and) (NP (DT the) (JJ live) (NNS pictures)))))) (. .)))
+
+(S1 (NP (NP (NNP hi)) (, ,) (NP (NNP frank)) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (NP (NP (NNP leon) (, ,) (RB yet) (DT another) (NN day)) (PP (IN of) (NP (JJ incredible) (NN home) (VBG coming)))) (. .)))
+
+(S1 (S (NP (DT this) (NN time)) (NP (DT the) (`` ``) (NNP uss) (NN constellation) ('' '')) (VP (VBG coming) (PRT (RP up))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX 're) (VP (VBG coming) (ADVP (RB home)) (PP (IN for) (NP (NP (DT the) (JJ last) (NN time)) (PP (TO to) (NP (NNP san) (NNP diego))))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (VP (VBN scheduled) (PP (IN for) (NP (NN decommissioning))) (PP (IN in) (NP (NNP August))))) (. .)))
+
+(S1 (S (VP (VB let) (S (NP (PRP me)) (VP (VB give) (NP (PRP you)) (NP (NP (DT a) (NN sense)) (PP (IN of) (NP (DT the) (NN excitement))) (PP (IN among) (NP (NNS families))))))) (. .)))
+
+(S1 (S (VP (VB look) (PP (IN at) (NP (NP (DT these) (NNS folks)) (SBAR (WHNP (WP who)) (S (VP (AUX have) (RB not) (VP (VBN seen) (NP (PRP$ their) (NN family) (NNS members)) (PP (IN for) (NP (CD seven) (NNS months))) (SBAR (IN as) (S (NP (DT the) (NN constellation)) (VP (AUX was) (ADVP (RB over)) (PP (IN in) (NP (DT the) (JJ persian) (NN gulf))))))))))))) (. .)))
+
+(S1 (S (VP (VB let) (S (NP (PRP me)) (VP (VB take) (S (NP (PRP you)) (VP (ADVP (RB up)) (VB top) (S (VP (TO to) (VP (VB give) (NP (PRP you)) (NP (NP (DT a) (JJR larger) (NN view)) (PP (IN of) (SBAR (WHNP (WHADJP (WRB how) (JJ many)) (NNS folks)) (S (VP (AUX are) (ADVP (RB here)) (PP (IN at) (NP (NNP lima) (NN pier)))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX are) (VP (VBG expecting) (S (NP (QP (DT some) (CD 15,000)) (NNS people)) (VP (TO to) (VP (VB greet) (NP (DT the) (`` ``) (NNP uss) (NN constellation) ('' ''))))) (SBAR (IN as) (S (NP (PRP it)) (VP (VBZ comes) (ADVP (RB home))))))) (. .)))
+
+(S1 (S (PP (IN among) (NP (NP (DT the) (NNS people)) (SBAR (WHNP (WDT that)) (S (VP (MD will) (VP (AUX be) (ADVP (RB here)) (S (VP (TO to) (VP (VB greet) (NP (DT those) (NNS folks))))))))))) (, ,) (NP (EX there)) (VP (AUX are) (ADVP (RB always)) (NP (NP (DT the) (NNS first-kissers)) (, ,) (NP (NP (DT the) (NNS people)) (SBAR (WHNP (WP who)) (S (VP (VBP win) (NP (NP (DT the) (JJ first-kiss) (NN lottery)) (CC and) (NP (DT the) (JJ new) (NNS dads))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (MD will) (VP (VB talk) (PP (TO to) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (NNS winners)) (PP (IN of) (NP (DT the) (ADJP (RB first) (VB kiss)) (NN contest))))))))) (. .)))
+
+(S1 (S (S (NP (DT this)) (VP (AUX is) (ADJP (JJ tammy)))) (, ,) (NP (PRP$ your) (NN husband)) (VP (AUX is) (NP (NNP david))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX have) (NP (RB little) (RB alisa) (RB here))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (AUX is) (ADJP (NP (CD 4) (NNS years)) (JJ old) (VBN told))) (. .)))
+
+(S1 (NP (NNS congratulations) (. .)))
+
+(S1 (S (VP (VB say) (ADVP (RB hi))) (. .)))
+
+(S1 (FRAG (NP (NN reporter)) (: :) (S (NP (PRP you)) (VP (AUX were) (VP (VBG telling) (NP (PRP me)) (NP (PRP you)) (VP (VBN spent) (NP (NP (QP (CD 30) (CC or) ($ $) (CD 40))) (: --) (NP (QP ($ $) (CD 30) (CC or) ($ $) (CD 40)))) (S (VP (TO to) (VP (VB get) (ADVP (RB here))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN question)) (NP (PRP i)) (VP (VBD asked) (NP (PRP you)) (ADVP (RB earlier)) (, ,) (SBAR (WHNP (WP who)) (S (VP (VBZ gets) (NP (DT the) (JJ first)) (S (VP (VB kiss) (VP (AUX do) (NP (PRP you))))))))) (. ?)))
+
+(S1 (S (S (NP (PRP she)) (VP (AUX has) (VP (VBN agreed)))) (, ,) (S (NP (PRP i)) (VP (VBP get) (S (VP (TO to) (VP (AUX have) (NP (PRP it))))))) (CC and) (S (NP (PRP she)) (VP (VBZ gets) (NP (PRP$ her) (NN daddy)))) (. .)))
+
+(S1 (S (VP (VB tell) (NP (PRP me)) (SBAR (WHNP (WP what)) (S (NP (PRP it)) (VP (VBZ feels) (SBAR (IN like) (S (VP (TO to) (VP (AUX have) (NP (PRP him)) (ADVP (RB almost) (RB home)))))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (VBP feel) (ADJP (JJ complete))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (AUX 'm) (ADJP (JJ whole)) (ADVP (RB again))) (. .)))
+
+(S1 (S (NP (PRP$ my) (JJR better) (NN half)) (VP (AUX is) (ADVP (RB here))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (NP (DT that)) (VP (AUX 's) (NP (NP (DT a) (JJ wonderful) (NN thing)) (SBAR (S (VP (TO to) (VP (VB say)))))))) (. .)))
+
+(S1 (SQ (SBAR (WHADVP (WRB when)) (S (NP (PRP you)) (VP (VBD heard) (SBAR (S (NP (PRP they)) (VP (AUX were) (ADVP (RB finally)) (VP (IN about) (S (VP (TO to) (VP (VB leave) (NP (NP (NN harm) (POS 's)) (NN way)))))))))))) (, ,) (MD can) (NP (PRP you)) (VP (VB give) (NP (NNS viewers)) (NP (NP (DT a) (NN sense)) (PP (IN of) (SBAR (WHNP (WP what)) (S (NP (DT that)) (VP (AUX was) (PP (IN like)))))) (SBAR (IN for) (S (NP (PRP you)) (ADVP (RB personally)) (VP (TO to) (VP (VB get) (NP (DT that) (NN news)))))))) (. ?)))
+
+(S1 (NP (JJ complete) (NN relief) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX were) (VP (VBN headed) (ADVP (RB home)))) (. .)))
+
+(S1 (NP (NN reporter) (: :) (SBARQ (CC and) (WHNP (WP what)) (SQ (AUX has) (NP (PRP it)) (VP (AUX been) (PP (IN like) (S (VP (VBG knowing) (SBAR (S (NP (PRP you)) (VP (VBP get) (S (NP (DT the) (JJ first)) (VP (VB kiss) (, ,) (SQ (AUX are) (NP (PRP you)) (ADJP (JJ nervous))))))))))))) (. ?))))
+
+(S1 (SQ (AUX do) (NP (PRP you)) (VP (VB remember) (SBAR (WHADVP (WRB how)) (S (VP (TO to) (VP (AUX do) (NP (PRP it))))))) (. ?)))
+
+(S1 (S (S (PP (TO to) (NP (DT a) (NN point))) (NP (PRP i)) (VP (AUX 'm) (ADJP (JJ nervous)))) (CC but) (S (NP (PRP i)) (ADVP (RB just)) (VP (VBP want) (NP (PRP him)) (PP (IN in) (NP (PRP$ my) (NNS arms))))) (. .)))
+
+(S1 (FRAG (NP (NN reporter)) (: :) (NP (JJ happy) (NN birthday)) (. .)))
+
+(S1 (S (VP (VB say) (S (VP (VB thank) (NP (PRP you))))) (. .)))
+
+(S1 (S (VP (VB thank) (NP (PRP you))) (. .)))
+
+(S1 (FRAG (NP (NN reporter)) (: :) (S (NP (EX there)) (VP (VP (AUX are) (ADVP (RB also)) (NP (CD 106) (JJ new) (NNS dads))) (, ,) (CC and) (VP (PP (IN among) (NP (PRP them))) (AUX is) (NP (NP (DT the) (NN dad)) (PP (IN of) (NP (NN look)))) (PP (IN at) (NP (NP (DT this) (JJ beautiful) (NN boy)) (SBAR (WHNP (WP who)) (S (ADVP (RB just)) (VP (VBD woke) (PRT (RP up)))))))))) (. .)))
+
+(S1 (S (S (NP (DT this)) (VP (AUX is))) (: --) (S (NP (DT this)) (VP (AUX is) (ADJP (JJ trebian)))) (. .)))
+
+(S1 (S (S (NP (NN mom)) (VP (AUX is) (ADJP (JJ felicia)))) (, ,) (NP (NN typhus)) (VP (AUX is) (NP (DT the) (JJ new) (NN dad))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (AUX were) (VP (VBG telling) (NP (PRP me)) (SBAR (S (NP (DT this) (JJ little) (JJ beautiful) (NN boy)) (VP (AUX was) (VP (VBN born) (PP (NP (CD two) (NNS days)) (IN after) (NP (NN deployment))))))))) (. .)))
+
+(S1 (FRAG (PP (IN after) (NP (NN deployment))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX was) (VP (VBN born) (PP (IN on) (NP (NNP November) (JJ 4th))))) (. .)))
+
+(S1 (S (CC and) (NP (PRP they)) (VP (VBD deployed) (PP (IN on) (NP (NNP November) (NN 2nd)))) (. .)))
+
+(S1 (INTJ (UH yes) (. .)))
+
+(S1 (S (S (CC and) (NP (PRP you)) (NP (NNS guys)) (VP (AUX had) (VP (VP (VBN tried)) (CC or) (VP (VP (AUX had) (VP (VBN hoped))) (, ,) (VP (VBD prayed) (SBAR (S (NP (PRP it)) (VP (MD would))))))))) (: --) (S (NP (PRP he)) (VP (MD would))) (: --) (S (NP (PRP we)) (VP (AUX were) (VP (VBG praying) (SBAR (IN that) (S (NP (PRP he)) (VP (MD would) (VP (VB get) (ADVP (RB here)) (PP (IN on) (NP (NN time)))))))))) (, ,) (ADVP (RB unfortunately)) (S (NP (PRP he)) (VP (VBD missed) (NP (PRP it)))) (, ,) (CC but) (S (PP (IN through) (NP (NNS e-mails))) (, ,) (NP (NNS pictures)) (, ,) (S (NP (PRP he)) (ADVP (RB actually)) (VP (VBN seen) (S (NP (PRP him)) (VP (VB grow))))) (, ,) (ADVP (RB so)) (NP (PRP it)) (VP (VBD turned) (PRT (RP out)) (S (VP (TO to) (VP (AUX be) (ADJP (JJ okay))))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX was) (ADVP (RB just)) (SBAR (IN like) (S (NP (PRP he)) (VP (AUX was) (ADVP (RB there)))))) (. .)))
+
+(S1 (S (NP (DT this)) (VP (AUX is) (NP (NP (PRP$ your) (JJ second) (NN one)) (SBAR (S (NP (PRP he)) (VP (AUX has) (VP (VBN missed))))))) (. .)))
+
+(S1 (S (INTJ (UH yes)) (, ,) (NP (DT this)) (VP (AUX is) (NP (NP (DT the) (JJ second) (NN one)) (SBAR (S (NP (PRP he)) (VP (AUX has) (VP (VBN missed))))))) (. .)))
+
+(S1 (FRAG (CC and) (NP (DT the) (JJ last)) (. .)))
+
+(S1 (S (ADVP (RB well)) (NP (PRP we)) (VP (MD 'll) (VP (AUX have) (NP (NP (NP (DT a) (VB chat)) (PP (IN with) (NP (NNP david)))) (CC or) (RB not) (NP (NNP david))) (PP (IN with) (NP (NN typhus))))) (. .)))
+
+(S1 (S (VP (VB thank) (NP (PRP you)) (ADVP (RB very) (RB much))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (VBP appreciate) (NP (PRP it))) (. .)))
+
+(S1 (S (S (NP (PRP you)) (VP (VBP get) (NP (NP (DT a) (NN sense)) (PP (IN of) (NP (DT the) (NN excitement)))) (ADVP (RB here)))) (, ,) (NP (NP (DT the) (NNS folks)) (PP (IN as) (NP (DT the) (NN home) (NNS comings)))) (VP (AUX are) (VP (VBN set) (S (VP (TO to) (VP (VB get) (PP (IN under) (NP (NN way)))))) (ADVP (RB here)) (PP (IN at) (NP (NP (NNP lima) (NN pier)) (PP (IN in) (NP (NNP san) (NNP diego))))))) (. .)))
+
+(S1 (NP (NNP leon) (. ?)))
+
+(S1 (S (NP (PRP i)) (VP (AUX 'm) (ADJP (JJ amazed))) (. .)))
+
+(S1 (S (NP (PRP i)) (ADVP (RB never)) (VP (AUX have) (: --) (VP (VBZ ceases) (S (VP (TO to) (VP (VB amaze) (NP (PRP me))))) (SBAR (WHADVP (WRB how)) (S (NP (NNS kids)) (VP (MD can) (VP (VB sleep) (ADVP (RB anywhere)))))))) (. .)))
+
+(S1 (S (NP (DT that) (JJ little) (NN kid)) (VP (AUX is) (VP (VBG going) (S (VP (TO to) (VP (VB sleep) (PP (IN with) (S (NP (PDT all) (DT that) (NN racket)) (VP (VBG going) (PRT (RP off)) (PP (IN around) (NP (PRP you))))))))))) (. .)))
+
+(S1 (INTJ (JJ amazing) (. .)))
+
+(S1 (NP (NP (DT any) (NN idea)) (SBAR (WHADVP (WRB how)) (S (NP (JJ many) (NNS babies)) (VP (AUX are) (ADJP (ADVP (RB out) (RB there)) (, ,) (JJ frank))))) (. ?)))
+
+(S1 (SBARQ (WHNP (WRB how) (JJ many) (NNS babies)) (. ?)))
+
+(S1 (INTJ (UH yes) (. .)))
+
+(S1 (S (S (INTJ (UH well)) (, ,) (NP (PRP we)) (VP (VBP know) (NP (DT that)))) (: --) (S (NP (PRP i)) (VP (AUX do) (RB n't) (VP (VB know) (NP (WRB how)))))))
+

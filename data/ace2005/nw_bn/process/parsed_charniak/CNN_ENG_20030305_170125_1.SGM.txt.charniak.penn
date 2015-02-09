@@ -1,0 +1,22 @@
+(S1 (S (NP (PRP it)) (VP (AUX 's) (PP (IN with) (NP (NP (NNP Wednesday)) (, ,) (NP (NNP march) (CD 5) (QP (CD 200) (CD 3)))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (AUX 'm) (NP (NP (NNP wolf) (NN blitzer)) (PP (IN in) (NP (NNP washington))))) (. .)))
+
+(S1 (SQ (AUX is) (NP (DT the) (NNP u.s.)) (VP (VBG going) (PP (TO to) (NP (NN war)))) (. ?)))
+
+(S1 (S (SBAR (IN if) (S (NP (PRP you)) (VP (VB listen) (PP (TO to) (NP (DT the))) (PP (IN from) (S (VP (POS 's) (NP (NNS men)))))))) (NP (PRP it)) (VP (VBZ sounds) (SBAR (IN like) (S (NP (DT the) (NN battle)) (VP (AUX is) (VP (IN about) (S (VP (TO to) (VP (VB begin) (, ,) (ADVP (RB maybe) (NP (RB only) (NNS days)) (PP (IN from) (NP (RB now)))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNP america) (POS 's)) (JJ top) (NN diplomat)) (VP (VBD laid) (PRT (RP out)) (NP (NP (DT the) (NN case)) (PP (IN for) (NP (NN war))))) (. .)))
+
+(S1 (S (NP (NAC (NNP secretary) (PP (IN of) (NP (NNP state)))) (NNP colin) (NNP powell)) (VP (VBD acted) (PP (IN like) (NP (DT a) (NN prosecutor))) (, ,) (S (VP (VBG pointing) (PRT (RP out)) (NP (NP (NNP iraq) (POS 's)) (NNS failures))))) (. .)))
+
+(S1 (S (PP (IN over) (PP (IN at) (NP (DT the) (NNP pentagon)))) (, ,) (NP (DT the) (JJ military) (NNS leaders)) (VP (VBP say) (SBAR (IN that) (S (NP (NNS troops)) (VP (AUX are) (ADJP (JJ ready) (S (VP (TO to) (VP (VB fight) (ADVP (RB right) (RB now)) (SBAR (RB even) (IN as) (S (S (NP (PRP they)) (VP (VBP await) (NP (NP (NN word)) (PP (IN of) (NP (NP (DT the) (NN president) (POS 's)) (NN order)))))) (, ,) (CC but) (S (NP (EX there)) (VP (AUX is) (SBAR (S (NP (NP (JJ major) (NN opposition) (NN today)) (, ,) (NP (NNP france)) (, ,) (NP (NNP germany)) (CC and) (NP (NNP russia))) (VP (VBP plan) (NP (NP (DT a) (NN showdown)) (PP (IN at) (NP (NP (NNS theupups)) (PP (IN in) (NP (DT a) (NN bid) (S (VP (TO to) (VP (VB stop) (NP (NP (NP (DT the) (NNP u.s.) (POS 's)) (NN war) (NN machine)) (CC and) (NP (NP (PRP$ their) (NNS voices)) (PP (IN of) (NP (NN dissent))) (VP (VBN echoed) (PP (IN by) (NP (NP (NNS protestors)) (PP (PP (IN from) (NP (NNP australia))) (PP (TO to) (NP (NNP egypt))) (PP (TO to) (NP (NP (NN university) (NNS students)) (ADVP (RB right) (RB here) (PP (IN in) (NP (DT the) (VBN united) (NNS states))))))))))))))))))))))))))))))))))) (. .)))
+
+(S1 (S (NP (RB even) (DT the) (NNP vatican)) (VP (VBD voiced) (NP (NNS concerns)) (NP (NN today))) (. .)))
+
+(S1 (S (S (ADVP (RBR later) (NP (DT this) (NN hour))) (NP (PRP i)) (VP (MD 'll) (VP (VB speak) (ADVP (RB exclusively)) (PP (TO to) (NP (NP (NNP cardinal) (FW pio) (NNP laghi)) (, ,) (NP (NP (DT the) (NN man)) (VP (VBN dismatched) (PP (IN by) (NP (NNP pope) (NNP john) (NNP paul) (NNP ii))) (S (VP (TO to) (VP (VB persuade) (NP (NN president) (NNP bush)) (S (VP (TO to) (VP (VB avoid) (NP (NN war))))))))))))))) (, ,) (CC but) (S (NP (PRP we)) (VP (VBP begin) (PP (IN with) (NP (NP (NNS reports)) (PP (IN from) (NP (NP (DT the) (VBN united) (NNS nations)) (, ,) (NP (DT the) (NNP pentagon)) (CC and) (NP (DT the) (JJ white) (NN house)))))))) (. .)))
+
+(S1 (FRAG (ADJP (JJ first) (PP (TO to) (NP (NNP chris) (NNS burns))) (PP (IN with) (NP (NP (NN news)) (PP (IN on) (NP (NP (DT the) (NN president)) (CC and) (NP (NP (DT the) (NN secretary)) (PP (IN of) (NP (NN state))) (SBAR (WHNP (WP who)) (S (VP (VBD switched) (PP (IN from) (NP (NN diplomacy))) (PP (TO to) (NP (NP (NN talk)) (PP (IN of) (NP (NN war)))))))))))))) (. .)))
+
+(S1 (NP (NNP chris) (. ?)))
+

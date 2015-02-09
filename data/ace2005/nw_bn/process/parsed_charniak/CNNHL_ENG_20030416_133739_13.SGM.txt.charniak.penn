@@ -1,0 +1,40 @@
+(S1 (S (NP (NNP time)) (ADVP (RB now)) (VP (TO to) (VP (VB check) (NP (DT the) (NN business) (NN news)) (PP (IN with) (NP (NP (NNP carrie) (NNP lee)) (PP (IN in) (NP (NNP new) (NNP york))))))) (. .)))
+
+(S1 (NP (NNP carrie) (. .)))
+
+(S1 (S (NP (DT a) (PRP you)) (VP (VBD said) (NP (PRP it)) (, ,) (ADVP (RB renay))) (. .)))
+
+(S1 (S (NP (DT the) (NNP dow)) (VP (AUX was) (PP (IN in) (NP (JJ negative) (NN territory))) (NP (NP (JJ much)) (PP (IN of) (NP (DT the) (NN day))))) (. .)))
+
+(S1 (S (NP (DT a) (NN couple)) (VP (NNS stocks) (S (VP (VBG losing) (NP (NP (NN ground)) (, ,) (NP (NN coca) (NN cola)) (, ,)) (ADVP (RB down) (NP (CD 6.1) (NN %)))))) (. .)))
+
+(S1 (S (S (NP (PRP they)) (VP (AUX did) (ADJP (JJ okay)) (PP (IN on) (NP (DT the) (NN profit) (NN quarter))))) (, ,) (CC but) (S (NP (DT the) (NN taste) (NN vowel)) (VP (VBD came) (PRT (RP in)) (ADVP (RB late)) (PP (IN for) (NP (NP (PDT all) (DT the) (NNS regions)) (SBAR (WHNP (WDT that)) (S (VP (AUX 's) (SBAR (WHADVP (WRB why)) (S (NP (PRP it)) (VP (AUX is) (VP (VBG selling) (PRT (RP off)) (NP (NN today))))))))))))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (MD can) (VP (VB see) (S (NP (DT the) (NNP nasdaq) (ADJP (RB pretty) (JJ nice)) (NNS gains)) (VP (VBG holding) (S (ADJP (RB steady)) (PP (IN throughout) (NP (DT the) (NN day)))) (, ,) (PP (ADVP (RB mainly)) (JJ due) (PP (TO to) (NP (NNP intel) (CC and) (NNP microsoft)))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX 're) (PP (IN in) (NP (NP (NN flu) (NN enshall)) (PP (IN on) (NP (NN thed)))))) (. ?)))
+
+(S1 (S (NP (NNP hey)) (VP (AUX had) (ADJP (ADJP (JJR better)) (PP (IN than) (NP (NP (JJ expected) (NN profit) (NNS reports)) (PP (IN for) (NP (DT the) (JJ recent) (NN quarter))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (DT both) (VP (AUX had) (NP (NP (JJ good) (NNS things)) (SBAR (S (VP (TO to) (VP (VB say) (S (VP (VBG going) (ADVP (RB forward)) (S (VP (VBG upping) (CC or) (VBG reiterating) (NP (CD 2003) (NN guidance)))))))))))) (. .)))
+
+(S1 (NP (NP (JJ good) (JJ solid) (NNS reports)) (. .)))
+
+(S1 (S (NP (NNP motor) (NN row) (NNP la.)) (VP (VBG cutting) (NP (DT another) (CD 3,000) (NNS jobs)) (PP (IN by) (NP (NP (DT the) (NN end)) (PP (IN of) (NP (DT the) (NN year)))))) (. .)))
+
+(S1 (S (NP (NP (NNS profits)) (PP (IN for) (NP (NP (DT the) (NN end)) (PP (IN of) (NP (DT the) (NN year)))))) (VP (AUX did) (VP (VB see) (NP (NN profit)) (ADVP (RB as) (RB well)))) (. .)))
+
+(S1 (S (NP (NP (NNP motorola)) (CC and) (NP (NP (JJ texas) (NNS instruments)) (PP (DT both) (IN in) (NP (DT the) (NNS chips))))) (VP (VBP base) (ADVP (RB as) (RB well)) (VP (VBG swinging) (PP (TO to) (NP (NNS profits))) (ADVP (RB as) (RB well)) (, ,) (PP (IN with) (NP (NP (NNS sales)) (ADVP (RB up) (NP (CD 20) (NN %))))))) (. .)))
+
+(S1 (S (ADVP (RB finally)) (NP (NNP amr)) (, ,) (NP (DT the) (NN stock)) (VP (VBD gained) (NP (CD 15) (NN %)) (NP (NP (NN yesterday)) (, ,) (NP (NP (NP (NN today) (POS 's)) (NNS shares)) (ADVP (RB up) (NP (DT another) (NNP sen.) (CD 8) (NN %)))))) (. .)))
+
+(S1 (S (NP (DT the) (NN flight) (NNS attendants)) (VP (AUX have) (PP (IN until) (NP (CD 6:00))) (NP (NN today)) (S (VP (TO to) (VP (VB ratify) (NP (NN labor) (NNS concessions)))))) (. .)))
+
+(S1 (S (NP (DT the) (NNS pilots) (NN union) (CC and) (NN ground) (NN crew)) (VP (AUX did) (ADVP (RB so)) (NP (NN yesterday))) (. .)))
+
+(S1 (S (NP (DT the) (NN flight) (NNS attendants)) (VP (VBD came) (PRT (RP in)) (PP (IN with) (NP (NP (DT a) (JJ close) (NN vote)) (VP (VBG rejecting) (NP (DT these) (NNS concessions)) (SBAR (IN so) (S (NP (DT the) (NN ceo)) (VP (AUX has) (VP (VBN extended) (NP (DT the) (NN deadline)) (NP (NN today))))))))) (, ,) (SBAR (S (SBAR (IN if) (S (NP (PRP they)) (VP (AUX do) (RB n't) (VP (VB ratify) (NP (DT these) (NNS agreements)))))) (, ,) (NP (NNP amr)) (VP (MD will) (VP (AUX have) (S (VP (TO to) (VP (VB file) (PP (IN for) (NP (NN bankruptcy))))))))))) (. .)))
+
+(S1 (S (S (NP (NNS investors)) (VP (AUX are) (VP (VBG betting) (SBAR (S (NP (PRP they)) (VP (MD will) (VP (VB agree)))))))) (, ,) (NP (NP (CD 16.8) (NN %)) (PP (TO to) (NP (DT the) (NN upside)))) (VP (AUX is) (ADVP (RB certainly)) (NP (NP (DT a) (NN vote)) (PP (IN of) (NP (NN confidence))))) (. .)))
+
+(S1 (FRAG (ADVP (RB back) (PP (TO to) (NP (PRP you)))) (, ,) (NP (NNS guys)) (. .)))
+

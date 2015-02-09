@@ -1,0 +1,16 @@
+(S1 (S (S (NP (NP (NP (NNP NEW) (NNP DELHI)) (, ,) (NP (NNP June) (CD 7))) (PRN (-LRB- -LRB-) (NP (NNP AFP)) (-RRB- -RRB-)) (NP (NP (DT A) (JJ provincial) (NN chief)) (PP (IN from) (NP (NP (NNP India) (POS 's)) (JJ main) (NN opposition) (NNP Congress) (NN party))))) (VP (AUX has) (VP (VBN told) (NP (DT an) (NN election) (NN rally)) (SBAR (IN that) (S (NP (NNP India)) (VP (AUX is) (VP (VBG suffering) (NP (NP (NN nature) (POS 's)) (`` ``) (NX (FW curse)) ('' '')) (SBAR (IN because) (S (NP (PDT both) (NP (DT the) (NN president)) (CC and) (NP (JJ prime) (NN minister))) (VP (AUX are) (ADJP (JJ bachelors)))))))))))) (, ,) (NP (DT a) (NN report)) (VP (VBD said) (NP (NNP Saturday))) (. .)))
+
+(S1 (S (NP (DT The) (NAC (NNP Times) (PP (IN of) (NP (NNP India)))) (NN newspaper)) (VP (VBD quoted) (NP (NP (NNP Digvijay) (NNP Singh)) (, ,) (NP (NP (JJ chief) (NN minister)) (PP (IN of) (NP (NP (DT the) (JJ central) (JJ Indian) (NN state)) (PP (IN of) (NP (NNP Madhya) (NNP Pradesh)))))) (, ,)) (PP (IN as) (S (VP (VBG saying) (SBAR (IN that) (S (NP (NP (NNP Prime) (NNP Minister) (NNP Atal) (NNP Behari) (NNP Vajpayee)) (CC and) (NP (NNP President) (NNP Abdul) (NNP Kalam))) (VP (AUX had) (VP (VBN offended) (NP (DT the) (NNP Hindu) (NN rain) (NNP God) (NNP Varuna)) (PP (IN by) (NP (VBG remaining) (NNS bachelors))))))))))) (. .)))
+
+(S1 (S (`` ``) (NP (DT The) (NN country)) (VP (AUX is) (VP (AUXG being) (VP (VBN ruled) (PP (IN by) (NP (NP (DT a) (NN bachelor) (NN president)) (CC and) (NP (DT an) (JJ unmarried) (JJ prime) (NN minister))))))) (. .)))
+
+(S1 (SINV (S (S (NP (NP (DT This) (VBG according)) (PP (TO to) (NP (NP (DT the) (NNP Hindu) (NNS shastras)) (PRN (-LRB- -LRB-) (NP (NNS books)) (-RRB- -RRB-))))) (VP (AUX is) (ADJP (RB very) (JJ inauspicious)))) (CC and) (S (NP (DT that)) (VP (AUX is) (NP (NP (DT the) (NN reason)) (SBAR (S (NP (EX there)) (VP (AUX is) (NP (DT a) (JJ widespread) (NN heatwave) (CC and) (NN drought))))))))) (, ,) ('' '') (VP (VBD said)) (NP (NNP Singh)) (. .)))
+
+(S1 (S (`` ``) (S (NP (RB Not) (RB just) (NP (NNP Prime) (NNP Minister) (NNP Vajpayee) (CC but) (NNP President) (NNP Kalam) (POS 's)) (NN bachelor) (NN status)) (VP (AUX is) (VP (VBG making) (S (NP (DT the) (NN country)) (ADJP (JJ dry) (, ,) (JJ arid) (CC and) (JJ infertile)))))) (, ,) ('' '') (NP (PRP he)) (VP (VBD added)) (. .)))
+
+(S1 (S (NP (NP (DT The) (JJ general) (NN secretary)) (PP (IN of) (NP (NP (NP (NNP Vajpayee) (POS 's)) (JJ ruling) (NNP Bharatiya) (NNP Janata) (NNP Party)) (, ,) (NP (NNP Pramod) (NNP Mahajan)) (, ,)))) (VP (VBD retorted) (SBAR (IN that) (S (NP (NP (NNP Singh) (POS 's)) (NN statement)) (VP (AUX was) (`` ``) (PP (IN beneath) (NP (NN contempt))))))) (. .) ('' '')))
+
+(S1 (S (NP (NNP India) (POS 's)) (VP (AUX has) (VP (AUX been) (VP (VBG reeling) (PP (IN under) (NP (NP (DT a) (NN heatwave)) (PP (IN since) (NP (NN mid-May))) (SBAR (WHNP (WDT which)) (S (VP (AUX has) (VP (VBD killed) (NP (CD 1,403) (NNS people))))))))))) (. .)))
+
+(S1 (S (NP (NP (NP (DT The) (NN country) (POS 's)) (JJ western) (NN desert) (NN state)) (PP (IN of) (NP (NNP Rajasthan)))) (VP (AUX is) (ADVP (RB also)) (VP (VBG bracing) (PP (IN for) (NP (NP (PRP$ its) (JJ fifth) (JJ straight) (NN year)) (PP (IN of) (NP (NN drought))))))) (. .)))
+

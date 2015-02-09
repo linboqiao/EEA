@@ -1,0 +1,28 @@
+(S1 (S (S (NP (NP (NNP COPENHAGEN) (, ,) (NNP Denmark)) (PRN (-LRB- -LRB-) (NP (NNP AP)) (-RRB- -RRB-)) (NP (JJ Former) (JJ Danish) (JJ international) (NNP Stig) (NNP Toefting))) (VP (VP (VBD dropped) (NP (NP (PRP$ his) (NN appeal)) (PP (IN of) (NP (DT an) (NN assault) (NN conviction))))) (CC and) (VP (MD will) (VP (VB serve) (NP (DT a) (JJ four-month) (NN jail) (NN sentence)))))) (, ,) (NP (NP (NNP Denmark) (POS 's)) (NN TV2)) (VP (VBD reported) (NP (NNP Monday))) (. .)))
+
+(S1 (S (NP (NNP Toefting)) (VP (AUX was) (VP (VBN convicted) (PP (IN in) (NP (NNP October) (CD 2002))) (PP (IN of) (S (VP (VBG assaulting) (NP (NP (DT a) (NN pair)) (PP (IN of) (NP (NN restaurant) (NNS workers)))) (PP (IN during) (NP (DT a) (NN night))) (PP (IN out) (PP (IN with) (NP (NP (JJ national) (NN squad) (NNS teammates)) (PP (IN in) (NP (NP (DT the) (NN capital)) (, ,) (NP (NNP Copenhagen)))))))))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (VP (AUX was) (VP (VBN sentenced) (PP (TO to) (NP (CD four) (NNS months))) (PP (IN in) (NP (NN prison))))) (, ,) (CC but) (VP (VBD appealed))) (. .)))
+
+(S1 (S (NP (DT The) (NN hearing)) (VP (AUX was) (VP (VBN scheduled) (PP (IN for) (NP (NNP April) (CD 10))))) (. .)))
+
+(S1 (S (NP (NNP TV2)) (, ,) (S (VP (VBG quoting) (NP (NP (NNP Toefting) (POS 's)) (NN lawyer) (NNP Anders) (NNP Nemeth)))) (, ,) (VP (VBD reported) (SBAR (IN that) (S (NP (DT that) (JJ 33-year-old) (NN midfielder)) (VP (AUX was) (ADJP (JJ ready) (S (VP (TO to) (VP (VB serve) (NP (PRP$ his) (NN sentence)) (ADVP (RB immediately)))))))))) (. .)))
+
+(S1 (S (NP (DT Neither) (NNP Toefting) (CC or) (NNP Nemeth)) (VP (AUX were) (ADJP (RB immediately) (JJ available) (PP (IN for) (NP (NN comment))))) (. .)))
+
+(S1 (S (NP (RBR Earlier) (DT this) (NN month)) (, ,) (NP (NNP Toefting)) (VP (VBD said) (SBAR (S (NP (NNP English) (NNP Premier) (NNP League) (NN club) (NNP Bolton)) (VP (VBD let) (S (NP (PRP him)) (VP (VB go) (SBAR (IN so) (S (NP (PRP he)) (VP (MD could) (VP (VB prepare) (PP (IN for) (NP (DT the) (NN appeal))))))))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX was) (ADJP (JJ unclear)) (SBAR (IN whether) (S (NP (NNP Toefting)) (VP (MD would) (VP (VB return) (PP (TO to) (NP (NNP Bolton))) (PP (IN after) (S (VP (VBG serving) (NP (PRP$ his) (NN sentence)))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN club)) (VP (VBD said) (SBAR (S (NP (PRP it)) (VP (AUX was) (RB n't) (ADJP (JJ aware) (PP (IN of) (NP (NP (NNP Toefting) (POS 's)) (NN decision) (S (VP (TO to) (VP (VB drop) (NP (PRP$ his) (NN appeal)))))))))))) (. .)))
+
+(S1 (S (NP (NNP Toefting)) (VP (VBD transferred) (PP (TO to) (NP (NNP Bolton))) (PP (IN in) (NP (NNP February) (CD 2002))) (PP (IN from) (NP (NNP German) (NN club) (NNP Hamburg)))) (. .)))
+
+(S1 (S (NP (NNP Toefting)) (VP (AUX has) (VP (AUX been) (VP (VBN convicted) (ADVP (RB before))))) (. .)))
+
+(S1 (S (PP (IN In) (NP (CD 1999))) (NP (PRP he)) (VP (AUX was) (VP (VBN given) (NP (NP (DT a) (JJ 20-day) (JJ suspended) (NN sentence)) (PP (IN for) (S (VP (VBG assaulting) (NP (NP (DT a) (NN fan)) (SBAR (WHNP (WP who)) (S (VP (VBD berated) (NP (PRP him)) (PP (IN for) (S (VP (VBG playing) (PP (IN with) (NP (NNP German) (NN club) (NNP Duisburg)))))))))))))))) (. .)))
+
+(S1 (S (NP (NP (DT The) (JJ popular) (NN player) (NN _)) (VP (VBN known) (PP (IN for) (NP (NP (PRP$ his) (NN temperament)) (CC and) (NP (NP (DT the) (NNS words)) (`` ``) (NP (DT No) (NN Regret)) ('' '') (VP (VBN tattooed) (PP (IN across) (NP (PRP$ his) (NN chest))))))))) (ADVP (RB _)) (VP (VBD retired) (PP (IN from) (NP (NP (NNP Denmark) (POS 's)) (JJ national) (NN team))) (SBAR (IN after) (S (NP (PRP it)) (VP (AUX was) (VP (VBN knocked) (PRT (RP out)) (PP (IN in) (NP (NP (DT the) (JJ second) (NN round)) (PP (IN of) (NP (DT the) (CD 2002) (NNP World) (NNP Cup)))))))))) (. .)))
+
+(S1 (S (NP (NNP Toefting)) (VP (VP (VBD joined) (NP (DT the) (JJ Danish) (NN squad)) (PP (IN in) (NP (CD 1993)))) (CC and) (VP (AUX has) (NP (CD 41) (NNS caps)))) (. .)))
+

@@ -1,0 +1,32 @@
+(S1 (S (NP (NNP Mel) (NNP Karmazin)) (VP (AUX is) (VP (VBG pushing) (S (VP (TO to) (VP (VB add) (NP (NNP Sirius) (NNP Satellite) (NNS services)) (PP (TO to) (NP (NNS iPods)))))) (: --) (NP (DT an) (JJ interesting) (NN idea)) (, ,) (SBAR (RB inasmuch) (IN as) (S (NP (PRP it)) (VP (VBZ seems) (S (VP (TO to) (VP (VB defeat) (NP (NP (DT the) (NN purpose)) (PP (IN of) (NP (DT both)))))))))))) (. .)))
+
+(S1 (S (S (NP (DT The) (NN iPod)) (VP (AUX 's) (NP (NP (DT the) (JJS tiniest) (JJ possible) (NN container)) (PP (IN for) (NP (JJ vast) (NN music) (NNS libraries)))))) (, ,) (CC and) (S (NP (NNP Sirius)) (VP (AUX is) (NP (NP (DT a) (NN way)) (SBAR (S (VP (TO to) (VP (VB get) (PP (IN at) (NP (NP (NNS lots)) (PP (IN of) (NP (NN content))))) (SBAR (WHADVP (WRB when)) (S (VP (VBD said) (SBAR (S (NP (NN music) (NN library)) (VP (AUX is) (ADJP (JJ unavailable))))))))))))))) (. .)))
+
+(S1 (S (PP (IN On) (NP (DT the) (JJ other) (NN hand))) (, ,) (NP (NNP Karmazin) (CC and) (NNP Jobs)) (VP (AUX are) (NP (NP (CD two)) (PP (IN of) (NP (DT the) (JJS smartest) (NNS dealmakers)))) (ADVP (RB around)) (, ,) (SBAR (IN so) (S (NP (PRP they)) (VP (MD might) (VP (VB find) (NP (NP (DT a) (NN way)) (SBAR (S (VP (TO to) (VP (VP (VB structure) (NP (DT this))) (CC or) (VP (VB spin) (NP (PRP it)) (PP (TO to) (NP (NP (DT the) (NN benefit)) (PP (IN of) (NP (NN everyone)))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP$ My) (JJ main) (NN suspicion)) (VP (AUX is) (SBAR (IN that) (S (NP (DT this)) (VP (AUX is) (ADVP (RB Karmazin)) (VP (VBG hoping) (S (VP (TO to) (VP (VB see) (NP (NP (DT the) (NN phrase)) (`` ``) (NP (NP (NNP Mel) (NNP Karmazin)) (, ,) (NP (NNP CEO) (PRN (-LRB- -LRB-) (`` ``) (S (NP (DT That)) (VP (AUX 's) (ADJP (JJ right)))) (, ,) ('' '') (S (NP (NNP Mel)) (VP (VBZ says) (PP (TO to) (NP (PRP himself))))) (, ,) (`` ``)) (NNP C-E-friggin)) (: -) (NP (NNP O)))))))))))) (. !) ('' '') (-RRB- -RRB-)))
+
+(S1 (S (PP (IN of) (NP (NNP Sirius) (NNP Satellite) (NNP Radio))) (: ...) ('' '') (NP (NNP Steve) (NNP Jobs)) (VP (VBZ knows) (NP (DT a) (JJ bad) (NN idea)) (SBAR (WHADVP (WRB when)) (S (NP (PRP he)) (VP (AUX 's) (VP (VBN pitched) (NP (PRP it)))))) (, ,) (PP (IN for) (NP (NP (RB exactly) (DT the) (NNS reasons)) (SBAR (S (NP (PRP you)) (VP (VBP point) (PRT (RP out)))))))) (. .)))
+
+(S1 (S (CC Plus) (, ,) (NP (DT a) (JJ satellite) (NN receiver)) (VP (VBZ burns) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NN power)))) (, ,) (SBAR (RB even) (IN if) (S (NP (PRP it)) (VP (MD could) (VP (AUX be) (VP (VBN made) (S (ADJP (JJ tiny))))))))) (. .)))
+
+(S1 (S (S (PP (IN On) (NP (DT the) (JJ other) (NN hand))) (, ,) (NP (DT the) (NN guy)) (VP (AUX has) (VP (VBN convinced) (S (NP (DT some) (ADJP (RB very) (JJ smart)) (NNS people)) (VP (TO to) (VP (VB spend) (NP (JJ huge) (NNS sums)) (PP (IN on) (NP (JJ stupid) (NNS ideas))))))))) (: --) (S (NP (EX there)) (VP (AUX is) (RB n't) (ADVP (RB much)) (VP (VB talk) (PP (IN about) (NP (PRP it))) (ADVP (RB now))))) (, ,) (CC but) (S (RB back) (SBAR (WHADVP (WRB when)) (S (NP (PRP$ his) (NN reputation)) (VP (AUX was) (RB n't) (ADJP (ADJP (RB so) (JJ hot)) (PRN (-LRB- -LRB-) (NP (JJ late) (NNS '80s)) (-RRB- -RRB-)))))) (, ,) (NP (NP (NNS lots)) (PP (IN of) (NP (NNS journalists)))) (VP (VBD talked) (PP (IN about) (NP (DT the) (`` ``) (NNP Steve) (NNP Jobs) (NN Reality) (NNP Distortion) (NNP Field))))) (. .) ('' '')))
+
+(S1 (S (NP (PRP He)) (VP (MD could) (VP (VB get) (S (NP (NNS people)) (VP (TO to) (VP (VP (VB ignore) (NP (DT every) (JJ single) (JJ technical) (NN obstacle)) (PP (TO to) (NP (DT an) (NN idea)))) (, ,) (CC and) (VP (VB invest) (PP (IN on) (NP (NP (DT the) (NN basis)) (PP (IN of) (NP (NP (NN something)) (UCP (ADVP (RB beautifully)) (, ,) (CC but) (ADVP (RB ridiculously)) (, ,) (ADJP (JJ simple))))))))))))) (. .)))
+
+(S1 (S (S (ADVP (RB Basically)) (, ,) (NP (PRP he)) (VP (VBZ sells) (NP (DT the) (NN future)))) (: ;) (S (NP (NP (DT the) (NN iPod)) (CC and) (NP (DT the) (NNP Mac) (NNP Mini))) (VP (AUX are) (NP (NP (RB just) (NNS times)) (SBAR (S (S (NP (PRP he)) (VP (VBD got) (ADJP (JJ lucky)))) (CC and) (S (NP (DT the) (NN future)) (VP (VBD caught) (PRT (RP up))))))))) (. .)))
+
+(S1 (NP (NNP Yea) (. .)))
+
+(S1 (NP (NNP Yea) (. .)))
+
+(S1 (NP (NNP Yea) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 'm) (NP (DT the) (NN president))) (. .)))
+
+(S1 (INTJ (UH Oh) (NN yea) (. !)))
+
+(S1 (INTJ (UH Oh) (NN yea) (. !)))
+
+(S1 (PRN (-LRB- -LRB-) (S (NP (PRP you)) (VP (VBP dumbass))) (-RRB- -RRB-) (VP (JJ commercial) (NP (NP (DT A) (NN video)) (PP (IN of) (NP (NP (DT a) (NN commercial)) (PP (IN in) (NP (NN case))) (SBAR (S (NP (NN nobody)) (VP (VBZ knows) (SBAR (WHNP (WP what)) (S (NP (PRP I)) (`` ``) (VP (NNP m) (S (VP (VBG talking) (PP (IN about) (NP (SYM =))))))))))))))) (-RRB- -RRB-)))
+

@@ -1,0 +1,8 @@
+(S1 (S (NP (NNP israel)) (VP (AUX has) (VP (VBN experienced) (NP (PRP$ its) (JJ fifth) (NN suicide) (NN bombing)) (PP (IN in) (NP (CD three) (NNS days))))) (. .)))
+
+(S1 (S (NP (NNS police)) (VP (VBP say) (SBAR (S (NP (DT a) (NN bomber)) (VP (VBD blew) (NP (PRP herself)) (PRT (RP up)) (PP (IN outside) (NP (DT a) (JJ northern) (NNP israel) (NN shopping) (NN center))) (SBAR (WHADVP (WRB when)) (S (NP (PRP she)) (VP (AUX was) (VP (VBN stopped) (PP (IN by) (NP (DT a) (NN security) (NN guard))))))))))) (. .)))
+
+(S1 (S (S (NP (NP (CD three) (NNS people)) (CC plus) (NP (DT the) (NN bomber))) (VP (AUX were) (VP (VBN killed)))) (, ,) (CC and) (S (NP (QP (IN at) (JJS least) (CD 30)) (NNS others)) (VP (AUX were) (VP (VBN hurt)))) (. .)))
+
+(S1 (S (NP (DT the) (JJ french) (NN press) (NN agency)) (VP (VBZ says) (SBAR (S (NP (NP (DT the) (JJ militant) (NN group)) (`` ``) (NP (NNP islamic) (NNP jihad)) ('' '')) (VP (AUX is) (VP (VBG claiming) (NP (NN responsibility))))))) (. .)))
+

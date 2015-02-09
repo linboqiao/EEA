@@ -1,0 +1,20 @@
+(S1 (S (NP (PRP i)) (VP (AUX 'm) (NP (NNP allan) (NN chernoff)) (PP (IN at) (NP (DT the) (JJ new) (NNP york) (NN stock) (NN exchange)))) (. .)))
+
+(S1 (S (NP (JJ american) (NNS airlines)) (, ,) (NP (NP (DT a) (JJ second) (JJ major) (NN union)) (PP (IN at) (ADJP (JJ american)))) (VP (AUX is) (VP (VBG planning) (NP (NP (DT a) (JJ new) (NN vote)) (PP (IN on) (NP (NP (DT the) (NN company) (POS 's)) (NN cost) (NN cutting) (NN agreement)))))) (. .)))
+
+(S1 (S (NP (DT the) (NNS unions)) (VP (AUX are) (ADJP (VBN outraged) (SBAR (IN that) (S (NP (DT a) (NN bonus)) (VP (NN plan) (PP (IN for) (NP (NP (JJ top) (NNS executives)) (SBAR (WHNP (WDT that)) (S (VP (AUX had) (RB not) (VP (AUX been) (VP (ADVP (RB fully)) (VBN disclosed) (SBAR (IN before) (S (NP (DT the) (NN union)) (VP (VBD voted) (S (VP (TO to) (VP (VB take) (NP (NN pay) (NNS cuts)))))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN transport) (NNS brokers) (NN union)) (VP (VBD made) (NP (DT the) (JJ revote) (JJ last) (NN night)) (NP (NNS moments)) (SBAR (IN before) (S (NP (DT the) (NN ceo)) (ADVP (RB publicly)) (VP (VBD apologized) (PP (TO to) (NP (PRP$ his) (NNS employees))))))) (. .)))
+
+(S1 (S (NP (NNP carty)) (VP (VBD said) (SBAR (S (NP (PRP he)) (VP (VBD thought) (SBAR (S (NP (DT the) (NNS employees)) (VP (MD would) (VP (VB like) (NP (NP (DT the) (NN plan)) (SBAR (WHNP (WDT that)) (S (VP (VBD meant) (S (VP (TO to) (VP (VB keep) (NP (DT the) (NNS executives)) (NP (DT that) (NN company))))))))))))))))) (. .)))
+
+(S1 (S (CC but) (NP (PRP he)) (VP (VBN concealed) (NP (DT the) (NNS details)) (S (VP (VBG fearing) (SBAR (S (NP (DT the) (NN story)) (VP (MD would) (VP (VB cause) (NP (NNS problems)) (SBAR (WHADVP (WRB when)) (S (NP (PRP they)) (VP (AUX were) (VP (VBG asking) (NP (NNS employees)) (PP (IN for) (NP (JJ big) (NNS concessions)))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNS shares)) (PP (IN of) (NP (JJ american) (NNS airlines)))) (VP (AUX are) (VP (VBG falling) (ADVP (RB sharply)) (PP (IN for) (NP (NP (DT the) (JJ second) (JJ straight) (NN day)) (PP (IN on) (NP (DT the) (NNS fears) (SBAR (IN that) (S (NP (DT the) (NN company)) (VP (MD might) (VP (AUX be) (VP (VBN forced) (S (VP (TO to) (VP (VB file) (PP (IN for) (NP (NN bankruptcy))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN stock) (NN market)) (VP (AUX has) (VP (VBD bounced) (PRT (RP back)) (PP (IN from) (NP (DT a) (JJ weak) (NN start))))) (. .)))
+
+(S1 (S (S (NP (DT a) (NN lot) (JJR more)) (VP (VBG earning) (SBAR (S (NP (PRP 's)) (VP (VBZ reports) (PRT (RP out)) (NP (NP (NN today)) (, ,) (ADJP (RB many) (JJ positive)))))))) (, ,) (NP (DT a) (JJ few) (NNS disappointments)) (VP (VBD sprinkled) (PRT (RP in)) (, ,) (ADVP (RB as) (RB well))) (. .)))
+
+(S1 (S (NP (DT the) (NNP dow) (NNP jones) (JJ industrial) (NN average)) (VP (VP (AUX is) (ADVP (RB up)) (PP (IN by) (NP (CD 16) (NNS points))) (ADVP (RB right) (RB now))) (CC and) (VP (ADJP (NP (DT the) (NNP nasdaq) (NN composite)) (JJR higher)) (PP (IN by) (NP (CD 6) (NNS points))))) (. .)))
+

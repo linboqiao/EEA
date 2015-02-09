@@ -1,0 +1,34 @@
+(S1 (S (S (NP (NP (NNP KHARTOUM) (, ,) (NNP Sudan)) (PRN (-LRB- -LRB-) (NP (NNP AP)) (-RRB- -RRB-))) (NP (DT A) (NN state) (NN security) (NN court)) (VP (VBD suspended) (NP (NP (DT a) (NN newspaper)) (ADJP (JJ critical) (PP (IN of) (NP (DT the) (NN government))))) (NP (NNP Saturday)) (PP (IN after) (S (VP (VBG convicting) (NP (PRP it)) (PP (IN of) (S (VP (VBG publishing) (NP (ADJP (RB religiously) (JJ inflammatory)) (NN material)))))))))) (, ,) (NP (NP (DT the) (NN newspaper) (POS 's)) (NN lawyer)) (VP (VBD said)) (. .)))
+
+(S1 (S (S (NP (DT The) (NNP Khartoum) (NNP Monitor)) (VP (VP (MD may) (RB not) (VP (VB appear) (PP (IN for) (NP (CD two) (NNS months))))) (CC and) (VP (MD must) (VP (VB pay) (NP (NP (DT a) (NN fine)) (PP (IN of) (NP (NP (QP (CD 1) (CD million)) (NNP Sudanese) (NNS pounds)) (PRN (-LRB- -LRB-) (NP (QP (RB about) ($ US$) (CD 400))) (-RRB- -RRB-))))))))) (, ,) (NP (NN lawyer) (NNP Ngor) (NNP Olang) (NNP Ngor)) (VP (VBD told) (NP (NNP The) (NNP Associated) (NNP Press))) (. .)))
+
+(S1 (S (NP (NN Failure) (S (VP (TO to) (VP (VB pay) (NP (DT the) (NN fine)))))) (VP (MD would) (VP (VB result) (PP (IN in) (NP (NP (DT a) (JJ two-month) (NN extension)) (PP (IN of) (NP (DT the) (NN suspension))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN sentence)) (VP (AUX was) (NP (NP (DT the) (JJS latest)) (PP (IN in) (NP (NP (DT a) (NN series)) (PP (IN of) (NP (NN state) (NNS actions))) (PP (IN against) (NP (NP (DT the) (NNP Monitor)) (, ,) (NP (NP (NP (DT the) (RB only) (JJ English) (NN language) (NN daily)) (PP (IN in) (NP (NNP Sudan)))) (CC and) (NP (NP (DT a) (VBG leading) (NN critic)) (PP (IN of) (NP (NP (NNS conditions)) (PP (IN in) (NP (NP (DT the) (NN south)) (PP (IN of) (NP (DT the) (NN country))) (, ,) (SBAR (WHADVP (WRB where)) (S (NP (DT a) (JJ civil) (NN war)) (VP (AUX has) (VP (AUX been) (VP (VBD waged) (PP (IN for) (NP (CD 20) (NNS years)))))))))))))))))))) (. .)))
+
+(S1 (S (NP (NNP Ngor)) (VP (VBD said) (SBAR (S (S (NP (DT the) (NN paper)) (VP (MD would) (VP (VB pay) (NP (DT the) (NN fine))))) (CC but) (S (NP (PRP it)) (VP (MD would) (ADVP (RB also)) (VP (VB appeal) (NP (DT the) (NN verdict)))))))) (. .)))
+
+(S1 (S (S (NP (DT The) (NN court) (NN ruling)) (VP (VBD stated) (SBAR (IN that) (S (NP (DT the) (NN verdict) (CC and) (NN sentence)) (VP (MD would) (VP (AUX be) (VP (VBN submitted) (PP (TO to) (NP (NP (DT the) (NNP National) (NNP Press) (NNP Council)) (, ,) (NP (DT a) (JJ government-appointed) (NN body)) (, ,))) (PP (IN for) (NP (NN approval)))))))))) (, ,) (NP (NNP Ngor)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (NP (DT The) (NN secretary) (NN general)) (PP (IN of) (NP (NP (DT the) (NNP National) (NNP Press) (NNP Council)) (, ,) (NP (NNP Hashim) (NN el-Jazz)) (, ,)))) (VP (AUX did) (RB not) (VP (VB answer) (NP (VBN repeated) (NNS calls)) (PP (TO to) (NP (NP (PRP$ his) (NN cell) (NN phone)) (PP (IN on) (NP (NNP Saturday))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN court)) (VP (VBD convicted) (NP (DT the) (NN paper)) (PP (IN of) (S (VP (VBG violating) (NP (NP (NN article) (CD 25)) (PP (IN of) (NP (NP (DT the) (NNP Press) (NNP Law)) (, ,) (SBAR (WHNP (WDT which)) (S (VP (VBZ prohibits) (NP (NP (DT the) (NN publication)) (PP (IN of) (NP (NN material))) (SBAR (WHNP (WDT that)) (S (VP (VP (VBZ defames) (NP (NN religion))) (CC or) (VP (VBZ incites) (NP (ADJP (RB religiously) (JJ unacceptable)) (NN activity))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NNS charges)) (VP (VBD arose) (PP (IN from) (NP (NP (NN letters-to-the-editor)) (VP (VBN published) (NP (JJ last) (NN month))) (SBAR (WHNP (WDT that)) (S (VP (VBD dealt) (PP (IN with) (NP (NN religion))))))))) (. .)))
+
+(S1 (S (NP (CD One) (NN letter)) (VP (VBD claimed) (SBAR (IN that) (S (NP (NN alcohol)) (VP (AUX was) (RB not) (VP (VBN prohibited) (PP (IN by) (NP (NNP Islam)))))))) (. .)))
+
+(S1 (S (NP (RBR Earlier) (DT this) (NN week)) (, ,) (NP (NN security) (NNS police)) (VP (VBD detained) (NP (NP (NP (DT the) (NNP Monitor) (POS 's)) (NN managing) (NN editor)) (, ,) (NP (NNP Nhial) (NNP Bol)) (, ,)) (PP (IN for) (NP (CD 24) (NNS hours)))) (. .)))
+
+(S1 (S (PP (IN On) (NP (PRP$ his) (NN release))) (, ,) (NP (PRP he)) (VP (AUX was) (VP (VBN charged) (PP (IN with) (NP (NP (NN incitement)) (PP (IN of) (NP (JJ public) (NN discord))))) (PP (IN for) (S (VP (VBG publishing) (NP (DT the) (NNS letters))))))) (. .)))
+
+(S1 (S (NP (NNP Sudan)) (VP (AUX has) (NP (NP (DT an) (JJ Islamic-orientated) (NN government)) (CC and) (NP (DT a) (JJ substantial) (NNP Christian) (NN minority)))) (. .)))
+
+(S1 (S (PP (IN In) (NP (NP (DT a) (JJ separate) (NN action)) (PP (IN against) (NP (DT the) (NNP Monitor))))) (, ,) (NP (NN security) (NNS officials)) (VP (VP (VBD went) (PP (TO to) (NP (PRP$ its) (NN editorial) (NNS offices))) (PP (IN on) (NP (NNP Thursday) (NN night)))) (CC and) (VP (VBD told) (NP (DT the) (NN management)) (SBAR (IN that) (S (NP (PRP it)) (VP (AUX was) (VP (AUXG being) (VP (VBN closed) (SBAR (IN until) (S (NP (PRP it)) (VP (VBD paid) (NP (NP (DT a) (NN fine)) (PP (IN of) (NP (NP (QP (CD 15) (CD million)) (NNP Sudanese) (NNS pounds)) (PRN (-LRB- -LRB-) (NP (QP (RB about) ($ US$) (CD 6,000))) (-RRB- -RRB-)) (SBAR (WHNP (WDT that)) (S (VP (AUX was) (ADJP (JJ outstanding)))))))) (PP (IN from) (NP (DT a) (NN court) (NN conviction))) (NP (JJ last) (NN year)))))))))))) (. .)))
+
+(S1 (S (S (NP (DT The) (NNP Monitor)) (VP (AUX did) (RB not) (VP (VB appear) (NP (NNP Friday))))) (CC and) (S (NP (PRP$ its) (NNS offices)) (VP (AUX were) (ADJP (JJ closed)))) (. .)))
+
+(S1 (S (PP (IN In) (NP (NP (JJ last) (NN year) (POS 's)) (NN trial))) (, ,) (NP (DT the) (NN paper)) (VP (AUX was) (VP (VBN convicted) (PP (IN of) (S (VP (VBG defaming) (NP (DT the) (NN government)) (PP (IN for) (S (VP (VBG publishing) (SBAR (IN that) (S (NP (NP (NNS trains)) (VP (VBG running) (PP (TO to) (CC and) (IN from) (NP (JJ southern) (NNP Sudan))))) (VP (AUX were) (VP (VBN used) (S (VP (TO to) (VP (VB transport) (NP (NN abducted) (NNS women) (CC and) (NNS children))))))))))))))))) (. .)))
+
+(S1 (NP (NN mk-jbm)))
+

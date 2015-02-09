@@ -1,0 +1,28 @@
+(S1 (S (NP (PRP we)) (VP (AUX 're) (VP (VBG following) (NP (NP (DT an) (JJ important) (NN story)) (SBAR (WHNP (WDT that)) (S (VP (AUX 's) (VP (VBN developed) (NP (NN today)) (PP (IN in) (NP (NNP gaza)))))))))) (. .)))
+
+(S1 (NP (NP (NP (CD two) (JJ israeli) (NN helicopter) (NN air) (NNS strikes)) (PP (IN against) (NP (JJ palestinian) (NNS targets)))) (, ,) (NP (NP (JJ hamas) (NNS targets)) (PP (IN in) (NP (NNP gaza)))) (. .)))
+
+(S1 (S (NP (NP (DT a) (NN number)) (PP (IN of) (NP (NNS people)))) (VP (AUX have) (VP (AUX been) (VP (VBN killed) (PP (IN in) (NP (NP (NP (DT the) (JJ first) (NN airstrike)) (PRN (, ,) (S (NP (CD two) (NNS palestinians)) (VP (AUX were) (VP (VBN killed)))))) (, ,) (NP (DT a) (NN mother)) (CC and) (NP (DT a) (NN child)))) (ADVP (RB apparently))))) (. .)))
+
+(S1 (S (NP (DT a) (JJ hamas) (NN leader)) (VP (AUX was) (VP (VBN injured) (PP (IN in) (NP (DT that) (NN strike))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX 's) (ADVP (RB now)) (PP (IN in) (NP (DT a) (JJ palestinian) (NN hospital)))) (. .)))
+
+(S1 (S (S (PP (IN in) (NP (NP (DT the) (JJ second) (NNP apache) (NN helicopter) (NN airstrike)) (SBAR (WHNP (WDT that)) (S (VP (VBD occurred) (PP (IN within) (NP (DT the) (JJ past) (NN hour) (CC or) (RB so)))))))) (, ,) (NP (PRP we)) (VP (AUX 're) (ADVP (RB now)) (VP (VBN told) (PP (IN by) (NP (NNS palestinians)))))) (, ,) (S (NP (CD three) (NNS people)) (VP (VBD died))) (, ,) (S (NP (CD 33) (NNS others)) (VP (AUX were) (VP (VBN wounded)))) (, ,) (S (NP (CD six)) (VP (AUX are) (PP (IN in) (NP (JJ critical) (NN condition))))) (, ,) (S (NP (CD three) (JJ dead)) (VP (AUX were) (NP (NNS civilians)) (, ,) (PP (VBG according) (PP (TO to) (NP (JJ palestinian) (NNS sources)))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX 're) (VP (VBG going) (S (VP (TO to) (VP (VB continue) (S (VP (TO to) (VP (VB monitor) (NP (DT that) (NN story)) (PP (IN for) (NP (PRP$ our) (NNS viewers))))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX 're) (ADVP (RB also)) (VP (VBG checking) (PRT (RP out)) (NP (JJ other) (NNS developments)) (ADVP (RB right) (RB now)) (, ,) (PP (VBG including) (NP (NP (DT this) (NN story)) (SBAR (WHNP (WDT that)) (S (VP (AUX 's) (ADVP (RB just)) (VP (VBG coming) (PRT (RP in)) (PP (IN from) (NP (DT the) (VBN associated) (NN press))) (ADVP (RB right) (RB now)))))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (ADVP (RB just)) (VP (VBP want) (S (VP (TO to) (VP (VB get) (NP (PRP it)) (PP (IN from) (NP (PRP$ our) (NNS computers))))))) (. .)))
+
+(S1 (S (NP (NNP sam) (NN waksal)) (VP (AUX has) (VP (AUX been) (VP (VBN sentenced) (PP (TO to) (NP (NP (QP (JJR more) (IN that) (CD seven)) (NNS years)) (PP (IN in) (NP (NN prison))) (, ,) (VP (VBN ordered) (S (VP (TO to) (VP (VB pay) (NP (NP (QP ($ $) (CD 4) (CD million))) (PP (IN in) (NP (NP (NNS fines)) (CC and) (NP (JJ back) (NNS taxes))))) (PP (IN in) (NP (NP (NN connection)) (PP (IN with) (NP (DT the) (NN insider) (NN trading) (NN scandal)))))))))))))) (. .)))
+
+(S1 (S (SBAR (IN as) (S (NP (PRP you)) (VP (VBP know)))) (, ,) (NP (PRP he)) (VP (VBD pleaded) (ADJP (JJ guilty) (PP (TO to) (NP (DT those) (NNS charges))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX is) (ADVP (RB now)) (VP (VBG getting) (NP (NP (NN word)) (PP (IN of) (NP (PRP$ his) (NN sentence)))) (PP (IN from) (NP (DT the) (JJ federal) (NN judge))))) (. .)))
+
+(S1 (FRAG (NP (NP (NP (CD seven) (NNS years)) (PP (IN in) (NP (NN prison)))) (, ,) (ADVP (RB actually)) (NP (NP (QP (JJR more) (IN than) (CD seven)) (NNS years)) (PP (IN in) (NP (NN prison))))) (, ,) (NP (NP (QP ($ $) (CD 4) (CD million))) (PP (IN in) (NP (NP (NNS fines)) (CC and) (NP (JJ back) (NNS taxes))))) (, ,) (NP (NP (DT a) (NN story)) (SBAR (S (NP (PRP we)) (VP (AUX 've) (VP (AUX been) (VP (VBG following) (ADVP (RB here)) (PP (IN on) (NP (NNP cnn))) (PP (IN throughout) (NP (DT the) (NN morning))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (MD 'll) (VP (AUX have) (ADVP (RB much) (RBR more)) (VP (VBG coming) (PRT (RP up)) (PP (IN in) (NP (DT the) (JJ next) (NN hour)))))) (. .)))
+

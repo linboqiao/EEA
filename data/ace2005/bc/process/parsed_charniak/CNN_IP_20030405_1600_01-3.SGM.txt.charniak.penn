@@ -1,0 +1,48 @@
+(S1 (NP (NP (NNS Thanks)) (ADJP (RB very) (JJ much)) (. .)))
+
+(S1 (S (NP (DT An) (NN investigation)) (VP (AUX is) (PP (IN under) (NP (NN way))) (PP (IN at) (NP (NP (DT a) (JJ makeshift) (NN morgue)) (PP (IN in) (NP (JJ southern) (NNP Iraq))))) (PP (IN after) (NP (NP (DT a) (JJ gruesome) (NN discovery)) (PP (IN by) (NP (DT some) (NNP British) (NNS troops)))))) (. .)))
+
+(S1 (S (NP (NP (NNP Tim) (NNP Ewart)) (PP (IN of) (NP (NNP ITN) (NNP News)))) (VP (VBZ reports) (PP (IN on) (NP (NP (NN evidence)) (PP (IN of) (NP (NNS atrocities))))) (PP (IN at) (NP (DT an) (JJ abandoned) (JJ Iraqi) (JJ military) (NN base)))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX was) (NP (NP (DT a) (NN discovery)) (SBAR (WHNP (WDT that)) (S (VP (VBD horrified) (NP (NP (DT the) (NNS soldiers)) (SBAR (WHNP (WP who)) (S (VP (VBD made) (NP (PRP it))))))))))) (. .)))
+
+(S1 (S (NP (NP (DT The) (NNS remains)) (PP (IN of) (NP (NP (NNS hundreds)) (PP (IN of) (NP (NNS men)))))) (VP (AUX were) (VP (VBN found) (PP (IN in) (NP (NP (NN plastic) (NNS bags)) (CC and) (NP (JJ Unsealed) (JJ hard-board) (NNS coffins)))))) (. .)))
+
+(S1 (S (NP (JJ British) (NNS troops)) (VP (VBD found) (NP (DT the) (NNS bodies)) (PP (IN at) (NP (NP (DT an) (JJ abandoned) (JJ Iraqi) (JJ military) (NN base)) (PP (IN on) (NP (NP (DT the) (NNS outskirts)) (PP (IN of) (NP (NNP Azubayr)))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN evidence)) (VP (VBD suggested) (SBAR (S (NP (PRP it)) (VP (AUX was) (NP (NP (DT the) (NN scene)) (PP (IN of) (NP (JJ appalling) (NNS atrocities)))))))) (. .)))
+
+(S1 (S (S (NP (NP (DT The) (NNS teeth)) (PP (IN in) (NP (NP (JJ many)) (PP (IN of) (NP (DT the) (NNS skulls)))))) (VP (AUX had) (VP (AUX been) (VP (VBN broken))))) (, ,) (CC and) (S (NP (NNS bones)) (VP (VBD appeared) (S (VP (TO to) (VP (AUX be) (VP (VBN wrapped) (PP (IN in) (NP (NP (NNS strips)) (PP (IN of) (NP (JJ military) (NN uniform))))))))))) (. .)))
+
+(S1 (S (S (NP (PRP It)) (VP (AUX 's) (RB not) (ADJP (JJ clear)) (SBAR (WHADVP (WRB how) (RB long)) (S (NP (DT the) (NNS bodies)) (VP (AUX had) (VP (VBN lain) (ADVP (RB here)))))))) (, ,) (CC but) (S (NP (PRP they)) (VP (AUX were) (ADVP (RB clearly)) (RB not) (PP (IN from) (NP (DT this) (NN war))))) (. .)))
+
+(S1 (S (NP (PRP You)) (VP (VBP come) (S (VP (TO to) (VP (VB expect) (NP (NP (NN everything)) (PP (IN in) (NP (NN war) (NN fighting)))))))) (. .)))
+
+(S1 (S (NP (DT The) (NNS coffins)) (VP (AUX were) (ADVP (RB there))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX was) (ADJP (ADJP (NP (DT a) (NN bit)) (JJR more)) (PP (IN of) (NP (DT a) (NN surprise)))) (SBAR (WHADVP (WRB when)) (S (NP (PRP I)) (VP (VBD discovered) (NP (DT the) (NNS bags)) (SBAR (IN with) (S (NP (DT the) (NN human)) (VP (VBZ remains) (ADVP (RB inside))))))))) (. .)))
+
+(S1 (S (PP (IN Inside) (NP (DT a) (JJ neighboring) (NN building))) (, ,) (NP (EX there)) (VP (AUX was) (NP (NP (NP (NN evidence)) (PP (IN of) (NP (NNS cells)))) (CC and) (NP (NP (DT a) (NN catalog)) (PP (IN of) (NP (NP (NNS photographs)) (PP (IN of) (NP (DT the) (NN dead)))))))) (. .)))
+
+(S1 (S (NP (JJS Most)) (VP (AUX had) (VP (VBN died) (PP (PP (IN from) (NP (NN gunshot) (NNS wounds))) (PP (TO to) (NP (DT the) (NN head)))))) (. .)))
+
+(S1 (S (NP (NNS Others)) (VP (AUX were) (VP (VBN mutilated) (PP (IN beyond) (NP (NN recognition))) (, ,) (S (NP (PRP$ their) (NNS faces)) (ADJP (JJ burned) (CC and) (JJ swollen))))) (. .)))
+
+(S1 (S (ADVP (RB Outside)) (, ,) (NP (NNS soldiers)) (VP (VP (VP (VBD discovered) (SBAR (WHNP (WP what)) (S (NP (PRP they)) (VP (VBD described) (PP (IN as) (NP (DT a) (NN purpose))))))) (: -) (VP (VBD built) (NP (VBG shooting) (NN gallery)))) (, ,) (NP (NP (DT the) (NN brickwork)) (PP (IN behind) (NP (PRP it))) (ADJP (JJ riddled) (PP (IN with) (NP (NNS bullets)))))) (. .)))
+
+(S1 (S (NP (NN Identity) (NNS cards)) (VP (VBD revealed) (NP (NP (DT the) (NNS names)) (PP (IN of) (NP (NP (DT some)) (PP (IN of) (NP (DT the) (NN dead))))))) (. .)))
+
+(S1 (S (NP (JJ Forensic) (NNS specialists)) (VP (MD will) (ADVP (RB now)) (VP (VP (VB visit) (NP (DT the) (NN scene))) (CC and) (VP (VB hope) (S (VP (TO to) (VP (VB establish) (NP (NP (DT the) (NN truth)) (PP (IN of) (SBAR (WHNP (WP what)) (S (VP (VBD happened) (UCP (ADVP (RB here)) (CC and) (WHADVP (WRB when)))))))))))))) (. .)))
+
+(S1 (S (PRN (-LRB- -LRB-) (PP (IN on) (NP (NN camera))) (-RRB- -RRB-)) (: :) (NP (NP (NNP Today) (POS 's)) (NN discovery)) (VP (VBZ seems) (S (VP (TO to) (VP (VB provide) (NP (NP (JJ shocking) (NN evidence)) (PP (IN of) (NP (NNS atrocities)))) (PP (IN under) (NP (NP (NNP Saddam) (NNP Hussein) (POS 's)) (NN regime))))))) (. .)))
+
+(S1 (S (NP (JJS Most) (NNS people)) (VP (AUX are) (ADJP (JJ afraid) (S (VP (TO to) (VP (VB talk) (ADVP (RB openly)) (PP (IN about) (SBAR (WHNP (WP what)) (S (VP (AUX 's) (VP (AUX been) (VP (VBG happening) (ADVP (RB here))))))))))))) (. .)))
+
+(S1 (S (CC But) (SBAR (WHADVP (WRB when)) (S (NP (PRP they)) (VP (AUX do)))) (PRN (, ,) (S (NP (JJ British) (NNS soldiers)) (VP (VBP believe))) (, ,)) (NP (JJR more) (NNS horrors)) (VP (MD will) (VP (VB come) (PP (TO to) (NP (NN light))))) (. .)))
+
+(S1 (NP (NP (NNP Tim) (NNP Ewart)) (, ,) (NP (NP (NNP ITV) (NNP News)) (, ,) (NP (NNP Azubayr))) (. .)))
+
+(S1 (FRAG (INTJ (UH Well)) (, ,) (PP (PP (IN from) (NP (DT a) (JJ gruesome) (NN finding))) (PP (TO to) (NP (NP (DT a) (JJ dangerous) (NN one)) (PP (IN in) (NP (JJ central) (NNP Iraq)))))) (. .)))
+
+(S1 (S (NP (NNP U.S.) (NNS troops)) (VP (VBP work) (S (VP (TO to) (VP (VB clear) (NP (NP (DT that) (NN area)) (PP (IN of) (NP (JJ Iraqi) (NNS weapons))))))) (, ,) (S (VP (VBG coming) (PRT (RP up))))) (. .)))
+

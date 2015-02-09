@@ -1,0 +1,30 @@
+(S1 (NP (DT all) (NN right) (. .)))
+
+(S1 (FRAG (ADVP (NP (RB just) (IN about) (CD 25) (NNS minutes)) (RB long) (PP (IN in) (NP (DT that) (NN press) (NN conference)))) (RB there) (PP (IN at) (NP (NP (NNP nato) (NN headquarters)) (PP (IN in) (NP (NNP brussels))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (VBD mentioned) (NP (DT a) (NN headline)) (ADVP (NP (DT a) (JJ short) (NN time)) (RB ago))) (. .)))
+
+(S1 (S (NP (NNP u.s.) (NNS forces)) (VP (VBG moving) (PRT (RP in)) (PP (IN on) (NP (DT the) (NNS airports))) (PP (IN at) (NP (NP (FW saddam) (FW hussein) (JJ international) (NN airport)) (, ,) (ADVP (NP (CD 12) (NNS miles)) (RB west) (PP (IN of) (NP (NP (DT the) (NN city) (POS 's)) (NN center))))))) (. .)))
+
+(S1 (S (NP (NNP colin) (NNP powell)) (VP (VBG saying) (SBAR (S (S (NP (DT an) (NN end)) (VP (MD will) (VP (VB come) (ADVP (RB soon))))) (CC and) (S (PP (IN toward) (NP (DT the) (NN end))) (, ,) (NP (DT this) (NN regime)) (VP (MD will) (VP (AUX be) (VP (VBN finished)))))))) (. .)))
+
+(S1 (FRAG (ADVP (RB also)) (NP (NP (DT a) (NN question)) (ADVP (RB there)) (PP (IN about) (NP (DT the) (VBN united) (NNS nations)))) (. .)))
+
+(S1 (NP (NP (DT a) (NN question)) (PP (IN about) (NP (NNP nato))) (PP (IN about) (SBAR (WHNP (WP what) (NN role)) (S (NP (DT these) (CD two) (NNS organizations)) (VP (MD may) (VP (VB play) (PP (IN in) (S (VP (VBG rebuilding) (NP (NNP iraq)))))))))) (. .)))
+
+(S1 (S (NP (NNP colin) (NNP powell)) (VP (VBZ says) (SBAR (S (NP (DT the) (NNP u.n.)) (VP (AUX does) (VP (AUX have) (NP (NP (DT a) (NN role)) (SBAR (S (VP (TO to) (VP (VB play)))))) (, ,) (SBAR (WHNP (WDT what) (NN role)) (S (NP (DT that)) (VP (AUX is) (VP (VBZ remains) (S (VP (TO to) (VP (AUX be) (VP (VBN seen)))))))))))))) (. .)))
+
+(S1 (S (NP (EX there)) (VP (AUX was) (ADVP (RB also)) (NP (CD one) (JJ other) (NN moment)) (ADVP (RB there)) (SBAR (WHADVP (WRB when)) (S (NP (PRP you)) (VP (VBD heard) (NP (NP (DT a) (NN woman)) (VP (VBG asking) (PP (IN about) (NP (NP (DT the) (NN safety)) (PP (IN of) (NP (PRP$ her) (NN husband))))) (ADVP (RB right) (RB now)))))))) (. .)))
+
+(S1 (S (NP (DT that) (NN woman)) (, ,) (NP (PRP we)) (VP (VBP believe) (SBAR (S (VP (VBZ s) (ADJP (VBN married) (PP (TO to) (NP (NP (NP (CD one)) (PP (IN of) (NP (NP (CD two) (NNS journalists)) (SBAR (WHNP (WP who)) (S (VP (VBD disappeared) (PP (IN in) (NP (NNP iraq))) (ADVP (NP (QP (RB almost) (CD two)) (NNS weeks)) (RB ago)))))))) (, ,) (CC both) (NP (NP (NN work) (JJ other)) (PP (IN for) (NP (DT the) (NN network)))) (, ,) (NP (CD itn))))))))) (. .)))
+
+(S1 (S (S (NP (PRP we)) (VP (AUX have) (VP (VBN heard) (SBAR (IN that) (S (NP (RB perhaps) (DT both)) (VP (AUX are) (VP (AUXG being) (VP (VBN held) (PP (IN in) (NP (NN basra))) (, ,) (PP (ADVP (RB possibly)) (IN in) (NP (DT a) (NN hospital))))))))))) (, ,) (CC but) (S (NP (EX there)) (VP (AUX 's) (NP (NP (DT no) (NN way)) (SBAR (IN for) (S (NP (PRP us)) (VP (TO to) (VP (VB confirm) (NP (NP (PRP$ their) (NN whereabouts)) (, ,) (CONJP (CC but) (RB obviously)) (NP (NP (DT a) (NN lot)) (PP (IN of) (NP (NP (NN concern)) (PP (IN from) (NP (DT this) (NN woman))))))) (PP (IN as) (PP (TO to) (SBAR (WHADVP (WRB where)) (S (NP (NP (NP (NN whereabouts)) (PP (IN of) (NP (PRP$ her) (NN husband)))) (CC and) (NP (PRP$ his) (NN health)))))))))))))) (. .)))
+
+(S1 (S (NP (NNP walt) (NNP rogers)) (VP (AUX is) (ADVP (RB back)) (PP (IN with) (NP (PRP us)))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (AUX 've) (VP (AUX been) (PP (IN in) (CC and) (IN out) (NP (RB now))) (PP (IN for) (NP (QP (RB almost) (CD two)) (NNS hours))))) (. .)))
+
+(S1 (S (SBAR (WHNP (WP what)) (S (VP (AUX 's) (VP (VBG happening) (PP (IN with) (NP (NP (PRP you)) (CC and) (NP (DT the) (NN 7th)))))))) (VP (VBZ cav) (SBAR (IN as) (S (NP (PRP we)) (VP (VBP continue) (S (VP (TO to) (VP (VB watch) (NP (PRP$ your) (NN image)) (PP (IN by) (NP (NP (NN way)) (PP (IN of) (NP (NP (NN video) (NN phone)) (CC and) (NP (DT the) (JJ giant) (JJ m1-a1) (NN tank))))))))))))) (. .)))
+
+(S1 (NP (NP (NNP walt)) (, ,) (NP (NP (JJ good) (NN evening)) (ADVP (RB again))) (. .)))
+

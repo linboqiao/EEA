@@ -1,0 +1,30 @@
+(S1 (S (NP (NP (NP (NNP EL) (NNP SEGUNDO)) (, ,) (NP (NNP California))) (PRN (-LRB- -LRB-) (NP (NNP AP)) (-RRB- -RRB-)) (NP (NP (NNP Shaquille) (NNP O'Neal) (POS 's)) (NN wife))) (VP (VBD gave) (NP (NN birth)) (PP (TO to) (NP (DT a) (NN baby) (NN boy))) (NP (JJ early) (NNP Saturday)) (, ,) (S (VP (VBG eliminating) (NP (DT any) (NN chance) (SBAR (IN that) (S (NP (DT the) (NNP Los) (NNP Angeles) (NNP Lakers) (NN center)) (VP (MD might) (VP (VB skip) (NP (DT a) (NN playoff) (NN game)) (S (VP (TO to) (VP (VB witness) (NP (DT the) (NN birth))))))))))))) (. .)))
+
+(S1 (S (S (NP (NNP Shaunie) (NNP O'Neal)) (VP (VBD gave) (NP (NN birth)) (PP (TO to) (NP (NP (DT the) (NN couple) (POS 's)) (JJ third) (NN child))) (PP (IN at) (NP (CD 1:52) (NN a.m.))) (PP (IN at) (NP (DT a) (NNP Los) (NNP Angeles-area) (NN hospital))))) (, ,) (NP (NN team) (NN spokesman) (NNP John) (NNP Black)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (AUX did) (RB not) (VP (VB provide) (NP (NP (DT the) (NN baby) (POS 's)) (UCP (NN name) (CC or) (JJ other)) (NNS details)))) (. .)))
+
+(S1 (S (NP (NNP O'Neal)) (VP (AUX was) (VP (VBN excused) (PP (IN from) (NP (NP (NNP Saturday) (POS 's)) (NN practice))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (AUX was) (VP (VBN scheduled) (S (VP (TO to) (VP (VB fly) (PP (IN on) (NP (PRP$ his) (JJ own))) (PP (TO to) (NP (NNP Minneapolis))) (NP (JJ late) (NNP Saturday)) (PP (IN for) (NP (NP (NP (NNP Sunday) (POS 's)) (VBG opening) (NN game)) (PP (IN of) (NP (NP (DT a) (JJ first-round) (NN playoff) (NN series)) (PP (IN against) (NP (DT the) (NNP Minnesota) (NNPS Timberwolves)))))))))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (PRP We)) (VP (AUX 're) (ADVP (RB really)) (ADJP (JJ happy) (PP (IN for) (NP (NP (NP (DT the) (NN delivery)) (PP (IN of) (NP (DT a) (NN child)))) (CC and) (NP (DT the) (NN fact) (SBAR (IN that) (S (S (NP (NN everything)) (VP (AUX 's) (ADJP (JJ safe) (CC and) (JJ sound)))) (CC and) (S (NP (PRP we)) (VP (MD can) (VP (VB go) (ADVP (RB forward)) (PP (IN from) (NP (RB there)))))))))))))) (, ,) ('' '') (NP (NN coach) (NNP Phil) (NNP Jackson)) (VP (VBD said)) (. .)))
+
+(S1 (S (`` ``) (ADVP (RB Hopefully)) (NP (PRP he)) (VP (MD can) (VP (VP (VB get) (PP (TO to) (NP (NNP Minneapolis)))) (, ,) (VP (VB get) (NP (DT some) (NN rest))) (CC and) (VP (AUX be) (ADJP (JJ ready) (S (VP (TO to) (VP (VB play) (NP (DT the) (JJ first) (NN game))))))))) (. .)))
+
+(S1 (S (NP (DT That)) (VP (AUX 's) (NP (NP (DT a) (JJ pivotal) (NN game)) (PP (IN for) (NP (DT every) (NN team))))) (. .) ('' '')))
+
+(S1 (S (NP (NNP O'Neal) (AUX had)) (VP (VBD said) (SBAR (S (NP (PRP he)) (VP (MD could) (RB not) (VP (VB rule) (PRT (RP out)) (S (VP (VBG missing) (NP (DT a) (NN game) (S (VP (TO to) (VP (VB witness) (NP (DT the) (NN birth))))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (JJ due) (NN date)) (VP (AUX was) (NP (NP (NNP April) (CD 27)) (, ,) (NP (NP (DT the) (JJ same) (NN day)) (PP (IN as) (NP (NP (NNP Game) (CD 4)) (PP (IN of) (NP (NP (DT the) (JJ best-of-seven) (NN series)) (PP (IN between) (NP (NP (DT the) (NNPS Timberwolves)) (CC and) (NP (DT the) (NNPS Lakers))))))))))) (. .)))
+
+(S1 (S (NP (NN Teammate) (NNP Kobe) (NNP Bryant)) (VP (VBD said) (SBAR (S (NP (PRP he)) (VP (MD would) (RB not) (VP (AUX be) (ADJP (JJ surprised)) (SBAR (IN if) (S (NP (NNP O'Neal)) (VP (AUX had) (NP (DT a) (JJ big) (NN game)) (NP (NNP Sunday)) (PP (IN despite) (NP (NP (PRP$ his) (JJ expected) (JJ late) (NN arrival)) (PP (IN in) (NP (NNP Minneapolis))))))))))))) (. .)))
+
+(S1 (SINV (`` ``) (S (NP (PRP You)) (ADVP (RB just)) (VP (VBP roll) (PP (IN off) (NP (DT the) (NN adrenaline))))) (, ,) ('' '') (VP (VBD said)) (NP (NP (NNP Bryant)) (, ,) (SBAR (WHNP (WP who)) (S (VP (VBD scored) (NP (CD 48) (NNS points)) (PP (IN in) (NP (NP (DT a) (CD 2001) (NN playoff) (NN game)) (PP (IN at) (NP (NNP Sacramento))))) (PP (IN after) (S (VP (VBG leaving) (S (NP (DT the) (NN team)) (VP (TO to) (VP (VB attend) (PP (TO to) (NP (DT a) (JJ personal) (NN matter))))))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN birth)) (VP (VBZ comes) (NP (NNS days)) (PP (IN after) (NP (NP (DT the) (NN death)) (PP (IN of) (NP (NP (NP (NNP O'Neal) (POS 's)) (JJ maternal) (NN grandfather)) (, ,) (NP (NNP Sirlester) (NNP O'Neal))))))) (. .)))
+
+(S1 (S (S (NP (NN Funeral) (NNS services)) (VP (AUX are) (VP (VBN expected) (S (VP (TO to) (VP (AUX be) (VP (VBN held) (NP (DT this) (NN week)) (PP (IN in) (NP (NNP South) (NNP Carolina)))))))))) (, ,) (NP (NNP Black)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (NNP O'Neal)) (VP (AUX is) (VP (VBN expected) (S (VP (TO to) (VP (VB attend)))))) (. .)))
+

@@ -1,0 +1,32 @@
+(S1 (S (S (S (NP (NP (NP (NNP JAKARTA)) (, ,) (NP (NNP March) (CD 27))) (PRN (-LRB- -LRB-) (NP (NNP AFP)) (-RRB- -RRB-)) (NP (NNP Indonesia))) (VP (MD will) (VP (VB delay) (NP (NP (DT the) (NN execution)) (PP (IN of) (NP (CD six))))))) (VP (VBZ convicts) (PP (VBG including) (NP (NP (DT an) (JJ Indian)) (PP (IN on) (NP (NN death) (NN row))))) (SBAR (IN after) (S (NP (NP (CD five)) (PP (IN of) (NP (PRP them)))) (VP (VBD appealed) (PP (TO to) (NP (DT the) (NNP Supreme) (NNP Court))) (PP (IN for) (NP (DT a) (JJ second) (NN review)))))))) (, ,) (NP (NNS prosecutors)) (VP (VBD said) (NP (NNP Thursday))) (. .)))
+
+(S1 (SINV (`` ``) (S (SBAR (IN If) (S (NP (PRP we)) (VP (VBP execute) (NP (PRP them)) (ADVP (RB now))))) (NP (PRP we)) (VP (MD ca) (RB n't) (VP (VB bring) (S (NP (PRP them)) (VP (TO to) (VP (NN life) (ADVP (RB again)) (SBAR (MD should) (S (NP (NP (PRP$ their) (NNS appeals)) (PP (IN for) (NP (DT a) (NN review)))) (VP (AUX be) (VP (VBN granted))))))))))) (, ,) ('' '') (VP (VBD said)) (NP (NP (NNP Antasari) (NNP Azhar)) (, ,) (NP (NP (NN spokesman)) (PP (IN for) (NP (NP (DT the) (NN attorney) (NN general) (POS 's)) (NN office))))) (. .)))
+
+(S1 (S (NP (DT The) (NNP Supreme) (NNP Court)) (VP (VBD rejected) (NP (NP (JJR earlier) (NNS appeals)) (PP (IN for) (NP (NP (DT a) (NN case) (NN review)) (PP (IN from) (NP (NP (CD five)) (PP (IN of) (NP (DT the) (VBZ convicts))))))))) (. .)))
+
+(S1 (S (NP (DT The) (JJ sixth) (NN offender)) (VP (AUX has) (ADVP (RB only)) (VP (VBN made) (NP (CD one) (NN appeal)) (PP (IN for) (NP (DT a) (NN review))))) (. .)))
+
+(S1 (S (NP (NNP President) (NNP Megawati) (NNP Sukarnoputri)) (VP (AUX has) (VP (VP (VBN refused) (NP (NN clemency)) (PP (IN for) (NP (DT the) (CD six)))) (CC and) (VP (VBN asked) (PP (IN for) (NP (DT a) (JJ speedy) (NN execution)))))) (. .)))
+
+(S1 (S (NP (NP (CD Five)) (PP (IN of) (NP (PRP them)))) (VP (AUX are) (NP (NP (NNS Indonesians)) (VP (VBN convicted) (PP (IN of) (NP (NNS murders))) (SBAR (IN while) (S (NP (DT the) (JJ other)) (VP (AUX is) (NP (NP (DT an) (NNP Indian) (NN drug) (NN offender)) (, ,) (NP (NNP Ayodhya) (NNP Prasad) (NNP Chaubey))))))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (PRP We)) (VP (AUX are) (VP (VBG talking) (PP (IN about) (NP (NP (NN someone) (POS 's)) (NN life) (CC or) (NN death))) (SBAR (IN so) (S (NP (PRP we)) (VP (AUX have) (S (VP (TO to) (VP (AUX be) (ADJP (RB very) (JJ careful))))))))))) (, ,) ('' '') (NP (NNP Azhar)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (DT A) (NNP convict)) (VP (MD can) (VP (VB file) (NP (DT a) (NN case) (NN review) (CC or) (NN appeal)) (PP (IN for) (NP (JJ presidential) (NN clemency))) (SBAR (RB only) (IN after) (S (NP (DT the) (NNP Supreme) (NNP Court)) (VP (VBZ upholds) (NP (NP (DT a) (NN sentence)) (VP (VBN imposed) (PP (IN by) (NP (DT a) (JJR lower) (NN court)))))))))) (. .)))
+
+(S1 (S (ADVP (RB Apart) (PP (IN from) (NP (NP (DT those)) (VP (VBN convicted) (PP (IN of) (NP (NN murder))))))) (, ,) (NP (CD 16) (NNS people)) (VP (VP (AUX are) (PP (IN on) (NP (NN death) (NN row))) (PP (IN for) (NP (NN drug) (NN trafficking)))) (: --) (NP (NP (CD 11) (NNS foreigners)) (, ,) (NP (CD four) (NNS Indonesians)) (CC and) (NP (NP (DT a) (JJ Dutch) (NN citizen)) (PP (IN of) (NP (JJ Chinese-Indonesian) (NN origin)))))) (. .)))
+
+(S1 (S (NP (JJ Indonesian) (NNS courts)) (VP (AUX have) (ADVP (RB increasingly)) (VP (VBN handed) (PRT (RP out)) (NP (NP (JJ severe) (NNS sentences)) (, ,) (PP (VBG including) (NP (NN death))) (, ,)) (PP (IN for) (NP (NN drug) (NNS smugglers))))) (. .)))
+
+(S1 (S (NP (NNS Narcotics) (NN abuse)) (VP (AUX is) (NP (NP (DT an) (ADJP (RB increasingly) (JJ serious)) (NN problem)) (PP (IN in) (NP (DT the) (NN country))))) (. .)))
+
+(S1 (S (NP (NN Amnesty) (NNP International)) (VP (AUX has) (VP (VBN appealed) (PP (TO to) (NP (NNP Indonesia))) (S (VP (TO to) (VP (VB spare) (NP (NP (DT the) (NNS lives)) (PP (IN of) (NP (NP (VBN convicted) (NN drug) (NNS offenders)) (CC and) (NP (NNS others)))))))) (, ,) (S (VP (VBG saying) (SBAR (S (NP (EX there)) (VP (AUX was) (NP (NP (DT no) (NN proof)) (SBAR (S (NP (DT the) (NN death) (NN penalty)) (VP (VBZ deters) (NP (JJ would-be) (NNS traffickers)) (ADVP (ADVP (RBR more) (RB effectively)) (PP (IN than) (NP (JJ other) (NNS punishments))))))))))))))) (. .)))
+
+(S1 (S (NP (NN Amnesty)) (VP (VBZ opposes) (NP (DT the) (NN death) (NN penalty)) (PP (IN for) (NP (DT any) (NN crime)))) (. .)))
+
+(S1 (S (NP (NP (NN Use)) (PP (IN of) (NP (DT the) (NN death) (NN penalty)))) (VP (AUX is) (ADJP (JJ rare)) (PP (IN in) (NP (NP (NNP Indonesia)) (, ,) (SBAR (WHADVP (WRB where)) (S (NP (DT the) (JJ last) (NN execution)) (VP (AUX was) (VP (VBN carried) (PRT (RP out)) (PP (IN in) (NP (NP (NNP May) (CD 2001)) (PP (IN of) (NP (NP (CD two) (NNS men)) (VP (VBN convicted) (PP (IN of) (NP (DT a) (NN murder))) (PP (IN in) (NP (CD 1989))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX was) (NP (NP (DT the) (JJ first) (NN execution)) (PP (IN for) (NP (CD five) (NNS years))))) (. .)))
+
+(S1 (S (NP (DT A) (NN police) (NN firing) (NN squad)) (VP (VBZ enforces) (NP (DT the) (NN penalty))) (. .)))
+

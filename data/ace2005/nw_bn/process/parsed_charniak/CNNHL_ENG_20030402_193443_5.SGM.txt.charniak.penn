@@ -1,0 +1,6 @@
+(S1 (S (NP (NNP central) (NNP command)) (VP (VBZ says) (SBAR (S (NP (PRP it)) (VP (AUX is) (VP (VBG investigating) (NP (JJ iraqi) (NNS allegations) (SBAR (IN that) (S (NP (NNP u.s.) (NNS attacks)) (VP (AUX are) (S (VP (TO to) (VP (VB blame) (PP (IN for) (NP (NP (NNS hundreds)) (PP (IN of) (NP (NNS civilians))))) (NP (NP (NNS casualties)) (PP (IN in) (NP (NN hillah)))))))))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (ADVP (NP (QP (RB about) (CD 60)) (NNS miles)) (RB south) (PP (IN of) (NP (NN baghdad))))) (. .)))
+
+(S1 (S (S (NP (NP (DT a) (NN member)) (PP (IN of) (NP (NP (DT the) (JJ international) (NN committee)) (PP (IN of) (NP (JJ red) (NN cross)))))) (VP (VBD visited) (NP (DT the) (JJ local) (NN hospital)) (ADVP (RB there)))) (, ,) (CC and) (S (NP (PRP he)) (VP (VBZ says) (SBAR (S (NP (PRP it)) (VP (AUX 's) (NP (DT a) (JJ horrible) (NN scene))))))) (. .)))
+

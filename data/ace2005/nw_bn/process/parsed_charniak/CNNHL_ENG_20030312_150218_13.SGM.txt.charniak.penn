@@ -1,0 +1,10 @@
+(S1 (S (NP (NP (NNS lawyers)) (PP (IN in) (NP (NNP texas)))) (VP (AUX are) (VP (VBG trying) (S (VP (TO to) (VP (VB keep) (NP (PRP$ their) (NN client)) (PP (IN from) (S (VP (VBG becoming) (NP (NP (DT the) (JJ 300th) (NN person)) (VP (VBN executed) (PP (IN in) (NP (DT the) (NN state))))) (PP (IN since) (NP (NP (CD 1982)) (, ,) (SBAR (WHADVP (WRB when)) (S (NP (NNP texas)) (VP (VBD resumed) (NP (JJ capital) (NN punishment))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX 're) (VP (VBG asking) (NP (DT the) (JJ supreme) (NN court)) (S (VP (TO to) (VP (VB block) (NP (NP (NP (NN tonight) (POS 's)) (JJ scheduled) (NN execution)) (PP (IN of) (NP (NN delma) (NNS banks))))))))) (. .)))
+
+(S1 (S (NP (NNS banks)) (VP (AUX was) (VP (VBN convicted) (PP (IN of) (S (VP (VBG shooting) (CC and) (VBG killing) (NP (DT a) (JJ 16-year-old)) (PP (IN at) (NP (DT a) (NN park))) (PP (IN in) (NP (CD 1980)))))))) (. .)))
+
+(S1 (S (NP (PRP$ his) (NNS lawyers)) (VP (VBP say) (SBAR (S (S (NP (PRP$ his) (NN trial) (NN attorney)) (VP (AUX did) (NP (DT a) (JJ bad) (NN job)))) (CC and) (S (NP (DT the) (NNS prosecutors)) (ADVP (RB improperly)) (VP (VBD kept) (NP (JJ african) (NNS americans)) (PP (IN off) (NP (PRP$ his) (NN jury)))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (MD 'd) (VP (AUX be) (NP (NP (DT the) (JJ 11th) (NN killer)) (VP (VBN put) (PP (TO to) (NP (NN death))) (PP (IN in) (NP (NNP texas))) (NP (DT this) (NN year)))))) (. .)))
+

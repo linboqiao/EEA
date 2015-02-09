@@ -1,0 +1,8 @@
+(S1 (S (NP (CD 5,400) (NNS sailors) (CC and) (NNS marines)) (VP (AUX are) (ADVP (RB back)) (PP (IN at) (NP (NN home))) (PP (IN after) (S (VP (VBG serving) (PP (IN in) (NP (NNP iraq))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX 're) (NP (NP (DT the) (NN crew)) (PP (IN of) (NP (DT the) (`` ``) (NNP uss) (NNP harry) (NNP s.) (NN truman))))) (. .) ('' '')))
+
+(S1 (S (NP (PRP they)) (VP (AUX have) (VP (VBN reunited) (PP (IN with) (NP (PRP$ their) (NNS families) (CC and) (NNS friends))) (, ,) (PP (IN at) (NP (NP (NP (DT the) (NN aircraft) (NN carrier) (POS 's)) (NN home) (NN port)) (PP (IN in) (NP (NP (NNP norfolk)) (, ,) (NP (NNP virginia)))))))) (. .)))
+
+(S1 (S (NP (DT the) (`` ``) (NN truman) ('' '')) (VP (AUX is) (NP (NP (DT the) (JJ first) (JJ east) (JJ coast-based) (NN carrier)) (SBAR (S (VP (TO to) (VP (VB return) (PP (IN from) (NP (DT the) (NN war))))))))) (. .)))
+

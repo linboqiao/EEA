@@ -1,0 +1,22 @@
+(S1 (S (VP (VB welcome) (PRT (RP back)) (NP (NP (NP (NNP n) (NN case)) (SBAR (S (NP (PRP you)) (VP (AUX 're) (ADVP (RB just)) (VP (VBG tuning) (PRT (RP in))))))) (, ,) (NP (NP (PRP$ our) (JJ top) (NN story)) (NP (DT this) (NN hour))) (, ,) (NP (NP (DT the) (NN discovery)) (PP (IN of) (NP (JJ suspect) (NN chemical) (NNS weapons) (NNS materials))) (PP (IN at) (NP (NP (DT an) (JJ agricultural) (NN complex)) (PP (IN in) (NP (JJ central) (NNP iraq)))))))) (. .)))
+
+(S1 (S (NP (NP (NNS troops)) (PP (IN from) (NP (NP (DT the) (NNP u.s.) (NN army) (POS 's)) (JJ 101st) (JJ airborne) (NN division)))) (VP (VBD went) (PP (TO to) (NP (DT the) (NN site))) (PP (IN on) (NP (NNP Friday))) (, ,) (S (VP (VBG finding) (NP (NP (DT a) (NN number)) (PP (IN of) (NP (NP (JJ large) (NNS drums)) (VP (VBN buried) (PP (IN in) (NP (NNS bunkers)))))))))) (. .)))
+
+(S1 (S (NP (JJ initial) (NNS tests)) (VP (AUX were) (ADJP (JJ inconclusive))) (. .)))
+
+(S1 (S (NP (DT the) (JJ general) (NNP benjamin)) (ADVP (RB frankly) (PP (IN of) (NP (DT the) (NN 101st)))) (VP (VBZ says) (NP (NN today)) (NP (NP (DT a) (ADJP (RBR more) (JJ sophisticated)) (NN test)) (VP (VBD indicated) (NP (NP (DT the) (NN presence)) (PP (IN of) (NP (NN nerve) (CC and) (NN blister) (NNS agents))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (VBZ says) (SBAR (IN that) (S (NP (NP (NN type)) (PP (IN of) (NP (NP (NN test)) (SBAR (WHNP (WDT that)) (S (VP (AUX is) (VP (VBN required) (ADVP (RB sometimes))))))))) (VP (VBZ shows) (SBAR (S (NP (NP (NNS false-positives)) (CC and) (NP (JJ further) (NN testing))) (VP (MD will) (VP (AUX be) (VP (AUX done) (S (VP (TO to) (VP (VB determine) (SBAR (IN whether) (S (NP (DT the) (NNS materials)) (VP (AUX are) (ADVP (RB indeed)) (VP (VBN nonweaponized) (NP (NP (NN chemical) (NNS agents)) (CC or) (RB perhaps) (RB simply) (NP (NNS pesticides))))))))))))))))))) (. .)))
+
+(S1 (S (NP (NNP general) (NNP frankly)) (VP (VBZ says) (SBAR (S (NP (PRP it)) (VP (AUX is) (ADJP (JJ hard)) (S (VP (TO to) (VP (VB believe) (SBAR (S (NP (NNP u.n.) (NNS inspectors)) (VP (MD would) (VP (AUX have) (VP (VBN found) (S (NP (DT the) (NN facility)) (VP (VBN hidden) (ADVP (ADVP (RB as) (RB deeply)) (SBAR (IN as) (S (NP (PRP it)) (VP (AUX was) (PP (IN near) (NP (DT the) (NNS euphrates) (NN river))))))))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (MD 'll) (VP (AUX are) (ADVP (RB much) (RBR more)) (PP (IN on) (NP (DT this) (VBG developing) (NN story))) (S (VP (VBG coming) (PRT (RP up)) (PP (IN in) (NP (DT a) (JJ few) (NNS minutes))))))) (. .)))
+
+(S1 (S (PP (IN for) (NP (DT the) (JJS latest))) (, ,) (ADVP (RB though)) (, ,) (PP (IN on) (NP (DT the) (NN air) (NN war))) (, ,) (NP (NP (NNP cnn) (POS 's)) (NNP gary) (NN tuchman)) (VP (AUX is) (VP (VBG joining) (NP (PRP us)) (ADVP (RB now)) (ADVP (RB live)) (PP (IN from) (NP (NP (DT an) (NN air) (NN base)) (ADVP (RB not) (RB far) (PP (IN from) (NP (NNP iraq)))))))) (. .)))
+
+(S1 (SBARQ (WHNP (WP what)) (SQ (VP (AUX 's) (VP (VBG happening))) (NP (EX there)) (NP (NP (NN tonight)) (, ,) (NP (NNP gary)))) (. ?)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (INTJ (UH well)) (, ,) (NP (NNP wolf)) (, ,) (NP (DT the) (NN air) (NN force)) (VP (AUX is) (VP (VBG continuing) (NP (PRP$ its) (JJ 24-hour) (NN air) (NN coverage)) (PP (IN over) (NP (NN baghdad)))))) (. .)))
+
+(S1 (S (NP (EX there)) (VP (MD will) (ADVP (RB always)) (VP (AUX be) (NP (NP (JJ multiple) (NNS warplanes)) (, ,) (NP (NN fighter)))))))
+

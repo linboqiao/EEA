@@ -1,0 +1,18 @@
+(S1 (S (NP (NP (NNP JAKARTA)) (, ,) (NP (NNP April) (CD 23)) (PRN (-LRB- -LRB-) (NP (NNP Xinhua)) (-RRB- -RRB-))) (NP (DT The) (NNP Central) (NNP Jakarta) (NNP District) (NNP Court)) (VP (VBD began) (NP (NNP Wednesday)) (NP (NP (DT the) (NN trial)) (PP (IN of) (NP (NP (NP (NNP Muslim) (NN cleric) (NNP Abu) (NNP Bakar) (NNP Ba) (POS ')) (NN asyir)) (SBAR (WHNP (WP who)) (S (VP (AUX has) (VP (AUX been) (PP (IN in) (NP (NN custody))) (PP (IN since) (NP (JJ last) (NNP October))) (PP (IN on) (NP (NP (NNS charges)) (PP (IN of) (NP (NN treason) (CC and) (NN immigration) (NNS offenses))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Ba'asyir)) (, ,) (NP (CD 64)) (, ,)) (VP (AUX was) (VP (VBN arrested) (PP (IN on) (NP (NP (JJ preliminary) (NNS charges)) (PP (IN of) (NP (NN involvement))))) (PP (IN in) (NP (NP (DT a) (NN series)) (PP (IN of) (NP (NP (NN church) (NNS bombings)) (PP (IN on) (NP (NP (DT the) (NN eve)) (PP (IN of) (NP (NP (DT the) (CD 2000) (NNP Christmas) (CC and) (DT an) (JJ alleged) (NN plot)) (SBAR (S (VP (TO to) (VP (VB assassinate) (NP (NNP Megawati) (NNP Soekarnoputri)) (PP (IN in) (NP (NP (CD 1999)) (, ,) (SBAR (WHADVP (WRB when)) (S (NP (PRP she)) (VP (AUX was) (NP (NN vice) (NN president))))))))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (AUX is) (ADVP (RB also)) (VP (VBN charged) (PP (IN with) (NP (NN immigration) (NNS offenses))) (PP (IN for) (S (VP (AUXG having) (NP (DT a) (JJ Malaysian) (NN citizenship)) (PP (IN since) (NP (CD 1993)))))))) (. .)))
+
+(S1 (S (NP (CD Seven) (NNS prosecutors)) (VP (VBD read) (PP (IN in) (NP (NN turn))) (NP (NP (DT the) (NN indictment)) (PP (IN against) (NP (NNP Ba'asyir)))) (PP (IN at) (NP (NP (NP (DT the) (JJ makeshift) (NN court) (NN room)) (PP (IN in) (NP (DT the) (NNP Meteorology)))) (CC and) (NP (NP (NP (NNP Geophysics) (NNP Agency) (POS 's)) (NN office)) (PP (IN in) (NP (NNP Central) (NNP Jakarta))))))) (. .)))
+
+(S1 (S (NP (DT The) (NNS authorities)) (VP (AUX have) (VP (VP (VBN moved) (NP (NP (DT the) (NN trial) (NN venue)) (PP (IN for) (NP (NN security) (NNS reasons))))) (CC and) (VP (TO to) (VP (VB allow) (NP (JJR wider) (NN media) (NN coverage)))))) (. .)))
+
+(S1 (S (S (NP (NNP Ba'asyir)) (VP (AUX was) (RB not) (ADVP (RB officially)) (VP (VBN charged) (PP (IN with) (NP (DT the) (NNP Bali) (NN bombing))) (NP (JJ last) (NNP October))))) (, ,) (CC but) (S (NP (NNS police)) (VP (VBD said) (SBAR (S (NP (PRP he)) (VP (VBD gave) (NP (PRP$ his) (NN blessing)) (PP (TO to) (NP (DT the) (NNP Bali) (NNS perpetrators)))))))) (. .)))
+
+(S1 (S (NP (NNS Police)) (VP (VBD believed) (SBAR (S (NP (NNP Ba'asyir)) (VP (AUX was) (NP (NP (DT the) (JJ spiritual) (NN leader)) (PP (IN of) (NP (NP (NNP Jemaah) (NNP Islamiyah)) (, ,) (NP (NP (DT the) (JJ terrorist) (NN network)) (PP (IN in) (NP (NNP Southeast) (NNP Asia))) (SBAR (WHNP (WDT which)) (S (VP (AUX is) (ADVP (RB widely)) (VP (VBN blamed) (PP (IN for) (NP (DT the) (NNP Bali) (NN bombing))))))))))))))) (. .)))
+
+(S1 (S (PP (VBG According) (PP (TO to) (NP (DT the) (NNP Criminal) (NNP Code)))) (, ,) (NP (NN treason)) (VP (AUX is) (ADJP (JJ punishable) (PP (IN with) (NP (DT a) (JJ possible) (NN death) (NN penalty))))) (. .)))
+
+(S1 (S (NP (NNP Ba'asyir)) (VP (VP (AUX has) (ADVP (RB publicly)) (VP (VBN denied) (NP (DT any) (NN wrongdoing)))) (CC and) (VP (VBD refused) (S (VP (TO to) (VP (VB answer) (S (NP (NNS police)) (VP (VBG questioning)))))))) (. .)))
+

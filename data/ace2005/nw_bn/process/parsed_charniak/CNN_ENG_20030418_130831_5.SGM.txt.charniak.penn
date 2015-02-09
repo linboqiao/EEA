@@ -1,0 +1,24 @@
+(S1 (S (NP (NP (NP (CD 6:03) (RB a.m.) (JJ eastern) (NN time)) (, ,) (NP (CD seven) (NNS americans))) (SBAR (WHNP (WP who)) (S (VP (AUX had) (VP (AUX been) (NP (NP (NNS prisoners)) (PP (IN of) (NP (NN war)))) (PP (IN in) (NP (NNP iraq)))))))) (VP (VBP make) (NP (NP (DT a) (JJ public) (NN appearance)) (PP (IN at) (NP (NP (DT the) (JJ medical) (NN center)) (PP (IN in) (NP (NNP germany))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (VBP say) (SBAR (S (NP (PRP they)) (VP (AUX 're) (VP (VBG looking) (ADVP (RB forward)) (PP (TO to) (NP (NP (JJ going) (NN home)) (, ,) (SBAR (WHNP (WDT which)) (S (NP (NP (NNS relatives)) (PP (IN of) (NP (CD one) (JJ former) (NNS p.o.w.)))) (VP (VBP say) (SBAR (S (VP (MD could) (VP (VB happen) (ADVP (ADVP (RB as) (RB soon)) (PP (IN as) (NP (NN tomorrow)))))))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNS officials)) (PP (IN at) (NP (DT the) (NN hospital)))) (VP (VBP say) (SBAR (S (NP (NP (NP (DT the) (JJ sev) (NN reason)) (PP (IN in) (NP (JJ good) (NN shape)))) (CC and) (NP (PRP$ their) (NN prognosis))) (VP (AUX is) (ADJP (JJ excellent)) (, ,) (SBAR (RB even) (IN though) (S (NP (CD three)) (VP (AUX have) (NP (NN gunshot) (NNS wounds))))))))) (. .)))
+
+(S1 (S (NP (NP (CD 6:21) (JJ eastern) (NN time)) (, ,) (NP (NP (CD 2:21) (NN p.m.)) (PP (IN in) (NP (NNP iraq)))) (, ,) (NP (JJ iraqi) (NNS protesters))) (VP (VBP demonstrate) (PP (IN outside) (NP (DT a) (JJ baghdad) (NN mosque))) (, ,) (S (VP (VP (VBG opposing) (SBAR (WHNP (WP what)) (S (NP (PRP they)) (VP (VBP call) (NP (DT the) (JJ u.s.) (NN occupation)))))) (, ,) (CC and) (VP (VBG saying) (SBAR (S (NP (DT any) (JJ new) (JJ iraqi) (NN government)) (VP (MD must) (VP (VB represent) (NP (DT the) (NNS people)))))))))) (. .)))
+
+(S1 (S (NP (CD 6:33) (RB a.m.)) (, ,) (NP (NP (NNP cnn) (POS 's)) (NNP jane) (NN arraf)) (VP (NN report) (PP (IN from) (NP (NN kirkuk))) (SBAR (IN that) (S (NP (NP (JJ local) (NNS authorities)) (CC and) (NP (JJ u.s.) (NNS investigators))) (VP (AUX are) (ADVP (RB still)) (VP (VBN mystified) (PP (IN by) (NP (NP (DT a) (NN graveyard)) (PP (IN on) (NP (NP (DT a) (JJ military) (NN base)) (VP (VBN abandoned) (PP (IN by) (NP (DT the) (JJ old) (JJ iraqi) (NN regime))))))))))))) (. .)))
+
+(S1 (S (NP (EX there)) (VP (AUX are) (NP (NP (NNS hundreds)) (PP (IN of) (NP (JJ unmarked) (NNP graves))) (, ,) (VP (ADVP (RB apparently)) (VBG dating) (ADVP (RB back)) (PP (TO to) (NP (NP (DT the) (CD 1991) (NN gulf) (NN war)) (, ,) (CC or) (ADVP (RB before))))))) (. .)))
+
+(S1 (S (CC but) (NP (PRP it)) (VP (AUX 's) (RB not) (ADJP (JJ clear) (SBAR (SBAR (IN whether) (S (NP (NP (DT the) (NNS people)) (VP (VBN buried) (ADVP (RB there)))) (VP (AUX are) (NP (NP (NNS victims)) (PP (IN of) (NP (NN regime) (NNS atrocities))))))) (, ,) (CC or) (SBAR (IN whether) (S (NP (PRP it)) (VP (AUX 's) (ADVP (RB simply)) (NP (DT a) (JJ military) (NN graveyard)))))))) (. .)))
+
+(S1 (S (NP (NP (CD 7:05) (NN a.m.)) (, ,) (NP (JJ u.s.) (JJ central) (NN command))) (VP (VBZ says) (SBAR (S (NP (DT another) (JJ top) (JJ baath) (NN party) (NN official)) (VP (AUX has) (VP (AUX been) (VP (VBN captured))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX was) (VP (VBN handed) (PRT (RP over)) (PP (TO to) (NP (NN coalition) (JJ special) (NNS forces))) (PP (IN by) (NP (JJ iraqi) (NNS kurds))) (NP (JJ last) (NN night)))) (. .)))
+
+(S1 (S (NP (NP (CD 8:10) (NN a.m.)) (, ,) (NP (NP (NNP abu) (NNP dhabi) (NN tv) (NNS broadcasts) (NN videotape)) (SBAR (WHNP (WDT which)) (S (NP (PRP it)) (VP (VBZ says)))))) (VP (VBZ shows) (NP (NP (NP (NN saddam)) (VP (VBN hussein) (PP (IN in) (NP (DT a) (JJ baghdad) (NN neighborhood))) (NP (JJ last) (NNP Wednesday)))) (, ,) (NP (NNP April) (NN 9th)) (, ,) (NP (NP (DT the) (NN day)) (SBAR (S (NP (DT the) (NN city)) (VP (VBD fell) (PP (TO to) (NP (NN coalition) (NNS troops))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN network)) (VP (AUX has) (RB not) (VP (VBN said) (SBAR (WHADVP (WRB where)) (S (NP (PRP it)) (VP (VBD got) (NP (DT the) (NN tape))))))) (. .)))
+
+(S1 (S (NP (EX there)) (VP (AUX 's) (NP (NP (DT no) (NN way)) (SBAR (S (VP (TO to) (VP (VB confirm) (SBAR (SBAR (WHADVP (WRB when)) (S (NP (PRP it)) (VP (AUX was) (VP (VBN shot))))) (CC or) (SBAR (IN whether) (S (NP (NP (DT the) (NN man)) (PP (IN in) (NP (DT the) (NN video)))) (VP (AUX is) (ADVP (RB really)) (NP (FW saddam) (FW hussein)))))))))))) (. .)))
+

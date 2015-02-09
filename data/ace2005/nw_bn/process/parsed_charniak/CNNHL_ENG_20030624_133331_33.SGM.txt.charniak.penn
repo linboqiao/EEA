@@ -1,0 +1,40 @@
+(S1 (SINV (S (NP (NP (DT a) (NN father)) (PP (IN in) (NP (NNP new) (NNP york)))) (VP (AUX is) (VP (VBN accused) (PP (IN of) (S (VP (VBG dropping) (NP (PRP$ his) (NN baby)) (PP (IN out) (PP (IN of) (NP (DT a) (CD seven) (: -) (NN story) (NN apartment) (NN window)))))))))) (, ,) (ADVP (RB here)) (VP (AUX 's) (NP (NNP jordena) (NNP ginsberg)) (PP (IN with) (NP (QP (JJR more) (IN from) (NN affiliate))))) (NP (CD news-12) (NN westchester)) (. .)))
+
+(S1 (FRAG (NP (NN reporter)) (: :) (S (VP (VB please) (VP (VB measure) (NP (NP (DT the) (NN spot)) (SBAR (WHADVP (WRB where)) (S (NP (PRP she)) (VP (VBD landed) (SBAR (IN after) (S (NP (PRP she)) (VP (AUX was) (VP (VBN thrown) (PP (IN from) (NP (DT a) (JJ seventh) (NN floor) (NN window)))))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN baby)) (VP (VBD fell) (NP (CD 80) (NNS feet))) (. .)))
+
+(S1 (S (NP (DT these) (NN tree) (NNS branches)) (VP (VP (VBN cushioned) (NP (PRP$ her) (NN fall))) (CC and) (VP (VBN saved) (NP (PRP$ her) (NN life)))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NN baby) (POS 's)) (NN aunt)) (VP (VP (AUX did) (RB n't) (VP (VB want) (S (NP (PRP$ her) (NN face)) (VP (VBN shown) (PP (IN on) (NP (NN tv))))))) (, ,) (CC but) (VP (VBD told) (NP (PRP us)) (SBAR (S (NP (PRP she)) (VP (AUX was) (ADJP (JJ stunned))))))) (. .)))
+
+(S1 (S (NP (PRP i)) (VP (AUX 'm) (ADJP (JJ glad) (SBAR (S (NP (PRP she)) (VP (AUX 's) (ADJP (JJ alive))))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX 's) (NP (DT a) (NN miracle))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (ADVP (RB now)) (, ,) (NP (NNP willie) (NNP williams)) (, ,) (NP (NP (DT the) (JJ little) (NN girl) (POS 's)) (NN father)) (VP (AUX is) (VP (VBN charged) (PP (IN with) (NP (VBN attempted) (NN murder)))))) (. .)))
+
+(S1 (S (NP (NNS police)) (VP (VBP say) (SBAR (S (NP (NP (PRP it)) (NP (DT all))) (VP (VBD started) (PP (IN at) (NP (QP (IN around) (CD 11:30)))) (NP (NNP Saturday) (NN night)) (SBAR (WHADVP (WRB when)) (S (NP (NNP williams)) (VP (VBD got) (PP (IN into) (NP (NP (DT a) (NN fight)) (PP (IN with) (NP (NP (DT the) (NN baby) (POS 's)) (NN mother) (NN jasmine) (NNP gil) (NNP yo)))))))))))) (. .)))
+
+(S1 (S (S (NP (PRP he)) (VP (VBD wanted) (S (VP (TO to) (VP (VB date) (NP (PRP her)) (ADVP (RB again))))))) (CC and) (S (NP (PRP she)) (VP (AUX was) (RB n't) (ADJP (JJ interested)))) (. .)))
+
+(S1 (S (NP (NNS cops)) (VP (VBP say) (SBAR (S (NP (PRP he)) (ADVP (RB allegedly)) (VP (VP (VP (VBD kidnapped) (NP (PRP her))) (CC and) (VP (VBD threatened) (NP (PRP her)))) (CC but) (VP (ADVP (RB eventually)) (VBD brought) (NP (PRP her)) (PRT (RP back)) (PP (TO to) (NP (PRP$ her) (NN home)))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (SBAR (WHADVP (WRB when)) (S (NP (NNS police)) (VP (VBP say) (SBAR (S (NP (PRP he)) (VP (VBD grabbed) (NP (PRP$ their) (NN daughter))))))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NN father)) (PP (IN of) (NP (DT the) (NN child)))) (ADVP (RB allegedly)) (VP (VBD picked) (NP (DT the) (NN baby)) (PRT (RP up)) (, ,) (VP (VBD dangedled) (NP (PRP it)) (PP (IN out) (NP (DT the) (NN window)))) (, ,) (VP (VBD pulled) (NP (DT the) (NN child)) (ADVP (RB back) (RB in)))) (. .)))
+
+(S1 (S (ADVP (RB then)) (NP (NP (DT the) (NN baby) (POS 's)) (NN mother)) (VP (VBD made) (NP (DT a) (JJ frantic) (NN call)) (PP (TO to) (NP (DT the) (NN police)))) (. .)))
+
+(S1 (S (SBAR (IN while) (S (NP (PRP she)) (VP (AUX was) (PP (IN on) (NP (DT the) (NN phone)))))) (, ,) (S (NP (PRP he)) (VP (VBD picked) (PRT (RP up)) (NP (DT the) (NN child)) (ADVP (RB again)))) (CC and) (S (NP (DT this) (NN time)) (VP (VBD threw) (NP (PRP her)) (PP (IN out) (NP (DT the) (NN window))))) (. .)))
+
+(S1 (S (NP (JJ then) (NNS police)) (VP (VBP say) (SBAR (S (NP (NP (DT the) (NN baby) (POS 's)) (NN mother)) (VP (VBD pulled) (PRT (RP out)) (NP (DT a) (NN kitchen) (NN knife)))))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (MD can) (VP (VP (VB hear) (S (NP (NNP williams)) (VP (VB say)))) (, ,) (VP (VB go) (ADVP (RB ahead))) (, ,) (VP (VB kill) (NP (PRP me))))) (. .)))
+
+(S1 (S (PP (IN at) (NP (DT that) (NN point))) (NP (NP (DT the) (NN baby) (POS 's)) (NN mother)) (VP (VBD stabbed) (NP (PRP him)) (PP (ADVP (RB right)) (IN in) (NP (DT the) (NN hand)))) (. .)))
+
+(S1 (S (S (ADVP (RB still)) (VP (VBG bleeding))) (, ,) (NP (PRP he)) (VP (VP (VBD ran) (NP (NNS downstairs))) (CC and) (VP (VBD scooped) (PRT (RP up)) (NP (DT the) (NN baby))) (, ,) (CC and) (VP (VBD took) (NP (DT the) (NN baby)) (PP (TO to) (NP (DT the) (NN hospital))))) (. .)))
+
+(S1 (S (NP (NNS police)) (VP (VP (AUX were) (PP (IN on) (NP (PRP$ his) (NN trail)))) (CC and) (VP (VBD found) (NP (NP (NNP williams)) (CC and) (NP (NP (DT the) (NN baby)) (PP (IN at) (PP (IN at) (NP (DT the))))))))))
+

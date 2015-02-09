@@ -1,0 +1,44 @@
+(S1 (S (SBAR (IN as) (S (NP (PRP we)) (VP (VBD told) (NP (PRP you)) (PP (IN at) (NP (NP (DT the) (NN top)) (PP (IN of) (NP (DT this) (NN newscast)))))))) (, ,) (NP (DT an) (NNP oklahoma) (NN judge)) (VP (AUX has) (VP (VBN ruled) (SBAR (IN that) (S (NP (NNP terry) (NNP nichols)) (VP (MD will) (ADVP (RB indeed)) (VP (VB stand) (NP (NN trial)) (PP (IN in) (NP (DT that) (NN state) (NN court))) (PP (IN on) (NP (NP (CD 160) (NNS counts)) (PP (IN of) (NP (JJ first-degree) (NN murder))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NNP oklahoma) (NN city) (NN bombing) (NN conspirator)) (VP (AUX is) (ADVP (RB already)) (VP (VBG serving) (NP (DT a) (NN life) (NN term)) (PP (IN in) (NP (JJ federal) (NN prison))))) (. .)))
+
+(S1 (S (NP (NN state) (NNS proceedings)) (VP (MD could) (VP (VB bring) (NP (DT the) (NN death) (NN penalty)) (SBAR (IN if) (S (NP (NNP nichols)) (VP (AUX is) (VP (VBN convicted))))))) (. .)))
+
+(S1 (S (NP (DT a) (NN trial) (NN date)) (VP (AUX was) (RB not) (ADVP (RB immediately)) (VP (VBN set) (PP (IN by) (NP (NP (DT the) (NN judge)) (SBAR (WHNP (WP$ whose) (NN decision)) (S (VP (VBD came) (SBAR (IN as) (S (NP (NNS prosecutes)) (VP (AUX were) (ADVP (RB still)) (VP (VBG presenting) (NP (NN evidence))))))))))))) (. .)))
+
+(S1 (S (NP (DT a) (JJ texas) (NN woman)) (VP (AUX is) (PP (IN in) (NP (NN jail))) (S (NP (DT this) (NN morning)) (VP (VBN accused) (PP (IN of) (S (VP (VP (VBG killing) (NP (PRP$ her) (CD two) (NNS sons))) (CC and) (VP (ADVP (RB severely)) (VBG beating) (NP (DT another)) (NP (DT the) (NN day)) (PP (IN before) (NP (NP (NN mother) (POS 's)) (NN day)))))))))) (. .)))
+
+(S1 (S (NP (NP (NN yesterday)) (NP (DT a) (JJ silent) (NNP dee) (NNP ana) (NN laney))) (VP (VBD waited) (SBAR (IN as) (S (NP (DT the) (NN judge)) (VP (VBD read) (NP (NP (DT the) (NNS charges)) (PP (IN against) (NP (PRP her)))))))) (. .)))
+
+(S1 (FRAG (NP (NP (NN capital) (NN murder)) (CC and) (NP (VBN aggravated) (NN assault))) (. .)))
+
+(S1 (S (NP (NP (CD one)) (PP (IN of) (NP (DT the) (JJ first) (NNS people)))) (VP (TO to) (VP (VB arrive) (PP (IN at) (NP (DT the) (NN crime) (NN scene))))) (. .)))
+
+(S1 (NP (NNP judge) (NNP james) (NNP marin) (. .)))
+
+(S1 (NP (NP (NNS thanks)) (ADJP (RB very) (JJ much)) (. .)))
+
+(S1 (SBARQ (WHADVP (WRB why)) (SQ (AUX were) (NP (PRP you)) (ADVP (RB there)) (ADVP (RB so) (RB quickly))) (. ?)))
+
+(S1 (S (NP (PRP i)) (VP (AUX was) (RB n't) (ADVP (RB really) (RB there)) (ADVP (RB that) (RB quickly))) (. .)))
+
+(S1 (S (NP (PRP i)) (ADVP (RB actually)) (VP (VBD responded) (NP (DT a) (JJ few) (NNS hours)) (SBAR (IN after) (S (NP (NP (DT the) (NN sheriff) (POS 's)) (NN department)) (VP (AUX did))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NN reason)) (SBAR (S (NP (PRP you)) (VP (VBD went))))) (VP (AUX was)) (. ?)))
+
+(S1 (S (INTJ (UH well)) (, ,) (VP (AUXG being) (NP (NP (DT the) (NN justice)) (PP (IN of) (NP (NP (DT the) (NN peace)) (SBAR (S (S (NP (PRP we)) (VP (AUX are) (NP (NP (DT the) (NNS ones)) (SBAR (WHNP (WDT that)) (S (VP (VBP hold) (NP (DT the) (NN inquest)) (PP (IN on) (NP (DT the) (NN death))))))))) (CC and) (S (NP (PRP they)) (VP (AUX were) (VP (VBN required) (S (VP (TO to) (VP (VB call) (NP (PRP us)) (PP (TO to) (NP (DT the) (NN scene))))))))))))))) (. .)))
+
+(S1 (SBARQ (WHNP (WP what)) (SQ (AUX did) (NP (PRP you)) (VP (VB see) (SBAR (WHADVP (WRB when)) (S (NP (PRP you)) (VP (VBD got) (ADVP (RB there))))))) (. ?)))
+
+(S1 (S (INTJ (UH well)) (, ,) (S (S (VP (TO to) (VP (AUX be) (ADJP (JJ honest) (PP (IN with) (NP (PRP you))))))) (, ,) (NP (PRP i)) (VP (VBD saw) (NP (DT a) (ADJP (RB pretty) (JJ gruesome)) (NN sight)))) (CC and) (S (S (NP (PRP i)) (VP (VBP think) (SBAR (S (NP (PRP it)) (VP (AUX 's) (VP (AUX been) (VP (VBN talked) (PP (IN about) (NP (NP (RB quite) (DT a) (NN bit)) (UCP (NP (DT the) (JJ last) (JJ few) (NNS days)) (CC and) (SBAR (IN if) (S (NP (NN anybody)) (VP (AUX did) (RB n't) (VP (AUX have) (S (VP (TO to) (VP (AUX be) (ADVP (RB there)) (S (VP (TO to) (VP (VB see) (NP (PRP it)))))))))))))))))))))) (, ,) (NP (PRP they)) (VP (AUX were) (ADJP (JJ lucky) (S (RB not) (VP (TO to) (VP (AUX have) (S (VP (TO to) (VP (AUX be) (ADVP (RB there))))))))))) (. .)))
+
+(S1 (S (S (NP (PRP it)) (VP (AUX was) (NP (DT a) (JJ horrific) (NN sight)))) (, ,) (S (NP (PRP you)) (VP (AUX do) (RB n't) (VP (AUX have) (S (VP (TO to) (VP (VB go) (PP (IN into) (NP (NNS details))))))))) (, ,) (S (ADVP (RB obviously)) (, ,) (NP (PRP we)) (VP (MD can) (ADVP (RB only)) (VP (VB imagine) (SBAR (WHADJP (WRB how) (JJ bad)) (S (NP (PRP it)) (VP (MD might) (VP (AUX have) (VP (AUX been))))))))) (. .)))
+
+(S1 (S (NP (PRP it)) (ADVP (RB probably)) (VP (AUX was) (, ,) (ADVP (RB indeed)) (, ,) (PP (VBN based) (PP (IN on) (NP (PRP$ your) (NN eyewitness) (NNS accounts))))) (. .)))
+
+(S1 (SBARQ (WHNP (WP what)) (SQ (VP (VBD happened))) (. ?)))
+
+(S1 (S (S (NP (PRP they)) (VP (AUX were) (VP (VBG collecting) (NP (NN evidence)) (SBAR (IN as) (S (NP (PRP you)) (VP (AUX were) (ADVP (RB there)))))))) (, ,) (NP (DT the) (NN law) (NN enforcement)) (VP (NNS authorities)) (. ?)))
+
+(S1 (S (S (NP (PRP they)) (VP (AUX had) (VP (AUX been) (VP (VBG collecting) (NP (PRP$ their) (NN evidence)))))) (CC and) (, ,) (S (PP (IN of) (NP (NN course))) (, ,) (SBAR (WHADVP (WRB when)) (S (NP (PRP i)) (VP (VBD got) (ADVP (RB there))))) (NP (PRP they)) (VP (VBD showed) (NP (PRP me)) (NP (NP (DT the) (NN location)) (CC and) (, ,) (PP (PP (IN of) (NP (NN course))) (, ,) (RB then) (S (VP (AUXG having) (S (VP (TO to) (VP (AUX do))))))))))))
+

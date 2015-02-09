@@ -1,0 +1,111 @@
+
+Limo Relation Extraction (RE) system 
+------------------------------------
+
+Author:	Barbara Plank
+Date:   May-September, 2013
+
+version: v0.1a
+
+This package contains limo, a RE system based on tree kernels.
+If you use this system, please cite [1].
+
+
+REQUIREMENTS:
+Sun Java version 1.6 or higher, python3, gcc, Charniak parser
+
+INSTALL:
+
+Compile SVM-light with semantics:
+
+cd svm_semantic
+make clean
+make
+cd ..
+
+You should now have "svm_learn" and "svm_classify" in the svm_semantic folder.
+
+SET DIRECTORY:
+
+Set the LIMODIR directory to the directory where you have put limo-rel-ACL2013, e.g.
+
+export LIMODIR=${HOME}/tools/limo-rel-ACL2013
+
+PARSER:
+
+Install the Charniak parser [2] and put the "bllip-parser" directory
+under parser/ To test your installation, run:
+
+./parser/parse-charniak.sh parser/test.charniak
+
+You should get: 
+(S1 (NP (NN Phone) (: :) (NP (CD -LRB-800-RRB-728-3843) (NNP The) (NNP Salvation) (NNP Army)) (: :) (NP (NP (NNP P.O.) (NNP Box) (CD 269)) (, ,) (NP (NP (NNP Alexandria)) (, ,) (NP (NNP VA) (CD 22313)))) (. .)))
+
+MATRIX:
+
+to get the matrix files, execute the script:
+
+sh getmatrix.sh
+
+CHECK:
+
+Run the script check.sh that checks if you have configured the system correctly.
+If you just see "Done!" then your system is configured correctly. 
+
+DATA:
+
+The data is not included in this release because of licensing
+issues. To replicate our experiments, convert the ACE 2005 data to
+Roth & Yih format using the convert2RothYih.sh script. For instance,
+there is example file in the data_example folder. It can be converted
+to the Roth & Yih format (which was used in CoNLL 2004 and is also
+used in our experiments) by running the following command:
+
+mkdir -p data/ace2005/bc_example-RY;  ./convert2RothYih.sh data_example/bc_example/ > data/ace2005/bc_example-RY/bc_example.corp
+mkdir -p data/ace2005/nw_bn_example-RY;  ./convert2RothYih.sh data_example/nw_bn_example/ > data/ace2005/nw_bn_example-RY/nw_bn_example.corp
+
+
+RUNNING:
+
+Once you have the data, you can run the system -- examine the Makefile. 
+
+For a quick test on the example data, run:
+
+make example & 
+
+This produces the file nohup.example-baseline-charniak.true.f1.PET.c2.4 which
+contains all details (parameters, data, evaluation, etc.). The example file 
+reparses the data each time; once you have done that, you can simply uncomment
+the respective parts in the configuration file to avoid reparsing it again.
+The models, predictions etc will be stored in the run/ directory.
+The output on the small test set will be stored in:
+run/semtk-PET-t5-F1-L0.4-c2.4-GRtype-Trnw_bn_example-RY-Tebc_example-RY-conf-train-test-charniak-zhang-ry-example.xml-onlyTree/test/out.predicted.class.output
+
+
+
+LICENSE:
+
+See the LICENSE file.
+
+References:
+
+[1] Barbara Plank and Alessandro Moschitti. Embedding Semantic
+    Similarity in Tree Kernels for Domain Adaptation of Relation
+    Extraction. In Proceedings of the Annual Meeting of the
+    Association for Computational Linguistics (ACL 2013), Sofia,
+    Bulgaria, August 2013.
+
+[2] Charniak parser: https://github.com/BLLIP/bllip-parser
+
+[3] Alessandro Moschitti, Daniele Pighin, and Roberto Basili. Tree
+    Kernels for Semantic Role Labeling. Computational Linguistics,
+    Volume 34, Number 2, p.193-224, 2008
+
+Disclaimer: Parts of the code in this package are inspired by Exrel [3]
+(Pighin, 2010) and makes use of Stanford NLP tools.
+
+Acknowledgments: 
+This research has been supported by the European FP7 project LiMoSINe.
+
+Contact:
+Barbara Plank, http://disi.unitn.it/~plank

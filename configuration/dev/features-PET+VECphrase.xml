@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<exrel>
+	<extractorLayout>
+
+	    <separator id="sep1">|BT|</separator>
+
+		<structuredgroup id="str1">
+			<structuredfeature class="limo.exrel.features.re.structured.PET" />
+		</structuredgroup>
+
+        <separator id="sep4">|ET|</separator>
+        
+        <structuredgroup id="vec2">
+			<structuredfeature class="limo.exrel.features.re.structured.VECphrase" />
+		</structuredgroup>
+
+        <separator id="sep5">|EV|</separator>
+
+	</extractorLayout>
+
+</exrel>

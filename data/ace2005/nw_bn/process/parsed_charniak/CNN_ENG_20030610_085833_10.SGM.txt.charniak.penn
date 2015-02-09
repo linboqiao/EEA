@@ -1,0 +1,20 @@
+(S1 (FRAG (ADVP (RB back) (PP (IN in) (NP (DT this) (NN city)))) (, ,) (NP (NP (DT a) (NN courthouse)) (PP (IN in) (NP (NNP manhattan)))) (. .)))
+
+(S1 (S (NP (NP (NNP sam) (NNP waksal)) (, ,) (NP (NN founder)) (CC and) (JJ former)) (VP (VBZ considers) (SBAR (S (NP (NP (NN o)) (PP (IN of) (NP (NN imclone)))) (VP (AUX is) (VP (VBN scheduled) (S (VP (TO to) (VP (AUX be) (VP (VBN sentenced) (NP (NN today))))))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (VBD pleaded) (ADJP (JJ guilty)) (ADVP (RBR earlier) (NP (DT this) (NN year))) (PP (TO to) (NP (NP (NN insider) (NN trading)) (, ,) (NP (NN bank) (NN fraud)) (CC and) (NP (NN tax) (NN evasion))))) (. .)))
+
+(S1 (S (NP (NNP waksal)) (VP (MD could) (VP (AUX be) (VP (VBN fined) (NP (NP (QP ($ $) (CD 3.5) (CD million))) (, ,) (VP (VBG facing) (NP (NP (DT a) (NN maximum)) (PP (IN of) (NP (NP (CD 75) (NNS years)) (PP (IN in) (NP (NN prison))))))) (, ,) (VP (VBN expected))) (, ,) (ADVP (RB though)) (, ,) (S (VP (TO to) (VP (VB receive) (NP (QP (RB about) (CD six) (TO to) (CD seven)) (NNS years)))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (NP (NP (DT the) (JJ early) (NN indication)) (SBAR (S (NP (PRP we)) (VP (AUX 've) (VP (AUX been) (VP (VBN given)))))))) (. .)))
+
+(S1 (S (NP (NP (NP (DT a) (NN friend)) (PP (IN of) (NP (PRP$ his)))) (, ,) (NP (NNP martha) (NNP stewart)) (, ,)) (VP (VBD pleaded) (ADJP (RB not) (JJ guilty)) (NP (JJ last) (NN week))) (. .)))
+
+(S1 (S (NP (DT the) (NNS charges)) (VP (VBN related) (PP (TO to) (NP (NP (PRP$ her) (NN sale)) (PP (IN of) (NP (JJ imclone) (NN stock)))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (VBD sold) (NP (DT the) (NN share)) (PP (IN as) (NP (NN day))) (SBAR (IN before) (S (NP (NP (JJ bad) (NN news)) (PP (IN about) (NP (DT the) (NN company)))) (VP (VBD sent) (S (NP (DT the) (NN stock) (NN price)) (VP (VBG falling))))))) (. .)))
+
+(S1 (FRAG (ADVP (RB considerably)) (. .)))
+
+(S1 (NP (NP (NP (NNP sam) (NNP waksal)) (, ,) (VP (VBN sentenced))) (, ,) (NP (CD 10:00) (RB a.m.)) (, ,) (NP (NP (JJ local) (NN time)) (ADVP (RB here)) (PP (IN in) (NP (NNP new) (NNP york)))) (. .)))
+

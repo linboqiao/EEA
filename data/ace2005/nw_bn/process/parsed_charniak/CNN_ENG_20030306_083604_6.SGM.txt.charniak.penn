@@ -1,0 +1,16 @@
+(S1 (S (NP (NP (NNS tens)) (PP (IN of) (NP (NP (NNS thousands)) (PP (IN of) (NP (NN college) (CC and) (JJ high) (NN school) (NNS students)))))) (VP (VBP stage) (NP (NP (JJ antiwar) (NNS protests)) (PP (IN on) (NP (NNS campuses)))) (NP (NN yesterday)) (PP (IN from) (NP (JJ coast-to-coast)))) (. .)))
+
+(S1 (S (NP (NP (NP (NNP california)) (ADVP (RB now))) (, ,) (NP (JJ high) (NN school)) (CC and) (NP (NN college) (NNS students))) (ADVP (RB there)) (VP (VBD skipped) (NP (NN class)) (S (VP (TO to) (VP (VB show) (NP (NP (PRP$ their) (NN opposition)) (PP (TO to) (NP (NP (DT a) (JJ u.s.-led) (NN war)) (PP (IN with) (NP (NNP iraq)))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NNS books)) (NP (QP (RB not) (NNS bombs)) (NN demonstration)) (VP (VBD coored) (VP (VBN naed) (PP (IN by) (NP (DT the) (NX (NX (JJ national) (NN youth)) (CC and) (NX (NN student) (NN peace) (NN coalition))))))) (. .)))
+
+(S1 (NP (NP (NN record) (NNS temperatures)) (PP (IN in) (NP (DT the) (NN north))) (. .)))
+
+(S1 (S (VP (VBG threatening) (ADVP (RB right) (RB now)) (S (VP (TO to) (VP (VB freeze) (PP (IN over) (NP (NN lake))) (NP (JJ superior) (NN surface)))))) (. .)))
+
+(S1 (S (SBAR (IN if) (FRAG (ADVP (RB so)))) (, ,) (NP (NNS forecasters)) (VP (VBP say) (SBAR (S (NP (PRP it)) (VP (MD will) (VP (AUX be) (NP (DT the) (JJ first) (NN time)) (ADVP (RB there)) (PP (IN in) (NP (QP (RB about) (CD two)) (NNS decades)))))))) (. .)))
+
+(S1 (NP (NP (NNP lake) (NNP superior)) (, ,) (NP (NP (DT the) (JJS largest)) (PP (IN of) (NP (DT the) (CD five) (JJ great) (NNS lakes)))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX does) (RB n't) (VP (VB look) (ADJP (RB too) (JJ frozen)) (ADVP (RB there)))) (. .)))
+

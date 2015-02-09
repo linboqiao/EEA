@@ -1,0 +1,30 @@
+(S1 (S (NP (DT A) (NNP CNN) (NN poll)) (VP (VBZ asks) (NP (NNS readers)) (S (VP (TO to) (VP (NN rate) (NP (NP (NP (DT the) (NN president) (POS 's)) (NN State)) (PP (IN of) (NP (DT the) (NNP Union) (NN speech)))) (NP (JJ last) (NN night)))))) (. .)))
+
+(S1 (S (PP (IN After) (NP (CD 90,000) (NNS votes))) (NP (NNP Mr.) (NNP Bush)) (VP (AUX has) (NP (NP (DT a) (`` `) (NNP C-C) (NNP +) ('' ') (NN grade)) (PP (IN across) (NP (DT the) (NN board)))) (, ,) (S (VP (VBG meaning) (SBAR (S (S (NP (CD 45,000) (NNPS Republicans)) (VP (VBD gave) (NP (PRP him)) (NP (DT an) (`` `) (NNP A) ('' ')))) (CC and) (S (NP (CD 45,000) (NNS liberals)) (VP (VBD failed) (NP (PRP him))))))))) (. .)))
+
+(S1 (S (CC But) (NP (DT a) (JJ new) (NNP CNN\/USA) (NNP Today\/Gallup) (NN poll)) (VP (VBZ suggests) (NP (NP (JJR more) (NNS people)) (ADJP (JJ side) (PP (IN with) (NP (DT the) (NN president)))))) (. .)))
+
+(S1 (S (NP (NP (CD 70) (NN percent)) (PP (IN of) (NP (NNS respondents)))) (VP (VBD said) (SBAR (S (NP (NP (NP (NNP Bush) (POS 's)) (NNS policies)) (PP (IN on) (NP (NN health) (NN care)))) (VP (AUX were) (ADJP (JJ positive)) (, ,) (SBAR (IN while) (S (NP (CD 66) (NN percent)) (VP (VBN approved) (PP (IN of) (NP (NP (NP (DT the) (NN president) (POS 's)) (NN plan)) (PP (IN for) (NP (NNP Social) (NNP Security)))))))))))) (. .)))
+
+(S1 (S (NP (CD 78) (NN percent)) (VP (VBD said) (SBAR (S (NP (NP (NNP U.S.) (NN policy)) (PP (IN in) (NP (NNP Iraq)))) (VP (AUX is) (VP (VBG hading) (PP (IN in) (NP (NP (DT the) (JJ right) (NN direction)) (, ,) (NP (NP (DT a) (ADJP (CD 12) (NN percentage) (NN point)) (NN increase)) (PP (IN over) (NP (JJ pre-speech) (NN polling))))))))))) (. .)))
+
+(S1 (S (ADVP (RB Overall)) (, ,) (NP (NP (CD 77) (NN percent)) (PP (IN of) (NP (NNS respondents)))) (VP (VBD said) (SBAR (S (NP (NNP Bush)) (VP (AUX is) (VP (VBG taking) (NP (DT the) (NN country)) (PP (IN in) (NP (DT the) (JJ right) (NN direction))) (PP (IN after) (NP (NP (DT the) (NN speech)) (VP (VBN compared) (PP (TO to) (NP (NP (CD 67) (NN percent)) (ADVP (RB beforehand)))))))))))) (. .)))
+
+(S1 (SBARQ (CC And) (WHNP (WP who)) (SQ (VP (AUX was) (RB n't) (VP (VBN moved) (PP (IN by) (NP (NP (NP (DT the) (VB embrace)) (PP (IN of) (NP (NP (NN mother)) (PP (IN of) (NP (NP (DT a) (NN soldier)) (VP (VBN killed) (PP (IN in) (NP (NNP Iraq))))))))) (CC and) (NP (NP (DT the) (NN daughter)) (PP (IN of) (NP (NP (DT a) (NN man)) (VP (VBN killed) (PP (IN by) (NP (NP (NNP Saddam) (NNP Hussein) (POS 's)) (NN regime)))))))))))) (. ?)))
+
+(S1 (S (NP (PRP It)) (VP (AUX was) (NP (DT a) (JJ beautiful) (NN moment)) (NP (JJ last) (NN night)) (SBAR (WHNP (WDT that)) (S (VP (VBD resulted) (PP (IN in) (NP (NP (DT the) (JJS longest) (NN standing) (NN ovation)) (PP (IN of) (NP (DT the) (NN evening))))))))) (. .)))
+
+(S1 (S (NP (NP (NN Today)) (NP (NP (DT the) (NNS parents)) (PP (IN of) (NP (NNP Marine) (NNP Corps)))) (NNP Sgt.) (NNP Byron) (NNP Norwood)) (VP (VBD said) (SBAR (S (NP (NP (DT the) (JJ Iraqi) (NN woman)) (, ,) (NP (NNP Safia) (NNP Taleb) (NNP al-Suhail)) (, ,)) (VP (AUX had) (VP (VBN turned) (CC and) (VBN introduced) (NP (PRP herself)) (PP (ADVP (RB just)) (IN before) (NP (DT the) (NN speech)))))))) (. .)))
+
+(S1 (S (`` ``) (S (NP (PRP She)) (VP (VP (VBD thanked) (NP (PRP us)) (PP (IN for) (NP (NP (PRP$ our) (NN son) (POS 's)) (NN sacrifice)))) (CC and) (VP (VBD made) (ADJP (JJ sure) (SBAR (S (NP (PRP we)) (VP (VBD knew) (SBAR (S (NP (NP (DT the) (NNS people)) (PP (IN in) (NP (NNP Iraq)))) (VP (AUX were) (ADJP (JJ grateful) (PP (IN for) (NP (NP (DT the) (NNS sacrifices)) (SBAR (WHNP (WDT that)) (S (VP (AUX were) (VP (VBN made) (PP (CONJP (RB not) (RB just)) (PP (IN by) (NP (PRP$ our) (NN son))) (, ,) (CC but) (PP (IN by) (NP (NP (DT all)) (PP (IN of) (NP (PRP them))))))))))))))))))))))) (, ,) ('' '') (NP (NNP Janet) (NNP Norwood)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX was) (NP (NP (DT an) (JJ uplifting) (NN moment)) (VP (VBG suggesting) (SBAR (IN that) (S (ADVP (RB maybe)) (NP (PRP we)) (VP (AUX 're) (VP (VBG doing) (NP (DT the) (JJ right) (NN thing))))))))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (VBD talked) (PP (TO to) (NP (NP (DT a) (NN friend)) (VP (ADVP (RB currently)) (VBG serving) (PP (IN in) (NP (NNP Iraq))) (NP (JJ last) (NN night))))))) (CC and) (S (NP (PRP he)) (VP (VBZ says) (SBAR (S (S (NP (NN morale)) (VP (AUX is) (ADVP (RB up)))) (CC and) (S (NP (NP (DT the) (NN presence)) (PP (IN of) (NP (NNS troops)))) (VP (AUX is) (NP (DT a) (JJ positive) (NN thing)))))))) (. .)))
+
+(S1 (S (NP (PRP They)) (ADVP (RB just)) (VP (MD ca) (RB n't) (VP (VP (VB pack) (PRT (RP up))) (CC and) (VP (VB leave)))) (. .)))
+
+(S1 (FRAG (ADVP (RB Not) (RB just) (RB yet)) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (MD must) (VP (AUX be) (ADJP (JJ patient)))) (. .)))
+

@@ -1,0 +1,8 @@
+(S1 (S (NP (NP (NP (JJ israeli) (JJ prime) (NN minister)) (NP (NNP ariel) (NNP sharon))) (CC and) (NP (JJ palestinian) (JJ prime) (NN minister))) (NP (NNP mahmoud) (NNS abbas)) (VP (VP (VBN scheduled) (S (VP (TO to) (VP (VB meet) (NP (NN today)))))) (, ,) (NP (NP (PRP$ their) (JJ second) (NN chance)) (ADVP (RB now)) (S (VP (TO to) (VP (VB discuss) (NP (NP (DT the) (NNP bush) (NN administration) (POS 's)) (NN road) (NN map)) (NP (ADJP (RBR more) (JJ mideast)) (NN peace))))))) (. .)))
+
+(S1 (S (NP (DT both) (NNS sides)) (VP (MD will) (VP (VB meet) (PP (IN with) (NP (NNP president) (NNP bush))) (SBAR (WHADVP (WRB when)) (S (NP (PRP he)) (VP (VBZ arrives) (PP (IN in) (NP (DT the) (JJ mideast) (JJ next) (NN week)))))))) (. .)))
+
+(S1 (S (NP (PRP$ our) (NNP jerusalem) (NN bureau) (NN chief) (NNP mike) (NNP hanna)) (VP (VBG standing) (ADVP (IN by)) (PP (IN with) (NP (NP (JJR more)) (CC and) (NP (DT that))))) (. .)))
+
+(S1 (NP (NNP mike) (. ?)))
+

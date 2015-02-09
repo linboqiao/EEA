@@ -1,0 +1,8 @@
+(S1 (S (CC and) (NP (NP (NNS investigators)) (PP (IN in) (NP (NNP taiwan)))) (VP (VBP raise) (NP (NP (JJR more) (NNS questions)) (PP (IN about) (NP (NP (DT the) (NN disintegration) (CC and) (NN crash)) (PP (IN of) (NP (DT a) (NNP china) (NNS airlines) (NN jet)))))) (NP (JJ last) (MD may))) (. .)))
+
+(S1 (S (NP (NP (DT all) (CD 225) (NNS people)) (ADVP (RB aboard))) (VP (AUX were) (VP (VBN killed))) (. .)))
+
+(S1 (S (NP (DT a) (NN probe)) (VP (AUX has) (VP (VBN determined) (SBAR (S (NP (DT the) (NN plane)) (VP (AUX had) (NP (NP (NN metal) (NN fatigue) (NNS cracks)) (CC and) (NP (NN metal) (NN corrosion)))))))) (. .)))
+
+(S1 (S (NP (NNS investigators)) (VP (VBP say) (SBAR (S (NP (DT the) (NNS cracks)) (VP (MD may) (VP (AUX have) (VP (AUX been) (NP (NP (DT the) (NN result)) (PP (IN of) (NP (NP (DT a) (NN runway) (NN accident)) (ADVP (NP (CD 20) (NNS years)) (RB earlier))))))))))) (. .)))
+

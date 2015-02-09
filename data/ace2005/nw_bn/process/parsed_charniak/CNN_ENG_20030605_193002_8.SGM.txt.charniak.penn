@@ -1,0 +1,42 @@
+(S1 (S (NP (NNP martha) (NNP stewart)) (VP (AUX is) (RB n't) (NP (NP (DT the) (JJ only) (JJ corporate) (NN figurehead)) (PP (IN in) (NP (NP (DT the) (NN news)) (NP (NN today)))))) (. .)))
+
+(S1 (S (NP (DT the) (NN jury)) (VP (AUX has) (VP (VBN handed) (PRT (RP down)) (NP (NP (QP (DT a) ($ $) (CD 30) (CD million))) (, ,) (NP (NP (DT a) (JJ grand) (NNP rapids) (NN jury)) (VP (VBG saying) (SBAR (S (NP (NNP taco) (NNP bell)) (VP (AUX has) (S (VP (TO to) (VP (VB pay) (NP (NP (DT the) (JJ true) (NNS creators)) (PP (IN of) (NP (DT the) (NN chihuahua) (NN mass) (NN cot))))))))))))))) (. .)))
+
+(S1 (S (NP (CD two) (NNS men)) (VP (VP (VBD claimed) (SBAR (S (NP (PRP$ their) (NN idea)) (VP (VBN originated))))) (, ,) (CC and) (VP (VBD proved) (SBAR (S (NP (PRP i)) (VP (AUX am) (PP (IN in) (NP (DT the) (JJ wrong) (NN business)))))))) (. .)))
+
+(S1 (S (NP (NNP taco) (NN ball)) (VP (AUX is) (VP (VBG appealing))) (. .)))
+
+(S1 (SINV (VP (VBZ joins) (NP (PRP me))) (VP (AUX is)) (NP (NP (NNP tom) (NNS rinks)) (PP (IN with) (NP (PRP$ his) (NN attorney) (NNP john) (NNP doza)))) (. .)))
+
+(S1 (S (SBAR (NNP tom)) (, ,) (NP (PRP you)) (VP (AUX 've) (VP (VBN got) (S (VP (TO to) (VP (AUX be) (ADJP (JJ happy) (PP (IN with) (NP (DT the) (NN settlement))))))))) (. .)))
+
+(S1 (S (S (NP (PRP i)) (VP (VBP know) (SBAR (S (NP (PRP they)) (VP (AUX 're) (VP (VBG going) (S (VP (TO to) (VP (VB appeal)))))))))) (, ,) (CC but) (S (NP (JJ first) (FW et)) (VP (VBP tell) (NP (PRP$ my)) (SBAR (WHADVP (WRB how)) (S (NP (PRP you)) (VP (VB calm) (PRT (RP up)) (PP (IN with) (NP (DT the) (NN chihuahua) (NN character)))))))) (. ?)))
+
+(S1 (S (NP (NP (NNP joe)) (CC and) (NP (PRP myself))) (PRN (, ,) (S (NP (PRP he)) (VP (AUX 's) (NP (DT the) (NN partner)))) (, ,)) (NP (PRP we)) (VP (AUX were) (VP (VBG looking) (S (VP (TO to) (VP (VB design) (NP (DT some) (NNS licenses)) (S (VP (TO to) (VP (VB put) (PP (PP (IN on) (NP (DT some) (NNS t-shirts))) (, ,) (CC and) (PP (IN at) (NP (NP (DT the) (NN time)) (SBAR (S (S (NP (JJ big) (NNS dogs)) (VP (AUX were) (UCP (ADJP (JJ big)) (, ,) (CC and) (NP (PDT all) (DT the) (JJ mean) (NNS dogs))))) (, ,) (CC and) (S (NP (DT no) (NN fear)) (VP (AUX was) (NP (DT a) (JJ big) (NN hit)))) (, ,) (CC and) (S (NP (PRP we)) (VP (VBD thought) (SBAR (S (NP (PRP it)) (VP (AUX was) (NP (NP (NN time)) (PP (IN for) (NP (NP (DT a) (NN bit)) (PP (IN of) (NP (NP (DT a) (NN change)) (PP (IN for) (NP (DT the) (JJ 18-24) (NN crowd)))))))))))))))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB so)) (NP (PRP we)) (VP (VP (ADVP (RB actually)) (VBD took) (NP (NP (DT the) (NN opposite)) (PP (IN of) (NP (PDT all) (DT that))))) (, ,) (CC and) (VP (VBD looked) (PP (IN for) (NP (DT the) (NNS smallers) (, ,) (JJS weakest) (, ,) (ADJP (RBS most) (JJ timid)) (NN animal)))) (, ,) (CC and) (VP (VBD tried) (S (VP (TO to) (VP (VB make) (S (NP (PRP him)) (VP (VB cool))))))) (, ,) (VP (VBD tried) (S (VP (TO to) (VP (VB make) (S (NP (PRP him)) (ADJP (JJ big)))))))) (. .)))
+
+(S1 (S (CC and) (NP (PRP we)) (VP (VBD knew) (SBAR (S (SBAR (IN if) (S (NP (PRP he)) (VP (VBD gave) (NP (PRP him)) (NP (DT some) (NN spunk))))) (, ,) (NP (NN everybody)) (VP (MD would) (VP (VB root) (PP (IN for) (NP (PRP him)))))))) (. .)))
+
+(S1 (SBARQ (WHADVP (WRB how)) (SQ (AUX did) (NP (DT the) (NNP taco) (NNP bell) (NNS folks)) (VP (VB run) (PP (IN into) (NP (PRP you))))) (. ?)))
+
+(S1 (S (NP (PRP they)) (ADVP (RB actually)) (VP (VBD came) (PP (TO to) (NP (PRP us))) (PP (IN at) (NP (DT a) (NN licensing) (NN show)))) (. .)))
+
+(S1 (S (S (NP (PRP we)) (VP (AUX had) (VP (AUX been) (VP (VBG licensing) (PP (TO to) (NP (NP (DT a) (NN bunch)) (PP (IN of) (NP (JJ different) (NNS manufacturers))))))))) (, ,) (CC and) (S (PP (IN in) (NP (CD 1996))) (NP (PRP we)) (VP (AUX were) (PP (IN at) (NP (DT a) (NN show))) (PP (IN in) (NP (NP (JJ new) (NNP york) (NN city)) (SBAR (WHADVP (WRB where)) (S (NP (NP (NNP nick) (NNP loada)) (CC and) (NP (JJ universal) (NNS studios)) (, ,) (CC and) (NP (NNP taco) (NNP bell))) (VP (VP (VBD walked) (PRT (RP up)) (PP (TO to) (NP (PRP us)))) (CC and) (VP (VBD said) (SBAR (S (S (NP (PRP they)) (VP (AUX were) (VP (VBG looking) (PP (IN for) (NP (NP (DT a) (JJ mass) (NN cot)) (PP (IN for) (NP (PRP$ their) (NN brand)))))))) (CC and) (S (NP (DT this)) (VP (MD would) (VP (AUX be) (ADJP (JJ perfect))))))))))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (VBD started) (NP (NP (DT a) (NN year) (NN relationship)) (SBAR (S (NP (PRP we)) (VP (AUX had) (PP (IN with) (NP (PRP them)))))))) (. .)))
+
+(S1 (S (CC and) (S (NP (PRP it)) (VP (VBD went) (ADVP (RB on)) (PP (IN for) (NP (DT a) (NN year))))) (, ,) (CC and) (S (NP (PRP you)) (VP (VBD thought) (SBAR (S (S (NP (PRP it)) (VP (AUX did) (RB n't) (VP (VB pan) (PRT (RP out))))) (CC and) (S (ADVP (RB then)) (NP (PRP you)) (VP (VP (VBP pick) (PRT (RP up)) (NP (DT a) (NN trade) (NN paper))) (CC and) (VP (VBP read) (SBAR (S (NP (PRP they)) (VP (AUX 're) (VP (VBG going) (ADVP (RB ahead)) (PP (IN with) (NP (PRP it)))))))))))))) (. ?)))
+
+(S1 (S (SBAR (IN after) (S (NP (PRP we)) (VP (VP (VBD finalized) (NP (PDT all) (DT the) (NNS commercials))) (, ,) (CC and) (VP (ADVP (RB actually)) (AUX done) (NP (NP (DT the) (NN campaign)) (PP (IN for) (NP (PRP them)))))))) (, ,) (S (NP (PRP they)) (VP (VBD hired) (NP (DT a) (JJ new) (NN ad) (NN agency)))) (, ,) (CC and) (S (NP (NN telephone) (NNS calls)) (ADVP (RB just)) (VP (VBD started) (S (VP (VBG staggering) (PRT (RP off)))))) (. .)))
+
+(S1 (S (S (ADVP (RB then)) (S (NP (PRP they)) (VP (VBD stopped) (VP (VBG coming)))) (, ,) (CC and) (S (NP (PRP we)) (ADVP (RB ahead)) (VP (VBP imp) (NP (DT the) (NNS ads))))) (, ,) (CC and) (S (NP (PRP they)) (VP (AUX were) (SBAR (WHNP (RB exactly) (WP what)) (S (NP (PRP we)) (VP (AUX had) (VP (VBN presented) (PP (IN for) (NP (IN over) (DT a) (NN year))))))))) (. .)))
+
+(S1 (SQ (SBAR (WHADVP (WRB when)) (S (NP (PRP you)) (ADVP (RB first)) (VP (VP (VBD heard) (NP (DT that))) (, ,) (CC or) (VP (VBD read) (NP (DT that)))))) (, ,) (AUX did) (NP (PRP you)) (ADVP (RB just)) (VP (VB go) (ADJP (JJ ballistic))) (. ?)))
+
+(S1 (S (S (NP (PRP i)) (VP (VBP mean) (, ,) (NP (DT no) (NN offense)))) (, ,) (CC but) (S (NP (PRP it)) (VP (AUX was) (NP (NP (PRP you)) (CC and) (NP (NP (CD one) (JJ other) (NN guy)) (SBAR (WHNP (WP who)) (S (VP (VBD created) (NP (DT this) (NN thing))))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX 're) (NP (DT a) (JJ huge) (, ,) (JJ huge) (NN corporation))) (. .)))
+
+(S1 (S (S (INTJ (UH yeah)) (, ,) (NP (PRP it)) (VP (AUX was) (ADJP (JJ devastating)))) (PRN (, ,) (S (VP (TO to) (VP (VB say) (NP (DT the) (JJS least))))) (, ,)) (CC but) (S (NP (PRP we)) (ADVP (RB really)) (VP (AUX did) (RB n't) (VP (VB know))))))
+

@@ -1,0 +1,22 @@
+(S1 (INTJ (INTJ (UH welcome)) (CC and) (INTJ (JJ good) (NN evening) (, ,) (NN everyone) (. .))))
+
+(S1 (S (NP (NNP mike)) (VP (AUX is) (ADVP (RB off)) (NP (NN tonight))) (. .)))
+
+(S1 (S (PP (TO to) (NP (NP (PRP$ our) (JJ top) (NN story)) (PP (IN of) (NP (DT the) (NN evening))))) (: --) (NP (NNP martha) (NNP stewart)) (VP (AUX is) (VP (VBG stepping) (PRT (RP down)) (PP (IN as) (NP (NP (NN head)) (PP (IN of) (NP (PRP$ her) (NNS media) (NN empire))))))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (VBD announced) (NP (PRP$ her) (NN decision) (S (VP (TO to) (VP (VB vacate) (NP (PRP$ her) (NN post)) (PP (IN as) (NP (NP (JJ chief) (NN executive)) (PP (IN of) (NP (NNP martha) (NNP stewart) (NN living) (NNS omnimedia))))))))) (, ,) (PP (VBG following) (NP (NP (NN word)) (PP (IN of) (NP (DT a) (JJ federal) (NN indictment)))))) (. .)))
+
+(S1 (S (PP (IN in) (NP (DT a) (NN statement))) (, ,) (NP (PRP she)) (VP (VBZ says) (SBAR (S (S (NP (PRP she)) (VP (AUX 's) (VP (VBG stepping) (PRT (RP aside)) (PP (IN in) (NP (NP (DT the) (JJS best) (NN interest)) (PP (IN of) (NP (DT the) (NN company)))))))) (, ,) (CC but) (S (NP (PRP she)) (VP (MD will) (VP (VB stay) (PP (IN on) (NP (NP (DT the) (NN board)) (PP (IN of) (NP (NNS directors))))))))))) (. .)))
+
+(S1 (S (NP (NNP stewart)) (VP (VBD pleaded) (ADJP (RB not) (JJ guilty) (PP (TO to) (NP (DT a) (JJ nine-count) (NN indictment))))) (. .)))
+
+(S1 (S (NP (DT the) (NNS charges)) (VP (VBP include) (NP (NP (NN conspiracy)) (PP (TO to) (S (VP (VBP obstruct) (NP (NP (NN justice) (CC and) (NN perjury)) (VP (VBN connected) (PP (TO to) (NP (DT an) (NN insider) (NN trading) (NN scandal)))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN government)) (ADVP (RB also)) (VP (VBD filed) (NP (JJ civil) (NNS charges)) (PP (IN against) (NP (PRP her)))) (. .)))
+
+(S1 (S (NP (PRP she)) (VP (AUX is) (VP (VBN charged) (PP (IN with) (S (VP (VP (VBG using) (NP (NN insider) (NN information)) (S (VP (TO to) (VP (VB bail) (PP (IN out) (PP (IN of) (NP (DT a) (JJ biotech) (NN stock)))) (NP (DT the) (NN day)) (SBAR (IN before) (S (NP (PRP$ its) (NN price)) (VP (VBD tanked)))))))) (, ,) (CC and) (RB then) (VP (VBG trying) (S (VP (TO to) (VP (VB cover) (NP (PRP it)) (PRT (RP up))))))))))) (. .)))
+
+(S1 (S (NP (PRP$ her) (NN stockbroker)) (VP (AUX was) (ADVP (RB also)) (VP (VBN charged))) (. .)))
+
+(S1 (S (SBAR (IN if) (S (VP (VBN convicted) (PP (IN on) (NP (DT all) (NNS counts)))))) (, ,) (NP (NNP stewart)) (VP (VBZ faces) (NP (NP (NP (QP (IN up) (TO to) (CD 30)) (NNS years)) (PP (IN in) (NP (NN prison)))) (CC and) (NP (NP (QP ($ $) (CD 2) (CD million))) (PP (IN in) (NP (NNS fines)))))) (. .)))
+

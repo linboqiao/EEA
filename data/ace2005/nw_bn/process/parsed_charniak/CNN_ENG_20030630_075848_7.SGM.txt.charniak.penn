@@ -1,0 +1,8 @@
+(S1 (S (CC and) (NP (DT the) (NN pope)) (VP (MD will) (ADVP (RB reportedly)) (VP (VB name) (NP (NP (DT a) (JJ new) (NN head)) (PP (IN of) (NP (DT the) (JJ troubled) (NNP boston) (NN archdiocese)))) (NP (DT this) (NN week)))) (. .)))
+
+(S1 (S (NP (NP (NNP sean) (NNP patrick) (NNP o'malley)) (, ,) (NP (NP (DT the) (NN bishop)) (PP (IN of) (NP (NP (NNP palm) (NNP beach)) (, ,) (NP (NNP florida))))) (, ,)) (VP (AUX is) (VP (VBN expected) (S (VP (TO to) (VP (VB replace) (NP (NNP cardinal) (NNP bernard) (NN law))))))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX 's) (PP (VBG according) (PP (TO to) (NP (DT the) (JJ national) (JJ catholic) (NN reporter))))) (. .)))
+
+(S1 (S (NP (NNP law)) (VP (VBD stepped) (ADVP (RB down)) (PP (IN in) (NP (NNP December))) (PP (IN amid) (NP (NP (NNS charges)) (PP (IN of) (NP (NP (JJ widespread) (NN child) (JJ sexual) (NN abuse)) (PP (IN in) (NP (DT the) (NN church)))))))) (. .)))
+

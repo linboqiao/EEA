@@ -1,0 +1,80 @@
+(S1 (S (NP (NP (DT The) (NNP Augusta) (NNP Free) (NNP Press)) (PRN (-LRB- -LRB-) (NP (NP (NNP motto)) (: :) (S (`` ``) (NP (PRP$ Our) (JJ only) (NN agenda)) (VP (AUX is) (NP (DT the) (NN truth))) ('' ''))) (-RRB- -RRB-))) (VP (AUX has) (NP (NP (DT a) (NNP Chris) (NNP Graham) (NN story)) (PP (IN on) (NP (DT a) (NNP Del.))))) (. .)))
+
+(S1 (NP (NP (NAC (NNP Chap) (NNP Peterson) (, ,) (NNP D-Fairfax) (, ,)) (NN bill)) (SBAR (WHNP (WDT that)) (S (VP (MD would) (VP (VB require) (NP (NP (NN payback)) (PP (IN by) (NP (NP (NNS companies)) (VP (VBN lured) (PP (TO to) (NP (NNP Virginia))) (PP (IN by) (NP (NNS incentives))))))) (SBAR (IN if) (S (NP (PRP they)) (VP (AUX do) (RB not) (VP (VB stay) (PP (IN for) (NP (CD five) (NNS years))))))))))) (. .)))
+
+(S1 (S (NP (NP (DT The) (NN text)) (PP (IN of) (NP (CD HB2898)))) (VP (AUX is) (ADVP (RB here))) (. .)))
+
+(S1 (S (NP (NNP Peterson)) (, ,) (PP (IN of) (NP (NN course))) (, ,) (VP (AUX is) (NP (NP (DT a) (NN candidate)) (PP (IN for) (NP (DT the) (NNP Lt.) (NNP Governor) (NN nomination))))) (. .)))
+
+(S1 (S (NP (NP (NNP Graham) (POS 's)) (NN article)) (VP (AUX has) (NP (NP (DT the) (JJ interesting) (NN hook)) (PP (IN of) (S (VP (VBG quoting) (NP (NP (NP (CD one)) (PP (IN of) (NP (NP (NNP Peterson) (POS 's)) (NNS rivals)))) (, ,) (NP (NP (JJ former) (NNP Congresswoman)) (CC and) (NP (NNP State) (NNP Sen.) (NNP Leslie) (NNP Byrne))) (, ,)) (PP (IN as) (S (VP (VBG approving) (PP (IN of) (NP (DT the) (NN measure)))))))))) (SBAR (IN because) (S (NP (PRP it)) (VP (AUX 's) (`` ``) (NP (NP (NN something)) (SBAR (WHNP (IN that)) (S (NP (PRP I)) (VP (AUX 've) (VP (AUX been) (VP (VBG talking) (PP (IN about)) (PP (IN for) (NP (DT some) (NN time))) (ADVP (RB now)))))))))))) (. .) ('' '')))
+
+(S1 (S (S (NP (DT The) (NNP Virginia) (NNP Economic) (NNP Developers) (NNP Association)) (VP (AUX has) (RB not) (VP (VBN taken) (NP (NP (DT a) (NN stance)) (PP (IN on) (NP (DT the) (NN bill))))))) (, ,) (CC but) (S (NP (NP (DT the) (NN organization) (POS 's)) (NN leadership)) (VP (AUX is) (VP (VBN expected) (S (VP (TO to) (VP (VB meet) (NP (NN tomorrow)) (S (VP (TO to) (VP (VB discuss) (NP (PRP it))))))))))) (. .)))
+
+(S1 (S (S (VP (VBG Demanding) (NP (NN accountability)) (PP (IN from) (NP (JJ economic) (NN development))))) (VP (AUX is) (NP (DT a) (JJ rare) (NN phenomenon))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (MD would) (VP (VB expect) (S (NP (PRP them)) (VP (TO to) (VP (VB oppose) (NP (PRP it))))))) (. .)))
+
+(S1 (S (SBAR (IN If) (S (NP (NN anybody)) (VP (MD would) (VP (VB like) (S (VP (TO to) (VP (VP (VB debate) (NP (NP (DT the) (NNS merits)) (PP (IN of) (NP (DT this) (NN proposal))))) (CC or) (VP (VB discuss) (NP (JJ economic) (NN development)) (PP (IN in) (ADJP (JJ general))))))))))) (, ,) (NP (DT the) (NN comment) (NN section)) (VP (AUX is) (ADJP (JJ open))) (. .)))
+
+(S1 (S (NP (NP (NNP PS) (CD One)) (PP (IN of) (NP (NP (PRP$ our) (NNP Bacons) (NN Rebellion) (NNS contributors)) (, ,) (NP (NNP Steven) (NNP Sisson)) (, ,)))) (VP (VBZ offers) (NP (NP (DT this) (NN testimonial)) (: :) (`` ``) (S (PP (IN Without) (NP (DT a) (NN doubt))) (, ,) (NP (DT The) (NNP Augusta) (NNP Free) (NNP Press)) (VP (AUX is) (NP (NP (DT the) (JJS best) (NN thing)) (PP (IN since) (NP (JJ sliced) (NN bread)))))))) (. !) ('' '')))
+
+(S1 (S (NP (NP (NNP Hey)) (, ,) (SBAR (WHNP (WP what)) (S (VP (AUX 's) (NP (DT this) (NN blog))))) (, ,)) (VP (VBD chopped) (NP (NN liver))) (. ?)))
+
+(S1 (S (SBAR (IN If) (S (NP (PRP I)) (VP (VBP recall) (ADVP (RB correctly))))) (, ,) (NP (NP (DT the) (JJ last) (NN time)) (SBAR (WHNP (WDT that)) (S (NP (NNP Virginia)) (ADVP (RB seriously)) (VP (VBD addressed) (NP (DT the) (`` ``) (NNS incentives) ('' '') (NN issue)))))) (VP (AUX was) (PP (IN during) (NP (DT the) (NNP Allen) (NN administration)))) (. .)))
+
+(S1 (S (S (NP (DT The) (NN idea)) (ADVP (RB then)) (VP (AUX was) (S (VP (TO to) (VP (VBP peg) (NP (NNS incentives)) (PP (TO to) (NP (NN performance)))))))) (: :) (S (SBAR (IN If) (S (NP (NP (DT the) (VBD touted) (NNS jobs)) (CC and) (NP (NN investment))) (VP (AUX do) (RB n't) (VP (VB materialize))))) (, ,) (NP (PRP you)) (VP (VBP lose) (NP (DT the) (NN tax) (NNS breaks) (CC and) (NNS incentives)))) (. .)))
+
+(S1 (S (PP (IN By) (S (VP (VBG demanding) (NP (NN accountability))))) (, ,) (NP (NP (NNP Peterson) (POS 's)) (NN bill)) (VP (AUX is) (PP (IN in) (NP (NP (DT the) (NN spirit)) (PP (IN of) (NP (NP (NNP Virginia) (POS 's)) (VBG existing) (NN policy))) (, ,) (VP (VBN thought) (S (ADVP (RB perhaps)) (ADJP (RB somewhat) (JJR tougher))))))) (. .)))
+
+(S1 (S (NP (NNP Will) (NNP Verhrs)) (VP (VBD wrote) (: :) (`` ``) (S (NP (NNP Hey)) (, ,) (SBAR (WHNP (WP what)) (S (VP (AUX 's) (NP (DT this) (NN blog))))) (, ,) (VP (VBD chopped) (NP (NN liver))))) (. ?) ('' '')))
+
+(S1 (S (NP (PRP I)) (VP (AUX 'm) (RB not) (NP (DT a) (JJ certifiable) (NN Blogophile)) (ADVP (RB yet))) (. .)))
+
+(S1 (S (PP (IN In) (NP (PRP$ my) (NN estimation))) (, ,) (NP (NP (DT the) (NNP Bacon) (POS 's)) (NN Rebellion) (NN blog)) (VP (VP (AUX is) (ADJP (ADJP (NN nothing) (JJR more)) (PP (IN than) (`` ``) (NP (NNP Bacon) (NNS Bits)) ('' '')))) (CC but) (VP (AUX do) (RB n't) (VP (VB blog) (S (NP (PRP me)) (ADJP (JJ wrong))))) (, ,) (SBAR (IN because) (S (NP (PRP I)) (VP (VBP love) (NP (NN bacon) (NNS bits)) (PP (IN on) (NP (NNS salads))))))) (. .)))
+
+(S1 (S (NP (DT The) (JJ same)) (VP (MD might) (VP (AUX be) (VP (VBD said) (PP (IN of) (NP (NP (NNP Chap) (POS 's)) (JJ condiment-packaged) (NN business) (NN bill)))))) (. .)))
+
+(S1 (S (NP (NNP Delegate) (NNP Chap) (NNP Petersen) (NN bill)) (VP (VP (AUX is) (ADJP (ADJP (NN nothing) (JJR more)) (PP (IN than) (NP (NP (NN salt) (CC and) (NN pepper) (NN electioneering)) (PP (IN in) (NP (DT the) (CD 2005) (JJ statewide) (NN campaign))))))) (: --) (CC and) (VP (AUX is) (ADVP (RB probably)) (VP (VBN tied) (PP (IN into) (NP (NP (DT the) (JJ Democratic) (VBG outsourcing) (NN clamor)) (CC and) (NP (NP (VBG growing) (NN threat)) (PP (IN of) (NP (NP (JJR more) (NN manufacturing) (NNS plants) (NN closing)) (, ,) (SBAR (WHNP (WDT which)) (S (NP (NNP John) (NNP Kerry)) (ADJP (RB politically) (JJ contrived) (CC and) (JJ sensationalized)) (PP (IN for) (NP (DT the) (JJ 04) (JJ presidential) (NN run))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNS Residents)) (PP (IN throughout) (NP (NP (NP (DT the) (NN commonwealth)) (PP (IN of) (NP (NNP Virginia)))) (CC and) (NP (NP (DT the) (NN rest)) (PP (IN of) (NP (DT the) (NN nation))))))) (VP (AUX are) (ADJP (RB economically) (JJ vulnerable) (PP (RB due) (TO to) (NP (NP (JJ free) (NN trade) (NNS agreements)) (CC and) (NP (DT the) (JJ global) (NN economy)))))) (. .)))
+
+(S1 (S (CC But) (NP (DT both) (NNS parties)) (VP (VP (AUX are) (ADJP (JJ responsible))) (CC and) (VP (AUX have) (VP (VBN voted) (PP (IN in) (NP (NP (NN favor)) (PP (IN of) (NP (DT those) (NNS agreements)))))))) (. .)))
+
+(S1 (S (NP (NP (NP (NNP Lt.) (NNP Governor) (NN candidate) (POS 's)) (NNP Chap) (NNP Peterson)) (CC and) (NP (NNP Leslie) (NNP Byrne))) (VP (VP (AUX are) (NP (DT both) (JJ good) (NNS politicians))) (, ,) (CC but) (VP (AUX need) (S (VP (TO to) (VP (VB start) (S (VP (VBG thinking) (PP (IN outside) (NP (DT the) (NN box))))) (PP (IN with) (NP (NP (NN legislation)) (SBAR (WHNP (WDT that)) (S (VP (MD will) (VP (VP (VB attract) (CC and) (VB benefit) (NP (NP (JJ economic) (NN growth)) (PP (IN for) (NP (DT the) (NN business) (NN world))))) (CC and) (VP (VB create) (NP (JJ sustainable) (NNS workplaces)) (PP (IN for) (NP (NNPS Virginians))))))))))))))) (. .)))
+
+(S1 (S (MD Will) (PRN (, ,) (S (NP (PRP I)) (VP (VBP agree) (PP (IN with) (NP (PRP$ your) (NN analysis))))) (, ,)) (NP (NP (DT the) (NNP VA) (NN business) (NN community)) (PP (IN along) (PP (IN with) (NP (NP (DT a) (NN majority)) (PP (IN of) (NP (NNP GA) (NNS members))))))) (VP (MD will) (ADVP (RB probably)) (VP (NN deep-six) (NP (DT this) (JJ 5-year) (JJ mandatory) (NN requirement)) (PP (IN for) (NP (NP (NN compensation)) (ADJP (JJ due) (PP (TO to) (NP (NN relocation)))))))) (. .)))
+
+(S1 (S (SBAR (IN If) (S (RB not) (VP (VBG bordering) (PP (IN on) (NP (NP (DT the) (JJ political) (NN ridorkulous)) (PRN (-LRB- -LRB-) (ADJP (RB ridiculously) (JJ dorky)) (-RRB- -RRB-))))))) (, ,) (NP (PRP it)) (VP (AUX 's) (ADJP (RB just) (RB plain) (JJ ludicrous)) (S (VP (TO to) (VP (VB believe) (SBAR (S (NP (NN business) (NNS owners)) (VP (MD would) (VP (VB agree) (PP (TO to) (NP (NP (DT a) (NN capital) (NN investment)) (PP (IN with) (NP (NP (NNS strings)) (VP (VBN attached) (PP (TO to) (NP (DT the) (NNS businesses) (NN health) (CC and) (NN longevity)))))))))))))))) (. .)))
+
+(S1 (S (S (NP (NNP Reward-to-punishment-to-reward)) (ADVP (RB maybe)) (NP (JJ good) (NN dog) (NN training) (NNS techniques))) (, ,) (CC but) (S (NP (PRP it)) (VP (AUX 's) (RB not) (ADJP (RB very) (NN business) (JJ friendly)))) (. .)))
+
+(S1 (S (NP (DT The) (NNP Commonwealth)) (VP (VBZ needs) (NP (NP (NN legislation)) (SBAR (WHNP (WDT that)) (S (VP (VBZ requires) (NP (NP (DT a) (JJ mandatory) (NNP Employee) (NNP Stock) (NNP Ownership) (NNP Plan)) (PRN (-LRB- -LRB-) (NP (NNP ESOP)) (-RRB- -RRB-))) (PP (IN within) (NP (DT the) (JJ contractual) (JJ economic) (NN development) (NNS agreements)))))))) (. .)))
+
+(S1 (S (S (NP (DT The) (NNP ESOP)) (VP (AUX is) (ADVP (PRP itself)) (NP (NP (DT a) (JJ corporate) (NN finance) (NN vehicle)) (SBAR (WHNP (WDT that)) (S (VP (VBZ provides) (NP (JJ monetary) (NNS incentives)) (PP (IN with) (NP (NP (NN lending) (NN institutes)) (, ,) (NP (UCP (NN state) (CC and) (JJ federal)) (NN tax) (NNS benefits)) (, ,) (NP (JJ new) (NN capital) (NN investment)) (, ,) (CC and) (NP (NP (JJS most)) (PP (IN of) (NP (DT all)))))))))))) (, ,) (NP (DT the) (NN stock) (NN ownership) (NN plan)) (VP (VBZ increases) (NP (NNP VA) (NN employee) (NN capital) (NN wealth))) (. .)))
+
+(S1 (S (NP (JJR More) (NN capital) (NN wealth)) (VP (MD will) (VP (VB drive) (NP (PRP$ our) (JJ consumer-base) (NN economy)) (PP (IN through) (NP (DT the) (VBG flipping) (NN roof))))) (. .)))
+
+(S1 (S (CC But) (ADVP (RBS most) (RB importantly)) (, ,) (NP (WRB how) (JJ many) (NNP Virginia) (NNS businesses)) (VP (MD will) (VP (VB choose) (S (VP (TO to) (VP (VB relocate) (: --) (CC or) (VB outsource)))) (SBAR (WHADVP (WRB when)) (S (NP (NN employee)) (VP (AUX are) (NP (DT the) (JJ corporate) (NNS stockowners))))))) (. ?)))
+
+(S1 (S (CC And) (NP (VBZ lets)) (VP (VBP say) (SBAR (S (S (NP (DT the) (NN business)) (VP (AUX has) (NP (DT no) (JJ other) (NN choice)))) (CC but) (S (S (VP (TO to) (VP (VB remove) (PP (TO to) (NP (DT the) (JJ third) (NN world))) (: ...) (SBAR (WHADVP (WRB When)) (S (NP (NP (NNP Virginia) (POS 's)) (NNS employees)) (VP (AUX are) (ADJP (RB fully) (JJ vested) (PP (IN in) (NP (NN company) (NN stock)))))))))) (, ,) (NP (PRP they)) (VP (MD will) (ADVP (RB also)) (VP (VB reap) (PP (IN from) (NP (NP (DT the) (NNS profits)) (PP (IN of) (NP (NP (JJR lower) (NNS wages)) (PP (IN in) (NP (DT the) (JJ global) (NN marketplace))) (PP (ADVP (RB just)) (IN like) (NP (DT the) (JJ corporate) (JJ big) (NNS boys))))))))))))) (. .)))
+
+(S1 (S (NP (PRP It)) (VP (AUX 's) (NP (NNP Win-Win)) (: --) (ADVP (NN sort) (IN of))) (. .)))
+
+(S1 (S (NP (NNP Steve) (NNP Sisson)) (VP (VBD said) (: :) (`` ``) (S (NP (NP (NP (NNP Lt.) (NNP Governor) (NN candidate) (POS 's)) (NNP Chap) (NNP Peterson)) (CC and) (NP (NNP Leslie) (NNP Byrne))) (VP (AUX are) (NP (DT both) (JJ good) (NNS politicians) (: ...)) ('' '') (S (VP (VB Define) (SBAR (WHNP (WP what)) (S (VP (VBZ makes) (NP (DT a) (`` ``) (JJ good) (NN politician)))))))))) (. !) ('' '')))
+
+(S1 (S (SBAR (IN If) (S (NP (PRP one)) (VP (VBZ defines) (NP (NN being)) (PP (IN on) (NP (NP (DT the) (JJ extreme) (JJ liberal) (NN fringe)) (PP (IN of) (NP (DT the) (NNP Democart) (NN party))))) (PP (IN as) (ADJP (JJ good)))))) (, ,) (NP (IN than) (NNP Byrne)) (ADVP (RB surely)) (VP (VBZ qualifies) (PP (IN under) (NP (DT that) (NN label)))) (. .)))
+
+(S1 (S (S (NP (NNP Peterson)) (VP (AUX is) (ADVP (RB slightly)) (PP (PP (TO to) (NP (NP (DT the) (NN right)) (PP (IN of) (NP (NNP Byrne))))) (, ,) (CC but) (RB not) (PP (IN by) (NP (RB much)))))) (: ...) (S (ADVP (NNP Frankly)) (, ,) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VP (VB consider) (NP (NN tax))) (CC and) (VP (VB spend) (NP (NNS liberals)) (PP (IN as) (NP (JJ good) (NNS politicians))))))) (. .)))
+
+(S1 (S (ADVP (RB Unfortunately)) (, ,) (S (NP (DT the) (NNP Republican) (NNP Party)) (VP (AUX is) (ADVP (RB also)) (VP (VBN loaded) (PP (IN with) (NP (NP (PRP$ its) (NN share)) (PP (IN of) (NP (JJ irresponsible) (JJ big) (NNS spenders)))))))) (, ,) (CC but) (S (ADVP (RB hopefully)) (NP (NP (DT some)) (PP (IN of) (NP (PRP them)))) (VP (MD will) (VP (AUX be) (VP (VBN held) (S (ADJP (JJ accountable) (PP (IN during) (NP (DT the) (CD 2005) (JJ primary) (NNS elections))))))))) (. .)))
+
+(S1 (S (PP (IN On) (NP (DT the) (JJ other) (NN hand))) (, ,) (NP (PRP I)) (VP (AUX have) (ADVP (RB yet)) (S (VP (TO to) (VP (VB see) (S (NP (DT any) (NNPS Democrats)) (VP (VBP challenge) (NP (NP (NNS incumbents)) (PP (IN for) (S (VP (AUXG being) (ADJP (RB fiscally) (JJ irresponsible)))))))))))) (. .)))
+
+(S1 (S (NP (NNP Accountbility)) (VP (AUX is) (ADJP (JJ important))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP hope) (SBAR (S (NP (NNP Wilder)) (VP (MD will) (VP (VB return) (NP (PRP it)) (PP (TO to) (NP (NNP Richmond)))))))) (. .)))
+
+(S1 (S (PP (IN For) (NP (NNS years))) (NP (PRP we)) (VP (AUX have) (VP (VBN seen) (NP (NP (NN abuse)) (PP (IN by) (NP (NP (`` `) (JJ public-private) ('' ') (NNS partnerships)) (PP (IN like) (NP (NP (NNP Richmond) (NNP Renaissance)) (CC and) (ADVP (RB now)) (NP (NNP VPAF))))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (MD would) (VP (VB like) (S (VP (TO to) (VP (VB see) (NP (NP (DT the) (NN bill)) (VP (VBN applied) (PP (TO to) (NP (DT the) (JJ shady) (NNP Broad) (NNP Street) (NNP CDA)))))))))) (. .)))
+

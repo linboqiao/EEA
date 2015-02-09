@@ -1,0 +1,128 @@
+(S1 (NP (CD 4) (. .)))
+
+(S1 (S (S (NP (NNP Peterson) (NNP Trial) (NNP Scott) (NNP Peterson)) (VP (AUX has) (VP (AUX been) (VP (VBN found) (S (ADJP (JJ guilty) (PP (IN of) (S (VP (VBG murdering) (NP (NP (NP (PRP$ his) (NN wife)) (NP (NNP Laci))) (CC and) (NP (PRP$ their) (JJ unborn) (NN son)))))))))))) (, ,) (CC and) (S (NP (PRP he)) (ADVP (RB now)) (VP (VBZ faces) (NP (DT the) (NN death) (NN penalty)))) (. .)))
+
+(S1 (SQ (AUX Do) (NP (PRP you)) (VP (VB think) (SBAR (S (NP (PRP he)) (VP (AUX is) (ADJP (JJ guilty) (PP (IN of) (NP (NP (DT the) (NNS crimes)) (SBAR (S (NP (PRP he)) (VP (AUX 's) (VP (AUX been) (VP (VBN convicted) (PP (IN of)))))))))))))) (. ?)))
+
+(S1 (SBARQ (SBAR (IN If) (FRAG (ADVP (RB so)))) (, ,) (WHNP (WP what)) (SQ (AUX were) (NP (PRP$ his) (NNS motives))) (. ?)))
+
+(S1 (SBARQ (SBARQ (WHADVP (WRB How) (RB closely)) (SQ (AUX did) (NP (PRP you)) (VP (VB follow) (NP (DT the) (NN trial))))) (CC and) (WHNP (WP what)) (SQ (AUX do) (NP (PRP you)) (VP (VB think) (PP (IN of) (NP (NP (DT all)) (PP (IN of) (NP (NP (DT the) (NNS media) (NN coverage)) (PP (IN of) (NP (DT the) (NN trial))))))))) (. ?)))
+
+(S1 (SBARQ (WHNP (WHNP (WDT What) (NN kind)) (PP (IN of) (NP (NN sentencing)))) (SQ (MD should) (NP (NNP Peterson)) (VP (VB receive))) (. ?)))
+
+(S1 (S (S (INTJ (UH Uh)) (, ,) (NP (EX there)) (NP (EX there)) (VP (AUX 's) (NP (NP (NN something)) (PP (IN about) (NP (DT this) (NNP Scott) (NNP Peterson) (NN trial)))) (PRN (, ,) (ADVP (RB though)) (, ,)) (SBAR (IN that) (S (NP (DT the) (NNS th)))))) (: -) (S (SBAR (IN that) (S (NP (PRP I)) (VP (MD ca) (RB n't)))) (NP (PRP I)) (VP (MD ca) (RB n't) (VP (VB recall) (NP (NN hearing))))) (. .)))
+
+(S1 (S (S (VP (AUX Did) (NP (DT the)))) (: --) (SQ (AUX are) (NP (PRP they)) (ADVP (RB still)) (VP (VBG going) (S (VP (TO to) (VP (VB try) (S (VP (TO to) (VP (VP (VB get) (NP (PRP him)) (PP (IN with) (PRN (, ,) (INTJ (UH uh)) (, ,)) (NP (DT the) (NN death) (NN penalty)))) (CC or) (VP (AUX are) (NP (PRP they)))))) (: --) (: --) (SQ (CC or) (AUX are) (NP (PRP they)) (VP (VBG going) (S (VP (TO to) (VP (AUX be) (ADJP (JJ content)) (SBAR (IN with) (S (ADVP (RB just)) (, ,) (INTJ (UH uh)) (, ,) (ADVP (RB just)) (, ,) (NP (PRP you)) (VP (VBP know) (, ,) (S (VP (VBG giving) (NP (PRP him)) (NP (NN life)) (, ,) (INTJ (UH uh)) (, ,) (VP (AUX have) (VP (VBN heard) (PP (IN about) (NP (DT that))))))))))))))))))) (. ?))))
+
+(S1 (S (NP (NNS Um)) (PRN (, ,) (S (NP (PRP I)) (VP (VBP mean))) (, ,)) (VP (AUX are) (SQ (AUX are) (NP (PRP they)) (ADVP (RB still)) (VP (VBG going) (S (VP (TO to) (VP (VB go) (PP (IN after) (NP (PRP him))) (PP (IN with) (NP (NNP al)))))) (: -) (PP (IN with) (NP (PDT all) (PRP$ their))) (: --) (NP (NP (DT all)) (PP (IN of) (NP (PRP$ their) (NN ability))))))) (. ?)))
+
+(S1 (S (S (NP (NNS Eh)) (, ,) (S (NP (PRP you)) (VP (VBP know))) (, ,) (VP (AUX are) (NP (PRP they)))) (: --) (S (AUX are) (NP (PRP they)) (VP (VBZ s) (: -) (S (NP (PRP I)) (VP (VBP think) (SBAR (IN if) (S (NP (PRP they)) (VP (AUX do) (PRN (: --) (SBAR (IN if) (S (NP (NP (PRP they)) (: --) (NP (NNS th)) (: -) (NP (PRP I))) (VP (VBP think) (SBAR (IN that) (S (NP (PRP they)) (VP (MD can))))))) (: --)) (SBAR (IN because) (S (: --) (PP (IN in) (NP (NNP California))) (, ,) (INTJ (UH uh)) (, ,) (NP (DT the) (NN baby)) (VP (AUX was) (VP (VBN considered) (NP (DT a) (NN person) (INTJ (UH Yeah) (, ,) (UH yeah)))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB So)) (, ,) (NP (NP (CD th)) (: -) (NP (RB then) (DT an)) (: -) (CC and) (NP (PRP they))) (VP (AUX had) (NP (NP (DT a) (JJ little) (NN bit)) (PP (IN about) (SBAR (IN that) (S (PP (IN at) (NP (NP (NP (NN church) (JJ last) (NN week)) (: --) (SBAR (WHADVP (WRB when)) (S (NP (PRP I)) (VP (VBD went) (PP (TO to) (NP (NN church) (NNS services))))))) (, ,) (CC or) (NP (NP (DT the) (NN week)) (ADVP (RB before))))) (, ,) (NP (PRP I)) (VP (MD ca) (RB n't) (VP (VB remember) (, ,) (FRAG (CC but) (, ,) (ADVP (RB um)) (, ,) (NP (PRP it))) (PRN (: --) (S (NP (PRP I)) (ADVP (NN kind) (IN of)) (VP (VBD thought) (ADVP (RB then)))) (: --)) (SBAR (IN that) (S (, ,) (INTJ (UH uh)) (, ,) (SBAR (WHADVP (WRB when)) (S (NP (PRP I)) (ADVP (RB first)) (VP (VBD heard) (PP (IN about) (NP (DT the) (NN case)))))) (, ,) (VP (VB let) (S (NP (PRP me)) (ADVP (RB just)) (VP (VB back) (PRT (RP up)) (NP (DT a) (JJ little) (NN bit)))))))))))))) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (S (SBAR (WHADVP (WRB When)) (S (NP (PRP I)) (ADVP (RB first)) (VP (: --) (VP (VBD heard) (NP (DT the) (NN case)) (, ,) (CC or) (PP (IN about) (NP (PRP it))) (, ,) (NP (PRP I))) (: --) (VP (VBD told) (NP (PRP myself)))))) (, ,) (SBAR (IN if) (S (NP (PRP he)) (VP (AUX did) (VP (AUX do) (NP (PRP it)))))) (, ,) (INTJ (UH Yeah)) (, ,) (NP (PRP he)) (ADVP (RB probably)) (VP (AUX did)) (. .)))
+
+(S1 (S (CC and) (NP (PRP I)) (VP (VBP think) (SBAR (S (NP (PRP he)) (VP (AUX did) (, ,) (INTJ (UH Yeah)))))) (. .)))
+
+(S1 (S (INTJ (UH uh)) (, ,) (SBAR (IN if) (S (S (NP (PRP he)) (VP (AUX did) (VP (AUX do) (NP (PRP it))))) (, ,) (NP (PRP I)) (: --) (VP (VBD thought) (PP (TO to) (NP (PRP myself)))))) (, ,) (NP (PRP he)) (VP (MD will) (ADVP (RB probably)) (VP (VB get) (: --) (NP (NP (NP (DT the) (JJ maximum) (NN sentence)) (PP (IN of) (SBAR (WHNP (WDT whatever)) (S (NP (PRP it)) (VP (AUX is) (NP (UH Well))))))) (, ,) (NP (NP (PRP he)) (NP (PRP he)) (S (NP (PRP he)) (ADVP (RB probably)) (VP (MD will) (, ,) (INTJ (UH yeah)))))))) (. .)))
+
+(S1 (FRAG (PP (IN because) (IN of) (NP (DT the) (NN baby))) (INTJ (UH Yeah)) (. .)))
+
+(S1 (S (S (S (CC and) (, ,) (PP (TO to) (NP (PRP me))) (, ,) (NP (PRP I)) (: --) (VP (AUX do) (RB n't) (VP (VB believe) (ADVP (RB even))))) (: --) (S (NP (NNS eh)) (, ,) (ADVP (RB exactly)) (, ,) (NP (PRP you)) (VP (VBP know) (, ,) (NP (JJ fetal) (NN state))))) (, ,) (NP (PRP I)) (VP (VBP believe) (SBAR (IN that) (S (NP (DT that)) (VP (AUX was) (NP (NP (DT a) (NN baby)) (: --) (SBAR (WHNP (WDT that)) (S (VP (MD could) (VP (AUX 've) (VP (VBN lived))))))))))) (. .)))
+
+(S1 (FRAG (INTJ (JJ Right)) (, ,) (NP (DT a) (JJ human) (NN being)) (, ,) (INTJ (UH yeah)) (. .)))
+
+(S1 (S (ADVP (RB So)) (, ,) (PP (TO to) (NP (PRP me))) (, ,) (NP (PRP I)) (VP (MD would) (RB n't) (PRN (: --) (NP (PRP he)) (: -) (S (NP (PRP it)) (VP (MD would) (RB n't) (VP (AUX 've) (VP (AUX been) (ADJP (JJ good)) (PP (IN if) (NP (PRP he))))))) (: --)) (SBAR (IN if) (S (NP (PRP I)) (VP (AUX had) (VP (AUX been) (PP (IN on) (NP (PRP$ his) (NN jury)))))))) (. .)))
+
+(S1 (S (ADVP (RB Mm)) (, ,) (INTJ (UH yeah)) (, ,) (NP (PRP I)) (VP (VBP see) (SBAR (WHNP (WP what)) (S (NP (PRP you)) (VP (VBP mean))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (MD could) (ADVP (RB never)) (VP (VB vote) (PRN (, ,) (S (NP (PRP I)) (VP (VBP mean))) (, ,)) (S (VP (TO to) (VP (VB let) (S (NP (PRP him)) (VP (VB go)))))))) (. .)))
+
+(S1 (S (S (INTJ (UH Well)) (, ,) (NP (PRP you)) (VP (VBP know) (S (NP (PRP I)) (VP (SYM c))))) (: -) (S (CC but) (, ,) (ADVP (RB now)) (, ,) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB know) (SBAR (IN that) (S (NP (PRP I)) (VP (MD would) (VP (VB vote) (PP (IN for) (NP (DT a) (NN death) (NN penalty))) (SBAR (IN because) (S (NP (PRP I)) (VP (AUX 'm) (RB not) (ADJP (JJ sure)) (ADVP (IN that) (DT a)))))))))))) (: --) (S (NP (DT a) (NN death)) (VP (VBZ cancels) (PRT (RP out)) (NP (DT a) (NN death)))) (. .)))
+
+(S1 (FRAG (ADVP (RB Right)) (, ,) (INTJ (UH yeah)) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX 'm) (RB not) (PRN (: --) (: --) (S (NP (PRP I)) (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB know)))) (, ,) (CC and) (S (: --) (NP (PRP I)) (VP (MD would) (RB n't) (ADVP (RB really)) (VP (AUX be) (ADJP (JJ able) (S (VP (TO to) (VP (VB vote))))))))) (: --)) (PP (IN on) (NP (DT that))) (SBAR (IN because) (S (NP (PRP$ my) (NN father)) (VP (AUX was) (VP (VBN killed) (PP (IN at) (NP (NN work)))))))) (. .)))
+
+(S1 (S (INTJ (UH Oh)) (, ,) (NP (PRP I)) (VP (AUX 'm) (ADJP (JJ sorry) (S (VP (TO to) (VP (VB hear) (NP (DT that))))))) (. .)))
+
+(S1 (S (S (ADVP (RB So)) (, ,) (NP (PRP you)) (VP (VBP think) (NP (PRP you)) (: --) (: --) (ADVP (RB so)) (, ,) (SBAR (S (NP (PRP you)) (VP (VBP know)))))) (, ,) (NP (PRP I)) (NP (PRP I)) (VP (AUX 've) (VP (VBN got) (NP (NP (CD two) (NNS things)) (SBAR (WHNP (WDT that)) (S (ADVP (RB probably)) (: --) (NP (PRP I)) (VP (MD would) (VP (AUX be) (VP (VBN disqualified) (PP (IN on) (NP (NP (DT that) (NN kind)) (PP (IN of) (NP (DT a) (NN jury))))))))))))) (. .)))
+
+(S1 (FRAG (INTJ (UH Yeah)) (, ,) (ADVP (RB maybe) (RB so)) (. .)))
+
+(S1 (S (INTJ (UH Well)) (, ,) (NP (PRP I)) (VP (AUX 'm) (ADJP (RB pretty) (JJ sure) (PP (IN of) (NP (PRP it))))) (. .)))
+
+(S1 (S (S (INTJ (UH Well) (, ,) (UH uh) (: -) (CC But) (, ,) (INTJ (UH uh))) (, ,) (S (VP (VB believe) (NP (PRP it)) (CC or) (RB not))) (, ,) (S (NP (PRP I)) (VP (AUX do) (ADVP (RB still)) (VP (VB feel) (ADJP (JJ sorry)) (PP (IN for) (NP (NP (PRP him)) (ADJP (NNP Uh) (, ,) (JJ wh)))))))) (: -) (S (INTJ (UH yeah)) (, ,) (NP (PRP I)) (VP (AUX do) (ADVP (RB too)))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP feel) (ADJP (JJ sorry) (PP (IN for) (NP (PRP him))))) (. .)))
+
+(S1 (S (ADVP (RB because)) (, ,) (INTJ (UH uh)) (, ,) (NP (PRP He)) (VP (AUX 's) (VP (VBG going) (S (VP (TO to) (VP (AUX be) (PP (IN in) (NP (DT the) (JJR more))) (ADVP (RB so)) (PP (IN for) (NP (NP (PRP$ his) (NN family)) (: --) (NP (NNP m)))) (PRN (: -) (ADVP (RBR more) (RB so)) (PP (IN for) (NP (DT both) (NNS families))) (: --)) (SBAR (IN because) (S (NP (PRP I)) (VP (VBP know) (SBAR (IN that) (S (PP (IN from) (NP (PRP$ my) (JJ own) (NN experience))) (, ,) (NP (PRP we)) (VP (AUX 're) (NP (NP (DT the) (NN one) (POS 's)) (SBAR (WHNP (WDT that)) (S (VP (AUX are) (VP (VBN left))))))))))))))))) (. .)))
+
+(S1 (S (INTJ (UH Well)) (, ,) (NP (PRP he)) (VP (AUX 's) (ADVP (RB also)) (VP (AUXG being) (VP (, ,) (S (INTJ (UH uh)) (, ,) (NP (PRP you)) (VP (VBP know))) (, ,) (VP (VBD dragged) (PRT (RP through)) (, ,) (INTJ (UH uh)) (, ,) (NP (DT the) (NNS media)) (, ,) (S (NP (PRP you)) (VP (VBP know) (, ,) (INTJ (UH uh)) (, ,) (ADVP (RB Now)) (, ,) (PP (TO to) (PP (TO to) (NP (NP (PRP me)) (SBAR (WHNP (WDT that)) (S (VP (AUX was) (NP (NP (DT the) (NN nation-wi)) (: -) (NP (JJ nation-wide) (NN med)) (: -) (NP (DT the) (NN natio)) (: -) (ADJP (RB totally) (JJ unfair))))))))))))))) (. .)))
+
+(S1 (S (INTJ (UH Oh)) (, ,) (NP (PRP you)) (VP (VBP mean) (S (VP (AUXG being) (VP (VBD dragged) (PP (IN through) (NP (DT the) (NNS media))) (PP (IN like) (NP (DT that))))))) (. ?)))
+
+(S1 (S (INTJ (UH Yeah)) (, ,) (NP (PRP it)) (NP (PRP it)) (VP (AUX is) (ADJP (JJ unfair)) (, ,) (INTJ (UH yeah))) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (S (NP (DT That)) (VP (AUX was) (ADJP (JJ wrong))) (. .)))
+
+(S1 (S (S (NP (PRP You)) (VP (VBP know) (, ,) (SBAR (S (NP (PRP he)) (VP (AUX 's) (VP (AUXG having) (VP (VBN th)))))))) (: -) (S (NP (PRP he)) (VP (AUX 's) (VP (AUXG having) (VP (VBN th))))) (: -) (S (INTJ (UH Eh)) (, ,) (NP (PRP I)) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB know) (PRN (, ,) (ADVP (RB though)) (, ,)) (SBAR (IN if) (S (NP (PRP it)) (VP (AUX was) (SBAR (IN because) (S (NP (PRP it)) (VP (AUX was) (NP (JJ sensational) (NNS lies))))))))))) (. .)))
+
+(S1 (S (S (NP (DT The) (NN case)) (VP (AUX was) (ADJP (RB so) (JJ different) (NNP W)))) (: -) (S (ADVP (RB well)) (NP (PRP it)) (VP (AUX was) (ADJP (DT a) (: -) (CC and) (JJ horrible)))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX was) (NP (DT a) (ADJP (RB pretty) (JJ sensational)) (NN case)) (, ,) (ADJP (RB all) (JJ right)) (, ,) (INTJ (UH yeah))) (. .)))
+
+(S1 (S (CC And) (ADVP (RB then)) (SBAR (WHADVP (WRB when)) (S (NP (PRP they)) (VP (NN drug) (PRT (RP in))))) (, ,) (NP (PRP I)) (VP (NNP re) (: -) (S (S (NP (PRP I)) (VP (MD ca) (RB n't))) (: --) (S (NP (NP (DT that) (NNP Amber) (NNP Frey)) (, ,) (CC and) (RB then) (RB also) (IN that)) (, ,) (ADVP (RB um)) (, ,) (NP (PRP I)) (VP (AUX 'm) (PP (IN in) (NP (NP (CD th)) (: -) (NP (NP (NNP Gloria) (NNP Allred)) (, ,) (NP (UH Yeah)) (, ,) (NP (NP (NNP Amber) (POS 's)) (NP (DT the) (NN attorney)))))))))) (. .)))
+
+(S1 (FRAG (NP (NP (DT any) (NN time)) (SBAR (S (NP (PRP you)) (VP (VBP bring) (PP (IN in) (NP (NNP Amb))))))) (: -) (S (ADVP (RB er)) (, ,) (NP (PRP I)) (VP (VB mean) (, ,) (S (S (S (ADJP (JJ Allred))) (, ,) (NP (PRP I)) (VP (AUX 'm) (RB not) (PP (IN against) (NP (NP (PRP her)) (, ,) (NP (PRP I)))) (PP (IN like) (NP (PRP her))) (, ,) (ADJP (JJ eh)) (, ,) (PP (IN at) (NP (NNS times))))) (, ,) (CC but) (PRN (: --) (SBAR (WHADVP (WRB when)) (S (NP (PRP they)) (VP (VBD brought) (NP (PRP her)) (PP (IN in))))) (: --)) (CC and) (S (NP (DT this) (JJ other) (NN woman)) (, ,) (ADVP (NP (PRP I)) (RB though)) (, ,) (NP (NP (NN uh-oh)) (, ,) (NP (NP (DT any) (NN chance)) (SBAR (S (NP (PRP he)) (VP (AUX has) (PP (IN of) (NP (NP (DT any)) (: --) (PP (IN of) (NP (NP (DT any) (NN kind)) (PP (IN of) (NP (DT a) (NN trial))) (SBAR (WHNP (WDT that)) (S (VP (AUX 's) (, ,) (INTJ (UH uh)) (, ,) (SBAR (WHNP (RB not) (WP what)) (S (NP (PRP I)) (VP (VBP call) (S (VP (VBN sensationalized))))))))))))))))) (, ,)) (VP (AUX is) (ADJP (JJ over))))))) (. .)))
+
+(S1 (FRAG (INTJ (UH Well)) (, ,) (INTJ (UH yeah)) (. .)))
+
+(S1 (FRAG (INTJ (UH Uh)) (, ,) (SBAR (S (NP (PRP I)) (VP (VBP agree) (PP (IN with) (NP (DT that)))))) (, ,) (INTJ (UH yeah)) (. .)))
+
+(S1 (INTJ (JJ Over) (. .)))
+
+(S1 (FRAG (NP (NNP Forge)) (: -) (S (S (NP (PRP You)) (VP (VBP know))) (, ,) (NP (PRP she)) (VP (AUX was) (, ,) (ADVP (RB eh)) (, ,) (PP (IN in) (: --) (S (VP (ADVP (RB always)) (VBG ruling) (PRT (RP in)) (, ,) (INTJ (UH uh)) (, ,) (ADVP (IN in)) (, ,) (S (INTJ (UH uh)) (, ,) (SBAR (WHNP (WP what)) (S (VP (AUX was) (NP (NP (DT the) (NN word)) (SBAR (S (NP (PRP I)) (VP (AUX was) (VP (VBG looking) (PP (IN for) (NP (NP (PRN (, ,) (INTJ (UH uh)) (, ,)) (NN possessive)) (PRN (: --) (ADJP (RB no) (, ,) (RB not) (JJ possessive) (CC but) (JJ protective)) (: --)) (PP (IN of) (, ,) (ADVP (RB um)) (, ,) (PP (IN of))))))))))))) (, ,) (INTJ (UH uh)) (, ,) (NP (PRP$ her) (NN client)) (, ,) (ADVP (RB um)) (, ,) (ADVP (RB just)) (, ,) (ADVP (RB um)) (, ,) (VP (VBG wh) (: -) (SBAR (WHNP (WP what)) (S (VP (AUX was) (NP (PRP$ her) (NN name)))))))))))) (. ?)))
+
+(S1 (NP (NNP Amber) (. ?)))
+
+(S1 (NP (NP (DT The)) (: -) (NP (DT the) (NN girl)) (. ?)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (AUX was) (VP (VBG o) (: -) (NP (UH yeah)))) (. .)))
+
+(S1 (S (S (S (NP (PRP She)) (VP (AUX was) (ADVP (RB always)) (ADJP (JJ ready) (S (VP (TO to) (VP (VP (VB bite) (NP (NP (NN anyone) (POS 's)) (NN head)) (PP (IN off) (NP (DT that) (NN ha)))) (: -) (VP (AUX had) (NP (NN anything))))))))) (, ,) (NP (PRP you)) (VP (VBP know) (, ,) (NP (ADJP (RB slightly) (JJ wrong)) (NN abo)))) (: -) (S (NP (PRP you)) (VP (VBP know) (, ,) (INTJ (UH uh)) (, ,) (ADJP (ADJP (JJ ow)) (, ,) (CC or) (ADJP (JJ amiss) (PP (IN about) (NP (NNP Amber))))))) (. .)))
+
+(S1 (S (ADVP (RB Well)) (PRN (, ,) (S (NP (PRP you)) (VP (VBP know))) (, ,)) (NP (PRP you)) (VP (MD may) (VP (VB think) (SBAR (S (NP (PRP I)) (VP (AUX 'm) (UCP (NP (DT a) (JJ little)) (: --) (ADJP (JJ crazy)) (, ,) (CC but) (SBAR (IN at) (S (ADVP (RB first)) (SBAR (WHADVP (WRB when)) (S (NP (PRP I)) (VP (VBD heard) (PRT (RP about))))) (, ,) (INTJ (UH uh)) (, ,) (NP (NNP Frey)) (, ,) (SBAR (WHADVP (WRB when)) (S (NP (PRP I)) (ADVP (RB first)) (VP (VBD heard) (PP (IN about) (NP (PRP her)))))) (, ,) (NP (PRP I)) (VP (VBD got) (ADJP (JJ worried) (SBAR (IN that) (S (S (ADVP (RB maybe)) (NP (PRP it)) (VP (AUX was) (PRN (: --) (S (NP (NP (DT both)) (PP (IN of) (NP (NP (PRP them) (DT No)) (PRN (, ,) (INTJ (UH yeah)) (, ,))))) (VP (MD may))) (: -)) (SBAR (IN because) (S (NP (PRP they)) (VP (AUX 're)))))) (: --) (S (NP (PRP I)) (VP (AUX 've) (ADVP (RB never) (RB totally)) (PRN (: --) (VP (VBN believed)) (: --)) (SBAR (IN that) (S (NP (NNP Peterson)) (VP (AUX did) (NP (DT this) (DT all)) (PP (IN by) (NP (PRP himself)))))))))))))))))))) (. .)))
+
+(S1 (S (S (S (NP (PRP She)) (VP (MD may) (VP (AUX have)))) (: --) (S (NP (PRP she)) (VP (MD may) (VP (AUX have) (PRN (, ,) (INTJ (UH uh)) (, ,)) (VP (VBN planted) (NP (DT the) (NN idea)) (PP (IN in) (NP (PRP$ his) (NN head)))))))) (, ,) (NP (PRP you)) (VP (VBP know)) (. .)))
+
+(S1 (FRAG (ADVP (RB Yet)) (SBAR (S (NP (NN something)) (VP (VP (VBZ tells) (NP (PRP me))) (, ,) (CC and) (PRN (: --) (S (NP (PRP I)) (VP (VBP think))) (: --)) (SBAR (IN that) (S (NP (PRP he)) (ADVP (RB actually))))))) (: --) (VP (AUX was) (RB so) (VP (VBN involved) (NP (PRP her)) (, ,) (ADVP (RB th)))) (: -) (NP (NNP Amber)) (, ,) (INTJ (UH Yeah)) (. .)))
+
+(S1 (S (SBAR (IN that) (IN if) (: --) (S (NP (PRP she)) (VP (AUX had) (NP (NP (NN anything)) (SBAR (S (VP (TO to) (VP (AUX do) (PP (IN with) (NP (DT this))))))))))) (, ,) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB think) (SBAR (S (NP (PRP he)) (VP (MD would) (ADVP (RB ever)) (VP (VB tell))))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB believe) (SBAR (S (NP (PRP he)) (VP (MD would) (ADVP (RB ever)) (VP (VB tell) (PP (IN on) (NP (PRP her))))))))) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (S (NP (NNP Uh) (EX There)) (VP (AUX was) (NP (NP (DT the) (NN impression)) (SBAR (S (NP (PRP I)) (VP (VBD got)))))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (ADVP (NN kind) (IN of)) (, ,) (INTJ (UH uh)) (, ,) (VP (VBD watched) (NP (PRP him)) (PP (IN at) (NP (NP (JJ different) (NNS times)) (SBAR (WHADVP (WRB when)) (S (NP (PRP they)) (VP (MD would) (VP (VB mention) (NP (PRP$ her) (PRN (S (INTJ (UH Yeah)) (, ,) (NP (PRP he)) (NP (PRP he)) (VP (VBD seemed) (S (VP (TO to) (VP (AUX be) (VP (AUX be) (ADJP (RB very) (JJ vili)) (PRN (: -) (S (NP (PRP he)) (VP (VBD seemed) (S (VP (TO to) (VP (AUX be) (ADJP (RBS most) (RBS most) (JJ un))))))) (: -)) (PP (IN at) (: -) (NP (CD eh))))))))) (, ,)) (NN un-at-ease)))))))))) (CC and) (S (NP (PRP I)) (ADVP (RB just)) (VP (VBP think) (SBAR (IN that) (WHADVP (WRB when)) (S (NP (PRP they)) (VP (AUX were) (VP (VBG talking) (PP (IN about) (NP (NNP Amber))))))))) (. .)))
+
+(S1 (INTJ (JJ Right) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+
+(S1 (S (NP (NP (NNP Uh)) (CC And) (NP (DT that))) (VP (VBD caught) (NP (PRP$ my) (NN eye))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB know) (SBAR (IN if) (S (NP (PRP it)) (VP (AUX 's) (SBAR (IN because) (S (NP (PRP I)) (VP (AUX 'm) (NP (NP (DT a) (NN woman)) (CC but) (, ,) (ADVP (RB um)) (, ,) (SBAR (S (NP (PRP I)) (VP (VBD thought))))) (, ,) (ADVP (RB uh-oh)) (, ,) (NP (NNP Hm)))))))))) (. .)))
+
+(S1 (S (SBAR (IN because) (S (PP (IN at) (NP (DT that) (NN time))) (, ,) (INTJ (UH uh)) (: --) (S (ADVP (RB right) (RB now)) (, ,) (NP (PRP I)) (VP (AUX 've) (VP (AUX been) (, ,) (INTJ (VB like)) (, ,) (ADJP (RB totally) (JJ busy) (PP (IN with) (PRN (, ,) (INTJ (UH uh)) (, ,)) (NP (NN holiday))))))))) (, ,) (NP (PRP you)) (VP (VBP know) (, ,) (ADVP (RB so) (UH Yeah))) (. .)))
+
+(S1 (INTJ (UH Yeah) (. .)))
+

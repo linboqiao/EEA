@@ -1,0 +1,8 @@
+(S1 (S (ADVP (RB Well)) (, ,) (NP (PRP I)) (VP (MD would) (, ,) (ADVP (RB too))) (. .)))
+
+(S1 (S (S (PP (IN On) (NP (DT the) (JJ other) (NN hand))) (, ,) (NP (DT the) (JJ Russian) (JJ legal) (NN system)) (VP (AUX is) (ADJP (NP (DT a) (NN bit)) (JJR less)) (, ,) (INTJ (UH well)) (, ,) (ADJP (JJ legalistic)))) (: --) (S (NP (PRP they)) (VP (VBP seem) (ADJP (ADVP (RB much) (RBR more)) (JJ concerned) (PP (IN about) (NP (DT the) (NN chance) (SBAR (IN that) (S (NP (NN someone)) (VP (MD will) (VP (VB harm) (NP (DT the) (NN state)) (PP (IN than) (PP (IN about) (NP (NP (JJ actual) (NNS matters)) (PP (IN of) (ADJP (JJ right) (CC and) (JJ wrong))))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB So)) (NP (PRP it)) (VP (AUX 's) (ADJP (RB pretty) (JJ significant)) (SBAR (IN that) (S (NP (NNP Mikhail) (NNP Khodorkovsky)) (VP (AUX is) (VP (VBG taking) (NP (NP (DT the) (NN risk)) (PP (IN of) (S (VP (VBG maintaining) (NP (PRP$ his) (NN innocence))))))))))) (. .)))
+
+(S1 (S (PP (IN At) (NP (DT this) (NN point))) (, ,) (NP (PRP he)) (VP (AUX has) (ADVP (RB essentially)) (NP (NP (DT no) (NN chance)) (PP (IN of) (S (VP (VBG recovering) (NP (NN anything)))))) (, ,) (SBAR (IN unless) (S (S (NP (NNP Russia)) (VP (VBZ sees) (NP (DT a) (NN change)) (PP (IN in) (NP (JJ political) (NN control))))) (CC and) (S (NP (DT the) (NNP US)) (VP (VBZ applies) (NP (DT some) (NN pressure))))))) (. .)))
+

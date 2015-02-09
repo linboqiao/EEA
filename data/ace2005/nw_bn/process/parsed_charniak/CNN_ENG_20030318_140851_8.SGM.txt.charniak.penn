@@ -1,0 +1,36 @@
+(S1 (S (S (NP (PRP you)) (VP (AUX 've) (VP (VBN heard) (NP (DT the) (JJ old) (NN saying))))) (, ,) (NP (DT the) (JJS best) (NN offense)) (VP (AUX is) (NP (DT a) (JJ good) (NN defense))) (. ?)))
+
+(S1 (S (PP (ADVP (RB perhaps)) (IN with) (NP (NP (DT that)) (PP (IN in) (NP (NN mind))))) (, ,) (NP (NP (DT the) (NN nation) (POS 's)) (NN threat)) (VP (VBP level) (PRT (RP back)) (UCP (PP (IN at) (NP (NN orange))) (, ,) (CC or) (ADJP (JJ high)) (, ,) (S (VP (TO to) (VP (VB discourage) (CC and) (VB thwart) (NP (JJ potential) (JJ terrorist) (NNS attacks))))))) (. .)))
+
+(S1 (SBARQ (WHNP (WP what)) (SQ (AUX does) (NP (DT this)) (VP (VB mean) (SBAR (IN if) (S (NP (PRP you)) (VP (AUX 're) (VP (VBG traveling) (SBAR (S (NP (PRP you)) (VP (MD might) (VP (VB ask))))))))))) (. .)))
+
+(S1 (SINV (PP (TO to) (NP (NNP cnn))) (VP (AUX 's)) (NP (NP (NNP patty) (NNP davis)) (PP (IN at) (NP (JJ reagan) (JJ national) (NN airport)))) (. .)))
+
+(S1 (SBARQ (WHNP (WP what)) (SQ (VP (AUX are) (NP (NP (NNS travelers)) (SBAR (S (VP (VP (TO to) (VP (AUX do))) (CC and) (PRN (, ,) (PP (IN for) (NP (DT that) (NN matter))) (, ,)) (RB not) (VP (TO to) (VP (AUX do))))))))) (. ?)))
+
+(S1 (NP (NP (NN reporter)) (: :) (NP (NP (NNS miles)) (, ,) (SBAR (WHNP (WP what)) (S (NP (DT that)) (VP (VBZ means) (SBAR (S (VP (AUX is) (NP (JJR tighter) (NN security)) (PP (IN at) (NP (NP (NNS airports)) (PP (IN across) (NP (DT the) (NN country)))))))))))) (. .)))
+
+(S1 (S (CC and) (NP (DT that)) (VP (MD could) (ADVP (RB potentially)) (VP (VB slow) (NP (PRP you)) (PRT (RP down)))) (. .)))
+
+(S1 (S (NP (NP (NP (DT some) (NNS things)) (SBAR (S (NP (PRP you)) (VP (MD may) (VP (VB want) (S (VP (TO to) (VP (AUX do) (ADJP (AUX is)))))))))) (, ,) (NP (RB first) (DT all)) (, ,)) (ADVP (RB just)) (VP (VBP get) (ADVP (RB here)) (NP (DT a) (JJ little) (NN bit) (RB early))) (. .)))
+
+(S1 (S (ADVP (RB now)) (, ,) (NP (NN homeland) (NN security) (NN chief) (NNP tom) (NNP ridge)) (VP (VBD described) (NP (NP (DT some)) (PP (IN of) (NP (NP (DT those) (JJ new) (NN security) (NNS measures)) (PP (IN on) (NP (NP (NN top)) (PP (IN of) (NP (NP (DT the) (NNS ones)) (SBAR (WHNP (WDT that)) (S (VP (AUX are) (ADVP (RB already)) (PP (IN in) (NP (NN place)))))))))))))) (. .)))
+
+(S1 (S (VP (VB begin) (NP (NP (DT the) (NN training)) (PP (IN for) (NP (DT the) (NNS pilots)))) (PP (IN in) (NP (DT the) (NNS cockpits))) (PP (IN with) (NP (NN firearms)))) (. .)))
+
+(S1 (S (ADVP (RB then)) (NP (PRP you)) (VP (AUX 've) (VP (VBN got) (NP (DT the) (JJ hardened) (NN cockpit) (NNS doors)))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (AUX have) (NP (NP (NN training)) (PP (IN for) (NP (DT the) (NN flight) (NNS attendants))))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (AUX have) (NP (ADJP (RBR more) (JJ federal)) (NN air) (NNS marshals))) (. .)))
+
+(S1 (S (S (NP (PRP you)) (VP (VB come) (PP (IN outside) (NP (DT the) (NN airline))) (: --) (NP (NP (DT the) (NN airplane)) (NP (PRP itself))))) (CC and) (S (NP (PRP you)) (VP (AUX have) (NP (NP (NN technology) (, ,) (ADJP (CD 100) (NN %)) (NN inspection)) (PP (IN of) (NP (NN baggage)))))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (AUX have) (NP (NP (JJ new) (JJ trained) (NNS inspectors)) (PP (IN for) (NP (NNS passengers))))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (VB enhance) (NP (NN airport) (NN security)) (PP (IN outside) (NP (DT the) (NN perimeter)))) (. .)))
+
+(S1 (S (S (NP (EX there)) (VP (MD will) (VP (AUX be) (NP (NP (JJ additional) (JJ random) (NNS inspections)) (PP (IN of) (NP (NNS vehicles))))))) (CC and) (S (ADVP (RB potentially)) (, ,) (PP (VBG depending) (PP (IN on) (NP (DT the) (NN airport)))) (, ,) (NP (NP (DT some) (NNS limitations)) (PP (IN of) (NP (NP (NNS indegrees) (CC and) (NNS egress)) (PP (IN into) (NP (DT the) (NN airport))))))) (. .)))
+
+(S1 (NP (NN reporter) (: :) (S (NP (NNS airports)) (VP (AUX are) (ADVP (RB currently))))))
+

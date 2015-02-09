@@ -1,0 +1,10 @@
+(S1 (S (NP (PRP I)) (VP (AUX was) (VP (VBG hoping) (PP (IN for) (NP (NP (DT another) (ADJP (RB incredibly) (JJ drawn-out)) (NN story)) (, ,) (ADJP (JJ full) (PP (IN of) (NP (JJ antitrust) (NN drama)))))) (, ,) (S (VP (VBG lurking) (NP (NP (JJ potential) (NNS bidders)) (, ,) (CC and) (NP (NP (JJ contentious) (NNS confrontations)) (PP (IN between) (NP (NNS executives))))))))) (. .)))
+
+(S1 (S (CC And) (RB then) (NP (NNP MCI)) (ADVP (RB just)) (ADVP (NN sort) (IN of)) (VP (VBD accepted) (NP (DT a) (NNP Verizon) (NN deal)) (PP (IN without) (S (ADVP (RB really)) (VP (VBG bothering) (NP (NN anybody)))))) (. .)))
+
+(S1 (S (S (ADVP (RB Clearly)) (, ,) (NP (PRP$ their) (JJ corporate) (NN culture)) (VP (AUX has) (VP (VBN suffered)))) (: --) (S (ADVP (NP (CD 25) (NNS years)) (RB ago)) (, ,) (NP (NNP MCI)) (VP (AUX was) (NP (NP (DT the) (JJ brawling) (NN upstart)) (PP (IN in) (NP (DT the) (NNP telecom) (NN industry)))) (, ,) (S (VP (ADVP (RB constantly)) (VBG challenging) (NP (NP (NNP AT&T) (POS 's)) (NN right) (S (VP (TO to) (VP (VB exist) (, ,) (ADVP (RB much) (RBR less)) (S (VP (TO to) (VP (VB monopolize) (NP (DT the) (NN phone) (NN system))))))))))))) (. .)))
+
+(S1 (S (CC And) (ADVP (RB now)) (, ,) (NP (PRP they)) (VP (AUX 're) (VP (VBN swallowed) (PP (IN by) (NP (RB Just) (DT Another) (NNP Monolith))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBD expected) (UCP (ADJP (JJR better)) (: --) (ADJP (JJR meaner) (CC and) (JJR tougher)) (, ,) (ADVP (RB sure)) (, ,) (CC but) (ADVP (RBR better) (RB nonetheless)))) (. .)))
+

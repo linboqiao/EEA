@@ -1,0 +1,12 @@
+(S1 (NP (NP (DT the) (JJ palestinian) (NNS crossroads)) (SBAR (WHNP (WDT that)) (S (VP (MD could) (VP (VB lead) (PP (TO to) (NP (DT the) (NN relation))) (PP (IN in) (NP (DT a) (JJ new) (NN direction))))))) (. .)))
+
+(S1 (S (NP (NNP yasser) (NNP arafat)) (VP (VBD backed) (NP (NNP abu) (NNS mazen)) (PP (IN as) (NP (JJ prime) (NN minister)))) (. .)))
+
+(S1 (S (NP (DT a) (JJ first) (NN step)) (NP (PRP he)) (VP (VBZ says) (PP (IN toward) (NP (NP (NN peace)) (PP (IN with) (NP (NNP israel)))))) (. .)))
+
+(S1 (S (ADVP (RB now)) (NP (JJ palestinian) (NNS leaders)) (VP (MD must) (VP (VB vote) (PP (IN on) (SBAR (IN whether) (S (PP (TO to) (NP (NNP September) (NN 24-member) (NN cabinet))) (NP (DT that) (NN mazen)) (VP (AUX is) (VP (VBG presenting)))))))) (. .)))
+
+(S1 (S (NP (NNP kelly) (NNP wallace)) (VP (AUX is) (VP (VBG standing) (PRT (RP by)))) (. .)))
+
+(S1 (SBARQ (WHNP (WP what)) (SQ (AUX 's) (NP (DT the) (JJS latest))) (. ?)))
+

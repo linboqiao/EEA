@@ -1,0 +1,24 @@
+(S1 (S (NP (NNP Merck)) (VP (VBD posted) (NP (NP (DT a) (ADJP (CD 21) (NN %)) (NN decline)) (PP (IN in) (NP (NNS earnings)))) (NP (NP (NNS thanks)) (PP (TO to) (NP (DT the) (JJ new) (JJ post-Vioxx) (NN announcement))))) (. .)))
+
+(S1 (S (NP (NP (JJS Most)) (PP (IN of) (NP (DT the) (NN profit) (NN decline)))) (VP (AUX was) (SBAR (IN because) (S (S (NP (NP (NNP Vioxx)) (, ,) (VP (VBG representing) (NP (NP (QP (RB about) (CD 11)) (NN %)) (PP (IN of) (NP (NNS sales))))) (, ,)) (ADVP (RB now)) (VP (VBZ represents) (NP (DT a) (ADJP (RB pretty) (JJ severe)) (JJ legal) (NN headache)) (: :) (CONJP (RB Not) (RB only)) (VP (AUX have) (S (NP (PRP they)) (VP (VBD lost) (NP (DT the) (NN revenue))))))) (, ,) (CC but) (S (NP (PRP they)) (VP (AUX 've) (VP (VBN taken) (NP (DT a) (ADJP (QP ($ $) (CD 600) (CD million))) (NN charge)) (PP (IN as) (NP (NP (DT a) (NN reserve)) (PP (IN against) (NP (JJ future) (NNP Vioxx) (NNS losses))))))))))) (. .)))
+
+(S1 (S (S (SBAR (IN If) (S (NP (DT that)) (VP (AUX 's) (NP (DT an) (JJ accurate) (NN number))))) (, ,) (NP (NNS investors)) (VP (MD should) (VP (VB cheer) (PRT (RP up))))) (: :) (S (NP (NP (NNP Merck) (POS 's)) (PP (IN at) (NP (JJ fifteen) (NNS times)))) (VP (VP (VBN annualized) (NP (NP (NNS earnings)) (, ,) (NP (QP (CD twelve) (NNS times)) (JJ forward) (NNS earnings)))) (, ,) (CC and) (VP (VBN underappreciated) (PP (IN by) (NP (NP (JJS most)) (PP (IN of) (NP (NNP Wall) (NNP Street)))))))) (. .)))
+
+(S1 (NP (NP (JJ Full) (NN Disclosure)) (: :) (S (NP (PRP I)) (VP (VBP own) (NP (NNP Merck)))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBD bought) (NP (NP (DT the) (NN day)) (PP (IN of) (NP (DT the) (NNP Vioxx) (NN announcement))))) (. .)))
+
+(S1 (S (CC And) (SBAR (IN if) (S (NP (PRP I)) (VP (VBP want) (S (VP (TO to) (VP (VB stay) (ADJP (RB that) (JJ contrarian)))))))) (, ,) (NP (PRP I)) (VP (MD 'll) (VP (AUX have) (S (VP (TO to) (VP (VB sell) (SBAR (WHADVP (RB only) (WRB when)) (S (NP (PRP I)) (VP (VBP get) (NP (DT an) (JJ inside) (NN tip) (SBAR (IN that) (S (NP (PRP they)) (VP (AUX 've) (VP (VBN cured) (NP (NP (NN cancer)) (, ,) (NP (NNP AIDS)) (, ,) (NP (NN heart) (NN disease)) (, ,) (CC and) (NP (NN death)))))))))))))))) (. .)))
+
+(S1 (S (SBAR (IN If) (S (NP (PRP you)) (VP (VBP read) (NP (DT the) (NN quarterly)) (ADVP (RBR more) (RB carefully))))) (, ,) (NP (PRP you)) (VP (MD 'll) (VP (VB notice) (SBAR (IN that) (S (NP (DT the) (NN charge)) (VP (AUX is) (RB not) (VP (VBN related) (PP (TO to) (NP (NP (NP (NNS liabilities)) (PP (IN from) (NP (NNP Vioxx)))) (CONJP (CC but) (RB merely)) (NP (NP (NNS costs)) (VP (VBN associated) (PP (IN with) (NP (NP (JJ legal) (NN defense)) (, ,) (NP (FW i.e.)) (, ,) (NP (NP (RB just) (DT the) (NN cost)) (PP (IN of) (S (VP (VBG paying) (NP (DT the) (NNS lawyers)) (PP (IN in) (NP (NP (DT all)) (PP (IN of) (NP (DT these) (NNS cases))))))))))))))))))))) (. .)))
+
+(S1 (S (SBAR (IN If) (S (VP (VBZ thats) (SBAR (WHNP (WRB how) (RB much)) (S (NP (PRP they)) (VP (AUX 're) (ADJP (JJ willing) (S (VP (TO to) (VP (VB pay) (PP (IN for) (NP (JJ legal) (NN defense))))))))))))) (, ,) (VP (VB imagine) (SBAR (WHNP (WRB how) (JJ much)) (S (NP (DT the) (JJ actual) (NNS liabilities)) (VP (AUX are) (ADJP (FW gonna) (AUX be)))))) (. .)))
+
+(S1 (S (NP (JJ Good) (NN blog)) (, ,) (NP (PRP I)) (VP (VBD found) (NP (PRP you)) (PP (IN via) (NP (PRP$ your) (NN instalanche)))) (. .)))
+
+(S1 (NP (NP (NNS Thanks)) (PP (IN for) (NP (PRP$ your) (NNS compliments))) (. .)))
+
+(S1 (S (S (S (ADVP (RB Usually)) (, ,) (NP (PRP I)) (VP (AUX do) (RB n't) (VP (VB read) (NP (DT the) (NNS filings)) (ADVP (ADVP (RB as) (RB carefully)) (SBAR (IN as) (S (NP (PRP I)) (VP (MD should)))))))) (: --) (S (NP (PRP I)) (VP (VBP leave) (NP (PRP it)) (PRT (RP up)) (S (VP (TO to) (VP (VB alert) (NP (NNS readers)))))))) (, ,) (NP (PRP I)) (VP (VBP guess)) (. .)))
+
+(S1 (S (ADVP (RB Anyway)) (PRN (, ,) (S (NP (PRP I)) (ADVP (RB still)) (VP (VBP think) (SBAR (S (NP (DT the) (NNP Vioxx) (NN risk)) (VP (AUX is) (VP (VBN overestimated) (PRN (: --) (S (S (SBAR (IN if) (S (NP (DT the) (NN tobacco) (NN industry)) (VP (MD can) (VP (VP (VB sell) (NP (NN something)) (PP (IN with) (NP (DT no) (NN health) (NNS benefits))) (PP (IN for) (NP (NNS years)))) (, ,) (VP (VB get) (VP (VBN sued))) (, ,) (CC and) (VP (LST (LS 1) (-RRB- -RRB-)) (VB Keep) (NP (DT the) (NN product)) (PP (IN on) (NP (DT the) (NNS shelves)))))))) (, ,) (NP (CD 2)) (-RRB- -RRB-) (VP (VBP Remain) (PP (IN in) (NP (NN business))))) (, ,) (CC and) (S (LST (LS 3)) (-RRB- -RRB-) (VP (AUX do) (NP (CD 2))))) (-RRB- -RRB-)) (PP (TO to) (NP (NP (DT the) (NN tune)) (PP (IN of) (NP (NP (QP (JJ several) (CD billion)) (NNS dollars)) (PP (IN per) (NP (NP (NN year)) (PP (IN in) (NP (NNS profits))))))))))))))) (, ,)) (NP (PRP we) (NNPS Merckers)) (VP (MD might) (VP (AUX be) (ADJP (JJ safe)))) (. .)))
+

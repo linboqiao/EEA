@@ -1,0 +1,22 @@
+(S1 (S (S (NP (NP (NNP MOSCOW)) (PRN (-LRB- -LRB-) (NP (NNP AP)) (-RRB- -RRB-)) (NP (NP (DT The) (NN lawyer)) (PP (IN for) (NP (NP (DT a) (JJ Russian) (JJ military) (NN journalist)) (VP (VBN convicted) (PP (IN of) (NP (NN treason)))))))) (VP (VBD filed) (NP (DT an) (NN appeal)) (NP (NNP Wednesday)) (PP (IN in) (NP (DT an) (NN effort) (S (VP (TO to) (VP (VB overturn) (NP (NP (DT the) (JJ guilty) (NN verdict)) (PP (IN against) (NP (NP (PRP$ his) (NN client)) (, ,) (SBAR (WHNP (WP who)) (S (VP (AUX was) (VP (VBN released) (PP (IN on) (NP (NN parole))) (NP (RBR earlier) (DT this) (NN year)))))))))))))))) (, ,) (NP (NN news) (NNS agencies)) (VP (VBD reported)) (. .)))
+
+(S1 (S (S (NP (NP (NNP Grigory) (NNP Pasko) (POS 's)) (NN lawyer) (NNP Genri) (NNP Reznik)) (VP (VBD filed) (NP (DT the) (NN appeal)) (PP (IN with) (NP (NNP Russian) (NNP Supreme) (NNP Court))))) (, ,) (NP (NP (DT the) (NNP Interfax)) (CC and) (NP (JJ ITAR-Tass) (NN news) (NNS agencies))) (VP (VBD reported)) (. .)))
+
+(S1 (S (S (NP (PRP He)) (VP (VBD asked) (NP (DT the) (NN court)) (S (VP (TO to) (VP (VP (VB invalidate) (NP (DT the) (NN verdict))) (CC and) (VP (VB throw) (PRT (RP out)) (NP (NP (DT the) (JJ criminal) (NN case)) (PP (IN against) (NP (NNP Pasko)))))))))) (, ,) (NP (PRP they)) (VP (VBD said)) (. .)))
+
+(S1 (S (NP (NNP Pasko)) (VP (AUX was) (VP (VBN sentenced) (PP (TO to) (NP (NP (CD four) (NNS years)) (PP (IN in) (NP (NN prison))))) (PP (IN in) (NP (NNP December) (CD 2001))) (PP (IN for) (S (VP (VP (ADVP (RB illegally)) (VBG attending) (NP (NP (DT a) (NN meeting)) (PP (IN of) (NP (JJ top) (JJ military) (NNS commanders))))) (CC and) (VP (VBG taking) (NP (NNS notes)) (ADVP (RB there)))))))) (. .)))
+
+(S1 (S (NP (DT A) (JJ military) (NN court)) (VP (VBD said) (SBAR (S (NP (PRP he)) (VP (VBD intended) (S (VP (TO to) (VP (VB pass) (NP (DT the) (NNS notes)) (PP (TO to) (NP (NP (JJ Japanese) (NNS media)) (SBAR (WHPP (IN with) (WHNP (WDT which))) (S (NP (PRP he)) (VP (AUX had) (VP (VBN worked)))))))))))))) (. .)))
+
+(S1 (S (NP (NP (NNP Pasko)) (, ,) (SBAR (WHNP (WP$ whose) (NN sentence)) (S (VP (VBD included) (NP (NP (NN time)) (VP (VBN served)))))) (, ,)) (VP (AUX was) (VP (VBN released) (PP (IN in) (NP (NNP January))) (PP (IN for) (NP (JJ good) (NN behavior))) (PP (IN after) (S (VP (VBG serving) (NP (NP (QP (JJR more) (IN than) (NNS two-thirds))) (PP (IN of) (NP (DT the) (NN sentence))))))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (AUX has) (VP (VBN maintained) (NP (PRP$ his) (NN innocence)) (, ,) (S (VP (VBG saying) (SBAR (S (NP (DT the) (NN military)) (VP (AUX was) (VP (VBG punishing) (NP (PRP him)) (PP (IN for) (S (VP (VBG exposing) (NP (NP (JJ environmental) (NNS abuses)) (PP (IN by) (NP (DT the) (JJ Russian) (NN navy))) (, ,) (PP (VBG including) (NP (NP (DT the) (VBG dumping)) (PP (IN of) (NP (JJ radioactive) (NN waste))) (PP (IN into) (NP (DT the) (NN sea))))))))))))))))) (. .)))
+
+(S1 (S (NP (NNP Reznik)) (VP (VBD said) (NP (DT an) (JJ initial) (NN appeal)) (SBAR (S (NP (PRP he)) (VP (VBN lodged) (NP (NP (DT the) (NN day)) (SBAR (S (NP (NNP Pasko)) (VP (AUX was) (VP (VBN freed) (S (ADVP (RB never)) (VP (VBN reached) (NP (NP (DT the) (NN presidium)) (PP (IN of) (NP (DT the) (NNP Supreme) (NNP Court))))))))))) (, ,) (PP (VBG according) (PP (TO to) (NP (NNP Interfax)))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN lawyer)) (VP (VBD said) (SBAR (S (NP (NP (DT the) (NN court) (POS 's)) (JJ military) (NN board)) (VP (AUX had) (VP (VBN refused) (S (VP (TO to) (VP (VB launch) (NP (NNS proceedings)) (PP (IN on) (NP (DT the) (NN appeal))))))))))) (. .)))
+
+(S1 (S (S (NP (NNP Reznik)) (VP (VBD said) (SBAR (S (NP (PRP he)) (VP (VP (VBD addressed) (NP (DT the) (JJ new) (NN appeal)) (ADVP (RB directly)) (PP (TO to) (NP (NNP Supreme) (NNP Court) (NNP Chairman) (NNP Vyacheslav) (NNP Lebedev)))) (CC and) (VP (VBD asked) (SBAR (IN that) (S (NP (PRP it)) (VP (RB not) (AUX be) (VP (VBN considered) (PP (IN by) (NP (JJ military) (NNS judges))) (`` ``) (SBAR (IN because) (S (NP (DT the) (JJ military) (NN justice) (NN system)) (VP (AUX has) (VP (VBN adopted) (NP (NP (DT a) (VBN biased) (NN attitude)) (PP (IN against) (NP (NNP Pasko)))))))))))))))))) (, ,) ('' '') (NP (NNP Interfax)) (VP (VBD reported)) (. .)))
+
+(S1 (NP (-LRB- -LRB-) (NP (NNP sbg)) (-RRB- -RRB-)))
+

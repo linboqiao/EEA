@@ -1,0 +1,6 @@
+(S1 (S (PP (IN in) (NP (JJ northern) (NNP iraq))) (, ,) (NP (NNP u.s.) (NNS warplanes)) (VP (VBD hit) (NP (NP (NNS targets)) (PP (VBG including) (NP (NP (DT a) (NNP ridge) (NNP east)) (PP (IN of) (NP (NN mosul))) (, ,) (SBAR (WHADVP (WRB where)) (S (NP (JJ iraqi) (NNS troops)) (VP (AUX have) (VP (AUX been) (VP (VBN entrenched)))))))))) (. .)))
+
+(S1 (S (NP (CD two) (NN f-14) (NNS tomcats)) (VP (VBD struck) (NP (DT the) (NNS targets)) (, ,) (S (NP (DT the) (JJ same) (NN area)) (VP (AUX was) (NP (NP (DT a) (NN site)) (PP (IN of) (NP (JJ heavy) (NN bombing)))) (NP (NN yesterday))))) (. .)))
+
+(S1 (S (SBAR (IN after) (S (NP (NP (NN today) (POS 's)) (NN air)) (VP (VBZ strikes)))) (, ,) (NP (CD 13) (JJ iraqi) (NNS soldiers)) (VP (VP (VBD abandoned) (NP (PRP$ their) (NNS posts))) (CC and) (VP (VBD surrendered) (S (VP (TO to) (VP (VB kurdish) (NP (NNS fighters))))))) (. .)))
+

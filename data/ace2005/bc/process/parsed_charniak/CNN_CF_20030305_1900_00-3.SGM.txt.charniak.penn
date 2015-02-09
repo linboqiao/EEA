@@ -1,0 +1,70 @@
+(S1 (S (NP (JJ Former) (NNP Illinois) (NNP Senator) (NNP Carol) (NNP Moseley-Braun)) (ADVP (RB recently)) (VP (VBD decided) (S (VP (TO to) (VP (VB run) (PP (IN for) (NP (NN president))))))) (. .)))
+
+(S1 (S (S (NP (JJ Early) (NNS reviews)) (VP (AUX have) (RB not) (VP (AUX been) (ADJP (JJ good))))) (, ,) (CC so) (S (NP (NN yesterday)) (NP (PRP she)) (VP (VBD announced) (SBAR (S (NP (PRP she)) (VP (MD 'll) (VP (AUX be) (VP (VBG making) (NP (DT some) (NNS changes))))))))) (. .)))
+
+(S1 (FRAG (RB Not) (PP (TO to) (NP (NP (PRP$ her) (NNS ideas)) (, ,) (SBAR (WHNP (WDT which)) (S (VP (AUX are) (NP (JJ few))))))) (. .)))
+
+(S1 (FRAG (RB Not) (PP (TO to) (NP (NP (PRP$ her) (NN record)) (, ,) (SBAR (WHNP (WDT which)) (S (VP (AUX is) (ADJP (RB pretty) (JJ embarrassing))))))) (. .)))
+
+(S1 (FRAG (RB Not) (RB even) (PP (TO to) (NP (NP (PRP$ her) (NN staff)) (, ,) (SBAR (WHNP (WDT which)) (S (VP (AUX is) (, ,) (PP (IN of) (NP (NN course))) (, ,) (ADJP (JJ tiny))))))) (. .)))
+
+(S1 (FRAG (CC But) (PP (TO to) (NP (PRP$ her) (NN name))) (. .)))
+
+(S1 (S (PP (IN From) (ADVP (ADVP (RB here)) (ADVP (RB on) (RB out)))) (, ,) (NP (NNP Carol)) (VP (JJ Moseley-Braun) (PP (IN as) (NP (NNP Carol) (NNP Moseley) (NNP Braun)))) (. .)))
+
+(S1 (SQ (AUX Did) (NP (PRP you)) (VP (VB catch) (NP (DT the) (NN difference))) (. ?)))
+
+(S1 (S (PP (IN In) (NP (DT the) (JJ second) (NN version))) (, ,) (NP (EX there)) (VP (AUX is) (NP (NP (DT no) (NN hyphen)) (PP (IN between) (NP (PRP$ her) (JJ last) (NNS names))))) (. .)))
+
+(S1 (S (NP (NNP Moseley) (NNP Braun)) (VP (VBZ expects) (SBAR (IN that) (S (NP (NP (JJ primary) (NNS voters)) (PP (IN in) (NP (NP (NNP Iowa)) (CC and) (NP (NNP New) (NNP Hampshire))))) (VP (MD will) (VP (VB react) (ADVP (RB enthusiastically)) (PP (TO to) (NP (DT this) (JJ radical) (, ,) (JJ grammatical) (NN transformation)))))))) (. .)))
+
+(S1 (S (NP (PRP They)) (VP (MD 'll) (VP (AUX have) (S (VP (TO to))) (, ,) (SBAR (IN because) (S (NP (DT the) (JJS latest) (NNP CNN) (NN poll)) (VP (VBZ shows) (NP (NNP Moseley) (NNP Braun)) (PP (ADVP (RB far)) (IN behind) (NP (NP (DT the) (NN candidate)) (SBAR (S (NP (PRP she)) (VP (VBD set) (PRT (RP out)) (S (VP (TO to) (VP (VB discredit)))))))))))))) (. .)))
+
+(S1 (S (NP (DT That)) (VP (MD would) (VP (AUX be) (, ,) (PP (IN of) (NP (NN course))) (, ,) (NP (DT the) (JJ honorable) (NNP Al) (NNP Sharpton)))) (. .)))
+
+(S1 (S (S (NP (NNP Sharpton)) (VP (AUX is) (RB not) (ADVP (RB only) (IN by) (RB far)) (NP (NP (DT the) (JJ first) (NN choice)) (PP (IN of) (NP (JJ black) (NNS voters)))) (ADVP (RB nationally)))) (, ,) (NP (PRP he)) (VP (AUX is) (VP (VBN tied) (PP (IN with) (NP (NP (NP (NNP Senator) (NNP John) (NNP Edwards)) (PP (IN among) (NP (DT all) (NNS voters)))) (CC and) (NP (NP (VBG beating) (NNP Governor) (NNP Howard) (NNP Dean)) (, ,) (NP (NNP Representative) (NNP Dennis) (NNP Kucinich)) (CC and) (NP (NNP Senator) (NNP Bob) (NNP Graham))))))) (. .)))
+
+(S1 (S (VP (VBG Beating) (NP (PRP them))) (. .)))
+
+(S1 (S (CC And) (NP (NNP Al) (NNP Sharpton)) (VP (AUX did) (RB n't) (ADVP (RB even)) (VP (AUX have) (S (VP (TO to) (VP (VB change) (NP (PRP$ his) (NN name))))))) (. .)))
+
+(S1 (SBARQ (WHADVP (WRB How)) (SQ (AUX did) (NP (PRP he)) (VP (VB become) (ADJP (JJ honorable)))) (. ?)))
+
+(S1 (INTJ (UH Yes) (. !)))
+
+(S1 (S (-LRB- -LRB-) (NP (NNS CROSSTALK)) (-RRB- -RRB-) (NP (PRP You)) (VP (VBP become) (ADJP (JJ honorable)) (PP (IN by) (S (VP (VP (VBG winning) (NP (NP (DT an) (NN election)) (PP (IN of) (NP (DT some) (NN sort))))) (CC or) (VP (VP (AUXG having) (NP (DT a) (JJ high) (NN post))) (, ,) (VP (AUXG being) (NP (NP (DT an) (NN ambassador)) (CC or) (NP (DT a) (NN governor)) (CC or) (NP (DT some) (NN thing))))))))) (. .)))
+
+(S1 (FRAG (PP (IN By) (S (VP (VBG embodying) (NP (NP (DT the) (NNS values)) (PP (IN of) (NP (PRP$ your) (NN party))))))) (. .)))
+
+(S1 (S (NP (PRP$ Your)) (VP (VBZ values) (, ,) (S (ADJP (RB not) (JJ mine)))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (AUX 's) (NP (NP (DT the) (NNP No.) (CD 1) (NN pick)) (, ,) (NP (NP (DT the) (RBS most) (JJ popular)) (PRN (, ,) (PP (IN among) (NP (DT all) (NNS candidates))) (, ,)) (PP (IN among) (NP (JJ black) (JJ primary) (NNS voters)))))) (. .)))
+
+(S1 (S (NP (PRP I)) (VP (VBP mean) (, ,) (SBAR (S (NP (PRP you)) (VP (MD ca) (RB n't) (VP (VB dismiss) (NP (PRP him))))))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (AUX 's) (NP (DT a) (JJ serious) (NN candidate))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (AUX have) (RB n't) (ADVP (RB even)) (VP (VBN begun) (NP (DT the) (NNS primaries)))) (. .)))
+
+(S1 (S (NP (PRP He)) (VP (AUX 's) (RB not) (NP (DT a) (JJ serious) (NN candidate))) (. .)))
+
+(S1 (S (S (NP (PRP He)) (VP (AUX 's) (NP (JJ right) (NN wing) (NN fantasy)))) (CC and) (S (NP (PRP it)) (VP (AUX 's) (ADVP (RB never)) (VP (VBG going) (S (VP (TO to) (VP (VB happen))))))) (. .)))
+
+(S1 (FRAG (RB Not) (NP (JJ right) (NN wing)) (. .)))
+
+(S1 (S (S (VP (VB Take) (NP (NNP Al) (NNP Sharpton)) (ADVP (RB seriously)))) (, ,) (NP (DT that)) (VP (AUX 's) (NP (PRP$ our) (NN message)) (ADVP (RB tonight))) (. .)))
+
+(S1 (S (PP (IN In) (NP (DT a) (NN moment))) (, ,) (NP (PRP we)) (VP (MD 'll) (VP (VB ask) (NP (NP (CD two) (NNS members)) (PP (IN of) (NP (NNP Congress)))) (SBAR (IN if) (S (NP (PRP they)) (VP (AUX 're) (ADJP (VBN convinced) (SBAR (IN that) (S (NP (NN war)) (VP (AUX is) (NP (NP (DT the) (JJ only) (NN way)) (SBAR (S (VP (TO to) (VP (VB make) (S (NP (NNP Saddam) (NNP Hussein)) (VP (VB disarm))))))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB Later)) (, ,) (NP (DT the) (NN pope)) (VP (NNS practices) (NP (NP (NN religion)) (CC and) (NP (NP (DT a) (JJ little) (JJ anti-war) (NN politics)) (PP (IN on) (NP (DT the) (NN side)))))) (. .)))
+
+(S1 (SQ (ADVP (RB Then)) (, ,) (MD can) (NP (PRP you)) (VP (VB spell) (NP (JJ prosthetic) (NN nose))) (. ?)))
+
+(S1 (S (S (NP (NNP Maureen) (NNP Orth)) (VP (MD can))) (, ,) (CC and) (S (NP (PRP she)) (VP (AUX does) (PP (IN in) (NP (NP (DT a) (JJ new) (`` ``) (NNP Vanity) (NNP Fair) ('' '') (NN profile)) (PP (IN of) (NP (NNP Michael) (NNP Jackson))))))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (MD 'll) (VP (VB talk) (PP (TO to) (NP (PRP her))))) (. .)))
+
+(S1 (S (NP (PRP You)) (VP (MD wo) (RB n't) (VP (VB want) (S (VP (TO to) (VP (VB miss) (NP (DT that))))))) (. .)))
+
+(S1 (S (NP (PRP We)) (VP (MD 'll) (VP (AUX be) (ADJP (JJ right)) (ADVP (RB back)))) (. .)))
+

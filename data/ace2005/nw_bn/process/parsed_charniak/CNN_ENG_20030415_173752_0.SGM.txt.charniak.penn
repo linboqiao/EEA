@@ -1,0 +1,16 @@
+(S1 (S (NP (NNP spy)) (VP (TO to) (VP (VB help) (NP (JJ free) (JJ private) (NNP jessica) (NNP lynch)))) (. .)))
+
+(S1 (S (X (SYM \*)) (X (SYM \*)) (NP (NP (NN lara) (NN hijacking)) (PP (IN in) (NP (CD 1995)))) (VP (AUX has) (VP (AUX been) (VP (VBN captured) (PP (IN by) (NP (NP (JJ u.s.) (NNS forces)) (PP (IN in) (CC or) (IN near) (NP (NN baghdad)))))))) (. .)))
+
+(S1 (S (S (S (NP (DT this)) (VP (AUX was) (NP (NP (DT the) (JJ italian) (NN ship)) (SBAR (WHNP (WDT that)) (S (VP (AUX was) (VP (VBN taken)))))))) (: --) (S (NP (DT that)) (VP (AUX was) (VP (VBN captured) (PP (IN by) (NP (JJ palestinian) (NNS terrorists))) (PP (ADVP (RB back)) (IN in) (NP (CD 1985)))))) (CC and) (S (NP (DT some)) (VP (MD may) (VP (VB remember) (NP (NP (DT the) (NN story)) (PP (IN of) (NP (NNP leon) (NN clinghover)))))))) (, ,) (S (NP (PRP he)) (VP (AUX was) (PP (IN in) (NP (DT a) (JJ cheal) (NN chair))))) (CC and) (S (NP (DT the) (NNS terrorists)) (VP (VP (VBD shot) (NP (PRP him))) (CC and) (VP (VBD pushed) (NP (PRP him)) (PP (IN over) (NP (NP (DT the) (NN side)) (PP (IN of) (NP (DT the) (NN ship))))) (PP (IN into) (NP (NP (DT the) (NNP mediterranean)) (SBAR (WHADVP (WRB where)) (S (NP (PRP he)) (ADVP (RB obviously)) (, ,) (VP (VBD died))))))))) (. .)))
+
+(S1 (S (S (NP (DT this) (NN man)) (, ,) (NP (NNP abu) (NNS abbas)) (VP (AUX has) (VP (VBN lived) (NP (DT an) (CD i) (NN tin) (NN rant) (NN life))))) (, ,) (S (NP (PRP he)) (VP (AUX 's) (VP (AUX been) (PP (IN in) (NP (NNS tunas)))))) (. .)))
+
+(S1 (S (S (NP (PRP he)) (VP (AUX 's) (VP (AUX been) (PP (IN in) (NP (NNP libya)))))) (CC and) (S (NP (PRP he)) (VP (AUX 's) (VP (AUX been) (VP (VBG living) (PP (IN under) (NP (NP (DT the) (NN protection)) (PP (IN of) (NP (JJ saddam) (NN hussein))))) (PP (IN in) (NP (NN baghdad))))))) (, ,) (CC but) (S (NP (PRP he)) (VP (AUX is) (VP (VBN wanted) (PP (IN for) (NP (NP (NN murder)) (PP (IN in) (NP (NNP italy) (NNP italy)))))))) (. .)))
+
+(S1 (S (S (NP (EX there)) (VP (AUX are) (NP (NNS charges)))) (, ,) (NP (NP (JJ u.s.) (NNS charges)) (SBAR (WHNP (WDT which)) (S (VP (VP (AUX have) (VP (VBN expired))) (CC but) (VP (MD could) (PRN (, ,) (S (NP (PRP i)) (VP (AUX am) (VP (VBN told)))) (, ,)) (ADVP (RB possibly)) (VP (AUX be) (NP (NNP re))))))) (: --)) (VP (VBD restarted) (PP (IN for) (NP (NN piracy) (, ,) (NN hostage) (NN taking) (CC and) (NN conspiracy)))) (. .)))
+
+(S1 (S (CC so) (NP (DT this)) (VP (AUX is) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (JJS oldest) (NNS cases)) (PP (IN of) (NP (NN terrorism))) (SBAR (WHNP (WDT that)) (S (VP (AUX is) (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (JJS oldest) (NNS cases)) (SBAR (WHNP (WDT that)) (S (VP (AUX has) (RB not) (VP (AUX been) (VP (VBN closed) (PP (TO to) (NP (NN date))) (SBAR (S (NP (NNP t.)) (ADVP (RB now)) (VP (VB look) (SBAR (IN as) (IN if) (S (NP (DT this) (NN man) (NNP abu)) (VP (NNS absaas) (PP (IN in) (NP (JJ u.s.) (NNS hands)))))))))))))))))))))))) (. .)))
+
+(S1 (NP (NNS miles) (. ?)))
+

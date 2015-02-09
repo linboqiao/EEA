@@ -1,0 +1,26 @@
+(S1 (S (NP (PRP we)) (VP (VBP begin) (ADVP (RB tonight)) (PP (IN with) (NP (NP (DT a) (JJ big) (NN story) (RP out)) (PP (IN of) (NP (NNP iraq)))))) (. .)))
+
+(S1 (S (NP (NNP cnn)) (VP (AUX has) (VP (VBN learned) (SBAR (IN that) (S (NP (DT the) (NNP cia)) (VP (AUX has) (VP (VBN obtained) (NP (NP (JJ critical) (NNS pieces)) (PP (IN of) (NP (JJ nuclear) (NN technology)))) (PP (IN in) (NP (NNP iraq))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NNS parts)) (VP (AUX are) (ADJP (JJ essential) (PP (TO to) (S (VP (VBG developing) (NP (DT a) (JJ nuclear) (NN bomb) (NN program))))))) (. .)))
+
+(S1 (S (NP (PRP they)) (VP (AUX were) (VP (VBN hidden) (PP (IN under) (NP (NP (DT a) (NN rosebush)) (PP (IN in) (NP (NP (DT the) (JJ back) (NN yard)) (PP (IN of) (NP (NP (DT an) (JJ iraqi) (NN scientist)) (PP (IN in) (NP (NN baghdad))))))))))) (. .)))
+
+(S1 (S (NP (DT that) (JJ iraqi) (NN scientist)) (VP (VBD hid) (NP (DT the) (NNS components)) (ADVP (NP (CD 12) (NNS years)) (RB ago))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (VBD said) (SBAR (S (NP (NP (NP (NP (JJ saddam) (NN hussein) (POS 's)) (NN son)) (, ,) (NP (NN qusay)) (, ,)) (CC and) (NP (PRP$ his) (JJ then) (NN son-in-law))) (VP (VBD ordered) (NP (PRP him)) (S (VP (TO to) (VP (AUX do) (NP (PRP it))))))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (VBZ tells) (NP (NNP cnn)) (SBAR (S (NP (PRP he)) (VP (AUX was) (VP (VBN told) (S (VP (TO to) (VP (VB keep) (S (NP (DT the) (NNS parts)) (ADJP (JJ hidden))) (SBAR (IN so) (S (NP (PRP they)) (VP (MD would) (VP (AUX be) (ADJP (JJ ready)) (SBAR (WHADVP (WRB when)) (S (NP (DT the) (NN time)) (VP (VBD came) (S (VP (TO to) (VP (VB rebuild) (NP (NP (NNP iraq) (POS 's)) (NN program)))))))))))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (NNS parts)) (VP (VP (AUX are) (PP (IN from) (NP (DT a) (NN gas) (NN centrifuge)))) (CC and) (VP (MD can) (VP (AUX be) (VP (VBN used) (PP (IN for) (S (VP (VBG enriching) (NP (NP (NN uranium)) (PP (IN in) (NP (NN bomb) (NN quality) (NN material))))))))))) (. .)))
+
+(S1 (S (NP (CD ,000)) (VP (VBZ looks) (SBAR (IN like) (S (NP (EX there)) (VP (MD may) (VP (AUX be) (NP (DT some) (NN evidence) (SBAR (IN that) (S (NP (FW osama) (FW bin) (JJ laden)) (VP (AUX is) (ADJP (JJ alive) (CC and) (RB still) (VBG plotting))))))))))) (. .)))
+
+(S1 (S (NP (NNP cnn)) (VP (VBD learned) (SBAR (S (NP (DT the) (NNP al) (NN qaeda) (NN leader)) (VP (VBD sent) (NP (JJ personal) (NNS letters)) (PP (TO to) (NP (JJ key) (NNS operatives))) (PP (IN in) (NP (NNP February))) (, ,) (S (VP (VBG ordering) (NP (PRP them)) (S (VP (TO to) (VP (VB attack) (NP (NP (DT the) (VBN united) (NNS states)) (CC and) (NP (PRP$ its) (NNS allies)))))))))))) (. .)))
+
+(S1 (S (NP (NN intelligence) (NNS sources)) (VP (VBP say) (SBAR (S (NP (DT the) (NN correspondence)) (VP (VBD came) (PP (IN from) (NP (NP (DT the) (NN border)) (PP (IN between) (NP (NNP pakistan) (CC and) (NNP afghanistan))) (, ,) (SBAR (WHADVP (WRB where)) (S (NP (FW osama) (FW bin) (JJ laden)) (VP (AUX is) (VP (VBN believed) (S (VP (TO to) (VP (AUX be) (VP (VBG hiding))))))))))))))) (. .)))
+
+(S1 (S (NP (NNS couriers)) (VP (VBD delivered) (NP (DT the) (NNS letters)) (PP (TO to) (NP (NP (NNS locations)) (PP (VBG including) (NP (NP (NNP africa)) (, ,) (NP (NNP asia)) (CC and) (NP (DT the) (JJ middle) (NNP east))))))) (. .)))
+
+(S1 (S (S (ADVP (NP (DT a) (NN month)) (RB later)) (, ,) (NP (UCP (NNP u.s.) (CC and) (JJ pakistani)) (NN force)) (VP (VBD hs) (NP (NP (DT a) (NN lead)) (PP (IN on) (NP (FW osama) (FW bin) (JJ laden)))))) (, ,) (CC but) (S (PP (IN by) (NP (NP (DT the) (NN time)) (SBAR (S (NP (PRP they)) (VP (VBD moved) (ADVP (RB in))))))) (, ,) (NP (PRP he)) (VP (AUX had) (VP (VBN vanished) (ADVP (RB again))))) (. .)))
+

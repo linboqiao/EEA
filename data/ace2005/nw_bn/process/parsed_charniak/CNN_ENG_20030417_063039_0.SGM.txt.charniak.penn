@@ -1,0 +1,20 @@
+(S1 (FRAG (PP (IN by) (NP (NNP u.s.) (NNS forces))) (CC and) (SBAR (WHNP (WDT which)) (S (VP (VBZ appears) (S (VP (TO to) (VP (AUX be) (VP (VBN run) (PP (IN by) (NP (NP (NNS members)) (PP (IN of) (NP (NP (DT the)) (SBAR (S (NP (DT the) (NN war)) (VP (VBD began) (PP (IN in) (NP (NNP iraq))) (ADVP (NP (JJ several) (NNS weeks)) (RB ago)))))))))))))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NN operation)) (SBAR (IN as) (S (NP (PRP it)) (VP (VBZ continues) (PP (IN in) (NP (DT the) (NN north))))))) (VP (VBZ continues) (S (VP (TO to) (VP (AUX be) (NP (NP (DT a) (NN situation)) (PP (IN of) (NP (NN unrest)))))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NN area)) (PP (IN around) (NP (NN mosul)))) (VP (VBD described) (PP (IN as) (ADJP (JJ uncertain))) (PP (IN in) (NP (NP (NNS terms)) (PP (IN of) (NP (NP (PRP$ its) (NN stability)) (PP (IN with) (NP (JJ deliberate) (NN agitation)))))))) (. .)))
+
+(S1 (S (NP (DT those)) (VP (AUX are) (NP (DT the) (NNS words)) (ADVP (RB there)) (SBAR (IN that) (S (NP (JJ general) (NNP brooks)) (VP (VBD used) (NP (DT a) (JJ short) (NN time)) (ADVP (RB ago)))))) (. .)))
+
+(S1 (S (S (NP (DT the) (NN unrest)) (VP (VBZ continues) (ADVP (RB there)))) (CC and) (S (NP (DT this)) (VP (VBZ follows) (PRT (RP up)) (NP (NP (DT the) (NN shooting)) (SBAR (S (NP (PRP we)) (VP (VBD talked) (PP (IN about) (NP (NN yesterday))) (PP (IN in) (SBAR (WHNP (WDT which)) (S (NP (QP (IN at) (JJS least) (CD seven)) (NNS iraqis)) (VP (AUX were) (VP (VBN killed) (PP (IN by) (NP (JJ u.s.) (NN fire))) (SBAR (IN after) (S (NP (PRP they)) (ADVP (RB apparently)) (VP (VBD came) (PP (IN under) (NP (NP (NN fire)) (VP (VBG trying) (S (VP (TO to) (VP (VB secure) (NP (NP (DT a) (JJ certain) (NN part)) (PP (IN of) (NP (NP (DT the) (JJ central) (NN part)) (PP (IN of) (NP (NN mosul)))))))))))))))))))))))))) (. .)))
+
+(S1 (S (ADVP (RB also)) (, ,) (NP (NP (NN news)) (PP (IN about) (NP (NP (DT another) (NN half-broth)) (PP (IN of) (NP (FW saddam) (FW hussein)))))) (ADVP (RB apparently)) (ADVP (RB now)) (VP (VBD apprehended) (ADVP (RB overnight)) (PP (IN in) (NP (NN baghdad))) (PP (IN with) (NP (NP (DT the) (CD i) (NN assistance)) (PP (IN of) (NP (JJ local) (NNS iraqis)))))) (. .)))
+
+(S1 (FRAG (ADVP (RB not) (RB sure)) (SBAR (WHADVP (WRB where)) (S (PP (IN in) (NP (NN baghdad))) (, ,) (VP (JJ personal) (NP (NP (DT the) (NN person) (JJ western) (NN neighborhood)) (PP (IN of) (NP (NN mansor))))))) (. .)))
+
+(S1 (S (NP (PRP you)) (VP (MD might) (VP (VB remember) (NP (JJ last) (NN week)) (SBAR (WHADVP (WRB when)) (S (S (NP (NP (DT another) (NN half-brother)) (PP (IN of) (NP (JJ saddam) (NN hussein)))) (VP (AUX was) (VP (VBN picked) (PRT (RP up)) (S (VP (VBG trying) (S (VP (TO to) (VP (VB cross) (PP (IN into) (NP (NNP syria))))))))))) (CC and) (S (NP (DT that) (NN time)) (, ,) (NP (PRP we)) (VP (AUX have) (VP (AUX been) (VP (VBN told) (SBAR (S (NP (NNP syria)) (VP (AUX has) (VP (VBN closed) (NP (NP (PRP$ its) (NN border)) (PP (IN with) (NP (NNP iraq)))) (S (VP (TO to) (VP (VB prevent) (NP (NP (DT any)) (PP (IN of) (NP (DT that) (JJ ongoing))))))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP we)) (VP (MD 'll) (VP (VB go) (PP (IN through) (NP (NP (DT all)) (PP (IN of) (NP (DT this))))) (PP (IN throughout) (NP (NP (DT the) (NN morning)) (ADVP (RB here)))))) (. .)))
+
+(S1 (S (ADVP (RB first)) (, ,) (PP (TO to) (NP (NP (DT the) (NNP pentagon)) (CC and) (NP (NNP barbara) (NNP starr)))) (VP (TO to) (VP (VB pick) (PRT (RP up)) (SBAR (WHNP (WP what)) (S (VP (AUX 's) (VP (VBG happening))))))) (. .)))
+

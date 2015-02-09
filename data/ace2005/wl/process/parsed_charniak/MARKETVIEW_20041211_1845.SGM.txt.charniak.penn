@@ -1,0 +1,58 @@
+(S1 (S (NP (JJ Scrappy) (NN underdog) (NNP Netflix)) (VP (AUX had) (NP (NP (PRP$ its) (NN day)) (ADVP (RB earlier))) (PP (IN in) (NP (DT the) (NN year))) (, ,) (SBAR (WHADVP (WRB when)) (S (NP (PRP it)) (VP (VBD became) (NP (NP (CD one)) (PP (IN of) (NP (DT the) (JJS hottest) (NNS stocks)))) (ADVP (RB around)) (PRN (-LRB- -LRB-) (S (VP (VP (VBG sporting) (NP (DT an) (JJ eye-popping) (NNP P\/E)) (PP (IN in) (NP (DT the) (JJ high) (CD 900) (POS 's))) (PP (IN on) (NP (DT the) (NN way) (RP up)))) (, ,) (CC and) (, ,) (NP (NP (NNS thanks)) (PP (TO to) (NP (DT a) (JJ poor) (NNS earnings) (NN report)))) (, ,) (PP (IN over) (NP (CD 1,000))) (PP (IN on) (NP (DT the) (NN way) (RP down))))) (-RRB- -RRB-)))))) (. .)))
+
+(S1 (S (S (NP (EX There)) (VP (AUX 's) (ADJP (JJ plenty) (PP (IN of) (NP (NN argument) (SBAR (IN about) (S (NP (NP (DT the) (NN future)) (PP (IN of) (NP (NP (NN DVD) (CC and) (NN video) (NN rental)) (, ,) (CC and) (NP (NNP Netflix))))) (VP (VBZ represents) (NP (NP (DT a) (NN pure-play)) (PP (IN on) (NP (NP (NP (CD one)) (PP (IN of) (NP (DT the) (CD three) (JJ dominant) (NNS hypotheses)))) (: :) (NP (NP (NNP I.)) (SBAR (S (NP (DT That) (NN business)) (VP (AUX is) (ADJP (JJ O-V-E-R)))))) (: --))) (ADJP (IN Between) (JJ pay-per-view) (, ,) (JJ video-on-demand)) (, ,) (VP (VBN pirated) (NP (NP (NNS movies)) (, ,) (NP (JJ high-bandwidth) (NNP Internet) (NNS broadcasts)) (, ,) (CC and) (NP (NP (DT the) (VBG increasing) (NN availability)) (PP (IN of) (NP (JJ other) (NNS media))))))))))))))) (, ,) (NP (PRP it)) (VP (VBZ takes) (NP (DT some) (NN faith)) (S (VP (TO to) (VP (VB see) (NP (NP (DT any) (NN future)) (PP (IN for) (NP (NN movie) (NNS rentals)))))))) (. .)))
+
+(S1 (S (S (NP (NP (DT Those)) (SBAR (WHNP (WP who)) (S (VP (AUX do) (RB n't) (VP (AUX have) (NP (DT the) (JJ requisite) (NN faith))))))) (VP (MD will) (VP (VB point) (PP (TO to) (NP (DT these) (NNS factors))) (PP (IN as) (NP (NN proof) (SBAR (IN that) (S (NP (DT the) (NN business)) (VP (AUX is) (VP (VBG dying)))))))))) (CC and) (S (NP (NP (DT the) (NN movie) (NN business)) (PP (IN in) (ADJP (JJ general)))) (VP (MD will) (VP (AUX need) (NP (DT a) (ADJP (RB pretty) (JJ significant)) (NN overhaul)) (SBAR (IN before) (S (NP (PRP it)) (VP (MD can) (VP (VB make) (NP (NNS profits))))))))) (. .)))
+
+(S1 (S (S (NP (NN Movie) (NNS rentals)) (VP (AUX are) (ADVP (RB no) (RB longer)) (NP (NP (DT a) (JJ cheap) (NN alternative)) (PP (TO to) (NP (NP (JJ other) (NNS ways)) (PP (IN of) (NP (VBG viewing) (NNS films)))))))) (: ;) (S (NP (PRP they)) (VP (AUX 're) (NP (DT the) (JJ stodgy) (, ,) (JJ expensive) (NN way)))) (. .)))
+
+(S1 (S (S (NP (EX There)) (VP (AUX are) (RB n't) (NP (NP (DT any) (JJ pure-play) (NNS buys)) (PP (IN on) (NP (DT this) (NN theory)))))) (, ,) (CC but) (S (NP (NP (NN someone)) (SBAR (WHNP (WP who)) (S (VP (VBZ believes) (NP (PRP it)))))) (VP (MD might) (VP (NN overweight) (NP (PRP$ their) (NN portfolio)) (PP (IN in) (NP (NN cable) (NNS companies))) (: --) (SBAR (IN if) (S (NP (PRP they)) (VP (VBD purchased) (NP (NP (DT any) (NNS media) (NNS stocks)) (ADVP (IN at) (DT all))))))))) (. .)))
+
+(S1 (S (S (PP (IN Of) (NP (NN course))) (, ,) (NP (EX there)) (VP (AUX have) (VP (AUX been) (NP (NP (NNS companies)) (SBAR (WHNP (WP$ whose) (NN performance)) (S (VP (MD would) (ADVP (RB perfectly)) (VP (VB mimic) (NP (NP (DT the) (NN validity)) (PP (IN of) (NP (DT this) (NN idea)))))))))))) (, ,) (CC but) (S (S (NP (NNP Psuedo.com)) (VP (VBD failed) (PP (IN without) (S (VP (VBG producing) (NP (DT a) (JJ single) (NN show))))))) (, ,) (CC and) (S (NP (NNP Broadcast.com)) (VP (AUX was) (VP (VBN swallowed) (PP (IN for) (NP (QP ($ $) (CD 6) (CD billion)))) (PP (IN by) (NP (NNP Yahoo))))))) (. !)))
+
+(S1 (FRAG (, ,) (PP (TO to) (NP (NNP Yahoo))) (. !)))
+
+(S1 (S (NP (PRP 's)) (ADVP (RB great)) (VP (VB regret)) (. .)))
+
+(S1 (NP (NNP II) (. .)))
+
+(S1 (S (FRAG (ADVP (RB Not) (RB so) (RB fast))) (: --) (NP (PRP it)) (VP (MD 'll) (ADVP (RB just)) (VP (VB go) (ADVP (RB online)))) (. !)))
+
+(S1 (S (: --) (NP (NP (NN Anyone)) (SBAR (WHNP (WP who)) (S (VP (VBZ wants) (S (VP (TO to) (VP (VB counter) (NP (DT that) (NN argument))))))))) (VP (MD would) (ADVP (RB probably)) (VP (VB start) (PP (IN by) (S (VP (VBG taking) (NP (PRP us)) (PRT (RP back)) (PP (TO to) (NP (NP (CD 1997)) (, ,) (SBAR (WHADVP (WRB when)) (S (PP (IN in) (NP (NP (NNS terms)) (PP (IN of) (NP (NP (NN time)) (VP (VBN used)))))) (, ,) (NP (NN text)) (VP (AUX was) (NP (NP (DT the) (ADJP (RBS most) (JJ popular)) (NN kind)) (PP (IN of) (NP (NN information) (NN online)))))))))))))) (. .)))
+
+(S1 (S (PP (PP (IN At) (NP (DT the) (NN time))) (, ,) (CC and) (PP (IN for) (NP (NNS years))) (ADVP (RB after))) (, ,) (NP (NNS people)) (VP (VBD argued) (SBAR (IN that) (S (NP (DT the) (JJ traditional) (NN bookstore)) (VP (MD would) (VP (VB become) (ADJP (JJ obsolete))))))) (. .)))
+
+(S1 (SBARQ (PP (IN After) (NP (DT all))) (, ,) (WHADVP (WRB how)) (SQ (MD could) (NP (PRP we)) (VP (VB stand) (PP (IN for) (NP (NP (DT a) (ADJP (RB rapaciously) (JJ arborcidal)) (NN medium)) (PP (IN like) (NP (`` `) (NNS books) ('' ') (CC or) (`` `) (NP (NNS newspapers) (POS ')))))) (SBAR (WHADVP (WRB when)) (S (NP (PRP we)) (VP (MD could) (VP (VP (VB transmit) (NP (DT the) (JJ same) (NN data)) (PP (IN as) (NP (NNS bits) (CC and) (NNS bytes)))) (CC and) (VP (VB save) (PP (IN on) (NP (NN transportation))) (, ,) (ADVP (RB too))))))))) (. ?)))
+
+(S1 (S (SBAR (IN As) (S (NP (PRP it)) (VP (VBZ turns) (PRT (RP out))))) (, ,) (PP (IN of) (NP (NN course))) (, ,) (NP (NP (NNP Amazon.com)) (, ,) (NP (NNP BarnseandNoble.com)) (, ,) (CC and) (NP (NP (DT a) (NN host)) (PP (IN of) (NP (NNS others))))) (VP (VP (ADVP (RB simply)) (VBD took) (NP (DT the) (NN bookstore) (NN model))) (, ,) (VP (VBD attached) (NP (DT a) (JJ 56K) (NN modem))) (, ,) (CC and) (VP (VBD declared) (S (NP (PRP themselves)) (NP (DT The) (NN Future))))) (. .)))
+
+(S1 (S (NP (NNP Netflix)) (VP (AUX is) (VP (VBG doing) (NP (NP (RB much) (DT the) (JJ same) (NN thing)) (: :) (S (VP (VBG Taking) (NP (DT the) (JJ traditional) (NN business) (NN online)) (S (VP (TO to) (VP (VP (VB cut) (NP (NNS costs))) (CC and) (VP (VB boost) (NP (NN customer) (NN service))))))))))) (. .)))
+
+(S1 (NP (NNP III) (. .)))
+
+(S1 (SBARQ (WHNP (WP Who)) (SQ (MD d'you) (VP (VB think) (SBAR (S (NP (PRP you)) (VP (AUX 're) (VP (VBG kidding))))))) (. ?)))
+
+(S1 (S (S (NP (PRP You)) (VP (MD ca) (RB n't) (VP (VB kill) (NP (NN movie) (NN rental) (NNS stores))))) (: --) (S (ADVP (RB So)) (NP (EX there)) (VP (AUX 's) (NP (NP (DT a) (JJ big) (NN difference)) (PP (IN between) (NP (NNS movies) (CC and) (NNS books)))))) (: :) (S (PP (IN For) (NP (NNS books))) (, ,) (NP (DT the) (JJ retail) (NN store)) (VP (AUX is) (RB practically) (NP (NP (DT the) (JJ sole) (NN medium)) (PP (IN of) (NP (NN distribution)))))) (: ;) (S (SBAR (IN if) (S (NP (PRP you)) (VP (AUX do) (RB n't) (VP (VB sell) (PP (IN through) (NP (PRP them))))))) (, ,) (NP (NNS books)) (VP (MD wo) (RB n't) (VP (VB get) (VP (VBN sold))))) (. .)))
+
+(S1 (S (PP (IN For) (NP (NNS movies))) (, ,) (NP (DT the) (JJ video) (JJ rental) (NN store)) (VP (AUX is) (NP (NP (QP (RB just) (CD one)) (NN way)) (SBAR (S (VP (TO to) (VP (VB get) (NP (NNS videos)) (PP (IN out) (NP (EX there))) (PRN (-LRB- -LRB-) (SBAR (IN though) (S (PP (IN at) (NP (NP (CD 45-55) (NN %)) (PP (IN of) (NP (NN studio) (NNS revenues))))) (, ,) (NP (PRP it)) (VP (AUX 's) (NP (NP (DT a) (ADJP (ADVP (RB much) (RBR more)) (JJ important)) (NN one)) (SBAR (IN than) (S (NP (NNS people)) (VP (VBP think)))))))) (-RRB- -RRB-)))))))) (. .)))
+
+(S1 (S (CC But) (PP (VBN given) (NP (NP (DT the) (JJ high) (NNS valuations)) (VP (VBN ascribed) (PP (TO to) (NP (NP (JJ bricks-and-mortar-and-dead) (NN tree) (NNS booksellers)) (PP (IN like) (NP (NP (NNP Barnes) (CC and) (NNP Noble)) (, ,) (NP (NNS Borders)) (, ,) (CC and) (PP (TO to) (NP (DT a) (ADJP (RB much) (JJR lesser)) (NN extent))) (NP (NNP Books-A-Million))))))))) (, ,) (ADVP (RB surely)) (NP (EX there)) (VP (AUX 's) (NP (NP (NN room)) (PP (IN for) (NP (NP (DT a) (NN Blockbuster)) (, ,) (ADVP (IN along) (PP (IN with) (NP (NP (DT a) (NNP Movie) (NN Gallery)) (QP (CC or) (CD two))))))))) (. .)))
+
+(S1 (S (NP (DT The) (NN latter)) (, ,) (ADVP (IN at) (JJS least)) (, ,) (ADVP (RB still)) (VP (AUX has) (NP (NP (NN room)) (SBAR (S (VP (TO to) (VP (VB grow))))))) (. .)))
+
+(S1 (S (PP (IN By) (S (VP (VBG focusing) (PP (IN on) (NP (JJR smaller) (, ,) (JJ rural) (NNS communities)))))) (PRN (-LRB- -LRB-) (NP (NP (RB preferably) (DT the) (NN sort)) (SBAR (WHNP (WDT that)) (S (VP (VBZ considers) (S (NP (NNP DSL)) (ADJP (`` `) (JJ newfangled) ('' '))))))) (-RRB- -RRB-)) (NP (PRP they)) (VP (AUX 're) (NP (NNP WalMarting) (NNP WalMart)) (: --) (S (VP (VBG competing) (PP (IN with) (NP (NP (NNP Walmart) (POS 's)) (JJ awful) (JJ in-store) (NN video) (NNS rentals))) (PP (IN by) (S (VP (VBG offering) (NP (NP (JJR better) (NN selection)) (CC and) (NP (ADJP (RB much) (JJR lower)) (NNS prices))))))))) (. .)))
+
+(S1 (S (S (NP (DT The) (NN movie) (NN business)) (VP (AUX is) (VP (VBG changing) (ADVP (RB dramatically)) (SBAR (IN as) (S (NP (NP (DT the) (NN potential)) (PP (IN for) (NP (JJ online) (NN distribution)))) (VP (VBZ grows))))))) (, ,) (CC but) (S (PP (IN like) (NP (DT every) (JJ other) (NN business))) (NP (PRP it)) (VP (VBZ leaves) (NP (NP (NNS lots)) (PP (IN of) (NP (NN room) (SBAR (IN for) (S (NP (JJ traditional) (NNS operators)) (VP (TO to) (VP (VB operate) (PP (IN at) (NP (JJ traditional) (PRN (-LRB- -LRB-) (S (VP (VB read) (: :) (ADVP (RB high)))) (-RRB- -RRB-)) (NNS profits)))))))))))) (. .)))
+
+(S1 (S (NP (NP (DT The) (JJ aggressive) (NN bidding) (NN war)) (PP (IN for) (NP (NNP Hollywood) (NNP Video))) (, ,) (VP (VBG featuring) (NP (NP (NP (CD two)) (PP (IN of) (NP (PRP$ their) (NNS competitors)))) (, ,) (NP (DT a) (NN buyout) (NN shop)) (, ,) (CC and) (NP (NP (CD one)) (PP (IN of) (NP (DT the) (JJS savviest) (NNS raiders))))) (ADVP (RB around))) (, ,)) (VP (AUX is) (NP (NN proof) (SBAR (IN that) (S (NP (DT some) (NNS people)) (ADVP (RB still)) (VP (VBP think) (SBAR (S (NP (DT these) (NNS stores)) (VP (AUX are) (PP (IN worth) (NP (NN something))))))))))) (. .)))
+
+(S1 (S (CC And) (NP (PRP I)) (VP (AUX 'm) (NP (NP (CD one)) (PP (IN of) (NP (PRP them))))) (. .)))
+
+(S1 (NP (NP (JJ Full) (NN Disclosure)) (: :) (S (S (PP (IN For) (NP (RB once))) (, ,) (NP (PRP I)) (VP (AUX 'm) (ADVP (RB actually)) (VP (VBG writing) (PP (IN about) (NP (NP (NN something)) (SBAR (S (NP (PRP I)) (VP (VBP own))))))))) (: :) (S (NP (PRP I)) (VP (AUX have) (NP (NP (NNS shares)) (PP (IN of) (NP (NNP Movie) (NNP Gallery)))))) (, ,) (S (NP (PRP I)) (VP (AUX 've) (VP (VBD suggested) (NP (PRP it)) (PP (TO to) (NP (NNS friends)))))) (, ,) (CC and) (S (NP (PRP I)) (VP (MD 'd) (VP (AUX be) (VP (ADVP (RB quite)) (VBN thrilled) (SBAR (IN if) (S (NP (DT the) (NN stock)) (VP (VBD went) (PRT (RP up)))))))))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (AUX do) (RB n't) (VP (AUX do) (`` `) (NP (NN sell) (NNS targets)) ('' ')))) (, ,) (CC but) (S (NP (PRP I)) (VP (MD 'd) (ADVP (RB probably)) (VP (VB hold) (NP (DT the) (NN stock)) (SBAR (IN if) (S (NP (PRP it)) (VP (VBD ran) (PRT (RP up)) (NP (NN anything)) (NP (QP (JJR less) (IN than) (CD 50)) (NN %)) (PP (IN from) (NP (DT this) (NN level))))))))) (. .)))
+
+(S1 (S (SBAR (IN If) (S (NP (PRP I)) (VP (VBP sell)))) (, ,) (NP (PRP I)) (VP (MD 'll) (VP (VB post) (NP (DT a) (NN notification) (CD one) (NN trading) (NN day)) (ADVP (RB beforehand)))) (. .)))
+
+(S1 (S (SBAR (IN Because) (S (NP (NNP Lord)) (VP (VBZ knows)))) (NP (PRP you)) (VP (VBP care)) (. .)))
+

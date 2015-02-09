@@ -1,0 +1,42 @@
+(S1 (S (CC and) (NP (NP (DT the) (VBG growing) (NN number)) (PP (IN of) (NP (NNS sars)))) (VP (NNS cases) (PP (IN in) (NP (NN china)))) (. .)))
+
+(S1 (S (NP (DT the) (NN country)) (VP (VBD reported) (NP (NP (QP (RB now) (CD 160)) (JJ new) (NNS cases)) (CC and) (NP (CD nine) (JJR more) (NNS deaths)))) (. .)))
+
+(S1 (S (NP (EX there)) (VP (AUX are) (NP (DT no) (NNS signs) (SBAR (IN that) (S (NP (DT this) (NN infection) (NN rate)) (VP (AUX has) (VP (VBN grown))))))) (. .)))
+
+(S1 (S (S (NP (NNP beijing)) (VP (VBZ remains) (NP (NP (DT the) (ADJP (RBS most) (JJ affected)) (NN part)) (PP (IN of) (NP (DT the) (NN country)))))) (, ,) (CC but) (S (NP (NNS figures)) (VP (VBP show) (SBAR (S (NP (DT this) (NN disease)) (VP (AUX is) (ADVP (RB also)) (VP (VBG spreading) (PP (IN in) (NP (JJ northern) (NNP china))))))))) (. .)))
+
+(S1 (NP (NP (NP (CD 11:00) (NN a.m.)) (PP (IN on) (NP (DT the) (JJ east) (NN coast)))) (, ,) (NP (NP (CD 8:00) (NN a.m.)) (PP (IN on) (NP (DT the) (NN west)))) (. .)))
+
+(S1 (S (NP (NNP leon) (NNP harris)) (VP (VBG checking) (PP (IN in) (NP (RB here)))) (. .)))
+
+(S1 (S (ADVP (RB up) (RB first)) (, ,) (VP (VBG searching) (PP (IN for) (NP (NNS survivors)))) (. .)))
+
+(S1 (FRAG (PP (IN from) (NP (NP (JJ deadly) (NNS tornadoes)) (PP (IN in) (NP (NP (DT the) (NN midwest)) (CC and) (NP (DT the) (NN south)))))) (. .)))
+
+(S1 (S (NP (NP (DT the) (NN path)) (PP (IN of) (NP (NN destruction)))) (VP (VBZ scratches) (PP (IN through) (NP (NP (NNP kansas)) (, ,) (NP (NNP missouri)) (, ,) (NP (NNP arkansas)) (CC and) (NP (NNP tennessee))))) (. .)))
+
+(S1 (S (NP (NNS cameras)) (VP (VBN captured) (NP (NP (DT a) (NN tornado)) (PP (IN on) (NP (NP (DT the) (NN ground)) (PP (IN in) (NP (NNP missouri))))))) (. .)))
+
+(S1 (S (NP (DT the) (NN governor)) (VP (AUX has) (VP (VBN declared) (NP (NP (DT a) (NN state)) (PP (IN of) (NP (NN emergency)))) (SBAR (IN after) (S (NP (NNS twisters)) (VP (VBD struck) (NP (JJ several) (JJ western) (NNS counties))))))) (. .)))
+
+(S1 (S (NP (CD 20) (NNS people)) (VP (AUX were) (VP (VBN killed) (PP (IN in) (NP (DT that) (NN state))))) (. .)))
+
+(S1 (S (PP (IN in) (NP (NNP kansas))) (, ,) (NP (NNS authorities)) (VP (VBP say) (SBAR (S (NP (CD seven) (NNS people)) (VP (AUX were) (VP (VBN killed) (SBAR (WHADVP (WRB when)) (S (NP (NNS tornadoes)) (VP (VBN cut) (PP (IN across) (NP (NP (DT the) (JJ southeastern) (NN part)) (PP (IN of) (NP (DT the) (NN state))))))))))))) (. .)))
+
+(S1 (S (NP (JJ several) (NNS counties)) (VP (AUX have) (VP (AUX been) (VP (VBN declared) (NP (NN disaster) (NNS areas)) (ADVP (RB there))))) (. .)))
+
+(S1 (S (ADVP (RB now)) (, ,) (PP (IN across) (NP (DT the) (NN region))) (, ,) (NP (DT the) (NNS storms)) (VP (VP (VBD demolished) (NP (NNS homes))) (, ,) (VP (VBN ripped) (PRT (RP down)) (NP (NN power) (NNS lines))) (, ,) (VP (VBD uprooted) (NP (NNS trees) (NNS trees)))) (. .)))
+
+(S1 (S (NP (NN search) (NNS teams)) (VP (VBG looking) (PP (IN for) (NP (NP (NNS people)) (SBAR (WHNP (WP who)) (S (VP (AUX are) (ADVP (RB still)) (VP (VBG missing)))))))) (. .)))
+
+(S1 (S (NP (NP (CD one)) (PP (IN of) (NP (NP (DT the) (NNS sites)) (VP (VBG proving) (S (VP (TO to) (VP (AUX be) (NP (DT the) (ADJP (RBS most) (JJ deadly)))))))))) (VP (AUX was) (NP (NP (DT the) (NN law) (NN enforcement) (NN center)) (PP (IN in) (NP (NP (DT the) (JJ western) (NNP tennessee) (NN city)) (PP (IN of) (NP (NNP jackson))))))) (. .)))
+
+(S1 (S (NP (DT an) (NN emergency) (NN official)) (VP (VBZ tells) (NP (NNP cnn)) (SBAR (IN that) (S (NP (CD ten) (NNS people)) (VP (VBD died) (ADVP (RB there)))))) (. .)))
+
+(S1 (S (NP (NNS dozens)) (VP (AUX were) (VP (VBN hurt))) (. .)))
+
+(S1 (S (S (VP (VBG joining) (NP (PRP us)) (PP (IN on) (NP (DT the) (NN phone))))) (VP (AUX is) (NP (NP (DT the) (NN mayor)) (PP (IN of) (NP (NAC (NNP jackson) (, ,) (NNP tennessee) (, ,)) (NNP charles) (NN farmer))))) (. .)))
+
+(S1 (SQ (NNP mayor) (NP (NN farmer)) (, ,) (MD can) (NP (PRP you)) (VP (VB give) (NP (PRP us)) (NP (NP (DT the) (JJS latest)) (PP (IN on) (NP (PRP$ your) (NN town))))) (. .)))
+

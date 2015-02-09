@@ -1,0 +1,18 @@
+(S1 (S (S (NP (PRP i)) (VP (AUX 'm) (VP (VBG rhonda) (NP (NN schaffler))))) (, ,) (VP (VBP live) (PP (IN from) (NP (DT the) (JJ new) (NNP york) (NN stock) (NN exchange)))) (. .)))
+
+(S1 (FRAG (SBAR (WHADVP (WRB where)) (S (NP (NNS stocks)) (VP (AUX are) (VP (VBD stuck) (PP (IN in) (NP (NN reverse))))))) (. .)))
+
+(S1 (S (NP (NNS stocks)) (VP (AUX have) (VP (VBN rallied) (PP (IN for) (NP (NP (CD three) (NNS months)) (PP (IN on) (NP (NP (DT a) (NN hope)) (PP (IN of) (NP (NP (DT a) (NN turnaround)) (PP (IN in) (NP (DT the) (NN economy))))))))))) (. .)))
+
+(S1 (S (NP (NNS investors)) (VP (VBG ignoring) (NP (NP (JJ upbeat) (NNS signs)) (PP (IN about) (NP (DT the) (NN economy)))) (NP (NN today))) (. .)))
+
+(S1 (S (NP (NP (DT a) (JJ key) (NN gauge)) (PP (IN of) (NP (JJ future) (JJ economic) (NN activity)))) (VP (VBD posted) (NP (NP (PRP$ its) (JJS biggest) (NN rise)) (PP (IN in) (NP (CD 17) (NNS months))))) (. .)))
+
+(S1 (FRAG (IN despite) (SBAR (IN that) (S (NP (DT the) (NNP dow) (NNP jones) (JJ industrial) (NN average)) (VP (VBG sliding) (PP (IN at) (NP (DT the) (NN moment))) (PP (IN by) (NP (CD 76) (NNS points)))))) (. .)))
+
+(S1 (S (NP (NNP general) (NNP electronic)) (VP (VBG using) (NP (DT a) (NN dollar)) (SBAR (IN after) (S (NP (CD three) (NN brokerage) (NNS companies)) (VP (VBD cut) (NP (PRP$ their) (NN profit) (NN expectation)) (PP (IN on) (NP (DT the) (NN company))))))) (. .)))
+
+(S1 (S (VP (NNP nasdaq) (PRT (RP off)) (NP (CD 0.75) (NN %))) (. .)))
+
+(S1 (S (NP (NP (NNP cnn) (POS 's)) (`` ``) (S (VP (VBP live) (PP (IN from)))) ('' '')) (VP (VBZ continues) (PP (IN after) (NP (DT this)))) (. .)))
+

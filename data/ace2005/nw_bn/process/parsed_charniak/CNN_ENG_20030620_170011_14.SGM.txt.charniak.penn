@@ -1,0 +1,10 @@
+(S1 (S (PP (IN from) (NP (DT the) (NN air))) (, ,) (NP (PRP it)) (VP (VBZ looks) (PP (IN like) (NP (NP (DT a) (JJ big) (NN box)) (PP (IN of) (NP (JJ spifld) (NN matching) (CC and) (NNS toothpicks)))))) (. .)))
+
+(S1 (S (NP (DT a) (JJ runaway) (JJ fragt) (NN train)) (VP (VP (VBN derailed) (PP (IN in) (NP (NP (NN commerce)) (, ,) (NP (NNP california))))) (, ,) (CC and) (VP (VBD spilled) (NP (NP (PRP$ its) (NN load)) (PP (IN of) (NP (NN lumber)))))) (. .)))
+
+(S1 (S (NP (PRP$ our) (JJ national) (NN correspondent) (NNP frank) (NNP buckley)) (VP (AUX is) (PP (IN on) (NP (DT the) (NN scene))) (PP (IN for) (NP (PRP us)))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX 's) (UCP (ADVP (RB there)) (CC and) (VP (VBG joining) (NP (PRP us)) (ADVP (RB live)) (PP (IN with) (NP (NNS details)))))) (. .)))
+
+(S1 (SBARQ (WHNP (WRB how) (JJ bad)) (SQ (AUX is) (NP (PRP it))) (. ?)))
+

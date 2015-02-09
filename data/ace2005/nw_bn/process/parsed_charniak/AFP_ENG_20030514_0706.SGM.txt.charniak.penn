@@ -1,0 +1,18 @@
+(S1 (S (NP (NP (NAC (NNP PARIS) (, ,) (NNP May) (CD 14) (PRN (-LRB- -LRB-) (NP (NNP AFP)) (-RRB- -RRB-))) (NNP Israeli) (NNP Foreign) (NNP Minister) (NNP Silvan) (FW Shalom)) (PP (IN on) (NP (NNP Wednesday)))) (VP (VBD stressed) (NP (NP (NP (NNP Qatar) (POS 's)) (NN role)) (PP (IN in) (NP (DT the) (NNP Middle) (NNP East) (NN peace) (NN process)))) (PP (IN during) (NP (NP (NNS talks)) (PP (IN with) (NP (PRP$ his) (NNP Qatari) (NN counterpart))))) (NP (NNP Sheikh) (NNP Hamad) (FW bin) (NNP Jassem) (FW bin) (NNP Jabr) (NN al-Thani)) (PP (IN in) (NP (NNP Paris)))) (. .)))
+
+(S1 (S (NP (FW Shalom)) (VP (VBD told) (NP (DT a) (JJ joint) (NN press) (NN conference)) (SBAR (IN that) (S (NP (NP (NP (DT the) (JJ tiny) (NNP Gulf) (NN state) (POS 's)) (JJ strong) (NN relationship)) (PP (IN with) (NP (NP (DT the) (ADJP (RB recently) (VBN appointed)) (JJ Palestinian) (JJ prime) (NN minister)) (, ,) (NP (NNP Mahmud) (NNP Abbas)) (, ,)))) (VP (MD could) (VP (AUX be) (NP (NP (DT a) (NN boost)) (PP (IN for) (NP (NN peace))))))))) (. .)))
+
+(S1 (S (`` ``) (NP (PRP We)) (VP (VBD discussed) (NP (DT the) (NNP Middle) (NNP East) (NN peace) (NN process))) (. .)))
+
+(S1 (S (S (PP (IN Over) (NP (NP (DT an) (NN hour)) (PP (IN of) (NP (NNS talks))))) (, ,) (NP (PRP we)) (VP (VBD asserted) (NP (NP (DT the) (NN will)) (PP (IN of) (NP (NP (DT both) (NNS parties)) (PRN (-LRB- -LRB-) (NP (NP (NNP Israel)) (CC and) (NP (DT the) (JJ Arab) (NN world))) (-RRB- -RRB-))))) (S (VP (TO to) (VP (AUX do) (NP (NN everything)) (S (VP (TO to) (VP (VB return) (PP (TO to) (NP (DT the) (VBG negotiating) (NN table))))))))))) (, ,) ('' '') (NP (FW Shalom)) (VP (VBD said)) (. .)))
+
+(S1 (S (`` ``) (NP (NNP Qatar)) (VP (AUX is) (NP (NP (DT a) (ADJP (RB very) (JJ important)) (NN country)) (PP (IN on) (NP (DT this) (NN issue))))) (. .)))
+
+(S1 (S (S (NP (PRP I)) (VP (VBP know) (NP (NP (DT the) (JJ special) (NN relationship)) (SBAR (WHNP (WDT that)) (S (NP (DT the) (NNP Qatari) (JJ foreign) (NN minister)) (VP (AUX has) (PP (IN with) (NP (NNP Abu) (NNP Mazen))))))))) (, ,) ('' '') (NP (PRP he)) (VP (VBD said) (, ,) (S (VP (VBG using) (NP (NP (NNP Abbas) (POS 's)) (JJ alternative) (NN name))))) (. .)))
+
+(S1 (S (NP (DT The) (NN meeting)) (VP (AUX was) (NP (NP (NP (FW Shalom) (POS 's)) (JJ first) (NN encounter)) (PP (IN with) (NP (DT an) (NNP Arab) (NN counterpart)))) (SBAR (IN since) (S (NP (PRP he)) (VP (VBD took) (NP (NN office)) (PP (IN as) (NP (NP (NP (NNP Israel) (POS 's)) (JJ foreign) (NN minister)) (PP (IN on) (NP (NNP February) (CD 27))))))))) (. .)))
+
+(S1 (S (NP (NNP Qatar)) (VP (AUX has) (NP (NP (JJ economic) (NNS links)) (PP (IN with) (NP (NNP Israel)))) (PP (IN without) (S (VP (VBG maintaining) (NP (JJ diplomatic) (NNS relations)) (, ,) (PP (IN in) (NP (NP (DT the) (NN face)) (PP (IN of) (NP (NP (NN criticism)) (PP (IN from) (NP (JJ other) (JJ Arab) (NNS countries))))))))))) (. .)))
+
+(S1 (S (NP (RB Afterwards) (NX (FW Shalom))) (VP (AUX was) (S (VP (TO to) (VP (VB fly) (PRT (RP on)) (PP (TO to) (NP (NNP London))) (PP (IN for) (NP (NP (NNS talks)) (PP (IN with) (NP (NP (NNP British) (NNP Prime) (NNP Minister) (NNP Tony) (NNP Blair)) (CC and) (NP (NNP Foreign) (NNP Secretary) (NNP Jack) (NNP Straw)))))))))) (. .)))
+

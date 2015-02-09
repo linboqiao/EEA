@@ -1,0 +1,72 @@
+(S1 (S (NP (DT that) (NN standing)) (VP (VBP ovation) (SBAR (IN that) (S (NP (NN sammy) (NNS sosa)) (VP (VBD got) (PP (IN at) (NP (NNP wrigley) (NN field))) (NP (JJ last) (NN night)))))) (. .)))
+
+(S1 (S (NP (DT a) (JJ major) (NN league) (NN baseball) (NN official)) (VP (AUX is) (VP (VBN skilledded) (S (VP (TO to) (VP (VB conduct) (NP (NNS interviews)) (PP (IN in) (NP (NNP chicago)))))))) (. .)))
+
+(S1 (S (NP (DT those) (NNS interviews)) (VP (MD could) (VP (AUX be) (NP (DT a) (NN factor)) (SBAR (IN as) (S (NP (DT the) (NN league)) (VP (VBZ decides) (SBAR (WHADVP (WRB how)) (S (NP (JJ sammy) (NNS sosa)) (VP (MD will) (VP (AUX be) (VP (VBN punished) (PP (IN for) (S (VP (VBG using) (NP (DT a) (JJ court-filled) (NN bat))))))))))))))) (. .)))
+
+(S1 (S (NP (PRP$ our) (NNP gary) (NN tuchman)) (VP (AUX is) (ADJP (JJ live))) (. .)))
+
+(S1 (INTJ (JJ good) (NN morning) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (S (S (NP (NP (NP (DT the) (NN cub) (POS 's)) (NN player)) (NP (DT this) (NN afternoon))) (, ,) (ADVP (RB once) (RB again)) (, ,) (NP (JJ sammy) (NNS sosa)) (VP (MD will) (VP (AUX be) (PP (IN in) (NP (DT the) (NN lineup)))))) (CC but) (S (NP (PRP he)) (VP (MD could) (VP (VB find) (PRT (RP out)) (ADVP (ADVP (RB as) (RB early)) (PP (IN as) (NP (NN today)) (SBAR (SBAR (WHNP (WP what)) (S (NP (PRP$ his) (NN punishment)) (VP (MD will) (VP (AUX be))))) (CC and) (SBAR (WHNP (WRB how) (JJ many) (NNS games)) (S (NP (PRP he)) (VP (MD 'll) (VP (AUX be) (S (VP (VB suspend) (PP (IN for))))))))))))))) (. .)))
+
+(S1 (S (NP (JJ last) (NN night)) (SBAR (WHADVP (WRB when)) (S (NP (PRP he)) (VP (VBD went) (PP (TO to) (NP (NN play))) (PP (IN for) (NP (DT the) (JJ first) (NN time)))))) (, ,) (NP (NP (JJS most)) (PP (IN of) (NP (NP (DT the) (NNS fans)) (PP (IN on) (NP (NNP wrigley) (NN field)))))) (VP (VBD gave) (NP (PRP him)) (NP (DT a) (JJ standing) (NN ovation))) (. .)))
+
+(S1 (S (PP (IN in) (NP (DT all) (NN fairness))) (, ,) (S (NP (NP (RB not) (DT all)) (PP (IN of) (NP (PRP them)))) (VP (ADVP (RB totally)) (VBN believed) (NP (JJ sammy) (NNS sosa)))) (CC but) (S (NP (PRP he)) (VP (AUX 's) (NP (DT a) (NN hero)) (ADVP (RB here)))) (CC and) (S (NP (PRP they)) (VP (VBP want) (S (VP (TO to) (VP (VB believe) (NP (JJ sammy) (NNS sosa))))))) (. .)))
+
+(S1 (S (S (NP (PRP he)) (VP (VBD hit) (NP (DT the) (NN ground) (NN ball)) (PP (IN on) (NP (NP (DT the) (JJ first) (NN inning)) (, ,) (SBAR (WHNP (WDT that)) (S (VP (VBD scored) (NP (DT a) (NN run))))))))) (, ,) (CC but) (S (NP (DT the) (NN run)) (VP (AUX was) (VP (VBN taken) (ADVP (RB away))))) (. .)))
+
+(S1 (S (NP (NNP sosa)) (VP (AUX was) (VP (VBN quicked) (PP (IN out) (PP (IN of) (NP (DT the) (NN game)))) (SBAR (IN after) (S (NP (PRP he)) (VP (AUX was) (VP (VBN found) (SBAR (IN out) (S (NP (PRP he)) (VP (AUX had) (NP (DT a) (NN cork)) (PP (IN during) (NP (DT the) (NN bat)))))))))))) (. .)))
+
+(S1 (S (S (NP (PRP he)) (VP (VBD meant) (S (RB not) (VP (TO to) (VP (VB use) (NP (PRP it)) (PP (IN during) (NP (DT the) (NN game)))))))) (, ,) (CC but) (S (NP (PRP he)) (VP (AUX did) (VP (VB use) (NP (PRP it)) (PP (IN during) (NP (DT the) (NN game)))))) (. .)))
+
+(S1 (S (NP (JJ major) (NN league) (NN baseball)) (VP (VP (VBD took) (NP (NP (CD 76)) (PP (IN of) (NP (PRP$ his) (NNS bats))))) (CC and) (VP (VBD x-rayed) (NP (PRP them)) (PP (IN for) (NP (NN cork))))) (. .)))
+
+(S1 (S (NP (DT those) (NNP x) (NN race)) (VP (AUX were) (ADJP (JJ negative))) (. .)))
+
+(S1 (S (NP (DT that)) (VP (AUX was) (VP (VBN conducted) (PP (IN by) (NP (DT a) (JJ trained) (JJ radiological) (NN technician))))) (. .)))
+
+(S1 (S (S (NP (PRP we)) (VP (VBP believe) (SBAR (S (NP (DT the) (NN x-ray) (NN process)) (VP (AUX was) (ADJP (JJ sufficient) (S (VP (TO to) (VP (VB determine) (NP (NP (DT the) (NN state)) (PP (IN of) (NP (DT those) (NNS bats))))))))))))) (CC and) (S (NP (PRP we)) (VP (AUX 're) (ADJP (RB very) (JJ confident) (SBAR (IN that) (S (NP (NP (DT all)) (PP (IN of) (NP (DT those) (NNS bats)))) (VP (VP (AUX were) (ADJP (JJ clean))) (CC and) (VP (AUX had) (NP (NP (DT no) (JJ foreign) (NNS substances)) (PP (IN within) (NP (PRP them))))))))))) (. .)))
+
+(S1 (S (NP (PRP it)) (VP (AUX was) (NP (DT a) (NN mistake))) (. .)))
+
+(S1 (S (S (NP (PRP we)) (VP (AUX 're) (DT all) (ADJP (JJ human)))) (CC and) (S (NP (NP (PRP we)) (NP (DT all))) (VP (VBD made) (NP (DT a) (NN mistake)))) (. .)))
+
+(S1 (S (NP (NN nobody)) (VP (AUX 's) (ADJP (JJ perfect)) (PP (IN in) (NP (DT this) (NN world))) (ADVP (RB upon))) (. .)))
+
+(S1 (NP (NP (NN reporter)) (: :) (NP (NP (JJ last) (NN night)) (SBAR (S (PP (IN with) (NP (DT the) (NN bat))) (PRN (, ,) (S (NP (PRP we)) (VP (VBD assumed) (SBAR (S (VP (AUX was) (RB not) (ADJP (JJ cork))))))) (, ,)) (NP (NN sammy)) (ADVP (RB sosa)) (VP (VBD struck) (PRT (RP out)) (NP (DT the) (JJ first) (CD three) (NNS times)) (ADVP (RB up)))))) (. .)))
+
+(S1 (S (NP (PRP he)) (VP (AUX did) (VP (VBN hit) (NP (DT a) (JJ single)) (PP (IN in) (NP (DT the) (CD ninety) (NN inning))) (PP (IN in) (NP (NP (DT a) (JJ losing) (NN effort)) (PP (IN for) (NP (DT the) (NNP chicago) (NNS cubs))))))) (. .)))
+
+(S1 (FRAG (ADVP (RB back) (PP (TO to) (NP (PRP you)))) (. .)))
+
+(S1 (S (NP (EX there)) (VP (POS 's) (NP (NP (DT a) (NN concern)) (PP (IN with) (NP (DT the) (JJ huge) (NNS series)))) (ADVP (RB there)) (NP (DT this) (NN weekend)) (PP (IN with) (S (NP (DT the) (NN yankees)) (VP (VBG coming) (PP (TO to) (NP (NN town))) (SBAR (IN that) (S (NP (NN sammy)) (VP (MD would) (VP (AUX be) (VP (VBN suspended) (PP (IN during) (NP (DT that)))))))))))) (. .)))
+
+(S1 (S (NP (DT the) (JJ yankees) (NNS vpts)) (VP (AUX been) (PP (TO to) (NP (NNP wrigley) (NN field))) (PP (IN since) (NP (DT the) (CD 1930s))) (SBAR (IN since) (S (NP (PRP they)) (VP (VBD played) (NP (DT the) (NNS cubs)) (PP (IN in) (NP (DT the) (NNS 1930s))))))) (. .)))
+
+(S1 (S (S (NP (NNP sosa)) (VP (MD could) (VP (VB get) (NP (DT a) (NN suspension))))) (, ,) (CC but) (S (NP (PRP he)) (VP (MD could) (VP (VB appeal) (NP (NN suspension))))) (. .)))
+
+(S1 (S (IN so) (SBAR (IN if) (S (NP (PRP he)) (VP (VBD wanted) (S (VP (TO to) (VP (VB play) (PP (IN against) (NP (DT the) (NN yankees))))))))) (, ,) (NP (PRP he)) (ADVP (RB probably)) (VP (MD will) (VP (AUX be) (ADJP (JJ able) (S (VP (TO to)))))) (. .)))
+
+(S1 (S (NP (NNP gary)) (VP (VBZ tuchman) (PP (IN in) (NP (NNP chicago)))) (. .)))
+
+(S1 (NP (NP (NNS thanks)) (ADJP (RB so) (JJ much)) (. .)))
+
+(S1 (S (VP (VB let) (S (NP (POS 's)) (VP (VB bring) (NP (NN jack)) (ADVP (RB back) (PP (IN in) (PP (IN with) (NP (NP (DT the) (NN question)) (PP (IN of) (NP (NP (DT the) (NN day)) (CC and) (S (NP (NN bill) (POS 's)) (ADVP (RB also)) (VP (VBG joining) (NP (PRP us)) (PP (IN from) (NP (NNP d.c.)))))))))))))) (. .)))
+
+(S1 (FRAG (INTJ (UH hello)) (, ,) (NP (NNP william)) (. .)))
+
+(S1 (S (PP (IN over) (NP (PRP$ your) (NN shoulder))) (, ,) (VP (VB jack)) (. .)))
+
+(S1 (S (VP (VBG keeping) (NP (NP (DT an) (NN eye)) (PP (IN on) (NP (PRP us))))) (. .)))
+
+(S1 (S (NP (NNP martha) (NNP stewart)) (VP (VP (ADVP (RB unfairly)) (VBD singled) (PRT (RP out)) (PP (IN for) (NP (NN prosecution)))) (CC or) (VP (AUX is) (S (NP (PRP she)) (VP (VBG getting) (SBAR (WHNP (WP what)) (S (NP (PRP she)) (VP (VBD deserved)))))))) (. ?)))
+
+(S1 (S (S (NP (NP (NNP jim)) (PP (IN in) (NP (JJ new) (NNP york)))) (, ,) (NP (PRP i)) (VP (AUX 've) (ADVP (FW des)) (VP (VBN piesed) (NP (NNP martha) (NNP stewart)) (PP (IN for) (NP (NNS years))) (PP (IN before) (NP (DT the) (NN imclone) (NN scandal)))))) (, ,) (CC but) (S (NP (PDT all) (DT this) (NN prosecution)) (AUX does) (VP (AUX is) (SBAR (WHADVP (WRB how)) (S (NP (NN bias) (NNS prosecutors)) (VP (AUX are) (SBAR (WHADVP (WRB when)) (S (NP (PRP they)) (VP (VBP deal) (PP (IN with) (NP (NP (NNS moguls)) (SBAR (WHNP (WP who)) (S (VP (VB strip) (NP (NP (DT the) (NNS hopes)) (PP (IN of) (NP (NNS investors))))))))))))))))) (. .)))
+
+(S1 (S (NP (NNP ceos) (PRN (, ,) (S (VP (VB sleaze) (ADVP (VB walk) (JJ free)))) (, ,)) (NN market)) (VP (MD should) (VP (AUX be) (ADJP (JJ free) (S (VP (TO to) (VP (VB stroll) (ADVP (RB right) (RB along)) (PP (IN with) (NP (PRP them))) (PP (IN into) (NP (NP (DT the) (NN ceo) (NN hall)) (PP (IN of) (NP (NN shame))))))))))) (. .)))
+
+(S1 (S (NP (NNP joe)) (PP (IN in) (NP (NNP michigan))) (, ,) (ADVP (JJ prosecute)) (, ,) (SBAR (WHADVP (WRB when)) (S (S (NP (NP (PRP$ your) (NN skit)) (PP (IN in) (NP (NN life)))) (VP (AUX is) (VP (VBG professing) (NP (NN trust) (CC and) (NN integrity))))) (CC and) (S (NP (PRP you)) (VP (VBP violate) (NP (DT that) (NN responsilibity)) (PP (TO to) (NP (PRP$ your) (VBG believing) (NN public))))))) (, ,) (ADVP (RB then)) (NP (PRP you)) (VP (MD should) (VP (AUX be) (VP (AUX done)))) (. .)))
+
+(S1 (S (NP (NNP jude) (NN nith) (NNP florida)) (, ,) (VP (VBZ says) (SBAR (S (S (NP (NN eye)) (ADVP (RB never)) (VP (VBD liked) (NP (NNP martha)))) (, ,) (CC but) (S (ADVP (RB now)) (NP (PRP she)) (VP (AUX 's) (NP (NP (DT a) (NN part)) (PP (IN of) (NP (NN good)))))))))))
+
