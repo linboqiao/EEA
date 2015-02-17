@@ -31,13 +31,13 @@ public class EventMentionTupleExtractorRunner {
     public static void main(String[] args) throws UIMAException, IOException {
         System.out.println(className + " started...");
 
+
         // Parameters for the reader
-        String inputDir = "data/01_discourse_parsed";
+        String inputDir = args[0]; //"data/01_discourse_parsed";
 
+        String parentDir = "data";
 
-        // Parameters for the writer
-        String paramParentOutputDir = "data";
-        String paramBaseOutputDirName = "event_tuples";
+        String paramBaseOutputDirName = args[1];
         String paramOutputFileSuffix = null;
         int stepnum = 2;
 
@@ -47,8 +47,6 @@ public class EventMentionTupleExtractorRunner {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        // Instantiate a collection reader to get XMI as input.
-        // Note that you should change the following parameters for your setting.
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, inputDir, false);
 
@@ -64,7 +62,6 @@ public class EventMentionTupleExtractorRunner {
 
         AnalysisEngineDescription goalMentionAnnotator = CustomAnalysisEngineFactory.createAnalysisEngine(GoalMentionAnnotator.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
-
         String[] needIdTops = {Entity.class.getName()};
 
         AnalysisEngineDescription idAssigRunner = CustomAnalysisEngineFactory.createAnalysisEngine(
@@ -75,7 +72,7 @@ public class EventMentionTupleExtractorRunner {
         // Instantiate a XMI writer to put XMI as output.
         // Note that you should change the following parameters for your setting.
         AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createGzippedXmiWriter(
-                paramParentOutputDir, paramBaseOutputDirName, stepnum, paramOutputFileSuffix);
+                parentDir, paramBaseOutputDirName, stepnum, paramOutputFileSuffix);
 
         // Run the pipeline.
         SimplePipeline.runPipeline(reader, fixer, whLinker, tupleExtractor, SyntacticArgumentPropagater, goalMentionAnnotator, idAssigRunner, writer);
