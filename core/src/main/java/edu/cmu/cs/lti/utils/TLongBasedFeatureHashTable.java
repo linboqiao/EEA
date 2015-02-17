@@ -115,8 +115,8 @@ public class TLongBasedFeatureHashTable extends TwoLevelFeatureTable {
                     secondLevelIter.advance();
                     if (weightsRow.containsKey(secondLevelIter.key())) {
                         dotProd += secondLevelIter.value() * weightsRow.get(secondLevelIter.key());
-                        System.err.println("Feature hit " + headWords[wordIndexPair.getLeft()] + " " +
-                                headWords[wordIndexPair.getRight()] + " " + secondaryFeatureLookupMap.get(secondLevelIter.key()) + " : " +
+                        System.err.println("\t#Feature hit " + headWords[wordIndexPair.getLeft()] + " " +
+                                headWords[wordIndexPair.getRight()] + " " + secondaryFeatureLookupMap.inverse().get(secondLevelIter.key()) + " : " +
                                 weightsRow.get(secondLevelIter.key()));
                     }
                 }

@@ -13,6 +13,8 @@ import org.apache.uima.jcas.JCas;
 import java.util.*;
 
 /**
+ * This class might be harmful, not using it
+ * <p/>
  * <p>Several syntactic relations between events and entities are used to fix the Arg0 and Arg1</p>
  * <p>1. Find a Arg0 from wrong labelled patients by subj
  * <p>2. Find a Arg0/Arg1 using partmod</p>

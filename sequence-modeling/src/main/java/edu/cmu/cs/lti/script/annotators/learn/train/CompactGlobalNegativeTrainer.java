@@ -18,6 +18,7 @@ import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.utils.TwoLevelFeatureTable;
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.iterator.TShortDoubleIterator;
 import gnu.trove.map.TShortDoubleMap;
@@ -65,7 +66,7 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
     CompactFeatureExtractor extractor;
 
     //a more compact form in storing such parameters
-    public static final TLongBasedFeatureTable trainingUsedCompactWeights = new TLongBasedFeatureTable();
+    public static final TwoLevelFeatureTable trainingUsedCompactWeights = new TLongBasedFeatureTable();
     //ada grad memory
     public static final TLongShortDoubleHashTable compactAdaGradMemory = new TLongShortDoubleHashTable();
     //sample counter

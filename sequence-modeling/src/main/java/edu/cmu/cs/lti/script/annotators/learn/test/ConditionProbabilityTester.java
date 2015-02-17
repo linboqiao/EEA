@@ -27,7 +27,7 @@ import java.util.Set;
  * Date: 1/14/15
  * Time: 1:53 AM
  */
-public class ConditionProbablityTester extends MultiArgumentClozeTest {
+public class ConditionProbabilityTester extends MultiArgumentClozeTest {
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
 
@@ -82,6 +82,8 @@ public class ConditionProbablityTester extends MultiArgumentClozeTest {
 
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateEvms = MooneyEventRepre.generateTuples(head, entities);
+
+            //TODO a more accurate estimate is to use the Unigram size
             int numTotalEvents = candidateEvms.size() * allPredicates.length;
 
             for (MooneyEventRepre candidateEvm : candidateEvms) {
@@ -95,21 +97,36 @@ public class ConditionProbablityTester extends MultiArgumentClozeTest {
                 for (int i = 0; i < testIndex; i++) {
                     MooneyEventRepre previousMention = chain.get(i).getMention().toMooneyMention();
                     Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(previousMention, candidateEvm);
-                    double precedingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter, numTotalEvents);
+
+//                    double precedingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter, numTotalEvents);
+                    Pair<Integer, Integer> counts = followingCounts(transformedTuples.getLeft(), transformedTuples.getRight());
+                    double precedingScore = computeConditionalProbability(counts.getLeft(), counts.getRight(), smoothingParameter, numTotalEvents);
+
                     score += precedingScore;
 
                     if (sawAnswer) {
+                        if (counts.getRight() != 0) {
+                            logEvalInfo(String.format("Saw preceding training example : [%s] with occ %d and coocc %d", previousMention, counts.getLeft(), counts.getRight()));
+                        }
                         logEvalInfo(String.format("Preceding score with %s is %.3f", previousMention, precedingScore));
                     }
                 }
 
                 for (int i = testIndex + 1; i < chain.size(); i++) {
                     MooneyEventRepre followingMention = chain.get(i).getMention().toMooneyMention();
-                    Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(candidateEvm, chain.get(i).getMention().toMooneyMention());
-                    double followingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter, numTotalEvents);
+                    Pair<MooneyEventRepre, MooneyEventRepre> transformedTuples = formerBasedTransform(candidateEvm, followingMention);
+
+//                    double followingScore = conditionalFollowing(transformedTuples.getLeft(), transformedTuples.getRight(), smoothingParameter, numTotalEvents);
+
+                    Pair<Integer, Integer> counts = followingCounts(transformedTuples.getLeft(), transformedTuples.getRight());
+                    double followingScore = computeConditionalProbability(counts.getLeft(), counts.getRight(), smoothingParameter, numTotalEvents);
+
                     score += followingScore;
 
                     if (sawAnswer) {
+                        if (counts.getRight() != 0) {
+                            logEvalInfo(String.format("Saw following training example : [%s] with occ %d and coocc %d", followingMention, counts.getLeft(), counts.getRight()));
+                        }
                         logEvalInfo(String.format("Following score with %s is %.3f", followingMention, followingScore));
                     }
                 }
@@ -174,17 +191,19 @@ public class ConditionProbablityTester extends MultiArgumentClozeTest {
         return Pair.of(transformedFormer, transformedLatter);
     }
 
-    //this is correct but slow.
+    private Pair<Integer, Integer> followingCounts(MooneyEventRepre former, MooneyEventRepre latter) {
+        return MultiMapUtils.getCounts(former, latter, cooccCountMaps, occCountMaps, headIdMaps);
+    }
+
+    private double computeConditionalProbability(int cooccCount, int occCount, double laplacianSmoothingParameter, int numTotalEvents) {
+        return Math.log((cooccCount + laplacianSmoothingParameter) / (occCount + numTotalEvents * laplacianSmoothingParameter));
+    }
+
     private double conditionalFollowing(MooneyEventRepre former, MooneyEventRepre latter, double laplacianSmoothingParameter, int numTotalEvents) {
         Pair<Integer, Integer> counts = MultiMapUtils.getCounts(former, latter, cooccCountMaps, occCountMaps, headIdMaps);
 
         double cooccCountSmoothed = counts.getRight() + laplacianSmoothingParameter;
         double formerOccCountSmoothed = counts.getLeft() + numTotalEvents * laplacianSmoothingParameter;
-
-//        if (cooccCountSmoothed > laplacianSmoothingParameter) {
-//            logger.fine("Probability of seeing " + former + " before " + latter);
-//            logger.fine(cooccCountSmoothed / formerOccCountSmoothed + " " + counts.getRight() + "/" + counts.getLeft());
-//        }
 
         //add one smoothing
         return Math.log(cooccCountSmoothed / formerOccCountSmoothed);

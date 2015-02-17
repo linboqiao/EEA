@@ -6,12 +6,15 @@ import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import gnu.trove.map.TIntIntMap;
+import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.lang.builder.CompareToBuilder;
 
 /**
  * Although this is not so different from MooneyEventRepre, a new class is used to
  * differentiate because this would take arbitrary thing for arguments, while
  * MooneyEventRepre is initially design to hold only a set of variables
+ * <p/>
+ * <p/>
  * <p/>
  * Created with IntelliJ IDEA.
  * User: zhengzhongliu
@@ -31,7 +34,7 @@ public class LocalEventMentionRepre implements Comparable<LocalEventMentionRepre
 
     public void rewrite(TIntIntMap entityIdRewriteMap) {
         for (LocalArgumentRepre arg : args) {
-            arg.setRewritedId(entityIdRewriteMap.get(arg.getEntityId()));
+            arg.setRewrittenId(entityIdRewriteMap.get(arg.getEntityId()));
         }
     }
 
@@ -40,7 +43,7 @@ public class LocalEventMentionRepre implements Comparable<LocalEventMentionRepre
         for (EventMentionArgumentLink aLink : UimaConvenience.convertFSListToList(mention.getArguments(), EventMentionArgumentLink.class)) {
             String argumentRole = aLink.getArgumentRole();
             if (KmTargetConstants.targetArguments.containsKey(argumentRole)) {
-                int slotId = KmTargetConstants.targetArguments.get(argumentRole) - KmTargetConstants.anchorArg0Marker;
+                int slotId = KmTargetConstants.argMarkerToSlotIndex(KmTargetConstants.targetArguments.get(argumentRole));
                 int entityId = UimaAnnotationUtils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId());
                 LocalArgumentRepre arg = new LocalArgumentRepre(entityId, aLink.getArgument().getHead().getLemma());
                 args[slotId] = arg;
@@ -49,13 +52,43 @@ public class LocalEventMentionRepre implements Comparable<LocalEventMentionRepre
         return new LocalEventMentionRepre(align.getLowercaseWordLemma(mention.getHeadWord()), args);
     }
 
+    public static LocalEventMentionRepre rewriteUsingCandidateMention(LocalEventMentionRepre realMention, MooneyEventRepre candidateMention) {
+        TIntIntMap rewrittenId2EntityId = new TIntIntHashMap();
+
+        for (int slotId = 0; slotId < realMention.getNumArgs(); slotId++) {
+            LocalArgumentRepre arg = realMention.getArg(slotId);
+            if (arg != null) {
+                rewrittenId2EntityId.put(arg.getRewrittenId(), arg.getEntityId());
+            }
+        }
+
+        LocalArgumentRepre[] args = new LocalArgumentRepre[3];
+        for (int slotId = 0; slotId < candidateMention.getAllArguments().length; slotId++) {
+            int rewrittenArgumentId = candidateMention.getAllArguments()[slotId];
+            if (rewrittenArgumentId == KmTargetConstants.nullArgMarker) {
+
+            } else if (rewrittenArgumentId == KmTargetConstants.otherMarker) {
+                //-1 actually means other here
+                LocalArgumentRepre arg = new LocalArgumentRepre(-1, rewrittenArgumentId);
+                args[slotId] = arg;
+            } else {
+                int entityId = rewrittenId2EntityId.get(rewrittenArgumentId);
+                LocalArgumentRepre arg = new LocalArgumentRepre(entityId, rewrittenArgumentId);
+                args[slotId] = arg;
+            }
+        }
+
+        return new LocalEventMentionRepre(candidateMention.getPredicate(), args);
+    }
+
+
     public static LocalEventMentionRepre fromMooneyMention(MooneyEventRepre mention) {
         LocalArgumentRepre[] args = new LocalArgumentRepre[3];
         for (int slotId = 0; slotId < mention.getAllArguments().length; slotId++) {
             int rewriteArgumentId = mention.getAllArguments()[slotId];
             if (rewriteArgumentId != KmTargetConstants.nullArgMarker) {
                 LocalArgumentRepre arg = new LocalArgumentRepre(-1, LocalArgumentRepre.UNKNOWN_HEAD, rewriteArgumentId, false);
-                arg.setRewritedId(rewriteArgumentId);
+                arg.setRewrittenId(rewriteArgumentId);
                 args[slotId] = arg;
             }
         }
@@ -63,9 +96,9 @@ public class LocalEventMentionRepre implements Comparable<LocalEventMentionRepre
     }
 
     public MooneyEventRepre toMooneyMention() {
-        return new MooneyEventRepre(mentionHead, args[0] == null ? KmTargetConstants.nullArgMarker : args[0].getRewritedId(),
-                args[1] == null ? KmTargetConstants.nullArgMarker : args[1].getRewritedId(),
-                args[2] == null ? KmTargetConstants.nullArgMarker : args[2].getRewritedId());
+        return new MooneyEventRepre(mentionHead, args[0] == null ? KmTargetConstants.nullArgMarker : args[0].getRewrittenId(),
+                args[1] == null ? KmTargetConstants.nullArgMarker : args[1].getRewrittenId(),
+                args[2] == null ? KmTargetConstants.nullArgMarker : args[2].getRewrittenId());
     }
 
 

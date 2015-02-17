@@ -25,9 +25,26 @@ public class ContextElement {
         this.head = headWord;
     }
 
-    public static ContextElement fromMooney(JCas aJCas, Sentence sent, Word headWord, MooneyEventRepre mooneyEventRepre) {
-        return new ContextElement(aJCas, sent, headWord, LocalEventMentionRepre.fromMooneyMention(mooneyEventRepre));
+    /**
+     * Convert the real element to the candidate event mention, removing the gold standard
+     * information that will needed to be inferred, which include the headword and argument setting,
+     * however, this will tell the candidate event mention some other information, includes:
+     * 1. Sentence id
+     * 2. Concrete Entity Id in document for the proposed candidate argument
+     *
+     * @param realElement
+     * @param candidateEvm
+     * @return
+     */
+    public static ContextElement eraseGoldStandard(ContextElement realElement, MooneyEventRepre candidateEvm) {
+        return new ContextElement(realElement.getJcas(), realElement.getSent(), realElement.getHead(),
+                LocalEventMentionRepre.rewriteUsingCandidateMention(realElement.getMention(), candidateEvm));
     }
+
+//
+//    public static ContextElement fromMooney(JCas aJCas, Sentence sent, Word headWord, MooneyEventRepre mooneyEventRepre) {
+//        return new ContextElement(aJCas, sent, headWord, LocalEventMentionRepre.fromMooneyMention(mooneyEventRepre));
+//    }
 
     public Sentence getSent() {
         return sent;

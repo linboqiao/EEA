@@ -73,13 +73,14 @@ public class CompactFeatureExtractor {
 
     public TLongShortDoubleHashTable getFeatures(List<ContextElement> chain, ContextElement targetMention, int index, int skipGramN, boolean breakOnConflict) {
         TLongShortDoubleHashTable extractedFeatures = new TLongShortDoubleHashTable();
-        //ngram features
         for (Triple<ContextElement, ContextElement, Integer> ngram : getSkippedNgrams(chain, targetMention, index, skipGramN)) {
-            Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedForm = KarlMooneyScriptCounter.
-                    firstBasedSubstitution(ngram.getLeft().getMention(), ngram.getMiddle().getMention());
-            TIntLinkedList compactPair = FeatureExtractor.compactEvmPairSubstituiton(subsitutedForm, headMap);
-            if (breakOnConflict && positiveObservations.containsKey(compactPair)) {
-                return null;
+            if (breakOnConflict) {
+                Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedForm = KarlMooneyScriptCounter.
+                        firstBasedSubstitution(ngram.getLeft().getMention(), ngram.getMiddle().getMention());
+                TIntLinkedList compactPair = FeatureExtractor.compactEvmPairSubstituiton(subsitutedForm, headMap);
+                if (positiveObservations.containsKey(compactPair)) {
+                    return null;
+                }
             }
             extractFeatures(extractedFeatures, ngram.getLeft(), ngram.getMiddle(), ngram.getRight());
         }

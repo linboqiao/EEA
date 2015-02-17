@@ -67,11 +67,6 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
         } else {
             ignoreLowFreq = true;
         }
-
-//        if (ignoreLowFreq) {
-//            String[] countingDbFileNames = (String[]) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAMES);
-//            headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
-//        }
     }
 
     @Override
@@ -87,6 +82,7 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
         }
 
         align.loadWord2Stanford(aJCas);
+        align.loadFanse2Stanford(aJCas);
         StringBuilder sb = new StringBuilder();
 
         List<TIntIntHashMap> allSlots = new ArrayList<>();
@@ -94,7 +90,6 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
             if (ignoreLowFreq) {
-//                int evmTf = MultiMapUtils.getTf(headTfDfMaps, align.getLowercaseWordLemma(mention.getHeadWord()));
                 long evmTf = DataPool.getPredicateFreq(align.getLowercaseWordLemma(mention.getHeadWord()));
                 //filter by low tf df counts
                 if (Utils.termFrequencyFilter(evmTf)) {
@@ -135,6 +130,7 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
         for (int heldoutSlotId : heldOutSlots.keys()) {
             int entityId = heldOutSlots.get(heldoutSlotId);
+            //here, if multiple entity id has been mapped to the same held out slot?
             rewriteMap.put(entityId, heldoutSlotId);
         }
 
@@ -149,15 +145,6 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
                 chain[i] = new MooneyEventRepre();
                 chain[i].setPredicate(predicate);
 
-//                for (int argument : KmTargetConstants.targetArguments.values()) {
-//                    if (slots.containsKey(argument)) {
-//                        chain[i].setArgument(KmTargetConstants.argMarkerToSlotIndex(argument), argument);
-//                        System.out.println("Setting slot id " + KmTargetConstants.argMarkerToSlotIndex(argument) + " into " + argument);
-//                    } else {
-//                        chain[i].setArgument(argument, KmTargetConstants.nullArgMarker);
-//                        System.out.println("Setting slot id " + KmTargetConstants.argMarkerToSlotIndex(argument) + " into null " + KmTargetConstants.nullArgMarker);
-//                    }
-//                }
                 chain[i] = new MooneyEventRepre(
                         predicate,
                         rewriteHeldOut(slots, KmTargetConstants.anchorArg0Marker, rewriteMap),

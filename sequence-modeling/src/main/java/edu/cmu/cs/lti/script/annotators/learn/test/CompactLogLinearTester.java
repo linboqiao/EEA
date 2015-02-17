@@ -7,7 +7,7 @@ import edu.cmu.cs.lti.script.model.LocalArgumentRepre;
 import edu.cmu.cs.lti.script.model.MooneyEventRepre;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.utils.Comparators;
-import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
+import edu.cmu.cs.lti.utils.TwoLevelFeatureTable;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import weka.core.SerializationHelper;
@@ -32,7 +32,7 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
     public static final String PARAM_FEATURE_NAMES = "featureNames";
 
     private CompactFeatureExtractor extractor;
-    private TLongBasedFeatureTable compactWeights;
+    private TwoLevelFeatureTable compactWeights;
     private int skipGramN = 2;
     private String[] allPredicates;
 
@@ -57,7 +57,7 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
         logger.info("Loading from " + modelPath);
 
         try {
-            compactWeights = (TLongBasedFeatureTable) SerializationHelper.read(modelPath);
+            compactWeights = (TwoLevelFeatureTable) SerializationHelper.read(modelPath);
             extractor = new CompactFeatureExtractor(compactWeights, featureImplNames);
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,12 +83,14 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateMooeyEvms = MooneyEventRepre.generateTuples(head, mooneyEntities);
             for (MooneyEventRepre candidateEvm : candidateMooeyEvms) {
-                ContextElement candidate = ContextElement.fromMooney(realElement.getJcas(), realElement.getSent(), realElement.getHead(), candidateEvm);
+//                ContextElement candidate = ContextElement.fromMooney(realElement.getJcas(), realElement.getSent(), realElement.getHead(), candidateEvm);
+                ContextElement candidate = ContextElement.eraseGoldStandard(realElement, candidateEvm);
+
                 TLongShortDoubleHashTable features = extractor.getFeatures(chain, candidate, testIndex, skipGramN, false);
 
                 double score = compactWeights.dotProd(features);
                 if (score > 0) {
-                    logEvalInfo("Candidate is " + candidate.getMention());
+                    logEvalInfo("Candidate is " + candidate.getMention() + "\t" + candidate.getMention().toMooneyMention());
                     logEvalInfo("Feature score " + score);
                     compactWeights.dotProd(features);
                     logEvalInfo("Candidate features : ");
@@ -101,6 +103,7 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
                     logEvalInfo("Feature score " + score);
                     logEvalInfo("Answer features : ");
                     logEvalInfo(features.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
+                    logEvalResult(String.format("Answer score for %s is %.2f", candidateEvm, score));
                 }
                 rankedEvents.add(Pair.of(candidateEvm, score));
             }
@@ -113,7 +116,7 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
         for (ContextElement rep : chain) {
             for (LocalArgumentRepre arg : rep.getMention().getArgs()) {
                 if (arg != null && !arg.isOther()) {
-                    entities.add(arg.getRewritedId());
+                    entities.add(arg.getRewrittenId());
                 }
             }
         }

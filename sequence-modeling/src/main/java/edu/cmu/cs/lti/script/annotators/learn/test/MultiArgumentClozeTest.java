@@ -108,9 +108,6 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        evalResults = new ArrayList<>();
-        evalInfos = new ArrayList<>();
-
         logger.info(progressInfo(aJCas));
 
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
@@ -130,6 +127,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         }
 
         align.loadWord2Stanford(aJCas);
+        align.loadFanse2Stanford(aJCas);
 
         //the actual chain is got here
         List<ContextElement> regularChain = getTestingEventMentions(aJCas);
@@ -145,12 +143,13 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
             throw new IllegalArgumentException("Test data and document have different size! " + mooneyChain.size() + " " + regularChain.size());
         }
 
+        //use the cloze evaluation file to give the rewritten information to the chain
         for (int i = 0; i < mooneyChain.size(); i++) {
             MooneyEventRepre mooneyEventRepre = mooneyChain.get(i);
             for (int slotId = 0; slotId < mooneyEventRepre.getAllArguments().length; slotId++) {
                 LocalArgumentRepre argument = regularChain.get(i).getMention().getArg(slotId);
                 if (argument != null) {
-                    argument.setRewritedId((mooneyEventRepre.getAllArguments()[slotId]));
+                    argument.setRewrittenId((mooneyEventRepre.getAllArguments()[slotId]));
                 }
             }
         }
@@ -204,6 +203,9 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        evalResults = new ArrayList<>();
+        evalInfos = new ArrayList<>();
     }
 
     protected void logEvalResult(String record) {
@@ -277,7 +279,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         for (ContextElement rep : chain) {
             for (LocalArgumentRepre arg : rep.getMention().getArgs()) {
                 if (arg != null && !arg.isOther()) {
-                    entities.add(arg.getRewritedId());
+                    entities.add(arg.getRewrittenId());
                 }
             }
         }
@@ -294,6 +296,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
         try {
             FileUtils.writeLines(evalResultFile, evalResults, true);
+            FileUtils.writeLines(evalInfoFile, evalInfos, true);
         } catch (IOException e) {
             e.printStackTrace();
         }

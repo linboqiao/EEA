@@ -61,17 +61,21 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
     CompactFeatureExtractor extractor;
 
     //some defaults, will be changed by parameters anyway
-    int miniBatchSize = 100;
+    int miniBatchSize = 1000;
     int rankListSize = 100;
     int numArguments = 3;
 
     int skipGramN = 2;
 
-    int topNegatives = 5;
+    int numTopNegativeToTrain = 1;
+
+    int targetRank = 10;
 
     double averageRankPercentage = 0;
 
     Random randomGenerator = new Random();
+
+    boolean debug = false;
 
     GlobalUnigrmHwLocalUniformArgumentDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist();
 
@@ -83,8 +87,6 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
         skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
 
-//        trainingFeatureTable = new TLongBasedFeatureHashTable();
-        trainingFeatureTable = new ArrayBasedTwoLevelFeatureTable(DataPool.headIdMap.size());
         numSamplesProcessed = 0;
 
         try {
@@ -92,6 +94,11 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void initializeParameters() {
+        //        trainingFeatureTable = new TLongBasedFeatureHashTable();
+        trainingFeatureTable = new ArrayBasedTwoLevelFeatureTable(DataPool.headIdMap.size());
     }
 
     @Override
@@ -119,8 +126,14 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
         Map<LocalEventMentionRepre, TLongShortDoubleHashTable> mention2Features = new HashMap<>();
 
+        List<TLongShortDoubleHashTable> chainBestPredictionFeatures = new ArrayList<>();
+        List<TLongShortDoubleHashTable> chainCorrectFeatures = new ArrayList<>();
+
         //for each sample
         for (int sampleIndex = 0; sampleIndex < chain.size(); sampleIndex++) {
+            if (debug) {
+                System.err.println(String.format("=============Sample %d============", sampleIndex));
+            }
             ContextElement realSample = chain.get(sampleIndex);
             TLongShortDoubleHashTable correctFeatures = extractor.getFeatures(chain, realSample, sampleIndex, skipGramN, false);
             Sentence sampleSent = realSample.getSent();
@@ -130,18 +143,24 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
             int originalRank = 0;
             for (LocalEventMentionRepre sample : sampleCandidatesWithReal(arguments, realSample.getMention())) {
                 TLongShortDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getHead(), sample), sampleIndex, skipGramN, false);
-                double sampleScore = trainingFeatureTable.dotProd(sampleFeature, DataPool.headWords);
+                double sampleScore;
+                if (debug) {
+                    sampleScore = trainingFeatureTable.dotProd(sampleFeature, DataPool.headWords);
+                } else {
+                    sampleScore = trainingFeatureTable.dotProd(sampleFeature);
+                }
                 scores.add(Pair.of(sampleScore, sample));
                 mention2Features.put(sample, sampleFeature);
 
-                if (sample.mooneyMatch(realSample.getMention())) {
-                    System.err.println(sample + " is correct, Original rank is " + originalRank + " score is " + sampleScore);
-                } else {
-                    if (sampleScore != 0) {
-                        System.err.println(sample + " is wrong, Original rank is " + originalRank + " score is " + sampleScore);
+                if (debug) {
+                    if (sample.mooneyMatch(realSample.getMention())) {
+                        System.err.println(sample + " is the actual mention, sampled rank is " + originalRank + " score is " + sampleScore);
+                    } else {
+                        if (sampleScore != 0) {
+                            System.err.println(sample + " is a noisy mention, sampled rank is " + originalRank + " score is " + sampleScore);
+                        }
                     }
                 }
-
                 originalRank++;
             }
 
@@ -155,32 +174,46 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 Pair<Double, LocalEventMentionRepre> nextScoredItem = scores.poll();
                 if (nextScoredItem.getRight().mooneyMatch(realSample.getMention())) {
                     realRank = rank;
+                    if (debug) {
+                        System.err.println("\t[Real One]" + nextScoredItem + " " + rank);
+                    }
                     break;
                 } else {
-                    if (negativeCount < topNegatives) {
+                    if (negativeCount < numTopNegativeToTrain) {
                         currentBestSampleFeatures.add(mention2Features.get(nextScoredItem.getRight()));
                         negativeCount++;
+                        if (debug) {
+                            System.err.println("\t" + nextScoredItem + " " + rank);
+                        }
                     }
                 }
                 rank++;
             }
 
-            System.err.println(String.format("Real rank is %d  among %d", realRank, rankListSize));
-            if (realRank != 0) {
-                perceptronUpdate(correctFeatures, currentBestSampleFeatures);
+            if (debug) {
+                System.err.println(String.format("Predicted rank is %d  among %d", realRank, rankListSize));
+            }
+
+            //update when prediction didn't fall into the top list
+            //rank starts at 0
+            if (realRank >= targetRank) {
+                chainBestPredictionFeatures.addAll(currentBestSampleFeatures);
+                chainCorrectFeatures.add(correctFeatures);
             }
 
             averageRankPercentage += realRank * 1.0 / rankListSize;
             numSamplesProcessed++;
 
             if (numSamplesProcessed % miniBatchSize == 0) {
-                logger.info("Features lexical pairs just learnt " + trainingFeatureTable.getNumRows());
                 logger.info("Processed " + numSamplesProcessed + " samples");
+                logger.info("Features lexical pairs just learnt " + trainingFeatureTable.getNumRows());
                 logger.info("Average rank position for previous batch is : " + averageRankPercentage / miniBatchSize);
                 averageRankPercentage = 0;
                 BasicConvenience.printMemInfo(logger);
             }
         }
+
+        perceptronUpdate(chainCorrectFeatures, chainBestPredictionFeatures);
     }
 
     /**
@@ -214,12 +247,16 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
     }
 
 
-    private void perceptronUpdate(TLongShortDoubleHashTable correctFeatures, List<TLongShortDoubleHashTable> currentTops) {
-        trainingFeatureTable.adjustBy(correctFeatures, 1);
+    private void perceptronUpdate(List<TLongShortDoubleHashTable> correctFeatures, List<TLongShortDoubleHashTable> currentTops) {
+        int negativeSize = currentTops.size();
 
-        for (TLongShortDoubleHashTable currentTop : currentTops) {
-            trainingFeatureTable.adjustBy(currentTop, -1);
+        for (TLongShortDoubleHashTable correctFeature : correctFeatures) {
+            trainingFeatureTable.adjustBy(correctFeature, negativeSize);
         }
+
+//        for (TLongShortDoubleHashTable currentTop : currentTops) {
+//            trainingFeatureTable.adjustBy(currentTop, -1);
+//        }
     }
 
     @Override
@@ -231,6 +268,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         averageRankPercentage = 0;
         BasicConvenience.printMemInfo(logger);
     }
+
 
     public static void main(String[] args) throws Exception {
         Logger logger = Logger.getLogger(PerceptronTraining.class.getName());
@@ -283,6 +321,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 PerceptronTraining.PARAM_FEATURE_NAMES, featureNames,
                 PerceptronTraining.PARAM_SKIP_GRAM_N, skipgramN);
 
+        PerceptronTraining.initializeParameters();
         BasicConvenience.printMemInfo(logger, "Beginning memory");
 
         for (int i = 0; i < maxIter; i++) {

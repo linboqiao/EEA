@@ -31,10 +31,6 @@ public class EventMentionTupleExtractorRunner {
     public static void main(String[] args) throws UIMAException, IOException {
         System.out.println(className + " started...");
 
-        // ///////////////////////// Parameter Setting ////////////////////////////
-        // Note that you should change the parameters below for your configuration.
-        // //////////////////////////////////////////////////////////////////////////
-        // Parameters for the reader
         // Parameters for the reader
         String inputDir = "data/01_discourse_parsed";
 
@@ -44,8 +40,6 @@ public class EventMentionTupleExtractorRunner {
         String paramBaseOutputDirName = "event_tuples";
         String paramOutputFileSuffix = null;
         int stepnum = 2;
-
-        // ////////////////////////////////////////////////////////////////
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -64,7 +58,7 @@ public class EventMentionTupleExtractorRunner {
 
         AnalysisEngineDescription tupleExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(EventMentionTupleExtractor.class, typeSystemDescription);
 
-        AnalysisEngineDescription syntaticDirectArgumentExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(SyntacticDirectArgumentFixer.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
+//        AnalysisEngineDescription syntaticDirectArgumentExtractor = CustomAnalysisEngineFactory.createAnalysisEngine(SyntacticDirectArgumentFixer.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
         AnalysisEngineDescription SyntacticArgumentPropagater = CustomAnalysisEngineFactory.createAnalysisEngine(SyntacticArgumentPropagateAnnotator.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
@@ -84,7 +78,7 @@ public class EventMentionTupleExtractorRunner {
                 paramParentOutputDir, paramBaseOutputDirName, stepnum, paramOutputFileSuffix);
 
         // Run the pipeline.
-        SimplePipeline.runPipeline(reader, fixer, whLinker, tupleExtractor, syntaticDirectArgumentExtractor, SyntacticArgumentPropagater, goalMentionAnnotator, idAssigRunner, writer);
+        SimplePipeline.runPipeline(reader, fixer, whLinker, tupleExtractor, SyntacticArgumentPropagater, goalMentionAnnotator, idAssigRunner, writer);
         System.out.println(className + " completed.");
     }
 }

@@ -202,8 +202,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         return id;
     }
 
-
-    //TODO check correctness
     public static Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> firstBasedSubstitution(
             LocalEventMentionRepre evm1, LocalEventMentionRepre evm2) {
         TIntIntHashMap evm1BasedRewriteMap = new TIntIntHashMap();
@@ -215,45 +213,35 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
             int argMarker = KmTargetConstants.slotIndexToArgMarker(slotId);
             LocalArgumentRepre argi = evm1.getArg(slotId);
             if (argi != null) {
-                int argiEntityId = argi.isConcrete() ? argi.getEntityId() : argi.getRewritedId();
-                int defaultRewriteVal = argiEntityId == KmTargetConstants.nullArgMarker ? KmTargetConstants.nullArgMarker : KmTargetConstants.otherMarker;
-                if (argiEntityId == -1) {
-                    continue;
+                //set default evm1 slots when we haven't check for overlap in evm2
+                evm1Slots.put(argMarker, KmTargetConstants.otherMarker);
+
+                if (!argi.isOther()) {
+                    if (argi.isConcrete()) {
+                        evm1BasedRewriteMap.put(argi.getEntityId(), argMarker);
+                    } else {
+                        evm1BasedRewriteMap.put(argi.getRewrittenId(), argMarker);
+                    }
                 }
-                evm1BasedRewriteMap.put(argiEntityId, argMarker);
-                evm1Slots.put(argMarker, defaultRewriteVal);
             }
         }
-
-//        if (evm1.getMentionHead().equals("receive")) {
-//            System.err.println("Checking arguments");
-//            System.err.println(evm1);
-//            System.err.println(evm2);
-//            System.err.println("Left slots: " + evm1Slots);
-//            System.err.println("Left args: " + evm1BasedRewriteMap);
-//        }
 
         for (int slotIndex = 0; slotIndex < evm2.getNumArgs(); slotIndex++) {
             LocalArgumentRepre argi = evm2.getArg(slotIndex);
             int argMarker = KmTargetConstants.slotIndexToArgMarker(slotIndex);
 
             if (argi != null) {
-                int entityId = argi.isConcrete() ? argi.getEntityId() : argi.getRewritedId();
-                int substituteId;
+                int entityId = argi.isConcrete() ? argi.getEntityId() : argi.getRewrittenId();
+                int substitutedArgMarker;
                 if (evm1BasedRewriteMap.containsKey(entityId)) {
-                    substituteId = evm1BasedRewriteMap.get(entityId);
-                    evm1Slots.put(substituteId, substituteId);
+                    substitutedArgMarker = evm1BasedRewriteMap.get(entityId);
+                    evm1Slots.put(substitutedArgMarker, substitutedArgMarker);
                 } else {
-                    substituteId = KmTargetConstants.otherMarker;
+                    substitutedArgMarker = KmTargetConstants.otherMarker;
                 }
-                evm2Slots.put(argMarker, substituteId);
+                evm2Slots.put(argMarker, substitutedArgMarker);
             }
         }
-
-//        if (evm1.getMentionHead().equals("receive")) {
-//            System.err.println("Rewrited Left slots: " + evm1Slots);
-//            System.err.println("Rewrited Right slots: " + evm2Slots);
-//        }
 
         Fun.Tuple4<String, Integer, Integer, Integer> eventTuple1 = new Fun.Tuple4<>(evm1.getMentionHead(),
                 evm1Slots.containsKey(KmTargetConstants.anchorArg0Marker) ? evm1Slots.get(KmTargetConstants.anchorArg0Marker) : KmTargetConstants.nullArgMarker,
@@ -277,10 +265,12 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
         for (EventMentionArgumentLink aLink : UimaConvenience.convertFSListToList(evm1.getArguments(), EventMentionArgumentLink.class)) {
             String argumentRole = aLink.getArgumentRole();
+
             if (KmTargetConstants.targetArguments.containsKey(argumentRole)) {
+                //only when this role is one of the targets arguments we record it
                 int slotId = KmTargetConstants.targetArguments.get(argumentRole);
                 evm1Args.put(UimaAnnotationUtils.entityIdToInteger(aLink.getArgument().getReferingEntity().getId()), slotId);
-                //initialize with other
+                //if evm1 has an argument here, we mark it as other; otherwise it will be null
                 evm1Slots.put(slotId, KmTargetConstants.otherMarker);
             }
         }
@@ -297,8 +287,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
                 int substituteId;
                 if (evm1Args.containsKey(entityId)) {
                     substituteId = evm1Args.get(entityId);
-                    //we apply the mask to the former slot here
-                    //former event based, so event slot id is the same as subsituted id
+                    //if evm2 has an overlap with evm1, we activate both
                     evm1Slots.put(substituteId, substituteId);
                 } else {
                     substituteId = KmTargetConstants.otherMarker;

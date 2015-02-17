@@ -100,7 +100,7 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
         String inputDev = inputDir + "01_dev_data";
         String inputTrain = inputDir + "01_train_data";
 
-        String paramTypeSystemDescriptor = "TypeSystem";
+        String paramTypeSystemDescriptor = "TaskEventMentionDetectionTypeSystem";
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
         CollectionReaderDescription testReader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, inputTest, false);

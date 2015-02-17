@@ -38,7 +38,7 @@ public class ArgumentCorefFeature extends Feature {
                     continue;
                 }
 
-                if (leftArg.getRewritedId() == rightArg.getRewritedId()) {
+                if (leftArg.getRewrittenId() == rightArg.getRewrittenId()) {
                     features.put(prefix + slotLeft + "_" + slotRight, 1.0);
                 }
             }

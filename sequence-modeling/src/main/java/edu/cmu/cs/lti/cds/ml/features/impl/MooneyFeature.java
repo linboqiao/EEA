@@ -1,9 +1,10 @@
 package edu.cmu.cs.lti.cds.ml.features.impl;
 
 import com.google.common.base.Joiner;
-import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.ml.features.Feature;
+import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.script.model.ContextElement;
+import edu.cmu.cs.lti.utils.Utils;
 import org.mapdb.Fun;
 
 import java.util.Arrays;
@@ -22,16 +23,32 @@ public class MooneyFeature extends Feature {
     public Map<String, Double> getFeature(ContextElement elementLeft, ContextElement elementRight, int skip) {
         Map<String, Double> features = new HashMap<>();
 
-        if (skip > 3) {
+        if (skip >= 3) {
+            //for skip gram further than 3, use LongMooneyFeature
             return features;
         }
 
+
         Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedForm = KarlMooneyScriptCounter.
                 firstBasedSubstitution(elementLeft.getMention(), elementRight.getMention());
+
         int[] arg1s = getLast3IntFromTuple(subsitutedForm.a);
         int[] arg2s = getLast3IntFromTuple(subsitutedForm.b);
 
+
         String featureName = "m_arg" + "_" + asArgumentStr(arg1s) + "_" + asArgumentStr(arg2s);
+
+
+        if (elementRight.getMention().getMentionHead().equals("give")) {
+            System.err.println("Subsituting " + elementLeft.getMention() + "  " + elementRight.getMention());
+
+            System.err.println("Subsituted form : " + subsitutedForm.a + " " + subsitutedForm.b);
+
+            System.err.println(featureName);
+
+            Utils.pause();
+        }
+
         features.put(featureName, 1.0);
         return features;
     }

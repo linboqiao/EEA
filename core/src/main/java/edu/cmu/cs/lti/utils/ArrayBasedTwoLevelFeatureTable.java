@@ -123,9 +123,11 @@ public class ArrayBasedTwoLevelFeatureTable extends TwoLevelFeatureTable {
                     secondLevelIter.advance();
                     if (weightsRow.containsKey(secondLevelIter.key())) {
                         dotProd += secondLevelIter.value() * weightsRow.get(secondLevelIter.key());
-                        System.err.println("Feature hit " + headWords[wordIndexPair.getLeft()] + " " +
-                                headWords[wordIndexPair.getRight()] + " " + getFeatureName(secondLevelIter.key()) + " : " +
-                                weightsRow.get(secondLevelIter.key()));
+                        System.err.println(
+                                String.format("\t#Feature hit [%s-%s:%s] = %.2f * %.2f", headWords[wordIndexPair.getLeft()],
+                                        headWords[wordIndexPair.getRight()], getFeatureName(secondLevelIter.key()),
+                                        weightsRow.get(secondLevelIter.key()), secondLevelIter.value())
+                        );
                     }
                 }
             }
