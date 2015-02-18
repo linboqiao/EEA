@@ -723,7 +723,7 @@ public class ParsedDataReaderModule  extends AbstractModule {
 							//add as DUMMY
 							featuresIdx.put("NONE" + "\t"
 									//+ qid+ " |BT| |ET|" //empty tree
-									+ qid + " " + skipString //thien's addition
+									+ qid + " " + (skipString.isEmpty() ? "EMPTY" : skipString) //thien's addition
 									+ "\t" + "ENTITY@ENTITY"
 									+ "\t" + s.getAnnotatedSentence(),
 									countInstance);
@@ -755,7 +755,7 @@ public class ParsedDataReaderModule  extends AbstractModule {
 						//add as DUMMY
 						featuresIdx.put("NONE" + "\t"
 								//+ qid+ " |BT| |ET|" //empty tree
-								+ qid + " " + skipString //thien's addition
+								+ qid + " " + (skipString.isEmpty() ? "EMPTY" : skipString) //thien's addition
 								+ "\t" + "ENTITY@ENTITY"
 								+ "\t" + s.getAnnotatedSentence(),
 								countInstance);

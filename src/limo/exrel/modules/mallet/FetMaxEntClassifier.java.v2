@@ -1,0 +1,164 @@
+package limo.exrel.modules.mallet;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import limo.exrel.data.Classification;
+import limo.exrel.data.ClassificationScores;
+import limo.exrel.modules.AbstractModule;
+import limo.exrel.modules.mallet.MalletMaxEnt.GeneralMaxEntClassifier;
+import limo.exrel.modules.mallet.MalletMaxEnt.MMETClassifier;
+import limo.exrel.modules.mallet.MalletMaxEnt.MMaxEntModel;
+import limo.exrel.slots.DoubleSlot;
+import limo.exrel.slots.FileSlot;
+import limo.exrel.slots.InputDirSlot;
+import limo.exrel.slots.OutputFileSlot;
+
+public class FetMaxEntClassifier extends AbstractModule {
+	
+	public InputDirSlot modelsDir = new InputDirSlot(true);
+	public FileSlot examplesIdxFile = new FileSlot(true);
+	public OutputFileSlot outScoresIdxFile = new OutputFileSlot(true);
+	public OutputFileSlot outPropositionsIdxFile = new OutputFileSlot(true);
+	
+	public DoubleSlot detectionThreshold = new DoubleSlot(0.7);
+	public DoubleSlot classificationThreshold = new DoubleSlot(0.9);
+	
+	public FetMaxEntClassifier(String moduleId, String configId) {
+		super(moduleId,configId);
+	}
+	
+//	public MMaxEntModel getDetectorModel() {
+//		message("Loading MaxEnt detector model ...");
+//		String dir = modelsDir.get().getAbsolutePath() + File.separator + "detector.model";
+//		MMaxEntModel tagger = new MMaxEntModel();
+//		tagger.loadModel(dir);
+//		return tagger;
+//	}
+//	
+//	public MMaxEntModel getClassifierModel() {
+//		message("Loading MaxEnt classifier model ...");
+//		String dir = modelsDir.get().getAbsolutePath() + File.separator + "classifier.model";
+//		MMaxEntModel tagger = new MMaxEntModel();
+//		tagger.loadModel(dir);
+//		return tagger;
+//	}
+	
+	public GeneralMaxEntClassifier getDetectorModel() throws Throwable {
+		message("Loading MaxEnt detector model ...");
+		String dir = modelsDir.get().getAbsolutePath() + File.separator + "detector.model";
+		return new MMETClassifier(dir);
+	}
+	
+	public GeneralMaxEntClassifier getClassifierModel() throws Throwable {
+		message("Loading MaxEnt classifier model ...");
+		String dir = modelsDir.get().getAbsolutePath() + File.separator + "classifier.model";
+		return new MMETClassifier(dir);
+	}
+	
+	@Override
+	protected void _run() throws Exception {
+		
+		double dT = detectionThreshold.get().doubleValue(), cT = classificationThreshold.get().doubleValue();
+		
+		message("Tagging traning data ...");
+		message("Detection Threshold = " + dT + ", Classification Threshold = " + cT);
+		
+		GeneralMaxEntClassifier detector = null, classifier = null;
+		try {
+			detector = getDetectorModel();
+			classifier = getClassifierModel();
+		}
+		catch (Throwable th) {
+			th.printStackTrace();
+		}
+		
+//		int numOfClass = classifier.getNumOutcomes();
+//		String[] classes = new String[numOfClass];
+//		for (int i = 0; i < numOfClass; i++)
+//			classes[i] = classifier.getOutcome(i);
+		
+		BufferedReader reader = new BufferedReader(new FileReader(examplesIdxFile.get()));
+		PrintWriter scorePrinter = new PrintWriter(outScoresIdxFile.get());
+		PrintWriter predictionPrinter = new PrintWriter(outPropositionsIdxFile.get());
+		
+		String line = "", features = "", id = "", relationClass = "";
+		String[] data = null;
+		String scores = null;
+		boolean isRelation = false;
+		double[] ds = null;
+		double detectorScore = 0.0, classifierScore = 0.0;
+		while ((line = reader.readLine()) != null) {
+			data = line.split("\t", 4);
+			features = data[2].substring(data[2].indexOf(" ")+1).trim();
+			id = data[0];
+			
+			isRelation = detector.eval(features, false).equals("1");
+			
+			//scores = new ClassificationScores();
+			if (isRelation) {
+				relationClass = classifier.eval(features, false);
+				
+//				ds = classifier.getOutcomeProbabilities(features);
+//				
+//				if (ds.length != classes.length) {
+//					throw new Exception("Mismatch between the number of classes and scores: FetMaxEntClassifier");
+//				}
+//				
+//				for (int i = 0; i < ds.length; i++) {
+//					scores.add(new Classification(classes[i], ds[i]));
+//				}
+				scores = classifier.allOutComeText(features);
+			}
+			else {
+				//extra effort
+				detectorScore = detector.getBestOutComeScore(features, false);
+				classifierScore = classifier.getBestOutComeScore(features, false);
+				if (detectorScore < dT && classifierScore >= cT) {
+					relationClass = classifier.eval(features, false);
+					
+//					ds = classifier.getOutcomeProbabilities(features);
+//					
+//					if (ds.length != classes.length) {
+//						throw new Exception("Mismatch between the number of classes and scores (Extra Effort): FetMaxEntClassifier");
+//					}
+					
+//					for (int i = 0; i < ds.length; i++) {
+//						scores.add(new Classification(classes[i], ds[i]));
+//					}
+					scores = classifier.allOutComeText(features);
+				}
+				else {
+					relationClass = "NONE";
+					
+//					for (int i = 0; i < classes.length; i++) {
+//						if (classes[i].equals("NONE"))
+//							scores.add(new Classification(classes[i], 1.0));
+//						else
+//							scores.add(new Classification(classes[i], 0.0));
+//					}
+					scores = "NONE:1.0";
+				}
+				
+//				relationClass = "NONE";
+//				
+//				for (int i = 0; i < classes.length; i++) {
+//					if (classes[i].equals("NONE"))
+//						scores.add(new Classification(classes[i], 1.0));
+//					else
+//						scores.add(new Classification(classes[i], 0.0));
+//				}
+			}
+			
+			scorePrinter.println(id + "\t" + scores);
+			predictionPrinter.println(id + "\t" + relationClass);
+		}
+		
+		reader.close();
+		scorePrinter.close();
+		predictionPrinter.close();
+	}
+}
