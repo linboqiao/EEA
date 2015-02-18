@@ -660,8 +660,6 @@ system-FET+FETwc+WEDhm+WEDphrase+WEDtree-bc0:
 	mkdir -p $(logDir)
 	nohup make t5-tree_vect-c-svm-light-semtk F=1 TREETYPE=FET+FETwc+WEDhm+WEDphrase+WEDtree c=2.4 CONF=$(CHARNIAK_FET_WC_VEC) TRAINDIR=nw_bn-RY TESTDIR=bc0-RY  > $(logDir)/nohup.bc0-vec-charniak.$(D).f.FET+FETwc+WEDhm+WEDphrase+WEDtree.c2.4-$(REGU)-$(DETH)-$(CATH)
 
-# => WEDhm+WEDtree is the best
-
 ### real experiments for feature-based (to be compared with kernels)
 
 ##FET+FETwc+WEDhm+WEDtree
