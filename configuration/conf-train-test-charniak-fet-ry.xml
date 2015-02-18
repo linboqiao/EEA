@@ -29,14 +29,8 @@
    </variables>
 
   <configuration id="training">
-
-<!-- <module class="limo.modules.ACE2005ReaderModule" id="ACE2005ReaderModuleTrain">
-      <slot name="aceDataDir" type="value">@{DataDirTrain}/</slot>
-      <slot name="plainTextDataDir" type="value">@{DataDirTrain}/process/plain_charniak</slot>
-      <slot name="ignoreRelationsFile" type="value">@{IgnoreRelationsFile}</slot>
-    </module>
--->
-<!--<module class="limo.modules.RYRelationsReaderModule" id="RYReaderModuleTrain">
+<!--
+<module class="limo.modules.RYRelationsReaderModule" id="RYReaderModuleTrain">
       <slot name="ryDataDir" type="value">@{DataDirTrain}/</slot>
       <slot name="plainTextDataDir" type="value">@{DataDirTrain}/process/plain_charniak</slot>
 </module>
@@ -48,6 +42,7 @@
        <slot name="fileEnding" type="value">.penn</slot>
     </module>
 -->
+
     <module class="limo.modules.ParsedDataReaderModule" id="ReadParsedDataAndFeatureExtractorTrain">
            <slot name="inputDir" type="value">@{DataDirTrain}/process/parsed_charniak/</slot>
            <slot name="fileEndingConstituency" type="value">.penn</slot>
@@ -60,20 +55,12 @@
            <slot name="granularityClassification" type="value">@{GranularityClassification}</slot>
 	   <slot name="restrictMentionsInBetween" type="value">true</slot>
 	   <slot name="maxNumMentions" type="value">3</slot>
-	   <slot name="semanticKernelDictionary" type="value">@{HomeDir}/matrix/lsa_ukwac_all_ace2005vocabOnly.txt/lsa-semantic-space.sspace.dict</slot>
     </module>
 
-    <module class="limo.exrel.modules.classification.TRMTrainer" id="TRMTrain">
-        <slot name="svmLearn" type="value">@{SVMLearn}</slot>
-        <!--<slot name="svmLearnParameters" type="value">-t 4 -U 1 -C +</slot>-->
-       <!-- check that parameter file is in current dir! -->
-        <slot name="svmLearnParameters" type="value">@{SVMParams}</slot>
-	<slot name="paramsFile" type="value">@{OutDir}/TRM.params</slot>
+    <module class="limo.exrel.modules.mallet.FetMaxEntTrainer" id="MaxEntTrain">
         <slot name="examplesIdxFile" type="slot" source="ReadParsedDataAndFeatureExtractorTrain">outExamplesIdxFile</slot>
-        <slot name="numThreads" type="value">3</slot>
-	<slot name="trainNone" type="value">true</slot>
-        <slot name="svmOutputDir" type="value">@{ModelsDir}</slot>
-	   <slot name="calculateJ" type="value">false</slot>
+        <slot name="maxEntOutputDir" type="value">@{ModelsDir}</slot>
+        <slot name="regularizationFactor" type="value">@{RegularizationMaxEnt}</slot>
     </module>
 
 	
@@ -100,6 +87,7 @@
        <slot name="fileEnding" type="value">.penn</slot>
     </module>
 -->
+
     <module class="limo.modules.ParsedDataReaderModule" id="ReadParsedDataAndFeatureExtractorTest">
        <slot name="inputDir" type="value">@{DataDirTest}/process/parsed_charniak/</slot>
            <slot name="fileEndingConstituency" type="value">.penn</slot>
@@ -112,25 +100,17 @@
            <slot name="granularityClassification" type="value">@{GranularityClassification}</slot>
 	   <slot name="restrictMentionsInBetween" type="value">true</slot>
 	   <slot name="maxNumMentions" type="value">3</slot>
-	   <slot name="semanticKernelDictionary" type="value">@{HomeDir}/matrix/lsa_ukwac_all_ace2005vocabOnly.txt/lsa-semantic-space.sspace.dict</slot>
     </module>
 
-      <module class="limo.exrel.modules.classification.TRM" id="TRM">
-           <slot name="svmClassify" type="value">@{SVMClassify}</slot>
+      <module class="limo.exrel.modules.mallet.FetMaxEntClassifier" id="MaxEntClassifier">
            <slot name="modelsDir" type="value">@{ModelsDir}</slot>
-           <slot name="svmOutputDir" type="value">@{LoggingDir}</slot>
            <slot name="examplesIdxFile" type="slot" source="ReadParsedDataAndFeatureExtractorTest">outExamplesIdxFile</slot>
            <slot name="outScoresIdxFile" type="value">@{TestDir}/trm.scores.idx</slot>
-           <slot name="numThreads" type="value">3</slot>
-     </module>
-
-
-     <module class="limo.modules.Disambiguator" id="Disambiguate">
-           <slot name="TRMScoresIdxFile" type="slot" source="TRM">outScoresIdxFile</slot>
            <slot name="outPropositionsIdxFile" type='value'>@{TestDir}/out.predicted.class</slot>
-           <slot name="goldIdxFile" type="slot" source="ReadParsedDataAndFeatureExtractorTest">outExamplesIdxFile</slot>
-           <slot name="writeOutputToFile" type="value">true</slot>
+           <slot name="detectionThreshold" type="value">@{DetectionThreshold}</slot>
+           <slot name="classificationThreshold" type="value">@{ClassificationThreshold}</slot>
      </module>
+
  </configuration>
 
 </exrel>

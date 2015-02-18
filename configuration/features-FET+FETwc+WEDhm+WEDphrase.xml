@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<exrel>
+	<extractorLayout>
+
+		<structuredgroup id="fet1">
+			<structuredfeature class="limo.exrel.features.re.fetbase.FET" />
+		</structuredgroup>
+
+		<structuredgroup id="fet2">
+			<structuredfeature class="limo.exrel.features.re.fetbase.FETwc" />
+		</structuredgroup>
+		
+		<structuredgroup id="fet3">
+			<structuredfeature class="limo.exrel.features.re.fetbase.WEDhm" />
+		</structuredgroup>
+		
+		<structuredgroup id="fet4">
+			<structuredfeature class="limo.exrel.features.re.fetbase.WEDphrase" />
+		</structuredgroup>
+
+	</extractorLayout>
+
+</exrel>

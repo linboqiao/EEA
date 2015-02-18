@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<exrel>
+	<extractorLayout>
+
+		<structuredgroup id="fet1">
+			<structuredfeature class="limo.exrel.features.re.fetbase.FET" />
+		</structuredgroup>
+
+	</extractorLayout>
+
+</exrel>

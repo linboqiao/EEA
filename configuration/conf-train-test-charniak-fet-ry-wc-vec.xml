@@ -60,20 +60,14 @@
            <slot name="granularityClassification" type="value">@{GranularityClassification}</slot>
 	   <slot name="restrictMentionsInBetween" type="value">true</slot>
 	   <slot name="maxNumMentions" type="value">3</slot>
-	   <slot name="semanticKernelDictionary" type="value">@{HomeDir}/matrix/lsa_ukwac_all_ace2005vocabOnly.txt/lsa-semantic-space.sspace.dict</slot>
+           <slot name="wordClusterFilePath" type="value">@{HomeDir}/wordcluster/ukwac_all_ace2005vocabOnly-c1000-p1.out/paths</slot>
+        <slot name="wordEmbeddingDictionary" type="value">@{HomeDir}/matrix/word2vec/embeddings-scaled.EMBEDDING_SIZE_50.txt</slot>
     </module>
 
-    <module class="limo.exrel.modules.classification.TRMTrainer" id="TRMTrain">
-        <slot name="svmLearn" type="value">@{SVMLearn}</slot>
-        <!--<slot name="svmLearnParameters" type="value">-t 4 -U 1 -C +</slot>-->
-       <!-- check that parameter file is in current dir! -->
-        <slot name="svmLearnParameters" type="value">@{SVMParams}</slot>
-	<slot name="paramsFile" type="value">@{OutDir}/TRM.params</slot>
+    <module class="limo.exrel.modules.mallet.FetMaxEntTrainer" id="MaxEntTrain">
         <slot name="examplesIdxFile" type="slot" source="ReadParsedDataAndFeatureExtractorTrain">outExamplesIdxFile</slot>
-        <slot name="numThreads" type="value">3</slot>
-	<slot name="trainNone" type="value">true</slot>
-        <slot name="svmOutputDir" type="value">@{ModelsDir}</slot>
-	   <slot name="calculateJ" type="value">false</slot>
+        <slot name="maxEntOutputDir" type="value">@{ModelsDir}</slot>
+        <slot name="regularizationFactor" type="value">@{RegularizationMaxEnt}</slot>
     </module>
 
 	
@@ -112,24 +106,17 @@
            <slot name="granularityClassification" type="value">@{GranularityClassification}</slot>
 	   <slot name="restrictMentionsInBetween" type="value">true</slot>
 	   <slot name="maxNumMentions" type="value">3</slot>
-	   <slot name="semanticKernelDictionary" type="value">@{HomeDir}/matrix/lsa_ukwac_all_ace2005vocabOnly.txt/lsa-semantic-space.sspace.dict</slot>
+           <slot name="wordClusterFilePath" type="value">@{HomeDir}/wordcluster/ukwac_all_ace2005vocabOnly-c1000-p1.out/paths</slot>
+           <slot name="wordEmbeddingDictionary" type="value">@{HomeDir}/matrix/word2vec/embeddings-scaled.EMBEDDING_SIZE_50.txt</slot>
     </module>
 
-      <module class="limo.exrel.modules.classification.TRM" id="TRM">
-           <slot name="svmClassify" type="value">@{SVMClassify}</slot>
+      <module class="limo.exrel.modules.mallet.FetMaxEntClassifier" id="MaxEntClassifier">
            <slot name="modelsDir" type="value">@{ModelsDir}</slot>
-           <slot name="svmOutputDir" type="value">@{LoggingDir}</slot>
            <slot name="examplesIdxFile" type="slot" source="ReadParsedDataAndFeatureExtractorTest">outExamplesIdxFile</slot>
            <slot name="outScoresIdxFile" type="value">@{TestDir}/trm.scores.idx</slot>
-           <slot name="numThreads" type="value">3</slot>
-     </module>
-
-
-     <module class="limo.modules.Disambiguator" id="Disambiguate">
-           <slot name="TRMScoresIdxFile" type="slot" source="TRM">outScoresIdxFile</slot>
            <slot name="outPropositionsIdxFile" type='value'>@{TestDir}/out.predicted.class</slot>
-           <slot name="goldIdxFile" type="slot" source="ReadParsedDataAndFeatureExtractorTest">outExamplesIdxFile</slot>
-           <slot name="writeOutputToFile" type="value">true</slot>
+           <slot name="detectionThreshold" type="value">@{DetectionThreshold}</slot>
+           <slot name="classificationThreshold" type="value">@{ClassificationThreshold}</slot>
      </module>
  </configuration>
 

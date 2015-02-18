@@ -23,6 +23,9 @@
     <DirectedClassification>__DIRECTED__</DirectedClassification> <!-- true|false -->
     <GranularityClassification>__GRANULARITY__</GranularityClassification><!-- type|subtype -->
     <HomeDir>__HOME__</HomeDir>
+    <RegularizationMaxEnt>__REGULARIZATION__</RegularizationMaxEnt>
+    <DetectionThreshold>__DETECTIONTHRESHOLD__</DetectionThreshold>
+    <ClassificationThreshold>__CLASSIFICATIONTHRESHOLD__</ClassificationThreshold>
    </variables>
 
   <configuration id="training">
