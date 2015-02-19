@@ -28,7 +28,7 @@ S=1
 # regularization factor for MaxEnt
 REGU=1.0
 # detection and classification threshold for MaxEnt
-DETH=0.7
+DETH=0.3
 CATH=0.9
 
 ## configuration files
