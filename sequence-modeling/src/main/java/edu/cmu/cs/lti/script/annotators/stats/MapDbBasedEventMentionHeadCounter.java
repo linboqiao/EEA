@@ -7,7 +7,7 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.uima.UIMAException;

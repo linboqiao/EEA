@@ -26,6 +26,8 @@ public class ArrayBasedTwoLevelFeatureTable extends TwoLevelFeatureTable {
         table = new TShortDoubleMap[vocabularySize][vocabularySize];
     }
 
+
+
     @Override
     public int getNumRows() {
         return numRows;

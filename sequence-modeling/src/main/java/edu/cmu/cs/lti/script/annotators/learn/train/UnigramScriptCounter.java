@@ -11,7 +11,7 @@ import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import gnu.trove.list.TIntList;
 import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.map.TObjectIntMap;

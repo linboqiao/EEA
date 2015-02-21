@@ -7,7 +7,7 @@ import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalsysisEngine;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;

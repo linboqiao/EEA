@@ -9,7 +9,7 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.mit.jwi.item.POS;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.UimaContext;

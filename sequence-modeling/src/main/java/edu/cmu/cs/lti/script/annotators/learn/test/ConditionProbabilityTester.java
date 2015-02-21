@@ -126,6 +126,8 @@ public class ConditionProbabilityTester extends MultiArgumentClozeTest {
                     if (sawAnswer) {
                         if (counts.getRight() != 0) {
                             logEvalInfo(String.format("Saw following training example : [%s] with occ %d and coocc %d", followingMention, counts.getLeft(), counts.getRight()));
+                            logEvalInfo(String.format("Occ count : %d, coocc count : %d, laplacian : %.4f, total events : %d",
+                                    counts.getLeft(), counts.getRight(), smoothingParameter, numTotalEvents));
                         }
                         logEvalInfo(String.format("Following score with %s is %.3f", followingMention, followingScore));
                     }
@@ -195,19 +197,17 @@ public class ConditionProbabilityTester extends MultiArgumentClozeTest {
         return MultiMapUtils.getCounts(former, latter, cooccCountMaps, occCountMaps, headIdMaps);
     }
 
-    private double computeConditionalProbability(int cooccCount, int occCount, double laplacianSmoothingParameter, int numTotalEvents) {
+    private double computeConditionalProbability(int occCount, int cooccCount, double laplacianSmoothingParameter, int numTotalEvents) {
         return Math.log((cooccCount + laplacianSmoothingParameter) / (occCount + numTotalEvents * laplacianSmoothingParameter));
     }
 
-    private double conditionalFollowing(MooneyEventRepre former, MooneyEventRepre latter, double laplacianSmoothingParameter, int numTotalEvents) {
-        Pair<Integer, Integer> counts = MultiMapUtils.getCounts(former, latter, cooccCountMaps, occCountMaps, headIdMaps);
-
-        double cooccCountSmoothed = counts.getRight() + laplacianSmoothingParameter;
-        double formerOccCountSmoothed = counts.getLeft() + numTotalEvents * laplacianSmoothingParameter;
-
-        //add one smoothing
-        return Math.log(cooccCountSmoothed / formerOccCountSmoothed);
-    }
-
-
+//    private double conditionalFollowing(MooneyEventRepre former, MooneyEventRepre latter, double laplacianSmoothingParameter, int numTotalEvents) {
+//        Pair<Integer, Integer> counts = MultiMapUtils.getCounts(former, latter, cooccCountMaps, occCountMaps, headIdMaps);
+//
+//        double cooccCountSmoothed = counts.getRight() + laplacianSmoothingParameter;
+//        double formerOccCountSmoothed = counts.getLeft() + numTotalEvents * laplacianSmoothingParameter;
+//
+//        //add one smoothing
+//        return Math.log(cooccCountSmoothed / formerOccCountSmoothed);
+//    }
 }

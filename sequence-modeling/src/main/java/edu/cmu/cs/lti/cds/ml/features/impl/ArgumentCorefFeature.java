@@ -20,10 +20,6 @@ public class ArgumentCorefFeature extends Feature {
     public Map<String, Double> getFeature(ContextElement elementLeft, ContextElement elementRight, int skip) {
         Map<String, Double> features = new HashMap<>();
 
-        if (skip > 3) {
-            return features;
-        }
-
         LocalArgumentRepre[] leftArgs = elementLeft.getMention().getArgs();
         LocalArgumentRepre[] rightArgs = elementRight.getMention().getArgs();
 

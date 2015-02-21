@@ -1,8 +1,8 @@
 package edu.cmu.cs.lti.cds.ml.features.impl;
 
 import com.google.common.base.Joiner;
-import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.cds.ml.features.Feature;
+import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import org.mapdb.Fun;
 
@@ -22,7 +22,8 @@ public class LongMooneyFeature extends Feature {
     public Map<String, Double> getFeature(ContextElement elementLeft, ContextElement elementRight, int skip) {
         Map<String, Double> features = new HashMap<>();
 
-        if (skip <= 3 || skip > 10) {
+        if (skip > 9) {
+//            if (skip < 3 || skip > 9) {
             return features;
         }
 

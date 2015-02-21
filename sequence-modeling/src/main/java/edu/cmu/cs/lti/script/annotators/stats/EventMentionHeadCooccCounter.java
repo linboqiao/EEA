@@ -9,7 +9,7 @@ import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import gnu.trove.iterator.TLongIntIterator;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TLongIntMap;

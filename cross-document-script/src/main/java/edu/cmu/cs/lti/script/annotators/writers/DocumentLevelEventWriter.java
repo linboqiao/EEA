@@ -9,7 +9,7 @@ import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.io.writer.AbstractCsvWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.uima.fit.util.JCasUtil;

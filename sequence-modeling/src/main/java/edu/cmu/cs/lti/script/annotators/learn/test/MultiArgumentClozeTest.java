@@ -7,7 +7,7 @@ import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -57,8 +57,6 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
     private File evalResultFile;
 
-    private File evalInfoFile;
-
     int numArguments = 3;
 
     private TokenAlignmentHelper align = new TokenAlignmentHelper();
@@ -87,12 +85,11 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         rankListOutputDir = new File((String) aContext.getConfigParameterValue(PARAM_EVAL_RESULT_PATH), predictorName);
         String evalDirPath = (String) aContext.getConfigParameterValue(PARAM_EVAL_LOG_DIR);
         evalResultFile = new File(evalDirPath, "eval_results_" + predictorName);
-        evalInfoFile = new File(evalDirPath, "eval_info_" + predictorName);
 
         try {
             FileUtils.write(evalResultFile, "");
-            logEvalInfo(String.format("Rank list output directory : [%s] , eval logging file : [%s], eval info file : [%s]",
-                    rankListOutputDir.getCanonicalPath(), evalResultFile.getCanonicalPath(), evalInfoFile.getCanonicalPath()));
+            logEvalInfo(String.format("Rank list output directory : [%s] , eval result file : [%s]",
+                    rankListOutputDir.getCanonicalPath(), evalResultFile.getCanonicalPath()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -118,23 +115,35 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
             return;
         }
 
-
         String clozeFileName = UimaConvenience.getShortDocumentName(aJCas) + ".gz_" + UimaConvenience.getOffsetInSource(aJCas) + clozeExt;
-        Triple<List<MooneyEventRepre>, Integer, String> mooneyClozeTask = getMooneyStyleCloze(clozeFileName);
-        if (mooneyClozeTask == null) {
-            logger.info("Cloze file removed due to duplication or empty");
-            return;
-        }
+
+        List<Triple<List<MooneyEventRepre>, Integer, String>> clozeTasks = getAllPoissibleMooneyStyleClozes(clozeFileName);
+
+//        Triple<List<MooneyEventRepre>, Integer, String> mooneyClozeTask = getMooneyStyleCloze(clozeFileName);
+//        if (mooneyClozeTask == null) {
+//            logger.info("Cloze file removed due to duplication or empty");
+//            return;
+//        }
 
         align.loadWord2Stanford(aJCas);
         align.loadFanse2Stanford(aJCas);
+
+
+        for (Triple<List<MooneyEventRepre>, Integer, String> mooneyClozeTask : clozeTasks) {
+            runClozeTask(aJCas, mooneyClozeTask);
+        }
+    }
+
+    private void runClozeTask(JCas aJCas, Triple<List<MooneyEventRepre>, Integer, String> mooneyClozeTask) {
 
         //the actual chain is got here
         List<ContextElement> regularChain = getTestingEventMentions(aJCas);
         if (regularChain.size() == 0) {
             return;
         }
+        String taskId = mooneyClozeTask.getRight();
 
+        logger.info("Running cloze task : " + taskId);
 
         int clozeIndex = mooneyClozeTask.getMiddle();
         List<MooneyEventRepre> mooneyChain = mooneyClozeTask.getLeft();
@@ -169,7 +178,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
             Pair<MooneyEventRepre, Double> resulti = results.poll();
             rankResults.add(resulti.getLeft() + "\t" + resulti.getRight());
             if (resulti.getKey().equals(mooneyStyleAnswer)) {
-                String evalRecord = String.format("For cloze task : %s, correct answer found at %d", clozeFileName, rank);
+                String evalRecord = String.format("For cloze task : %s, correct answer found at %d", taskId, rank);
                 logEvalInfo(evalRecord);
                 logEvalResult(evalRecord);
                 for (int kPos = 0; kPos < allK.length; kPos++) {
@@ -185,14 +194,14 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         if (!oov) {
             mrr += 1.0 / rank;
         } else {
-            String evalRecord = String.format("For cloze task : %s, correct answer is not found", clozeFileName);
+            String evalRecord = String.format("For cloze task : %s, correct answer is not found", taskId);
             logEvalResult(evalRecord);
             logEvalInfo(evalRecord);
         }
         totalCount++;
 
-        String rankListOutputName = mooneyClozeTask.getRight() + "_ranklist";
-        String evalInfoOutputName = mooneyClozeTask.getRight() + "_evalinfo";
+        String rankListOutputName = taskId + "_ranklist";
+        String evalInfoOutputName = taskId + "_evalinfo";
 
         File rankListOutputFile = new File(rankListOutputDir, rankListOutputName);
         File evalInfoFile = new File(rankListOutputDir, evalInfoOutputName);
@@ -208,6 +217,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         evalInfos = new ArrayList<>();
     }
 
+
     protected void logEvalResult(String record) {
         evalResults.add(record);
     }
@@ -222,7 +232,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
      * @param chain        The cloze task chain
      * @param testIndex    The position to be test
      * @param numArguments Number of arguments for each event
-     * @return
+     * @return A triple indicating the tasks : list of mentions, a target index to guess and the task Id
      */
     protected abstract PriorityQueue<Pair<MooneyEventRepre, Double>> predict(List<ContextElement> chain, Set<Integer> entities, int testIndex, int numArguments);
 
@@ -253,6 +263,47 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
             }
         }
         return Triple.of(repres, blankIndex, fileName);
+    }
+
+    /**
+     * Ignoring the random selected cloze, use all possible slots for cloze evaluation
+     *
+     * @param fileName
+     * @return
+     */
+    private List<Triple<List<MooneyEventRepre>, Integer, String>> getAllPoissibleMooneyStyleClozes(String fileName) {
+        List<Triple<List<MooneyEventRepre>, Integer, String>> clozeTasks = new ArrayList<>();
+
+        File clozeFile = new File(clozeDir, fileName);
+        if (!clozeFile.exists()) {
+            logEvalInfo("Cloze file does not exist: " + clozeFile.getPath());
+            return clozeTasks;
+        }
+
+        List<String> lines = null;
+
+        try {
+            lines = FileUtils.readLines(clozeFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<MooneyEventRepre> repres = new ArrayList<>();
+
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            if (line.startsWith(KmTargetConstants.clozeBlankIndicator)) {
+                repres.add(MooneyEventRepre.fromString(line.substring(KmTargetConstants.clozeBlankIndicator.length())));
+            } else {
+                repres.add(MooneyEventRepre.fromString(line));
+            }
+        }
+
+        for (int i = 0; i < lines.size(); i++) {
+            clozeTasks.add(Triple.of(repres, i, fileName + "_" + i));
+        }
+
+        return clozeTasks;
     }
 
     private List<ContextElement> getTestingEventMentions(JCas aJCas) {
@@ -292,11 +343,9 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
             logEvalResult(String.format("Recall at %d : %.4f", allK[kPos], recallCounts[kPos] * 1.0 / totalCount));
         }
         logEvalResult(String.format("MRR is : %.4f", mrr / totalCount));
-        logEvalInfo("Completed.");
 
         try {
             FileUtils.writeLines(evalResultFile, evalResults, true);
-            FileUtils.writeLines(evalInfoFile, evalInfos, true);
         } catch (IOException e) {
             e.printStackTrace();
         }

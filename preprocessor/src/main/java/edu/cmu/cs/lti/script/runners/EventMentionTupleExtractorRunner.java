@@ -31,7 +31,6 @@ public class EventMentionTupleExtractorRunner {
     public static void main(String[] args) throws UIMAException, IOException {
         System.out.println(className + " started...");
 
-
         // Parameters for the reader
         String inputDir = args[0]; //"data/01_discourse_parsed";
 

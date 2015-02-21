@@ -28,12 +28,12 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
     public static final String PARAM_MODEL_PATH = "modelPath";
-    public static final String PARAM_SKIP_GRAM_N = "skipgramN";
+    public static final String PARAM_MAX_SKIP_GRAM_N = "maxSkipgramN";
     public static final String PARAM_FEATURE_NAMES = "featureNames";
 
     private CompactFeatureExtractor extractor;
     private TwoLevelFeatureTable compactWeights;
-    private int skipGramN = 2;
+    private int skipGramN;
     private String[] allPredicates;
 
     @Override
@@ -50,7 +50,7 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
 
         logger.info("Initializing tester : " + predictorName);
 
-        skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
+        skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_MAX_SKIP_GRAM_N);
 
         String modelPath = (String) aContext.getConfigParameterValue(PARAM_MODEL_PATH);
 
@@ -92,18 +92,20 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
                 if (score > 0) {
                     logEvalInfo("Candidate is " + candidate.getMention() + "\t" + candidate.getMention().toMooneyMention());
                     logEvalInfo("Feature score " + score);
-                    compactWeights.dotProd(features);
+//                    System.err.println("Showing dot product details for positive scored ones: ");
+//                    compactWeights.dotProd(features, DataPool.headWords);
                     logEvalInfo("Candidate features : ");
                     logEvalInfo(features.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
-//                    compactWeights.dotProd(features, extractor.getFeatureNamesByIndex(), DataPool.headWords);
                 }
 
                 if (candidate.getMention().mooneyMatch(answer.getMention())) {
-                    logEvalInfo("Answer candidate appears: " + candidate.getMention());
+                    logEvalInfo("Answer candidate appears: " + candidate.getMention() + "\t" + candidate.getMention().toMooneyMention());
                     logEvalInfo("Feature score " + score);
                     logEvalInfo("Answer features : ");
                     logEvalInfo(features.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
                     logEvalResult(String.format("Answer score for %s is %.2f", candidateEvm, score));
+                    System.err.println("Showing dot product details for answer: ");
+                    System.err.println("Score is : " + compactWeights.dotProd(features, DataPool.headWords));
                 }
                 rankedEvents.add(Pair.of(candidateEvm, score));
             }

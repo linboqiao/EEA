@@ -158,7 +158,6 @@ public class KarlMooneyPredictor {
         return Pair.of(transformedFormer, transformedLatter);
     }
 
-    //this is correct but slow.
     private double conditionalFollowing(MooneyEventRepre former, MooneyEventRepre latter, double laplacianSmoothingParameter, int numTotalEvents) {
         Pair<Integer, Integer> counts = MultiMapUtils.getCounts(former, latter, cooccCountMaps, occCountMaps, headIdMaps);
 

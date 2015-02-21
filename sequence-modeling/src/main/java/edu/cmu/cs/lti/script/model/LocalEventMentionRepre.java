@@ -4,7 +4,7 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.lang.builder.CompareToBuilder;

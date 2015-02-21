@@ -11,11 +11,11 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.BasicConvenience;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.CollectionUtils;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
 import gnu.trove.list.TIntList;
 import gnu.trove.list.linked.TIntLinkedList;
@@ -111,12 +111,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         if (!dbParentPath.isDirectory()) {
             dbParentPath.mkdirs();
         }
-
-//        if (ignoreLowFreq) {
-//            String[] countingDbFileNames = (String[]) aContext.getConfigParameterValue(PARAM_HEAD_COUNT_DB_NAMES);
-//            headTfDfMaps = DbManager.getMaps(dbPath, countingDbFileNames, EventMentionHeadCounter.defaultMentionHeadMapName);
-//        }
-
         BasicConvenience.printMemInfo(logger, "Initial memory information ");
     }
 
@@ -132,6 +126,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         }
 
         align.loadWord2Stanford(aJCas);
+        align.loadFanse2Stanford(aJCas);
 
         Collection<EventMention> allMentions = JCasUtil.select(aJCas, EventMention.class);
         List<Pair<EventMention, EventMention>> mentionBigrams = CollectionUtils.nSkippedBigrams(allMentions, skippedBigramN);
@@ -153,6 +148,16 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
                     continue;
                 }
             }
+
+
+//            System.err.println(subsitutedBigram);
+//
+//            if (checkMatch(subsitutedBigram, "understand", "say", 0, 0, -1, -1, 0, -1)) {
+//                System.err.println("Found this pair");
+//                System.err.println(compactEvmPairSubstituiton(subsitutedBigram, headIdMap));
+//            }
+
+
             cooccCounts.adjustOrPutValue(compactEvmPairSubstituiton(subsitutedBigram, headIdMap), 1, 1);
             occCounts.adjustOrPutValue(compactEvmSubstituiton(subsitutedBigram.a, headIdMap), 1, 1);
         }
@@ -161,6 +166,14 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         if (counter % 4000 == 0) {
             BasicConvenience.printMemInfo(logger, "Memory info after loaded " + counter + " files");
         }
+    }
+
+    private boolean checkMatch(Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> sb,
+                               String word1, String word2, int id11, int id12, int id13, int id21, int id22, int id23) {
+        return sb.a.a.equals(word1) && sb.b.a.equals(word2)
+                && sb.a.b == id11 && sb.b.b == id21
+                && sb.a.c == id12 && sb.b.c == id22
+                && sb.a.d == id13 && sb.b.d == id23;
     }
 
     public TIntLinkedList compactEvmSubstituiton(Fun.Tuple4<String, Integer, Integer, Integer> evm, TObjectIntMap<String> headMap) {
@@ -356,7 +369,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //data/_db
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
-        int skipGramN = config.getInt("edu.cmu.cs.lti.cds.skipgram.n");
+        int skipGramN = config.getInt("edu.cmu.cs.lti.cds.mooney.skipgram.n");
 
         // ////////////////////////////////////////////////////////////////
 

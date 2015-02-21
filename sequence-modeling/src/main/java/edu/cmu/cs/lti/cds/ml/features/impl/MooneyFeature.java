@@ -4,7 +4,6 @@ import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.cds.ml.features.Feature;
 import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.script.model.ContextElement;
-import edu.cmu.cs.lti.utils.Utils;
 import org.mapdb.Fun;
 
 import java.util.Arrays;
@@ -28,26 +27,22 @@ public class MooneyFeature extends Feature {
             return features;
         }
 
-
-        Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedForm = KarlMooneyScriptCounter.
+        Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> substitutedForm = KarlMooneyScriptCounter.
                 firstBasedSubstitution(elementLeft.getMention(), elementRight.getMention());
 
-        int[] arg1s = getLast3IntFromTuple(subsitutedForm.a);
-        int[] arg2s = getLast3IntFromTuple(subsitutedForm.b);
+        int[] arg1s = getLast3IntFromTuple(substitutedForm.a);
+        int[] arg2s = getLast3IntFromTuple(substitutedForm.b);
 
 
         String featureName = "m_arg" + "_" + asArgumentStr(arg1s) + "_" + asArgumentStr(arg2s);
 
-
-        if (elementRight.getMention().getMentionHead().equals("give")) {
-            System.err.println("Subsituting " + elementLeft.getMention() + "  " + elementRight.getMention());
-
-            System.err.println("Subsituted form : " + subsitutedForm.a + " " + subsitutedForm.b);
-
-            System.err.println(featureName);
-
-            Utils.pause();
-        }
+//        if (elementRight.getMention().getMentionHead().equals("say") && arg2s[0] == -1
+//                && arg2s[1] == 0 && arg2s[2] == -1 && elementLeft.getMention().getMentionHead().equals("understand")) {
+//            System.err.println("Substituting " + elementLeft.getMention() + "  " + elementRight.getMention());
+//            System.err.println("Substituted form : " + substitutedForm.a + " " + substitutedForm.b);
+//            System.err.println(featureName);
+//            Utils.pause();
+//        }
 
         features.put(featureName, 1.0);
         return features;

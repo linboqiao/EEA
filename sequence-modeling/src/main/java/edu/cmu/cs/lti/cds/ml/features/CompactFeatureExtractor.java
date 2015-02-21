@@ -122,8 +122,8 @@ public class CompactFeatureExtractor {
 
         int count = 0;
         for (int i = index + 1; i < sequence.size(); i++) {
-            count++;
             skipGrams.add(Triple.of(target, sequence.get(i), count));
+            count++;
             if (count > k) {
                 break;
             }
@@ -136,8 +136,8 @@ public class CompactFeatureExtractor {
 
         int count = 0;
         for (int i = index - 1; i > 0; i--) {
-            count++;
             skipGrams.add(Triple.of(sequence.get(i), target, count));
+            count++;
             if (count > k) {
                 break;
             }

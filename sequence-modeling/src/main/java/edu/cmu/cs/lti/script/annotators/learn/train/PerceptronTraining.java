@@ -15,9 +15,9 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.BasicConvenience;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.ArrayBasedTwoLevelFeatureTable;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.TwoLevelFeatureTable;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
@@ -49,7 +49,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
     public static final String PARAM_FEATURE_NAMES = "featureNames";
 
-    public static final String PARAM_SKIP_GRAM_N = "skipgramn";
+    public static final String PARAM_MAX_SKIP_GRAM_N = "maxSkippedN";
 
     public static TwoLevelFeatureTable trainingFeatureTable;
 
@@ -65,7 +65,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
     int rankListSize = 100;
     int numArguments = 3;
 
-    int skipGramN = 2;
+    int maxSkippedN;
 
     int numTopNegativeToTrain = 1;
 
@@ -85,7 +85,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         rankListSize = (Integer) aContext.getConfigParameterValue(PARAM_RANK_LIST_SIZE);
         miniBatchSize = (Integer) aContext.getConfigParameterValue(PARAM_MINI_BATCH_SIZE);
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
-        skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_SKIP_GRAM_N);
+        maxSkippedN = (Integer) aContext.getConfigParameterValue(PARAM_MAX_SKIP_GRAM_N);
 
         numSamplesProcessed = 0;
 
@@ -127,7 +127,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         Map<LocalEventMentionRepre, TLongShortDoubleHashTable> mention2Features = new HashMap<>();
 
         List<TLongShortDoubleHashTable> chainBestPredictionFeatures = new ArrayList<>();
-        List<TLongShortDoubleHashTable> chainCorrectFeatures = new ArrayList<>();
+        List<Pair<TLongShortDoubleHashTable, Integer>> chainCorrectFeatures = new ArrayList<>();
 
         //for each sample
         for (int sampleIndex = 0; sampleIndex < chain.size(); sampleIndex++) {
@@ -135,14 +135,14 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 System.err.println(String.format("=============Sample %d============", sampleIndex));
             }
             ContextElement realSample = chain.get(sampleIndex);
-            TLongShortDoubleHashTable correctFeatures = extractor.getFeatures(chain, realSample, sampleIndex, skipGramN, false);
+            TLongShortDoubleHashTable correctFeature = extractor.getFeatures(chain, realSample, sampleIndex, maxSkippedN, false);
             Sentence sampleSent = realSample.getSent();
 
             PriorityQueue<Pair<Double, LocalEventMentionRepre>> scores = new PriorityQueue<>(rankListSize, Collections.reverseOrder());
 
             int originalRank = 0;
             for (LocalEventMentionRepre sample : sampleCandidatesWithReal(arguments, realSample.getMention())) {
-                TLongShortDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getHead(), sample), sampleIndex, skipGramN, false);
+                TLongShortDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getHead(), sample), sampleIndex, maxSkippedN, false);
                 double sampleScore;
                 if (debug) {
                     sampleScore = trainingFeatureTable.dotProd(sampleFeature, DataPool.headWords);
@@ -198,7 +198,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
             //rank starts at 0
             if (realRank >= targetRank) {
                 chainBestPredictionFeatures.addAll(currentBestSampleFeatures);
-                chainCorrectFeatures.add(correctFeatures);
+                chainCorrectFeatures.add(Pair.of(correctFeature, numTopNegativeToTrain));
             }
 
             averageRankPercentage += realRank * 1.0 / rankListSize;
@@ -246,17 +246,14 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         return samples;
     }
 
-
-    private void perceptronUpdate(List<TLongShortDoubleHashTable> correctFeatures, List<TLongShortDoubleHashTable> currentTops) {
-        int negativeSize = currentTops.size();
-
-        for (TLongShortDoubleHashTable correctFeature : correctFeatures) {
-            trainingFeatureTable.adjustBy(correctFeature, negativeSize);
+    private void perceptronUpdate(List<Pair<TLongShortDoubleHashTable, Integer>> listOfCorrectFeatures, List<TLongShortDoubleHashTable> currentTops) {
+        for (Pair<TLongShortDoubleHashTable, Integer> correctFeatureWithWeight : listOfCorrectFeatures) {
+            trainingFeatureTable.adjustBy(correctFeatureWithWeight.getKey(), correctFeatureWithWeight.getRight());
         }
 
-//        for (TLongShortDoubleHashTable currentTop : currentTops) {
-//            trainingFeatureTable.adjustBy(currentTop, -1);
-//        }
+        for (TLongShortDoubleHashTable currentTop : currentTops) {
+            trainingFeatureTable.adjustBy(currentTop, -1);
+        }
     }
 
     @Override
@@ -284,7 +281,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         String modelExt = config.get("edu.cmu.cs.lti.cds.model.ext");
         String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
         String featurePackage = config.get("edu.cmu.cs.lti.cds.features.packagename");
-        int skipgramN = config.getInt("edu.cmu.cs.lti.cds.skipgram.n");
+        int maxSkipN = config.getInt("edu.cmu.cs.lti.cds.max.n");
 
         int rankListSize = config.getInt("edu.cmu.cs.lti.cds.perceptron.ranklist.size");
 
@@ -319,7 +316,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 PerceptronTraining.PARAM_RANK_LIST_SIZE, rankListSize,
                 PerceptronTraining.PARAM_MINI_BATCH_SIZE, miniBatchNum,
                 PerceptronTraining.PARAM_FEATURE_NAMES, featureNames,
-                PerceptronTraining.PARAM_SKIP_GRAM_N, skipgramN);
+                PerceptronTraining.PARAM_MAX_SKIP_GRAM_N, maxSkipN);
 
         PerceptronTraining.initializeParameters();
         BasicConvenience.printMemInfo(logger, "Beginning memory");

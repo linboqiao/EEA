@@ -9,7 +9,7 @@ import edu.cmu.cs.lti.ling.WordNetSearcher;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import gnu.trove.iterator.TIntDoubleIterator;
 import gnu.trove.map.TIntDoubleMap;
 import gnu.trove.map.hash.TIntDoubleHashMap;
@@ -346,7 +346,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
                     addFeature("HeadDepNer_" + dep.getDependencyType() + "_" + dep.getHead().getNerTag(), features);
                 }
 
-                addFeature("HeadDepPos" + dep.getDependencyType() + "_" + dep.getHead().getPos(), features);
+                addFeature("HeadDepPos_" + dep.getDependencyType() + "_" + dep.getHead().getPos(), features);
 
                 if (brownClusters.containsKey(headLemma)) {
                     addFeature("HeadDepLemmaBrownCluster_" + brownClusters.get(headLemma), features);
@@ -482,7 +482,7 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
                 addFeature("SubPhrase_" + mention.getHeadWord().getLemma().toLowerCase() + "_" + argumentHeadWord.getLemma().toLowerCase(), 1.0, features);
 
-                addFeature("FrameArugumentRole_" + argument.getRoleName(), features);
+                addFeature("FrameArgumentRole_" + argument.getRoleName(), features);
 
                 int objectStatus = isPhysicalArtifacts(argumentHeadWord.getLemma().toLowerCase());
 

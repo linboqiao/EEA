@@ -17,7 +17,7 @@ import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
-import edu.cmu.cs.lti.utils.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.TwoLevelFeatureTable;
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.iterator.TShortDoubleIterator;

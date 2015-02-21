@@ -53,7 +53,7 @@ public class MultiArgumentClozeTestRunner {
 
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
         String featurePackage = config.get("edu.cmu.cs.lti.cds.features.packagename");
-        int skipgramN = config.getInt("edu.cmu.cs.lti.cds.skipgram.n");
+        int maxSkippedGramN = config.getInt("edu.cmu.cs.lti.cds.max.n");
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
 
         Set<String> methods = new HashSet<>(Arrays.asList(config.getList("edu.cmu.cs.lti.cds.methods")));
@@ -100,7 +100,7 @@ public class MultiArgumentClozeTestRunner {
                         CompactLogLinearTester.PARAM_DB_DIR_PATH, dbPath,
                         CompactLogLinearTester.PARAM_MODEL_PATH, modelPath,
                         CompactLogLinearTester.PARAM_KEEP_QUIET, false,
-                        CompactLogLinearTester.PARAM_SKIP_GRAM_N, skipgramN,
+                        CompactLogLinearTester.PARAM_MAX_SKIP_GRAM_N, maxSkippedGramN,
                         CompactLogLinearTester.PARAM_FEATURE_NAMES, featureNames
                 );
 
