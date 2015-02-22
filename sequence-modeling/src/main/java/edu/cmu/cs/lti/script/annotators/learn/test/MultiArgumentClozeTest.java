@@ -235,9 +235,10 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
         File clozeFile = new File(clozeDir, fileName);
         if (!clozeFile.exists()) {
-            logEvalInfo("Cloze file does not exist: " + clozeFile.getPath());
-            return null;
+            logger.info("Cloze file does not exist: " + clozeFile.getPath());
+            return clozeTasks;
         }
+
         List<String> lines = null;
 
         try {
