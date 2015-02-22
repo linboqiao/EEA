@@ -6,8 +6,8 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Utils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -117,17 +117,11 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
         String clozeFileName = UimaConvenience.getShortDocumentName(aJCas) + ".gz_" + UimaConvenience.getOffsetInSource(aJCas) + clozeExt;
 
-        List<Triple<List<MooneyEventRepre>, Integer, String>> clozeTasks = getAllPoissibleMooneyStyleClozes(clozeFileName);
-
-//        Triple<List<MooneyEventRepre>, Integer, String> mooneyClozeTask = getMooneyStyleCloze(clozeFileName);
-//        if (mooneyClozeTask == null) {
-//            logger.info("Cloze file removed due to duplication or empty");
-//            return;
-//        }
+//        List<Triple<List<MooneyEventRepre>, Integer, String>> clozeTasks = getAllPoissibleMooneyStyleClozes(clozeFileName);
+        List<Triple<List<MooneyEventRepre>, Integer, String>> clozeTasks = getPreselectedClozeTask(clozeFileName);
 
         align.loadWord2Stanford(aJCas);
         align.loadFanse2Stanford(aJCas);
-
 
         for (Triple<List<MooneyEventRepre>, Integer, String> mooneyClozeTask : clozeTasks) {
             runClozeTask(aJCas, mooneyClozeTask);
@@ -236,7 +230,9 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
      */
     protected abstract PriorityQueue<Pair<MooneyEventRepre, Double>> predict(List<ContextElement> chain, Set<Integer> entities, int testIndex, int numArguments);
 
-    private Triple<List<MooneyEventRepre>, Integer, String> getMooneyStyleCloze(String fileName) {
+    private List<Triple<List<MooneyEventRepre>, Integer, String>> getPreselectedClozeTask(String fileName) {
+        List<Triple<List<MooneyEventRepre>, Integer, String>> clozeTasks = new ArrayList<>();
+
         File clozeFile = new File(clozeDir, fileName);
         if (!clozeFile.exists()) {
             logEvalInfo("Cloze file does not exist: " + clozeFile.getPath());
@@ -252,17 +248,23 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
         List<MooneyEventRepre> repres = new ArrayList<>();
 
-        int blankIndex = -1;
+        List<Integer> blankIndices = new ArrayList<>();
+
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             if (line.startsWith(KmTargetConstants.clozeBlankIndicator)) {
-                blankIndex = i;
+                blankIndices.add(i);
                 repres.add(MooneyEventRepre.fromString(line.substring(KmTargetConstants.clozeBlankIndicator.length())));
             } else {
                 repres.add(MooneyEventRepre.fromString(line));
             }
         }
-        return Triple.of(repres, blankIndex, fileName);
+
+        for (int blankIndex : blankIndices) {
+            clozeTasks.add(Triple.of(repres, blankIndex, fileName + "_" + blankIndex));
+        }
+
+        return clozeTasks;
     }
 
     /**
