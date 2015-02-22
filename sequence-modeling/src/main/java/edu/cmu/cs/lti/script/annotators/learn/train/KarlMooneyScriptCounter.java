@@ -23,7 +23,6 @@ import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -38,7 +37,6 @@ import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.core.SerializationHelper;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -356,7 +354,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
      * @throws java.io.IOException
      * @throws org.apache.uima.UIMAException
      */
-    public static void main(String[] args) throws UIMAException, IOException {
+    public static void main(String[] args) throws Exception {
         String className = KarlMooneyScriptCounter.class.getSimpleName();
 
         System.out.println(className + " started...");
@@ -372,6 +370,10 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
 
         DataPool.readBlackList(new File(blackListFile));
+
+        if (ignoreLowFreq) {
+            DataPool.loadHeadStatistics(config, false);
+        }
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
