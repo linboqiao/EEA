@@ -19,11 +19,6 @@
         </dependency>
         <dependency>
             <groupId>edu.cmu.cs.lti</groupId>
-            <artifactId>corpus-reader</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>edu.cmu.cs.lti</groupId>
             <artifactId>discourse-parser</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

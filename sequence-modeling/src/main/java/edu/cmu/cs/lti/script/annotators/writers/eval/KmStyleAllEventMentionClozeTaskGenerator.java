@@ -224,7 +224,7 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
 
         String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.heldout.path"); //"data/02_event_tuples/dev";
         String paramParentOutputDir = config.get("edu.cmu.cs.lti.cds.parent.output"); // "data";
-        String clozePath = config.get("edu.cmu.cs.lti.cds.cloze.base.path"); // "loze_dev"
+        String clozePath = config.get("edu.cmu.cs.lti.cds.cloze.base.path"); // "cloze_dev"
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
         int clozeMinSize = config.getInt("edu.cmu.cs.lti.cds.cloze.minsize");

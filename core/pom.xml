@@ -87,11 +87,6 @@
             <version>2.4.0</version>
         </dependency>
         <dependency>
-            <groupId>edu.cmu.cs.lti</groupId>
-            <artifactId>uima-base</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>
             <version>4.9.0</version>
