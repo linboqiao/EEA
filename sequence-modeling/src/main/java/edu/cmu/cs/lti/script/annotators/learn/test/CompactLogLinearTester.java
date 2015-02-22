@@ -8,6 +8,7 @@ import edu.cmu.cs.lti.script.model.MooneyEventRepre;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.utils.Comparators;
 import edu.cmu.cs.lti.utils.TwoLevelFeatureTable;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import weka.core.SerializationHelper;
@@ -16,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,22 +38,15 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
 
     @Override
     protected String initializePredictor(UimaContext aContext) {
-
-        String predictorName = this.getClass().getSimpleName();
-
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
-
-        for (String featureImplName : featureImplNames) {
-            String[] nameParts = featureImplName.split(Pattern.quote("."));
-            predictorName += "_" + nameParts[nameParts.length - 1];
-        }
-
-        logger.info("Initializing tester : " + predictorName);
 
         skipGramN = (Integer) aContext.getConfigParameterValue(PARAM_MAX_SKIP_GRAM_N);
 
         String modelPath = (String) aContext.getConfigParameterValue(PARAM_MODEL_PATH);
 
+        String predictorName = FilenameUtils.getBaseName(modelPath);
+
+        logger.info("Initializing tester : " + FilenameUtils.getBaseName(modelPath));
         logger.info("Loading from " + modelPath);
 
         try {
