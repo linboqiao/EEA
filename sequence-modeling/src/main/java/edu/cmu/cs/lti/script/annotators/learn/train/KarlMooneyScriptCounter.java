@@ -49,7 +49,6 @@ import java.util.List;
  * Time: 3:47 PM
  */
 public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
-    //TODO use word sense instead of predicate head word
     public static final String PARAM_DB_NAME = "dbName";
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
@@ -371,7 +370,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
         int skipGramN = config.getInt("edu.cmu.cs.lti.cds.mooney.skipgram.n");
 
-        // ////////////////////////////////////////////////////////////////
 
         DataPool.readBlackList(new File(blackListFile));
 
@@ -382,7 +380,7 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
+                CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, true);
 
         AnalysisEngineDescription kmScriptCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
                 KarlMooneyScriptCounter.class, typeSystemDescription,

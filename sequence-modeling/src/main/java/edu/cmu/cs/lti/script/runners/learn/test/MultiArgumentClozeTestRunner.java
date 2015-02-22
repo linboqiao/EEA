@@ -47,8 +47,6 @@ public class MultiArgumentClozeTestRunner {
         String clozePath = config.get("edu.cmu.cs.lti.cds.cloze.path"); // "cloze"
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath");
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
-        String[] modelPaths = config.getList("edu.cmu.cs.lti.cds.loglinear.model");
-        String modelPathBase = config.get("edu.cmu.cs.lti.cds.perceptron.model.path");
         String evalLogDirectoryPath = config.get("edu.cmu.cs.lti.cds.eval.log.path");
 
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
@@ -81,6 +79,9 @@ public class MultiArgumentClozeTestRunner {
 
 
         if (methods.contains("loglinear")) {
+            String[] modelPaths = config.getList("edu.cmu.cs.lti.cds.loglinear.model");
+            String modelPathBase = config.get("edu.cmu.cs.lti.cds.perceptron.model.path");
+
             for (String modelPath : modelPaths) {
                 String[] featureNames = modelPath.replaceAll("^" + modelPathBase + "_", "").replaceAll("_\\d.ser$", "").split("_");
                 //make complete class name
