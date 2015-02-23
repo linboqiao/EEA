@@ -62,6 +62,8 @@ public class DataPool {
     //Load some of these large maps that might be shared static
     public static void loadKmCooccMap(String dbPath, String dbName, String cooccName) {
         String mapPath = new File(dbPath, dbName + "_" + cooccName).getAbsolutePath();
+        System.err.println("Loading coocc map at : " + mapPath);
+
         try {
             cooccCountMaps = (TObjectIntMap<TIntList>) SerializationHelper.read(mapPath);
         } catch (Exception e) {
@@ -105,8 +107,10 @@ public class DataPool {
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
         String unigramMapName = UnigramScriptCounter.defaultUnigramMapName;
-
         String mapPath = new File(dbPath, dbNames[0] + "_" + unigramMapName).getAbsolutePath();
+
+        System.err.println("Loading unigram counts " + mapPath);
+
         unigramCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(mapPath);
         for (TObjectIntIterator<TIntList> iter = unigramCounts.iterator(); iter.hasNext(); ) {
             iter.advance();
