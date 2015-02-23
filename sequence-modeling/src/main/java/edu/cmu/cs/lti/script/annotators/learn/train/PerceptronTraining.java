@@ -98,7 +98,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
     public static void initializeParameters() {
         //        trainingFeatureTable = new TLongBasedFeatureHashTable();
-        trainingFeatureTable = new ArrayBasedTwoLevelFeatureTable(DataPool.headIdMap.size());
+        trainingFeatureTable = new ArrayBasedTwoLevelFeatureTable(DataPool.headIdMap.size() + 1);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         for (Sentence sent : JCasUtil.select(aJCas, Sentence.class)) {
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sent)) {
                 LocalEventMentionRepre eventRep = LocalEventMentionRepre.fromEventMention(mention, align);
-                chain.add(new ContextElement(aJCas, sent, mention.getHeadWord(), eventRep));
+                chain.add(new ContextElement(aJCas, sent, mention, eventRep));
                 Collections.addAll(arguments, eventRep.getArgs());
             }
         }
@@ -129,20 +129,23 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         List<TLongShortDoubleHashTable> chainBestPredictionFeatures = new ArrayList<>();
         List<Pair<TLongShortDoubleHashTable, Integer>> chainCorrectFeatures = new ArrayList<>();
 
+
+        extractor.prepareGlobalFeatures(chain);
+
         //for each sample
         for (int sampleIndex = 0; sampleIndex < chain.size(); sampleIndex++) {
             if (debug) {
                 System.err.println(String.format("=============Sample %d============", sampleIndex));
             }
             ContextElement realSample = chain.get(sampleIndex);
-            TLongShortDoubleHashTable correctFeature = extractor.getFeatures(chain, realSample, sampleIndex, maxSkippedN, false);
+            TLongShortDoubleHashTable correctFeature = extractor.getFeatures(chain, realSample, sampleIndex, maxSkippedN);
             Sentence sampleSent = realSample.getSent();
 
             PriorityQueue<Pair<Double, LocalEventMentionRepre>> scores = new PriorityQueue<>(rankListSize, Collections.reverseOrder());
 
             int originalRank = 0;
             for (LocalEventMentionRepre sample : sampleCandidatesWithReal(arguments, realSample.getMention())) {
-                TLongShortDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getHead(), sample), sampleIndex, maxSkippedN, false);
+                TLongShortDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getOriginalMention(), sample), sampleIndex, maxSkippedN);
                 double sampleScore;
                 if (debug) {
                     sampleScore = trainingFeatureTable.dotProd(sampleFeature, DataPool.headWords);
@@ -281,6 +284,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         String modelExt = config.get("edu.cmu.cs.lti.cds.model.ext");
         String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
         String featurePackage = config.get("edu.cmu.cs.lti.cds.features.packagename");
+        String semLinkPath = config.get("edu.cmu.cs.lti.cds.db.semlink.path");
         int maxSkipN = config.getInt("edu.cmu.cs.lti.cds.max.n");
 
         int rankListSize = config.getInt("edu.cmu.cs.lti.cds.perceptron.ranklist.size");
@@ -300,6 +304,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         DataPool.readBlackList(new File(blackListFileName));
         DataPool.loadKmCooccMap(dbPath, dbNames[0], KarlMooneyScriptCounter.defaultCooccMapName);
         DataPool.loadEventUnigramCounts(config);
+        DataPool.loadSemLinkData(semLinkPath);
 
         logger.info("# predicates " + DataPool.headIdMap.size());
 

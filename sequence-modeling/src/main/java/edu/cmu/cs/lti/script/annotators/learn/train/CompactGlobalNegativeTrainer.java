@@ -15,9 +15,9 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.BasicConvenience;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.TLongBasedFeatureTable;
-import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.TwoLevelFeatureTable;
 import gnu.trove.iterator.TLongObjectIterator;
 import gnu.trove.iterator.TShortDoubleIterator;
@@ -118,7 +118,7 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         for (Sentence sent : JCasUtil.select(aJCas, Sentence.class)) {
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sent)) {
                 LocalEventMentionRepre eventRep = LocalEventMentionRepre.fromEventMention(mention, align);
-                chain.add(new ContextElement(aJCas, sent, mention.getHeadWord(), eventRep));
+                chain.add(new ContextElement(aJCas, sent, mention, eventRep));
                 Collections.addAll(arguments, eventRep.getArgs());
             }
         }
@@ -126,14 +126,14 @@ public class CompactGlobalNegativeTrainer extends AbstractLoggingAnnotator {
         //for each sample
         for (int sampleIndex = 0; sampleIndex < chain.size(); sampleIndex++) {
             ContextElement realSample = chain.get(sampleIndex);
-            TLongShortDoubleHashTable features = extractor.getFeatures(chain, realSample, sampleIndex, skipGramN, false);
+            TLongShortDoubleHashTable features = extractor.getFeatures(chain, realSample, sampleIndex, skipGramN);
             Sentence sampleSent = realSample.getSent();
             //generate noise samples
             List<TLongShortDoubleHashTable> noiseSamples = new ArrayList<>();
             for (int i = 0; i < numNoise; i++) {
                 Pair<LocalEventMentionRepre, Double> noise = noiseDist.draw(arguments, numArguments);
                 LocalEventMentionRepre noiseRep = noise.getKey();
-                TLongShortDoubleHashTable noiseFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getHead(), noiseRep), sampleIndex, skipGramN, true);
+                TLongShortDoubleHashTable noiseFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getOriginalMention(), noiseRep), sampleIndex, skipGramN);
                 if (noiseFeature != null) {
                     noiseSamples.add(noiseFeature);
                 }

@@ -14,9 +14,9 @@ import java.util.Map;
  * Time: 2:42 PM
  */
 public class KmTargetConstants {
-    //TODO very ugly class
-
     public static final Map<String, Integer> targetArguments;
+
+    public static final String[] argumentSlotName;
 
     public static final List<Integer> notNullArguments;
 
@@ -41,6 +41,12 @@ public class KmTargetConstants {
         targetArguments.put(PropBankTagSet.ARG0, anchorArg0Marker);
         targetArguments.put(PropBankTagSet.ARG1, anchorArg1Marker);
         targetArguments.put(PropBankTagSet.ARG2, anchorArg2Marker);
+
+        argumentSlotName = new String[3];
+
+        argumentSlotName[0] = PropBankTagSet.ARG0;
+        argumentSlotName[1] = PropBankTagSet.ARG1;
+        argumentSlotName[2] = PropBankTagSet.ARG2;
 
         notNullArguments = new ArrayList<>();
         notNullArguments.addAll(targetArguments.values());

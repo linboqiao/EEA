@@ -8,8 +8,8 @@ import edu.cmu.cs.lti.ling.FrameDataReader;
 import edu.cmu.cs.lti.ling.WordNetSearcher;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import gnu.trove.iterator.TIntDoubleIterator;
 import gnu.trove.map.TIntDoubleMap;
 import gnu.trove.map.hash.TIntDoubleHashMap;
@@ -92,8 +92,8 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     @ConfigurationParameter(name = PARAM_TRAINING_DATASET_PATH, mandatory = false)
     String trainingDataSetPath;
 
+    //TODO not used
     Map<String, String> vn2Fn;
-
     Map<String, String> pb2Vn;
 
     TokenAlignmentHelper align = new TokenAlignmentHelper();

@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.script.utils;
 
+import edu.cmu.cs.lti.ling.FrameDataReader;
 import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.script.annotators.learn.train.UnigramScriptCounter;
 import edu.cmu.cs.lti.script.type.Article;
@@ -12,11 +13,14 @@ import gnu.trove.map.TObjectIntMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.javatuples.Pair;
 import weka.core.SerializationHelper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -27,15 +31,6 @@ import java.util.logging.Logger;
  * Time: 11:05 AM
  */
 public class DataPool {
-//    //a more compact form in storing such parameters
-//    public static final TLongBasedFeatureTable trainingUsedCompactWeights = new TLongBasedFeatureTable();
-//
-//    //ada grad memory
-//    public static final TLongShortDoubleHashTable compactAdaGradMemory = new TLongShortDoubleHashTable();
-//
-//    //sample counter
-//    public static long numSampleProcessed = 0;
-
     //data used by the trainer
     public static long predicateTotalCount = 0;
     public static long eventUnigramTotalCount = 0;
@@ -45,6 +40,9 @@ public class DataPool {
     public static Set<String> blackListedArticleId;
 
     public static TObjectIntMap<TIntList> cooccCountMaps;
+
+    public static Map<String, String> pb2FnFrameMapping;
+    public static Map<String, String> pb2FnFrameRoleMapping;
 
     //global event head statistics
     public static TIntIntMap headTfMap;
@@ -154,5 +152,40 @@ public class DataPool {
 
     public static boolean lowFreqFilter(String predicate) {
         return lowFreqFilter(headIdMap.get(predicate));
+    }
+
+    public static void loadSemLinkData(String semLinkDirPath) {
+        Map<String, String> vn2Fn = FrameDataReader.getFN2VNFrameMap(semLinkDirPath + "/vn-fn/VN-FNRoleMapping.txt", true);
+        Map<String, String> pb2Vn = FrameDataReader.getVN2PBFrameMap(semLinkDirPath + "/vn-pb/vnpbMappings", true);
+
+        Map<Pair<String, String>, Pair<String, String>> vn2FnRole = FrameDataReader.getFN2VNRoleMap(semLinkDirPath + "/vn-fn/VN-FNRoleMapping.txt", true);
+        //TODO: this one is not read successfully
+        Map<Pair<String, String>, Pair<String, String>> pb2VnRole = FrameDataReader.getVN2PBRoleMap(semLinkDirPath + "/vn-pb/vnpbMappings", true);
+
+        pb2FnFrameMapping = new HashMap<>();
+
+        for (Map.Entry<String, String> pbvn : pb2Vn.entrySet()) {
+            String pbFrame = pbvn.getKey();
+            String vnFrame = pbvn.getValue();
+            String fnFrame = vn2Fn.get(vnFrame);
+            if (fnFrame != null) {
+                pb2FnFrameMapping.put(pbFrame, fnFrame);
+            }
+        }
+
+        pb2FnFrameRoleMapping = new HashMap<>();
+
+        for (Map.Entry<Pair<String, String>, Pair<String, String>> pbvn : pb2VnRole.entrySet()) {
+            Pair<String, String> pbRole = pbvn.getKey();
+            Pair<String, String> vnRole = pbvn.getValue();
+            Pair<String, String> fnRole = vn2FnRole.get(vnRole);
+            System.out.println(pbRole);
+
+            if (fnRole != null) {
+                System.out.println(pbRole);
+                pb2FnFrameRoleMapping.put(pbRole.getValue0() + "_ARG" + pbRole.getValue1(), fnRole.getValue0() + "_" + fnRole.getValue1());
+            }
+        }
+
     }
 }

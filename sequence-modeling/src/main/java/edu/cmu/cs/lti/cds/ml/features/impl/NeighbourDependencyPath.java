@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.cds.ml.features.impl;
 
 import com.google.common.base.Joiner;
-import edu.cmu.cs.lti.cds.ml.features.Feature;
+import edu.cmu.cs.lti.cds.ml.features.PairwiseFeature;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import edu.cmu.cs.lti.script.type.Dependency;
 import edu.cmu.cs.lti.script.type.Sentence;
@@ -20,7 +20,10 @@ import java.util.Map;
  * Date: 12/1/14
  * Time: 2:57 PM
  */
-public class NeighbourDependencyPath extends Feature {
+public class NeighbourDependencyPath extends PairwiseFeature {
+    String prefix = "dep_path_";
+    int maxPathLength = 2;
+
     @Override
     public Map<String, Double> getFeature(ContextElement elementLeft, ContextElement elementRight, int skip) {
         Map<String, Double> features = new HashMap<>();
@@ -36,15 +39,15 @@ public class NeighbourDependencyPath extends Feature {
         int rightSentId = getId(rightSent);
 
         if (leftSentId == rightSentId) {
-            String depPath = getDepdencyPath(elementLeft.getHead(), elementRight.getHead(), 2);
+            String depPath = getDependencyPathStr(elementLeft.getHead(), elementRight.getHead(), maxPathLength);
             if (depPath != null) {
-                features.put(depPath, 1.0);
+                features.put(prefix + depPath, 1.0);
             }
         }
         return features;
     }
 
-    private String getDepdencyPath(Word leftWord, Word rightWord, int k) {
+    private String getDependencyPathStr(Word leftWord, Word rightWord, int k) {
         List<String> path = getDependencyPath(leftWord, rightWord, k);
         if (path.size() > 0) {
             return Joiner.on("_").join(path);
@@ -56,12 +59,12 @@ public class NeighbourDependencyPath extends Feature {
         return null;
     }
 
-    private List<String> getDependencyPath(Word ancenstor, Word descendant, int k) {
+    private List<String> getDependencyPath(Word ancestor, Word descendant, int k) {
         List<String> path = new LinkedList<>();
         if (k == 0) {
             return path;
         }
-        FSList childDependencyFS = ancenstor.getChildDependencyRelations();
+        FSList childDependencyFS = ancestor.getChildDependencyRelations();
         if (childDependencyFS != null) {
             for (Dependency childDependency : FSCollectionFactory.create(childDependencyFS, Dependency.class)) {
                 if (childDependency.getChild().equals(descendant)) {

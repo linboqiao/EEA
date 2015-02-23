@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.cds.ml.features.impl;
 
-import edu.cmu.cs.lti.cds.ml.features.Feature;
+import edu.cmu.cs.lti.cds.ml.features.PairwiseFeature;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import edu.cmu.cs.lti.script.type.Sentence;
 import org.apache.uima.fit.util.JCasUtil;
@@ -15,7 +15,7 @@ import java.util.Map;
  * Date: 12/2/14
  * Time: 1:02 AM
  */
-public class SentDistFeature extends Feature {
+public class SentDistFeature extends PairwiseFeature {
     @Override
     public Map<String, Double> getFeature(ContextElement elementLeft, ContextElement elementRight, int skip) {
         Map<String, Double> features = new HashMap<>();

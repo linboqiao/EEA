@@ -1,18 +1,15 @@
 package edu.cmu.cs.lti.cds.ml.features;
 
 import com.google.common.collect.BiMap;
-import edu.cmu.cs.lti.cds.ml.features.impl.MooneyFeature;
 import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
-import edu.cmu.cs.lti.script.annotators.learn.train.KarlMooneyScriptCounter;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.TwoLevelFeatureTable;
 import gnu.trove.list.TIntList;
-import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.map.TObjectIntMap;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
-import org.mapdb.Fun;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,63 +30,78 @@ public class CompactFeatureExtractor {
     private TObjectIntMap<TIntList> positiveObservations;
     private TObjectIntMap<String> headMap;
 
-    private List<Feature> featureImpls;
+    private List<PairwiseFeature> singleFeatureImpls;
+    private List<GlobalFeature> globalFeatureImpls;
 
-    public <T extends TwoLevelFeatureTable> CompactFeatureExtractor(T featureTable, List<Feature> featureImpls) {
+    public <T extends TwoLevelFeatureTable> CompactFeatureExtractor(T featureTable, List<PairwiseFeature> singleFeatureImpls, List<GlobalFeature> globalFeatureImpls) {
         this.featureTable = featureTable;
         this.positiveObservations = DataPool.cooccCountMaps;
         this.headMap = DataPool.headIdMap;
-        this.featureImpls = featureImpls;
-        for (Feature featureImpl : featureImpls) {
-            logger.info("Feature registered: " + featureImpl.getClass().getSimpleName());
+        this.singleFeatureImpls = singleFeatureImpls;
+        this.globalFeatureImpls = globalFeatureImpls;
+
+        for (Feature featureImpl : singleFeatureImpls) {
+            logger.info("Single feature registered: " + featureImpl.getClass().getSimpleName());
         }
+
+        for (Feature featureImpl : globalFeatureImpls) {
+            logger.info("Global feature registered: " + featureImpl.getClass().getSimpleName());
+        }
+
+
         logger.info("Feature table lexical size: " + featureTable.getNumRows());
         logger.info("Feature table feature type size: " + featureTable.getFeatureNameMap().size());
     }
 
-    public <T extends TwoLevelFeatureTable> CompactFeatureExtractor(T featureTable, String[] featureImplNames) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
-        this(featureTable, featuresByName(featureImplNames));
+    public <T extends TwoLevelFeatureTable> CompactFeatureExtractor(T featureTable, String[] featureImplNames)
+            throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+        this(featureTable, featuresByName(featureImplNames).getKey(), featuresByName(featureImplNames).getRight());
     }
 
-    public <T extends TwoLevelFeatureTable> CompactFeatureExtractor(T featureTable) {
-        this(featureTable, defaultFeatures());
-    }
-
-    private static List<Feature> featuresByName(String[] featureImplNames) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        List<Feature> featureImpls = new ArrayList<>();
+    private static Pair<List<PairwiseFeature>, List<GlobalFeature>> featuresByName(String[] featureImplNames)
+            throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        List<PairwiseFeature> pairwiseFeatureImpls = new ArrayList<>();
+        List<GlobalFeature> globalFeatureImpls = new ArrayList<>();
         for (String featureImplName : featureImplNames) {
-            Class c = Class.forName(featureImplName);
+            Class<?> c = Class.forName(featureImplName);
             Feature f = (Feature) c.newInstance();
-            featureImpls.add(f);
-        }
-        return featureImpls;
-    }
 
-    private static List<Feature> defaultFeatures() {
-        List<Feature> featureImpls = new ArrayList<>();
-        featureImpls.add(new MooneyFeature());
-        return featureImpls;
-    }
-
-    public TLongShortDoubleHashTable getFeatures(List<ContextElement> chain, ContextElement targetMention, int index, int skipGramN, boolean breakOnConflict) {
-        TLongShortDoubleHashTable extractedFeatures = new TLongShortDoubleHashTable();
-        for (Triple<ContextElement, ContextElement, Integer> ngram : getSkippedNgrams(chain, targetMention, index, skipGramN)) {
-            if (breakOnConflict) {
-                Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> subsitutedForm = KarlMooneyScriptCounter.
-                        firstBasedSubstitution(ngram.getLeft().getMention(), ngram.getMiddle().getMention());
-                TIntLinkedList compactPair = FeatureExtractor.compactEvmPairSubstituiton(subsitutedForm, headMap);
-                if (positiveObservations.containsKey(compactPair)) {
-                    return null;
-                }
+            if (f instanceof PairwiseFeature) {
+                pairwiseFeatureImpls.add((PairwiseFeature) f);
+            } else if (f instanceof GlobalFeature) {
+                globalFeatureImpls.add((GlobalFeature) f);
             }
-            extractFeatures(extractedFeatures, ngram.getLeft(), ngram.getMiddle(), ngram.getRight());
+
         }
+
+        return Pair.of(pairwiseFeatureImpls, globalFeatureImpls);
+    }
+
+    /**
+     * precompute stuff for global features
+     *
+     * @param chain
+     */
+    public void prepareGlobalFeatures(List<ContextElement> chain) {
+        for (GlobalFeature globalFeature : globalFeatureImpls) {
+            globalFeature.preprocessChain(chain);
+        }
+    }
+
+    public TLongShortDoubleHashTable getFeatures(List<ContextElement> chain, ContextElement targetMention, int index, int maxSkippedGramN) {
+        TLongShortDoubleHashTable extractedFeatures = new TLongShortDoubleHashTable();
+        targetMention.setIsTarget(true);
+        for (Triple<ContextElement, ContextElement, Integer> ngram : getSkippedNgrams(chain, targetMention, index, maxSkippedGramN)) {
+            extractSingleFeatures(extractedFeatures, ngram.getLeft(), ngram.getMiddle(), ngram.getRight());
+        }
+        //the chain itself must be preprocessed
+        extractGlobalFeatures(extractedFeatures, targetMention, index);
         return extractedFeatures;
     }
 
-    private void extractFeatures(TLongShortDoubleHashTable extractedFeatures, ContextElement elementLeft, ContextElement elementRight, int skip) {
+    private void extractSingleFeatures(TLongShortDoubleHashTable extractedFeatures, ContextElement elementLeft, ContextElement elementRight, int skip) {
         long predicatePair = getCompactPredicatePair(elementLeft.getMention().getMentionHead(), elementRight.getMention().getMentionHead());
-        for (Feature featureImpl : featureImpls) {
+        for (PairwiseFeature featureImpl : singleFeatureImpls) {
             if (featureImpl.isLexicalized()) {
                 for (Map.Entry<String, Double> f : featureImpl.getFeature(elementLeft, elementRight, skip).entrySet()) {
                     short featureIndex = featureTable.getOrPutFeatureIndex(f.getKey());
@@ -98,6 +110,18 @@ public class CompactFeatureExtractor {
             }
         }
     }
+
+    private void extractGlobalFeatures(TLongShortDoubleHashTable extractedFeatures, ContextElement targetElement, int targetIndex) {
+        int lastInt = DataPool.headWords.length;
+        long specialPair = BitUtils.store2Int(lastInt, lastInt);
+        for (GlobalFeature featureImpl : globalFeatureImpls) {
+            for (Map.Entry<String, Double> f : featureImpl.getFeature(targetElement, targetIndex).entrySet()) {
+                short featureIndex = featureTable.getOrPutFeatureIndex(f.getKey());
+                extractedFeatures.put(specialPair, featureIndex, f.getValue());
+            }
+        }
+    }
+
 
     public <T extends Object> List<Triple<T, T, Integer>> getSkippedNgrams(List<T> sequence, T target, int index, int skipgramN) {
         List<Triple<T, T, Integer>> formerPairs = getSkipGramBefore(sequence, target, index, skipgramN);

@@ -1,8 +1,12 @@
 package edu.cmu.cs.lti.cds.ml.features.impl;
 
-import edu.cmu.cs.lti.cds.ml.features.Feature;
+import edu.cmu.cs.lti.cds.ml.features.PairwiseFeature;
 import edu.cmu.cs.lti.script.model.ContextElement;
+import edu.cmu.cs.lti.script.model.KmTargetConstants;
 import edu.cmu.cs.lti.script.model.LocalArgumentRepre;
+import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
+import org.apache.uima.fit.util.FSCollectionFactory;
+import org.apache.uima.jcas.cas.FSList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +17,7 @@ import java.util.Map;
  * Date: 11/30/14
  * Time: 5:55 PM
  */
-public class ArgumentCorefFeature extends Feature {
+public class ArgumentCorefFeature extends PairwiseFeature {
     String prefix = "r_arg_";
 
     @Override
@@ -35,6 +39,11 @@ public class ArgumentCorefFeature extends Feature {
                 }
 
                 if (leftArg.getRewrittenId() == rightArg.getRewrittenId()) {
+                    String type = getCoreferredEntityType(elementLeft, slotLeft);
+                    if (type != null) {
+                        features.put(prefix + slotLeft + "_" + slotRight + "_type_" + type, 1.0);
+                    }
+
                     features.put(prefix + slotLeft + "_" + slotRight, 1.0);
                 }
             }
@@ -42,8 +51,19 @@ public class ArgumentCorefFeature extends Feature {
         return features;
     }
 
-    @Override
-    public boolean isLexicalized() {
-        return true;
+    private String getCoreferredEntityType(ContextElement element, int slotId) {
+        String argumentRoleName = KmTargetConstants.argumentSlotName[slotId];
+
+        FSList arguments = element.getOriginalMention().getArguments();
+        if (arguments != null) {
+            for (EventMentionArgumentLink argumentLink : FSCollectionFactory.create(arguments, EventMentionArgumentLink.class)) {
+                if (argumentLink.getArgumentRole().equals(argumentRoleName)) {
+                    return argumentLink.getArgument().getHead().getLemma().toLowerCase();
+                }
+            }
+        }
+
+        return null;
     }
+
 }

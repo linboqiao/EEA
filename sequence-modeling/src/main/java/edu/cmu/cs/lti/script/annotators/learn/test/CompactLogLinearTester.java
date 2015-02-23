@@ -73,13 +73,15 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
 
         ContextElement realElement = chain.get(testIndex);
 
+        extractor.prepareGlobalFeatures(chain);
+
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateMooeyEvms = MooneyEventRepre.generateTuples(head, mooneyEntities);
             for (MooneyEventRepre candidateEvm : candidateMooeyEvms) {
 //                ContextElement candidate = ContextElement.fromMooney(realElement.getJcas(), realElement.getSent(), realElement.getHead(), candidateEvm);
                 ContextElement candidate = ContextElement.eraseGoldStandard(realElement, candidateEvm);
 
-                TLongShortDoubleHashTable features = extractor.getFeatures(chain, candidate, testIndex, skipGramN, false);
+                TLongShortDoubleHashTable features = extractor.getFeatures(chain, candidate, testIndex, skipGramN);
 
                 double score = compactWeights.dotProd(features);
                 if (score > 0) {
@@ -97,8 +99,8 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
                     logEvalInfo("Answer features : ");
                     logEvalInfo(features.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
                     logEvalResult(String.format("Answer score for %s is %.2f", candidateEvm, score));
-                    System.err.println("Showing dot product details for answer: ");
-                    System.err.println("Score is : " + compactWeights.dotProd(features, DataPool.headWords));
+//                    System.err.println("Showing dot product details for answer: ");
+//                    System.err.println("Score is : " + compactWeights.dotProd(features, DataPool.headWords));
                 }
                 rankedEvents.add(Pair.of(candidateEvm, score));
             }

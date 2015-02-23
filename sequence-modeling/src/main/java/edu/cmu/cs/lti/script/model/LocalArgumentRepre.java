@@ -59,6 +59,12 @@ public class LocalArgumentRepre {
         return isConcrete;
     }
 
+    /**
+     * This will be true when this argument is rewritten as 0
+     * It shouldn't be true if the argument is not rewritten at all
+     *
+     * @return whether the argument is an "other" argument as in K&M
+     */
     public boolean isOther() {
         return rewrittenId == KmTargetConstants.otherMarker;
     }

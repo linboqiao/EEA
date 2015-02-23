@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.script.model;
 
+import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.type.Word;
 import org.apache.uima.jcas.JCas;
@@ -15,14 +16,17 @@ public class ContextElement {
     private Sentence sent;
     private Word head;
     private JCas jcas;
-
+    private boolean isTarget;
+    private EventMention originalMention;
     private LocalEventMentionRepre mention;
 
-    public ContextElement(JCas jcas, Sentence sent, Word headWord, LocalEventMentionRepre mention) {
+    public ContextElement(JCas jcas, Sentence sent, EventMention originMention, LocalEventMentionRepre mention) {
         this.sent = sent;
         this.mention = mention;
+        this.originalMention = originMention;
         this.jcas = jcas;
-        this.head = headWord;
+        this.head = originMention.getHeadWord();
+        this.isTarget = false;
     }
 
     /**
@@ -37,7 +41,7 @@ public class ContextElement {
      * @return
      */
     public static ContextElement eraseGoldStandard(ContextElement realElement, MooneyEventRepre candidateEvm) {
-        return new ContextElement(realElement.getJcas(), realElement.getSent(), realElement.getHead(),
+        return new ContextElement(realElement.getJcas(), realElement.getSent(), realElement.getOriginalMention(),
                 LocalEventMentionRepre.rewriteUsingCandidateMention(realElement.getMention(), candidateEvm));
     }
 
@@ -70,7 +74,19 @@ public class ContextElement {
         this.mention = mention;
     }
 
+    public void setIsTarget(boolean isTarget) {
+        this.isTarget = isTarget;
+    }
+
+    public boolean isTarget() {
+        return isTarget;
+    }
+
     public String toString() {
         return mention + "@[sent:" + (sent != null ? sent.getId() : "not_assigned") + "]";
+    }
+
+    public EventMention getOriginalMention() {
+        return originalMention;
     }
 }
