@@ -299,15 +299,15 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         String paramTypeSystemDescriptor = "TypeSystem";
 
         //prepare data
-        logger.info("Loading data");
+        logger.info("Loading data.");
         DataPool.loadHeadStatistics(config, false);
         DataPool.readBlackList(new File(blackListFileName));
         DataPool.loadKmCooccMap(dbPath, dbNames[0], KarlMooneyScriptCounter.defaultCooccMapName);
         DataPool.loadEventUnigramCounts(config);
         DataPool.loadSemLinkData(semLinkPath);
+        logger.info("Finish data loading.");
 
         logger.info("# predicates " + DataPool.headIdMap.size());
-
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
@@ -315,7 +315,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
-        logger.info("Running " + CompactGlobalNegativeTrainer.class.getName());
+        logger.info("Running " + PerceptronTraining.class.getName());
 
         AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(PerceptronTraining.class, typeSystemDescription,
                 PerceptronTraining.PARAM_RANK_LIST_SIZE, rankListSize,

@@ -155,6 +155,7 @@ public class DataPool {
     }
 
     public static void loadSemLinkData(String semLinkDirPath) {
+        System.err.println("Loading SemLink data");
         Map<String, String> vn2Fn = FrameDataReader.getFN2VNFrameMap(semLinkDirPath + "/vn-fn/VN-FNRoleMapping.txt", true);
         Map<String, String> pb2Vn = FrameDataReader.getVN2PBFrameMap(semLinkDirPath + "/vn-pb/vnpbMappings", true);
 
