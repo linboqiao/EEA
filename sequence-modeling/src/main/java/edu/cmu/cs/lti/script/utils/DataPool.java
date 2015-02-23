@@ -90,6 +90,7 @@ public class DataPool {
         System.err.println(String.format("Total predicate counts: %d", predicateTotalCount));
 
         if (loadPairCount) {
+            System.err.println("Loading pair counts, may take a while.");
             String headPairCountMapName = config.get("edu.cmu.cs.lti.cds.db.predicte.pair.count");
             loadEventHeadPairMap(dbPath, headPairCountMapName);
         }
