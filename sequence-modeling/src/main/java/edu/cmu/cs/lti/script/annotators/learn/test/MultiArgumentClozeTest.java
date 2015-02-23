@@ -123,6 +123,8 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         align.loadWord2Stanford(aJCas);
         align.loadFanse2Stanford(aJCas);
 
+        logger.info("Number of cloze tasks found : " + clozeTasks.size());
+
         for (Triple<List<MooneyEventRepre>, Integer, String> mooneyClozeTask : clozeTasks) {
             runClozeTask(aJCas, mooneyClozeTask);
         }

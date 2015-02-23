@@ -81,6 +81,8 @@ public class MultiArgumentClozeTestRunner {
         if (methods.contains("loglinear")) {
             String[] modelPaths = config.getList("edu.cmu.cs.lti.cds.loglinear.model");
             String modelPathBase = config.get("edu.cmu.cs.lti.cds.perceptron.model.path");
+            String semLinkPath = config.get("edu.cmu.cs.lti.cds.db.semlink.path");
+            DataPool.loadSemLinkData(semLinkPath);
 
             for (String modelPath : modelPaths) {
                 String[] featureNames = modelPath.replaceAll("^" + modelPathBase + "_", "").replaceAll("_\\d.ser$", "").split("_");
