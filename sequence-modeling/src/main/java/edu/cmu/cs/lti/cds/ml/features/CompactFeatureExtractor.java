@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.cds.ml.features;
 
 import com.google.common.collect.BiMap;
-import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
+import edu.cmu.cs.lti.collections.TLongIntDoubleHashTable;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.utils.BitUtils;
@@ -88,8 +88,8 @@ public class CompactFeatureExtractor {
         }
     }
 
-    public TLongShortDoubleHashTable getFeatures(List<ContextElement> chain, ContextElement targetMention, int index, int maxSkippedGramN) {
-        TLongShortDoubleHashTable extractedFeatures = new TLongShortDoubleHashTable();
+    public TLongIntDoubleHashTable getFeatures(List<ContextElement> chain, ContextElement targetMention, int index, int maxSkippedGramN) {
+        TLongIntDoubleHashTable extractedFeatures = new TLongIntDoubleHashTable();
         targetMention.setIsTarget(true);
         for (Triple<ContextElement, ContextElement, Integer> ngram : getSkippedNgrams(chain, targetMention, index, maxSkippedGramN)) {
             extractSingleFeatures(extractedFeatures, ngram.getLeft(), ngram.getMiddle(), ngram.getRight());
@@ -99,24 +99,24 @@ public class CompactFeatureExtractor {
         return extractedFeatures;
     }
 
-    private void extractSingleFeatures(TLongShortDoubleHashTable extractedFeatures, ContextElement elementLeft, ContextElement elementRight, int skip) {
+    private void extractSingleFeatures(TLongIntDoubleHashTable extractedFeatures, ContextElement elementLeft, ContextElement elementRight, int skip) {
         long predicatePair = getCompactPredicatePair(elementLeft.getMention().getMentionHead(), elementRight.getMention().getMentionHead());
         for (PairwiseFeature featureImpl : singleFeatureImpls) {
             if (featureImpl.isLexicalized()) {
                 for (Map.Entry<String, Double> f : featureImpl.getFeature(elementLeft, elementRight, skip).entrySet()) {
-                    short featureIndex = featureTable.getOrPutFeatureIndex(f.getKey());
+                    int featureIndex = featureTable.getOrPutFeatureIndex(f.getKey());
                     extractedFeatures.put(predicatePair, featureIndex, f.getValue());
                 }
             }
         }
     }
 
-    private void extractGlobalFeatures(TLongShortDoubleHashTable extractedFeatures, ContextElement targetElement, int targetIndex) {
+    private void extractGlobalFeatures(TLongIntDoubleHashTable extractedFeatures, ContextElement targetElement, int targetIndex) {
         int lastInt = DataPool.headWords.length;
         long specialPair = BitUtils.store2Int(lastInt, lastInt);
         for (GlobalFeature featureImpl : globalFeatureImpls) {
             for (Map.Entry<String, Double> f : featureImpl.getFeature(targetElement, targetIndex).entrySet()) {
-                short featureIndex = featureTable.getOrPutFeatureIndex(f.getKey());
+                int featureIndex = featureTable.getOrPutFeatureIndex(f.getKey());
                 extractedFeatures.put(specialPair, featureIndex, f.getValue());
             }
         }
@@ -173,11 +173,11 @@ public class CompactFeatureExtractor {
         return featureTable.getFeatureName(featureIndex);
     }
 
-    public Short getFeatureIndex(String featureName) {
+    public int getFeatureIndex(String featureName) {
         return featureTable.getFeatureIndex(featureName);
     }
 
-    public BiMap<Short, String> getFeatureNamesByIndex() {
+    public BiMap<Integer, String> getFeatureNamesByIndex() {
         return featureTable.getFeatureNameMap();
     }
 

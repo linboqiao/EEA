@@ -5,8 +5,8 @@ import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.utils.ArrayBasedTwoLevelFeatureTable;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.Configuration;
-import gnu.trove.iterator.TShortDoubleIterator;
-import gnu.trove.map.TShortDoubleMap;
+import gnu.trove.iterator.TIntDoubleIterator;
+import gnu.trove.map.TIntDoubleMap;
 import weka.core.SerializationHelper;
 
 import java.io.File;
@@ -44,16 +44,16 @@ public class FeatureCheck {
 
             long rowKey = BitUtils.store2Int(word1Id, word2Id);
 
-            TShortDoubleMap row = compactWeights.getRow(rowKey);
+            TIntDoubleMap row = compactWeights.getRow(rowKey);
 
-            BiMap<Short, String> secondKeyMap = compactWeights.getFeatureNameMap();
+            BiMap<Integer, String> secondKeyMap = compactWeights.getFeatureNameMap();
 
 
             StringBuilder sb = new StringBuilder();
 
-            for (TShortDoubleIterator secondIter = row.iterator(); secondIter.hasNext(); ) {
+            for (TIntDoubleIterator secondIter = row.iterator(); secondIter.hasNext(); ) {
                 secondIter.advance();
-                short secondKey = secondIter.key();
+                int secondKey = secondIter.key();
                 String secondKeyName = secondKeyMap.get(secondKey);
                 sb.append("\t").append(secondKey).append(". ").append(secondKeyName).append(":").append(secondIter.value()).append("\n");
             }

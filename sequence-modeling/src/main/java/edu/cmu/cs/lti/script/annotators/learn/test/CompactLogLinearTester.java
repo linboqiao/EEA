@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.script.annotators.learn.test;
 
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
-import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
+import edu.cmu.cs.lti.collections.TLongIntDoubleHashTable;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import edu.cmu.cs.lti.script.model.LocalArgumentRepre;
 import edu.cmu.cs.lti.script.model.MooneyEventRepre;
@@ -25,7 +25,6 @@ import java.util.Set;
  * Time: 1:16 AM
  */
 public class CompactLogLinearTester extends MultiArgumentClozeTest {
-
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
     public static final String PARAM_MODEL_PATH = "modelPath";
     public static final String PARAM_MAX_SKIP_GRAM_N = "maxSkipgramN";
@@ -81,7 +80,7 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
 //                ContextElement candidate = ContextElement.fromMooney(realElement.getJcas(), realElement.getSent(), realElement.getHead(), candidateEvm);
                 ContextElement candidate = ContextElement.eraseGoldStandard(realElement, candidateEvm);
 
-                TLongShortDoubleHashTable features = extractor.getFeatures(chain, candidate, testIndex, skipGramN);
+                TLongIntDoubleHashTable features = extractor.getFeatures(chain, candidate, testIndex, skipGramN);
 
                 double score = compactWeights.dotProd(features);
                 if (score > 0) {

@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.script.annotators.learn.train;
 
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
-import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
+import edu.cmu.cs.lti.collections.TLongIntDoubleHashTable;
 import edu.cmu.cs.lti.script.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import edu.cmu.cs.lti.script.model.LocalArgumentRepre;
@@ -89,6 +89,9 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
         numSamplesProcessed = 0;
 
+        logger.info(String.format("Perceptron training setup: rank list size [%d], batch size [%d], max skip [%d]",
+                rankListSize, miniBatchSize, maxSkippedN));
+
         try {
             extractor = new CompactFeatureExtractor(trainingFeatureTable, featureImplNames);
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
@@ -124,10 +127,10 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
             }
         }
 
-        Map<LocalEventMentionRepre, TLongShortDoubleHashTable> mention2Features = new HashMap<>();
+        Map<LocalEventMentionRepre, TLongIntDoubleHashTable> mention2Features = new HashMap<>();
 
-        List<TLongShortDoubleHashTable> chainBestPredictionFeatures = new ArrayList<>();
-        List<Pair<TLongShortDoubleHashTable, Integer>> chainCorrectFeatures = new ArrayList<>();
+        List<TLongIntDoubleHashTable> chainBestPredictionFeatures = new ArrayList<>();
+        List<Pair<TLongIntDoubleHashTable, Integer>> chainCorrectFeatures = new ArrayList<>();
 
 
         extractor.prepareGlobalFeatures(chain);
@@ -138,14 +141,14 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 System.err.println(String.format("=============Sample %d============", sampleIndex));
             }
             ContextElement realSample = chain.get(sampleIndex);
-            TLongShortDoubleHashTable correctFeature = extractor.getFeatures(chain, realSample, sampleIndex, maxSkippedN);
+            TLongIntDoubleHashTable correctFeature = extractor.getFeatures(chain, realSample, sampleIndex, maxSkippedN);
             Sentence sampleSent = realSample.getSent();
 
             PriorityQueue<Pair<Double, LocalEventMentionRepre>> scores = new PriorityQueue<>(rankListSize, Collections.reverseOrder());
 
             int originalRank = 0;
             for (LocalEventMentionRepre sample : sampleCandidatesWithReal(arguments, realSample.getMention())) {
-                TLongShortDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getOriginalMention(), sample), sampleIndex, maxSkippedN);
+                TLongIntDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getOriginalMention(), sample), sampleIndex, maxSkippedN);
                 double sampleScore;
                 if (debug) {
                     sampleScore = trainingFeatureTable.dotProd(sampleFeature, DataPool.headWords);
@@ -172,7 +175,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
             int negativeCount = 0;
 
-            List<TLongShortDoubleHashTable> currentBestSampleFeatures = new ArrayList<>();
+            List<TLongIntDoubleHashTable> currentBestSampleFeatures = new ArrayList<>();
             while (!scores.isEmpty()) {
                 Pair<Double, LocalEventMentionRepre> nextScoredItem = scores.poll();
                 if (nextScoredItem.getRight().mooneyMatch(realSample.getMention())) {
@@ -249,12 +252,12 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         return samples;
     }
 
-    private void perceptronUpdate(List<Pair<TLongShortDoubleHashTable, Integer>> listOfCorrectFeatures, List<TLongShortDoubleHashTable> currentTops) {
-        for (Pair<TLongShortDoubleHashTable, Integer> correctFeatureWithWeight : listOfCorrectFeatures) {
+    private void perceptronUpdate(List<Pair<TLongIntDoubleHashTable, Integer>> listOfCorrectFeatures, List<TLongIntDoubleHashTable> currentTops) {
+        for (Pair<TLongIntDoubleHashTable, Integer> correctFeatureWithWeight : listOfCorrectFeatures) {
             trainingFeatureTable.adjustBy(correctFeatureWithWeight.getKey(), correctFeatureWithWeight.getRight());
         }
 
-        for (TLongShortDoubleHashTable currentTop : currentTops) {
+        for (TLongIntDoubleHashTable currentTop : currentTops) {
             trainingFeatureTable.adjustBy(currentTop, -1);
         }
     }

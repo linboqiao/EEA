@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.utils;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
+import edu.cmu.cs.lti.collections.TLongIntDoubleHashTable;
 
 import java.io.Serializable;
 
@@ -15,9 +15,9 @@ import java.io.Serializable;
 public abstract class TwoLevelFeatureTable implements Serializable {
     private static final long serialVersionUID = 1431921441554123194L;
 
-    BiMap<String, Short> secondaryFeatureLookupMap = HashBiMap.create();
+    BiMap<String, Integer> secondaryFeatureLookupMap = HashBiMap.create();
 
-    short nextKey = Short.MIN_VALUE;
+    int nextKey = Integer.MIN_VALUE;
 
     public TwoLevelFeatureTable() {
 
@@ -27,7 +27,7 @@ public abstract class TwoLevelFeatureTable implements Serializable {
         this.secondaryFeatureLookupMap = baseTable.getFeatureMap();
     }
 
-    public TwoLevelFeatureTable(BiMap<String, Short> secondaryFeatureLookupMap) {
+    public TwoLevelFeatureTable(BiMap<String, Integer> secondaryFeatureLookupMap) {
         this.secondaryFeatureLookupMap = secondaryFeatureLookupMap;
     }
 
@@ -37,35 +37,35 @@ public abstract class TwoLevelFeatureTable implements Serializable {
      * @param featureName
      * @return
      */
-    public short getOrPutFeatureIndex(String featureName) {
+    public Integer getOrPutFeatureIndex(String featureName) {
         if (secondaryFeatureLookupMap.containsKey(featureName)) {
             return secondaryFeatureLookupMap.get(featureName);
         } else {
             secondaryFeatureLookupMap.put(featureName, nextKey);
-            short currentKey = nextKey;
+            int currentKey = nextKey;
             nextKey++;
-            if (nextKey == Short.MIN_VALUE) {
+            if (nextKey == Integer.MIN_VALUE) {
                 //this will only happen when we circuit around
-                throw new IllegalStateException("You have used up all shorts for features!");
+                throw new IllegalStateException("You have used up all integer for features!");
             }
             return currentKey;
         }
     }
 
 
-    public Short getFeatureIndex(String featureName) {
+    public Integer getFeatureIndex(String featureName) {
         return secondaryFeatureLookupMap.get(featureName);
     }
 
-    public String getFeatureName(short featureIndex) {
+    public String getFeatureName(int featureIndex) {
         return secondaryFeatureLookupMap.inverse().get(featureIndex);
     }
 
-    public BiMap<String, Short> getFeatureMap() {
+    public BiMap<String, Integer> getFeatureMap() {
         return secondaryFeatureLookupMap;
     }
 
-    public BiMap<Short, String> getFeatureNameMap() {
+    public BiMap<Integer, String> getFeatureNameMap() {
         return secondaryFeatureLookupMap.inverse();
     }
 
@@ -79,15 +79,15 @@ public abstract class TwoLevelFeatureTable implements Serializable {
      * @param colKey
      * @return return the value as Double object
      */
-    public abstract Double get(long rowKey, short colKey);
+    public abstract Double get(long rowKey, int colKey);
 
-    public abstract void put(long rowKey, short colKey, double value);
+    public abstract void put(long rowKey, int colKey, double value);
 
-    public abstract boolean contains(long rowKey, short colKey);
+    public abstract boolean contains(long rowKey, int colKey);
 
     public abstract boolean containsRow(long rowKey);
 
-    public abstract boolean adjust(long rowKey, short colKey, double value);
+    public abstract boolean adjust(long rowKey, int colKey, double value);
 
     /**
      * Adjusts the primitive value mapped to the key if the key pair is present in the map. Otherwise, the initial_value is put in the map.
@@ -98,11 +98,11 @@ public abstract class TwoLevelFeatureTable implements Serializable {
      * @param putAmount    the value put into the map if the key is not initial present
      * @return the value present in the map after the adjustment or put operation
      */
-    public abstract double adjustOrPutValue(long rowKey, short colKey, double adjustAmount, double putAmount);
+    public abstract double adjustOrPutValue(long rowKey, int colKey, double adjustAmount, double putAmount);
 
-    public abstract double dotProd(TLongShortDoubleHashTable features);
+    public abstract double dotProd(TLongIntDoubleHashTable features);
 
-    public abstract double dotProd(TLongShortDoubleHashTable features, String[] headWords);
+    public abstract double dotProd(TLongIntDoubleHashTable features, String[] headWords);
 
-    public abstract void adjustBy(TLongShortDoubleHashTable adjustVect, double mul);
+    public abstract void adjustBy(TLongIntDoubleHashTable adjustVect, double mul);
 }

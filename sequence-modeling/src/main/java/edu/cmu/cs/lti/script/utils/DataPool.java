@@ -33,7 +33,6 @@ import java.util.logging.Logger;
 public class DataPool {
     //data used by the trainer
     public static long predicateTotalCount = 0;
-    public static long eventUnigramTotalCount = 0;
     public static String[] headWords;
     public static TObjectIntMap<String> headIdMap;
     public static TObjectIntMap<TIntList> unigramCounts;
@@ -112,10 +111,6 @@ public class DataPool {
         System.err.println("Loading unigram counts " + mapPath);
 
         unigramCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(mapPath);
-        for (TObjectIntIterator<TIntList> iter = unigramCounts.iterator(); iter.hasNext(); ) {
-            iter.advance();
-            eventUnigramTotalCount += iter.value();
-        }
     }
 
     public static long getPredicateFreq(int predicateId) {

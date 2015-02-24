@@ -1,10 +1,10 @@
 package edu.cmu.cs.lti.utils;
 
-import edu.cmu.cs.lti.collections.TLongShortDoubleHashTable;
+import edu.cmu.cs.lti.collections.TLongIntDoubleHashTable;
+import gnu.trove.iterator.TIntDoubleIterator;
 import gnu.trove.iterator.TLongObjectIterator;
-import gnu.trove.iterator.TShortDoubleIterator;
-import gnu.trove.map.TShortDoubleMap;
-import gnu.trove.map.hash.TShortDoubleHashMap;
+import gnu.trove.map.TIntDoubleMap;
+import gnu.trove.map.hash.TIntDoubleHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
@@ -16,16 +16,15 @@ import org.apache.commons.lang3.tuple.Pair;
 public class ArrayBasedTwoLevelFeatureTable extends TwoLevelFeatureTable {
     private static final long serialVersionUID = 5335403133116054451L;
 
-    TShortDoubleMap[][] table;
+    TIntDoubleMap[][] table;
 
     int numRows = 0;
 
     int numFeatures = 0;
 
     public ArrayBasedTwoLevelFeatureTable(int vocabularySize) {
-        table = new TShortDoubleMap[vocabularySize][vocabularySize];
+        table = new TIntDoubleMap[vocabularySize][vocabularySize];
     }
-
 
 
     @Override
@@ -33,18 +32,18 @@ public class ArrayBasedTwoLevelFeatureTable extends TwoLevelFeatureTable {
         return numRows;
     }
 
-    public TShortDoubleMap getRow(long rowKey) {
+    public TIntDoubleMap getRow(long rowKey) {
         Pair<Integer, Integer> tableKeys = BitUtils.get2IntFromLong(rowKey);
         return table[tableKeys.getLeft()][tableKeys.getRight()];
     }
 
 
     private void newRow(int row, int col) {
-        table[row][col] = new TShortDoubleHashMap();
+        table[row][col] = new TIntDoubleHashMap();
         numRows++;
     }
 
-    private TShortDoubleMap getOrNewRow(long rowKey) {
+    private TIntDoubleMap getOrNewRow(long rowKey) {
         Pair<Integer, Integer> tableKeys = BitUtils.get2IntFromLong(rowKey);
         if (table[tableKeys.getLeft()][tableKeys.getRight()] == null) {
             newRow(tableKeys.getLeft(), tableKeys.getRight());
@@ -53,20 +52,20 @@ public class ArrayBasedTwoLevelFeatureTable extends TwoLevelFeatureTable {
     }
 
     @Override
-    public Double get(long rowKey, short colKey) {
+    public Double get(long rowKey, int colKey) {
         return getRow(rowKey).get(colKey);
     }
 
 
     @Override
-    public void put(long rowKey, short colKey, double value) {
-        TShortDoubleMap row = getOrNewRow(rowKey);
+    public void put(long rowKey, int colKey, double value) {
+        TIntDoubleMap row = getOrNewRow(rowKey);
         row.put(colKey, value);
     }
 
     @Override
-    public boolean contains(long rowKey, short colKey) {
-        TShortDoubleMap row = getRow(rowKey);
+    public boolean contains(long rowKey, int colKey) {
+        TIntDoubleMap row = getRow(rowKey);
         return row != null && row.containsKey(colKey);
     }
 
@@ -76,8 +75,8 @@ public class ArrayBasedTwoLevelFeatureTable extends TwoLevelFeatureTable {
     }
 
     @Override
-    public boolean adjust(long rowKey, short colKey, double value) {
-        TShortDoubleMap row = getRow(rowKey);
+    public boolean adjust(long rowKey, int colKey, double value) {
+        TIntDoubleMap row = getRow(rowKey);
         if (row != null) {
             return row.adjustValue(colKey, value);
         } else {
@@ -86,21 +85,21 @@ public class ArrayBasedTwoLevelFeatureTable extends TwoLevelFeatureTable {
     }
 
     @Override
-    public double adjustOrPutValue(long rowKey, short colKey, double adjustAmount, double putAmount) {
-        TShortDoubleMap row = getOrNewRow(rowKey);
+    public double adjustOrPutValue(long rowKey, int colKey, double adjustAmount, double putAmount) {
+        TIntDoubleMap row = getOrNewRow(rowKey);
         return row.adjustOrPutValue(colKey, adjustAmount, putAmount);
     }
 
     @Override
-    public double dotProd(TLongShortDoubleHashTable features) {
+    public double dotProd(TLongIntDoubleHashTable features) {
         double dotProd = 0;
-        for (TLongObjectIterator<TShortDoubleMap> firstLevelIter = features.iterator(); firstLevelIter.hasNext(); ) {
+        for (TLongObjectIterator<TIntDoubleMap> firstLevelIter = features.iterator(); firstLevelIter.hasNext(); ) {
             firstLevelIter.advance();
             long featureRowKey = firstLevelIter.key();
             if (containsRow(featureRowKey)) {
-                TShortDoubleMap weightsRow = getRow(featureRowKey);
-                TShortDoubleMap secondLevelFeatures = firstLevelIter.value();
-                for (TShortDoubleIterator secondLevelIter = secondLevelFeatures.iterator(); secondLevelIter.hasNext(); ) {
+                TIntDoubleMap weightsRow = getRow(featureRowKey);
+                TIntDoubleMap secondLevelFeatures = firstLevelIter.value();
+                for (TIntDoubleIterator secondLevelIter = secondLevelFeatures.iterator(); secondLevelIter.hasNext(); ) {
                     secondLevelIter.advance();
                     if (weightsRow.containsKey(secondLevelIter.key())) {
                         dotProd += secondLevelIter.value() * weightsRow.get(secondLevelIter.key());
@@ -111,17 +110,17 @@ public class ArrayBasedTwoLevelFeatureTable extends TwoLevelFeatureTable {
         return dotProd;
     }
 
-    public double dotProd(TLongShortDoubleHashTable features, String[] headWords) {
+    public double dotProd(TLongIntDoubleHashTable features, String[] headWords) {
         double dotProd = 0;
-        for (TLongObjectIterator<TShortDoubleMap> firstLevelIter = features.iterator(); firstLevelIter.hasNext(); ) {
+        for (TLongObjectIterator<TIntDoubleMap> firstLevelIter = features.iterator(); firstLevelIter.hasNext(); ) {
             firstLevelIter.advance();
             long featureRowKey = firstLevelIter.key();
             if (containsRow(featureRowKey)) {
                 Pair<Integer, Integer> wordIndexPair = BitUtils.get2IntFromLong(featureRowKey);
 
-                TShortDoubleMap weightsRow = getRow(featureRowKey);
-                TShortDoubleMap secondLevelFeatures = firstLevelIter.value();
-                for (TShortDoubleIterator secondLevelIter = secondLevelFeatures.iterator(); secondLevelIter.hasNext(); ) {
+                TIntDoubleMap weightsRow = getRow(featureRowKey);
+                TIntDoubleMap secondLevelFeatures = firstLevelIter.value();
+                for (TIntDoubleIterator secondLevelIter = secondLevelFeatures.iterator(); secondLevelIter.hasNext(); ) {
                     secondLevelIter.advance();
                     if (weightsRow.containsKey(secondLevelIter.key())) {
                         dotProd += secondLevelIter.value() * weightsRow.get(secondLevelIter.key());
@@ -138,13 +137,13 @@ public class ArrayBasedTwoLevelFeatureTable extends TwoLevelFeatureTable {
     }
 
     @Override
-    public void adjustBy(TLongShortDoubleHashTable adjustVect, double mul) {
-        for (TLongObjectIterator<TShortDoubleMap> firstLevelIter = adjustVect.iterator(); firstLevelIter.hasNext(); ) {
+    public void adjustBy(TLongIntDoubleHashTable adjustVect, double mul) {
+        for (TLongObjectIterator<TIntDoubleMap> firstLevelIter = adjustVect.iterator(); firstLevelIter.hasNext(); ) {
             firstLevelIter.advance();
             long featureRowKey = firstLevelIter.key();
-            TShortDoubleMap row = getOrNewRow(featureRowKey);
+            TIntDoubleMap row = getOrNewRow(featureRowKey);
 
-            for (TShortDoubleIterator secondLevelIter = firstLevelIter.value().iterator(); secondLevelIter.hasNext(); ) {
+            for (TIntDoubleIterator secondLevelIter = firstLevelIter.value().iterator(); secondLevelIter.hasNext(); ) {
                 secondLevelIter.advance();
                 row.adjustOrPutValue(secondLevelIter.key(), secondLevelIter.value() * mul, secondLevelIter.value() * mul);
             }

@@ -12,7 +12,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,32 +20,54 @@ import java.util.Random;
  * Date: 11/25/14
  * Time: 11:42 AM
  */
-public class UnigramEventDist {
+public class TopCappedUnigramEventDist {
     AliasMethod alias;
     private static double[] probabilities;
 
     private static TIntObjectMap<TIntList> unigramId = new TIntObjectHashMap<>();
 
-    public UnigramEventDist(TObjectIntMap<TIntList> unigramCounts) {
-        alias = new AliasMethod(unigramProb(unigramCounts), new Random());
+    public TopCappedUnigramEventDist(TObjectIntMap<TIntList> unigramCounts, int topKtoCap) {
+        alias = new AliasMethod(unigramProb(unigramCounts, topKtoCap), new Random());
     }
 
-    private static double[] unigramProb(TObjectIntMap<TIntList> unigramCounts) {
+    private static double[] unigramProb(TObjectIntMap<TIntList> unigramCounts, int topKtoCap) {
         probabilities = new double[unigramCounts.size()];
         int index = 0;
 
+        Queue<Pair<Integer, String>> topUnigrams = new PriorityQueue<>();
+
         int eventUnigramTotalCount = 0;
+
         for (TObjectIntIterator<TIntList> iter = unigramCounts.iterator(); iter.hasNext(); ) {
             iter.advance();
             eventUnigramTotalCount += iter.value();
+            topUnigrams.add(Pair.of(iter.value(), iter.key().toString()));
+
+            if (topUnigrams.size() > topKtoCap) {
+                topUnigrams.poll();
+            }
         }
+
+        int cappedSize = 0;
+        Map<String, Integer> cappingDict = new HashMap<>();
+
+        while (!topUnigrams.isEmpty()) {
+            Pair<Integer, String> topUnigramCount = topUnigrams.poll();
+            cappedSize += topUnigramCount.getKey();
+            cappingDict.put(topUnigramCount.getRight(), cappedSize);
+        }
+
+        System.err.println(eventUnigramTotalCount + " " + cappedSize);
 
         for (TObjectIntIterator<TIntList> iter = unigramCounts.iterator(); iter.hasNext(); ) {
             iter.advance();
-            probabilities[index] = iter.value() * 1.0 / eventUnigramTotalCount;
-
-            unigramId.put(index, iter.key());
-            index++;
+            if (!cappingDict.containsKey(iter.key().toString())) {
+                probabilities[index] = iter.value() * 1.0 / (eventUnigramTotalCount - cappedSize);
+                unigramId.put(index, iter.key());
+                index++;
+            } else {
+                System.err.println(DataPool.headWords[iter.key().get(0)] + " " + iter.key() + " is ignored, count is " +cappingDict.get(iter.key().toString()));
+            }
         }
 
         return probabilities;
@@ -71,7 +93,7 @@ public class UnigramEventDist {
         //prepare data
         DataPool.loadHeadStatistics(config, false);
         DataPool.loadEventUnigramCounts(config);
-        UnigramEventDist noiseDist = new UnigramEventDist(DataPool.unigramCounts);
+        TopCappedUnigramEventDist noiseDist = new TopCappedUnigramEventDist(DataPool.unigramCounts, 500);
 
         while (true) {
             System.out.println(noiseDist.draw());
