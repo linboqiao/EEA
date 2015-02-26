@@ -2,9 +2,9 @@ package edu.cmu.cs.lti.script.model;
 
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.lang.builder.CompareToBuilder;
@@ -168,7 +168,7 @@ public class LocalEventMentionRepre implements Comparable<LocalEventMentionRepre
 
     @Override
     /**
-     * The comparison for this class is not important, just easy
+     * The comparison for this class is not important, just make it comparable so it can be put to the PriorityQueue
      */
     public int compareTo(LocalEventMentionRepre o) {
         if (this == o) return 0;

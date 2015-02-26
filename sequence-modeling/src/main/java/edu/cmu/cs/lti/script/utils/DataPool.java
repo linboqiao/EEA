@@ -109,7 +109,6 @@ public class DataPool {
         String mapPath = new File(dbPath, dbNames[0] + "_" + unigramMapName).getAbsolutePath();
 
         System.err.println("Loading unigram counts " + mapPath);
-
         unigramCounts = (TObjectIntMap<TIntList>) SerializationHelper.read(mapPath);
     }
 

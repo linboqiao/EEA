@@ -43,6 +43,8 @@ public class ConditionProbabilityTester extends MultiArgumentClozeTest {
 
     private String[] allPredicates = DataPool.headWords;
 
+    private long numTotalEvents = DataPool.predicateTotalCount;
+
     @Override
     protected String initializePredictor(UimaContext aContext) {
         BasicConvenience.printMemInfo(logger, "Initial memory information ");
@@ -69,6 +71,8 @@ public class ConditionProbabilityTester extends MultiArgumentClozeTest {
 
         BasicConvenience.printMemInfo(logger, "Memory info after all loading");
 
+        logger.info(String.format("Will smooth the distribution with laplace [%.1f] and N [%d]", smoothingParameter, numTotalEvents));
+
         return this.getClass().getSimpleName();
     }
 
@@ -83,8 +87,7 @@ public class ConditionProbabilityTester extends MultiArgumentClozeTest {
         for (String head : allPredicates) {
             List<MooneyEventRepre> candidateEvms = MooneyEventRepre.generateTuples(head, entities);
 
-            //TODO a more accurate estimate is to use the Unigram size
-            int numTotalEvents = candidateEvms.size() * allPredicates.length;
+//            int numTotalEvents = candidateEvms.size() * allPredicates.length;
 
             for (MooneyEventRepre candidateEvm : candidateEvms) {
                 boolean sawAnswer = false;
@@ -197,8 +200,8 @@ public class ConditionProbabilityTester extends MultiArgumentClozeTest {
         return MultiMapUtils.getCounts(former, latter, cooccCountMaps, occCountMaps, headIdMaps);
     }
 
-    private double computeConditionalProbability(int occCount, int cooccCount, double laplacianSmoothingParameter, int numTotalEvents) {
-        return Math.log((cooccCount + laplacianSmoothingParameter) / (occCount + numTotalEvents * laplacianSmoothingParameter));
+    private double computeConditionalProbability(int occCount, int cooccCount, double laplaceSmoothingParameter, long numTotalEvents) {
+        return Math.log((cooccCount + laplaceSmoothingParameter) / (occCount + numTotalEvents * laplaceSmoothingParameter));
     }
 
 //    private double conditionalFollowing(MooneyEventRepre former, MooneyEventRepre latter, double laplacianSmoothingParameter, int numTotalEvents) {

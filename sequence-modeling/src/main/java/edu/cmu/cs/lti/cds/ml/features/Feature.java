@@ -7,5 +7,11 @@ package edu.cmu.cs.lti.cds.ml.features;
  * Time: 4:29 PM
  */
 public abstract class Feature {
+    protected boolean testMode = false;
+
     public abstract boolean isLexicalized();
+
+    public void setTestMode() {
+        testMode = true;
+    }
 }

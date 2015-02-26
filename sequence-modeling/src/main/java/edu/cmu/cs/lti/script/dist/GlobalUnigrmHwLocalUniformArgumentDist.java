@@ -17,7 +17,7 @@ import java.util.Random;
  * Date: 11/3/14
  * Time: 3:39 PM
  */
-public class GlobalUnigrmHwLocalUniformArgumentDist {
+public class GlobalUnigrmHwLocalUniformArgumentDist extends BaseEventDist {
 //    private final Random random;
 //
 //    /* The probability and alias tables. */
@@ -28,8 +28,8 @@ public class GlobalUnigrmHwLocalUniformArgumentDist {
 
     private Random random;
 
-    public GlobalUnigrmHwLocalUniformArgumentDist() {
-//        this(headCounts2Probs(), new Random());
+    public GlobalUnigrmHwLocalUniformArgumentDist(int numArguments) {
+        super(numArguments);
         random = new Random();
         am = new AliasMethod(headCounts2Probs(), random);
     }
@@ -43,19 +43,20 @@ public class GlobalUnigrmHwLocalUniformArgumentDist {
         return probabilities;
     }
 
-    /**
-     * Draw a predicate and create a mention with given arguments.
-     *
-     * @param providedArguments
-     * @return
-     */
-    public Pair<LocalEventMentionRepre, Double> draw(LocalArgumentRepre[] providedArguments) {
-        String predicate = drawPredicate();
-        LocalEventMentionRepre repre = new LocalEventMentionRepre(predicate, providedArguments.clone());
-        return Pair.of(repre, DataPool.getPredicateProb(predicate));
-    }
+//    /**
+//     * Draw a predicate and create a mention with given arguments.
+//     *
+//     * @param providedArguments
+//     * @return
+//     */
+//    public Pair<LocalEventMentionRepre, Double> draw(LocalArgumentRepre[] providedArguments) {
+//        String predicate = drawPredicate();
+//        LocalEventMentionRepre repre = new LocalEventMentionRepre(predicate, providedArguments.clone());
+//        return Pair.of(repre, DataPool.getPredicateProb(predicate));
+//    }
 
-    public Pair<LocalEventMentionRepre, Double> draw(List<LocalArgumentRepre> candidateArguments, int numArguments) {
+    @Override
+    public Pair<LocalEventMentionRepre, Double> draw(List<LocalArgumentRepre> candidateArguments) {
         String predicate = drawPredicate();
 
         //TODO do not let two argument share the same entity
@@ -84,6 +85,6 @@ public class GlobalUnigrmHwLocalUniformArgumentDist {
 
         //prepare data
         DataPool.loadHeadStatistics(config, false);
-        GlobalUnigrmHwLocalUniformArgumentDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist();
+        GlobalUnigrmHwLocalUniformArgumentDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist(3);
     }
 }

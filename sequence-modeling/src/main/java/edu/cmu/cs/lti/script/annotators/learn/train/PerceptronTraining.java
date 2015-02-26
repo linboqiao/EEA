@@ -3,14 +3,17 @@ package edu.cmu.cs.lti.script.annotators.learn.train;
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.cds.ml.features.CompactFeatureExtractor;
 import edu.cmu.cs.lti.collections.TLongIntDoubleHashTable;
+import edu.cmu.cs.lti.script.dist.BaseEventDist;
 import edu.cmu.cs.lti.script.dist.GlobalUnigrmHwLocalUniformArgumentDist;
 import edu.cmu.cs.lti.script.model.ContextElement;
 import edu.cmu.cs.lti.script.model.LocalArgumentRepre;
 import edu.cmu.cs.lti.script.model.LocalEventMentionRepre;
+import edu.cmu.cs.lti.script.model.MooneyEventRepre;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.utils.DataPool;
+import edu.cmu.cs.lti.script.utils.MultiMapUtils;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -19,16 +22,23 @@ import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.ArrayBasedTwoLevelFeatureTable;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.TwoLevelFeatureTable;
+import gnu.trove.iterator.TIntDoubleIterator;
+import gnu.trove.iterator.TLongObjectIterator;
+import gnu.trove.list.TIntList;
+import gnu.trove.map.TIntDoubleMap;
+import gnu.trove.map.TObjectIntMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.mapdb.Fun;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.core.SerializationHelper;
 
@@ -51,6 +61,17 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
     public static final String PARAM_MAX_SKIP_GRAM_N = "maxSkippedN";
 
+    public static final String PARAM_TOP_RANK_TO_OPTIMIZE = "topToOptimize";
+
+    public static final String PARAM_PSEUDO_GUIDE = "pseudoGuide";
+
+    public static final String PARAM_DB_DIR_PATH = "dbLocation";
+
+    public static final String PARAM_DB_NAMES = "dbNames";
+
+    public static final String PARAM_SMOOTHING = "smoothingParameter";
+
+
     public static TwoLevelFeatureTable trainingFeatureTable;
 
 //    public static TwoLevelFeatureTable sumOfFeatures;
@@ -63,21 +84,32 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
     //some defaults, will be changed by parameters anyway
     int miniBatchSize = 1000;
     int rankListSize = 100;
-    int numArguments = 3;
 
     int maxSkippedN;
 
-    int numTopNegativeToTrain = 1;
+    @ConfigurationParameter(name = PARAM_TOP_RANK_TO_OPTIMIZE)
+    int topRankToOptimize = 10;
 
-    int targetRank = 10;
+    @ConfigurationParameter(name = PARAM_PSEUDO_GUIDE)
+    boolean pseudoGuide = true;
+
+    int topPredictionAsNegative = 1;
 
     double averageRankPercentage = 0;
-
-    Random randomGenerator = new Random();
-
     boolean debug = false;
 
-    GlobalUnigrmHwLocalUniformArgumentDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist();
+    //can be made as parameters too
+    int numArguments = 3;
+    BaseEventDist noiseDist = new GlobalUnigrmHwLocalUniformArgumentDist(numArguments);
+//    BaseEventDist noiseDist = new TopCappedUnigramEventDist(DataPool.unigramCounts, 500, numArguments);
+
+    //data for the Mooney predictor
+    static TObjectIntMap<TIntList>[] cooccCountMaps;
+    static TObjectIntMap<TIntList>[] occCountMaps;
+    static TObjectIntMap<String>[] headIdMaps;
+    static float laplaceSmoothingParameter;
+
+    long numTotalEvents;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -87,16 +119,37 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
         maxSkippedN = (Integer) aContext.getConfigParameterValue(PARAM_MAX_SKIP_GRAM_N);
 
+
+        if (pseudoGuide) {
+            //Load mooney data as guide
+            String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
+            String[] dbNames = (String[]) aContext.getConfigParameterValue(PARAM_DB_NAMES);
+            laplaceSmoothingParameter = (Float) aContext.getConfigParameterValue(PARAM_SMOOTHING);
+
+            try {
+                cooccCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, KarlMooneyScriptCounter.defaultCooccMapName, logger, "Loading coocc");
+                occCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, KarlMooneyScriptCounter.defaultOccMapName, logger, "Loading occ");
+                headIdMaps = MultiMapUtils.loadMaps(dbPath, dbNames, KarlMooneyScriptCounter.defaltHeadIdMapName, logger, "Loading head ids");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         numSamplesProcessed = 0;
 
-        logger.info(String.format("Perceptron training setup: rank list size [%d], batch size [%d], max skip [%d]",
-                rankListSize, miniBatchSize, maxSkippedN));
+        logger.info(String.format("Perceptron training setup: rank list size [%d], batch size [%d], max skip [%d], use guidance [%s], optimize rank [%d]",
+                rankListSize, miniBatchSize, maxSkippedN, pseudoGuide, topRankToOptimize));
 
         try {
-            extractor = new CompactFeatureExtractor(trainingFeatureTable, featureImplNames);
+            extractor = new CompactFeatureExtractor(trainingFeatureTable, featureImplNames, false);
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        numTotalEvents = DataPool.predicateTotalCount;
+
+        System.err.println("Number total events " + numTotalEvents);
+
     }
 
     public static void initializeParameters() {
@@ -129,9 +182,8 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
         Map<LocalEventMentionRepre, TLongIntDoubleHashTable> mention2Features = new HashMap<>();
 
-        List<TLongIntDoubleHashTable> chainBestPredictionFeatures = new ArrayList<>();
-        List<Pair<TLongIntDoubleHashTable, Integer>> chainCorrectFeatures = new ArrayList<>();
-
+        List<List<TLongIntDoubleHashTable>> batchedNegativeFeatures = new ArrayList<>();
+        List<TLongIntDoubleHashTable> batchedCorrectFeatures = new ArrayList<>();
 
         extractor.prepareGlobalFeatures(chain);
 
@@ -146,21 +198,26 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
             PriorityQueue<Pair<Double, LocalEventMentionRepre>> scores = new PriorityQueue<>(rankListSize, Collections.reverseOrder());
 
+            Set<LocalEventMentionRepre> sampledCandidates = sampleCandidatesWithReal(arguments, realSample.getMention());
+
             int originalRank = 0;
-            for (LocalEventMentionRepre sample : sampleCandidatesWithReal(arguments, realSample.getMention())) {
-                TLongIntDoubleHashTable sampleFeature = extractor.getFeatures(chain, new ContextElement(aJCas, sampleSent, realSample.getOriginalMention(), sample), sampleIndex, maxSkippedN);
+            for (LocalEventMentionRepre sample : sampledCandidates) {
+                TLongIntDoubleHashTable sampleFeature = extractor.getFeatures(chain,
+                        new ContextElement(aJCas, sampleSent, realSample.getOriginalMention(), sample), sampleIndex, maxSkippedN);
+
                 double sampleScore;
                 if (debug) {
                     sampleScore = trainingFeatureTable.dotProd(sampleFeature, DataPool.headWords);
                 } else {
                     sampleScore = trainingFeatureTable.dotProd(sampleFeature);
                 }
+
                 scores.add(Pair.of(sampleScore, sample));
                 mention2Features.put(sample, sampleFeature);
 
                 if (debug) {
                     if (sample.mooneyMatch(realSample.getMention())) {
-                        System.err.println(sample + " is the actual mention, sampled rank is " + originalRank + " score is " + sampleScore);
+                        System.err.println(sample + " is the actual mention, sampled rank is " + originalRank + " among " + sampledCandidates.size() + ", score is " + sampleScore);
                     } else {
                         if (sampleScore != 0) {
                             System.err.println(sample + " is a noisy mention, sampled rank is " + originalRank + " score is " + sampleScore);
@@ -170,46 +227,18 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 originalRank++;
             }
 
-            int realRank = -1;
-            int rank = 0;
-
-            int negativeCount = 0;
-
-            List<TLongIntDoubleHashTable> currentBestSampleFeatures = new ArrayList<>();
-            while (!scores.isEmpty()) {
-                Pair<Double, LocalEventMentionRepre> nextScoredItem = scores.poll();
-                if (nextScoredItem.getRight().mooneyMatch(realSample.getMention())) {
-                    realRank = rank;
-                    if (debug) {
-                        System.err.println("\t[Real One]" + nextScoredItem + " " + rank);
-                    }
-                    break;
-                } else {
-                    if (negativeCount < numTopNegativeToTrain) {
-                        currentBestSampleFeatures.add(mention2Features.get(nextScoredItem.getRight()));
-                        negativeCount++;
-                        if (debug) {
-                            System.err.println("\t" + nextScoredItem + " " + rank);
-                        }
-                    }
-                }
-                rank++;
-            }
-
-            if (debug) {
-                System.err.println(String.format("Predicted rank is %d  among %d", realRank, rankListSize));
-            }
-
             //update when prediction didn't fall into the top list
-            //rank starts at 0
-            if (realRank >= targetRank) {
-                chainBestPredictionFeatures.addAll(currentBestSampleFeatures);
-                chainCorrectFeatures.add(Pair.of(correctFeature, numTopNegativeToTrain));
+            Pair<Boolean, List<TLongIntDoubleHashTable>> updateDecision = prepareUpdate(
+                    chain, sampleIndex, scores, realSample.getMention(), mention2Features);
+
+            if (updateDecision.getKey()) {
+                List<TLongIntDoubleHashTable> pseudoNegativeInstances = updateDecision.getRight();
+//                System.err.println("Adding " + pseudoNegativeInstances.size() + " negative features");
+                batchedNegativeFeatures.add(pseudoNegativeInstances);
+                batchedCorrectFeatures.add(correctFeature);
             }
 
-            averageRankPercentage += realRank * 1.0 / rankListSize;
             numSamplesProcessed++;
-
             if (numSamplesProcessed % miniBatchSize == 0) {
                 logger.info("Processed " + numSamplesProcessed + " samples");
                 logger.info("Features lexical pairs just learnt " + trainingFeatureTable.getNumRows());
@@ -218,47 +247,196 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 BasicConvenience.printMemInfo(logger);
             }
         }
-
-        perceptronUpdate(chainCorrectFeatures, chainBestPredictionFeatures);
+        perceptronUpdate(batchedCorrectFeatures, batchedNegativeFeatures);
     }
+
+    private Pair<Boolean, List<TLongIntDoubleHashTable>> prepareUpdate(List<ContextElement> chain, int sampleIndex, PriorityQueue<Pair<Double, LocalEventMentionRepre>> scoredItems,
+                                                                       LocalEventMentionRepre realMention, Map<LocalEventMentionRepre, TLongIntDoubleHashTable> mention2Features) {
+        int realRank = -1;
+        int rank = 0;
+
+
+        List<TLongIntDoubleHashTable> negativeInstancesToTrain = new ArrayList<>();
+        List<LocalEventMentionRepre> topPredictions = new ArrayList<>();
+
+        int nonOriginalPredictionCount = 0;
+        while (!scoredItems.isEmpty()) {
+            Pair<Double, LocalEventMentionRepre> nextScoredItem = scoredItems.poll();
+            LocalEventMentionRepre nextMention = nextScoredItem.getRight();
+
+            if (nextMention.equals(realMention)) {
+                realRank = rank;
+                if (debug) {
+                    System.err.println("\t[Real One] " + nextScoredItem + " ranks " + rank);
+                }
+                break;
+            } else {
+                if (nonOriginalPredictionCount < topRankToOptimize) {
+                    topPredictions.add(nextScoredItem.getRight());
+                    nonOriginalPredictionCount++;
+                }
+            }
+            rank++;
+        }
+
+
+        boolean considerCorrect = false;
+        if (rank < topRankToOptimize) {
+            considerCorrect = true;
+            if (debug) {
+                System.err.println(String.format("\t[Consider correct] because original rank at %d , within top %d", rank, topRankToOptimize));
+            }
+        } else {
+            if (pseudoGuide) {
+                Map<LocalEventMentionRepre, Double> pseudoNegatives
+                        = getGuidingScores(chain, sampleIndex, realMention, topPredictions);
+                for (LocalEventMentionRepre pseudoNegativeInstance : pseudoNegatives.keySet()) {
+                    negativeInstancesToTrain.add(mention2Features.get(pseudoNegativeInstance));
+                }
+                if (pseudoNegatives.size() == 0) {
+                    considerCorrect = true;
+                    if (debug) {
+                        System.err.println("\t[Consider correct] because no negative is lower than real score");
+                    }
+                }
+            } else {
+                for (int i = 0; i < topPredictionAsNegative && i < topPredictions.size(); i++) {
+                    negativeInstancesToTrain.add(mention2Features.get(topPredictions.get(i)));
+                }
+            }
+        }
+
+
+        if (debug) {
+            System.err.println(String.format("Predicted rank is %d  among %d", realRank, rankListSize));
+        }
+
+        averageRankPercentage += realRank * 1.0 / rankListSize;
+
+        //update when we do not consider them as correct
+        if (!considerCorrect) {
+            return Pair.of(true, negativeInstancesToTrain);
+        } else {
+            return Pair.of(false, null);
+        }
+    }
+
+    private Map<LocalEventMentionRepre, Double> getGuidingScores(List<ContextElement> chain, int sampleIndex, LocalEventMentionRepre realMention,
+                                                                 List<LocalEventMentionRepre> topPredictions) {
+        Map<LocalEventMentionRepre, Double> pseudoNegatives = new HashMap<>();
+
+        double guidedRealScore = guidedScorer(chain, sampleIndex, realMention);
+
+        for (LocalEventMentionRepre topPrediction : topPredictions) {
+            double guidedPredictionScore = guidedScorer(chain, sampleIndex, topPrediction);
+            if (guidedPredictionScore < guidedRealScore) {
+                pseudoNegatives.put(topPrediction, guidedPredictionScore);
+            }
+        }
+        if (debug) {
+            System.err.println("Real score is " + guidedRealScore);
+            System.err.println(String.format("[Number of top predictions [%d], Choose as negatives [%d]", topPredictions.size(), pseudoNegatives.size()));
+            System.err.println("[Pseudo negatives] " + pseudoNegatives);
+        }
+
+        return pseudoNegatives;
+    }
+
+    private double guidedScorer(List<ContextElement> chain, int sampleIndex, LocalEventMentionRepre candidateEvm) {
+        double score = 0;
+        for (int i = 0; i < sampleIndex; i++) {
+            Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> substitutedForm = KarlMooneyScriptCounter.
+                    firstBasedSubstitution(chain.get(i).getMention(), candidateEvm);
+            double precedingScore = conditionalFollowing(MooneyEventRepre.fromTuple(substitutedForm.a),
+                    MooneyEventRepre.fromTuple(substitutedForm.b), laplaceSmoothingParameter, numTotalEvents);
+            score += precedingScore;
+        }
+
+        for (int i = sampleIndex + 1; i < chain.size(); i++) {
+            Fun.Tuple2<Fun.Tuple4<String, Integer, Integer, Integer>, Fun.Tuple4<String, Integer, Integer, Integer>> substitutedForm = KarlMooneyScriptCounter.
+                    firstBasedSubstitution(candidateEvm, chain.get(i).getMention());
+            double followingScore = conditionalFollowing(MooneyEventRepre.fromTuple(substitutedForm.a),
+                    MooneyEventRepre.fromTuple(substitutedForm.b), laplaceSmoothingParameter, numTotalEvents);
+            score += followingScore;
+        }
+        return score;
+    }
+
+    private double conditionalFollowing(MooneyEventRepre former, MooneyEventRepre latter, double smoothParameter, long numTotalEvents) {
+        Pair<Integer, Integer> counts = MultiMapUtils.getCounts(former, latter, cooccCountMaps, occCountMaps, headIdMaps);
+
+        double cooccCountSmoothed = counts.getRight() + smoothParameter;
+        double formerOccCountSmoothed = counts.getLeft() + numTotalEvents * smoothParameter;
+
+        //add one smoothing
+        return Math.log(cooccCountSmoothed / formerOccCountSmoothed);
+    }
+
 
     /**
      * Return a list of generated noise union with the real sample
      *
-     * @param arguments
-     * @param realSample
-     * @return
+     * @param arguments  Arguments to be used to generate sample
+     * @param realSample Real event example
+     * @return A list of noise examples and the real one
      */
-    private List<LocalEventMentionRepre> sampleCandidatesWithReal(List<LocalArgumentRepre> arguments, LocalEventMentionRepre realSample) {
-        List<LocalEventMentionRepre> samples = new ArrayList<>();
+    private Set<LocalEventMentionRepre> sampleCandidatesWithReal(List<LocalArgumentRepre> arguments, LocalEventMentionRepre realSample) {
+        Set<LocalEventMentionRepre> samples = new HashSet<>();
         boolean containsReal = false;
 
         for (int i = 0; i < rankListSize; i++) {
-            Pair<LocalEventMentionRepre, Double> noise = noiseDist.draw(arguments, numArguments);
+            Pair<LocalEventMentionRepre, Double> noise = noiseDist.draw(arguments);
             LocalEventMentionRepre noiseRep = noise.getKey();
-
             if (noiseRep.mooneyMatch(realSample)) {
                 containsReal = true;
             }
-
             samples.add(noiseRep);
         }
 
         if (!containsReal) {
-            //replace the last sample with the real one
-            samples.remove(samples.size() - 1);
-            samples.add(randomGenerator.nextInt(samples.size()), realSample);
+            samples.add(realSample);
         }
         return samples;
     }
 
-    private void perceptronUpdate(List<Pair<TLongIntDoubleHashTable, Integer>> listOfCorrectFeatures, List<TLongIntDoubleHashTable> currentTops) {
-        for (Pair<TLongIntDoubleHashTable, Integer> correctFeatureWithWeight : listOfCorrectFeatures) {
-            trainingFeatureTable.adjustBy(correctFeatureWithWeight.getKey(), correctFeatureWithWeight.getRight());
-        }
+    private void perceptronUpdate(List<TLongIntDoubleHashTable> listOfPositiveFeatures, List<List<TLongIntDoubleHashTable>> allPossibleNegativeFeatures) {
+        for (int i = 0; i < listOfPositiveFeatures.size(); i++) {
+            TLongIntDoubleHashTable positiveFeature = listOfPositiveFeatures.get(i);
+            List<TLongIntDoubleHashTable> negativeFeatures = allPossibleNegativeFeatures.get(i);
 
-        for (TLongIntDoubleHashTable currentTop : currentTops) {
-            trainingFeatureTable.adjustBy(currentTop, -1);
+            updateUniquePositiveFeatures(positiveFeature, negativeFeatures);
+        }
+    }
+
+    private void vanillaUpdate(TLongIntDoubleHashTable positiveFeature, List<TLongIntDoubleHashTable> negativeFeatures) {
+        trainingFeatureTable.adjustBy(positiveFeature, negativeFeatures.size());
+        for (TLongIntDoubleHashTable currentNegative : negativeFeatures) {
+            trainingFeatureTable.adjustBy(currentNegative, -1);
+        }
+    }
+
+    private void updateUniquePositiveFeatures(TLongIntDoubleHashTable positiveFeature, List<TLongIntDoubleHashTable> negativeFeatures) {
+        for (TLongObjectIterator<TIntDoubleMap> correctTableIter = positiveFeature.iterator(); correctTableIter.hasNext(); ) {
+            correctTableIter.advance();
+
+            long rowKey = correctTableIter.key();
+
+            for (TIntDoubleIterator correctCellIter = correctTableIter.value().iterator(); correctCellIter.hasNext(); ) {
+                correctCellIter.advance();
+                int colKey = correctCellIter.key();
+
+                boolean containsInNegative = false;
+
+                for (TLongIntDoubleHashTable negativeFeature : negativeFeatures) {
+                    if (negativeFeature.contains(rowKey, colKey)) {
+                        containsInNegative = true;
+                    }
+                }
+
+                if (!containsInNegative) {
+                    trainingFeatureTable.adjustOrPutValue(rowKey, colKey, 1, 1);
+                }
+            }
         }
     }
 
@@ -290,9 +468,21 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         String semLinkPath = config.get("edu.cmu.cs.lti.cds.db.semlink.path");
         int maxSkipN = config.getInt("edu.cmu.cs.lti.cds.max.n");
 
+        boolean guided = config.getBoolean("edu.cmu.cs.lti.cds.perceptron.guided");
+        int topRankToOptimize = config.getInt("edu.cmu.cs.lti.cds.perceptron.top.rank.optimize");
+        float smoothingParameter = config.getInt("edu.cmu.cs.lti.cds.conditional.smoothing");
+
+
         int rankListSize = config.getInt("edu.cmu.cs.lti.cds.perceptron.ranklist.size");
 
         String modelSuffix = Joiner.on("_").join(featureNames);
+
+        if (guided) {
+            modelSuffix = "guided_" + topRankToOptimize + "_" + modelSuffix;
+        }
+
+        logger.info("Model will be stored with suffix : " + modelSuffix);
+
 
         //make complete class name
         for (int i = 0; i < featureNames.length; i++) {
@@ -306,7 +496,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         DataPool.loadHeadStatistics(config, false);
         DataPool.readBlackList(new File(blackListFileName));
 //        DataPool.loadKmCooccMap(dbPath, dbNames[0], KarlMooneyScriptCounter.defaultCooccMapName);
-//        DataPool.loadEventUnigramCounts(config);
+        DataPool.loadEventUnigramCounts(config);
         DataPool.loadSemLinkData(semLinkPath);
         logger.info("Finish data loading.");
 
@@ -324,14 +514,20 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 PerceptronTraining.PARAM_RANK_LIST_SIZE, rankListSize,
                 PerceptronTraining.PARAM_MINI_BATCH_SIZE, miniBatchNum,
                 PerceptronTraining.PARAM_FEATURE_NAMES, featureNames,
-                PerceptronTraining.PARAM_MAX_SKIP_GRAM_N, maxSkipN);
+                PerceptronTraining.PARAM_MAX_SKIP_GRAM_N, maxSkipN,
+                PerceptronTraining.PARAM_PSEUDO_GUIDE, guided,
+                PerceptronTraining.PARAM_TOP_RANK_TO_OPTIMIZE, topRankToOptimize,
+                PerceptronTraining.PARAM_DB_DIR_PATH, dbPath,
+                PerceptronTraining.PARAM_DB_NAMES, dbNames,
+                PerceptronTraining.PARAM_SMOOTHING, smoothingParameter
+        );
 
         PerceptronTraining.initializeParameters();
         BasicConvenience.printMemInfo(logger, "Beginning memory");
 
         for (int i = 0; i < maxIter; i++) {
             String modelOutputPath = modelStoragePath + "_" + modelSuffix + "_" + i + modelExt;
-            String averageModelOutputPath = modelOutputPath + "_average";
+//            String averageModelOutputPath = modelOutputPath + "_average";
 
             SimplePipeline.runPipeline(reader, trainer);
             File modelDirParent = new File(modelStoragePath).getParentFile();
@@ -342,11 +538,6 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
             logger.info("Storing this model to " + modelOutputPath);
             SerializationHelper.write(modelOutputPath, PerceptronTraining.trainingFeatureTable);
-
-//            TLongShortDoubleHashTable averageParameters = PerceptronTraining.sumOfFeatures;
-//            averageParameters.multiplyBy(1.0 / PerceptronTraining.numSamplesProcessed);
-//            logger.info("Storing the averaged model to " + modelOutputPath);
-//            SerializationHelper.write(averageModelOutputPath, averageParameters);
         }
     }
 }

@@ -19,8 +19,7 @@ public class MooneyFeature extends PairwiseFeature {
     public Map<String, Double> getFeature(ContextElement elementLeft, ContextElement elementRight, int skip) {
         Map<String, Double> features = new HashMap<>();
 
-        if (skip >= 3) {
-            //for skip gram further than 3, use LongMooneyFeature
+        if (!testMode && skip >= 3) {
             return features;
         }
 
@@ -29,7 +28,6 @@ public class MooneyFeature extends PairwiseFeature {
 
         int[] arg1s = getLast3IntFromTuple(substitutedForm.a);
         int[] arg2s = getLast3IntFromTuple(substitutedForm.b);
-
 
         String featureName = "m_arg" + "_" + asArgumentStr(arg1s) + "_" + asArgumentStr(arg2s);
 

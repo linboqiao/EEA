@@ -54,6 +54,8 @@ public class MultiArgumentClozeTestRunner {
         int maxSkippedGramN = config.getInt("edu.cmu.cs.lti.cds.max.n");
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
 
+        float smoothingParameter = config.getInt("edu.cmu.cs.lti.cds.conditional.smoothing");
+
         Set<String> methods = new HashSet<>(Arrays.asList(config.getList("edu.cmu.cs.lti.cds.methods")));
 
         //prepare data
@@ -77,15 +79,17 @@ public class MultiArgumentClozeTestRunner {
         int[] allK = config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k");
         String evalResultBasePath = config.get("edu.cmu.cs.lti.cds.eval.result.path");
 
-
         if (methods.contains("loglinear")) {
             String[] modelPaths = config.getList("edu.cmu.cs.lti.cds.loglinear.model");
             String modelPathBase = config.get("edu.cmu.cs.lti.cds.perceptron.model.path");
             String semLinkPath = config.get("edu.cmu.cs.lti.cds.db.semlink.path");
+            boolean testMode = config.getBoolean("edu.cmu.cs.lti.cds.test.mode");
+
             DataPool.loadSemLinkData(semLinkPath);
 
             for (String modelPath : modelPaths) {
-                String[] featureNames = modelPath.replaceAll("^" + modelPathBase + "_", "").replaceAll("_\\d.ser$", "").split("_");
+//                String[] featureNames = modelPath.replaceAll("^" + modelPathBase + "_", "").replaceAll("_\\d.ser$", "").split("_");
+                String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
                 //make complete class name
                 for (int i = 0; i < featureNames.length; i++) {
                     featureNames[i] = featurePackage + "." + featureNames[i];
@@ -104,7 +108,8 @@ public class MultiArgumentClozeTestRunner {
                         CompactLogLinearTester.PARAM_MODEL_PATH, modelPath,
                         CompactLogLinearTester.PARAM_KEEP_QUIET, false,
                         CompactLogLinearTester.PARAM_MAX_SKIP_GRAM_N, maxSkippedGramN,
-                        CompactLogLinearTester.PARAM_FEATURE_NAMES, featureNames
+                        CompactLogLinearTester.PARAM_FEATURE_NAMES, featureNames,
+                        CompactLogLinearTester.PARAM_USE_TEST_MODE, testMode
                 );
 
                 SimplePipeline.runPipeline(reader, logLinearPredictor);
@@ -123,7 +128,7 @@ public class MultiArgumentClozeTestRunner {
 
                     ConditionProbabilityTester.PARAM_DB_DIR_PATH, dbPath,
                     ConditionProbabilityTester.PARAM_DB_NAMES, dbNames,
-                    ConditionProbabilityTester.PARAM_SMOOTHING, (float) 1.0
+                    ConditionProbabilityTester.PARAM_SMOOTHING, smoothingParameter
             );
 
             SimplePipeline.runPipeline(reader, conditionalProbabilityPredictor);

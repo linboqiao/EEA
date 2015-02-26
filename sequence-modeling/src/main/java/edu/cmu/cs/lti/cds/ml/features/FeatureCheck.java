@@ -27,6 +27,8 @@ public class FeatureCheck {
 
         Scanner scan = new Scanner(System.in);
 
+        System.out.println("Number of lexical pairs " + compactWeights.getNumRows());
+
         while (true) {
             System.out.print("Word 1 : ");
             String word1 = scan.nextLine();
@@ -44,18 +46,21 @@ public class FeatureCheck {
 
             long rowKey = BitUtils.store2Int(word1Id, word2Id);
 
-            TIntDoubleMap row = compactWeights.getRow(rowKey);
 
             BiMap<Integer, String> secondKeyMap = compactWeights.getFeatureNameMap();
 
-
             StringBuilder sb = new StringBuilder();
 
-            for (TIntDoubleIterator secondIter = row.iterator(); secondIter.hasNext(); ) {
-                secondIter.advance();
-                int secondKey = secondIter.key();
-                String secondKeyName = secondKeyMap.get(secondKey);
-                sb.append("\t").append(secondKey).append(". ").append(secondKeyName).append(":").append(secondIter.value()).append("\n");
+            if (compactWeights.containsRow(rowKey)) {
+                TIntDoubleMap row = compactWeights.getRow(rowKey);
+                for (TIntDoubleIterator secondIter = row.iterator(); secondIter.hasNext(); ) {
+                    secondIter.advance();
+                    int secondKey = secondIter.key();
+                    String secondKeyName = secondKeyMap.get(secondKey);
+                    sb.append("\t").append(secondKey).append(". ").append(secondKeyName).append(":").append(secondIter.value()).append("\n");
+                }
+            }else{
+                System.out.println("Do not have this lexical pair");
             }
 
             System.out.println(sb.toString());

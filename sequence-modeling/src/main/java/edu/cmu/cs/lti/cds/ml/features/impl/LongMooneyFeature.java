@@ -20,7 +20,6 @@ public class LongMooneyFeature extends PairwiseFeature {
         Map<String, Double> features = new HashMap<>();
 
         if (skip > 7) {
-//            if (skip < 3 || skip > 9) {
             return features;
         }
 

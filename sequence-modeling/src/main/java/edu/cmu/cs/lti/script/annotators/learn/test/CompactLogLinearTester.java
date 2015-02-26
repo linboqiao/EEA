@@ -29,6 +29,7 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
     public static final String PARAM_MODEL_PATH = "modelPath";
     public static final String PARAM_MAX_SKIP_GRAM_N = "maxSkipgramN";
     public static final String PARAM_FEATURE_NAMES = "featureNames";
+    public static final String PARAM_USE_TEST_MODE = "useAllContext";
 
     private CompactFeatureExtractor extractor;
     private TwoLevelFeatureTable compactWeights;
@@ -43,14 +44,21 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
 
         String modelPath = (String) aContext.getConfigParameterValue(PARAM_MODEL_PATH);
 
+        boolean useAllContext = (Boolean) aContext.getConfigParameterValue(PARAM_USE_TEST_MODE);
+
         String predictorName = FilenameUtils.getBaseName(modelPath);
 
-        logger.info("Initializing tester : " + FilenameUtils.getBaseName(modelPath));
+        if (useAllContext) {
+            predictorName += "_full_context";
+        }
+
+        logger.info("Initializing tester : " + predictorName);
         logger.info("Loading from " + modelPath);
+
 
         try {
             compactWeights = (TwoLevelFeatureTable) SerializationHelper.read(modelPath);
-            extractor = new CompactFeatureExtractor(compactWeights, featureImplNames);
+            extractor = new CompactFeatureExtractor(compactWeights, featureImplNames, useAllContext);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,13 +91,14 @@ public class CompactLogLinearTester extends MultiArgumentClozeTest {
                 TLongIntDoubleHashTable features = extractor.getFeatures(chain, candidate, testIndex, skipGramN);
 
                 double score = compactWeights.dotProd(features);
+
                 if (score > 0) {
                     logEvalInfo("Candidate is " + candidate.getMention() + "\t" + candidate.getMention().toMooneyMention());
                     logEvalInfo("Feature score " + score);
 //                    System.err.println("Showing dot product details for positive scored ones: ");
 //                    compactWeights.dotProd(features, DataPool.headWords);
-                    logEvalInfo("Candidate features : ");
-                    logEvalInfo(features.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
+//                    logEvalInfo("Candidate features : ");
+//                    logEvalInfo(features.dump(DataPool.headWords, extractor.getFeatureNamesByIndex()));
                 }
 
                 if (candidate.getMention().mooneyMatch(answer.getMention())) {

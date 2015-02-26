@@ -29,7 +29,14 @@ public class SentDistFeature extends PairwiseFeature {
         int leftSid = getSentId(elementLeft.getSent());
         int rightSid = getSentId(elementRight.getSent());
         int dist = Math.abs(leftSid - rightSid);
-        features.put("sent_dist", 1.0 - (dist / sentSize));
+
+        if (dist == 0) {
+            features.put("same_sent", 1.0);
+        } else if (dist == 1) {
+            features.put("adjacent_sent", 1.0);
+        }
+
+//        features.put("sent_dist", 1.0 - (dist / sentSize));
 
         return features;
     }

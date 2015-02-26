@@ -33,7 +33,7 @@ public class CompactFeatureExtractor {
     private List<PairwiseFeature> singleFeatureImpls;
     private List<GlobalFeature> globalFeatureImpls;
 
-    public <T extends TwoLevelFeatureTable> CompactFeatureExtractor(T featureTable, List<PairwiseFeature> singleFeatureImpls, List<GlobalFeature> globalFeatureImpls) {
+    public <T extends TwoLevelFeatureTable> CompactFeatureExtractor(T featureTable, List<PairwiseFeature> singleFeatureImpls, List<GlobalFeature> globalFeatureImpls, boolean testMode) {
         this.featureTable = featureTable;
         this.positiveObservations = DataPool.cooccCountMaps;
         this.headMap = DataPool.headIdMap;
@@ -42,10 +42,16 @@ public class CompactFeatureExtractor {
 
         for (Feature featureImpl : singleFeatureImpls) {
             logger.info("Single feature registered: " + featureImpl.getClass().getSimpleName());
+            if (testMode) {
+                featureImpl.setTestMode();
+            }
         }
 
         for (Feature featureImpl : globalFeatureImpls) {
             logger.info("Global feature registered: " + featureImpl.getClass().getSimpleName());
+            if (testMode) {
+                featureImpl.setTestMode();
+            }
         }
 
 
@@ -53,9 +59,9 @@ public class CompactFeatureExtractor {
         logger.info("Feature table feature type size: " + featureTable.getFeatureNameMap().size());
     }
 
-    public <T extends TwoLevelFeatureTable> CompactFeatureExtractor(T featureTable, String[] featureImplNames)
+    public <T extends TwoLevelFeatureTable> CompactFeatureExtractor(T featureTable, String[] featureImplNames, boolean testMode)
             throws IllegalAccessException, InstantiationException, ClassNotFoundException {
-        this(featureTable, featuresByName(featureImplNames).getKey(), featuresByName(featureImplNames).getRight());
+        this(featureTable, featuresByName(featureImplNames).getKey(), featuresByName(featureImplNames).getRight(), testMode);
     }
 
     private static Pair<List<PairwiseFeature>, List<GlobalFeature>> featuresByName(String[] featureImplNames)
