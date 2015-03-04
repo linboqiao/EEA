@@ -139,8 +139,7 @@ public class FullSystemRunner {
                 PerceptronTraining.PARAM_MINI_BATCH_SIZE, miniBatchNum,
                 PerceptronTraining.PARAM_FEATURE_NAMES, featureNames,
                 PerceptronTraining.PARAM_MAX_SKIP_GRAM_N, maxSkipN,
-                PerceptronTraining.PARAM_TOP_RANK_TO_OPTIMIZE, topRankToOptimize,
-                PerceptronTraining.PARAM_PSEUDO_GUIDE, false
+                PerceptronTraining.PARAM_TOP_RANK_TO_OPTIMIZE, topRankToOptimize
         );
 
 

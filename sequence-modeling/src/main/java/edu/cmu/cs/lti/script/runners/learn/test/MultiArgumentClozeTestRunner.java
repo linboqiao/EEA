@@ -75,7 +75,6 @@ public class MultiArgumentClozeTestRunner {
             String[] modelPaths = config.getList("edu.cmu.cs.lti.cds.loglinear.model");
             String modelPathBase = config.get("edu.cmu.cs.lti.cds.perceptron.model.path");
             String semLinkPath = config.get("edu.cmu.cs.lti.cds.db.semlink.path");
-            boolean testMode = config.getBoolean("edu.cmu.cs.lti.cds.test.mode");
 
             DataPool.loadSemLinkData(semLinkPath);
 
@@ -101,7 +100,7 @@ public class MultiArgumentClozeTestRunner {
                         CompactLogLinearTester.PARAM_KEEP_QUIET, false,
                         CompactLogLinearTester.PARAM_MAX_SKIP_GRAM_N, maxSkippedGramN,
                         CompactLogLinearTester.PARAM_FEATURE_NAMES, featureNames,
-                        CompactLogLinearTester.PARAM_USE_TEST_MODE, testMode
+                        CompactLogLinearTester.PARAM_USE_TEST_MODE, true
                 );
 
                 SimplePipeline.runPipeline(reader, logLinearPredictor);

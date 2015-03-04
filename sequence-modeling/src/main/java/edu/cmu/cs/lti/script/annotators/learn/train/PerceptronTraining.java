@@ -63,14 +63,6 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
     public static final String PARAM_TOP_RANK_TO_OPTIMIZE = "topToOptimize";
 
-    public static final String PARAM_PSEUDO_GUIDE = "pseudoGuide";
-
-    public static final String PARAM_DB_DIR_PATH = "dbLocation";
-
-    public static final String PARAM_DB_NAMES = "dbNames";
-
-    public static final String PARAM_SMOOTHING = "smoothingParameter";
-
     public static TwoLevelFeatureTable trainingFeatureTable;
 
 //    public static TwoLevelFeatureTable sumOfFeatures;
@@ -88,9 +80,6 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
     @ConfigurationParameter(name = PARAM_TOP_RANK_TO_OPTIMIZE)
     int topRankToOptimize = 10;
-
-    @ConfigurationParameter(name = PARAM_PSEUDO_GUIDE)
-    boolean pseudoGuide = false;
 
     int topPredictionAsNegative = 1;
 
@@ -118,26 +107,10 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         String[] featureImplNames = (String[]) aContext.getConfigParameterValue(PARAM_FEATURE_NAMES);
         maxSkippedN = (Integer) aContext.getConfigParameterValue(PARAM_MAX_SKIP_GRAM_N);
 
-
-        if (pseudoGuide) {
-            //Load mooney data as guide
-            String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
-            String[] dbNames = (String[]) aContext.getConfigParameterValue(PARAM_DB_NAMES);
-            laplaceSmoothingParameter = (Float) aContext.getConfigParameterValue(PARAM_SMOOTHING);
-
-            try {
-                cooccCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, KarlMooneyScriptCounter.defaultCooccMapName, logger, "Loading coocc");
-                occCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, KarlMooneyScriptCounter.defaultOccMapName, logger, "Loading occ");
-                headIdMaps = MultiMapUtils.loadMaps(dbPath, dbNames, KarlMooneyScriptCounter.defaltHeadIdMapName, logger, "Loading head ids");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
         numSamplesProcessed = 0;
 
-        logger.info(String.format("Perceptron training setup: rank list size [%d], batch size [%d], max skip [%d], use guidance [%s], optimize rank [%d]",
-                rankListSize, miniBatchSize, maxSkippedN, pseudoGuide, topRankToOptimize));
+        logger.info(String.format("Perceptron training setup: rank list size [%d], batch size [%d], max skip [%d], optimize rank [%d]",
+                rankListSize, miniBatchSize, maxSkippedN, topRankToOptimize));
 
         try {
             extractor = new CompactFeatureExtractor(trainingFeatureTable, featureImplNames, false);
@@ -286,22 +259,8 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 System.err.println(String.format("\t[Consider correct] because original rank at %d , within top %d", rank, topRankToOptimize));
             }
         } else {
-            if (pseudoGuide) {
-                Map<LocalEventMentionRepre, Double> pseudoNegatives
-                        = getGuidingScores(chain, sampleIndex, realMention, topPredictions);
-                for (LocalEventMentionRepre pseudoNegativeInstance : pseudoNegatives.keySet()) {
-                    negativeInstancesToTrain.add(mention2Features.get(pseudoNegativeInstance));
-                }
-                if (pseudoNegatives.size() == 0) {
-                    considerCorrect = true;
-                    if (debug) {
-                        System.err.println("\t[Consider correct] because no negative is lower than real score");
-                    }
-                }
-            } else {
-                for (int i = 0; i < topPredictionAsNegative && i < topPredictions.size(); i++) {
-                    negativeInstancesToTrain.add(mention2Features.get(topPredictions.get(i)));
-                }
+            for (int i = 0; i < topPredictionAsNegative && i < topPredictions.size(); i++) {
+                negativeInstancesToTrain.add(mention2Features.get(topPredictions.get(i)));
             }
         }
 
@@ -469,7 +428,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         int topRankToOptimize = config.getInt("edu.cmu.cs.lti.cds.perceptron.top.rank.optimize");
         int rankListSize = config.getInt("edu.cmu.cs.lti.cds.perceptron.ranklist.size");
 
-        boolean guided = config.getBoolean("edu.cmu.cs.lti.cds.perceptron.guided");
+//        boolean guided = config.getBoolean("edu.cmu.cs.lti.cds.perceptron.guided");
         float smoothingParameter = config.getInt("edu.cmu.cs.lti.cds.conditional.smoothing");
         String blackListFileName = config.get("edu.cmu.cs.lti.cds.blacklist");
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
@@ -477,10 +436,10 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
 
         String modelSuffix = Joiner.on("_").join(featureNames);
-
-        if (guided) {
-            modelSuffix = "guided_" + topRankToOptimize + "_" + modelSuffix;
-        }
+//
+//        if (guided) {
+//            modelSuffix = "guided_" + topRankToOptimize + "_" + modelSuffix;
+//        }
 
         logger.info("Model will be stored with suffix : " + modelSuffix);
 
@@ -516,11 +475,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
                 PerceptronTraining.PARAM_MINI_BATCH_SIZE, miniBatchNum,
                 PerceptronTraining.PARAM_FEATURE_NAMES, featureNames,
                 PerceptronTraining.PARAM_MAX_SKIP_GRAM_N, maxSkipN,
-                PerceptronTraining.PARAM_PSEUDO_GUIDE, guided,
-                PerceptronTraining.PARAM_TOP_RANK_TO_OPTIMIZE, topRankToOptimize,
-                PerceptronTraining.PARAM_DB_DIR_PATH, dbPath,
-                PerceptronTraining.PARAM_DB_NAMES, dbNames,
-                PerceptronTraining.PARAM_SMOOTHING, smoothingParameter
+                PerceptronTraining.PARAM_TOP_RANK_TO_OPTIMIZE, topRankToOptimize
         );
 
         PerceptronTraining.initializeParameters();
@@ -528,7 +483,6 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
         for (int i = 0; i < maxIter; i++) {
             String modelOutputPath = modelStoragePath + "_" + modelSuffix + "_" + i + modelExt;
-//            String averageModelOutputPath = modelOutputPath + "_average";
 
             SimplePipeline.runPipeline(reader, trainer);
             File modelDirParent = new File(modelStoragePath).getParentFile();
