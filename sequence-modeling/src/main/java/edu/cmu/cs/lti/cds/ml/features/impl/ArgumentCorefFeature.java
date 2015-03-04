@@ -27,6 +27,9 @@ public class ArgumentCorefFeature extends PairwiseFeature {
         LocalArgumentRepre[] leftArgs = elementLeft.getMention().getArgs();
         LocalArgumentRepre[] rightArgs = elementRight.getMention().getArgs();
 
+
+        StringBuilder sb = new StringBuilder();
+
         for (int slotLeft = 0; slotLeft < leftArgs.length; slotLeft++) {
             LocalArgumentRepre leftArg = leftArgs[slotLeft];
             if (leftArg == null) {
@@ -38,12 +41,17 @@ public class ArgumentCorefFeature extends PairwiseFeature {
                     continue;
                 }
 
-                if (leftArg.getRewrittenId() == rightArg.getRewrittenId()) {
-                    String type = getCoreferredEntityType(elementLeft, slotLeft);
-                    if (type != null) {
-                        features.put(prefix + slotLeft + "_" + slotRight + "_type_" + type, 1.0);
-                    }
+                int leftEntityId = leftArg.isConcrete() ? leftArg.getEntityId() : leftArg.getRewrittenId();
+                int rightEntityId = rightArg.isConcrete() ? rightArg.getEntityId() : rightArg.getRewrittenId();
 
+                if (leftEntityId == rightEntityId) {
+//                    String type = getCoreferredEntityType(elementLeft, slotLeft);
+//                    if (type != null) {
+////                        System.err.println(leftEntityId + " " + rightEntityId);
+//                        features.put(prefix + slotLeft + "_" + slotRight + "_type_" + type, 1.0);
+////                        System.err.println(prefix + slotLeft + "_" + slotRight + "_type_" + type);
+////                        Utils.pause();
+//                    }
                     features.put(prefix + slotLeft + "_" + slotRight, 1.0);
                 }
             }

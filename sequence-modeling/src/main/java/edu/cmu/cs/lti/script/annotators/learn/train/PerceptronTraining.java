@@ -496,7 +496,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         DataPool.loadHeadStatistics(config, false);
         DataPool.readBlackList(new File(blackListFileName));
 //        DataPool.loadKmCooccMap(dbPath, dbNames[0], KarlMooneyScriptCounter.defaultCooccMapName);
-        DataPool.loadEventUnigramCounts(config);
+//        DataPool.loadEventUnigramCounts(config);
         DataPool.loadSemLinkData(semLinkPath);
         logger.info("Finish data loading.");
 

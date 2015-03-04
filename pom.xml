@@ -26,6 +26,7 @@
         <module>core</module>
         <module>event-mention-detection</module>
         <module>preprocessor</module>
+        <module>argument-modeling</module>
     </modules>
 
     <dependencies>
