@@ -71,7 +71,6 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
     public static final String PARAM_SMOOTHING = "smoothingParameter";
 
-
     public static TwoLevelFeatureTable trainingFeatureTable;
 
 //    public static TwoLevelFeatureTable sumOfFeatures;
@@ -91,7 +90,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
     int topRankToOptimize = 10;
 
     @ConfigurationParameter(name = PARAM_PSEUDO_GUIDE)
-    boolean pseudoGuide = true;
+    boolean pseudoGuide = false;
 
     int topPredictionAsNegative = 1;
 
@@ -143,7 +142,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         try {
             extractor = new CompactFeatureExtractor(trainingFeatureTable, featureImplNames, false);
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException(e);
         }
 
         numTotalEvents = DataPool.predicateTotalCount;
@@ -455,25 +454,27 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         Logger logger = Logger.getLogger(PerceptronTraining.class.getName());
 
         Configuration config = new Configuration(new File(args[0]));
-        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path");
+
         int maxIter = config.getInt("edu.cmu.cs.lti.cds.sgd.iter");
-        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
-        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
-        String blackListFileName = config.get("edu.cmu.cs.lti.cds.blacklist");
-        String modelStoragePath = config.get("edu.cmu.cs.lti.cds.perceptron.model.path");
-        int miniBatchNum = config.getInt("edu.cmu.cs.lti.cds.minibatch");
         String modelExt = config.get("edu.cmu.cs.lti.cds.model.ext");
+        String modelStoragePath = config.get("edu.cmu.cs.lti.cds.perceptron.model.path");
+
+        String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path");
+        int miniBatchNum = config.getInt("edu.cmu.cs.lti.cds.minibatch");
         String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
         String featurePackage = config.get("edu.cmu.cs.lti.cds.features.packagename");
         String semLinkPath = config.get("edu.cmu.cs.lti.cds.db.semlink.path");
         int maxSkipN = config.getInt("edu.cmu.cs.lti.cds.max.n");
 
-        boolean guided = config.getBoolean("edu.cmu.cs.lti.cds.perceptron.guided");
         int topRankToOptimize = config.getInt("edu.cmu.cs.lti.cds.perceptron.top.rank.optimize");
-        float smoothingParameter = config.getInt("edu.cmu.cs.lti.cds.conditional.smoothing");
-
-
         int rankListSize = config.getInt("edu.cmu.cs.lti.cds.perceptron.ranklist.size");
+
+        boolean guided = config.getBoolean("edu.cmu.cs.lti.cds.perceptron.guided");
+        float smoothingParameter = config.getInt("edu.cmu.cs.lti.cds.conditional.smoothing");
+        String blackListFileName = config.get("edu.cmu.cs.lti.cds.blacklist");
+        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
+        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
+
 
         String modelSuffix = Joiner.on("_").join(featureNames);
 

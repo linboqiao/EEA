@@ -117,8 +117,8 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
         String clozeFileName = UimaConvenience.getShortDocumentName(aJCas) + ".gz_" + UimaConvenience.getOffsetInSource(aJCas) + clozeExt;
 
-        List<Triple<List<MooneyEventRepre>, Integer, String>> clozeTasks = getAllPoissibleMooneyStyleClozes(clozeFileName);
-//        List<Triple<List<MooneyEventRepre>, Integer, String>> clozeTasks = getPreselectedClozeTask(clozeFileName);
+//        List<Triple<List<MooneyEventRepre>, Integer, String>> clozeTasks = getAllPoissibleMooneyStyleClozes(clozeFileName);
+        List<Triple<List<MooneyEventRepre>, Integer, String>> clozeTasks = getPreselectedClozeTask(clozeFileName);
 
         align.loadWord2Stanford(aJCas);
         align.loadFanse2Stanford(aJCas);
@@ -212,7 +212,6 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
         evalResults = new ArrayList<>();
         evalInfos = new ArrayList<>();
     }
-
 
     protected void logEvalResult(String record) {
         evalResults.add(record);

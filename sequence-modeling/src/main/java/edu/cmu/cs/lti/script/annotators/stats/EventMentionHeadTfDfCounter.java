@@ -8,8 +8,8 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.BasicConvenience;
-import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
+import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TObjectIntMap;
@@ -36,9 +36,11 @@ import java.io.File;
  * Time: 9:06 PM
  */
 public class EventMentionHeadTfDfCounter extends AbstractLoggingAnnotator {
-    public static final String PARAM_DB_NAME = "dbName";
-
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
+
+    public static final String PARAM_PREDICATE_TF_PATH = "predicateTf";
+
+    public static final String PARAM_PREDICATE_DF_PATH = "predicateDf";
 
     TIntIntMap tfCounts = new TIntIntHashMap();
 
@@ -48,12 +50,6 @@ public class EventMentionHeadTfDfCounter extends AbstractLoggingAnnotator {
 
     private int counter = 0;
 
-    public static final String defaultDBName = "predicate";
-
-    public static final String defaultMentionHeadTfMapName = "tf";
-
-    public static final String defaultMentionHeadDfMapName = "df";
-
     private File tfOut;
 
     private File dfOut;
@@ -62,8 +58,6 @@ public class EventMentionHeadTfDfCounter extends AbstractLoggingAnnotator {
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
 
-        String dbName = (String) aContext.getConfigParameterValue(PARAM_DB_NAME);
-        String dbFileName = dbName == null ? defaultDBName : dbName;
         String dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
 
         File dbDir = new File(dbPath);
@@ -71,8 +65,8 @@ public class EventMentionHeadTfDfCounter extends AbstractLoggingAnnotator {
             dbDir.mkdirs();
         }
 
-        tfOut = new File(dbPath, dbFileName + "_" + defaultMentionHeadTfMapName);
-        dfOut = new File(dbPath, dbFileName + "_" + defaultMentionHeadDfMapName);
+        tfOut = new File(dbPath, (String) aContext.getConfigParameterValue(PARAM_PREDICATE_TF_PATH));
+        dfOut = new File(dbPath, (String) aContext.getConfigParameterValue(PARAM_PREDICATE_DF_PATH));
 
         logger.info("Term frequencies will be saved at : " + tfOut.getAbsolutePath());
         logger.info("Document frequencies will be saved at : " + dfOut.getAbsolutePath());
@@ -89,6 +83,7 @@ public class EventMentionHeadTfDfCounter extends AbstractLoggingAnnotator {
         }
 
         align.loadWord2Stanford(aJCas);
+        align.loadFanse2Stanford(aJCas);
 
         TObjectIntMap<String> localTfCounts = new TObjectIntHashMap<>();
         TObjectIntMap<String> localDfCounts = new TObjectIntHashMap<>();
@@ -150,6 +145,8 @@ public class EventMentionHeadTfDfCounter extends AbstractLoggingAnnotator {
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath");
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
+        String predicateTfName = config.get("edu.cmu.cs.lti.cds.db.predicate.tf");
+        String predicateDfName = config.get("edu.cmu.cs.lti.cds.db.predicate.df");
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -167,7 +164,9 @@ public class EventMentionHeadTfDfCounter extends AbstractLoggingAnnotator {
         AnalysisEngineDescription headTfDfCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionHeadTfDfCounter.class, typeSystemDescription,
                 EventMentionHeadTfDfCounter.PARAM_DB_DIR_PATH, dbPath,
-                EventMentionHeadTfDfCounter.PARAM_KEEP_QUIET, false);
+                EventMentionHeadTfDfCounter.PARAM_KEEP_QUIET, false,
+                EventMentionHeadTfDfCounter.PARAM_PREDICATE_DF_PATH, predicateDfName,
+                EventMentionHeadTfDfCounter.PARAM_PREDICATE_TF_PATH, predicateTfName);
 
         SimplePipeline.runPipeline(reader, headTfDfCounter);
         System.out.println(className + " completed.");

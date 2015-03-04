@@ -53,8 +53,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
 
     public static final String PARAM_SKIP_BIGRAM_N = "skippedBigramN";
 
-//    public static final String PARAM_HEAD_COUNT_DB_NAMES = "headCountDbName";
-
     public static final String PARAM_IGNORE_LOW_FREQ = "ignoreLowFreq";
 
     private TObjectIntMap<String> headIdMap = new TObjectIntHashMap<>();
@@ -62,10 +60,6 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
     private TObjectIntMap<TIntList> cooccCounts = new TObjectIntHashMap<>();
 
     private TObjectIntMap<TIntList> occCounts = new TObjectIntHashMap<>();
-
-//    private Map<String, Fun.Tuple2<Integer, Integer>> headTfDfMap;
-
-//    private Map<String, Fun.Tuple2<Integer, Integer>>[] headTfDfMaps;
 
     private int skippedBigramN;
 
@@ -368,11 +362,11 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
         int skipGramN = config.getInt("edu.cmu.cs.lti.cds.mooney.skipgram.n");
 
-
         DataPool.readBlackList(new File(blackListFile));
 
         if (ignoreLowFreq) {
-            DataPool.loadHeadStatistics(config, false);
+            String predicateTfName = config.get("edu.cmu.cs.lti.cds.db.predicate.tf");
+            DataPool.loadEventHeadTfMap(dbPath, predicateTfName);
         }
 
         String paramTypeSystemDescriptor = "TypeSystem";

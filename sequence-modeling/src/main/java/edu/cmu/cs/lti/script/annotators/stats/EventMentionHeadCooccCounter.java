@@ -7,9 +7,9 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.BasicConvenience;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import gnu.trove.iterator.TLongIntIterator;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TLongIntMap;
@@ -41,15 +41,11 @@ import java.util.List;
  */
 public class EventMentionHeadCooccCounter extends AbstractLoggingAnnotator {
 
-    public static final String PARAM_DB_NAME = "dbName";
+    public static final String PARAM_COOCC_NAME = "cooccName";
 
     private TLongLongMap eventPairCount = new TLongLongHashMap();
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
-
-    public static final String defaultDBName = "predicate";
-
-    public static final String defaultMentionPairCountName = "coocc";
 
     private int counter = 0;
 
@@ -57,17 +53,15 @@ public class EventMentionHeadCooccCounter extends AbstractLoggingAnnotator {
 
     private String dbPath;
 
-    private String dbFileName;
+    private String cooccFileName;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
 
-        String dbName = (String) aContext.getConfigParameterValue(PARAM_DB_NAME);
-        dbFileName = dbName == null ? defaultDBName : dbName;
+        String cooccFileName = (String) aContext.getConfigParameterValue(PARAM_COOCC_NAME);
 
         dbPath = (String) aContext.getConfigParameterValue(PARAM_DB_DIR_PATH);
-
         File dbParentPath = new File(dbPath);
 
         if (!dbParentPath.isDirectory()) {
@@ -121,7 +115,7 @@ public class EventMentionHeadCooccCounter extends AbstractLoggingAnnotator {
         logger.info("Total pairs " + eventPairCount.size());
 
         try {
-            SerializationHelper.write(new File(dbPath, dbFileName + "_" + defaultMentionPairCountName).getAbsolutePath(), eventPairCount);
+            SerializationHelper.write(new File(dbPath, cooccFileName).getAbsolutePath(), eventPairCount);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -142,6 +136,7 @@ public class EventMentionHeadCooccCounter extends AbstractLoggingAnnotator {
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath");
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
+        String cooccName = config.get("edu.cmu.cs.lti.cds.db.predicte.pair.count");
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -159,6 +154,7 @@ public class EventMentionHeadCooccCounter extends AbstractLoggingAnnotator {
         AnalysisEngineDescription evmCooccCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionHeadCooccCounter.class, typeSystemDescription,
                 EventMentionHeadCooccCounter.PARAM_DB_DIR_PATH, dbPath,
+                EventMentionHeadCooccCounter.PARAM_COOCC_NAME, cooccName,
                 EventMentionHeadCooccCounter.PARAM_KEEP_QUIET, false);
 
 

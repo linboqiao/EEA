@@ -34,15 +34,7 @@ public class MultiArgumentClozeTestRunner {
 //    public static String outputPath;
 //    public static int[] recallCounts;
 
-    /**
-     * @param args
-     * @throws java.io.IOException
-     * @throws org.apache.uima.UIMAException
-     */
-    public static void main(String[] args) throws Exception {
-        logger.info(className + " started...");
-        Configuration config = new Configuration(new File(args[0]));
-
+    public static void test(Configuration config) throws Exception {
         String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.heldout.path"); //"data/02_event_tuples";
         String clozePath = config.get("edu.cmu.cs.lti.cds.cloze.path"); // "cloze"
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath");
@@ -133,5 +125,16 @@ public class MultiArgumentClozeTestRunner {
 
             SimplePipeline.runPipeline(reader, conditionalProbabilityPredictor);
         }
+    }
+
+    /**
+     * @param args
+     * @throws java.io.IOException
+     * @throws org.apache.uima.UIMAException
+     */
+    public static void main(String[] args) throws Exception {
+        logger.info(className + " started...");
+        Configuration config = new Configuration(new File(args[0]));
+        test(config);
     }
 }

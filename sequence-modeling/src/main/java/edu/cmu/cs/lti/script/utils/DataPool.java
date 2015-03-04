@@ -71,30 +71,41 @@ public class DataPool {
     }
 
     public static void loadHeadStatistics(Configuration config, boolean loadPairCount) throws Exception {
+        loadHeadIds(config, loadPairCount);
+        loadHeadCounts(config);
+    }
+
+    public static void loadHeadIds(Configuration config, boolean loadPairCount) throws Exception {
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath");
         String dbName = config.getList("edu.cmu.cs.lti.cds.db.basenames")[0];
         String headIdMapName = KarlMooneyScriptCounter.defaltHeadIdMapName;
-        String headCountMapName = config.get("edu.cmu.cs.lti.cds.db.predicate.count");
 
         //id to head word
         loadHeadIds(dbPath, dbName, headIdMapName);
         // word to id
         headWords = new String[headIdMap.size()];
 
-        loadEventHeadTfMap(dbPath, headCountMapName);
         for (TObjectIntIterator<String> iter = headIdMap.iterator(); iter.hasNext(); ) {
             iter.advance();
-            predicateTotalCount += getPredicateFreq(iter.value());
             headWords[iter.value()] = iter.key();
         }
-
-        System.err.println(String.format("Total predicate counts: %d", predicateTotalCount));
 
         if (loadPairCount) {
             System.err.println("Loading pair counts, may take a while.");
             String headPairCountMapName = config.get("edu.cmu.cs.lti.cds.db.predicte.pair.count");
             loadEventHeadPairMap(dbPath, headPairCountMapName);
         }
+    }
+
+    public static void loadHeadCounts(Configuration config) throws Exception {
+        String headCountMapName = config.get("edu.cmu.cs.lti.cds.db.predicate.tf");
+        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath");
+        loadEventHeadTfMap(dbPath, headCountMapName);
+        for (TObjectIntIterator<String> iter = headIdMap.iterator(); iter.hasNext(); ) {
+            iter.advance();
+            predicateTotalCount += getPredicateFreq(iter.value());
+        }
+        System.err.println(String.format("Total predicate counts: %d", predicateTotalCount));
     }
 
     public static void loadHeadIds(String dbPath, String dbName, String headIdMapName) throws Exception {
