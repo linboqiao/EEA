@@ -28,7 +28,6 @@ public class EventMentionTester {
 
         String realisModelName = args[3];
 
-
         String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
         String paramTypeSystemDescriptor = "TypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
@@ -48,7 +47,7 @@ public class EventMentionTester {
 //        CollectionReaderDescription dev_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, "dev_data", 1, false);
 //        CollectionReaderDescription test_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, "test_data", 1, false);
 
-        AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription mention = CustomAnalysisEngineFactory.createAnalysisEngine(
                 EventMentionCandidateFeatureGenerator.class, typeSystemDescription,
                 EventMentionCandidateFeatureGenerator.PARAM_SEM_LINK_DIR, semLinkDataPath,
                 EventMentionCandidateFeatureGenerator.PARAM_IS_TRAINING, false,
@@ -82,14 +81,16 @@ public class EventMentionTester {
 //
 //        AnalysisEngineDescription testOutputPrediction = CustomAnalysisEngineFactory.createXmiWriter(paramInputDir, "test_predicted", 2, null);
 
-//        SimplePipeline.runPipeline(dev_reader, ana, realis, devResults, devOutputPrediction);
+//        SimplePipeline.runPipeline(dev_reader, mention, realis, devResults, devOutputPrediction);
 //
-//        SimplePipeline.runPipeline(test_reader, ana, realis, testResults, testOutputPrediction);
+//        SimplePipeline.runPipeline(test_reader, mention, realis, testResults, testOutputPrediction);
 
         AnalysisEngineDescription finalResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
                 EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/CMU-TWO-STEP.tbf");
-        AnalysisEngineDescription finalOutputPrediction = CustomAnalysisEngineFactory.createXmiWriter(paramInputDir + "/test", "final_predicted", 2, null);
-        SimplePipeline.runPipeline(final_reader, ana, realis, finalResults, finalOutputPrediction);
+
+//        AnalysisEngineDescription finalOutputPrediction = CustomAnalysisEngineFactory.createXmiWriter(paramInputDir + "/test", "final_predicted", 2, null);
+
+        SimplePipeline.runPipeline(final_reader, mention, realis, finalResults);
 
         System.err.println(className + " finished");
     }

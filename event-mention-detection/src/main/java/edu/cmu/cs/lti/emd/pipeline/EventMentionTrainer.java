@@ -217,7 +217,7 @@ public class EventMentionTrainer {
                              String parentInput,
                              String modelBaseDir,
                              String trainingBaseDir,
-                             String[] devBaseDirs,
+                             String[] testBaseDirs,
                              String semLinkDataPath,
                              String bwClusterPath,
                              String wordnetDataPath) throws Exception {
@@ -241,7 +241,7 @@ public class EventMentionTrainer {
 
         System.out.println("Preparing dev datasets");
         List<Instances> testSets = new ArrayList<>();
-        for (String devBaseDir : devBaseDirs) {
+        for (String devBaseDir : testBaseDirs) {
             generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1,
                     semLinkDataPath, bwClusterPath, wordnetDataPath, false, modelOutputDir.getCanonicalPath(), true);
             List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionCandidateFeatureGenerator.featuresAndClass;
@@ -263,13 +263,13 @@ public class EventMentionTrainer {
         String trainingBaseDir = args[0];//"train_data";
         String modelBasePath = args[1]; //"models";
 
-        String[] devBaseDir = {"dev_data", "test_data"};
+        String[] testBaseDirs = {"dev_data", "test_data"};
 
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
         EventMentionTrainer trainer = new EventMentionTrainer();
-        trainer.buildModels(typeSystemDescription, paramInputDir, modelBasePath, trainingBaseDir, devBaseDir, semLinkDataPath, brownClusteringDataPath, wordnetDataPath);
+        trainer.buildModels(typeSystemDescription, paramInputDir, modelBasePath, trainingBaseDir, testBaseDirs, semLinkDataPath, brownClusteringDataPath, wordnetDataPath);
 
         System.out.println(className + " finished...");
     }

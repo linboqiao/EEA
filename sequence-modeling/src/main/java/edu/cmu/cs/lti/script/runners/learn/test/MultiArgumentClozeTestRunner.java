@@ -30,10 +30,6 @@ public class MultiArgumentClozeTestRunner {
 
     private static Logger logger = Logger.getLogger(className);
 
-//    public static List<Integer> allK;
-//    public static String outputPath;
-//    public static int[] recallCounts;
-
     public static void test(Configuration config) throws Exception {
         String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.heldout.path"); //"data/02_event_tuples";
         String clozePath = config.get("edu.cmu.cs.lti.cds.cloze.path"); // "cloze"
@@ -73,13 +69,11 @@ public class MultiArgumentClozeTestRunner {
 
         if (methods.contains("loglinear")) {
             String[] modelPaths = config.getList("edu.cmu.cs.lti.cds.loglinear.model");
-            String modelPathBase = config.get("edu.cmu.cs.lti.cds.perceptron.model.path");
             String semLinkPath = config.get("edu.cmu.cs.lti.cds.db.semlink.path");
 
             DataPool.loadSemLinkData(semLinkPath);
 
             for (String modelPath : modelPaths) {
-//                String[] featureNames = modelPath.replaceAll("^" + modelPathBase + "_", "").replaceAll("_\\d.ser$", "").split("_");
                 String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
                 //make complete class name
                 for (int i = 0; i < featureNames.length; i++) {

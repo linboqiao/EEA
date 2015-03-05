@@ -428,18 +428,10 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         int topRankToOptimize = config.getInt("edu.cmu.cs.lti.cds.perceptron.top.rank.optimize");
         int rankListSize = config.getInt("edu.cmu.cs.lti.cds.perceptron.ranklist.size");
 
-//        boolean guided = config.getBoolean("edu.cmu.cs.lti.cds.perceptron.guided");
-        float smoothingParameter = config.getInt("edu.cmu.cs.lti.cds.conditional.smoothing");
         String blackListFileName = config.get("edu.cmu.cs.lti.cds.blacklist");
-        String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
-        String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
 
 
         String modelSuffix = Joiner.on("_").join(featureNames);
-//
-//        if (guided) {
-//            modelSuffix = "guided_" + topRankToOptimize + "_" + modelSuffix;
-//        }
 
         logger.info("Model will be stored with suffix : " + modelSuffix);
 
@@ -455,8 +447,6 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         logger.info("Loading data.");
         DataPool.loadHeadStatistics(config, false);
         DataPool.readBlackList(new File(blackListFileName));
-//        DataPool.loadKmCooccMap(dbPath, dbNames[0], KarlMooneyScriptCounter.defaultCooccMapName);
-//        DataPool.loadEventUnigramCounts(config);
         DataPool.loadSemLinkData(semLinkPath);
         logger.info("Finish data loading.");
 
