@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.emd.pipeline;
 
 import com.google.common.collect.BiMap;
-import edu.cmu.cs.lti.emd.annotators.EventMentionRealisFeatureGenerator;
+import edu.cmu.cs.lti.emd.annotators.EventMentionRealisLearner;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import gnu.trove.iterator.TIntDoubleIterator;
@@ -172,13 +172,13 @@ public class RealisTrainer {
                                   boolean isTraining, String modelDir, boolean keep_quite) throws UIMAException, IOException {
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(inputDir, baseInputDirName, stepNum, false);
         AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
-                EventMentionRealisFeatureGenerator.class, typeSystemDescription,
-                EventMentionRealisFeatureGenerator.PARAM_SEM_LINK_DIR, semLinkDataPath,
-                EventMentionRealisFeatureGenerator.PARAM_IS_TRAINING, isTraining,
-                EventMentionRealisFeatureGenerator.PARAM_ONLINE_TEST, false,
-                EventMentionRealisFeatureGenerator.PARAM_MODEL_FOLDER, modelDir,
-                EventMentionRealisFeatureGenerator.PARAM_BROWN_CLUSTERING_PATH, bwClusterPath,
-                EventMentionRealisFeatureGenerator.PARAM_KEEP_QUIET, keep_quite
+                EventMentionRealisLearner.class, typeSystemDescription,
+                EventMentionRealisLearner.PARAM_SEM_LINK_DIR, semLinkDataPath,
+                EventMentionRealisLearner.PARAM_IS_TRAINING, isTraining,
+                EventMentionRealisLearner.PARAM_ONLINE_TEST, false,
+                EventMentionRealisLearner.PARAM_MODEL_FOLDER, modelDir,
+                EventMentionRealisLearner.PARAM_BROWN_CLUSTERING_PATH, bwClusterPath,
+                EventMentionRealisLearner.PARAM_KEEP_QUIET, keep_quite
         );
         SimplePipeline.runPipeline(reader, ana);
     }
@@ -199,9 +199,9 @@ public class RealisTrainer {
 
         System.out.println("Preparing training dataset");
         generateFeatures(typeSystemDescription, parentInput, trainingBaseDir, 1, semLinkDataPath, bwClusterPath, wordnetDataPath, true, null, true);
-        BiMap<String, Integer> featureNameMap = EventMentionRealisFeatureGenerator.featureNameMap;
-        List<Pair<TIntDoubleMap, String>> trainingFeatures = EventMentionRealisFeatureGenerator.featuresAndClass;
-        ArrayList<String> allClasses = new ArrayList<>(EventMentionRealisFeatureGenerator.allTypes);
+        BiMap<String, Integer> featureNameMap = EventMentionRealisLearner.featureNameMap;
+        List<Pair<TIntDoubleMap, String>> trainingFeatures = EventMentionRealisLearner.featuresAndClass;
+        ArrayList<String> allClasses = new ArrayList<>(EventMentionRealisLearner.allTypes);
         configFeatures(featureNameMap, allClasses, modelOutputDir);
 
         Instances trainingDataset = prepareDataSet(trainingFeatures, new File(modelOutputDir, "training.arff").getCanonicalPath());
@@ -215,7 +215,7 @@ public class RealisTrainer {
         for (String devBaseDir : devBaseDirs) {
             generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1,
                     semLinkDataPath, bwClusterPath, wordnetDataPath, false, modelOutputDir.getCanonicalPath(), true);
-            List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionRealisFeatureGenerator.featuresAndClass;
+            List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionRealisLearner.featuresAndClass;
             Instances devDataset = prepareDataSet(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath());
             testSets.add(devDataset);
             System.out.println("Number of dev instances : " + devFeatures.size());

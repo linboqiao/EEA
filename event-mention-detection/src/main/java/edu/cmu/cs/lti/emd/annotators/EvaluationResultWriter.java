@@ -41,7 +41,7 @@ public class EvaluationResultWriter extends AbstractSimpleTextWriterAnalsysisEng
 
         int eventId = 1;
         for (CandidateEventMention candidate : JCasUtil.select(aJCas, CandidateEventMention.class)) {
-            if (candidate.getPredictedType() != null && !candidate.getPredictedType().equals(EventMentionCandidateFeatureGenerator.OTHER_TYPE)) {
+            if (candidate.getPredictedType() != null && !candidate.getPredictedType().equals(EventMentionTypeLearner.OTHER_TYPE)) {
                 List<String> parts = new ArrayList<>();
                 parts.add(SYSTEM_ID);
                 parts.add(articleName);

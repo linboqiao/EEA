@@ -2,14 +2,14 @@ package edu.cmu.cs.lti.emd.annotators;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.Iterables;
 import edu.cmu.cs.lti.collection_reader.EventMentionDetectionDataReader;
 import edu.cmu.cs.lti.emd.pipeline.EventMentionTrainer;
 import edu.cmu.cs.lti.ling.FrameDataReader;
-import edu.cmu.cs.lti.ling.WordNetSearcher;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import gnu.trove.iterator.TIntDoubleIterator;
 import gnu.trove.map.TIntDoubleMap;
 import gnu.trove.map.hash.TIntDoubleHashMap;
@@ -40,7 +40,7 @@ import java.util.*;
  * Date: 1/27/15
  * Time: 12:03 PM
  */
-public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnotator {
+public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
 
     public static final String PARAM_SEM_LINK_DIR = "semLinkDir";
 
@@ -56,8 +56,6 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     public static final String PARAM_BROWN_CLUSTERING_PATH = "brownClusteringPath";
 
-    public static final String PARAM_WORDNET_PATH = "wordNetPath";
-
     public static BiMap<String, Integer> featureNameMap;
 
     public static List<Pair<TIntDoubleMap, String>> featuresAndClass;
@@ -66,16 +64,11 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     private double[] emptyVector;
 
-    private WordNetSearcher wns;
-
     @ConfigurationParameter(name = PARAM_BROWN_CLUSTERING_PATH)
     String brownClusteringPath;
 
     @ConfigurationParameter(name = PARAM_SEM_LINK_DIR)
     String semLinkDirPath;
-
-    @ConfigurationParameter(name = PARAM_WORDNET_PATH)
-    private String wnDictPath;
 
     @ConfigurationParameter(name = PARAM_ONLINE_TEST)
     boolean isOnlineTest;
@@ -92,8 +85,8 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     @ConfigurationParameter(name = PARAM_TRAINING_DATASET_PATH, mandatory = false)
     String trainingDataSetPath;
 
-    //TODO not used
     Map<String, String> vn2Fn;
+
     Map<String, String> pb2Vn;
 
     TokenAlignmentHelper align = new TokenAlignmentHelper();
@@ -114,10 +107,6 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
     private int numDocuments = 0;
 
-    private String[] injuryRelatedSenses = {"body_part"};
-    private String[] physicalSense = {"artifact", "whole", "component"};
-    private String[] intangibleAssets = {"possession", "transferred_property", "liabilities", "assets"};
-
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
@@ -128,17 +117,8 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        try {
-            logger.info("Loading wordnet dictionary");
-            wns = new WordNetSearcher(wnDictPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         allTypes = new HashSet<>();
-        allTypes.add(OTHER_TYPE);
+//        allTypes.add(OTHER_TYPE);
         featuresAndClass = new ArrayList<>();
 
         if (isTraining) {
@@ -157,7 +137,6 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
     }
 
     private void readBrownCluster() throws IOException {
-        logger.info("Loading Brown clusters");
         brownClusters = new HashMap<>();
         for (String line : FileUtils.readLines(new File(brownClusteringPath))) {
             String[] parts = line.split("\t");
@@ -200,61 +179,51 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         numDocuments++;
         align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
         align.loadFanse2Stanford(aJCas);
+
+        Map<StanfordCorenlpToken, Collection<Sentence>> token2Sentences =
+                JCasUtil.indexCovering(aJCas, StanfordCorenlpToken.class, Sentence.class);
+
         for (CandidateEventMention candidateEventMention : JCasUtil.select(aJCas, CandidateEventMention.class)) {
-            String goldType = candidateEventMention.getGoldStandardMentionType();
+//            String goldType = candidateEventMention.getGoldStandardMentionType();
+            if (candidateEventMention.getGoldStandardMentionType() == null) {
+                continue;
+            }
+
+            String goldRealis = candidateEventMention.getGoldRealis();
+
             TIntDoubleMap features = new TIntDoubleHashMap();
             StanfordCorenlpToken candidateHead = candidateEventMention.getHeadWord();
+
+            if (isTraining) {
+                addFeature("MentionType_" + candidateEventMention.getGoldStandardMentionType(), 1, features);
+            } else {
+                addFeature("MentionType_" + candidateEventMention.getPredictedType(), 1, features);
+            }
 
             addHeadWordFeatures(candidateHead, features);
             addSurroundingWordFeatures(candidateHead, 2, features);
             addFrameFeatures(candidateEventMention, features);
 
+
             if (isOnlineTest) {
                 try {
                     Pair<Double, String> prediction = predict(features);
-                    String predictedType = prediction.getValue1();
+                    String realisPrediction = prediction.getValue1();
                     double predictionConfidence = prediction.getValue0();
-                    candidateEventMention.setPredictedType(predictedType);
-                    candidateEventMention.setTypePredictionConfidence(predictionConfidence);
+                    candidateEventMention.setPredictedRealis(realisPrediction);
 
-                    if (!predictedType.equals(OTHER_TYPE)) {
-                        CandidateEventMention annotateMention =
-                                new CandidateEventMention(goldView, candidateEventMention.getBegin(), candidateEventMention.getEnd());
-                        annotateMention.setPredictedType(predictedType);
-                        annotateMention.setTypePredictionConfidence(predictionConfidence);
-                        annotateMention.addToIndexes();
-                    }
-
-//                    if (goldType != null && goldType.equals("Transaction_Transfer-Ownership")) {
-//                        System.err.println(goldType + " " + predictedType);
-//                        System.err.println(candidateEventMention.getCoveredText());
-//                        dumpFeature(features);
-//                        edu.cmu.cs.lti.utils.Utils.pause();
-//                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.exit(1);
                 }
             } else {
-                if (goldType != null) {
-                    featuresAndClass.add(Pair.with(features, goldType));
+                if (goldRealis != null) {
+                    featuresAndClass.add(Pair.with(features, goldRealis));
                     if (isTraining) {
-                        allTypes.add(goldType);
-//                        if (goldType.equals("Transaction_Transfer-Ownership")) {
-//                            dumpFeature(features);
-//                        }
+                        allTypes.add(goldRealis);
                     }
-                } else {
-                    featuresAndClass.add(Pair.with(features, OTHER_TYPE));
                 }
             }
-        }
-    }
-
-    private void dumpFeature(TIntDoubleMap features) {
-        for (TIntDoubleIterator iter = features.iterator(); iter.hasNext(); ) {
-            iter.advance();
-            System.err.println(String.format("%s", featureNameMap.inverse().get(iter.key())));
         }
     }
 
@@ -270,26 +239,19 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         }
 
         Pair<Double, String> currentBest = rankList.poll();
-        Pair<Double, String> secondBest = rankList.poll();
-        Pair<Double, String> thirdBest = rankList.poll();
 
+        if (currentBest.getValue1().equals(OTHER_TYPE) && currentBest.getValue0() < 0.8) {
+            Pair<Double, String> secondBest = rankList.poll();
+            Pair<Double, String> thirdBest = rankList.poll();
 
-//            System.err.println("Current Best" + currentBest);
-//            System.err.println("Second Best" + secondBest);
-//            System.err.println("Third Best" + thirdBest);
-
-
-        return currentBest;
-
-//        if (currentBest.getValue1().equals(OTHER_TYPE) && currentBest.getValue0() < 0.8) {
-//            if (secondBest.getValue0() > thirdBest.getValue0() * 2) {
-//                return secondBest;
-//            } else {
-//                return currentBest;
-//            }
-//        } else {
-//            return currentBest;
-//        }
+            if (secondBest.getValue0() > thirdBest.getValue0() * 2) {
+                return secondBest;
+            } else {
+                return currentBest;
+            }
+        } else {
+            return currentBest;
+        }
 
 
 //        for (int i = 0; i < 5; i++) {
@@ -316,18 +278,33 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         return instance;
     }
 
+    private void addSentenceWordFeatures(StanfordCorenlpToken triggerWord,
+                                         TIntDoubleMap features,
+                                         Map<StanfordCorenlpToken, Collection<Sentence>> token2Sentences) {
+        Sentence sent = Iterables.get(token2Sentences.get(triggerWord), 0);
+        for (Word word : JCasUtil.selectCovered(Word.class, sent)) {
+            if (word.getPos().equals("IN")) {
+                addFeature("SentenceWord_" + word.getLemma(), features);
+            }
+        }
+    }
+
     private void addHeadWordFeatures(StanfordCorenlpToken triggerWord, TIntDoubleMap features) {
         String lemma = triggerWord.getLemma().toLowerCase();
 
         addFeature("TriggerHeadLemma_" + lemma, features);
         addFeature("HeadPOS_" + triggerWord.getPos(), features);
 
+        if (triggerWord.getPos().equals("VBN")) {
+            addFeature("HeadWordIsPastTense", features);
+        }
+
         if (brownClusters.containsKey(lemma)) {
             addFeature("HeadWordLemmaBrownCluster_" + brownClusters.get(lemma), features);
         }
 
         if (brownClusters.containsKey(triggerWord.getCoveredText())) {
-            addFeature("HeadWordSurfaceBrownCluster_" + brownClusters.get(triggerWord.getCoveredText()), features);
+            addFeature("HeadWordSurfaceBrownCluster_" + brownClusters.get(lemma), features);
         }
 
         if (triggerWord.getNerTag() != null) {
@@ -338,34 +315,8 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
             for (Dependency dep : FSCollectionFactory.create(triggerWord.getHeadDependencyRelations(), Dependency.class)) {
 //                addFeature("HeadDepType_" + dep.getDependencyType(), features);
 //                addFeature("HeadDepLemma_" + dep.getHead().getLemma(), features);
-                String headLemma = dep.getHead().getLemma();
-                String headSurface = dep.getHead().getCoveredText();
-
-                addFeature("HeadDepLemma_" + dep.getDependencyType() + "_" + headLemma, features);
                 if (dep.getHead().getNerTag() != null) {
-                    addFeature("HeadDepNer_" + dep.getDependencyType() + "_" + dep.getHead().getNerTag(), features);
-                }
-
-                addFeature("HeadDepPos_" + dep.getDependencyType() + "_" + dep.getHead().getPos(), features);
-
-                if (brownClusters.containsKey(headLemma)) {
-                    addFeature("HeadDepLemmaBrownCluster_" + brownClusters.get(headLemma), features);
-                }
-
-                if (brownClusters.containsKey(headSurface)) {
-                    addFeature("HeadDepSurfaceBrownCluster_" + brownClusters.get(headSurface), features);
-                }
-
-                for (String superType : getInterestingSupertype(headLemma.toLowerCase())) {
-                    String superTypeWordFeatupre = "HeadDepLemmaSuperType_" + superType +
-                            "_get_" + triggerWord.getLemma().toLowerCase();
-                    String superTypeDepWordFeature = "HeadDepLemmaSuperType_" + superType + "_" +
-                            dep.getDependencyType() + "_" + triggerWord.getLemma().toLowerCase();
-
-                    addFeature("HeadDepLemmaSuperType_" + superType, features);
-                    addFeature(superTypeDepWordFeature, features);
-                    addFeature(superTypeWordFeatupre, features);
-
+                    addFeature("HeadDep_" + dep.getDependencyType() + "_" + dep.getHead().getLemma(), features);
                 }
             }
         }
@@ -374,49 +325,12 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
             for (Dependency dep : FSCollectionFactory.create(triggerWord.getChildDependencyRelations(), Dependency.class)) {
 //                addFeature("ChildDepType_" + dep.getDependencyType(), features);
 //                addFeature("ChildDepLemma_" + dep.getChild().getLemma(), features);
-
-                String childLemma = dep.getChild().getLemma();
-                String childSurface = dep.getChild().getCoveredText();
-
-                addFeature("ChildDepLemma_" + dep.getDependencyType() + "_" + childLemma, features);
+                addFeature("ChildDep_" + dep.getDependencyType() + "_" + dep.getChild().getLemma(), features);
                 if (dep.getChild().getNerTag() != null) {
                     addFeature("ChildDepNer_" + dep.getDependencyType() + "_" + dep.getChild().getNerTag(), features);
                 }
-
-                addFeature("ChildDepPos_" + dep.getDependencyType() + "_" + dep.getChild().getPos(), features);
-
-                if (brownClusters.containsKey(childLemma)) {
-                    addFeature("ChildDepLemmaBrownCluster_" + brownClusters.get(childLemma), features);
-                }
-
-                if (brownClusters.containsKey(childSurface)) {
-                    addFeature("ChildDepSurfaceBrownCluster_" + brownClusters.get(childSurface), features);
-                }
-
-                for (String superType : getInterestingSupertype(childLemma.toLowerCase())) {
-                    String superTypeFeature = "ChildDepLemmaSuperType_" + superType;
-                    String superTypeAndWordFeature = "ChildDepLemmaSuperType_" + superType + "_get_" + triggerWord.getLemma().toLowerCase();
-                    String superTypeDepWordFeature = "ChildDepLemmaSuperType_" + superType + "_" +
-                            dep.getDependencyType() + "_" + triggerWord.getLemma().toLowerCase();
-
-                    addFeature(superTypeFeature, features);
-                    addFeature(superTypeAndWordFeature, features);
-                    addFeature(superTypeDepWordFeature, features);
-                }
             }
         }
-    }
-
-    private List<String> getInterestingSupertype(String word) {
-        List<String> interestTypes = new ArrayList<>();
-        for (String interestingWordType : injuryRelatedSenses) {
-            for (Set<String> hypernyms : wns.getAllHypernymsForAllSense(word)) {
-                if (hypernyms.contains(interestingWordType)) {
-                    interestTypes.add(interestingWordType);
-                }
-            }
-        }
-        return interestTypes;
     }
 
     private void addSurroundingWordFeatures(Word word, int windowSize, TIntDoubleMap features) {
@@ -424,10 +338,10 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         int leftLimit = centerId - windowSize > 0 ? centerId - windowSize : 0;
         int rightLimit = centerId + windowSize < allWords.size() - 1 ? centerId + windowSize : allWords.size() - 1;
         for (int i = centerId; i >= leftLimit; i--) {
-            addWindowWordFeature(allWords.get(i), features);
+            addWordFeature(allWords.get(i), features);
         }
         for (int i = centerId; i <= rightLimit; i++) {
-            addWindowWordFeature(allWords.get(i), features);
+            addWordFeature(allWords.get(i), features);
         }
     }
 
@@ -448,19 +362,11 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
         }
     }
 
-    private void addWindowWordFeature(StanfordCorenlpToken word, TIntDoubleMap features) {
-//        addFeature("WindowPOS_" + word.getPos(), features);
-
-        if (!word.getPos().equals(".") && !word.getPos().equals(",") && !word.getPos().equals(":")) {
-            addFeature("WindowLemma_" + word.getLemma(), features);
-        }
-
+    private void addWordFeature(StanfordCorenlpToken word, TIntDoubleMap features) {
+        addFeature("WindowPOS_" + word.getPos(), features);
+        addFeature("WindowLemma_" + word.getLemma(), features);
         if (word.getNerTag() != null) {
             addFeature("WindowNer_" + word.getNerTag(), features);
-        }
-
-        for (String wordType : getInterestingSupertype(word.getLemma().toLowerCase())) {
-            addFeature("WindowSuperType_" + wordType, features);
         }
     }
 
@@ -475,36 +381,15 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
 
         FSList argumentFs = mention.getArguments();
         if (argumentFs != null) {
-            boolean allHuman = true;
             for (CandidateEventMentionArgument argument : FSCollectionFactory.create(argumentFs, CandidateEventMentionArgument.class)) {
                 StanfordCorenlpToken argumentHeadWord = argument.getHeadWord();
                 addFeature("FrameArgument_" + argumentHeadWord.getLemma().toLowerCase(), 1.0, features);
-
-                addFeature("SubPhrase_" + mention.getHeadWord().getLemma().toLowerCase() + "_" + argumentHeadWord.getLemma().toLowerCase(), 1.0, features);
-
-                addFeature("FrameArgumentRole_" + argument.getRoleName(), features);
-
-                int objectStatus = isPhysicalArtifacts(argumentHeadWord.getLemma().toLowerCase());
-
-                if (objectStatus == 1) {
-                    addFeature("FrameArgument_isPhysical", features);
-                } else if (objectStatus == -1) {
-                    addFeature("FrameArgument_isIntangible", features);
-                }
-
-                if (isHumanProunoun(argumentHeadWord)) {
-                    addFeature("FrameArgument_isHuman", features);
-                    addFeature("FrameArgument_isHuman_" + argument.getRoleName(), features);
-                }
-
                 if (brownClusters.containsKey(argumentHeadWord.getLemma())) {
                     addFeature("FrameArgumentBrownCluster_" + brownClusters.get(argumentHeadWord.getLemma()), 1.0, features);
                 }
                 if (argumentHeadWord.getNerTag() != null) {
                     addFeature("FrameArgumentHeadNer_" + argumentHeadWord.getNerTag(), 1.0, features);
                 }
-
-                addFeature("FrameArgument_POS_" + argumentHeadWord.getPos(), 1.0, features);
 
                 for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, argument)) {
                     if (token.getNerTag() != null) {
@@ -513,30 +398,6 @@ public class EventMentionCandidateFeatureGenerator extends AbstractLoggingAnnota
                 }
             }
         }
-    }
-
-    private int isPhysicalArtifacts(String word) {
-        for (Set<String> hypernyms : wns.getAllHypernymsForAllSense(word)) {
-            for (String intangible : intangibleAssets) {
-                if (hypernyms.contains(intangible)) {
-                    return -1;
-                }
-            }
-
-            for (String physical : physicalSense) {
-                if (hypernyms.contains(physical)) {
-                    return 1;
-                }
-            }
-        }
-        return 0;
-    }
-
-    private boolean isHumanProunoun(StanfordCorenlpToken token) {
-        if (token.getPos().equals("PPS") && !token.getLemma().equals("it")) {
-            return true;
-        }
-        return false;
     }
 
     private int getFeatureId(String featureName) {
