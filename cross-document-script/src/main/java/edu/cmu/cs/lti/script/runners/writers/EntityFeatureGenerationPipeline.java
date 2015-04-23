@@ -7,13 +7,13 @@ import edu.cmu.cs.lti.script.annotators.writers.EntityFeatureExtractor;
 import edu.cmu.cs.lti.script.annotators.writers.EventEntityLinkProducer;
 import edu.cmu.cs.lti.script.annotators.writers.EventFeatureExtractor;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.IOException;
 
@@ -56,26 +56,26 @@ public class EntityFeatureGenerationPipeline {
                 CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
 
 
-        AnalysisEngineDescription entityFeatureWriter = CustomAnalysisEngineFactory
-                .createAnalysisEngine(EntityFeatureExtractor.class, typeSystemDescription,
-                        EntityFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, "entity_features",
-                        EntityFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-                        EntityFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                        EntityFeatureExtractor.PARAM_STEP_NUMBER, stepNum);
+        AnalysisEngineDescription entityFeatureWriter = AnalysisEngineFactory.createEngineDescription(
+                EntityFeatureExtractor.class, typeSystemDescription,
+                EntityFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, "entity_features",
+                EntityFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
+                EntityFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
+                EntityFeatureExtractor.PARAM_STEP_NUMBER, stepNum);
 
-        AnalysisEngineDescription eventFeatureWriter = CustomAnalysisEngineFactory
-                .createAnalysisEngine(EventFeatureExtractor.class, typeSystemDescription,
-                        EventFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, "event_features",
-                        EventFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-                        EventFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                        EventFeatureExtractor.PARAM_STEP_NUMBER, stepNum);
+        AnalysisEngineDescription eventFeatureWriter = AnalysisEngineFactory.createEngineDescription(
+                EventFeatureExtractor.class, typeSystemDescription,
+                EventFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, "event_features",
+                EventFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
+                EventFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
+                EventFeatureExtractor.PARAM_STEP_NUMBER, stepNum);
 
-        AnalysisEngineDescription entityEventLinkWriter = CustomAnalysisEngineFactory
-                .createAnalysisEngine(EventEntityLinkProducer.class, typeSystemDescription,
-                        EventEntityLinkProducer.PARAM_BASE_OUTPUT_DIR_NAME, "entity_event_links",
-                        EventEntityLinkProducer.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-                        EventEntityLinkProducer.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                        EventEntityLinkProducer.PARAM_STEP_NUMBER, stepNum);
+        AnalysisEngineDescription entityEventLinkWriter = AnalysisEngineFactory.createEngineDescription(
+                EventEntityLinkProducer.class, typeSystemDescription,
+                EventEntityLinkProducer.PARAM_BASE_OUTPUT_DIR_NAME, "entity_event_links",
+                EventEntityLinkProducer.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
+                EventEntityLinkProducer.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
+                EventEntityLinkProducer.PARAM_STEP_NUMBER, stepNum);
 
         SimplePipeline.runPipeline(reader, entityFeatureWriter, eventFeatureWriter,
                 entityEventLinkWriter);

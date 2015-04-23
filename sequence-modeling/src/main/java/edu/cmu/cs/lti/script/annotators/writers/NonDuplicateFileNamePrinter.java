@@ -5,17 +5,17 @@ import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalsysisEngine;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -95,7 +95,7 @@ public class NonDuplicateFileNamePrinter extends AbstractCustomizedTextWriterAna
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createGzippedXmiReader(typeSystemDescription, inputDir, false);
 
-        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
                 NonDuplicateFileNamePrinter.class, typeSystemDescription,
                 NonDuplicateFileNamePrinter.PARAM_BASE_OUTPUT_DIR_NAME, outputDir,
                 NonDuplicateFileNamePrinter.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,

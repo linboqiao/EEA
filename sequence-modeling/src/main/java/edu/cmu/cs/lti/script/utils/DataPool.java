@@ -14,6 +14,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.javatuples.Pair;
+import org.slf4j.Logger;
 import weka.core.SerializationHelper;
 
 import java.io.File;
@@ -22,7 +23,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.

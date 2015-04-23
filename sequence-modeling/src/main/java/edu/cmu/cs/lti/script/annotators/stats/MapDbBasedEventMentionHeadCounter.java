@@ -15,6 +15,7 @@ import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -23,7 +24,7 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.Fun;
-import org.uimafit.factory.TypeSystemDescriptionFactory;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -148,7 +149,7 @@ public class MapDbBasedEventMentionHeadCounter extends AbstractLoggingAnnotator 
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
-        AnalysisEngineDescription kmScriptCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription kmScriptCounter = AnalysisEngineFactory.createEngineDescription(
                 MapDbBasedEventMentionHeadCounter.class, typeSystemDescription,
                 MapDbBasedEventMentionHeadCounter.PARAM_DB_DIR_PATH, dbPath,
                 MapDbBasedEventMentionHeadCounter.PARAM_KEEP_QUIET, false);

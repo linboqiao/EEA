@@ -7,11 +7,11 @@ import gnu.trove.list.linked.TIntLinkedList;
 import gnu.trove.map.TObjectIntMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.mapdb.Fun;
+import org.slf4j.Logger;
 import weka.core.SerializationHelper;
 
 import java.io.File;
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.

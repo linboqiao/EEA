@@ -5,6 +5,7 @@ import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
@@ -44,7 +45,7 @@ public class CandidateEventMentionDetectorRunner {
 
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, new File(paramParentInputDir, paramBaseInputDirName).getCanonicalPath(), false);
 
-        AnalysisEngineDescription detector = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription detector = AnalysisEngineFactory.createEngineDescription(
                 CandidateEventMentionDetector.class, typeSystemDescription,
                 CandidateEventMentionDetector.PARAM_FRAME_DATA_PATH, frameDataPath,
                 CandidateEventMentionDetector.PARAM_GOLD_STANDARD_VIEW_NAME, "goldStandard",

@@ -2,10 +2,11 @@ package edu.cmu.cs.lti.emd.pipeline;
 
 import edu.cmu.cs.lti.emd.annotators.EvaluationResultWriter;
 import edu.cmu.cs.lti.emd.annotators.EventMentionTypeLearner;
+import edu.cmu.cs.lti.emd.eval.EventMentionEvalRunner;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 import org.uimafit.pipeline.SimplePipeline;
@@ -44,7 +45,7 @@ public class EventMentionTester {
 //        CollectionReaderDescription test_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, "test_data", 1, false);
 //        CollectionReaderDescription final_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir + "/test", "submission_data", 1, false);
 
-        AnalysisEngineDescription mention = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription mention = AnalysisEngineFactory.createEngineDescription(
                 EventMentionTypeLearner.class, typeSystemDescription,
                 EventMentionTypeLearner.PARAM_SEM_LINK_DIR, semLinkDataPath,
                 EventMentionTypeLearner.PARAM_IS_TRAINING, false,
@@ -67,8 +68,8 @@ public class EventMentionTester {
 //                EventMentionRealisLearner.PARAM_BROWN_CLUSTERING_PATH, brownClusteringDataPath
 //        );
 
-        AnalysisEngineDescription devResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
-                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/results/dev_prediction.tbf");
+        AnalysisEngineDescription devResults = AnalysisEngineFactory.createEngineDescription(EvaluationResultWriter.class, typeSystemDescription,
+                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/results/temp_dev_prediction.tbf");
         SimplePipeline.runPipeline(dev_reader, mention, devResults);
 
 //        AnalysisEngineDescription testResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
@@ -78,6 +79,18 @@ public class EventMentionTester {
 //        AnalysisEngineDescription finalResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
 //                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/CMU-TWO-STEP.tbf");
 //        SimplePipeline.runPipeline(final_reader, mention, realis, finalResults);
+
+        EventMentionEvalRunner runner = new EventMentionEvalRunner();
+
+        runner.runEval(
+                "/Users/zhengzhongliu/Documents/projects/EvmEval/scorer_v1.2.py",
+                "event-mention-detection/data/Event-mention-detection-2014/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/tbf/all_dev_gold.tbf",
+                "event-mention-detection/data/Event-mention-detection-2014/results/temp_dev_prediction.tbf",
+                "event-mention-detection/data/Event-mention-detection-2014/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/data/token_offset",
+                "event-mention-detection/data/Event-mention-detection-2014/eval_out");
+
+        System.out.println(modelBase + "\t" + runner.getMicroTypeAccuracy());
+
 
         System.err.println(className + " finished");
     }

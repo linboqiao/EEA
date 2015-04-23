@@ -9,9 +9,10 @@ import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.uimafit.factory.TypeSystemDescriptionFactory;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 
 import java.io.IOException;
 
@@ -54,7 +55,7 @@ public class EntitySurfacePrinter {
                 CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
 
 
-        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
                 DocumentLevelEntityWriter.class, typeSystemDescription,
                 DocumentLevelEntityWriter.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
                 DocumentLevelEntityWriter.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,

@@ -8,20 +8,21 @@ import edu.cmu.cs.lti.script.runners.learn.test.MultiArgumentClozeTestRunner;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.uimafit.factory.TypeSystemDescriptionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import weka.core.SerializationHelper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,7 +34,7 @@ import java.util.logging.Logger;
  */
 public class FullSystemRunner {
     private static String className = FullSystemRunner.class.getSimpleName();
-    private static Logger logger = Logger.getLogger(className);
+    private static Logger logger = LoggerFactory.getLogger(className);
 
     private boolean doTesting = false;
 
@@ -80,7 +81,7 @@ public class FullSystemRunner {
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
         // The Tf Df counter
-        AnalysisEngineDescription headTfDfCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription headTfDfCounter = AnalysisEngineFactory.createEngineDescription(
                 EventMentionHeadTfDfCounter.class, typeSystemDescription,
                 EventMentionHeadTfDfCounter.PARAM_DB_DIR_PATH, dbPath,
                 EventMentionHeadTfDfCounter.PARAM_KEEP_QUIET, false,
@@ -98,7 +99,7 @@ public class FullSystemRunner {
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, eventTuplePath, true);
 
-        AnalysisEngineDescription kmScriptCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription kmScriptCounter = AnalysisEngineFactory.createEngineDescription(
                 KarlMooneyScriptCounter.class, typeSystemDescription,
                 KarlMooneyScriptCounter.PARAM_DB_DIR_PATH, dbPath,
                 KarlMooneyScriptCounter.PARAM_SKIP_BIGRAM_N, skipgramN,
@@ -134,7 +135,7 @@ public class FullSystemRunner {
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, eventTuplePath, false);
 
 
-        AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(PerceptronTraining.class, typeSystemDescription,
+        AnalysisEngineDescription trainer = AnalysisEngineFactory.createEngineDescription(PerceptronTraining.class, typeSystemDescription,
                 PerceptronTraining.PARAM_RANK_LIST_SIZE, rankListSize,
                 PerceptronTraining.PARAM_MINI_BATCH_SIZE, miniBatchNum,
                 PerceptronTraining.PARAM_FEATURE_NAMES, featureNames,

@@ -11,6 +11,7 @@ import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -107,7 +108,7 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
         CollectionReaderDescription devReader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, inputDev, false);
         CollectionReaderDescription trainReader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, inputTrain, false);
 
-        AnalysisEngineDescription runner = CustomAnalysisEngineFactory.createAnalysisEngine(EventMentionTypeClassPrinter.class, typeSystemDescription);
+        AnalysisEngineDescription runner = AnalysisEngineFactory.createEngineDescription(EventMentionTypeClassPrinter.class, typeSystemDescription);
         SimplePipeline.runPipeline(testReader, runner);
         SimplePipeline.runPipeline(devReader, runner);
         SimplePipeline.runPipeline(trainReader, runner);

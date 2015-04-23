@@ -121,7 +121,7 @@ public class UsefulFramDetector extends AbstractLoggingAnnotator {
         JCas goldView = UimaConvenience.getView(aJCas, goldStandardViewName);
 
         TokenAlignmentHelper align = new TokenAlignmentHelper();
-        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
+        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.COMPONENT_ID);
         align.loadStanford2Fanse(aJCas);
 
         Map<Word, String> target2Frame = getFrameAnnotations(aJCas);
@@ -188,7 +188,7 @@ public class UsefulFramDetector extends AbstractLoggingAnnotator {
             if (layers != null) {
                 for (SemaforLayer layer : FSCollectionFactory.create(layers, SemaforLayer.class)) {
                     if (layer.getName().equals("Target")) {
-                        invokeMapping.put(UimaNlpUtils.findHeadFromTreeAnnotation(aJCas, layer.getLabels(0)), annotationSet.getFrameName());
+                        invokeMapping.put(UimaNlpUtils.findHeadFromTreeAnnotation(layer.getLabels(0)), annotationSet.getFrameName());
                     }
                 }
             }

@@ -5,13 +5,13 @@ package edu.cmu.cs.lti.script.runners.writers;
 
 import edu.cmu.cs.lti.script.annotators.writers.EventEntityLinkProducer;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.IOException;
 
@@ -54,12 +54,12 @@ public class EntityEventLinkOutputRunner {
       CollectionReaderDescription reader =
               CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
 
-      AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createAnalysisEngine(
-            EventEntityLinkProducer.class, typeSystemDescription,
-            EventEntityLinkProducer.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
-            EventEntityLinkProducer.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-            EventEntityLinkProducer.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-            EventEntityLinkProducer.PARAM_STEP_NUMBER, stemNum);
+      AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
+              EventEntityLinkProducer.class, typeSystemDescription,
+              EventEntityLinkProducer.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
+              EventEntityLinkProducer.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
+              EventEntityLinkProducer.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
+              EventEntityLinkProducer.PARAM_STEP_NUMBER, stemNum);
 
     SimplePipeline.runPipeline(reader, writer);
 

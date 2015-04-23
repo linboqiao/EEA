@@ -92,7 +92,6 @@ public class HeadWordFeatures extends EventMentionFeatureGenerator {
                         dep.getDependencyType() + "_" + triggerWord.getLemma().toLowerCase(), features);
                 addFeature("HeadDepLemmaSuperTypeWithDepLemma,", superType +
                         "_get_" + triggerWord.getLemma().toLowerCase(), features);
-
             }
         }
     }

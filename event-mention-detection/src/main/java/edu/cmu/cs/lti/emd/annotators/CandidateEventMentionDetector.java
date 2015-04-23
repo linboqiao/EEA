@@ -145,7 +145,7 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
         token2Candidates = new HashMap<>();
 
         align = new TokenAlignmentHelper();
-        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
+        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.COMPONENT_ID);
         align.loadStanford2Fanse(aJCas);
         align.loadFanse2Stanford(aJCas);
 
@@ -186,7 +186,7 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
                 }
             }
 
-            StanfordCorenlpToken triggerHead = UimaNlpUtils.findHeadFromTreeAnnotation(aJCas, trigger);
+            StanfordCorenlpToken triggerHead = UimaNlpUtils.findHeadFromTreeAnnotation(trigger);
 
             if (!usefulFrames.contains(frameName) || !usefulHeads.contains(triggerHead.getLemma().toLowerCase())) {
                 continue;
@@ -206,7 +206,7 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
                 CandidateEventMentionArgument argument = new CandidateEventMentionArgument(aJCas, frameElement.getBegin(), frameElement.getEnd());
                 UimaAnnotationUtils.finishAnnotation(argument, COMPONENT_ID, 0, aJCas);
                 argument.setRoleName(feName);
-                argument.setHeadWord(UimaNlpUtils.findHeadFromTreeAnnotation(aJCas, argument));
+                argument.setHeadWord(UimaNlpUtils.findHeadFromTreeAnnotation(argument));
                 candidate.setArguments(UimaConvenience.appendFSList(aJCas, candidate.getArguments(), argument, CandidateEventMentionArgument.class));
             }
         }

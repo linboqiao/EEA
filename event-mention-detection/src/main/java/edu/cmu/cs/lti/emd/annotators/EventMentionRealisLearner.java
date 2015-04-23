@@ -177,7 +177,7 @@ public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
 
         indexWords(aJCas);
         numDocuments++;
-        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
+        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.COMPONENT_ID);
         align.loadFanse2Stanford(aJCas);
 
         Map<StanfordCorenlpToken, Collection<Sentence>> token2Sentences =

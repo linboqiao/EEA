@@ -16,7 +16,6 @@ import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.script.utils.MultiMapUtils;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.BasicConvenience;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.ArrayBasedTwoLevelFeatureTable;
@@ -33,18 +32,18 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.mapdb.Fun;
-import org.uimafit.factory.TypeSystemDescriptionFactory;
 import weka.core.SerializationHelper;
 
 import java.io.File;
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -134,7 +133,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
 
         if (DataPool.blackListedArticleId.contains(article.getArticleName())) {
-            logger.fine("Ignored black listed file : " + article.getArticleName());
+            logger.debug("Ignored black listed file : " + article.getArticleName());
             return;
         }
 
@@ -410,8 +409,6 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
 
     public static void main(String[] args) throws Exception {
-        Logger logger = Logger.getLogger(PerceptronTraining.class.getName());
-
         Configuration config = new Configuration(new File(args[0]));
 
         int maxIter = config.getInt("edu.cmu.cs.lti.cds.sgd.iter");
@@ -460,7 +457,7 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
 
         logger.info("Running " + PerceptronTraining.class.getName());
 
-        AnalysisEngineDescription trainer = CustomAnalysisEngineFactory.createAnalysisEngine(PerceptronTraining.class, typeSystemDescription,
+        AnalysisEngineDescription trainer = AnalysisEngineFactory.createEngineDescription(PerceptronTraining.class, typeSystemDescription,
                 PerceptronTraining.PARAM_RANK_LIST_SIZE, rankListSize,
                 PerceptronTraining.PARAM_MINI_BATCH_SIZE, miniBatchNum,
                 PerceptronTraining.PARAM_FEATURE_NAMES, featureNames,

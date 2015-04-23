@@ -42,7 +42,6 @@ public class FrameArgumentLemmaFeatureGenerator extends EventMentionFeatureGener
                 addFeature("FrameArgumentSubPhrase", mention.getHeadWord().getLemma().toLowerCase() + "_" + argumentHeadWord.getLemma().toLowerCase(), features);
                 addFeature("FrameArgumentRole", argument.getRoleName(), features);
 
-
                 int objectStatus = wnsi.getPhysicalStatus(argumentHeadWord.getLemma().toLowerCase());
 
                 if (objectStatus == 1) {
@@ -50,7 +49,6 @@ public class FrameArgumentLemmaFeatureGenerator extends EventMentionFeatureGener
                 } else if (objectStatus == -1) {
                     addFeature("FrameArgumentSense", "isIntangible", features);
                 }
-
 
                 if (isHumanProunoun(argumentHeadWord)) {
                     addFeature("FrameArgumentSense", "isHuman", features);

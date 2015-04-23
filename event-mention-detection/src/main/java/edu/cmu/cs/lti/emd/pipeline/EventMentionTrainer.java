@@ -3,20 +3,21 @@ package edu.cmu.cs.lti.emd.pipeline;
 import com.google.common.collect.BiMap;
 import edu.cmu.cs.lti.emd.annotators.EventMentionTypeLearner;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import gnu.trove.iterator.TIntDoubleIterator;
 import gnu.trove.map.TIntDoubleMap;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.javatuples.Pair;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
+import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
-import weka.classifiers.functions.SMO;
+import weka.classifiers.functions.LibSVM;
 import weka.core.*;
 import weka.core.converters.ArffSaver;
 
@@ -39,7 +40,25 @@ public class EventMentionTrainer {
 
     public static final String predictionLabels = "labelNames";
 
-    private Logger logger = Logger.getLogger(EventMentionTrainer.className);
+    public static final String trainingFeatureName = "training.arff";
+
+    private static Logger logger = Logger.getLogger(EventMentionTrainer.className);
+
+    String semLinkDataPath;
+    String bwClusterPath;
+    String wordnetDataPath;
+    TypeSystemDescription typeSystemDescription;
+
+    public EventMentionTrainer(String semLinkDataPath,
+                               String bwClusterPath,
+                               String wordnetDataPath,
+                               TypeSystemDescription typeSystemDescription) {
+        this.semLinkDataPath = semLinkDataPath;
+        this.bwClusterPath = bwClusterPath;
+        this.wordnetDataPath = wordnetDataPath;
+        this.typeSystemDescription = typeSystemDescription;
+    }
+
 
     public void configFeatures(BiMap<String, Integer> featureNameMap, List<String> allClasses, File outputDir) throws Exception {
         featureConfiguration = new ArrayList<>();
@@ -75,19 +94,29 @@ public class EventMentionTrainer {
         featureVector.add(new Attribute("event_types", fixedClasses));
     }
 
-    private Classifier getSMO() throws Exception {
-        SMO smo = new SMO();
-//        String[] options = {"-M"};
-//        smo.setOptions(options);
-        return smo;
+
+    private Classifier configClassifier(AbstractClassifier cls, String[] options) throws Exception {
+        cls.setOptions(options);
+        return cls;
     }
 
-    private List<Classifier> getClassifiers() throws Exception {
-        List<Classifier> classifiers = new ArrayList<>();
-        classifiers.add(getSMO());
+    private Map<String, Classifier> getClassifiers() throws Exception {
+        Map<String, Classifier> classifiers = new HashMap<>();
+        classifiers.put("LibSvm_linear", configClassifier(new LibSVM(), new String[]{"-K", "0"}));
+        classifiers.put("LibSvm_poly_square", configClassifier(new LibSVM(), new String[]{"-K", "1", "-D", "2", "-G", "1.0"}));
+//        classifiers.put("LibSvm_Gaussian", configClassifier(new LibSVM(), new String[]{"-G","1.0"}));
+//        classifiers.put("LibSvm_poly_cubic", configClassifier(new LibSVM(), new String[]{"-K", "1", "-G", "1.0"}));
+
+
+//        classifiers.put("SMO_linear", configClassifier(new SMO(), new String[]{}));
+//        classifiers.put("SMO_poly", configClassifier(new SMO(), new String[]{"-K", "weka.classifiers.functions.supportVector.PolyKernel -E 2.0"}));
+//        classifiers.put("SMO_gaussian", configClassifier(new SMO(), new String[]{"-K", "weka.classifiers.functions.supportVector.RBFKernel"}));
+
+//        classifiers.put("logistic_ridge", configClassifier(new Logistic(), new String[]{"-R", "1.0"}));
+//        classifiers.put("linear", configClassifier(new LinearRegression(), new String[]{}));
+
 //        classifiers.add(new RandomForest());
-//        classifiers.add(new Logistic());
-//        classifiers.add(new NaiveBayes());
+//        classifiers.put("NB", new NaiveBayes());
 //        classifiers.add(new J48());
         return classifiers;
     }
@@ -96,111 +125,68 @@ public class EventMentionTrainer {
      * Train multiple models, return the best weighted F1 score these models
      *
      * @param trainingSet
-     * @param testSets
-     * @param modelOutPath
-     * @param allClasses
      * @return
      * @throws Exception
      */
-    private double trainAndTest(Instances trainingSet, List<Instances> testSets, File modelOutPath, List<String> allClasses) throws Exception {
-        double bestWeightedF1 = 0;
+    private Map<String, Classifier> train(Instances trainingSet, String classifierSuffix) throws Exception {
+        Map<String, Classifier> classifiersByName = new HashMap<>();
 
-        for (Classifier classifier : getClassifiers()) {
-            Evaluation eval = new Evaluation(trainingSet);
-            logger.info("Building model");
+        for (Map.Entry<String, Classifier> classifierByName : getClassifiers().entrySet()) {
+            Classifier classifier = classifierByName.getValue();
+            String baseName = classifierByName.getKey();
+            logger.info("Building a model with " + baseName);
             classifier.buildClassifier(trainingSet);
-            String classifierName = classifier.getClass().getName();
+            String classifierName = baseName + "_" + classifierSuffix;
+            classifiersByName.put(classifierName, classifier);
+        }
+        return classifiersByName;
+    }
 
-            logger.info("Evaluating model");
+    private double test(Instances trainingSet, Instances testSet, Classifier classifier, List<String> allClasses, File resultDir) throws Exception {
+        Evaluation eval = new Evaluation(trainingSet);
+        String classifierName = classifier.getClass().getName();
 
-            double weightedF1 = 0;
-            int totalInstances = 0;
+        List<String> evalResultLines = new ArrayList<>();
 
-            List<String> evalResultLines = new ArrayList<>();
+        double weightedF1 = 0;
+        int totalInstances = 0;
 
-            for (Instances testSet : testSets) {
-                eval.evaluateModel(classifier, testSet);
-                logger.info("=== Setup ===");
-                logger.info("Classifier: " + classifierName);
-                logger.info("Training set size: " + trainingSet.numInstances());
-                logger.info("Test set size: " + testSet.numInstances());
+        eval.evaluateModel(classifier, testSet);
+        logger.info("=== Setup ===");
+        logger.info("Classifier: " + classifierName);
+        logger.info("Training set size: " + trainingSet.numInstances());
+        logger.info("Test set size: " + testSet.numInstances());
 
-                String evalSummary = eval.toSummaryString("=== Evaluation Results ===", false);
-//                logger.info(evalSummary);
-                evalResultLines.add(evalSummary);
+        String evalSummary = eval.toSummaryString("=== Evaluation Results ===", false);
+        evalResultLines.add(evalSummary);
 
-//                logger.info("Prec\tRecall\tF1\tTotal");
-                evalResultLines.add("Prec\tRecall\tF1\tTotal");
+        evalResultLines.add("Prec\tRecall\tF1\tTotal");
 
-                for (int i = 0; i < allClasses.size(); i++) {
-                    int realClassIndex = i + 1;
-                    double numInThisClass = eval.numTruePositives(realClassIndex) + eval.numFalseNegatives(realClassIndex);
+        for (int i = 0; i < allClasses.size(); i++) {
+            int realClassIndex = i + 1;
+            double numInThisClass = eval.numTruePositives(realClassIndex) + eval.numFalseNegatives(realClassIndex);
 
-                    String fString = String.format("%.4f\t%.4f\t%.4f\t%.2f\t%s",
-                            eval.precision(realClassIndex), eval.recall(realClassIndex), eval.fMeasure(realClassIndex), numInThisClass, allClasses.get(i));
-//                    logger.info(fString);
-                    evalResultLines.add(fString);
+            String fString = String.format("%.4f\t%.4f\t%.4f\t%.2f\t%s",
+                    eval.precision(realClassIndex), eval.recall(realClassIndex), eval.fMeasure(realClassIndex), numInThisClass, allClasses.get(i));
+            evalResultLines.add(fString);
 
-                    if (!allClasses.get(i).equals(EventMentionTypeLearner.OTHER_TYPE)) {
-                        weightedF1 += eval.fMeasure(realClassIndex) * numInThisClass;
-                        totalInstances += numInThisClass;
-                    }
-                }
-            }
-
-            if (modelOutPath != null) {
-                String modelStoringPath = new File(modelOutPath, classifierName).getCanonicalPath();
-                logger.info("Saving model to : " + modelStoringPath);
-                SerializationHelper.write(modelStoringPath, classifier);
-
-                File resultStoringFile = new File(modelOutPath, "results_with_" + classifierName);
-                logger.info("Saving eval results to : " + resultStoringFile);
-                FileUtils.writeLines(resultStoringFile, evalResultLines);
-            }
-
-
-            //calculate Weighted F1 scores averaged on all dataset tested
-            weightedF1 /= totalInstances;
-            if (weightedF1 > bestWeightedF1) {
-                bestWeightedF1 = weightedF1;
+            if (!allClasses.get(i).equals(EventMentionTypeLearner.OTHER_TYPE)) {
+                weightedF1 += eval.fMeasure(realClassIndex) * numInThisClass;
+                totalInstances += numInThisClass;
             }
         }
 
-        return bestWeightedF1;
+        //calculate Weighted F1 scores averaged on all dataset tested
+        weightedF1 /= totalInstances;
+
+        File resultStoringFile = new File(resultDir, "per_class_results_with_" + classifierName);
+        logger.info("Saving eval results to : " + resultStoringFile);
+        FileUtils.writeLines(resultStoringFile, evalResultLines);
+
+        return weightedF1;
     }
 
-    private void crossValidation(Instances dataSet, File modelOutDir) throws Exception {
-        Random rand = new Random(0);   // create seeded number generator
-        Instances randData = new Instances(dataSet);   // create copy of original data
-        randData.randomize(rand);
-
-        int folds = 5;
-        Evaluation eval = new Evaluation(randData);
-
-        for (Classifier classifier : getClassifiers()) {
-            for (int n = 0; n < folds; n++) {
-                Instances trainSplit = randData.trainCV(folds, n);
-                Instances testSplit = randData.testCV(folds, n);
-                logger.info("Building model for fold " + n);
-                classifier.buildClassifier(trainSplit);
-                logger.info("Evaluating model for fold " + n);
-                eval.evaluateModel(classifier, testSplit);
-            }
-
-            String classifierName = classifier.getClass().getName();
-
-            logger.info("=== Setup ===");
-            logger.info("Classifier: " + classifier.getClass().getName());
-            logger.info("Data set size: " + dataSet.numInstances());
-            logger.info("Folds: " + folds);
-            logger.info(eval.toSummaryString("=== " + folds + "-fold Cross-validation ===", false));
-
-            SerializationHelper.write(new File(modelOutDir, classifierName).getCanonicalPath(), classifier);
-        }
-    }
-
-
-    private Instances prepareDataSet(List<Pair<TIntDoubleMap, String>> featuresAndClass, String dataSetOutputPath) throws Exception {
+    private Instances convertToInstances(List<Pair<TIntDoubleMap, String>> featuresAndClass, String dataSetOutputPath) throws Exception {
         Instances dataSet = new Instances("event_type_detection", featureConfiguration, featuresAndClass.size());
         dataSet.setClass(featureConfiguration.get(featureConfiguration.size() - 1));
 
@@ -210,9 +196,9 @@ public class EventMentionTrainer {
         for (Pair<TIntDoubleMap, String> rawData : featuresAndClass) {
             //initialize the sparse vector to be empty
             Instance trainingInstance = new SparseInstance(1, emptyVector);
-            TIntDoubleMap featureValues = rawData.getValue0();
+            TIntDoubleMap featureValues = rawData.getKey();
             trainingInstance.setDataset(dataSet);
-            String classValue = rawData.getValue1();
+            String classValue = rawData.getValue();
 
             for (TIntDoubleIterator fIter = featureValues.iterator(); fIter.hasNext(); ) {
                 fIter.advance();
@@ -240,14 +226,11 @@ public class EventMentionTrainer {
         saver.writeBatch();
     }
 
-    private void generateFeatures(TypeSystemDescription typeSystemDescription,
-                                  String inputDir, String baseInputDirName,
-                                  int stepNum, String semLinkDataPath,
-                                  String bwClusterPath, String wordnetDataPath,
-                                  boolean isTraining, String modelDir, boolean keep_quite,
+    private void generateFeatures(String inputDir, String baseInputDirName,
+                                  int stepNum, boolean isTraining, String modelDir, boolean keep_quite,
                                   Set<String> featureSubset) throws UIMAException, IOException {
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(inputDir, baseInputDirName, stepNum, false);
-        AnalysisEngineDescription ana = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription ana = AnalysisEngineFactory.createEngineDescription(
                 EventMentionTypeLearner.class, typeSystemDescription,
                 EventMentionTypeLearner.PARAM_SEM_LINK_DIR, semLinkDataPath,
                 EventMentionTypeLearner.PARAM_IS_TRAINING, isTraining,
@@ -262,67 +245,85 @@ public class EventMentionTrainer {
     }
 
 
-    public double buildModels(TypeSystemDescription typeSystemDescription,
-                              String parentInput,
-                              String modelBaseDir,
-                              String trainingBaseDir,
-                              String[] testBaseDirs,
-                              String semLinkDataPath,
-                              String bwClusterPath,
-                              String wordnetDataPath,
-                              Set<String> featureSubset) throws Exception {
+    public Instances getDataSet(String parentInput,
+                                String dataBaseDir,
+                                Set<String> featureSubset,
+                                File modelOutputDir) throws Exception {
+        generateFeatures(parentInput, dataBaseDir, 1,
+                false, modelOutputDir.getCanonicalPath(), true, featureSubset);
+        List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionTypeLearner.featuresAndClass;
+        return convertToInstances(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath());
+    }
+
+
+    public Map<String, Classifier> buildModels(String parentInput,
+                                               String modelBaseDir,
+                                               String trainingBaseDir,
+                                               Set<String> featureSubset,
+                                               Map<String, Instances> testSets,
+                                               String resultDir) throws Exception {
         File modelOutputDir = new File(parentInput, modelBaseDir);
         if (!modelOutputDir.exists() || !modelOutputDir.isDirectory()) {
             modelOutputDir.mkdirs();
         }
 
         logger.info("Preparing training dataset");
-        generateFeatures(typeSystemDescription, parentInput, trainingBaseDir, 1, semLinkDataPath, bwClusterPath, wordnetDataPath, true, null, true, featureSubset);
+        generateFeatures(parentInput, trainingBaseDir, 1, true, null, true, featureSubset);
         BiMap<String, Integer> featureNameMap = EventMentionTypeLearner.featureNameMap;
         List<Pair<TIntDoubleMap, String>> trainingFeatures = EventMentionTypeLearner.featuresAndClass;
         ArrayList<String> allClasses = new ArrayList<>(EventMentionTypeLearner.allTypes);
         configFeatures(featureNameMap, allClasses, modelOutputDir);
 
-        Instances trainingDataset = prepareDataSet(trainingFeatures, new File(modelOutputDir, "training.arff").getCanonicalPath());
+        Instances trainingDataset = convertToInstances(trainingFeatures, new File(modelOutputDir, trainingFeatureName).getCanonicalPath());
         logger.info("Number of training instances : " + trainingFeatures.size());
 
         logger.info("Saving feature config");
         SerializationHelper.write(new File(modelOutputDir, featureConfigOutputName).getCanonicalPath(), featureConfiguration);
 
-        List<Instances> testSets = new ArrayList<>();
-        for (String devBaseDir : testBaseDirs) {
-            logger.info("Preparing test data");
-            generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1,
-                    semLinkDataPath, bwClusterPath, wordnetDataPath, false, modelOutputDir.getCanonicalPath(), true, featureSubset);
-            List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionTypeLearner.featuresAndClass;
-            Instances devDataset = prepareDataSet(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath());
-            testSets.add(devDataset);
-            logger.info("Number of dev instances : " + devFeatures.size());
+        Map<String, Classifier> classifiers = train(trainingDataset, trainingBaseDir);
+
+        for (Map.Entry<String, Classifier> classifierByName : classifiers.entrySet()) {
+            String classifierName = classifierByName.getKey();
+            Classifier classifier = classifierByName.getValue();
+            String modelStoringPath = new File(modelOutputDir, classifierName).getCanonicalPath();
+            logger.info("Saving model to : " + modelStoringPath);
+            SerializationHelper.write(modelStoringPath, classifier);
+
+            logger.info("Conducting evaluation on dev sets");
+            for (Map.Entry<String, Instances> testSet : testSets.entrySet()) {
+                test(trainingDataset, testSet.getValue(), classifier, allClasses, new File(resultDir, classifierName + "_" + testSet.getKey()));
+            }
         }
-        logger.info("Conducting evaluation on dev sets");
-        return trainAndTest(trainingDataset, testSets, modelOutputDir, allClasses);
+
+        return classifiers;
     }
 
     public static void main(String[] args) throws Exception {
         System.out.println(className + " started...");
-        String paramInputDir = "event-mention-detection/data/Event-mention-detection-2014";
-        String paramTypeSystemDescriptor = "TaskEventMentionDetectionTypeSystem";
+        String workingDir = "event-mention-detection/data/Event-mention-detection-2014";
+        String typeSystemDescriptor = "TaskEventMentionDetectionTypeSystem";
         String semLinkDataPath = "data/resources/SemLink_1.2.2c";
         String wordnetDataPath = "data/resources/wnDict";
         String brownClusteringDataPath = "data/resources/TDT5_BrownWC.txt";
         String trainingBaseDir = args[0];//"train_data";
         String modelBasePath = args[1]; //"models/train_split";
+        String resultBaseDir = workingDir + "/results";
 
         String[] testBaseDirs = {"dev_data", "test_data"};
 
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
-                .createTypeSystemDescription(paramTypeSystemDescriptor);
+                .createTypeSystemDescription(typeSystemDescriptor);
 
         Set<String> featureSubset = new HashSet<>();
 
-        EventMentionTrainer trainer = new EventMentionTrainer();
-        trainer.buildModels(typeSystemDescription, paramInputDir, modelBasePath, trainingBaseDir, testBaseDirs, semLinkDataPath, brownClusteringDataPath, wordnetDataPath, featureSubset);
+        EventMentionTrainer trainer = new EventMentionTrainer(semLinkDataPath, brownClusteringDataPath, wordnetDataPath, typeSystemDescription);
+        Map<String, Instances> testSets = new HashMap<>();
+        for (String testBaseDir : testBaseDirs) {
+            logger.info("Preparing test data");
+            testSets.put(new File(testBaseDir).getName(), trainer.getDataSet(workingDir, testBaseDir, featureSubset, new File(workingDir, modelBasePath)));
+        }
 
+        trainer.buildModels(workingDir, modelBasePath, trainingBaseDir, featureSubset, testSets, resultBaseDir);
         System.out.println(className + " finished...");
     }
 }

@@ -17,12 +17,12 @@ import gnu.trove.set.hash.TIntHashSet;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -47,10 +47,10 @@ public class KarlMooneyPredictor {
 
     private String className = this.getClass().getName();
 
-    private Logger logger = Logger.getLogger(className);
+
+    private Logger logger = LoggerFactory.getLogger(className);
 
     public KarlMooneyPredictor(String dbPath, String[] dbNames, String occName, String cooccName, String headIdMapName) throws Exception {
-        logger.setLevel(Level.INFO);
         BasicConvenience.printMemInfo(logger, "Initial memory information ");
 
         cooccCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, cooccName, logger, "Loading coocc");
@@ -165,8 +165,8 @@ public class KarlMooneyPredictor {
         double formerOccCountSmoothed = counts.getLeft() + numTotalEvents * laplacianSmoothingParameter;
 
         if (cooccCountSmoothed > laplacianSmoothingParameter) {
-            logger.fine("Probability of seeing " + former + " before " + latter);
-            logger.fine(cooccCountSmoothed / formerOccCountSmoothed + " " + counts.getRight() + "/" + counts.getLeft());
+            logger.debug("Probability of seeing " + former + " before " + latter);
+            logger.debug(cooccCountSmoothed / formerOccCountSmoothed + " " + counts.getRight() + "/" + counts.getLeft());
         }
 
         //add one smoothing

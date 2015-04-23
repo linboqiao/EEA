@@ -5,16 +5,17 @@ import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalsysisEngine;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.File;
 import java.util.*;
@@ -169,7 +170,7 @@ public class PredicatePmiCalculator extends AbstractCustomizedTextWriterAnalsysi
         CollectionReaderDescription reader =
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(typeSystemDescription, inputDir, false);
 
-        AnalysisEngineDescription pmiCounter = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription pmiCounter = AnalysisEngineFactory.createEngineDescription(
                 PredicatePmiCalculator.class, typeSystemDescription,
                 PredicatePmiCalculator.PARAM_PARENT_OUTPUT_DIR, "data",
                 PredicatePmiCalculator.PARAM_BASE_OUTPUT_DIR_NAME, "predicate_pmi",

@@ -23,13 +23,13 @@ import gnu.trove.iterator.TIntDoubleIterator;
 import gnu.trove.map.TIntDoubleMap;
 import gnu.trove.map.hash.TIntDoubleHashMap;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.javatuples.Pair;
 import weka.classifiers.Classifier;
 import weka.core.*;
 import weka.core.converters.ArffLoader.ArffReader;
@@ -230,7 +230,7 @@ public class EventMentionTypeLearner extends AbstractLoggingAnnotator {
         registerFeatures();
 
         numDocuments++;
-        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.componentId);
+        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.COMPONENT_ID);
         align.loadFanse2Stanford(aJCas);
         for (CandidateEventMention candidateEventMention : JCasUtil.select(aJCas, CandidateEventMention.class)) {
             String goldType = candidateEventMention.getGoldStandardMentionType();
@@ -246,8 +246,8 @@ public class EventMentionTypeLearner extends AbstractLoggingAnnotator {
             if (isOnlineTest) {
                 try {
                     Pair<Double, String> prediction = predict(features);
-                    String predictedType = prediction.getValue1();
-                    double predictionConfidence = prediction.getValue0();
+                    String predictedType = prediction.getValue();
+                    double predictionConfidence = prediction.getKey();
                     candidateEventMention.setPredictedType(predictedType);
                     candidateEventMention.setTypePredictionConfidence(predictionConfidence);
 
@@ -264,12 +264,12 @@ public class EventMentionTypeLearner extends AbstractLoggingAnnotator {
                 }
             } else {
                 if (goldType != null) {
-                    featuresAndClass.add(Pair.with(features, goldType));
+                    featuresAndClass.add(Pair.of(features, goldType));
                     if (isTraining) {
                         allTypes.add(goldType);
                     }
                 } else {
-                    featuresAndClass.add(Pair.with(features, OTHER_TYPE));
+                    featuresAndClass.add(Pair.of(features, OTHER_TYPE));
                 }
             }
         }
@@ -288,12 +288,17 @@ public class EventMentionTypeLearner extends AbstractLoggingAnnotator {
         PriorityQueue<Pair<Double, String>> rankList = new PriorityQueue<>(dist.length, Collections.reverseOrder());
 
         for (int i = 1; i < dist.length; i++) {
-            rankList.add(Pair.with(dist[i], classesToPredict.get(i - 1)));
+            rankList.add(Pair.of(dist[i], classesToPredict.get(i - 1)));
         }
 
         Pair<Double, String> currentBest = rankList.poll();
         Pair<Double, String> secondBest = rankList.poll();
         Pair<Double, String> thirdBest = rankList.poll();
+
+//        if (currentBest.getRight().equals(OTHER_TYPE)){
+////            System.out.println("Predicate as " + "[Other]");
+//            return secondBest;
+//        }
 
         return currentBest;
     }

@@ -8,10 +8,11 @@ import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.list.TIntList;
 import gnu.trove.map.TObjectIntMap;
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,7 +32,7 @@ public class OccCountCheck {
         String occName = KarlMooneyScriptCounter.defaultOccMapName;
         String headIdMapName = KarlMooneyScriptCounter.defaltHeadIdMapName;
 
-        Logger logger = Logger.getLogger(OccCountCheck.class.getSimpleName());
+        Logger logger = LoggerFactory.getLogger(OccCountCheck.class);
 
 
         TObjectIntMap<TIntList>[] cooccCountMaps = MultiMapUtils.loadMaps(dbPath, dbNames, cooccName, logger, "Loading coocc");

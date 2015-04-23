@@ -8,6 +8,7 @@ import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
@@ -51,15 +52,15 @@ public class EventMentionDataPreprocessor {
                 EventMentionDetectionDataReader.PARAM_TOKEN_EXT, ".txt.tab"
         );
 
-        AnalysisEngineDescription stanfordAnalyzer = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription stanfordAnalyzer = AnalysisEngineFactory.createEngineDescription(
                 StanfordCoreNlpAnnotator.class, typeSystemDescription,
                 StanfordCoreNlpAnnotator.PARAM_USE_SUTIME, true);
 
-        AnalysisEngineDescription semaforAnalyzer = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription semaforAnalyzer = AnalysisEngineFactory.createEngineDescription(
                 SemaforAnnotator.class, typeSystemDescription,
                 SemaforAnnotator.SEMAFOR_MODEL_PATH, semaforModelDirectory);
 
-        AnalysisEngineDescription fanseParser = CustomAnalysisEngineFactory.createAnalysisEngine(
+        AnalysisEngineDescription fanseParser = AnalysisEngineFactory.createEngineDescription(
                 FanseAnnotator.class, typeSystemDescription, FanseAnnotator.PARAM_MODEL_BASE_DIR,
                 fanseModelDirectory);
 

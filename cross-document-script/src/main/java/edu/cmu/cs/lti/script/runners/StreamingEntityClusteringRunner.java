@@ -5,13 +5,13 @@ package edu.cmu.cs.lti.script.runners;
 
 import edu.cmu.cs.lti.script.annotators.clustering.StreamingEntityCluster;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.IOException;
 import java.util.Date;
@@ -52,7 +52,7 @@ public class StreamingEntityClusteringRunner {
         // Instantiate a collection reader to get XMI as input.
         // Note that you should change the following parameters for your setting.
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
-        AnalysisEngineDescription coreferenceProcessor = CustomAnalysisEngineFactory.createAnalysisEngine(StreamingEntityCluster.class, typeSystemDescription);
+        AnalysisEngineDescription coreferenceProcessor = AnalysisEngineFactory.createEngineDescription(StreamingEntityCluster.class, typeSystemDescription);
 
         SimplePipeline.runPipeline(reader, coreferenceProcessor);
 

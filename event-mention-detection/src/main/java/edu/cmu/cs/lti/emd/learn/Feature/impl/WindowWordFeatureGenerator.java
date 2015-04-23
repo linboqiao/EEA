@@ -51,7 +51,7 @@ public class WindowWordFeatureGenerator extends EventMentionFeatureGenerator {
 
     private void addWindowFeature(StanfordCorenlpToken word, Map<String, Double> features) {
         if (!word.getPos().equals(".") && !word.getPos().equals(",") && !word.getPos().equals(":")) {
-            addFeature("WindowLemma", word.getLemma(), features);
+            addFeature("WindowLemma", word.getLemma().toLowerCase(), features);
         }
 
         if (word.getNerTag() != null) {

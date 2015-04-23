@@ -5,13 +5,13 @@ import edu.cmu.cs.lti.script.annotators.learn.test.ConditionProbabilityTester;
 import edu.cmu.cs.lti.script.annotators.learn.test.MultiArgumentClozeTest;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.File;
 import java.util.Arrays;
@@ -81,7 +81,7 @@ public class MultiArgumentClozeTestRunner {
                     logger.info("Register feature : " + featureNames[i]);
                 }
 
-                AnalysisEngineDescription logLinearPredictor = CustomAnalysisEngineFactory.createAnalysisEngine(
+                AnalysisEngineDescription logLinearPredictor = AnalysisEngineFactory.createEngineDescription(
                         CompactLogLinearTester.class, typeSystemDescription,
                         MultiArgumentClozeTest.PARAM_CLOZE_DIR_PATH, clozePath,
                         MultiArgumentClozeTest.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
@@ -103,7 +103,7 @@ public class MultiArgumentClozeTestRunner {
 
         if (methods.contains("conditional")) {
             //mooney model
-            AnalysisEngineDescription conditionalProbabilityPredictor = CustomAnalysisEngineFactory.createAnalysisEngine(
+            AnalysisEngineDescription conditionalProbabilityPredictor = AnalysisEngineFactory.createEngineDescription(
                     ConditionProbabilityTester.class, typeSystemDescription,
                     MultiArgumentClozeTest.PARAM_CLOZE_DIR_PATH, clozePath,
                     MultiArgumentClozeTest.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,

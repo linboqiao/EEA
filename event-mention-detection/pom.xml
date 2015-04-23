@@ -4,12 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>root</artifactId>
-        <groupId>edu.cmu.cs.lti</groupId>
+        <groupId>edu.cmu.cs.lti.script</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>event-mention-detection</artifactId>
+
+    <repositories>
+        <repository>
+            <id>evd_local</id>
+            <url>file://${basedir}/lib</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -19,7 +26,7 @@
         </dependency>
         <dependency>
             <groupId>edu.cmu.cs.lti</groupId>
-            <artifactId>semafor-uima</artifactId>
+            <artifactId>semafor-parser</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -57,9 +64,13 @@
             <classifier>models</classifier>
         </dependency>
         <dependency>
-            <groupId>edu.cmu.cs.lti</groupId>
+            <groupId>edu.cmu.cs.lti.script</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>nz.ac.waikato.cms.weka</groupId>
+            <artifactId>LibSVM</artifactId>
+            <version>1.0.6</version>
         </dependency>
     </dependencies>
 </project>
