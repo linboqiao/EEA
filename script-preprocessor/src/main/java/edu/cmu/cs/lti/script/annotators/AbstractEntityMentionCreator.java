@@ -27,14 +27,12 @@ public abstract class AbstractEntityMentionCreator extends AbstractLoggingAnnota
 
     public abstract String getComponentId();
 
-
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         head2EntityMention = new HashMap<>();
         Collection<EntityMention> entityMentions = JCasUtil.select(aJCas, EntityMention.class);
         for (EntityMention mention : entityMentions) {
             head2EntityMention.put(UimaAnnotationUtils.toSpan(mention.getHead()), mention);
         }
-
         subprocess(aJCas);
     }
 

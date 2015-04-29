@@ -40,8 +40,8 @@ public class SemanticParseBasedEventMentionTupleExtractor extends AbstractEntity
             "ARGM-DIS",
             "ARGM-MOD",
             "ARGM-NEG",
-            "ARGM-ADJ"));
-
+            "ARGM-ADJ")
+    );
 
     @Override
     public String getComponentId() {

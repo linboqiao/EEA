@@ -59,7 +59,6 @@ public class EventMentionTrainer {
         this.typeSystemDescription = typeSystemDescription;
     }
 
-
     public void configFeatures(BiMap<String, Integer> featureNameMap, List<String> allClasses, File outputDir) throws Exception {
         featureConfiguration = new ArrayList<>();
         ArrayList<Map.Entry<String, Integer>> featureNames = new ArrayList<>(featureNameMap.entrySet());

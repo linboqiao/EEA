@@ -6,7 +6,7 @@ import edu.cmu.cs.lti.collection_reader.BratEventGoldStandardAnnotator;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.PlainTextCollectionReader;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
-import edu.cmu.lti.event_coref.annotators.ForumTextCleaner;
+import edu.cmu.lti.event_coref.annotators.InputTextCleaner;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
@@ -54,8 +54,8 @@ public class Preprocessor {
                 PlainTextCollectionReader.PARAM_INPUT_VIEW_NAME, inputViewName);
 
         AnalysisEngineDescription cleaner = AnalysisEngineFactory.createEngineDescription(
-                ForumTextCleaner.class, typeSystemDescription,
-                ForumTextCleaner.PARAM_INPUT_VIEW_NAME, inputViewName
+                InputTextCleaner.class, typeSystemDescription,
+                InputTextCleaner.PARAM_INPUT_VIEW_NAME, inputViewName
         );
 
         AnalysisEngineDescription goldStandard = AnalysisEngineFactory.createEngineDescription(
