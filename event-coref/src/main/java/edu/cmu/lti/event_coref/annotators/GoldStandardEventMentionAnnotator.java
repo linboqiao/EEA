@@ -5,6 +5,7 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
@@ -20,15 +21,27 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
 
     public static final String COMPONENT_ID = GoldStandardEventMentionAnnotator.class.getSimpleName();
 
+    public static final String PARAM_TARGET_VIEWS = "targetViewNamess";
+
+    @ConfigurationParameter(name = PARAM_TARGET_VIEWS)
+    private String[] targetViewNamess;
+
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         final JCas goldStandard = JCasUtil.getView(aJCas, goldStandardViewName, false);
-        for (EventMention goldMention : JCasUtil.select(goldStandard, EventMention.class)) {
-            EventMention systemMention = new EventMention(aJCas, goldMention.getBegin(), goldMention.getEnd());
-            copyRegions(aJCas, goldMention, systemMention);
+        for (String targetViewName : targetViewNamess) {
+            JCas targetView = JCasUtil.getView(aJCas, targetViewName, false);
+            copyMentions(goldStandard, targetView);
+        }
+    }
+
+    private void copyMentions(JCas fromView, JCas toView) {
+        for (EventMention goldMention : JCasUtil.select(fromView, EventMention.class)) {
+            EventMention systemMention = new EventMention(toView, goldMention.getBegin(), goldMention.getEnd());
+            copyRegions(toView, goldMention, systemMention);
             systemMention.setRealisType(goldMention.getRealisType());
             systemMention.setEventType(goldMention.getEventType());
-            UimaAnnotationUtils.finishAnnotation(systemMention, COMPONENT_ID, goldMention.getId(), aJCas);
+            UimaAnnotationUtils.finishAnnotation(systemMention, COMPONENT_ID, goldMention.getId(), toView);
         }
     }
 

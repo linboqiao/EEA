@@ -34,7 +34,8 @@ public class EntityFeatureOutputRunner {
     // Note that you should change the parameters below for your configuration.
     // //////////////////////////////////////////////////////////////////////////
     // Parameters for the reader
-    String paramInputDir = "data/01_event_tuples";
+      String parentInput = "data";
+      String baseInput = "01_event_tuples";
 
     // Parameters for the writer
     String paramParentOutputDir = "data";
@@ -52,7 +53,7 @@ public class EntityFeatureOutputRunner {
     // Instantiate a collection reader to get XMI as input.
     // Note that you should change the following parameters for your setting.
       CollectionReaderDescription reader =
-              CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
+              CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, parentInput, baseInput);
 
 
       AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(

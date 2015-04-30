@@ -36,7 +36,8 @@ public class StreamingEntityClusteringRunner {
         // Note that you should change the parameters below for your configuration.
         // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
-        String paramInputDir = "data/02_event_tuples";
+        String parentInput = "data";
+        String baseInput = "02_event_tuples";
 
         // Parameters for the writer
         int stepNum = 2;
@@ -51,7 +52,7 @@ public class StreamingEntityClusteringRunner {
 
         // Instantiate a collection reader to get XMI as input.
         // Note that you should change the following parameters for your setting.
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, parentInput, baseInput);
         AnalysisEngineDescription coreferenceProcessor = AnalysisEngineFactory.createEngineDescription(StreamingEntityCluster.class, typeSystemDescription);
 
         SimplePipeline.runPipeline(reader, coreferenceProcessor);

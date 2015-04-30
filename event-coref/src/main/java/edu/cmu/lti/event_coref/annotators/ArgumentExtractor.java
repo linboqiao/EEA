@@ -47,6 +47,8 @@ public class ArgumentExtractor extends AbstractLoggingAnnotator {
                 logger.debug("Found null headword for " + mention.getId() + " : " + mention.getCoveredText());
             }
 
+            assert (headWord != null);
+
             List<SemaforLabel> coveredSemaforLabel = JCasUtil.selectCovered(SemaforLabel.class, headWord);
             Map<StanfordCorenlpToken, String> semafordHeadWord2Role = new HashMap<>();
             Map<String, SemaforLabel> semaforRoles = new HashMap<>();
@@ -59,7 +61,6 @@ public class ArgumentExtractor extends AbstractLoggingAnnotator {
                         if (argumentHead != null) {
                             semafordHeadWord2Role.put(argumentHead, roleName);
                         }
-//                        System.out.println(roleName + " " + semaforRoles.containsKey(roleName));
                     }
                 }
             }
@@ -79,13 +80,13 @@ public class ArgumentExtractor extends AbstractLoggingAnnotator {
                 }
             }
 
+            //for the same mention, all arguments should be merged together
             Set<StanfordCorenlpToken> mappedArguments = new HashSet<>();
 
             for (Map.Entry<StanfordCorenlpToken, String> semaforRoleHead : semafordHeadWord2Role.entrySet()) {
                 StanfordCorenlpToken headToken = semaforRoleHead.getKey();
                 mappedArguments.add(headToken);
                 String semaforRoleName = semaforRoleHead.getValue();
-//                System.out.println("Getting " + semaforRoleName + " " + semaforRoles.containsKey(semaforRoleName));
                 SemaforLabel argumentAnnotation = semaforRoles.get(semaforRoleName);
                 EventMentionArgumentLink argumentLink = new EventMentionArgumentLink(aJCas);
                 EntityMention argumentEntityMention = UimaNlpUtils.createEntityMention(aJCas, argumentAnnotation.getBegin(), argumentAnnotation.getEnd(), ANNOTATOR_COMPONENT_ID);

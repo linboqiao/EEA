@@ -63,14 +63,15 @@ public class ArgumentStatisticsCounter extends AbstractLoggingAnnotator {
 
     public static void main(String[] args) throws UIMAException, IOException {
         // Parameters for the reader
-        String paramInputDir = "data/02_event_tuples";
+        String parentInput = "data";
+        String baseInput = "02_event_tuples";
         // Parameters for the writer
         String paramTypeSystemDescriptor = "TypeSystem";
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, parentInput, baseInput);
 
         AnalysisEngineDescription counter = AnalysisEngineFactory.createEngineDescription(
                 ArgumentStatisticsCounter.class, typeSystemDescription);

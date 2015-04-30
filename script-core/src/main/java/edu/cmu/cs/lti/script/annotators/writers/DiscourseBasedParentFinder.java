@@ -110,17 +110,14 @@ public class DiscourseBasedParentFinder extends JCasAnnotator_ImplBase {
 
         System.out.println(className + " started...");
 
-        // ///////////////////////// Parameter Setting ////////////////////////////
-        // Note that you should change the parameters below for your configuration.
-        // //////////////////////////////////////////////////////////////////////////
         // Parameters for the reader
-        String paramInputDir = "data/02_discourse_parsed";
+        String parentInput = "data";
+        String baseInput = "02_discourse_parsed";
 
         // Parameters for the writer
         String paramParentOutputDir = "data";
         String paramBaseOutputDirName = "discourse_parsed";
         String paramOutputFileSuffix = null;
-        // ////////////////////////////////////////////////////////////////
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -128,10 +125,8 @@ public class DiscourseBasedParentFinder extends JCasAnnotator_ImplBase {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        // Instantiate a collection reader to get XMI as input.
-        // Note that you should change the following parameters for your setting.
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
+                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, parentInput, baseInput);
 
         AnalysisEngineDescription discourseParser = AnalysisEngineFactory.createEngineDescription(
                 DiscourseBasedParentFinder.class, typeSystemDescription);

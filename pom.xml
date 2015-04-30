@@ -94,6 +94,11 @@
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
+                <groupId>edu.cmu.cs.lti</groupId>
+                <artifactId>opennlp</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
                 <groupId>edu.stanford.nlp</groupId>
                 <artifactId>stanford-corenlp</artifactId>
                 <version>3.4.1</version>
@@ -175,7 +180,6 @@
                 <artifactId>jwi</artifactId>
                 <version>2.2.3</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 </project>

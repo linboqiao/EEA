@@ -1,5 +1,5 @@
 package edu.cmu.cs.lti.script.runners; /**
- * 
+ *
  */
 
 import edu.cmu.cs.lti.annotators.FanseAnnotator;
@@ -19,66 +19,54 @@ import java.io.IOException;
 
 /**
  * @author zhengzhongliu
- * 
  */
 public class PreparationPipeline {
 
-  private static String className = PreparationPipeline.class.getSimpleName();
+    private static String className = PreparationPipeline.class.getSimpleName();
 
-  /**
-   * @param args
-   * @throws java.io.IOException
-   * @throws org.apache.uima.resource.ResourceInitializationException
-   * @throws org.apache.uima.UIMAException
-   */
-  public static void main(String[] args) throws IOException, ResourceInitializationException {
-    System.out.println(className + " started...");
+    /**
+     * @param args
+     * @throws java.io.IOException
+     * @throws org.apache.uima.resource.ResourceInitializationException
+     * @throws org.apache.uima.UIMAException
+     */
+    public static void main(String[] args) throws IOException, ResourceInitializationException {
+        System.out.println(className + " started...");
 
-    // ///////////////////////// Parameter Setting ////////////////////////////
-    // Note that you should change the parameters below for your configuration.
-    // //////////////////////////////////////////////////////////////////////////
-    // Parameters for the reader
-    String paramInputDir = args[0];// "/Users/zhengzhongliu/Downloads/agiga_sample"
+        String paramInputDir = args[0];// "/Users/zhengzhongliu/Downloads/agiga_sample"
+        String paramModelBaseDirectory = args[1];// "../models"
 
-    // Parameters for the writer
-    String paramParentOutputDir = "data";
-    String paramBaseOutputDirName = args[1];
-    String paramOutputFileSuffix = null;
+        // Parameters for the writer
+        String paramParentOutputDir = "data";
+        String paramBaseOutputDirName = "fanse_parsed";
+        String paramOutputFileSuffix = null;
 
-    String paramModelBaseDirectory = args[2];// "/Users/zhengzhongliu/Documents/projects/uimafied-tools/fanse-parser/src/main/resources/"
-    // ////////////////////////////////////////////////////////////////
+        String paramTypeSystemDescriptor = "TypeSystem";
 
-    String paramTypeSystemDescriptor = "TypeSystem";
+        System.out.println("Reading from " + paramInputDir + " , writing to base dir " + paramBaseOutputDirName);
 
-    System.out.println("Reading from " + paramInputDir + " , writing to base dir " + args[1]);
+        TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
+                .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-    // Instantiate the analysis engine.
-    TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
-            .createTypeSystemDescription(paramTypeSystemDescriptor);
+        CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
+                AgigaCollectionReader.class, typeSystemDescription,
+                AgigaCollectionReader.PARAM_INPUTDIR, paramInputDir);
 
-    // Instantiate a collection reader to get XMI as input.
-    // Note that you should change the following parameters for your setting.
-    CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
-            AgigaCollectionReader.class, typeSystemDescription,
-            AgigaCollectionReader.PARAM_INPUTDIR, paramInputDir);
+        AnalysisEngineDescription fanseParser = AnalysisEngineFactory.createEngineDescription(
+                FanseAnnotator.class, typeSystemDescription, FanseAnnotator.PARAM_MODEL_BASE_DIR,
+                paramModelBaseDirectory);
 
-    AnalysisEngineDescription fanseParser = AnalysisEngineFactory.createEngineDescription(
-            FanseAnnotator.class, typeSystemDescription, FanseAnnotator.PARAM_MODEL_BASE_DIR,
-            paramModelBaseDirectory);
+        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createGzippedXmiWriter(
+                paramParentOutputDir, paramBaseOutputDirName, 0, paramOutputFileSuffix);
 
-    // Instantiate a XMI writer to put XMI as output.
-    // Note that you should change the following parameters for your setting.
-    AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createGzippedXmiWriter(
-            paramParentOutputDir, paramBaseOutputDirName, 0, paramOutputFileSuffix);
+        // Run the pipeline.
 
-    // Run the pipeline.
+        try {
+            SimplePipeline.runPipeline(reader, fanseParser, writer);
+        } catch (UIMAException e) {
+            e.printStackTrace();
+        }
 
-    try {
-      SimplePipeline.runPipeline(reader, fanseParser, writer);
-    } catch (UIMAException e) {
-      e.printStackTrace();
+        System.out.println(className + " successfully completed.");
     }
-
-    System.out.println(className + " successfully completed.");
-  }
 }

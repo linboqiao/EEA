@@ -33,7 +33,8 @@ public class EventMentionTupleExtractorRunner {
         System.out.println(className + " started...");
 
         // Parameters for the reader
-        String inputDir = args[0]; //"data/01_discourse_parsed";
+        String parentInput = args[0]; //"data"
+        String baseInput = args[1]; //"01_discourse_parsed";
 
         String parentDir = "data";
 
@@ -48,7 +49,7 @@ public class EventMentionTupleExtractorRunner {
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, inputDir, false);
+                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, parentInput, baseInput);
 
         AnalysisEngineDescription fixer = AnalysisEngineFactory.createEngineDescription(HeadWordFixer.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 

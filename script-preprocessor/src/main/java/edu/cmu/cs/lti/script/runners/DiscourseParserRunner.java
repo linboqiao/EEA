@@ -34,35 +34,28 @@ public class DiscourseParserRunner {
     public static void main(String[] args) throws UIMAException, IOException {
         logger.log(Level.INFO, className + " started...");
 
-        if (args.length < 3){
-            logger.log(Level.INFO, "Please provide input and output directory and step number");
+        if (args.length < 1) {
+            logger.log(Level.INFO, "Please provide input parent and base directory");
             System.exit(1);
         }
 
-        // ///////////////////////// Parameter Setting ////////////////////////////
-        // Note that you should change the parameters below for your configuration.
-        // //////////////////////////////////////////////////////////////////////////
-        // Parameters for the reader
-        String paramInputDir = args[0]; //"data/01_event_tuples";
-        int inputStepNum = Integer.parseInt(args[1]);
+        String parentInputDir = args[1];
+        String baseInputDir = args[0]; //"data/01_event_tuples";
 
-//        String paramInputDir = "data/test";
+        String paramBaseOutputDirName = "discourse_parsed"; //"discourse_parsed";
+
+        Integer inputStepNum = null;
+        Integer outputStepNum = null;
+        if (args.length >= 3) {
+            inputStepNum = Integer.parseInt(args[1]);
+            outputStepNum = inputStepNum + 1;
+        }
 
         // Parameters for the writer
-        String paramParentOutputDir = "data";
-        String paramBaseOutputDirName = args[2]; //"discourse_parsed";
         String paramOutputFileSuffix = null;
-
-        boolean quiet = false;
-        // Quiet or not
-        if (args.length >=4) {
-             quiet = args[3].equals("quiet");
-        }
-        // ////////////////////////////////////////////////////////////////
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
-        int outputStepNum = inputStepNum + 1;
 
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
@@ -71,13 +64,13 @@ public class DiscourseParserRunner {
         // Instantiate a collection reader to get XMI as input.
         // Note that you should change the following parameters for your setting.
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
+                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, parentInputDir, baseInputDir);
 
         AnalysisEngineDescription discourseParser = AnalysisEngineFactory.createEngineDescription(
-                DiscourseParserAnnotator.class, typeSystemDescription, DiscourseParserAnnotator.PARAM_KEEP_QUIET, quiet);
+                DiscourseParserAnnotator.class, typeSystemDescription);
 
         AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createGzipWriter(
-                paramParentOutputDir, paramBaseOutputDirName, outputStepNum, paramOutputFileSuffix, null);
+                parentInputDir, paramBaseOutputDirName, outputStepNum, paramOutputFileSuffix, null);
 
         SimplePipeline.runPipeline(reader, discourseParser, writer);
     }

@@ -1,5 +1,6 @@
 package edu.cmu.lti.event_coref.pipeline;
 
+import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.pipeline.AbstractProcessorBuilder;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
@@ -8,6 +9,7 @@ import edu.cmu.lti.event_coref.annotators.ArgumentExtractor;
 import edu.cmu.lti.event_coref.annotators.GoldStandardEventMentionAnnotator;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
+import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -47,7 +49,8 @@ public class CorefPipeline {
             @Override
             public AnalysisEngineDescription[] buildProcessors() throws ResourceInitializationException {
                 AnalysisEngineDescription eventMentionAnnotator = AnalysisEngineFactory.createEngineDescription(
-                        GoldStandardEventMentionAnnotator.class, typeSystemDescription
+                        GoldStandardEventMentionAnnotator.class, typeSystemDescription,
+                        GoldStandardEventMentionAnnotator.PARAM_TARGET_VIEWS, new String[]{CAS.NAME_DEFAULT_SOFA, UimaConst.inputViewName}
                 );
                 AnalysisEngineDescription argumentExtractor = AnalysisEngineFactory.createEngineDescription(
                         ArgumentExtractor.class, typeSystemDescription
@@ -69,7 +72,7 @@ public class CorefPipeline {
         CorefPipeline pipeline = new CorefPipeline();
         String typeSystemName = "TypeSystem";
         String parentDir = argv[0];
-        String baseInputDir = argv[1];
+        String baseInputDir = "discourse_parsed";
         String xmiOutputBase = "argument_extracted";
         pipeline.prepareEventMentions(typeSystemName, parentDir, baseInputDir, xmiOutputBase);
     }

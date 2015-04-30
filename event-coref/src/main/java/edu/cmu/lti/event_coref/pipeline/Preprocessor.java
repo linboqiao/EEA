@@ -2,7 +2,9 @@ package edu.cmu.lti.event_coref.pipeline;
 
 import edu.cmu.cs.lti.annotator.StanfordCoreNlpAnnotator;
 import edu.cmu.cs.lti.annotators.FanseAnnotator;
+import edu.cmu.cs.lti.annotators.OpenNlpChunker;
 import edu.cmu.cs.lti.collection_reader.BratEventGoldStandardAnnotator;
+import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.PlainTextCollectionReader;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -42,8 +44,6 @@ public class Preprocessor {
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
-        String inputViewName = "original";
-
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
@@ -51,11 +51,11 @@ public class Preprocessor {
                 PlainTextCollectionReader.class,
                 PlainTextCollectionReader.PARAM_INPUTDIR, sourceTextDir,
                 PlainTextCollectionReader.PARAM_TEXT_SUFFIX, BratEventGoldStandardAnnotator.defaultTextFileNameSuffix,
-                PlainTextCollectionReader.PARAM_INPUT_VIEW_NAME, inputViewName);
+                PlainTextCollectionReader.PARAM_INPUT_VIEW_NAME, UimaConst.inputViewName);
 
         AnalysisEngineDescription cleaner = AnalysisEngineFactory.createEngineDescription(
                 InputTextCleaner.class, typeSystemDescription,
-                InputTextCleaner.PARAM_INPUT_VIEW_NAME, inputViewName
+                InputTextCleaner.PARAM_INPUT_VIEW_NAME, UimaConst.inputViewName
         );
 
         AnalysisEngineDescription goldStandard = AnalysisEngineFactory.createEngineDescription(
@@ -75,13 +75,16 @@ public class Preprocessor {
                 FanseAnnotator.class, typeSystemDescription, FanseAnnotator.PARAM_MODEL_BASE_DIR,
                 fanseModelDirectory);
 
+        AnalysisEngineDescription opennlp = AnalysisEngineFactory.createEngineDescription(
+                OpenNlpChunker.class, typeSystemDescription);
+
         AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(
                 parentDir, outputBaseDir, null, null
         );
 
         try {
-//            SimplePipeline.runPipeline(reader, cleaner,  goldStandard, writer);
-            SimplePipeline.runPipeline(reader, cleaner, goldStandard, stanfordAnalyzer, semaforAnalyzer, fanseParser, writer);
+//            SimplePipeline.runPipeline(reader, cleaner, goldStandard, writer);
+            SimplePipeline.runPipeline(reader, cleaner, goldStandard, stanfordAnalyzer, semaforAnalyzer, fanseParser, opennlp, writer);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);

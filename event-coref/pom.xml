@@ -21,6 +21,12 @@
             <artifactId>guava</artifactId>
             <version>12.0</version>
         </dependency>
+        <!--there are some conflicts in discourse parse and semafor libs-->
+        <!--do not run them at the same time-->
+        <!--<dependency>-->
+        <!--<groupId>edu.cmu.cs.lti</groupId>-->
+        <!--<artifactId>discourse-parser</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>edu.cmu.cs.lti</groupId>
             <artifactId>stanford-corenlp</artifactId>

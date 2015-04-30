@@ -29,17 +29,13 @@ public class SingletonRunner {
     public static void main(String[] args) throws UIMAException, IOException {
         System.out.println(className + " started...");
 
-        // ///////////////////////// Parameter Setting ////////////////////////////
-        // Note that you should change the parameters below for your configuration.
-        // //////////////////////////////////////////////////////////////////////////
-        // Parameters for the reader
-        String paramInputDir = "data/01_event_tuples";
+        String parentInput = "data";
+        String baseInput = "data/01_event_tuples";
 
         // Parameters for the writer
         String paramParentOutputDir = "data";
         String paramBaseOutputDirName = "singleton_annotated";
         String paramOutputFileSuffix = null;
-        // ////////////////////////////////////////////////////////////////
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -47,10 +43,8 @@ public class SingletonRunner {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        // Instantiate a collection reader to get XMI as input.
-        // Note that you should change the following parameters for your setting.
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
+                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, parentInput, baseInput);
 
 
         AnalysisEngineDescription singletonCreator = AnalysisEngineFactory.createEngineDescription(

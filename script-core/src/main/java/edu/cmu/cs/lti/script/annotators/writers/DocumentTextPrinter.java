@@ -5,7 +5,6 @@ package edu.cmu.cs.lti.script.annotators.writers;
 
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalsysisEngine;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -47,7 +46,8 @@ public class DocumentTextPrinter extends AbstractCustomizedTextWriterAnalsysisEn
 
 
         // Parameters for the reader
-        String paramInputDir = "data/01_event_tuples_sample";
+        String parentInput = "data";
+        String baseInput = "01_event_tuples_sample";
 
         // Parameters for the writer
         String paramParentOutputDir = "data";
@@ -63,7 +63,7 @@ public class DocumentTextPrinter extends AbstractCustomizedTextWriterAnalsysisEn
         // Instantiate a collection reader to get XMI as input.
         // Note that you should change the following parameters for your setting.
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, paramInputDir, false);
+                CustomCollectionReaderFactory.createTimeSortedGzipXmiReader(typeSystemDescription, parentInput, baseInput);
 
         AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
                 DocumentTextPrinter.class, typeSystemDescription,
