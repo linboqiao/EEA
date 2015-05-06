@@ -4,16 +4,15 @@ import edu.cmu.cs.lti.script.type.EntityMention;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
-import gnu.trove.map.TObjectFloatMap;
-import gnu.trove.map.hash.TObjectFloatHashMap;
+import edu.cmu.lti.event_coref.model.graph.Edge;
+import gnu.trove.map.TObjectDoubleMap;
+import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,10 +21,15 @@ import java.util.Map;
  *
  * @author Zhengzhong Liu
  */
-public class MentionPairFeatureExtractor {
+public class MentionPairFeatureExtractor implements Serializable {
+    private static final long serialVersionUID = 2717024521605026684L;
     //TODO speed up using hash kernel
 
-    Map<EventMention, StanfordCorenlpSentence> evm2SentMap = new HashMap<>();
+    private Map<EventMention, StanfordCorenlpSentence> evm2SentMap = new HashMap<>();
+
+    private TObjectDoubleMap<String> unlabelledFeatures;
+
+    private EnumMap<Edge.EdgeType, TObjectDoubleMap<String>> labelledFeatures;
 
     public MentionPairFeatureExtractor(JCas aJCas) {
         for (StanfordCorenlpSentence sent : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
@@ -35,75 +39,78 @@ public class MentionPairFeatureExtractor {
         }
     }
 
-    public TObjectFloatMap<String> getFeatures(EventMention antecedent, EventMention anaphora) {
-        TObjectFloatMap<String> features = new TObjectFloatHashMap<>();
-        features.putAll(lexicalFeatures(antecedent, anaphora));
-        features.putAll(argumentFeatures(antecedent, anaphora));
-        features.putAll(distanceFeatures(antecedent, anaphora));
-        return features;
+    public TObjectDoubleMap<String> getUnlablledFeatures() {
+        return unlabelledFeatures;
     }
 
-    public TObjectFloatMap<String> lexicalFeatures(EventMention antecedent, EventMention anaphora) {
-        TObjectFloatMap<String> features = new TObjectFloatHashMap<>();
-        if (antecedent.getHeadWord().getLemma().toLowerCase().equals(anaphora.getHeadWord().getLemma())) {
-            features.put("headMatch", 1);
+    public TObjectDoubleMap<String> getFeaturesByType(Edge.EdgeType linkType) {
+        return labelledFeatures.get(linkType);
+    }
+
+
+    public EnumMap<Edge.EdgeType, TObjectDoubleMap<String>> getLabelledFeatures() {
+        return labelledFeatures;
+    }
+
+
+    public void computeFeatures(EventMention antecedent, EventMention mention) {
+        unlabelledFeatures = new TObjectDoubleHashMap<>();
+        labelledFeatures = new EnumMap<>(Edge.EdgeType.class);
+        lexicalFeatures(antecedent, mention);
+        argumentFeatures(antecedent, mention);
+        distanceFeatures(antecedent, mention);
+    }
+
+    private void lexicalFeatures(EventMention antecedent, EventMention mention) {
+        if (antecedent.getHeadWord().getLemma().toLowerCase().equals(mention.getHeadWord().getLemma())) {
+            unlabelledFeatures.put("headMatch", 1);
         }
-        return features;
     }
 
-
-    public TObjectFloatMap<String> argumentFeatures(EventMention antecedent, EventMention anaphora) {
-        TObjectFloatMap<String> features = new TObjectFloatHashMap<>();
-
+    private void argumentFeatures(EventMention antecedent, EventMention mention) {
         Map<String, EntityMention> antecedentPropbankMentions = new HashMap<>();
-        Map<String, EntityMention> anaphoraPropbankMentions = new HashMap<>();
+        Map<String, EntityMention> mentionPropbankMentions = new HashMap<>();
 
         for (EventMentionArgumentLink antecedentArgLink : getArguments(antecedent)) {
             antecedentPropbankMentions.put(antecedentArgLink.getPropbankRoleName(), antecedentArgLink.getArgument());
         }
 
-        for (EventMentionArgumentLink anaphoraArgLink : getArguments(anaphora)) {
-            anaphoraPropbankMentions.put(anaphoraArgLink.getPropbankRoleName(), anaphoraArgLink.getArgument());
+        for (EventMentionArgumentLink mentionArgLink : getArguments(mention)) {
+            mentionPropbankMentions.put(mentionArgLink.getPropbankRoleName(), mentionArgLink.getArgument());
         }
 
         for (Map.Entry<String, EntityMention> antecedentPropbankMention : antecedentPropbankMentions.entrySet()) {
             String propbankRole = antecedentPropbankMention.getKey();
             EntityMention antMention = antecedentPropbankMention.getValue();
-            if (anaphoraPropbankMentions.containsKey(propbankRole)) {
+            if (mentionPropbankMentions.containsKey(propbankRole)) {
                 String featureTemplate = "argument_" + propbankRole;
-                EntityMention anaMention = anaphoraPropbankMentions.get(propbankRole);
+                EntityMention anaMention = mentionPropbankMentions.get(propbankRole);
                 if (antMention.getReferingEntity() == anaMention.getReferingEntity()) {
-                    features.put("argument_" + propbankRole + "_coref", 1);
+                    unlabelledFeatures.put(featureTemplate + "_coref", 1);
                 }
                 if (antMention.getHead().getLemma().toLowerCase().equals(anaMention.getHead().getLemma().toLowerCase())) {
-                    features.put("argument_" + propbankRole + "_headMatch", 1);
+                    unlabelledFeatures.put(featureTemplate + "_headMatch", 1);
                 }
             }
         }
-
-        return features;
     }
 
-    private TObjectFloatMap<String> distanceFeatures(EventMention antecedent, EventMention anaphora) {
-        TObjectFloatMap<String> features = new TObjectFloatHashMap<>();
-
+    private void distanceFeatures(EventMention antecedent, EventMention mention) {
         int antecedentSentId = Integer.parseInt(evm2SentMap.get(antecedent).getId());
-        int anaphoraSentId = Integer.parseInt((evm2SentMap.get(anaphora)).getId());
+        int mentionSentId = Integer.parseInt((evm2SentMap.get(mention)).getId());
 
-        int diff = anaphoraSentId - antecedentSentId;
+        int diff = mentionSentId - antecedentSentId;
 
         if (diff == 0) {
-            features.put("sameSentence", 1);
+            unlabelledFeatures.put("sameSentence", 1);
         } else if (diff == 1) {
-            features.put("previousSentence", 1);
+            unlabelledFeatures.put("previousSentence", 1);
             if (antecedentSentId == 0) {
-                features.put("top2Sentence", 1);
+                unlabelledFeatures.put("top2Sentence", 1);
             }
         } else if (diff < 5) {
-            features.put("within5Sentence", 1);
+            unlabelledFeatures.put("within5Sentence", 1);
         }
-
-        return features;
     }
 
     private List<EventMentionArgumentLink> getArguments(EventMention mention) {

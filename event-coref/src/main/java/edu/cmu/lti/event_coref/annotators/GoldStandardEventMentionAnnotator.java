@@ -14,6 +14,10 @@ import org.apache.uima.jcas.cas.FSArray;
  * Created with IntelliJ IDEA.
  * Date: 4/20/15
  * Time: 2:45 PM
+ * <p/>
+ * Annotate event mentions based on Gold Standard, while this is useful
+ * for training, it is can also be used in some evaluation case when
+ * gold standard mentions are given
  *
  * @author Zhengzhong Liu
  */
