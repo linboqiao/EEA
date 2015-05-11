@@ -150,14 +150,14 @@ public class FET extends RelationExtractionStructuredFeature {
 				return "";
 			}
 			common = leftTemp;
-			while (true) {
-				leftTemp = leftPath.pop();
-				rightTemp = rightPath.pop();
-				if (!leftTemp.equals(rightTemp)) {
-					break;
-				}
-				common = leftTemp;
-			}
+//			while (true) {
+//				leftTemp = leftPath.pop();
+//				rightTemp = rightPath.pop();
+//				if (!leftTemp.equals(rightTemp)) {
+//					break;
+//				}
+//				common = leftTemp;
+//			}
 			
 			ArrayList<String> elementPath = new ArrayList<String>();
 			while (!leftPath.isEmpty()) {
