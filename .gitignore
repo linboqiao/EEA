@@ -9,3 +9,4 @@ target/
 logs/
 /debug/
 grad_compare/
+excluded_classes/
