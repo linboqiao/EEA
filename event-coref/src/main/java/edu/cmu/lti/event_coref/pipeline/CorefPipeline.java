@@ -27,7 +27,7 @@ import java.io.IOException;
 
 /**
  * A pipeline structure that create mentions first and then create coref links
- * <p/>
+ * <p>
  * Created with IntelliJ IDEA.
  * Date: 4/15/15
  * Time: 5:20 PM
@@ -35,7 +35,8 @@ import java.io.IOException;
  * @author Zhengzhong Liu
  */
 public class CorefPipeline {
-    public void prepareEventMentions(String typeSystemName, final String parentDir, final String modelPath, final String xmiOutputBase) throws UIMAException, IOException {
+    public void prepareEventMentions(String typeSystemName, final String parentDir, final String modelPath, final
+    String xmiOutputBase) throws UIMAException, IOException {
         final TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(typeSystemName);
 
@@ -54,8 +55,11 @@ public class CorefPipeline {
                 return CollectionReaderFactory.createReaderDescription(
                         PlainTextCollectionReader.class,
                         PlainTextCollectionReader.PARAM_INPUTDIR, sourceTextDir,
-                        PlainTextCollectionReader.PARAM_TEXT_SUFFIX, BratEventGoldStandardAnnotator.defaultTextFileNameSuffix,
+                        PlainTextCollectionReader.PARAM_TEXT_SUFFIX, BratEventGoldStandardAnnotator
+                                .defaultTextFileNameSuffix,
                         PlainTextCollectionReader.PARAM_INPUT_VIEW_NAME, UimaConst.inputViewName);
+//                return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, parentDir,
+// "argument_extracted_old");
             }
 
             @Override
@@ -94,17 +98,23 @@ public class CorefPipeline {
 
                 AnalysisEngineDescription eventMentionAnnotator = AnalysisEngineFactory.createEngineDescription(
                         GoldStandardEventMentionAnnotator.class, typeSystemDescription,
-                        GoldStandardEventMentionAnnotator.PARAM_TARGET_VIEWS, new String[]{CAS.NAME_DEFAULT_SOFA, UimaConst.inputViewName}
+                        GoldStandardEventMentionAnnotator.PARAM_TARGET_VIEWS, new String[]{CAS.NAME_DEFAULT_SOFA,
+                                UimaConst.inputViewName}
                 );
+
                 AnalysisEngineDescription argumentExtractor = AnalysisEngineFactory.createEngineDescription(
                         ArgumentExtractor.class, typeSystemDescription
                 );
-                return new AnalysisEngineDescription[]{cleaner, goldStandard, stanfordAnalyzer, semaforAnalyzer, fanseParser, opennlp, eventMentionAnnotator, argumentExtractor};
+                return new AnalysisEngineDescription[]{cleaner, goldStandard, stanfordAnalyzer, semaforAnalyzer,
+                        fanseParser, opennlp, eventMentionAnnotator, argumentExtractor};
+//                return new AnalysisEngineDescription[]{eventAnnotator};
             }
+
 
             @Override
             public AnalysisEngineDescription[] buildPostProcessors() throws ResourceInitializationException {
-                AnalysisEngineDescription xmiWriter = CustomAnalysisEngineFactory.createXmiWriter(parentDir, xmiOutputBase);
+                AnalysisEngineDescription xmiWriter = CustomAnalysisEngineFactory.createXmiWriter(parentDir,
+                        xmiOutputBase);
                 return new AnalysisEngineDescription[]{xmiWriter};
             }
         });

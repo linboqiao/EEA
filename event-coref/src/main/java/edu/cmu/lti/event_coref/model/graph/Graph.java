@@ -10,10 +10,13 @@ import edu.cmu.lti.event_coref.ml.StructWeights;
 import edu.cmu.lti.event_coref.model.graph.Edge.EdgeType;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,6 +26,8 @@ import java.util.Map;
  * @author Zhengzhong Liu
  */
 public class Graph {
+    private static final Logger logger = LoggerFactory.getLogger(Graph.class.getName());
+
     private Node[] nodes;
 
     //Edge is indexed from the anaphora to its antecedent
@@ -41,19 +46,39 @@ public class Graph {
         //a virtual root
         nodes[0] = new Node(0);
 
-        ArrayListMultimap<Event, Integer> event2Clusters = groupEventClusters(mentions);
+        ArrayListMultimap<Integer, Integer> event2Clusters = groupEventClusters(mentions);
+
+        logger.debug(String.format("Number of all clusters : %d", event2Clusters.size()));
+
         //this will only store non-singleton to corefChains
         corefChains = GraphUtils.createSortedCorefChains(event2Clusters);
+        logger.debug(String.format("Number of non-singleton clusters : %d", corefChains.length));
+
         //this will store all relations
         edgeAdjacentList = GraphUtils.resolveRelations(generalizeRelationNode(relations), event2Clusters, nodes.length);
 
-        edges = new Edge[nodes.length - 1][];
-        for (int curr = 1; curr < nodes.length; curr++) {
+        edgeAdjacentList.forEach(new BiConsumer<EdgeType, int[][]>() {
+            @Override
+            public void accept(EdgeType edgeType, int[][] adjacentLists) {
+                int numEdge = 0;
+                for (int[] l : adjacentLists) {
+                    numEdge += l.length;
+                }
+                logger.debug(String.format("Number of edges for %s is %d", edgeType, numEdge));
+            }
+        });
+
+        // Edges is a 2-d array, from current to antecedent
+        // the first node (root), does not have any antecedent, which is a empty array
+        edges = new Edge[nodes.length][];
+        for (int curr = 0; curr < nodes.length; curr++) {
             edges[curr] = new Edge[curr];
             for (int ant = 0; ant < curr; ant++) {
                 edges[curr][ant] = new Edge(ant, curr);
             }
         }
+
+//        System.out.println(Arrays.deepToString(edges));
 
         //store all golden edge type into edge
         for (int[] chain : corefChains) {
@@ -61,7 +86,7 @@ public class Graph {
                 int antecedentId = chain[i];
                 for (int j = i + 1; j < chain.length; j++) {
                     int anaphoraId = chain[j];
-                    edges[antecedentId][anaphoraId].edgeType = EdgeType.Coreference;
+                    edges[anaphoraId][antecedentId].edgeType = EdgeType.Coreference;
                 }
             }
         }
@@ -76,27 +101,40 @@ public class Graph {
                 }
             }
         }
+
+        for (Edge[] antecedentEdges : edges) {
+            boolean hasEdge = false;
+            for (Edge antEdge : antecedentEdges) {
+                if (antEdge.edgeType != null) {
+                    hasEdge = true;
+                    break;
+                }
+            }
+            if (!hasEdge && antecedentEdges.length > 0) {
+                antecedentEdges[0].edgeType = EdgeType.Root;
+            }
+        }
     }
 
-    private ArrayListMultimap<Event, Integer> groupEventClusters(List<EventMention> mentions) {
-        ArrayListMultimap<Event, Integer> event2Clusters = ArrayListMultimap.create();
+    private ArrayListMultimap<Integer, Integer> groupEventClusters(List<EventMention> mentions) {
+        ArrayListMultimap<Integer, Integer> event2Clusters = ArrayListMultimap.create();
         for (int i = 1; i < nodes.length; i++) {
             EventMention mention = mentions.get(i - 1);
             nodes[i] = new Node(i, mention);
             Event event = mention.getReferringEvent();
             //this will store all clusters, including singleton clusters
-            event2Clusters.put(event, i);
+            event2Clusters.put(event.getEventIndex(), i);
         }
         return event2Clusters;
     }
 
-    private ArrayListMultimap<EdgeType, Pair<Event, Event>> generalizeRelationNode(List<EventMentionRelation> relations) {
-        ArrayListMultimap<EdgeType, Pair<Event, Event>> allRelations = ArrayListMultimap.create();
+    private ArrayListMultimap<EdgeType, Pair<Integer, Integer>> generalizeRelationNode(List<EventMentionRelation> relations) {
+        ArrayListMultimap<EdgeType, Pair<Integer, Integer>> allRelations = ArrayListMultimap.create();
         for (EventMentionRelation relation : relations) {
             EventMention govMention = relation.getHead();
             EventMention depMention = relation.getChild();
             EdgeType type = EdgeType.valueOf(relation.getRelationType());
-            allRelations.put(type, Pair.of(govMention.getReferringEvent(), depMention.getReferringEvent()));
+            allRelations.put(type, Pair.of(govMention.getReferringEvent().getEventIndex(), depMention.getReferringEvent().getEventIndex()));
         }
         return allRelations;
     }
@@ -134,11 +172,11 @@ public class Graph {
         // Might move this to graph class instead
         for (Edge[] edges : this.getEdges()) {
             for (Edge edge : edges) {
-                Node depNode = this.getNode(edge.depIdx);
                 Node govNode = this.getNode(edge.govIdx);
-                extractor.computeFeatures(depNode.getMention(), govNode.getMention());
+                Node depNode = this.getNode(edge.depIdx);
+                extractor.computeFeatures(edge, govNode, depNode);
                 //set unlabelled score and features
-                TObjectDoubleMap<String> arcFeatures = extractor.getUnlablledFeatures();
+                TObjectDoubleMap<String> arcFeatures = extractor.getUnlabelledFeatures();
                 edge.setArcScore(weights.unlabelledWeights.score(arcFeatures));
                 edge.setArcFeatures(arcFeatures);
 
@@ -152,5 +190,16 @@ public class Graph {
                 }
             }
         }
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Graph : \n");
+        for (Edge[] edgeArray : edges) {
+            for (Edge edge : edgeArray) {
+                sb.append("\t").append(edge).append("\n");
+            }
+        }
+        return sb.toString();
     }
 }

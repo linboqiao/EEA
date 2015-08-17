@@ -35,8 +35,16 @@ public class StructDelta {
     public double getScore(StructWeights weights) {
         double score = weights.unlabelledWeights.score(unlabelledFeatures);
         for (Map.Entry<Edge.EdgeType, MapBasedFeatureContainer> typedWeights : weights.labelledWeights.entrySet()) {
-            score += typedWeights.getValue().score(typedFeatures.get(typedWeights.getKey()));
+            TObjectDoubleMap<String> typedFeature = typedFeatures.get(typedWeights.getKey());
+            if (typedFeature != null) {
+                score += typedWeights.getValue().score(typedFeature);
+            }
         }
         return score;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[StructDelta]:\n - Unlabelled Features : [%s]\n - Labelled Features: [%s]", unlabelledFeatures.toString(), typedFeatures.toString());
     }
 }

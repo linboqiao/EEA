@@ -10,9 +10,9 @@ import java.util.EnumMap;
  * Created with IntelliJ IDEA.
  * Date: 5/1/15
  * Time: 10:56 PM
- * <p/>
+ * <p>
  * Partially borrowed from HotCoref
- * <p/>
+ * <p>
  * http://www.ims.uni-stuttgart.de/forschung/ressourcen/werkzeuge/HOTCoref.en.html
  *
  * @author Zhengzhong Liu
@@ -20,7 +20,10 @@ import java.util.EnumMap;
 public class Edge {
     public final int govIdx;
     public final int depIdx;
-    public EdgeType edgeType;
+
+    //this variable store the gold type when training
+    //null means the gold type is nothing
+    public EdgeType edgeType = null;
 
     //a score for each label type
     private double[] labelScores;
@@ -55,19 +58,23 @@ public class Edge {
         this.arcScore = arcScore;
     }
 
-    public Pair<EdgeType, Double> getCorretLabelScore() {
-        if (edgeType != null) {
-            return Pair.with(edgeType, labelScores[edgeType.ordinal()]);
-        } else {
+    public Pair<EdgeType, Double> getCorrectLabelScore() {
+        if (edgeType == null) {
             return null;
+        } else {
+            return Pair.with(edgeType, labelScores[edgeType.ordinal()]);
         }
     }
 
-    public Pair<EdgeType, Double> getBestLabelScore() {
+    public Pair<EdgeType, Double> getBestLabelScore(boolean fromRoot) {
         double score = Double.NEGATIVE_INFINITY;
         EdgeType bestLabel = null;
         for (EdgeType label : EdgeType.values()) {
+            if (!fromRoot && label.equals(EdgeType.Root)) {
+                continue;
+            }
             double typeScore = getLabelScore(label);
+
             if (typeScore > score) {
                 score = typeScore;
                 bestLabel = label;
@@ -101,7 +108,7 @@ public class Edge {
     }
 
     public String toString() {
-        return "e: (" + govIdx + ',' + depIdx + ")";
+        return "Edge: (" + govIdx + ',' + depIdx + ")" + " [" + edgeType + "]";
     }
 
     public static final Comparator<Edge> edgeDepComparator = new Comparator<Edge>() {

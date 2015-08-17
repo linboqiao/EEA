@@ -87,14 +87,15 @@ public class SubGraph {
         edges.add(new SubGraphEdge(newEdge.govIdx, newEdge.depIdx, newType));
         allEdgeFeatures.add(newEdge.getArcFeatures());
 
-        for (Map.Entry<EdgeType, TObjectDoubleMap<String>> entry
-                : newEdge.getLabelledFeatures().entrySet()) {
-            if (allLabelledFeatures.containsKey(entry.getKey())) {
-                VectorUtils.sumInPlace(allLabelledFeatures.get(entry.getKey()), entry.getValue());
-            } else {
-                allLabelledFeatures.put(entry.getKey(), entry.getValue());
-            }
+        if (allLabelledFeatures.containsKey(newType)) {
+            VectorUtils.sumInPlace(allLabelledFeatures.get(newType), newEdge.getLabelledFeatures().get(newType));
+        } else {
+            allLabelledFeatures.put(newType, new TObjectDoubleHashMap<>(newEdge.getLabelledFeatures().get(newType)));
         }
+
+//        System.out.println("After adding edge " + newEdge + " using type " + newType);
+//        System.out.println(allLabelledFeatures);
+
         int edgeIndex = edges.size() - 1;
         edgeIndexes[newEdge.govIdx][newEdge.depIdx] = edgeIndex;
     }
@@ -135,20 +136,22 @@ public class SubGraph {
     public TObjectDoubleMap<String> getEdgeFeatureDeltas(SubGraph otherGraph) {
         TObjectDoubleMap<String> unlabelledFeaturesDelta = new TObjectDoubleHashMap<>();
 
-        //compare edge features
-        for (SubGraphEdge edge : edges) {
-            if (!otherGraph.hasEdge(edge.govIdx, edge.depIdx)) {
-                int edgeIndex = this.getEdgeIndex(edge.govIdx, edge.depIdx);
-                VectorUtils.sumInPlace(unlabelledFeaturesDelta, this.getEdgeFeatures(edgeIndex));
-            }
-        }
+        //compare edge features, we only need to see which edges are not contained in both set
+        //if two graph contains the same edge, the features will cancelled each other.
 
-        for (SubGraphEdge edge : otherGraph.edges) {
-            if (!this.hasEdge(edge.govIdx, edge.depIdx)) {
-                int edgeIndex = otherGraph.getEdgeIndex(edge.govIdx, edge.depIdx);
-                VectorUtils.minusInplace(unlabelledFeaturesDelta, otherGraph.getEdgeFeatures(edgeIndex));
-            }
-        }
+        edges.stream().filter(edge -> !otherGraph.hasEdge(edge.govIdx, edge.depIdx)).forEach(edge -> {
+            int edgeIndex = this.getEdgeIndex(edge.govIdx, edge.depIdx);
+            TObjectDoubleMap<String> edgeFeatures = this.getEdgeFeatures(edgeIndex);
+            VectorUtils.sumInPlace(unlabelledFeaturesDelta, this.getEdgeFeatures(edgeIndex));
+            System.out.println("Edge feature in this graph " + edgeFeatures);
+        });
+
+        otherGraph.edges.stream().filter(edge -> !this.hasEdge(edge.govIdx, edge.depIdx)).forEach(edge -> {
+            int edgeIndex = otherGraph.getEdgeIndex(edge.govIdx, edge.depIdx);
+            TObjectDoubleMap<String> edgeFeatures = otherGraph.getEdgeFeatures(edgeIndex);
+            VectorUtils.minusInplace(unlabelledFeaturesDelta, edgeFeatures);
+            System.out.println("Edge feature in the other graph " + edgeFeatures);
+        });
         return unlabelledFeaturesDelta;
     }
 
@@ -157,13 +160,43 @@ public class SubGraph {
         EnumMap<EdgeType, TObjectDoubleMap<String>> typedFeaturesDelta = new EnumMap<>(EdgeType.class);
 
         EnumMap<EdgeType, TObjectDoubleMap<String>> allOtherGraphFeatures = otherGraph.getAllLabelledFeatures();
-        for (EnumMap.Entry<EdgeType, TObjectDoubleMap<String>> entry : allLabelledFeatures.entrySet()) {
-            EdgeType type = entry.getKey();
-            TObjectDoubleMap<String> thisFeatuers = entry.getValue();
-            TObjectDoubleMap<String> otherFeatures = allOtherGraphFeatures.get(type);
-            TObjectDoubleMap<String> resultFeatures = VectorUtils.minus(thisFeatuers, otherFeatures);
-            typedFeaturesDelta.put(type, resultFeatures);
-        }
+
+        System.out.println("Labelled Features in the other graph");
+        System.out.println(allOtherGraphFeatures);
+
+        System.out.println("Labelled Features in this graph");
+        System.out.println(allLabelledFeatures);
+
+        allLabelledFeatures.entrySet().forEach(
+                entry -> {
+                    EdgeType type = entry.getKey();
+                    TObjectDoubleMap<String> otherFeatures = allOtherGraphFeatures.get(type);
+                    TObjectDoubleMap<String> thisFeatures = entry.getValue();
+                    TObjectDoubleMap<String> resultFeatures = otherFeatures != null ? VectorUtils.minus(thisFeatures, otherFeatures) : new TObjectDoubleHashMap<>(thisFeatures);
+
+//                    System.out.println("Difference in " + type);
+//                    System.out.println("This :");
+//                    System.out.println(thisFeatures);
+//                    System.out.println("Other :");
+//                    System.out.println(otherFeatures);
+//                    System.out.println("Result :");
+//                    System.out.println(resultFeatures);
+
+                    if (!resultFeatures.isEmpty()) {
+                        typedFeaturesDelta.put(type, resultFeatures);
+                    }
+                }
+        );
+
+        allOtherGraphFeatures.entrySet().forEach(
+                entry -> {
+                    EdgeType type = entry.getKey();
+                    if (!allLabelledFeatures.containsKey(type)) {
+                        typedFeaturesDelta.put(type, VectorUtils.minus(new TObjectDoubleHashMap<>(), entry.getValue()));
+                    }
+                }
+        );
+
         return typedFeaturesDelta;
     }
 
@@ -180,15 +213,17 @@ public class SubGraph {
             EdgeType type = edge.getEdgeType();
             int govNode = edge.govIdx;
             int depNode = edge.depIdx;
+
+            //The following can resolve transitive closure under the left-to-right decoding
             if (type.equals(EdgeType.Root)) {
                 Set<Integer> newCluster = new HashSet<>();
                 newCluster.add(depNode);
                 clusters.add(newCluster);
             } else if (type.equals(EdgeType.Coreference)) {
                 for (Set<Integer> cluster : clusters) {
-                    if (cluster.contains(depNode) || cluster.contains(govNode)) {
+                    if (cluster.contains(govNode)) {
                         cluster.add(depNode);
-                        cluster.add(govNode);
+                        break;
                     }
                 }
             } else {
@@ -215,5 +250,20 @@ public class SubGraph {
 
         edgeAdjacentList = GraphUtils.resolveRelations(generalizedRelations, group2Clusters, numNodes);
         corefChains = GraphUtils.createSortedCorefChains(group2Clusters);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SubGraph:\n");
+        for (Integer[] edgeIndex : edgeIndexes) {
+            for (Integer index : edgeIndex) {
+                if (index != null) {
+                    if (edges.get(index) != null) {
+                        sb.append("\t").append(edges.get(index).toString()).append("\n");
+                    }
+                }
+            }
+        }
+        return sb.toString();
     }
 }

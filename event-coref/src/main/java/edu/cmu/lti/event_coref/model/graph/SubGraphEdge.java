@@ -30,11 +30,14 @@ public class SubGraphEdge {
         this.edgeType = edgeType;
     }
 
-
     public static final Comparator<SubGraphEdge> subgraphComparator = new Comparator<SubGraphEdge>() {
         @Override
         public int compare(SubGraphEdge o1, SubGraphEdge o2) {
             return o1.depIdx - o2.depIdx;
         }
     };
+
+    public String toString() {
+        return "SubGraphEdge: (" + govIdx + ',' + depIdx + ")" + " [" + edgeType + "]";
+    }
 }

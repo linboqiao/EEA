@@ -54,6 +54,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        printProcessInfo(aJCas, logger);
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
         List<EventMentionRelation> allMentionRelations = new ArrayList<>(JCasUtil.select(aJCas, EventMentionRelation.class));
         //feed the extractor with document information
@@ -62,14 +63,37 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         Graph mentionGraph = new Graph(allMentions, allMentionRelations);
         mentionGraph.fillGraph(extractor, weights);
 
+//        System.out.println("Graph is ");
+//        System.out.println(mentionGraph);
+
         //  decoding
         SubGraph predictedTree = bestFirstDecoding(mentionGraph);
+
+        System.out.println("Predicted Tree is ");
+        System.out.println(predictedTree);
+
+        System.out.println("Labelled feature for the predicted Tree");
+        System.out.println(predictedTree.getAllLabelledFeatures());
+
         if (!graphMatch(predictedTree, mentionGraph)) {
             SubGraph latentTree = getLatentTree(mentionGraph);
+
+            System.out.println("Labelled feature for the latent Tree");
+            System.out.println(latentTree);
+
+            System.out.println("Latent Tree is ");
+            System.out.println(latentTree.getAllLabelledFeatures());
+
+            System.out.println("Labelled feature for the predicted Tree is now");
+            System.out.println(predictedTree.getAllLabelledFeatures());
+
             StructDelta delta = predictedTree.getDelta(latentTree);
+            System.out.println(delta);
             double loss = predictedTree.getLoss(latentTree);
             double tau = getUpdateWeight(delta, weights, loss);
             weights.update(delta, tau);
+
+//            Utils.pause();
         }
     }
 
@@ -97,14 +121,20 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         mentionGraph.getCorefChains();
 
+        logger.debug("Decoding the latent tree");
+
         for (int curr = 1; curr < nodes.length; curr++) {
             Pair<Edge, EdgeType> bestEdge = null;
             double bestScore = Double.NEGATIVE_INFINITY;
             for (int ant = 0; ant < curr; ant++) {
                 Edge edge = mentionGraph.getEdges()[curr][ant];
-                Pair<Edge.EdgeType, Double> bestCorrectLabelScore = edge.getCorretLabelScore();
-                double score = bestCorrectLabelScore.getValue1();
+                Pair<Edge.EdgeType, Double> bestCorrectLabelScore = edge.getCorrectLabelScore();
+                if (bestCorrectLabelScore == null) {
+                    continue;
+                }
                 Edge.EdgeType label = bestCorrectLabelScore.getValue0();
+                double score = bestCorrectLabelScore.getValue1();
+//                System.out.println(ant + " " + curr + " " + bestCorrectLabelScore);
                 if (bestEdge == null) {
                     bestEdge = Pair.with(edge, label);
                 } else {
@@ -114,6 +144,9 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
                     }
                 }
             }
+
+//            System.out.println(bestEdge);
+
             latentTree.addEdge(bestEdge.getValue0(), bestEdge.getValue1());
         }
         return latentTree;
@@ -123,23 +156,26 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         SubGraph bestFirstTree = new SubGraph(mentionGraph.numNodes());
         Node[] nodes = mentionGraph.getNodes();
 
+        logger.debug("Decoding with best first");
+
         for (int curr = 1; curr < nodes.length; curr++) {
             Pair<Edge, Edge.EdgeType> bestEdge = null;
             double bestScore = Double.NEGATIVE_INFINITY;
             for (int ant = 0; ant < curr; ant++) {
                 Edge edge = mentionGraph.getEdges()[curr][ant];
-                Pair<Edge.EdgeType, Double> bestLabelScore = edge.getBestLabelScore();
+                Pair<Edge.EdgeType, Double> bestLabelScore = edge.getBestLabelScore(ant == 0);
                 double score = bestLabelScore.getValue1();
                 Edge.EdgeType label = bestLabelScore.getValue0();
+
                 if (bestEdge == null) {
                     bestEdge = Pair.with(edge, label);
-                } else {
-                    if (score > bestScore) {
-                        bestEdge = Pair.with(edge, label);
-                        bestScore = score;
-                    }
+                    bestScore = score;
+                } else if (score > bestScore) {
+                    bestEdge = Pair.with(edge, label);
+                    bestScore = score;
                 }
             }
+
             bestFirstTree.addEdge(bestEdge.getValue0(), bestEdge.getValue1());
         }
         return bestFirstTree;
@@ -157,12 +193,20 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         @Override
         protected boolean checkStopCriteria() {
+            logger.info("Iteration : " + numIter);
             return numIter++ >= maxIter;
         }
 
         @Override
         protected void stopActions() {
             try {
+                File outputFile = new File(outputPath);
+                File outputFolder = outputFile.getParentFile();
+
+                if (!outputFolder.exists()) {
+                    outputFolder.mkdirs();
+                }
+
                 SerializationUtils.serialize(weights, new ObjectOutputStream(new FileOutputStream(new File(outputPath))));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -206,8 +250,8 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         PaLatentTreeTrainer trainer = new PaLatentTreeTrainer();
         String typeSystemName = "TypeSystem";
         String parentDir = args[0];
-        String baseInputDir = "discourse_parsed";
-        String modelOutput = "data/models/perceptron.ser";
+        String modelOutput = args[1];
+        String baseInputDir = "argument_extracted";
         int maxIter = 5;
         trainer.run(typeSystemName, parentDir, baseInputDir, maxIter, modelOutput);
     }

@@ -3,6 +3,8 @@ package edu.cmu.lti.event_coref.model.graph;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.primitives.Ints;
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -14,6 +16,15 @@ import java.util.*;
  * @author Zhengzhong Liu
  */
 public class GraphUtils {
+    private static final Logger logger = LoggerFactory.getLogger(GraphUtils.class.getName());
+
+    /**
+     * Given a list of relations, produce a adjacent list of transitive resolved relations
+     *
+     * @param relations List of binary relations
+     * @param <T>       The class of the relation argument
+     * @return Transitive resolved relations, represented as adjacent map
+     */
     public static <T> ArrayListMultimap<T, T> linkTransitiveRelations(Collection<Pair<T, T>> relations) {
         ArrayListMultimap<T, T> transitiveResolvedRelations = ArrayListMultimap.create();
 
@@ -58,45 +69,43 @@ public class GraphUtils {
     }
 
 
+    /**
+     * From list of clusters, grouped by whatever key T, convert to sorted coref chains
+     *
+     * @param group2Clusters
+     * @param <T>
+     * @return
+     */
     public static <T> int[][] createSortedCorefChains(ArrayListMultimap<T, Integer> group2Clusters) {
-        int[][] corefChains = new int[group2Clusters.size()][];
-
         SortedMap<Integer, int[]> chainsSortedByHead = new TreeMap<>();
         for (Map.Entry<T, Collection<Integer>> entry : group2Clusters.asMap().entrySet()) {
             Collection<Integer> chainList = entry.getValue();
-            int[] chainArr = Ints.toArray(chainList);
-            Arrays.sort(chainArr);
-            Integer headId = chainArr[0];
-            chainsSortedByHead.put(headId, chainArr);
+            if (chainList.size() > 1) {
+                int[] chainArr = Ints.toArray(chainList);
+                Arrays.sort(chainArr);
+                Integer headId = chainArr[0];
+                chainsSortedByHead.put(headId, chainArr);
+            }
         }
 
         int clusterId = 0;
+        int[][] corefChains = new int[chainsSortedByHead.size()][];
         for (Map.Entry<Integer, int[]> entry : chainsSortedByHead.entrySet()) {
-            if (entry.getValue().length > 1) {
-                //singleton are not uniquely stored
-                corefChains[clusterId++] = entry.getValue();
-            }
+            corefChains[clusterId++] = entry.getValue();
         }
         return corefChains;
     }
 
-    public static <T> Map<Edge.EdgeType, int[][]> resolveRelations(ArrayListMultimap<Edge.EdgeType, Pair<T, T>> generalizedRelations, ArrayListMultimap<T, Integer> event2Clusters, int numNodes) {
+    public static <T> Map<Edge.EdgeType, int[][]> resolveRelations(ArrayListMultimap<Edge.EdgeType, Pair<T, T>> generalizedRelations, ArrayListMultimap<T, Integer> clusters, int numNodes) {
         Map<Edge.EdgeType, int[][]> edgeAdjacentList = new HashMap<>();
-        for (Edge.EdgeType type : Edge.EdgeType.values()) {
-            if (!type.equals(Edge.EdgeType.Root)) {
-                //Root type do not need to be modelled explicitly here
-                edgeAdjacentList.put(type, new int[numNodes][]);
-            }
-        }
 
         for (Map.Entry<Edge.EdgeType, Collection<Pair<T, T>>> relationsByType : generalizedRelations.asMap().entrySet()) {
             //resolve transitive
             ArrayListMultimap<T, T> transitiveResolvedAdjacentEvents = GraphUtils.linkTransitiveRelations(relationsByType.getValue());
             //resolve equivalence
-            int[][] mentionAdjacentArray = GraphUtils.resolveEquivalence(transitiveResolvedAdjacentEvents, event2Clusters, numNodes);
+            int[][] mentionAdjacentArray = GraphUtils.resolveEquivalence(transitiveResolvedAdjacentEvents, clusters, numNodes);
             edgeAdjacentList.put(relationsByType.getKey(), mentionAdjacentArray);
         }
         return edgeAdjacentList;
     }
-
 }

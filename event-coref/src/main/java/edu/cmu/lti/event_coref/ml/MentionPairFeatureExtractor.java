@@ -5,6 +5,8 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.lti.event_coref.model.graph.Edge;
+import edu.cmu.lti.event_coref.model.graph.Edge.EdgeType;
+import edu.cmu.lti.event_coref.model.graph.Node;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.apache.uima.fit.util.FSCollectionFactory;
@@ -39,7 +41,7 @@ public class MentionPairFeatureExtractor implements Serializable {
         }
     }
 
-    public TObjectDoubleMap<String> getUnlablledFeatures() {
+    public TObjectDoubleMap<String> getUnlabelledFeatures() {
         return unlabelledFeatures;
     }
 
@@ -53,63 +55,94 @@ public class MentionPairFeatureExtractor implements Serializable {
     }
 
 
-    public void computeFeatures(EventMention antecedent, EventMention mention) {
+    public void computeFeatures(Edge edge, Node antecedent, Node anaphora) {
         unlabelledFeatures = new TObjectDoubleHashMap<>();
         labelledFeatures = new EnumMap<>(Edge.EdgeType.class);
-        lexicalFeatures(antecedent, mention);
-        argumentFeatures(antecedent, mention);
-        distanceFeatures(antecedent, mention);
-    }
 
-    private void lexicalFeatures(EventMention antecedent, EventMention mention) {
-        if (antecedent.getHeadWord().getLemma().toLowerCase().equals(mention.getHeadWord().getLemma())) {
-            unlabelledFeatures.put("headMatch", 1);
+        for (Edge.EdgeType type : Edge.EdgeType.values()) {
+            labelledFeatures.put(type, new TObjectDoubleHashMap<String>());
+        }
+
+        for (Edge.EdgeType type : Edge.EdgeType.values()) {
+            lexicalFeatures(type, antecedent, anaphora);
+            argumentFeatures(type, antecedent, anaphora);
+            distanceFeatures(type, antecedent, anaphora);
         }
     }
 
-    private void argumentFeatures(EventMention antecedent, EventMention mention) {
-        Map<String, EntityMention> antecedentPropbankMentions = new HashMap<>();
-        Map<String, EntityMention> mentionPropbankMentions = new HashMap<>();
-
-        for (EventMentionArgumentLink antecedentArgLink : getArguments(antecedent)) {
-            antecedentPropbankMentions.put(antecedentArgLink.getPropbankRoleName(), antecedentArgLink.getArgument());
-        }
-
-        for (EventMentionArgumentLink mentionArgLink : getArguments(mention)) {
-            mentionPropbankMentions.put(mentionArgLink.getPropbankRoleName(), mentionArgLink.getArgument());
-        }
-
-        for (Map.Entry<String, EntityMention> antecedentPropbankMention : antecedentPropbankMentions.entrySet()) {
-            String propbankRole = antecedentPropbankMention.getKey();
-            EntityMention antMention = antecedentPropbankMention.getValue();
-            if (mentionPropbankMentions.containsKey(propbankRole)) {
-                String featureTemplate = "argument_" + propbankRole;
-                EntityMention anaMention = mentionPropbankMentions.get(propbankRole);
-                if (antMention.getReferingEntity() == anaMention.getReferingEntity()) {
-                    unlabelledFeatures.put(featureTemplate + "_coref", 1);
-                }
-                if (antMention.getHead().getLemma().toLowerCase().equals(anaMention.getHead().getLemma().toLowerCase())) {
-                    unlabelledFeatures.put(featureTemplate + "_headMatch", 1);
-                }
+    private void lexicalFeatures(EdgeType type, Node antecedent, Node anaphora) {
+        if (antecedent.isRoot()) {
+            addLabelledFeature(type, "head_lemma_root_" + anaphora.getMention().getHeadWord().getLemma(), 1);
+        } else {
+            if (antecedent.getMention().getHeadWord().getLemma().toLowerCase().equals(anaphora.getMention().getHeadWord().getLemma())) {
+                addUnlabelledFeature("headMatch");
+                addLabelledFeature(type, "headMatch");
             }
         }
     }
 
-    private void distanceFeatures(EventMention antecedent, EventMention mention) {
-        int antecedentSentId = Integer.parseInt(evm2SentMap.get(antecedent).getId());
-        int mentionSentId = Integer.parseInt((evm2SentMap.get(mention)).getId());
+    private void argumentFeatures(EdgeType type, Node antecedent, Node anaphora) {
+        if (!antecedent.isRoot()) {
+            EventMention govMention = antecedent.getMention();
+            EventMention depMention = anaphora.getMention();
 
-        int diff = mentionSentId - antecedentSentId;
+            Map<String, EntityMention> antecedentPropbankMentions = new HashMap<>();
+            Map<String, EntityMention> mentionPropbankMentions = new HashMap<>();
 
-        if (diff == 0) {
-            unlabelledFeatures.put("sameSentence", 1);
-        } else if (diff == 1) {
-            unlabelledFeatures.put("previousSentence", 1);
-            if (antecedentSentId == 0) {
-                unlabelledFeatures.put("top2Sentence", 1);
+            for (EventMentionArgumentLink antecedentArgLink : getArguments(govMention)) {
+                antecedentPropbankMentions.put(antecedentArgLink.getPropbankRoleName(), antecedentArgLink.getArgument());
             }
-        } else if (diff < 5) {
-            unlabelledFeatures.put("within5Sentence", 1);
+
+            for (EventMentionArgumentLink mentionArgLink : getArguments(depMention)) {
+                mentionPropbankMentions.put(mentionArgLink.getPropbankRoleName(), mentionArgLink.getArgument());
+            }
+
+            for (Map.Entry<String, EntityMention> antecedentPropbankMention : antecedentPropbankMentions.entrySet()) {
+                String propbankRole = antecedentPropbankMention.getKey();
+                EntityMention antMention = antecedentPropbankMention.getValue();
+                if (mentionPropbankMentions.containsKey(propbankRole)) {
+                    String featureTemplate = "argument_" + propbankRole;
+                    EntityMention anaMention = mentionPropbankMentions.get(propbankRole);
+                    if (antMention.getReferingEntity() == anaMention.getReferingEntity()) {
+                        addLabelledFeature(type, featureTemplate + "_coref");
+                        addUnlabelledFeature(featureTemplate + "_coref");
+                    }
+                    if (antMention.getHead().getLemma().toLowerCase().equals(anaMention.getHead().getLemma().toLowerCase())) {
+                        addLabelledFeature(type, featureTemplate + "_headMatch");
+                        addUnlabelledFeature(featureTemplate + "_headMatch");
+                    }
+                }
+            }
+        } else {
+            //currently no features for root
+        }
+    }
+
+    private void distanceFeatures(EdgeType type, Node antecedent, Node anaphora) {
+        if (!antecedent.isRoot()) {
+            EventMention govMention = antecedent.getMention();
+            EventMention depMention = anaphora.getMention();
+
+            int antecedentSentId = Integer.parseInt(evm2SentMap.get(govMention).getId());
+            int mentionSentId = Integer.parseInt((evm2SentMap.get(depMention)).getId());
+
+            int diff = mentionSentId - antecedentSentId;
+
+            if (diff == 0) {
+                addUnlabelledFeature("sameSentence");
+                addLabelledFeature(type, "sameSentence");
+            } else if (diff == 1) {
+                addUnlabelledFeature("previousSentence");
+                addLabelledFeature(type, "previousSentence");
+
+                if (antecedentSentId == 0) {
+                    addUnlabelledFeature("top2Sentence");
+                    addLabelledFeature(type, "top2Sentence");
+                }
+            } else if (diff < 5) {
+                addUnlabelledFeature("within5Sentence");
+                addLabelledFeature(type, "within5Sentence");
+            }
         }
     }
 
@@ -119,5 +152,21 @@ public class MentionPairFeatureExtractor implements Serializable {
         } else {
             return new ArrayList<>();
         }
+    }
+
+    private void addLabelledFeature(Edge.EdgeType type, String featureName, double val) {
+        labelledFeatures.get(type).put(featureName, val);
+    }
+
+    private void addLabelledFeature(Edge.EdgeType type, String featureName) {
+        addLabelledFeature(type, featureName, 1);
+    }
+
+    private void addUnlabelledFeature(String featureName, double val) {
+        unlabelledFeatures.put(featureName, val);
+    }
+
+    private void addUnlabelledFeature(String featureName) {
+        addUnlabelledFeature(featureName, 1);
     }
 }
