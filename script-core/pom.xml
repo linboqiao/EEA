@@ -92,6 +92,10 @@
         </dependency>
         <dependency>
             <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>uima-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs.lti</groupId>
             <artifactId>opennlp</artifactId>
         </dependency>
         <dependency>
