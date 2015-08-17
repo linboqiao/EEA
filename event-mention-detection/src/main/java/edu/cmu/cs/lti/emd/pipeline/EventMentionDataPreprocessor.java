@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.emd.pipeline;
 
 import edu.cmu.cs.lti.annotator.StanfordCoreNlpAnnotator;
 import edu.cmu.cs.lti.annotators.FanseAnnotator;
-import edu.cmu.cs.lti.collection_reader.EventMentionDetectionDataReader;
+import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;
@@ -44,12 +44,12 @@ public class EventMentionDataPreprocessor {
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
-                EventMentionDetectionDataReader.class, typeSystemDescription,
-                EventMentionDetectionDataReader.PARAM_GOLD_STANDARD_FILE, goldStandardFilePath,
-                EventMentionDetectionDataReader.PARAM_SOURCE_EXT, ".tkn.txt",
-                EventMentionDetectionDataReader.PARAM_SOURCE_TEXT_DIRECTORY, sourceDataPath,
-                EventMentionDetectionDataReader.PARAM_TOKEN_DIRECTORY, tokenDataPath,
-                EventMentionDetectionDataReader.PARAM_TOKEN_EXT, ".txt.tab"
+                TbfEventDataReader.class, typeSystemDescription,
+                TbfEventDataReader.PARAM_GOLD_STANDARD_FILE, goldStandardFilePath,
+                TbfEventDataReader.PARAM_SOURCE_EXT, ".tkn.txt",
+                TbfEventDataReader.PARAM_SOURCE_TEXT_DIRECTORY, sourceDataPath,
+                TbfEventDataReader.PARAM_TOKEN_DIRECTORY, tokenDataPath,
+                TbfEventDataReader.PARAM_TOKEN_EXT, ".txt.tab"
         );
 
         AnalysisEngineDescription stanfordAnalyzer = AnalysisEngineFactory.createEngineDescription(

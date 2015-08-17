@@ -1,15 +1,15 @@
 package edu.cmu.cs.lti.emd.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.collection_reader.EventMentionDetectionDataReader;
+import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.ling.FrameDataReader;
 import edu.cmu.cs.lti.ling.WordNetSearcher;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
-import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.mit.jwi.item.POS;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.UimaContext;
@@ -28,6 +28,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA.
@@ -145,7 +146,7 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
         token2Candidates = new HashMap<>();
 
         align = new TokenAlignmentHelper();
-        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.COMPONENT_ID);
+        align.loadWord2Stanford(aJCas, TbfEventDataReader.COMPONENT_ID);
         align.loadStanford2Fanse(aJCas);
         align.loadFanse2Stanford(aJCas);
 
@@ -179,9 +180,8 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
                 } else if (layerName.equals("FE")) {// Frame element
                     FSArray elements = layer.getLabels();
                     if (elements != null) {
-                        for (SemaforLabel element : FSCollectionFactory.create(elements, SemaforLabel.class)) {
-                            frameElements.add(element);
-                        }
+                        frameElements.addAll(FSCollectionFactory.create(elements, SemaforLabel.class).stream()
+                                .collect(Collectors.toList()));
                     }
                 }
             }
@@ -199,15 +199,18 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
                 candidate = createCandidateMention(aJCas, trigger.getBegin(), trigger.getEnd(), triggerHead);
             }
 
-            candidate.setPotentialFrames(UimaConvenience.appendStringList(aJCas, candidate.getPotentialFrames(), frameName));
+            candidate.setPotentialFrames(UimaConvenience.appendStringList(aJCas, candidate.getPotentialFrames(),
+                    frameName));
 
             for (SemaforLabel frameElement : frameElements) {
                 String feName = frameElement.getName();
-                CandidateEventMentionArgument argument = new CandidateEventMentionArgument(aJCas, frameElement.getBegin(), frameElement.getEnd());
+                CandidateEventMentionArgument argument = new CandidateEventMentionArgument(aJCas, frameElement
+                        .getBegin(), frameElement.getEnd());
                 UimaAnnotationUtils.finishAnnotation(argument, COMPONENT_ID, 0, aJCas);
                 argument.setRoleName(feName);
                 argument.setHeadWord(UimaNlpUtils.findHeadFromTreeAnnotation(argument));
-                candidate.setArguments(UimaConvenience.appendFSList(aJCas, candidate.getArguments(), argument, CandidateEventMentionArgument.class));
+                candidate.setArguments(UimaConvenience.appendFSList(aJCas, candidate.getArguments(), argument,
+                        CandidateEventMentionArgument.class));
             }
         }
     }
@@ -237,19 +240,24 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
             }
 
             if (frameName != null) {
-                candidate.setPotentialFrames(UimaConvenience.appendStringList(aJCas, candidate.getPotentialFrames(), frameName));
+                candidate.setPotentialFrames(UimaConvenience.appendStringList(aJCas, candidate.getPotentialFrames(),
+                        frameName));
             } else {
-                for (String searchedFrame : searchForFrames(triggerHead.getLemma().toLowerCase(), triggerHead.getPos())) {
-                    candidate.setPotentialFrames(UimaConvenience.appendStringList(aJCas, candidate.getPotentialFrames(), searchedFrame));
+                for (String searchedFrame : searchForFrames(triggerHead.getLemma().toLowerCase(), triggerHead.getPos
+                        ())) {
+                    candidate.setPotentialFrames(UimaConvenience.appendStringList(aJCas, candidate.getPotentialFrames
+                            (), searchedFrame));
                 }
             }
 
             if (childSemantics != null) {
-                for (FanseSemanticRelation relation : FSCollectionFactory.create(childSemantics, FanseSemanticRelation.class)) {
+                for (FanseSemanticRelation relation : FSCollectionFactory.create(childSemantics,
+                        FanseSemanticRelation.class)) {
                     String argX = relation.getSemanticAnnotation().replace("ARG", "");
 
                     Word role = relation.getChild();
-                    CandidateEventMentionArgument argument = new CandidateEventMentionArgument(aJCas, role.getBegin(), role.getEnd());
+                    CandidateEventMentionArgument argument = new CandidateEventMentionArgument(aJCas, role.getBegin()
+                            , role.getEnd());
                     UimaAnnotationUtils.finishAnnotation(argument, COMPONENT_ID, 0, aJCas);
 
                     Pair<String, String> pbRolePair = new Pair<>(propbankSense, argX);
@@ -266,7 +274,8 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
                     if (fnRolePair != null) {
                         argument.setRoleName(fnRolePair.getValue1());
                     }
-                    candidate.setArguments(UimaConvenience.appendFSList(aJCas, candidate.getArguments(), argument, CandidateEventMentionArgument.class));
+                    candidate.setArguments(UimaConvenience.appendFSList(aJCas, candidate.getArguments(), argument,
+                            CandidateEventMentionArgument.class));
                 }
             }
         }
@@ -286,10 +295,12 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
         List<StanfordCorenlpToken> goldWords = new ArrayList<>();
         if (mention.getMentionTokens() != null) {
             for (Word word : FSCollectionFactory.create(mention.getMentionTokens(), Word.class)) {
-                goldWords.add(align.getStanfordToken(JCasUtil.selectCovered(aJCas, Word.class, word.getBegin(), word.getEnd()).get(0)));
+                goldWords.add(align.getStanfordToken(JCasUtil.selectCovered(aJCas, Word.class, word.getBegin(), word
+                        .getEnd()).get(0)));
             }
         } else {
-            goldWords.addAll(JCasUtil.selectCovered(aJCas, StanfordCorenlpToken.class, mention.getBegin(), mention.getEnd()));
+            goldWords.addAll(JCasUtil.selectCovered(aJCas, StanfordCorenlpToken.class, mention.getBegin(), mention
+                    .getEnd()));
         }
 
         for (StanfordCorenlpToken goldWord : goldWords) {
@@ -319,7 +330,8 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
         }
     }
 
-    private CandidateEventMention createCandidateMention(JCas aJCas, int begin, int end, StanfordCorenlpToken triggerHead) {
+    private CandidateEventMention createCandidateMention(JCas aJCas, int begin, int end, StanfordCorenlpToken
+            triggerHead) {
         CandidateEventMention candidate = new CandidateEventMention(aJCas, begin, end);
         candidate.setHeadWord(triggerHead);
         if (forTraining && goldWords.containsKey(triggerHead)) {

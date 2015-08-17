@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.emd.annotators;
 
 import com.google.common.base.Joiner;
-import edu.cmu.cs.lti.collection_reader.EventMentionDetectionDataReader;
+import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -37,7 +37,7 @@ public class EvaluationResultWriter extends AbstractSimpleTextWriterAnalsysisEng
         sb.append("#BeginOfDocument ").append(articleName).append("\n");
 
         TokenAlignmentHelper align = new TokenAlignmentHelper();
-        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.COMPONENT_ID);
+        align.loadWord2Stanford(aJCas, TbfEventDataReader.COMPONENT_ID);
 
         int eventId = 1;
         for (CandidateEventMention candidate : JCasUtil.select(aJCas, CandidateEventMention.class)) {
@@ -83,13 +83,13 @@ public class EvaluationResultWriter extends AbstractSimpleTextWriterAnalsysisEng
 
     private Word getWord(StanfordCorenlpToken token) {
         for (Word word : JCasUtil.selectCovered(Word.class, token)) {
-            if (word.getComponentId().equals(EventMentionDetectionDataReader.COMPONENT_ID)) {
+            if (word.getComponentId().equals(TbfEventDataReader.COMPONENT_ID)) {
                 return word;
             }
         }
 
         for (Word word : JCasUtil.selectCovering(Word.class, token)) {
-            if (word.getComponentId().equals(EventMentionDetectionDataReader.COMPONENT_ID)) {
+            if (word.getComponentId().equals(TbfEventDataReader.COMPONENT_ID)) {
                 return word;
             }
         }
@@ -110,7 +110,7 @@ public class EvaluationResultWriter extends AbstractSimpleTextWriterAnalsysisEng
         }
 
         for (Word word : words) {
-            if (word.getComponentId().equals(EventMentionDetectionDataReader.COMPONENT_ID)) {
+            if (word.getComponentId().equals(TbfEventDataReader.COMPONENT_ID)) {
                 wordIds.add(word.getId());
                 surface.add(word.getCoveredText());
             }

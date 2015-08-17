@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.emd.annotators;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import edu.cmu.cs.lti.collection_reader.EventMentionDetectionDataReader;
+import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.emd.learn.Feature.EventMentionFeatureGenerator;
 import edu.cmu.cs.lti.emd.learn.Feature.impl.FrameArgumentLemmaFeatureGenerator;
 import edu.cmu.cs.lti.emd.learn.Feature.impl.FrameNameFeatureGenerator;
@@ -230,7 +230,7 @@ public class EventMentionTypeLearner extends AbstractLoggingAnnotator {
         registerFeatures();
 
         numDocuments++;
-        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.COMPONENT_ID);
+        align.loadWord2Stanford(aJCas, TbfEventDataReader.COMPONENT_ID);
         align.loadFanse2Stanford(aJCas);
         for (CandidateEventMention candidateEventMention : JCasUtil.select(aJCas, CandidateEventMention.class)) {
             String goldType = candidateEventMention.getGoldStandardMentionType();

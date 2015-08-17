@@ -1,14 +1,14 @@
 package edu.cmu.cs.lti.emd.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.collection_reader.EventMentionDetectionDataReader;
+import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.ling.FrameDataReader;
 import edu.cmu.cs.lti.ling.WordNetSearcher;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
-import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.mit.jwi.item.POS;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.TObjectIntMap;
@@ -121,7 +121,7 @@ public class UsefulFramDetector extends AbstractLoggingAnnotator {
         JCas goldView = UimaConvenience.getView(aJCas, goldStandardViewName);
 
         TokenAlignmentHelper align = new TokenAlignmentHelper();
-        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.COMPONENT_ID);
+        align.loadWord2Stanford(aJCas, TbfEventDataReader.COMPONENT_ID);
         align.loadStanford2Fanse(aJCas);
 
         Map<Word, String> target2Frame = getFrameAnnotations(aJCas);

@@ -3,13 +3,13 @@ package edu.cmu.cs.lti.emd.annotators;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Iterables;
-import edu.cmu.cs.lti.collection_reader.EventMentionDetectionDataReader;
+import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.emd.pipeline.EventMentionTrainer;
 import edu.cmu.cs.lti.ling.FrameDataReader;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import gnu.trove.iterator.TIntDoubleIterator;
 import gnu.trove.map.TIntDoubleMap;
 import gnu.trove.map.hash.TIntDoubleHashMap;
@@ -125,7 +125,8 @@ public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
             featureNameMap = HashBiMap.create();
         } else {
             if (modelDirPath == null) {
-                throw new ResourceInitializationException(new IllegalStateException("Must provide model files if using test mode"));
+                throw new ResourceInitializationException(new IllegalStateException("Must provide model files if " +
+                        "using test mode"));
             } else {
                 try {
                     loadModel();
@@ -147,14 +148,18 @@ public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
     }
 
     private void loadModel() throws Exception {
-        featureNameMap = (BiMap<String, Integer>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.featureNamePath).getCanonicalPath());
+        featureNameMap = (BiMap<String, Integer>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer
+                .featureNamePath).getCanonicalPath());
         logger.info("Number of features in total: " + featureNameMap.size());
 
         if (isOnlineTest) {
-            featureConfiguration = (ArrayList<Attribute>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.featureConfigOutputName).getCanonicalPath());
-            pretrainedClassifier = (Classifier) SerializationHelper.read(new File(modelDirPath, modelNameForTest).getCanonicalPath());
+            featureConfiguration = (ArrayList<Attribute>) SerializationHelper.read(new File(modelDirPath,
+                    EventMentionTrainer.featureConfigOutputName).getCanonicalPath());
+            pretrainedClassifier = (Classifier) SerializationHelper.read(new File(modelDirPath, modelNameForTest)
+                    .getCanonicalPath());
             emptyVector = new double[featureConfiguration.size()];
-            classesToPredict = (List<String>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.predictionLabels).getCanonicalPath());
+            classesToPredict = (List<String>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer
+                    .predictionLabels).getCanonicalPath());
 
             BufferedReader reader =
                     new BufferedReader(new FileReader(trainingDataSetPath));
@@ -165,7 +170,8 @@ public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
             int classId = featureConfiguration.get(featureConfiguration.size() - 1).index();
             trainingDataSet.setClass(featureConfiguration.get(featureConfiguration.size() - 1));
             trainingDataSet.classAttribute();
-            logger.info("Training class id : " + classId + ". Number of attributes : " + trainingDataSet.numAttributes());
+            logger.info("Training class id : " + classId + ". Number of attributes : " + trainingDataSet
+                    .numAttributes());
         }
     }
 
@@ -177,7 +183,7 @@ public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
 
         indexWords(aJCas);
         numDocuments++;
-        align.loadWord2Stanford(aJCas, EventMentionDetectionDataReader.COMPONENT_ID);
+        align.loadWord2Stanford(aJCas, TbfEventDataReader.COMPONENT_ID);
         align.loadFanse2Stanford(aJCas);
 
         Map<StanfordCorenlpToken, Collection<Sentence>> token2Sentences =
@@ -312,7 +318,8 @@ public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
         }
 
         if (triggerWord.getHeadDependencyRelations() != null) {
-            for (Dependency dep : FSCollectionFactory.create(triggerWord.getHeadDependencyRelations(), Dependency.class)) {
+            for (Dependency dep : FSCollectionFactory.create(triggerWord.getHeadDependencyRelations(), Dependency
+                    .class)) {
 //                addFeature("HeadDepType_" + dep.getDependencyType(), features);
 //                addFeature("HeadDepLemma_" + dep.getHead().getLemma(), features);
                 if (dep.getHead().getNerTag() != null) {
@@ -322,7 +329,8 @@ public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
         }
 
         if (triggerWord.getChildDependencyRelations() != null) {
-            for (Dependency dep : FSCollectionFactory.create(triggerWord.getChildDependencyRelations(), Dependency.class)) {
+            for (Dependency dep : FSCollectionFactory.create(triggerWord.getChildDependencyRelations(), Dependency
+                    .class)) {
 //                addFeature("ChildDepType_" + dep.getDependencyType(), features);
 //                addFeature("ChildDepLemma_" + dep.getChild().getLemma(), features);
                 addFeature("ChildDep_" + dep.getDependencyType() + "_" + dep.getChild().getLemma(), features);
@@ -381,11 +389,13 @@ public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
 
         FSList argumentFs = mention.getArguments();
         if (argumentFs != null) {
-            for (CandidateEventMentionArgument argument : FSCollectionFactory.create(argumentFs, CandidateEventMentionArgument.class)) {
+            for (CandidateEventMentionArgument argument : FSCollectionFactory.create(argumentFs,
+                    CandidateEventMentionArgument.class)) {
                 StanfordCorenlpToken argumentHeadWord = argument.getHeadWord();
                 addFeature("FrameArgument_" + argumentHeadWord.getLemma().toLowerCase(), 1.0, features);
                 if (brownClusters.containsKey(argumentHeadWord.getLemma())) {
-                    addFeature("FrameArgumentBrownCluster_" + brownClusters.get(argumentHeadWord.getLemma()), 1.0, features);
+                    addFeature("FrameArgumentBrownCluster_" + brownClusters.get(argumentHeadWord.getLemma()), 1.0,
+                            features);
                 }
                 if (argumentHeadWord.getNerTag() != null) {
                     addFeature("FrameArgumentHeadNer_" + argumentHeadWord.getNerTag(), 1.0, features);
