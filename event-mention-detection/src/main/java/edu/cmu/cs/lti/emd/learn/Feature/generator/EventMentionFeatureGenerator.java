@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.learn.Feature;
+package edu.cmu.cs.lti.emd.learn.feature.generator;
 
 import edu.cmu.cs.lti.script.type.CandidateEventMention;
 
