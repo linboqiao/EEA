@@ -39,5 +39,10 @@
             <groupId>edu.cmu.cs.lti.script</groupId>
             <artifactId>core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs.lti.script</groupId>
+            <artifactId>learning</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

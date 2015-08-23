@@ -1,9 +1,9 @@
-package edu.cmu.lti.event_coref.annotators;
+package edu.cmu.cs.lti.event_coref.annotators;
 
 import edu.cmu.cs.lti.uima.annotator.AbstractAnnotator;
 import edu.cmu.cs.lti.util.NoiseTextFormatter;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.ViewCreatorAnnotator;
+import org.apache.uima.cas.CASException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 
@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created with IntelliJ IDEA.
+ * Only work if the InputView really exists and contains document text.
  * Date: 4/21/15
  * Time: 12:38 AM
  *
@@ -25,12 +25,14 @@ public class InputTextCleaner extends AbstractAnnotator {
 
 
     private String moreThan2ConsecutiveNewLines = "[\\p{Punct}|\\s]*[\\n]{2,}[\\p{Punct}|\\s]*";
-    private String moreThan2NewLinesMixedWithWhiteSpaces = "[\\p{Punct}|\\s]*[\\n]+[\\p{Punct}|\\s]*\\n+[\\p{Punct}|\\s]*";
+    private String moreThan2NewLinesMixedWithWhiteSpaces =
+            "[\\p{Punct}|\\s]*[\\n]+[\\p{Punct}|\\s]*\\n+[\\p{Punct}|\\s]*";
 
     private String whiteSpacePunctPattern = moreThan2NewLinesMixedWithWhiteSpaces + "|" + moreThan2ConsecutiveNewLines;
 
     //A pattern match string with only whitespaces or new lines, and must contain one \n
-//    private String whiteSpacePunctPattern = "[\\p{Punct}|\\s]*[\\n]{2,}[\\p{Punct}|\\s]*|[\\p{Punct}|\\s]*[\\n]+[\\p{Punct}|\\s]*\\n+[\\p{Punct}|\\s]*";
+//    private String whiteSpacePunctPattern = "[\\p{Punct}|\\s]*[\\n]{2,
+// }[\\p{Punct}|\\s]*|[\\p{Punct}|\\s]*[\\n]+[\\p{Punct}|\\s]*\\n+[\\p{Punct}|\\s]*";
 
     private Pattern p = Pattern.compile("(" + whiteSpacePunctPattern + ")", Pattern.DOTALL);
     private Pattern hasPunct = Pattern.compile("\\p{Punct}");
@@ -38,10 +40,14 @@ public class InputTextCleaner extends AbstractAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        JCas inputView = ViewCreatorAnnotator.createViewSafely(aJCas, inputViewName);
+        JCas inputView = null;
+        try {
+            inputView = aJCas.getView(inputViewName);
+        } catch (CASException e) {
+            throw new AnalysisEngineProcessException(e);
+        }
         String originalText = inputView.getDocumentText();
         String cleanedText = new NoiseTextFormatter(originalText).cleanForum().cleanNews().getText();
-
         //we only want to fix punctuation, but we wanna keep index exactly the same.
         assert (originalText.length() == cleanedText.length());
 

@@ -1,8 +1,8 @@
-package edu.cmu.lti.event_coref.model.graph;
+package edu.cmu.cs.lti.event_coref.model.graph;
 
+import edu.cmu.cs.lti.event_coref.ml.StructWeights;
 import edu.cmu.cs.lti.feature.MapBasedFeatureContainer;
 import edu.cmu.cs.lti.feature.VectorUtils;
-import edu.cmu.lti.event_coref.ml.StructWeights;
 import gnu.trove.map.TObjectDoubleMap;
 
 import java.util.EnumMap;

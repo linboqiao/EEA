@@ -1,18 +1,18 @@
-package edu.cmu.lti.event_coref.pipeline;
+package edu.cmu.cs.lti.event_coref.pipeline;
 
 import edu.cmu.cs.lti.annotator.StanfordCoreNlpAnnotator;
 import edu.cmu.cs.lti.annotators.FanseAnnotator;
 import edu.cmu.cs.lti.annotators.OpenNlpChunker;
 import edu.cmu.cs.lti.collection_reader.BratEventGoldStandardAnnotator;
+import edu.cmu.cs.lti.event_coref.annotators.ArgumentExtractor;
+import edu.cmu.cs.lti.event_coref.annotators.GoldStandardEventMentionAnnotator;
+import edu.cmu.cs.lti.event_coref.annotators.InputTextCleaner;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.pipeline.AbstractProcessorBuilder;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.PlainTextCollectionReader;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
-import edu.cmu.lti.event_coref.annotators.ArgumentExtractor;
-import edu.cmu.lti.event_coref.annotators.GoldStandardEventMentionAnnotator;
-import edu.cmu.lti.event_coref.annotators.InputTextCleaner;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.cas.CAS;
@@ -58,8 +58,6 @@ public class CorefPipeline {
                         PlainTextCollectionReader.PARAM_TEXT_SUFFIX, BratEventGoldStandardAnnotator
                                 .defaultTextFileNameSuffix,
                         PlainTextCollectionReader.PARAM_INPUT_VIEW_NAME, UimaConst.inputViewName);
-//                return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, parentDir,
-// "argument_extracted_old");
             }
 
             @Override
@@ -117,7 +115,7 @@ public class CorefPipeline {
                         xmiOutputBase);
                 return new AnalysisEngineDescription[]{xmiWriter};
             }
-        });
+        }, typeSystemDescription);
         pipeline.run();
     }
 

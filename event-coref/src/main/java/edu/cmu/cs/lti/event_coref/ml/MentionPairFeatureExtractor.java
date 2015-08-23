@@ -1,12 +1,12 @@
-package edu.cmu.lti.event_coref.ml;
+package edu.cmu.cs.lti.event_coref.ml;
 
 import edu.cmu.cs.lti.script.type.EntityMention;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
-import edu.cmu.lti.event_coref.model.graph.Edge;
-import edu.cmu.lti.event_coref.model.graph.Edge.EdgeType;
-import edu.cmu.lti.event_coref.model.graph.Node;
+import edu.cmu.cs.lti.event_coref.model.graph.Edge;
+import edu.cmu.cs.lti.event_coref.model.graph.Edge.EdgeType;
+import edu.cmu.cs.lti.event_coref.model.graph.Node;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.apache.uima.fit.util.FSCollectionFactory;

@@ -1,13 +1,12 @@
-package edu.cmu.lti.event_coref.model.graph;
+package edu.cmu.cs.lti.event_coref.model.graph;
 
 import com.google.common.collect.ArrayListMultimap;
+import edu.cmu.cs.lti.event_coref.ml.MentionPairFeatureExtractor;
+import edu.cmu.cs.lti.event_coref.ml.StructWeights;
 import edu.cmu.cs.lti.feature.MapBasedFeatureContainer;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionRelation;
-import edu.cmu.lti.event_coref.ml.MentionPairFeatureExtractor;
-import edu.cmu.lti.event_coref.ml.StructWeights;
-import edu.cmu.lti.event_coref.model.graph.Edge.EdgeType;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -39,7 +38,7 @@ public class Graph {
     private int[][] corefChains;
 
     //represent each relation with a adjacent list
-    private Map<EdgeType, int[][]> edgeAdjacentList;
+    private Map<Edge.EdgeType, int[][]> edgeAdjacentList;
 
     public Graph(List<EventMention> mentions, List<EventMentionRelation> relations) {
         nodes = new Node[mentions.size() + 1];
@@ -57,9 +56,9 @@ public class Graph {
         //this will store all relations
         edgeAdjacentList = GraphUtils.resolveRelations(generalizeRelationNode(relations), event2Clusters, nodes.length);
 
-        edgeAdjacentList.forEach(new BiConsumer<EdgeType, int[][]>() {
+        edgeAdjacentList.forEach(new BiConsumer<Edge.EdgeType, int[][]>() {
             @Override
-            public void accept(EdgeType edgeType, int[][] adjacentLists) {
+            public void accept(Edge.EdgeType edgeType, int[][] adjacentLists) {
                 int numEdge = 0;
                 for (int[] l : adjacentLists) {
                     numEdge += l.length;
@@ -86,13 +85,13 @@ public class Graph {
                 int antecedentId = chain[i];
                 for (int j = i + 1; j < chain.length; j++) {
                     int anaphoraId = chain[j];
-                    edges[anaphoraId][antecedentId].edgeType = EdgeType.Coreference;
+                    edges[anaphoraId][antecedentId].edgeType = Edge.EdgeType.Coreference;
                 }
             }
         }
 
-        for (Map.Entry<EdgeType, int[][]> edgeRelations : edgeAdjacentList.entrySet()) {
-            EdgeType type = edgeRelations.getKey();
+        for (Map.Entry<Edge.EdgeType, int[][]> edgeRelations : edgeAdjacentList.entrySet()) {
+            Edge.EdgeType type = edgeRelations.getKey();
             int[][] adjacentList = edgeRelations.getValue();
 
             for (int govNodeId = 0; govNodeId < adjacentList.length; govNodeId++) {
@@ -111,7 +110,7 @@ public class Graph {
                 }
             }
             if (!hasEdge && antecedentEdges.length > 0) {
-                antecedentEdges[0].edgeType = EdgeType.Root;
+                antecedentEdges[0].edgeType = Edge.EdgeType.Root;
             }
         }
     }
@@ -128,12 +127,12 @@ public class Graph {
         return event2Clusters;
     }
 
-    private ArrayListMultimap<EdgeType, Pair<Integer, Integer>> generalizeRelationNode(List<EventMentionRelation> relations) {
-        ArrayListMultimap<EdgeType, Pair<Integer, Integer>> allRelations = ArrayListMultimap.create();
+    private ArrayListMultimap<Edge.EdgeType, Pair<Integer, Integer>> generalizeRelationNode(List<EventMentionRelation> relations) {
+        ArrayListMultimap<Edge.EdgeType, Pair<Integer, Integer>> allRelations = ArrayListMultimap.create();
         for (EventMentionRelation relation : relations) {
             EventMention govMention = relation.getHead();
             EventMention depMention = relation.getChild();
-            EdgeType type = EdgeType.valueOf(relation.getRelationType());
+            Edge.EdgeType type = Edge.EdgeType.valueOf(relation.getRelationType());
             allRelations.put(type, Pair.of(govMention.getReferringEvent().getEventIndex(), depMention.getReferringEvent().getEventIndex()));
         }
         return allRelations;
@@ -163,7 +162,7 @@ public class Graph {
         return corefChains;
     }
 
-    public Map<EdgeType, int[][]> getEdgeAdjacentList() {
+    public Map<Edge.EdgeType, int[][]> getEdgeAdjacentList() {
         return edgeAdjacentList;
     }
 
@@ -181,9 +180,9 @@ public class Graph {
                 edge.setArcFeatures(arcFeatures);
 
                 //set labelled scores and features
-                EnumMap<EdgeType, TObjectDoubleMap<String>> labelledFeatures = extractor.getLabelledFeatures();
-                for (Map.Entry<EdgeType, MapBasedFeatureContainer> edgeTypeWeights : weights.labelledWeights.entrySet()) {
-                    EdgeType eType = edgeTypeWeights.getKey();
+                EnumMap<Edge.EdgeType, TObjectDoubleMap<String>> labelledFeatures = extractor.getLabelledFeatures();
+                for (Map.Entry<Edge.EdgeType, MapBasedFeatureContainer> edgeTypeWeights : weights.labelledWeights.entrySet()) {
+                    Edge.EdgeType eType = edgeTypeWeights.getKey();
                     TObjectDoubleMap<String> typeFeatures = labelledFeatures.get(eType);
                     edge.setLabelScore(eType, weights.labelledWeights.get(eType).score(typeFeatures));
                     edge.setLabelledFeatures(labelledFeatures);

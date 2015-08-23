@@ -1,4 +1,4 @@
-package edu.cmu.lti.event_coref.model.graph;
+package edu.cmu.cs.lti.event_coref.model.graph;
 
 import gnu.trove.map.TObjectDoubleMap;
 import org.javatuples.Pair;

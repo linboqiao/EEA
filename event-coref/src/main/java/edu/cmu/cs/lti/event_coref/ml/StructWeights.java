@@ -1,8 +1,8 @@
-package edu.cmu.lti.event_coref.ml;
+package edu.cmu.cs.lti.event_coref.ml;
 
 import edu.cmu.cs.lti.feature.MapBasedFeatureContainer;
-import edu.cmu.lti.event_coref.model.graph.Edge;
-import edu.cmu.lti.event_coref.model.graph.StructDelta;
+import edu.cmu.cs.lti.event_coref.model.graph.Edge;
+import edu.cmu.cs.lti.event_coref.model.graph.StructDelta;
 import gnu.trove.map.TObjectDoubleMap;
 
 import java.io.Serializable;

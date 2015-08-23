@@ -1,5 +1,6 @@
-package edu.cmu.lti.event_coref.ml;
+package edu.cmu.cs.lti.event_coref.ml;
 
+import edu.cmu.cs.lti.event_coref.model.graph.*;
 import edu.cmu.cs.lti.pipeline.AbstractProcessorBuilder;
 import edu.cmu.cs.lti.pipeline.BasicLoopyPipeline;
 import edu.cmu.cs.lti.script.type.EventMention;
@@ -7,8 +8,7 @@ import edu.cmu.cs.lti.script.type.EventMentionRelation;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.pipeline.LoopPipeline;
-import edu.cmu.lti.event_coref.model.graph.*;
-import edu.cmu.lti.event_coref.model.graph.Edge.EdgeType;
+import edu.cmu.cs.lti.event_coref.model.graph.Edge.EdgeType;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;

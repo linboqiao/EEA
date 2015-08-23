@@ -1,8 +1,8 @@
-package edu.cmu.lti.event_coref.model.graph;
+package edu.cmu.cs.lti.event_coref.model.graph;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.feature.VectorUtils;
-import edu.cmu.lti.event_coref.model.graph.Edge.EdgeType;
+import edu.cmu.cs.lti.event_coref.model.graph.Edge.EdgeType;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TIntIntHashMap;

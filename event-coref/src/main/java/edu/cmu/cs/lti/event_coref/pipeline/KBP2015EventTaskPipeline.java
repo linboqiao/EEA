@@ -1,4 +1,4 @@
-package edu.cmu.lti.event_coref.pipeline;
+package edu.cmu.cs.lti.event_coref.pipeline;
 
 import edu.cmu.cs.lti.annotator.StanfordCoreNlpAnnotator;
 import edu.cmu.cs.lti.annotators.FanseAnnotator;
@@ -10,7 +10,6 @@ import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.lti.event_coref.annotators.InputTextCleaner;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -18,6 +17,8 @@ import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.IOException;
@@ -45,6 +46,8 @@ public class KBP2015EventTaskPipeline {
     // Models.
     final String modelDir;
 
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+
     public KBP2015EventTaskPipeline(String typeSystemName, String goldStandardFilePath, String plainTextDataDir,
                                     String tokenMapDir, String modelDir, String mainOutputDir) {
         this.typeSystemDescription = TypeSystemDescriptionFactory
@@ -54,6 +57,10 @@ public class KBP2015EventTaskPipeline {
         this.tokenMapDir = tokenMapDir;
         this.modelDir = modelDir;
         this.mainOutputDir = mainOutputDir;
+
+        logger.info(String.format("Reading gold tbf from %s , token from %s, source from %s", goldStandardFilePath,
+                tokenMapDir, plainTextDataDir));
+        logger.info(String.format("Main output can be found at %s.", mainOutputDir));
     }
 
     public void process(String xmiOutputBase) throws UIMAException, IOException {
@@ -70,17 +77,13 @@ public class KBP2015EventTaskPipeline {
                         TbfEventDataReader.PARAM_SOURCE_EXT, ".txt",
                         TbfEventDataReader.PARAM_SOURCE_TEXT_DIRECTORY, plainTextDataDir,
                         TbfEventDataReader.PARAM_TOKEN_DIRECTORY, tokenMapDir,
-                        TbfEventDataReader.PARAM_TOKEN_EXT, ".tab"
+                        TbfEventDataReader.PARAM_TOKEN_EXT, ".tab",
+                        TbfEventDataReader.PARAM_INPUT_VIEW_NAME, UimaConst.inputViewName
                 );
             }
 
             @Override
             public AnalysisEngineDescription[] buildPreprocessors() throws ResourceInitializationException {
-                AnalysisEngineDescription cleaner = AnalysisEngineFactory.createEngineDescription(
-                        InputTextCleaner.class, typeSystemDescription,
-                        InputTextCleaner.PARAM_INPUT_VIEW_NAME, UimaConst.inputViewName
-                );
-
                 AnalysisEngineDescription stanfordAnalyzer = AnalysisEngineFactory.createEngineDescription(
                         StanfordCoreNlpAnnotator.class, typeSystemDescription,
                         StanfordCoreNlpAnnotator.PARAM_USE_SUTIME, true);
@@ -98,7 +101,7 @@ public class KBP2015EventTaskPipeline {
                         OpenNlpChunker.PARAM_MODEL_PATH, opennlpDirectory);
 
                 return new AnalysisEngineDescription[]{
-                        cleaner, stanfordAnalyzer, semaforAnalyzer, fanseParser, opennlp
+                        stanfordAnalyzer, semaforAnalyzer, fanseParser, opennlp
                 };
             }
 
@@ -113,7 +116,7 @@ public class KBP2015EventTaskPipeline {
                         xmiOutputBase);
                 return new AnalysisEngineDescription[]{xmiWriter};
             }
-        });
+        }, typeSystemDescription);
 
         pipeline.run();
     }
@@ -145,16 +148,15 @@ public class KBP2015EventTaskPipeline {
         String modelPath = commonConfig.get("edu.cmu.cs.lti.model.dir");
         String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
 
-
         String parenOutputtDir = kbpConfig.get("edu.cmu.cs.lti.output.parent.dir");
         String goldTbf = kbpConfig.get("edu.cmu.cs.lti.gold.tbf");
         String sourceDir = kbpConfig.get("edu.cmu.cs.lti.source_text.dir");
         String tokenDir = kbpConfig.get("edu.cmu.cs.lti.token_map.dir");
+        String outputbse = kbpConfig.get("edu.cmu.cs.lti.output.preprocess.dir");
 
         KBP2015EventTaskPipeline pipeline = new KBP2015EventTaskPipeline(typeSystemName, goldTbf, sourceDir,
                 tokenDir, modelPath, parenOutputtDir);
 
-        String xmiOutputBase = "argument_extracted";
-        pipeline.process(xmiOutputBase);
+        pipeline.process(outputbse);
     }
 }
