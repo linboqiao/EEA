@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.annotators;
+package edu.cmu.cs.lti.emd.annotators.twostep;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;

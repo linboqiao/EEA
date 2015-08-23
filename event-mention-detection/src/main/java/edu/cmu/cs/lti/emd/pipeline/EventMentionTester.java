@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.emd.pipeline;
 
 import edu.cmu.cs.lti.emd.annotators.EvaluationResultWriter;
-import edu.cmu.cs.lti.emd.annotators.EventMentionTypeLearner;
+import edu.cmu.cs.lti.emd.annotators.twostep.EventMentionTypeLearner;
 import edu.cmu.cs.lti.emd.eval.EventMentionEvalRunner;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;

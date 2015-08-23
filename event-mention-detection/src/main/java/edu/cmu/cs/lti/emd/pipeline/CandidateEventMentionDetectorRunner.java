@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.emd.pipeline;
 
-import edu.cmu.cs.lti.emd.annotators.CandidateEventMentionDetector;
+import edu.cmu.cs.lti.emd.annotators.twostep.CandidateEventMentionDetector;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;

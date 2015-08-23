@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.emd.annotators;
 
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
+import edu.cmu.cs.lti.emd.annotators.twostep.EventMentionTypeLearner;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;

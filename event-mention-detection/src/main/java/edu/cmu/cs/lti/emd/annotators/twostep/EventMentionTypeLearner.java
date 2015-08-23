@@ -1,14 +1,14 @@
-package edu.cmu.cs.lti.emd.annotators;
+package edu.cmu.cs.lti.emd.annotators.twostep;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
-import edu.cmu.cs.lti.emd.learn.Feature.EventMentionFeatureGenerator;
-import edu.cmu.cs.lti.emd.learn.Feature.impl.FrameArgumentLemmaFeatureGenerator;
-import edu.cmu.cs.lti.emd.learn.Feature.impl.FrameNameFeatureGenerator;
-import edu.cmu.cs.lti.emd.learn.Feature.impl.HeadWordFeatures;
-import edu.cmu.cs.lti.emd.learn.Feature.impl.WindowWordFeatureGenerator;
+import edu.cmu.cs.lti.emd.learn.feature.generator.EventMentionFeatureGenerator;
+import edu.cmu.cs.lti.emd.learn.feature.generator.impl.FrameArgumentLemmaFeatureGenerator;
+import edu.cmu.cs.lti.emd.learn.feature.generator.impl.FrameNameFeatureGenerator;
+import edu.cmu.cs.lti.emd.learn.feature.generator.impl.HeadWordFeatureGenerator;
+import edu.cmu.cs.lti.emd.learn.feature.generator.impl.WindowWordFeatureGenerator;
 import edu.cmu.cs.lti.emd.pipeline.EventMentionTrainer;
 import edu.cmu.cs.lti.emd.utils.WordNetSenseIdentifier;
 import edu.cmu.cs.lti.ling.FrameDataReader;
@@ -193,7 +193,7 @@ public class EventMentionTypeLearner extends AbstractLoggingAnnotator {
 
     private void registerFeatures() {
         featureGenerators = new ArrayList<>();
-        featureGenerators.add(new HeadWordFeatures(brownClusters, wnsi, featureSubset));
+        featureGenerators.add(new HeadWordFeatureGenerator(brownClusters, wnsi, featureSubset));
         featureGenerators.add(new FrameNameFeatureGenerator(featureSubset));
         featureGenerators.add(new FrameArgumentLemmaFeatureGenerator(brownClusters, wnsi, featureSubset));
         featureGenerators.add(new WindowWordFeatureGenerator(2, wnsi, allWords, featureSubset));

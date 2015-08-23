@@ -4,7 +4,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Sets;
 import edu.cmu.cs.lti.emd.annotators.EvaluationResultWriter;
-import edu.cmu.cs.lti.emd.annotators.EventMentionTypeLearner;
+import edu.cmu.cs.lti.emd.annotators.twostep.EventMentionTypeLearner;
 import edu.cmu.cs.lti.emd.eval.EventMentionEvalRunner;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import org.apache.uima.UIMAException;

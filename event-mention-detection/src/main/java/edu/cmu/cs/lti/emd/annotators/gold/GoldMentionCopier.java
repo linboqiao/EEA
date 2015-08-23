@@ -25,7 +25,13 @@ public class GoldMentionCopier extends AbstractLoggingAnnotator {
         for (EventMention mention : JCasUtil.select(goldStandardView, EventMention.class)) {
             EventMention systemMention = new EventMention(aJCas, mention.getBegin(), mention.getEnd());
             systemMention.setEventType(mention.getEventType());
-            UimaAnnotationUtils.finishAnnotation(systemMention, componentId, mention.getId(), aJCas);
+
+            if (!systemMention.getCoveredText().trim().equals("")) {
+                UimaAnnotationUtils.finishAnnotation(systemMention, componentId, mention.getId(), aJCas);
+            } else {
+                systemMention.removeFromIndexes();
+            }
+
         }
     }
 }

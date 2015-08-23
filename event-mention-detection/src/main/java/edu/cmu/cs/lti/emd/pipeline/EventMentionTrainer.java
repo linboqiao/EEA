@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.emd.pipeline;
 
 import com.google.common.collect.BiMap;
-import edu.cmu.cs.lti.emd.annotators.EventMentionTypeLearner;
+import edu.cmu.cs.lti.emd.annotators.twostep.EventMentionTypeLearner;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import gnu.trove.iterator.TIntDoubleIterator;
 import gnu.trove.map.TIntDoubleMap;

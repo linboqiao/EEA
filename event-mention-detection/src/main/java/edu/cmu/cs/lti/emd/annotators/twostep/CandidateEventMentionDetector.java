@@ -1,7 +1,8 @@
-package edu.cmu.cs.lti.emd.annotators;
+package edu.cmu.cs.lti.emd.annotators.twostep;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
+import edu.cmu.cs.lti.emd.annotators.UsefulFramDetector;
 import edu.cmu.cs.lti.ling.FrameDataReader;
 import edu.cmu.cs.lti.ling.WordNetSearcher;
 import edu.cmu.cs.lti.script.type.*;
