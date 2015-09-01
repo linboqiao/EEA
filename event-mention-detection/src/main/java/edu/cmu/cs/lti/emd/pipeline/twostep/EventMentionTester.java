@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.emd.pipeline.twostep;
 
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.twostep.EventMentionTypeLearner;
+import edu.cmu.cs.lti.emd.annotators.acceptors.NotOtherTypeAcceptor;
 import edu.cmu.cs.lti.emd.eval.EventMentionEvalRunner;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -40,6 +41,9 @@ public class EventMentionTester {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
+        AnalysisEngineDescription acceptor = AnalysisEngineFactory.createEngineDescription(
+                NotOtherTypeAcceptor.class, typeSystemDescription
+        );
 
         CollectionReaderDescription dev_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir,
                 "dev_data", 1, false);
@@ -77,19 +81,19 @@ public class EventMentionTester {
                         .class, typeSystemDescription,
                 TbfStyleEventWriter.PARAM_OUTPUT_PATH, paramInputDir + "/results/temp_dev_prediction.tbf",
                 TbfStyleEventWriter.PARAM_SYSTEM_ID, "cmu-two-step");
-        SimplePipeline.runPipeline(dev_reader, mention, devResults);
+        SimplePipeline.runPipeline(dev_reader, mention, acceptor, devResults);
 
 //        AnalysisEngineDescription testResults = CustomAnalysisEngineFactory.createAnalysisEngine
 // (EvaluationResultWriter.class, typeSystemDescription,
 //                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir +
 // "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/test_prediction.tbf");
-//        SimplePipeline.runPipeline(test_reader, mention, testResults);
+//        SimplePipeline.runPipeline(test_reader, mention, acceptor, testResults);
 
 //        AnalysisEngineDescription finalResults = CustomAnalysisEngineFactory.createAnalysisEngine
 // (EvaluationResultWriter.class, typeSystemDescription,
 //                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir +
 // "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/CMU-TWO-STEP.tbf");
-//        SimplePipeline.runPipeline(final_reader, mention, realis, finalResults);
+//        SimplePipeline.runPipeline(final_reader, mention, realis, acceptor, finalResults);
 
         EventMentionEvalRunner runner = new EventMentionEvalRunner();
 

@@ -2,12 +2,8 @@ package edu.cmu.cs.lti.emd.annotators;
 
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
-import edu.cmu.cs.lti.emd.annotators.twostep.EventMentionTypeLearner;
-import edu.cmu.cs.lti.script.type.Article;
-import edu.cmu.cs.lti.script.type.CandidateEventMention;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.script.type.Word;
-import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalsysisEngine;
+import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -24,10 +20,10 @@ import java.util.List;
  * Date: 2/1/15
  * Time: 9:15 PM
  */
-public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalsysisEngine {
+public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine {
     public static final String PARAM_SYSTEM_ID = "systemId";
 
-    @ConfigurationParameter(name = PARAM_SYSTEM_ID, mandatory = true)
+    @ConfigurationParameter(name = PARAM_SYSTEM_ID)
     private String systemId;
 
     @Override
@@ -44,32 +40,27 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalsysisEngine
         align.loadWord2Stanford(aJCas, TbfEventDataReader.COMPONENT_ID);
 
         int eventId = 1;
-        for (CandidateEventMention candidate : JCasUtil.select(aJCas, CandidateEventMention.class)) {
-            if (candidate.getPredictedType() != null && !candidate.getPredictedType().equals(EventMentionTypeLearner
-                    .OTHER_TYPE)) {
-                List<String> parts = new ArrayList<>();
-                parts.add(systemId);
-                parts.add(articleName);
-                String eid = "E" + eventId++;
-                parts.add(eid);
-                Pair<String, String> wordInfo = getWords(candidate, align);
-                parts.add(wordInfo.getValue0());
-                parts.add(wordInfo.getValue1());
-                parts.add(candidate.getPredictedType());
-                parts.add(candidate.getPredictedRealis() == null ? "Actual" : candidate.getPredictedRealis());
-                parts.add("1");
-                sb.append(Joiner.on("\t").join(parts)).append("\n");
-
-                candidate.setId(eid);
-            }
+        for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
+            List<String> parts = new ArrayList<>();
+            parts.add(systemId);
+            parts.add(articleName);
+            String eid = "E" + eventId++;
+            parts.add(eid);
+            Pair<String, String> wordInfo = getWords(mention, align);
+            parts.add(wordInfo.getValue0());
+            parts.add(wordInfo.getValue1());
+            parts.add(mention.getEventType());
+            parts.add(mention.getRealisType() == null ? "Actual" : mention.getRealisType());
+            parts.add("1");
+            sb.append(Joiner.on("\t").join(parts)).append("\n");
+            mention.setId(eid);
         }
-
         sb.append("#EndOfDocument\n");
 
         return sb.toString();
     }
 
-    private List<Word> getSubWords(CandidateEventMention candidate, TokenAlignmentHelper align) {
+    private List<Word> getSubWords(ComponentAnnotation candidate, TokenAlignmentHelper align) {
         List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, candidate);
 
         List<Word> words = new ArrayList<>();
@@ -101,16 +92,16 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalsysisEngine
         return null;
     }
 
-    private Pair<String, String> getWords(CandidateEventMention candidate, TokenAlignmentHelper align) {
+    private Pair<String, String> getWords(ComponentAnnotation mention, TokenAlignmentHelper align) {
         List<String> wordIds = new ArrayList<>();
         List<String> surface = new ArrayList<>();
 
 //        List<Word> words = JCasUtil.selectCovered(Word.class, candidate);
 
-        List<Word> words = getSubWords(candidate, align);
+        List<Word> words = getSubWords(mention, align);
 
         if (words.size() == 0) {
-            System.out.println(candidate.getCoveredText() + " " + candidate.getBegin() + " " + candidate.getEnd());
+            System.out.println(mention.getCoveredText() + " " + mention.getBegin() + " " + mention.getEnd());
             Utils.pause();
         }
 

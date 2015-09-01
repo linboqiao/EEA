@@ -210,7 +210,6 @@ public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
             addSurroundingWordFeatures(candidateHead, 2, features);
             addFrameFeatures(candidateEventMention, features);
 
-
             if (isOnlineTest) {
                 try {
                     Pair<Double, String> prediction = predict(features);
@@ -258,15 +257,6 @@ public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
         } else {
             return currentBest;
         }
-
-
-//        for (int i = 0; i < 5; i++) {
-//            System.err.println("Best " + (i + 1) + " " + rankList.poll());
-//        }
-//
-//
-//        double prediction = pretrainedClassifier.classifyInstance(instance);
-//        return classesToPredict.get((int) prediction - 1);
     }
 
     private Instance createInstance(TIntDoubleMap features) {
@@ -318,14 +308,12 @@ public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
         }
 
         if (triggerWord.getHeadDependencyRelations() != null) {
-            for (Dependency dep : FSCollectionFactory.create(triggerWord.getHeadDependencyRelations(), Dependency
-                    .class)) {
-//                addFeature("HeadDepType_" + dep.getDependencyType(), features);
+            //                addFeature("HeadDepType_" + dep.getDependencyType(), features);
 //                addFeature("HeadDepLemma_" + dep.getHead().getLemma(), features);
-                if (dep.getHead().getNerTag() != null) {
-                    addFeature("HeadDep_" + dep.getDependencyType() + "_" + dep.getHead().getLemma(), features);
-                }
-            }
+            FSCollectionFactory.create(triggerWord.getHeadDependencyRelations(), Dependency
+                    .class).stream().filter(dep -> dep.getHead().getNerTag() != null).forEach(dep -> {
+                addFeature("HeadDep_" + dep.getDependencyType() + "_" + dep.getHead().getLemma(), features);
+            });
         }
 
         if (triggerWord.getChildDependencyRelations() != null) {

@@ -158,7 +158,8 @@ public class EventMentionTypeLearner extends AbstractLoggingAnnotator {
             featureNameMap = HashBiMap.create();
         } else {
             if (modelDirPath == null) {
-                throw new ResourceInitializationException(new IllegalStateException("Must provide model files if using test mode"));
+                throw new ResourceInitializationException(new IllegalStateException("Must provide model files if " +
+                        "using test mode"));
             } else {
                 try {
                     loadModel();
@@ -200,14 +201,18 @@ public class EventMentionTypeLearner extends AbstractLoggingAnnotator {
     }
 
     private void loadModel() throws Exception {
-        featureNameMap = (BiMap<String, Integer>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.featureNamePath).getCanonicalPath());
+        featureNameMap = (BiMap<String, Integer>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer
+                .featureNamePath).getCanonicalPath());
         logger.info("Number of features in total: " + featureNameMap.size());
 
         if (isOnlineTest) {
-            featureConfiguration = (ArrayList<Attribute>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.featureConfigOutputName).getCanonicalPath());
-            pretrainedClassifier = (Classifier) SerializationHelper.read(new File(modelDirPath, modelNameForTest).getCanonicalPath());
+            featureConfiguration = (ArrayList<Attribute>) SerializationHelper.read(new File(modelDirPath,
+                    EventMentionTrainer.featureConfigOutputName).getCanonicalPath());
+            pretrainedClassifier = (Classifier) SerializationHelper.read(new File(modelDirPath, modelNameForTest)
+                    .getCanonicalPath());
             emptyVector = new double[featureConfiguration.size()];
-            classesToPredict = (List<String>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer.predictionLabels).getCanonicalPath());
+            classesToPredict = (List<String>) SerializationHelper.read(new File(modelDirPath, EventMentionTrainer
+                    .predictionLabels).getCanonicalPath());
 
             BufferedReader reader =
                     new BufferedReader(new FileReader(trainingDataSetPath));
@@ -218,7 +223,8 @@ public class EventMentionTypeLearner extends AbstractLoggingAnnotator {
             int classId = featureConfiguration.get(featureConfiguration.size() - 1).index();
             trainingDataSet.setClass(featureConfiguration.get(featureConfiguration.size() - 1));
             trainingDataSet.classAttribute();
-            logger.info("Training class id : " + classId + ". Number of attributes : " + trainingDataSet.numAttributes());
+            logger.info("Training class id : " + classId + ". Number of attributes : " + trainingDataSet
+                    .numAttributes());
         }
     }
 
@@ -252,8 +258,8 @@ public class EventMentionTypeLearner extends AbstractLoggingAnnotator {
                     candidateEventMention.setTypePredictionConfidence(predictionConfidence);
 
                     if (!predictedType.equals(OTHER_TYPE)) {
-                        CandidateEventMention annotateMention =
-                                new CandidateEventMention(goldView, candidateEventMention.getBegin(), candidateEventMention.getEnd());
+                        CandidateEventMention annotateMention = new CandidateEventMention(goldView,
+                                candidateEventMention.getBegin(), candidateEventMention.getEnd());
                         annotateMention.setPredictedType(predictedType);
                         annotateMention.setTypePredictionConfidence(predictionConfidence);
                         annotateMention.addToIndexes();

@@ -22,7 +22,9 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -221,32 +223,5 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
         trainer = new AveragePerceptronTrainer(decoder, stepSize, featureDimension);
         sentenceExtractor = new MentionTypeFeatureExtractor(alphabet);
-//        List<SentenceFeatureWithFocus> featureFunctions = new ArrayList<>();
-//        featureFunctions.add(new WordFeatures());
-//                new UimaSentenceFeatureExtractor(alphabet) {
-//            private final Logger logger = LoggerFactory.getLogger(getClass());
-//
-//            List<StanfordCorenlpToken> sentenceTokens;
-//
-//            @Override
-//            public void init(JCas context) {
-//                super.init(context);
-//            }
-//
-//            @Override
-//            public void resetWorkspace(StanfordCorenlpSentence sentence) {
-//                super.resetWorkspace(sentence);
-//                sentenceTokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
-//            }
-//
-//            @Override
-//            public void extract(int focus, TObjectDoubleMap<String> featuresNoState,
-//                                TObjectDoubleMap<String> featuresNeedForState) {
-////                logger.info("Extracting features at focus : " + focus);
-//                featureFunctions.forEach(ff -> ff.extract(sentenceTokens, focus, featuresNoState,
-//                        featuresNeedForState));
-////                logger.info("Done extracting : " + focus);
-//            }
-//        };
     }
 }

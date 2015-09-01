@@ -40,12 +40,14 @@ public class RealisTrainer {
 
     public static final String predictionLabels = "labelNames";
 
-    public void configFeatures(BiMap<String, Integer> featureNameMap, List<String> allClasses, File outputDir) throws Exception {
+    public void configFeatures(BiMap<String, Integer> featureNameMap, List<String> allClasses, File outputDir) throws
+            Exception {
         featureConfiguration = new ArrayList<>();
         ArrayList<Map.Entry<String, Integer>> featureNames = new ArrayList<>(featureNameMap.entrySet());
         declareFeatures(featureNames, featureConfiguration);
         declareClass(allClasses, featureConfiguration);
-        System.out.println("Number of features : " + featureNames.size() + ". Number of classes : " + allClasses.size());
+        System.out.println("Number of features : " + featureNames.size() + ". Number of classes : " + allClasses.size
+                ());
 
         if (outputDir != null) {
             String featureNameSavingPath = new File(outputDir, featureNamePath).getCanonicalPath();
@@ -91,7 +93,8 @@ public class RealisTrainer {
         return classifiers;
     }
 
-    private void trainAndTest(Instances trainingSet, List<Instances> testSets, File modelOutPath, List<String> allClasses) throws Exception {
+    private void trainAndTest(Instances trainingSet, List<Instances> testSets, File modelOutPath, List<String>
+            allClasses) throws Exception {
         for (Classifier classifier : getClassifiers()) {
             Evaluation eval = new Evaluation(trainingSet);
             System.out.println("Building model");
@@ -110,9 +113,11 @@ public class RealisTrainer {
                 System.out.println("Prec\tRecall\tF1\tTotal");
                 for (int i = 0; i < allClasses.size(); i++) {
                     int realClassIndex = i + 1;
-                    double numInThisClass = eval.numTruePositives(realClassIndex) + eval.numFalseNegatives(realClassIndex);
+                    double numInThisClass = eval.numTruePositives(realClassIndex) + eval.numFalseNegatives
+                            (realClassIndex);
                     System.out.println(String.format("%.4f\t%.4f\t%.4f\t%.2f\t%s",
-                            eval.precision(realClassIndex), eval.recall(realClassIndex), eval.fMeasure(realClassIndex), numInThisClass, allClasses.get(i)));
+                            eval.precision(realClassIndex), eval.recall(realClassIndex), eval.fMeasure
+                                    (realClassIndex), numInThisClass, allClasses.get(i)));
                 }
             }
 
@@ -125,7 +130,8 @@ public class RealisTrainer {
     }
 
 
-    private Instances prepareDataSet(List<Pair<TIntDoubleMap, String>> featuresAndClass, String dataSetOutputPath) throws Exception {
+    private Instances prepareDataSet(List<Pair<TIntDoubleMap, String>> featuresAndClass, String dataSetOutputPath)
+            throws Exception {
         Instances dataSet = new Instances("event_type_detection", featureConfiguration, featuresAndClass.size());
         dataSet.setClass(featureConfiguration.get(featureConfiguration.size() - 1));
 
@@ -169,8 +175,10 @@ public class RealisTrainer {
                                   String inputDir, String baseInputDirName,
                                   int stepNum, String semLinkDataPath,
                                   String bwClusterPath, String wordnetDataPath,
-                                  boolean isTraining, String modelDir, boolean keep_quite) throws UIMAException, IOException {
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(inputDir, baseInputDirName, stepNum, false);
+                                  boolean isTraining, String modelDir, boolean keep_quite) throws UIMAException,
+            IOException {
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(inputDir,
+                baseInputDirName, stepNum, false);
         AnalysisEngineDescription ana = AnalysisEngineFactory.createEngineDescription(
                 EventMentionRealisLearner.class, typeSystemDescription,
                 EventMentionRealisLearner.PARAM_SEM_LINK_DIR, semLinkDataPath,
@@ -198,17 +206,20 @@ public class RealisTrainer {
         }
 
         System.out.println("Preparing training dataset");
-        generateFeatures(typeSystemDescription, parentInput, trainingBaseDir, 1, semLinkDataPath, bwClusterPath, wordnetDataPath, true, null, true);
+        generateFeatures(typeSystemDescription, parentInput, trainingBaseDir, 1, semLinkDataPath, bwClusterPath,
+                wordnetDataPath, true, null, true);
         BiMap<String, Integer> featureNameMap = EventMentionRealisLearner.featureNameMap;
         List<Pair<TIntDoubleMap, String>> trainingFeatures = EventMentionRealisLearner.featuresAndClass;
         ArrayList<String> allClasses = new ArrayList<>(EventMentionRealisLearner.allTypes);
         configFeatures(featureNameMap, allClasses, modelOutputDir);
 
-        Instances trainingDataset = prepareDataSet(trainingFeatures, new File(modelOutputDir, "training.arff").getCanonicalPath());
+        Instances trainingDataset = prepareDataSet(trainingFeatures, new File(modelOutputDir, "training.arff")
+                .getCanonicalPath());
         System.out.println("Number of training instances : " + trainingFeatures.size());
 
         System.out.println("Saving feature config");
-        SerializationHelper.write(new File(modelOutputDir, featureConfigOutputName).getCanonicalPath(), featureConfiguration);
+        SerializationHelper.write(new File(modelOutputDir, featureConfigOutputName).getCanonicalPath(),
+                featureConfiguration);
 
         System.out.println("Preparing dev datasets");
         List<Instances> testSets = new ArrayList<>();
@@ -216,7 +227,8 @@ public class RealisTrainer {
             generateFeatures(typeSystemDescription, parentInput, devBaseDir, 1,
                     semLinkDataPath, bwClusterPath, wordnetDataPath, false, modelOutputDir.getCanonicalPath(), true);
             List<Pair<TIntDoubleMap, String>> devFeatures = EventMentionRealisLearner.featuresAndClass;
-            Instances devDataset = prepareDataSet(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath());
+            Instances devDataset = prepareDataSet(devFeatures, new File(modelOutputDir, "test.arff").getCanonicalPath
+                    ());
             testSets.add(devDataset);
             System.out.println("Number of dev instances : " + devFeatures.size());
         }
@@ -240,7 +252,8 @@ public class RealisTrainer {
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
         RealisTrainer trainer = new RealisTrainer();
-        trainer.buildModels(typeSystemDescription, paramInputDir, modelBasePath, trainingBaseDir, devBaseDir, semLinkDataPath, brownClusteringDataPath, wordnetDataPath);
+        trainer.buildModels(typeSystemDescription, paramInputDir, modelBasePath, trainingBaseDir, devBaseDir,
+                semLinkDataPath, brownClusteringDataPath, wordnetDataPath);
 
         System.out.println(className + " finished...");
     }
