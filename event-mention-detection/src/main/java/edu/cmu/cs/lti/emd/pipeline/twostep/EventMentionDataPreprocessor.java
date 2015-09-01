@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.pipeline;
+package edu.cmu.cs.lti.emd.pipeline.twostep;
 
 import edu.cmu.cs.lti.annotator.StanfordCoreNlpAnnotator;
 import edu.cmu.cs.lti.annotators.FanseAnnotator;

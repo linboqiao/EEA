@@ -1,8 +1,7 @@
-package edu.cmu.cs.lti.emd.pipeline;
+package edu.cmu.cs.lti.emd.pipeline.twostep;
 
-import edu.cmu.cs.lti.emd.annotators.twostep.CandidateEventMentionDetector;
+import edu.cmu.cs.lti.emd.annotators.UsefulFramDetector;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
@@ -18,17 +17,17 @@ import java.io.File;
  * Date: 1/30/15
  * Time: 7:07 PM
  */
-public class CandidateEventMentionDetectorRunner {
-    static String className = CandidateEventMentionDetectorRunner.class.getSimpleName();
+public class UsefulFrameDetectorRunner {
+    static String className = UsefulFrameDetectorRunner.class.getSimpleName();
+
+    public static String dataOutputDir = "event-mention-detection/data/Event-mention-detection-2014/useful_frames";
 
     public static void main(String[] args) throws Exception {
         System.out.println(className + " started...");
 
-        String paramBaseInputDirName = args[0];// "split_train";
-        String outputBase = args[1]; //"test_data";
-
         // Parameters for the writer
         String paramParentInputDir = "event-mention-detection/data/Event-mention-detection-2014";
+        String paramBaseInputDirName = "split_train";
 
         String paramTypeSystemDescriptor = "TypeSystem";
 
@@ -38,7 +37,6 @@ public class CandidateEventMentionDetectorRunner {
 
         String frameDataPath = "data/resources/fndata-1.5/frame";
 
-
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
@@ -46,25 +44,19 @@ public class CandidateEventMentionDetectorRunner {
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, new File(paramParentInputDir, paramBaseInputDirName).getCanonicalPath(), false);
 
         AnalysisEngineDescription detector = AnalysisEngineFactory.createEngineDescription(
-                CandidateEventMentionDetector.class, typeSystemDescription,
-                CandidateEventMentionDetector.PARAM_FRAME_DATA_PATH, frameDataPath,
-                CandidateEventMentionDetector.PARAM_GOLD_STANDARD_VIEW_NAME, "goldStandard",
-                CandidateEventMentionDetector.PARAM_USEFUL_FRAME_DIR, UsefulFrameDetectorRunner.dataOutputDir,
-                CandidateEventMentionDetector.PARAM_SEM_LINK_PATH, semLinkDataPath,
-                CandidateEventMentionDetector.PARAM_WORDNET_PATH, wordnetDataPath,
-                CandidateEventMentionDetector.PARAM_FOR_TRAINING, true
-        );
-
-        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(paramParentInputDir, outputBase, 1, null);
+                UsefulFramDetector.class, typeSystemDescription,
+                UsefulFramDetector.PARAM_FRAME_DATA_PATH, frameDataPath,
+                UsefulFramDetector.PARAM_GOLD_STANDARD_VIEW_NAME, "goldStandard",
+                UsefulFramDetector.PARAM_OUTPUT_DIR, dataOutputDir,
+                UsefulFramDetector.PARAM_SEM_LINK_PATH, semLinkDataPath,
+                UsefulFramDetector.PARAM_WORDNET_PATH, wordnetDataPath);
 
         // Run the pipeline.
         try {
-            SimplePipeline.runPipeline(reader, detector, writer);
+            SimplePipeline.runPipeline(reader, detector);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
         }
-
-        System.out.println("Done");
     }
 }

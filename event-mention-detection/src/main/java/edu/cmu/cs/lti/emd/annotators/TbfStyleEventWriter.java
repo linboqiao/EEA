@@ -10,6 +10,7 @@ import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalsysisEngine;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Utils;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.javatuples.Pair;
@@ -23,9 +24,11 @@ import java.util.List;
  * Date: 2/1/15
  * Time: 9:15 PM
  */
-public class EvaluationResultWriter extends AbstractSimpleTextWriterAnalsysisEngine {
+public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalsysisEngine {
+    public static final String PARAM_SYSTEM_ID = "systemId";
 
-    public static final String SYSTEM_ID = "CMU-TWO-STEP";
+    @ConfigurationParameter(name = PARAM_SYSTEM_ID, mandatory = true)
+    private String systemId;
 
     @Override
     public String getTextToPrint(JCas aJCas) {
@@ -42,9 +45,10 @@ public class EvaluationResultWriter extends AbstractSimpleTextWriterAnalsysisEng
 
         int eventId = 1;
         for (CandidateEventMention candidate : JCasUtil.select(aJCas, CandidateEventMention.class)) {
-            if (candidate.getPredictedType() != null && !candidate.getPredictedType().equals(EventMentionTypeLearner.OTHER_TYPE)) {
+            if (candidate.getPredictedType() != null && !candidate.getPredictedType().equals(EventMentionTypeLearner
+                    .OTHER_TYPE)) {
                 List<String> parts = new ArrayList<>();
-                parts.add(SYSTEM_ID);
+                parts.add(systemId);
                 parts.add(articleName);
                 String eid = "E" + eventId++;
                 parts.add(eid);

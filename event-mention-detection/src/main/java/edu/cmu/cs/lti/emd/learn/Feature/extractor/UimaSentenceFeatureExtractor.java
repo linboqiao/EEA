@@ -1,8 +1,7 @@
-package edu.cmu.cs.lti.emd.learn;
+package edu.cmu.cs.lti.emd.learn.feature.extractor;
 
 import edu.cmu.cs.lti.learning.model.Alphabet;
 import edu.cmu.cs.lti.learning.model.ChainFeatureExtractor;
-import edu.cmu.cs.lti.learning.model.HashedFeatureVector;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import org.apache.uima.jcas.JCas;
 
@@ -30,7 +29,4 @@ public abstract class UimaSentenceFeatureExtractor extends ChainFeatureExtractor
     public void resetWorkspace(StanfordCorenlpSentence sentence) {
         this.sentence = sentence;
     }
-
-    @Override
-    public abstract HashedFeatureVector extract(int focus, int previousStateValue);
 }

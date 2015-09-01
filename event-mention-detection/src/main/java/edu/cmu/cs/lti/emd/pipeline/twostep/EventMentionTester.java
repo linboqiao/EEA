@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.pipeline;
+package edu.cmu.cs.lti.emd.pipeline.twostep;
 
 import edu.cmu.cs.lti.emd.annotators.EvaluationResultWriter;
 import edu.cmu.cs.lti.emd.annotators.twostep.EventMentionTypeLearner;
@@ -41,9 +41,12 @@ public class EventMentionTester {
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
 
-        CollectionReaderDescription dev_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, "dev_data", 1, false);
-//        CollectionReaderDescription test_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir, "test_data", 1, false);
-//        CollectionReaderDescription final_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir + "/test", "submission_data", 1, false);
+        CollectionReaderDescription dev_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir,
+                "dev_data", 1, false);
+//        CollectionReaderDescription test_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir,
+// "test_data", 1, false);
+//        CollectionReaderDescription final_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir +
+// "/test", "submission_data", 1, false);
 
         AnalysisEngineDescription mention = AnalysisEngineFactory.createEngineDescription(
                 EventMentionTypeLearner.class, typeSystemDescription,
@@ -52,7 +55,8 @@ public class EventMentionTester {
                 EventMentionTypeLearner.PARAM_MODEL_FOLDER, modelPath,
                 EventMentionTypeLearner.PARAM_MODEL_NAME_FOR_TEST, modelName,
                 EventMentionTypeLearner.PARAM_ONLINE_TEST, true,
-                EventMentionTypeLearner.PARAM_TRAINING_DATASET_PATH, new File(paramInputDir, modelBase + "/training.arff").getCanonicalPath(),
+                EventMentionTypeLearner.PARAM_TRAINING_DATASET_PATH, new File(paramInputDir, modelBase + "/training" +
+                        ".arff").getCanonicalPath(),
                 EventMentionTypeLearner.PARAM_BROWN_CLUSTERING_PATH, brownClusteringDataPath,
                 EventMentionTypeLearner.PARAM_WORDNET_PATH, wordnetDataPath
         );
@@ -64,29 +68,38 @@ public class EventMentionTester {
 //                EventMentionRealisLearner.PARAM_MODEL_FOLDER, realisModelPath,
 //                EventMentionRealisLearner.PARAM_MODEL_NAME_FOR_TEST, realisModelName,
 //                EventMentionRealisLearner.PARAM_ONLINE_TEST, true,
-//                EventMentionRealisLearner.PARAM_TRAINING_DATASET_PATH, new File(paramInputDir, realisModelBase + "/training.arff").getCanonicalPath(),
+//                EventMentionRealisLearner.PARAM_TRAINING_DATASET_PATH, new File(paramInputDir, realisModelBase +
+// "/training.arff").getCanonicalPath(),
 //                EventMentionRealisLearner.PARAM_BROWN_CLUSTERING_PATH, brownClusteringDataPath
 //        );
 
-        AnalysisEngineDescription devResults = AnalysisEngineFactory.createEngineDescription(EvaluationResultWriter.class, typeSystemDescription,
-                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/results/temp_dev_prediction.tbf");
+        AnalysisEngineDescription devResults = AnalysisEngineFactory.createEngineDescription(EvaluationResultWriter
+                        .class, typeSystemDescription,
+                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/results/temp_dev_prediction.tbf",
+                EvaluationResultWriter.PARAM_SYSTEM_ID, "cmu-two-step");
         SimplePipeline.runPipeline(dev_reader, mention, devResults);
 
-//        AnalysisEngineDescription testResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
-//                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/test_prediction.tbf");
+//        AnalysisEngineDescription testResults = CustomAnalysisEngineFactory.createAnalysisEngine
+// (EvaluationResultWriter.class, typeSystemDescription,
+//                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir +
+// "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/test_prediction.tbf");
 //        SimplePipeline.runPipeline(test_reader, mention, testResults);
 
-//        AnalysisEngineDescription finalResults = CustomAnalysisEngineFactory.createAnalysisEngine(EvaluationResultWriter.class, typeSystemDescription,
-//                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/CMU-TWO-STEP.tbf");
+//        AnalysisEngineDescription finalResults = CustomAnalysisEngineFactory.createAnalysisEngine
+// (EvaluationResultWriter.class, typeSystemDescription,
+//                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir +
+// "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/CMU-TWO-STEP.tbf");
 //        SimplePipeline.runPipeline(final_reader, mention, realis, finalResults);
 
         EventMentionEvalRunner runner = new EventMentionEvalRunner();
 
         runner.runEval(
                 "/Users/zhengzhongliu/Documents/projects/EvmEval/scorer_v1.2.py",
-                "event-mention-detection/data/Event-mention-detection-2014/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/tbf/all_dev_gold.tbf",
+                "event-mention-detection/data/Event-mention-detection-2014" +
+                        "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/tbf/all_dev_gold.tbf",
                 "event-mention-detection/data/Event-mention-detection-2014/results/temp_dev_prediction.tbf",
-                "event-mention-detection/data/Event-mention-detection-2014/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/data/token_offset",
+                "event-mention-detection/data/Event-mention-detection-2014" +
+                        "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/data/token_offset",
                 "event-mention-detection/data/Event-mention-detection-2014/eval_out");
 
         System.out.println(modelBase + "\t" + runner.getMicroTypeAccuracy());

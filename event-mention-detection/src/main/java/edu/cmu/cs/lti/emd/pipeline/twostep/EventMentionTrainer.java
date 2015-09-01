@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.pipeline;
+package edu.cmu.cs.lti.emd.pipeline.twostep;
 
 import com.google.common.collect.BiMap;
 import edu.cmu.cs.lti.emd.annotators.twostep.EventMentionTypeLearner;
