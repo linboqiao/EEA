@@ -12,6 +12,11 @@
     <artifactId>event-coref</artifactId>
     <dependencies>
         <dependency>
+            <groupId>edu.cmu.cs.lti.script</groupId>
+            <artifactId>event-mention-detection</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>edu.cmu.cs.lti</groupId>
             <artifactId>semafor-parser</artifactId>
         </dependency>

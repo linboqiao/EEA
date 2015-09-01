@@ -1,21 +1,13 @@
 package edu.cmu.cs.lti.event_coref.ml;
 
 import edu.cmu.cs.lti.event_coref.model.graph.*;
-import edu.cmu.cs.lti.pipeline.AbstractProcessorBuilder;
-import edu.cmu.cs.lti.pipeline.BasicLoopyPipeline;
+import edu.cmu.cs.lti.event_coref.model.graph.Edge.EdgeType;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionRelation;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.pipeline.LoopPipeline;
-import edu.cmu.cs.lti.event_coref.model.graph.Edge.EdgeType;
-import org.apache.commons.lang3.SerializationUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
-import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.collection.CollectionReaderDescription;
-import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -23,10 +15,7 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.javatuples.Pair;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +45,8 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         printProcessInfo(aJCas, logger);
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
-        List<EventMentionRelation> allMentionRelations = new ArrayList<>(JCasUtil.select(aJCas, EventMentionRelation.class));
+        List<EventMentionRelation> allMentionRelations = new ArrayList<>(JCasUtil.select(aJCas, EventMentionRelation
+                .class));
         //feed the extractor with document information
         extractor = new MentionPairFeatureExtractor(aJCas);
         // a graph to be filled
@@ -181,68 +171,10 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         return bestFirstTree;
     }
 
-    class PerceptronLooper extends LoopPipeline {
-        final int maxIter;
-        private int numIter = 0;
-        private String outputPath;
-
-        public PerceptronLooper(int maxIter, String outputPath) {
-            this.maxIter = maxIter;
-            this.outputPath = outputPath;
-        }
-
-        @Override
-        protected boolean checkStopCriteria() {
-            logger.info("Iteration : " + numIter);
-            return numIter++ >= maxIter;
-        }
-
-        @Override
-        protected void stopActions() {
-            try {
-                File outputFile = new File(outputPath);
-                File outputFolder = outputFile.getParentFile();
-
-                if (!outputFolder.exists()) {
-                    outputFolder.mkdirs();
-                }
-
-                SerializationUtils.serialize(weights, new ObjectOutputStream(new FileOutputStream(new File(outputPath))));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void run(String typeSystemName, final String parentDir, final String baseInputDir, int maxIter, String modelOutput) throws IOException, UIMAException {
-        final TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory.createTypeSystemDescription(typeSystemName);
-
-        BasicLoopyPipeline blp = new BasicLoopyPipeline(new AbstractProcessorBuilder() {
-            @Override
-            public CollectionReaderDescription buildCollectionReader() throws ResourceInitializationException {
-                return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, parentDir, baseInputDir);
-            }
-
-            @Override
-            public AnalysisEngineDescription[] buildPreprocessors() throws ResourceInitializationException {
-                return new AnalysisEngineDescription[0];
-            }
-
-            @Override
-            public AnalysisEngineDescription[] buildProcessors() throws ResourceInitializationException {
-                AnalysisEngineDescription trainer = AnalysisEngineFactory.createEngineDescription(
-                        PaLatentTreeTrainer.class, typeSystemDescription
-                );
-                return new AnalysisEngineDescription[]{trainer};
-            }
-
-            @Override
-            public AnalysisEngineDescription[] buildPostProcessors() throws ResourceInitializationException {
-                return new AnalysisEngineDescription[0];
-            }
-        }, new PerceptronLooper(maxIter, modelOutput)
-        );
-        blp.run();
+    public void run(String typeSystemName, final String parentDir, final String baseInputDir, int maxIter, String
+            modelOutput) throws IOException, UIMAException {
+        final TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory.createTypeSystemDescription
+                (typeSystemName);
     }
 
 

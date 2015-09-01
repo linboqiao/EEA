@@ -103,17 +103,13 @@ public class CorefPipeline {
                 AnalysisEngineDescription argumentExtractor = AnalysisEngineFactory.createEngineDescription(
                         ArgumentExtractor.class, typeSystemDescription
                 );
-                return new AnalysisEngineDescription[]{cleaner, goldStandard, stanfordAnalyzer, semaforAnalyzer,
-                        fanseParser, opennlp, eventMentionAnnotator, argumentExtractor};
-//                return new AnalysisEngineDescription[]{eventAnnotator};
-            }
 
-
-            @Override
-            public AnalysisEngineDescription[] buildPostProcessors() throws ResourceInitializationException {
                 AnalysisEngineDescription xmiWriter = CustomAnalysisEngineFactory.createXmiWriter(parentDir,
                         xmiOutputBase);
-                return new AnalysisEngineDescription[]{xmiWriter};
+
+                return new AnalysisEngineDescription[]{cleaner, goldStandard, stanfordAnalyzer, semaforAnalyzer,
+                        fanseParser, opennlp, eventMentionAnnotator, argumentExtractor, xmiWriter};
+//                return new AnalysisEngineDescription[]{eventAnnotator};
             }
         }, typeSystemDescription);
         pipeline.run();
