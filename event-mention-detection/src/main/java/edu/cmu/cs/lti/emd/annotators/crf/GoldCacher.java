@@ -5,6 +5,8 @@ import edu.cmu.cs.lti.learning.model.SequenceSolution;
 import edu.cmu.cs.lti.learning.model.Solution;
 import org.apache.commons.lang3.SerializationUtils;
 import org.javatuples.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,10 +22,11 @@ import java.util.HashMap;
  * @author Zhengzhong Liu
  */
 class GoldCacher {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     private static final String GOLD_SOLUTION_CACHE_NAME = "goldSolution";
     private static final String GOLD_FEATURE_CACHE_NAME = "goldCache";
 
-    private MentionTypeCrfTrainer mentionTypeCrfTrainer;
     private HashMap<Pair<String, Integer>, Solution> goldSolutions;
     private HashMap<Pair<String, Integer>, HashedFeatureVector> goldFeatures;
 
@@ -32,8 +35,7 @@ class GoldCacher {
     private File goldSolutionFile;
     private File goldFeaturesFile;
 
-    public GoldCacher(MentionTypeCrfTrainer mentionTypeCrfTrainer, File cacheDirectory) {
-        this.mentionTypeCrfTrainer = mentionTypeCrfTrainer;
+    public GoldCacher(File cacheDirectory) {
         this.goldLoaded = false;
         this.goldSolutions = new HashMap<>();
         this.goldFeatures = new HashMap<>();
@@ -44,12 +46,12 @@ class GoldCacher {
 
     public void loadGoldSolutions() throws FileNotFoundException {
         if (goldSolutionFile.exists() && goldFeaturesFile.exists()) {
-            mentionTypeCrfTrainer.logger.info(String.format("Loading solutions from %s and %s .", goldFeaturesFile.getAbsolutePath(),
+            logger.info(String.format("Loading solutions from %s and %s .", goldFeaturesFile.getAbsolutePath(),
                     goldSolutionFile.getAbsolutePath()));
             goldSolutions = SerializationUtils.deserialize(new FileInputStream(goldSolutionFile));
             goldFeatures = SerializationUtils.deserialize(new FileInputStream(goldFeaturesFile));
             goldLoaded = true;
-            mentionTypeCrfTrainer.logger.info("Gold Caches of solutions loaded.");
+            logger.info("Gold Caches of solutions loaded.");
         }
     }
 
@@ -57,8 +59,8 @@ class GoldCacher {
         if (!goldLoaded) {
             SerializationUtils.serialize(goldSolutions, new FileOutputStream(goldSolutionFile));
             SerializationUtils.serialize(goldFeatures, new FileOutputStream(goldFeaturesFile));
-            mentionTypeCrfTrainer.logger.info(goldSolutionFile.getAbsolutePath());
-            mentionTypeCrfTrainer.logger.info("Writing gold caches.");
+            logger.info(goldSolutionFile.getAbsolutePath());
+            logger.info("Writing gold caches.");
         }
     }
 

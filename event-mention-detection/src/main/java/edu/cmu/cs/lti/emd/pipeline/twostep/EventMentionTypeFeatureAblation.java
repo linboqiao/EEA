@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.emd.pipeline.twostep;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Sets;
-import edu.cmu.cs.lti.emd.annotators.EvaluationResultWriter;
+import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.twostep.EventMentionTypeLearner;
 import edu.cmu.cs.lti.emd.eval.EventMentionEvalRunner;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
@@ -170,8 +170,8 @@ public class EventMentionTypeFeatureAblation {
         );
 
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(workingDir, baseDataDir, 1, false);
-        AnalysisEngineDescription response = AnalysisEngineFactory.createEngineDescription(EvaluationResultWriter.class, typeSystemDescription,
-                EvaluationResultWriter.PARAM_OUTPUT_PATH, responseOutputPath);
+        AnalysisEngineDescription response = AnalysisEngineFactory.createEngineDescription(TbfStyleEventWriter.class, typeSystemDescription,
+                TbfStyleEventWriter.PARAM_OUTPUT_PATH, responseOutputPath);
         SimplePipeline.runPipeline(reader, mention, response);
     }
 

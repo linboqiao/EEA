@@ -2,9 +2,8 @@ package edu.cmu.cs.lti.emd.annotators.crf;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.emd.learn.UimaSentenceFeatureExtractor;
-import edu.cmu.cs.lti.emd.learn.feature.sentence.SentenceFeatureWithFocus;
-import edu.cmu.cs.lti.emd.learn.feature.sentence.WordFeatures;
+import edu.cmu.cs.lti.emd.learn.feature.extractor.MentionTypeFeatureExtractor;
+import edu.cmu.cs.lti.emd.learn.feature.extractor.UimaSentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.cache.CrfFeatureCacher;
 import edu.cmu.cs.lti.learning.cache.CrfState;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
@@ -16,20 +15,18 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import gnu.trove.map.TObjectDoubleMap;
-import org.apache.commons.lang3.SerializationUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.javatuples.Pair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 
 /**
  * Created with IntelliJ IDEA.
@@ -150,7 +147,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
     }
 
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        if (!goldCacher.goldLoaded) {
+        if (!goldCacher.isGoldLoaded()) {
             try {
                 goldCacher.saveGoldSolutions();
             } catch (FileNotFoundException e) {
@@ -174,66 +171,6 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         }
 
         return mentionWithMergedTypes;
-    }
-
-    class GoldCacher {
-        private static final String GOLD_SOLUTION_CACHE_NAME = "goldSolution";
-        private static final String GOLD_FEATURE_CACHE_NAME = "goldCache";
-
-        private HashMap<Pair<String, Integer>, Solution> goldSolutions;
-        private HashMap<Pair<String, Integer>, HashedFeatureVector> goldFeatures;
-
-        private boolean goldLoaded;
-
-        private File goldSolutionFile;
-        private File goldFeaturesFile;
-
-        public GoldCacher(File cacheDirectory) {
-            this.goldLoaded = false;
-            this.goldSolutions = new HashMap<>();
-            this.goldFeatures = new HashMap<>();
-
-            goldSolutionFile = new File(cacheDirectory, GOLD_SOLUTION_CACHE_NAME);
-            goldFeaturesFile = new File(cacheDirectory, GOLD_FEATURE_CACHE_NAME);
-        }
-
-        public void loadGoldSolutions() throws FileNotFoundException {
-            if (goldSolutionFile.exists() && goldFeaturesFile.exists()) {
-                logger.info(String.format("Loading solutions from %s and %s .", goldFeaturesFile.getAbsolutePath(),
-                        goldSolutionFile.getAbsolutePath()));
-                goldSolutions = SerializationUtils.deserialize(new FileInputStream(goldSolutionFile));
-                goldFeatures = SerializationUtils.deserialize(new FileInputStream(goldFeaturesFile));
-                goldLoaded = true;
-                logger.info("Gold Caches of solutions loaded.");
-            }
-        }
-
-        public void saveGoldSolutions() throws FileNotFoundException {
-            if (!goldLoaded) {
-                SerializationUtils.serialize(goldSolutions, new FileOutputStream(goldSolutionFile));
-                SerializationUtils.serialize(goldFeatures, new FileOutputStream(goldFeaturesFile));
-                logger.info(goldSolutionFile.getAbsolutePath());
-                logger.info("Writing gold caches.");
-            }
-        }
-
-        public void addGoldSolutions(String documentKey, int sequenceKey, SequenceSolution solution,
-                                     HashedFeatureVector featureVector) {
-            goldSolutions.put(Pair.with(documentKey, sequenceKey), solution);
-            goldFeatures.put(Pair.with(documentKey, sequenceKey), featureVector);
-        }
-
-        public HashedFeatureVector getGoldFeature(String documentKey, int sequenceKey) {
-            return goldFeatures.getOrDefault(Pair.with(documentKey, sequenceKey), null);
-        }
-
-        public Solution getGoldSolution(String documentKey, int sequenceKey) {
-            return goldSolutions.getOrDefault(Pair.with(documentKey, sequenceKey), null);
-        }
-
-        public boolean isGoldLoaded() {
-            return goldLoaded;
-        }
     }
 
     private SequenceSolution getGoldSequence(StanfordCorenlpSentence sentence, Map<StanfordCorenlpToken, String>
@@ -283,34 +220,33 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         cacher = new CrfFeatureCacher(cacheDirectory);
         decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
         trainer = new AveragePerceptronTrainer(decoder, stepSize, featureDimension);
-
-        List<SentenceFeatureWithFocus> featureFunctions = new ArrayList<>();
-        featureFunctions.add(new WordFeatures());
-
-        sentenceExtractor = new UimaSentenceFeatureExtractor(alphabet) {
-            private final Logger logger = LoggerFactory.getLogger(getClass());
-
-            List<StanfordCorenlpToken> sentenceTokens;
-
-            @Override
-            public void init(JCas context) {
-                super.init(context);
-            }
-
-            @Override
-            public void resetWorkspace(StanfordCorenlpSentence sentence) {
-                super.resetWorkspace(sentence);
-                sentenceTokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
-            }
-
-            @Override
-            public void extract(int focus, TObjectDoubleMap<String> featuresNoState,
-                                TObjectDoubleMap<String> featuresNeedForState) {
-//                logger.info("Extracting features at focus : " + focus);
-                featureFunctions.forEach(ff -> ff.extract(sentenceTokens, focus, featuresNoState,
-                        featuresNeedForState));
-//                logger.info("Done extracting : " + focus);
-            }
-        };
+        sentenceExtractor = new MentionTypeFeatureExtractor(alphabet);
+//        List<SentenceFeatureWithFocus> featureFunctions = new ArrayList<>();
+//        featureFunctions.add(new WordFeatures());
+//                new UimaSentenceFeatureExtractor(alphabet) {
+//            private final Logger logger = LoggerFactory.getLogger(getClass());
+//
+//            List<StanfordCorenlpToken> sentenceTokens;
+//
+//            @Override
+//            public void init(JCas context) {
+//                super.init(context);
+//            }
+//
+//            @Override
+//            public void resetWorkspace(StanfordCorenlpSentence sentence) {
+//                super.resetWorkspace(sentence);
+//                sentenceTokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
+//            }
+//
+//            @Override
+//            public void extract(int focus, TObjectDoubleMap<String> featuresNoState,
+//                                TObjectDoubleMap<String> featuresNeedForState) {
+////                logger.info("Extracting features at focus : " + focus);
+//                featureFunctions.forEach(ff -> ff.extract(sentenceTokens, focus, featuresNoState,
+//                        featuresNeedForState));
+////                logger.info("Done extracting : " + focus);
+//            }
+//        };
     }
 }

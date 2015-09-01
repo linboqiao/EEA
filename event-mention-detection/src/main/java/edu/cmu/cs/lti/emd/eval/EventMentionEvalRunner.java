@@ -15,23 +15,23 @@ import java.util.List;
  */
 public class EventMentionEvalRunner {
 
-    double microSpanF1;
+    private double microSpanF1;
 
-    double microTypeF1;
+    private double microTypeF1;
 
-    double microRealisF1;
+    private double microRealisF1;
 
-    double microTypeRealisF1;
+    private double microTypeRealisF1;
 
-    double microTypeAccuracy;
+    private double microTypeAccuracy;
 
-    double microRealisAccuracy;
+    private double microRealisAccuracy;
 
-    double macroMentionF1;
+    private double macroMentionF1;
 
-    double macroTypeAccuracy;
+    private double macroTypeAccuracy;
 
-    double macroRealisAccuracy;
+    private double macroRealisAccuracy;
 
     public double getMicroSpanF1() {
         return microSpanF1;
@@ -72,7 +72,8 @@ public class EventMentionEvalRunner {
     public EventMentionEvalRunner() {
     }
 
-    public String[] buildEvalCommand(String evalScriptPath, String goldPath, String systemPath, String tokenPath, String evalOutputPath) {
+    public String[] buildEvalCommand(String evalScriptPath, String goldPath, String systemPath, String tokenPath,
+                                     String evalOutputPath) {
         return new String[]{evalScriptPath, "-g", goldPath, "-s", systemPath, "-t", tokenPath, "-o", evalOutputPath};
     }
 
@@ -89,7 +90,8 @@ public class EventMentionEvalRunner {
         p.waitFor();
     }
 
-    public void runEval(String evalScriptPath, String goldPath, String systemPath, String tokenPath, String evalOutputPath) throws IOException, InterruptedException {
+    public void runEval(String evalScriptPath, String goldPath, String systemPath, String tokenPath, String
+            evalOutputPath) throws IOException, InterruptedException {
         String[] command = buildEvalCommand(evalScriptPath, goldPath, systemPath, tokenPath, evalOutputPath);
         System.err.println("[EXECUTE] " + Joiner.on(" ").join(command));
         executeShellCommand(command);
@@ -130,40 +132,6 @@ public class EventMentionEvalRunner {
         }
     }
 
-//    public void getResults(String evalOutputPath) throws IOException {
-//        List<String> lines = FileUtils.readLines(new File(evalOutputPath));
-//
-//        for (String line : lines) {
-//            String[] parts = line.split(":");
-//            if (parts.length == 2) {
-//                double score = Double.parseDouble(parts[1]);
-//
-//                switch (parts[0]) {
-//                    case "F1 (Micro Average)":
-//                        microMentionF1 = score;
-//                        break;
-//                    case "Mention type detection accuracy (Micro Average)":
-//                        microTypeAccuracy = score;
-//                        break;
-//                    case "Mention realis status accuracy (Micro Average)":
-//                        microRealisAccuracy = score;
-//                        break;
-//                    case "F1 (Macro Average)":
-//                        macroMentionF1 = score;
-//                        break;
-//                    case "Mention type detection accuracy (Macro Average)":
-//                        macroTypeAccuracy = score;
-//                        break;
-//                    case "Mention realis status accuracy (Macro Average)":
-//                        macroRealisAccuracy = score;
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        }
-//    }
-
     public static void main(String[] args) throws IOException, InterruptedException {
         EventMentionEvalRunner runner = new EventMentionEvalRunner();
 
@@ -171,9 +139,12 @@ public class EventMentionEvalRunner {
 
         runner.runEval(
                 "/Users/zhengzhongliu/Documents/projects/EvmEval/scorer_v1.2.py",
-                "event-mention-detection/data/Event-mention-detection-2014/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/tbf/dev_gold.tbf",
-                "event-mention-detection/data/Event-mention-detection-2014/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/tbf/dev_gold.tbf",
-                "event-mention-detection/data/Event-mention-detection-2014/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/data/token_offset",
+                "event-mention-detection/data/Event-mention-detection-2014" +
+                        "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/tbf/dev_gold.tbf",
+                "event-mention-detection/data/Event-mention-detection-2014" +
+                        "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/tbf/dev_gold.tbf",
+                "event-mention-detection/data/Event-mention-detection-2014" +
+                        "/LDC2014E121_DEFT_Event_Nugget_Evaluation_Training_Data/data/token_offset",
                 "event-mention-detection/data/Event-mention-detection-2014/eval_out_1.2");
 
         System.out.println(runner.getMicroSpanF1() + " " + runner.getMicroTypeF1());

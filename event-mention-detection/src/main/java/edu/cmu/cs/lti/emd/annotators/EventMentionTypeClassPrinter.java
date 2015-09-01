@@ -4,16 +4,17 @@ import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.script.type.EventMention;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
@@ -21,11 +22,9 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,13 +34,14 @@ import java.util.Set;
  */
 public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
 
-    TObjectIntMap<Set<String>> jointClassesGold = new TObjectIntHashMap<>();
+    public static final String CLASS_OUTPUT_PATH = "classOutputPath";
 
-    TObjectIntMap<String> singleClassesGold = new TObjectIntHashMap<>();
+    @ConfigurationParameter(name = CLASS_OUTPUT_PATH)
+    private File classOutputFile;
 
-    TObjectIntHashMap<String> jointClassesCandidate = new TObjectIntHashMap<>();
+    TObjectIntMap<List<String>> goldClassesWithJoint = new TObjectIntHashMap<>();
 
-    TObjectIntMap<String> singleClassesGoldCandidate = new TObjectIntHashMap<>();
+    TObjectIntMap<String> candidateClassesSingle = new TObjectIntHashMap<>();
 
     static Set<String> targetClasses;
 
@@ -51,27 +51,30 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
 //        targetClasses.add("Business_Start-Org");
 //        targetClasses.add("Personnel_Start-Position");
 //        targetClasses.add("Contact_Meet");
-        targetClasses.add("Transaction_Transfer-Money");
+//        targetClasses.add("Transaction_Transfer-Money");
     }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         JCas goldView = UimaConvenience.getView(aJCas, UimaConst.goldViewName);
 
-//        String joint_type = null;
         Set<String> joint_type = new HashSet<>();
         int previous_start = -1;
         int previous_end = -1;
         for (EventMention mention : JCasUtil.select(goldView, EventMention.class)) {
             String t = mention.getEventType();
 
-            singleClassesGold.adjustOrPutValue(t, 1, 1);
-
             if (mention.getBegin() == previous_start && mention.getEnd() == previous_end) {
                 joint_type.add(t);
             } else {
                 if (!joint_type.isEmpty()) {
-                    jointClassesGold.adjustOrPutValue(joint_type, 1, 1);
+                    List<String> sorted_joint_type = new ArrayList<>(joint_type);
+                    Collections.sort(sorted_joint_type);
+                    goldClassesWithJoint.adjustOrPutValue(sorted_joint_type, 1, 1);
+                    if (joint_type.size() > 1) {
+                        System.out.println(aJCas.getDocumentText().substring(previous_start, previous_end) + "\t" +
+                                Joiner.on(" ; ").join(joint_type));
+                    }
                 }
                 joint_type = new HashSet<>();
                 joint_type.add(t);
@@ -82,11 +85,10 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
         }
 
         if (!joint_type.isEmpty()) {
-            jointClassesGold.adjustOrPutValue(joint_type, 1, 1);
+            List<String> sorted_joint_type = new ArrayList<>(joint_type);
+            Collections.sort(sorted_joint_type);
+            goldClassesWithJoint.adjustOrPutValue(sorted_joint_type, 1, 1);
         }
-
-        Map<CandidateEventMention, Collection<StanfordCorenlpSentence>> mentionBySent =
-                JCasUtil.indexCovering(aJCas, CandidateEventMention.class, StanfordCorenlpSentence.class);
 
         for (CandidateEventMention mention : JCasUtil.select(aJCas, CandidateEventMention.class)) {
             String t = mention.getGoldStandardMentionType();
@@ -95,51 +97,53 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
                 continue;
             }
 
-            singleClassesGoldCandidate.adjustOrPutValue(t, 1, 1);
-
-//            if (targetClasses.contains(t)) {
-//                System.out.println("================");
-//                System.out.println(JCasUtil.selectSingle(aJCas, Article.class).getArticleName());
-//                System.out.println(t);
-//                System.out.println(mention.getCoveredText());
-//                System.out.println("===Sentence:====");
-//                System.out.println(Iterables.get(mentionBySent.get(mention), 0).getCoveredText());
-//                System.out.println("================");
-//            }
+            candidateClassesSingle.adjustOrPutValue(t, 1, 1);
         }
     }
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        TObjectIntMap<String> joint_types = new TObjectIntHashMap<>();
+        List<String> classesLines = new ArrayList<>();
 
         final int[] total_type_count = {0};
         final int[] joint_type_count = {0};
-        jointClassesGold.forEachEntry((t, c) -> {
-            System.out.println(String.format("Type %s occurs %d times.", t, c));
+
+        goldClassesWithJoint.forEachEntry((t, c) -> {
+            String joinedTypeName = Joiner.on(" ; ").join(t);
             if (t.size() > 1) {
-                joint_types.adjustOrPutValue(Joiner.on(" ; ").join(t), 1, c);
                 joint_type_count[0] += c;
+                System.out.println(String.format("Joint type %s occurs %d times.", joinedTypeName, c));
             }
             total_type_count[0] += c;
+
+            classesLines.add(joinedTypeName + "\t" + c);
             return true;
         });
 
-        System.out.println("#Possible joint types : " + joint_types.size());
-        joint_types.forEachEntry((t, c) -> {
-//            if (c > 5) {
-                System.out.println(String.format("Joint type %s occurs %d times.", t, c));
-//            }
+        goldClassesWithJoint.forEachEntry((t, c) -> {
+            String joinedTypeName = Joiner.on(" ; ").join(t);
+            if (t.size() == 1) {
+                System.out.println(String.format("Single type %s occurs %d times.", joinedTypeName, c));
+            }
             return true;
         });
+
 
         System.out.println("Total types count : " + total_type_count[0]);
         System.out.println("Joint type count : " + joint_type_count[0]);
+
+
+        Collections.sort(classesLines);
+        try {
+            FileUtils.writeLines(classOutputFile, classesLines);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String args[]) throws IOException, UIMAException {
 //        String inputDir = args[0];
-        String inputDir = "/Users/zhengzhongliu/Documents/projects/cmu-script/data/mention/kbp/";
+        String inputDir = "/Users/zhengzhongliu/Documents/projects/cmu-script/data/mention/kbp/LDC2015E73/";
         String inputAll = inputDir + "preprocessed";
         String inputTest = inputDir + "01_test_data";
         String inputDev = inputDir + "01_dev_data";
@@ -158,8 +162,9 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
 //        CollectionReaderDescription trainReader = CustomCollectionReaderFactory.createXmiReader
 //                (typeSystemDescription, inputTrain, false);
 
-        AnalysisEngineDescription runner = AnalysisEngineFactory.createEngineDescription(EventMentionTypeClassPrinter
-                .class, typeSystemDescription);
+        AnalysisEngineDescription runner = AnalysisEngineFactory.createEngineDescription(
+                EventMentionTypeClassPrinter.class, typeSystemDescription,
+                EventMentionTypeClassPrinter.CLASS_OUTPUT_PATH, inputDir + "mention_types.txt");
 
         SimplePipeline.runPipeline(allReader, runner);
 //        SimplePipeline.runPipeline(testReader, runner);

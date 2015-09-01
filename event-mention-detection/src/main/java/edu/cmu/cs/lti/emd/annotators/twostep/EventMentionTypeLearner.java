@@ -9,7 +9,7 @@ import edu.cmu.cs.lti.emd.learn.feature.generator.impl.FrameArgumentLemmaFeature
 import edu.cmu.cs.lti.emd.learn.feature.generator.impl.FrameNameFeatureGenerator;
 import edu.cmu.cs.lti.emd.learn.feature.generator.impl.HeadWordFeatureGenerator;
 import edu.cmu.cs.lti.emd.learn.feature.generator.impl.WindowWordFeatureGenerator;
-import edu.cmu.cs.lti.emd.pipeline.EventMentionTrainer;
+import edu.cmu.cs.lti.emd.pipeline.twostep.EventMentionTrainer;
 import edu.cmu.cs.lti.emd.utils.WordNetSenseIdentifier;
 import edu.cmu.cs.lti.ling.FrameDataReader;
 import edu.cmu.cs.lti.ling.WordNetSearcher;

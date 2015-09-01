@@ -4,7 +4,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Iterables;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
-import edu.cmu.cs.lti.emd.pipeline.EventMentionTrainer;
+import edu.cmu.cs.lti.emd.pipeline.twostep.EventMentionTrainer;
 import edu.cmu.cs.lti.ling.FrameDataReader;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;

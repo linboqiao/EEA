@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.emd.pipeline.twostep;
 
-import edu.cmu.cs.lti.emd.annotators.EvaluationResultWriter;
+import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.twostep.EventMentionTypeLearner;
 import edu.cmu.cs.lti.emd.eval.EventMentionEvalRunner;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
@@ -73,10 +73,10 @@ public class EventMentionTester {
 //                EventMentionRealisLearner.PARAM_BROWN_CLUSTERING_PATH, brownClusteringDataPath
 //        );
 
-        AnalysisEngineDescription devResults = AnalysisEngineFactory.createEngineDescription(EvaluationResultWriter
+        AnalysisEngineDescription devResults = AnalysisEngineFactory.createEngineDescription(TbfStyleEventWriter
                         .class, typeSystemDescription,
-                EvaluationResultWriter.PARAM_OUTPUT_PATH, paramInputDir + "/results/temp_dev_prediction.tbf",
-                EvaluationResultWriter.PARAM_SYSTEM_ID, "cmu-two-step");
+                TbfStyleEventWriter.PARAM_OUTPUT_PATH, paramInputDir + "/results/temp_dev_prediction.tbf",
+                TbfStyleEventWriter.PARAM_SYSTEM_ID, "cmu-two-step");
         SimplePipeline.runPipeline(dev_reader, mention, devResults);
 
 //        AnalysisEngineDescription testResults = CustomAnalysisEngineFactory.createAnalysisEngine
