@@ -14,9 +14,9 @@ import org.apache.uima.resource.ResourceInitializationException;
 public abstract class AbstractProcessorBuilder {
     public abstract CollectionReaderDescription buildCollectionReader() throws ResourceInitializationException;
 
-    public abstract AnalysisEngineDescription[] buildPreprocessors() throws ResourceInitializationException;
-
     public abstract AnalysisEngineDescription[] buildProcessors() throws ResourceInitializationException;
 
-    public abstract AnalysisEngineDescription[] buildPostProcessors() throws ResourceInitializationException;
+    public AnalysisEngineDescription[] buildPreprocessors() throws ResourceInitializationException {
+        return new AnalysisEngineDescription[0];
+    }
 }

@@ -23,7 +23,6 @@ public class BasicPipeline {
     private CollectionReader reader;
     protected AnalysisEngineDescription[] preprocessors;
     protected AnalysisEngineDescription[] processors;
-    protected AnalysisEngineDescription[] postprocessors;
     private AnalysisEngineDescription[] engines;
 
     private TypeSystemDescription typeSystemDescription;
@@ -34,8 +33,7 @@ public class BasicPipeline {
         reader = CollectionReaderFactory.createReader(builder.buildCollectionReader());
         preprocessors = builder.buildPreprocessors();
         processors = builder.buildProcessors();
-        postprocessors = builder.buildPostProcessors();
-        engines = ProcessorManager.joinProcessors(preprocessors, processors, postprocessors);
+        engines = ProcessorManager.joinProcessors(preprocessors, processors);
         this.typeSystemDescription = typeSystemDescription;
     }
 
@@ -43,7 +41,15 @@ public class BasicPipeline {
         SimplePipeline.runPipeline(reader, engines);
     }
 
-    public void run_processors(String outputParent, String outputBase) throws
+    /**
+     * Run processors from existing data source.
+     *
+     * @param outputParent Parent directory of the data.
+     * @param outputBase   Directory directly containing the data.
+     * @throws UIMAException
+     * @throws IOException
+     */
+    public void runProcessors(String outputParent, String outputBase) throws
             UIMAException, IOException {
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription,
                 outputParent,
