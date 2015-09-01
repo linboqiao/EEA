@@ -5,8 +5,10 @@ import edu.cmu.cs.lti.annotators.FanseAnnotator;
 import edu.cmu.cs.lti.annotators.OpenNlpChunker;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
+import edu.cmu.cs.lti.emd.annotators.acceptors.AllCandidateAcceptor;
 import edu.cmu.cs.lti.emd.annotators.crf.CrfMentionTypeAnnotator;
 import edu.cmu.cs.lti.emd.pipeline.CrfMentionTrainingRunner;
+import edu.cmu.cs.lti.event_coref.annotators.GoldStandardEventMentionAnnotator;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.pipeline.AbstractProcessorBuilder;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
@@ -118,36 +120,38 @@ public class KBP2015EventTaskPipeline {
         pipeline.run();
     }
 
-    public void train(Configuration kbpConfig, String inputBaseDir) throws UIMAException,
-            IOException {
+    public void trainMentionTypeLv1(Configuration kbpConfig, CollectionReaderDescription trainingReader, String suffix)
+            throws UIMAException, IOException {
         logger.info("Starting Training ...");
         int maxiter = kbpConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
         int dimension = kbpConfig.getInt("edu.cmu.cs.lti.feature.dimension", 1000000);
         double stepsize = kbpConfig.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
         int averageLossN = kbpConfig.getInt("edu.cmu.cs.lti.avergelossN", 50);
         boolean readableModel = kbpConfig.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
-        String modelDir = kbpConfig.get("edu.cmu.cs.lti.model.output.dir");
         File classFile = kbpConfig.getFile("edu.cmu.cs.lti.mention.classes.path");
-        File cacheDir = kbpConfig.getFile("edu.cmu.cs.lti.mention.cache.dir");
+
+        String modelDir = kbpConfig.get("edu.cmu.cs.lti.model.output.dir") + suffix;
+        File cacheDir = new File(kbpConfig.get("edu.cmu.cs.lti.mention.cache.dir") + suffix);
 
         String[] classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
                 .filter(p -> p.length >= 1).map(p -> p[0]).toArray(String[]::new);
 
-        CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createXmiReader
-                (typeSystemDescription, workingDir, inputBaseDir);
         CrfMentionTrainingRunner mentionTypeTrainer = new CrfMentionTrainingRunner(classes, maxiter, dimension,
                 stepsize, averageLossN, readableModel, modelDir, cacheDir, typeSystemDescription,
                 trainingReader);
         mentionTypeTrainer.runLoopPipeline();
     }
 
-    public void mentionDetection(String testBase, String modelDir, String tbfOutput) throws
-            UIMAException,
-            IOException {
-        BasicPipeline pipeline = new BasicPipeline(new AbstractProcessorBuilder() {
+    public void mentionDetection(CollectionReaderDescription reader, String modelDir, String tbfOutput,
+                                 String goldTbfOutput) throws UIMAException, IOException {
+        AnalysisEngineDescription allAcceptor = AnalysisEngineFactory.createEngineDescription(
+                AllCandidateAcceptor.class, typeSystemDescription
+        );
+
+        BasicPipeline systemPipeline = new BasicPipeline(new AbstractProcessorBuilder() {
             @Override
             public CollectionReaderDescription buildCollectionReader() throws ResourceInitializationException {
-                return null;
+                return reader;
             }
 
             @Override
@@ -162,11 +166,36 @@ public class KBP2015EventTaskPipeline {
                         TbfStyleEventWriter.PARAM_OUTPUT_PATH, tbfOutput,
                         TbfStyleEventWriter.PARAM_SYSTEM_ID, "crf-lv1"
                 );
-                return new AnalysisEngineDescription[]{crfLevel1Annotator, resultWriter};
+
+                return new AnalysisEngineDescription[]{crfLevel1Annotator, allAcceptor, resultWriter};
             }
         }, typeSystemDescription);
 
-        pipeline.runProcessors(workingDir, testBase);
+
+        BasicPipeline goldPipeline = new BasicPipeline(new AbstractProcessorBuilder() {
+            @Override
+            public CollectionReaderDescription buildCollectionReader() throws ResourceInitializationException {
+                return reader;
+            }
+
+            @Override
+            public AnalysisEngineDescription[] buildProcessors() throws ResourceInitializationException {
+                AnalysisEngineDescription goldCopier = AnalysisEngineFactory.createEngineDescription(
+                        GoldStandardEventMentionAnnotator.class, typeSystemDescription
+                );
+
+                AnalysisEngineDescription resultWriter = AnalysisEngineFactory.createEngineDescription(
+                        TbfStyleEventWriter.class, typeSystemDescription,
+                        TbfStyleEventWriter.PARAM_OUTPUT_PATH, goldTbfOutput,
+                        TbfStyleEventWriter.PARAM_SYSTEM_ID, "gold"
+                );
+
+                return new AnalysisEngineDescription[]{goldCopier, resultWriter};
+            }
+        }, typeSystemDescription);
+
+        systemPipeline.run();
+        goldPipeline.run();
     }
 
     // TODO calling coreference only.
@@ -177,6 +206,29 @@ public class KBP2015EventTaskPipeline {
     // TODO joint inference of mention and detection.
     public void joinMentionDetectionAndCoreference() {
 
+    }
+
+    public void crossValidation(Configuration kbpConfig, String inputBaseDir) throws UIMAException, IOException {
+        int numSplit = kbpConfig.getInt("edu.cmu.cs.lti.cv.split", 5);
+        int seed = kbpConfig.getInt("edu.cmu.cs.lti.cv.seed", 17);
+        String evalPath = kbpConfig.get("edu.cmu.cs.lti.eval.base");
+
+        File typeLv1Eval = new File(new File(workingDir, evalPath), "lv1_types");
+        edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(typeLv1Eval);
+
+        for (int slice = 0; slice < numSplit; slice++) {
+            String sliceSuffix = "_" + slice;
+            CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createCrossValidationReader(
+                    typeSystemDescription, workingDir, inputBaseDir, false, seed, slice);
+            trainMentionTypeLv1(kbpConfig, trainingReader, "_" + slice);
+            CollectionReaderDescription evalReader = CustomCollectionReaderFactory.createCrossValidationReader(
+                    typeSystemDescription, workingDir, inputBaseDir, true, seed, slice);
+            String modelDir = kbpConfig.get("edu.cmu.cs.lti.model.output.dir") + sliceSuffix;
+            String predictedTbf = new File(typeLv1Eval, "predicted" + sliceSuffix + ".tbf").getAbsolutePath();
+            String goldTbf = new File(typeLv1Eval, "gold" + sliceSuffix + ".tbf").getAbsolutePath();
+
+            mentionDetection(evalReader, modelDir, predictedTbf, goldTbf);
+        }
     }
 
     public static void main(String argv[]) throws UIMAException, IOException {
@@ -196,6 +248,7 @@ public class KBP2015EventTaskPipeline {
                 tokenDir, modelPath, workingDir);
 
 //        pipeline.prepare(preprocessBase);
-        pipeline.train(kbpConfig, preprocessBase);
+//        pipeline.trainMentionTypeLv1(kbpConfig, preprocessBase);
+        pipeline.crossValidation(kbpConfig, preprocessBase);
     }
 }
