@@ -60,8 +60,8 @@ public class EventFeatureOutputRunner {
                 EventFeatureExtractor.class, typeSystemDescription,
                 EventFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
                 EventFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-                EventFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                EventFeatureExtractor.PARAM_STEP_NUMBER, stepNum);
+                EventFeatureExtractor.PARAM_PARENT_OUTPUT_DIR_PATH, paramParentOutputDir,
+                EventFeatureExtractor.PARAM_OUTPUT_STEP_NUMBER, stepNum);
 
         SimplePipeline.runPipeline(reader, writer);
 

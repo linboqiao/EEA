@@ -58,8 +58,8 @@ public class EntityEventLinkOutputRunner {
                 EventEntityLinkProducer.class, typeSystemDescription,
                 EventEntityLinkProducer.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
                 EventEntityLinkProducer.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-                EventEntityLinkProducer.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                EventEntityLinkProducer.PARAM_STEP_NUMBER, stemNum);
+                EventEntityLinkProducer.PARAM_PARENT_OUTPUT_DIR_PATH, paramParentOutputDir,
+                EventEntityLinkProducer.PARAM_OUTPUT_STEP_NUMBER, stemNum);
 
         SimplePipeline.runPipeline(reader, writer);
 

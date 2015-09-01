@@ -61,22 +61,22 @@ public class EntityFeatureGenerationPipeline {
                 EntityFeatureExtractor.class, typeSystemDescription,
                 EntityFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, "entity_features",
                 EntityFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-                EntityFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                EntityFeatureExtractor.PARAM_STEP_NUMBER, stepNum);
+                EntityFeatureExtractor.PARAM_PARENT_OUTPUT_DIR_PATH, paramParentOutputDir,
+                EntityFeatureExtractor.PARAM_OUTPUT_STEP_NUMBER, stepNum);
 
         AnalysisEngineDescription eventFeatureWriter = AnalysisEngineFactory.createEngineDescription(
                 EventFeatureExtractor.class, typeSystemDescription,
                 EventFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, "event_features",
                 EventFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-                EventFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                EventFeatureExtractor.PARAM_STEP_NUMBER, stepNum);
+                EventFeatureExtractor.PARAM_PARENT_OUTPUT_DIR_PATH, paramParentOutputDir,
+                EventFeatureExtractor.PARAM_OUTPUT_STEP_NUMBER, stepNum);
 
         AnalysisEngineDescription entityEventLinkWriter = AnalysisEngineFactory.createEngineDescription(
                 EventEntityLinkProducer.class, typeSystemDescription,
                 EventEntityLinkProducer.PARAM_BASE_OUTPUT_DIR_NAME, "entity_event_links",
                 EventEntityLinkProducer.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-                EventEntityLinkProducer.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                EventEntityLinkProducer.PARAM_STEP_NUMBER, stepNum);
+                EventEntityLinkProducer.PARAM_PARENT_OUTPUT_DIR_PATH, paramParentOutputDir,
+                EventEntityLinkProducer.PARAM_OUTPUT_STEP_NUMBER, stepNum);
 
         SimplePipeline.runPipeline(reader, entityFeatureWriter, eventFeatureWriter,
                 entityEventLinkWriter);

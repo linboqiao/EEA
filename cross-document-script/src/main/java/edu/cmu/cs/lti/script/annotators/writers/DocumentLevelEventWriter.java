@@ -53,7 +53,7 @@ public class DocumentLevelEventWriter extends AbstractCsvWriterAnalysisEngine {
   protected void prepare(JCas aJCas) {
     Collection<Event> events = JCasUtil.select(aJCas, Event.class);
     iter = events.iterator();
-    setSeperator('\t');
+    setSeparator('\t');
 
     docId = UimaConvenience.getShortDocumentNameWithOffset(aJCas);
   }

@@ -1,16 +1,6 @@
 package edu.cmu.cs.lti.script.annotators.writers;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.uima.fit.util.JCasUtil;
-import org.apache.uima.jcas.JCas;
-
 import com.google.common.collect.ArrayListMultimap;
-
 import edu.cmu.cs.lti.script.type.Entity;
 import edu.cmu.cs.lti.script.type.EntityMention;
 import edu.cmu.cs.lti.script.type.Sentence;
@@ -18,6 +8,10 @@ import edu.cmu.cs.lti.uima.io.writer.AbstractCsvWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import org.apache.uima.fit.util.JCasUtil;
+import org.apache.uima.jcas.JCas;
+
+import java.util.*;
 
 public class DocumentLevelEntityWriter extends AbstractCsvWriterAnalysisEngine {
 
@@ -39,7 +33,7 @@ public class DocumentLevelEntityWriter extends AbstractCsvWriterAnalysisEngine {
     List<Entity> allEntities = new ArrayList<Entity>(JCasUtil.select(aJCas, Entity.class));
     iter = allEntities.iterator();
     docId = UimaConvenience.getShortDocumentNameWithOffset(aJCas);
-    setSeperator('\t');
+    setSeparator('\t');
   }
 
   @Override

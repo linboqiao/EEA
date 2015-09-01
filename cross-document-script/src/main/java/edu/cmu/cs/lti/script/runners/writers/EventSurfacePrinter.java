@@ -59,8 +59,8 @@ public class EventSurfacePrinter {
                 DocumentLevelEventWriter.class, typeSystemDescription,
                 DocumentLevelEventWriter.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
                 DocumentLevelEventWriter.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-                DocumentLevelEventWriter.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                DocumentLevelEventWriter.PARAM_STEP_NUMBER, stepNum);
+                DocumentLevelEventWriter.PARAM_PARENT_OUTPUT_DIR_PATH, paramParentOutputDir,
+                DocumentLevelEventWriter.PARAM_OUTPUT_STEP_NUMBER, stepNum);
 
         SimplePipeline.runPipeline(reader, writer);
 

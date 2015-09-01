@@ -59,8 +59,8 @@ public class EntitySurfacePrinter {
                 DocumentLevelEntityWriter.class, typeSystemDescription,
                 DocumentLevelEntityWriter.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
                 DocumentLevelEntityWriter.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-                DocumentLevelEntityWriter.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                DocumentLevelEntityWriter.PARAM_STEP_NUMBER, stepNum);
+                DocumentLevelEntityWriter.PARAM_PARENT_OUTPUT_DIR_PATH, paramParentOutputDir,
+                DocumentLevelEntityWriter.PARAM_OUTPUT_STEP_NUMBER, stepNum);
 
         SimplePipeline.runPipeline(reader, writer);
 

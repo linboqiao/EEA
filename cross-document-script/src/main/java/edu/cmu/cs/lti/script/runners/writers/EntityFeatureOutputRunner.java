@@ -60,8 +60,8 @@ public class EntityFeatureOutputRunner {
               EntityFeatureExtractor.class, typeSystemDescription,
               EntityFeatureExtractor.PARAM_BASE_OUTPUT_DIR_NAME, paramBaseOutputDirName,
               EntityFeatureExtractor.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-              EntityFeatureExtractor.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-              EntityFeatureExtractor.PARAM_STEP_NUMBER, stepNum);
+              EntityFeatureExtractor.PARAM_PARENT_OUTPUT_DIR_PATH, paramParentOutputDir,
+              EntityFeatureExtractor.PARAM_OUTPUT_STEP_NUMBER, stepNum);
 
     SimplePipeline.runPipeline(reader, writer);
 

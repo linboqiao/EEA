@@ -3,27 +3,21 @@
  */
 package edu.cmu.cs.lti.script.annotators.writers;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
+import com.google.common.collect.Table.Cell;
+import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.uima.io.writer.AbstractCsvWriterAnalysisEngine;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
-import com.google.common.collect.Table.Cell;
-
-import edu.cmu.cs.lti.script.type.Entity;
-import edu.cmu.cs.lti.script.type.EntityMention;
-import edu.cmu.cs.lti.script.type.Event;
-import edu.cmu.cs.lti.script.type.EventMention;
-import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
-import edu.cmu.cs.lti.uima.io.writer.AbstractCsvWriterAnalysisEngine;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import gnu.trove.map.hash.TObjectIntHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author zhengzhongliu
@@ -56,7 +50,7 @@ public class EventEntityLinkProducer extends AbstractCsvWriterAnalysisEngine {
    */
   @Override
   protected void prepare(JCas aJCas) {
-    setSeperator('\t');
+    setSeparator('\t');
     docId = UimaConvenience.getShortDocumentNameWithOffset(aJCas);
 
     Table<Event, Entity, TObjectIntHashMap<String>> event2EntityLinks = HashBasedTable.create();
