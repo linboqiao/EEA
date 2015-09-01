@@ -4,7 +4,7 @@
 package edu.cmu.cs.lti.script.annotators.writers;
 
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalsysisEngine;
+import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalysisEngine;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -19,7 +19,7 @@ import java.io.IOException;
 /**
  * @author zhengzhongliu
  */
-public class DocumentTextPrinter extends AbstractCustomizedTextWriterAnalsysisEngine {
+public class DocumentTextPrinter extends AbstractCustomizedTextWriterAnalysisEngine {
 
     /*
      * (non-Javadoc)
@@ -67,12 +67,12 @@ public class DocumentTextPrinter extends AbstractCustomizedTextWriterAnalsysisEn
 
         AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
                 DocumentTextPrinter.class, typeSystemDescription,
-                AbstractCustomizedTextWriterAnalsysisEngine.PARAM_BASE_OUTPUT_DIR_NAME,
+                AbstractCustomizedTextWriterAnalysisEngine.PARAM_BASE_OUTPUT_DIR_NAME,
                 paramBaseOutputDirName,
-                AbstractCustomizedTextWriterAnalsysisEngine.PARAM_PARENT_OUTPUT_DIR,
+                AbstractCustomizedTextWriterAnalysisEngine.PARAM_PARENT_OUTPUT_DIR_PATH,
                 paramParentOutputDir,
                 // AbstractCustomizedTextWriterAnalsysisEngine.PARAM_OUTPUT_FILE_SUFFIX, null,
-                AbstractCustomizedTextWriterAnalsysisEngine.PARAM_STEP_NUMBER, stepNum);
+                AbstractCustomizedTextWriterAnalysisEngine.PARAM_OUTPUT_STEP_NUMBER, stepNum);
 
         SimplePipeline.runPipeline(reader, writer);
 

@@ -56,4 +56,15 @@ public class BasicPipeline {
                 outputBase);
         SimplePipeline.runPipeline(reader, processors);
     }
+
+    /**
+     * Run processors from existing data source.
+     *
+     * @throws UIMAException
+     * @throws IOException
+     */
+    public void runProcessors(CollectionReaderDescription reader) throws
+            UIMAException, IOException {
+        SimplePipeline.runPipeline(reader, processors);
+    }
 }
