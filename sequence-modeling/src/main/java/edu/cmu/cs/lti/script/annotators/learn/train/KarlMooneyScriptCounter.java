@@ -359,8 +359,8 @@ public class KarlMooneyScriptCounter extends AbstractLoggingAnnotator {
         String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path"); //"data/02_event_tuples";
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //data/_db
-        boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
-        int skipGramN = config.getInt("edu.cmu.cs.lti.cds.mooney.skipgram.n");
+        boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq", false);
+        int skipGramN = config.getInt("edu.cmu.cs.lti.cds.mooney.skipgram.n", 2);
 
         DataPool.readBlackList(new File(blackListFile));
 

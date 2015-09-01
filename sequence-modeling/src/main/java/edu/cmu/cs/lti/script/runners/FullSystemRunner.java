@@ -162,19 +162,19 @@ public class FullSystemRunner {
         String dbPath = config.get("edu.cmu.cs.lti.cds.dbpath"); //"dbpath"
         String eventTuplePath = config.get("edu.cmu.cs.lti.cds.event_tuple.path"); //"data/02_event_tuples";
         String dbName = config.get("edu.cmu.cs.lti.cds.db.basenames"); //db names;
-        boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
-        int skipGramN = config.getInt("edu.cmu.cs.lti.cds.mooney.skipgram.n");
+        boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq", false);
+        int skipGramN = config.getInt("edu.cmu.cs.lti.cds.mooney.skipgram.n", 2);
 
-        int maxIter = config.getInt("edu.cmu.cs.lti.cds.sgd.iter");
-        int miniBatchNum = config.getInt("edu.cmu.cs.lti.cds.minibatch");
+        int maxIter = config.getInt("edu.cmu.cs.lti.cds.sgd.iter", 2);
+        int miniBatchNum = config.getInt("edu.cmu.cs.lti.cds.minibatch", 1000);
         String modelExt = config.get("edu.cmu.cs.lti.cds.model.ext");
         String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
         String featurePackage = config.get("edu.cmu.cs.lti.cds.features.packagename");
         String semLinkPath = config.get("edu.cmu.cs.lti.cds.db.semlink.path");
-        int maxSkipN = config.getInt("edu.cmu.cs.lti.cds.max.n");
+        int maxSkipN = config.getInt("edu.cmu.cs.lti.cds.max.n", 9);
 
-        int topRankToOptimize = config.getInt("edu.cmu.cs.lti.cds.perceptron.top.rank.optimize");
-        int rankListSize = config.getInt("edu.cmu.cs.lti.cds.perceptron.ranklist.size");
+        int topRankToOptimize = config.getInt("edu.cmu.cs.lti.cds.perceptron.top.rank.optimize", 10);
+        int rankListSize = config.getInt("edu.cmu.cs.lti.cds.perceptron.ranklist.size", 500);
 
         String modelStoragePath = config.get("edu.cmu.cs.lti.cds.perceptron.model.path");
 

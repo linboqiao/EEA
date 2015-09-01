@@ -37,12 +37,12 @@ public class MultiArgumentClozeTestRunner {
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
         String evalLogDirectoryPath = config.get("edu.cmu.cs.lti.cds.eval.log.path");
 
-        boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
+        boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq", false);
         String featurePackage = config.get("edu.cmu.cs.lti.cds.features.packagename");
-        int maxSkippedGramN = config.getInt("edu.cmu.cs.lti.cds.max.n");
+        int maxSkippedGramN = config.getInt("edu.cmu.cs.lti.cds.max.n", 9);
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
 
-        float smoothingParameter = config.getInt("edu.cmu.cs.lti.cds.conditional.smoothing");
+        float smoothingParameter = config.getInt("edu.cmu.cs.lti.cds.conditional.smoothing", 1);
 
         Set<String> methods = new HashSet<>(Arrays.asList(config.getList("edu.cmu.cs.lti.cds.methods")));
 

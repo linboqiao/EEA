@@ -440,19 +440,19 @@ public class PerceptronTraining extends AbstractLoggingAnnotator {
         Logger logger = LoggerFactory.getLogger(PerceptronTraining.class);
         Configuration config = new Configuration(new File(args[0]));
 
-        int maxIter = config.getInt("edu.cmu.cs.lti.cds.sgd.iter");
+        int maxIter = config.getInt("edu.cmu.cs.lti.cds.sgd.iter", 5);
         String modelExt = config.get("edu.cmu.cs.lti.cds.model.ext");
         String modelStoragePath = config.get("edu.cmu.cs.lti.cds.perceptron.model.path");
 
         String inputDir = config.get("edu.cmu.cs.lti.cds.event_tuple.path");
-        int miniBatchNum = config.getInt("edu.cmu.cs.lti.cds.minibatch");
+        int miniBatchNum = config.getInt("edu.cmu.cs.lti.cds.minibatch", 1000);
         String[] featureNames = config.getList("edu.cmu.cs.lti.cds.features");
         String featurePackage = config.get("edu.cmu.cs.lti.cds.features.packagename");
         String semLinkPath = config.get("edu.cmu.cs.lti.cds.db.semlink.path");
-        int maxSkipN = config.getInt("edu.cmu.cs.lti.cds.max.n");
+        int maxSkipN = config.getInt("edu.cmu.cs.lti.cds.max.n", 9);
 
-        int topRankToOptimize = config.getInt("edu.cmu.cs.lti.cds.perceptron.top.rank.optimize");
-        int rankListSize = config.getInt("edu.cmu.cs.lti.cds.perceptron.ranklist.size");
+        int topRankToOptimize = config.getInt("edu.cmu.cs.lti.cds.perceptron.top.rank.optimize", 10);
+        int rankListSize = config.getInt("edu.cmu.cs.lti.cds.perceptron.ranklist.size", 500);
 
         String blackListFileName = config.get("edu.cmu.cs.lti.cds.blacklist");
 

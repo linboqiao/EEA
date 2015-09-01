@@ -328,7 +328,7 @@ public class KarlMooneyPredictor {
         String[] dbNames = config.getList("edu.cmu.cs.lti.cds.db.basenames"); //db names;
         int[] allK = config.getIntList("edu.cmu.cs.lti.cds.eval.rank.k");
         String outputPath = config.get("edu.cmu.cs.lti.cds.eval.result.path") + subPath;
-        boolean filter = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
+        boolean filter = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq", false);
 
         DataPool.loadHeadStatistics(config, false);
 

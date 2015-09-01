@@ -226,8 +226,8 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
         String paramParentOutputDir = config.get("edu.cmu.cs.lti.cds.parent.output"); // "data";
         String clozePath = config.get("edu.cmu.cs.lti.cds.cloze.base.path"); // "cloze_dev"
         String blackListFile = config.get("edu.cmu.cs.lti.cds.blacklist"); //"duplicate.count.tail"
-        boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq");
-        int clozeMinSize = config.getInt("edu.cmu.cs.lti.cds.cloze.minsize");
+        boolean ignoreLowFreq = config.getBoolean("edu.cmu.cs.lti.cds.filter.lowfreq", false);
+        int clozeMinSize = config.getInt("edu.cmu.cs.lti.cds.cloze.minsize", 5);
 
         String paramOutputFileSuffix = ".txt";
 
