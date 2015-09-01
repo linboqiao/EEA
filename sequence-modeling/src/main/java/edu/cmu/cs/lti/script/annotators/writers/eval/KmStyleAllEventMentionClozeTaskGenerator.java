@@ -7,7 +7,7 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalsysisEngine;
+import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
@@ -39,7 +39,7 @@ import java.util.logging.Logger;
  * Date: 10/21/14
  * Time: 1:32 PM
  */
-public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomizedTextWriterAnalsysisEngine {
+public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomizedTextWriterAnalysisEngine {
 //    public static final String PARAM_HEAD_COUNT_DB_NAMES = "headCountDbFileNames";
 
     public static final String PARAM_DB_DIR_PATH = "dbLocation";
@@ -251,8 +251,8 @@ public class KmStyleAllEventMentionClozeTaskGenerator extends AbstractCustomized
                 KmStyleAllEventMentionClozeTaskGenerator.class, typeSystemDescription,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_BASE_OUTPUT_DIR_NAME, clozePath,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-                KmStyleAllEventMentionClozeTaskGenerator.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                KmStyleAllEventMentionClozeTaskGenerator.PARAM_STEP_NUMBER, stepNum,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_PARENT_OUTPUT_DIR_PATH, paramParentOutputDir,
+                KmStyleAllEventMentionClozeTaskGenerator.PARAM_OUTPUT_STEP_NUMBER, stepNum,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_DB_DIR_PATH, "data/_db/",
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_IGNORE_LOW_FREQ, ignoreLowFreq,
                 KmStyleAllEventMentionClozeTaskGenerator.PARAM_CLOZE_MIN_SIZE, clozeMinSize

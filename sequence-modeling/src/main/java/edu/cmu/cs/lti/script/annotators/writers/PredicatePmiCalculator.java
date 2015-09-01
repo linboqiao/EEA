@@ -3,8 +3,7 @@ package edu.cmu.cs.lti.script.annotators.writers;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalsysisEngine;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
+import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.BitUtils;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -26,7 +25,7 @@ import java.util.*;
  * Date: 11/28/14
  * Time: 2:50 PM
  */
-public class PredicatePmiCalculator extends AbstractCustomizedTextWriterAnalsysisEngine {
+public class PredicatePmiCalculator extends AbstractCustomizedTextWriterAnalysisEngine {
     private static final double log2Val = Math.log(2);
 
     double[][] pmiTable;
@@ -172,9 +171,9 @@ public class PredicatePmiCalculator extends AbstractCustomizedTextWriterAnalsysi
 
         AnalysisEngineDescription pmiCounter = AnalysisEngineFactory.createEngineDescription(
                 PredicatePmiCalculator.class, typeSystemDescription,
-                PredicatePmiCalculator.PARAM_PARENT_OUTPUT_DIR, "data",
+                PredicatePmiCalculator.PARAM_PARENT_OUTPUT_DIR_PATH, "data",
                 PredicatePmiCalculator.PARAM_BASE_OUTPUT_DIR_NAME, "predicate_pmi",
-                PredicatePmiCalculator.PARAM_STEP_NUMBER, 1
+                PredicatePmiCalculator.PARAM_OUTPUT_STEP_NUMBER, 1
         );
 
         SimplePipeline.runPipeline(reader, pmiCounter);

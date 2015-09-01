@@ -4,7 +4,7 @@ import edu.cmu.cs.lti.script.model.KmTargetConstants;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalsysisEngine;
+import edu.cmu.cs.lti.uima.io.writer.AbstractCustomizedTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.hash.TIntIntHashMap;
@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  * Date: 10/21/14
  * Time: 1:32 PM
  */
-public class NonDuplicateFileNamePrinter extends AbstractCustomizedTextWriterAnalsysisEngine {
+public class NonDuplicateFileNamePrinter extends AbstractCustomizedTextWriterAnalysisEngine {
 
     @Override
     public String getTextToPrint(JCas aJCas) {
@@ -99,8 +99,8 @@ public class NonDuplicateFileNamePrinter extends AbstractCustomizedTextWriterAna
                 NonDuplicateFileNamePrinter.class, typeSystemDescription,
                 NonDuplicateFileNamePrinter.PARAM_BASE_OUTPUT_DIR_NAME, outputDir,
                 NonDuplicateFileNamePrinter.PARAM_OUTPUT_FILE_SUFFIX, paramOutputFileSuffix,
-                NonDuplicateFileNamePrinter.PARAM_PARENT_OUTPUT_DIR, paramParentOutputDir,
-                NonDuplicateFileNamePrinter.PARAM_STEP_NUMBER, stepNum
+                NonDuplicateFileNamePrinter.PARAM_PARENT_OUTPUT_DIR_PATH, paramParentOutputDir,
+                NonDuplicateFileNamePrinter.PARAM_OUTPUT_STEP_NUMBER, stepNum
         );
 
         SimplePipeline.runPipeline(reader, writer);
