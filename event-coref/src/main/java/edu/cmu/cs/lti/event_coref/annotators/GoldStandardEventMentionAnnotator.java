@@ -85,14 +85,11 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
     }
 
     private void copyRegions(JCas toView, DiscontinuousComponentAnnotation from, DiscontinuousComponentAnnotation to) {
-        to.setYangRegions(new FSArray(toView, from.getYangRegions().size()));
-        for (int i = 0; i < from.getYangRegions().size(); i++) {
-            to.setYangRegions(i, from.getYangRegions(i));
-        }
-
-        to.setYinRegions(new FSArray(toView, from.getYinRegions().size()));
-        for (int i = 0; i < from.getYinRegions().size(); i++) {
-            to.setYinRegions(i, from.getYinRegions(i));
+        if (from.getRegions() != null) {
+            to.setRegions(new FSArray(toView, from.getRegions().size()));
+            for (int i = 0; i < from.getRegions().size(); i++) {
+                to.setRegions(i, from.getRegions(i));
+            }
         }
     }
 }
