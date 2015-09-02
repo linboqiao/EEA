@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.emd.annotators.crf;
 
 import edu.cmu.cs.lti.emd.learn.feature.extractor.MentionTypeFeatureExtractor;
 import edu.cmu.cs.lti.emd.learn.feature.extractor.UimaSentenceFeatureExtractor;
+import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.model.Alphabet;
 import edu.cmu.cs.lti.learning.model.AveragedWeightVector;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
@@ -69,6 +70,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
         logger.info("Model loaded");
         sentenceExtractor = new MentionTypeFeatureExtractor(alphabet);
+        decoder = new ViterbiDecoder(alphabet, classAlphabet, null /**No caching here**/);
     }
 
     @Override
@@ -88,6 +90,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
                 CandidateEventMention candidateEventMention = new CandidateEventMention(aJCas);
                 StanfordCorenlpToken firstToken = tokens.get(chunk.getValue0());
                 StanfordCorenlpToken lastToken = tokens.get(chunk.getValue1());
+                candidateEventMention.setPredictedType(chunk.getValue2());
                 UimaAnnotationUtils.finishAnnotation(candidateEventMention, firstToken.getBegin(), lastToken.getEnd()
                         , COMPONENT_ID, 0, aJCas);
             }
@@ -117,9 +120,5 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
         }
 
         return chunkEndPoints;
-    }
-
-    public static void setup() {
-
     }
 }

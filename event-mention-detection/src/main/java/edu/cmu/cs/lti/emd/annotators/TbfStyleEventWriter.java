@@ -51,7 +51,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             parts.add(wordInfo.getValue1());
             parts.add(mention.getEventType());
             parts.add(mention.getRealisType() == null ? "Actual" : mention.getRealisType());
-            parts.add("1");
+//            parts.add("1");
             sb.append(Joiner.on("\t").join(parts)).append("\n");
             mention.setId(eid);
         }
