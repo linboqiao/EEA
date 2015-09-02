@@ -20,14 +20,14 @@ import java.io.File;
  *
  * @author Zhengzhong Liu
  */
-public class CrfMentionTrainingRunner extends LoopPipeline {
+public class CrfMentionTrainingLooper extends LoopPipeline {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private int maxIteration;
     private int numIteration;
     private String modelBasename;
 
-    public CrfMentionTrainingRunner(String[] classes, int maxIteration, int featureDimension, double stepSize,
+    public CrfMentionTrainingLooper(String[] classes, int maxIteration, int featureDimension, double stepSize,
                                     int printPreviousNLoss, boolean readableModel, String modelOutputBasename,
                                     File cacheDirectory, TypeSystemDescription typeSystemDescription,
                                     CollectionReaderDescription readerDescription) throws
@@ -48,7 +48,9 @@ public class CrfMentionTrainingRunner extends LoopPipeline {
 
     @Override
     protected void stopActions() {
+        logger.info("Finalizing the training ...");
         try {
+            logger.info("Saving final models at " + modelBasename);
             MentionTypeCrfTrainer.saveModels(new File(modelBasename));
         } catch (java.io.IOException e) {
             e.printStackTrace();
@@ -59,7 +61,7 @@ public class CrfMentionTrainingRunner extends LoopPipeline {
     protected void loopActions() {
         numIteration++;
         try {
-            MentionTypeCrfTrainer.saveModels(new File(modelBasename + "_" + numIteration));
+            MentionTypeCrfTrainer.saveModels(new File(modelBasename + "_iter" + numIteration));
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }

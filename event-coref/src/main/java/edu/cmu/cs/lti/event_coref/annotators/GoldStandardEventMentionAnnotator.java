@@ -33,12 +33,12 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
     public static final String PARAM_TARGET_VIEWS = "targetViewNames";
 
     @ConfigurationParameter(name = PARAM_TARGET_VIEWS)
-    private String[] targetViewNamess;
+    private String[] targetViewNames;
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         final JCas goldStandard = JCasUtil.getView(aJCas, goldStandardViewName, false);
-        for (String targetViewName : targetViewNamess) {
+        for (String targetViewName : targetViewNames) {
             JCas targetView = JCasUtil.getView(aJCas, targetViewName, false);
             copyMentions(goldStandard, targetView);
             copyEvents(goldStandard, targetView);

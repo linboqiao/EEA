@@ -7,7 +7,7 @@ import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.acceptors.AllCandidateAcceptor;
 import edu.cmu.cs.lti.emd.annotators.crf.CrfMentionTypeAnnotator;
-import edu.cmu.cs.lti.emd.pipeline.CrfMentionTrainingRunner;
+import edu.cmu.cs.lti.emd.pipeline.CrfMentionTrainingLooper;
 import edu.cmu.cs.lti.event_coref.annotators.GoldStandardEventMentionAnnotator;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.pipeline.AbstractProcessorBuilder;
@@ -120,8 +120,8 @@ public class KBP2015EventTaskPipeline {
         pipeline.run();
     }
 
-    public void trainMentionTypeLv1(Configuration kbpConfig, CollectionReaderDescription trainingReader, String suffix)
-            throws UIMAException, IOException {
+    public String trainMentionTypeLv1(Configuration kbpConfig, CollectionReaderDescription trainingReader,
+                                      String suffix) throws UIMAException, IOException {
         logger.info("Starting Training ...");
         int maxiter = kbpConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
         int dimension = kbpConfig.getInt("edu.cmu.cs.lti.feature.dimension", 1000000);
@@ -136,10 +136,14 @@ public class KBP2015EventTaskPipeline {
         String[] classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
                 .filter(p -> p.length >= 1).map(p -> p[0]).toArray(String[]::new);
 
-        CrfMentionTrainingRunner mentionTypeTrainer = new CrfMentionTrainingRunner(classes, maxiter, dimension,
+        logger.info("Saving model directory at " + modelDir);
+
+        CrfMentionTrainingLooper mentionTypeTrainer = new CrfMentionTrainingLooper(classes, maxiter, dimension,
                 stepsize, averageLossN, readableModel, modelDir, cacheDir, typeSystemDescription,
                 trainingReader);
         mentionTypeTrainer.runLoopPipeline();
+
+        return modelDir;
     }
 
     public void mentionDetection(CollectionReaderDescription reader, String modelDir, String tbfOutput,
@@ -217,16 +221,15 @@ public class KBP2015EventTaskPipeline {
         edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(typeLv1Eval);
 
         for (int slice = 0; slice < numSplit; slice++) {
-            String sliceSuffix = "_" + slice;
+            String sliceSuffix = "split_" + slice;
             CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createCrossValidationReader(
                     typeSystemDescription, workingDir, inputBaseDir, false, seed, slice);
-            trainMentionTypeLv1(kbpConfig, trainingReader, "_" + slice);
+            String modelDir = trainMentionTypeLv1(kbpConfig, trainingReader, sliceSuffix);
             CollectionReaderDescription evalReader = CustomCollectionReaderFactory.createCrossValidationReader(
                     typeSystemDescription, workingDir, inputBaseDir, true, seed, slice);
-            String modelDir = kbpConfig.get("edu.cmu.cs.lti.model.output.dir") + sliceSuffix;
             String predictedTbf = new File(typeLv1Eval, "predicted" + sliceSuffix + ".tbf").getAbsolutePath();
             String goldTbf = new File(typeLv1Eval, "gold" + sliceSuffix + ".tbf").getAbsolutePath();
-
+            logger.info("Finding models in " + modelDir);
             mentionDetection(evalReader, modelDir, predictedTbf, goldTbf);
         }
     }
