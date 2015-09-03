@@ -19,6 +19,7 @@ import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
+import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
@@ -58,8 +59,7 @@ public class KBP2015EventTaskPipeline {
 
     public KBP2015EventTaskPipeline(String typeSystemName, String goldStandardFilePath, String plainTextDataDir,
                                     String tokenMapDir, String modelDir, String workingDir) {
-        this.typeSystemDescription = TypeSystemDescriptionFactory
-                .createTypeSystemDescription(typeSystemName);
+        this.typeSystemDescription = TypeSystemDescriptionFactory.createTypeSystemDescription(typeSystemName);
         this.goldStandardFilePath = goldStandardFilePath;
         this.plainTextDataDir = plainTextDataDir;
         this.tokenMapDir = tokenMapDir;
@@ -148,7 +148,7 @@ public class KBP2015EventTaskPipeline {
 
     public void mentionDetection(CollectionReaderDescription reader, String modelDir, String tbfOutput,
                                  String goldTbfOutput) throws UIMAException, IOException {
-        AnalysisEngineDescription allAcceptor = AnalysisEngineFactory.createEngineDescription(
+        AnalysisEngineDescription everythingAcceptor = AnalysisEngineFactory.createEngineDescription(
                 AllCandidateAcceptor.class, typeSystemDescription
         );
 
@@ -171,7 +171,7 @@ public class KBP2015EventTaskPipeline {
                         TbfStyleEventWriter.PARAM_SYSTEM_ID, "crf-lv1"
                 );
 
-                return new AnalysisEngineDescription[]{crfLevel1Annotator, allAcceptor, resultWriter};
+                return new AnalysisEngineDescription[]{crfLevel1Annotator, everythingAcceptor, resultWriter};
             }
         }, typeSystemDescription);
 
@@ -185,7 +185,8 @@ public class KBP2015EventTaskPipeline {
             @Override
             public AnalysisEngineDescription[] buildProcessors() throws ResourceInitializationException {
                 AnalysisEngineDescription goldCopier = AnalysisEngineFactory.createEngineDescription(
-                        GoldStandardEventMentionAnnotator.class, typeSystemDescription
+                        GoldStandardEventMentionAnnotator.class, typeSystemDescription,
+                        GoldStandardEventMentionAnnotator.PARAM_TARGET_VIEWS, new String[]{CAS.NAME_DEFAULT_SOFA}
                 );
 
                 AnalysisEngineDescription resultWriter = AnalysisEngineFactory.createEngineDescription(
