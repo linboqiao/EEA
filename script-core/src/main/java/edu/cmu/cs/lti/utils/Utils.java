@@ -1,7 +1,5 @@
 package edu.cmu.cs.lti.utils;
 
-import java.util.Scanner;
-
 /**
  * Created with IntelliJ IDEA.
  * User: zhengzhongliu
@@ -23,11 +21,5 @@ public class Utils {
 
     public static boolean documentFrequencyFilter(int df) {
         return df / 10 == 0;
-    }
-
-    public static void pause() {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter to continue");
-        in.nextLine();
     }
 }

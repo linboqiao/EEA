@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.script.dist;
 import edu.cmu.cs.lti.script.model.MooneyEventRepre;
 import edu.cmu.cs.lti.script.utils.DataPool;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.Utils;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.list.TIntList;
 import gnu.trove.map.TIntObjectMap;
@@ -75,7 +75,7 @@ public class UnigramEventDist {
 
         while (true) {
             System.out.println(noiseDist.draw());
-            Utils.pause();
+            DebugUtils.pause();
         }
     }
 }
