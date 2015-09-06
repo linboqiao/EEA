@@ -16,6 +16,7 @@ import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -121,29 +122,40 @@ public class KBP2015EventTaskPipeline {
     }
 
     public String trainMentionTypeLv1(Configuration kbpConfig, CollectionReaderDescription trainingReader,
-                                      String suffix) throws UIMAException, IOException {
+                                      String suffix, boolean skipTrain) throws UIMAException, IOException {
         logger.info("Starting Training ...");
-        int maxiter = kbpConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
-        int alphabetBits = kbpConfig.getInt("edu.cmu.cs.lti.feature.alphabet_bits", 24);
-        double stepsize = kbpConfig.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
-        int averageLossN = kbpConfig.getInt("edu.cmu.cs.lti.avergelossN", 50);
-        boolean readableModel = kbpConfig.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
-        File classFile = kbpConfig.getFile("edu.cmu.cs.lti.mention.classes.path");
 
-        String modelDir = kbpConfig.get("edu.cmu.cs.lti.model.output.dir") + suffix;
-        File cacheDir = new File(kbpConfig.get("edu.cmu.cs.lti.mention.cache.dir") + suffix);
+        String cvModelDir = kbpConfig.get("edu.cmu.cs.lti.model.output.dir") + suffix;
+        if (!skipTrain) {
+            int maxiter = kbpConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
+            int alphabetBits = kbpConfig.getInt("edu.cmu.cs.lti.feature.alphabet_bits", 24);
+            double stepsize = kbpConfig.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
+            int averageLossN = kbpConfig.getInt("edu.cmu.cs.lti.avergelossN", 50);
+            boolean readableModel = kbpConfig.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
+            File classFile = kbpConfig.getFile("edu.cmu.cs.lti.mention.classes.path");
 
-        String[] classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
-                .filter(p -> p.length >= 1).map(p -> p[0]).toArray(String[]::new);
+            File cacheDir = new File(kbpConfig.get("edu.cmu.cs.lti.mention.cache.dir") + suffix);
 
-        logger.info("Saving model directory at " + modelDir);
+            String[] classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
+                    .filter(p -> p.length >= 1).map(p -> p[0]).toArray(String[]::new);
 
-        CrfMentionTrainingLooper mentionTypeTrainer = new CrfMentionTrainingLooper(classes, maxiter, alphabetBits,
-                stepsize, averageLossN, readableModel, modelDir, cacheDir, typeSystemDescription,
-                trainingReader);
-        mentionTypeTrainer.runLoopPipeline();
+            for (String c : classes) {
+                logger.info("Register class " + c);
+            }
 
-        return modelDir;
+            DebugUtils.pause();
+
+            logger.info("Saving model directory at " + cvModelDir);
+
+            CrfMentionTrainingLooper mentionTypeTrainer = new CrfMentionTrainingLooper(classes, maxiter,
+                    alphabetBits, stepsize, averageLossN, readableModel, modelDir, cacheDir, typeSystemDescription,
+                    trainingReader);
+            mentionTypeTrainer.runLoopPipeline();
+        } else {
+            logger.info("Skipping training");
+        }
+
+        return cvModelDir;
     }
 
     public void mentionDetection(CollectionReaderDescription reader, String modelDir, String tbfOutput,
@@ -216,6 +228,7 @@ public class KBP2015EventTaskPipeline {
     public void crossValidation(Configuration kbpConfig, String inputBaseDir) throws UIMAException, IOException {
         int numSplit = kbpConfig.getInt("edu.cmu.cs.lti.cv.split", 5);
         int seed = kbpConfig.getInt("edu.cmu.cs.lti.cv.seed", 17);
+        boolean skipTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.cv.skiptrain", true);
         String evalPath = kbpConfig.get("edu.cmu.cs.lti.eval.base");
 
         File typeLv1Eval = new File(new File(workingDir, evalPath), "lv1_types");
@@ -225,7 +238,7 @@ public class KBP2015EventTaskPipeline {
             String sliceSuffix = "split_" + slice;
             CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createCrossValidationReader(
                     typeSystemDescription, workingDir, inputBaseDir, false, seed, slice);
-            String modelDir = trainMentionTypeLv1(kbpConfig, trainingReader, sliceSuffix);
+            String modelDir = trainMentionTypeLv1(kbpConfig, trainingReader, sliceSuffix, skipTrain);
             CollectionReaderDescription evalReader = CustomCollectionReaderFactory.createCrossValidationReader(
                     typeSystemDescription, workingDir, inputBaseDir, true, seed, slice);
             String predictedTbf = new File(typeLv1Eval, "predicted" + sliceSuffix + ".tbf").getAbsolutePath();

@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.emd.annotators.crf;
 
+import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
 import edu.cmu.cs.lti.emd.learn.feature.extractor.MentionTypeFeatureExtractor;
 import edu.cmu.cs.lti.emd.learn.feature.extractor.UimaSentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
@@ -79,6 +80,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
         sentenceExtractor.init(aJCas);
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
+            logger.info(sentence.getCoveredText());
             sentenceExtractor.resetWorkspace(sentence);
 
             List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
@@ -86,18 +88,29 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
             SequenceSolution solution = decoder.getDecodedPrediction();
 
-            for (Triplet<Integer, Integer, String> chunk : convertIOtagsToChunks(solution)) {
+            logger.info(solution.toString());
+//            DebugUtils.pause();
+
+            for (Triplet<Integer, Integer, String> chunk : convertTypeTagsToChunks(solution)) {
                 CandidateEventMention candidateEventMention = new CandidateEventMention(aJCas);
                 StanfordCorenlpToken firstToken = tokens.get(chunk.getValue0());
                 StanfordCorenlpToken lastToken = tokens.get(chunk.getValue1());
-                candidateEventMention.setPredictedType(chunk.getValue2());
-                UimaAnnotationUtils.finishAnnotation(candidateEventMention, firstToken.getBegin(), lastToken.getEnd()
-                        , COMPONENT_ID, 0, aJCas);
+                String[] predictedTypes = EventMentionTypeClassPrinter.splitToTmultipleTypes(chunk.getValue2());
+
+                for (String t : predictedTypes) {
+                    candidateEventMention.setPredictedType(t);
+                    UimaAnnotationUtils.finishAnnotation(candidateEventMention, firstToken.getBegin(), lastToken
+                            .getEnd(), COMPONENT_ID, 0, aJCas);
+                    logger.info(String.format("%s : [%d, %d]",
+                            candidateEventMention.getPredictedType(),
+                            candidateEventMention.getBegin(),
+                            candidateEventMention.getEnd()));
+                }
             }
         }
     }
 
-    private List<Triplet<Integer, Integer, String>> convertIOtagsToChunks(SequenceSolution solution) {
+    private List<Triplet<Integer, Integer, String>> convertTypeTagsToChunks(SequenceSolution solution) {
         List<Triplet<Integer, Integer, String>> chunkEndPoints = new ArrayList<>();
 
         for (int i = 0; i < solution.getSequenceLength(); i++) {

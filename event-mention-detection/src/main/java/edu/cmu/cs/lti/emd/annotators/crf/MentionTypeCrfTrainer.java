@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.emd.annotators.crf;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
+import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
 import edu.cmu.cs.lti.emd.learn.feature.extractor.MentionTypeFeatureExtractor;
 import edu.cmu.cs.lti.emd.learn.feature.extractor.UimaSentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.cache.CrfFeatureCacher;
@@ -169,7 +169,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
         for (Span span : mergedMentionTypes.keySet()) {
             TreeSet<String> uniqueSortedTypes = new TreeSet<>(mergedMentionTypes.get(span));
-            mentionWithMergedTypes.put(span, Joiner.on(";").join(uniqueSortedTypes));
+            mentionWithMergedTypes.put(span, EventMentionTypeClassPrinter.joinMultipleTypes(uniqueSortedTypes));
         }
 
         return mentionWithMergedTypes;

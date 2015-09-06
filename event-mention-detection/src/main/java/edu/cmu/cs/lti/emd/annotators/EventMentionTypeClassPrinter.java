@@ -43,6 +43,8 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
 
     TObjectIntMap<String> candidateClassesSingle = new TObjectIntHashMap<>();
 
+    public static String TYPE_NAME_JOINER = " ; ";
+
     static Set<String> targetClasses;
 
     static {
@@ -73,7 +75,7 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
                     goldClassesWithJoint.adjustOrPutValue(sorted_joint_type, 1, 1);
                     if (joint_type.size() > 1) {
                         System.out.println(aJCas.getDocumentText().substring(previous_start, previous_end) + "\t" +
-                                Joiner.on(" ; ").join(joint_type));
+                                joinMultipleTypes(joint_type));
                     }
                 }
                 joint_type = new HashSet<>();
@@ -109,7 +111,7 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
         final int[] joint_type_count = {0};
 
         goldClassesWithJoint.forEachEntry((t, c) -> {
-            String joinedTypeName = Joiner.on(" ; ").join(t);
+            String joinedTypeName = joinMultipleTypes(t);
             if (t.size() > 1) {
                 joint_type_count[0] += c;
                 System.out.println(String.format("Joint type %s occurs %d times.", joinedTypeName, c));
@@ -121,7 +123,7 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
         });
 
         goldClassesWithJoint.forEachEntry((t, c) -> {
-            String joinedTypeName = Joiner.on(" ; ").join(t);
+            String joinedTypeName = joinMultipleTypes(t);
             if (t.size() == 1) {
                 System.out.println(String.format("Single type %s occurs %d times.", joinedTypeName, c));
             }
@@ -139,6 +141,14 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String joinMultipleTypes(Iterable<String> types) {
+        return Joiner.on(TYPE_NAME_JOINER).join(types);
+    }
+
+    public static String[] splitToTmultipleTypes(String joinedType) {
+        return joinedType.split(TYPE_NAME_JOINER);
     }
 
     public static void main(String args[]) throws IOException, UIMAException {
