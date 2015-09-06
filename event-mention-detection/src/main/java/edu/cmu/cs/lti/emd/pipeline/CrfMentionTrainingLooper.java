@@ -27,12 +27,12 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
     private int numIteration;
     private String modelBasename;
 
-    public CrfMentionTrainingLooper(String[] classes, int maxIteration, int featureDimension, double stepSize,
+    public CrfMentionTrainingLooper(String[] classes, int maxIteration, int alphabetBits, double stepSize,
                                     int printPreviousNLoss, boolean readableModel, String modelOutputBasename,
                                     File cacheDirectory, TypeSystemDescription typeSystemDescription,
                                     CollectionReaderDescription readerDescription) throws
             ResourceInitializationException {
-        super(readerDescription, setup(typeSystemDescription, classes, featureDimension, stepSize, printPreviousNLoss,
+        super(readerDescription, setup(typeSystemDescription, classes, alphabetBits, stepSize, printPreviousNLoss,
                 readableModel, cacheDirectory));
         this.maxIteration = maxIteration;
         this.numIteration = 0;
@@ -70,12 +70,12 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
 
     private static AnalysisEngineDescription setup(TypeSystemDescription typeSystemDescription,
                                                    String[] classes,
-                                                   int featureDimension,
+                                                   int alphabetBits,
                                                    double stepSize,
                                                    int printPreviousNLoss,
                                                    boolean readableModel,
                                                    File cacheDir) throws ResourceInitializationException {
-        MentionTypeCrfTrainer.setup(classes, featureDimension, stepSize, printPreviousNLoss, readableModel, cacheDir);
+        MentionTypeCrfTrainer.setup(classes, alphabetBits, stepSize, printPreviousNLoss, readableModel, cacheDir);
         return AnalysisEngineFactory.createEngineDescription(MentionTypeCrfTrainer.class, typeSystemDescription,
                 MentionTypeCrfTrainer.PARAM_GOLD_CACHE_DIRECTORY, cacheDir,
                 MentionTypeCrfTrainer.PARAM_GOLD_STANDARD_VIEW_NAME, UimaConst.goldViewName

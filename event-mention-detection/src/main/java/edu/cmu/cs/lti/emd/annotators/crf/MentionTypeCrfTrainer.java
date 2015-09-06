@@ -214,14 +214,14 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         }
     }
 
-    public static void setup(String[] classes, int featureDimension, double stepSize, int printLossOverPreviousN,
+    public static void setup(String[] classes, int alphabetBits, double stepSize, int printLossOverPreviousN,
                              boolean readableModel, File cacheDirectory) {
         classAlphabet = new ClassAlphabet(classes, true);
-        alphabet = new Alphabet(featureDimension, readableModel);
+        alphabet = new Alphabet(alphabetBits, readableModel);
         trainingStats = new TrainingStats(printLossOverPreviousN);
         cacher = new CrfFeatureCacher(cacheDirectory);
         decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
-        trainer = new AveragePerceptronTrainer(decoder, stepSize, featureDimension);
+        trainer = new AveragePerceptronTrainer(decoder, stepSize, alphabet.getAlphabetSize());
         sentenceExtractor = new MentionTypeFeatureExtractor(alphabet);
     }
 }

@@ -83,7 +83,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
             double tau = getUpdateWeight(delta, weights, loss);
             weights.update(delta, tau);
 
-//            Utils.pause();
+//            DebugUtils.pause();
         }
     }
 

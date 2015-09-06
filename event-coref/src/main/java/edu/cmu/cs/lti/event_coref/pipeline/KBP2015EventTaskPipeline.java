@@ -124,7 +124,7 @@ public class KBP2015EventTaskPipeline {
                                       String suffix) throws UIMAException, IOException {
         logger.info("Starting Training ...");
         int maxiter = kbpConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
-        int dimension = kbpConfig.getInt("edu.cmu.cs.lti.feature.dimension", 1000000);
+        int alphabetBits = kbpConfig.getInt("edu.cmu.cs.lti.feature.alphabet_bits", 24);
         double stepsize = kbpConfig.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
         int averageLossN = kbpConfig.getInt("edu.cmu.cs.lti.avergelossN", 50);
         boolean readableModel = kbpConfig.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
@@ -138,7 +138,7 @@ public class KBP2015EventTaskPipeline {
 
         logger.info("Saving model directory at " + modelDir);
 
-        CrfMentionTrainingLooper mentionTypeTrainer = new CrfMentionTrainingLooper(classes, maxiter, dimension,
+        CrfMentionTrainingLooper mentionTypeTrainer = new CrfMentionTrainingLooper(classes, maxiter, alphabetBits,
                 stepsize, averageLossN, readableModel, modelDir, cacheDir, typeSystemDescription,
                 trainingReader);
         mentionTypeTrainer.runLoopPipeline();
