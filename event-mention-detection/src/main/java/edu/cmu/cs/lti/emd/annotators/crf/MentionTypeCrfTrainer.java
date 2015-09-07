@@ -15,6 +15,7 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -87,7 +88,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
 //        UimaConvenience.printProcessLog(aJCas, logger);
-        sentenceExtractor.init(aJCas);
+        sentenceExtractor.initWorkspace(aJCas);
 
         JCas goldView = JCasUtil.getView(aJCas, goldStandardViewName, aJCas);
 
@@ -214,14 +215,19 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         }
     }
 
-    public static void setup(String[] classes, int alphabetBits, double stepSize, int printLossOverPreviousN,
-                             boolean readableModel, File cacheDirectory) {
+    public static void setup(String[] classes, File cacheDirectory, Configuration kbpConfig) {
+        int alphabetBits = kbpConfig.getInt("edu.cmu.cs.lti.feature.alphabet_bits", 24);
+        double stepSize = kbpConfig.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
+        int printLossOverPreviousN = kbpConfig.getInt("edu.cmu.cs.lti.avergelossN", 50);
+        boolean readableModel = kbpConfig.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
+
         classAlphabet = new ClassAlphabet(classes, true);
         alphabet = new Alphabet(alphabetBits, readableModel);
         trainingStats = new TrainingStats(printLossOverPreviousN);
+
         cacher = new CrfFeatureCacher(cacheDirectory);
         decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
         trainer = new AveragePerceptronTrainer(decoder, stepSize, alphabet.getAlphabetSize());
-        sentenceExtractor = new MentionTypeFeatureExtractor(alphabet);
+        sentenceExtractor = new MentionTypeFeatureExtractor(alphabet, kbpConfig);
     }
 }

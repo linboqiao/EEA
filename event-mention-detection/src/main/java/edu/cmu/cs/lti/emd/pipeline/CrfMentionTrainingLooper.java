@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.emd.pipeline;
 import edu.cmu.cs.lti.emd.annotators.crf.MentionTypeCrfTrainer;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.uima.pipeline.LoopPipeline;
+import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
@@ -27,14 +28,13 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
     private int numIteration;
     private String modelBasename;
 
-    public CrfMentionTrainingLooper(String[] classes, int maxIteration, int alphabetBits, double stepSize,
-                                    int printPreviousNLoss, boolean readableModel, String modelOutputBasename,
-                                    File cacheDirectory, TypeSystemDescription typeSystemDescription,
+    public CrfMentionTrainingLooper(String[] classes, Configuration kbpConfig,
+                                    String modelOutputBasename, File cacheDirectory,
+                                    TypeSystemDescription typeSystemDescription,
                                     CollectionReaderDescription readerDescription) throws
             ResourceInitializationException {
-        super(readerDescription, setup(typeSystemDescription, classes, alphabetBits, stepSize, printPreviousNLoss,
-                readableModel, cacheDirectory));
-        this.maxIteration = maxIteration;
+        super(readerDescription, setup(typeSystemDescription, classes, cacheDirectory, kbpConfig));
+        this.maxIteration = kbpConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
         this.numIteration = 0;
         this.modelBasename = modelOutputBasename;
 
@@ -68,14 +68,10 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
         logger.info(String.format("Iteration %d finished ...", numIteration));
     }
 
-    private static AnalysisEngineDescription setup(TypeSystemDescription typeSystemDescription,
-                                                   String[] classes,
-                                                   int alphabetBits,
-                                                   double stepSize,
-                                                   int printPreviousNLoss,
-                                                   boolean readableModel,
-                                                   File cacheDir) throws ResourceInitializationException {
-        MentionTypeCrfTrainer.setup(classes, alphabetBits, stepSize, printPreviousNLoss, readableModel, cacheDir);
+    private static AnalysisEngineDescription setup(TypeSystemDescription typeSystemDescription, String[] classes,
+                                                   File cacheDir, Configuration kbpConfig) throws
+            ResourceInitializationException {
+        MentionTypeCrfTrainer.setup(classes, cacheDir, kbpConfig);
         return AnalysisEngineFactory.createEngineDescription(MentionTypeCrfTrainer.class, typeSystemDescription,
                 MentionTypeCrfTrainer.PARAM_GOLD_CACHE_DIRECTORY, cacheDir,
                 MentionTypeCrfTrainer.PARAM_GOLD_STANDARD_VIEW_NAME, UimaConst.goldViewName

@@ -15,6 +15,7 @@ import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -49,9 +50,10 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     private static SequenceDecoder decoder;
 
     public static final String PARAM_MODEL_DIRECTORY = "modelDirectory";
-
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
     File modelDirectory;
+
+    public static Configuration kbpConfig;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -70,14 +72,14 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
         }
 
         logger.info("Model loaded");
-        sentenceExtractor = new MentionTypeFeatureExtractor(alphabet);
+        sentenceExtractor = new MentionTypeFeatureExtractor(alphabet, kbpConfig);
         decoder = new ViterbiDecoder(alphabet, classAlphabet, null /**No caching here**/);
     }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         UimaConvenience.printProcessLog(aJCas, logger);
-        sentenceExtractor.init(aJCas);
+        sentenceExtractor.initWorkspace(aJCas);
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             logger.info(sentence.getCoveredText());

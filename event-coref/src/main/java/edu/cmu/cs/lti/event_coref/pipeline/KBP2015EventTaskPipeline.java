@@ -16,7 +16,6 @@ import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -127,15 +126,8 @@ public class KBP2015EventTaskPipeline {
 
         String cvModelDir = kbpConfig.get("edu.cmu.cs.lti.model.output.dir") + suffix;
         if (!skipTrain) {
-            int maxiter = kbpConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
-            int alphabetBits = kbpConfig.getInt("edu.cmu.cs.lti.feature.alphabet_bits", 24);
-            double stepsize = kbpConfig.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
-            int averageLossN = kbpConfig.getInt("edu.cmu.cs.lti.avergelossN", 50);
-            boolean readableModel = kbpConfig.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
             File classFile = kbpConfig.getFile("edu.cmu.cs.lti.mention.classes.path");
-
             File cacheDir = new File(kbpConfig.get("edu.cmu.cs.lti.mention.cache.dir") + suffix);
-
             String[] classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
                     .filter(p -> p.length >= 1).map(p -> p[0]).toArray(String[]::new);
 
@@ -143,13 +135,10 @@ public class KBP2015EventTaskPipeline {
                 logger.info("Register class " + c);
             }
 
-            DebugUtils.pause();
-
             logger.info("Saving model directory at " + cvModelDir);
 
-            CrfMentionTrainingLooper mentionTypeTrainer = new CrfMentionTrainingLooper(classes, maxiter,
-                    alphabetBits, stepsize, averageLossN, readableModel, modelDir, cacheDir, typeSystemDescription,
-                    trainingReader);
+            CrfMentionTrainingLooper mentionTypeTrainer = new CrfMentionTrainingLooper(classes, kbpConfig, cvModelDir,
+                    cacheDir, typeSystemDescription, trainingReader);
             mentionTypeTrainer.runLoopPipeline();
         } else {
             logger.info("Skipping training");
@@ -159,7 +148,10 @@ public class KBP2015EventTaskPipeline {
     }
 
     public void mentionDetection(CollectionReaderDescription reader, String modelDir, String tbfOutput,
-                                 String goldTbfOutput) throws UIMAException, IOException {
+                                 String goldTbfOutput, Configuration config) throws UIMAException, IOException {
+        // Static variable is not so nice here.
+        CrfMentionTypeAnnotator.kbpConfig = config;
+
         AnalysisEngineDescription everythingAcceptor = AnalysisEngineFactory.createEngineDescription(
                 AllCandidateAcceptor.class, typeSystemDescription
         );
@@ -244,7 +236,7 @@ public class KBP2015EventTaskPipeline {
             String predictedTbf = new File(typeLv1Eval, "predicted" + sliceSuffix + ".tbf").getAbsolutePath();
             String goldTbf = new File(typeLv1Eval, "gold" + sliceSuffix + ".tbf").getAbsolutePath();
             logger.info("Finding models in " + modelDir);
-            mentionDetection(evalReader, modelDir, predictedTbf, goldTbf);
+            mentionDetection(evalReader, modelDir, predictedTbf, goldTbf, kbpConfig);
         }
     }
 
