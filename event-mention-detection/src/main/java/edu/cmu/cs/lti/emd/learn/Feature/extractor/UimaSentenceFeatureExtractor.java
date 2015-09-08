@@ -22,10 +22,18 @@ public abstract class UimaSentenceFeatureExtractor extends ChainFeatureExtractor
         super(alphabet);
     }
 
-    public void init(JCas context) {
+    /**
+     * Called once per document.
+     * @param context
+     */
+    public void initWorkspace(JCas context) {
         this.context = context;
     }
 
+    /**
+     * Called once per sentence.
+     * @param sentence
+     */
     public void resetWorkspace(StanfordCorenlpSentence sentence) {
         this.sentence = sentence;
     }

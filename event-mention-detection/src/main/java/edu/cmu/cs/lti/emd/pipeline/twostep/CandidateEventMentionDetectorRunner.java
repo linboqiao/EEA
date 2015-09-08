@@ -43,7 +43,8 @@ public class CandidateEventMentionDetectorRunner {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, new File(paramParentInputDir, paramBaseInputDirName).getCanonicalPath(), false);
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, new
+                File(paramParentInputDir, paramBaseInputDirName).getCanonicalPath(), false);
 
         AnalysisEngineDescription detector = AnalysisEngineFactory.createEngineDescription(
                 CandidateEventMentionDetector.class, typeSystemDescription,
@@ -55,7 +56,8 @@ public class CandidateEventMentionDetectorRunner {
                 CandidateEventMentionDetector.PARAM_FOR_TRAINING, true
         );
 
-        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(paramParentInputDir, outputBase, 1, null);
+        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(paramParentInputDir,
+                outputBase, 1, null);
 
         // Run the pipeline.
         try {

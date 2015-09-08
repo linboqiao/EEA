@@ -41,7 +41,8 @@ public class UsefulFrameDetectorRunner {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, new File(paramParentInputDir, paramBaseInputDirName).getCanonicalPath(), false);
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, new
+                File(paramParentInputDir, paramBaseInputDirName).getCanonicalPath(), false);
 
         AnalysisEngineDescription detector = AnalysisEngineFactory.createEngineDescription(
                 UsefulFramDetector.class, typeSystemDescription,

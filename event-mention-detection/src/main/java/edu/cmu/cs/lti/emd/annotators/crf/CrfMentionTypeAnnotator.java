@@ -94,12 +94,12 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 //            DebugUtils.pause();
 
             for (Triplet<Integer, Integer, String> chunk : convertTypeTagsToChunks(solution)) {
-                CandidateEventMention candidateEventMention = new CandidateEventMention(aJCas);
                 StanfordCorenlpToken firstToken = tokens.get(chunk.getValue0());
                 StanfordCorenlpToken lastToken = tokens.get(chunk.getValue1());
                 String[] predictedTypes = EventMentionTypeClassPrinter.splitToTmultipleTypes(chunk.getValue2());
 
                 for (String t : predictedTypes) {
+                    CandidateEventMention candidateEventMention = new CandidateEventMention(aJCas);
                     candidateEventMention.setPredictedType(t);
                     UimaAnnotationUtils.finishAnnotation(candidateEventMention, firstToken.getBegin(), lastToken
                             .getEnd(), COMPONENT_ID, 0, aJCas);
