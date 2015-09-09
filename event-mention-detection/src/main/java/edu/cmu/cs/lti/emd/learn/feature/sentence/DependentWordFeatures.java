@@ -24,7 +24,7 @@ public class DependentWordFeatures extends SentenceFeatureWithFocus {
     }
 
     @Override
-    public void initWorkspace(JCas context) {
+    public void initDocumentWorkspace(JCas context) {
         // Set types to each token for easy feature extraction.
         for (StanfordEntityMention mention : JCasUtil.select(context, StanfordEntityMention.class)) {
             String entityType = mention.getEntityType();
@@ -35,19 +35,22 @@ public class DependentWordFeatures extends SentenceFeatureWithFocus {
     }
 
     @Override
-    public void resetWorkspace(StanfordCorenlpSentence sentence) {
+    public void resetWorkspace(JCas aJCas, int begin, int end) {
 
     }
 
     @Override
-    public void extract(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,
+    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
                         TObjectDoubleMap<String> featuresNeedForState) {
-        addDependentFeatures(sentence, focus, features, Word::getLemma, "ChildLemma");
-        addDependentFeatures(sentence, focus, features, Word::getNerTag, "ChildNer");
+        addDependentFeatures(sequence, focus, features, Word::getLemma, "ChildLemma");
+        addDependentFeatures(sequence, focus, features, Word::getNerTag, "ChildNer");
     }
 
     public void addDependentFeatures(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,
                                      Function<Word, String> operator, String featureType) {
+        if (focus < 0 || focus > sentence.size() - 1) {
+            return;
+        }
         StanfordCorenlpToken token = sentence.get(focus);
         FSList childDependencies = token.getChildDependencyRelations();
 

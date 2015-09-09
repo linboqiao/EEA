@@ -2,7 +2,6 @@ package edu.cmu.cs.lti.emd.learn.feature.extractor;
 
 import edu.cmu.cs.lti.emd.learn.feature.sentence.*;
 import edu.cmu.cs.lti.learning.model.Alphabet;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
@@ -21,7 +20,7 @@ import java.util.List;
  *
  * @author Zhengzhong Liu
  */
-public class MentionTypeFeatureExtractor extends UimaSentenceFeatureExtractor {
+public class MentionTypeFeatureExtractor extends UimaSequenceFeatureExtractor {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private List<StanfordCorenlpToken> sentenceTokens;
@@ -40,17 +39,16 @@ public class MentionTypeFeatureExtractor extends UimaSentenceFeatureExtractor {
     public void initWorkspace(JCas context) {
         super.initWorkspace(context);
         for (SentenceFeatureWithFocus ff : featureFunctions) {
-            ff.initWorkspace(context);
+            ff.initDocumentWorkspace(context);
         }
     }
 
     @Override
-    public void resetWorkspace(StanfordCorenlpSentence sentence) {
-        super.resetWorkspace(sentence);
-        sentenceTokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
+    public void resetWorkspace(JCas aJCas, int begin, int end) {
+        sentenceTokens = JCasUtil.selectCovered(aJCas, StanfordCorenlpToken.class, begin, end);
 
         for (SentenceFeatureWithFocus ff : featureFunctions) {
-            ff.resetWorkspace(sentence);
+            ff.resetWorkspace(aJCas, begin, end);
         }
     }
 

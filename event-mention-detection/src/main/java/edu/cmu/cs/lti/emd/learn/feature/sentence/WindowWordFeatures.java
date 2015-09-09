@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.emd.learn.feature.sentence;
 
 import edu.cmu.cs.lti.emd.learn.feature.FeatureUtils;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.StanfordEntityMention;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -26,16 +25,12 @@ import java.util.stream.IntStream;
 public class WindowWordFeatures extends SentenceFeatureWithFocus {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public static String outsideValue = "<OUTSIDE>";
-    public static String startPlaceholder = "<START>";
-    public static String endPlaceholder = "<END>";
-
     public WindowWordFeatures(Configuration config) {
         super(config);
     }
 
     @Override
-    public void initWorkspace(JCas context) {
+    public void initDocumentWorkspace(JCas context) {
         // Set types to each token for easy feature extraction.
         for (StanfordEntityMention mention : JCasUtil.select(context, StanfordEntityMention.class)) {
             String entityType = mention.getEntityType();
@@ -46,37 +41,16 @@ public class WindowWordFeatures extends SentenceFeatureWithFocus {
     }
 
     @Override
-    public void resetWorkspace(StanfordCorenlpSentence sentence) {
+    public void resetWorkspace(JCas aJCas, int begin, int end) {
 
     }
 
     @Override
-    public void extract(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,
+    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
                         TObjectDoubleMap<String> featuresNeedForState) {
-        addWindowFeatures(sentence, focus, features, StanfordCorenlpToken::getPos, "Pos", 1);
-        addWindowFeatures(sentence, focus, features, StanfordCorenlpToken::getLemma, "Lemma", 3);
-        addWindowFeatures(sentence, focus, features, StanfordCorenlpToken::getNerTag, "Ner", 3);
-    }
-
-    public String outsideProtection(List<StanfordCorenlpToken> sentence, Function<StanfordCorenlpToken, String>
-            operator, int index) {
-        if (index < -1) {
-            return outsideValue;
-        } else if (index > sentence.size()) {
-            return outsideValue;
-        }
-
-        if (index == -1) {
-            return startPlaceholder;
-        }
-
-        if (index == sentence.size()) {
-            return endPlaceholder;
-        }
-
-        String operatedValue = operator.apply(sentence.get(index));
-
-        return operatedValue == null ? outsideValue : operatedValue;
+        addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getPos, "Pos", 1);
+        addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getLemma, "Lemma", 3);
+        addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getNerTag, "Ner", 3);
     }
 
     public void addWindowFeatures(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,
@@ -102,7 +76,7 @@ public class WindowWordFeatures extends SentenceFeatureWithFocus {
 
     public Pair<String, String> computeWordFeature(List<StanfordCorenlpToken> sentence, String
             prefix, Function<StanfordCorenlpToken, String> operator, int focus, int offset) {
-        return Pair.with(String.format("%s_i=%d", prefix, offset), outsideProtection(sentence, operator, focus +
+        return Pair.with(String.format("%s_i=%d", prefix, offset), operateWithOutside(sentence, operator, focus +
                 offset));
     }
 }

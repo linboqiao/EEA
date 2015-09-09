@@ -2,7 +2,10 @@ package edu.cmu.cs.lti.emd.learn.feature.sentence;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.learn.feature.FeatureUtils;
-import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.script.type.SemaforAnnotationSet;
+import edu.cmu.cs.lti.script.type.SemaforLabel;
+import edu.cmu.cs.lti.script.type.SemaforLayer;
+import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -35,18 +38,21 @@ public class FrameFeatures extends SentenceFeatureWithFocus {
     }
 
     @Override
-    public void initWorkspace(JCas context) {
+    public void initDocumentWorkspace(JCas context) {
     }
 
     @Override
-    public void resetWorkspace(StanfordCorenlpSentence sentence) {
-        readFrames(sentence);
+    public void resetWorkspace(JCas aJCas, int begin, int end) {
+        readFrames(aJCas, begin, end);
     }
 
     @Override
-    public void extract(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,
+    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
                         TObjectDoubleMap<String> featuresNeedForState) {
-        StanfordCorenlpToken token = sentence.get(focus);
+        if (focus > sequence.size() - 1 || focus < 0) {
+            return;
+        }
+        StanfordCorenlpToken token = sequence.get(focus);
         if (triggerToArgs.containsKey(token)) {
             for (Pair<String, String> triggerAndType : triggerToArgs.get(token)) {
                 features.put(FeatureUtils.formatFeatureName("FrameArgumentLemma", triggerAndType.getValue0()), 1);
@@ -59,11 +65,10 @@ public class FrameFeatures extends SentenceFeatureWithFocus {
         }
     }
 
-
-    private void readFrames(StanfordCorenlpSentence sentence) {
+    private void readFrames(JCas jCas, int begin, int end) {
         triggerToArgs = ArrayListMultimap.create();
         triggerToFrameName = new HashMap<>();
-        for (SemaforAnnotationSet annoSet : JCasUtil.selectCovered(SemaforAnnotationSet.class, sentence)) {
+        for (SemaforAnnotationSet annoSet : JCasUtil.selectCovered(jCas, SemaforAnnotationSet.class, begin, end)) {
             String frameName = annoSet.getFrameName();
 
             SemaforLabel trigger = null;

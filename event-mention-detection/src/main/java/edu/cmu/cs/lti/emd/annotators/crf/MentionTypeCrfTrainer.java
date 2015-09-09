@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.emd.annotators.crf;
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
 import edu.cmu.cs.lti.emd.learn.feature.extractor.MentionTypeFeatureExtractor;
-import edu.cmu.cs.lti.emd.learn.feature.extractor.UimaSentenceFeatureExtractor;
+import edu.cmu.cs.lti.emd.learn.feature.extractor.UimaSequenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.cache.CrfFeatureCacher;
 import edu.cmu.cs.lti.learning.cache.CrfState;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
@@ -46,7 +46,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
     private static AveragePerceptronTrainer trainer;
 
-    private static UimaSentenceFeatureExtractor sentenceExtractor;
+    private static UimaSequenceFeatureExtractor sentenceExtractor;
 
     private static ClassAlphabet classAlphabet;
 

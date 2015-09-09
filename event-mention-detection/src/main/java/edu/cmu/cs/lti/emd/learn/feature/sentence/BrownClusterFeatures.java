@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.emd.learn.feature.sentence;
 
-import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
@@ -50,18 +49,19 @@ public class BrownClusterFeatures extends SentenceFeatureWithFocus {
     }
 
     @Override
-    public void initWorkspace(JCas context) {
+    public void initDocumentWorkspace(JCas context) {
     }
 
     @Override
-    public void resetWorkspace(StanfordCorenlpSentence sentence) {
+    public void resetWorkspace(JCas aJCas, int begin, int end) {
 
     }
 
     @Override
-    public void extract(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,
+    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
                         TObjectDoubleMap<String> featuresNeedForState) {
-        String lemma = sentence.get(focus).getLemma();
+        String lemma = operateWithOutside(sequence, StanfordCorenlpToken::getLemma, focus);
+
         if (brownClusters.containsKey(lemma)) {
             String fullClusterId = brownClusters.get(lemma);
             for (int prefixLength : brownClusterPrefix) {

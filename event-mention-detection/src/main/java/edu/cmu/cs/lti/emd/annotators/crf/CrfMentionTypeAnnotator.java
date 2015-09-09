@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.emd.annotators.crf;
 
 import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
 import edu.cmu.cs.lti.emd.learn.feature.extractor.MentionTypeFeatureExtractor;
-import edu.cmu.cs.lti.emd.learn.feature.extractor.UimaSentenceFeatureExtractor;
+import edu.cmu.cs.lti.emd.learn.feature.extractor.UimaSequenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.model.Alphabet;
 import edu.cmu.cs.lti.learning.model.AveragedWeightVector;
@@ -43,7 +43,7 @@ import java.util.List;
 public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private UimaSentenceFeatureExtractor sentenceExtractor;
+    private UimaSequenceFeatureExtractor sentenceExtractor;
     private Alphabet alphabet;
     private ClassAlphabet classAlphabet;
     private AveragedWeightVector averagedWeightVector;
@@ -83,7 +83,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             logger.info(sentence.getCoveredText());
-            sentenceExtractor.resetWorkspace(sentence);
+            sentenceExtractor.resetWorkspace(aJCas, sentence.getBegin(), sentence.getEnd());
 
             List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
             decoder.decode(sentenceExtractor, averagedWeightVector, tokens.size(), 0);
