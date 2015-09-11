@@ -175,8 +175,8 @@ public class RealisTrainer {
                                   String inputDir, String baseInputDirName,
                                   int stepNum, String semLinkDataPath,
                                   String bwClusterPath, String wordnetDataPath,
-                                  boolean isTraining, String modelDir, boolean keep_quite) throws UIMAException,
-            IOException {
+                                  boolean isTraining, String modelDir, boolean keep_quite)
+            throws UIMAException, IOException {
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(inputDir,
                 baseInputDirName, stepNum, false);
         AnalysisEngineDescription ana = AnalysisEngineFactory.createEngineDescription(
