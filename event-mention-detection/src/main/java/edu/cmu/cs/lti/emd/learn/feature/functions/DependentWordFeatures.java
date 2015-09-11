@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.learn.feature.sentence;
+package edu.cmu.cs.lti.emd.learn.feature.functions;
 
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -18,7 +18,7 @@ import java.util.function.Function;
  *
  * @author Zhengzhong Liu
  */
-public class DependentWordFeatures extends SentenceFeatureWithFocus {
+public class DependentWordFeatures extends SequenceFeatureWithFocus {
     public DependentWordFeatures(Configuration config) {
         super(config);
     }

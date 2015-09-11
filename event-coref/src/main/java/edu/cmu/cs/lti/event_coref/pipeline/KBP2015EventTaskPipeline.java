@@ -6,6 +6,7 @@ import edu.cmu.cs.lti.annotators.OpenNlpChunker;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.acceptors.AllCandidateAcceptor;
+import edu.cmu.cs.lti.emd.annotators.classification.RealisClassifierTrainer;
 import edu.cmu.cs.lti.emd.annotators.crf.CrfMentionTypeAnnotator;
 import edu.cmu.cs.lti.emd.pipeline.CrfMentionTrainingLooper;
 import edu.cmu.cs.lti.event_coref.annotators.GoldStandardEventMentionAnnotator;
@@ -124,7 +125,7 @@ public class KBP2015EventTaskPipeline {
                                       String suffix, boolean skipTrain) throws UIMAException, IOException {
         logger.info("Starting Training ...");
 
-        String cvModelDir = kbpConfig.get("edu.cmu.cs.lti.model.output.dir") + suffix;
+        String cvModelDir = kbpConfig.get("edu.cmu.cs.lti.model.crf.mention.lv1.dir") + suffix;
         if (!skipTrain) {
             File classFile = kbpConfig.getFile("edu.cmu.cs.lti.mention.classes.path");
             File cacheDir = new File(kbpConfig.get("edu.cmu.cs.lti.mention.cache.dir") + suffix);
@@ -145,6 +146,13 @@ public class KBP2015EventTaskPipeline {
         }
 
         return cvModelDir;
+    }
+
+    public void trainRealisTypes(Configuration kbpConfig, CollectionReaderDescription trainingReader, String
+            suffix, boolean skipTrain) throws Exception {
+        RealisClassifierTrainer trainer = new RealisClassifierTrainer(typeSystemDescription, trainingReader);
+        String realisCvModelDir = kbpConfig.get("edu.cmu.cs.lti.model.realis.dir") + suffix;
+        trainer.buildModels(realisCvModelDir);
     }
 
     public void mentionDetection(CollectionReaderDescription reader, String modelDir, String tbfOutput,
@@ -230,13 +238,14 @@ public class KBP2015EventTaskPipeline {
             String sliceSuffix = "split_" + slice;
             CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createCrossValidationReader(
                     typeSystemDescription, workingDir, inputBaseDir, false, seed, slice);
-            String modelDir = trainMentionTypeLv1(kbpConfig, trainingReader, sliceSuffix, skipTrain);
+            String crfTypeModelDir = trainMentionTypeLv1(kbpConfig, trainingReader, sliceSuffix, skipTrain);
+
             CollectionReaderDescription evalReader = CustomCollectionReaderFactory.createCrossValidationReader(
                     typeSystemDescription, workingDir, inputBaseDir, true, seed, slice);
             String predictedTbf = new File(typeLv1Eval, "predicted" + sliceSuffix + ".tbf").getAbsolutePath();
             String goldTbf = new File(typeLv1Eval, "gold" + sliceSuffix + ".tbf").getAbsolutePath();
-            logger.info("Finding models in " + modelDir);
-            mentionDetection(evalReader, modelDir, predictedTbf, goldTbf, kbpConfig);
+            logger.info("Finding models in " + crfTypeModelDir);
+            mentionDetection(evalReader, crfTypeModelDir, predictedTbf, goldTbf, kbpConfig);
         }
     }
 

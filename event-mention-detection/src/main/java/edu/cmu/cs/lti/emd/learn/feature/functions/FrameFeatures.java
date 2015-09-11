@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.learn.feature.sentence;
+package edu.cmu.cs.lti.emd.learn.feature.functions;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.learn.feature.FeatureUtils;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  *
  * @author Zhengzhong Liu
  */
-public class FrameFeatures extends SentenceFeatureWithFocus {
+public class FrameFeatures extends SequenceFeatureWithFocus {
     ArrayListMultimap<StanfordCorenlpToken, Pair<String, String>> triggerToArgs;
     Map<StanfordCorenlpToken, String> triggerToFrameName;
 

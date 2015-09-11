@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.learn.feature.sentence;
+package edu.cmu.cs.lti.emd.learn.feature.functions;
 
 import edu.cmu.cs.lti.emd.learn.feature.FeatureUtils;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
  *
  * @author Zhengzhong Liu
  */
-public class WindowWordFeatures extends SentenceFeatureWithFocus {
+public class WindowWordFeatures extends SequenceFeatureWithFocus {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public WindowWordFeatures(Configuration config) {

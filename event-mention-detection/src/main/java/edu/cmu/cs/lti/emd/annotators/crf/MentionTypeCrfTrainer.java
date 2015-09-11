@@ -50,7 +50,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
     private static ClassAlphabet classAlphabet;
 
-    private static Alphabet alphabet;
+    private static HashAlphabet alphabet;
 
     public static final String MODEL_NAME = "crfWeights";
 
@@ -99,7 +99,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         int sentenceId = 0;
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
 //            logger.info(String.format("Extracting from sentence %d of document %s", sentenceId, documentKey));
-            sentenceExtractor.resetWorkspace(sentence);
+            sentenceExtractor.resetWorkspace(aJCas, sentence);
             key.setSequenceId(sentenceId);
 
             Map<StanfordCorenlpToken, String> tokenTypes = new HashMap<>();
@@ -221,8 +221,8 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         int printLossOverPreviousN = kbpConfig.getInt("edu.cmu.cs.lti.avergelossN", 50);
         boolean readableModel = kbpConfig.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
 
-        classAlphabet = new ClassAlphabet(classes, true);
-        alphabet = new Alphabet(alphabetBits, readableModel);
+        classAlphabet = new ClassAlphabet(classes, true, true);
+        alphabet = new HashAlphabet(alphabetBits, readableModel);
         trainingStats = new TrainingStats(printLossOverPreviousN);
 
         cacher = new CrfFeatureCacher(cacheDirectory);

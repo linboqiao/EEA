@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.emd.learn.feature.extractor;
 
-import edu.cmu.cs.lti.learning.model.Alphabet;
 import edu.cmu.cs.lti.learning.model.ChainFeatureExtractor;
+import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 
@@ -16,7 +16,7 @@ public abstract class UimaSequenceFeatureExtractor extends ChainFeatureExtractor
 
     protected JCas context;
 
-    public UimaSequenceFeatureExtractor(Alphabet alphabet) {
+    public UimaSequenceFeatureExtractor(FeatureAlphabet alphabet) {
         super(alphabet);
     }
 
@@ -34,18 +34,18 @@ public abstract class UimaSequenceFeatureExtractor extends ChainFeatureExtractor
      *
      * @param aJCas The underlying JCas index.
      * @param begin The begin of the sequence.
-     * @param end The end of the sequence.
+     * @param end   The end of the sequence.
      */
     public abstract void resetWorkspace(JCas aJCas, int begin, int end);
 
     /**
      * Called once per sequence.
      *
+     * @param aJCas The Cas containing the annotation.
      * @param annotation The annotation representing the sequence.
      */
-    public void resetWorkspace(Annotation annotation) {
-        annotation.addToIndexes();
-        resetWorkspace((JCas) annotation.getCAS(), annotation.getBegin(), annotation.getEnd());
+    public void resetWorkspace(JCas aJCas, Annotation annotation) {
+        resetWorkspace(aJCas, annotation.getBegin(), annotation.getEnd());
     }
 
 }

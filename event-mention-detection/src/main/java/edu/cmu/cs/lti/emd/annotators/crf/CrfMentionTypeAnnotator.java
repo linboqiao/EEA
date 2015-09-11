@@ -4,10 +4,7 @@ import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
 import edu.cmu.cs.lti.emd.learn.feature.extractor.MentionTypeFeatureExtractor;
 import edu.cmu.cs.lti.emd.learn.feature.extractor.UimaSequenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
-import edu.cmu.cs.lti.learning.model.Alphabet;
-import edu.cmu.cs.lti.learning.model.AveragedWeightVector;
-import edu.cmu.cs.lti.learning.model.ClassAlphabet;
-import edu.cmu.cs.lti.learning.model.SequenceSolution;
+import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.training.SequenceDecoder;
 import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
@@ -44,7 +41,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private UimaSequenceFeatureExtractor sentenceExtractor;
-    private Alphabet alphabet;
+    private FeatureAlphabet alphabet;
     private ClassAlphabet classAlphabet;
     private AveragedWeightVector averagedWeightVector;
     private static SequenceDecoder decoder;

@@ -1,12 +1,10 @@
-package edu.cmu.cs.lti.emd.learn.feature.sentence;
+package edu.cmu.cs.lti.emd.learn.feature.functions;
 
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.jcas.JCas;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,8 +19,7 @@ import java.util.Map;
  *
  * @author Zhengzhong Liu
  */
-public class BrownClusterFeatures extends SentenceFeatureWithFocus {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+public class BrownClusterFeatures extends SequenceFeatureWithFocus {
     private int[] brownClusterPrefix = {13, 16, 20};
 
 //    private ArrayListMultimap<String, String> brownClusters;
