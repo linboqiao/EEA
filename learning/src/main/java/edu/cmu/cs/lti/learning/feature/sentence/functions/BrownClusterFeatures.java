@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.learn.feature.functions;
+package edu.cmu.cs.lti.learning.feature.sentence.functions;
 
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;

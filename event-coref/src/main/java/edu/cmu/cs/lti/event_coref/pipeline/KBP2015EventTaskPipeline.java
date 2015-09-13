@@ -32,6 +32,7 @@ import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * A pipeline structure for KBP 2015 event task of both Mention Detection and Coref.
@@ -122,7 +123,9 @@ public class KBP2015EventTaskPipeline {
     }
 
     public String trainMentionTypeLv1(Configuration kbpConfig, CollectionReaderDescription trainingReader,
-                                      String suffix, boolean skipTrain) throws UIMAException, IOException {
+                                      String suffix, boolean skipTrain) throws UIMAException, IOException,
+            ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
+            InvocationTargetException {
         logger.info("Starting Training ...");
 
         String cvModelDir = kbpConfig.get("edu.cmu.cs.lti.model.crf.mention.lv1.dir") + suffix;
@@ -150,7 +153,7 @@ public class KBP2015EventTaskPipeline {
 
     public void trainRealisTypes(Configuration kbpConfig, CollectionReaderDescription trainingReader, String
             suffix, boolean skipTrain) throws Exception {
-        RealisClassifierTrainer trainer = new RealisClassifierTrainer(typeSystemDescription, trainingReader);
+        RealisClassifierTrainer trainer = new RealisClassifierTrainer(typeSystemDescription, trainingReader, kbpConfig);
         String realisCvModelDir = kbpConfig.get("edu.cmu.cs.lti.model.realis.dir") + suffix;
         trainer.buildModels(realisCvModelDir);
     }
@@ -225,7 +228,9 @@ public class KBP2015EventTaskPipeline {
 
     }
 
-    public void crossValidation(Configuration kbpConfig, String inputBaseDir) throws UIMAException, IOException {
+    public void crossValidation(Configuration kbpConfig, String inputBaseDir) throws UIMAException, IOException,
+            ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException,
+            IllegalAccessException {
         int numSplit = kbpConfig.getInt("edu.cmu.cs.lti.cv.split", 5);
         int seed = kbpConfig.getInt("edu.cmu.cs.lti.cv.seed", 17);
         boolean skipTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.cv.skiptrain", true);
@@ -249,7 +254,8 @@ public class KBP2015EventTaskPipeline {
         }
     }
 
-    public static void main(String argv[]) throws UIMAException, IOException {
+    public static void main(String argv[]) throws UIMAException, IOException, ClassNotFoundException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Configuration kbpConfig = new Configuration("settings/kbp.properties");
         Configuration commonConfig = new Configuration("settings/common.properties");
 

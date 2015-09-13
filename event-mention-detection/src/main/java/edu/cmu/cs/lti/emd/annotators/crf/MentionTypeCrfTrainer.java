@@ -2,8 +2,8 @@ package edu.cmu.cs.lti.emd.annotators.crf;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
-import edu.cmu.cs.lti.emd.learn.feature.extractor.MentionTypeFeatureExtractor;
-import edu.cmu.cs.lti.emd.learn.feature.extractor.UimaSequenceFeatureExtractor;
+import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
+import edu.cmu.cs.lti.learning.feature.sentence.extractor.UimaSequenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.cache.CrfFeatureCacher;
 import edu.cmu.cs.lti.learning.cache.CrfState;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
@@ -26,6 +26,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -215,7 +216,9 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         }
     }
 
-    public static void setup(String[] classes, File cacheDirectory, Configuration kbpConfig) {
+    public static void setup(String[] classes, File cacheDirectory, Configuration kbpConfig) throws
+            ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException,
+            IllegalAccessException {
         int alphabetBits = kbpConfig.getInt("edu.cmu.cs.lti.feature.alphabet_bits", 24);
         double stepSize = kbpConfig.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
         int printLossOverPreviousN = kbpConfig.getInt("edu.cmu.cs.lti.avergelossN", 50);
@@ -228,6 +231,6 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         cacher = new CrfFeatureCacher(cacheDirectory);
         decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
         trainer = new AveragePerceptronTrainer(decoder, stepSize, alphabet.getAlphabetSize());
-        sentenceExtractor = new MentionTypeFeatureExtractor(alphabet, kbpConfig);
+        sentenceExtractor = new SentenceFeatureExtractor(alphabet, kbpConfig);
     }
 }

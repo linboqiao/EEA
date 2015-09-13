@@ -1,7 +1,7 @@
-package edu.cmu.cs.lti.emd.learn.feature.generator.impl;
+package edu.cmu.cs.lti.learning.feature.sentence.generator.impl;
 
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.emd.learn.feature.generator.EventMentionFeatureGenerator;
+import edu.cmu.cs.lti.learning.feature.sentence.generator.EventMentionFeatureGenerator;
 import edu.cmu.cs.lti.emd.utils.WordNetSenseIdentifier;
 import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.script.type.Dependency;

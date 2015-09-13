@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,7 +33,8 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
                                     String modelOutputBasename, File cacheDirectory,
                                     TypeSystemDescription typeSystemDescription,
                                     CollectionReaderDescription readerDescription) throws
-            ResourceInitializationException {
+            ResourceInitializationException, ClassNotFoundException, NoSuchMethodException,
+            InvocationTargetException, InstantiationException, IllegalAccessException {
         super(readerDescription, setup(typeSystemDescription, classes, cacheDirectory, kbpConfig));
         this.maxIteration = kbpConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
         this.numIteration = 0;
@@ -70,7 +72,8 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
 
     private static AnalysisEngineDescription setup(TypeSystemDescription typeSystemDescription, String[] classes,
                                                    File cacheDir, Configuration kbpConfig) throws
-            ResourceInitializationException {
+            ResourceInitializationException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
+            IllegalAccessException, InvocationTargetException {
         MentionTypeCrfTrainer.setup(classes, cacheDir, kbpConfig);
         return AnalysisEngineFactory.createEngineDescription(MentionTypeCrfTrainer.class, typeSystemDescription,
                 MentionTypeCrfTrainer.PARAM_GOLD_CACHE_DIRECTORY, cacheDir,

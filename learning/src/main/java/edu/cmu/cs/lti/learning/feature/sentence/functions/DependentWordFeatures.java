@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.learn.feature.functions;
+package edu.cmu.cs.lti.learning.feature.sentence.functions;
 
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -44,6 +44,7 @@ public class DependentWordFeatures extends SequenceFeatureWithFocus {
                         TObjectDoubleMap<String> featuresNeedForState) {
         addDependentFeatures(sequence, focus, features, Word::getLemma, "ChildLemma");
         addDependentFeatures(sequence, focus, features, Word::getNerTag, "ChildNer");
+        addDependentFeatures(sequence, focus, features, Word::getPos, "ChildPos");
     }
 
     public void addDependentFeatures(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,

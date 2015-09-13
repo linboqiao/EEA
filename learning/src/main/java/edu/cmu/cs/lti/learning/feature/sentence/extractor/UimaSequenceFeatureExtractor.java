@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.learn.feature.extractor;
+package edu.cmu.cs.lti.learning.feature.sentence.extractor;
 
 import edu.cmu.cs.lti.learning.model.ChainFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;

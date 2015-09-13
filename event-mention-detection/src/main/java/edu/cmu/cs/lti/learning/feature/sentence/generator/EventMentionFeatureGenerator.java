@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.learn.feature.generator;
+package edu.cmu.cs.lti.learning.feature.sentence.generator;
 
 import edu.cmu.cs.lti.script.type.CandidateEventMention;
 

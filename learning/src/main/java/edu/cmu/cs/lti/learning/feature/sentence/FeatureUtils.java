@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.learn.feature;
+package edu.cmu.cs.lti.learning.feature.sentence;
 
 import org.javatuples.Pair;
 

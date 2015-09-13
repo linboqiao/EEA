@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.emd.annotators.classification;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.training.WekaBasedTrainer;
+import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TIntDoubleMap;
 import org.apache.uima.UIMAException;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -13,6 +14,7 @@ import weka.classifiers.functions.LibSVM;
 import weka.core.OptionHandler;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,12 +30,15 @@ import java.util.Map;
 public class RealisClassifierTrainer extends WekaBasedTrainer {
     private TypeSystemDescription typeSystemDescription;
     private CollectionReaderDescription reader;
+    private Configuration config;
 
     private List<String> classifierNames;
 
-    public RealisClassifierTrainer(TypeSystemDescription typeSystemDescription, CollectionReaderDescription reader) {
+    public RealisClassifierTrainer(TypeSystemDescription typeSystemDescription, CollectionReaderDescription reader,
+                                   Configuration config) {
         this.typeSystemDescription = typeSystemDescription;
         this.reader = reader;
+        this.config = config;
     }
 
     @Override
@@ -59,8 +64,10 @@ public class RealisClassifierTrainer extends WekaBasedTrainer {
     protected void getFeatures(List<Pair<TIntDoubleMap, String>> instances, FeatureAlphabet alphabet, ClassAlphabet
             classAlphabet) {
         try {
-            RealisFeatureExtractor.getFeatures(reader, typeSystemDescription, instances, alphabet, classAlphabet);
-        } catch (UIMAException | IOException e) {
+            RealisFeatureExtractor.getFeatures(reader, typeSystemDescription, instances, alphabet, classAlphabet,
+                    config);
+        } catch (UIMAException | IOException | ClassNotFoundException | InvocationTargetException |
+                InstantiationException | IllegalAccessException | NoSuchMethodException e) {
             e.printStackTrace();
         }
     }

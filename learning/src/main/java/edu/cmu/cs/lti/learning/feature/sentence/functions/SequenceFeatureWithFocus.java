@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.learn.feature.functions;
+package edu.cmu.cs.lti.learning.feature.sentence.functions;
 
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -20,11 +20,11 @@ import java.util.function.Function;
 public abstract class SequenceFeatureWithFocus {
     protected final Logger logger;
 
-    Configuration config;
+    protected Configuration config;
 
     /**
      * TODO A couple more features
-     *
+     * <p>
      * 1. Whether the sentence is in quote
      * 2. Whether the phrase is in quote
      * 3. Document type
@@ -35,18 +35,18 @@ public abstract class SequenceFeatureWithFocus {
      * 8. Word vector
      * 9. Government (related to broadcast), basically some specific type of the entity will help, maybe wordnet
      * 10. Add CRF features to encode phrase
-     *
+     * <p>
      * TODO Need to have features based on the super type only
      * 1. Release will only be Justice Release in the legal context
-     *
+     * <p>
      * TODO Multiple type mentions need to be dealt with carefully
      * 1. Current method do not allow a joint type to share statistics with the separated types
      * 2. If we include only local features (no previous state), this should be quite easy, just extract features from
      * two subtypes.
-     *
+     * <p>
      * TODO Also need to inspect cases to eliminate some features
      * 1. Some easy case are failing, it is likely that some additional signal make such decision happen.
-     *    a. Such as cases in AFP_ENG_20091021.0463
+     * a. Such as cases in AFP_ENG_20091021.0463
      */
 
     public static String outsideValue = "<OUTSIDE>";
@@ -59,8 +59,8 @@ public abstract class SequenceFeatureWithFocus {
      *
      * @param sequence The list of tokens to evaluate on.
      * @param operator The operator on the token.
-     * @param index The index of the token in interested relative to the sequence.
-     * @return
+     * @param index    The index of the token in interested relative to the sequence.
+     * @return The operation result. A special outside value will be return if out of boundary.
      */
     protected String operateWithOutside(List<StanfordCorenlpToken> sequence, Function<StanfordCorenlpToken, String>
             operator, int index) {

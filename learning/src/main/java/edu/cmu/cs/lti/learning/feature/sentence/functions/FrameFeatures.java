@@ -1,7 +1,7 @@
-package edu.cmu.cs.lti.emd.learn.feature.functions;
+package edu.cmu.cs.lti.learning.feature.sentence.functions;
 
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.emd.learn.feature.FeatureUtils;
+import edu.cmu.cs.lti.learning.feature.sentence.FeatureUtils;
 import edu.cmu.cs.lti.script.type.SemaforAnnotationSet;
 import edu.cmu.cs.lti.script.type.SemaforLabel;
 import edu.cmu.cs.lti.script.type.SemaforLayer;
