@@ -1,9 +1,10 @@
 package edu.cmu.cs.lti.emd.annotators.crf;
 
 import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
+import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
+import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sentence.extractor.UimaSequenceFeatureExtractor;
-import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.model.AveragedWeightVector;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
@@ -54,7 +55,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
     File modelDirectory;
 
-    public static Configuration kbpConfig;
+    public static Configuration config;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -74,7 +75,10 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
         logger.info("Model loaded");
         try {
-            sentenceExtractor = new SentenceFeatureExtractor(alphabet, kbpConfig);
+            FeatureSpecParser specParser = new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.package.name"));
+            Configuration typeFeatureConfig = specParser.parseFeatureFunctionSpecs(config.get(
+                    "edu.cmu.cs.lti.features.type.lv1.spec"));
+            sentenceExtractor = new SentenceFeatureExtractor(alphabet, typeFeatureConfig);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
                 | IllegalAccessException e) {
             e.printStackTrace();

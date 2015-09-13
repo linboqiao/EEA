@@ -2,11 +2,12 @@ package edu.cmu.cs.lti.emd.annotators.crf;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
-import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
-import edu.cmu.cs.lti.learning.feature.sentence.extractor.UimaSequenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.cache.CrfFeatureCacher;
 import edu.cmu.cs.lti.learning.cache.CrfState;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
+import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
+import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
+import edu.cmu.cs.lti.learning.feature.sentence.extractor.UimaSequenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.training.AveragePerceptronTrainer;
 import edu.cmu.cs.lti.model.Span;
@@ -216,13 +217,13 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         }
     }
 
-    public static void setup(String[] classes, File cacheDirectory, Configuration kbpConfig) throws
+    public static void setup(String[] classes, File cacheDirectory, Configuration config) throws
             ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException,
             IllegalAccessException {
-        int alphabetBits = kbpConfig.getInt("edu.cmu.cs.lti.feature.alphabet_bits", 24);
-        double stepSize = kbpConfig.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
-        int printLossOverPreviousN = kbpConfig.getInt("edu.cmu.cs.lti.avergelossN", 50);
-        boolean readableModel = kbpConfig.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
+        int alphabetBits = config.getInt("edu.cmu.cs.lti.feature.alphabet_bits", 24);
+        double stepSize = config.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
+        int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
+        boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
 
         classAlphabet = new ClassAlphabet(classes, true, true);
         alphabet = new HashAlphabet(alphabetBits, readableModel);
@@ -231,6 +232,8 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         cacher = new CrfFeatureCacher(cacheDirectory);
         decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
         trainer = new AveragePerceptronTrainer(decoder, stepSize, alphabet.getAlphabetSize());
-        sentenceExtractor = new SentenceFeatureExtractor(alphabet, kbpConfig);
+        sentenceExtractor = new SentenceFeatureExtractor(alphabet,
+                new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.package.name")).
+                        parseFeatureFunctionSpecs(config.get("edu.cmu.cs.lti.features.type.lv1.spec")));
     }
 }

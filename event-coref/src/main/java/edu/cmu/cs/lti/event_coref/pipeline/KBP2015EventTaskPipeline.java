@@ -161,7 +161,7 @@ public class KBP2015EventTaskPipeline {
     public void mentionDetection(CollectionReaderDescription reader, String modelDir, String tbfOutput,
                                  String goldTbfOutput, Configuration config) throws UIMAException, IOException {
         // Static variable is not so nice here.
-        CrfMentionTypeAnnotator.kbpConfig = config;
+        CrfMentionTypeAnnotator.config = config;
 
         AnalysisEngineDescription everythingAcceptor = AnalysisEngineFactory.createEngineDescription(
                 AllCandidateAcceptor.class, typeSystemDescription
@@ -272,7 +272,7 @@ public class KBP2015EventTaskPipeline {
                 tokenDir, modelPath, workingDir);
 
 //        pipeline.prepare(preprocessBase);
-//        pipeline.trainMentionTypeLv1(kbpConfig, preprocessBase);
+//        pipeline.trainMentionTypeLv1(config, preprocessBase);
         pipeline.crossValidation(kbpConfig, preprocessBase);
     }
 }

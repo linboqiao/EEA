@@ -25,8 +25,19 @@ import java.util.stream.IntStream;
 public class WindowWordFeatures extends SequenceFeatureWithFocus {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    private int posWindowSize;
+    private int lemmaWindowSize;
+    private int nerWindowSize;
+
     public WindowWordFeatures(Configuration config) {
         super(config);
+        posWindowSize = getParamFromConfig(config, "posWindowSize", -1);
+        lemmaWindowSize = getParamFromConfig(config, "lemmaWindowSize", -1);
+        nerWindowSize = getParamFromConfig(config, "nerWindowSize", -1);
+    }
+
+    private int getParamFromConfig(Configuration config, String paramName, int defaultVal) {
+        return config.getInt(this.getClass().getSimpleName() + "." + paramName, defaultVal);
     }
 
     @Override
@@ -48,9 +59,15 @@ public class WindowWordFeatures extends SequenceFeatureWithFocus {
     @Override
     public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
                         TObjectDoubleMap<String> featuresNeedForState) {
-        addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getPos, "Pos", 1);
-        addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getLemma, "Lemma", 3);
-        addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getNerTag, "Ner", 3);
+        if (posWindowSize > 0) {
+            addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getPos, "Pos", posWindowSize);
+        }
+        if (lemmaWindowSize > 0) {
+            addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getLemma, "Lemma", lemmaWindowSize);
+        }
+        if (nerWindowSize > 0) {
+            addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getNerTag, "Ner", nerWindowSize);
+        }
     }
 
     public void addWindowFeatures(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,

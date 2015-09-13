@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.learning.feature.sentence.extractor;
 
+import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sentence.functions.SequenceFeatureWithFocus;
-import edu.cmu.cs.lti.learning.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -16,7 +16,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,21 +32,20 @@ public class SentenceFeatureExtractor extends UimaSequenceFeatureExtractor {
     protected TObjectIntMap<StanfordCorenlpToken> tokenIndex;
     protected List<SequenceFeatureWithFocus> featureFunctions = new ArrayList<>();
 
-    public SentenceFeatureExtractor(FeatureAlphabet alphabet, Configuration featureConfiguration) throws
+    public SentenceFeatureExtractor(FeatureAlphabet alphabet, Configuration featureConfig) throws
             ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         super(alphabet);
 
-        for (Map.Entry<Object, Object> featureConfigEntry : featureConfiguration.getAllEntries()) {
-            String key = (String) featureConfigEntry.getKey();
+        String featureFunctionPackage = featureConfig.get(FeatureSpecParser.FEATURE_FUNCTION_PACKAGE_KEY);
 
-            if (key.startsWith(FeatureSpecParser.SPEC_BASENAME)) {
-                String ffName = key.replaceFirst(FeatureSpecParser.SPEC_BASENAME, "");
-                Class<?> featureFunctionType = Class.forName(ffName);
-                Constructor<?> constructor = featureFunctionType.getConstructor(Configuration.class);
-                featureFunctions.add((SequenceFeatureWithFocus) constructor.newInstance(featureConfiguration));
-            }
+        for (String featureFunctionName : featureConfig.getList(FeatureSpecParser.FEAUTRE_FUNCTION_NAME_KEY)) {
+            String ffClassName = featureFunctionPackage + "." + featureFunctionName;
+            Class<?> featureFunctionType = Class.forName(ffClassName);
+            Constructor<?> constructor = featureFunctionType.getConstructor(Configuration.class);
+            featureFunctions.add((SequenceFeatureWithFocus) constructor.newInstance(featureConfig));
         }
+
     }
 
     @Override

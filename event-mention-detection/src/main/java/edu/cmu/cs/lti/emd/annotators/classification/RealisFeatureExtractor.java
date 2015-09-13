@@ -1,8 +1,8 @@
 package edu.cmu.cs.lti.emd.annotators.classification;
 
-import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
-import edu.cmu.cs.lti.learning.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.cache.CrfState;
+import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
+import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.script.type.Article;
@@ -105,9 +105,19 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
             ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException,
             IllegalAccessException {
         // Parse feature configs from config.
-        String[] featureSpecs = config.getList("edu.cmu.cs.lti.features.realis.spec");
-        FeatureSpecParser parser = new FeatureSpecParser();
-        Configuration realisSpec = parser.parseFeatureFunctionSpecs(featureSpecs);
+        FeatureSpecParser parser = new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.package.name"));
+        Configuration realisSpec = parser.parseFeatureFunctionSpecs(config.get("edu.cmu.cs.lti.features.realis.spec"));
+
+        realisSpec.getAllEntries().forEach(a -> {
+            System.out.println(a.getKey()+"="+a.getValue());
+        });
+
         extractor = new SentenceFeatureExtractor(alphabet, realisSpec);
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException, InvocationTargetException {
+        setupFeatureExtractor(null, new Configuration
+                ("/Users/zhengzhongliu/Documents/projects/cmu-script/settings/kbp.properties"));
     }
 }
