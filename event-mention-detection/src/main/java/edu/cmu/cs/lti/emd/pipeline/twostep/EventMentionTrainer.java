@@ -276,7 +276,7 @@ public class EventMentionTrainer {
         Instances trainingDataset = convertToInstances(trainingFeatures, new File(modelOutputDir, trainingFeatureName).getCanonicalPath());
         logger.info("Number of training instances : " + trainingFeatures.size());
 
-        logger.info("Saving feature config");
+        logger.info("Saving feature featureConfig");
         SerializationHelper.write(new File(modelOutputDir, featureConfigOutputName).getCanonicalPath(), featureConfiguration);
 
         Map<String, Classifier> classifiers = train(trainingDataset, trainingBaseDir);

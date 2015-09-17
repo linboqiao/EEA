@@ -1,5 +1,6 @@
-package edu.cmu.cs.lti.emd.annotators.classification;
+package edu.cmu.cs.lti.learning.train;
 
+import edu.cmu.cs.lti.emd.annotators.classification.RealisFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.training.WekaBasedTrainer;

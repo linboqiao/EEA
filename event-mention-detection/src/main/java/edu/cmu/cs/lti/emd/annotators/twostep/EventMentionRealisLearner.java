@@ -308,8 +308,8 @@ public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
         }
 
         if (triggerWord.getHeadDependencyRelations() != null) {
-            //                addFeature("HeadDepType_" + dep.getDependencyType(), features);
-//                addFeature("HeadDepLemma_" + dep.getHead().getLemma(), features);
+            //                addFeatureInternal("HeadDepType_" + dep.getDependencyType(), features);
+//                addFeatureInternal("HeadDepLemma_" + dep.getHead().getLemma(), features);
             FSCollectionFactory.create(triggerWord.getHeadDependencyRelations(), Dependency
                     .class).stream().filter(dep -> dep.getHead().getNerTag() != null).forEach(dep -> {
                 addFeature("HeadDep_" + dep.getDependencyType() + "_" + dep.getHead().getLemma(), features);
@@ -319,8 +319,8 @@ public class EventMentionRealisLearner extends AbstractLoggingAnnotator {
         if (triggerWord.getChildDependencyRelations() != null) {
             for (Dependency dep : FSCollectionFactory.create(triggerWord.getChildDependencyRelations(), Dependency
                     .class)) {
-//                addFeature("ChildDepType_" + dep.getDependencyType(), features);
-//                addFeature("ChildDepLemma_" + dep.getChild().getLemma(), features);
+//                addFeatureInternal("ChildDepType_" + dep.getDependencyType(), features);
+//                addFeatureInternal("ChildDepLemma_" + dep.getChild().getLemma(), features);
                 addFeature("ChildDep_" + dep.getDependencyType() + "_" + dep.getChild().getLemma(), features);
                 if (dep.getChild().getNerTag() != null) {
                     addFeature("ChildDepNer_" + dep.getDependencyType() + "_" + dep.getChild().getNerTag(), features);

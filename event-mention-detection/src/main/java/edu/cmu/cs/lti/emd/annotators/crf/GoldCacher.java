@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.emd.annotators.crf;
 
-import edu.cmu.cs.lti.learning.model.HashedFeatureVector;
+import edu.cmu.cs.lti.learning.model.BiKeyFeatureVector;
 import edu.cmu.cs.lti.learning.model.SequenceSolution;
 import edu.cmu.cs.lti.learning.model.Solution;
 import org.apache.commons.lang3.SerializationUtils;
@@ -28,7 +28,7 @@ class GoldCacher {
     private static final String GOLD_FEATURE_CACHE_NAME = "goldCache";
 
     private HashMap<Pair<String, Integer>, Solution> goldSolutions;
-    private HashMap<Pair<String, Integer>, HashedFeatureVector> goldFeatures;
+    private HashMap<Pair<String, Integer>, BiKeyFeatureVector> goldFeatures;
 
     private boolean goldLoaded;
 
@@ -52,6 +52,8 @@ class GoldCacher {
             goldFeatures = SerializationUtils.deserialize(new FileInputStream(goldFeaturesFile));
             goldLoaded = true;
             logger.info("Gold Caches of solutions loaded.");
+        } else {
+            logger.info("Gold Caches loading failed.");
         }
     }
 
@@ -65,12 +67,12 @@ class GoldCacher {
     }
 
     public void addGoldSolutions(String documentKey, int sequenceKey, SequenceSolution solution,
-                                 HashedFeatureVector featureVector) {
+                                 BiKeyFeatureVector featureVector) {
         goldSolutions.put(Pair.with(documentKey, sequenceKey), solution);
         goldFeatures.put(Pair.with(documentKey, sequenceKey), featureVector);
     }
 
-    public HashedFeatureVector getGoldFeature(String documentKey, int sequenceKey) {
+    public BiKeyFeatureVector getGoldFeature(String documentKey, int sequenceKey) {
         return goldFeatures.getOrDefault(Pair.with(documentKey, sequenceKey), null);
     }
 

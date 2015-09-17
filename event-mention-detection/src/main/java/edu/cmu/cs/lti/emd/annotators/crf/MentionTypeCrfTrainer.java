@@ -85,6 +85,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -125,7 +126,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 //                    mergedMentions.size(), tokenTypes.size()));
 
             SequenceSolution goldSolution;
-            HashedFeatureVector goldFv;
+            BiKeyFeatureVector goldFv;
 
             if (goldCacher.isGoldLoaded()) {
                 goldFv = goldCacher.getGoldFeature(documentKey, sentenceId);
@@ -231,8 +232,8 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
         cacher = new CrfFeatureCacher(cacheDirectory);
         decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
-        trainer = new AveragePerceptronTrainer(decoder, stepSize, alphabet.getAlphabetSize());
-        sentenceExtractor = new SentenceFeatureExtractor(alphabet,
+        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, stepSize, alphabet.getAlphabetSize());
+        sentenceExtractor = new SentenceFeatureExtractor(alphabet, config,
                 new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.package.name")).
                         parseFeatureFunctionSpecs(config.get("edu.cmu.cs.lti.features.type.lv1.spec")));
     }

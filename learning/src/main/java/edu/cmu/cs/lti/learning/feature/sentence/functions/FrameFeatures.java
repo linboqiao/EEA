@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 /**
@@ -33,8 +34,29 @@ public class FrameFeatures extends SequenceFeatureWithFocus {
     ArrayListMultimap<StanfordCorenlpToken, Pair<String, String>> triggerToArgs;
     Map<StanfordCorenlpToken, String> triggerToFrameName;
 
-    public FrameFeatures(Configuration config) {
-        super(config);
+    List<BiConsumer<TObjectDoubleMap<String>, Pair<String, String>>> argumentTemplates;
+    List<BiConsumer<TObjectDoubleMap<String>, String>> frameTemplates;
+
+    public FrameFeatures(Configuration generalConfig, Configuration featureConfig) {
+        super(generalConfig, featureConfig);
+        argumentTemplates = new ArrayList<>();
+        frameTemplates = new ArrayList<>();
+
+        for (String templateName : featureConfig.getList(this.getClass().getSimpleName() + ".templates")) {
+            switch (templateName) {
+                case "FrameArgumentLemma":
+                    argumentTemplates.add(this::frameArgumentLemma);
+                    break;
+                case "FrameArgumentRole":
+                    argumentTemplates.add(this::frameArgumentRole);
+                    break;
+                case "FrameName":
+                    frameTemplates.add(this::frameName);
+                    break;
+                default:
+                    logger.warn(String.format("Template [%s] not recognized.", templateName));
+            }
+        }
     }
 
     @Override
@@ -53,18 +75,37 @@ public class FrameFeatures extends SequenceFeatureWithFocus {
             return;
         }
         StanfordCorenlpToken token = sequence.get(focus);
+
+
         if (triggerToArgs.containsKey(token)) {
             for (Pair<String, String> triggerAndType : triggerToArgs.get(token)) {
-                features.put(FeatureUtils.formatFeatureName("FrameArgumentLemma", triggerAndType.getValue0()), 1);
-                features.put(FeatureUtils.formatFeatureName("FrameArgumentRole", triggerAndType.getValue0()), 1);
+                for (BiConsumer<TObjectDoubleMap<String>, Pair<String, String>> argumentTemplate : argumentTemplates) {
+                    argumentTemplate.accept(features, triggerAndType);
+                }
             }
         }
 
         if (triggerToFrameName.containsKey(token)) {
-            features.put(FeatureUtils.formatFeatureName("FrameName", triggerToFrameName.get(token)), 1);
+            for (BiConsumer<TObjectDoubleMap<String>, String> frameTemplate : frameTemplates) {
+                frameTemplate.accept(features, triggerToFrameName.get(token));
+            }
         }
     }
 
+    // Feature templates.
+    private void frameName(TObjectDoubleMap<String> features, String frameName) {
+        features.put(FeatureUtils.formatFeatureName("FrameName", frameName), 1);
+    }
+
+    private void frameArgumentLemma(TObjectDoubleMap<String> features, Pair<String, String> triggerAndType) {
+        features.put(FeatureUtils.formatFeatureName("FrameArgumentLemma", triggerAndType.getValue0()), 1);
+    }
+
+    private void frameArgumentRole(TObjectDoubleMap<String> features, Pair<String, String> triggerAndType) {
+        features.put(FeatureUtils.formatFeatureName("FrameArgumentRole", triggerAndType.getValue1()), 1);
+    }
+
+    // Prepare frames.
     private void readFrames(JCas jCas, int begin, int end) {
         triggerToArgs = ArrayListMultimap.create();
         triggerToFrameName = new HashMap<>();

@@ -28,16 +28,22 @@ public class WindowWordFeatures extends SequenceFeatureWithFocus {
     private int posWindowSize;
     private int lemmaWindowSize;
     private int nerWindowSize;
+    private boolean useBigram;
 
-    public WindowWordFeatures(Configuration config) {
-        super(config);
-        posWindowSize = getParamFromConfig(config, "posWindowSize", -1);
-        lemmaWindowSize = getParamFromConfig(config, "lemmaWindowSize", -1);
-        nerWindowSize = getParamFromConfig(config, "nerWindowSize", -1);
+    public WindowWordFeatures(Configuration generalConfig, Configuration featureConfig) {
+        super(generalConfig, featureConfig);
+        posWindowSize = getIntFromConfig(featureConfig, "PosWindowSize", 0);
+        lemmaWindowSize = getIntFromConfig(featureConfig, "LemmaWindowSize", 0);
+        nerWindowSize = getIntFromConfig(featureConfig, "NerWindowSize", 0);
+        useBigram = getBoolFromConfig(featureConfig, "Bigram", false);
     }
 
-    private int getParamFromConfig(Configuration config, String paramName, int defaultVal) {
+    private int getIntFromConfig(Configuration config, String paramName, int defaultVal) {
         return config.getInt(this.getClass().getSimpleName() + "." + paramName, defaultVal);
+    }
+
+    private boolean getBoolFromConfig(Configuration config, String paramName, boolean defaultVal) {
+        return config.getBoolean(this.getClass().getSimpleName() + "." + paramName, defaultVal);
     }
 
     @Override
@@ -61,12 +67,29 @@ public class WindowWordFeatures extends SequenceFeatureWithFocus {
                         TObjectDoubleMap<String> featuresNeedForState) {
         if (posWindowSize > 0) {
             addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getPos, "Pos", posWindowSize);
+            // POS conjoined with previous state, we are conservative about window size here.
+            addWindowFeatures(sequence, focus, featuresNeedForState, StanfordCorenlpToken::getPos, "Pos", 1);
+            if (useBigram) {
+                addNgramFeatureWithOffsetRange(sequence, focus, -posWindowSize, posWindowSize, "Pos",
+                        StanfordCorenlpToken::getPos, features, 2);
+            }
         }
         if (lemmaWindowSize > 0) {
             addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getLemma, "Lemma", lemmaWindowSize);
+
+            // Current lemma with previous state, we do not include any window size.
+            addWindowFeatures(sequence, focus, featuresNeedForState, StanfordCorenlpToken::getLemma, "Lemma", 0);
+            if (useBigram) {
+                addNgramFeatureWithOffsetRange(sequence, focus, -lemmaWindowSize, lemmaWindowSize, "Lemma",
+                        StanfordCorenlpToken::getLemma, features, 2);
+            }
         }
         if (nerWindowSize > 0) {
             addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getNerTag, "Ner", nerWindowSize);
+            if (useBigram) {
+                addNgramFeatureWithOffsetRange(sequence, focus, -nerWindowSize, nerWindowSize, "Ner",
+                        StanfordCorenlpToken::getNerTag, features, 2);
+            }
         }
     }
 
@@ -80,9 +103,45 @@ public class WindowWordFeatures extends SequenceFeatureWithFocus {
     public void addWordFeatureWithOffsetRange(List<StanfordCorenlpToken> sentence, int focus, int begin, int end,
                                               String prefix, Function<StanfordCorenlpToken, String> operator,
                                               TObjectDoubleMap<String> features) {
+        // TODO it might be worth checking whether adding features as window without knowing their specific position.
         IntStream.rangeClosed(begin, end)
                 .mapToObj(offset -> computeWordFeature(sentence, prefix, operator, focus, offset))
                 .forEach(featureTypeAndName -> putWithoutOutside(features, featureTypeAndName));
+    }
+
+    public void addNgramFeatureWithOffsetRange(List<StanfordCorenlpToken> sentence, int focus, int begin, int end,
+                                               String prefix, Function<StanfordCorenlpToken, String> operator,
+                                               TObjectDoubleMap<String> features, int n) {
+        int left = Math.min(focus + begin, -1);
+        int right = Math.max(focus + end, sentence.size());
+
+        int[] runners = new int[n];
+        for (int i = 0; i < n; i++) {
+            runners[i] = left + i;
+            if (runners[i] > right) {
+                return;
+            }
+        }
+
+        String ngramPrefix = "window" + n + "gram" + prefix;
+
+        while (true) {
+            StringBuilder sb = new StringBuilder();
+            String ngramSep = "";
+            for (int i = 0; i < runners.length; i++) {
+                sb.append(ngramSep);
+                ngramSep = "_";
+                // Operate with outside will ensure we get a feature value. However, we do not allow outside here, this
+                // function will simply create <outside> for tokens without NER.
+                String val = operateWithOutside(sentence, operator, runners[i]);
+                sb.append(val);
+                runners[i]++;
+                if (runners[i] > right) {
+                    return;
+                }
+            }
+            features.put(FeatureUtils.formatFeatureName(ngramPrefix, sb.toString()), 1);
+        }
     }
 
     public void putWithoutOutside(TObjectDoubleMap<String> features, Pair<String, String> featureTypeAndName) {

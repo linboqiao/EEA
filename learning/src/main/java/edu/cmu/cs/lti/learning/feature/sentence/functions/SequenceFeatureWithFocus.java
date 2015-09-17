@@ -20,29 +20,35 @@ import java.util.function.Function;
 public abstract class SequenceFeatureWithFocus {
     protected final Logger logger;
 
-    protected Configuration config;
+    protected Configuration featureConfig;
+    protected Configuration generalConfig;
+
+    public SequenceFeatureWithFocus(Configuration generalConfig, Configuration featureConfig) {
+        this.featureConfig = featureConfig;
+        this.generalConfig = generalConfig;
+        this.logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("Register feature extractor : " + featureName());
+    }
 
     /**
      * TODO A couple more features
      * <p>
-     * 1. Whether the sentence is in quote
-     * 2. Whether the phrase is in quote
+     * 1. Whether the sentence is in quote (Done)
+     * 2. Whether the phrase is in quote (Done)
      * 3. Document type
-     * 4. Job name (or the word job)
-     * 5. Bigrams
-     * 6. Closest entity and type
-     * 7. Numbers
+     * 4. Job name (or the word job) (Half Done)
+     * 5. Bigrams (Done)
+     * 6. Closest entity type (Done) and string?
+     * 7. Numbers (Included in entity?)
      * 8. Word vector
-     * 9. Government (related to broadcast), basically some specific type of the entity will help, maybe wordnet
-     * 10. Add CRF features to encode phrase
+     * 9. Government (related to broadcast), basically some specific type of the entity will help, maybe wordnet (Done)
+     * 10. Add CRF features to encode phrase (A little)
      * <p>
      * TODO Need to have features based on the super type only
-     * 1. Release will only be Justice Release in the legal context
+     * 1. Release will only be Justice Release in the legal context (DONE)
      * <p>
      * TODO Multiple type mentions need to be dealt with carefully
-     * 1. Current method do not allow a joint type to share statistics with the separated types
-     * 2. If we include only local features (no previous state), this should be quite easy, just extract features from
-     * two subtypes.
+     * 1. Current method do not allow a joint type to share statistics with the separated types (DONE)
      * <p>
      * TODO Also need to inspect cases to eliminate some features
      * 1. Some easy case are failing, it is likely that some additional signal make such decision happen.
@@ -83,12 +89,6 @@ public abstract class SequenceFeatureWithFocus {
         return operatedValue == null ? outsideValue : operatedValue;
     }
 
-    public SequenceFeatureWithFocus(Configuration config) {
-        this.config = config;
-        this.logger = LoggerFactory.getLogger(this.getClass());
-        logger.info("Register feature extractor : " + featureName());
-    }
-
     /**
      * A name to describe this feature, it use the full class name by default
      *
@@ -125,4 +125,5 @@ public abstract class SequenceFeatureWithFocus {
     public abstract void extract(List<StanfordCorenlpToken> sequence, int focus,
                                  TObjectDoubleMap<String> features,
                                  TObjectDoubleMap<String> featuresNeedForState);
+
 }

@@ -136,7 +136,7 @@ public class HeadWordFeatureGenerator extends EventMentionFeatureGenerator {
 
     }
 
-//    private void addFeature(String featureName, Map<String, Double> features) {
+//    private void addFeatureInternal(String featureName, Map<String, Double> features) {
 //        features.put(featureName, 1.0);
 //    }
 }

@@ -17,6 +17,10 @@
             <artifactId>core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>misc-annotators</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -29,7 +29,7 @@ public class WordNetSenseIdentifier {
     }
 
     public int getPhysicalStatus(String word) {
-        for (Set<String> hypernyms : wns.getAllHypernymsForAllSense(word)) {
+        for (Set<String> hypernyms : wns.getAllNounHypernymsForAllSense(word)) {
             for (String intangible : intangibleAssets) {
                 if (hypernyms.contains(intangible)) {
                     return -1;
@@ -48,7 +48,7 @@ public class WordNetSenseIdentifier {
     public List<String> getInterestingSupertype(String word) {
         List<String> interestTypes = new ArrayList<>();
         for (String interestingWordType : injuryRelatedSenses) {
-            for (Set<String> hypernyms : wns.getAllHypernymsForAllSense(word)) {
+            for (Set<String> hypernyms : wns.getAllNounHypernymsForAllSense(word)) {
                 if (hypernyms.contains(interestingWordType)) {
                     interestTypes.add(interestingWordType);
                 }

@@ -5,7 +5,7 @@ import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sentence.extractor.UimaSequenceFeatureExtractor;
-import edu.cmu.cs.lti.learning.model.AveragedWeightVector;
+import edu.cmu.cs.lti.learning.model.BiKeyWeightVector;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.SequenceSolution;
@@ -48,7 +48,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     private UimaSequenceFeatureExtractor sentenceExtractor;
     private FeatureAlphabet alphabet;
     private ClassAlphabet classAlphabet;
-    private AveragedWeightVector averagedWeightVector;
+    private BiKeyWeightVector weightVector;
     private static SequenceDecoder decoder;
 
     public static final String PARAM_MODEL_DIRECTORY = "modelDirectory";
@@ -67,7 +67,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
                     MentionTypeCrfTrainer.CLASS_ALPHABET_NAME)));
             alphabet = SerializationUtils.deserialize(new FileInputStream(new File(modelDirectory,
                     MentionTypeCrfTrainer.ALPHABET_NAME)));
-            averagedWeightVector = SerializationUtils.deserialize(new FileInputStream(new File
+            weightVector = SerializationUtils.deserialize(new FileInputStream(new File
                     (modelDirectory, MentionTypeCrfTrainer.MODEL_NAME)));
         } catch (FileNotFoundException e) {
             throw new ResourceInitializationException(e);
@@ -78,7 +78,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
             FeatureSpecParser specParser = new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.package.name"));
             Configuration typeFeatureConfig = specParser.parseFeatureFunctionSpecs(config.get(
                     "edu.cmu.cs.lti.features.type.lv1.spec"));
-            sentenceExtractor = new SentenceFeatureExtractor(alphabet, typeFeatureConfig);
+            sentenceExtractor = new SentenceFeatureExtractor(alphabet, config, typeFeatureConfig);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
                 | IllegalAccessException e) {
             e.printStackTrace();
@@ -96,7 +96,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
             sentenceExtractor.resetWorkspace(aJCas, sentence.getBegin(), sentence.getEnd());
 
             List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
-            decoder.decode(sentenceExtractor, averagedWeightVector, tokens.size(), 0);
+            decoder.decode(sentenceExtractor, weightVector, tokens.size(), 0, true);
 
             SequenceSolution solution = decoder.getDecodedPrediction();
 

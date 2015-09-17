@@ -47,7 +47,7 @@ public class FeatureSpecParser {
 
     public Map<String, String> parseFeatureTemplateSpec(String templateSpecStr) {
         Map<String, String> featureTemplateSpec = new HashMap<>();
-        for (String s : templateSpecStr.split(",", 2)) {
+        for (String s : templateSpecStr.split(":")) {
             String[] keyVal = s.split("=", 2);
             featureTemplateSpec.put(keyVal[0], keyVal[1]);
         }

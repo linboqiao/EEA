@@ -217,7 +217,7 @@ public class RealisTrainer {
                 .getCanonicalPath());
         System.out.println("Number of training instances : " + trainingFeatures.size());
 
-        System.out.println("Saving feature config");
+        System.out.println("Saving feature featureConfig");
         SerializationHelper.write(new File(modelOutputDir, featureConfigOutputName).getCanonicalPath(),
                 featureConfiguration);
 
