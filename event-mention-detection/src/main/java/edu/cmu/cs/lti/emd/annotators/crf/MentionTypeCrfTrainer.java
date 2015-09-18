@@ -227,7 +227,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
 
         classAlphabet = new ClassAlphabet(classes, true, true);
-        alphabet = new HashAlphabet(alphabetBits, readableModel);
+        alphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
         trainingStats = new TrainingStats(printLossOverPreviousN);
 
         cacher = new CrfFeatureCacher(cacheDirectory);
