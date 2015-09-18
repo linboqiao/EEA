@@ -66,10 +66,12 @@ class GoldCacher {
         }
     }
 
-    public void addGoldSolutions(String documentKey, int sequenceKey, SequenceSolution solution,
-                                 BiKeyFeatureVector featureVector) {
-        goldSolutions.put(Pair.with(documentKey, sequenceKey), solution);
+    public void addGoldFeatures(String documentKey, int sequenceKey, BiKeyFeatureVector featureVector) {
         goldFeatures.put(Pair.with(documentKey, sequenceKey), featureVector);
+    }
+
+    public void addGoldSolutions(String documentKey, int sequenceKey, SequenceSolution solution) {
+        goldSolutions.put(Pair.with(documentKey, sequenceKey), solution);
     }
 
     public BiKeyFeatureVector getGoldFeature(String documentKey, int sequenceKey) {

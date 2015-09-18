@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -34,7 +35,7 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
                                     TypeSystemDescription typeSystemDescription,
                                     CollectionReaderDescription readerDescription) throws
             ResourceInitializationException, ClassNotFoundException, NoSuchMethodException,
-            InvocationTargetException, InstantiationException, IllegalAccessException {
+            InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
         super(readerDescription, setup(typeSystemDescription, classes, cacheDirectory, kbpConfig));
         this.maxIteration = kbpConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
         this.numIteration = 0;
@@ -73,9 +74,10 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
     private static AnalysisEngineDescription setup(TypeSystemDescription typeSystemDescription, String[] classes,
                                                    File cacheDir, Configuration kbpConfig) throws
             ResourceInitializationException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
-            IllegalAccessException, InvocationTargetException {
+            IllegalAccessException, InvocationTargetException, IOException {
         MentionTypeCrfTrainer.setup(classes, cacheDir, kbpConfig);
-        return AnalysisEngineFactory.createEngineDescription(MentionTypeCrfTrainer.class, typeSystemDescription,
+        return AnalysisEngineFactory.createEngineDescription(
+                MentionTypeCrfTrainer.class, typeSystemDescription,
                 MentionTypeCrfTrainer.PARAM_GOLD_CACHE_DIRECTORY, cacheDir,
                 MentionTypeCrfTrainer.PARAM_GOLD_STANDARD_VIEW_NAME, UimaConst.goldViewName
         );

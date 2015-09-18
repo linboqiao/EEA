@@ -128,13 +128,18 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
             SequenceSolution goldSolution;
             BiKeyFeatureVector goldFv;
 
-            if (goldCacher.isGoldLoaded()) {
-                goldFv = goldCacher.getGoldFeature(documentKey, sentenceId);
-                goldSolution = (SequenceSolution) goldCacher.getGoldSolution(documentKey, sentenceId);
-            } else {
+//            if (goldCacher.isGoldLoaded()) {
+
+            goldSolution = (SequenceSolution) goldCacher.getGoldSolution(documentKey, sentenceId);
+            if (goldSolution == null) {
                 goldSolution = getGoldSequence(sentence, tokenTypes);
+                goldCacher.addGoldSolutions(documentKey, sentenceId, goldSolution);
+            }
+
+            goldFv = goldCacher.getGoldFeature(documentKey, sentenceId);
+            if (goldFv == null) {
                 goldFv = decoder.getSolutionFeatures(sentenceExtractor, goldSolution);
-                goldCacher.addGoldSolutions(documentKey, sentenceId, goldSolution, goldFv);
+                goldCacher.addGoldFeatures(documentKey, sentenceId, goldFv);
             }
 
 //            logger.debug("Training this sentence.");
@@ -220,17 +225,18 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
     public static void setup(String[] classes, File cacheDirectory, Configuration config) throws
             ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException,
-            IllegalAccessException {
+            IllegalAccessException, IOException {
         int alphabetBits = config.getInt("edu.cmu.cs.lti.feature.alphabet_bits", 24);
         double stepSize = config.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
         int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
+        boolean invalidate = config.getBoolean("edu.cmu.cs.lti.mention.cache.invalidate", true);
 
         classAlphabet = new ClassAlphabet(classes, true, true);
         alphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
         trainingStats = new TrainingStats(printLossOverPreviousN);
 
-        cacher = new CrfFeatureCacher(cacheDirectory);
+        cacher = new CrfFeatureCacher(cacheDirectory, invalidate);
         decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
         trainer = new AveragePerceptronTrainer(decoder, classAlphabet, stepSize, alphabet.getAlphabetSize());
         sentenceExtractor = new SentenceFeatureExtractor(alphabet, config,
