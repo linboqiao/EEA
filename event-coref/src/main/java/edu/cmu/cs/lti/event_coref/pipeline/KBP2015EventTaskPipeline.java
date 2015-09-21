@@ -361,13 +361,13 @@ public class KBP2015EventTaskPipeline {
             CollectionReaderDescription devSliceReader = CustomCollectionReaderFactory.createCrossValidationReader(
                     typeSystemDescription, workingDir, inputBaseDir, true, seed, slice);
 
-
             // Train lv1 of the mention type model.
             String crfTypeModelDir = trainMentionTypeLv1(kbpConfig, trainingSliceReader, sliceSuffix);
 
             logger.info("Finding models in " + crfTypeModelDir);
 
-            String mentionLv1Output = sliceSuffix + "/mention_lv1";
+            // Mentions from the crf model.
+            String mentionLv1Output = middleResults + "/" + sliceSuffix + "/mention_lv1";
             CollectionReaderDescription lv1OutputReader = mentionDetection(devSliceReader, crfTypeModelDir,
                     mentionLv1Output, kbpConfig);
 
@@ -391,12 +391,12 @@ public class KBP2015EventTaskPipeline {
 
             // Output final result.
             writeResults(lv1MentionRealisResults,
-                    new File(goldMentionEval, "lv1_mention_svm_realis" + sliceSuffix + ".tbf").getAbsolutePath(),
-                    "gold_type"
+                    new File(typeLv1Eval, "lv1_mention_svm_realis" + sliceSuffix + ".tbf").getAbsolutePath(),
+                    "crf_lv1_types"
             );
             writeResults(goldMentionRealisResults,
-                    new File(typeLv1Eval, "gold_mention_svm_realis" + sliceSuffix + ".tbf").getAbsolutePath(),
-                    "cmu_crf_lv1");
+                    new File(goldMentionEval, "gold_mention_svm_realis" + sliceSuffix + ".tbf").getAbsolutePath(),
+                    "gold_types");
 
             // Write gold standard.
             String goldTbf = new File(typeLv1Eval, "gold" + sliceSuffix + ".tbf").getAbsolutePath();

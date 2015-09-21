@@ -46,9 +46,6 @@ public class FanseFeatures extends SequenceFeatureWithFocus {
 
         for (String templateName : featureConfig.getList(this.getClass().getSimpleName() + ".templates")) {
             switch (templateName) {
-                case "FanseHeadLemma":
-                    headTemplates.add(this::fanseHeadLemmaTemplate);
-                    break;
                 case "FanseHeadSense":
                     headTemplates.add(this::fanseHeadSenseTemplate);
                     break;

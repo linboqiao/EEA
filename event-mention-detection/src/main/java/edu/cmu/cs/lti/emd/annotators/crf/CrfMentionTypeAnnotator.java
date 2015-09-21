@@ -1,13 +1,14 @@
 package edu.cmu.cs.lti.emd.annotators.crf;
 
+import com.google.common.io.Files;
 import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sentence.extractor.UimaSequenceFeatureExtractor;
-import edu.cmu.cs.lti.learning.model.BiKeyWeightVector;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
+import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.SequenceSolution;
 import edu.cmu.cs.lti.learning.training.SequenceDecoder;
 import edu.cmu.cs.lti.script.type.CandidateEventMention;
@@ -30,8 +31,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +50,9 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     private UimaSequenceFeatureExtractor sentenceExtractor;
     private FeatureAlphabet alphabet;
     private ClassAlphabet classAlphabet;
-    private BiKeyWeightVector weightVector;
+    private GraphWeightVector weightVector;
     private static SequenceDecoder decoder;
+
 
     public static final String PARAM_MODEL_DIRECTORY = "modelDirectory";
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
@@ -62,22 +65,31 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
         super.initialize(aContext);
         logger.info("Loading models ...");
 
+        String featureSpec;
         try {
-            classAlphabet = SerializationUtils.deserialize(new FileInputStream(new File(modelDirectory,
-                    MentionTypeCrfTrainer.CLASS_ALPHABET_NAME)));
-            alphabet = SerializationUtils.deserialize(new FileInputStream(new File(modelDirectory,
-                    MentionTypeCrfTrainer.ALPHABET_NAME)));
             weightVector = SerializationUtils.deserialize(new FileInputStream(new File
                     (modelDirectory, MentionTypeCrfTrainer.MODEL_NAME)));
-        } catch (FileNotFoundException e) {
+            alphabet = weightVector.getFeatureAlphabet();
+            classAlphabet = weightVector.getClassAlphabet();
+            featureSpec = Files.readFirstLine(new File(modelDirectory, MentionTypeCrfTrainer.FEATURE_SPEC_FILE),
+                    Charset.defaultCharset());
+        } catch (IOException e) {
             throw new ResourceInitializationException(e);
         }
 
         logger.info("Model loaded");
         try {
             FeatureSpecParser specParser = new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.package.name"));
-            Configuration typeFeatureConfig = specParser.parseFeatureFunctionSpecs(config.get(
-                    "edu.cmu.cs.lti.features.type.lv1.spec"));
+
+            String currentFeatureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
+
+            if (!currentFeatureSpec.equals(featureSpec)) {
+                logger.warn("Current feature specification is not the same with the trained model.");
+                logger.warn("Will use the stored specification, it might create unexpected errors");
+                logger.warn("Using Spec:" + featureSpec);
+            }
+            Configuration typeFeatureConfig = specParser.parseFeatureFunctionSpecs(featureSpec);
+
             sentenceExtractor = new SentenceFeatureExtractor(alphabet, config, typeFeatureConfig);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
                 | IllegalAccessException e) {

@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.emd.annotators.crf;
 
-import edu.cmu.cs.lti.learning.model.BiKeyFeatureVector;
+import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.SequenceSolution;
 import edu.cmu.cs.lti.learning.model.Solution;
 import org.apache.commons.lang3.SerializationUtils;
@@ -28,7 +28,7 @@ class GoldCacher {
     private static final String GOLD_FEATURE_CACHE_NAME = "goldCache";
 
     private HashMap<Pair<String, Integer>, Solution> goldSolutions;
-    private HashMap<Pair<String, Integer>, BiKeyFeatureVector> goldFeatures;
+    private HashMap<Pair<String, Integer>, GraphFeatureVector> goldFeatures;
 
     private boolean goldLoaded;
 
@@ -66,7 +66,7 @@ class GoldCacher {
         }
     }
 
-    public void addGoldFeatures(String documentKey, int sequenceKey, BiKeyFeatureVector featureVector) {
+    public void addGoldFeatures(String documentKey, int sequenceKey, GraphFeatureVector featureVector) {
         goldFeatures.put(Pair.with(documentKey, sequenceKey), featureVector);
     }
 
@@ -74,7 +74,7 @@ class GoldCacher {
         goldSolutions.put(Pair.with(documentKey, sequenceKey), solution);
     }
 
-    public BiKeyFeatureVector getGoldFeature(String documentKey, int sequenceKey) {
+    public GraphFeatureVector getGoldFeature(String documentKey, int sequenceKey) {
         return goldFeatures.getOrDefault(Pair.with(documentKey, sequenceKey), null);
     }
 

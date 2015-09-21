@@ -57,7 +57,7 @@ public class BrownClusterFeatures extends SequenceFeatureWithFocus {
     @Override
     public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
                         TObjectDoubleMap<String> featuresNeedForState) {
-        String lemma = operateWithOutside(sequence, StanfordCorenlpToken::getLemma, focus);
+        String lemma = operateWithOutsideLowerCase(sequence, StanfordCorenlpToken::getLemma, focus);
 
         if (brownClusters.containsKey(lemma)) {
             String fullClusterId = brownClusters.get(lemma);

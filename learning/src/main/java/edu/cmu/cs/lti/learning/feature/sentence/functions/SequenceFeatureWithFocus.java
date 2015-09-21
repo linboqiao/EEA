@@ -53,6 +53,8 @@ public abstract class SequenceFeatureWithFocus {
      * TODO Also need to inspect cases to eliminate some features
      * 1. Some easy case are failing, it is likely that some additional signal make such decision happen.
      * a. Such as cases in AFP_ENG_20091021.0463
+     * <p>
+     * TODO Change the capitalizaiton of a title sentence
      */
 
     public static String outsideValue = "<OUTSIDE>";
@@ -68,8 +70,9 @@ public abstract class SequenceFeatureWithFocus {
      * @param index    The index of the token in interested relative to the sequence.
      * @return The operation result. A special outside value will be return if out of boundary.
      */
-    protected String operateWithOutside(List<StanfordCorenlpToken> sequence, Function<StanfordCorenlpToken, String>
-            operator, int index) {
+    protected String operateWithOutsideLowerCase(List<StanfordCorenlpToken> sequence,
+                                                 Function<StanfordCorenlpToken, String> operator,
+                                                 int index) {
         if (index < -1) {
             return outsideValue;
         } else if (index > sequence.size()) {
@@ -86,7 +89,7 @@ public abstract class SequenceFeatureWithFocus {
 
         String operatedValue = operator.apply(sequence.get(index));
 
-        return operatedValue == null ? outsideValue : operatedValue;
+        return operatedValue == null ? outsideValue : operatedValue.toLowerCase();
     }
 
     /**

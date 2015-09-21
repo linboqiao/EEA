@@ -93,13 +93,16 @@ public class SentenceFeatureExtractor extends UimaSequenceFeatureExtractor {
         for (TObjectDoubleIterator<String> iter = rawFeaturesNoState.iterator(); iter.hasNext(); ) {
             iter.advance();
             featuresNoState.addFeature(iter.key(), iter.value());
+//            logger.info(iter.key());
         }
 
         for (TObjectDoubleIterator<String> iter = rawFeaturesNeedForState.iterator(); iter.hasNext(); ) {
             iter.advance();
             featuresNeedForState.addFeature(iter.key(), iter.value());
+//            logger.info(iter.key());
         }
 
+//        DebugUtils.pause();
         //        logger.debug("Done extracting features");
     }
 }

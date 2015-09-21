@@ -54,11 +54,11 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
     private static HashAlphabet alphabet;
 
-    public static final String MODEL_NAME = "crfWeights";
+    public static final String MODEL_NAME = "crfModel";
 
-    public static final String CLASS_ALPHABET_NAME = "classAlphabet";
+    public static final String FEATURE_SPEC_FILE = "featureSpec";
 
-    public static final String ALPHABET_NAME = "alphabet";
+    private static String featureSpec;
 
     private static TrainingStats trainingStats;
 
@@ -126,9 +126,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 //                    mergedMentions.size(), tokenTypes.size()));
 
             SequenceSolution goldSolution;
-            BiKeyFeatureVector goldFv;
-
-//            if (goldCacher.isGoldLoaded()) {
+            GraphFeatureVector goldFv;
 
             goldSolution = (SequenceSolution) goldCacher.getGoldSolution(documentKey, sentenceId);
             if (goldSolution == null) {
@@ -143,11 +141,22 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
             }
 
 //            logger.debug("Training this sentence.");
-//            logger.debug(sentence.getCoveredText().replaceAll("\n", " "));
+//            List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
+//            for (int i = 0; i < tokens.size(); i++) {
+//                System.out.print(i + ": " + tokens.get(i).getCoveredText());
+//                if (i == tokens.size() - 1) {
+//                    System.out.println();
+//                } else {
+//                    System.out.print(" ");
+//                }
+//            }
+
             double loss = trainer.trainNext(goldSolution, goldFv, sentenceExtractor, 0, key);
 //            logger.info("Sentence loss is " + loss);
             trainingStats.addLoss(logger, loss);
             sentenceId++;
+
+
         }
 
         try {
@@ -216,8 +225,9 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
         if (directoryExist) {
             trainer.write(new File(modelOutputDirectory, MODEL_NAME));
-            classAlphabet.write(new File(modelOutputDirectory, CLASS_ALPHABET_NAME));
-            alphabet.write(new File(modelOutputDirectory, ALPHABET_NAME));
+//            classAlphabet.write(new File(modelOutputDirectory, CLASS_ALPHABET_NAME));
+//            alphabet.write(new File(modelOutputDirectory, ALPHABET_NAME));
+            org.apache.commons.io.FileUtils.write(new File(modelOutputDirectory, FEATURE_SPEC_FILE), featureSpec);
         } else {
             throw new IOException(String.format("Cannot create directory : [%s]", modelOutputDirectory.toString()));
         }
@@ -238,9 +248,10 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
         cacher = new CrfFeatureCacher(cacheDirectory, invalidate);
         decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
-        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, stepSize, alphabet.getAlphabetSize());
+        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, stepSize, alphabet);
+        featureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
         sentenceExtractor = new SentenceFeatureExtractor(alphabet, config,
-                new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.package.name")).
-                        parseFeatureFunctionSpecs(config.get("edu.cmu.cs.lti.features.type.lv1.spec")));
+                new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.package.name"))
+                        .parseFeatureFunctionSpecs(featureSpec));
     }
 }
