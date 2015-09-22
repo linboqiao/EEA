@@ -8,7 +8,9 @@ import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.RealValueHashFeatureVector;
 import edu.cmu.cs.lti.learning.model.WekaModel;
-import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.script.type.Article;
+import edu.cmu.cs.lti.script.type.CandidateEventMention;
+import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
@@ -55,9 +57,6 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
 
     private WekaModel model;
 
-    // TODO read this from cache;
-    private FeatureAlphabet alphabet;
-
     private FeatureVector dummy;
 
     private TokenAlignmentHelper alignmentHelper = new TokenAlignmentHelper();
@@ -78,7 +77,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
         try {
             config = new Configuration(configPath);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("Configuration path is not correct : " + configPath.getPath());
         }
 
         String featureSpec = config.get("edu.cmu.cs.lti.features.realis.spec");
@@ -92,9 +91,9 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
             e.printStackTrace();
         }
 
-        dummy = new RealValueHashFeatureVector(alphabet);
-
+        dummy = new RealValueHashFeatureVector(model.getAlphabet());
         logger.info("Model loaded");
+        logger.info("Feature size is " + model.getAlphabet().getAlphabetSize());
     }
 
     @Override
@@ -102,55 +101,42 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
         extractor.initWorkspace(aJCas);
         alignmentHelper.loadWord2Stanford(aJCas, goldTokenComponentId);
 
-        JCas goldView = JCasUtil.getView(aJCas, goldStandardViewName, aJCas);
-
         String documentKey = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
         CrfState key = new CrfState();
         key.setDocumentKey(documentKey);
 
         int sentenceId = 0;
 
+        FeatureAlphabet alphabet = model.getAlphabet();
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             extractor.resetWorkspace(aJCas, sentence);
             key.setSequenceId(sentenceId);
 
-            List<CandidateEventMention> mentions = JCasUtil.selectCovered(goldView, CandidateEventMention.class,
+            List<CandidateEventMention> mentions = JCasUtil.selectCovered(aJCas, CandidateEventMention.class,
                     sentence.getBegin(), sentence.getEnd());
 
             for (CandidateEventMention mention : mentions) {
                 TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
 
                 FeatureVector mentionFeatures = new RealValueHashFeatureVector(alphabet);
-                int head = extractor.getTokenIndex(UimaNlpUtils.findHeadFromRange(aJCas, mention
-                        .getBegin(), mention.getEnd()));
+                int head = extractor.getTokenIndex(UimaNlpUtils.findHeadFromRange(aJCas, mention.getBegin(),
+                        mention.getEnd()));
                 extractor.extract(head, mentionFeatures, dummy);
+
+                for (FeatureVector.FeatureIterator iter = mentionFeatures.featureIterator(); iter.hasNext(); ) {
+                    iter.next();
+                    rawFeatures.put(alphabet.getFeatureNames(iter.featureIndex())[0], iter.featureValue());
+                }
 
                 // Do prediction.
                 try {
-                    Pair<Double, String> prediction = model.classify("", rawFeatures);
+                    Pair<Double, String> prediction = model.classify(rawFeatures);
                     mention.setPredictedRealis(prediction.getValue1());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-    }
-
-    private StanfordCorenlpToken getHead(JCas aJCas, int begin, int end) {
-        StanfordCorenlpToken head = UimaNlpUtils.findHeadFromRange(aJCas, begin, end);
-
-        if (head == null) {
-            head = UimaNlpUtils.findFirstToken(aJCas, begin, end);
-        }
-
-        if (head == null) {
-            Word word = UimaNlpUtils.findFirstWord(aJCas, begin, end, goldTokenComponentId);
-            if (word != null) {
-                head = alignmentHelper.getStanfordToken(word);
-            }
-        }
-
-        return head;
     }
 }

@@ -29,29 +29,28 @@ public class WordNetSenseIdentifier {
     }
 
     public int getPhysicalStatus(String word) {
-        for (Set<String> hypernyms : wns.getAllNounHypernymsForAllSense(word)) {
-            for (String intangible : intangibleAssets) {
-                if (hypernyms.contains(intangible)) {
-                    return -1;
-                }
-            }
-
-            for (String physical : physicalSense) {
-                if (hypernyms.contains(physical)) {
-                    return 1;
-                }
+        Set<String> hypernyms = wns.getAllNounHypernymsForAllSense(word);
+        for (String intangible : intangibleAssets) {
+            if (hypernyms.contains(intangible)) {
+                return -1;
             }
         }
+
+        for (String physical : physicalSense) {
+            if (hypernyms.contains(physical)) {
+                return 1;
+            }
+        }
+
         return 0;
     }
 
     public List<String> getInterestingSupertype(String word) {
         List<String> interestTypes = new ArrayList<>();
+        Set<String> hypernyms = wns.getAllNounHypernymsForAllSense(word);
         for (String interestingWordType : injuryRelatedSenses) {
-            for (Set<String> hypernyms : wns.getAllNounHypernymsForAllSense(word)) {
-                if (hypernyms.contains(interestingWordType)) {
-                    interestTypes.add(interestingWordType);
-                }
+            if (hypernyms.contains(interestingWordType)) {
+                interestTypes.add(interestingWordType);
             }
         }
         return interestTypes;

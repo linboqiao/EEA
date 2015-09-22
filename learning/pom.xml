@@ -11,6 +11,13 @@
 
     <artifactId>learning</artifactId>
 
+    <repositories>
+        <repository>
+            <id>evd_local</id>
+            <url>file://${basedir}/lib</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>edu.cmu.cs.lti</groupId>
@@ -23,6 +30,21 @@
         <dependency>
             <groupId>edu.cmu.cs.lti.script</groupId>
             <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>nz.ac.waikato.cms.weka</groupId>
+            <artifactId>LibSVM</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>nz.ac.waikato.cms.weka</groupId>
+            <artifactId>LibLINEAR</artifactId>
+            <version>1.9.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>de.bwaldvogel</groupId>
+            <artifactId>liblinear</artifactId>
+            <version>1.94</version>
         </dependency>
     </dependencies>
 </project>

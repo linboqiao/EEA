@@ -78,10 +78,14 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
                 extractor.extract(head, rawFeatures, dummy);
                 classAlphabet.addClass(mention.getRealisType());
                 TIntDoubleMap indexedFeatures = new TIntDoubleHashMap();
+//                logger.info(mention.getCoveredText());
                 for (FeatureVector.FeatureIterator iter = rawFeatures.featureIterator(); iter.hasNext(); ) {
                     iter.next();
+//                    logger.info("Feature is " + rawFeatures.getAlphabet().getFeatureNameRepre(iter.featureIndex()) +
+//                            " value is " + iter.featureValue() + " index is " + iter.featureIndex());
                     indexedFeatures.put(iter.featureIndex(), iter.featureValue());
                 }
+//                DebugUtils.pause();
                 features.add(Pair.with(indexedFeatures, mention.getRealisType()));
             }
         }
@@ -89,18 +93,15 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
 
     private StanfordCorenlpToken getHead(JCas aJCas, int begin, int end) {
         StanfordCorenlpToken head = UimaNlpUtils.findHeadFromRange(aJCas, begin, end);
-
         if (head == null) {
             head = UimaNlpUtils.findFirstToken(aJCas, begin, end);
         }
-
         if (head == null) {
             Word word = UimaNlpUtils.findFirstWord(aJCas, begin, end, goldTokenComponentId);
             if (word != null) {
                 head = alignmentHelper.getStanfordToken(word);
             }
         }
-
         return head;
     }
 

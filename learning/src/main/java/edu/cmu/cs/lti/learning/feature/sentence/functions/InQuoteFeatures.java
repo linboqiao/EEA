@@ -44,8 +44,9 @@ public class InQuoteFeatures extends SequenceFeatureWithFocus {
     @Override
     public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
                         TObjectDoubleMap<String> featuresNeedForState) {
-
-        isInPhraseQuote(features, sequence.get(focus));
+        if (focus > 0 && focus < sequence.size()) {
+            isInPhraseQuote(features, sequence.get(focus));
+        }
     }
 
     private void isInPhraseQuote(TObjectDoubleMap<String> features, StanfordCorenlpToken token) {

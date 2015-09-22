@@ -58,11 +58,6 @@
             <artifactId>core</artifactId>
         </dependency>
         <dependency>
-            <groupId>nz.ac.waikato.cms.weka</groupId>
-            <artifactId>LibSVM</artifactId>
-            <version>1.0.6</version>
-        </dependency>
-        <dependency>
             <groupId>edu.cmu.cs.lti.script</groupId>
             <artifactId>learning</artifactId>
         </dependency>

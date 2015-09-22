@@ -11,7 +11,7 @@ import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.javatuples.Pair;
 import weka.classifiers.Classifier;
-import weka.classifiers.functions.LibSVM;
+import weka.classifiers.functions.LibLINEAR;
 import weka.core.OptionHandler;
 
 import java.io.IOException;
@@ -46,8 +46,10 @@ public class RealisClassifierTrainer extends WekaBasedTrainer {
     protected Map<String, Classifier> getClassifiers() throws Exception {
         Map<String, Classifier> classifiers = new HashMap<>();
         classifierNames = new ArrayList<>();
-        classifiers.put("svm-linear", getClassifiers(new LibSVM(), "-K", "0"));
-        classifiers.put("svm-poly", getClassifiers(new LibSVM(), "-K", "1"));
+        classifiers.put("lib-linear", getClassifiers(new LibLINEAR(), "-S", "0", "-C", "1.0", "-E", "0.0001", "-B",
+                "1.0", "-Z"));
+//        classifiers.put("svm-linear", getClassifiers(new LibSVM(), "-K", "0"));
+//        classifiers.put("svm-poly", getClassifiers(new LibSVM(), "-K", "1"));
         classifierNames.addAll(classifiers.keySet());
         return classifiers;
     }

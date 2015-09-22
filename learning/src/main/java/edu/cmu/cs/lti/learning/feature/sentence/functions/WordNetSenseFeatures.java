@@ -11,6 +11,7 @@ import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
+import org.javatuples.Pair;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +48,9 @@ public class WordNetSenseFeatures extends SequenceFeatureWithFocus {
                 case "Synonym":
                     featureTemplates.add(this::synonymFeatures);
                     break;
+                case "Derivation":
+                    featureTemplates.add(this::derivationFeatures);
+                    break;
                 default:
                     logger.warn(String.format("Template [%s] not recognized.", templateName));
             }
@@ -80,16 +84,33 @@ public class WordNetSenseFeatures extends SequenceFeatureWithFocus {
     private void modifyingJobTitle(TObjectDoubleMap<String> features, StanfordCorenlpToken token) {
         FSList headDeps = token.getHeadDependencyRelations();
         if (headDeps != null) {
-            FSCollectionFactory.create(headDeps, Dependency.class).stream().filter(
-                    dependency -> dependency.getDependencyType().endsWith("mod")).filter(
-                    dependency -> jobTitleWords.contains(dependency.getChild())).forEach(
-                    dependency -> features.put("ModifyingJobTitle", 1));
+            FSCollectionFactory.create(headDeps, Dependency.class).stream().forEach(dep -> {
+                if (dep.getDependencyType().endsWith("mod") && jobTitleWords.contains(dep.getHead())) {
+                    features.put("TriggerModifyingJobTitle", 1);
+                }
+            });
         }
     }
 
     private void synonymFeatures(TObjectDoubleMap<String> features, StanfordCorenlpToken token) {
         for (String synonym : searcher.getAllSynonyms(token.getLemma().toLowerCase(), token.getPos())) {
-            features.put(FeatureUtils.formatFeatureName("LemmaSynonym", synonym), 1);
+            features.put(FeatureUtils.formatFeatureName("TriggerLemmaSynonym", synonym), 1);
+        }
+    }
+
+    private void derivationFeatures(TObjectDoubleMap<String> features, StanfordCorenlpToken token) {
+        Set<String> derivedWordType = new HashSet<>();
+
+        for (Pair<String, String> der : searcher.getDerivations(token.getLemma().toLowerCase(), token.getPos())) {
+            derivedWordType.add(der.getValue0());
+        }
+
+        if (!derivedWordType.isEmpty()) {
+            derivedWordType.add(token.getLemma().toLowerCase());
+        }
+
+        for (String s : derivedWordType) {
+            features.put(FeatureUtils.formatFeatureName("TriggerDerivationForm", s), 1);
         }
     }
 }
