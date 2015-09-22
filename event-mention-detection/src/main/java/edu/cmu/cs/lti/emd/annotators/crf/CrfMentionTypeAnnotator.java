@@ -48,7 +48,6 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private UimaSequenceFeatureExtractor sentenceExtractor;
-    private FeatureAlphabet alphabet;
     private ClassAlphabet classAlphabet;
     private GraphWeightVector weightVector;
     private static SequenceDecoder decoder;
@@ -58,6 +57,10 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
     File modelDirectory;
 
+    public static final String PARAM_VERBOSE = "verbose";
+    @ConfigurationParameter(name = PARAM_VERBOSE, defaultValue = "false")
+    boolean verbose;
+
     public static Configuration config;
 
     @Override
@@ -66,6 +69,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
         logger.info("Loading models ...");
 
         String featureSpec;
+        FeatureAlphabet alphabet;
         try {
             weightVector = SerializationUtils.deserialize(new FileInputStream(new File
                     (modelDirectory, MentionTypeCrfTrainer.MODEL_NAME)));
@@ -104,7 +108,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
         sentenceExtractor.initWorkspace(aJCas);
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
-            logger.info(sentence.getCoveredText());
+
             sentenceExtractor.resetWorkspace(aJCas, sentence.getBegin(), sentence.getEnd());
 
             List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
@@ -112,8 +116,10 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
             SequenceSolution solution = decoder.getDecodedPrediction();
 
-            logger.info(solution.toString());
-//            DebugUtils.pause();
+            if (verbose) {
+                logger.info(sentence.getCoveredText());
+                logger.info(solution.toString());
+            }
 
             for (Triplet<Integer, Integer, String> chunk : convertTypeTagsToChunks(solution)) {
                 StanfordCorenlpToken firstToken = tokens.get(chunk.getValue0());
@@ -125,10 +131,12 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
                     candidateEventMention.setPredictedType(t);
                     UimaAnnotationUtils.finishAnnotation(candidateEventMention, firstToken.getBegin(), lastToken
                             .getEnd(), COMPONENT_ID, 0, aJCas);
-                    logger.info(String.format("%s : [%d, %d]",
-                            candidateEventMention.getPredictedType(),
-                            candidateEventMention.getBegin(),
-                            candidateEventMention.getEnd()));
+                    if (verbose) {
+                        logger.info(String.format("%s : [%d, %d]",
+                                candidateEventMention.getPredictedType(),
+                                candidateEventMention.getBegin(),
+                                candidateEventMention.getEnd()));
+                    }
                 }
             }
         }

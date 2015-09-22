@@ -61,6 +61,9 @@ public class DependentWordFeatures extends SequenceFeatureWithFocus {
         if (featureTemplates.contains("ChildPos")) {
             addDependentFeatures(sequence, focus, features, Word::getPos, "ChildPos");
         }
+        if (featureTemplates.contains("ChildDepType")) {
+            addDependentLabelFeatures(sequence, focus, features, "ChildDepType");
+        }
         if (featureTemplates.contains("HeadLemma")) {
             addGovnerFeatures(sequence, focus, features, Word::getLemma, "HeadLemma");
         }
@@ -69,6 +72,49 @@ public class DependentWordFeatures extends SequenceFeatureWithFocus {
         }
         if (featureTemplates.contains("HeadPos")) {
             addGovnerFeatures(sequence, focus, features, Word::getPos, "HeadPos");
+        }
+        if (featureTemplates.contains("HeadDepType")) {
+            addGovnerLabelFeatures(sequence, focus, features, "HeadDepType");
+        }
+    }
+
+    public void addDependentLabelFeatures(List<StanfordCorenlpToken> sentence, int focus,
+                                          TObjectDoubleMap<String> features, String featureType) {
+        if (focus < 0 || focus > sentence.size() - 1) {
+            return;
+        }
+        StanfordCorenlpToken token = sentence.get(focus);
+        FSList childDependencies = token.getChildDependencyRelations();
+
+        if (childDependencies == null) {
+            return;
+        }
+
+        for (Dependency dep : FSCollectionFactory.create(childDependencies, Dependency.class)) {
+            String featureVal = dep.getDependencyType();
+            if (featureVal != null) {
+                features.put(String.format("%s=%s", featureType, featureVal), 1);
+            }
+        }
+    }
+
+    public void addGovnerLabelFeatures(List<StanfordCorenlpToken> sentence, int focus,
+                                       TObjectDoubleMap<String> features, String featureType) {
+        if (focus < 0 || focus > sentence.size() - 1) {
+            return;
+        }
+        StanfordCorenlpToken token = sentence.get(focus);
+        FSList headDependencyRelations = token.getHeadDependencyRelations();
+
+        if (headDependencyRelations == null) {
+            return;
+        }
+
+        for (Dependency dep : FSCollectionFactory.create(headDependencyRelations, Dependency.class)) {
+            String featureVal = dep.getDependencyType();
+            if (featureVal != null) {
+                features.put(String.format("%s=%s", featureType, featureVal), 1);
+            }
         }
     }
 
