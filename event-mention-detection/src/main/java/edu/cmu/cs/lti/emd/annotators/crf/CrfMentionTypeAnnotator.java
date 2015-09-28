@@ -83,7 +83,8 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
         logger.info("Model loaded");
         try {
-            FeatureSpecParser specParser = new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.package.name"));
+            FeatureSpecParser specParser = new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.sentence.package" +
+                    ".name"));
 
             String currentFeatureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
 

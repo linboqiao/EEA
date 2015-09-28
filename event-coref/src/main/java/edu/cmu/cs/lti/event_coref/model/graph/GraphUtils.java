@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.event_coref.model.graph;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.primitives.Ints;
-import org.apache.commons.lang3.tuple.Pair;
+import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,8 +31,8 @@ public class GraphUtils {
         ArrayListMultimap<T, T> reverseRelations = ArrayListMultimap.create();
 
         for (Pair<T, T> r : relations) {
-            T gov = r.getKey();
-            T dep = r.getValue();
+            T gov = r.getValue0();
+            T dep = r.getValue1();
             transitiveResolvedRelations.put(gov, dep);
             reverseRelations.put(dep, gov);
             for (T govHead : reverseRelations.get(gov)) {
@@ -42,7 +42,8 @@ public class GraphUtils {
         return transitiveResolvedRelations;
     }
 
-    public static <T> int[][] resolveEquivalence(ArrayListMultimap<T, T> transitiveResolvedAdjacentGroup, ArrayListMultimap<T, Integer> group2Clusters, int numNodes) {
+    public static <T> int[][] resolveEquivalence(ArrayListMultimap<T, T> transitiveResolvedAdjacentGroup,
+                                                 ArrayListMultimap<T, Integer> group2Clusters, int numNodes) {
         ArrayListMultimap<Integer, Integer> transitiveResolvedAdjacentMentions = ArrayListMultimap.create();
 
         int[][] mentionAdjacentArray = new int[numNodes][];
@@ -58,7 +59,8 @@ public class GraphUtils {
             }
         }
 
-        for (Map.Entry<Integer, Collection<Integer>> mentionRow : transitiveResolvedAdjacentMentions.asMap().entrySet()) {
+        for (Map.Entry<Integer, Collection<Integer>> mentionRow : transitiveResolvedAdjacentMentions.asMap().entrySet
+                ()) {
             int mentionId = mentionRow.getKey();
             int[] adjacentMentions = Ints.toArray(mentionRow.getValue());
             Arrays.sort(adjacentMentions);
@@ -70,11 +72,11 @@ public class GraphUtils {
 
 
     /**
-     * From list of clusters, grouped by whatever key T, convert to sorted coref chains
+     * From list of clusters, grouped by whatever key T, convert to sorted coref chains.
      *
-     * @param group2Clusters
-     * @param <T>
-     * @return
+     * @param group2Clusters Map from the cluster Id to elements in the cluster.
+     * @param <T>            The type representing the cluster id.
+     * @return List of non-singleton coreference chains sorted by event mention id.
      */
     public static <T> int[][] createSortedCorefChains(ArrayListMultimap<T, Integer> group2Clusters) {
         SortedMap<Integer, int[]> chainsSortedByHead = new TreeMap<>();
@@ -96,14 +98,28 @@ public class GraphUtils {
         return corefChains;
     }
 
-    public static <T> Map<Edge.EdgeType, int[][]> resolveRelations(ArrayListMultimap<Edge.EdgeType, Pair<T, T>> generalizedRelations, ArrayListMultimap<T, Integer> clusters, int numNodes) {
-        Map<Edge.EdgeType, int[][]> edgeAdjacentList = new HashMap<>();
+    /**
+     * Propagate all transitive and equivalence relations to all the nodes.
+     *
+     * @param interClusterRelations Relations in between clusters.
+     * @param clusters              Nodes contained in the cluster.
+     * @param numNodes              Total number of nodes in the graph.
+     * @param <T>                   The type representing a cluster of nodes (e.g. event for event mentions)
+     * @return The resolved graph as adjacent list, stored separated for each edge type.
+     */
+    public static <T> Map<MentionGraphEdge.EdgeType, int[][]> resolveRelations(
+            ArrayListMultimap<MentionGraphEdge.EdgeType, Pair<T, T>> interClusterRelations,
+            ArrayListMultimap<T, Integer> clusters, int numNodes) {
+        Map<MentionGraphEdge.EdgeType, int[][]> edgeAdjacentList = new HashMap<>();
 
-        for (Map.Entry<Edge.EdgeType, Collection<Pair<T, T>>> relationsByType : generalizedRelations.asMap().entrySet()) {
-            //resolve transitive
-            ArrayListMultimap<T, T> transitiveResolvedAdjacentEvents = GraphUtils.linkTransitiveRelations(relationsByType.getValue());
-            //resolve equivalence
-            int[][] mentionAdjacentArray = GraphUtils.resolveEquivalence(transitiveResolvedAdjacentEvents, clusters, numNodes);
+        for (Map.Entry<MentionGraphEdge.EdgeType, Collection<Pair<T, T>>> relationsByType : interClusterRelations
+                .asMap().entrySet()) {
+            // Resolve transitive.
+            ArrayListMultimap<T, T> transitiveResolvedAdjacentEvents = GraphUtils.linkTransitiveRelations
+                    (relationsByType.getValue());
+            // Resolve equivalence.
+            int[][] mentionAdjacentArray = GraphUtils.resolveEquivalence(transitiveResolvedAdjacentEvents, clusters,
+                    numNodes);
             edgeAdjacentList.put(relationsByType.getKey(), mentionAdjacentArray);
         }
         return edgeAdjacentList;

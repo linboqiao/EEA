@@ -11,7 +11,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Only work if the InputView really exists and contains document text.
+ * Only work if the InputView really exists and contains document text. （Gonna be replaced by the direct reader
+ * integrated version)
+ * <p>
  * Date: 4/21/15
  * Time: 12:38 AM
  *

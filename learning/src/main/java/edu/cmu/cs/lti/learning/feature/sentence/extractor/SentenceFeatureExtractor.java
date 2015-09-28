@@ -42,8 +42,7 @@ public class SentenceFeatureExtractor extends UimaSequenceFeatureExtractor {
         super(alphabet);
 
         String featureFunctionPackage = featureConfig.get(FeatureSpecParser.FEATURE_FUNCTION_PACKAGE_KEY);
-
-        for (String featureFunctionName : featureConfig.getList(FeatureSpecParser.FEAUTRE_FUNCTION_NAME_KEY)) {
+        for (String featureFunctionName : featureConfig.getList(FeatureSpecParser.FEATURE_FUNCTION_NAME_KEY)) {
             String ffClassName = featureFunctionPackage + "." + featureFunctionName;
             Class<?> featureFunctionType = Class.forName(ffClassName);
             Constructor<?> constructor = featureFunctionType.getConstructor(Configuration.class, Configuration.class);
@@ -83,8 +82,6 @@ public class SentenceFeatureExtractor extends UimaSequenceFeatureExtractor {
 
     @Override
     public void extract(int focus, FeatureVector featuresNoState, FeatureVector featuresNeedForState) {
-//        logger.debug("Extracting features");
-
         TObjectDoubleMap<String> rawFeaturesNoState = new TObjectDoubleHashMap<>();
         TObjectDoubleMap<String> rawFeaturesNeedForState = new TObjectDoubleHashMap<>();
 
@@ -93,16 +90,16 @@ public class SentenceFeatureExtractor extends UimaSequenceFeatureExtractor {
         for (TObjectDoubleIterator<String> iter = rawFeaturesNoState.iterator(); iter.hasNext(); ) {
             iter.advance();
             featuresNoState.addFeature(iter.key(), iter.value());
-//            logger.info(iter.key());
         }
 
         for (TObjectDoubleIterator<String> iter = rawFeaturesNeedForState.iterator(); iter.hasNext(); ) {
             iter.advance();
             featuresNeedForState.addFeature(iter.key(), iter.value());
-//            logger.info(iter.key());
         }
+    }
 
-//        DebugUtils.pause();
-        //        logger.debug("Done extracting features");
+    public void extractRaw(int focus, TObjectDoubleMap<String> rawFeaturesNoState, TObjectDoubleMap<String>
+            rawFeaturesNeedForState) {
+        featureFunctions.forEach(ff -> ff.extract(sentenceTokens, focus, rawFeaturesNoState, rawFeaturesNeedForState));
     }
 }

@@ -61,6 +61,14 @@ public class KBP2015EventTaskPipeline {
     // Models.
     final String modelDir;
 
+    // Base directory to store intermediate results during prediction (i.e. temporary mention detection, realis
+    // detection)
+    final String middleResults = "intermediate";
+
+    // For outputs with cross validation, we have a auto generated suffix for it. We use this for the case where we do
+    // it on all.
+    final String fullRunSuffix = "all";
+
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     public KBP2015EventTaskPipeline(String typeSystemName, String goldStandardFilePath, String plainTextDataDir,
@@ -265,7 +273,7 @@ public class KBP2015EventTaskPipeline {
                         RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
                         RealisTypeAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
                         RealisTypeAnnotator.PARAM_FEATURE_PACKAGE_NAME,
-                        config.get("edu.cmu.cs.lti.feature.package.name")
+                        config.get("edu.cmu.cs.lti.feature.sentence.package.name")
                 );
                 AnalysisEngineDescription xmiWriter = CustomAnalysisEngineFactory.createXmiWriter(workingDir,
                         realisOutputBase);
@@ -343,27 +351,54 @@ public class KBP2015EventTaskPipeline {
         goldPipeline.run();
     }
 
-    public void trainAll(Configuration kbpConfig, String inputBaseDir) throws UIMAException, NoSuchMethodException,
-            IOException, InstantiationException, ClassNotFoundException, IllegalAccessException,
-            InvocationTargetException {
+    public void trainAll(Configuration kbpConfig, String inputBaseDir) throws Exception {
         logger.info("Staring training a full model on all data in " + inputBaseDir);
         CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createXmiReader(
                 typeSystemDescription, workingDir, inputBaseDir);
-        trainMentionTypeLv1(kbpConfig, trainingReader, "all");
+        trainMentionTypeLv1(kbpConfig, trainingReader, fullRunSuffix);
+        trainRealisTypes(kbpConfig, trainingReader, fullRunSuffix);
         logger.info("All training done.");
     }
 
-    public void crossValidation(Configuration kbpConfig, String inputBaseDir) throws Exception {
-        int numSplit = kbpConfig.getInt("edu.cmu.cs.lti.cv.split", 5);
-        int seed = kbpConfig.getInt("edu.cmu.cs.lti.cv.seed", 17);
-        String evalPath = kbpConfig.get("edu.cmu.cs.lti.eval.base");
+    public void test(Configuration testConfig, String inputBaseDir) throws UIMAException, IOException {
+        CollectionReaderDescription testDataReader = CustomCollectionReaderFactory.createXmiReader(
+                typeSystemDescription, workingDir, inputBaseDir);
+
+        String sliceSuffix = fullRunSuffix;
+
+        String crfTypeModelDir = testConfig.get("edu.cmu.cs.lti.model.crf.mention.lv1.dir") + sliceSuffix;
+        String mentionLv1Output = middleResults + "/" + sliceSuffix + "/mention_lv1";
+
+        logger.info("Going to run mention type on [" + workingDir + "/" + inputBaseDir + "], output will be at " +
+                mentionLv1Output);
+        CollectionReaderDescription lv1OutputReader = mentionDetection(testDataReader, crfTypeModelDir,
+                mentionLv1Output, testConfig);
+        // Run realis on Lv1 crf mentions.
+        String realisModelDir = testConfig.get("edu.cmu.cs.lti.model.realis.dir") + sliceSuffix;
+        String lv1RealisOutput = middleResults + "/" + sliceSuffix + "/lv1_realis";
+
+        logger.info("Going to run realis classifier on " + mentionLv1Output + " output will be at " + lv1RealisOutput);
+        CollectionReaderDescription lv1MentionRealisResults = realisAnnotation(testConfig, lv1OutputReader,
+                realisModelDir, lv1RealisOutput);
+
+        // Output final result.
+        String evalPath = testConfig.get("edu.cmu.cs.lti.eval.base");
+        File typeLv1Eval = new File(new File(workingDir, evalPath), "lv1_types");
+        writeResults(lv1MentionRealisResults,
+                new File(typeLv1Eval, "lv1_mention_realis" + sliceSuffix + ".tbf").getAbsolutePath(),
+                "CMU-LTI-Run1"
+        );
+    }
+
+    public void crossValidation(Configuration taskConfig, String inputBaseDir) throws Exception {
+        int numSplit = taskConfig.getInt("edu.cmu.cs.lti.cv.split", 5);
+        int seed = taskConfig.getInt("edu.cmu.cs.lti.cv.seed", 17);
+        String evalPath = taskConfig.get("edu.cmu.cs.lti.eval.base");
 
         File typeLv1Eval = new File(new File(workingDir, evalPath), "lv1_types");
         File goldMentionEval = new File(new File(workingDir, evalPath), "gold_types");
         edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(typeLv1Eval);
         edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(goldMentionEval);
-
-        String middleResults = "intermediate";
 
         for (int slice = 0; slice < numSplit; slice++) {
             String sliceSuffix = "split_" + slice;
@@ -373,15 +408,15 @@ public class KBP2015EventTaskPipeline {
             CollectionReaderDescription devSliceReader = CustomCollectionReaderFactory.createCrossValidationReader(
                     typeSystemDescription, workingDir, inputBaseDir, true, seed, slice);
 
-//            // Train lv1 of the mention type model.
-//            String crfTypeModelDir = trainMentionTypeLv1(kbpConfig, trainingSliceReader, sliceSuffix);
-//
-//            logger.info("Finding models in " + crfTypeModelDir);
-//
-//            // Mentions from the crf model.
-//            String mentionLv1Output = middleResults + "/" + sliceSuffix + "/mention_lv1";
-//            CollectionReaderDescription lv1OutputReader = mentionDetection(devSliceReader, crfTypeModelDir,
-//                    mentionLv1Output, kbpConfig);
+            // Train lv1 of the mention type model.
+            String crfTypeModelDir = trainMentionTypeLv1(taskConfig, trainingSliceReader, sliceSuffix);
+
+            logger.info("Finding models in " + crfTypeModelDir);
+
+            // Mentions from the crf model.
+            String mentionLv1Output = middleResults + "/" + sliceSuffix + "/mention_lv1";
+            CollectionReaderDescription lv1OutputReader = mentionDetection(devSliceReader, crfTypeModelDir,
+                    mentionLv1Output, taskConfig);
 
             // Gold mentions.
             String goldMentionOutput = middleResults + "/" + sliceSuffix + "/gold_type";
@@ -389,23 +424,23 @@ public class KBP2015EventTaskPipeline {
                     goldMentionOutput);
 
             // Train realis model.
-            String realisModelDir = trainRealisTypes(kbpConfig, trainingSliceReader, sliceSuffix);
+            String realisModelDir = trainRealisTypes(taskConfig, trainingSliceReader, sliceSuffix);
             String goldBasedRealisOutput = middleResults + "/" + sliceSuffix + "/gold_realis";
             String lv1RealisOutput = middleResults + "/" + sliceSuffix + "/lv1_realis";
 
             // Run realis on gold mentions.
-            CollectionReaderDescription goldMentionRealisResults = realisAnnotation(kbpConfig, goldMentionOutputReader,
+            CollectionReaderDescription goldMentionRealisResults = realisAnnotation(taskConfig, goldMentionOutputReader,
                     realisModelDir, goldBasedRealisOutput);
 
-//            // Run realis on Lv1 crf mentions.
-//            CollectionReaderDescription lv1MentionRealisResults = realisAnnotation(kbpConfig, lv1OutputReader,
-//                    realisModelDir, lv1RealisOutput);
+            // Run realis on Lv1 crf mentions.
+            CollectionReaderDescription lv1MentionRealisResults = realisAnnotation(taskConfig, lv1OutputReader,
+                    realisModelDir, lv1RealisOutput);
 
-//            // Output final result.
-//            writeResults(lv1MentionRealisResults,
-//                    new File(typeLv1Eval, "lv1_mention_realis" + sliceSuffix + ".tbf").getAbsolutePath(),
-//                    "crf_lv1_types"
-//            );
+            // Output final result.
+            writeResults(lv1MentionRealisResults,
+                    new File(typeLv1Eval, "lv1_mention_realis" + sliceSuffix + ".tbf").getAbsolutePath(),
+                    "crf_lv1_types"
+            );
 
             writeResults(goldMentionRealisResults,
                     new File(goldMentionEval, "gold_mention_realis" + sliceSuffix + ".tbf").getAbsolutePath(),
@@ -442,5 +477,6 @@ public class KBP2015EventTaskPipeline {
 //        pipeline.extraAnnotations(kbpConfig, preprocessBase, extraBase);
 //        pipeline.trainAll(kbpConfig, extraBase);
         pipeline.crossValidation(kbpConfig, extraBase);
+//        pipeline.test(kbpConfig, extraBase);
     }
 }

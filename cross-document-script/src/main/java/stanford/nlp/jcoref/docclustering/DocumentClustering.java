@@ -222,10 +222,10 @@ public class DocumentClustering {
       Counters.expInPlace(newProb_c_di);
 
       // TODO
-      // calculate diff
+      // calculate nodeOnlyDiff
       Counters.subtractInPlace(oldProb_c_di, newProb_c_di);
       diff += Counters.L2Norm(oldProb_c_di);
-      if(VERBOSE) System.err.println("diff: "+diff);
+      if(VERBOSE) System.err.println("nodeOnlyDiff: "+diff);
 
       if(previousDecision != Counters.argmax(newProb_c_di)) decisionChanged = true;
       prob_c_d.setCounter(doc.docID, (ClassicCounter<Integer>) newProb_c_di);

@@ -155,8 +155,6 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 //            logger.info("Sentence loss is " + loss);
             trainingStats.addLoss(logger, loss);
             sentenceId++;
-
-
         }
 
         try {
@@ -236,7 +234,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
     public static void setup(String[] classes, File cacheDirectory, Configuration config) throws
             ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException,
             IllegalAccessException, IOException {
-        int alphabetBits = config.getInt("edu.cmu.cs.lti.feature.alphabet_bits", 24);
+        int alphabetBits = config.getInt("edu.cmu.cs.lti.mention.feature.alphabet_bits", 24);
         double stepSize = config.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
         int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
@@ -250,8 +248,9 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
         trainer = new AveragePerceptronTrainer(decoder, classAlphabet, stepSize, alphabet);
         featureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
+
         sentenceExtractor = new SentenceFeatureExtractor(alphabet, config,
-                new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.package.name"))
+                new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.sentence.package.name"))
                         .parseFeatureFunctionSpecs(featureSpec));
     }
 }

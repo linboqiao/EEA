@@ -63,24 +63,12 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
             systemMention.setRealisType(goldMention.getRealisType());
             systemMention.setEventType(goldMention.getEventType());
             UimaAnnotationUtils.finishAnnotation(systemMention, COMPONENT_ID, goldMention.getId(), toView);
-//            System.out.println(goldMention.getCoveredText() + " " + systemMention.getCoveredText());
             from2toMentionMap.put(goldMention, systemMention);
         }
         return from2toMentionMap;
     }
 
     private void copyEvents(JCas from, JCas to, Map<EventMention, EventMention> from2toMentionMap) {
-//        Map<Span, EventMention> fromMentions = new HashMap<>();
-//        Map<EventMention, EventMention> from2toMention = new HashMap<>();
-
-//        for (EventMention fromMention : JCasUtil.select(from, EventMention.class)) {
-//            fromMentions.put(new Span(fromMention.getBegin(), fromMention.getEnd()), fromMention);
-//        }
-//
-//        for (EventMention toMention : JCasUtil.select(to, EventMention.class)) {
-//            from2toMention.put(fromMentions.get(new Span(toMention.getBegin(), toMention.getEnd())), toMention);
-//        }
-
         for (Event event : JCasUtil.select(from, Event.class)) {
             Event copiedEvent = new Event(to);
             int fromMentionLength = event.getEventMentions().size();

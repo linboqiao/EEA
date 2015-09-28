@@ -16,10 +16,9 @@ import java.util.Map;
  * @author Zhengzhong Liu
  */
 public class FeatureSpecParser {
-
     public static String FEATURE_FUNCTION_PACKAGE_KEY = "feature_function.package";
 
-    public static String FEAUTRE_FUNCTION_NAME_KEY = "feature_function.names";
+    public static String FEATURE_FUNCTION_NAME_KEY = "feature_function.names";
 
     private String featureFunctionPackageName;
 
@@ -41,7 +40,7 @@ public class FeatureSpecParser {
                         featureFunctionName + "." + entry.getKey(), entry.getValue()));
             }
         }
-        featureSpec.add(FEAUTRE_FUNCTION_NAME_KEY, Joiner.on(",").join(allFunctions));
+        featureSpec.add(FEATURE_FUNCTION_NAME_KEY, Joiner.on(",").join(allFunctions));
         return featureSpec;
     }
 

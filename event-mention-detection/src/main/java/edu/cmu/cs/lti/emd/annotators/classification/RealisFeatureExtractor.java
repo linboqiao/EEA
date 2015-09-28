@@ -125,7 +125,7 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
         RealisFeatureExtractor.classAlphabet = classAlphabet;
 
         // Parse feature configs from featureConfig.
-        FeatureSpecParser parser = new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.package.name"));
+        FeatureSpecParser parser = new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.sentence.package.name"));
         Configuration realisSpec = parser.parseFeatureFunctionSpecs(config.get("edu.cmu.cs.lti.features.realis.spec"));
         extractor = new SentenceFeatureExtractor(alphabet, config, realisSpec);
     }

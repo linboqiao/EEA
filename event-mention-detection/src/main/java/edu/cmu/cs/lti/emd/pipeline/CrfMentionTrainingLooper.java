@@ -9,8 +9,6 @@ import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,20 +22,18 @@ import java.lang.reflect.InvocationTargetException;
  * @author Zhengzhong Liu
  */
 public class CrfMentionTrainingLooper extends LoopPipeline {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
     private int maxIteration;
     private int numIteration;
     private String modelBasename;
 
-    public CrfMentionTrainingLooper(String[] classes, Configuration kbpConfig,
+    public CrfMentionTrainingLooper(String[] classes, Configuration taskConfig,
                                     String modelOutputBasename, File cacheDirectory,
                                     TypeSystemDescription typeSystemDescription,
                                     CollectionReaderDescription readerDescription) throws
             ResourceInitializationException, ClassNotFoundException, NoSuchMethodException,
             InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
-        super(readerDescription, setup(typeSystemDescription, classes, cacheDirectory, kbpConfig));
-        this.maxIteration = kbpConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
+        super(readerDescription, setup(typeSystemDescription, classes, cacheDirectory, taskConfig));
+        this.maxIteration = taskConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
         this.numIteration = 0;
         this.modelBasename = modelOutputBasename;
 

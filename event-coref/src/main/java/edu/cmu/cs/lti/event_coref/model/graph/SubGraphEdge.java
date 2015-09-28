@@ -1,5 +1,7 @@
 package edu.cmu.cs.lti.event_coref.model.graph;
 
+import edu.cmu.cs.lti.learning.model.FeatureVector;
+
 import java.util.Comparator;
 
 /**
@@ -10,34 +12,47 @@ import java.util.Comparator;
  * @author Zhengzhong Liu
  */
 public class SubGraphEdge {
-    public final int govIdx;
-    public final int depIdx;
-    private Edge.EdgeType edgeType;
+    private MentionGraphEdge.EdgeType edgeType;
 
-//    private double score;
+    private final MentionGraphEdge superGraphEdge;
 
-    public SubGraphEdge(int govIdx, int depIdx, Edge.EdgeType edgeType) {
-        this.govIdx = govIdx;
-        this.depIdx = depIdx;
+    public SubGraphEdge(MentionGraphEdge edge, MentionGraphEdge.EdgeType edgeType) {
         this.edgeType = edgeType;
+        this.superGraphEdge = edge;
     }
 
-    public Edge.EdgeType getEdgeType() {
+    public MentionGraphEdge.EdgeType getEdgeType() {
         return edgeType;
     }
 
-    public void setEdgeType(Edge.EdgeType edgeType) {
+    public void setEdgeType(MentionGraphEdge.EdgeType edgeType) {
         this.edgeType = edgeType;
     }
 
     public static final Comparator<SubGraphEdge> subgraphComparator = new Comparator<SubGraphEdge>() {
         @Override
         public int compare(SubGraphEdge o1, SubGraphEdge o2) {
-            return o1.depIdx - o2.depIdx;
+            return MentionGraphEdge.edgeDepComparator.compare(o1.superGraphEdge, o2.superGraphEdge);
         }
     };
 
+    public int getGov() {
+        return superGraphEdge.govIdx;
+    }
+
+    public int getDep() {
+        return superGraphEdge.depIdx;
+    }
+
     public String toString() {
-        return "SubGraphEdge: (" + govIdx + ',' + depIdx + ")" + " [" + edgeType + "]";
+        return "SubGraphEdge: (" + getGov() + ',' + getDep() + ")" + " [" + edgeType + "]";
+    }
+
+    public MentionGraphEdge getSuperGraphEdge() {
+        return superGraphEdge;
+    }
+
+    public FeatureVector getEdgeFeatures() {
+        return superGraphEdge.getLabelledFeatures(superGraphEdge.getHostingGraph().getExtractor());
     }
 }

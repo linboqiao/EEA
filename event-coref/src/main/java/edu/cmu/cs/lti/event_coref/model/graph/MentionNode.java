@@ -7,21 +7,23 @@ import edu.cmu.cs.lti.script.type.EventMention;
  * Date: 5/1/15
  * Time: 11:28 PM
  *
+ * Each mention node contains an event mention and a couple
+ *
  * @author Zhengzhong Liu
  */
-public class Node {
+public class MentionNode {
     EventMention mention;
     int id;
 
     boolean isVirtual;
 
-    public Node(int id) {
+    public MentionNode(int id) {
         this.id = id;
         this.mention = null;
         isVirtual = true;
     }
 
-    public Node(int id, EventMention mention) {
+    public MentionNode(int id, EventMention mention) {
         this.id = id;
         this.mention = mention;
     }

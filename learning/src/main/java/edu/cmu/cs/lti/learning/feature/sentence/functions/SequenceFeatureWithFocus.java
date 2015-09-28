@@ -30,33 +30,6 @@ public abstract class SequenceFeatureWithFocus {
         logger.info("Register feature extractor : " + featureName());
     }
 
-    /**
-     * TODO A couple more features
-     * <p>
-     * 1. Whether the sentence is in quote (Done)
-     * 2. Whether the phrase is in quote (Done)
-     * 3. Document type
-     * 4. Job name (or the word job) (Half Done)
-     * 5. Bigrams (Done)
-     * 6. Closest entity type (Done) and string?
-     * 7. Numbers (Included in entity?)
-     * 8. Word vector
-     * 9. Government (related to broadcast), basically some specific type of the entity will help, maybe wordnet (Done)
-     * 10. Add CRF features to encode phrase (A little)
-     * <p>
-     * TODO Need to have features based on the super type only
-     * 1. Release will only be Justice Release in the legal context (DONE)
-     * <p>
-     * TODO Multiple type mentions need to be dealt with carefully
-     * 1. Current method do not allow a joint type to share statistics with the separated types (DONE)
-     * <p>
-     * TODO Also need to inspect cases to eliminate some features
-     * 1. Some easy case are failing, it is likely that some additional signal make such decision happen.
-     * a. Such as cases in AFP_ENG_20091021.0463
-     * <p>
-     * TODO Change the capitalizaiton of a title sentence
-     */
-
     public static String outsideValue = "<OUTSIDE>";
     public static String startPlaceholder = "<START>";
     public static String endPlaceholder = "<END>";
