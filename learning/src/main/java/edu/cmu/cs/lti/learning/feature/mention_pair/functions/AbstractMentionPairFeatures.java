@@ -14,13 +14,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Zhengzhong Liu
  */
-public abstract class MentionPairFeatures {
+public abstract class AbstractMentionPairFeatures {
     protected final Logger logger;
 
     protected Configuration featureConfig;
     protected Configuration generalConfig;
 
-    public MentionPairFeatures(Configuration generalConfig, Configuration featureConfig) {
+    public AbstractMentionPairFeatures(Configuration generalConfig, Configuration featureConfig) {
         this.logger = LoggerFactory.getLogger(this.getClass());
         logger.info("Register feature extractor : " + featureName());
         this.featureConfig = featureConfig;
@@ -29,8 +29,26 @@ public abstract class MentionPairFeatures {
 
     public abstract void initDocumentWorkspace(JCas context);
 
+    /**
+     * Extract features from the mention pair.
+     *
+     * @param documentContext The UIMA context
+     * @param rawFeatures     Features will be added to this raw feature map.
+     * @param firstAnno       First mention to extract from.
+     * @param secondAnno      Second mention to extract from.
+     */
     public abstract void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures,
                                  EventMention firstAnno, EventMention secondAnno);
+
+    /**
+     * Extract features from one mention only when the other is deliberately omitted, for example, the other mention
+     * is a virtual root.
+     *
+     * @param documentContext The UIMA context
+     * @param rawFeatures     Features will be added to this raw feature map.
+     * @param secondAnno      Second mention to extract from.
+     */
+    public abstract void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures, EventMention secondAnno);
 
     /**
      * A name to describe this feature, it use the full class name by default
@@ -39,6 +57,10 @@ public abstract class MentionPairFeatures {
      */
     public String featureName() {
         return this.getClass().getName();
+    }
+
+    protected void addBoolean(TObjectDoubleMap<String> rawFeatures, String featureName) {
+        rawFeatures.put(featureName, 1);
     }
 
 }

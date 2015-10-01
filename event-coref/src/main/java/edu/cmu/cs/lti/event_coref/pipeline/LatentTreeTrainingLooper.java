@@ -10,7 +10,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -47,7 +47,7 @@ public class LatentTreeTrainingLooper extends LoopPipeline {
         logger.info("Saving final models at " + modelBasename);
         try {
             PaLatentTreeTrainer.saveModels(new File(modelBasename));
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -57,7 +57,7 @@ public class LatentTreeTrainingLooper extends LoopPipeline {
         numIteration++;
         try {
             PaLatentTreeTrainer.saveModels(new File(modelBasename + "_iter" + numIteration));
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.event_coref.model.graph;
 
+import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 
 import java.util.Comparator;
@@ -52,7 +53,7 @@ public class SubGraphEdge {
         return superGraphEdge;
     }
 
-    public FeatureVector getEdgeFeatures() {
-        return superGraphEdge.getLabelledFeatures(superGraphEdge.getHostingGraph().getExtractor());
+    public FeatureVector getEdgeFeatures(PairFeatureExtractor extractor) {
+        return superGraphEdge.getLabelledFeatures(extractor);
     }
 }

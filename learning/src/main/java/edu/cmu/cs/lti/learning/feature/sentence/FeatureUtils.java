@@ -1,6 +1,9 @@
 package edu.cmu.cs.lti.learning.feature.sentence;
 
+import com.google.common.base.Joiner;
 import org.javatuples.Pair;
+
+import java.util.Arrays;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,6 +15,7 @@ import org.javatuples.Pair;
 public class FeatureUtils {
     /**
      * Formate the feature name by combining the type and name.
+     *
      * @param featureTypeAndName
      * @return
      */
@@ -21,5 +25,10 @@ public class FeatureUtils {
 
     public static String formatFeatureName(String featureType, String featureName) {
         return String.format("%s::%s", featureType, featureName);
+    }
+
+    public static String sortedJoin(String... components) {
+        Arrays.sort(components);
+        return Joiner.on(":").join(components);
     }
 }

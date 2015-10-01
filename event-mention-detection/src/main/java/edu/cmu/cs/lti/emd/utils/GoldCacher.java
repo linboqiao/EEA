@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.annotators.crf;
+package edu.cmu.cs.lti.emd.utils;
 
 import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.SequenceSolution;
@@ -21,7 +21,7 @@ import java.util.HashMap;
  *
  * @author Zhengzhong Liu
  */
-class GoldCacher {
+public class GoldCacher {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private static final String GOLD_SOLUTION_CACHE_NAME = "goldSolution";

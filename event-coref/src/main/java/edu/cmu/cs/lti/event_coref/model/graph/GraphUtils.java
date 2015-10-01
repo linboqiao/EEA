@@ -51,7 +51,6 @@ public class GraphUtils {
         for (Map.Entry<T, T> relationEventPair : transitiveResolvedAdjacentGroup.entries()) {
             List<Integer> govCluster = group2Clusters.get(relationEventPair.getKey());
             List<Integer> depCluster = group2Clusters.get(relationEventPair.getValue());
-
             for (int govMentionId : govCluster) {
                 for (int depMentionId : depCluster) {
                     transitiveResolvedAdjacentMentions.put(govMentionId, depMentionId);

@@ -85,7 +85,7 @@ public class KBP2015EventTaskPipeline {
         logger.info(String.format("Main output can be found at %s.", workingDir));
     }
 
-    public void prepare(String preprocessOutputBase) throws UIMAException, IOException {
+    public void prepare(Configuration taskConfig, String preprocessOutputBase) throws UIMAException, IOException {
         final String semaforModelDirectory = modelDir + "/semafor_malt_model_20121129";
         final String fanseModelDirectory = modelDir + "/fanse_models";
         final String opennlpDirectory = modelDir + "/opennlp/en-chunker.bin";
@@ -122,41 +122,25 @@ public class KBP2015EventTaskPipeline {
                         OpenNlpChunker.class, typeSystemDescription,
                         OpenNlpChunker.PARAM_MODEL_PATH, opennlpDirectory);
 
-                AnalysisEngineDescription xmiWriter = CustomAnalysisEngineFactory.createXmiWriter(workingDir,
-                        preprocessOutputBase);
-
-                return new AnalysisEngineDescription[]{
-                        stanfordAnalyzer, semaforAnalyzer, fanseParser, opennlp, xmiWriter
-                };
-            }
-        }, typeSystemDescription);
-
-        pipeline.run();
-    }
-
-    public void extraAnnotations(Configuration config, String inputBase, String outputBase) throws UIMAException,
-            IOException {
-        BasicPipeline pipeline = new BasicPipeline(new AbstractProcessorBuilder() {
-            @Override
-            public CollectionReaderDescription buildCollectionReader() throws ResourceInitializationException {
-                return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, workingDir, inputBase);
-            }
-
-            @Override
-            public AnalysisEngineDescription[] buildProcessors() throws ResourceInitializationException {
                 AnalysisEngineDescription quoteAnnotator = AnalysisEngineFactory.createEngineDescription(
                         QuoteAnnotator.class, typeSystemDescription
                 );
 
                 AnalysisEngineDescription wordNetEntityAnnotator = AnalysisEngineFactory.createEngineDescription(
                         WordNetBasedEntityAnnotator.class, typeSystemDescription,
-                        WordNetBasedEntityAnnotator.PARAM_JOB_TITLE_LIST, config.get("edu.cmu.cs.lti.profession_list"),
-                        WordNetBasedEntityAnnotator.PARAM_WN_PATH, config.get("edu.cmu.cs.lti.wndict.path")
+                        WordNetBasedEntityAnnotator.PARAM_JOB_TITLE_LIST,
+                        taskConfig.get("edu.cmu.cs.lti.profession_list"),
+                        WordNetBasedEntityAnnotator.PARAM_WN_PATH,
+                        taskConfig.get("edu.cmu.cs.lti.wndict.path")
                 );
-                AnalysisEngineDescription xmiWriter = CustomAnalysisEngineFactory.createXmiWriter(workingDir,
-                        outputBase);
 
-                return new AnalysisEngineDescription[]{quoteAnnotator, wordNetEntityAnnotator, xmiWriter};
+                AnalysisEngineDescription xmiWriter = CustomAnalysisEngineFactory.createXmiWriter(workingDir,
+                        preprocessOutputBase);
+
+                return new AnalysisEngineDescription[]{
+                        stanfordAnalyzer, semaforAnalyzer, fanseParser, opennlp, quoteAnnotator,
+                        wordNetEntityAnnotator, xmiWriter
+                };
             }
         }, typeSystemDescription);
 
@@ -219,7 +203,7 @@ public class KBP2015EventTaskPipeline {
 
     public CollectionReaderDescription mentionDetection(CollectionReaderDescription reader, String modelDir, String
             baseOutput, Configuration config) throws UIMAException, IOException {
-        // Static variable is not so nice here.
+        // TODO: Static variable is not so nice here, it can actually be passed in.
         CrfMentionTypeAnnotator.config = config;
 
         BasicPipeline systemPipeline = new BasicPipeline(new AbstractProcessorBuilder() {
@@ -472,11 +456,9 @@ public class KBP2015EventTaskPipeline {
                 tokenDir, modelPath, workingDir);
 
         String preprocessBase = "preprocessed";
-        String extraBase = "extra";
-//        pipeline.prepare(preprocessBase);
-//        pipeline.extraAnnotations(kbpConfig, preprocessBase, extraBase);
-//        pipeline.trainAll(kbpConfig, extraBase);
-        pipeline.crossValidation(kbpConfig, extraBase);
-//        pipeline.test(kbpConfig, extraBase);
+        pipeline.prepare(kbpConfig, preprocessBase);
+//        pipeline.trainAll(kbpConfig, preprocessBase);
+        pipeline.crossValidation(kbpConfig, preprocessBase);
+//        pipeline.test(kbpConfig, preprocessBase);
     }
 }

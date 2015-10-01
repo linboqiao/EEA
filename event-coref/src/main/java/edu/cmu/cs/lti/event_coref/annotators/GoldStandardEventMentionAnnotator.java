@@ -7,6 +7,7 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -15,6 +16,7 @@ import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
+import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
@@ -22,7 +24,9 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,8 +46,15 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
 
     public static final String PARAM_TARGET_VIEWS = "targetViewNames";
 
+    public static final String PARAM_COPY_MENTION_ONLY = "copyMentionOnly";
+
+    public static final String PARAM_COPY_EVENT_ONLY = "copyEventOnly";
+
     @ConfigurationParameter(name = PARAM_TARGET_VIEWS)
     private String[] targetViewNames;
+
+    @ConfigurationParameter(name = PARAM_COPY_MENTION_ONLY, defaultValue = "false")
+    private boolean copyMentionOnly;
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
@@ -51,37 +62,61 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
         for (String targetViewName : targetViewNames) {
             JCas targetView = JCasUtil.getView(aJCas, targetViewName, false);
             Map<EventMention, EventMention> from2toMentionMap = copyMentions(goldStandard, targetView);
-            copyEvents(goldStandard, targetView, from2toMentionMap);
+            if (!copyMentionOnly) {
+                copyEvents(goldStandard, targetView, from2toMentionMap);
+            }
         }
     }
 
     private Map<EventMention, EventMention> copyMentions(JCas fromView, JCas toView) {
-        Map<EventMention, EventMention> from2toMentionMap = new HashMap<>();
-        for (EventMention goldMention : JCasUtil.select(fromView, EventMention.class)) {
-            EventMention systemMention = new EventMention(toView, goldMention.getBegin(), goldMention.getEnd());
-            copyRegions(toView, goldMention, systemMention);
-            systemMention.setRealisType(goldMention.getRealisType());
-            systemMention.setEventType(goldMention.getEventType());
-            UimaAnnotationUtils.finishAnnotation(systemMention, COMPONENT_ID, goldMention.getId(), toView);
-            from2toMentionMap.put(goldMention, systemMention);
+        // Delete the mentions first.
+        for (EventMention mention : UimaConvenience.getAnnotationList(toView, EventMention.class)) {
+            mention.removeFromIndexes();
         }
+
+        Map<EventMention, EventMention> from2toMentionMap = new HashMap<>();
+        for (EventMention goldMention : JCasUtil.select(fromView, EventMention.class))
+            if (validate(goldMention, toView)) {
+                EventMention systemMention = new EventMention(toView, goldMention.getBegin(), goldMention.getEnd());
+                copyRegions(toView, goldMention, systemMention);
+                systemMention.setRealisType(goldMention.getRealisType());
+                systemMention.setEventType(goldMention.getEventType());
+                UimaAnnotationUtils.finishAnnotation(systemMention, COMPONENT_ID, goldMention.getId(), toView);
+                from2toMentionMap.put(goldMention, systemMention);
+            }
         return from2toMentionMap;
     }
 
-    private void copyEvents(JCas from, JCas to, Map<EventMention, EventMention> from2toMentionMap) {
-        for (Event event : JCasUtil.select(from, Event.class)) {
-            Event copiedEvent = new Event(to);
+    private boolean validate(EventMention goldMention, JCas targetView) {
+        if (targetView.getDocumentText().substring(goldMention.getBegin(), goldMention.getEnd()).trim().equals("")) {
+            return false;
+        }
+        return true;
+    }
+
+    private void copyEvents(JCas fromView, JCas toView, Map<EventMention, EventMention> from2toMentionMap) {
+        // Delete events first.
+        for (Event event : UimaConvenience.getAnnotationList(toView, Event.class)) {
+            event.removeFromIndexes();
+        }
+
+        for (Event event : JCasUtil.select(fromView, Event.class)) {
+            Event copiedEvent = new Event(toView);
             int fromMentionLength = event.getEventMentions().size();
-            copiedEvent.setEventMentions(new FSArray(to, fromMentionLength));
+//            copiedEvent.setEventMentions(new FSArray(toView, fromMentionLength));
+
+            List<EventMention> copiedMentions = new ArrayList<>();
 
             for (int i = 0; i < fromMentionLength; i++) {
                 EventMention toMention = from2toMentionMap.get(event.getEventMentions(i));
-                copiedEvent.setEventMentions(i, toMention);
-                toMention.setReferringEvent(copiedEvent);
+                if (toMention != null) {
+                    copiedMentions.add(toMention);
+                    toMention.setReferringEvent(copiedEvent);
+                }
             }
-            copiedEvent.setEventIndex(event.getEventIndex());
 
-            UimaAnnotationUtils.finishTop(copiedEvent, COMPONENT_ID, event.getId(), to);
+            copiedEvent.setEventMentions(FSCollectionFactory.createFSArray(toView, copiedMentions));
+            UimaAnnotationUtils.finishTop(copiedEvent, COMPONENT_ID, event.getId(), toView);
         }
     }
 

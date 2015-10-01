@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.emd.annotators.crf;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
+import edu.cmu.cs.lti.emd.utils.GoldCacher;
 import edu.cmu.cs.lti.learning.cache.CrfFeatureCacher;
 import edu.cmu.cs.lti.learning.cache.CrfState;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
@@ -223,8 +224,6 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
         if (directoryExist) {
             trainer.write(new File(modelOutputDirectory, MODEL_NAME));
-//            classAlphabet.write(new File(modelOutputDirectory, CLASS_ALPHABET_NAME));
-//            alphabet.write(new File(modelOutputDirectory, ALPHABET_NAME));
             org.apache.commons.io.FileUtils.write(new File(modelOutputDirectory, FEATURE_SPEC_FILE), featureSpec);
         } else {
             throw new IOException(String.format("Cannot create directory : [%s]", modelOutputDirectory.toString()));

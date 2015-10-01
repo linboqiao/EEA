@@ -5,6 +5,7 @@ import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import org.javatuples.Pair;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -14,53 +15,46 @@ import java.util.Comparator;
  *
  * @author Zhengzhong Liu
  */
-public class MentionGraphEdge {
+public class MentionGraphEdge implements Serializable {
+    private static final long serialVersionUID = -4095257622117532545L;
+
     public final int govIdx;
     public final int depIdx;
 
     private final MentionGraph hostingGraph;
 
-    // This variable store the gold type during training. The subgraph will store the predicted type.
+    // This variable store the gold type during training.
     public EdgeType edgeType = null;
-
-    // A score for each label type.
-    private double[] labelScores;
-
-    private boolean isScored;
 
     private boolean featureExtracted;
 
     private FeatureVector labelledFeatures;
 
-    public enum EdgeType {Root, Coreference, Subevent, After}
+    public enum EdgeType {Root, Coreference}
 
-    public MentionGraphEdge(MentionGraph graph, int gov, int dep) {
+    private boolean testingMode;
+
+    public MentionGraphEdge(MentionGraph graph, int gov, int dep, boolean testingMode) {
         this.govIdx = gov;
         this.depIdx = dep;
-        this.labelScores = new double[EdgeType.values().length];
-        this.isScored = false; // Both features and scores started as 0.
         this.featureExtracted = false;
         this.hostingGraph = graph;
+        this.testingMode = testingMode;
     }
 
-    public double getLabelScore(EdgeType edgeType, GraphWeightVector weightVector, PairFeatureExtractor extractor) {
-        if (!isScored) {
-            scoreEdge(weightVector, extractor);
-        }
-        return labelScores[edgeType.ordinal()];
-    }
-
-    public void scoreEdge(GraphWeightVector weightVector, PairFeatureExtractor extractor) {
-        for (int i = 0; i < EdgeType.values().length; i++) {
-            double typeScore = weightVector.dotProd(getLabelledFeatures(extractor), EdgeType.values()[i].name());
-            labelScores[i] = typeScore;
-        }
-        isScored = true;
+    public double scoreEdge(EdgeType type, GraphWeightVector weightVector, PairFeatureExtractor extractor) {
+        return weightVector.dotProd(getLabelledFeatures(extractor), type.name());
     }
 
     private void extractFeatures(PairFeatureExtractor extractor) {
-        labelledFeatures = extractor.extract(hostingGraph.getContext(), hostingGraph.getNode(govIdx)
-                .getMention(), hostingGraph.getNode(depIdx).getMention());
+        MentionNode govNode = hostingGraph.getNode(govIdx);
+        MentionNode depNode = hostingGraph.getNode(depIdx);
+
+        if (govNode.isRoot()) {
+            labelledFeatures = extractor.extract(depNode.getMentionIndex());
+        } else {
+            labelledFeatures = extractor.extract(govNode.getMentionIndex(), depNode.getMentionIndex());
+        }
         featureExtracted = true;
     }
 
@@ -68,7 +62,7 @@ public class MentionGraphEdge {
         if (edgeType == null) {
             return null;
         }
-        return Pair.with(edgeType, getLabelScore(edgeType, weightVector, extractor));
+        return Pair.with(edgeType, scoreEdge(edgeType, weightVector, extractor));
     }
 
     public Pair<EdgeType, Double> getBestLabelScore(GraphWeightVector weightVector, PairFeatureExtractor extractor) {
@@ -78,7 +72,7 @@ public class MentionGraphEdge {
 
         if (isRootEdge) {
             // The only possible relation with the root node is ROOT.
-            score = getLabelScore(EdgeType.Root, weightVector, extractor);
+            score = scoreEdge(EdgeType.Root, weightVector, extractor);
             bestLabel = EdgeType.Root;
         } else {
             for (EdgeType label : EdgeType.values()) {
@@ -86,7 +80,8 @@ public class MentionGraphEdge {
                     // If the edge is not a root edge, we will not test for Root edge type.
                     continue;
                 }
-                double typeScore = getLabelScore(label, weightVector, extractor);
+                double typeScore = scoreEdge(label, weightVector, extractor);
+
                 if (typeScore > score) {
                     score = typeScore;
                     bestLabel = label;

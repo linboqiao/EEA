@@ -1,15 +1,13 @@
 package edu.cmu.cs.lti.learning.feature.mention_pair.extractor;
 
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
-import edu.cmu.cs.lti.learning.feature.mention_pair.functions.MentionPairFeatures;
-import edu.cmu.cs.lti.learning.model.BinaryHashFeatureVector;
-import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
-import edu.cmu.cs.lti.learning.model.FeatureVector;
-import edu.cmu.cs.lti.learning.model.RealValueHashFeatureVector;
+import edu.cmu.cs.lti.learning.feature.mention_pair.functions.AbstractMentionPairFeatures;
+import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
+import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
 import java.lang.reflect.Constructor;
@@ -25,41 +23,82 @@ import java.util.List;
  * @author Zhengzhong Liu
  */
 public class PairFeatureExtractor {
-    private List<MentionPairFeatures> featureFunctions = new ArrayList<>();
+    private List<AbstractMentionPairFeatures> featureFunctions = new ArrayList<>();
 
     private boolean useBinary;
 
-    private FeatureAlphabet alphabet;
+    private final ClassAlphabet classAlphabet;
 
-    public PairFeatureExtractor(FeatureAlphabet alphabet, boolean useBinary,
+    private final FeatureAlphabet featureAlphabet;
+
+    private JCas context;
+
+    private List<EventMention> mentions;
+
+    public PairFeatureExtractor(FeatureAlphabet featureAlphabet, ClassAlphabet classAlphabet, boolean useBinary,
                                 Configuration generalConfig, Configuration featureConfig)
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         this.useBinary = useBinary;
-        this.alphabet = alphabet;
+        this.featureAlphabet = featureAlphabet;
+        this.classAlphabet = classAlphabet;
         String featureFunctionPackage = featureConfig.get(FeatureSpecParser.FEATURE_FUNCTION_PACKAGE_KEY);
         for (String featureFunctionName : featureConfig.getList(FeatureSpecParser.FEATURE_FUNCTION_NAME_KEY)) {
             String ffClassName = featureFunctionPackage + "." + featureFunctionName;
             Class<?> featureFunctionType = Class.forName(ffClassName);
             Constructor<?> constructor = featureFunctionType.getConstructor(Configuration.class, Configuration.class);
-            featureFunctions.add((MentionPairFeatures) constructor.newInstance(generalConfig, featureConfig));
+            featureFunctions.add((AbstractMentionPairFeatures) constructor.newInstance(generalConfig, featureConfig));
         }
     }
 
     public void initWorkspace(JCas context) {
-        for (MentionPairFeatures ff : featureFunctions) {
+        for (AbstractMentionPairFeatures ff : featureFunctions) {
             ff.initDocumentWorkspace(context);
         }
+        this.context = context;
+        this.mentions = new ArrayList<>(JCasUtil.select(context, EventMention.class));
     }
 
-    private FeatureVector newFeatureVector() {
-        return useBinary ? new BinaryHashFeatureVector(alphabet) : new RealValueHashFeatureVector(alphabet);
+    public FeatureVector newFeatureVector() {
+        return useBinary ? new BinaryHashFeatureVector(featureAlphabet) : new RealValueHashFeatureVector
+                (featureAlphabet);
     }
 
-    public FeatureVector extract(JCas context, EventMention firstMention, EventMention secondMention) {
+    public GraphFeatureVector newGraphFeatureVector() {
+        return new GraphFeatureVector(classAlphabet, featureAlphabet, useBinary);
+    }
+
+    /**
+     * Extract features from one mention only when the other is deliberately omitted, for example, the other mention
+     * is a virtual root.
+     *
+     * @param mentionId The mention id to extract from.
+     * @return Feature vector of this mention against the other
+     */
+    public FeatureVector extract(int mentionId) {
         FeatureVector featureVector = newFeatureVector();
         TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
-        featureFunctions.forEach(ff -> ff.extract(context, rawFeatures, firstMention, secondMention));
+        featureFunctions.forEach(ff -> ff.extract(context, rawFeatures, mentions.get(mentionId)));
+
+        rawFeatures.forEachEntry((featureName, featureValue) -> {
+            featureVector.addFeature(featureName, featureValue);
+            return true;
+        });
+
+        return featureVector;
+    }
+
+    /**
+     * Extract features for the mention pair.
+     *
+     * @param firstId  The first mention to extract from.
+     * @param secondId The second mention to extract from.
+     * @return Feature vector of this mention against the other
+     */
+    public FeatureVector extract(int firstId, int secondId) {
+        FeatureVector featureVector = newFeatureVector();
+        TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
+        featureFunctions.forEach(ff -> ff.extract(context, rawFeatures, mentions.get(firstId), mentions.get(secondId)));
 
         rawFeatures.forEachEntry((featureName, featureValue) -> {
             featureVector.addFeature(featureName, featureValue);

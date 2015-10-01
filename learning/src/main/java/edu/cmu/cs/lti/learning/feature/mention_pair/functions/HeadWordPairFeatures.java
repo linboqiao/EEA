@@ -15,7 +15,7 @@ import org.apache.uima.jcas.JCas;
  *
  * @author Zhengzhong Liu
  */
-public class HeadWordPairFeatures extends MentionPairFeatures {
+public class HeadWordPairFeatures extends AbstractMentionPairFeatures {
     public HeadWordPairFeatures(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
     }
@@ -26,14 +26,28 @@ public class HeadWordPairFeatures extends MentionPairFeatures {
 
     public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures,
                         EventMention firstAnno, EventMention secondAnno) {
-        StanfordCorenlpToken firstHead = UimaNlpUtils.findHeadFromTreeAnnotation(firstAnno);
-        StanfordCorenlpToken secondHead = UimaNlpUtils.findHeadFromTreeAnnotation(secondAnno);
-
-        String firstLemma = firstHead.getLemma().toLowerCase();
-        String secondLemma = secondHead.getLemma().toLowerCase();
+        String firstLemma = getLemma(firstAnno);
+        String secondLemma = getLemma(secondAnno);
 
         lemmaPairFeature(rawFeatures, firstLemma, secondLemma);
         lemmaMatchFeature(rawFeatures, firstLemma, secondLemma);
+    }
+
+    @Override
+    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures, EventMention secondAnno) {
+// Disable because there are no much we can do to derive whether a mention is coreferent with something by looking at
+// its lemma.
+    }
+
+    private String getLemma(EventMention mention) {
+        StanfordCorenlpToken head = UimaNlpUtils.findHeadFromTreeAnnotation(mention);
+
+        if (head == null) {
+            return mention.getCoveredText().toLowerCase();
+        }
+
+        String lemma = head.getLemma();
+        return lemma.toLowerCase();
     }
 
     private void lemmaPairFeature(TObjectDoubleMap<String> rawFeatures, String firstLemma, String secondLemma) {
@@ -44,12 +58,18 @@ public class HeadWordPairFeatures extends MentionPairFeatures {
             lemmaPair = secondLemma + "_" + firstLemma;
         }
 
-        rawFeatures.put(FeatureUtils.formatFeatureName("HeadWordPair", lemmaPair), 1);
+        rawFeatures.put(FeatureUtils.formatFeatureName("HeadLemmaPair", lemmaPair), 1);
     }
 
     private void lemmaMatchFeature(TObjectDoubleMap<String> rawFeatures, String firstLemma, String secondLemma) {
         if (firstLemma.equals(secondLemma)) {
             rawFeatures.put("LemmaMatch", 1);
+        }
+    }
+
+    private void lemmaSubstringFeature(TObjectDoubleMap<String> rawFeatures, String firstLemma, String secondLemma) {
+        if (firstLemma.contains(secondLemma) || secondLemma.contains(firstLemma)) {
+            rawFeatures.put("LemmaSubString", 1);
         }
     }
 

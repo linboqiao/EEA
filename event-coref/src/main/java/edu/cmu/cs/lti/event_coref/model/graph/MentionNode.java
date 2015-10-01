@@ -1,39 +1,24 @@
 package edu.cmu.cs.lti.event_coref.model.graph;
 
-import edu.cmu.cs.lti.script.type.EventMention;
+import java.io.Serializable;
 
 /**
  * Created with IntelliJ IDEA.
  * Date: 5/1/15
  * Time: 11:28 PM
- *
+ * <p>
  * Each mention node contains an event mention and a couple
  *
  * @author Zhengzhong Liu
  */
-public class MentionNode {
-    EventMention mention;
-    int id;
-
-    boolean isVirtual;
+public class MentionNode implements Serializable {
+    private static final long serialVersionUID = 5437802273911493639L;
+    private int id;
+    private int mentionIndex;
 
     public MentionNode(int id) {
         this.id = id;
-        this.mention = null;
-        isVirtual = true;
-    }
-
-    public MentionNode(int id, EventMention mention) {
-        this.id = id;
-        this.mention = mention;
-    }
-
-    public boolean isVirtual() {
-        return isVirtual;
-    }
-
-    public void setIsVirtual(boolean isVirtual) {
-        this.isVirtual = isVirtual;
+        this.mentionIndex = id - 1;
     }
 
     public boolean isRoot() {
@@ -48,11 +33,11 @@ public class MentionNode {
         this.id = id;
     }
 
-    public EventMention getMention() {
-        return mention;
+    public String toString() {
+        return String.format("%s:%d", "MentionNode", id);
     }
 
-    public void setMention(EventMention mention) {
-        this.mention = mention;
+    public int getMentionIndex() {
+        return mentionIndex;
     }
 }

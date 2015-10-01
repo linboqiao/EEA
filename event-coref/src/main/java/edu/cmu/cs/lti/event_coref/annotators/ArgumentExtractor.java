@@ -11,6 +11,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
+import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,26 +38,29 @@ public class ArgumentExtractor extends AbstractLoggingAnnotator {
         helper.loadStanford2Fanse(aJCas);
         helper.loadFanse2Stanford(aJCas);
 
-        Map<SemaforLabel, Map<String, SemaforLabel>> semaforArguments = getSemaforArguments(aJCas);
+        Map<SemaforLabel, Pair<String, Map<String, SemaforLabel>>> semaforArguments = getSemaforArguments(aJCas);
 
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
             StanfordCorenlpToken headWord = UimaNlpUtils.findHeadFromTreeAnnotation(mention);
-            mention.setHeadWord(headWord);
 
             if (headWord == null) {
+                // TODO this is a temporary solution.
                 logger.debug("Found null headword for " + mention.getId() + " : " + mention.getCoveredText());
+                headWord = JCasUtil.selectCovering(StanfordCorenlpToken.class, mention).get(0);
             }
-
-            assert (headWord != null);
+            mention.setHeadWord(headWord);
 
             List<SemaforLabel> coveredSemaforLabel = JCasUtil.selectCovered(SemaforLabel.class, headWord);
             Map<StanfordCorenlpToken, String> semafordHeadWord2Role = new HashMap<>();
             Map<String, SemaforLabel> semaforRoles = new HashMap<>();
             for (SemaforLabel label : coveredSemaforLabel) {
                 if (semaforArguments.containsKey(label)) {
-                    semaforRoles = semaforArguments.get(label);
+                    Pair<String, Map<String, SemaforLabel>> frameNameAndRoles = semaforArguments.get(label);
+                    semaforRoles = frameNameAndRoles.getValue1();
+                    mention.setFrameName(frameNameAndRoles.getValue0());
                     for (Map.Entry<String, SemaforLabel> aSemaforArgument : semaforRoles.entrySet()) {
-                        StanfordCorenlpToken argumentHead = UimaNlpUtils.findHeadFromTreeAnnotation(aSemaforArgument.getValue());
+                        StanfordCorenlpToken argumentHead = UimaNlpUtils.findHeadFromTreeAnnotation(aSemaforArgument
+                                .getValue());
                         String roleName = aSemaforArgument.getKey();
                         if (argumentHead != null) {
                             semafordHeadWord2Role.put(argumentHead, roleName);
@@ -70,7 +74,8 @@ public class ArgumentExtractor extends AbstractLoggingAnnotator {
             Map<StanfordCorenlpToken, String> fanseHeadWord2Role = new HashMap<>();
             Map<String, FanseToken> fanseRoles = new HashMap<>();
             if (childSemanticRelations != null) {
-                for (FanseSemanticRelation childRelation : JCasUtil.select(childSemanticRelations, FanseSemanticRelation.class)) {
+                for (FanseSemanticRelation childRelation : JCasUtil.select(childSemanticRelations,
+                        FanseSemanticRelation.class)) {
                     FanseToken fanseChild = (FanseToken) childRelation.getChild();
                     StanfordCorenlpToken argumentHead = helper.getStanfordToken(fanseChild);
                     if (argumentHead != null) {
@@ -80,7 +85,7 @@ public class ArgumentExtractor extends AbstractLoggingAnnotator {
                 }
             }
 
-            //for the same mention, all arguments should be merged together
+            // For the same mention, all arguments should be merged together.
             Set<StanfordCorenlpToken> mappedArguments = new HashSet<>();
 
             for (Map.Entry<StanfordCorenlpToken, String> semaforRoleHead : semafordHeadWord2Role.entrySet()) {
@@ -89,34 +94,38 @@ public class ArgumentExtractor extends AbstractLoggingAnnotator {
                 String semaforRoleName = semaforRoleHead.getValue();
                 SemaforLabel argumentAnnotation = semaforRoles.get(semaforRoleName);
                 EventMentionArgumentLink argumentLink = new EventMentionArgumentLink(aJCas);
-                EntityMention argumentEntityMention = UimaNlpUtils.createEntityMention(aJCas, argumentAnnotation.getBegin(), argumentAnnotation.getEnd(), ANNOTATOR_COMPONENT_ID);
+                EntityMention argumentEntityMention = UimaNlpUtils.createEntityMention(aJCas, argumentAnnotation
+                        .getBegin(), argumentAnnotation.getEnd(), ANNOTATOR_COMPONENT_ID);
                 argumentLink.setArgument(argumentEntityMention);
                 argumentLink.setFrameElementName(semaforRoleName);
                 if (fanseHeadWord2Role.containsKey(headToken)) {
                     argumentLink.setPropbankRoleName(fanseHeadWord2Role.get(headToken));
                 }
-                mention.setArguments(UimaConvenience.appendFSList(aJCas, mention.getArguments(), argumentLink, EventMentionArgumentLink.class));
+                mention.setArguments(UimaConvenience.appendFSList(aJCas, mention.getArguments(), argumentLink,
+                        EventMentionArgumentLink.class));
                 UimaAnnotationUtils.finishTop(argumentLink, ANNOTATOR_COMPONENT_ID, 0, aJCas);
             }
 
             for (Map.Entry<StanfordCorenlpToken, String> fanseRoleHead : fanseHeadWord2Role.entrySet()) {
                 StanfordCorenlpToken headToken = fanseRoleHead.getKey();
-                if (mappedArguments.contains(headToken)) {
+                if (!mappedArguments.contains(headToken)) {
                     String fanseRoleName = fanseRoleHead.getValue();
                     FanseToken argumentAnnotation = fanseRoles.get(fanseRoleName);
                     EventMentionArgumentLink argumentLink = new EventMentionArgumentLink((aJCas));
-                    EntityMention argumentEntityMention = UimaNlpUtils.createEntityMention(aJCas, argumentAnnotation.getBegin(), argumentAnnotation.getEnd(), ANNOTATOR_COMPONENT_ID);
+                    EntityMention argumentEntityMention = UimaNlpUtils.createEntityMention(aJCas, argumentAnnotation
+                            .getBegin(), argumentAnnotation.getEnd(), ANNOTATOR_COMPONENT_ID);
                     argumentLink.setArgument(argumentEntityMention);
                     argumentLink.setPropbankRoleName(fanseRoleName);
-                    mention.setArguments(UimaConvenience.appendFSList(aJCas, mention.getArguments(), argumentLink, EventMentionArgumentLink.class));
+                    mention.setArguments(UimaConvenience.appendFSList(aJCas, mention.getArguments(), argumentLink,
+                            EventMentionArgumentLink.class));
                     UimaAnnotationUtils.finishTop(argumentLink, ANNOTATOR_COMPONENT_ID, 0, aJCas);
                 }
             }
         }
     }
 
-    private Map<SemaforLabel, Map<String, SemaforLabel>> getSemaforArguments(JCas aJCas) {
-        Map<SemaforLabel, Map<String, SemaforLabel>> semaforArguments = new HashMap<>();
+    private Map<SemaforLabel, Pair<String, Map<String, SemaforLabel>>> getSemaforArguments(JCas aJCas) {
+        Map<SemaforLabel, Pair<String, Map<String, SemaforLabel>>> semaforArguments = new HashMap<>();
 
         for (SemaforAnnotationSet annotationSet : JCasUtil.select(aJCas, SemaforAnnotationSet.class)) {
             SemaforLabel targetLabel = null;
@@ -134,7 +143,7 @@ public class ArgumentExtractor extends AbstractLoggingAnnotator {
                     }
                 }
             }
-            semaforArguments.put(targetLabel, roleLabels);
+            semaforArguments.put(targetLabel, Pair.with(annotationSet.getFrameName(), roleLabels));
         }
         return semaforArguments;
     }

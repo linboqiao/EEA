@@ -7,6 +7,7 @@ import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.javatuples.Pair;
@@ -42,7 +43,9 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         TokenAlignmentHelper align = new TokenAlignmentHelper();
         align.loadWord2Stanford(aJCas, goldCompontnentId);
 
-        int eventId = 1;
+        Map<EventMention, String> mention2Id = new HashMap<>();
+
+        int eventMentionIndex = 1;
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
             Pair<String, String> wordInfo = getWords(mention, align);
             if (wordInfo == null) {
@@ -51,7 +54,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             List<String> parts = new ArrayList<>();
             parts.add(systemId);
             parts.add(articleName);
-            String eid = "E" + eventId++;
+            String eid = "E" + eventMentionIndex++;
             parts.add(eid);
             parts.add(wordInfo.getValue0());
             parts.add(wordInfo.getValue1());
@@ -59,7 +62,22 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             parts.add(mention.getRealisType() == null ? "Actual" : mention.getRealisType());
             sb.append(Joiner.on("\t").join(parts)).append("\n");
             mention.setId(eid);
+            mention2Id.put(mention, eid);
         }
+
+
+        int corefIndex = 1;
+        for (Event event : JCasUtil.select(aJCas, Event.class)) {
+            String corefId = "R" + corefIndex;
+            sb.append("@Coreference").append("\t").append(corefId).append("\t");
+            String sep = "";
+            for (EventMention mention : FSCollectionFactory.create(event.getEventMentions(), EventMention.class)) {
+                sb.append(sep).append(mention2Id.get(mention));
+                sep = ",";
+            }
+            sb.append("\n");
+        }
+
         sb.append("#EndOfDocument\n");
 
         return sb.toString();
