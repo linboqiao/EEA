@@ -221,7 +221,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
     /**
      * Compute the L2 norm of the feature vector.
      *
-     * @param typedFeatures A vector that store features with each type separated
+     * @param typedFeatures A vector that store features with each type separated.
      * @return The L2 norm of the feature vector.
      */
     public double getFeatureL2(GraphFeatureVector typedFeatures) {
