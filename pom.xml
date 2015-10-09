@@ -72,32 +72,32 @@
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>zl-utils</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>0.0.1</version>
             </dependency>
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>semafor-parser</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.0.1</version>
             </dependency>
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>stanford-corenlp</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.0.1</version>
             </dependency>
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>fanse-parser</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.0.1</version>
             </dependency>
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>discourse-parser</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.0.1</version>
             </dependency>
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>opennlp</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.0.1</version>
             </dependency>
             <dependency>
                 <groupId>edu.stanford.nlp</groupId>
@@ -119,7 +119,7 @@
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>corpus-reader</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.0.1</version>
             </dependency>
             <dependency>
                 <groupId>org.uimafit</groupId>
@@ -129,12 +129,12 @@
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>uima-util</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.0.1</version>
             </dependency>
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>uima-base</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.0.1</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.uima</groupId>
@@ -189,7 +189,7 @@
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>misc-annotators</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.0.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
