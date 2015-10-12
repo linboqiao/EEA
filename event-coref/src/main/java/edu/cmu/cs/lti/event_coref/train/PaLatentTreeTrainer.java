@@ -45,14 +45,12 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
     public static final String MODEL_NAME = "latentTreeModel";
     public static final String FEATURE_SPEC_FILE = "featureSpec";
 
-    public static final String PARAM_CONFIG_PATH = "configPath";
+    public static final String PARAM_CONFIGURATION_PATH = "configPath";
 
-    @ConfigurationParameter(name = PARAM_CONFIG_PATH)
+    @ConfigurationParameter(name = PARAM_CONFIGURATION_PATH)
     private Configuration config;
 
     private PairFeatureExtractor extractor;
-    private ClassAlphabet classAlphabet;
-    private FeatureAlphabet featureAlphabet;
     private LatentTreeDecoder decoder;
     private ObjectCacher objectCacher;
     private TrainingStats trainingStats;
@@ -77,13 +75,13 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        classAlphabet = new ClassAlphabet();
+        ClassAlphabet classAlphabet = new ClassAlphabet();
         for (EdgeType edgeType : EdgeType.values()) {
             classAlphabet.addClass(edgeType.name());
         }
-        featureAlphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
+        FeatureAlphabet featureAlphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
         decoder = new BestFirstLatentTreeDecoder();
-        weights = new GraphWeightVector(classAlphabet, featureAlphabet);
+        weights = new GraphWeightVector(classAlphabet, featureAlphabet, true /**Use hash weight vector**/);
 
         featureSpec = config.get("edu.cmu.cs.lti.features.coref.spec");
         try {
@@ -103,6 +101,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        // TODO caching is not successful why?
 //        printProcessInfo(aJCas, logger);
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
         List<EventMentionRelation> allMentionRelations = new ArrayList<>(

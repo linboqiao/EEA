@@ -77,7 +77,7 @@ public class MentionGraphEdge implements Serializable {
         } else {
             for (EdgeType label : EdgeType.values()) {
                 if (label.equals(EdgeType.Root)) {
-                    // If the edge is not a root edge, we will not test for Root edge type.
+                    // If the edge is not a root edge, we will not testAll for Root edge type.
                     continue;
                 }
                 double typeScore = scoreEdge(label, weightVector, extractor);

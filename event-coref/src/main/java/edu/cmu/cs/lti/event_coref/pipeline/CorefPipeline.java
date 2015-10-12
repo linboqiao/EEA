@@ -169,7 +169,8 @@ public class CorefPipeline {
                 AnalysisEngineDescription mentionAndCorefGoldAnnotator = AnalysisEngineFactory
                         .createEngineDescription(
                                 GoldStandardEventMentionAnnotator.class, typeSystemDescription,
-                                GoldStandardEventMentionAnnotator.PARAM_COPY_MENTION_ONLY, true,
+                                GoldStandardEventMentionAnnotator.PARAM_COPY_TYPE, true,
+                                GoldStandardEventMentionAnnotator.PARAM_COPY_REALIS, true,
                                 GoldStandardEventMentionAnnotator.PARAM_TARGET_VIEWS,
                                 new String[]{CAS.NAME_DEFAULT_SOFA, UimaConst.inputViewName}
                         );
@@ -180,8 +181,6 @@ public class CorefPipeline {
 
                 AnalysisEngineDescription xmiWriter = CustomAnalysisEngineFactory.createXmiWriter(workingDir,
                         outputBase);
-
-//                return new AnalysisEngineDescription[]{argumentExtractor, xmiWriter};
 
                 return new AnalysisEngineDescription[]{mentionAndCorefGoldAnnotator, argumentExtractor, xmiWriter};
             }
@@ -212,7 +211,7 @@ public class CorefPipeline {
 
     public void testCoref(Configuration config, String testWorkingDir, String testBase,
                           String modelDir, String outputBase, String suffix) throws UIMAException, IOException {
-        logger.info("Running model on test data, output at " + outputBase);
+        logger.info("Running model on testAll data, output at " + outputBase);
 
         BasicPipeline testPipeline = new BasicPipeline(new AbstractProcessorBuilder() {
             @Override
@@ -380,11 +379,11 @@ public class CorefPipeline {
 
     public String trainFinal(String inputBaseDir) throws UIMAException, IOException {
         String sliceSuffix = "all";
-        CollectionReaderDescription trainingReaader = CustomCollectionReaderFactory.createXmiReader
+        CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createXmiReader
                 (typeSystemDescription, workingDir, inputBaseDir);
 
         String trainingDataOutuput = FileUtils.joinPaths(middleResults, sliceSuffix, "coref_training");
-        CollectionReaderDescription trainingAnnotatedReader = annotateGoldCoref(trainingReaader,
+        CollectionReaderDescription trainingAnnotatedReader = annotateGoldCoref(trainingReader,
                 trainingDataOutuput);
 
         return trainLatentTreeCoref(taskConfig, trainingAnnotatedReader, sliceSuffix);
@@ -410,7 +409,7 @@ public class CorefPipeline {
         String finalModel = pipeline.trainFinal(preprocesseBase);
 //        pipeline.crossValidation(preprocesseBase);
 
-//        pipeline.testCoref(taskConfig, taskConfig.get("edu.cmu.cs.lti.coref.test.dir"), preprocesseBase,
+//        pipeline.testCoref(taskConfig, taskConfig.get("edu.cmu.cs.lti.coref.testAll.dir"), preprocesseBase,
 //                "../models/latent_tree_coref/all_iter1", "test_out");
     }
 }

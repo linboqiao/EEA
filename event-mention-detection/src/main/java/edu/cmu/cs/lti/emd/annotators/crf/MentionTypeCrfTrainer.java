@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.emd.annotators.crf;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
-import edu.cmu.cs.lti.emd.utils.GoldCacher;
+import edu.cmu.cs.lti.emd.utils.SequenceGoldCacher;
 import edu.cmu.cs.lti.learning.cache.CrfFeatureCacher;
 import edu.cmu.cs.lti.learning.cache.CrfState;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
@@ -42,45 +42,77 @@ import java.util.TreeSet;
  * @author Zhengzhong Liu
  */
 public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
+    public static final String PARAM_CONFIGURATION_PATH = "configFile";
+
+    @ConfigurationParameter(name = PARAM_CONFIGURATION_PATH)
+    private Configuration config;
+
     public static final String PARAM_GOLD_CACHE_DIRECTORY = "GoldCacheDirectory";
 
     @ConfigurationParameter(name = PARAM_GOLD_CACHE_DIRECTORY)
     private File goldCacheDirectory;
 
-    private static AveragePerceptronTrainer trainer;
-
-    private static UimaSequenceFeatureExtractor sentenceExtractor;
-
-    private static ClassAlphabet classAlphabet;
-
-    private static HashAlphabet alphabet;
-
     public static final String MODEL_NAME = "crfModel";
 
     public static final String FEATURE_SPEC_FILE = "featureSpec";
 
+    private static AveragePerceptronTrainer trainer;
+
     private static String featureSpec;
 
-    private static TrainingStats trainingStats;
+    private UimaSequenceFeatureExtractor sentenceExtractor;
 
-    private static CrfFeatureCacher cacher;
+    private ClassAlphabet classAlphabet;
 
-    private static ViterbiDecoder decoder;
+    private TrainingStats trainingStats;
 
-    private GoldCacher goldCacher;
+    private CrfFeatureCacher cacher;
+
+    private ViterbiDecoder decoder;
+
+    private SequenceGoldCacher goldCacher;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
         logger.info("Starting iteration ...");
-        logger.info("Initializing gold cacher with " + goldCacheDirectory.getAbsolutePath());
 
+        int alphabetBits = config.getInt("edu.cmu.cs.lti.mention.feature.alphabet_bits", 24);
+        double stepSize = config.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
+        int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
+        boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
+        boolean invalidate = config.getBoolean("edu.cmu.cs.lti.mention.cache.invalidate", true);
+        File cacheDir = config.getFile("edu.cmu.cs.lti.mention.cache.dir");
+
+        HashAlphabet alphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
+        trainingStats = new TrainingStats(printLossOverPreviousN);
+        classAlphabet = new ClassAlphabet(true, true);
+
+        try {
+            cacher = new CrfFeatureCacher(cacheDir, invalidate);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
+        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, stepSize, alphabet);
+        featureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
+
+        try {
+            sentenceExtractor = new SentenceFeatureExtractor(alphabet, config,
+                    new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.sentence.package.name"))
+                            .parseFeatureFunctionSpecs(featureSpec));
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
+                | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+
+        logger.info("Initializing gold cacher with " + goldCacheDirectory.getAbsolutePath());
         if (!goldCacheDirectory.exists()) {
             goldCacheDirectory.mkdirs();
             logger.info("Create a gold directory at : " + goldCacheDirectory.getAbsolutePath());
         }
-
-        goldCacher = new GoldCacher(goldCacheDirectory);
+        goldCacher = new SequenceGoldCacher(goldCacheDirectory);
         try {
             goldCacher.loadGoldSolutions();
         } catch (FileNotFoundException e) {
@@ -228,28 +260,5 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         } else {
             throw new IOException(String.format("Cannot create directory : [%s]", modelOutputDirectory.toString()));
         }
-    }
-
-    public static void setup(String[] classes, File cacheDirectory, Configuration config) throws
-            ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException,
-            IllegalAccessException, IOException {
-        int alphabetBits = config.getInt("edu.cmu.cs.lti.mention.feature.alphabet_bits", 24);
-        double stepSize = config.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
-        int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
-        boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
-        boolean invalidate = config.getBoolean("edu.cmu.cs.lti.mention.cache.invalidate", true);
-
-        classAlphabet = new ClassAlphabet(classes, true, true);
-        alphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
-        trainingStats = new TrainingStats(printLossOverPreviousN);
-
-        cacher = new CrfFeatureCacher(cacheDirectory, invalidate);
-        decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
-        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, stepSize, alphabet);
-        featureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
-
-        sentenceExtractor = new SentenceFeatureExtractor(alphabet, config,
-                new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.sentence.package.name"))
-                        .parseFeatureFunctionSpecs(featureSpec));
     }
 }

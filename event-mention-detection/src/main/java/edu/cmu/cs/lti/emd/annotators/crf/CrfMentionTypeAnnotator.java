@@ -52,7 +52,6 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     private GraphWeightVector weightVector;
     private static SequenceDecoder decoder;
 
-
     public static final String PARAM_MODEL_DIRECTORY = "modelDirectory";
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
     File modelDirectory;
@@ -61,6 +60,8 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_VERBOSE, defaultValue = "false")
     boolean verbose;
 
+    public static final String PARAM_CONFIGURATION_PATH = "configurationPath";
+    @ConfigurationParameter(name = PARAM_CONFIGURATION_PATH)
     public static Configuration config;
 
     @Override

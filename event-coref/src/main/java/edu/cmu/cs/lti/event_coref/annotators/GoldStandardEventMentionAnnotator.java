@@ -36,7 +36,7 @@ import java.util.Map;
  * <p>
  * Annotate event mentions based on Gold Standard, while this is useful
  * for training, it is can also be used in some evaluation case when
- * gold standard mentions are given
+ * gold standard mentions are given.
  *
  * @author Zhengzhong Liu
  */
@@ -46,15 +46,28 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
 
     public static final String PARAM_TARGET_VIEWS = "targetViewNames";
 
-    public static final String PARAM_COPY_MENTION_ONLY = "copyMentionOnly";
+//    public static final String PARAM_COPY_MENTION_ONLY = "copyMentionOnly";
 
-    public static final String PARAM_COPY_EVENT_ONLY = "copyEventOnly";
+    public static final String PARAM_COPY_TYPE = "copyMentionType";
+
+    public static final String PARAM_COPY_REALIS = "copyRealis";
+
+    public static final String PARAM_COPY_COREFERENCE = "copyCoref";
 
     @ConfigurationParameter(name = PARAM_TARGET_VIEWS)
     private String[] targetViewNames;
 
-    @ConfigurationParameter(name = PARAM_COPY_MENTION_ONLY, defaultValue = "false")
-    private boolean copyMentionOnly;
+    @ConfigurationParameter(name = PARAM_COPY_TYPE, defaultValue = "false")
+    private boolean copyType;
+
+    @ConfigurationParameter(name = PARAM_COPY_REALIS, defaultValue = "false")
+    private boolean copyRealis;
+
+    @ConfigurationParameter(name = PARAM_COPY_COREFERENCE, defaultValue = "false")
+    private boolean copyCoreference;
+
+//    @ConfigurationParameter(name = PARAM_COPY_MENTION_ONLY, defaultValue = "false")
+//    private boolean copyMentionOnly;
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
@@ -62,7 +75,7 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
         for (String targetViewName : targetViewNames) {
             JCas targetView = JCasUtil.getView(aJCas, targetViewName, false);
             Map<EventMention, EventMention> from2toMentionMap = copyMentions(goldStandard, targetView);
-            if (!copyMentionOnly) {
+            if (copyCoreference) {
                 copyEvents(goldStandard, targetView, from2toMentionMap);
             }
         }
@@ -79,8 +92,12 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
             if (validate(goldMention, toView)) {
                 EventMention systemMention = new EventMention(toView, goldMention.getBegin(), goldMention.getEnd());
                 copyRegions(toView, goldMention, systemMention);
-                systemMention.setRealisType(goldMention.getRealisType());
-                systemMention.setEventType(goldMention.getEventType());
+                if (copyRealis) {
+                    systemMention.setRealisType(goldMention.getRealisType());
+                }
+                if (copyType) {
+                    systemMention.setEventType(goldMention.getEventType());
+                }
                 UimaAnnotationUtils.finishAnnotation(systemMention, COMPONENT_ID, goldMention.getId(), toView);
                 from2toMentionMap.put(goldMention, systemMention);
             }
@@ -143,7 +160,7 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
 
         AnalysisEngineDescription resultWriter = AnalysisEngineFactory.createEngineDescription(
                 TbfStyleEventWriter.class, typeSystemDescription,
-                TbfStyleEventWriter.PARAM_OUTPUT_PATH, "test.tbf",
+                TbfStyleEventWriter.PARAM_OUTPUT_PATH, "testAll.tbf",
                 TbfStyleEventWriter.PARAM_SYSTEM_ID, "gold"
         );
 
