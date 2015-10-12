@@ -84,7 +84,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         boolean invalidate = config.getBoolean("edu.cmu.cs.lti.mention.cache.invalidate", true);
         File cacheDir = config.getFile("edu.cmu.cs.lti.mention.cache.dir");
 
-        HashAlphabet alphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
+        HashAlphabet alphabet = new HashAlphabet(alphabetBits, readableModel);
         trainingStats = new TrainingStats(printLossOverPreviousN);
         classAlphabet = new ClassAlphabet(true, true);
 

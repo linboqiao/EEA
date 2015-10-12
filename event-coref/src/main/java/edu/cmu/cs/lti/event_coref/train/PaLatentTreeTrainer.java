@@ -62,7 +62,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
-        logger.info("Initialize perceptron trainer");
+        logger.info("Initialize latent tree trainer");
 
         int alphabetBits = config.getInt("edu.cmu.cs.lti.coref.feature.alphabet_bits", 22);
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.coref.readableModel", false);
@@ -79,7 +79,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         for (EdgeType edgeType : EdgeType.values()) {
             classAlphabet.addClass(edgeType.name());
         }
-        FeatureAlphabet featureAlphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
+        FeatureAlphabet featureAlphabet = new HashAlphabet(alphabetBits, readableModel);
         decoder = new BestFirstLatentTreeDecoder();
         weights = new GraphWeightVector(classAlphabet, featureAlphabet, true /**Use hash weight vector**/);
 

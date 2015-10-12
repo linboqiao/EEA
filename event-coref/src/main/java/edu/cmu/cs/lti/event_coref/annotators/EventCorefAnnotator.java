@@ -18,6 +18,7 @@ import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.uima.UimaContext;
@@ -64,7 +65,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
-        logger.info("Initialize perceptron trainer");
+        logger.info("Initialize latent tree predictor.");
 
         boolean useBinaryFeatures = config.getBoolean("edu.cmu.cs.lti.coref.binaryFeature", false);
 
@@ -100,8 +101,9 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        UimaConvenience.printProcessLog(aJCas, logger);
+        UimaConvenience.printProcessLog(aJCas, logger);
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
+        logger.info(String.format("Clustering %d mentions.", allMentions.size()));
         extractor.initWorkspace(aJCas);
         MentionGraph mentionGraph = new MentionGraph(allMentions);
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, weights, extractor);
@@ -126,7 +128,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
             if (predictedChain.size() > 1) {
                 Event event = new Event(aJCas);
                 event.setEventMentions(FSCollectionFactory.createFSArray(aJCas, predictedChain));
-//                logger.info("Cluster size is " + predictedChain.size());
+                logger.info("Cluster size is " + predictedChain.size());
                 UimaAnnotationUtils.finishTop(event, COMPONENT_ID, 0, aJCas);
                 for (EventMention eventMention : predictedChain) {
                     eventMention.setReferringEvent(event);

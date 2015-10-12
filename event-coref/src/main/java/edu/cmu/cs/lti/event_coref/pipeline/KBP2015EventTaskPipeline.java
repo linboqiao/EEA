@@ -162,11 +162,11 @@ public class KBP2015EventTaskPipeline {
             InvocationTargetException {
         logger.info("Starting Training ...");
 
-        String cvModelDir = kbpConfig.get("edu.cmu.cs.lti.model.crf.mention.lv1.dir") + suffix;
+        String cvModelDir = new File(kbpConfig.get("edu.cmu.cs.lti.model.crf.mention.lv1.dir"), suffix).getPath();
         boolean skipTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
         if (!skipTrain) {
             logger.info("Saving model directory at " + cvModelDir);
-            File goldCache = new File(kbpConfig.get("edu.cmu.cs.lti.mention.cache.dir") + suffix);
+            File goldCache = new File(kbpConfig.get("edu.cmu.cs.lti.mention.cache.dir"), suffix);
             CrfMentionTrainingLooper mentionTypeTrainer = new CrfMentionTrainingLooper(kbpConfig, cvModelDir, goldCache,
                     typeSystemDescription, trainingReader);
             mentionTypeTrainer.runLoopPipeline();
@@ -212,7 +212,7 @@ public class KBP2015EventTaskPipeline {
     public String trainRealisTypes(Configuration kbpConfig, CollectionReaderDescription trainingReader, String
             suffix) throws Exception {
         RealisClassifierTrainer trainer = new RealisClassifierTrainer(typeSystemDescription, trainingReader, kbpConfig);
-        String realisCvModelDir = kbpConfig.get("edu.cmu.cs.lti.model.realis.dir") + suffix;
+        String realisCvModelDir = new File(kbpConfig.get("edu.cmu.cs.lti.model.realis.dir"), suffix).getPath();
         trainer.buildModels(realisCvModelDir);
 
         return realisCvModelDir;
@@ -323,7 +323,7 @@ public class KBP2015EventTaskPipeline {
         String trainingDataOutput = edu.cmu.cs.lti.utils.FileUtils.joinPaths(middleResults, suffix, "coref_training");
         CollectionReaderDescription trainingAnnotatedReader = prepareCorefTraining(trainingReader, trainingDataOutput);
         logger.info("Start coreference training.");
-        String modelDir = taskConfig.get("edu.cmu.cs.lti.model.event_coref.latent_tree") + suffix;
+        String modelDir = new File(taskConfig.get("edu.cmu.cs.lti.model.event_coref.latent_tree"), suffix).getPath();
 
         logger.info("Saving model directory at : " + modelDir);
         LatentTreeTrainingLooper corefTrainer = new LatentTreeTrainingLooper(taskConfig, modelDir,
@@ -499,7 +499,7 @@ public class KBP2015EventTaskPipeline {
         String evalPath = new File(workingDir, evalBase).getPath();
 
         for (int slice = 0; slice < numSplit; slice++) {
-            String sliceSuffix = "_split_" + slice;
+            String sliceSuffix = "split_" + slice;
 
 //            File evalPath = edu.cmu.cs.lti.utils.FileUtils.joinPathsAsFile(workingDir, evalBase, sliceSuffix);
             edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(evalPath);
@@ -511,11 +511,11 @@ public class KBP2015EventTaskPipeline {
 
             // Training Part:
 
-            // Train lv1 of the mention type model.
-            String crfTypeModelPath = trainMentionTypeLv1(taskConfig, trainingSliceReader, sliceSuffix);
-
-            // Train realis model.
-            String realisModelPath = trainRealisTypes(taskConfig, trainingSliceReader, sliceSuffix);
+//            // Train lv1 of the mention type model.
+//            String crfTypeModelPath = trainMentionTypeLv1(taskConfig, trainingSliceReader, sliceSuffix);
+//
+//            // Train realis model.
+//            String realisModelPath = trainRealisTypes(taskConfig, trainingSliceReader, sliceSuffix);
 
             // Train coreference model.
             String treeCorefModelPath = trainLatentTreeCoref(taskConfig, trainingSliceReader, sliceSuffix);
@@ -523,53 +523,58 @@ public class KBP2015EventTaskPipeline {
             // Testing Part:
 
             // Gold mentions : type.
-            CollectionReaderDescription goldMentionTypesOutput = annotateGold(devSliceReader,
-                    middleResults + "/" + sliceSuffix + "/gold_type", true, false, false);
+//            CollectionReaderDescription goldMentionTypesOutput = annotateGold(devSliceReader,
+//                    middleResults + "/" + sliceSuffix + "/gold_type", true, false, false);
 
-            // Mentions from the crf model.
-            CollectionReaderDescription lv1Output = lv1MentionDetection(devSliceReader, crfTypeModelPath,
-                    middleResults + "/" + sliceSuffix + "/mention_lv1", taskConfig);
+//            // Mentions from the crf model.
+//            CollectionReaderDescription lv1Output = lv1MentionDetection(devSliceReader, crfTypeModelPath,
+//                    middleResults + "/" + sliceSuffix + "/mention_lv1", taskConfig);
 
             // Gold mentions : type and realis.
             CollectionReaderDescription goldMentionTypeRealisOutput = annotateGold(devSliceReader,
                     middleResults + "/" + sliceSuffix + "/gold_mention", true, true, false);
 
 
-            // Run realis on gold mentions.
-            CollectionReaderDescription goldTypeSystemRealisResults = realisAnnotation(taskConfig,
-                    goldMentionTypesOutput, realisModelPath, middleResults + "/" + sliceSuffix + "/gold_realis");
-
-            // Run realis on Lv1 crf mentions.
-            CollectionReaderDescription lv1MentionRealisResults = realisAnnotation(taskConfig, lv1Output,
-                    realisModelPath, middleResults + "/" + sliceSuffix + "/lv1_realis");
+//            // Run realis on gold mentions.
+//            CollectionReaderDescription goldTypeSystemRealisResults = realisAnnotation(taskConfig,
+//                    goldMentionTypesOutput, realisModelPath, middleResults + "/" + sliceSuffix + "/gold_realis");
+//
+//            // Run realis on Lv1 crf mentions.
+//            CollectionReaderDescription lv1MentionRealisResults = realisAnnotation(taskConfig, lv1Output,
+//                    realisModelPath, middleResults + "/" + sliceSuffix + "/lv1_realis");
 
             // Run coreference on gold mention type and gold realis.
             CollectionReaderDescription goldMentionCorefResults = corefResolution(goldMentionTypeRealisOutput,
                     taskConfig, treeCorefModelPath, edu.cmu.cs.lti.utils.FileUtils.joinPaths(middleResults, sliceSuffix,
                             "goldType_goldRealis_treeCoref"));
 
-            // Run coreference on gold mention type and predicted realis.
-            CollectionReaderDescription goldTypeSystemRealisCorefResults = corefResolution(goldTypeSystemRealisResults,
-                    taskConfig, treeCorefModelPath, edu.cmu.cs.lti.utils.FileUtils.joinPaths(middleResults, sliceSuffix,
-                            "goldType_sysRealis_treeCoref"));
-
-            // Run coreference on predicted mentions.
-            CollectionReaderDescription systemMentionCorefResults = corefResolution(lv1MentionRealisResults, taskConfig,
-                    treeCorefModelPath, edu.cmu.cs.lti.utils.FileUtils.joinPaths(middleResults, sliceSuffix,
-                            "lv1Type_sysRealis_treeCoref"));
+//            // Run coreference on gold mention type and predicted realis.
+//            CollectionReaderDescription goldTypeSystemRealisCorefResults = corefResolution
+// (goldTypeSystemRealisResults,
+//                    taskConfig, treeCorefModelPath, edu.cmu.cs.lti.utils.FileUtils.joinPaths(middleResults,
+// sliceSuffix,
+//                            "goldType_sysRealis_treeCoref"));
+//
+//            // Run coreference on predicted mentions.
+//            CollectionReaderDescription systemMentionCorefResults = corefResolution(lv1MentionRealisResults,
+// taskConfig,
+//                    treeCorefModelPath, edu.cmu.cs.lti.utils.FileUtils.joinPaths(middleResults, sliceSuffix,
+//                            "lv1Type_sysRealis_treeCoref"));
 
             // Output final result.
             writeResults(goldMentionCorefResults, evalPath, "goldType_goldRealis_treeCoref", sliceSuffix);
-            writeResults(goldTypeSystemRealisCorefResults, evalPath, "goldType_sysRealis_treeCoref", sliceSuffix);
-            writeResults(systemMentionCorefResults, evalPath, "lv1Type_sysRealis_treeCoref", sliceSuffix);
+//            writeResults(goldTypeSystemRealisCorefResults, evalPath, "goldType_sysRealis_treeCoref", sliceSuffix);
+//            writeResults(systemMentionCorefResults, evalPath, "lv1Type_sysRealis_treeCoref", sliceSuffix);
 
             // Run and write coreference baselines.
-            runBaselines(devSliceReader, new File(evalPath, "OneInOne" + sliceSuffix + ".tbf").getPath(),
-                    OneInOneBaselineCorefAnnotator.class);
-            runBaselines(devSliceReader, new File(evalPath, "AllInOne" + sliceSuffix + ".tbf").getPath(),
-                    AllInOneBaselineCorefAnnotator.class);
-            // Write gold standard.
-            annotateAndWriteGold(devSliceReader, new File(evalPath, "gold" + sliceSuffix + ".tbf").getPath());
+//            runBaselines(goldMentionTypeRealisOutput, new File(evalPath, "OneInOne_" + sliceSuffix + ".tbf").getPath(),
+//                    OneInOneBaselineCorefAnnotator.class);
+//            runBaselines(goldMentionTypeRealisOutput, new File(evalPath, "AllInOne_" + sliceSuffix + ".tbf").getPath(),
+//                    AllInOneBaselineCorefAnnotator.class);
+//            // Write gold standard.
+//            annotateAndWriteGold(devSliceReader, new File(evalPath, "gold" + sliceSuffix + ".tbf").getPath());
+
+            break;
         }
     }
 
@@ -589,7 +594,7 @@ public class KBP2015EventTaskPipeline {
 
         trainingPipeline.prepare();
         trainingPipeline.crossValidation();
-        trainingPipeline.trainAll();
+//        trainingPipeline.trainAll();
 
         if (argv.length >= 2) {
             Configuration testConfig = new Configuration(argv[1]);
