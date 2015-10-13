@@ -45,12 +45,14 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
     public static final String MODEL_NAME = "latentTreeModel";
     public static final String FEATURE_SPEC_FILE = "featureSpec";
 
-    public static final String PARAM_CONFIGURATION_PATH = "configPath";
+    public static final String PARAM_CONFIG_PATH = "configPath";
 
-    @ConfigurationParameter(name = PARAM_CONFIGURATION_PATH)
+    @ConfigurationParameter(name = PARAM_CONFIG_PATH)
     private Configuration config;
 
     private PairFeatureExtractor extractor;
+    private ClassAlphabet classAlphabet;
+    private FeatureAlphabet featureAlphabet;
     private LatentTreeDecoder decoder;
     private ObjectCacher objectCacher;
     private TrainingStats trainingStats;
@@ -62,7 +64,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
-        logger.info("Initialize latent tree trainer");
+        logger.info("Initialize perceptron trainer");
 
         int alphabetBits = config.getInt("edu.cmu.cs.lti.coref.feature.alphabet_bits", 22);
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.coref.readableModel", false);
@@ -75,13 +77,13 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ClassAlphabet classAlphabet = new ClassAlphabet();
+        classAlphabet = new ClassAlphabet();
         for (EdgeType edgeType : EdgeType.values()) {
             classAlphabet.addClass(edgeType.name());
         }
-        FeatureAlphabet featureAlphabet = new HashAlphabet(alphabetBits, readableModel);
+        featureAlphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
         decoder = new BestFirstLatentTreeDecoder();
-        weights = new GraphWeightVector(classAlphabet, featureAlphabet, true /**Use hash weight vector**/);
+        weights = new GraphWeightVector(classAlphabet, featureAlphabet);
 
         featureSpec = config.get("edu.cmu.cs.lti.features.coref.spec");
         try {
@@ -101,7 +103,6 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        // TODO caching is not successful why?
 //        printProcessInfo(aJCas, logger);
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
         List<EventMentionRelation> allMentionRelations = new ArrayList<>(

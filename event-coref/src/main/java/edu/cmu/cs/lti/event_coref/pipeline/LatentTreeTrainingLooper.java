@@ -68,7 +68,7 @@ public class LatentTreeTrainingLooper extends LoopPipeline {
             taskConfig) throws ResourceInitializationException {
         return AnalysisEngineFactory.createEngineDescription(
                 PaLatentTreeTrainer.class, typeSystemDescription,
-                PaLatentTreeTrainer.PARAM_CONFIGURATION_PATH, taskConfig.getConfigFile().getPath()
+                PaLatentTreeTrainer.PARAM_CONFIG_PATH, taskConfig.getConfigFile().getPath()
         );
     }
 }

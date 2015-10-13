@@ -21,7 +21,7 @@ import java.util.HashMap;
  *
  * @author Zhengzhong Liu
  */
-public class SequenceGoldCacher {
+public class GoldCacher {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private static final String GOLD_SOLUTION_CACHE_NAME = "goldSolution";
@@ -35,7 +35,7 @@ public class SequenceGoldCacher {
     private File goldSolutionFile;
     private File goldFeaturesFile;
 
-    public SequenceGoldCacher(File cacheDirectory) {
+    public GoldCacher(File cacheDirectory) {
         this.goldLoaded = false;
         this.goldSolutions = new HashMap<>();
         this.goldFeatures = new HashMap<>();

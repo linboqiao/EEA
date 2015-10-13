@@ -9,7 +9,7 @@ import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.RealValueHashFeatureVector;
 import edu.cmu.cs.lti.learning.model.WekaModel;
 import edu.cmu.cs.lti.script.type.Article;
-import edu.cmu.cs.lti.script.type.EventMention;
+import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
@@ -26,6 +26,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.javatuples.Pair;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
     File modelDirectory;
 
     @ConfigurationParameter(name = PARAM_CONFIG_PATH)
-    Configuration config;
+    File configPath;
 
     @ConfigurationParameter(name = PARAM_FEATURE_PACKAGE_NAME)
     String featurePackageName;
@@ -70,6 +71,13 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
             model = new WekaModel(modelDirectory);
         } catch (Exception e) {
             throw new ResourceInitializationException(e);
+        }
+
+        Configuration config = null;
+        try {
+            config = new Configuration(configPath);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Configuration path is not correct : " + configPath.getPath());
         }
 
         String featureSpec = config.get("edu.cmu.cs.lti.features.realis.spec");
@@ -105,10 +113,10 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
             extractor.resetWorkspace(aJCas, sentence);
             key.setSequenceId(sentenceId);
 
-            List<EventMention> mentions = JCasUtil.selectCovered(aJCas, EventMention.class,
+            List<CandidateEventMention> mentions = JCasUtil.selectCovered(aJCas, CandidateEventMention.class,
                     sentence.getBegin(), sentence.getEnd());
 
-            for (EventMention mention : mentions) {
+            for (CandidateEventMention mention : mentions) {
                 TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
 
                 FeatureVector mentionFeatures = new RealValueHashFeatureVector(alphabet);
@@ -124,7 +132,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
                 // Do prediction.
                 try {
                     Pair<Double, String> prediction = model.classify(rawFeatures);
-                    mention.setRealisType(prediction.getValue1());
+                    mention.setPredictedRealis(prediction.getValue1());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
