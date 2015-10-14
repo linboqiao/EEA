@@ -106,6 +106,7 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
         WordNetBasedEntityTypes closestEntity = null;
         for (WordNetBasedEntityTypes en : wnEntities) {
             StanfordCorenlpToken wnToken = UimaConvenience.selectCoveredFirst(en, StanfordCorenlpToken.class);
+
             int distance = Math.abs(wnToken.getIndex() - mentionHead.getIndex());
             if (distance < minDistance) {
                 closestEntity = en;

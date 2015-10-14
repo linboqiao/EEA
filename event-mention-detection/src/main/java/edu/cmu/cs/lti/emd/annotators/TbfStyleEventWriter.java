@@ -5,7 +5,6 @@ import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
@@ -30,8 +29,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
 
     @Override
     public String getTextToPrint(JCas aJCas) {
-        UimaConvenience.printProcessLog(aJCas, logger);
-
+//        UimaConvenience.printProcessLog(aJCas, logger);
         StringBuilder sb = new StringBuilder();
 
         Article article = JCasUtil.selectSingle(aJCas, Article.class);

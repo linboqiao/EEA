@@ -103,10 +103,14 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        printProcessInfo(aJCas, logger);
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
         List<EventMentionRelation> allMentionRelations = new ArrayList<>(
                 JCasUtil.select(aJCas, EventMentionRelation.class));
+
+//        logger.info("Number of mentions " + allMentions.size());
+//        for (EventMention mention : allMentions) {
+//            logger.info("Mention : " + mention.getCoveredText() + " " + mention.getId());
+//        }
 
         int eventIdx = 0;
         for (Event event : JCasUtil.select(aJCas, Event.class)) {

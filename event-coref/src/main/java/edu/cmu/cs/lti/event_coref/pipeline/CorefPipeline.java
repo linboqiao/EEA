@@ -363,17 +363,18 @@ public class CorefPipeline {
             CollectionReaderDescription goldCorefResultReader = annotateGoldCoref(devSliceReader, goldCorefOutput);
 
             // Run coreference on dev data.
-            String corefOutput = FileUtils.joinPaths(middleResults, sliceSuffix, "treeCoref");
+            String corefOutput = FileUtils.joinPaths(middleResults, sliceSuffix, "tree_coref");
             CollectionReaderDescription corefResultReader = corefResolution(devSliceReader, taskConfig, treeCorefModel,
                     corefOutput);
 
             // Output final result.
             writeResults(corefResultReader,
-                    FileUtils.joinPaths(workingDir, evalPath, "treeCoref", "coref" + sliceSuffix + ".tbf"), "treeCoref"
+                    FileUtils.joinPaths(workingDir, evalPath, "tree_coref", "coref_" + sliceSuffix + ".tbf"),
+                    "tree_coref"
             );
 
             writeResults(goldCorefResultReader,
-                    FileUtils.joinPaths(workingDir, evalPath, "treeCoref", "gold" + sliceSuffix + ".tbf"),
+                    FileUtils.joinPaths(workingDir, evalPath, "tree_coref", "gold_" + sliceSuffix + ".tbf"),
                     "gold_types");
         }
     }
@@ -407,8 +408,8 @@ public class CorefPipeline {
 //        pipeline.prepareEventMentions(preprocesseBase);
 //        pipeline.extra("preprocessed_bak", preprocesseBase);
 
-        String finalModel = pipeline.trainFinal(preprocesseBase);
-//        pipeline.crossValidation(preprocesseBase);
+//        String finalModel = pipeline.trainFinal(preprocesseBase);
+        pipeline.crossValidation(preprocesseBase);
 
 //        pipeline.testCoref(taskConfig, taskConfig.get("edu.cmu.cs.lti.coref.test.dir"), preprocesseBase,
 //                "../models/latent_tree_coref/all_iter1", "test_out");
