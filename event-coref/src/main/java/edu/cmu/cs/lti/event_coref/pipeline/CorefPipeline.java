@@ -241,7 +241,7 @@ public class CorefPipeline {
         String evalPath = taskConfig.get("edu.cmu.cs.lti.eval.base");
 
         writeResults(corefResultReader, FileUtils.joinPaths(testWorkingDir, evalPath,
-                        "treeCoref", "coref_final" + suffix + ".tbf"), "treeCoref"
+                        "tree_coref", "coref_final" + suffix + ".tbf"), "tree_coref"
         );
     }
 
@@ -408,9 +408,9 @@ public class CorefPipeline {
 //        pipeline.prepareEventMentions(preprocesseBase);
 //        pipeline.extra("preprocessed_bak", preprocesseBase);
 
-//        String finalModel = pipeline.trainFinal(preprocesseBase);
-        pipeline.crossValidation(preprocesseBase);
-
+        String finalModel = pipeline.trainFinal(preprocesseBase);
+//        pipeline.crossValidation(preprocesseBase);
+//
 //        pipeline.testCoref(taskConfig, taskConfig.get("edu.cmu.cs.lti.coref.test.dir"), preprocesseBase,
 //                "../models/latent_tree_coref/all_iter1", "test_out");
     }
