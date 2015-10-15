@@ -42,16 +42,22 @@ public class MentionGraph implements Serializable {
     // Represent each relation with a adjacent list.
     private Map<MentionGraphEdge.EdgeType, int[][]> resolvedRelations;
 
-    private boolean testingMode = false;
+    private boolean useAverage = false;
 
-    public MentionGraph(List<EventMention> mentions) {
+    /**
+     * Now if you only provide a list of mentions, it will automatically enter the testing mode (e.g. using average
+     * weights)
+     *
+     * @param mentions List of event mentions.
+     */
+    public MentionGraph(List<EventMention> mentions, boolean useAverage) {
         this(mentions, new ArrayList<>());
         // TODO this mode is temporary.
-        this.testingMode = true;
+        this.useAverage = useAverage;
     }
 
     public MentionGraph(List<EventMention> mentions, List<EventMentionRelation> relations) {
-        this.testingMode = false;
+        this.useAverage = false;
 
         mentionNodes = new MentionNode[mentions.size() + 1];
         // A virtual root, the id should always be 0.
@@ -101,7 +107,7 @@ public class MentionGraph implements Serializable {
                 for (int j = i + 1; j < chain.length; j++) {
                     int anaphoraId = chain[j];
                     mentionGraphEdges[anaphoraId][antecedentId] = new MentionGraphEdge(this, antecedentId,
-                            anaphoraId, testingMode);
+                            anaphoraId, useAverage);
                     mentionGraphEdges[anaphoraId][antecedentId].edgeType = MentionGraphEdge.EdgeType.Coreference;
                 }
             }
@@ -118,7 +124,7 @@ public class MentionGraph implements Serializable {
             for (int govNodeId = 0; govNodeId < adjacentList.length; govNodeId++) {
                 for (int depNodeId : adjacentList[govNodeId]) {
                     mentionGraphEdges[depNodeId][govNodeId] = new MentionGraphEdge(this, govNodeId, depNodeId,
-                            testingMode);
+                            useAverage);
                     mentionGraphEdges[depNodeId][govNodeId].edgeType = type;
                 }
             }
@@ -140,7 +146,7 @@ public class MentionGraph implements Serializable {
             }
 
             if (!hasEdge) {
-                antecedentEdges[0] = new MentionGraphEdge(this, 0, nodeIndex, testingMode);
+                antecedentEdges[0] = new MentionGraphEdge(this, 0, nodeIndex, useAverage);
                 antecedentEdges[0].edgeType = MentionGraphEdge.EdgeType.Root;
             }
         }
@@ -202,7 +208,7 @@ public class MentionGraph implements Serializable {
         }
 
         if (mentionGraphEdges[dep][gov] == null) {
-            mentionGraphEdges[dep][gov] = new MentionGraphEdge(this, gov, dep, testingMode);
+            mentionGraphEdges[dep][gov] = new MentionGraphEdge(this, gov, dep, useAverage);
         }
 
         return mentionGraphEdges[dep][gov];

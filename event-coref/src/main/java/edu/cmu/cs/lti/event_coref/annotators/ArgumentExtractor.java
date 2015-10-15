@@ -33,7 +33,7 @@ public class ArgumentExtractor extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        UimaConvenience.printProcessLog(aJCas, logger);
+//        UimaConvenience.printProcessLog(aJCas, logger);
 
         helper.loadStanford2Fanse(aJCas);
         helper.loadFanse2Stanford(aJCas);
@@ -45,7 +45,7 @@ public class ArgumentExtractor extends AbstractLoggingAnnotator {
 
             if (headWord == null) {
                 // TODO this is a temporary solution.
-                logger.debug("Found null headword for " + mention.getId() + " : " + mention.getCoveredText());
+//                logger.debug("Found null headword for " + mention.getId() + " : " + mention.getCoveredText());
                 headWord = JCasUtil.selectCovering(StanfordCorenlpToken.class, mention).get(0);
             }
             mention.setHeadWord(headWord);

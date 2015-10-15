@@ -527,7 +527,7 @@ public class RegressionPipeline {
 
             // Gold mentions.
 //            String goldMentionOutput = middleResults + "/" + sliceSuffix + "/gold_type";
-//            CollectionReaderDescription goldMentionOutputReader = goldMentionDetection(devSliceReader,
+//            CollectionReaderDescription goldMentionOutputReader = goldCandidateAnnotation(devSliceReader,
 //                    goldMentionOutput);
 
 //            // Run realis on gold mentions.

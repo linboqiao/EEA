@@ -43,6 +43,9 @@ public class MentionGraphEdge implements Serializable {
     }
 
     public double scoreEdge(EdgeType type, GraphWeightVector weightVector, PairFeatureExtractor extractor) {
+        if (testingMode) {
+            return weightVector.dotProdAver(getLabelledFeatures(extractor), type.name());
+        }
         return weightVector.dotProd(getLabelledFeatures(extractor), type.name());
     }
 

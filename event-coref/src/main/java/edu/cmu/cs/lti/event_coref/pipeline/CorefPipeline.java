@@ -381,11 +381,11 @@ public class CorefPipeline {
 
     public String trainFinal(String inputBaseDir) throws UIMAException, IOException {
         String sliceSuffix = "all";
-        CollectionReaderDescription trainingReaader = CustomCollectionReaderFactory.createXmiReader
+        CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createXmiReader
                 (typeSystemDescription, workingDir, inputBaseDir);
 
         String trainingDataOutuput = FileUtils.joinPaths(middleResults, sliceSuffix, "coref_training");
-        CollectionReaderDescription trainingAnnotatedReader = annotateGoldCoref(trainingReaader,
+        CollectionReaderDescription trainingAnnotatedReader = annotateGoldCoref(trainingReader,
                 trainingDataOutuput);
 
         return trainLatentTreeCoref(taskConfig, trainingAnnotatedReader, sliceSuffix);

@@ -48,13 +48,16 @@ import java.util.Map;
  */
 public class EventCorefAnnotator extends AbstractLoggingAnnotator {
     public static final String PARAM_CONFIG_PATH = "configPath";
-
     @ConfigurationParameter(name = PARAM_CONFIG_PATH)
     private Configuration config;
 
     public static final String PARAM_MODEL_DIRECTORY = "modelDirectory";
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
     File modelDirectory;
+
+    public static final String PARAM_USE_AVERAGE = "useAverage";
+    @ConfigurationParameter(name = PARAM_USE_AVERAGE)
+    boolean useAverage;
 
     private PairFeatureExtractor extractor;
     private LatentTreeDecoder decoder;
@@ -105,7 +108,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
         logger.info("Clustering " + allMentions.size() + " mentions.");
         extractor.initWorkspace(aJCas);
-        MentionGraph mentionGraph = new MentionGraph(allMentions);
+        MentionGraph mentionGraph = new MentionGraph(allMentions, useAverage);
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, weights, extractor);
 
         predictedTree.resolveTree();
