@@ -34,7 +34,7 @@ public class CorefRunner {
 
         // TODO a rough way of running all iterations.
         for (int i = 15; i <= 15; i++) {
-            pipeline.testCoref(taskConfig, taskConfig.get("edu.cmu.cs.lti.coref.test.dir"), preprocesseBase,
+            pipeline.testCoref(taskConfig, taskConfig.get("edu.cmu.cs.lti.test.working.dir"), preprocesseBase,
                     "../models/latent_tree_coref/all_iter" + i, "test_out", String.valueOf(i));
         }
     }

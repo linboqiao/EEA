@@ -41,20 +41,27 @@ import java.util.Map;
  * @author Zhengzhong Liu
  */
 public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
-
     public static final String COMPONENT_ID = GoldStandardEventMentionAnnotator.class.getSimpleName();
 
     public static final String PARAM_TARGET_VIEWS = "targetViewNames";
 
-    public static final String PARAM_COPY_MENTION_ONLY = "copyMentionOnly";
+    public static final String PARAM_COPY_MENTION_TYPE = "copyMentionType";
 
-    public static final String PARAM_COPY_EVENT_ONLY = "copyEventOnly";
+    public static final String PARAM_COPY_REALIS = "copyRealis";
+
+    public static final String PARAM_COPY_CLUSTER = "copyCluster";
 
     @ConfigurationParameter(name = PARAM_TARGET_VIEWS)
     private String[] targetViewNames;
 
-    @ConfigurationParameter(name = PARAM_COPY_MENTION_ONLY, defaultValue = "false")
-    private boolean copyMentionOnly;
+    @ConfigurationParameter(name = PARAM_COPY_MENTION_TYPE, defaultValue = "false")
+    private boolean copyMentionType;
+
+    @ConfigurationParameter(name = PARAM_COPY_REALIS, defaultValue = "false")
+    private boolean copyRealis;
+
+    @ConfigurationParameter(name = PARAM_COPY_CLUSTER, defaultValue = "false")
+    private boolean copyCluster;
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
@@ -62,7 +69,7 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
         for (String targetViewName : targetViewNames) {
             JCas targetView = JCasUtil.getView(aJCas, targetViewName, false);
             Map<EventMention, EventMention> from2toMentionMap = copyMentions(goldStandard, targetView);
-            if (!copyMentionOnly) {
+            if (copyCluster) {
                 copyEvents(goldStandard, targetView, from2toMentionMap);
             }
         }
@@ -79,8 +86,13 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
             if (validate(goldMention, toView)) {
                 EventMention systemMention = new EventMention(toView, goldMention.getBegin(), goldMention.getEnd());
                 copyRegions(toView, goldMention, systemMention);
-                systemMention.setRealisType(goldMention.getRealisType());
-                systemMention.setEventType(goldMention.getEventType());
+                if (copyMentionType) {
+                    systemMention.setRealisType(goldMention.getRealisType());
+                }
+
+                if (copyRealis) {
+                    systemMention.setEventType(goldMention.getEventType());
+                }
                 UimaAnnotationUtils.finishAnnotation(systemMention, COMPONENT_ID, goldMention.getId(), toView);
                 from2toMentionMap.put(goldMention, systemMention);
             }
@@ -103,7 +115,6 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
         for (Event event : JCasUtil.select(fromView, Event.class)) {
             Event copiedEvent = new Event(toView);
             int fromMentionLength = event.getEventMentions().size();
-//            copiedEvent.setEventMentions(new FSArray(toView, fromMentionLength));
 
             List<EventMention> copiedMentions = new ArrayList<>();
 

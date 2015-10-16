@@ -1,7 +1,8 @@
 package edu.cmu.cs.lti.pipeline;
 
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.util.ProcessorManager;
+import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReader;
@@ -21,24 +22,30 @@ import java.io.IOException;
  */
 public class BasicPipeline {
     private CollectionReader reader;
-    protected AnalysisEngineDescription[] preprocessors;
-    protected AnalysisEngineDescription[] processors;
     private AnalysisEngineDescription[] engines;
 
     private TypeSystemDescription typeSystemDescription;
 
-    public BasicPipeline(AbstractProcessorBuilder builder, TypeSystemDescription typeSystemDescription) throws
+    public BasicPipeline(ProcessorWrapper wrapper, TypeSystemDescription typeSystemDescription) throws
             UIMAException {
         // Create the components
-        reader = CollectionReaderFactory.createReader(builder.buildCollectionReader());
-        preprocessors = builder.buildPreprocessors();
-        processors = builder.buildProcessors();
-        engines = ProcessorManager.joinProcessors(preprocessors, processors);
+        reader = CollectionReaderFactory.createReader(wrapper.getCollectionReader());
+        engines = wrapper.getProcessors();
         this.typeSystemDescription = typeSystemDescription;
     }
 
     public void run() throws IOException, UIMAException {
         SimplePipeline.runPipeline(reader, engines);
+    }
+
+
+    public void runWithOutput(AnalysisEngineDescription writer) throws UIMAException, IOException {
+        SimplePipeline.runPipeline(reader, ArrayUtils.add(engines, writer));
+    }
+
+    public void runWithOutput(String workingDir, String outputDir) throws UIMAException, IOException {
+        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(workingDir, outputDir);
+        runWithOutput(writer);
     }
 
     /**
@@ -54,7 +61,7 @@ public class BasicPipeline {
         CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription,
                 outputParent,
                 outputBase);
-        SimplePipeline.runPipeline(reader, processors);
+        SimplePipeline.runPipeline(reader, engines);
     }
 
     /**
@@ -65,6 +72,6 @@ public class BasicPipeline {
      */
     public void runProcessors(CollectionReaderDescription reader) throws
             UIMAException, IOException {
-        SimplePipeline.runPipeline(reader, processors);
+        SimplePipeline.runPipeline(reader, engines);
     }
 }

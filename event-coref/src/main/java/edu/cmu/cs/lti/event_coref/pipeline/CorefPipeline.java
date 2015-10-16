@@ -12,7 +12,7 @@ import edu.cmu.cs.lti.event_coref.annotators.ArgumentExtractor;
 import edu.cmu.cs.lti.event_coref.annotators.EventCorefAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.GoldStandardEventMentionAnnotator;
 import edu.cmu.cs.lti.model.UimaConst;
-import edu.cmu.cs.lti.pipeline.AbstractProcessorBuilder;
+import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
@@ -70,10 +70,10 @@ public class CorefPipeline {
     public CorefPipeline(String typeSystemName, String modelDir, Configuration taskConfig) {
         this.typeSystemDescription = TypeSystemDescriptionFactory.createTypeSystemDescription(typeSystemName);
 
-        this.goldStandardFilePath = taskConfig.get("edu.cmu.cs.lti.gold.tbf");
-        this.plainTextDataDir = taskConfig.get("edu.cmu.cs.lti.source_text.dir");
-        this.tokenMapDir = taskConfig.get("edu.cmu.cs.lti.token_map.dir");
-        this.workingDir = taskConfig.get("edu.cmu.cs.lti.working.dir");
+        this.goldStandardFilePath = taskConfig.get("edu.cmu.cs.lti.training.gold.tbf");
+        this.plainTextDataDir = taskConfig.get("edu.cmu.cs.lti.training.source_text.dir");
+        this.tokenMapDir = taskConfig.get("edu.cmu.cs.lti.training.token_map.dir");
+        this.workingDir = taskConfig.get("edu.cmu.cs.lti.training.working.dir");
         this.taskConfig = taskConfig;
         this.modelDir = modelDir;
         logger.info(String.format("Reading gold tbf from %s , token from %s, source from %s", goldStandardFilePath,
@@ -88,9 +88,9 @@ public class CorefPipeline {
 
         logger.info("Running preparation, from " + plainTextDataDir + ", results will be found at " + preprocessBase);
 
-        BasicPipeline pipeline = new BasicPipeline(new AbstractProcessorBuilder() {
+        BasicPipeline pipeline = new BasicPipeline(new ProcessorWrapper() {
             @Override
-            public CollectionReaderDescription buildCollectionReader() throws ResourceInitializationException {
+            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
                 return CollectionReaderFactory.createReaderDescription(
                         TbfEventDataReader.class, typeSystemDescription,
                         TbfEventDataReader.PARAM_GOLD_STANDARD_FILE, goldStandardFilePath,
@@ -103,7 +103,7 @@ public class CorefPipeline {
             }
 
             @Override
-            public AnalysisEngineDescription[] buildProcessors() throws
+            public AnalysisEngineDescription[] getProcessors() throws
                     ResourceInitializationException {
                 AnalysisEngineDescription stanfordAnalyzer = AnalysisEngineFactory.createEngineDescription(
                         StanfordCoreNlpAnnotator.class, typeSystemDescription,
@@ -155,40 +155,6 @@ public class CorefPipeline {
         pipeline.run();
     }
 
-    public void extra(String inputBase, String outputBase) throws UIMAException, IOException {
-        BasicPipeline pipeline = new BasicPipeline(new AbstractProcessorBuilder() {
-            @Override
-            public CollectionReaderDescription buildCollectionReader() throws ResourceInitializationException {
-                return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, workingDir, inputBase);
-            }
-
-            @Override
-            public AnalysisEngineDescription[] buildProcessors() throws
-                    ResourceInitializationException {
-
-                AnalysisEngineDescription mentionAndCorefGoldAnnotator = AnalysisEngineFactory
-                        .createEngineDescription(
-                                GoldStandardEventMentionAnnotator.class, typeSystemDescription,
-                                GoldStandardEventMentionAnnotator.PARAM_COPY_MENTION_ONLY, true,
-                                GoldStandardEventMentionAnnotator.PARAM_TARGET_VIEWS,
-                                new String[]{CAS.NAME_DEFAULT_SOFA, UimaConst.inputViewName}
-                        );
-
-                AnalysisEngineDescription argumentExtractor = AnalysisEngineFactory.createEngineDescription(
-                        ArgumentExtractor.class, typeSystemDescription
-                );
-
-                AnalysisEngineDescription xmiWriter = CustomAnalysisEngineFactory.createXmiWriter(workingDir,
-                        outputBase);
-
-//                return new AnalysisEngineDescription[]{argumentExtractor, xmiWriter};
-
-                return new AnalysisEngineDescription[]{mentionAndCorefGoldAnnotator, argumentExtractor, xmiWriter};
-            }
-        }, typeSystemDescription);
-        pipeline.run();
-    }
-
     /**
      * Train the latent tree model coreference resolver.
      *
@@ -214,18 +180,19 @@ public class CorefPipeline {
                           String modelDir, String outputBase, String suffix) throws UIMAException, IOException {
         logger.info("Running model on test data, output at " + outputBase);
 
-        BasicPipeline testPipeline = new BasicPipeline(new AbstractProcessorBuilder() {
+        BasicPipeline testPipeline = new BasicPipeline(new ProcessorWrapper() {
             @Override
-            public CollectionReaderDescription buildCollectionReader() throws ResourceInitializationException {
+            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
                 return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, testWorkingDir, testBase);
             }
 
             @Override
-            public AnalysisEngineDescription[] buildProcessors() throws ResourceInitializationException {
+            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
                 AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
                         EventCorefAnnotator.class, typeSystemDescription,
                         EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                        EventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile()
+                        EventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
+                        EventCorefAnnotator.PARAM_USE_AVERAGE, true
                 );
                 AnalysisEngineDescription xmiWriter = CustomAnalysisEngineFactory.createXmiWriter(testWorkingDir,
                         outputBase);
@@ -250,14 +217,14 @@ public class CorefPipeline {
             throws UIMAException, IOException {
         logger.info("Running coreference resolution, output at " + outputBase);
 
-        BasicPipeline testPipeline = new BasicPipeline(new AbstractProcessorBuilder() {
+        BasicPipeline testPipeline = new BasicPipeline(new ProcessorWrapper() {
             @Override
-            public CollectionReaderDescription buildCollectionReader() throws ResourceInitializationException {
+            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
                 return reader;
             }
 
             @Override
-            public AnalysisEngineDescription[] buildProcessors() throws ResourceInitializationException {
+            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
                 AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
                         EventCorefAnnotator.class, typeSystemDescription,
                         EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
@@ -282,14 +249,14 @@ public class CorefPipeline {
                 AllCandidateAcceptor.class, typeSystemDescription
         );
 
-        BasicPipeline systemPipeline = new BasicPipeline(new AbstractProcessorBuilder() {
+        BasicPipeline systemPipeline = new BasicPipeline(new ProcessorWrapper() {
             @Override
-            public CollectionReaderDescription buildCollectionReader() throws ResourceInitializationException {
+            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
                 return processedResultReader;
             }
 
             @Override
-            public AnalysisEngineDescription[] buildProcessors() throws ResourceInitializationException {
+            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
                 AnalysisEngineDescription resultWriter = AnalysisEngineFactory.createEngineDescription(
                         TbfStyleEventWriter.class, typeSystemDescription,
                         TbfStyleEventWriter.PARAM_OUTPUT_PATH, tbfOutput,
@@ -305,14 +272,14 @@ public class CorefPipeline {
     private CollectionReaderDescription annotateGoldCoref(CollectionReaderDescription reader, String outputBase)
             throws UIMAException, IOException {
         if (!new File(workingDir, outputBase).exists()) {
-            BasicPipeline pipeline = new BasicPipeline(new AbstractProcessorBuilder() {
+            BasicPipeline pipeline = new BasicPipeline(new ProcessorWrapper() {
                 @Override
-                public CollectionReaderDescription buildCollectionReader() throws ResourceInitializationException {
+                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
                     return reader;
                 }
 
                 @Override
-                public AnalysisEngineDescription[] buildProcessors() throws ResourceInitializationException {
+                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
                     AnalysisEngineDescription mentionAndCorefGoldAnnotator = AnalysisEngineFactory
                             .createEngineDescription(
                                     GoldStandardEventMentionAnnotator.class, typeSystemDescription,
@@ -410,7 +377,7 @@ public class CorefPipeline {
 
         String finalModel = pipeline.trainFinal(preprocesseBase);
 //        pipeline.crossValidation(preprocesseBase);
-//
+
 //        pipeline.testCoref(taskConfig, taskConfig.get("edu.cmu.cs.lti.coref.test.dir"), preprocesseBase,
 //                "../models/latent_tree_coref/all_iter1", "test_out");
     }
