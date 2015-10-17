@@ -87,11 +87,11 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
                 EventMention systemMention = new EventMention(toView, goldMention.getBegin(), goldMention.getEnd());
                 copyRegions(toView, goldMention, systemMention);
                 if (copyMentionType) {
-                    systemMention.setRealisType(goldMention.getRealisType());
+                    systemMention.setEventType(goldMention.getEventType());
                 }
 
                 if (copyRealis) {
-                    systemMention.setEventType(goldMention.getEventType());
+                    systemMention.setRealisType(goldMention.getRealisType());
                 }
                 UimaAnnotationUtils.finishAnnotation(systemMention, COMPONENT_ID, goldMention.getId(), toView);
                 from2toMentionMap.put(goldMention, systemMention);

@@ -304,7 +304,7 @@ public class CorefPipeline {
 
     public void crossValidation(String inputBaseDir) throws UIMAException, IOException {
         int numSplit = taskConfig.getInt("edu.cmu.cs.lti.cv.split", 5);
-        int seed = taskConfig.getInt("edu.cmu.cs.lti.cv.seed", 17);
+        int seed = taskConfig.getInt("edu.cmu.cs.lti.random.seed", 17);
         String evalPath = taskConfig.get("edu.cmu.cs.lti.eval.base");
 
         File goldCorefEval = new File(new File(workingDir, evalPath), "gold_type_coref");

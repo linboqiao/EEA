@@ -9,7 +9,7 @@ import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.RealValueHashFeatureVector;
 import edu.cmu.cs.lti.learning.model.WekaModel;
 import edu.cmu.cs.lti.script.type.Article;
-import edu.cmu.cs.lti.script.type.CandidateEventMention;
+import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
@@ -28,7 +28,6 @@ import org.javatuples.Pair;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -113,10 +112,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
             extractor.resetWorkspace(aJCas, sentence);
             key.setSequenceId(sentenceId);
 
-            List<CandidateEventMention> mentions = JCasUtil.selectCovered(aJCas, CandidateEventMention.class,
-                    sentence.getBegin(), sentence.getEnd());
-
-            for (CandidateEventMention mention : mentions) {
+            for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sentence)) {
                 TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
 
                 FeatureVector mentionFeatures = new RealValueHashFeatureVector(alphabet);
@@ -132,7 +128,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
                 // Do prediction.
                 try {
                     Pair<Double, String> prediction = model.classify(rawFeatures);
-                    mention.setPredictedRealis(prediction.getValue1());
+                    mention.setRealisType(prediction.getValue1());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
