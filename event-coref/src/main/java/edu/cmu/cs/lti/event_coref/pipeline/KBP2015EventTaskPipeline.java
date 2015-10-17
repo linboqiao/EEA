@@ -10,7 +10,6 @@ import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.acceptors.AllCandidateAcceptor;
 import edu.cmu.cs.lti.emd.annotators.classification.RealisTypeAnnotator;
 import edu.cmu.cs.lti.emd.annotators.crf.CrfMentionTypeAnnotator;
-import edu.cmu.cs.lti.emd.annotators.gold.GoldCandidateAnnotator;
 import edu.cmu.cs.lti.emd.pipeline.CrfMentionTrainingLooper;
 import edu.cmu.cs.lti.event_coref.annotators.ArgumentExtractor;
 import edu.cmu.cs.lti.event_coref.annotators.EventCorefAnnotator;
@@ -215,36 +214,6 @@ public class KBP2015EventTaskPipeline {
         }
 
         return modelPath;
-    }
-
-    /**
-     * Create gold standard based mention candidates.
-     *
-     * @param reader     The reader of input.
-     * @param workingDir The main working directory.
-     * @param baseOutput The base directory to output to.
-     * @return A reader for all the results.
-     * @throws UIMAException
-     * @throws IOException
-     */
-    public CollectionReaderDescription goldCandidateAnnotation(CollectionReaderDescription reader, String workingDir,
-                                                               String baseOutput) throws UIMAException, IOException {
-        new BasicPipeline(new ProcessorWrapper() {
-            @Override
-            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                return reader;
-            }
-
-            @Override
-            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                AnalysisEngineDescription goldMentionTypeAnnotator = AnalysisEngineFactory.createEngineDescription(
-                        GoldCandidateAnnotator.class, typeSystemDescription
-                );
-                return new AnalysisEngineDescription[]{goldMentionTypeAnnotator};
-            }
-        }, typeSystemDescription).runWithOutput(workingDir, baseOutput);
-
-        return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, workingDir, baseOutput);
     }
 
     private AnalysisEngineDescription getGoldAnnotator(boolean copyType, boolean copyRealis, boolean copyCluster)
