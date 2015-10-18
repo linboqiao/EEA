@@ -21,7 +21,6 @@ import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.utils.Configuration;
-import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.cas.CAS;
@@ -67,12 +66,13 @@ public class KBP2015EventTaskPipeline {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public KBP2015EventTaskPipeline(Configuration config, String typeSystemName, String modelDir) {
+    public KBP2015EventTaskPipeline(String typeSystemName, String modelDir,
+                                    String trainingWorkingDir, String testingWorkingDir) {
         this.typeSystemDescription = TypeSystemDescriptionFactory.createTypeSystemDescription(typeSystemName);
         this.modelDir = modelDir;
 
-        this.trainingWorkingDir = config.get("edu.cmu.cs.lti.training.working.dir");
-        this.testingWorkingDir = config.get("edu.cmu.cs.lti.test.working.dir");
+        this.trainingWorkingDir = trainingWorkingDir;
+        this.testingWorkingDir = testingWorkingDir;
 
         logger.info(String.format("Training directory will be %s.", trainingWorkingDir));
         if (testingWorkingDir != null && new File(testingWorkingDir).exists()) {
@@ -92,15 +92,17 @@ public class KBP2015EventTaskPipeline {
                 taskConfig.get("edu.cmu.cs.lti.training.source_text.dir"), taskConfig.get("edu.cmu.cs.lti.training" +
                         ".token_map.dir"));
 
-        prepare(taskConfig, testingWorkingDir,
-                // Simply do not supply this if the gold standard for testing doesn't exists.
-                taskConfig.get("edu.cmu.cs.lti.test.gold.tbf"),
-                taskConfig.get("edu.cmu.cs.lti.test.source_text.dir"),
-                taskConfig.get("edu.cmu.cs.lti.test.token_map.dir"));
+        if (testingWorkingDir != null) {
+            prepare(taskConfig, testingWorkingDir,
+                    // Simply do not supply this if the gold standard for testing doesn't exists.
+                    taskConfig.get("edu.cmu.cs.lti.test.gold.tbf"),
+                    taskConfig.get("edu.cmu.cs.lti.test.source_text.dir"),
+                    taskConfig.get("edu.cmu.cs.lti.test.token_map.dir"));
+        }
     }
 
     /**
-     * Run majore preprocessing steps for all the downstream tasks.
+     * Run major preprocessing steps for all the downstream tasks.
      *
      * @param taskConfig       The main configuration file.
      * @param workingDir       The working directory where data are read from and written to.
@@ -182,34 +184,28 @@ public class KBP2015EventTaskPipeline {
         }, typeSystemDescription).runWithOutput(workingDir, preprocessBase);
     }
 
-    public String trainMentionTypeLv1(Configuration kbpConfig, CollectionReaderDescription trainingReader,
+    public String trainMentionTypeLv1(Configuration taskConfig, CollectionReaderDescription trainingReader,
                                       String suffix) throws UIMAException, IOException,
             ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
         logger.info("Starting Training ...");
 
-        String modelPath = kbpConfig.get("edu.cmu.cs.lti.model.crf.mention.lv1.dir") + suffix;
+        String modelPath = taskConfig.get("edu.cmu.cs.lti.model.crf.mention.lv1.dir") + suffix;
         File modelFile = new File(modelPath);
-        boolean skipTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
+        boolean skipTrain = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
 
         // Only skip training when model directory exists.
         if (skipTrain && modelFile.exists()) {
             logger.info("Skipping mention type training, taking existing models.");
         } else {
-            File classFile = kbpConfig.getFile("edu.cmu.cs.lti.mention.classes.path");
-            File cacheDir = new File(kbpConfig.get("edu.cmu.cs.lti.mention.cache.dir") + suffix);
-            String[] classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
-                    .filter(p -> p.length >= 1).map(p -> p[0]).toArray(String[]::new);
-
-            for (String c : classes) {
-                logger.info("Register class " + c);
-            }
-
-            logger.info("Saving model directory at " + modelPath);
+            File cacheDir = new File(
+                    edu.cmu.cs.lti.utils.FileUtils.joinPaths(trainingWorkingDir,
+                            taskConfig.get("edu.cmu.cs.lti.mention.cache.base"), suffix)
+            );
 
             // TODO this still use a normal sequence reader, which may probably affect the result?
-            CrfMentionTrainingLooper mentionTypeTrainer = new CrfMentionTrainingLooper(classes, kbpConfig, modelPath,
-                    cacheDir, typeSystemDescription, trainingReader);
+            CrfMentionTrainingLooper mentionTypeTrainer = new CrfMentionTrainingLooper(taskConfig, modelPath,
+                    typeSystemDescription, trainingReader, cacheDir);
             mentionTypeTrainer.runLoopPipeline();
         }
 
@@ -511,9 +507,7 @@ public class KBP2015EventTaskPipeline {
         int numSplit = taskConfig.getInt("edu.cmu.cs.lti.cv.split", 5);
         int seed = taskConfig.getInt("edu.cmu.cs.lti.random.seed", 17);
 
-        String mentionEval = joinPaths(trainingWorkingDir, evalBase, "mention_only");
         String corefEval = joinPaths(trainingWorkingDir, evalBase, "tree_coref");
-        edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(mentionEval);
         edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(corefEval);
 
         for (int slice = 0; slice < numSplit; slice++) {
@@ -563,29 +557,28 @@ public class KBP2015EventTaskPipeline {
 
             CollectionReaderDescription corefOnGold = corefResolution(taskConfig, goldMentionAll,
                     treeCorefModel, trainingWorkingDir, coref_gold, true);
-            CollectionReaderDescription corefOnGoldNoAverage = corefResolution(taskConfig, goldMentionAll,
+            CollectionReaderDescription corefOnGoldNoAver = corefResolution(taskConfig, goldMentionAll,
                     treeCorefModel, trainingWorkingDir, coref_gold_no_aver, false);
             CollectionReaderDescription corefSystem = corefResolution(taskConfig, lv1MentionRealis,
                     treeCorefModel, trainingWorkingDir, coref_system, true);
-            CollectionReaderDescription corefSystemNoAverage = corefResolution(taskConfig, lv1MentionRealis,
+            CollectionReaderDescription corefSystemNoAver = corefResolution(taskConfig, lv1MentionRealis,
                     treeCorefModel, trainingWorkingDir, coref_system_no_aver, false);
 
             // Output final result.
-            writeResults(lv1MentionRealis,
-                    joinPaths(mentionEval, "lv1_mention_realis_" + sliceSuffix + ".tbf"), "crf_lv1_types"
-            );
+            String mentionEval = joinPaths(trainingWorkingDir, evalBase, "mention_only");
             writeResults(goldMentionRealis,
                     joinPaths(mentionEval, "gold_mention_realis_" + sliceSuffix + ".tbf"), "gold_types"
             );
 
-            writeResults(corefOnGold, joinPaths(corefEval, "coref_" + sliceSuffix + ".tbf"), "tree_coref");
-            writeResults(corefOnGoldNoAverage, joinPaths(corefEval, "coref_f_" + sliceSuffix + ".tbf"), "tree_coref");
-
-            writeResults(corefSystem, joinPaths(corefEval, "coref_" + sliceSuffix + ".tbf"), "tree_coref");
-            writeResults(corefSystemNoAverage, joinPaths(corefEval, "coref_f_" + sliceSuffix + ".tbf"), "tree_coref");
-
             // Produce gold mentions for easy evaluation.
             writeGold(devSliceReader, joinPaths(mentionEval, "gold_" + sliceSuffix + ".tbf"));
+
+            writeResults(corefOnGold, joinPaths(corefEval, "gold_coref_" + sliceSuffix + ".tbf"), "tree_coref");
+            writeResults(corefOnGoldNoAver, joinPaths(corefEval, "gold_coref_f_" + sliceSuffix + ".tbf"), "tree_coref");
+
+            writeResults(corefSystem, joinPaths(corefEval, "lv1_coref_" + sliceSuffix + ".tbf"), "tree_coref");
+            writeResults(corefSystemNoAver, joinPaths(corefEval, "lv1_coref_f_" + sliceSuffix + ".tbf"), "tree_coref");
+
 
             // Produce gold coreference for easy evaluation.
             writeGold(devSliceReader, joinPaths(corefEval, "gold_" + sliceSuffix + ".tbf"));
@@ -598,12 +591,15 @@ public class KBP2015EventTaskPipeline {
         }
 
         Configuration commonConfig = new Configuration("settings/common.properties");
-
         String modelPath = commonConfig.get("edu.cmu.cs.lti.model.dir");
         String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
 
         Configuration kbpConfig = new Configuration(argv[0]);
-        KBP2015EventTaskPipeline pipeline = new KBP2015EventTaskPipeline(kbpConfig, typeSystemName, modelPath);
+        String trainingWorkingDir = kbpConfig.get("edu.cmu.cs.lti.training.working.dir");
+        String testingWorkingDir = kbpConfig.get("edu.cmu.cs.lti.test.working.dir");
+
+        KBP2015EventTaskPipeline pipeline = new KBP2015EventTaskPipeline(typeSystemName, modelPath,
+                trainingWorkingDir, testingWorkingDir);
 
 //        pipeline.prepare(kbpConfig);
         pipeline.trainAll(kbpConfig);

@@ -26,17 +26,15 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
     private int numIteration;
     private String modelBasename;
 
-    public CrfMentionTrainingLooper(String[] classes, Configuration taskConfig,
-                                    String modelOutputBasename, File cacheDirectory,
+    public CrfMentionTrainingLooper(Configuration taskConfig, String modelOutputBasename,
                                     TypeSystemDescription typeSystemDescription,
-                                    CollectionReaderDescription readerDescription) throws
+                                    CollectionReaderDescription readerDescription, File cacheDir) throws
             ResourceInitializationException, ClassNotFoundException, NoSuchMethodException,
             InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
-        super(readerDescription, setup(typeSystemDescription, classes, cacheDirectory, taskConfig));
+        super(readerDescription, setup(typeSystemDescription, taskConfig, cacheDir));
         this.maxIteration = taskConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
         this.numIteration = 0;
         this.modelBasename = modelOutputBasename;
-
         logger.info("CRF mention trainer started, maximum iteration is " + maxIteration);
     }
 
@@ -67,15 +65,15 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
         logger.info(String.format("Iteration %d finished ...", numIteration));
     }
 
-    private static AnalysisEngineDescription setup(TypeSystemDescription typeSystemDescription, String[] classes,
-                                                   File cacheDir, Configuration kbpConfig) throws
+    private static AnalysisEngineDescription setup(TypeSystemDescription typeSystemDescription,
+                                                   Configuration kbpConfig, File cacheDir) throws
             ResourceInitializationException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
             IllegalAccessException, InvocationTargetException, IOException {
-        MentionTypeCrfTrainer.setup(classes, cacheDir, kbpConfig);
         return AnalysisEngineFactory.createEngineDescription(
                 MentionTypeCrfTrainer.class, typeSystemDescription,
-                MentionTypeCrfTrainer.PARAM_GOLD_CACHE_DIRECTORY, cacheDir,
-                MentionTypeCrfTrainer.PARAM_GOLD_STANDARD_VIEW_NAME, UimaConst.goldViewName
+                MentionTypeCrfTrainer.PARAM_GOLD_STANDARD_VIEW_NAME, UimaConst.goldViewName,
+                MentionTypeCrfTrainer.PARAM_CONFIGURATION_FILE, kbpConfig.getConfigFile(),
+                MentionTypeCrfTrainer.PARAM_CACHE_DIRECTORY, cacheDir
         );
     }
 }

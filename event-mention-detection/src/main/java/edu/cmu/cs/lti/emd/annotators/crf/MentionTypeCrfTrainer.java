@@ -18,6 +18,7 @@ import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.Configuration;
+import org.apache.commons.io.FileUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -42,18 +43,21 @@ import java.util.TreeSet;
  * @author Zhengzhong Liu
  */
 public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
-    public static final String PARAM_GOLD_CACHE_DIRECTORY = "GoldCacheDirectory";
+    public static final String PARAM_CACHE_DIRECTORY = "cacheDirectory";
 
-    @ConfigurationParameter(name = PARAM_GOLD_CACHE_DIRECTORY)
-    private File goldCacheDirectory;
+    public static final String PARAM_CONFIGURATION_FILE = "configurationFile";
+
+    @ConfigurationParameter(name = PARAM_CACHE_DIRECTORY)
+    private File cacheDir;
+
+    @ConfigurationParameter(name = PARAM_CONFIGURATION_FILE)
+    private Configuration config;
 
     private static AveragePerceptronTrainer trainer;
 
-    private static UimaSequenceFeatureExtractor sentenceExtractor;
+    private UimaSequenceFeatureExtractor sentenceExtractor;
 
-    private static ClassAlphabet classAlphabet;
-
-    private static HashAlphabet alphabet;
+    private ClassAlphabet classAlphabet;
 
     public static final String MODEL_NAME = "crfModel";
 
@@ -61,32 +65,71 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
     private static String featureSpec;
 
-    private static TrainingStats trainingStats;
+    private TrainingStats trainingStats;
 
-    private static CrfFeatureCacher cacher;
+    private CrfFeatureCacher cacher;
 
-    private static ViterbiDecoder decoder;
+    private ViterbiDecoder decoder;
 
     private GoldCacher goldCacher;
+
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
         logger.info("Starting iteration ...");
-        logger.info("Initializing gold cacher with " + goldCacheDirectory.getAbsolutePath());
 
-        if (!goldCacheDirectory.exists()) {
-            goldCacheDirectory.mkdirs();
-            logger.info("Create a gold directory at : " + goldCacheDirectory.getAbsolutePath());
+        int alphabetBits = config.getInt("edu.cmu.cs.lti.mention.feature.alphabet_bits", 24);
+        double stepSize = config.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
+        int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
+        boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
+        boolean invalidate = config.getBoolean("edu.cmu.cs.lti.mention.cache.invalidate", true);
+
+        File classFile = config.getFile("edu.cmu.cs.lti.mention.classes.path");
+        String[] classes = new String[0];
+        try {
+            classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
+                    .filter(p -> p.length >= 1).map(p -> p[0]).toArray(String[]::new);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        goldCacher = new GoldCacher(goldCacheDirectory);
+        for (String c : classes) {
+            logger.info("Register class " + c);
+        }
+
+        classAlphabet = new ClassAlphabet(classes, true, true);
+        HashAlphabet alphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
+        trainingStats = new TrainingStats(printLossOverPreviousN);
+
+        try {
+            cacher = new CrfFeatureCacher(cacheDir, invalidate);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
+        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, stepSize, alphabet);
+        featureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
+
+        try {
+            sentenceExtractor = new SentenceFeatureExtractor(alphabet, config,
+                    new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.sentence.package.name"))
+                            .parseFeatureFunctionSpecs(featureSpec));
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
+                | IllegalAccessException
+                e) {
+            e.printStackTrace();
+        }
+
+
+        logger.info("Initializing gold cacher with " + cacheDir.getAbsolutePath());
+
+        goldCacher = new GoldCacher(cacheDir);
         try {
             goldCacher.loadGoldSolutions();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -228,28 +271,5 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         } else {
             throw new IOException(String.format("Cannot create directory : [%s]", modelOutputDirectory.toString()));
         }
-    }
-
-    public static void setup(String[] classes, File cacheDirectory, Configuration config) throws
-            ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException,
-            IllegalAccessException, IOException {
-        int alphabetBits = config.getInt("edu.cmu.cs.lti.mention.feature.alphabet_bits", 24);
-        double stepSize = config.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
-        int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
-        boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
-        boolean invalidate = config.getBoolean("edu.cmu.cs.lti.mention.cache.invalidate", true);
-
-        classAlphabet = new ClassAlphabet(classes, true, true);
-        alphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
-        trainingStats = new TrainingStats(printLossOverPreviousN);
-
-        cacher = new CrfFeatureCacher(cacheDirectory, invalidate);
-        decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
-        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, stepSize, alphabet);
-        featureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
-
-        sentenceExtractor = new SentenceFeatureExtractor(alphabet, config,
-                new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.sentence.package.name"))
-                        .parseFeatureFunctionSpecs(featureSpec));
     }
 }

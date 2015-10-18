@@ -51,8 +51,6 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
     private Configuration config;
 
     private PairFeatureExtractor extractor;
-    private ClassAlphabet classAlphabet;
-    private FeatureAlphabet featureAlphabet;
     private LatentTreeDecoder decoder;
     private ObjectCacher objectCacher;
     private TrainingStats trainingStats;
@@ -69,7 +67,13 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         int alphabetBits = config.getInt("edu.cmu.cs.lti.coref.feature.alphabet_bits", 22);
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.coref.readableModel", false);
         boolean useBinaryFeatures = config.getBoolean("edu.cmu.cs.lti.coref.binaryFeature", false);
-        File corefGraphCacheDir = config.getFile("edu.cmu.cs.lti.coref.cache.dir");
+
+        File corefGraphCache = FileUtils.joinPathsAsFile(
+                config.get("edu.cmu.cs.lti.training.working.dir"),
+                config.get("edu.cmu.cs.lti.coref.cache.base")
+        );
+
+        File corefGraphCacheDir = config.getFile("edu.cmu.cs.lti.coref.cache.base");
 
         objectCacher = new ObjectCacher(corefGraphCacheDir);
         try {
@@ -77,11 +81,11 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        classAlphabet = new ClassAlphabet();
+        ClassAlphabet classAlphabet = new ClassAlphabet();
         for (EdgeType edgeType : EdgeType.values()) {
             classAlphabet.addClass(edgeType.name());
         }
-        featureAlphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
+        FeatureAlphabet featureAlphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
         decoder = new BestFirstLatentTreeDecoder();
         weights = new GraphWeightVector(classAlphabet, featureAlphabet);
 
