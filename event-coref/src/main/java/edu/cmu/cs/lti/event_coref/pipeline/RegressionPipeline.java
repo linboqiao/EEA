@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.event_coref.pipeline;
 
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.FileUtils;
 
 /**
  * Run regression on a toy dataset, ensure must component works as expected.
@@ -18,11 +19,13 @@ public class RegressionPipeline {
         String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
 
         Configuration config = new Configuration(argv[0]);
-        String trainingWorkingDir = config.get("edu.cmu.cs.lti.regression.working.dir");
+        String regressionDir = config.get("edu.cmu.cs.lti.regression.dir");
+        String trainingWorkingDir = FileUtils.joinPaths(regressionDir, "reference_run", "train");
+        String testWorkingDir = FileUtils.joinPaths(regressionDir, "reference_run", "test");
         String modelOutputDir = config.get("edu.cmu.cs.lti.regression.model.output.dir");
 
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName,
-                modelPath, modelOutputDir, trainingWorkingDir);
+                modelPath, modelOutputDir, trainingWorkingDir, testWorkingDir);
 
         pipeline.regression(config);
     }

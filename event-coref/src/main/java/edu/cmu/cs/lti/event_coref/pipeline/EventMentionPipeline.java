@@ -90,6 +90,8 @@ public class EventMentionPipeline {
         if (testingWorkingDir != null && new File(testingWorkingDir).exists()) {
             logger.info(String.format("Testing directory will be %s.", testingWorkingDir));
         }
+
+        logger.info(String.format("Models can be found in %s.", modelOutDir));
     }
 
     /**
@@ -111,12 +113,22 @@ public class EventMentionPipeline {
      * @throws Exception
      */
     public void regression(Configuration config) throws Exception {
+        String regressionDir = config.get("edu.cmu.cs.lti.regression.dir");
+
         prepare(config, trainingWorkingDir,
-                config.get("edu.cmu.cs.lti.regression.gold.tbf"),
-                config.get("edu.cmu.cs.lti.regression.source_text.dir"),
-                config.get("edu.cmu.cs.lti.regression.token_map.dir")
+                joinPaths(regressionDir, "train", "train.tbf"),
+                joinPaths(regressionDir, "train", "source"),
+                joinPaths(regressionDir, "train", "tkn")
         );
-        crossValidation(config);
+
+        prepare(config, testingWorkingDir,
+                joinPaths(regressionDir, "test", "test.tbf"),
+                joinPaths(regressionDir, "test", "source"),
+                joinPaths(regressionDir, "test", "tkn")
+        );
+
+        trainAll(config);
+        test(config);
     }
 
     /**
@@ -145,28 +157,34 @@ public class EventMentionPipeline {
      * Run major preprocessing steps for all the downstream tasks.
      *
      * @param taskConfig       The main configuration file.
-     * @param workingDir       The working directory where data are read from and written to.
+     * @param workingDirPath   The working directory where data are read from and written to.
      * @param goldStandardPath The gold standard file in tbf format.
      * @param plainTextPath    The directory that stores the plain text.
      * @param tokenMapPath     The directory that stores the token maps.
      * @throws UIMAException
      * @throws IOException
      */
-    public void prepare(Configuration taskConfig, String workingDir, String goldStandardPath,
+    public void prepare(Configuration taskConfig, String workingDirPath, String goldStandardPath,
                         String plainTextPath, String tokenMapPath) throws
             UIMAException, IOException {
-        if (workingDir == null || !new File(workingDir).exists()) {
-            logger.info("Working directory not provided or does not exists, not running");
+        if (workingDirPath == null) {
+            logger.info("Working directory not provided, not running");
             return;
         }
 
-        File preprocessDir = new File(workingDir, preprocessBase);
+        File workingDir = new File(workingDirPath);
+        if (!workingDir.exists()) {
+            logger.info("Created directory for preprocessing : " + workingDirPath);
+            workingDir.mkdirs();
+        }
+
+        File preprocessDir = new File(workingDirPath, preprocessBase);
 
         if (preprocessDir.exists()) {
             logger.info("Preprocessed data exists, not running.");
             return;
         } else {
-            logger.info(String.format("Staring pre-processing at %s.", workingDir));
+            logger.info(String.format("Staring pre-processing at %s.", workingDirPath));
         }
 
         final String semaforModelDirectory = modelDir + "/semafor_malt_model_20121129";
@@ -221,7 +239,7 @@ public class EventMentionPipeline {
                         stanfordAnalyzer, semaforAnalyzer, fanseParser, opennlp, quoteAnnotator, wordNetEntityAnnotator
                 };
             }
-        }, typeSystemDescription).runWithOutput(workingDir, preprocessBase);
+        }, typeSystemDescription).runWithOutput(workingDirPath, preprocessBase);
     }
 
     public String trainMentionTypeLv1(Configuration config, CollectionReaderDescription trainingReader,
