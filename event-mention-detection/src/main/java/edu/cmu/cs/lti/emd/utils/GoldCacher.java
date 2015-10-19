@@ -8,10 +8,7 @@ import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.HashMap;
 
 /**
@@ -42,6 +39,12 @@ public class GoldCacher {
 
         goldSolutionFile = new File(cacheDirectory, GOLD_SOLUTION_CACHE_NAME);
         goldFeaturesFile = new File(cacheDirectory, GOLD_FEATURE_CACHE_NAME);
+
+        try {
+            invalidate();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void loadGoldSolutions() throws FileNotFoundException {
@@ -84,5 +87,17 @@ public class GoldCacher {
 
     public boolean isGoldLoaded() {
         return goldLoaded;
+    }
+
+    public void invalidate() throws IOException {
+        if (goldSolutionFile.exists()) {
+            goldSolutionFile.delete();
+            logger.info("Gold Solution invalidated.");
+        }
+
+        if (goldFeaturesFile.exists()) {
+            goldFeaturesFile.delete();
+            logger.info("Gold Features invalidated.");
+        }
     }
 }

@@ -24,11 +24,11 @@ public class LatentTreeTrainingLooper extends LoopPipeline {
     private int numIteration;
     private String modelBasename;
 
-    protected LatentTreeTrainingLooper(Configuration taskConfig, String modelOutputBasename,
+    protected LatentTreeTrainingLooper(Configuration taskConfig, String modelOutputBasename, String cacheDir,
                                        TypeSystemDescription typeSystemDescription,
                                        CollectionReaderDescription readerDescription) throws
             ResourceInitializationException {
-        super(readerDescription, setup(typeSystemDescription, taskConfig));
+        super(readerDescription, setup(typeSystemDescription, cacheDir, taskConfig));
         this.maxIteration = taskConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
         this.numIteration = 0;
         this.modelBasename = modelOutputBasename;
@@ -47,6 +47,7 @@ public class LatentTreeTrainingLooper extends LoopPipeline {
         logger.info("Saving final models at " + modelBasename);
         try {
             PaLatentTreeTrainer.saveModels(new File(modelBasename));
+            PaLatentTreeTrainer.loopStopActions();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,11 +65,12 @@ public class LatentTreeTrainingLooper extends LoopPipeline {
         logger.info(String.format("Latent Tree Training Iteration %d finished ... ", numIteration));
     }
 
-    private static AnalysisEngineDescription setup(TypeSystemDescription typeSystemDescription, Configuration
-            taskConfig) throws ResourceInitializationException {
+    private static AnalysisEngineDescription setup(TypeSystemDescription typeSystemDescription, String cacheDir,
+                                                   Configuration taskConfig) throws ResourceInitializationException {
         return AnalysisEngineFactory.createEngineDescription(
                 PaLatentTreeTrainer.class, typeSystemDescription,
-                PaLatentTreeTrainer.PARAM_CONFIG_PATH, taskConfig.getConfigFile().getPath()
+                PaLatentTreeTrainer.PARAM_CONFIG_PATH, taskConfig.getConfigFile().getPath(),
+                PaLatentTreeTrainer.PARAM_CACHE_DIRECTORY, cacheDir
         );
     }
 }

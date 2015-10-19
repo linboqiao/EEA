@@ -46,13 +46,16 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
     public static final String FEATURE_SPEC_FILE = "featureSpec";
 
     public static final String PARAM_CONFIG_PATH = "configPath";
-
     @ConfigurationParameter(name = PARAM_CONFIG_PATH)
     private Configuration config;
 
+    public static final String PARAM_CACHE_DIRECTORY = "cacheDirectory";
+    @ConfigurationParameter(name = PARAM_CACHE_DIRECTORY)
+    private File cacheDir;
+
     private PairFeatureExtractor extractor;
     private LatentTreeDecoder decoder;
-    private ObjectCacher objectCacher;
+    private static ObjectCacher graphCacher;
     private TrainingStats trainingStats;
 
     // The resulting weights.
@@ -68,16 +71,8 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.coref.readableModel", false);
         boolean useBinaryFeatures = config.getBoolean("edu.cmu.cs.lti.coref.binaryFeature", false);
 
-        File corefGraphCache = FileUtils.joinPathsAsFile(
-                config.get("edu.cmu.cs.lti.training.working.dir"),
-                config.get("edu.cmu.cs.lti.coref.cache.base")
-        );
-
-        File corefGraphCacheDir = config.getFile("edu.cmu.cs.lti.coref.cache.base");
-
-        objectCacher = new ObjectCacher(corefGraphCacheDir);
         try {
-            objectCacher.invalidate();
+            graphCacher = new ObjectCacher(cacheDir);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -128,7 +123,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         // A mention graph represent all the mentions and contains features among them.
         MentionGraph mentionGraph = null;
         try {
-            mentionGraph = objectCacher.loadCachedObject(cacheKey);
+            mentionGraph = graphCacher.loadCachedObject(cacheKey);
         } catch (FileNotFoundException ignored) {
 
         }
@@ -167,7 +162,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         }
 
         try {
-            objectCacher.writeCacheObject(mentionGraph, cacheKey);
+            graphCacher.writeCacheObject(mentionGraph, cacheKey);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -268,4 +263,12 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         org.apache.commons.io.FileUtils.write(new File(modelOutputDirectory, FEATURE_SPEC_FILE), featureSpec);
     }
 
+    /**
+     * At loop finish, do some clean up work.
+     *
+     * @throws IOException
+     */
+    public static void loopStopActions() throws IOException {
+        graphCacher.invalidate();
+    }
 }

@@ -67,11 +67,11 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
     private TrainingStats trainingStats;
 
-    private CrfFeatureCacher cacher;
-
     private ViterbiDecoder decoder;
 
-    private GoldCacher goldCacher;
+    private static CrfFeatureCacher cacher;
+
+    private static GoldCacher goldCacher;
 
 
     @Override
@@ -83,7 +83,6 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         double stepSize = config.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
         int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
-        boolean invalidate = config.getBoolean("edu.cmu.cs.lti.mention.cache.invalidate", true);
 
         File classFile = config.getFile("edu.cmu.cs.lti.mention.classes.path");
         String[] classes = new String[0];
@@ -103,7 +102,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         trainingStats = new TrainingStats(printLossOverPreviousN);
 
         try {
-            cacher = new CrfFeatureCacher(cacheDir, invalidate);
+            cacher = new CrfFeatureCacher(cacheDir);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,7 +119,6 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
                 e) {
             e.printStackTrace();
         }
-
 
         logger.info("Initializing gold cacher with " + cacheDir.getAbsolutePath());
 
@@ -272,4 +270,15 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
             throw new IOException(String.format("Cannot create directory : [%s]", modelOutputDirectory.toString()));
         }
     }
+
+    /**
+     * At loop finish, do some clean up work.
+     *
+     * @throws IOException
+     */
+    public static void loopStopActions() throws IOException {
+        cacher.invalidate();
+        goldCacher.invalidate();
+    }
+
 }

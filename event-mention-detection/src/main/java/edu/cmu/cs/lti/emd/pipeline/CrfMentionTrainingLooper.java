@@ -49,6 +49,7 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
         try {
             logger.info("Saving final models at " + modelBasename);
             MentionTypeCrfTrainer.saveModels(new File(modelBasename));
+            MentionTypeCrfTrainer.loopStopActions();
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
