@@ -21,6 +21,7 @@ import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.utils.Configuration;
+import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.cas.CAS;
@@ -128,6 +129,12 @@ public class EventMentionPipeline {
         );
 
         trainAll(config);
+
+        logger.info("Cleaning the evaluation directory before rerun.");
+        String evalDir = joinPaths(testingWorkingDir, evalBase, "full_run");
+        if (new File(evalDir).exists()) {
+            FileUtils.cleanDirectory(new File(evalDir));
+        }
         test(config);
     }
 
@@ -184,7 +191,7 @@ public class EventMentionPipeline {
             logger.info("Preprocessed data exists, not running.");
             return;
         } else {
-            logger.info(String.format("Staring pre-processing at %s.", workingDirPath));
+            logger.info(String.format("Starting pre-processing at %s.", workingDirPath));
         }
 
         final String semaforModelDirectory = modelDir + "/semafor_malt_model_20121129";
@@ -256,10 +263,7 @@ public class EventMentionPipeline {
         if (skipTrain && modelFile.exists()) {
             logger.info("Skipping mention type training, taking existing models.");
         } else {
-            File cacheDir = new File(
-                    edu.cmu.cs.lti.utils.FileUtils.joinPaths(trainingWorkingDir,
-                            config.get("edu.cmu.cs.lti.mention.cache.base"))
-            );
+            File cacheDir = new File(joinPaths(trainingWorkingDir, config.get("edu.cmu.cs.lti.mention.cache.base")));
 
             // TODO this still use a normal sequence reader, which may probably affect the result?
             CrfMentionTrainingLooper mentionTypeTrainer = new CrfMentionTrainingLooper(config, modelPath,
@@ -514,8 +518,8 @@ public class EventMentionPipeline {
         CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createXmiReader(
                 typeSystemDescription, trainingWorkingDir, preprocessBase);
         trainMentionTypeLv1(config, trainingReader, fullRunSuffix);
-        trainRealisTypes(config, trainingReader, fullRunSuffix);
-        trainLatentTreeCoref(config, trainingReader, fullRunSuffix);
+//        trainRealisTypes(config, trainingReader, fullRunSuffix);
+//        trainLatentTreeCoref(config, trainingReader, fullRunSuffix);
         logger.info("All training done.");
     }
 

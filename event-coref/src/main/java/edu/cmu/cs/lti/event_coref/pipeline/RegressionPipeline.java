@@ -2,6 +2,10 @@ package edu.cmu.cs.lti.event_coref.pipeline;
 
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
 
 /**
  * Run regression on a toy dataset, ensure must component works as expected.
@@ -9,6 +13,8 @@ import edu.cmu.cs.lti.utils.FileUtils;
  * @author Zhengzhong Liu
  */
 public class RegressionPipeline {
+    private static final Logger logger = LoggerFactory.getLogger(RegressionPipeline.class);
+
     public static void main(String argv[]) throws Exception {
         if (argv.length < 1) {
             System.err.println("Please provide one argument for the settings file.");
@@ -20,9 +26,20 @@ public class RegressionPipeline {
 
         Configuration config = new Configuration(argv[0]);
         String regressionDir = config.get("edu.cmu.cs.lti.regression.dir");
-        String trainingWorkingDir = FileUtils.joinPaths(regressionDir, "reference_run", "train");
-        String testWorkingDir = FileUtils.joinPaths(regressionDir, "reference_run", "test");
-        String modelOutputDir = config.get("edu.cmu.cs.lti.regression.model.output.dir");
+        boolean runReference = config.getBoolean("edu.cmu.cs.lti.regression.reference_mode", false);
+
+        String base = runReference ? "reference_run" : "regression_run";
+
+        logger.info(String.format("Regression directory is [%s], reference base is [%s].", regressionDir, base));
+
+        String trainingWorkingDir = FileUtils.joinPaths(regressionDir, base, "train");
+        String testWorkingDir = FileUtils.joinPaths(regressionDir, base, "test");
+        String modelOutputDir = FileUtils.joinPaths(config.get("edu.cmu.cs.lti.regression.model.output.dir"), base);
+
+        if (new File(modelOutputDir).exists()) {
+            logger.info("Cleaning the model directory before running regression : " + modelOutputDir);
+            org.apache.commons.io.FileUtils.cleanDirectory(new File(modelOutputDir));
+        }
 
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName,
                 modelPath, modelOutputDir, trainingWorkingDir, testWorkingDir);
