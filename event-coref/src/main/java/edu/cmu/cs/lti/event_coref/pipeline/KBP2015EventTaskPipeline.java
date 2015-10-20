@@ -25,9 +25,9 @@ public class KBP2015EventTaskPipeline {
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, modelPath, modelOutputDir,
                 trainingWorkingDir, testingWorkingDir);
 
-//        pipeline.prepare(kbpConfig);
-//        pipeline.trainAll(kbpConfig);
-//        pipeline.test(kbpConfig);
+        pipeline.prepare(kbpConfig);
+        pipeline.trainAll(kbpConfig);
+        pipeline.test(kbpConfig);
         pipeline.crossValidation(kbpConfig);
     }
 }

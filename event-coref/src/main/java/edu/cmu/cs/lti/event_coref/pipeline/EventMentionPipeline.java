@@ -21,7 +21,6 @@ import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.utils.Configuration;
-import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.cas.CAS;
@@ -129,12 +128,6 @@ public class EventMentionPipeline {
         );
 
         trainAll(config);
-
-        logger.info("Cleaning the evaluation directory before rerun.");
-        String evalDir = joinPaths(testingWorkingDir, evalBase, "full_run");
-        if (new File(evalDir).exists()) {
-            FileUtils.cleanDirectory(new File(evalDir));
-        }
         test(config);
     }
 
@@ -250,9 +243,8 @@ public class EventMentionPipeline {
     }
 
     public String trainMentionTypeLv1(Configuration config, CollectionReaderDescription trainingReader,
-                                      String suffix) throws UIMAException, IOException,
-            ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
-            InvocationTargetException {
+                                      String suffix) throws UIMAException, IOException, ClassNotFoundException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         logger.info("Starting Training ...");
 
         String modelPath = joinPaths(outputModelDir, config.get("edu.cmu.cs.lti.model.crf.mention.lv1.dir"), suffix);
@@ -265,7 +257,6 @@ public class EventMentionPipeline {
         } else {
             File cacheDir = new File(joinPaths(trainingWorkingDir, config.get("edu.cmu.cs.lti.mention.cache.base")));
 
-            // TODO this still use a normal sequence reader, which may probably affect the result?
             CrfMentionTrainingLooper mentionTypeTrainer = new CrfMentionTrainingLooper(config, modelPath,
                     typeSystemDescription, trainingReader, cacheDir);
             mentionTypeTrainer.runLoopPipeline();

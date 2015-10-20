@@ -52,7 +52,6 @@ public class MentionGraph implements Serializable {
      */
     public MentionGraph(List<EventMention> mentions, boolean useAverage) {
         this(mentions, new ArrayList<>());
-        // TODO this mode is temporary.
         this.useAverage = useAverage;
     }
 
@@ -94,7 +93,6 @@ public class MentionGraph implements Serializable {
         storeNonEquivalentEdges();
         linkToRoot();
     }
-
 
     /**
      * Store coreference information as graph edges.

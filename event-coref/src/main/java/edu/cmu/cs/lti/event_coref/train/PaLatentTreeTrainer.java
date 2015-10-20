@@ -50,7 +50,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
     public static final String PARAM_CACHE_DIRECTORY = "cacheDirectory";
     @ConfigurationParameter(name = PARAM_CACHE_DIRECTORY)
-    private File cacheDir;
+    private String cacheDir;
 
     private PairFeatureExtractor extractor;
     private LatentTreeDecoder decoder;
@@ -69,8 +69,8 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         int alphabetBits = config.getInt("edu.cmu.cs.lti.coref.feature.alphabet_bits", 22);
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.coref.readableModel", false);
         boolean useBinaryFeatures = config.getBoolean("edu.cmu.cs.lti.coref.binaryFeature", false);
-        boolean discardAfter = config.getBoolean("edu.cmu.cs.lti.coref.cache.discard_after", false);
-        long weightLimit = config.getLong("edu.cmu.cs.lti.coref.weightlimit", 100000000);
+        boolean discardAfter = config.getBoolean("edu.cmu.cs.lti.coref.cache.discard_after", true);
+        long weightLimit = config.getLong("edu.cmu.cs.lti.coref.weightlimit", 500000);
 
         try {
             logger.info("Initialize auto-eviction cache with weight limit of " + weightLimit);
@@ -121,39 +121,18 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         String cacheKey = UimaConvenience.getShortDocumentNameWithOffset(aJCas);
 
         // A mention graph represent all the mentions and contains features among them.
-        logger.info("Loading graph cache.");
         MentionGraph mentionGraph = graphCacher.get(cacheKey);
-
         if (mentionGraph == null) {
             mentionGraph = new MentionGraph(allMentions, allMentionRelations);
             graphCacher.addWithMultiKey(mentionGraph, cacheKey);
-        } else {
-            logger.info("Loaded graph caches.");
         }
 
         // Decoding.
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, weights, extractor);
-
         if (!graphMatch(predictedTree, mentionGraph)) {
             MentionSubGraph latentTree = mentionGraph.getLatentTree(weights, extractor);
-
-//            logger.info("Predicted cluster.");
-//            logger.info(Arrays.deepToString(predictedTree.getCorefChains()));
-//
-//            logger.info("Gold cluster.");
-//            logger.info(Arrays.deepToString(mentionGraph.getCorefChains()));
-//
-//            logger.info("Predicted Tree is ");
-//            logger.info(predictedTree.toString());
-//
-//            logger.info("Latent Tree is ");
-//            logger.info(latentTree.toString());
-
             double loss = predictedTree.getLoss(latentTree);
-
             trainingStats.addLoss(logger, loss / mentionGraph.getMentionNodes().length);
-//            trainingStats.addLoss(logger, loss);
-
             update(predictedTree, latentTree, extractor);
         }
     }
@@ -252,7 +231,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         org.apache.commons.io.FileUtils.write(new File(modelOutputDirectory, FEATURE_SPEC_FILE), featureSpec);
     }
 
-    public static void finish(){
+    public static void finish() {
         try {
             graphCacher.close();
         } catch (IOException e) {

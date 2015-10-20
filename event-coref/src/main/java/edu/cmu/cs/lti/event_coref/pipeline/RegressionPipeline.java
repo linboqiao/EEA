@@ -34,11 +34,6 @@ public class RegressionPipeline {
         String testWorkingDir = FileUtils.joinPaths(regressionDir, base, "test");
         String modelOutputDir = FileUtils.joinPaths(config.get("edu.cmu.cs.lti.regression.model.output.dir"), base);
 
-//        if (new File(modelOutputDir).exists()) {
-//            logger.info("Cleaning the model directory before running regression : " + modelOutputDir);
-//            org.apache.commons.io.FileUtils.cleanDirectory(new File(modelOutputDir));
-//        }
-
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName,
                 modelPath, modelOutputDir, trainingWorkingDir, testWorkingDir);
 
