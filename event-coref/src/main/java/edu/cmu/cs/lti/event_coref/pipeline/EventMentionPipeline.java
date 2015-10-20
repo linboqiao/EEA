@@ -424,7 +424,7 @@ public class EventMentionPipeline {
             logger.info("Saving model directory at : " + cvModelDir);
 
             String cacheDir = edu.cmu.cs.lti.utils.FileUtils.joinPaths(trainingWorkingDir,
-                    config.get("edu.cmu.cs.lti.model.event.latent_tree"));
+                    config.get("edu.cmu.cs.lti.coref.cache.base"));
 
             LatentTreeTrainingLooper corefTrainer = new LatentTreeTrainingLooper(config, cvModelDir, cacheDir,
                     typeSystemDescription, trainingAnnotatedReader);
@@ -518,8 +518,8 @@ public class EventMentionPipeline {
         CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createXmiReader(
                 typeSystemDescription, trainingWorkingDir, preprocessBase);
         trainMentionTypeLv1(config, trainingReader, fullRunSuffix);
-//        trainRealisTypes(config, trainingReader, fullRunSuffix);
-//        trainLatentTreeCoref(config, trainingReader, fullRunSuffix);
+        trainRealisTypes(config, trainingReader, fullRunSuffix);
+        trainLatentTreeCoref(config, trainingReader, fullRunSuffix);
         logger.info("All training done.");
     }
 

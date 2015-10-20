@@ -13,9 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created with IntelliJ IDEA.
- * Date: 9/26/15
- * Time: 4:51 PM
+ * Train the latent tree coreference engine.
  *
  * @author Zhengzhong Liu
  */
@@ -47,7 +45,7 @@ public class LatentTreeTrainingLooper extends LoopPipeline {
         logger.info("Saving final models at " + modelBasename);
         try {
             PaLatentTreeTrainer.saveModels(new File(modelBasename));
-            PaLatentTreeTrainer.loopStopActions();
+            PaLatentTreeTrainer.finish();
         } catch (IOException e) {
             e.printStackTrace();
         }

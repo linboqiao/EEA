@@ -26,8 +26,8 @@ public class KBP2015EventTaskPipeline {
                 trainingWorkingDir, testingWorkingDir);
 
 //        pipeline.prepare(kbpConfig);
-        pipeline.trainAll(kbpConfig);
-        pipeline.test(kbpConfig);
+//        pipeline.trainAll(kbpConfig);
+//        pipeline.test(kbpConfig);
         pipeline.crossValidation(kbpConfig);
     }
 }

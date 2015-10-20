@@ -260,9 +260,14 @@ public class MentionGraph implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Graph : \n");
+
         for (MentionGraphEdge[] mentionGraphEdgeArray : mentionGraphEdges) {
-            for (MentionGraphEdge mentionGraphEdge : mentionGraphEdgeArray) {
-                sb.append("\t").append(mentionGraphEdge).append("\n");
+            if (mentionGraphEdgeArray != null) {
+                for (MentionGraphEdge mentionGraphEdge : mentionGraphEdgeArray) {
+                    if (mentionGraphEdge != null) {
+                        sb.append("\t").append(mentionGraphEdge.toString()).append("\n");
+                    }
+                }
             }
         }
         return sb.toString();

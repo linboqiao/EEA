@@ -16,7 +16,7 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
-import edu.cmu.cs.lti.utils.ObjectCacher;
+import edu.cmu.cs.lti.utils.MultiStringDiskBackedCacher;
 import gnu.trove.iterator.TIntObjectIterator;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -26,7 +26,6 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
     private PairFeatureExtractor extractor;
     private LatentTreeDecoder decoder;
-    private static ObjectCacher graphCacher;
+    private static MultiStringDiskBackedCacher<MentionGraph> graphCacher;
     private TrainingStats trainingStats;
 
     // The resulting weights.
@@ -70,12 +69,18 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         int alphabetBits = config.getInt("edu.cmu.cs.lti.coref.feature.alphabet_bits", 22);
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.coref.readableModel", false);
         boolean useBinaryFeatures = config.getBoolean("edu.cmu.cs.lti.coref.binaryFeature", false);
+        boolean discardAfter = config.getBoolean("edu.cmu.cs.lti.coref.cache.discard_after", false);
+        long weightLimit = config.getLong("edu.cmu.cs.lti.coref.weightlimit", 100000000);
 
         try {
-            graphCacher = new ObjectCacher(cacheDir);
+            logger.info("Initialize auto-eviction cache with weight limit of " + weightLimit);
+            graphCacher = new MultiStringDiskBackedCacher<>(
+                    cacheDir, (k, g) -> g.numNodes() * g.numNodes(), weightLimit, discardAfter
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         ClassAlphabet classAlphabet = new ClassAlphabet();
         for (EdgeType edgeType : EdgeType.values()) {
             classAlphabet.addClass(edgeType.name());
@@ -106,11 +111,6 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         List<EventMentionRelation> allMentionRelations = new ArrayList<>(
                 JCasUtil.select(aJCas, EventMentionRelation.class));
 
-//        logger.info("Number of mentions " + allMentions.size());
-//        for (EventMention mention : allMentions) {
-//            logger.info("Mention : " + mention.getCoveredText() + " " + mention.getId());
-//        }
-
         int eventIdx = 0;
         for (Event event : JCasUtil.select(aJCas, Event.class)) {
             event.setIndex(eventIdx++);
@@ -121,22 +121,20 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         String cacheKey = UimaConvenience.getShortDocumentNameWithOffset(aJCas);
 
         // A mention graph represent all the mentions and contains features among them.
-        MentionGraph mentionGraph = null;
-        try {
-            mentionGraph = graphCacher.loadCachedObject(cacheKey);
-        } catch (FileNotFoundException ignored) {
-
-        }
+        logger.info("Loading graph cache.");
+        MentionGraph mentionGraph = graphCacher.get(cacheKey);
 
         if (mentionGraph == null) {
             mentionGraph = new MentionGraph(allMentions, allMentionRelations);
+            graphCacher.addWithMultiKey(mentionGraph, cacheKey);
+        } else {
+            logger.info("Loaded graph caches.");
         }
 
         // Decoding.
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, weights, extractor);
 
         if (!graphMatch(predictedTree, mentionGraph)) {
-
             MentionSubGraph latentTree = mentionGraph.getLatentTree(weights, extractor);
 
 //            logger.info("Predicted cluster.");
@@ -157,14 +155,6 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 //            trainingStats.addLoss(logger, loss);
 
             update(predictedTree, latentTree, extractor);
-
-//            DebugUtils.pause();
-        }
-
-        try {
-            graphCacher.writeCacheObject(mentionGraph, cacheKey);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -214,8 +204,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         double tau = loss / l2;
 
 
-//        logger.info("Loss is " + loss + " PA update rate is " + tau + " dot prod is " + deltaDotProd + " l2 is " +
-// l2);
+//        logger.info("Loss is " + loss + " update rate is " + tau + " dot prod is " + deltaDotProd + " l2 is " + l2);
 
         weights.updateWeightsBy(delta, tau);
         weights.updateAverageWeights();
@@ -263,12 +252,11 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         org.apache.commons.io.FileUtils.write(new File(modelOutputDirectory, FEATURE_SPEC_FILE), featureSpec);
     }
 
-    /**
-     * At loop finish, do some clean up work.
-     *
-     * @throws IOException
-     */
-    public static void loopStopActions() throws IOException {
-        graphCacher.invalidate();
+    public static void finish(){
+        try {
+            graphCacher.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
