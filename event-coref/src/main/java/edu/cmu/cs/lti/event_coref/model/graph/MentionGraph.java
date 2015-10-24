@@ -106,7 +106,7 @@ public class MentionGraph implements Serializable {
                     int anaphoraId = chain[j];
                     mentionGraphEdges[anaphoraId][antecedentId] = new MentionGraphEdge(this, antecedentId,
                             anaphoraId, useAverage);
-                    mentionGraphEdges[anaphoraId][antecedentId].edgeType = MentionGraphEdge.EdgeType.Coreference;
+                    mentionGraphEdges[anaphoraId][antecedentId].setEdgeType(MentionGraphEdge.EdgeType.Coreference);
                 }
             }
         }
@@ -123,7 +123,7 @@ public class MentionGraph implements Serializable {
                 for (int depNodeId : adjacentList[govNodeId]) {
                     mentionGraphEdges[depNodeId][govNodeId] = new MentionGraphEdge(this, govNodeId, depNodeId,
                             useAverage);
-                    mentionGraphEdges[depNodeId][govNodeId].edgeType = type;
+                    mentionGraphEdges[depNodeId][govNodeId].setEdgeType(type);
                 }
             }
         }
@@ -145,7 +145,7 @@ public class MentionGraph implements Serializable {
 
             if (!hasEdge) {
                 antecedentEdges[0] = new MentionGraphEdge(this, 0, nodeIndex, useAverage);
-                antecedentEdges[0].edgeType = MentionGraphEdge.EdgeType.Root;
+                antecedentEdges[0].setEdgeType(MentionGraphEdge.EdgeType.Root);
             }
         }
     }

@@ -24,7 +24,8 @@ public class MentionGraphEdge implements Serializable {
     private final MentionGraph hostingGraph;
 
     // This variable store the gold type during training.
-    public EdgeType edgeType = null;
+    // TODO some edge types are not initialized.
+    private EdgeType edgeType = null;
 
     private boolean featureExtracted;
 
@@ -43,10 +44,11 @@ public class MentionGraphEdge implements Serializable {
     }
 
     public double scoreEdge(EdgeType type, GraphWeightVector weightVector, PairFeatureExtractor extractor) {
+        FeatureVector features = getLabelledFeatures(extractor);
         if (testingMode) {
-            return weightVector.dotProdAver(getLabelledFeatures(extractor), type.name());
+            return weightVector.dotProdAver(features, type.name());
         }
-        return weightVector.dotProd(getLabelledFeatures(extractor), type.name());
+        return weightVector.dotProd(features, type.name());
     }
 
     private void extractFeatures(PairFeatureExtractor extractor) {
@@ -111,7 +113,7 @@ public class MentionGraphEdge implements Serializable {
     }
 
     public String toString() {
-        return "Edge: (" + govIdx + ',' + depIdx + ")" + " [" + edgeType + "]";
+        return "Edge: (" + govIdx + ',' + depIdx + ")" + " [Actual Edge: " + edgeType + "]";
     }
 
     public static final Comparator<MentionGraphEdge> edgeDepComparator = new Comparator<MentionGraphEdge>() {
@@ -120,4 +122,12 @@ public class MentionGraphEdge implements Serializable {
             return o1.depIdx - o2.depIdx;
         }
     };
+
+    public void setEdgeType(EdgeType t) {
+        this.edgeType = t;
+    }
+
+    public EdgeType getEdgeType() {
+        return edgeType;
+    }
 }

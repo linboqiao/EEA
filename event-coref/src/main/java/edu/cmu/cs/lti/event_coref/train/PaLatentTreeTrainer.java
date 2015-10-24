@@ -85,7 +85,8 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         for (EdgeType edgeType : EdgeType.values()) {
             classAlphabet.addClass(edgeType.name());
         }
-        FeatureAlphabet featureAlphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
+
+        FeatureAlphabet featureAlphabet = new HashAlphabet(alphabetBits, readableModel);
         decoder = new BestFirstLatentTreeDecoder();
         weights = new GraphWeightVector(classAlphabet, featureAlphabet);
 
@@ -129,12 +130,19 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         // Decoding.
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, weights, extractor);
+//        logger.info(predictedTree.toString());
         if (!graphMatch(predictedTree, mentionGraph)) {
             MentionSubGraph latentTree = mentionGraph.getLatentTree(weights, extractor);
             double loss = predictedTree.getLoss(latentTree);
+//            logger.info(String.format("Loss is %.4f, length is %d, averaged loss is %.4f", loss, mentionGraph
+//                    .getMentionNodes().length, loss / mentionGraph.getMentionNodes().length));
             trainingStats.addLoss(logger, loss / mentionGraph.getMentionNodes().length);
             update(predictedTree, latentTree, extractor);
+        } else {
+            // TODO should add loss here
         }
+
+//        DebugUtils.pause();
     }
 
     /**

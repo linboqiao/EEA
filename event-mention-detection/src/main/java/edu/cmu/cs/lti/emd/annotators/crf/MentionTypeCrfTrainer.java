@@ -98,7 +98,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         }
 
         classAlphabet = new ClassAlphabet(classes, true, true);
-        HashAlphabet alphabet = HashAlphabet.getInstance(alphabetBits, readableModel);
+        HashAlphabet alphabet = new HashAlphabet(alphabetBits, readableModel);
         trainingStats = new TrainingStats(printLossOverPreviousN);
 
         try {

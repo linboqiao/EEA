@@ -38,6 +38,11 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
                 if (score > bestScore) {
                     bestEdge = Pair.with(mentionGraphEdge, label);
                     bestScore = score;
+//                    if (label == MentionGraphEdge.EdgeType.Coreference) {
+//                        logger.info(String.format("Coref link on edge %s, score is %.2f", mentionGraphEdge.toString()
+//                                , score));
+//                        logger.info(mentionGraphEdge.getLabelledFeatures(null).readableString());
+//                    }
                 }
             }
             bestFirstTree.addEdge(bestEdge.getValue0(), bestEdge.getValue1());
