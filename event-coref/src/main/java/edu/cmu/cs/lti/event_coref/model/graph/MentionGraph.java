@@ -45,8 +45,7 @@ public class MentionGraph implements Serializable {
     private boolean useAverage = false;
 
     /**
-     * Now if you only provide a list of mentions, it will automatically enter the testing mode (e.g. using average
-     * weights)
+     * Provide to the graph with only a list of mentions, no coreference information.
      *
      * @param mentions List of event mentions.
      */
@@ -55,6 +54,13 @@ public class MentionGraph implements Serializable {
         this.useAverage = useAverage;
     }
 
+    /**
+     * Provide to the graph a list of mentions and predefined event relations. Nodes without these relations will be
+     * link to root implicitly.
+     *
+     * @param mentions  List of event mentions.
+     * @param relations Relations between the event mentions.
+     */
     public MentionGraph(List<EventMention> mentions, List<EventMentionRelation> relations) {
         this.useAverage = false;
 
@@ -105,8 +111,7 @@ public class MentionGraph implements Serializable {
                 for (int j = i + 1; j < chain.length; j++) {
                     int anaphoraId = chain[j];
                     mentionGraphEdges[anaphoraId][antecedentId] = new MentionGraphEdge(this, antecedentId,
-                            anaphoraId, useAverage);
-                    mentionGraphEdges[anaphoraId][antecedentId].setEdgeType(MentionGraphEdge.EdgeType.Coreference);
+                            anaphoraId, MentionGraphEdge.EdgeType.Coreference, useAverage);
                 }
             }
         }
@@ -122,8 +127,7 @@ public class MentionGraph implements Serializable {
             for (int govNodeId = 0; govNodeId < adjacentList.length; govNodeId++) {
                 for (int depNodeId : adjacentList[govNodeId]) {
                     mentionGraphEdges[depNodeId][govNodeId] = new MentionGraphEdge(this, govNodeId, depNodeId,
-                            useAverage);
-                    mentionGraphEdges[depNodeId][govNodeId].setEdgeType(type);
+                            type, useAverage);
                 }
             }
         }
@@ -144,8 +148,8 @@ public class MentionGraph implements Serializable {
             }
 
             if (!hasEdge) {
-                antecedentEdges[0] = new MentionGraphEdge(this, 0, nodeIndex, useAverage);
-                antecedentEdges[0].setEdgeType(MentionGraphEdge.EdgeType.Root);
+                antecedentEdges[0] = new MentionGraphEdge(this, 0, nodeIndex,
+                        MentionGraphEdge.EdgeType.Root, useAverage);
             }
         }
     }

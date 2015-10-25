@@ -61,7 +61,9 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_VERBOSE, defaultValue = "false")
     boolean verbose;
 
-    public static Configuration config;
+    public static final String PARAM_CONFIG = "configuration";
+    @ConfigurationParameter(name = PARAM_CONFIG)
+    private static Configuration config;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -83,8 +85,8 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
         logger.info("Model loaded");
         try {
-            FeatureSpecParser specParser = new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.sentence.package" +
-                    ".name"));
+            FeatureSpecParser specParser = new FeatureSpecParser(
+                    config.get("edu.cmu.cs.lti.feature.sentence.package.name"));
 
             String currentFeatureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
 

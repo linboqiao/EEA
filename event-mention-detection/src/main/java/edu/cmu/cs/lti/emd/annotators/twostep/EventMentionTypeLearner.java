@@ -94,8 +94,6 @@ public class EventMentionTypeLearner extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_FEAUTRE_SUBSET, mandatory = false)
     Set<String> featureSubset;
 
-
-    //TODO not used
     Map<String, String> vn2Fn;
     Map<String, String> pb2Vn;
 

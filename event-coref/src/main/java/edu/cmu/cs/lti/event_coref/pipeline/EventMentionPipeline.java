@@ -294,11 +294,9 @@ public class EventMentionPipeline {
         return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, baseOutput);
     }
 
-    public CollectionReaderDescription crfMentionDetection(Configuration config, CollectionReaderDescription reader,
+    public CollectionReaderDescription crfMentionDetection(Configuration taskConfig, CollectionReaderDescription reader,
                                                            String modelDir, String mainDir, String baseOutput)
             throws UIMAException, IOException {
-        // TODO: Static variable is not so nice here, it can actually be passed in.
-        CrfMentionTypeAnnotator.config = config;
 
         new BasicPipeline(new ProcessorWrapper() {
             @Override
@@ -310,7 +308,8 @@ public class EventMentionPipeline {
             public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
                 AnalysisEngineDescription crfLevel1Annotator = AnalysisEngineFactory.createEngineDescription(
                         CrfMentionTypeAnnotator.class, typeSystemDescription,
-                        CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir
+                        CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                        CrfMentionTypeAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
                 );
 
                 AnalysisEngineDescription everythingAcceptor = AnalysisEngineFactory.createEngineDescription(
@@ -638,7 +637,6 @@ public class EventMentionPipeline {
 
             writeResults(corefSystem, joinPaths(corefEval, "lv1_coref_" + sliceSuffix + ".tbf"), "tree_coref");
             writeResults(corefSystemNoAver, joinPaths(corefEval, "lv1_coref_f_" + sliceSuffix + ".tbf"), "tree_coref");
-
 
             // Produce gold coreference for easy evaluation.
             writeGold(devSliceReader, joinPaths(corefEval, "gold_" + sliceSuffix + ".tbf"));

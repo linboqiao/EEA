@@ -24,7 +24,6 @@ public class MentionGraphEdge implements Serializable {
     private final MentionGraph hostingGraph;
 
     // This variable store the gold type during training.
-    // TODO some edge types are not initialized.
     private EdgeType edgeType = null;
 
     private boolean featureExtracted;
@@ -33,19 +32,24 @@ public class MentionGraphEdge implements Serializable {
 
     public enum EdgeType {Root, Coreference}
 
-    private boolean testingMode;
+    private boolean averageMode;
 
-    public MentionGraphEdge(MentionGraph graph, int gov, int dep, boolean testingMode) {
+    public MentionGraphEdge(MentionGraph graph, int gov, int dep, boolean averageMode) {
+        this(graph, gov, dep, null, averageMode);
+    }
+
+    public MentionGraphEdge(MentionGraph graph, int gov, int dep, EdgeType edgeType, boolean averageMode) {
         this.govIdx = gov;
         this.depIdx = dep;
         this.featureExtracted = false;
         this.hostingGraph = graph;
-        this.testingMode = testingMode;
+        this.edgeType = edgeType;
+        this.averageMode = averageMode;
     }
 
     public double scoreEdge(EdgeType type, GraphWeightVector weightVector, PairFeatureExtractor extractor) {
         FeatureVector features = getLabelledFeatures(extractor);
-        if (testingMode) {
+        if (averageMode) {
             return weightVector.dotProdAver(features, type.name());
         }
         return weightVector.dotProd(features, type.name());

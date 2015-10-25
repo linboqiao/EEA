@@ -22,12 +22,6 @@ import java.util.*;
  * @author Zhengzhong Liu
  */
 public class MentionSubGraph {
-//    //The edge index in the list, indexed first by the dep node, then the gov node index.
-//    private Integer[][] edgeIndexes;
-//
-//    // Store the edges of this graph.
-//    private List<SubGraphEdge> edges;
-
     private Table<Integer, Integer, SubGraphEdge> edgeTable;
 
     private int numNodes;
@@ -88,10 +82,6 @@ public class MentionSubGraph {
      */
     public double getLoss(MentionSubGraph referenceGraph) {
         double loss = 0;
-        double prec = 0;
-        double recall = 0;
-
-        int nonRootCorrect = 0;
 
         for (Map.Entry<Integer, Map<Integer, SubGraphEdge>> depEdgeEntry : referenceGraph.edgeTable.rowMap()
                 .entrySet()) {
@@ -151,58 +141,6 @@ public class MentionSubGraph {
         }
         return deltaFeatureVector;
     }
-
-//    /**
-//     * Compute the difference of features on this graph against another subgraph.
-//     *
-//     * @param otherGraph The other subgraph.
-//     * @param extractor  The feature extracor.
-//     * @return The delta of the features on these graphs.
-//     */
-//    public GraphFeatureVector getDelta(MentionSubGraph otherGraph, PairFeatureExtractor extractor) {
-//        if (parentGraph != otherGraph.parentGraph) {
-//            throw new IllegalArgumentException("To compute delta, both graph should have the same parent.");
-//        }
-//
-//        GraphFeatureVector deltaFeatureVector = extractor.newGraphFeatureVector();
-//
-//        Set<SubGraphEdge> otherEdgeMatched = new HashSet<>();
-//
-//        // For edges in this subgraph.
-//        for (SubGraphEdge edge : edgeTable.values()) {
-//            SubGraphEdge otherEdge = otherGraph.getEdge(edge.getDep(), edge.getGov());
-//
-//            // For edges in this subgraph but not in the other subgraph.
-//            if (otherEdge == null) {
-//                // Other graph does not contain this edge, add all features to the delta.
-//                deltaFeatureVector.extend(edge.getEdgeFeatures(extractor), edge.getEdgeType().name());
-//
-////                System.out.println("Edge missed from prediction : " + edge);
-////                System.out.println(edge.getEdgeFeatures(extractor).readableString());
-//            } else if (!otherEdge.getEdgeType().equals(edge.getEdgeType())) {
-//                // Add edge features.
-//                deltaFeatureVector.extend(edge.getEdgeFeatures(extractor), edge.getEdgeType().name());
-//                // Add the negation of the other features.
-//                deltaFeatureVector.extend(otherEdge.getEdgeFeatures(extractor).negation(),
-//                        otherEdge.getEdgeType().name());
-//                otherEdgeMatched.add(otherEdge);
-//
-////                System.out.println("Edge difference in type : " + otherEdge.getEdgeType() + " " + edge
-// .getEdgeType());
-////                System.out.println(edge.getEdgeFeatures(extractor).readableString());
-//            }
-//        }
-//
-//        // For edges in the other subgraph but not in this.
-//        for (SubGraphEdge edge : otherGraph.edgeTable.values()) {
-//            if (!otherEdgeMatched.contains(edge)) {
-////                System.out.println("Edge additional from prediction : " + edge);
-////                System.out.println(edge.getEdgeFeatures(extractor).readableString());
-//                deltaFeatureVector.extend(edge.getEdgeFeatures(extractor).negation(), edge.getEdgeType().name());
-//            }
-//        }
-//        return deltaFeatureVector;
-//    }
 
     /**
      * Convert the tree to transitive and equivalence resolved graph
