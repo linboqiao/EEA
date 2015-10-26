@@ -84,9 +84,9 @@ public class FanseFeatures extends SequenceFeatureWithFocus {
 
         if (loadWordnetSenseTokens) {
             fanseToken2WordnetType = new HashMap<>();
-            for (WordNetBasedEntityTypes anno : JCasUtil.select(context, WordNetBasedEntityTypes.class)) {
+            for (WordNetBasedEntity anno : JCasUtil.select(context, WordNetBasedEntity.class)) {
                 for (FanseToken token : JCasUtil.selectCovered(FanseToken.class, anno)) {
-                    fanseToken2WordnetType.put(token, anno.getClass().getSimpleName());
+                    fanseToken2WordnetType.put(token, anno.getSense());
                 }
             }
         }

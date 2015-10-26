@@ -3,8 +3,8 @@ package edu.cmu.cs.lti.learning.feature.sentence.functions;
 import edu.cmu.cs.lti.learning.feature.sentence.FeatureUtils;
 import edu.cmu.cs.lti.ling.WordNetSearcher;
 import edu.cmu.cs.lti.script.type.Dependency;
-import edu.cmu.cs.lti.script.type.JobTitle;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
+import edu.cmu.cs.lti.script.type.WordNetBasedEntity;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.uima.fit.util.FSCollectionFactory;
@@ -60,9 +60,11 @@ public class WordNetSenseFeatures extends SequenceFeatureWithFocus {
     @Override
     public void initDocumentWorkspace(JCas context) {
         jobTitleWords = new HashSet<>();
-        for (JobTitle title : JCasUtil.select(context, JobTitle.class)) {
-            jobTitleWords.addAll(JCasUtil.selectCovered(StanfordCorenlpToken.class, title).stream().collect
-                    (Collectors.toList()));
+        for (WordNetBasedEntity title : JCasUtil.select(context, WordNetBasedEntity.class)) {
+            if (title.getSense().equals("JobTitle")) {
+                jobTitleWords.addAll(JCasUtil.selectCovered(StanfordCorenlpToken.class, title).stream().collect
+                        (Collectors.toList()));
+            }
         }
     }
 

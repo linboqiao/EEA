@@ -21,7 +21,7 @@ import java.util.List;
  * @author Zhengzhong Liu
  */
 public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures {
-    ArrayListMultimap<EventMention, WordNetBasedEntityTypes> mention2SurroundWnEntities;
+    ArrayListMultimap<EventMention, WordNetBasedEntity> mention2SurroundWnEntities;
 
     public SurroundingWordNetSenseFeatures(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
@@ -32,8 +32,7 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
         mention2SurroundWnEntities = ArrayListMultimap.create();
         for (StanfordCorenlpSentence sentence : JCasUtil.select(context, StanfordCorenlpSentence.class)) {
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sentence)) {
-                for (WordNetBasedEntityTypes wordNetEntity :
-                        JCasUtil.selectCovered(WordNetBasedEntityTypes.class, sentence)) {
+                for (WordNetBasedEntity wordNetEntity : JCasUtil.selectCovered(WordNetBasedEntity.class, sentence)) {
                     mention2SurroundWnEntities.put(mention, wordNetEntity);
                 }
             }
@@ -43,14 +42,13 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
         for (StanfordCorenlpToken token : JCasUtil.select(context, StanfordCorenlpToken.class)) {
             token.setIndex(tokenIndex++);
         }
-
     }
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures, EventMention firstAnno,
                         EventMention secondAnno) {
-        WordNetBasedEntityTypes firstClosestEn = closestWordNetEntity(firstAnno);
-        WordNetBasedEntityTypes secondClosestEn = closestWordNetEntity(secondAnno);
+        WordNetBasedEntity firstClosestEn = closestWordNetEntity(firstAnno);
+        WordNetBasedEntity secondClosestEn = closestWordNetEntity(secondAnno);
 
         if (firstClosestEn != null && secondClosestEn != null) {
             // Add type pair.
@@ -82,29 +80,29 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
 
     }
 
-    private String getWordNetEntityType(WordNetBasedEntityTypes wnEntity) {
+    private String getWordNetEntityType(WordNetBasedEntity wnEntity) {
         if (wnEntity == null) {
             return "<NONE>";
         }
-        return wnEntity.getClass().getSimpleName();
+        return wnEntity.getSense();
     }
 
 
-    private String getWordNetEntitySurface(WordNetBasedEntityTypes wnEntity) {
+    private String getWordNetEntitySurface(WordNetBasedEntity wnEntity) {
         if (wnEntity == null) {
             return "<NONE>";
         }
         return wnEntity.getCoveredText().toLowerCase();
     }
 
-    private WordNetBasedEntityTypes closestWordNetEntity(EventMention mention) {
-        List<WordNetBasedEntityTypes> wnEntities = mention2SurroundWnEntities.get(mention);
+    private WordNetBasedEntity closestWordNetEntity(EventMention mention) {
+        List<WordNetBasedEntity> wnEntities = mention2SurroundWnEntities.get(mention);
 
         Word mentionHead = mention.getHeadWord();
 
         int minDistance = Integer.MAX_VALUE;
-        WordNetBasedEntityTypes closestEntity = null;
-        for (WordNetBasedEntityTypes en : wnEntities) {
+        WordNetBasedEntity closestEntity = null;
+        for (WordNetBasedEntity en : wnEntities) {
             StanfordCorenlpToken wnToken = UimaConvenience.selectCoveredFirst(en, StanfordCorenlpToken.class);
 
             int distance = Math.abs(wnToken.getIndex() - mentionHead.getIndex());

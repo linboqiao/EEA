@@ -229,8 +229,6 @@ public class EventMentionPipeline {
 
                 AnalysisEngineDescription wordNetEntityAnnotator = AnalysisEngineFactory.createEngineDescription(
                         WordNetBasedEntityAnnotator.class, typeSystemDescription,
-                        WordNetBasedEntityAnnotator.PARAM_JOB_TITLE_LIST,
-                        taskConfig.get("edu.cmu.cs.lti.profession_list"),
                         WordNetBasedEntityAnnotator.PARAM_WN_PATH,
                         taskConfig.get("edu.cmu.cs.lti.wndict.path")
                 );
