@@ -42,7 +42,6 @@ import java.util.Map;
  */
 public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
     public static final String MODEL_NAME = "latentTreeModel";
-    public static final String FEATURE_SPEC_FILE = "featureSpec";
 
     public static final String PARAM_CONFIG_PATH = "configPath";
     @ConfigurationParameter(name = PARAM_CONFIG_PATH)
@@ -59,7 +58,6 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
     // The resulting weights.
     private static GraphWeightVector weights;
-    private static String featureSpec;
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
@@ -87,10 +85,11 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         }
 
         FeatureAlphabet featureAlphabet = new HashAlphabet(alphabetBits, readableModel);
-        decoder = new BestFirstLatentTreeDecoder();
-        weights = new GraphWeightVector(classAlphabet, featureAlphabet);
+        String featureSpec = config.get("edu.cmu.cs.lti.features.coref.spec");
 
-        featureSpec = config.get("edu.cmu.cs.lti.features.coref.spec");
+        decoder = new BestFirstLatentTreeDecoder();
+        weights = new GraphWeightVector(classAlphabet, featureAlphabet, featureSpec);
+
         try {
             logger.debug(featureSpec);
             Configuration featureConfig = new FeatureSpecParser(
@@ -236,7 +235,6 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
     public static void saveModels(File modelOutputDirectory) throws IOException {
         FileUtils.ensureDirectory(modelOutputDirectory);
         weights.write(new File(modelOutputDirectory, MODEL_NAME));
-        org.apache.commons.io.FileUtils.write(new File(modelOutputDirectory, FEATURE_SPEC_FILE), featureSpec);
     }
 
     public static void finish() {

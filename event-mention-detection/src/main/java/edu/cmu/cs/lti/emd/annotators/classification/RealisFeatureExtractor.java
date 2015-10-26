@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.emd.annotators.classification;
 
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
-import edu.cmu.cs.lti.learning.cache.CrfState;
+import edu.cmu.cs.lti.learning.cache.CrfSequenceKey;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
@@ -49,14 +49,13 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        UimaConvenience.printProcessLog(aJCas);
         extractor.initWorkspace(aJCas);
         alignmentHelper.loadWord2Stanford(aJCas, goldTokenComponentId);
 
         JCas goldView = JCasUtil.getView(aJCas, goldStandardViewName, aJCas);
 
         String documentKey = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
-        CrfState key = new CrfState();
+        CrfSequenceKey key = new CrfSequenceKey();
         key.setDocumentKey(documentKey);
 
         int sentenceId = 0;
@@ -71,21 +70,15 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
                     sentence.getEnd());
 
             for (EventMention mention : mentions) {
-//                TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
                 FeatureVector rawFeatures = new RealValueHashFeatureVector(alphabet);
-//                logger.info("Extracting from mention " + mention.getCoveredText());
                 int head = extractor.getTokenIndex(getHead(aJCas, mention.getBegin(), mention.getEnd()));
                 extractor.extract(head, rawFeatures, dummy);
                 classAlphabet.addClass(mention.getRealisType());
                 TIntDoubleMap indexedFeatures = new TIntDoubleHashMap();
-//                logger.info(mention.getCoveredText());
                 for (FeatureVector.FeatureIterator iter = rawFeatures.featureIterator(); iter.hasNext(); ) {
                     iter.next();
-//                    logger.info("Feature is " + rawFeatures.getAlphabet().getFeatureNameRepre(iter.featureIndex()) +
-//                            " value is " + iter.featureValue() + " index is " + iter.featureIndex());
                     indexedFeatures.put(iter.featureIndex(), iter.featureValue());
                 }
-//                DebugUtils.pause();
                 features.add(Pair.with(indexedFeatures, mention.getRealisType()));
             }
         }

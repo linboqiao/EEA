@@ -25,8 +25,12 @@ public class KBP2015EventTaskPipeline {
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, modelPath, modelOutputDir,
                 trainingWorkingDir, testingWorkingDir);
 
+        boolean skipTypeTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
+        boolean skipRealisTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain=true", false);
+        boolean skipCorefTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
+
         pipeline.prepare(kbpConfig);
-        pipeline.trainAll(kbpConfig);
+        pipeline.trainAll(kbpConfig, skipTypeTrain, skipRealisTrain, skipCorefTrain);
         pipeline.test(kbpConfig);
         pipeline.crossValidation(kbpConfig);
     }

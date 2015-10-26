@@ -2,9 +2,7 @@ package edu.cmu.cs.lti.emd.annotators.crf;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
-import edu.cmu.cs.lti.emd.utils.GoldCacher;
-import edu.cmu.cs.lti.learning.cache.CrfFeatureCacher;
-import edu.cmu.cs.lti.learning.cache.CrfState;
+import edu.cmu.cs.lti.learning.cache.CrfSequenceKey;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
@@ -18,7 +16,9 @@ import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.MultiStringDiskBackedCacher;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -27,7 +27,6 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -61,18 +60,13 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
     public static final String MODEL_NAME = "crfModel";
 
-    public static final String FEATURE_SPEC_FILE = "featureSpec";
-
-    private static String featureSpec;
-
     private TrainingStats trainingStats;
 
     private ViterbiDecoder decoder;
 
-    private static CrfFeatureCacher cacher;
+    private static MultiStringDiskBackedCacher<FeatureVector[]> featureCacher;
 
-    private static GoldCacher goldCacher;
-
+    private static MultiStringDiskBackedCacher<Pair<GraphFeatureVector, SequenceSolution>> goldCacher;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -83,67 +77,71 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         double stepSize = config.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
         int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
+        boolean discardAfter = config.getBoolean("edu.cmu.cs.lti.coref.mention.cache.discard_after", true);
+        long weightLimit = config.getLong("edu.cmu.cs.lti.mention.cache.sentence.num", 20000);
 
         File classFile = config.getFile("edu.cmu.cs.lti.mention.classes.path");
         String[] classes = new String[0];
-        try {
-            classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
-                    .filter(p -> p.length >= 1).map(p -> p[0]).toArray(String[]::new);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        for (String c : classes) {
-            logger.info("Register class " + c);
+        if (classFile != null) {
+            try {
+                classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
+                        .filter(p -> p.length >= 1).map(p -> p[0]).toArray(String[]::new);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            logger.info(String.format("Registered %d classes.", classes.length));
+        } else {
+            logger.info("No class file provided, will accumulate classes during training.");
         }
 
         classAlphabet = new ClassAlphabet(classes, true, true);
+
         HashAlphabet alphabet = new HashAlphabet(alphabetBits, readableModel);
         trainingStats = new TrainingStats(printLossOverPreviousN);
 
         try {
-            cacher = new CrfFeatureCacher(cacheDir);
+            featureCacher = new MultiStringDiskBackedCacher<>(cacheDir.getPath(), (strings, featureVectors) -> 1,
+                    20000, discardAfter);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        decoder = new ViterbiDecoder(alphabet, classAlphabet, cacher);
-        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, stepSize, alphabet);
-        featureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
+
+        decoder = new ViterbiDecoder(alphabet, classAlphabet, featureCacher);
+        String featureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
+        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, alphabet, featureSpec, stepSize);
 
         try {
             sentenceExtractor = new SentenceFeatureExtractor(alphabet, config,
                     new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.sentence.package.name"))
                             .parseFeatureFunctionSpecs(featureSpec));
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
-                | IllegalAccessException
-                e) {
+                | IllegalAccessException e) {
             e.printStackTrace();
         }
 
         logger.info("Initializing gold cacher with " + cacheDir.getAbsolutePath());
 
-        goldCacher = new GoldCacher(cacheDir);
         try {
-            goldCacher.loadGoldSolutions();
-        } catch (FileNotFoundException e) {
+            goldCacher = new MultiStringDiskBackedCacher<>(cacheDir.getPath(), (strings, fv) -> 1,
+                    weightLimit, discardAfter);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        UimaConvenience.printProcessLog(aJCas, logger);
         sentenceExtractor.initWorkspace(aJCas);
 
         JCas goldView = JCasUtil.getView(aJCas, goldStandardViewName, aJCas);
 
         String documentKey = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
-        CrfState key = new CrfState();
+        CrfSequenceKey key = new CrfSequenceKey();
         key.setDocumentKey(documentKey);
 
         int sentenceId = 0;
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
-//            logger.info(String.format("Extracting from sentence %d of document %s", sentenceId, documentKey));
             sentenceExtractor.resetWorkspace(aJCas, sentence);
             key.setSequenceId(sentenceId);
 
@@ -164,56 +162,23 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
                 continue;
             }
 
-//            logger.debug(String.format("%d mentions, %d merged mentions, %d tokens are labelled", mentions.size(),
-//                    mergedMentions.size(), tokenTypes.size()));
-
             SequenceSolution goldSolution;
             GraphFeatureVector goldFv;
+            Pair<GraphFeatureVector, SequenceSolution> goldSolutionAndFeatures = goldCacher.get(documentKey,
+                    String.valueOf(sentenceId));
 
-            goldSolution = (SequenceSolution) goldCacher.getGoldSolution(documentKey, sentenceId);
-            if (goldSolution == null) {
+            if (goldSolutionAndFeatures != null) {
+                goldFv = goldSolutionAndFeatures.getLeft();
+                goldSolution = goldSolutionAndFeatures.getRight();
+            } else {
                 goldSolution = getGoldSequence(sentence, tokenTypes);
-                goldCacher.addGoldSolutions(documentKey, sentenceId, goldSolution);
-            }
-
-            goldFv = goldCacher.getGoldFeature(documentKey, sentenceId);
-            if (goldFv == null) {
                 goldFv = decoder.getSolutionFeatures(sentenceExtractor, goldSolution);
-                goldCacher.addGoldFeatures(documentKey, sentenceId, goldFv);
+                goldCacher.addWithMultiKey(Pair.of(goldFv, goldSolution), documentKey, String.valueOf(sentenceId));
             }
-
-//            logger.debug("Training this sentence.");
-//            List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
-//            for (int i = 0; i < tokens.size(); i++) {
-//                System.out.print(i + ": " + tokens.get(i).getCoveredText());
-//                if (i == tokens.size() - 1) {
-//                    System.out.println();
-//                } else {
-//                    System.out.print(" ");
-//                }
-//            }
 
             double loss = trainer.trainNext(goldSolution, goldFv, sentenceExtractor, 0, key);
-//            logger.info("Sentence loss is " + loss);
             trainingStats.addLoss(logger, loss);
             sentenceId++;
-        }
-
-        try {
-            cacher.flush(documentKey);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        if (!goldCacher.isGoldLoaded()) {
-            try {
-                goldCacher.saveGoldSolutions();
-            } catch (FileNotFoundException e) {
-                logger.error("Gold Cacher cannot find places to cache.");
-                throw new AnalysisEngineProcessException(e);
-            }
         }
     }
 
@@ -265,7 +230,6 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
         if (directoryExist) {
             trainer.write(new File(modelOutputDirectory, MODEL_NAME));
-            org.apache.commons.io.FileUtils.write(new File(modelOutputDirectory, FEATURE_SPEC_FILE), featureSpec);
         } else {
             throw new IOException(String.format("Cannot create directory : [%s]", modelOutputDirectory.toString()));
         }
@@ -277,8 +241,8 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
      * @throws IOException
      */
     public static void loopStopActions() throws IOException {
-        cacher.invalidate();
-        goldCacher.invalidate();
+        featureCacher.close();
+        goldCacher.close();
     }
 
 }

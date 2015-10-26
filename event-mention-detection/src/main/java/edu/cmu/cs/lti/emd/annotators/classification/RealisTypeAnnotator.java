@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.emd.annotators.classification;
 
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
-import edu.cmu.cs.lti.learning.cache.CrfState;
+import edu.cmu.cs.lti.learning.cache.CrfSequenceKey;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
@@ -101,7 +101,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
         alignmentHelper.loadWord2Stanford(aJCas, goldTokenComponentId);
 
         String documentKey = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
-        CrfState key = new CrfState();
+        CrfSequenceKey key = new CrfSequenceKey();
         key.setDocumentKey(documentKey);
 
         int sentenceId = 0;

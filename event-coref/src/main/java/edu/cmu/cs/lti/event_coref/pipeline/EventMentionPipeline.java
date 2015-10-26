@@ -127,7 +127,7 @@ public class EventMentionPipeline {
                 joinPaths(regressionDir, "test", "tkn")
         );
 
-        trainAll(config);
+        trainAll(config, false, false, false);
         test(config);
     }
 
@@ -242,14 +242,13 @@ public class EventMentionPipeline {
         }, typeSystemDescription).runWithOutput(workingDirPath, preprocessBase);
     }
 
-    public String trainMentionTypeLv1(Configuration config, CollectionReaderDescription trainingReader,
-                                      String suffix) throws UIMAException, IOException, ClassNotFoundException,
+    public String trainMentionTypeLv1(Configuration config, CollectionReaderDescription trainingReader, String suffix,
+                                      boolean skipTrain) throws UIMAException, IOException, ClassNotFoundException,
             NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         logger.info("Starting Training ...");
 
         String modelPath = joinPaths(outputModelDir, config.get("edu.cmu.cs.lti.model.crf.mention.lv1.dir"), suffix);
         File modelFile = new File(modelPath);
-        boolean skipTrain = config.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
 
         // Only skip training when model directory exists.
         if (skipTrain && modelFile.exists()) {
@@ -323,11 +322,10 @@ public class EventMentionPipeline {
     }
 
     public String trainRealisTypes(Configuration kbpConfig, CollectionReaderDescription trainingReader,
-                                   String suffix) throws Exception {
-        boolean skipTrian = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
+                                   String suffix, boolean skipTrain) throws Exception {
         String realisCvModelDir = joinPaths(outputModelDir, kbpConfig.get("edu.cmu.cs.lti.model.realis.dir"), suffix);
 
-        if (skipTrian && new File(realisCvModelDir).exists()) {
+        if (skipTrain && new File(realisCvModelDir).exists()) {
             logger.info("Skipping realis training, taking existing models.");
         } else {
             RealisClassifierTrainer trainer = new RealisClassifierTrainer(typeSystemDescription, trainingReader,
@@ -396,13 +394,12 @@ public class EventMentionPipeline {
      * @param suffix         The suffix for the model.
      * @return The trained model directory.
      */
-    private String trainLatentTreeCoref(Configuration config, CollectionReaderDescription trainingReader, String
-            suffix) throws UIMAException, IOException {
+    private String trainLatentTreeCoref(Configuration config, CollectionReaderDescription trainingReader,
+                                        String suffix, boolean skipTrain) throws UIMAException, IOException {
         logger.info("Start coreference training.");
         String cvModelDir = joinPaths(outputModelDir, config.get("edu.cmu.cs.lti.model.event.latent_tree"), suffix);
         int seed = config.getInt("edu.cmu.cs.lti.random.seed", 17);
 
-        boolean skipTrain = config.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
         boolean modelExists = new File(cvModelDir).exists();
 
         if (skipTrain && modelExists) {
@@ -503,13 +500,14 @@ public class EventMentionPipeline {
         }, typeSystemDescription).run();
     }
 
-    public void trainAll(Configuration config) throws Exception {
+    public void trainAll(Configuration config, boolean skipTypeTrain, boolean skipRealisTrain, boolean skipCorefTrain)
+            throws Exception {
         logger.info("Staring training a full model on all data in " + preprocessBase);
         CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createXmiReader(
                 typeSystemDescription, trainingWorkingDir, preprocessBase);
-        trainMentionTypeLv1(config, trainingReader, fullRunSuffix);
-        trainRealisTypes(config, trainingReader, fullRunSuffix);
-        trainLatentTreeCoref(config, trainingReader, fullRunSuffix);
+        trainMentionTypeLv1(config, trainingReader, fullRunSuffix, skipTypeTrain);
+        trainRealisTypes(config, trainingReader, fullRunSuffix, skipRealisTrain);
+        trainLatentTreeCoref(config, trainingReader, fullRunSuffix, skipCorefTrain);
         logger.info("All training done.");
     }
 
@@ -569,6 +567,10 @@ public class EventMentionPipeline {
         String corefEval = joinPaths(trainingWorkingDir, evalBase, "tree_coref");
         edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(corefEval);
 
+        boolean skipCorefTrain = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
+        boolean skipTypeTrain = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
+        boolean skipRealisTrain = taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain=true", false);
+
         for (int slice = 0; slice < numSplit; slice++) {
             logger.info("Starting CV split " + slice);
 
@@ -580,13 +582,13 @@ public class EventMentionPipeline {
                     typeSystemDescription, trainingWorkingDir, preprocessBase, true, seed, slice);
 
             // Train lv1 of the mention type model.
-            String crfTypeModelDir = trainMentionTypeLv1(taskConfig, trainingSliceReader, sliceSuffix);
+            String crfTypeModelDir = trainMentionTypeLv1(taskConfig, trainingSliceReader, sliceSuffix, skipTypeTrain);
 
             // Train realis model.
-            String realisModelDir = trainRealisTypes(taskConfig, trainingSliceReader, sliceSuffix);
+            String realisModelDir = trainRealisTypes(taskConfig, trainingSliceReader, sliceSuffix, skipRealisTrain);
 
             // Train coref model.
-            String treeCorefModel = trainLatentTreeCoref(taskConfig, trainingSliceReader, sliceSuffix);
+            String treeCorefModel = trainLatentTreeCoref(taskConfig, trainingSliceReader, sliceSuffix, skipCorefTrain);
 
             // Mention types from the crf model.
             CollectionReaderDescription lv1OutputReader = crfMentionDetection(taskConfig, devSliceReader,

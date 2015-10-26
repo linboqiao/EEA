@@ -31,7 +31,6 @@ public class BrownClusterFeatures extends SequenceFeatureWithFocus {
     public BrownClusterFeatures(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
         brownClusteringPath = generalConfig.get("edu.cmu.cs.lti.brown_cluster.path");
-        logger.info("Loading Brown clusters");
         brownClusters = new HashMap<>();
         try {
             for (String line : FileUtils.readLines(new File(brownClusteringPath))) {

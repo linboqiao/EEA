@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.emd.annotators.crf;
 
-import com.google.common.io.Files;
 import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
@@ -33,7 +32,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,15 +53,15 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
     public static final String PARAM_MODEL_DIRECTORY = "modelDirectory";
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
-    File modelDirectory;
+    private File modelDirectory;
 
     public static final String PARAM_VERBOSE = "verbose";
     @ConfigurationParameter(name = PARAM_VERBOSE, defaultValue = "false")
-    boolean verbose;
+    private boolean verbose;
 
     public static final String PARAM_CONFIG = "configuration";
     @ConfigurationParameter(name = PARAM_CONFIG)
-    private static Configuration config;
+    private Configuration config;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -77,8 +75,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
                     (modelDirectory, MentionTypeCrfTrainer.MODEL_NAME)));
             alphabet = weightVector.getFeatureAlphabet();
             classAlphabet = weightVector.getClassAlphabet();
-            featureSpec = Files.readFirstLine(new File(modelDirectory, MentionTypeCrfTrainer.FEATURE_SPEC_FILE),
-                    Charset.defaultCharset());
+            featureSpec = weightVector.getFeatureSpec();
         } catch (IOException e) {
             throw new ResourceInitializationException(e);
         }

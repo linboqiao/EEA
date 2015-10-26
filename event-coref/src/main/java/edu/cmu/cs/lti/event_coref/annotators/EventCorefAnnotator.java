@@ -1,7 +1,5 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
-import com.google.common.io.Files;
-import edu.cmu.cs.lti.emd.annotators.crf.MentionTypeCrfTrainer;
 import edu.cmu.cs.lti.event_coref.decoding.BestFirstLatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.decoding.LatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
@@ -32,7 +30,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,14 +79,19 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
                     new File(modelDirectory, PaLatentTreeTrainer.MODEL_NAME)));
             featureAlphabet = weights.getFeatureAlphabet();
             classAlphabet = weights.getClassAlphabet();
-            featureSpec = Files.readFirstLine(new File(modelDirectory, MentionTypeCrfTrainer.FEATURE_SPEC_FILE),
-                    Charset.defaultCharset());
+            featureSpec = weights.getFeatureSpec();
         } catch (IOException e) {
             throw new ResourceInitializationException(e);
         }
 
         try {
-            logger.debug(featureSpec);
+            String currentFeatureSpec = config.get("edu.cmu.cs.lti.features.coref.spec");
+            if (!currentFeatureSpec.equals(featureSpec)) {
+                logger.warn("Current feature specification is not the same with the trained model.");
+                logger.warn("Will use the stored specification, it might create unexpected errors");
+                logger.warn("Using Spec:" + featureSpec);
+            }
+
             Configuration featureConfig = new FeatureSpecParser(
                     config.get("edu.cmu.cs.lti.feature.pair.package.name")
             ).parseFeatureFunctionSpecs(featureSpec);
