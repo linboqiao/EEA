@@ -5,7 +5,7 @@
     <groupId>edu.cmu.cs.lti.script</groupId>
     <artifactId>cmu-script</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <build>
         <pluginManagement>
             <plugins>
@@ -72,7 +72,7 @@
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>zl-utils</artifactId>
-                <version>0.0.1</version>
+                <version>0.0.2</version>
             </dependency>
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
@@ -114,7 +114,7 @@
             <dependency>
                 <groupId>edu.cmu.cs.lti.script</groupId>
                 <artifactId>core</artifactId>
-                <version>0.0.1</version>
+                <version>0.0.2</version>
             </dependency>
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
@@ -184,7 +184,7 @@
             <dependency>
                 <groupId>edu.cmu.cs.lti.script</groupId>
                 <artifactId>learning</artifactId>
-                <version>0.0.1</version>
+                <version>0.0.2</version>
             </dependency>
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
