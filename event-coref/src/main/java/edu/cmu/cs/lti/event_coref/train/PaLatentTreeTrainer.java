@@ -129,19 +129,14 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         // Decoding.
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, weights, extractor);
-//        logger.info(predictedTree.toString());
         if (!graphMatch(predictedTree, mentionGraph)) {
             MentionSubGraph latentTree = mentionGraph.getLatentTree(weights, extractor);
             double loss = predictedTree.getLoss(latentTree);
-//            logger.info(String.format("Loss is %.4f, length is %d, averaged loss is %.4f", loss, mentionGraph
-//                    .getMentionNodes().length, loss / mentionGraph.getMentionNodes().length));
             trainingStats.addLoss(logger, loss / mentionGraph.getMentionNodes().length);
             update(predictedTree, latentTree, extractor);
         } else {
-            // TODO should add loss here
+            trainingStats.addLoss(logger, 0);
         }
-
-//        DebugUtils.pause();
     }
 
     /**
@@ -185,10 +180,9 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 //        logger.info(delta.readableNodeVector());
         double loss = predictedTree.getLoss(latentTree);
         double l2 = getFeatureL2(delta);
-        double deltaDotProd = weights.dotProd(delta);
+//        double deltaDotProd = weights.dotProd(delta);
 //        double tau = (deltaDotProd - loss) / l2;
         double tau = loss / l2;
-
 
 //        logger.info("Loss is " + loss + " update rate is " + tau + " dot prod is " + deltaDotProd + " l2 is " + l2);
 
