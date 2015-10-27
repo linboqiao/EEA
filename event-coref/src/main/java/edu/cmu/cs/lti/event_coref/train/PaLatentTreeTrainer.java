@@ -68,7 +68,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.coref.readableModel", false);
         boolean useBinaryFeatures = config.getBoolean("edu.cmu.cs.lti.coref.binaryFeature", false);
         boolean discardAfter = config.getBoolean("edu.cmu.cs.lti.coref.cache.discard_after", true);
-        long weightLimit = config.getLong("edu.cmu.cs.lti.coref.weightlimit", 500000);
+        long weightLimit = config.getLong("edu.cmu.cs.lti.coref.weightlimit", 1250000);
 
         try {
             logger.info("Initialize auto-eviction cache with weight limit of " + weightLimit);
