@@ -16,7 +16,7 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
-import edu.cmu.cs.lti.utils.MultiStringDiskBackedCacher;
+import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;
 import gnu.trove.iterator.TIntObjectIterator;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -53,7 +53,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
     private PairFeatureExtractor extractor;
     private LatentTreeDecoder decoder;
-    private static MultiStringDiskBackedCacher<MentionGraph> graphCacher;
+    private static MultiKeyDiskCacher<MentionGraph> graphCacher;
     private TrainingStats trainingStats;
 
     // The resulting weights.
@@ -72,7 +72,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         try {
             logger.info("Initialize auto-eviction cache with weight limit of " + weightLimit);
-            graphCacher = new MultiStringDiskBackedCacher<>(
+            graphCacher = new MultiKeyDiskCacher<>(
                     cacheDir, (k, g) -> g.numNodes() * g.numNodes(), weightLimit, discardAfter
             );
         } catch (IOException e) {

@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.emd.annotators.classification;
 
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
-import edu.cmu.cs.lti.learning.cache.CrfSequenceKey;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
@@ -54,17 +53,10 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
 
         JCas goldView = JCasUtil.getView(aJCas, goldStandardViewName, aJCas);
 
-        String documentKey = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
-        CrfSequenceKey key = new CrfSequenceKey();
-        key.setDocumentKey(documentKey);
-
-        int sentenceId = 0;
-
         FeatureVector dummy = new RealValueHashFeatureVector(alphabet);
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             extractor.resetWorkspace(aJCas, sentence);
-            key.setSequenceId(sentenceId);
 
             List<EventMention> mentions = JCasUtil.selectCovered(goldView, EventMention.class, sentence.getBegin(),
                     sentence.getEnd());

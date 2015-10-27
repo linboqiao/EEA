@@ -99,7 +99,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
                 | IllegalAccessException e) {
             e.printStackTrace();
         }
-        decoder = new ViterbiDecoder(alphabet, classAlphabet, null /**No caching here**/);
+        decoder = new ViterbiDecoder(alphabet, classAlphabet);
     }
 
     @Override

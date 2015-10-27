@@ -1,14 +1,12 @@
 package edu.cmu.cs.lti.emd.annotators.classification;
 
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
-import edu.cmu.cs.lti.learning.cache.CrfSequenceKey;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.RealValueHashFeatureVector;
 import edu.cmu.cs.lti.learning.model.WekaModel;
-import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
@@ -100,17 +98,10 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
         extractor.initWorkspace(aJCas);
         alignmentHelper.loadWord2Stanford(aJCas, goldTokenComponentId);
 
-        String documentKey = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
-        CrfSequenceKey key = new CrfSequenceKey();
-        key.setDocumentKey(documentKey);
-
-        int sentenceId = 0;
-
         FeatureAlphabet alphabet = model.getAlphabet();
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             extractor.resetWorkspace(aJCas, sentence);
-            key.setSequenceId(sentenceId);
 
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sentence)) {
                 TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();

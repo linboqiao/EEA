@@ -2,7 +2,6 @@ package edu.cmu.cs.lti.emd.annotators.crf;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
-import edu.cmu.cs.lti.learning.cache.CrfSequenceKey;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
@@ -16,7 +15,9 @@ import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.MultiStringDiskBackedCacher;
+import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;
+import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
@@ -29,10 +30,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -64,9 +62,9 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
     private ViterbiDecoder decoder;
 
-    private static MultiStringDiskBackedCacher<FeatureVector[]> featureCacher;
+    private static MultiKeyDiskCacher<ArrayList<TIntObjectMap<FeatureVector[]>>> featureCacher;
 
-    private static MultiStringDiskBackedCacher<Pair<GraphFeatureVector, SequenceSolution>> goldCacher;
+    private static MultiKeyDiskCacher<ArrayList<Pair<GraphFeatureVector, SequenceSolution>>> goldCacher;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -78,7 +76,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
         boolean discardAfter = config.getBoolean("edu.cmu.cs.lti.coref.mention.cache.discard_after", true);
-        long weightLimit = config.getLong("edu.cmu.cs.lti.mention.cache.sentence.num", 20000);
+        long weightLimit = config.getLong("edu.cmu.cs.lti.mention.cache.document.num", 1000);
 
         File classFile = config.getFile("edu.cmu.cs.lti.mention.classes.path");
         String[] classes = new String[0];
@@ -101,13 +99,13 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         trainingStats = new TrainingStats(printLossOverPreviousN);
 
         try {
-            featureCacher = new MultiStringDiskBackedCacher<>(cacheDir.getPath(), (strings, featureVectors) -> 1,
-                    20000, discardAfter);
+            featureCacher = new MultiKeyDiskCacher<>(cacheDir.getPath(), (strings, featureVectors) -> 1,
+                    weightLimit, discardAfter, "feature_cache");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        decoder = new ViterbiDecoder(alphabet, classAlphabet, featureCacher);
+        decoder = new ViterbiDecoder(alphabet, classAlphabet);
         String featureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
         trainer = new AveragePerceptronTrainer(decoder, classAlphabet, alphabet, featureSpec, stepSize);
 
@@ -123,8 +121,8 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         logger.info("Initializing gold cacher with " + cacheDir.getAbsolutePath());
 
         try {
-            goldCacher = new MultiStringDiskBackedCacher<>(cacheDir.getPath(), (strings, fv) -> 1,
-                    weightLimit, discardAfter);
+            goldCacher = new MultiKeyDiskCacher<>(cacheDir.getPath(), (strings, fv) -> 1,
+                    weightLimit, discardAfter, "gold_cache");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -137,13 +135,16 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         JCas goldView = JCasUtil.getView(aJCas, goldStandardViewName, aJCas);
 
         String documentKey = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
-        CrfSequenceKey key = new CrfSequenceKey();
-        key.setDocumentKey(documentKey);
+
+        List<TIntObjectMap<FeatureVector[]>> documentCacheFeatures = featureCacher.get(documentKey);
+        ArrayList<TIntObjectMap<FeatureVector[]>> featuresToCache = new ArrayList<>();
+
+        List<Pair<GraphFeatureVector, SequenceSolution>> cachedGold = goldCacher.get(documentKey);
+        ArrayList<Pair<GraphFeatureVector, SequenceSolution>> goldToCache = new ArrayList<>();
 
         int sentenceId = 0;
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             sentenceExtractor.resetWorkspace(aJCas, sentence);
-            key.setSequenceId(sentenceId);
 
             Map<StanfordCorenlpToken, String> tokenTypes = new HashMap<>();
             List<EventMention> mentions = JCasUtil.selectCovered(goldView, EventMention.class, sentence.getBegin(),
@@ -164,21 +165,39 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
             SequenceSolution goldSolution;
             GraphFeatureVector goldFv;
-            Pair<GraphFeatureVector, SequenceSolution> goldSolutionAndFeatures = goldCacher.get(documentKey,
-                    String.valueOf(sentenceId));
 
-            if (goldSolutionAndFeatures != null) {
+            if (cachedGold != null) {
+                Pair<GraphFeatureVector, SequenceSolution> goldSolutionAndFeatures = cachedGold.get(sentenceId);
                 goldFv = goldSolutionAndFeatures.getLeft();
                 goldSolution = goldSolutionAndFeatures.getRight();
             } else {
                 goldSolution = getGoldSequence(sentence, tokenTypes);
                 goldFv = decoder.getSolutionFeatures(sentenceExtractor, goldSolution);
-                goldCacher.addWithMultiKey(Pair.of(goldFv, goldSolution), documentKey, String.valueOf(sentenceId));
+                goldToCache.add(Pair.of(goldFv, goldSolution));
             }
 
-            double loss = trainer.trainNext(goldSolution, goldFv, sentenceExtractor, 0, key);
+            TIntObjectMap<FeatureVector[]> sentenceFeatures;
+            if (documentCacheFeatures != null) {
+                sentenceFeatures = documentCacheFeatures.get(sentenceId);
+            } else {
+                sentenceFeatures = new TIntObjectHashMap<>();
+            }
+
+            double loss = trainer.trainNext(goldSolution, goldFv, sentenceExtractor, 0, sentenceFeatures);
             trainingStats.addLoss(logger, loss);
             sentenceId++;
+
+            if (documentCacheFeatures == null) {
+                featuresToCache.add(sentenceFeatures);
+            }
+        }
+
+        if (documentCacheFeatures == null) {
+            featureCacher.addWithMultiKey(featuresToCache, documentKey);
+        }
+
+        if (cachedGold == null) {
+            goldCacher.addWithMultiKey(goldToCache, documentKey);
         }
     }
 
