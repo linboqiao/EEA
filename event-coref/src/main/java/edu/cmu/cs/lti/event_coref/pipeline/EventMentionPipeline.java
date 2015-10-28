@@ -11,7 +11,7 @@ import edu.cmu.cs.lti.emd.annotators.acceptors.AllCandidateAcceptor;
 import edu.cmu.cs.lti.emd.annotators.classification.RealisTypeAnnotator;
 import edu.cmu.cs.lti.emd.annotators.crf.CrfMentionTypeAnnotator;
 import edu.cmu.cs.lti.emd.pipeline.CrfMentionTrainingLooper;
-import edu.cmu.cs.lti.event_coref.annotators.ArgumentExtractor;
+import edu.cmu.cs.lti.emd.annotators.structure.ArgumentExtractor;
 import edu.cmu.cs.lti.event_coref.annotators.EventCorefAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.GoldStandardEventMentionAnnotator;
 import edu.cmu.cs.lti.learning.train.RealisClassifierTrainer;
@@ -640,6 +640,9 @@ public class EventMentionPipeline {
 
             // Produce gold coreference for easy evaluation.
             writeGold(devSliceReader, joinPaths(corefEval, "gold_" + sliceSuffix + ".tbf"));
+
+            // TODO temp return for running only one cross validation, for the matter of fast experiments.
+            return;
         }
     }
 }
