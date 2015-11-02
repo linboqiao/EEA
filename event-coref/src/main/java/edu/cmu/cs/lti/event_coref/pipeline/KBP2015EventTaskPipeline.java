@@ -30,8 +30,8 @@ public class KBP2015EventTaskPipeline {
         boolean skipCorefTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
 
         pipeline.prepare(kbpConfig);
-        pipeline.trainAll(kbpConfig, skipTypeTrain, skipRealisTrain, skipCorefTrain);
-        pipeline.test(kbpConfig);
+//        pipeline.trainAll(kbpConfig, skipTypeTrain, skipRealisTrain, skipCorefTrain);
+//        pipeline.test(kbpConfig);
         pipeline.crossValidation(kbpConfig);
     }
 }

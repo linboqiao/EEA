@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.emd.annotators;
 
 import com.google.common.base.Joiner;
-import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
@@ -22,10 +21,13 @@ import java.util.*;
 public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine {
     public static final String PARAM_SYSTEM_ID = "systemId";
 
+    public static final String PARAM_GOLD_TOKEN_COMPONENT_ID = "goldTokenComponentId";
+
     @ConfigurationParameter(name = PARAM_SYSTEM_ID)
     private String systemId;
 
-    public static final String goldCompontnentId = TbfEventDataReader.COMPONENT_ID;
+    @ConfigurationParameter(name = PARAM_GOLD_TOKEN_COMPONENT_ID)
+    public String goldCompontnentId;
 
     @Override
     public String getTextToPrint(JCas aJCas) {

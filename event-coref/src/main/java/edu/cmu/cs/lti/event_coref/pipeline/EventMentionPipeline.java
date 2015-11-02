@@ -10,8 +10,8 @@ import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.acceptors.AllCandidateAcceptor;
 import edu.cmu.cs.lti.emd.annotators.classification.RealisTypeAnnotator;
 import edu.cmu.cs.lti.emd.annotators.crf.CrfMentionTypeAnnotator;
-import edu.cmu.cs.lti.emd.pipeline.CrfMentionTrainingLooper;
 import edu.cmu.cs.lti.emd.annotators.structure.ArgumentExtractor;
+import edu.cmu.cs.lti.emd.pipeline.CrfMentionTrainingLooper;
 import edu.cmu.cs.lti.event_coref.annotators.EventCorefAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.GoldStandardEventMentionAnnotator;
 import edu.cmu.cs.lti.learning.train.RealisClassifierTrainer;
@@ -237,7 +237,7 @@ public class EventMentionPipeline {
                         stanfordAnalyzer, semaforAnalyzer, fanseParser, opennlp, quoteAnnotator, wordNetEntityAnnotator
                 };
             }
-        }, typeSystemDescription).runWithOutput(workingDirPath, preprocessBase);
+        }).runWithOutput(workingDirPath, preprocessBase);
     }
 
     public String trainMentionTypeLv1(Configuration config, CollectionReaderDescription trainingReader, String suffix,
@@ -287,7 +287,7 @@ public class EventMentionPipeline {
             public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
                 return new AnalysisEngineDescription[]{getGoldAnnotator(copyType, copyRealis, copyCluster)};
             }
-        }, typeSystemDescription).runWithOutput(mainDir, baseOutput);
+        }).runWithOutput(mainDir, baseOutput);
         return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, baseOutput);
     }
 
@@ -314,7 +314,7 @@ public class EventMentionPipeline {
                 );
                 return new AnalysisEngineDescription[]{crfLevel1Annotator, everythingAcceptor};
             }
-        }, typeSystemDescription).runWithOutput(mainDir, baseOutput);
+        }).runWithOutput(mainDir, baseOutput);
 
         return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, baseOutput);
     }
@@ -354,7 +354,7 @@ public class EventMentionPipeline {
                 );
                 return new AnalysisEngineDescription[]{realisAnnotator};
             }
-        }, typeSystemDescription).runWithOutput(mainDir, realisOutputBase);
+        }).runWithOutput(mainDir, realisOutputBase);
 
         return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, realisOutputBase);
     }
@@ -377,7 +377,7 @@ public class EventMentionPipeline {
                     );
                     return new AnalysisEngineDescription[]{mentionAndCorefGoldAnnotator, argumentExtractor};
                 }
-            }, typeSystemDescription).runWithOutput(workingDir, outputBase);
+            }).runWithOutput(workingDir, outputBase);
         }
 
         return CustomCollectionReaderFactory.createRandomizedXmiReader(typeSystemDescription, workingDir, outputBase,
@@ -445,7 +445,7 @@ public class EventMentionPipeline {
                 );
                 return new AnalysisEngineDescription[]{argumentExtractor, corefAnnotator};
             }
-        }, typeSystemDescription).runWithOutput(mainDir, outputBase);
+        }).runWithOutput(mainDir, outputBase);
 
         return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, outputBase);
     }
@@ -470,12 +470,13 @@ public class EventMentionPipeline {
                 AnalysisEngineDescription resultWriter = AnalysisEngineFactory.createEngineDescription(
                         TbfStyleEventWriter.class, typeSystemDescription,
                         TbfStyleEventWriter.PARAM_OUTPUT_PATH, tbfOutput,
-                        TbfStyleEventWriter.PARAM_SYSTEM_ID, systemId
+                        TbfStyleEventWriter.PARAM_SYSTEM_ID, systemId,
+                        TbfStyleEventWriter.PARAM_GOLD_TOKEN_COMPONENT_ID, TbfEventDataReader.COMPONENT_ID
                 );
 
                 return new AnalysisEngineDescription[]{resultWriter};
             }
-        }, typeSystemDescription).run();
+        }).run();
     }
 
     public void writeGold(CollectionReaderDescription reader, String goldTbfOutput) throws UIMAException, IOException {
@@ -495,7 +496,7 @@ public class EventMentionPipeline {
                 );
                 return new AnalysisEngineDescription[]{goldCopier, resultWriter};
             }
-        }, typeSystemDescription).run();
+        }).run();
     }
 
     public void trainAll(Configuration config, boolean skipTypeTrain, boolean skipRealisTrain, boolean skipCorefTrain)
@@ -509,6 +510,13 @@ public class EventMentionPipeline {
         logger.info("All training done.");
     }
 
+    /**
+     * Run a test, with all the intermediate results retained.
+     *
+     * @param testConfig The test configuration file.
+     * @throws UIMAException
+     * @throws IOException
+     */
     public void test(Configuration testConfig) throws UIMAException, IOException {
         CollectionReaderDescription testDataReader = CustomCollectionReaderFactory.createXmiReader(
                 typeSystemDescription, testingWorkingDir, preprocessBase);
@@ -552,6 +560,66 @@ public class EventMentionPipeline {
         String evalDir = joinPaths(testingWorkingDir, evalBase, "full_run");
         writeResults(fullResults, joinPaths(evalDir, "lv1_realis_coref_" + fullRunSuffix + ".tbf"), "sys-coref");
         writeResults(goldBasedCoref, joinPaths(evalDir, "gold_coref_" + fullRunSuffix + ".tbf"), "gold-coref");
+    }
+
+    /**
+     * Run a test from end to end. That is, assuming all models given, run test starting from raw text, and doesn't
+     * produce intermediate output.
+     *
+     * @param reader     Collection reader for the input dataset.
+     * @param testConfig Configuration file for the test.
+     */
+    public void endToEndTest(Configuration testConfig, CollectionReaderDescription reader)
+            throws UIMAException, IOException {
+        String crfTypeModel = joinPaths(outputModelDir,
+                testConfig.get("edu.cmu.cs.lti.model.crf.mention.lv1.dir"), fullRunSuffix);
+
+        String realisModel = joinPaths(outputModelDir,
+                testConfig.get("edu.cmu.cs.lti.model.realis.dir"), fullRunSuffix);
+
+        String corefModel = joinPaths(outputModelDir,
+                testConfig.get("edu.cmu.cs.lti.model.event.latent_tree"), fullRunSuffix);
+
+        new BasicPipeline(new ProcessorWrapper() {
+            @Override
+            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
+                return reader;
+            }
+
+            @Override
+            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
+                AnalysisEngineDescription crfLevel1Annotator = AnalysisEngineFactory.createEngineDescription(
+                        CrfMentionTypeAnnotator.class, typeSystemDescription,
+                        CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, crfTypeModel,
+                        CrfMentionTypeAnnotator.PARAM_CONFIG, testConfig.getConfigFile()
+                );
+
+                AnalysisEngineDescription everythingAcceptor = AnalysisEngineFactory.createEngineDescription(
+                        AllCandidateAcceptor.class, typeSystemDescription
+                );
+
+                AnalysisEngineDescription realisAnnotator = AnalysisEngineFactory.createEngineDescription(
+                        RealisTypeAnnotator.class, typeSystemDescription,
+                        RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, realisModel,
+                        RealisTypeAnnotator.PARAM_CONFIG_PATH, testConfig.getConfigFile(),
+                        RealisTypeAnnotator.PARAM_FEATURE_PACKAGE_NAME,
+                        testConfig.get("edu.cmu.cs.lti.feature.sentence.package.name")
+                );
+
+                AnalysisEngineDescription argumentExtractor = AnalysisEngineFactory.createEngineDescription(
+                        ArgumentExtractor.class, typeSystemDescription
+                );
+
+                AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
+                        EventCorefAnnotator.class, typeSystemDescription,
+                        EventCorefAnnotator.PARAM_MODEL_DIRECTORY, corefModel,
+                        EventCorefAnnotator.PARAM_CONFIG_PATH, testConfig.getConfigFile(),
+                        EventCorefAnnotator.PARAM_USE_AVERAGE, true
+                );
+                return new AnalysisEngineDescription[]{crfLevel1Annotator, everythingAcceptor, realisAnnotator,
+                        argumentExtractor, corefAnnotator};
+            }
+        }).run();
     }
 
     private String joinPaths(String... segments) {

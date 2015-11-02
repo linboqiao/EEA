@@ -58,10 +58,13 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
     @Override
     protected void loopActions() {
         numIteration++;
-        try {
-            MentionTypeCrfTrainer.saveModels(new File(modelBasename + "_iter" + numIteration));
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
+        if (numIteration % 3 == 0) {
+            try {
+                logger.info("Saving models for iteration " + numIteration);
+                MentionTypeCrfTrainer.saveModels(new File(modelBasename + "_iter" + numIteration));
+            } catch (java.io.IOException e) {
+                e.printStackTrace();
+            }
         }
         logger.info(String.format("Iteration %d finished ...", numIteration));
     }

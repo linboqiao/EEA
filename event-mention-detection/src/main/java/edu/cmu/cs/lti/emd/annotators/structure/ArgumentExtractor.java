@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.event_coref.annotators;
+package edu.cmu.cs.lti.emd.annotators.structure;
 
 import edu.cmu.cs.lti.script.model.SemaforConstants;
 import edu.cmu.cs.lti.script.type.*;
@@ -18,9 +18,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
- * Created with IntelliJ IDEA.
- * Date: 4/13/15
- * Time: 2:06 PM
+ * Quick and dirty argument extractor based on Semafor and Fanse parsers.
  *
  * @author Zhengzhong Liu
  */
