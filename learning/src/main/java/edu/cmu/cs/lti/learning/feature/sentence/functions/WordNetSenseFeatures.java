@@ -6,6 +6,7 @@ import edu.cmu.cs.lti.script.type.Dependency;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.WordNetBasedEntity;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.FileUtils;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
@@ -36,7 +37,10 @@ public class WordNetSenseFeatures extends SequenceFeatureWithFocus {
 
     public WordNetSenseFeatures(Configuration generalConfig, Configuration featureConfig) throws IOException {
         super(generalConfig, featureConfig);
-        searcher = new WordNetSearcher(generalConfig.get("edu.cmu.cs.lti.wndict.path"));
+        searcher = new WordNetSearcher(
+                FileUtils.joinPaths(generalConfig.get("edu.cmu.cs.lti.resource.dir"),
+                        generalConfig.get("edu.cmu.cs.lti.wndict.path"))
+        );
 
         featureTemplates = new ArrayList<>();
 

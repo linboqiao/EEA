@@ -19,12 +19,12 @@ public class RegressionPipeline {
         }
 
         Configuration commonConfig = new Configuration("settings/common.properties");
-        String modelPath = commonConfig.get("edu.cmu.cs.lti.model.dir");
         String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
 
         Configuration config = new Configuration(argv[0]);
         String regressionDir = config.get("edu.cmu.cs.lti.regression.dir");
         boolean runReference = config.getBoolean("edu.cmu.cs.lti.regression.reference_mode", false);
+        String modelPath = config.get("edu.cmu.cs.lti.model.dir");
 
         String base = runReference ? "reference_run" : "regression_run";
 

@@ -21,6 +21,7 @@ import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.cas.CAS;
@@ -230,7 +231,8 @@ public class EventMentionPipeline {
                 AnalysisEngineDescription wordNetEntityAnnotator = AnalysisEngineFactory.createEngineDescription(
                         WordNetBasedEntityAnnotator.class, typeSystemDescription,
                         WordNetBasedEntityAnnotator.PARAM_WN_PATH,
-                        taskConfig.get("edu.cmu.cs.lti.wndict.path")
+                        FileUtils.joinPaths(taskConfig.get("edu.cmu.cs.lti.resource.dir"),
+                                taskConfig.get("edu.cmu.cs.lti.wndict.path"))
                 );
 
                 return new AnalysisEngineDescription[]{

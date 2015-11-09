@@ -34,8 +34,7 @@ public class BasicPipeline {
     private AnalysisEngine aggregateAnalysisEngine;
     private CAS mergedCas;
 
-    public BasicPipeline(ProcessorWrapper wrapper) throws
-            UIMAException {
+    public BasicPipeline(ProcessorWrapper wrapper) throws UIMAException {
         // Create the components
         reader = CollectionReaderFactory.createReader(wrapper.getCollectionReader());
         engines = wrapper.getProcessors();
@@ -101,6 +100,24 @@ public class BasicPipeline {
         try {
             // Process.
             while (reader.hasNext()) {
+                reader.getNext(mergedCas);
+                aggregateAnalysisEngine.process(mergedCas);
+                mergedCas.reset();
+            }
+        } catch (AnalysisEngineProcessException | CollectionException | IOException e) {
+            e.printStackTrace();
+            // Destroy.
+            aggregateAnalysisEngine.destroy();
+        }
+    }
+
+    /**
+     * Process the one CAS in the reader.
+     */
+    public void processNext() {
+        try {
+            // Process.
+            if (reader.hasNext()) {
                 reader.getNext(mergedCas);
                 aggregateAnalysisEngine.process(mergedCas);
                 mergedCas.reset();

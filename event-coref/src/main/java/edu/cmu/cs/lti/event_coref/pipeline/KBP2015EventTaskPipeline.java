@@ -14,13 +14,13 @@ public class KBP2015EventTaskPipeline {
         }
 
         Configuration commonConfig = new Configuration("settings/common.properties");
-        String modelPath = commonConfig.get("edu.cmu.cs.lti.model.dir");
         String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
 
         Configuration kbpConfig = new Configuration(argv[0]);
         String trainingWorkingDir = kbpConfig.get("edu.cmu.cs.lti.training.working.dir");
         String testingWorkingDir = kbpConfig.get("edu.cmu.cs.lti.test.working.dir");
         String modelOutputDir = kbpConfig.get("edu.cmu.cs.lti.model.output.dir");
+        String modelPath = kbpConfig.get("edu.cmu.cs.lti.model.dir");
 
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, modelPath, modelOutputDir,
                 trainingWorkingDir, testingWorkingDir);
