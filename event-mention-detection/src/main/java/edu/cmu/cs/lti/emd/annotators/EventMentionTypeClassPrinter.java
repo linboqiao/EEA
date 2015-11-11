@@ -1,12 +1,13 @@
 package edu.cmu.cs.lti.emd.annotators;
 
 import com.google.common.base.Joiner;
+import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.commons.io.FileUtils;
@@ -16,6 +17,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -152,33 +154,30 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
     }
 
     public static void main(String args[]) throws IOException, UIMAException {
-//        String inputDir = args[0];
-        String inputDir = "/Users/zhengzhongliu/Documents/projects/cmu-script/data/mention/kbp/LDC2015E73/";
-        String inputAll = inputDir + "preprocessed";
-        String inputTest = inputDir + "01_test_data";
-        String inputDev = inputDir + "01_dev_data";
-        String inputTrain = inputDir + "01_train_data";
+        Configuration taskConfig = new Configuration(args[0]);
 
         String paramTypeSystemDescriptor = "TaskEventMentionDetectionTypeSystem";
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        CollectionReaderDescription allReader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription,
-                inputAll, false);
-//        CollectionReaderDescription testReader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription,
-//                inputTest, false);
-//        CollectionReaderDescription devReader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription,
-//                inputDev, false);
-//        CollectionReaderDescription trainReader = CustomCollectionReaderFactory.createXmiReader
-//                (typeSystemDescription, inputTrain, false);
+        CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
+                TbfEventDataReader.class, typeSystemDescription,
+                TbfEventDataReader.PARAM_GOLD_STANDARD_FILE, taskConfig.get("edu.cmu.cs.lti.training.gold.tbf"),
+                TbfEventDataReader.PARAM_SOURCE_EXT, ".txt",
+                TbfEventDataReader.PARAM_SOURCE_TEXT_DIRECTORY,
+                taskConfig.get("edu.cmu.cs.lti.training.source_text.dir"),
+                TbfEventDataReader.PARAM_TOKEN_DIRECTORY, taskConfig.get("edu.cmu.cs.lti.training.token_map.dir"),
+                TbfEventDataReader.PARAM_TOKEN_EXT, ".tab",
+                TbfEventDataReader.PARAM_INPUT_VIEW_NAME, UimaConst.inputViewName
+        );
 
         AnalysisEngineDescription runner = AnalysisEngineFactory.createEngineDescription(
                 EventMentionTypeClassPrinter.class, typeSystemDescription,
-                EventMentionTypeClassPrinter.CLASS_OUTPUT_PATH, inputDir + "mention_types.txt");
+                EventMentionTypeClassPrinter.CLASS_OUTPUT_PATH,
+                edu.cmu.cs.lti.utils.FileUtils.joinPaths(
+                        taskConfig.get("edu.cmu.cs.lti.training.working.dir"), "mention_types.txt")
+        );
 
-        SimplePipeline.runPipeline(allReader, runner);
-//        SimplePipeline.runPipeline(testReader, runner);
-//        SimplePipeline.runPipeline(devReader, runner);
-//        SimplePipeline.runPipeline(trainReader, runner);
+        SimplePipeline.runPipeline(reader, runner);
     }
 }
