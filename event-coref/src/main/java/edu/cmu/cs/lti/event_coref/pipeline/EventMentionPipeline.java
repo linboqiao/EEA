@@ -710,9 +710,6 @@ public class EventMentionPipeline {
 
             // Produce gold coreference for easy evaluation.
             writeGold(devSliceReader, joinPaths(corefEval, "gold_" + sliceSuffix + ".tbf"));
-
-            // TODO temp return for running only one cross validation, for the matter of fast experiments.
-            return;
         }
     }
 }
