@@ -4,7 +4,8 @@ The event project
 -----------------
 
  - Quick summary
-A research prototype that induce script knowledge and its general component (events) from text, from multiple documents (Or not)
+
+A research prototype that induce script knowledge,mining relations from general discourse components (events, entities) from text, from multiple documents (Or not).
 
 Requirements
 ----------
