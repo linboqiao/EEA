@@ -11,7 +11,7 @@ Requirements
 ----------
 The project is developed under the following environment:
 
-1. Java 1.8
+1. Java 1.8  (A Java 1.6 branch is available, but not frequently maintained).
 2. Maven 3.2.1
 
 In addition, it depends on the following modules,
