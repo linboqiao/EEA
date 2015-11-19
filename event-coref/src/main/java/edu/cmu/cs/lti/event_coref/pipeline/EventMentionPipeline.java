@@ -494,7 +494,8 @@ public class EventMentionPipeline {
                 AnalysisEngineDescription resultWriter = AnalysisEngineFactory.createEngineDescription(
                         TbfStyleEventWriter.class, typeSystemDescription,
                         TbfStyleEventWriter.PARAM_OUTPUT_PATH, goldTbfOutput,
-                        TbfStyleEventWriter.PARAM_SYSTEM_ID, "gold"
+                        TbfStyleEventWriter.PARAM_SYSTEM_ID, "gold",
+                        TbfStyleEventWriter.PARAM_GOLD_TOKEN_COMPONENT_ID, TbfEventDataReader.COMPONENT_ID
                 );
                 return new AnalysisEngineDescription[]{goldCopier, resultWriter};
             }

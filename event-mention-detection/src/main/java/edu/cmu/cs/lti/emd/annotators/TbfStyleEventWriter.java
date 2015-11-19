@@ -27,7 +27,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
     private String systemId;
 
     @ConfigurationParameter(name = PARAM_GOLD_TOKEN_COMPONENT_ID)
-    public String goldCompontnentId;
+    public String goldComponentId;
 
     @Override
     public String getTextToPrint(JCas aJCas) {
@@ -41,7 +41,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         sb.append("#BeginOfDocument ").append(articleName).append("\n");
 
         TokenAlignmentHelper align = new TokenAlignmentHelper();
-        align.loadWord2Stanford(aJCas, goldCompontnentId);
+        align.loadWord2Stanford(aJCas, goldComponentId);
 
         Map<EventMention, String> mention2Id = new HashMap<>();
 
@@ -118,7 +118,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
 //                    logger.info("Adding from stanford " + alignedWord.getCoveredText() + " " + alignedWord.getId());
                 }
             } else {
-                if (word.getComponentId().equals(goldCompontnentId)) {
+                if (word.getComponentId().equals(goldComponentId)) {
                     allUnderlying.add(word);
 //                    logger.info("Add directly " + word.getCoveredText() + " " + word.getId() + " " + word.getBegin()
 //                            + " " + +word.getEnd());
