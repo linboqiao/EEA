@@ -1,8 +1,0 @@
-(S1 (S (NP (NP (DT a) (NN wildfire)) (PP (IN in) (NP (NNP california)))) (VP (VBD forced) (NP (NP (NNS hundreds)) (PP (IN of) (NP (NP (NNS people)) (PP (IN from) (NP (PRP$ their) (NNS homes))))))) (. .)))
-
-(S1 (S (NP (NP (DT the) (NN fire)) (, ,) (PP (IN near) (NP (DT the) (JJ historic) (NN state) (NN park)))) (VP (VBD started) (NP (NN yesterday)) (SBAR (WHADVP (WRB when)) (S (NP (NP (DT a) (NN trailer)) (, ,) (VP (VBD hauled) (PP (IN by) (NP (DT a) (NN pickup)))) (, ,)) (VP (VBN ignited) (PP (IN on) (NP (DT the) (JJ golden) (NN state) (NN freeway))))))) (. .)))
-
-(S1 (S (NP (NP (DT the) (NN fire)) (VP (VBN consumed) (NP (QP (JJR more) (IN than) (CD 500)) (NNS acres)))) (VP (AUX is) (ADJP (NP (QP (RB only) (RB about) (CD 35)) (NN %)) (VBN contained))) (. .)))
-
-(S1 (S (NP (DT no) (NNS injuries)) (VP (AUX have) (VP (AUX been) (NP (JJ reported) (JJ thankfully) (NN hat)) (NP (DT this) (NN time)))) (. .)))
-

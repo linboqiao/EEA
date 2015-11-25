@@ -1,8 +1,0 @@
-(S1 (S (ADVP (RB up) (RB first)) (, ,) (PP (IN on) (NP (`` ``) (NNP cnn) (JJ live) (NN today) ('' ''))) (, ,) (VP (NN sentencing) (NP (DT this) (NN hour)) (PP (IN in) (NP (NP (DT the) (NN case)) (PP (IN of) (NP (NP (NNP sam) (NNP waksal)) (, ,) (NP (NP (DT the) (NN man)) (PP (IN at) (NP (NP (DT the) (NN center)) (PP (IN of) (NP (DT the) (NNP martha) (NNP stewart) (NN scandal))))))))))) (. .)))
-
-(S1 (S (NP (PRP he)) (VP (MD could) (VP (VB become) (NP (NP (DT the) (JJS highest) (JJ ranking) (NN executive)) (SBAR (S (VP (TO to) (VP (VB go) (PP (TO to) (NP (NN prison))) (PP (IN in) (NP (NP (DT the) (JJ recent) (NN series)) (PP (IN of) (NP (JJ corporate) (NNS scandals)))))))))))) (. .)))
-
-(S1 (S (NP (NNP cnn) (JJ financial) (NN news) (NN correspondent) (NNP chris) (NNP huntington)) (VP (AUX is) (PP (IN outside) (NP (NP (DT the) (JJ federal) (NN courthouse)) (SBAR (WHADVP (WRB where)) (S (NP (VBG sentencing)) (VP (AUX is) (ADJP (JJ underway)))))))) (. .)))
-
-(S1 (NP (NNP chris) (. ?)))
-

@@ -1,8 +1,0 @@
-(S1 (S (NP (NP (NN police)) (PP (IN in) (NP (NNP pennsylvania)))) (NP (DT a) (NN student)) (VP (ADVP (RB fatally)) (VBD shot) (NP (DT a) (NN principal)) (PP (IN before) (S (VP (VBG killing) (NP (PRP himself)) (NP (DT this) (NN morning)))))) (. .)))
-
-(S1 (S (NP (PRP it)) (VP (VBD happened) (PP (IN in) (NP (NP (DT the) (NN cafeteria)) (PP (IN of) (NP (JJ red) (NN lion) (NN area) (NN junior) (JJ high) (NN school))))) (NP (NP (QP (RB about) (CD 30)) (NNS miles)) (ADJP (JJ southeast) (PP (IN of) (NP (NN harrisburg)))))) (. .)))
-
-(S1 (S (NP (PRP it)) (VP (VBD happened) (PP (IN at) (NP (CD 7:30))) (NP (DT this) (NN morning))) (. .)))
-
-(S1 (S (NP (NNS students)) (ADVP (RB then)) (VP (AUX were) (VP (VBN moved) (PP (IN across) (NP (DT the) (NN street))) (PP (TO to) (NP (DT a) (JJ senior) (JJ high) (NN school))))) (. .)))
-

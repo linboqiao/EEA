@@ -1,6 +1,0 @@
-(S1 (S (NP (JJ major) (NN league) (NN baseball)) (VP (VBD sent) (NP (NP (PRP$ its) (NN head)) (PP (IN of) (NP (NN security)))) (PP (TO to) (NP (NNP chicago))) (S (VP (TO to) (VP (VB review) (NP (NP (DT the) (JJ second) (NN incident)) (PP (IN of) (NP (NP (DT an) (JJ on-field) (NN fan) (NN attack)) (PP (IN in) (NP (DT the) (JJ last) (CD seven) (NNS months)))))))))) (. .)))
-
-(S1 (S (NP (DT the) (NN league)) (VP (AUX is) (VP (VBG reviewing) (NP (NN security)) (PP (IN at) (NP (DT all) (NNS ballparks))) (S (VP (TO to) (VP (VB crack) (PRT (RP down)) (PP (IN on) (NP (NN spectator) (NN violence)))))))) (. .)))
-
-(S1 (S (NP (DT the) (NNP kansas) (NN city) (NNS royals)) (VP (VBD considered) (S (RB not) (VP (VBG playing) (NP (NN tonight)) (SBAR (IN before) (S (NP (DT the) (NN team)) (VP (AUX was) (VP (VBN assured) (SBAR (IN that) (S (NP (NN security) (NNS measures)) (VP (AUX have) (VP (AUX been) (VP (VBN tightened))))))))))))) (. .)))
-

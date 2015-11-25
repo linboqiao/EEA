@@ -1,6 +1,0 @@
-(S1 (S (NP (DT a) (NN cruise) (NN ship)) (VP (AUX is) (VP (AUXG being) (VP (VBD searched) (PP (IN off) (NP (DT the) (NNS hawaii) (NN coast))) (SBAR (IN after) (S (NP (NP (CD two) (NNS notes)) (VP (VBG threatening) (NP (JJ terrorist) (NN attack)))) (VP (AUX were) (VP (VBN found) (PP (IN on) (NP (NN board)))))))))) (. .)))
-
-(S1 (S (NP (NP (JJ royal) (JJ caribbean) (NN cruise) (NN ship) (NN legend)) (PP (IN of) (NP (DT the) (NN sea)))) (VP (VBN diverted) (PP (TO to) (NP (NNP honolulu))) (SBAR (WHADVP (WRB when)) (S (NP (DT the) (NNS notes)) (VP (AUX were) (VP (VBN found) (PP (IN on) (NP (NN board))) (NP (NN yesterday))))))) (. .)))
-
-(S1 (S (NP (NNS passengers)) (VP (AUX were) (VP (VBN taken) (PP (TO to) (NP (NP (DT the) (NN ship) (POS 's)) (NN dining) (NNS rooms))) (SBAR (IN while) (S (NP (NN bomb) (VBG sniffing) (NNS dogs)) (VP (VBD went) (PP (IN over) (NP (DT the) (NN ship)))))))) (. .)))
-

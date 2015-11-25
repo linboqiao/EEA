@@ -1,4 +1,0 @@
-(S1 (S (NP (NP (DT the) (VBG draining)) (PP (IN of) (NP (DT a) (NNP pond))) (PP (IN for) (NP (NN anthrax) (NN evidence))) (PP (IN in) (NP (NN maryland)))) (VP (AUX is) (VP (VBN finished))) (. .)))
-
-(S1 (S (PP (IN up) (PP (ADVP (RB next)) (IN for) (NP (NNS investigators)))) (, ,) (S (VP (TO to) (VP (VB try) (S (VP (TO to) (VP (VB search) (NP (NN sediment)) (PP (IN on) (NP (NP (DT the) (NN bottom)) (PP (IN of) (NP (DT the) (NNP pond))) (VP (VBN located) (PP (ADVP (RB just)) (IN outside) (NP (NN fredrick)))))))))))) (, ,) (ADVP (RB not) (RB far) (PP (IN from) (NP (NP (NNP washington)) (, ,) (NP (NNP d.c.))))) (NP (PRP it)) (VP (AUX 's) (NP (NP (NN part)) (PP (IN of) (NP (NP (DT the) (NN investigation)) (PP (IN into) (NP (NP (DT the) (JJ deadly) (NN anthrax) (NNS attacks)) (PP (IN in) (NP (NP (DT the) (NN fall)) (PP (IN of) (NP (CD 2001))))))) (SBAR (WHPP (IN in) (WHNP (WDT which))) (S (NP (CD five) (NNS people)) (VP (AUX were) (VP (VBN killed))))))))) (. .)))
-

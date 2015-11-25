@@ -1,6 +1,0 @@
-(S1 (S (NP (DT a) (NN bomb)) (VP (VBD exploded) (NP (NN today)) (PP (IN in) (NP (NP (DT a) (NN courtroom)) (PP (IN in) (NP (JJ southern) (NNS yemen))))) (, ,) (S (VP (VBG injuring) (NP (NP (CD four) (NNS people)) (, ,) (NP (NP (NP (CD one)) (PP (IN of) (NP (PRP them)))) (NP (DT a) (NN judge))))))) (. .)))
-
-(S1 (S (S (NP (NP (DT a) (NN man)) (PP (IN with) (NP (DT a) (NN pistol)))) (VP (AUX was) (VP (VBN arrested) (PP (IN outside) (PP (IN of) (NP (DT the) (NN courthouse))))))) (CC and) (S (NP (NNS police)) (VP (VBP say) (SBAR (S (NP (PRP he)) (VP (VBZ admits) (S (VP (VBG planning) (NP (DT the) (NNS bombs))))))))) (. .)))
-
-(S1 (S (NP (PRP it)) (VP (AUX was) (NP (NP (DT the) (JJ same) (NN courtroom)) (SBAR (WHADVP (WRB where)) (S (NP (DT a) (VBN suspected) (NNP al) (NN qaeda) (JJ militant)) (VP (VBD got) (NP (DT a) (NN death) (NN sentence)) (NP (JJ last) (NN week)) (PP (IN for) (S (VP (VBG killing) (NP (CD three) (JJ american) (NNS missionaries)))))))))) (. .)))
-

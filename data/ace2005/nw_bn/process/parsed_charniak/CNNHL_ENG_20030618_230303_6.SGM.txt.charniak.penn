@@ -1,8 +1,0 @@
-(S1 (S (S (NP (QP (IN at) (JJS least) (CD ten)) (NNS people)) (VP (AUX have) (VP (AUX been) (VP (VBN injured))))) (CC and) (S (NP (QP (IN at) (JJS least) (CD five)) (NNS homes)) (VP (AUX have) (VP (VBN burned) (PP (IN in) (NP (NNP benton) (NN harbor))) (SBAR (IN since) (S (NP (DT the) (NN rioting)) (VP (VBD began))))))) (. .)))
-
-(S1 (S (NP (NNS police)) (VP (AUX are) (ADVP (RB still)) (VP (VBG looking) (PP (IN for) (NP (DT the) (NNS arsonists))))) (. .)))
-
-(S1 (S (CC but) (NP (NN city) (NNS officials)) (VP (VBP say) (SBAR (S (NP (JJ several) (NNS people)) (VP (AUX have) (VP (AUX been) (VP (VBN arrested) (PP (IN on) (NP (JJ civil) (NN disobedience) (NNS charges))))))))) (. .)))
-
-(S1 (S (NP (CD one) (NN person)) (VP (AUX was) (VP (VBN arrested) (PP (IN for) (NP (NN assault))) (PP (IN with) (NP (DT a) (JJ deadly) (NN weapon))))) (. .)))
-

@@ -1,8 +1,0 @@
-(S1 (S (PP (PP (IN in) (NP (NP (NNP michigan)) (, ,) (NP (DT a) (JJ second) (JJ straight) (NN night)))) (CC and) (PP (IN into) (NP (DT this) (NN morning)))) (, ,) (NP (NP (NNS hundreds)) (PP (IN of) (NP (NNS people)))) (VP (AUX have) (VP (AUX been) (NP (NN rioting)) (PP (IN in) (NP (NNP benton) (NN harbor))))) (. .)))
-
-(S1 (S (S (NP (NP (DT a) (NN man)) (PP (IN on) (NP (DT a) (NN motorcycle)))) (VP (AUX was) (VP (VBN killed) (SBAR (IN while) (S (VP (AUXG being) (VP (VBD chased) (PP (IN about) (SBAR (S (NP (PRP i)) (VP (VB police)))))))))))) (, ,) (NP (DT the) (NN violence)) (VP (VBD broke) (PRT (RP out))) (. .)))
-
-(S1 (S (NP (DT the) (NN governor)) (VP (AUX has) (VP (VBN declared) (NP (NP (DT a) (NN state)) (PP (IN of) (NP (NN emergency)))))) (. .)))
-
-(S1 (S (NP (NP (NN mark) (NNS alberts)) (PP (IN from) (NP (PRP$ our) (NN affiliate)))) (VP (AUX has) (NP (NP (JJR more)) (PP (IN from) (NP (NNP benton) (NN harbor))))) (. .)))
-

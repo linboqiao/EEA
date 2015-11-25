@@ -1,6 +1,0 @@
-(S1 (S (NP (NNP Time)) (VP (AUX is) (VP (VBG reporting) (NP (NN today)) (SBAR (IN that) (S (NP (DT a) (NN al-Qaeda) (NN operative)) (VP (VP (AUX was) (VP (VBN captured))) (CC and) (VP (AUX is) (VP (NN spitting) (PRT (RP out)) (SBAR (IN that) (S (NP (PRP they)) (VP (AUX have) (NP (NNS plans)) (PP (IN in) (NP (DT the) (NN work))) (S (VP (TO to) (VP (VP (VB smuggle) (NP (NNS nukes)) (PP (IN into) (NP (DT the) (NNP US))) (PP (IN from) (NP (NNP Mexico)))) (, ,) (VP (VB see) (NP (DT the) (NN article)) (ADVP (RB here)))))))))))))))) (. .)))
-
-(S1 (S (VP (VB Thank) (NP (NNP god)) (SBAR (S (NP (NNP Bush)) (VP (AUX is) (ADVP (RB still)) (NP (PRP$ our) (NN president)) (, ,) (SBAR (IN although) (S (NP (PRP I)) (ADVP (RB strongly)) (VP (VB disagree) (PP (IN with) (NP (PRP him))) (PP (IN on) (NP (PRP$ his) (JJ new) (NN immigration) (NN policy)))) (. .)))))))))
-
-(S1 (S (NP (DT This) (NN policy)) (VP (MD would) (ADVP (RB just)) (VP (VB make) (S (NP (PRP it)) (ADJP (JJR easier)) (SBAR (IN for) (S (NP (DT the) (NN enemy)) (VP (TO to) (VP (VB get) (PP (IN within) (NP (PRP$ our) (NNS borders)))))))))) (. .)))
-

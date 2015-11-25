@@ -1,6 +1,0 @@
-(S1 (S (NP (NNP saddam) (JJ international) (NN airport)) (VP (AUX has) (VP (VBN become) (NP (DT a) (NN battlefield)))) (. .)))
-
-(S1 (S (NP (NNS witnesses)) (VP (VBP say) (SBAR (S (NP (JJ iraqi) (NNS troops)) (VP (AUX are) (VP (VBD dug) (PP (IN in) (S (VP (VBG trying) (S (VP (TO to) (VP (VB fend) (PRT (RP off)) (NP (NN coalition) (NNS troops)) (S (VP (VBG making) (NP (PRP$ their) (NN way)) (PP (IN into) (NP (NP (DT the) (NN capital) (POS 's)) (JJ main) (NN airport)))))))))))))))) (. .)))
-
-(S1 (S (NP (DT a) (NNP reuters) (NN correspondent)) (VP (VBD said) (SBAR (S (NP (NP (NNS dozens)) (PP (IN of) (NP (JJ iraqi) (NNS civilians) (CC and) (NNS soldiers)))) (VP (AUX were) (VP (VBN killed) (PP (IN in) (SBAR (WHNP (WP what) (NNS witnesses)) (S (VP (VBD called) (NP (NP (DT a) (NN barrage)) (PP (IN of) (NP (JJ u.s.) (NN artillery))))))))))))) (. .)))
-

@@ -1,8 +1,0 @@
-(S1 (S (NP (NP (VBN convicted) (NN rapist)) (CC and) (NP (NNP max) (NN factor) (NN heir) (NNP andrew) (NN luster))) (VP (AUX is) (ADVP (RB back)) (PP (IN in) (NP (NNP california)))) (. .)))
-
-(S1 (S (NP (NN luster)) (VP (VBD returned) (PP (TO to) (NP (NNP los) (NNP angeles))) (NP (NN yesterday)) (PP (IN from) (S (NP (NNP mexico)) (VP (VBG following) (NP (PRP$ his) (NN capture) (NNP Tuesday)) (PP (IN by) (NP (JJ american) (NN bounlty) (NNS hunters))))))) (. .)))
-
-(S1 (S (NP (NN luster)) (VP (VBD skipped) (NP (NN bail)) (PP (IN during) (NP (NP (PRP$ his) (NN trial)) (PP (IN in) (NP (NNP January))))) (PP (IN for) (S (VP (VP (VBG raping)) (CC and) (VP (VBG drugging) (NP (CD three) (NNS women))))))) (. .)))
-
-(S1 (S (NP (PRP he)) (VP (AUX was) (VP (VBN sentenced) (PP (IN in) (NP (DT an) (JJ sten) (NN shah))) (PP (TO to) (NP (NP (CD 124) (NNS years)) (PP (IN in) (NP (NN prison))))))) (. .)))
-

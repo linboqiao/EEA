@@ -1,8 +1,0 @@
-(S1 (S (NP (DT the) (NNP bush) (NN administration)) (VP (AUX is) (ADVP (RB officially)) (VP (VBG endorsing) (NP (NP (DT the) (JJ pro-democracy) (NNS demonstrations)) (PP (IN in) (NP (NNP iran)))))) (. .)))
-
-(S1 (S (PP (IN for) (NP (NP (DT a) (NN week)) (ADVP (RB now)))) (, ,) (NP (NNS protesters)) (VP (AUX have) (VP (AUX been) (VP (VBG clashing) (PP (IN with) (NP (NP (NNS police) (CC and) (NNS backers)) (PP (IN of) (NP (NP (DT the) (JJ clerical) (NN regime)) (PP (IN in) (NP (NNP tehran)))))))))) (. .)))
-
-(S1 (S (PP (IN in) (NP (NN turn))) (, ,) (NP (DT the) (JJ iranian) (NN government)) (VP (AUX has) (VP (VBN accused) (NP (DT the) (NNP bush) (NN administration)) (PP (IN of) (S (VP (VBG providing) (NP (NN material) (NN support)) (PP (TO to) (NP (DT the) (NNS protesters)))))))) (. .)))
-
-(S1 (S (NP (DT the) (NN state) (NN department) (NN spokesman)) (VP (VBZ says) (SBAR (S (S (NP (DT the) (NNS demonstrations)) (VP (VP (AUX are) (PP (IN about) (NP (NNP iran) (CC and) (NNS iranians)))) (, ,) (CC and) (VP (AUX have) (NP (NP (NN nothing)) (SBAR (S (VP (TO to) (VP (AUX do) (PP (IN with) (NP (DT the) (NNP u.s.))))))))))) (, ,) (CC but) (S (NP (PRP he)) (VP (AUX did) (VP (VB make) (S (NP (PRP it)) (ADJP (JJ clear))) (SBAR (WHADVP (WRB where)) (S (NP (NNP u.s.) (NNS sympathies)) (VP (VBP lie)))))))))) (. .)))
-
