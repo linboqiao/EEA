@@ -1,3 +1,35 @@
+This package contains the code for the limo-re system used in Ngyuen et al., 2015.
+
+If you use this software, please cite the following papers:
+
+@InProceedings{nguyen-plank-grishman:2015:ACL-IJCNLP,
+  author    = {Nguyen, Thien Huu  and  Plank, Barbara  and  Grishman, Ralph},
+  title     = {Semantic Representations for Domain Adaptation: A Case Study on the Tree Kernel-based Method for Relation Extraction},
+  booktitle = {Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)},
+  month     = {July},
+  year      = {2015},
+  address   = {Beijing, China},
+  publisher = {Association for Computational Linguistics},
+  pages     = {635--644},
+  url       = {http://www.aclweb.org/anthology/P15-1062}
+}
+
+@InProceedings{plank-moschitti:2013:ACL2013,
+  author    = {Plank, Barbara  and  Moschitti, Alessandro},
+  title     = {Embedding Semantic Similarity in Tree Kernels for Domain Adaptation of Relation Extraction},
+  booktitle = {Proceedings of the 51st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  month     = {August},
+  year      = {2013},
+  address   = {Sofia, Bulgaria},
+  publisher = {Association for Computational Linguistics},
+  pages     = {1498--1507},
+  url       = {http://www.aclweb.org/anthology/P13-1147}
+}
+
+
+
+======= old readme ======
+
 
 Limo Relation Extraction (RE) system 
 ------------------------------------
