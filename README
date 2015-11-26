@@ -1,4 +1,4 @@
-This package contains the code for the limo-re system used in Ngyuen et al., 2015.
+This package contains the code for the limo-re system used in Nguyen et al., 2015.
 
 If you use this software, please cite the following papers:
 
@@ -26,7 +26,15 @@ If you use this software, please cite the following papers:
   url       = {http://www.aclweb.org/anthology/P13-1147}
 }
 
+The commands to run the experiments for the kernel method with word embeddings are located in the sections marked with "on dev set" and "real expriment with VEChm+VECphrase" in the Makefile.
 
+The sections for the feature-based method are tagged with "feature-based on dev set" and "real experiments for feature-based (to be compared with kernels)" in the Makefile.
+
+This package is extended from the LIMO package used in Plank and Moschitti (2013). The Mallet library is included to train the MaxEnt model in the feature-based method.
+
+Please find the instructions for system architecture and data generation in the old README file of LIMO below.
+
+Note that we are using the "adjudicated" (adj) version of the ACE 2005 dataset.
 
 ======= old readme ======
 
