@@ -21,21 +21,20 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @author Zhengzhong Liu
  */
-public class CrfMentionTrainingLooper extends LoopPipeline {
+public abstract class TrainingLooper extends LoopPipeline {
     private int maxIteration;
     private int numIteration;
     private String modelBasename;
 
-    public CrfMentionTrainingLooper(Configuration taskConfig, String modelOutputBasename,
-                                    TypeSystemDescription typeSystemDescription,
-                                    CollectionReaderDescription readerDescription, File cacheDir) throws
+    public TrainingLooper(Configuration taskConfig, String modelOutputBasename,
+                          CollectionReaderDescription reader, AnalysisEngineDescription trainer) throws
             ResourceInitializationException, ClassNotFoundException, NoSuchMethodException,
             InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
-        super(readerDescription, setup(typeSystemDescription, taskConfig, cacheDir));
+        super(reader, trainer);
         this.maxIteration = taskConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
         this.numIteration = 0;
         this.modelBasename = modelOutputBasename;
-        logger.info("CRF mention trainer started, maximum iteration is " + maxIteration);
+        logger.info("CRF mention trainerClass started, maximum iteration is " + maxIteration);
     }
 
     @Override
@@ -48,9 +47,9 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
         logger.info("Finalizing the training ...");
         try {
             logger.info("Saving final models at " + modelBasename);
-            MentionTypeCrfTrainer.saveModels(new File(modelBasename));
-            MentionTypeCrfTrainer.loopStopActions();
-        } catch (java.io.IOException e) {
+            saveModel(new File(modelBasename));
+            finish();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -61,13 +60,17 @@ public class CrfMentionTrainingLooper extends LoopPipeline {
         if (numIteration % 3 == 0) {
             try {
                 logger.info("Saving models for iteration " + numIteration);
-                MentionTypeCrfTrainer.saveModels(new File(modelBasename + "_iter" + numIteration));
-            } catch (java.io.IOException e) {
+                saveModel(new File(modelBasename + "_iter" + numIteration));
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         logger.info(String.format("Iteration %d finished ...", numIteration));
     }
+
+    protected abstract void finish() throws IOException;
+
+    protected abstract void saveModel(File modelOutputDir) throws IOException;
 
     private static AnalysisEngineDescription setup(TypeSystemDescription typeSystemDescription,
                                                    Configuration kbpConfig, File cacheDir) throws
