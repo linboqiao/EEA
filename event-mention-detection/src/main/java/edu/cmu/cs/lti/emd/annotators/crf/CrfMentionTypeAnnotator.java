@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.emd.annotators.crf;
 
-import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
+import edu.cmu.cs.lti.emd.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
@@ -49,7 +49,6 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     private ClassAlphabet classAlphabet;
     private GraphWeightVector weightVector;
     private static SequenceDecoder decoder;
-
 
     public static final String PARAM_MODEL_DIRECTORY = "modelDirectory";
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
@@ -112,19 +111,21 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
             sentenceExtractor.resetWorkspace(aJCas, sentence.getBegin(), sentence.getEnd());
 
             List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
+
+            // Extract features for this sentence and send in.
             decoder.decode(sentenceExtractor, weightVector, tokens.size(), 0, true);
 
             SequenceSolution solution = decoder.getDecodedPrediction();
 
             if (verbose) {
-                logger.info(sentence.getCoveredText());
-                logger.info(solution.toString());
+                logger.debug(sentence.getCoveredText());
+                logger.debug(solution.toString());
             }
 
             for (Triplet<Integer, Integer, String> chunk : convertTypeTagsToChunks(solution)) {
                 StanfordCorenlpToken firstToken = tokens.get(chunk.getValue0());
                 StanfordCorenlpToken lastToken = tokens.get(chunk.getValue1());
-                String[] predictedTypes = EventMentionTypeClassPrinter.splitToTmultipleTypes(chunk.getValue2());
+                String[] predictedTypes = MentionTypeUtils.splitToTmultipleTypes(chunk.getValue2());
 
                 for (String t : predictedTypes) {
                     CandidateEventMention candidateEventMention = new CandidateEventMention(aJCas);
@@ -132,7 +133,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
                     UimaAnnotationUtils.finishAnnotation(candidateEventMention, firstToken.getBegin(), lastToken
                             .getEnd(), COMPONENT_ID, 0, aJCas);
                     if (verbose) {
-                        logger.info(String.format("%s : [%d, %d]",
+                        logger.debug(String.format("%s : [%d, %d]",
                                 candidateEventMention.getPredictedType(),
                                 candidateEventMention.getBegin(),
                                 candidateEventMention.getEnd()));

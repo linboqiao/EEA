@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.emd.annotators;
 
-import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
+import edu.cmu.cs.lti.emd.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.script.type.EventMention;
@@ -45,8 +45,6 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
 
     TObjectIntMap<String> candidateClassesSingle = new TObjectIntHashMap<>();
 
-    public static String TYPE_NAME_JOINER = " ; ";
-
     static Set<String> targetClasses;
 
     static {
@@ -75,10 +73,10 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
                     List<String> sorted_joint_type = new ArrayList<>(joint_type);
                     Collections.sort(sorted_joint_type);
                     goldClassesWithJoint.adjustOrPutValue(sorted_joint_type, 1, 1);
-                    if (joint_type.size() > 1) {
-                        System.out.println(aJCas.getDocumentText().substring(previous_start, previous_end) + "\t" +
-                                joinMultipleTypes(joint_type));
-                    }
+//                    if (joint_type.size() > 1) {
+//                        System.out.println(aJCas.getDocumentText().substring(previous_start, previous_end) + "\t" +
+//                                MentionTypeUtils.joinMultipleTypes(joint_type));
+//                    }
                 }
                 joint_type = new HashSet<>();
                 joint_type.add(t);
@@ -109,33 +107,22 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
         List<String> classesLines = new ArrayList<>();
 
-        final int[] total_type_count = {0};
-        final int[] joint_type_count = {0};
-
         goldClassesWithJoint.forEachEntry((t, c) -> {
-            String joinedTypeName = joinMultipleTypes(t);
-            if (t.size() > 1) {
-                joint_type_count[0] += c;
-                System.out.println(String.format("Joint type %s occurs %d times.", joinedTypeName, c));
-            }
-            total_type_count[0] += c;
-
+            String joinedTypeName = MentionTypeUtils.joinMultipleTypes(t);
+//            if (t.size() > 1) {
+//                System.out.println(String.format("Joint type %s occurs %d times.", joinedTypeName, c));
+//            }
             classesLines.add(joinedTypeName + "\t" + c);
             return true;
         });
 
-        goldClassesWithJoint.forEachEntry((t, c) -> {
-            String joinedTypeName = joinMultipleTypes(t);
-            if (t.size() == 1) {
-                System.out.println(String.format("Single type %s occurs %d times.", joinedTypeName, c));
-            }
-            return true;
-        });
-
-
-        System.out.println("Total types count : " + total_type_count[0]);
-        System.out.println("Joint type count : " + joint_type_count[0]);
-
+//        goldClassesWithJoint.forEachEntry((t, c) -> {
+//            String joinedTypeName = MentionTypeUtils.joinMultipleTypes(t);
+//            if (t.size() == 1) {
+//                System.out.println(String.format("Single type %s occurs %d times.", joinedTypeName, c));
+//            }
+//            return true;
+//        });
 
         Collections.sort(classesLines);
         try {
@@ -143,14 +130,6 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static String joinMultipleTypes(Iterable<String> types) {
-        return Joiner.on(TYPE_NAME_JOINER).join(types);
-    }
-
-    public static String[] splitToTmultipleTypes(String joinedType) {
-        return joinedType.split(TYPE_NAME_JOINER);
     }
 
     public static void main(String args[]) throws IOException, UIMAException {

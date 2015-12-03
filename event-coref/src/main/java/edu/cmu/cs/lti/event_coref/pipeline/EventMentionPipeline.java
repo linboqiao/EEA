@@ -10,18 +10,24 @@ import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.acceptors.AllCandidateAcceptor;
 import edu.cmu.cs.lti.emd.annotators.classification.RealisTypeAnnotator;
 import edu.cmu.cs.lti.emd.annotators.crf.CrfMentionTypeAnnotator;
+import edu.cmu.cs.lti.emd.annotators.crf.MentionSequenceAnnotator;
+import edu.cmu.cs.lti.emd.annotators.crf.MentionSequenceCrfTrainer;
+import edu.cmu.cs.lti.emd.annotators.crf.MentionTypeCrfTrainer;
 import edu.cmu.cs.lti.emd.annotators.structure.ArgumentExtractor;
-import edu.cmu.cs.lti.emd.pipeline.CrfMentionTrainingLooper;
+import edu.cmu.cs.lti.emd.pipeline.TrainingLooper;
 import edu.cmu.cs.lti.event_coref.annotators.EventCorefAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.GoldStandardEventMentionAnnotator;
+import edu.cmu.cs.lti.event_coref.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.learning.train.RealisClassifierTrainer;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
+import edu.cmu.cs.lti.uima.io.reader.RandomizedXmiCollectionReader;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
+import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.cas.CAS;
@@ -67,7 +73,6 @@ public class EventMentionPipeline {
     final String fullRunSuffix = "all";
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-
 
     /**
      * A constructor that take both the training and testing directory.
@@ -128,7 +133,7 @@ public class EventMentionPipeline {
                 joinPaths(regressionDir, "test", "tkn")
         );
 
-        trainAll(config, false, false, false);
+        trainAll(config, false, false, false, false);
         test(config);
     }
 
@@ -242,28 +247,6 @@ public class EventMentionPipeline {
         }).runWithOutput(workingDirPath, preprocessBase);
     }
 
-    public String trainMentionTypeLv1(Configuration config, CollectionReaderDescription trainingReader, String suffix,
-                                      boolean skipTrain) throws UIMAException, IOException, ClassNotFoundException,
-            NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        logger.info("Starting Training ...");
-
-        String modelPath = joinPaths(outputModelDir, config.get("edu.cmu.cs.lti.model.crf.mention.lv1.dir"), suffix);
-        File modelFile = new File(modelPath);
-
-        // Only skip training when model directory exists.
-        if (skipTrain && modelFile.exists()) {
-            logger.info("Skipping mention type training, taking existing models.");
-        } else {
-            File cacheDir = new File(joinPaths(trainingWorkingDir, config.get("edu.cmu.cs.lti.mention.cache.base")));
-
-            CrfMentionTrainingLooper mentionTypeTrainer = new CrfMentionTrainingLooper(config, modelPath,
-                    typeSystemDescription, trainingReader, cacheDir);
-            mentionTypeTrainer.runLoopPipeline();
-        }
-
-        return modelPath;
-    }
-
     private AnalysisEngineDescription getGoldAnnotator(boolean copyType, boolean copyRealis, boolean copyCluster)
             throws ResourceInitializationException {
         return AnalysisEngineFactory.createEngineDescription(
@@ -293,10 +276,60 @@ public class EventMentionPipeline {
         return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, baseOutput);
     }
 
-    public CollectionReaderDescription crfMentionDetection(Configuration taskConfig, CollectionReaderDescription reader,
-                                                           String modelDir, String mainDir, String baseOutput)
-            throws UIMAException, IOException {
+    public String trainSentLvType(Configuration config, CollectionReaderDescription trainingReader, String suffix,
+                                  boolean skipTrain, int initialSeed)
+            throws UIMAException, IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
+            IllegalAccessException, InvocationTargetException {
+        logger.info("Starting training sentence level mention type model ...");
 
+        String modelPath = joinPaths(outputModelDir, config.get("edu.cmu.cs.lti.model.crf.mention.lv1.dir"), suffix);
+        File modelFile = new File(modelPath);
+
+        MutableInt trainingSeed = new MutableInt(initialSeed);
+
+        // Only skip training when model directory exists.
+        if (skipTrain && modelFile.exists()) {
+            logger.info("Skipping mention type training, taking existing models.");
+        } else {
+            File cacheDir = new File(joinPaths(trainingWorkingDir, config.get("edu.cmu.cs.lti.mention.cache.base")));
+
+            AnalysisEngineDescription trainingEngine = AnalysisEngineFactory.createEngineDescription(
+                    MentionTypeCrfTrainer.class, typeSystemDescription,
+                    MentionTypeCrfTrainer.PARAM_GOLD_STANDARD_VIEW_NAME, UimaConst.goldViewName,
+                    MentionTypeCrfTrainer.PARAM_CONFIGURATION_FILE, config.getConfigFile(),
+                    MentionTypeCrfTrainer.PARAM_CACHE_DIRECTORY, cacheDir);
+
+            TrainingLooper mentionTypeTrainer = new TrainingLooper(config, modelPath,
+                    trainingReader, trainingEngine) {
+                @Override
+                protected void loopActions() {
+                    super.loopActions();
+                    trainingSeed.add(2);
+                    logger.debug("Update the training seed to " + trainingSeed.intValue());
+                    trainingReader.setAttributeValue(RandomizedXmiCollectionReader.PARAM_SEED, trainingSeed.getValue());
+                }
+
+                @Override
+                protected void finish() throws IOException {
+                    MentionTypeCrfTrainer.loopStopActions();
+                }
+
+                @Override
+                protected void saveModel(File modelOutputDir) throws IOException {
+                    MentionTypeCrfTrainer.saveModels(modelOutputDir);
+
+                }
+            };
+            mentionTypeTrainer.runLoopPipeline();
+        }
+
+        return modelPath;
+    }
+
+    public CollectionReaderDescription sentenceLevelMentionTagging(Configuration taskConfig,
+                                                                   CollectionReaderDescription reader,
+                                                                   String modelDir, String mainDir, String baseOutput)
+            throws UIMAException, IOException {
         new BasicPipeline(new ProcessorWrapper() {
             @Override
             public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
@@ -305,16 +338,92 @@ public class EventMentionPipeline {
 
             @Override
             public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                AnalysisEngineDescription crfLevel1Annotator = AnalysisEngineFactory.createEngineDescription(
+                AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
                         CrfMentionTypeAnnotator.class, typeSystemDescription,
                         CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                        CrfMentionTypeAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
+                        CrfMentionTypeAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath(),
+                        CrfMentionTypeAnnotator.PARAM_VERBOSE,
+                        taskConfig.getBoolean("edu.cmu.cs.lti.mention.lv1.test.verbose", false)
                 );
 
                 AnalysisEngineDescription everythingAcceptor = AnalysisEngineFactory.createEngineDescription(
                         AllCandidateAcceptor.class, typeSystemDescription
                 );
-                return new AnalysisEngineDescription[]{crfLevel1Annotator, everythingAcceptor};
+                return new AnalysisEngineDescription[]{sentenceLevelTagger, everythingAcceptor};
+            }
+        }).runWithOutput(mainDir, baseOutput);
+
+        return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, baseOutput);
+    }
+
+    public String trainDocLvType(Configuration config, CollectionReaderDescription trainingReader, String suffix,
+                                 boolean skipTrain, int initialSeed)
+            throws NoSuchMethodException, UIMAException, InstantiationException, IOException, ClassNotFoundException,
+            IllegalAccessException, InvocationTargetException {
+        logger.info("Starting training document level mention type model ...");
+
+        String modelPath = joinPaths(outputModelDir, config.get("edu.cmu.cs.lti.model.crf.mention.lv2.dir"), suffix);
+        File modelFile = new File(modelPath);
+
+        MutableInt trainingSeed = new MutableInt(initialSeed);
+
+        // Only skip training when model directory exists.
+        if (skipTrain && modelFile.exists()) {
+            logger.info("Skipping second level mention type training, taking existing models.");
+        } else {
+            File cacheDir = new File(joinPaths(trainingWorkingDir, config.get("edu.cmu.cs.lti.mention.cache.base")));
+
+            AnalysisEngineDescription trainingEngine = AnalysisEngineFactory.createEngineDescription(
+                    MentionSequenceCrfTrainer.class, typeSystemDescription,
+                    MentionSequenceCrfTrainer.PARAM_GOLD_STANDARD_VIEW_NAME, UimaConst.goldViewName,
+                    MentionSequenceCrfTrainer.PARAM_CONFIGURATION_FILE, config.getConfigFile(),
+                    MentionSequenceCrfTrainer.PARAM_CACHE_DIRECTORY, cacheDir
+            );
+
+            TrainingLooper mentionTypeTrainer = new TrainingLooper(config, modelPath,
+                    trainingReader, trainingEngine) {
+                @Override
+                protected void loopActions() {
+                    super.loopActions();
+                    trainingSeed.add(2);
+                    logger.debug("Update the training seed to " + trainingSeed.intValue());
+                    trainingReader.setAttributeValue(RandomizedXmiCollectionReader.PARAM_SEED, trainingSeed.getValue());
+                }
+
+                @Override
+                protected void finish() throws IOException {
+                    MentionSequenceCrfTrainer.loopStopActions();
+                }
+
+                @Override
+                protected void saveModel(File modelOutputDir) throws IOException {
+                    MentionSequenceCrfTrainer.saveModels(modelOutputDir);
+                }
+            };
+            mentionTypeTrainer.runLoopPipeline();
+        }
+        return modelPath;
+    }
+
+    public CollectionReaderDescription docLevelMentionTagging(Configuration taskConfig, CollectionReaderDescription
+            reader, String modelDir, String mainDir, String baseOutput) throws UIMAException, IOException {
+        new BasicPipeline(new ProcessorWrapper() {
+            @Override
+            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
+                return reader;
+            }
+
+            @Override
+            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
+                AnalysisEngineDescription documentLevelTagger = AnalysisEngineFactory.createEngineDescription(
+                        MentionSequenceAnnotator.class, typeSystemDescription,
+                        MentionSequenceAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                        MentionSequenceAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath(),
+                        MentionSequenceAnnotator.PARAM_VERBOSE,
+                        taskConfig.getBoolean("edu.cmu.cs.lti.mention.lv2.test.verbose", false)
+                );
+
+                return new AnalysisEngineDescription[]{documentLevelTagger};
             }
         }).runWithOutput(mainDir, baseOutput);
 
@@ -361,8 +470,19 @@ public class EventMentionPipeline {
         return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, realisOutputBase);
     }
 
-    private CollectionReaderDescription prepareCorefTraining(CollectionReaderDescription reader, String workingDir,
-                                                             String outputBase, int seed)
+    /**
+     * Prepare dataset for training. It copy the annotations to the system mentions and annotate arguments.
+     *
+     * @param reader     The data to be prepared.
+     * @param workingDir The working directory.
+     * @param outputBase The base output directory.
+     * @param seed       The random seed to scramble the training data.
+     * @return A reader for the prepared dataset.
+     * @throws UIMAException
+     * @throws IOException
+     */
+    private CollectionReaderDescription prepareTraining(CollectionReaderDescription reader, String workingDir,
+                                                        String outputBase, int seed)
             throws UIMAException, IOException {
         if (!new File(workingDir, outputBase).exists()) {
             new BasicPipeline(new ProcessorWrapper() {
@@ -392,30 +512,56 @@ public class EventMentionPipeline {
      * @param config         The configuration file.
      * @param trainingReader Reader for the training data.
      * @param suffix         The suffix for the model.
+     * @param skipTrain      Whether to skip the training if model file exists.
+     * @param initialSeed    The initial seed for the reader.
      * @return The trained model directory.
      */
     private String trainLatentTreeCoref(Configuration config, CollectionReaderDescription trainingReader,
-                                        String suffix, boolean skipTrain) throws UIMAException, IOException {
+                                        String suffix, boolean skipTrain, int initialSeed)
+            throws UIMAException, IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
+            IllegalAccessException, InvocationTargetException {
         logger.info("Start coreference training.");
         String cvModelDir = joinPaths(outputModelDir, config.get("edu.cmu.cs.lti.model.event.latent_tree"), suffix);
-        int seed = config.getInt("edu.cmu.cs.lti.random.seed", 17);
 
         boolean modelExists = new File(cvModelDir).exists();
+
+        MutableInt trainingSeed = new MutableInt(initialSeed);
 
         if (skipTrain && modelExists) {
             logger.info("Skipping coreference training, taking existing models.");
         } else {
-            logger.info("Prepare data for coreference training");
-            CollectionReaderDescription trainingAnnotatedReader = prepareCorefTraining(trainingReader,
-                    trainingWorkingDir, joinPaths(middleResults, suffix, "coref_training"), seed);
             logger.info("Saving model directory at : " + cvModelDir);
 
             String cacheDir = edu.cmu.cs.lti.utils.FileUtils.joinPaths(trainingWorkingDir,
                     config.get("edu.cmu.cs.lti.coref.cache.base"));
 
-            LatentTreeTrainingLooper corefTrainer = new LatentTreeTrainingLooper(config, cvModelDir, cacheDir,
-                    typeSystemDescription, trainingAnnotatedReader);
+            AnalysisEngineDescription corefEngine = AnalysisEngineFactory.createEngineDescription(
+                    PaLatentTreeTrainer.class, typeSystemDescription,
+                    PaLatentTreeTrainer.PARAM_CONFIG_PATH, config.getConfigFile().getPath(),
+                    PaLatentTreeTrainer.PARAM_CACHE_DIRECTORY, cacheDir
+            );
+
+            TrainingLooper corefTrainer = new TrainingLooper(config, cvModelDir, trainingReader, corefEngine) {
+                @Override
+                protected void loopActions() {
+                    super.loopActions();
+                    trainingSeed.add(2);
+                    trainingReader.setAttributeValue(RandomizedXmiCollectionReader.PARAM_SEED, trainingSeed.getValue());
+                }
+
+                @Override
+                protected void finish() throws IOException {
+                    PaLatentTreeTrainer.finish();
+                }
+
+                @Override
+                protected void saveModel(File modelOutputDir) throws IOException {
+                    PaLatentTreeTrainer.saveModels(modelOutputDir);
+                }
+            };
+
             corefTrainer.runLoopPipeline();
+
             logger.info("Coreference training finished ...");
         }
         return cvModelDir;
@@ -502,14 +648,19 @@ public class EventMentionPipeline {
         }).run();
     }
 
-    public void trainAll(Configuration config, boolean skipTypeTrain, boolean skipRealisTrain, boolean skipCorefTrain)
+    public void trainAll(Configuration config, boolean skipTypeTrain, boolean skipLv2TypeTrain,
+                         boolean skipRealisTrain, boolean skipCorefTrain)
             throws Exception {
         logger.info("Staring training a full model on all data in " + preprocessBase);
         CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createXmiReader(
                 typeSystemDescription, trainingWorkingDir, preprocessBase);
-        trainMentionTypeLv1(config, trainingReader, fullRunSuffix, skipTypeTrain);
-        trainRealisTypes(config, trainingReader, fullRunSuffix, skipRealisTrain);
-        trainLatentTreeCoref(config, trainingReader, fullRunSuffix, skipCorefTrain);
+        int initialSeed = 17;
+        CollectionReaderDescription randomTrainingReader = prepareTraining(trainingReader,
+                trainingWorkingDir, joinPaths(middleResults, fullRunSuffix, "prepared_training"), initialSeed);
+        trainSentLvType(config, randomTrainingReader, fullRunSuffix, skipTypeTrain, initialSeed);
+        trainDocLvType(config, randomTrainingReader, fullRunSuffix, skipLv2TypeTrain, initialSeed);
+        trainRealisTypes(config, randomTrainingReader, fullRunSuffix, skipRealisTrain);
+        trainLatentTreeCoref(config, randomTrainingReader, fullRunSuffix, skipCorefTrain, initialSeed);
         logger.info("All training done.");
     }
 
@@ -524,14 +675,28 @@ public class EventMentionPipeline {
         CollectionReaderDescription testDataReader = CustomCollectionReaderFactory.createXmiReader(
                 typeSystemDescription, testingWorkingDir, preprocessBase);
 
-        String crfTypeModel = joinPaths(outputModelDir,
+        String sentCrfModel = joinPaths(outputModelDir,
                 testConfig.get("edu.cmu.cs.lti.model.crf.mention.lv1.dir"), fullRunSuffix);
         String mentionLv1Output = joinPaths(middleResults, fullRunSuffix, "mention_lv1");
 
+        // Run mention level crf for mention detection.
         logger.info("Going to run mention type on [" + testingWorkingDir + "/"
                 + preprocessBase + "], output will be at " + mentionLv1Output);
-        CollectionReaderDescription lv1OutputReader = crfMentionDetection(testConfig, testDataReader, crfTypeModel,
-                testingWorkingDir, mentionLv1Output);
+        CollectionReaderDescription sentMentionReader = sentenceLevelMentionTagging(testConfig, testDataReader,
+                sentCrfModel, testingWorkingDir, mentionLv1Output);
+
+
+        // Run document level crf for mention type refinement.
+        String docCrfModel = joinPaths(outputModelDir,
+                testConfig.get("edu.cmu.cs.lti.model.crf.mention.lv2.dir"), fullRunSuffix);
+        String docMentionOutput = joinPaths(middleResults, fullRunSuffix, "mention_lv2");
+        logger.info("Going to run document level mention type refinement on [" + testingWorkingDir + "/"
+                + preprocessBase + "], output will be at " + docMentionOutput);
+
+        logger.info("Going to run mention type on [" + testingWorkingDir + "/"
+                + preprocessBase + "], output will be at " + docMentionOutput);
+        CollectionReaderDescription docMentionReader = docLevelMentionTagging(testConfig, sentMentionReader,
+                docCrfModel, testingWorkingDir, docMentionOutput);
 
         // Run realis on Lv1 crf mentions.
         String realisModel = joinPaths(outputModelDir,
@@ -539,8 +704,15 @@ public class EventMentionPipeline {
         String lv1RealisOutput = joinPaths(middleResults, fullRunSuffix, "lv1_realis");
 
         logger.info("Going to run realis classifier on " + mentionLv1Output + " output will be at " + lv1RealisOutput);
-        CollectionReaderDescription lv1MentionRealisResults = realisAnnotation(testConfig, lv1OutputReader,
+        CollectionReaderDescription lv1MentionRealisResults = realisAnnotation(testConfig, sentMentionReader,
                 realisModel, testingWorkingDir, lv1RealisOutput);
+
+        // Run realis on Lv2 crf mentions.
+        String lv2RealisOutput = joinPaths(middleResults, fullRunSuffix, "lv2_realis");
+
+        logger.info("Going to run realis classifier on " + mentionLv1Output + " output will be at " + lv2RealisOutput);
+        CollectionReaderDescription lv2MentionRealisResults = realisAnnotation(testConfig, docMentionReader,
+                realisModel, testingWorkingDir, lv2RealisOutput);
 
         // Run gold standard mention detection.
         String goldMentionOutput = joinPaths(middleResults, fullRunSuffix, "gold");
@@ -550,18 +722,22 @@ public class EventMentionPipeline {
         // Run coreference.
         String corefModel = joinPaths(outputModelDir,
                 testConfig.get("edu.cmu.cs.lti.model.event.latent_tree"), fullRunSuffix);
-        String fullResultOutput = joinPaths(middleResults, fullRunSuffix, "lv1_realis_coref");
+        String lv1ModelResultOutput = joinPaths(middleResults, fullRunSuffix, "lv1_realis_coref");
+        String lv2ModelResultOutput = joinPaths(middleResults, fullRunSuffix, "lv2_realis_coref");
         String goldCorefOutput = joinPaths(middleResults, fullRunSuffix, "gold_coref");
 
-        logger.info("Going to run coreference on [" + lv1RealisOutput + "], output will be at " + fullResultOutput);
-        CollectionReaderDescription fullResults = corefResolution(testConfig, lv1MentionRealisResults,
-                corefModel, testingWorkingDir, fullResultOutput, true);
+        logger.info("Going to run coreference on [" + lv1RealisOutput + "], output will be at " + lv1ModelResultOutput);
+        CollectionReaderDescription lv1FinalResults = corefResolution(testConfig, lv1MentionRealisResults,
+                corefModel, testingWorkingDir, lv1ModelResultOutput, true);
+        CollectionReaderDescription lv2FinalResults = corefResolution(testConfig, lv2MentionRealisResults, corefModel,
+                testingWorkingDir, lv2ModelResultOutput, true);
         CollectionReaderDescription goldBasedCoref = corefResolution(testConfig, goldMentions, corefModel,
                 testingWorkingDir, goldCorefOutput, true);
 
         // Output final result.
         String evalDir = joinPaths(testingWorkingDir, evalBase, "full_run");
-        writeResults(fullResults, joinPaths(evalDir, "lv1_realis_coref_" + fullRunSuffix + ".tbf"), "sys-coref");
+        writeResults(lv1FinalResults, joinPaths(evalDir, "lv1_realis_coref_" + fullRunSuffix + ".tbf"), "lv1-coref");
+        writeResults(lv2FinalResults, joinPaths(evalDir, "lv2_realis_coref_" + fullRunSuffix + ".tbf"), "lv2-coref");
         writeResults(goldBasedCoref, joinPaths(evalDir, "gold_coref_" + fullRunSuffix + ".tbf"), "gold-coref");
     }
 
@@ -601,6 +777,12 @@ public class EventMentionPipeline {
                         AllCandidateAcceptor.class, typeSystemDescription
                 );
 
+                AnalysisEngineDescription documentLevelTagger = AnalysisEngineFactory.createEngineDescription(
+                        MentionSequenceAnnotator.class, typeSystemDescription,
+                        MentionSequenceAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                        MentionSequenceAnnotator.PARAM_CONFIG, testConfig.getConfigFile().getPath()
+                );
+
                 AnalysisEngineDescription realisAnnotator = AnalysisEngineFactory.createEngineDescription(
                         RealisTypeAnnotator.class, typeSystemDescription,
                         RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, realisModel,
@@ -619,8 +801,8 @@ public class EventMentionPipeline {
                         EventCorefAnnotator.PARAM_CONFIG_PATH, testConfig.getConfigFile(),
                         EventCorefAnnotator.PARAM_USE_AVERAGE, true
                 );
-                return new AnalysisEngineDescription[]{crfLevel1Annotator, everythingAcceptor, realisAnnotator,
-                        argumentExtractor, corefAnnotator};
+                return new AnalysisEngineDescription[]{crfLevel1Annotator, everythingAcceptor, documentLevelTagger,
+                        realisAnnotator, argumentExtractor, corefAnnotator};
             }
         }).run();
     }
@@ -629,6 +811,12 @@ public class EventMentionPipeline {
         return edu.cmu.cs.lti.utils.FileUtils.joinPaths(segments);
     }
 
+    /**
+     * Conduct cross validation on various tasks.
+     *
+     * @param taskConfig
+     * @throws Exception
+     */
     public void crossValidation(Configuration taskConfig) throws Exception {
         int numSplit = taskConfig.getInt("edu.cmu.cs.lti.cv.split", 5);
         int seed = taskConfig.getInt("edu.cmu.cs.lti.random.seed", 17);
@@ -638,7 +826,8 @@ public class EventMentionPipeline {
 
         boolean skipCorefTrain = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
         boolean skipTypeTrain = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
-        boolean skipRealisTrain = taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain=true", false);
+        boolean skipLv2TypeTrain = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.lv2.skiptrain", false);
+        boolean skipRealisTrain = taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
 
         for (int slice = 0; slice < numSplit; slice++) {
             logger.info("Starting CV split " + slice);
@@ -650,18 +839,29 @@ public class EventMentionPipeline {
             CollectionReaderDescription devSliceReader = CustomCollectionReaderFactory.createCrossValidationReader(
                     typeSystemDescription, trainingWorkingDir, preprocessBase, true, seed, slice);
 
+            CollectionReaderDescription randomTrainingReader = prepareTraining(trainingSliceReader,
+                    trainingWorkingDir, joinPaths(middleResults, sliceSuffix, "prepared_training"), seed);
+
             // Train lv1 of the mention type model.
-            String crfTypeModelDir = trainMentionTypeLv1(taskConfig, trainingSliceReader, sliceSuffix, skipTypeTrain);
+            String sentCrfModel = trainSentLvType(taskConfig, randomTrainingReader, sliceSuffix, skipTypeTrain, seed);
+
+            // Train lv2 of the mention type model.
+            String docCrfModel = trainDocLvType(taskConfig, randomTrainingReader, sliceSuffix, skipLv2TypeTrain, seed);
 
             // Train realis model.
-            String realisModelDir = trainRealisTypes(taskConfig, trainingSliceReader, sliceSuffix, skipRealisTrain);
+            String realisModelDir = trainRealisTypes(taskConfig, randomTrainingReader, sliceSuffix, skipRealisTrain);
 
             // Train coref model.
-            String treeCorefModel = trainLatentTreeCoref(taskConfig, trainingSliceReader, sliceSuffix, skipCorefTrain);
+            String treeCorefModel = trainLatentTreeCoref(taskConfig, randomTrainingReader, sliceSuffix,
+                    skipCorefTrain, seed);
 
-            // Mention types from the crf model.
-            CollectionReaderDescription lv1OutputReader = crfMentionDetection(taskConfig, devSliceReader,
-                    crfTypeModelDir, trainingWorkingDir, joinPaths(middleResults, sliceSuffix, "mention_lv1"));
+            // Mention types from the sentence crf model.
+            CollectionReaderDescription sentTypeOutputReader = sentenceLevelMentionTagging(taskConfig, devSliceReader,
+                    sentCrfModel, trainingWorkingDir, joinPaths(middleResults, sliceSuffix, "mentions_lv1"));
+
+            // Mention types from the document crf model.
+            CollectionReaderDescription docTypeOutputReader = docLevelMentionTagging(taskConfig, sentTypeOutputReader,
+                    docCrfModel, trainingWorkingDir, joinPaths(middleResults, sliceSuffix, "mentions_lv2"));
 
             // Gold mention types.
             CollectionReaderDescription goldMentionTypes = goldMentionAnnotator(devSliceReader, trainingWorkingDir,
@@ -671,9 +871,13 @@ public class EventMentionPipeline {
             CollectionReaderDescription goldMentionRealis = realisAnnotation(taskConfig, goldMentionTypes,
                     realisModelDir, trainingWorkingDir, joinPaths(middleResults, sliceSuffix, "gold_realis"));
 
-            // Run realis on Lv1 crf mentions.
-            CollectionReaderDescription lv1MentionRealis = realisAnnotation(taskConfig, lv1OutputReader,
+            // Run realis on sentence level crf mentions.
+            CollectionReaderDescription sentCrfMentionRealis = realisAnnotation(taskConfig, sentTypeOutputReader,
                     realisModelDir, trainingWorkingDir, joinPaths(middleResults, sliceSuffix, "lv1_realis"));
+
+            // Run realis on document level crf mentions.
+            CollectionReaderDescription docCrfMentionRealis = realisAnnotation(taskConfig, docTypeOutputReader,
+                    realisModelDir, trainingWorkingDir, joinPaths(middleResults, sliceSuffix, "lv2_realis"));
 
             // Run gold mention detection.
             CollectionReaderDescription goldMentionAll = goldMentionAnnotator(devSliceReader, trainingWorkingDir,
@@ -682,20 +886,28 @@ public class EventMentionPipeline {
             // Run coreference on dev data.
             String coref_gold = joinPaths(middleResults, sliceSuffix, "coref_gold_mention");
             String coref_gold_no_aver = joinPaths(middleResults, sliceSuffix, "coref_gold_mention_no_aver");
-            String coref_system = joinPaths(middleResults, sliceSuffix, "coref_system_mention");
-            String coref_system_no_aver = joinPaths(middleResults, sliceSuffix, "coref_system_mention_no_aver");
+            String coref_with_lv1 = joinPaths(middleResults, sliceSuffix, "coref_lv1_mention");
+            String coref_with_lv1_no_aver = joinPaths(middleResults, sliceSuffix, "coref_lv1_mention_no_aver");
+            String coref_with_lv2 = joinPaths(middleResults, sliceSuffix, "coref_lv2_mention");
+            String coref_with_lv2_no_aver = joinPaths(middleResults, sliceSuffix, "coref_lv2_mention_no_aver");
 
             CollectionReaderDescription corefOnGold = corefResolution(taskConfig, goldMentionAll,
                     treeCorefModel, trainingWorkingDir, coref_gold, true);
             CollectionReaderDescription corefOnGoldNoAver = corefResolution(taskConfig, goldMentionAll,
                     treeCorefModel, trainingWorkingDir, coref_gold_no_aver, false);
-            CollectionReaderDescription corefSystem = corefResolution(taskConfig, lv1MentionRealis,
-                    treeCorefModel, trainingWorkingDir, coref_system, true);
-            CollectionReaderDescription corefSystemNoAver = corefResolution(taskConfig, lv1MentionRealis,
-                    treeCorefModel, trainingWorkingDir, coref_system_no_aver, false);
+            CollectionReaderDescription corefSentMentions = corefResolution(taskConfig, sentCrfMentionRealis,
+                    treeCorefModel, trainingWorkingDir, coref_with_lv1, true);
+            CollectionReaderDescription corefSentMentionsNoAver = corefResolution(taskConfig, sentCrfMentionRealis,
+                    treeCorefModel, trainingWorkingDir, coref_with_lv1_no_aver, false);
+            CollectionReaderDescription corefDocMentions = corefResolution(taskConfig, docCrfMentionRealis,
+                    treeCorefModel, trainingWorkingDir, coref_with_lv2, true);
+            CollectionReaderDescription corefDocMentionsNoAver = corefResolution(taskConfig, docCrfMentionRealis,
+                    treeCorefModel, trainingWorkingDir, coref_with_lv2_no_aver, false);
 
             // Output final result.
             String mentionEval = joinPaths(trainingWorkingDir, evalBase, "mention_only");
+
+            // Write the results for gold mention based realis status.
             writeResults(goldMentionRealis,
                     joinPaths(mentionEval, "gold_mention_realis_" + sliceSuffix + ".tbf"), "gold_types"
             );
@@ -706,11 +918,18 @@ public class EventMentionPipeline {
             writeResults(corefOnGold, joinPaths(corefEval, "gold_coref_" + sliceSuffix + ".tbf"), "tree_coref");
             writeResults(corefOnGoldNoAver, joinPaths(corefEval, "gold_coref_f_" + sliceSuffix + ".tbf"), "tree_coref");
 
-            writeResults(corefSystem, joinPaths(corefEval, "lv1_coref_" + sliceSuffix + ".tbf"), "tree_coref");
-            writeResults(corefSystemNoAver, joinPaths(corefEval, "lv1_coref_f_" + sliceSuffix + ".tbf"), "tree_coref");
+            writeResults(corefSentMentions, joinPaths(corefEval, "lv1_coref_" + sliceSuffix + ".tbf"), "tree_coref");
+            writeResults(
+                    corefSentMentionsNoAver, joinPaths(corefEval, "lv1_coref_f_" + sliceSuffix + ".tbf"), "tree_coref");
+
+            writeResults(corefDocMentions, joinPaths(corefEval, "lv2_coref_" + sliceSuffix + ".tbf"), "tree_coref");
+            writeResults(
+                    corefDocMentionsNoAver, joinPaths(corefEval, "lv2_coref_f_" + sliceSuffix + ".tbf"), "tree_coref");
 
             // Produce gold coreference for easy evaluation.
             writeGold(devSliceReader, joinPaths(corefEval, "gold_" + sliceSuffix + ".tbf"));
+
+            break;
         }
     }
 }

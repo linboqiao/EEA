@@ -32,7 +32,7 @@ public class SentenceFeatureExtractor extends UimaSequenceFeatureExtractor {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected List<StanfordCorenlpToken> sentenceTokens;
+    protected List<StanfordCorenlpToken> tokens;
     protected TObjectIntMap<StanfordCorenlpToken> tokenIndex;
     protected List<SequenceFeatureWithFocus> featureFunctions = new ArrayList<>();
 
@@ -60,11 +60,11 @@ public class SentenceFeatureExtractor extends UimaSequenceFeatureExtractor {
 
     @Override
     public void resetWorkspace(JCas aJCas, int begin, int end) {
-        sentenceTokens = JCasUtil.selectCovered(aJCas, StanfordCorenlpToken.class, begin, end);
+        tokens = JCasUtil.selectCovered(aJCas, StanfordCorenlpToken.class, begin, end);
         tokenIndex = new TObjectIntHashMap<>();
 
         int i = 0;
-        for (StanfordCorenlpToken token : sentenceTokens) {
+        for (StanfordCorenlpToken token : tokens) {
             tokenIndex.put(token, i++);
         }
 
@@ -85,7 +85,7 @@ public class SentenceFeatureExtractor extends UimaSequenceFeatureExtractor {
         TObjectDoubleMap<String> rawFeaturesNoState = new TObjectDoubleHashMap<>();
         TObjectDoubleMap<String> rawFeaturesNeedForState = new TObjectDoubleHashMap<>();
 
-        featureFunctions.forEach(ff -> ff.extract(sentenceTokens, focus, rawFeaturesNoState, rawFeaturesNeedForState));
+        featureFunctions.forEach(ff -> ff.extract(tokens, focus, rawFeaturesNoState, rawFeaturesNeedForState));
 
         for (TObjectDoubleIterator<String> iter = rawFeaturesNoState.iterator(); iter.hasNext(); ) {
             iter.advance();
@@ -96,10 +96,5 @@ public class SentenceFeatureExtractor extends UimaSequenceFeatureExtractor {
             iter.advance();
             featuresNeedForState.addFeature(iter.key(), iter.value());
         }
-    }
-
-    public void extractRaw(int focus, TObjectDoubleMap<String> rawFeaturesNoState, TObjectDoubleMap<String>
-            rawFeaturesNeedForState) {
-        featureFunctions.forEach(ff -> ff.extract(sentenceTokens, focus, rawFeaturesNoState, rawFeaturesNeedForState));
     }
 }

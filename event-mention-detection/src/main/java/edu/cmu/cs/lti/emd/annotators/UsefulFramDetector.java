@@ -188,7 +188,7 @@ public class UsefulFramDetector extends AbstractLoggingAnnotator {
             if (layers != null) {
                 for (SemaforLayer layer : FSCollectionFactory.create(layers, SemaforLayer.class)) {
                     if (layer.getName().equals("Target")) {
-                        invokeMapping.put(UimaNlpUtils.findHeadFromTreeAnnotation(layer.getLabels(0)), annotationSet.getFrameName());
+                        invokeMapping.put(UimaNlpUtils.findHeadFromAnnotation(layer.getLabels(0)), annotationSet.getFrameName());
                     }
                 }
             }

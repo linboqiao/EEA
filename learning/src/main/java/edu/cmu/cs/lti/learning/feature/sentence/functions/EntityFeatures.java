@@ -41,7 +41,9 @@ public class EntityFeatures extends SequenceFeatureWithFocus {
     @Override
     public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
                         TObjectDoubleMap<String> featuresNeedForState) {
-        closestEntityType(sequence, focus, features);
+        if (focus < sequence.size() && focus > 0) {
+            closestEntityType(sequence, focus, features);
+        }
     }
 
     private void closestEntityType(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features) {

@@ -40,7 +40,7 @@ public class HeadWordPairFeatures extends AbstractMentionPairFeatures {
     }
 
     private String getLemma(EventMention mention) {
-        StanfordCorenlpToken head = UimaNlpUtils.findHeadFromTreeAnnotation(mention);
+        StanfordCorenlpToken head = UimaNlpUtils.findHeadFromAnnotation(mention);
 
         if (head == null) {
             return mention.getCoveredText().toLowerCase();

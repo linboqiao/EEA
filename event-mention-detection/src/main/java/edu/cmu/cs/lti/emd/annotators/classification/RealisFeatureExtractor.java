@@ -7,7 +7,10 @@ import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.RealValueHashFeatureVector;
-import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.script.type.EventMention;
+import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
+import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
+import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
@@ -51,15 +54,12 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
         extractor.initWorkspace(aJCas);
         alignmentHelper.loadWord2Stanford(aJCas, goldTokenComponentId);
 
-        JCas goldView = JCasUtil.getView(aJCas, goldStandardViewName, aJCas);
-
         FeatureVector dummy = new RealValueHashFeatureVector(alphabet);
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             extractor.resetWorkspace(aJCas, sentence);
 
-            List<EventMention> mentions = JCasUtil.selectCovered(goldView, EventMention.class, sentence.getBegin(),
-                    sentence.getEnd());
+            List<EventMention> mentions = JCasUtil.selectCovered(aJCas, EventMention.class, sentence);
 
             for (EventMention mention : mentions) {
                 FeatureVector rawFeatures = new RealValueHashFeatureVector(alphabet);

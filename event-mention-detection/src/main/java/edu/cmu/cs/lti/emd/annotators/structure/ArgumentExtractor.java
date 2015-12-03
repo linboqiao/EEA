@@ -39,13 +39,7 @@ public class ArgumentExtractor extends AbstractLoggingAnnotator {
         Map<SemaforLabel, Pair<String, Map<String, SemaforLabel>>> semaforArguments = getSemaforArguments(aJCas);
 
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
-            StanfordCorenlpToken headWord = UimaNlpUtils.findHeadFromTreeAnnotation(mention);
-
-            if (headWord == null) {
-                // TODO this is a temporary solution.
-//                logger.debug("Found null headword for " + mention.getId() + " : " + mention.getCoveredText());
-                headWord = JCasUtil.selectCovering(StanfordCorenlpToken.class, mention).get(0);
-            }
+            StanfordCorenlpToken headWord = UimaNlpUtils.findHeadFromAnnotation(mention);
             mention.setHeadWord(headWord);
 
             List<SemaforLabel> coveredSemaforLabel = JCasUtil.selectCovered(SemaforLabel.class, headWord);
@@ -57,7 +51,7 @@ public class ArgumentExtractor extends AbstractLoggingAnnotator {
                     semaforRoles = frameNameAndRoles.getValue1();
                     mention.setFrameName(frameNameAndRoles.getValue0());
                     for (Map.Entry<String, SemaforLabel> aSemaforArgument : semaforRoles.entrySet()) {
-                        StanfordCorenlpToken argumentHead = UimaNlpUtils.findHeadFromTreeAnnotation(aSemaforArgument
+                        StanfordCorenlpToken argumentHead = UimaNlpUtils.findHeadFromAnnotation(aSemaforArgument
                                 .getValue());
                         String roleName = aSemaforArgument.getKey();
                         if (argumentHead != null) {

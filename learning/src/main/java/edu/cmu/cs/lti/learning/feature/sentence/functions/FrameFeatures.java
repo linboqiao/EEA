@@ -76,7 +76,6 @@ public class FrameFeatures extends SequenceFeatureWithFocus {
         }
         StanfordCorenlpToken token = sequence.get(focus);
 
-
         if (triggerToArgs.containsKey(token)) {
             for (Pair<String, String> triggerAndType : triggerToArgs.get(token)) {
                 for (BiConsumer<TObjectDoubleMap<String>, Pair<String, String>> argumentTemplate : argumentTemplates) {
@@ -128,7 +127,7 @@ public class FrameFeatures extends SequenceFeatureWithFocus {
                 }
             }
 
-            StanfordCorenlpToken triggerHead = UimaNlpUtils.findHeadFromTreeAnnotation(trigger);
+            StanfordCorenlpToken triggerHead = UimaNlpUtils.findHeadFromAnnotation(trigger);
             if (triggerHead == null) {
                 triggerHead = UimaConvenience.selectCoveredFirst(trigger, StanfordCorenlpToken.class);
             }
@@ -137,7 +136,7 @@ public class FrameFeatures extends SequenceFeatureWithFocus {
             }
 
             for (SemaforLabel label : frameElements) {
-                StanfordCorenlpToken elementHead = UimaNlpUtils.findHeadFromTreeAnnotation(label);
+                StanfordCorenlpToken elementHead = UimaNlpUtils.findHeadFromAnnotation(label);
                 if (elementHead == null) {
                     elementHead = UimaConvenience.selectCoveredFirst(label, StanfordCorenlpToken.class);
                 }
