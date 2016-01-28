@@ -4,6 +4,7 @@ import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
+import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +27,10 @@ public abstract class LatentTreeDecoder {
      *
      * @param mentionGraph The base graph to be decode.
      * @param weights      The weight vector used to decode.
+     * @param u   The Lagrangian multiplier for decoding.
+     * @param v
      * @return The subgraph containing only the selected weights.
      */
     public abstract MentionSubGraph decode(MentionGraph mentionGraph, GraphWeightVector weights, PairFeatureExtractor
-            extractor);
+            extractor, CubicLagrangian u, CubicLagrangian v);
 }

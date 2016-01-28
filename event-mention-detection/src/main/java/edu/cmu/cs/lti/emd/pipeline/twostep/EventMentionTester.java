@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.emd.pipeline.twostep;
 
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.twostep.EventMentionTypeLearner;
-import edu.cmu.cs.lti.emd.annotators.acceptors.NotOtherTypeAcceptor;
+import edu.cmu.cs.lti.emd.annotators.postprocessors.NotOtherTypeAcceptor;
 import edu.cmu.cs.lti.emd.eval.EventMentionEvalRunner;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;

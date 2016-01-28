@@ -23,15 +23,19 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
 
     public static final String PARAM_GOLD_TOKEN_COMPONENT_ID = "goldTokenComponentId";
 
+    public static final String PARAM_USE_CHARACTER_OFFSET = "useCharacterOffsets";
+
     @ConfigurationParameter(name = PARAM_SYSTEM_ID)
     private String systemId;
 
     @ConfigurationParameter(name = PARAM_GOLD_TOKEN_COMPONENT_ID)
     public String goldComponentId;
 
+    @ConfigurationParameter(name = PARAM_USE_CHARACTER_OFFSET, defaultValue = "false")
+    private boolean useCharacter;
+
     @Override
     public String getTextToPrint(JCas aJCas) {
-//        UimaConvenience.printProcessLog(aJCas, logger);
         StringBuilder sb = new StringBuilder();
 
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
@@ -47,7 +51,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
 
         int eventMentionIndex = 1;
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
-            Pair<String, String> wordInfo = getWords(mention, align);
+            Pair<String, String> wordInfo = useCharacter ? getSpanInfo(mention) : getWords(mention, align);
             if (wordInfo == null) {
                 continue;
             }
@@ -71,19 +75,36 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
 
         int corefIndex = 1;
         for (Event event : JCasUtil.select(aJCas, Event.class)) {
-            String corefId = "R" + corefIndex;
-            sb.append("@Coreference").append("\t").append(corefId).append("\t");
-            String sep = "";
-            for (EventMention mention : FSCollectionFactory.create(event.getEventMentions(), EventMention.class)) {
-                sb.append(sep).append(mention2Id.get(mention));
-                sep = ",";
+            // Print non-singleton mentions only.
+            List<String> eventMentionIds = new ArrayList<>();
+            if (event.getEventMentions().size() > 1) {
+                for (EventMention mention : FSCollectionFactory.create(event.getEventMentions(), EventMention.class)) {
+                    String mentionId = mention2Id.get(mention);
+                    if (mentionId != null) {
+                        eventMentionIds.add(mentionId);
+                    }
+                }
             }
-            sb.append("\n");
-        }
 
+            if (eventMentionIds.size() > 1) {
+                String corefId = "R" + corefIndex;
+                sb.append("@Coreference").append("\t").append(corefId).append("\t");
+                sb.append(Joiner.on(",").join(eventMentionIds));
+                sb.append("\n");
+                corefIndex++;
+            }
+        }
         sb.append("#EndOfDocument\n");
 
         return sb.toString();
+    }
+
+    private void asTokens() {
+
+    }
+
+    private void asCharacters() {
+
     }
 
     private List<Word> mapToGoldWordsTest(ComponentAnnotation candidate, TokenAlignmentHelper align) {
@@ -132,11 +153,14 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         return allUnderlying;
     }
 
+    private Pair<String, String> getSpanInfo(ComponentAnnotation mention) {
+        return Pair.with(mention.getBegin() + "," + mention.getEnd(),
+                mention.getCoveredText().replace("\n", " ").replace("\t", " "));
+    }
+
     private Pair<String, String> getWords(ComponentAnnotation mention, TokenAlignmentHelper align) {
         List<String> wordIds = new ArrayList<>();
         List<String> surface = new ArrayList<>();
-
-//        List<Word> words = JCasUtil.selectCovered(Word.class, candidate);
 
         List<Word> words = new ArrayList<>(mapToGoldWords(mention, align));
 
@@ -144,7 +168,6 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             logger.warn("Candidate event mention is " + mention.getCoveredText() + " " + mention.getBegin() + " " +
                     mention.getEnd());
             logger.warn("Candidate cannot be mapped to a word, this candidate will be discarded in output.");
-//            DebugUtils.pause();
             return null;
         }
 

@@ -1,21 +1,21 @@
 package edu.cmu.cs.lti.emd.annotators.crf;
 
-import edu.cmu.cs.lti.emd.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
-import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
-import edu.cmu.cs.lti.learning.feature.sentence.extractor.UimaSequenceFeatureExtractor;
+import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
+import edu.cmu.cs.lti.learning.feature.extractor.UimaSequenceFeatureExtractor;
+import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.SequenceSolution;
 import edu.cmu.cs.lti.learning.training.SequenceDecoder;
-import edu.cmu.cs.lti.script.type.CandidateEventMention;
+import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
+import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.uima.UimaContext;
@@ -54,13 +54,12 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
     private File modelDirectory;
 
-    public static final String PARAM_VERBOSE = "verbose";
-    @ConfigurationParameter(name = PARAM_VERBOSE, defaultValue = "false")
-    private boolean verbose;
-
     public static final String PARAM_CONFIG = "configuration";
     @ConfigurationParameter(name = PARAM_CONFIG)
     private Configuration config;
+
+    // A dummy lagrangian variable.
+    private DummyCubicLagrangian lagrangian = new DummyCubicLagrangian();
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -81,19 +80,33 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
         logger.info("Model loaded");
         try {
-            FeatureSpecParser specParser = new FeatureSpecParser(
+            FeatureSpecParser sentFeatureSpecParser = new FeatureSpecParser(
                     config.get("edu.cmu.cs.lti.feature.sentence.package.name"));
 
-            String currentFeatureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
+            FeatureSpecParser docFeatureSpecParser = new FeatureSpecParser(
+                    config.get("edu.cmu.cs.lti.feature.document.package.name")
+            );
 
-            if (!currentFeatureSpec.equals(featureSpec)) {
-                logger.warn("Current feature specification is not the same with the trained model.");
-                logger.warn("Will use the stored specification, it might create unexpected errors");
-                logger.warn("Using Spec:" + featureSpec);
-            }
-            Configuration typeFeatureConfig = specParser.parseFeatureFunctionSpecs(featureSpec);
+            logger.debug(featureSpec);
 
-            sentenceExtractor = new SentenceFeatureExtractor(alphabet, config, typeFeatureConfig);
+            String[] savedFeatureSpecs = FeatureUtils.splitFeatureSpec(featureSpec);
+            String savedSentFeatureSpec = savedFeatureSpecs[0];
+            String savedDocFeatureSpec = (savedFeatureSpecs.length == 2) ? savedFeatureSpecs[1] : "";
+
+            String currentSentFeatureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.sentence.spec");
+            String currentDocFeatureSpepc = config.get("edu.cmu.cs.lti.features.type.lv1.doc.spec");
+
+            warning(savedSentFeatureSpec, currentSentFeatureSpec);
+            warning(savedDocFeatureSpec, currentDocFeatureSpepc);
+
+            logger.info("Sent feature spec : " + savedSentFeatureSpec);
+            logger.info("Doc feature spec : " + savedDocFeatureSpec);
+
+            Configuration sentFeatureConfig = sentFeatureSpecParser.parseFeatureFunctionSpecs(savedSentFeatureSpec);
+            Configuration docFeatureConfig = docFeatureSpecParser.parseFeatureFunctionSpecs(savedDocFeatureSpec);
+
+            sentenceExtractor = new SentenceFeatureExtractor(alphabet, config, sentFeatureConfig, docFeatureConfig,
+                    false);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
                 | IllegalAccessException e) {
             e.printStackTrace();
@@ -101,44 +114,43 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
         decoder = new ViterbiDecoder(alphabet, classAlphabet);
     }
 
+    private void warning(String savedSpec, String oldSpec) {
+        if (!oldSpec.equals(savedSpec)) {
+            logger.warn("Current feature specification is not the same with the trained model.");
+            logger.warn("Will use the stored specification, it might create unexpected errors");
+            logger.warn("Using Spec:" + savedSpec);
+        }
+    }
+
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        UimaConvenience.printProcessLog(aJCas, logger);
+//        UimaConvenience.printProcessLog(aJCas, logger, true);
         sentenceExtractor.initWorkspace(aJCas);
 
-        for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
+//        logger.info(UimaConvenience.getShortDocumentName(aJCas));
 
+        for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             sentenceExtractor.resetWorkspace(aJCas, sentence.getBegin(), sentence.getEnd());
+
+//            logger.info(sentence.getCoveredText());
 
             List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
 
             // Extract features for this sentence and send in.
-            decoder.decode(sentenceExtractor, weightVector, tokens.size(), 0, true);
+            decoder.decode(sentenceExtractor, weightVector, tokens.size(), lagrangian, lagrangian, true);
 
-            SequenceSolution solution = decoder.getDecodedPrediction();
+            SequenceSolution prediction = decoder.getDecodedPrediction();
 
-            if (verbose) {
-                logger.debug(sentence.getCoveredText());
-                logger.debug(solution.toString());
-            }
+            List<Triplet<Integer, Integer, String>> mentionChunks = convertTypeTagsToChunks(prediction);
 
-            for (Triplet<Integer, Integer, String> chunk : convertTypeTagsToChunks(solution)) {
+            for (Triplet<Integer, Integer, String> chunk : mentionChunks) {
                 StanfordCorenlpToken firstToken = tokens.get(chunk.getValue0());
                 StanfordCorenlpToken lastToken = tokens.get(chunk.getValue1());
-                String[] predictedTypes = MentionTypeUtils.splitToTmultipleTypes(chunk.getValue2());
 
-                for (String t : predictedTypes) {
-                    CandidateEventMention candidateEventMention = new CandidateEventMention(aJCas);
-                    candidateEventMention.setPredictedType(t);
-                    UimaAnnotationUtils.finishAnnotation(candidateEventMention, firstToken.getBegin(), lastToken
-                            .getEnd(), COMPONENT_ID, 0, aJCas);
-                    if (verbose) {
-                        logger.debug(String.format("%s : [%d, %d]",
-                                candidateEventMention.getPredictedType(),
-                                candidateEventMention.getBegin(),
-                                candidateEventMention.getEnd()));
-                    }
-                }
+                EventMention predictedMention = new EventMention(aJCas);
+                predictedMention.setEventType(chunk.getValue2());
+                UimaAnnotationUtils.finishAnnotation(predictedMention, firstToken.getBegin(), lastToken
+                        .getEnd(), COMPONENT_ID, 0, aJCas);
             }
         }
     }
@@ -164,7 +176,6 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
                 chunkEndPoints.add(Triplet.with(i, i, className));
             }
         }
-
         return chunkEndPoints;
     }
 }

@@ -89,6 +89,7 @@ public class MentionGraphEdge implements Serializable {
                     // If the edge is not a root edge, we will not test for Root edge type.
                     continue;
                 }
+
                 double typeScore = scoreEdge(label, weightVector, extractor);
 
                 if (typeScore > score) {

@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.learning.feature.sentence.FeatureUtils;
+import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;

@@ -41,7 +41,7 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = CLASS_OUTPUT_PATH)
     private File classOutputFile;
 
-    TObjectIntMap<List<String>> goldClassesWithJoint = new TObjectIntHashMap<>();
+    TObjectIntMap<String> goldClassesWithJoint = new TObjectIntHashMap<>();
 
     TObjectIntMap<String> candidateClassesSingle = new TObjectIntHashMap<>();
 
@@ -70,13 +70,7 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
                 joint_type.add(t);
             } else {
                 if (!joint_type.isEmpty()) {
-                    List<String> sorted_joint_type = new ArrayList<>(joint_type);
-                    Collections.sort(sorted_joint_type);
-                    goldClassesWithJoint.adjustOrPutValue(sorted_joint_type, 1, 1);
-//                    if (joint_type.size() > 1) {
-//                        System.out.println(aJCas.getDocumentText().substring(previous_start, previous_end) + "\t" +
-//                                MentionTypeUtils.joinMultipleTypes(joint_type));
-//                    }
+                    goldClassesWithJoint.adjustOrPutValue(MentionTypeUtils.joinMultipleTypes(joint_type), 1, 1);
                 }
                 joint_type = new HashSet<>();
                 joint_type.add(t);
@@ -87,9 +81,7 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
         }
 
         if (!joint_type.isEmpty()) {
-            List<String> sorted_joint_type = new ArrayList<>(joint_type);
-            Collections.sort(sorted_joint_type);
-            goldClassesWithJoint.adjustOrPutValue(sorted_joint_type, 1, 1);
+            goldClassesWithJoint.adjustOrPutValue(MentionTypeUtils.joinMultipleTypes(joint_type), 1, 1);
         }
 
         for (CandidateEventMention mention : JCasUtil.select(aJCas, CandidateEventMention.class)) {
@@ -108,21 +100,10 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
         List<String> classesLines = new ArrayList<>();
 
         goldClassesWithJoint.forEachEntry((t, c) -> {
-            String joinedTypeName = MentionTypeUtils.joinMultipleTypes(t);
-//            if (t.size() > 1) {
-//                System.out.println(String.format("Joint type %s occurs %d times.", joinedTypeName, c));
-//            }
-            classesLines.add(joinedTypeName + "\t" + c);
+//            logger.debug(String.format("Joint type [%s] occurs %d times.", t, c));
+            classesLines.add(t + "\t" + c);
             return true;
         });
-
-//        goldClassesWithJoint.forEachEntry((t, c) -> {
-//            String joinedTypeName = MentionTypeUtils.joinMultipleTypes(t);
-//            if (t.size() == 1) {
-//                System.out.println(String.format("Single type %s occurs %d times.", joinedTypeName, c));
-//            }
-//            return true;
-//        });
 
         Collections.sort(classesLines);
         try {

@@ -1,32 +1,33 @@
 package edu.cmu.cs.lti.emd.annotators.crf;
 
 import edu.cmu.cs.lti.emd.utils.MentionTypeUtils;
-import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
+import edu.cmu.cs.lti.learning.annotators.AbstractCrfTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
-import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
-import edu.cmu.cs.lti.learning.feature.sentence.extractor.UimaSequenceFeatureExtractor;
-import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
+import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
+import edu.cmu.cs.lti.learning.model.ClassAlphabet;
+import edu.cmu.cs.lti.learning.model.FeatureVector;
+import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
+import edu.cmu.cs.lti.learning.model.SequenceSolution;
 import edu.cmu.cs.lti.learning.training.AveragePerceptronTrainer;
+import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
+import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -41,98 +42,68 @@ import java.util.Map;
  *
  * @author Zhengzhong Liu
  */
-public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
-    public static final String PARAM_CACHE_DIRECTORY = "cacheDirectory";
-
-    public static final String PARAM_CONFIGURATION_FILE = "configurationFile";
-
-    @ConfigurationParameter(name = PARAM_CACHE_DIRECTORY)
-    private File cacheDir;
-
-    @ConfigurationParameter(name = PARAM_CONFIGURATION_FILE)
-    private Configuration config;
-
-    private static AveragePerceptronTrainer trainer;
-
-    private UimaSequenceFeatureExtractor sentenceExtractor;
-
-    private ClassAlphabet classAlphabet;
-
+public class MentionTypeCrfTrainer extends AbstractCrfTrainer {
+    //TODO rename this class
     public static final String MODEL_NAME = "crfModel";
 
-    private TrainingStats trainingStats;
+    protected static MultiKeyDiskCacher<ArrayList<TIntObjectMap<FeatureVector[]>>> featureCacher;
 
-    private ViterbiDecoder decoder;
+    protected static MultiKeyDiskCacher<ArrayList<Pair<GraphFeatureVector, SequenceSolution>>> goldCacher;
 
-    private static MultiKeyDiskCacher<ArrayList<TIntObjectMap<FeatureVector[]>>> featureCacher;
-
-    private static MultiKeyDiskCacher<ArrayList<Pair<GraphFeatureVector, SequenceSolution>>> goldCacher;
+    private CubicLagrangian dummyLagrangian = new DummyCubicLagrangian();
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
-        super.initialize(aContext);
         logger.info("Preparing the token level type trainer ...");
+        super.initialize(aContext);
 
-        int alphabetBits = config.getInt("edu.cmu.cs.lti.mention.feature.alphabet_bits", 24);
-        double stepSize = config.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
-        int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
-        boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
         boolean discardAfter = config.getBoolean("edu.cmu.cs.lti.coref.mention.cache.discard_after", true);
         long weightLimit = config.getLong("edu.cmu.cs.lti.mention.cache.document.num", 1000);
 
-        File classFile = config.getFile("edu.cmu.cs.lti.mention.classes.path");
-        String[] classes = new String[0];
-
-        if (classFile != null) {
-            try {
-                classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
-                        .filter(p -> p.length >= 1).map(p -> p[0]).toArray(String[]::new);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            logger.info(String.format("Registered %d classes.", classes.length));
-        } else {
-            throw new ResourceInitializationException(new Throwable("No classes provided for training"));
-        }
-
-        classAlphabet = new ClassAlphabet(classes, true, true);
-
-        HashAlphabet alphabet = new HashAlphabet(alphabetBits, readableModel);
-        trainingStats = new TrainingStats(printLossOverPreviousN);
-
         try {
-            featureCacher = new MultiKeyDiskCacher<>(cacheDir.getPath(), (strings, featureVectors) -> 1,
-                    weightLimit, discardAfter, "feature_cache");
+            featureCacher = createFeatureCacher(weightLimit, discardAfter);
+            goldCacher = createGoldCacher(weightLimit, discardAfter);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        decoder = new ViterbiDecoder(alphabet, classAlphabet);
-        String featureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.spec");
-        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, alphabet, featureSpec, stepSize);
+        String sentFeatureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.sentence.spec");
+        String docFeatureSpec = config.getOrElse("edu.cmu.cs.lti.features.type.lv1.doc.spec", "");
+
+        Configuration sentFeatureConfig = new FeatureSpecParser(
+                config.get("edu.cmu.cs.lti.feature.sentence.package.name")
+        ).parseFeatureFunctionSpecs(sentFeatureSpec);
+
+
+        Configuration docFeatureConfig = new FeatureSpecParser(
+                config.get("edu.cmu.cs.lti.feature.document.package.name")
+        ).parseFeatureFunctionSpecs(docFeatureSpec);
+
 
         try {
-            sentenceExtractor = new SentenceFeatureExtractor(alphabet, config,
-                    new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.sentence.package.name"))
-                            .parseFeatureFunctionSpecs(featureSpec));
+            featureExtractor = new SentenceFeatureExtractor(alphabet, config, sentFeatureConfig, docFeatureConfig,
+                    false);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
                 | IllegalAccessException e) {
             e.printStackTrace();
         }
 
-        logger.info("Initializing gold cacher with " + cacheDir.getAbsolutePath());
+        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, alphabet,
+                FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec), stepSize);
 
-        try {
-            goldCacher = new MultiKeyDiskCacher<>(cacheDir.getPath(), (strings, fv) -> 1,
-                    weightLimit, discardAfter, "gold_cache");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        logger.info("Training with the following specification: ");
+        logger.info("[Sentence Spec]" + sentFeatureSpec);
+        logger.info("[Document Spec]" + docFeatureSpec);
+    }
+
+    @Override
+    protected ClassAlphabet initClassAlphabet(String[] classes) {
+        return new ClassAlphabet(classes, true, true);
     }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        sentenceExtractor.initWorkspace(aJCas);
+        featureExtractor.initWorkspace(aJCas);
 
         String documentKey = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
 
@@ -144,7 +115,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
 
         int sentenceId = 0;
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
-            sentenceExtractor.resetWorkspace(aJCas, sentence);
+            featureExtractor.resetWorkspace(aJCas, sentence);
 
             Map<StanfordCorenlpToken, String> tokenTypes = new HashMap<>();
             List<EventMention> mentions = JCasUtil.selectCovered(aJCas, EventMention.class, sentence);
@@ -172,7 +143,7 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
                 goldSolution = goldSolutionAndFeatures.getRight();
             } else {
                 goldSolution = getGoldSequence(sentence, tokenTypes);
-                goldFv = decoder.getSolutionFeatures(sentenceExtractor, goldSolution);
+                goldFv = decoder.getSolutionFeatures(featureExtractor, goldSolution);
                 goldToCache.add(Pair.of(goldFv, goldSolution));
             }
 
@@ -183,7 +154,8 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
                 sentenceFeatures = new TIntObjectHashMap<>();
             }
 
-            double loss = trainer.trainNext(goldSolution, goldFv, sentenceExtractor, 0, sentenceFeatures);
+            double loss = trainer.trainNext(goldSolution, goldFv, featureExtractor, dummyLagrangian, dummyLagrangian,
+                    sentenceFeatures);
             trainingStats.addLoss(logger, loss);
             sentenceId++;
 
@@ -223,20 +195,6 @@ public class MentionTypeCrfTrainer extends AbstractLoggingAnnotator {
         return new SequenceSolution(decoder.getClassAlphabet(), goldSequence);
     }
 
-    public static void saveModels(File modelOutputDirectory) throws IOException {
-        boolean directoryExist = true;
-        if (!modelOutputDirectory.exists()) {
-            if (!modelOutputDirectory.mkdirs()) {
-                directoryExist = false;
-            }
-        }
-
-        if (directoryExist) {
-            trainer.write(new File(modelOutputDirectory, MODEL_NAME));
-        } else {
-            throw new IOException(String.format("Cannot create directory : [%s]", modelOutputDirectory.toString()));
-        }
-    }
 
     /**
      * At loop finish, do some clean up work.

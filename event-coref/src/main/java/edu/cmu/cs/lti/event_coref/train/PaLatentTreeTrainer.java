@@ -9,6 +9,7 @@ import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionRelation;
@@ -28,10 +29,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -58,6 +56,8 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
     // The resulting weights.
     private static GraphWeightVector weights;
+
+    private DummyCubicLagrangian dummyLagrangian = new DummyCubicLagrangian();
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
@@ -122,21 +122,33 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         // A mention graph represent all the mentions and contains features among them.
         MentionGraph mentionGraph = graphCacher.get(cacheKey);
+
+        Map<Integer, Integer> mentionId2EventId = groupEventClusters(allMentions);
+
         if (mentionGraph == null) {
-            mentionGraph = new MentionGraph(allMentions, allMentionRelations);
+            mentionGraph = new MentionGraph(allMentions.size(), mentionId2EventId, allMentionRelations);
             graphCacher.addWithMultiKey(mentionGraph, cacheKey);
         }
 
         // Decoding.
-        MentionSubGraph predictedTree = decoder.decode(mentionGraph, weights, extractor);
+        MentionSubGraph predictedTree = decoder.decode(mentionGraph, weights, extractor, dummyLagrangian,
+                dummyLagrangian);
         if (!graphMatch(predictedTree, mentionGraph)) {
             MentionSubGraph latentTree = mentionGraph.getLatentTree(weights, extractor);
             double loss = predictedTree.getLoss(latentTree);
             trainingStats.addLoss(logger, loss / mentionGraph.getMentionNodes().length);
             update(predictedTree, latentTree, extractor);
+
+//            logger.debug("Loss is " + loss);
+//            logger.debug("Predicted tree.");
+//            logger.debug(predictedTree.toString());
+//            logger.debug("Actual tree.");
+//            logger.debug(latentTree.toString());
+//            DebugUtils.pause(logger);
         } else {
             trainingStats.addLoss(logger, 0);
         }
+
     }
 
     /**
@@ -225,6 +237,33 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         }
         return corefMatch && linkMatch;
     }
+
+    /**
+     * @return Map from the mention to the event index it refers.
+     */
+    private Map<Integer, Integer> groupEventClusters(List<EventMention> mentions) {
+        Map<Integer, Integer> mentionId2EventId = new HashMap<>();
+        int eventIndex = 0;
+
+        Map<Event, Integer> eventIndices = new HashMap<>();
+
+        for (int i = 0; i < mentions.size(); i++) {
+            Event referringEvent = mentions.get(i).getReferringEvent();
+            if (referringEvent == null) {
+                mentionId2EventId.put(i, eventIndex);
+                eventIndex++;
+            } else if (eventIndices.containsKey(referringEvent)) {
+                Integer referringIndex = eventIndices.get(referringEvent);
+                mentionId2EventId.put(i, referringIndex);
+            } else {
+                mentionId2EventId.put(i, eventIndex);
+                eventIndices.put(referringEvent, eventIndex);
+                eventIndex++;
+            }
+        }
+        return mentionId2EventId;
+    }
+
 
     public static void saveModels(File modelOutputDirectory) throws IOException {
         FileUtils.ensureDirectory(modelOutputDirectory);

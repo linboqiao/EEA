@@ -15,7 +15,7 @@ for line in f:
             doc_id = line.strip().split()[1]
         if line.startswith("#EndOf"):
             used_tokens = set()
-            for index, ((type, realis), tokens2Ids) in enumerate(clusters.iteritems()):
+            for index, (key, tokens2Ids) in enumerate(clusters.iteritems()):
                 if len(tokens2Ids) > 1:
                     f_out.write("@Coreference\tR%d\t%s\n" % (index, ",".join(tokens2Ids.values())))
             clusters = {}
@@ -25,9 +25,10 @@ for line in f:
         realis = fields[6]
         eid = fields[2]
         tokens = fields[3]
+        key = (type,)
         try:
-            clusters[(type, realis)][tokens] = eid
+            clusters[key][tokens] = eid
         except KeyError:
-            clusters[(type, realis)] = {tokens: eid}
+            clusters[key] = {tokens: eid}
             pass
     f_out.write(line)

@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.emd.annotators.classification;
 
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
-import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
+import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.RealValueHashFeatureVector;
@@ -81,8 +81,12 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
 
         FeatureSpecParser parser = new FeatureSpecParser(featurePackageName);
         Configuration realisSpec = parser.parseFeatureFunctionSpecs(featureSpec);
+
+        // Currently no document level realis features.
+        Configuration placeHolderSpec = new Configuration();
+
         try {
-            extractor = new SentenceFeatureExtractor(model.getAlphabet(), config, realisSpec);
+            extractor = new SentenceFeatureExtractor(model.getAlphabet(), config, realisSpec, placeHolderSpec, false);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException
                 | InstantiationException e) {
             e.printStackTrace();
@@ -107,7 +111,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
                 TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
 
                 FeatureVector mentionFeatures = new RealValueHashFeatureVector(alphabet);
-                int head = extractor.getTokenIndex(UimaNlpUtils.findHeadFromRange(aJCas, mention.getBegin(),
+                int head = extractor.getElementIndex(UimaNlpUtils.findHeadFromRange(aJCas, mention.getBegin(),
                         mention.getEnd()));
                 extractor.extract(head, mentionFeatures, dummy);
 

@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 
-import edu.cmu.cs.lti.learning.feature.sentence.FeatureUtils;
+import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -30,6 +30,8 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
 
     private Map<EventMention, StanfordCorenlpSentence> mention2Sentence;
 
+    private String documentType = "UNKNOWN";
+
     public DistanceFeatures(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
     }
@@ -44,6 +46,7 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
             }
             sent.setIndex(sentenceId++);
         }
+        documentType = getDocumentType(context);
     }
 
     @Override
@@ -67,17 +70,20 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
 
         if (firstSentence.getIndex() == 0 && secondSentence.getIndex() == 1) {
             addBoolean(rawFeatures, "TitleAndFirstSent");
+
         }
 
         int sentenceInBetween = Math.abs(firstSentence.getIndex() - secondSentence.getIndex());
         for (int sentenceThreshold : sentenceThresholds) {
             if (sentenceInBetween <= sentenceThreshold) {
-                addBoolean(rawFeatures, FeatureUtils.formatFeatureName("SentenceDistance", "i<=" + sentenceThreshold));
+                addBoolean(rawFeatures, FeatureUtils.formatFeatureName("SentenceDistance",
+                        "i<=" + sentenceThreshold));
                 return;
             }
         }
 
-        rawFeatures.put(FeatureUtils.formatFeatureName("SentenceDistance", "i>" + lastSentenceThreshold), 1);
+        rawFeatures.put(FeatureUtils.formatFeatureName("SentenceDistance", "i>" +
+                lastSentenceThreshold), 1);
     }
 
     private void thresholdedMentionDistance(JCas documentContext, TObjectDoubleMap<String> rawFeatures,
@@ -86,11 +92,23 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
                 .size();
         for (int mentionThreshold : mentionThresholds) {
             if (mentionInBetween <= mentionThreshold) {
-                rawFeatures.put(FeatureUtils.formatFeatureName("MentionDistance", "i<=" + mentionThreshold), 1);
+                rawFeatures.put(FeatureUtils.formatFeatureName("MentionDistance",
+                        "i<=" + mentionThreshold), 1);
                 return;
             }
         }
-        rawFeatures.put(FeatureUtils.formatFeatureName("MentionDistance", "i>" + lastMentionTreshold), 1);
+        rawFeatures.put(FeatureUtils.formatFeatureName("MentionDistance",
+                "i>" + lastMentionTreshold), 1);
+    }
+
+    private String getDocumentType(JCas context) {
+        JCas originalContext = JCasUtil.getView(context, "original", false);
+        String originalText = originalContext.getDocumentText();
+        if (originalText.contains("<post")) {
+            return "Forum";
+        } else {
+            return "News";
+        }
     }
 
 }

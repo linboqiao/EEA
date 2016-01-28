@@ -97,9 +97,9 @@ public class MentionSubGraph {
 
             if (referenceEdge.getGov() != thisEdge.getGov()) {
 //                System.out.println("Loss because different antecedent : " + thisEdge + " vs " + referenceEdge);
-                if (thisEdge.getEdgeType() == EdgeType.Root){
+                if (thisEdge.getEdgeType() == EdgeType.Root) {
                     loss += 1.5;
-                }else{
+                } else {
                     loss += 1;
                 }
             } else {
@@ -108,7 +108,7 @@ public class MentionSubGraph {
                     // deterministic.
 //                    System.out.println("Loss because different type : " + thisEdge + " vs " + referenceEdge);
                     loss += 1;
-                }else{
+                } else {
 
                 }
             }
@@ -149,7 +149,7 @@ public class MentionSubGraph {
         List<Set<Integer>> clusters = new ArrayList<>();
 
         ArrayListMultimap<EdgeType, Pair<Integer, Integer>> allRelations = ArrayListMultimap.create();
-        ArrayListMultimap<EdgeType, Pair<Integer, Integer>> generalizedRelations = ArrayListMultimap.create();
+        ArrayListMultimap<EdgeType, Pair<Integer, Integer>> interRelations = ArrayListMultimap.create();
 
         for (SubGraphEdge edge : edgeTable.values()) {
             EdgeType type = edge.getEdgeType();
@@ -190,11 +190,14 @@ public class MentionSubGraph {
         for (Map.Entry<EdgeType, Pair<Integer, Integer>> relation : allRelations.entries()) {
             int govNode = relation.getValue().getValue0();
             int depNode = relation.getValue().getValue1();
-            generalizedRelations.put(relation.getKey(),
+            interRelations.put(relation.getKey(),
                     Pair.with(node2ClusterId.get(govNode), node2ClusterId.get(depNode)));
         }
 
-        resolvedRelations = GraphUtils.resolveRelations(generalizedRelations, group2Clusters, numNodes);
+        // Create links for nodes in clusters.
+        resolvedRelations = GraphUtils.resolveRelations(interRelations, group2Clusters, numNodes);
+
+        // Create a coreference chain.
         corefChains = GraphUtils.createSortedCorefChains(group2Clusters);
     }
 

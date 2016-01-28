@@ -3,13 +3,13 @@ package edu.cmu.cs.lti.event_coref.model.graph;
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
-import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionRelation;
 import org.javatuples.Pair;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,11 +46,9 @@ public class MentionGraph implements Serializable {
 
     /**
      * Provide to the graph with only a list of mentions, no coreference information.
-     *
-     * @param mentions List of event mentions.
      */
-    public MentionGraph(List<EventMention> mentions, boolean useAverage) {
-        this(mentions, new ArrayList<>());
+    public MentionGraph(int numMentions, boolean useAverage) {
+        this(numMentions, new HashMap<>(), new ArrayList<>());
         this.useAverage = useAverage;
     }
 
@@ -58,25 +56,24 @@ public class MentionGraph implements Serializable {
      * Provide to the graph a list of mentions and predefined event relations. Nodes without these relations will be
      * link to root implicitly.
      *
-     * @param mentions  List of event mentions.
      * @param relations Relations between the event mentions.
      */
-    public MentionGraph(List<EventMention> mentions, List<EventMentionRelation> relations) {
+    // TODO remove all EventMentionRelation dependency.
+    public MentionGraph(int numMentions, Map<Integer, Integer> mention2EventIndex, List<EventMentionRelation>
+            relations) {
         this.useAverage = false;
 
-        mentionNodes = new MentionNode[mentions.size() + 1];
+        mentionNodes = new MentionNode[numMentions + 1];
         // A virtual root, the id should always be 0.
         mentionNodes[0] = new MentionNode(0);
-        for (int i = 0; i < mentions.size(); i++) {
+        for (int i = 0; i < numMentions; i++) {
             mentionNodes[i + 1] = new MentionNode(i + 1);
         }
 
         // Read gold standard cluster information.
         // Each cluster is represented as a mapping from the event id to the event mention id list.
-        ArrayListMultimap<Integer, Integer> event2Clusters;
-
         // Group mention nodes into clusters, the first is the event id, the second is the node id.
-        event2Clusters = groupEventClusters(mentions);
+        ArrayListMultimap<Integer, Integer> event2Clusters = groupEventClusters(mention2EventIndex);
 
         corefChains = GraphUtils.createSortedCorefChains(event2Clusters);
 
@@ -160,16 +157,16 @@ public class MentionGraph implements Serializable {
      *
      * @return Map from the event index to mention indices it contains.
      */
-    private ArrayListMultimap<Integer, Integer> groupEventClusters(List<EventMention> mentions) {
+    private ArrayListMultimap<Integer, Integer> groupEventClusters(Map<Integer, Integer> mention2EventIndex) {
         ArrayListMultimap<Integer, Integer> event2Clusters = ArrayListMultimap.create();
 //        for (int i = 1; i < mentionNodes.length; i++) {
         for (MentionNode mentionNode : mentionNodes) {
             if (!mentionNode.isRoot()) {
-                EventMention mention = mentions.get(mentionNode.getMentionIndex());
-                Event event = mention.getReferringEvent();
-                if (event != null) {
+                int mentionIndex = mentionNode.getMentionIndex();
+                Integer eventIndex = mention2EventIndex.get(mentionIndex);
+                if (eventIndex != null) {
                     // This will store all clusters, including singleton clusters.
-                    event2Clusters.put(event.getIndex(), mentionNode.getId());
+                    event2Clusters.put(eventIndex, mentionNode.getId());
                 }
             }
         }

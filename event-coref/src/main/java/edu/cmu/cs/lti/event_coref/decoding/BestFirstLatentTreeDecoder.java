@@ -5,6 +5,7 @@ import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
+import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import org.javatuples.Pair;
 
 /**
@@ -22,7 +23,7 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
 
     @Override
     public MentionSubGraph decode(MentionGraph mentionGraph, GraphWeightVector weights, PairFeatureExtractor
-            extractor) {
+            extractor, CubicLagrangian u, CubicLagrangian v) {
         MentionSubGraph bestFirstTree = new MentionSubGraph(mentionGraph);
 
         for (int curr = 1; curr < mentionGraph.numNodes(); curr++) {
@@ -35,9 +36,23 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
                 double score = bestLabelScore.getValue1();
                 MentionGraphEdge.EdgeType label = bestLabelScore.getValue0();
 
+                // We have a special root node at the begin, so we minus one to get the original sequence index.
+                double lagrangianPenalty = 0;
+                if (ant > 0) {
+                    lagrangianPenalty =
+                            u.getSumOverTVariable(curr - 1, ant - 1) + v.getSumOverTVariable(curr - 1, ant - 1);
+                }
+
+                score += lagrangianPenalty;
+
                 if (score > bestScore) {
                     bestEdge = Pair.with(mentionGraphEdge, label);
                     bestScore = score;
+
+//                    logger.info("Best edge is between " + mentionGraphEdge.toString());
+//                    logger.info("Best edge type is " + bestEdge.getValue1());
+//                    logger.info(mentionGraph.getNode(mentionGraphEdge.govIdx).getMentionIndex() + " -> " +
+//                            mentionGraph.getNode(mentionGraphEdge.depIdx).getMentionIndex());
                 }
             }
             bestFirstTree.addEdge(bestEdge.getValue0(), bestEdge.getValue1());

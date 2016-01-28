@@ -11,6 +11,7 @@ import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtract
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
+import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
@@ -61,6 +62,9 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
     // The resulting weights.
     private static GraphWeightVector weights;
 
+    // Dummy lagrangians.
+    private DummyCubicLagrangian lagrangian = new DummyCubicLagrangian();
+
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
@@ -75,6 +79,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
 
         ClassAlphabet classAlphabet;
         try {
+            logger.info("Loading coreference model from " + modelDirectory);
             weights = SerializationUtils.deserialize(new FileInputStream(
                     new File(modelDirectory, PaLatentTreeTrainer.MODEL_NAME)));
             featureAlphabet = weights.getFeatureAlphabet();
@@ -86,11 +91,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
 
         try {
             String currentFeatureSpec = config.get("edu.cmu.cs.lti.features.coref.spec");
-            if (!currentFeatureSpec.equals(featureSpec)) {
-                logger.warn("Current feature specification is not the same with the trained model.");
-                logger.warn("Will use the stored specification, it might create unexpected errors");
-                logger.warn("Using Spec:" + featureSpec);
-            }
+            specWarning(featureSpec, currentFeatureSpec);
 
             Configuration featureConfig = new FeatureSpecParser(
                     config.get("edu.cmu.cs.lti.feature.pair.package.name")
@@ -103,17 +104,34 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
         }
     }
 
+    private void specWarning(String oldSpec, String newSpec) {
+        if (!oldSpec.equals(newSpec)) {
+            logger.warn("Current feature specification is not the same with the trained model.");
+            logger.warn("Will use the stored specification, it might create unexpected errors");
+            logger.warn("Using Spec:" + oldSpec);
+        }
+    }
+
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
 //        UimaConvenience.printProcessLog(aJCas, logger);
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
 //        logger.info("Clustering " + allMentions.size() + " mentions.");
         extractor.initWorkspace(aJCas);
-        MentionGraph mentionGraph = new MentionGraph(allMentions, useAverage);
-        MentionSubGraph predictedTree = decoder.decode(mentionGraph, weights, extractor);
+        MentionGraph mentionGraph = new MentionGraph(allMentions.size(), useAverage);
+        MentionSubGraph predictedTree = decoder.decode(mentionGraph, weights, extractor, lagrangian, lagrangian);
+
+        int i = 0;
+//        for (EventMention mention : allMentions) {
+//            logger.info(i + " " + mention.getCoveredText() + " " + mention.getEventType() + " " + mention
+//                    .getRealisType());
+//            i++;
+//        }
 
         predictedTree.resolveTree();
         int[][] corefChains = predictedTree.getCorefChains();
+
+//        logger.info(predictedTree.toString());
 
         for (int[] corefChain : corefChains) {
             List<EventMention> predictedChain = new ArrayList<>();
@@ -139,5 +157,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
                 }
             }
         }
+
+//        DebugUtils.pause();
     }
 }

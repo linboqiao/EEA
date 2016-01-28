@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.emd.annotators.classification;
 
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
-import edu.cmu.cs.lti.learning.feature.sentence.extractor.SentenceFeatureExtractor;
+import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
@@ -63,7 +63,7 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
 
             for (EventMention mention : mentions) {
                 FeatureVector rawFeatures = new RealValueHashFeatureVector(alphabet);
-                int head = extractor.getTokenIndex(getHead(aJCas, mention.getBegin(), mention.getEnd()));
+                int head = extractor.getElementIndex(getHead(aJCas, mention.getBegin(), mention.getEnd()));
                 extractor.extract(head, rawFeatures, dummy);
                 classAlphabet.addClass(mention.getRealisType());
                 TIntDoubleMap indexedFeatures = new TIntDoubleHashMap();
@@ -112,6 +112,10 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
         // Parse feature configs from featureConfig.
         FeatureSpecParser parser = new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.sentence.package.name"));
         Configuration realisSpec = parser.parseFeatureFunctionSpecs(config.get("edu.cmu.cs.lti.features.realis.spec"));
-        extractor = new SentenceFeatureExtractor(alphabet, config, realisSpec);
+
+        // Currently no document level realis features.
+        Configuration placeHolderSpec = new Configuration();
+
+        extractor = new SentenceFeatureExtractor(alphabet, config, realisSpec, placeHolderSpec, false);
     }
 }

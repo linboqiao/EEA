@@ -23,6 +23,8 @@ import java.util.List;
  * @author Zhengzhong Liu
  */
 public class PairFeatureExtractor {
+    // TODO remove dependency of EventMention here.
+
     private List<AbstractMentionPairFeatures> featureFunctions = new ArrayList<>();
 
     private boolean useBinary;
@@ -35,6 +37,7 @@ public class PairFeatureExtractor {
 
     private List<EventMention> mentions;
 
+    // TODO Extractor is highly depended on event mentions now. let's what can be done
     public PairFeatureExtractor(FeatureAlphabet featureAlphabet, ClassAlphabet classAlphabet, boolean useBinary,
                                 Configuration generalConfig, Configuration featureConfig)
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException,

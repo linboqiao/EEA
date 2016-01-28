@@ -31,16 +31,21 @@ public class FeatureSpecParser {
         featureSpec.add(FEATURE_FUNCTION_PACKAGE_KEY, featureFunctionPackageName);
         List<String> allFunctions = new ArrayList<>();
 
-        for (String rawFeatureSpec : rawFeatureSpecs.split(";")) {
-            String[] featureSpecKeyValue = rawFeatureSpec.split("\\s+", 2);
-            String featureFunctionName = featureSpecKeyValue[0];
-            allFunctions.add(featureFunctionName);
-            if (featureSpecKeyValue.length == 2) {
-                parseFeatureTemplateSpec(featureSpecKeyValue[1]).entrySet().forEach(entry -> featureSpec.add(
-                        featureFunctionName + "." + entry.getKey(), entry.getValue()));
+        if (rawFeatureSpecs != null && !rawFeatureSpecs.isEmpty()) {
+            for (String rawFeatureSpec : rawFeatureSpecs.split(";")) {
+                String[] featureSpecKeyValue = rawFeatureSpec.split("\\s+", 2);
+                String featureFunctionName = featureSpecKeyValue[0];
+                allFunctions.add(featureFunctionName);
+
+                if (featureSpecKeyValue.length == 2) {
+                    parseFeatureTemplateSpec(featureSpecKeyValue[1]).entrySet().forEach(entry -> featureSpec.add(
+                            featureFunctionName + "." + entry.getKey(), entry.getValue()));
+                }
             }
         }
+
         featureSpec.add(FEATURE_FUNCTION_NAME_KEY, Joiner.on(",").join(allFunctions));
+
         return featureSpec;
     }
 

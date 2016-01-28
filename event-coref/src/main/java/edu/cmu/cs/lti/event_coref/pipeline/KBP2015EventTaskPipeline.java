@@ -9,8 +9,11 @@ import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
+import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
+
+import java.io.File;
 
 /**
  * Run all the experiments of the KBP 2015 event track tasks, including train/test and 5-fold cross validation.
@@ -18,6 +21,8 @@ import org.uimafit.factory.TypeSystemDescriptionFactory;
  * @author Zhengzhong Liu
  */
 public class KBP2015EventTaskPipeline {
+
+
     public static void main(String argv[]) throws Exception {
         if (argv.length < 1) {
             System.err.println("Please provide one argument for the settings file.");
@@ -35,16 +40,10 @@ public class KBP2015EventTaskPipeline {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(typeSystemName);
 
-        CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
-                TbfEventDataReader.class, typeSystemDescription,
-                TbfEventDataReader.PARAM_GOLD_STANDARD_FILE, kbpConfig.get("edu.cmu.cs.lti.training.gold.tbf"),
-                TbfEventDataReader.PARAM_SOURCE_EXT, ".txt",
-                TbfEventDataReader.PARAM_SOURCE_TEXT_DIRECTORY,
+        CollectionReaderDescription trainReader = getTbfReader(typeSystemDescription, kbpConfig.get("edu.cmu.cs.lti" +
+                        ".training.gold.tbf"),
                 kbpConfig.get("edu.cmu.cs.lti.training.source_text.dir"),
-                TbfEventDataReader.PARAM_TOKEN_DIRECTORY, kbpConfig.get("edu.cmu.cs.lti.training.token_map.dir"),
-                TbfEventDataReader.PARAM_TOKEN_EXT, ".tab",
-                TbfEventDataReader.PARAM_INPUT_VIEW_NAME, UimaConst.inputViewName
-        );
+                kbpConfig.get("edu.cmu.cs.lti.training.token_map.dir"));
 
         AnalysisEngineDescription classPrinter = AnalysisEngineFactory.createEngineDescription(
                 EventMentionTypeClassPrinter.class, typeSystemDescription,
@@ -53,20 +52,70 @@ public class KBP2015EventTaskPipeline {
                         kbpConfig.get("edu.cmu.cs.lti.training.working.dir"), "mention_types.txt")
         );
 
+        CollectionReaderDescription testReader = getTbfReader(typeSystemDescription,
+                kbpConfig.get("edu.cmu.cs.lti.test.gold.tbf"),
+                kbpConfig.get("edu.cmu.cs.lti.test.source_text.dir"),
+                kbpConfig.get("edu.cmu.cs.lti.test.token_map.dir"));
+
+
         // Create the classes first.
-        SimplePipeline.runPipeline(reader, classPrinter);
+        SimplePipeline.runPipeline(trainReader, classPrinter);
 
         // Now prepare the real pipeline.
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, modelPath, modelOutputDir,
                 trainingWorkingDir, testingWorkingDir);
 
         boolean skipTypeTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
-        boolean skipRealisTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain=true", false);
+        boolean skipLv2TypeTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.lv2.skiptrain", false);
+        boolean skipRealisTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
         boolean skipCorefTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
 
-        pipeline.prepare(kbpConfig);
-//        pipeline.trainAll(kbpConfig, skipTypeTrain, skipRealisTrain, skipCorefTrain);
-//        pipeline.test(kbpConfig);
-        pipeline.crossValidation(kbpConfig);
+
+        boolean skipLv1Test = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
+        boolean skipLv2Test = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.lv2.skiptest", false);
+        boolean skipRealisTest = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
+        boolean skipCorefTest = kbpConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
+        boolean skipJointTest = kbpConfig.getBoolean("edu.cmu.cs.lti.joint.skiptest", false);
+
+        pipeline.prepare(kbpConfig, trainReader, testReader);
+//        pipeline.crossValidation(kbpConfig);
+
+        for (int i = 1; i < 23; i++) {
+            pipeline.trainAll(kbpConfig, skipTypeTrain, skipLv2TypeTrain, skipRealisTrain, skipCorefTrain, i
+            );
+            pipeline.test(kbpConfig, skipLv1Test, skipLv2Test, skipRealisTest, skipCorefTest, skipJointTest);
+            moveData(kbpConfig, modelOutputDir, testingWorkingDir, i);
+        }
+    }
+
+    private static CollectionReaderDescription getTbfReader(TypeSystemDescription typeSystemDescription, String
+            goldStandardPath, String plainTextPath, String tokenMapPath) throws ResourceInitializationException {
+        return CollectionReaderFactory.createReaderDescription(
+                TbfEventDataReader.class, typeSystemDescription,
+                TbfEventDataReader.PARAM_GOLD_STANDARD_FILE, goldStandardPath,
+                TbfEventDataReader.PARAM_SOURCE_EXT, ".txt",
+                TbfEventDataReader.PARAM_SOURCE_TEXT_DIRECTORY, plainTextPath,
+                TbfEventDataReader.PARAM_TOKEN_DIRECTORY, tokenMapPath,
+                TbfEventDataReader.PARAM_TOKEN_EXT, ".tab",
+                TbfEventDataReader.PARAM_INPUT_VIEW_NAME, UimaConst.inputViewName
+        );
+    }
+
+    public static void moveData(Configuration config, String outputModelDir, String testingWorkingDir, int suffix) {
+        File corefModelDir = new File(outputModelDir, config.get("edu.cmu.cs.lti.model.event.latent_tree"));
+        File evalDir = new File(new File(testingWorkingDir, "eval"), "full_run");
+
+        rename(corefModelDir, suffix);
+        rename(evalDir, suffix);
+    }
+
+    public static void rename(File d, int suffix) {
+        String newPath = d.getPath() + "_seed_" + suffix;
+        System.out.println("Backup results:");
+        System.out.println(d.getPath());
+        System.out.println("->");
+        System.out.println(newPath);
+
+        d.renameTo(new File(newPath));
     }
 }

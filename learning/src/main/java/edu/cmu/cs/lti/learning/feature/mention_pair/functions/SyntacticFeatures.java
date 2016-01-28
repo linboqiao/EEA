@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 
-import edu.cmu.cs.lti.learning.feature.sentence.FeatureUtils;
+import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
