@@ -48,5 +48,10 @@
             <groupId>edu.cmu.cs.lti</groupId>
             <artifactId>misc-annotators</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <!--<version>3.1</version>-->
+        </dependency>
     </dependencies>
 </project>

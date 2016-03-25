@@ -73,15 +73,15 @@ public class MentionSequenceCrfTrainer extends AbstractCrfTrainer {
         boolean useStateFeature = config.getBoolean("edu.cmu.cs.lti.mention.use_state", true);
 
         try {
-            featureExtractor = new MultiSentenceFeatureExtractor<>(alphabet, config, sentFeatureConfig,
+            featureExtractor = new MultiSentenceFeatureExtractor<>(featureAlphabet, config, sentFeatureConfig,
                     docFeatureConfig, useStateFeature, EventMention.class);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException |
                 IllegalAccessException e) {
             e.printStackTrace();
         }
 
-        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, alphabet,
-                FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec), stepSize);
+        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, featureAlphabet,
+                FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec), false);
 
         logger.info("Training with the following specification: ");
         logger.info("[Sentence Spec]" + sentFeatureSpec);
@@ -122,6 +122,7 @@ public class MentionSequenceCrfTrainer extends AbstractCrfTrainer {
             cachedGold = Pair.of(goldFv, goldSolution);
             newGold = true;
         }
+
 
         boolean newSequenceFeatures = false;
         if (sequenceFeatures == null) {

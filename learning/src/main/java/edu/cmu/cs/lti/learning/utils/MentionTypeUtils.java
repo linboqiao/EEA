@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.utils;
+package edu.cmu.cs.lti.learning.utils;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;

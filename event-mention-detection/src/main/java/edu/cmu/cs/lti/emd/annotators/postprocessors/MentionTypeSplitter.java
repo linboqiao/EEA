@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.emd.annotators.postprocessors;
 
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.emd.utils.MentionTypeUtils;
+import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;

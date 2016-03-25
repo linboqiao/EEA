@@ -1,15 +1,15 @@
 package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
-import edu.cmu.cs.lti.script.type.EventMention;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
+import edu.cmu.cs.lti.learning.model.ClassAlphabet;
+import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,8 +28,6 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
 
     private int lastMentionTreshold = mentionThresholds[mentionThresholds.length - 1];
 
-    private Map<EventMention, StanfordCorenlpSentence> mention2Sentence;
-
     private String documentType = "UNKNOWN";
 
     public DistanceFeatures(Configuration generalConfig, Configuration featureConfig) {
@@ -38,35 +36,37 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void initDocumentWorkspace(JCas context) {
-        mention2Sentence = new HashMap<>();
-        int sentenceId = 0;
-        for (StanfordCorenlpSentence sent : JCasUtil.select(context, StanfordCorenlpSentence.class)) {
-            for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sent)) {
-                mention2Sentence.put(mention, sent);
-            }
-            sent.setIndex(sentenceId++);
-        }
         documentType = getDocumentType(context);
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures,
-                        EventMention firstAnno, EventMention secondAnno) {
-//        thresholdedTokenDistance(rawFeatures, tokensInBetween);
-        thresholdedSentenceDistance(rawFeatures, firstAnno, secondAnno);
-        thresholdedMentionDistance(documentContext, rawFeatures, firstAnno, secondAnno);
+    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
+            candidates, int firstIndex, int secondIndex) {
+        MentionCandidate firstCandidate = candidates.get(firstIndex);
+        MentionCandidate secondCandidate = candidates.get(secondIndex);
+        thresholdedSentenceDistance(featuresNoLabel, firstCandidate, secondCandidate);
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures, EventMention secondAnno) {
-        // Currently nothing to say about the distance between root and a mention. Probably can have features about
-        // what is the closest mention it should refer to.
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                        List<MentionCandidate> candidates, int firstIndex, int secondIndex) {
+        thresholdedMentionDistance(featuresNeedLabel, candidates, firstIndex, secondIndex);
     }
 
-    private void thresholdedSentenceDistance(TObjectDoubleMap<String> rawFeatures, EventMention firstAnno,
-                                             EventMention secondAnno) {
-        StanfordCorenlpSentence firstSentence = mention2Sentence.get(firstAnno);
-        StanfordCorenlpSentence secondSentence = mention2Sentence.get(secondAnno);
+    @Override
+    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
+            secondCandidate) {
+    }
+
+    @Override
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate
+            secondCandidate) {
+    }
+
+    private void thresholdedSentenceDistance(TObjectDoubleMap<String> rawFeatures, MentionCandidate firstCandidate,
+                                             MentionCandidate secondCandidate) {
+        Sentence firstSentence = firstCandidate.getContainedSentence();
+        Sentence secondSentence = secondCandidate.getContainedSentence();
 
         if (firstSentence.getIndex() == 0 && secondSentence.getIndex() == 1) {
             addBoolean(rawFeatures, "TitleAndFirstSent");
@@ -86,10 +86,24 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
                 lastSentenceThreshold), 1);
     }
 
-    private void thresholdedMentionDistance(JCas documentContext, TObjectDoubleMap<String> rawFeatures,
-                                            EventMention firstAnno, EventMention secondAnno) {
-        int mentionInBetween = JCasUtil.selectBetween(documentContext, EventMention.class, firstAnno, secondAnno)
-                .size();
+    private void thresholdedMentionDistance(TObjectDoubleMap<String> rawFeatures, List<MentionCandidate> candidates,
+                                            int firstIndex, int secondIndex) {
+        int left, right;
+        if (firstIndex < secondIndex) {
+            left = firstIndex;
+            right = secondIndex;
+        } else {
+            left = secondIndex;
+            right = firstIndex;
+        }
+
+        int mentionInBetween = 0;
+        for (int i = left + 1; i < right; i++) {
+            if (!candidates.get(i).getMentionType().equals(ClassAlphabet.noneOfTheAboveClass)) {
+                mentionInBetween++;
+            }
+        }
+
         for (int mentionThreshold : mentionThresholds) {
             if (mentionInBetween <= mentionThreshold) {
                 rawFeatures.put(FeatureUtils.formatFeatureName("MentionDistance",

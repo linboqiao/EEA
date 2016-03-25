@@ -3,9 +3,9 @@ package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
-import edu.cmu.cs.lti.script.type.EventMention;
+import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.StanfordEntityMention;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.SimilarityUtils;
@@ -15,6 +15,7 @@ import org.apache.uima.jcas.JCas;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,7 +25,7 @@ import java.util.Collection;
  * @author Zhengzhong Liu
  */
 public class SurroundingEntityPairFeatures extends AbstractMentionPairFeatures {
-    private ArrayListMultimap<EventMention, StanfordEntityMention> mention2SurroundWnEntities;
+    private ArrayListMultimap<Sentence, StanfordEntityMention> mentionsBySentence;
 
     public SurroundingEntityPairFeatures(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
@@ -32,27 +33,44 @@ public class SurroundingEntityPairFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void initDocumentWorkspace(JCas context) {
-        mention2SurroundWnEntities = ArrayListMultimap.create();
+        mentionsBySentence = ArrayListMultimap.create();
         for (StanfordCorenlpSentence sentence : JCasUtil.select(context, StanfordCorenlpSentence.class)) {
             Collection<StanfordEntityMention> entities = JCasUtil.selectCovered(StanfordEntityMention.class, sentence);
-            for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sentence)) {
-                mention2SurroundWnEntities.putAll(mention, entities);
-            }
+            mentionsBySentence.putAll(sentence, entities);
         }
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures, EventMention firstAnno,
-                        EventMention secondAnno) {
-        StanfordEntityMention firstCloestMention = closestEntityMention(firstAnno);
-        StanfordEntityMention secondCloestMention = closestEntityMention(secondAnno);
+    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
+            candidates, int firstIndex, int secondIndex) {
+        MentionCandidate firstCandidate = candidates.get(firstIndex);
+        MentionCandidate secondCandidate = candidates.get(secondIndex);
 
-        closestTypePairFeature(rawFeatures, firstCloestMention, secondCloestMention);
-        closestSurfacePairFeature(rawFeatures, firstCloestMention, secondCloestMention);
+        StanfordEntityMention firstCloestMention = closestEntityMention(firstCandidate);
+        StanfordEntityMention secondCloestMention = closestEntityMention(secondCandidate);
+
+        closestTypePairFeature(featuresNoLabel, firstCloestMention, secondCloestMention);
+        closestSurfacePairFeature(featuresNoLabel, firstCloestMention, secondCloestMention);
+
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures, EventMention secondAnno) {
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                        List<MentionCandidate> candidates, int firstIndex, int
+
+            secondIndex) {
+
+    }
+
+    @Override
+    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
+            secondCandidate) {
+
+    }
+
+    @Override
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel,
+                                        MentionCandidate secondCandidate) {
 
     }
 
@@ -97,12 +115,12 @@ public class SurroundingEntityPairFeatures extends AbstractMentionPairFeatures {
         return type;
     }
 
-    private StanfordEntityMention closestEntityMention(EventMention eventMention) {
+    private StanfordEntityMention closestEntityMention(MentionCandidate candidate) {
         int minDistance = Integer.MAX_VALUE;
         StanfordEntityMention closestEntityMention = null;
 
-        for (StanfordEntityMention entityMention : mention2SurroundWnEntities.get(eventMention)) {
-            int distance = JCasUtil.selectBetween(StanfordCorenlpToken.class, entityMention, eventMention).size();
+        for (StanfordEntityMention entityMention : mentionsBySentence.get(candidate.getContainedSentence())) {
+            int distance = Math.abs(entityMention.getHead().getIndex() - candidate.getHeadWord().getIndex());
             if (distance < minDistance) {
                 closestEntityMention = entityMention;
             }

@@ -29,17 +29,16 @@ public class ChineseEventMentionPipeline {
         String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
 
         Configuration kbpConfig = new Configuration(argv[0]);
-        String trainingWorkingDir = kbpConfig.get("edu.cmu.cs.lti.training.working.dir");
-        String testingWorkingDir = kbpConfig.get("edu.cmu.cs.lti.test.working.dir");
-        String modelOutputDir = kbpConfig.get("edu.cmu.cs.lti.model.output.dir");
-        String modelPath = kbpConfig.get("edu.cmu.cs.lti.model.dir");
 
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(typeSystemName);
 
         CollectionReaderDescription trainReader = getEreReader(typeSystemDescription,
                 kbpConfig.get("edu.cmu.cs.lti.training.source_text.dir"),
-                kbpConfig.get("edu.cmu.cs.lti.training.ere.annotation"));
+                kbpConfig.get("edu.cmu.cs.lti.training.ere.annotation"),
+                kbpConfig.get("edu.cmu.cs.lti.data.ere.suffix"),
+                kbpConfig.get("edu.cmu.cs.lti.data.source.suffix")
+                );
 
         AnalysisEngineDescription classPrinter = AnalysisEngineFactory.createEngineDescription(
                 EventMentionTypeClassPrinter.class, typeSystemDescription,
@@ -52,14 +51,12 @@ public class ChineseEventMentionPipeline {
         SimplePipeline.runPipeline(trainReader, classPrinter);
 
         // Now prepare the real pipeline.
-        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, modelPath, modelOutputDir,
-                trainingWorkingDir, testingWorkingDir);
+        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
         boolean skipTypeTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
         boolean skipLv2TypeTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.lv2.skiptrain", false);
         boolean skipRealisTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
         boolean skipCorefTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
-
 
         boolean skipLv1Test = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
         boolean skipLv2Test = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.lv2.skiptest", false);
@@ -68,16 +65,17 @@ public class ChineseEventMentionPipeline {
         boolean skipJointTest = kbpConfig.getBoolean("edu.cmu.cs.lti.joint.skiptest", false);
 
         pipeline.prepare(kbpConfig, trainReader, null /*test data not exist now.*/);
-//        pipeline.crossValidation(kbpConfig);
+        pipeline.crossValidation(kbpConfig);
     }
 
     private static CollectionReaderDescription getEreReader(TypeSystemDescription typeSystemDescription, String
-            sourceDir, String annotationDir) throws ResourceInitializationException {
+            sourceDir, String annotationDir, String ereSuffix, String sourceSuffix) throws
+            ResourceInitializationException {
         return CollectionReaderFactory.createReaderDescription(EreCorpusReader.class, typeSystemDescription,
                 EreCorpusReader.PARAM_ERE_ANNOTATION_DIR, annotationDir,
                 EreCorpusReader.PARAM_SOURCE_TEXT_DIR, sourceDir,
-                EreCorpusReader.PARAM_ERE_ANNOTATION_EXT, "rich_ere.xml",
-                EreCorpusReader.PARAM_SOURCE_EXT, "mp.txt",
+                EreCorpusReader.PARAM_ERE_ANNOTATION_EXT, ereSuffix,
+                EreCorpusReader.PARAM_SOURCE_EXT, sourceSuffix,
                 EreCorpusReader.PARAM_LANGUAGE, "zh");
     }
 }

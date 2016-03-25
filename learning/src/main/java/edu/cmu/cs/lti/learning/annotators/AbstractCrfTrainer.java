@@ -36,7 +36,7 @@ public abstract class AbstractCrfTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_CONFIGURATION_FILE)
     protected Configuration config;
 
-    protected HashAlphabet alphabet;
+    protected HashAlphabet featureAlphabet;
 
     protected ClassAlphabet classAlphabet;
 
@@ -53,7 +53,6 @@ public abstract class AbstractCrfTrainer extends AbstractLoggingAnnotator {
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
-        logger.info("Preparing the token level type trainer ...");
 
         int alphabetBits = config.getInt("edu.cmu.cs.lti.mention.feature.alphabet_bits", 24);
         int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
@@ -77,10 +76,10 @@ public abstract class AbstractCrfTrainer extends AbstractLoggingAnnotator {
 
         classAlphabet = initClassAlphabet(classes);
 
-        alphabet = new HashAlphabet(alphabetBits, readableModel);
+        featureAlphabet = new HashAlphabet(alphabetBits, readableModel);
         trainingStats = new TrainingStats(printLossOverPreviousN);
 
-        decoder = new ViterbiDecoder(alphabet, classAlphabet);
+        decoder = new ViterbiDecoder(featureAlphabet, classAlphabet);
 
         logger.info("Initializing gold cacher with " + cacheDir.getAbsolutePath());
     }

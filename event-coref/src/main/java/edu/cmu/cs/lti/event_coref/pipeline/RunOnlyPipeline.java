@@ -45,8 +45,7 @@ public class RunOnlyPipeline {
         String modelPath = kbpConfig.get("edu.cmu.cs.lti.model.dir");
 
         // Now prepare the real pipeline.
-        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, modelPath, modelOutputDir,
-                null, workingDir);
+        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
         boolean skipLv1Test = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
         boolean skipLv2Test = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.lv2.skiptest", false);

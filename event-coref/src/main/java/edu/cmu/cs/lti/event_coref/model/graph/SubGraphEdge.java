@@ -1,7 +1,8 @@
 package edu.cmu.cs.lti.event_coref.model.graph;
 
-import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
+import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
+import edu.cmu.cs.lti.learning.model.MentionCandidate;
 
 import java.util.Comparator;
 
@@ -13,47 +14,56 @@ import java.util.Comparator;
  * @author Zhengzhong Liu
  */
 public class SubGraphEdge {
-    private MentionGraphEdge.EdgeType edgeType;
+    private EdgeType edgeType;
 
-    private final MentionGraphEdge superGraphEdge;
+    private final LabelledMentionGraphEdge superGraphEdge;
 
-    public SubGraphEdge(MentionGraphEdge edge, MentionGraphEdge.EdgeType edgeType) {
+    public SubGraphEdge(LabelledMentionGraphEdge edge, EdgeType edgeType) {
         this.edgeType = edgeType;
         this.superGraphEdge = edge;
     }
 
-    public MentionGraphEdge.EdgeType getEdgeType() {
+    public EdgeType getEdgeType() {
         return edgeType;
     }
 
-    public void setEdgeType(MentionGraphEdge.EdgeType edgeType) {
+    public void setEdgeType(EdgeType edgeType) {
         this.edgeType = edgeType;
+    }
+
+    public MentionCandidate.DecodingResult getDepKey() {
+        return superGraphEdge.getDepKey();
+    }
+
+    public MentionCandidate.DecodingResult getGovKey() {
+        return superGraphEdge.getGovKey();
     }
 
     public static final Comparator<SubGraphEdge> subgraphComparator = new Comparator<SubGraphEdge>() {
         @Override
         public int compare(SubGraphEdge o1, SubGraphEdge o2) {
-            return MentionGraphEdge.edgeDepComparator.compare(o1.superGraphEdge, o2.superGraphEdge);
+            return LabelledMentionGraphEdge.edgeDepComparator.compare(o1.superGraphEdge, o2.superGraphEdge);
         }
     };
 
     public int getGov() {
-        return superGraphEdge.govIdx;
+        return superGraphEdge.getGov();
     }
 
     public int getDep() {
-        return superGraphEdge.depIdx;
+        return superGraphEdge.getDep();
     }
 
     public String toString() {
-        return "SubGraphEdge: (" + getGov() + ',' + getDep() + ")" + " [" + edgeType + "]";
+        return String.format("SubGraphEdge: (%d:%s,%d:%s)) [%s]", getGov(), getGovKey().getMentionType(),
+                getDep(), getDepKey().getMentionType(), edgeType);
     }
 
-    public MentionGraphEdge getSuperGraphEdge() {
+    public LabelledMentionGraphEdge getSuperGraphEdge() {
         return superGraphEdge;
     }
 
-    public FeatureVector getEdgeFeatures(PairFeatureExtractor extractor) {
-        return superGraphEdge.getLabelledFeatures(extractor);
+    public FeatureVector getEdgeFeatures() {
+        return superGraphEdge.getFeatureVector();
     }
 }

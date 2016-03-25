@@ -137,15 +137,15 @@ public class FanseFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken
 
     private void fanseArgumentLemma(TObjectDoubleMap<String> features, FanseSemanticRelation relation) {
         addToFeatures(features,
-                FeatureUtils.formatFeatureName("FanseArgumentLemma", relation.getChild().getLemma()), 1);
+                FeatureUtils.formatFeatureName("FanseArgumentLemma", relation.getChildHead().getLemma()), 1);
     }
 
     private void fanseArgumentNer(TObjectDoubleMap<String> features, FanseSemanticRelation relation) {
-        addToFeatures(features, FeatureUtils.formatFeatureName("FanseArgumentNer", relation.getChild().getNerTag()), 1);
+        addToFeatures(features, FeatureUtils.formatFeatureName("FanseArgumentNer", relation.getChildHead().getNerTag()), 1);
     }
 
     private void fanseArgumentWordNetSense(TObjectDoubleMap<String> features, FanseSemanticRelation relation) {
-        Word child = relation.getChild();
+        Word child = relation.getChildHead();
         if (fanseToken2WordnetType.containsKey(child)) {
             addToFeatures(features, FeatureUtils.formatFeatureName("FanseArgumentWordNetSense",
                     fanseToken2WordnetType.get(child)), 1);

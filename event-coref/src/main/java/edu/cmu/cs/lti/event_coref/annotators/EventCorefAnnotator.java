@@ -1,9 +1,9 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
+import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BestFirstLatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.decoding.LatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionNode;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.event_coref.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
@@ -11,6 +11,7 @@ import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtract
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
+import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Event;
@@ -18,6 +19,8 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.utils.Configuration;
+import gnu.trove.map.TIntIntMap;
+import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -70,8 +73,6 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
         super.initialize(context);
         logger.info("Initialize event coreference annotator.");
 
-        boolean useBinaryFeatures = config.getBoolean("edu.cmu.cs.lti.coref.binaryFeature", false);
-
         decoder = new BestFirstLatentTreeDecoder();
 
         String featureSpec;
@@ -96,7 +97,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
             Configuration featureConfig = new FeatureSpecParser(
                     config.get("edu.cmu.cs.lti.feature.pair.package.name")
             ).parseFeatureFunctionSpecs(featureSpec);
-            extractor = new PairFeatureExtractor(featureAlphabet, classAlphabet, useBinaryFeatures, config,
+            extractor = new PairFeatureExtractor(featureAlphabet, classAlphabet, config,
                     featureConfig);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
                 | IllegalAccessException e) {
@@ -117,18 +118,16 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
 //        UimaConvenience.printProcessLog(aJCas, logger);
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
 //        logger.info("Clustering " + allMentions.size() + " mentions.");
+
+        TIntIntMap mention2Candidate = new TIntIntHashMap();
+        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions, mention2Candidate);
+
         extractor.initWorkspace(aJCas);
-        MentionGraph mentionGraph = new MentionGraph(allMentions.size(), useAverage);
-        MentionSubGraph predictedTree = decoder.decode(mentionGraph, weights, extractor, lagrangian, lagrangian);
+        MentionGraph mentionGraph = new MentionGraph(candidates, extractor, useAverage);
+        MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, extractor, lagrangian,
+                lagrangian);
 
-        int i = 0;
-//        for (EventMention mention : allMentions) {
-//            logger.info(i + " " + mention.getCoveredText() + " " + mention.getEventType() + " " + mention
-//                    .getRealisType());
-//            i++;
-//        }
-
-        predictedTree.resolveTree();
+        predictedTree.resolveCoreference();
         int[][] corefChains = predictedTree.getCorefChains();
 
 //        logger.info(predictedTree.toString());
@@ -138,8 +137,8 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
             Map<Span, EventMention> span2Mentions = new HashMap<>();
 
             for (int nodeId : corefChain) {
-                MentionNode node = mentionGraph.getNode(nodeId);
-                EventMention mention = allMentions.get(node.getMentionIndex());
+                int mentionIndex = mentionGraph.getCandidateIndex(nodeId);
+                EventMention mention = allMentions.get(mentionIndex);
                 Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());
                 if (!span2Mentions.containsKey(mentionSpan)) {
                     span2Mentions.put(Span.of(mention.getBegin(), mention.getEnd()), mention);
@@ -160,4 +159,5 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
 
 //        DebugUtils.pause();
     }
+
 }

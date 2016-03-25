@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
+import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.SimilarityUtils;
@@ -27,32 +28,49 @@ public class ArgumentFeatures extends AbstractMentionPairFeatures {
 
     //TODO add entity coreference
 
+    // TODO this feature is very slow right now!
+
     @Override
     public void initDocumentWorkspace(JCas context) {
         for (StanfordEntityMention mention : JCasUtil.select(context, StanfordEntityMention.class)) {
-            for (StanfordCorenlpToken token : JCasUtil.selectCovering(StanfordCorenlpToken.class, mention)) {
+            for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, mention)) {
                 token.setNerTag(mention.getEntityType());
             }
         }
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures, EventMention firstAnno,
-                        EventMention secondAnno) {
-        for (EventMentionArgumentLink firstLink : getArgumentLinks(firstAnno)) {
-            for (EventMentionArgumentLink secondLink : getArgumentLinks(secondAnno)) {
+    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures, List<MentionCandidate> candidates, int firstIndex, int secondIndex) {
+        MentionCandidate firstCandidate = candidates.get(firstIndex);
+        MentionCandidate secondCandidate = candidates.get(secondIndex);
+
+        for (SemanticRelation firstLink : getArgumentLinks(firstCandidate.getHeadWord())) {
+            for (SemanticRelation secondLink : getArgumentLinks(secondCandidate.getHeadWord())) {
                 extractLinkFeatures(documentContext, rawFeatures, firstLink, secondLink);
             }
         }
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures, EventMention secondAnno) {
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel, List<MentionCandidate> candidates, int firstIndex, int
+
+            secondIndex) {
+
+    }
+
+    @Override
+    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
+            secondCandidate) {
+
+    }
+
+    @Override
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> rawFeatures, MentionCandidate secondCandidate) {
 
     }
 
     private void extractLinkFeatures(JCas documentContext, TObjectDoubleMap<String> rawFeatures,
-                                     EventMentionArgumentLink firstLink, EventMentionArgumentLink secondLink) {
+                                     SemanticRelation firstLink, SemanticRelation secondLink) {
         addWhenEqualNotNull(rawFeatures, "BothHaveFrameRole", firstLink.getFrameElementName(), secondLink
                 .getFrameElementName());
 
@@ -66,8 +84,8 @@ public class ArgumentFeatures extends AbstractMentionPairFeatures {
                 .getPropbankRoleName());
 
 
-        EntityMention argument1 = firstLink.getArgument();
-        EntityMention argument2 = secondLink.getArgument();
+        ComponentAnnotation argument1 = firstLink.getChildSpan();
+        ComponentAnnotation argument2 = secondLink.getChildSpan();
 
         String argumentText1 = argument1.getCoveredText();
         String argumentText2 = argument2.getCoveredText();
@@ -93,7 +111,7 @@ public class ArgumentFeatures extends AbstractMentionPairFeatures {
                     addBoolean(rawFeatures, FeatureUtils.formatFeatureName("SameNerForRole", rolePair));
                 }
                 addBoolean(rawFeatures, FeatureUtils.formatFeatureName("RoleNerPair", FeatureUtils.sortedJoin
-                                (roleName1 + "_" + ner1, roleName2 + "_" + ner2)
+                        (roleName1 + "_" + ner1, roleName2 + "_" + ner2)
                 ));
             }
         }
@@ -113,31 +131,30 @@ public class ArgumentFeatures extends AbstractMentionPairFeatures {
         }
     }
 
-    private List<EventMentionArgumentLink> getArgumentLinks(EventMention mention) {
-        FSList firstAnnoFs = mention.getAgentLinks();
+    private List<SemanticRelation> getArgumentLinks(Word token) {
+        FSList firstAnnoFs = token.getChildSemanticRelations();
         if (firstAnnoFs != null) {
-            return new ArrayList<>(FSCollectionFactory.create(firstAnnoFs, EventMentionArgumentLink.class));
+            return new ArrayList<>(FSCollectionFactory.create(firstAnnoFs, SemanticRelation.class));
         } else {
             return new ArrayList<>();
         }
     }
 
-    private String getArgumentRoleName(EventMentionArgumentLink link) {
+    private String getArgumentRoleName(SemanticRelation link) {
         String roleName = link.getFrameElementName();
         if (roleName == null) {
             roleName = link.getPropbankRoleName();
         }
-
         return roleName;
     }
 
-    private String getArgumentNer(EntityMention argument1) {
-        String ner1 = null;
-        for (StanfordCorenlpToken token : JCasUtil.selectCovering(StanfordCorenlpToken.class, argument1)) {
+    private String getArgumentNer(ComponentAnnotation argument) {
+        String ner = null;
+        for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, argument)) {
             if (token.getNerTag() != null) {
-                ner1 = token.getNerTag();
+                ner = token.getNerTag();
             }
         }
-        return ner1;
+        return ner;
     }
 }

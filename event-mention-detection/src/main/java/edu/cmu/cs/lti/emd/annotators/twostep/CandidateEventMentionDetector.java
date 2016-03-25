@@ -256,7 +256,7 @@ public class CandidateEventMentionDetector extends AbstractLoggingAnnotator {
                         FanseSemanticRelation.class)) {
                     String argX = relation.getSemanticAnnotation().replace("ARG", "");
 
-                    Word role = relation.getChild();
+                    Word role = relation.getChildHead();
                     CandidateEventMentionArgument argument = new CandidateEventMentionArgument(aJCas, role.getBegin()
                             , role.getEnd());
                     UimaAnnotationUtils.finishAnnotation(argument, COMPONENT_ID, 0, aJCas);

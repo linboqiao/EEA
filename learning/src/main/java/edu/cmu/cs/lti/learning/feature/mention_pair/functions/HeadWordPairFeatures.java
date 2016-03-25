@@ -1,12 +1,13 @@
 package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
-import edu.cmu.cs.lti.script.type.EventMention;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
+import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.uima.jcas.JCas;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,30 +25,37 @@ public class HeadWordPairFeatures extends AbstractMentionPairFeatures {
 
     }
 
-    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures,
-                        EventMention firstAnno, EventMention secondAnno) {
-        String firstLemma = getLemma(firstAnno);
-        String secondLemma = getLemma(secondAnno);
+    @Override
+    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate> candidates, int firstIndex, int secondIndex) {
+        MentionCandidate firstCandidate = candidates.get(firstIndex);
+        MentionCandidate secondCandidate = candidates.get(secondIndex);
 
-        lemmaPairFeature(rawFeatures, firstLemma, secondLemma);
-        lemmaMatchFeature(rawFeatures, firstLemma, secondLemma);
+        Word firstHead = firstCandidate.getHeadWord();
+        Word secondHead = secondCandidate.getHeadWord();
+
+        String firstLemma = firstHead.getLemma().toLowerCase();
+        String secondLemma = secondHead.getLemma().toLowerCase();
+
+        lemmaPairFeature(featuresNoLabel, firstLemma, secondLemma);
+        lemmaMatchFeature(featuresNoLabel, firstLemma, secondLemma);
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures, EventMention secondAnno) {
-// Disable because there are no much we can do to derive whether a mention is coreferent with something by looking at
-// its lemma.
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel, List<MentionCandidate> candidates, int firstIndex, int
+
+            secondIndex) {
+
     }
 
-    private String getLemma(EventMention mention) {
-        StanfordCorenlpToken head = UimaNlpUtils.findHeadFromAnnotation(mention);
+    @Override
+    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel,
+                        MentionCandidate secondCandidate) {
 
-        if (head == null) {
-            return mention.getCoveredText().toLowerCase();
-        }
+    }
 
-        String lemma = head.getLemma();
-        return lemma.toLowerCase();
+    @Override
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate secondCandidate) {
+
     }
 
     private void lemmaPairFeature(TObjectDoubleMap<String> rawFeatures, String firstLemma, String secondLemma) {

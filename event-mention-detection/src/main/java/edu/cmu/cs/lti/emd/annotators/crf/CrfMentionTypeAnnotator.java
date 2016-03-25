@@ -16,7 +16,9 @@ import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -124,7 +126,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        UimaConvenience.printProcessLog(aJCas, logger, true);
+        UimaConvenience.printProcessLog(aJCas, logger, true);
         sentenceExtractor.initWorkspace(aJCas);
 
 //        logger.info(UimaConvenience.getShortDocumentName(aJCas));
@@ -132,7 +134,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             sentenceExtractor.resetWorkspace(aJCas, sentence.getBegin(), sentence.getEnd());
 
-//            logger.info(sentence.getCoveredText());
+            logger.debug(sentence.getCoveredText());
 
             List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
 
@@ -140,6 +142,8 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
             decoder.decode(sentenceExtractor, weightVector, tokens.size(), lagrangian, lagrangian, true);
 
             SequenceSolution prediction = decoder.getDecodedPrediction();
+
+            logger.debug(prediction.toString());
 
             List<Triplet<Integer, Integer, String>> mentionChunks = convertTypeTagsToChunks(prediction);
 
@@ -153,6 +157,8 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
                         .getEnd(), COMPONENT_ID, 0, aJCas);
             }
         }
+
+        DebugUtils.pause(logger);
     }
 
     private List<Triplet<Integer, Integer, String>> convertTypeTagsToChunks(SequenceSolution solution) {

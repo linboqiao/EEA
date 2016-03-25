@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.annotators.structure;
+package edu.cmu.cs.lti.event_coref.annotators.prepare;
 
 import edu.cmu.cs.lti.script.model.SemaforConstants;
 import edu.cmu.cs.lti.script.type.*;
@@ -12,8 +12,6 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
 import org.javatuples.Pair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -22,25 +20,20 @@ import java.util.*;
  *
  * @author Zhengzhong Liu
  */
-public class ArgumentExtractor extends AbstractLoggingAnnotator {
-    public static final String ANNOTATOR_COMPONENT_ID = ArgumentExtractor.class.getSimpleName();
+public class EnglishSrlArgumentExtractor extends AbstractLoggingAnnotator {
+    public static final String ANNOTATOR_COMPONENT_ID = EnglishSrlArgumentExtractor.class.getSimpleName();
 
     TokenAlignmentHelper helper = new TokenAlignmentHelper();
 
-    Logger logger = LoggerFactory.getLogger(ArgumentExtractor.class.getName());
-
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        UimaConvenience.printProcessLog(aJCas, logger);
-
         helper.loadStanford2Fanse(aJCas);
         helper.loadFanse2Stanford(aJCas);
 
         Map<SemaforLabel, Pair<String, Map<String, SemaforLabel>>> semaforArguments = getSemaforArguments(aJCas);
 
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
-            StanfordCorenlpToken headWord = UimaNlpUtils.findHeadFromAnnotation(mention);
-            mention.setHeadWord(headWord);
+            StanfordCorenlpToken headWord = (StanfordCorenlpToken) mention.getHeadWord();
 
             List<SemaforLabel> coveredSemaforLabel = JCasUtil.selectCovered(SemaforLabel.class, headWord);
             Map<StanfordCorenlpToken, String> semafordHeadWord2Role = new HashMap<>();
@@ -68,7 +61,7 @@ public class ArgumentExtractor extends AbstractLoggingAnnotator {
             if (childSemanticRelations != null) {
                 for (FanseSemanticRelation childRelation : JCasUtil.select(childSemanticRelations,
                         FanseSemanticRelation.class)) {
-                    FanseToken fanseChild = (FanseToken) childRelation.getChild();
+                    FanseToken fanseChild = (FanseToken) childRelation.getChildHead();
                     StanfordCorenlpToken argumentHead = helper.getStanfordToken(fanseChild);
                     if (argumentHead != null) {
                         fanseHeadWord2Role.put(argumentHead, childRelation.getSemanticAnnotation());

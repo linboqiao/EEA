@@ -7,7 +7,6 @@ import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
-import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -65,7 +64,7 @@ public class DDLatentTreeCrfDecoder {
     public Pair<SequenceSolution, MentionSubGraph> decode(ChainFeatureExtractor mentionFeatureExtractor,
                                                           GraphWeightVector mentionWeights,
                                                           MentionGraph mentionGraph,
-                                                          List<EventMention> allMentions,
+                                                          List<MentionCandidate> allCandidates,
                                                           PairFeatureExtractor corefFeatureExtractor,
                                                           GraphWeightVector corefWeights,
                                                           boolean useAverage) {
@@ -73,7 +72,7 @@ public class DDLatentTreeCrfDecoder {
         SequenceSolution typeSolution = null;
         decodingCounter++;
 
-        int sequenceLength = allMentions.size();
+        int sequenceLength = allCandidates.size();
 
 //        logger.info("Decoding a sentence of length " + sequenceLength);
 
@@ -89,9 +88,9 @@ public class DDLatentTreeCrfDecoder {
             viterbiDecoder.decode(mentionFeatureExtractor, mentionWeights, sequenceLength, u, v, useAverage);
 
             // NOTE: we annotate predicted type into JCas here.
-            annotatePredictedTypes(viterbiDecoder.getDecodedPrediction(), allMentions);
+            annotatePredictedTypes(viterbiDecoder.getDecodedPrediction(), allCandidates);
 
-            subGraph = latentTreeDecoder.decode(mentionGraph, corefWeights, corefFeatureExtractor, u, v);
+            subGraph = latentTreeDecoder.decode(mentionGraph, allCandidates, corefWeights, corefFeatureExtractor, u, v);
             typeSolution = viterbiDecoder.getDecodedPrediction();
 
 //            logger.debug(typeSolution.showBestBackPointerMap());
@@ -123,11 +122,11 @@ public class DDLatentTreeCrfDecoder {
         return Pair.of(typeSolution, subGraph);
     }
 
-    private void annotatePredictedTypes(SequenceSolution prediction, Collection<EventMention> predictedMentions) {
+    private void annotatePredictedTypes(SequenceSolution prediction, Collection<MentionCandidate> predictedMentions) {
         int index = 0;
-        for (EventMention mention : predictedMentions) {
+        for (MentionCandidate mention : predictedMentions) {
             String className = typeClassAlphabet.getClassName(prediction.getClassAt(index));
-            mention.setEventType(className);
+            mention.setMentionType(className);
             index++;
         }
     }
@@ -143,7 +142,7 @@ public class DDLatentTreeCrfDecoder {
     }
 
     private boolean matches(SequenceSolution typeSolution, MentionSubGraph corefTree) {
-        corefTree.resolveTree();
+        corefTree.resolveCoreference();
         int[][] corefChains = corefTree.getCorefChains();
         int[][] corefAdjacentList = chainAsAdjacentList(corefChains, typeSolution.getSequenceLength());
 
@@ -162,13 +161,6 @@ public class DDLatentTreeCrfDecoder {
                     y_jt += type_j == t ? 1 : 0;
 
                     int z_ij = corefAdjacentList[i][j];
-
-//                    for (int allowedForJ : allowedCorefs.get(t)) {
-////                        logger.debug("Allowed first type can be " + typeClassAlphabet.getClassName(allowedForJ));
-//                        int value = typeSolution.getClassAt(i) == allowedForJ ? 1 : 0;
-////                        logger.debug("Predicted value for this type is " + value);
-//                        y_it_sum += value;
-//                    }
 
                     // This also means :
                     // y_it = 1, y_jt = 0 or reverse, and z_ij = 1

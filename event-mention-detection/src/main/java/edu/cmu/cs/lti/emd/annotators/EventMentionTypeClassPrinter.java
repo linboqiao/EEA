@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.emd.annotators;
 
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
-import edu.cmu.cs.lti.emd.utils.MentionTypeUtils;
+import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.script.type.EventMention;

@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.emd.annotators.crf;
 
-import edu.cmu.cs.lti.emd.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.learning.annotators.AbstractCrfTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
@@ -12,6 +11,7 @@ import edu.cmu.cs.lti.learning.model.SequenceSolution;
 import edu.cmu.cs.lti.learning.training.AveragePerceptronTrainer;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
+import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
@@ -24,6 +24,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -46,6 +47,11 @@ public class MentionTypeCrfTrainer extends AbstractCrfTrainer {
     //TODO rename this class
     public static final String MODEL_NAME = "crfModel";
 
+    public static final String PARAM_USE_PA_UPDATE = "usePaUpdate";
+
+    @ConfigurationParameter(name = PARAM_USE_PA_UPDATE)
+    private boolean usePaUpdate;
+
     protected static MultiKeyDiskCacher<ArrayList<TIntObjectMap<FeatureVector[]>>> featureCacher;
 
     protected static MultiKeyDiskCacher<ArrayList<Pair<GraphFeatureVector, SequenceSolution>>> goldCacher;
@@ -56,6 +62,8 @@ public class MentionTypeCrfTrainer extends AbstractCrfTrainer {
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         logger.info("Preparing the token level type trainer ...");
         super.initialize(aContext);
+
+        logger.info("Using PA update : " + usePaUpdate);
 
         boolean discardAfter = config.getBoolean("edu.cmu.cs.lti.coref.mention.cache.discard_after", true);
         long weightLimit = config.getLong("edu.cmu.cs.lti.mention.cache.document.num", 1000);
@@ -79,17 +87,17 @@ public class MentionTypeCrfTrainer extends AbstractCrfTrainer {
                 config.get("edu.cmu.cs.lti.feature.document.package.name")
         ).parseFeatureFunctionSpecs(docFeatureSpec);
 
-
         try {
-            featureExtractor = new SentenceFeatureExtractor(alphabet, config, sentFeatureConfig, docFeatureConfig,
+            featureExtractor = new SentenceFeatureExtractor(featureAlphabet, config, sentFeatureConfig,
+                    docFeatureConfig,
                     false);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
                 | IllegalAccessException e) {
             e.printStackTrace();
         }
 
-        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, alphabet,
-                FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec), stepSize);
+        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, featureAlphabet,
+                FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec), usePaUpdate);
 
         logger.info("Training with the following specification: ");
         logger.info("[Sentence Spec]" + sentFeatureSpec);
@@ -129,6 +137,14 @@ public class MentionTypeCrfTrainer extends AbstractCrfTrainer {
                 }
             }
 
+//            StringBuilder sb = new StringBuilder();
+//            int tokenId = 0;
+//            for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence)) {
+//                sb.append(tokenId++).append(": ").append(token.getCoveredText()).append(" ");
+//            }
+//
+//            logger.debug(sb.toString());
+
             if (mentions.size() == 0) {
                 // TODO what if we also train empty type sentences?
                 continue;
@@ -147,6 +163,7 @@ public class MentionTypeCrfTrainer extends AbstractCrfTrainer {
                 goldToCache.add(Pair.of(goldFv, goldSolution));
             }
 
+
             TIntObjectMap<FeatureVector[]> sentenceFeatures;
             if (documentCacheFeatures != null) {
                 sentenceFeatures = documentCacheFeatures.get(sentenceId);
@@ -156,6 +173,8 @@ public class MentionTypeCrfTrainer extends AbstractCrfTrainer {
 
             double loss = trainer.trainNext(goldSolution, goldFv, featureExtractor, dummyLagrangian, dummyLagrangian,
                     sentenceFeatures);
+
+
             trainingStats.addLoss(logger, loss);
             sentenceId++;
 

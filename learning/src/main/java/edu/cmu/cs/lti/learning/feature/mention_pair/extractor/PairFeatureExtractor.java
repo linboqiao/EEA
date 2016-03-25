@@ -3,13 +3,11 @@ package edu.cmu.cs.lti.learning.feature.mention_pair.extractor;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.mention_pair.functions.AbstractMentionPairFeatures;
 import edu.cmu.cs.lti.learning.model.*;
-import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
-import gnu.trove.map.hash.TObjectDoubleHashMap;
-import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -22,12 +20,10 @@ import java.util.List;
  *
  * @author Zhengzhong Liu
  */
-public class PairFeatureExtractor {
-    // TODO remove dependency of EventMention here.
+public class PairFeatureExtractor implements Serializable {
+    private static final long serialVersionUID = -1278823150356335817L;
 
     private List<AbstractMentionPairFeatures> featureFunctions = new ArrayList<>();
-
-    private boolean useBinary;
 
     private final ClassAlphabet classAlphabet;
 
@@ -35,14 +31,11 @@ public class PairFeatureExtractor {
 
     private JCas context;
 
-    private List<EventMention> mentions;
-
     // TODO Extractor is highly depended on event mentions now. let's what can be done
-    public PairFeatureExtractor(FeatureAlphabet featureAlphabet, ClassAlphabet classAlphabet, boolean useBinary,
+    public PairFeatureExtractor(FeatureAlphabet featureAlphabet, ClassAlphabet classAlphabet,
                                 Configuration generalConfig, Configuration featureConfig)
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
-        this.useBinary = useBinary;
         this.featureAlphabet = featureAlphabet;
         this.classAlphabet = classAlphabet;
         String featureFunctionPackage = featureConfig.get(FeatureSpecParser.FEATURE_FUNCTION_PACKAGE_KEY);
@@ -59,55 +52,67 @@ public class PairFeatureExtractor {
             ff.initDocumentWorkspace(context);
         }
         this.context = context;
-        this.mentions = new ArrayList<>(JCasUtil.select(context, EventMention.class));
     }
 
     public FeatureVector newFeatureVector() {
-        return useBinary ? new BinaryHashFeatureVector(featureAlphabet) : new RealValueHashFeatureVector
-                (featureAlphabet);
+        return new RealValueHashFeatureVector(featureAlphabet);
     }
 
     public GraphFeatureVector newGraphFeatureVector() {
-        return new GraphFeatureVector(classAlphabet, featureAlphabet, useBinary);
+        return new GraphFeatureVector(classAlphabet, featureAlphabet);
     }
 
     /**
-     * Extract features from one mention only when the other is deliberately omitted, for example, the other mention
-     * is a virtual root.
+     * Extract label agnostic features from one mention only when the other is deliberately omitted, for example, the
+     * other mention is a virtual root.
      *
-     * @param mentionId The mention id to extract from.
+     * @param mentionCandidate The mention to extract from.
      * @return Feature vector of this mention against the other
      */
-    public FeatureVector extract(int mentionId) {
-        FeatureVector featureVector = newFeatureVector();
-        TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
-        featureFunctions.forEach(ff -> ff.extract(context, rawFeatures, mentions.get(mentionId)));
-
-        rawFeatures.forEachEntry((featureName, featureValue) -> {
-            featureVector.addFeature(featureName, featureValue);
-            return true;
+    public void extract(MentionCandidate mentionCandidate, TObjectDoubleMap<String> rawFeaturesNoLabel) {
+        featureFunctions.forEach(ff -> {
+            ff.extract(context, rawFeaturesNoLabel, mentionCandidate);
         });
-
-        return featureVector;
     }
 
     /**
-     * Extract features for the mention pair.
+     * Extract label agnostic features from one mention only when the other is deliberately omitted, for example, the
+     * other mention is a virtual root.
      *
-     * @param firstId  The first mention to extract from.
-     * @param secondId The second mention to extract from.
+     * @param mentionCandidate The mention to extract from.
      * @return Feature vector of this mention against the other
      */
-    public FeatureVector extract(int firstId, int secondId) {
-        FeatureVector featureVector = newFeatureVector();
-        TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
-        featureFunctions.forEach(ff -> ff.extract(context, rawFeatures, mentions.get(firstId), mentions.get(secondId)));
-
-        rawFeatures.forEachEntry((featureName, featureValue) -> {
-            featureVector.addFeature(featureName, featureValue);
-            return true;
+    public void extractCandidateRelated(MentionCandidate mentionCandidate, TObjectDoubleMap<String>
+            rawFeaturesNeedLabel) {
+        featureFunctions.forEach(ff -> {
+            ff.extractCandidateRelated(context, rawFeaturesNeedLabel, mentionCandidate);
         });
+    }
 
-        return featureVector;
+
+    /**
+     * Extract label agnostic features for the mention pair.
+     *
+     * @param candidates
+     * @param firstIndex
+     * @param secondIndex @return Feature vector of this mention against the other
+     */
+    public void extract(List<MentionCandidate> candidates, int firstIndex, int secondIndex, TObjectDoubleMap<String>
+            rawFeaturesNoLabel) {
+        featureFunctions.forEach(ff -> {
+            ff.extract(context, rawFeaturesNoLabel, candidates, firstIndex, secondIndex);
+        });
+    }
+
+    /**
+     * Extract label dependent features for the mention pair.
+     *
+     * @param candidates@return Feature vector of this mention against the other
+     */
+    public void extractCandidateRelated(List<MentionCandidate> candidates, int firstIndex, int secondIndex,
+                                        TObjectDoubleMap<String> rawFeaturesNeedLabel) {
+        featureFunctions.forEach(ff -> {
+            ff.extractCandidateRelated(context, rawFeaturesNeedLabel, candidates, firstIndex, secondIndex);
+        });
     }
 }

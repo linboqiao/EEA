@@ -1,15 +1,16 @@
 package edu.cmu.cs.lti.event_coref.train;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.SetMultimap;
+import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BestFirstLatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.decoding.LatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
-import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionRelation;
@@ -19,17 +20,23 @@ import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
 import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;
 import gnu.trove.iterator.TIntObjectIterator;
+import gnu.trove.map.TIntIntMap;
+import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.javatuples.Pair;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,7 +64,8 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
     // The resulting weights.
     private static GraphWeightVector weights;
 
-    private DummyCubicLagrangian dummyLagrangian = new DummyCubicLagrangian();
+    private ClassAlphabet classAlphabet;
+    private HashAlphabet featureAlphabet;
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
@@ -66,7 +74,6 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         int alphabetBits = config.getInt("edu.cmu.cs.lti.coref.feature.alphabet_bits", 22);
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.coref.readableModel", false);
-        boolean useBinaryFeatures = config.getBoolean("edu.cmu.cs.lti.coref.binaryFeature", false);
         boolean discardAfter = config.getBoolean("edu.cmu.cs.lti.coref.cache.discard_after", true);
         long weightLimit = config.getLong("edu.cmu.cs.lti.coref.weightlimit", 1250000);
 
@@ -79,12 +86,12 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
             e.printStackTrace();
         }
 
-        ClassAlphabet classAlphabet = new ClassAlphabet();
+        classAlphabet = new ClassAlphabet();
         for (EdgeType edgeType : EdgeType.values()) {
             classAlphabet.addClass(edgeType.name());
         }
 
-        FeatureAlphabet featureAlphabet = new HashAlphabet(alphabetBits, readableModel);
+        featureAlphabet = new HashAlphabet(alphabetBits, readableModel);
         String featureSpec = config.get("edu.cmu.cs.lti.features.coref.spec");
 
         decoder = new BestFirstLatentTreeDecoder();
@@ -95,8 +102,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
             Configuration featureConfig = new FeatureSpecParser(
                     config.get("edu.cmu.cs.lti.feature.pair.package.name")
             ).parseFeatureFunctionSpecs(featureSpec);
-            extractor = new PairFeatureExtractor(featureAlphabet, classAlphabet, useBinaryFeatures, config,
-                    featureConfig);
+            extractor = new PairFeatureExtractor(featureAlphabet, classAlphabet, config, featureConfig);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
                 | IllegalAccessException e) {
             e.printStackTrace();
@@ -123,21 +129,39 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         // A mention graph represent all the mentions and contains features among them.
         MentionGraph mentionGraph = graphCacher.get(cacheKey);
 
-        Map<Integer, Integer> mentionId2EventId = groupEventClusters(allMentions);
+        Map<Integer, Integer> mentionId2EventId = MentionUtils.groupEventClusters(allMentions);
+
+        TIntIntMap mention2Candidate = new TIntIntHashMap();
+        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions, mention2Candidate);
+
+        SetMultimap<Integer, Integer> candidate2SplitMentions = HashMultimap.create();
+
+        // Mention and candidate have a one to one match in this case, but you must provide the actual mentions (do
+        // not merge types)
+        mention2Candidate.forEachEntry((mentionId, candidateId) -> {
+            candidate2SplitMentions.put(mentionId, candidateId);
+            return true;
+        });
+
+        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas,
+                mention2Candidate, allMentions);
+
+        List<String> mentionTypes = allMentions.stream().map(EventMention::getEventType).collect(Collectors.toList());
+
 
         if (mentionGraph == null) {
-            mentionGraph = new MentionGraph(allMentions.size(), mentionId2EventId, allMentionRelations);
+            mentionGraph = new MentionGraph(candidates, candidate2SplitMentions, mentionTypes, mentionId2EventId,
+                    relations, extractor);
             graphCacher.addWithMultiKey(mentionGraph, cacheKey);
         }
 
         // Decoding.
-        MentionSubGraph predictedTree = decoder.decode(mentionGraph, weights, extractor, dummyLagrangian,
-                dummyLagrangian);
-        if (!graphMatch(predictedTree, mentionGraph)) {
-            MentionSubGraph latentTree = mentionGraph.getLatentTree(weights, extractor);
+        MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, extractor);
+        if (!predictedTree.graphMatch()) {
+            MentionSubGraph latentTree = mentionGraph.getLatentTree(weights, candidates);
             double loss = predictedTree.getLoss(latentTree);
-            trainingStats.addLoss(logger, loss / mentionGraph.getMentionNodes().length);
-            update(predictedTree, latentTree, extractor);
+            trainingStats.addLoss(logger, loss / mentionGraph.numNodes());
+            update(predictedTree, latentTree);
 
 //            logger.debug("Loss is " + loss);
 //            logger.debug("Predicted tree.");
@@ -148,7 +172,6 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         } else {
             trainingStats.addLoss(logger, 0);
         }
-
     }
 
     /**
@@ -157,8 +180,8 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
      * @param predictedTree The predicted tree.
      * @param latentTree    The gold latent tree.
      */
-    private void update(MentionSubGraph predictedTree, MentionSubGraph latentTree, PairFeatureExtractor extractor) {
-        passiveAggressiveUpdate(predictedTree, latentTree, extractor);
+    private void update(MentionSubGraph predictedTree, MentionSubGraph latentTree) {
+        passiveAggressiveUpdate(predictedTree, latentTree);
     }
 
     /**
@@ -168,11 +191,10 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
      * @param predictedTree The predicted tree.
      * @param latentTree    The gold latent tree.
      */
-    private void vanillaUpdate(MentionSubGraph predictedTree, MentionSubGraph latentTree,
-                               PairFeatureExtractor extractor) {
-        GraphFeatureVector delta = latentTree.getDelta(predictedTree, extractor);
-        logger.info("Delta between the features are: ");
-        logger.info(delta.readableNodeVector());
+    private void vanillaUpdate(MentionSubGraph predictedTree, MentionSubGraph latentTree) {
+        GraphFeatureVector delta = latentTree.getDelta(predictedTree, classAlphabet, featureAlphabet);
+//        logger.info("Delta between the features are: ");
+//        logger.info(delta.readableNodeVector());
         weights.updateWeightsBy(delta, 0.1);
         weights.updateAverageWeights();
     }
@@ -184,9 +206,12 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
      * @param predictedTree The predicted tree.
      * @param latentTree    The gold latent tree.
      */
-    private void passiveAggressiveUpdate(MentionSubGraph predictedTree, MentionSubGraph latentTree,
-                                         PairFeatureExtractor extractor) {
-        GraphFeatureVector delta = latentTree.getDelta(predictedTree, extractor);
+    private void passiveAggressiveUpdate(MentionSubGraph predictedTree, MentionSubGraph latentTree) {
+//        logger.info(predictedTree.toString());
+//
+//        logger.info(latentTree.toString());
+
+        GraphFeatureVector delta = latentTree.getDelta(predictedTree, classAlphabet, featureAlphabet);
 
 //        logger.info("Delta between the features are: ");
 //        logger.info(delta.readableNodeVector());
@@ -196,7 +221,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 //        double tau = (deltaDotProd - loss) / l2;
         double tau = loss / l2;
 
-//        logger.info("Loss is " + loss + " update rate is " + tau + " dot prod is " + deltaDotProd + " l2 is " + l2);
+//        logger.info("Loss is " + loss + " update rate is " + tau + " l2 is " + l2);
 
         weights.updateWeightsBy(delta, tau);
         weights.updateAverageWeights();
@@ -219,51 +244,6 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         }
         return Math.sqrt(l2Sq);
     }
-
-    private boolean graphMatch(MentionSubGraph predictedTree, MentionGraph mentionGraph) {
-        predictedTree.resolveTree();
-
-        // Variable indicating whether the coreference clusters are matched.
-        boolean corefMatch = Arrays.deepEquals(predictedTree.getCorefChains(), mentionGraph.getCorefChains());
-
-        // Variable indicating whether the other mention links are matched.
-        boolean linkMatch = true;
-        for (Map.Entry<MentionGraphEdge.EdgeType, int[][]> predictEdgesWithType : predictedTree.getResolvedRelations()
-                .entrySet()) {
-            int[][] actualEdges = mentionGraph.getResolvedRelations().get(predictEdgesWithType.getKey());
-            if (!Arrays.deepEquals(predictEdgesWithType.getValue(), actualEdges)) {
-                linkMatch = false;
-            }
-        }
-        return corefMatch && linkMatch;
-    }
-
-    /**
-     * @return Map from the mention to the event index it refers.
-     */
-    private Map<Integer, Integer> groupEventClusters(List<EventMention> mentions) {
-        Map<Integer, Integer> mentionId2EventId = new HashMap<>();
-        int eventIndex = 0;
-
-        Map<Event, Integer> eventIndices = new HashMap<>();
-
-        for (int i = 0; i < mentions.size(); i++) {
-            Event referringEvent = mentions.get(i).getReferringEvent();
-            if (referringEvent == null) {
-                mentionId2EventId.put(i, eventIndex);
-                eventIndex++;
-            } else if (eventIndices.containsKey(referringEvent)) {
-                Integer referringIndex = eventIndices.get(referringEvent);
-                mentionId2EventId.put(i, referringIndex);
-            } else {
-                mentionId2EventId.put(i, eventIndex);
-                eventIndices.put(referringEvent, eventIndex);
-                eventIndex++;
-            }
-        }
-        return mentionId2EventId;
-    }
-
 
     public static void saveModels(File modelOutputDirectory) throws IOException {
         FileUtils.ensureDirectory(modelOutputDirectory);

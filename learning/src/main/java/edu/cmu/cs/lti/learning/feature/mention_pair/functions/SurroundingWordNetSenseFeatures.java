@@ -3,7 +3,11 @@ package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
-import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.script.type.Sentence;
+import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
+import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
+import edu.cmu.cs.lti.script.type.WordNetBasedEntity;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
@@ -21,7 +25,7 @@ import java.util.List;
  * @author Zhengzhong Liu
  */
 public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures {
-    ArrayListMultimap<EventMention, WordNetBasedEntity> mention2SurroundWnEntities;
+    ArrayListMultimap<Sentence, WordNetBasedEntity> wnEntitiesBySentence;
 
     public SurroundingWordNetSenseFeatures(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
@@ -29,12 +33,10 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
 
     @Override
     public void initDocumentWorkspace(JCas context) {
-        mention2SurroundWnEntities = ArrayListMultimap.create();
+        wnEntitiesBySentence = ArrayListMultimap.create();
         for (StanfordCorenlpSentence sentence : JCasUtil.select(context, StanfordCorenlpSentence.class)) {
-            for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sentence)) {
-                for (WordNetBasedEntity wordNetEntity : JCasUtil.selectCovered(WordNetBasedEntity.class, sentence)) {
-                    mention2SurroundWnEntities.put(mention, wordNetEntity);
-                }
+            for (WordNetBasedEntity wordNetEntity : JCasUtil.selectCovered(WordNetBasedEntity.class, sentence)) {
+                wnEntitiesBySentence.put(sentence, wordNetEntity);
             }
         }
 
@@ -45,10 +47,13 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures, EventMention firstAnno,
-                        EventMention secondAnno) {
-        WordNetBasedEntity firstClosestEn = closestWordNetEntity(firstAnno);
-        WordNetBasedEntity secondClosestEn = closestWordNetEntity(secondAnno);
+    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
+            candidates, int firstIndex, int secondIndex) {
+        MentionCandidate firstCandidate = candidates.get(firstIndex);
+        MentionCandidate secondCandidate = candidates.get(secondIndex);
+
+        WordNetBasedEntity firstClosestEn = closestWordNetEntity(firstCandidate);
+        WordNetBasedEntity secondClosestEn = closestWordNetEntity(secondCandidate);
 
         if (firstClosestEn != null && secondClosestEn != null) {
             // Add type pair.
@@ -56,7 +61,7 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
             String secondClosestEnType = getWordNetEntityType(secondClosestEn);
             String[] enPair = {firstClosestEnType, secondClosestEnType};
             Arrays.sort(enPair);
-            addBoolean(rawFeatures, FeatureUtils.formatFeatureName("ClosestWordNetSenseType",
+            addBoolean(featuresNoLabel, FeatureUtils.formatFeatureName("ClosestWordNetSenseType",
                     Joiner.on(":").join(enPair)));
 
             // Add surface pair.
@@ -65,18 +70,31 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
             String[] enSurfacePair = {firstClosestEnSurface, secondClosestEnSurface};
 
             Arrays.sort(enSurfacePair);
-            addBoolean(rawFeatures, FeatureUtils.formatFeatureName("ClosestWordNetSenseSurface",
+            addBoolean(featuresNoLabel, FeatureUtils.formatFeatureName("ClosestWordNetSenseSurface",
                     Joiner.on(":").join(enSurfacePair)));
 
             if (firstClosestEnSurface.equals(secondClosestEnSurface)) {
-                addBoolean(rawFeatures, "ClosestWordNetSenseSurfaceMatch");
+                addBoolean(featuresNoLabel, "ClosestWordNetSenseSurfaceMatch");
             }
         }
+    }
+
+    @Override
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                        List
+                                                <MentionCandidate> candidates, int firstIndex, int secondIndex) {
 
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures, EventMention secondAnno) {
+    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
+            secondCandidate) {
+
+    }
+
+    @Override
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate
+            secondCandidate) {
 
     }
 
@@ -95,17 +113,14 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
         return wnEntity.getCoveredText().toLowerCase();
     }
 
-    private WordNetBasedEntity closestWordNetEntity(EventMention mention) {
-        List<WordNetBasedEntity> wnEntities = mention2SurroundWnEntities.get(mention);
-
-        Word mentionHead = mention.getHeadWord();
+    private WordNetBasedEntity closestWordNetEntity(MentionCandidate candidateMention) {
+        List<WordNetBasedEntity> wnEntities = wnEntitiesBySentence.get(candidateMention.getContainedSentence());
 
         int minDistance = Integer.MAX_VALUE;
         WordNetBasedEntity closestEntity = null;
         for (WordNetBasedEntity en : wnEntities) {
             StanfordCorenlpToken wnToken = UimaConvenience.selectCoveredFirst(en, StanfordCorenlpToken.class);
-
-            int distance = Math.abs(wnToken.getIndex() - mentionHead.getIndex());
+            int distance = Math.abs(wnToken.getIndex() - candidateMention.getHeadWord().getIndex());
             if (distance < minDistance) {
                 closestEntity = en;
             }

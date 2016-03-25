@@ -2,27 +2,25 @@ package edu.cmu.cs.lti.event_coref.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.annotators.crf.MentionSequenceCrfTrainer;
-import edu.cmu.cs.lti.emd.utils.MentionTypeUtils;
+import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
+import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.DDLatentTreeCrfDecoder;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionNode;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.event_coref.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.MultiSentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
-import edu.cmu.cs.lti.learning.model.ClassAlphabet;
-import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
-import edu.cmu.cs.lti.learning.model.GraphWeightVector;
-import edu.cmu.cs.lti.learning.model.SequenceSolution;
+import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.DebugUtils;
+import gnu.trove.map.TIntIntMap;
+import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -172,7 +170,7 @@ public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
             ).parseFeatureFunctionSpecs(featureSpec);
 
             corefFeatureExtractor = new PairFeatureExtractor(corefFeatureAlphabet, corefClassAlphabet,
-                    useBinaryFeatures, config, featureConfig);
+                    config, featureConfig);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
                 | IllegalAccessException e) {
             throw new ResourceInitializationException(e);
@@ -199,15 +197,18 @@ public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
 
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
 
-        MentionGraph mentionGraph = new MentionGraph(allMentions.size(), true);
+        TIntIntMap mention2Candidate = new TIntIntHashMap();
+        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions, mention2Candidate);
+
+        MentionGraph mentionGraph = new MentionGraph(candidates, corefFeatureExtractor, true);
 
         Pair<SequenceSolution, MentionSubGraph> decodeResult = decoder.decode(mentionFeatureExtractor,
-                crfWeights, mentionGraph, allMentions, corefFeatureExtractor, corefWeights, true);
+                crfWeights, mentionGraph, candidates, corefFeatureExtractor, corefWeights, true);
 
         annotatePredictedTypes(decodeResult.getLeft(), allMentions);
         annotatePredictedCoreference(aJCas, mentionGraph, decodeResult.getRight(), allMentions);
 
-        DebugUtils.pause(logger);
+//        DebugUtils.pause(logger);
     }
 
     @Override
@@ -220,7 +221,7 @@ public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
     // TODO separate clusters merged by joint types.
     private void annotatePredictedCoreference(JCas aJCas, MentionGraph mentionGraph, MentionSubGraph predictedTree,
                                               List<EventMention> allMentions) {
-        predictedTree.resolveTree();
+        predictedTree.resolveCoreference();
         int[][] corefChains = predictedTree.getCorefChains();
 
         for (int[] corefChain : corefChains) {
@@ -228,8 +229,8 @@ public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
             Map<Span, EventMention> span2Mentions = new HashMap<>();
 
             for (int nodeId : corefChain) {
-                MentionNode node = mentionGraph.getNode(nodeId);
-                EventMention mention = allMentions.get(node.getMentionIndex());
+                int mentionIndex = mentionGraph.getCandidateIndex(nodeId);
+                EventMention mention = allMentions.get(mentionIndex);
                 Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());
                 if (!span2Mentions.containsKey(mentionSpan)) {
                     span2Mentions.put(Span.of(mention.getBegin(), mention.getEnd()), mention);
@@ -258,4 +259,5 @@ public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
                     prediction.getClassAt(index)));
         }
     }
+
 }

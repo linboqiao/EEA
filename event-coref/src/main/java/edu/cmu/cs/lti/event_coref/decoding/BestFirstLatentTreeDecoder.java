@@ -1,12 +1,16 @@
 package edu.cmu.cs.lti.event_coref.decoding;
 
+import edu.cmu.cs.lti.event_coref.model.graph.LabelledMentionGraphEdge;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
+import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import org.javatuples.Pair;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,19 +26,31 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
     }
 
     @Override
-    public MentionSubGraph decode(MentionGraph mentionGraph, GraphWeightVector weights, PairFeatureExtractor
-            extractor, CubicLagrangian u, CubicLagrangian v) {
+    public MentionSubGraph decode(MentionGraph mentionGraph, List<MentionCandidate> mentionCandidates,
+                                  GraphWeightVector weights, PairFeatureExtractor extractor,
+                                  CubicLagrangian u, CubicLagrangian v) {
         MentionSubGraph bestFirstTree = new MentionSubGraph(mentionGraph);
 
         for (int curr = 1; curr < mentionGraph.numNodes(); curr++) {
-            Pair<MentionGraphEdge, MentionGraphEdge.EdgeType> bestEdge = null;
+            Pair<LabelledMentionGraphEdge, MentionGraphEdge.EdgeType> bestEdge = null;
             double bestScore = Double.NEGATIVE_INFINITY;
+
+            int currentMentionId = mentionGraph.getCandidateIndex(curr);
+
+            MentionCandidate.DecodingResult currentKey = mentionCandidates.get(currentMentionId).asKey().get(0);
+
             for (int ant = 0; ant < curr; ant++) {
-                MentionGraphEdge mentionGraphEdge = mentionGraph.getMentionGraphEdge(curr, ant);
-                Pair<MentionGraphEdge.EdgeType, Double> bestLabelScore =
-                        mentionGraphEdge.getBestLabelScore(weights, extractor);
+                int antMentionId = mentionGraph.getCandidateIndex(ant);
+                MentionCandidate.DecodingResult antKey = mentionGraph.isRoot(ant) ?
+                        MentionCandidate.getRootKey().get(0) : mentionCandidates.get(antMentionId).asKey().get(0);
+
+
+                LabelledMentionGraphEdge mentionGraphEdge = mentionGraph.getMentionGraphEdge(curr, ant)
+                        .getLabelledEdge(mentionCandidates, currentKey, antKey);
+
+                Pair<MentionGraphEdge.EdgeType, Double> bestLabelScore = mentionGraphEdge.getBestLabelScore(weights);
                 double score = bestLabelScore.getValue1();
-                MentionGraphEdge.EdgeType label = bestLabelScore.getValue0();
+                MentionGraphEdge.EdgeType edgeType = bestLabelScore.getValue0();
 
                 // We have a special root node at the begin, so we minus one to get the original sequence index.
                 double lagrangianPenalty = 0;
@@ -46,7 +62,7 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
                 score += lagrangianPenalty;
 
                 if (score > bestScore) {
-                    bestEdge = Pair.with(mentionGraphEdge, label);
+                    bestEdge = Pair.with(mentionGraphEdge, edgeType);
                     bestScore = score;
 
 //                    logger.info("Best edge is between " + mentionGraphEdge.toString());
