@@ -15,11 +15,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Represent a delta on a previous state, which includes change in score, features, and decoding results. These
+ * changes are not directly applied to the states because we need to choose the best deltas.
+ */
 public class StateDelta implements Comparable<StateDelta> {
-//    private final MentionGraphEdge.EdgeType linkType;
-//    private DecodingResult node;
-//    private int antecedent;
-
     private NodeLinkingState existingState;
     private double newScore;
 
@@ -63,7 +63,7 @@ public class StateDelta implements Comparable<StateDelta> {
         return MinMaxPriorityQueue.orderedBy(reverseComparator()).maximumSize(maxSize).create();
     }
 
-    public NodeLinkingState getUpdatedState(List<MentionCandidate> candidates) {
+    public NodeLinkingState applyUpdate(List<MentionCandidate> candidates) {
         NodeLinkingState state = existingState.makeCopy();
 
 //        System.out.println("Before applying : " + state.showNodes());
@@ -77,6 +77,8 @@ public class StateDelta implements Comparable<StateDelta> {
         state.addNode(nodes);
 
         state.setScore(newScore);
+
+        state.extendFeatures(deltaLabelFv, deltaGraphFv);
 
 //        System.out.println("After applying : " + state.showNodes());
 //        DebugUtils.pause();

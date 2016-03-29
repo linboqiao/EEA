@@ -66,6 +66,7 @@ public class DiscriminativeUpdater {
 
     public void recordLaSOUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
         if (!decodingAgenda.contains(goldAgenda)) {
+            logger.debug("Recording differences for LaSO update.");
             recordUpdate(decodingAgenda, goldAgenda);
 
             NodeLinkingState bestDecoding = decodingAgenda.getBeamStates().peek();
@@ -81,13 +82,21 @@ public class DiscriminativeUpdater {
 //            logger.debug("Gold agenda is :");
 //            logger.debug(goldAgenda.showAgendaItems());
 
+            logger.debug("Compute losses between best decoding and best gold.");
             Pair<Double, Double> losses = bestDecoding.loss(bestGold);
+
+            logger.debug("Loss value is " + losses);
 
             addLoss(DelayedLaSOJointTrainer.TYPE_MODEL_NAME, losses.getValue0());
             addLoss(DelayedLaSOJointTrainer.COREF_MODEL_NAME, losses.getValue1());
 
             // Copy the gold agenda to decoding agenda (LaSO)
             decodingAgenda.copyFrom(goldAgenda);
+
+
+            // Clear these features from both agenda, since they are assumed to be the same from here.
+            goldAgenda.clearFeatures();
+            decodingAgenda.clearFeatures();
 
 //            logger.debug("Copied agenda, now showing new system:");
 //            logger.debug("Now showing system:");
@@ -103,32 +112,36 @@ public class DiscriminativeUpdater {
     }
 
     public void recordFinalUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
-        //TODO is the final update use the right feature set?
-//        logger.info("Recording final updates");
         if (!decodingAgenda.getBeamStates().peek().match(goldAgenda.getBeamStates().peek())) {
+            logger.debug("Recording final update difference between the top states.");
             recordUpdate(decodingAgenda, goldAgenda);
         }
     }
 
-    public void recordUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
+    private void recordUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
+        logger.debug("Best decoding state is:");
+        logger.debug(decodingAgenda.getBeamStates().peek().showTree());
+
+        logger.debug("Best gold state is:");
+        logger.debug(goldAgenda.getBeamStates().peek().showTree());
+
         // Compute delta on coreferecence.
         GraphFeatureVector deltaCorefVector = allDelta.get(corefName);
 
 //        logger.debug("Computing delta on gold and decoding.");
-        for (Pair<MentionGraphEdge.EdgeType, FeatureVector> goldFv : goldAgenda.getBestDeltaCorefVectors()) {
-            deltaCorefVector.extend(goldFv.getValue1(), goldFv.getValue0().name());
-//            logger.debug("Gold feature edge type : " + goldFv.getValue0());
-//            logger.debug(goldFv.getValue1().toString());
-        }
-        for (Pair<MentionGraphEdge.EdgeType, FeatureVector> decoding : decodingAgenda.getBestDeltaCorefVectors()) {
-            deltaCorefVector.extend(decoding.getValue1().negation(), decoding.getValue0().name());
-//            logger.debug("System feature edge type : " + decoding.getValue0());
-//            logger.debug(decoding.getValue1().toString());
-        }
 
-//        logger.info("Showing coref delta between decoding and gold");
-//        logger.info(deltaCorefVector.readableEdgeVector());
-//        logger.info(deltaCorefVector.readableNodeVector());
+        for (Map.Entry<MentionGraphEdge.EdgeType, FeatureVector> goldFv : goldAgenda.getBestDeltaCorefVectors()
+                .entrySet()) {
+            deltaCorefVector.extend(goldFv.getValue(), goldFv.getKey().name());
+            logger.debug("Gold feature edge type : " + goldFv.getKey());
+            logger.debug(goldFv.getValue().toString());
+        }
+        for (Map.Entry<MentionGraphEdge.EdgeType, FeatureVector> decoding : decodingAgenda.getBestDeltaCorefVectors()
+                .entrySet()) {
+            deltaCorefVector.extend(decoding.getValue().negation(), decoding.getKey().name());
+            logger.debug("System feature edge type : " + decoding.getValue());
+            logger.debug(decoding.getValue().toString());
+        }
 
         // Compute delta on labeling.
         GraphFeatureVector goldLabelFeature = goldAgenda.getBestDeltaLabelFv();

@@ -55,7 +55,7 @@ public class SubGraphEdge {
     }
 
     public String toString() {
-        return String.format("SubGraphEdge: (%d:%s,%d:%s)) [%s]", getGov(), getGovKey().getMentionType(),
+        return String.format("SubGraphEdge: (%d:%s,%d:%s) [%s]", getGov(), getGovKey().getMentionType(),
                 getDep(), getDepKey().getMentionType(), edgeType);
     }
 

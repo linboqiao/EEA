@@ -98,10 +98,19 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
         for (List<MentionCandidate.DecodingResult> decodingResult : decodedState.getNodeResults()) {
             String type = MentionTypeUtils.joinMultipleTypes(decodingResult.stream().map(r -> r.getMentionType())
                     .collect(Collectors.toList()));
+
             MentionCandidate.DecodingResult firstResult = Iterables.get(decodingResult, 0);
             if (!type.equals(ClassAlphabet.noneOfTheAboveClass)) {
                 EventMention mention = new EventMention(aJCas, firstResult.getBegin(), firstResult.getEnd());
                 mention.setRealisType(firstResult.getRealis());
+                UimaAnnotationUtils.finishAnnotation(mention, COMPONENT_ID, 0, aJCas);
+                allMentions.add(mention);
+            }
+
+            for (MentionCandidate.DecodingResult result : decodingResult) {
+                EventMention mention = new EventMention(aJCas, result.getBegin(), result.getEnd());
+                mention.setRealisType(result.getRealis());
+                mention.setEventType(result.getMentionType());
                 UimaAnnotationUtils.finishAnnotation(mention, COMPONENT_ID, 0, aJCas);
                 allMentions.add(mention);
             }
@@ -110,7 +119,6 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
         annotatePredictedCoreference(aJCas, mentionGraph, decodedState.getDecodingTree(), allMentions);
     }
 
-    // TODO separate clusters merged by joint types.
     private void annotatePredictedCoreference(JCas aJCas, MentionGraph mentionGraph, MentionSubGraph predictedTree,
                                               List<EventMention> allMentions) {
         predictedTree.resolveCoreference();

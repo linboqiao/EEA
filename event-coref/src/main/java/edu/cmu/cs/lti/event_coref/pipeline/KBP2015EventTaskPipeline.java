@@ -34,7 +34,7 @@ public class KBP2015EventTaskPipeline {
         Configuration kbpConfig = new Configuration(argv[0]);
         String trainingWorkingDir = kbpConfig.get("edu.cmu.cs.lti.training.working.dir");
         String testingWorkingDir = kbpConfig.get("edu.cmu.cs.lti.test.working.dir");
-        String modelOutputDir = kbpConfig.get("edu.cmu.cs.lti.model.output.dir");
+        String modelOutputDir = kbpConfig.get("edu.cmu.cs.lti.model.event.dir");
         String modelPath = kbpConfig.get("edu.cmu.cs.lti.model.dir");
 
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
@@ -66,23 +66,9 @@ public class KBP2015EventTaskPipeline {
         // Now prepare the real pipeline.
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
-        boolean skipTypeTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
-        boolean skipLv2TypeTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.lv2.skiptrain", false);
-        boolean skipRealisTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
-        boolean skipCorefTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
-
-
-        boolean skipLv1Test = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
-        boolean skipLv2Test = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.lv2.skiptest", false);
-        boolean skipRealisTest = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
-        boolean skipCorefTest = kbpConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
-        boolean skipJointTest = kbpConfig.getBoolean("edu.cmu.cs.lti.joint.skiptest", false);
-
         pipeline.prepare(kbpConfig, trainReader, testReader);
         pipeline.crossValidation(kbpConfig);
-
-        pipeline.trainAll(kbpConfig, skipTypeTrain, skipLv2TypeTrain, skipRealisTrain, skipCorefTrain, 17);
-        pipeline.test(kbpConfig, skipLv1Test, skipLv2Test, skipRealisTest, skipCorefTest, skipJointTest);
+        pipeline.trainTest(kbpConfig, false);
 
 //        for (int i = 1; i < 23; i++) {
 //            pipeline.trainAll(kbpConfig, skipTypeTrain, skipLv2TypeTrain, skipRealisTrain, skipCorefTrain, i);

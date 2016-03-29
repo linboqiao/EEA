@@ -41,7 +41,7 @@ public class RunOnlyPipeline {
         );
 
 //        String testingWorkingDir = kbpConfig.get("edu.cmu.cs.lti.test.working.dir");
-        String modelOutputDir = kbpConfig.get("edu.cmu.cs.lti.model.output.dir");
+        String modelOutputDir = kbpConfig.get("edu.cmu.cs.lti.model.event.dir");
         String modelPath = kbpConfig.get("edu.cmu.cs.lti.model.dir");
 
         // Now prepare the real pipeline.

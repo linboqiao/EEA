@@ -5,6 +5,8 @@ import edu.cmu.cs.lti.event_coref.model.graph.LabelledMentionGraphEdge;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
+import edu.cmu.cs.lti.learning.model.FeatureVector;
+import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.MentionCandidate.DecodingResult;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
@@ -13,10 +15,7 @@ import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -35,15 +34,22 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     // So the value of this index can be used to retrieve the corresponding graph node from the MentionGraph.
     private int nodeIndex;
 
+    // Here is the node decoding results for each token. There are multiple possible types for a token, so each token
+    // is corresponding multiple decoding results.
     private List<List<DecodingResult>> nodeResults;
 
     private MentionSubGraph decodingTree;
+
+    private GraphFeatureVector labelFv;
+
+    private Map<EdgeType, FeatureVector> corefFv;
 
     private NodeLinkingState(MentionGraph graph) {
         this.graph = graph;
         this.nodeResults = new ArrayList<>();
         this.nodeIndex = 0;
         decodingTree = new MentionSubGraph(graph);
+        corefFv = new HashMap<>();
     }
 
     public static NodeLinkingState getInitialState(MentionGraph graph) {
@@ -54,6 +60,11 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         return s;
     }
 
+    public void clearFeatures() {
+        labelFv = null;
+        corefFv.clear();
+    }
+
     public String toString() {
         return "[Node Linking State]\n" +
                 "Score: " + score +
@@ -62,6 +73,10 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
                 "\n" +
                 "<Coref Tree>\n" +
                 decodingTree.toString();
+    }
+
+    public String showTree() {
+        return decodingTree.toString();
     }
 
     public String showNodes() {
@@ -96,6 +111,24 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         return nodeResults;
     }
 
+    public void extendFeatures(GraphFeatureVector newLabelFv, List<Pair<EdgeType, FeatureVector>> newCorefFvs) {
+        if (this.labelFv == null) {
+            this.labelFv = newLabelFv.newGraphFeatureVector();
+        }
+
+        this.labelFv.extend(newLabelFv);
+
+        for (Pair<EdgeType, FeatureVector> newCorefFv : newCorefFvs) {
+            EdgeType fvType = newCorefFv.getValue0();
+            FeatureVector fv = newCorefFv.getValue1();
+            if (this.corefFv.containsKey(fvType)) {
+                corefFv.get(fvType).extend(fv);
+            } else {
+                corefFv.put(fvType, fv);
+            }
+        }
+    }
+
     public void addLinkTo(List<MentionCandidate> candidates, int antecedent, DecodingResult govKey,
                           DecodingResult depKey, EdgeType type) {
         addLink(candidates, antecedent, nodeIndex, govKey, depKey, type);
@@ -107,7 +140,8 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 //        System.out.println(govKey.toString());
 //        System.out.println(depKey.toString());
 
-        LabelledMentionGraphEdge edge = graph.getMentionGraphEdge(dep, gov).getLabelledEdge(mentionCandidates, govKey, depKey);
+        LabelledMentionGraphEdge edge = graph.getMentionGraphEdge(dep, gov).getLabelledEdge(mentionCandidates,
+                govKey, depKey);
         decodingTree.addEdge(edge, type);
     }
 
@@ -193,27 +227,28 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         boolean labelMatch = true;
         for (int i = 1; i < nodeIndex; i++) {
             Set<String> otherTypes = otherState.getMentionType(i);
-            for (String type : getMentionType(i)) {
-                if (!otherTypes.contains(type)) {
-                    labelMatch = false;
-                    break;
-                }
-            }
-
-            if (!labelMatch) {
+            if (!getMentionType(i).equals(otherTypes)) {
+                labelMatch = false;
                 break;
             }
         }
 
 //        if (corefMatch && labelMatch) {
-//            logger.info("State match between the following.");
-//            logger.info(this.toString());
-//            logger.info(otherState.toString());
+//            logger.debug("State match between the following.");
+//            logger.debug(this.toString());
+//            logger.debug(otherState.toString());
 //        }
 
         return corefMatch && labelMatch;
     }
 
+    public GraphFeatureVector getLabelFv() {
+        return labelFv;
+    }
+
+    public Map<EdgeType, FeatureVector> getCorefFv() {
+        return corefFv;
+    }
 
     public NodeLinkingState makeCopy() {
         NodeLinkingState state = new NodeLinkingState(graph);
@@ -223,6 +258,20 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         for (List<DecodingResult> node : nodeResults) {
             state.nodeResults.add(node);
         }
+
+        // TODO making full copy of the existing feature vector, might be faster way of doing this.
+        if (this.labelFv != null) {
+            state.labelFv = this.labelFv.newGraphFeatureVector();
+            state.labelFv.extend(this.labelFv);
+        }
+
+        state.corefFv = new HashMap<>();
+        for (Map.Entry<EdgeType, FeatureVector> corefFv : this.corefFv.entrySet()) {
+            FeatureVector newFv = corefFv.getValue().newFeatureVector();
+            newFv.extend(corefFv.getValue());
+            state.corefFv.put(corefFv.getKey(), newFv);
+        }
+
         return state;
     }
 }

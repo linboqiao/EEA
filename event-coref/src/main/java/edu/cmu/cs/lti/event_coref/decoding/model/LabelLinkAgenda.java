@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -34,12 +35,12 @@ public class LabelLinkAgenda {
 
     private List<MentionCandidate> candidates;
 
-    // Only one set of the features is recorded: which is the features for the best scored new states.
-    // These features are delta over the previous vectors, i.e. they are not the features from starting the decoding
-    // to date, but only the new features introduced in this state update.
-    private GraphFeatureVector bestDeltaLabelFv;
-
-    private List<Pair<EdgeType, FeatureVector>> bestDeltaCorefVectors;
+//    // Only one set of the features is recorded: which is the features for the best scored new states.
+//    // These features are delta over the previous vectors, i.e. they are not the features from starting the decoding
+//    // to date, but only the new features introduced in this state update.
+//    private GraphFeatureVector bestDeltaLabelFv;
+//
+//    private List<Pair<EdgeType, FeatureVector>> bestDeltaCorefVectors;
 
     private int beamSize;
 
@@ -74,6 +75,12 @@ public class LabelLinkAgenda {
         return sb.toString();
     }
 
+    public void clearFeatures() {
+        for (NodeLinkingState beamState : beamStates) {
+            beamState.clearFeatures();
+        }
+    }
+
 
     /**
      * Record the TOP K deltas, based on the scores after the delta.
@@ -93,7 +100,7 @@ public class LabelLinkAgenda {
         if (linkType.size() != govKeys.size() || antecedent.size() != linkType.size() ||
                 govKeys.size() != antecedent.size() || govKeys.size() != depKeys.size()) {
             throw new IllegalArgumentException(String.format("Wrong state input. gov key size : %d,  dep key size : " +
-                    "%d, link size : %d, antecedent size %d", govKeys.size(), depKeys.size(), linkType.size(),
+                            "%d, link size : %d, antecedent size %d", govKeys.size(), depKeys.size(), linkType.size(),
                     antecedent.size()));
         }
 
@@ -116,18 +123,17 @@ public class LabelLinkAgenda {
 //            logger.debug(delta.toString());
 //            logger.debug(String.valueOf(stateDeltas.size()));
 //
-//            logger.debug("Remainings ...");
+//            logger.debug("Remaining ...");
 //            stateDeltas.forEach(d -> logger.debug(d.toString()));
 //        }
-//        stateDeltas.add(delta);
     }
 
-    public List<Pair<EdgeType, FeatureVector>> getBestDeltaCorefVectors() {
-        return bestDeltaCorefVectors;
+    public Map<EdgeType, FeatureVector> getBestDeltaCorefVectors() {
+        return beamStates.peek().getCorefFv();
     }
 
     public GraphFeatureVector getBestDeltaLabelFv() {
-        return bestDeltaLabelFv;
+        return beamStates.peek().getLabelFv();
     }
 
     /**
@@ -135,32 +141,32 @@ public class LabelLinkAgenda {
      */
     public void updateStates() {
         // First take the best features from the delta
-        boolean isFirst = true;
+//        boolean isFirst = true;
 
 //        logger.debug("Update states with " + stateDeltas.size() + " deltas.");
 
         while (!stateDeltas.isEmpty()) {
             StateDelta delta = stateDeltas.poll();
-            NodeLinkingState updatedState = delta.getUpdatedState(candidates);
+            NodeLinkingState updatedState = delta.applyUpdate(candidates);
             nextBeamStates.add(updatedState);
-            if (isFirst) {
-                bestDeltaLabelFv = delta.getDeltaLabelFv();
-                bestDeltaCorefVectors = delta.getDeltaGraphFv();
-
-                isFirst = false;
-
-                actualDecodingSequence.add(updatedState.getLastNode());
-
-//                logger.info("Update states with best label features");
-//                logger.info(bestDeltaLabelFv.readableNodeVector());
-//                logger.info("Update with best graph features for each antecedents.");
-
-//                for (Pair<EdgeType, FeatureVector> typeFeatureVector : bestDeltaCorefVectors) {
-//                    logger.info("Edge type is " + typeFeatureVector.getValue0());
-//                    logger.info(typeFeatureVector.getValue1().readableString());
-//                }
-//                DebugUtils.pause(logger);
-            }
+//            if (isFirst) {
+//                bestDeltaLabelFv = delta.getDeltaLabelFv();
+//                bestDeltaCorefVectors = delta.getDeltaGraphFv();
+//
+//                isFirst = false;
+//
+//                actualDecodingSequence.add(updatedState.getLastNode());
+//
+////                logger.debug("Update states with best label features");
+////                logger.debug(bestDeltaLabelFv.readableNodeVector());
+////                logger.debug("Update with best graph features for each antecedents.");
+////
+////                for (Pair<EdgeType, FeatureVector> typeFeatureVector : bestDeltaCorefVectors) {
+////                    logger.debug("Edge type is " + typeFeatureVector.getValue0());
+////                    logger.debug(typeFeatureVector.getValue1().readableString());
+////                }
+////                DebugUtils.pause(logger);
+//            }
         }
         beamStates = nextBeamStates;
         nextBeamStates = NodeLinkingState.getReverseHeap(beamSize);

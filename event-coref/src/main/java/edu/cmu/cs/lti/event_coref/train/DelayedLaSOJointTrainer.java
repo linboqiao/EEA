@@ -18,7 +18,6 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
@@ -140,13 +139,13 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
 
         this.mentionPairExtractor.initWorkspace(aJCas);
 
-        UimaConvenience.printProcessLog(aJCas, logger);
-        logger.debug("Creating mention graph.");
+//        UimaConvenience.printProcessLog(aJCas, logger);
+//        logger.debug("Creating mention graph.");
 
         MentionGraph mentionGraph = new MentionGraph(goldCandidates, candidate2Split, splitCandidateTypes,
                 splitCandidate2EventId, relations, mentionPairExtractor);
 
-        logger.debug("Starting decoding.");
+//        logger.debug("Starting decoding.");
         decoder.decode(aJCas, mentionGraph, systemCandidates, goldCandidates, false);
 //        logger.debug("Done decoding last one.");
     }

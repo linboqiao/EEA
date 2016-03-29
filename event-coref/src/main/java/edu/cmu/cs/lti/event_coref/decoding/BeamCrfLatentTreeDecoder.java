@@ -127,8 +127,8 @@ public class BeamCrfLatentTreeDecoder {
         List<StanfordCorenlpSentence> allSentences = new ArrayList<>(JCasUtil.select(aJCas, StanfordCorenlpSentence
                 .class));
 
-        logger.info(String.format("Sentence size : %d, Candidate size : %d, Graph nodes : %d", allSentences.size(),
-                predictionCandidates.size(), mentionGraph.numNodes()));
+//        logger.debug(String.format("Sentence size : %d, Candidate size : %d, Graph nodes : %d", allSentences.size(),
+//                predictionCandidates.size(), mentionGraph.numNodes()));
 
         // Dot product function on the node (i.e. only take features depend on current class)
         BiFunction<FeatureVector, Integer, Double> nodeDotProd = useAverage ?
@@ -197,7 +197,6 @@ public class BeamCrfLatentTreeDecoder {
                 MutableDouble maxTypedScore = new MutableDouble(0);
                 MutableInt maxType = new MutableInt(-1);
 
-
                 // Go over possible crf links.
                 mentionTypeClassAlphabet.getNormalClassesRange().forEach(classIndex -> {
                     double nodeTypeScore = nodeDotProd.apply(nodeFeature, classIndex);
@@ -226,7 +225,7 @@ public class BeamCrfLatentTreeDecoder {
                     sortedClassScores.clear();
                     sortedClassScores.add(Pair.with(mentionTypeClassAlphabet.getNoneOfTheAboveClassIndex(), 0.0));
                     prunedNodes.add(curr.getValue());
-//                    logger.debug("Pruned node " + curr.getValue());
+                    logger.debug("Pruned node " + curr.getValue());
                 }
 
                 // Only take the top 5 classes to expand.
@@ -263,7 +262,6 @@ public class BeamCrfLatentTreeDecoder {
                                 nodeTypeScore + newTypeEdgeScore, prunedNodes);
                     }
 
-//                    logger.debug(newDecodingMentionFeatures.readableNodeVector());
 //                    DebugUtils.pause(logger);
 
                     count++;
@@ -272,19 +270,19 @@ public class BeamCrfLatentTreeDecoder {
                     }
                 }
 
-                // Since type are determined for the gold agenda, we only need to do beam search on the links.
-                for (NodeLinkingState nodeLinkingState : goldAgenda.getBeamStates()) {
-//                    logger.info(String.format("Decoding antecedent at node %d for gold.", curr.getValue()));
-                    linkToCorrectAntecedent(mentionGraph, goldAgenda, nodeLinkingState, goldCandidates, curr
-                            .getValue(), goldMentionFeature, goldResults, 0);
 
-                }
-
-//                logger.info("Updating states for prediction.");
+//                logger.debug("Updating states for prediction.");
                 decodingAgenda.updateStates();
 
                 if (isTraining) {
-//                    logger.info("Updating states for gold.");
+                    // Expanding the states for gold agenda.
+                    for (NodeLinkingState nodeLinkingState : goldAgenda.getBeamStates()) {
+//                    logger.info(String.format("Decoding antecedent at node %d for gold.", curr.getValue()));
+                        linkToCorrectAntecedent(mentionGraph, goldAgenda, nodeLinkingState, curr
+                                .getValue(), goldMentionFeature, goldResults, 0);
+                    }
+
+//                    logger.debug("Updating states for gold.");
                     goldAgenda.updateStates();
                 }
 
@@ -322,17 +320,17 @@ public class BeamCrfLatentTreeDecoder {
 //        DebugUtils.pause(logger);
 
         if (isTraining) {
-//            logger.debug("Check for final updates");
+            logger.debug("Check for final updates");
 
             // The final check matches the first item in the agendas, while the searching check only ensure containment.
             updater.recordFinalUpdate(decodingAgenda, goldAgenda);
 
             // Update based on cumulative errors.
-//            logger.debug("Applying updates to " + DelayedLaSOJointTrainer.TYPE_MODEL_NAME);
+            logger.debug("Applying updates to " + DelayedLaSOJointTrainer.TYPE_MODEL_NAME);
             double typeLoss = updater.update(DelayedLaSOJointTrainer.TYPE_MODEL_NAME);
             typeTrainingStats.addLoss(logger, typeLoss / mentionGraph.numNodes());
 
-//            logger.debug("Applying updates to " + DelayedLaSOJointTrainer.COREF_MODEL_NAME);
+            logger.debug("Applying updates to " + DelayedLaSOJointTrainer.COREF_MODEL_NAME);
             double corefLoss = updater.update(DelayedLaSOJointTrainer.COREF_MODEL_NAME);
             corefTrainingStats.addLoss(logger, corefLoss / mentionGraph.numNodes());
         }
@@ -466,10 +464,6 @@ public class BeamCrfLatentTreeDecoder {
                 }
             }
 
-//            logger.debug(currDecodingResult.toString());
-//            logger.debug(String.valueOf(bestLinkScore));
-//            logger.debug(bestAntecedentNode.toString());
-
             bestGovKeys.add(bestAntecedentNode);
             bestAntecedents.add(bestAnt);
             bestEdgeTypes.add(bestEdgeType);
@@ -482,7 +476,7 @@ public class BeamCrfLatentTreeDecoder {
     }
 
     private void linkToCorrectAntecedent(MentionGraph mentionGraph, LabelLinkAgenda goldAgenda,
-                                         NodeLinkingState nodeLinkingState, List<MentionCandidate> candidates,
+                                         NodeLinkingState nodeLinkingState,
                                          int currGraphNodeIndex, GraphFeatureVector newDecodingCrfFeatures,
                                          List<DecodingResult> currDecodingResults, double mentionScore) {
         List<DecodingResult> correctGovKeys = new ArrayList<>();
@@ -500,9 +494,6 @@ public class BeamCrfLatentTreeDecoder {
             DecodingResult bestGovKey = null;
 
             for (int ant = 0; ant < currGraphNodeIndex; ant++) {
-//                 Access the antecedent node.
-//                List<DecodingResult> antDecodingResults = nodeLinkingState.getNode(ant);
-
                 List<LabelledMentionGraphEdge> realGraphEdges = mentionGraph
                         .getMentionGraphEdge(currGraphNodeIndex, ant).getRealLabelledEdges();
 
@@ -537,9 +528,6 @@ public class BeamCrfLatentTreeDecoder {
                 }
 
                 for (int ant = 0; ant < currGraphNodeIndex; ant++) {
-//                 Access the antecedent node.
-//                List<DecodingResult> antDecodingResults = nodeLinkingState.getNode(ant);
-
                     List<LabelledMentionGraphEdge> realGraphEdges = mentionGraph
                             .getMentionGraphEdge(currGraphNodeIndex, ant).getRealLabelledEdges();
 

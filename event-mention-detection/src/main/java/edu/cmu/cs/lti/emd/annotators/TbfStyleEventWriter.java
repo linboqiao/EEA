@@ -124,11 +124,16 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         return tokenBasedMapping;
     }
 
+    /**
+     * Use the gold tokens provided. This will not return any word if no gold tokens are annotated first.
+     *
+     * @param candidate The annotation to find gold tokens.
+     * @param align     The alignment helper.
+     * @return
+     */
     private Set<Word> mapToGoldWords(ComponentAnnotation candidate, TokenAlignmentHelper align) {
         List<Word> allWords = JCasUtil.selectCovered(Word.class, candidate);
         Set<Word> allUnderlying = new HashSet<>();
-
-//        logger.info(candidate.getBegin() + " " + candidate.getEnd());
 
         for (Word word : allWords) {
             if (word instanceof StanfordCorenlpToken) {
@@ -136,19 +141,13 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
                 Word alignedWord = align.getWord((StanfordCorenlpToken) word);
                 if (alignedWord != null) {
                     allUnderlying.add(alignedWord);
-//                    logger.info("Adding from stanford " + alignedWord.getCoveredText() + " " + alignedWord.getId());
                 }
             } else {
                 if (word.getComponentId().equals(goldComponentId)) {
                     allUnderlying.add(word);
-//                    logger.info("Add directly " + word.getCoveredText() + " " + word.getId() + " " + word.getBegin()
-//                            + " " + +word.getEnd());
                 }
             }
         }
-
-//        logger.info(candidate.getCoveredText());
-//        DebugUtils.pause();
 
         return allUnderlying;
     }
