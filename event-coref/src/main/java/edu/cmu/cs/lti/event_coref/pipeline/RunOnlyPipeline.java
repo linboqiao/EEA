@@ -40,20 +40,10 @@ public class RunOnlyPipeline {
                 LDCXmlCollectionReader.PARAM_DATA_PATH, inputPath
         );
 
-//        String testingWorkingDir = kbpConfig.get("edu.cmu.cs.lti.test.working.dir");
-        String modelOutputDir = kbpConfig.get("edu.cmu.cs.lti.model.event.dir");
-        String modelPath = kbpConfig.get("edu.cmu.cs.lti.model.dir");
-
         // Now prepare the real pipeline.
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
-        boolean skipLv1Test = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
-        boolean skipLv2Test = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.lv2.skiptest", false);
-        boolean skipRealisTest = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
-        boolean skipCorefTest = kbpConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
-        boolean skipJointTest = kbpConfig.getBoolean("edu.cmu.cs.lti.joint.skiptest", false);
-
         pipeline.prepare(kbpConfig, reader);
-        pipeline.test(kbpConfig, skipLv1Test, skipLv2Test, skipRealisTest, skipCorefTest, skipJointTest);
+        pipeline.trainTest(kbpConfig, false);
     }
 }
