@@ -5,8 +5,9 @@ import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
-import gnu.trove.map.TIntIntMap;
-import gnu.trove.map.hash.TIntIntHashMap;
+import edu.cmu.cs.lti.learning.model.MentionCandidate.DecodingResult;
+import gnu.trove.map.TObjectIntMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
 import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,10 +37,14 @@ public class MentionSubGraph {
     private MentionGraph parentGraph;
 
     // Store edges other than the cluster edges, as adjacent list.
-    private Map<EdgeType, int[][]> resolvedRelations;
+    private Map<EdgeType, ListMultimap<Pair<Integer, String>, Pair<Integer, String>>> resolvedRelations;
 
     // Store coreference chains.
-    private int[][] corefChains;
+//    private int[][] corefChains;
+
+    // Store typed coreference chains, each list represent a chain, where the elements are the
+    // <mention id, mention type> representing the mentions in the chain.
+    private List<Pair<Integer, String>>[] typedCorefChains;
 
     /**
      * Initialize a mention subgraph with all the super graph's node. The edges are empty.
@@ -93,12 +98,12 @@ public class MentionSubGraph {
         this.score = score;
     }
 
-    public Map<EdgeType, int[][]> getResolvedRelations() {
+    public Map<EdgeType, ListMultimap<Pair<Integer, String>, Pair<Integer, String>>> getResolvedRelations() {
         return resolvedRelations;
     }
 
-    public int[][] getCorefChains() {
-        return corefChains;
+    public List<Pair<Integer, String>>[] getCorefChains() {
+        return typedCorefChains;
     }
 
 
@@ -192,15 +197,27 @@ public class MentionSubGraph {
      */
     public void resolveCoreference(int untilNode) {
         List<Set<Integer>> clusters = new ArrayList<>();
-
         SetMultimap<EdgeType, Pair<Integer, Integer>> allRelations = HashMultimap.create();
         SetMultimap<EdgeType, Pair<Integer, Integer>> interRelations = HashMultimap.create();
 
+        List<Set<Pair<Integer, String>>> typedClusters = new ArrayList<>();
+        SetMultimap<Integer, Pair<Integer, String>> indexedTypedClusters = HashMultimap.create();
+        SetMultimap<EdgeType, Pair<Pair<Integer, String>, Pair<Integer, String>>> allTypedRelations =
+                HashMultimap.create();
+
         // Collect stuff from the edgeTable, until the limit
+        int typedClusterId = 0;
         for (SubGraphEdge edge : edgeTable.values()) {
             EdgeType type = edge.getEdgeType();
             int govNode = edge.getGov();
             int depNode = edge.getDep();
+
+            DecodingResult depKey = edge.getDepKey();
+            DecodingResult govKey = edge.getGovKey();
+
+            Pair<Integer, String> typedGovNode = Pair.with(govNode, govKey.getMentionType());
+
+            Pair<Integer, String> typedDepNode = Pair.with(depNode, depKey.getMentionType());
 
             if (govNode > untilNode || depNode > untilNode) {
                 continue;
@@ -211,6 +228,14 @@ public class MentionSubGraph {
                 Set<Integer> newCluster = new HashSet<>();
                 newCluster.add(depNode);
                 clusters.add(newCluster);
+
+                Set<Pair<Integer, String>> newTypedCluster = new HashSet<>();
+                newTypedCluster.add(typedDepNode);
+                typedClusters.add(newTypedCluster);
+
+                // Created a new cluster.
+                indexedTypedClusters.put(typedClusterId, typedDepNode);
+                typedClusterId++;
             } else if (type.equals(EdgeType.Coreference)) {
                 // Add the node to one of the existing node.
                 for (Set<Integer> cluster : clusters) {
@@ -219,21 +244,38 @@ public class MentionSubGraph {
                         break;
                     }
                 }
+
+                for (Set<Pair<Integer, String>> typedCluster : typedClusters) {
+                    if (typedCluster.contains(typedDepNode)) {
+                        typedCluster.add(typedDepNode);
+                        break;
+                    }
+                }
+
+                for (Integer eventId : indexedTypedClusters.keySet()) {
+                    Set<Pair<Integer, String>> typedCluster = indexedTypedClusters.get(eventId);
+                    if (typedCluster.contains(typedGovNode)) {
+                        typedCluster.add(typedDepNode);
+                        break;
+                    }
+                }
+
             } else {
-                // For all other relation types, remember them first.
+                // For all other relation types, simply record them first.
                 allRelations.put(type, Pair.with(govNode, depNode));
+                allTypedRelations.put(type, Pair.with(typedGovNode, typedDepNode));
             }
         }
 
-        ArrayListMultimap<Integer, Integer> group2Clusters = ArrayListMultimap.create();
-        TIntIntMap node2ClusterId = new TIntIntHashMap();
-        int clusterId = 0;
-        for (Set<Integer> cluster : clusters) {
-            group2Clusters.putAll(clusterId, cluster);
-            for (int clusterNode : cluster) {
-                node2ClusterId.put(clusterNode, clusterId);
+//        Multimap<Integer, Pair<Integer, Integer>> group2Clusters = ArrayListMultimap.create();
+//        TIntIntMap node2ClusterId = new TIntIntHashMap();
+
+        TObjectIntMap<Pair<Integer, String>> node2ClusterId = new TObjectIntHashMap<>();
+
+        for (Map.Entry<Integer, Collection<Pair<Integer, String>>> cluster : indexedTypedClusters.asMap().entrySet()) {
+            for (Pair<Integer, String> element : cluster.getValue()) {
+                node2ClusterId.put(element, cluster.getKey());
             }
-            clusterId++;
         }
 
         // Propagate relations within cluster.
@@ -245,9 +287,9 @@ public class MentionSubGraph {
         }
 
         // Create links for nodes in clusters.
-        resolvedRelations = GraphUtils.resolveRelations(interRelations, group2Clusters, numNodes);
+        resolvedRelations = GraphUtils.resolveRelations(interRelations, indexedTypedClusters);
         // Create a coreference chain.
-        corefChains = GraphUtils.createSortedCorefChains(group2Clusters);
+        typedCorefChains = GraphUtils.createSortedCorefChains(indexedTypedClusters);
     }
 
 
@@ -273,12 +315,11 @@ public class MentionSubGraph {
 
         // Variable indicating whether the other mention links are matched.
         boolean linkMatch = true;
-        for (Map.Entry<MentionGraphEdge.EdgeType, int[][]> predictEdgesWithType : this.getResolvedRelations()
-                .entrySet()) {
-            int[][] actualEdges = this.parentGraph.getResolvedRelations().get(predictEdgesWithType.getKey());
-            if (!Arrays.deepEquals(predictEdgesWithType.getValue(), actualEdges)) {
-                linkMatch = false;
-            }
+        for (Map.Entry<EdgeType, ListMultimap<Pair<Integer, String>, Pair<Integer, String>>> predictEdgesWithType :
+                this.getResolvedRelations().entrySet()) {
+            ListMultimap<Pair<Integer, String>, Pair<Integer, String>> actualEdges =
+                    this.parentGraph.getResolvedRelations().get(predictEdgesWithType.getKey());
+            linkMatch = predictEdgesWithType.getValue().equals(actualEdges);
         }
         return corefMatch && linkMatch;
     }
@@ -306,10 +347,13 @@ public class MentionSubGraph {
 
         // Variable indicating whether the other mention links are matched.
         boolean linkMatch = true;
-        for (Map.Entry<MentionGraphEdge.EdgeType, int[][]> predictEdgesWithType : this.getResolvedRelations()
-                .entrySet()) {
-            int[][] actualEdges = referentGraph.getResolvedRelations().get(predictEdgesWithType.getKey());
-            if (!Arrays.deepEquals(predictEdgesWithType.getValue(), actualEdges)) {
+        for (Map.Entry<EdgeType, ListMultimap<Pair<Integer, String>, Pair<Integer, String>>> predictEdgesWithType :
+                this.getResolvedRelations().entrySet()) {
+            ListMultimap<Pair<Integer, String>, Pair<Integer, String>> actualEdges = referentGraph
+                    .getResolvedRelations().get(predictEdgesWithType.getKey());
+            ListMultimap<Pair<Integer, String>, Pair<Integer, String>> predictedEdges = predictEdgesWithType.getValue();
+
+            if (!actualEdges.equals(predictedEdges)) {
                 linkMatch = false;
             }
         }

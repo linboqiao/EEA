@@ -39,8 +39,10 @@ public class DiscriminativeUpdater {
 
     private double defaultStepSize = 0.1; // Default step size used by the perceptron trainer.
 
-    private String corefName = DelayedLaSOJointTrainer.COREF_MODEL_NAME;
     private String mentionName = DelayedLaSOJointTrainer.TYPE_MODEL_NAME;
+    private String corefName = DelayedLaSOJointTrainer.COREF_MODEL_NAME;
+
+    private String[] modelNames = new String[]{mentionName, corefName};
 
     public DiscriminativeUpdater() {
         allWeights = new HashMap<>();
@@ -167,21 +169,57 @@ public class DiscriminativeUpdater {
 //        logger.debug("Loss for " + name + " is " + loss);
     }
 
-    public double update(String name) {
+    public TObjectDoubleMap<String> update() {
         // Update and then clear accumulated stuff.
-        if (name.equals(mentionName)) {
-            vanillaUpdate(name);
-        } else {
-            paUpdate(name);
-        }
+        paUpdate();
 
         // Logging the loss.
-        double loss = allLoss.get(name);
+        TObjectDoubleMap<String> currentLoss = new TObjectDoubleHashMap<>();
 
-        allDelta.put(name, newDelta(name));
-        allLoss.put(name, 0);
+        allLoss.forEachEntry((a, b) -> {
+            currentLoss.put(a, b);
+            return true;
+        });
 
-        return loss;
+        for (String name : modelNames) {
+            allDelta.put(name, newDelta(name));
+            allLoss.put(name, 0);
+        }
+
+        return currentLoss;
+    }
+
+    public double paUpdate() {
+//        logger.info("PA Updating " + name);
+        GraphFeatureVector corefDelta = allDelta.get(corefName);
+        GraphFeatureVector mentionDelta = allDelta.get(mentionName);
+        double corefLoss = allLoss.get(corefName);
+        double mentionLoss = allLoss.get(mentionName);
+
+        double totalLoss = corefLoss + mentionLoss;
+
+        if (totalLoss != 0) {
+            double l2 = Math.sqrt(Math.pow(corefDelta.getFeatureL2(), 2) + Math.pow(mentionDelta.getFeatureL2(), 2));
+            double tau = totalLoss / l2;
+
+//            // Sometimes we saw INFINITY weight value, it is likely to be cause by a empty l2.
+//            if (l2 == 0) {
+//                logger.debug(corefDelta.readableNodeVector());
+//                logger.debug("Loss is " + corefLoss);
+//                logger.debug("Feature L2 is " + l2);
+//                logger.debug("Update features by " + tau);
+//                DebugUtils.pause(logger);
+//            }
+
+            GraphWeightVector corefWeights = allWeights.get(corefName);
+            corefWeights.updateWeightsBy(corefDelta, tau);
+            corefWeights.updateAverageWeights();
+
+            GraphWeightVector mentionWeights = allWeights.get(mentionName);
+            mentionWeights.updateWeightsBy(mentionDelta, tau);
+            mentionWeights.updateAverageWeights();
+        }
+        return corefLoss;
     }
 
     public void vanillaUpdate(String name) {
@@ -193,7 +231,6 @@ public class DiscriminativeUpdater {
 
     public double paUpdate(String name) {
 //        logger.info("PA Updating " + name);
-
         GraphFeatureVector delta = allDelta.get(name);
         double loss = allLoss.get(name);
 

@@ -222,13 +222,14 @@ public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
     private void annotatePredictedCoreference(JCas aJCas, MentionGraph mentionGraph, MentionSubGraph predictedTree,
                                               List<EventMention> allMentions) {
         predictedTree.resolveCoreference();
-        int[][] corefChains = predictedTree.getCorefChains();
+        List<org.javatuples.Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
 
-        for (int[] corefChain : corefChains) {
+        for (List<org.javatuples.Pair<Integer, String>> corefChain : corefChains) {
             List<EventMention> predictedChain = new ArrayList<>();
             Map<Span, EventMention> span2Mentions = new HashMap<>();
 
-            for (int nodeId : corefChain) {
+            for (org.javatuples.Pair<Integer, String> typedNode : corefChain) {
+                int nodeId = typedNode.getValue0();
                 int mentionIndex = mentionGraph.getCandidateIndex(nodeId);
                 EventMention mention = allMentions.get(mentionIndex);
                 Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());

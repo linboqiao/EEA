@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
-import com.google.common.collect.Iterables;
 import edu.cmu.cs.lti.emd.annotators.crf.MentionTypeCrfTrainer;
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
@@ -13,8 +12,6 @@ import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.*;
-import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
-import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -29,6 +26,7 @@ import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.javatuples.Pair;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,7 +36,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA.
@@ -94,48 +91,40 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
 
         NodeLinkingState decodedState = decoder.decode(aJCas, mentionGraph, candidates, true);
 
-        List<EventMention> allMentions = new ArrayList<>();
-        for (List<MentionCandidate.DecodingResult> decodingResult : decodedState.getNodeResults()) {
-            String type = MentionTypeUtils.joinMultipleTypes(decodingResult.stream().map(r -> r.getMentionType())
-                    .collect(Collectors.toList()));
+        Map<Pair<Integer, String>, EventMention> node2Mention = new HashMap<>();
 
-            MentionCandidate.DecodingResult firstResult = Iterables.get(decodingResult, 0);
-            if (!type.equals(ClassAlphabet.noneOfTheAboveClass)) {
-                EventMention mention = new EventMention(aJCas, firstResult.getBegin(), firstResult.getEnd());
-                mention.setRealisType(firstResult.getRealis());
-                UimaAnnotationUtils.finishAnnotation(mention, COMPONENT_ID, 0, aJCas);
-                allMentions.add(mention);
+        List<List<MentionCandidate.DecodingResult>> nodeResults = decodedState.getNodeResults();
+        for (int nodeIndex = 0; nodeIndex < nodeResults.size(); nodeIndex++) {
+            List<MentionCandidate.DecodingResult> decodingResult = nodeResults.get(nodeIndex);
+            if (MentionCandidate.isRootKey(decodingResult)) {
+                continue;
             }
 
             for (MentionCandidate.DecodingResult result : decodingResult) {
-                EventMention mention = new EventMention(aJCas, result.getBegin(), result.getEnd());
-                mention.setRealisType(result.getRealis());
-                mention.setEventType(result.getMentionType());
-                UimaAnnotationUtils.finishAnnotation(mention, COMPONENT_ID, 0, aJCas);
-                allMentions.add(mention);
+                if (!result.getMentionType().equals(ClassAlphabet.noneOfTheAboveClass)) {
+                    EventMention mention = new EventMention(aJCas, result.getBegin(), result.getEnd());
+                    mention.setRealisType(result.getRealis());
+                    mention.setEventType(result.getMentionType());
+                    UimaAnnotationUtils.finishAnnotation(mention, COMPONENT_ID, 0, aJCas);
+                    node2Mention.put(Pair.with(nodeIndex, result.getMentionType()), mention);
+                }
             }
         }
 
-        annotatePredictedCoreference(aJCas, mentionGraph, decodedState.getDecodingTree(), allMentions);
+        annotatePredictedCoreference(aJCas, decodedState.getDecodingTree(), node2Mention);
     }
 
-    private void annotatePredictedCoreference(JCas aJCas, MentionGraph mentionGraph, MentionSubGraph predictedTree,
-                                              List<EventMention> allMentions) {
+    private void annotatePredictedCoreference(JCas aJCas, MentionSubGraph predictedTree,
+                                              Map<Pair<Integer, String>, EventMention> node2Mention) {
         predictedTree.resolveCoreference();
-        int[][] corefChains = predictedTree.getCorefChains();
+        List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
 
-        for (int[] corefChain : corefChains) {
+        for (List<Pair<Integer, String>> corefChain : corefChains) {
             List<EventMention> predictedChain = new ArrayList<>();
-            Map<Span, EventMention> span2Mentions = new HashMap<>();
 
-            for (int nodeId : corefChain) {
-                int mentionIndex = mentionGraph.getCandidateIndex(nodeId);
-                EventMention mention = allMentions.get(mentionIndex);
-                Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());
-                if (!span2Mentions.containsKey(mentionSpan)) {
-                    span2Mentions.put(Span.of(mention.getBegin(), mention.getEnd()), mention);
-                    predictedChain.add(mention);
-                }
+            for (Pair<Integer, String> typedNode : corefChain) {
+                EventMention mention =  node2Mention.get(typedNode);
+                predictedChain.add(mention);
             }
 
             if (predictedChain.size() > 1) {

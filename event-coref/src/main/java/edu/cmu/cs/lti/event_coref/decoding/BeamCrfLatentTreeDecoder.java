@@ -327,12 +327,11 @@ public class BeamCrfLatentTreeDecoder {
 
             // Update based on cumulative errors.
             logger.debug("Applying updates to " + DelayedLaSOJointTrainer.TYPE_MODEL_NAME);
-            double typeLoss = updater.update(DelayedLaSOJointTrainer.TYPE_MODEL_NAME);
-            typeTrainingStats.addLoss(logger, typeLoss / mentionGraph.numNodes());
+            TObjectDoubleMap<String> losses = updater.update();
+            typeTrainingStats.addLoss(logger, losses.get(DelayedLaSOJointTrainer.TYPE_MODEL_NAME) / mentionGraph.numNodes());
 
             logger.debug("Applying updates to " + DelayedLaSOJointTrainer.COREF_MODEL_NAME);
-            double corefLoss = updater.update(DelayedLaSOJointTrainer.COREF_MODEL_NAME);
-            corefTrainingStats.addLoss(logger, corefLoss / mentionGraph.numNodes());
+            corefTrainingStats.addLoss(logger, losses.get(DelayedLaSOJointTrainer.COREF_MODEL_NAME) / mentionGraph.numNodes());
         }
 
         return decodingAgenda.getBeamStates().peek();

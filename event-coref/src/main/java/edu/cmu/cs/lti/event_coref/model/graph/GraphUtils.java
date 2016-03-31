@@ -1,8 +1,9 @@
 package edu.cmu.cs.lti.event_coref.model.graph;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.primitives.Ints;
+import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
 import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,31 +44,38 @@ public class GraphUtils {
         return transitiveResolvedRelations;
     }
 
-    public static <T> int[][] resolveEquivalence(Multimap<T, T> transitiveResolvedAdjacentGroup,
-                                                 Multimap<T, Integer> group2Clusters, int numNodes) {
-        ArrayListMultimap<Integer, Integer> transitiveResolvedAdjacentMentions = ArrayListMultimap.create();
+    /**
+     * Propagate the relations between with among coreference clusters.
+     *
+     * @param clusterAdjacent Adjacent list for the clusters.
+     * @param group2Clusters  Map from each cluster to the mentions.
+     * @param <M>             Type representing mention.
+     * @param <E>             Type representing mention cluster.
+     * @return
+     */
+    public static <E, M extends Comparable> ArrayListMultimap<M, M> resolveEquivalence(
+            Multimap<E, E> clusterAdjacent, Multimap<E, M> group2Clusters) {
+        ArrayListMultimap<M, M> mentionAdjacent = ArrayListMultimap.create();
+        ArrayListMultimap<M, M> sortedMentionAdjacent = ArrayListMultimap.create();
 
-        int[][] mentionAdjacentArray = new int[numNodes][];
+        for (Map.Entry<E, E> relationEventPair : clusterAdjacent.entries()) {
+            Collection<M> govCluster = group2Clusters.get(relationEventPair.getKey());
+            Collection<M> depCluster = group2Clusters.get(relationEventPair.getValue());
 
-        for (Map.Entry<T, T> relationEventPair : transitiveResolvedAdjacentGroup.entries()) {
-            Collection<Integer> govCluster = group2Clusters.get(relationEventPair.getKey());
-            Collection<Integer> depCluster = group2Clusters.get(relationEventPair.getValue());
-            for (int govMentionId : govCluster) {
-                for (int depMentionId : depCluster) {
-                    transitiveResolvedAdjacentMentions.put(govMentionId, depMentionId);
+            for (M govMention : govCluster) {
+                for (M depMention : depCluster) {
+                    mentionAdjacent.put(govMention, depMention);
                 }
             }
         }
 
-        for (Map.Entry<Integer, Collection<Integer>> mentionRow : transitiveResolvedAdjacentMentions.asMap().entrySet
-                ()) {
-            int mentionId = mentionRow.getKey();
-            int[] adjacentMentions = Ints.toArray(mentionRow.getValue());
-            Arrays.sort(adjacentMentions);
-            mentionAdjacentArray[mentionId] = adjacentMentions;
+        for (Map.Entry<M, Collection<M>> mentionRow : mentionAdjacent.asMap().entrySet()) {
+            M mention = mentionRow.getKey();
+            List<M> adjacentElements = new ArrayList<>(mentionRow.getValue());
+            Collections.sort(adjacentElements);
+            sortedMentionAdjacent.putAll(mention, adjacentElements);
         }
-
-        return mentionAdjacentArray;
+        return sortedMentionAdjacent;
     }
 
 
@@ -75,24 +83,26 @@ public class GraphUtils {
      * From list of clusters, grouped by whatever key T, convert to sorted coref chains.
      *
      * @param group2Clusters Map from the cluster Id to elements in the cluster.
-     * @param <T>            The type representing the cluster id.
+     * @param <E>            The type representing the cluster id.
+     * @param <M>            The type representing the cluster element.
      * @return List of non-singleton coreference chains sorted by event mention id.
      */
-    public static <T> int[][] createSortedCorefChains(Multimap<T, Integer> group2Clusters) {
-        SortedMap<Integer, int[]> chainsSortedByHead = new TreeMap<>();
-        for (Map.Entry<T, Collection<Integer>> entry : group2Clusters.asMap().entrySet()) {
-            Collection<Integer> chainList = entry.getValue();
+    public static <E, M extends Comparable> List<M>[] createSortedCorefChains(
+            Multimap<E, M> group2Clusters) {
+        SortedMap<M, List<M>> chainsSortedByHead = new TreeMap<>();
+        for (Map.Entry<E, Collection<M>> entry : group2Clusters.asMap().entrySet()) {
+            List<M> chainList = new ArrayList<>(entry.getValue());
             if (chainList.size() > 1) {
-                int[] chainArr = Ints.toArray(chainList);
-                Arrays.sort(chainArr);
-                Integer headId = chainArr[0];
-                chainsSortedByHead.put(headId, chainArr);
+                Collections.sort(chainList);
+                M firstElement = chainList.get(0);
+                chainsSortedByHead.put(firstElement, chainList);
             }
         }
 
         int clusterId = 0;
-        int[][] corefChains = new int[chainsSortedByHead.size()][];
-        for (Map.Entry<Integer, int[]> entry : chainsSortedByHead.entrySet()) {
+//        int[][] corefChains = new int[chainsSortedByHead.size()][];
+        List<M>[] corefChains = new List[chainsSortedByHead.size()];
+        for (Map.Entry<M, List<M>> entry : chainsSortedByHead.entrySet()) {
             corefChains[clusterId++] = entry.getValue();
         }
         return corefChains;
@@ -101,27 +111,25 @@ public class GraphUtils {
     /**
      * Propagate all transitive and equivalence relations to all the nodes.
      *
+     * @param <T>                   The type representing a cluster of nodes (e.g. event for event mentions)
      * @param interClusterRelations Relations in between clusters.
      * @param clusters              Nodes contained in the cluster.
-     * @param numNodes              Total number of nodes in the graph.
-     * @param <T>                   The type representing a cluster of nodes (e.g. event for event mentions)
      * @return The resolved graph as adjacent list, stored separated for each edge type.
      */
-    public static <T> Map<MentionGraphEdge.EdgeType, int[][]> resolveRelations(
-            Multimap<MentionGraphEdge.EdgeType, Pair<T, T>> interClusterRelations,
-            Multimap<T, Integer> clusters, int numNodes) {
-        Map<MentionGraphEdge.EdgeType, int[][]> edgeAdjacentList = new HashMap<>();
+    public static <T extends Comparable> Map<EdgeType, ListMultimap<T, T>> resolveRelations(
+            Multimap<EdgeType, Pair<Integer, Integer>> interClusterRelations, Multimap<Integer, T> clusters) {
+        Map<EdgeType, ListMultimap<T, T>> relationAdjacentLists = new HashMap<>();
 
-        for (Map.Entry<MentionGraphEdge.EdgeType, Collection<Pair<T, T>>> relationsByType : interClusterRelations
+        for (Map.Entry<EdgeType, Collection<Pair<Integer, Integer>>> relationsByType : interClusterRelations
                 .asMap().entrySet()) {
             // Resolve transitive.
-            ArrayListMultimap<T, T> transitiveResolvedAdjacentEvents = GraphUtils.linkTransitiveRelations
-                    (relationsByType.getValue());
+            ArrayListMultimap<Integer, Integer> eventRelationAdjacentList =
+                    GraphUtils.linkTransitiveRelations(relationsByType.getValue());
             // Resolve equivalence.
-            int[][] mentionAdjacentArray = GraphUtils.resolveEquivalence(transitiveResolvedAdjacentEvents, clusters,
-                    numNodes);
-            edgeAdjacentList.put(relationsByType.getKey(), mentionAdjacentArray);
+            ArrayListMultimap<T, T> mentionAdjacentArray =
+                    GraphUtils.resolveEquivalence(eventRelationAdjacentList, clusters);
+            relationAdjacentLists.put(relationsByType.getKey(), mentionAdjacentArray);
         }
-        return edgeAdjacentList;
+        return relationAdjacentLists;
     }
 }

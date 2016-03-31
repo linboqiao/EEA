@@ -35,13 +35,6 @@ public class LabelLinkAgenda {
 
     private List<MentionCandidate> candidates;
 
-//    // Only one set of the features is recorded: which is the features for the best scored new states.
-//    // These features are delta over the previous vectors, i.e. they are not the features from starting the decoding
-//    // to date, but only the new features introduced in this state update.
-//    private GraphFeatureVector bestDeltaLabelFv;
-//
-//    private List<Pair<EdgeType, FeatureVector>> bestDeltaCorefVectors;
-
     private int beamSize;
 
     private List<List<MentionCandidate.DecodingResult>> actualDecodingSequence = new ArrayList<>();

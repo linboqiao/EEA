@@ -29,6 +29,7 @@ import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.javatuples.Pair;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -128,16 +129,16 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
                 lagrangian);
 
         predictedTree.resolveCoreference();
-        int[][] corefChains = predictedTree.getCorefChains();
+        List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
 
 //        logger.info(predictedTree.toString());
 
-        for (int[] corefChain : corefChains) {
+        for (List<Pair<Integer, String>> corefChain : corefChains) {
             List<EventMention> predictedChain = new ArrayList<>();
             Map<Span, EventMention> span2Mentions = new HashMap<>();
 
-            for (int nodeId : corefChain) {
-                int mentionIndex = mentionGraph.getCandidateIndex(nodeId);
+            for (Pair<Integer, String> typedNode : corefChain) {
+                int mentionIndex = mentionGraph.getCandidateIndex(typedNode.getValue0());
                 EventMention mention = allMentions.get(mentionIndex);
                 Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());
                 if (!span2Mentions.containsKey(mentionSpan)) {

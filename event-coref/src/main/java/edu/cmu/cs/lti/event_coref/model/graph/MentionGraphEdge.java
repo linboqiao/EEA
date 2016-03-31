@@ -40,7 +40,7 @@ public class MentionGraphEdge implements Serializable {
     private final int govIdx;
     private final int depIdx;
 
-    public enum EdgeType {Root, Coreference}
+    public enum EdgeType {Root, predictedEdges, Coreference}
 
     private PairFeatureExtractor extractor;
 

@@ -47,6 +47,13 @@ public class MentionCandidate {
         return String.format("%s,[%s]_[%s],[%d,%d]", headWord.getCoveredText(), mentionType, realis, begin, end);
     }
 
+    public static boolean isRootKey(List<DecodingResult> key) {
+        return key.size() > 1 && key.get(0).equals(rootKey.get(0));
+    }
+
+    /**
+     * This is basically a hashable, serializable representation of the candidate.
+     */
     public static class DecodingResult {
         private int begin;
         private int end;

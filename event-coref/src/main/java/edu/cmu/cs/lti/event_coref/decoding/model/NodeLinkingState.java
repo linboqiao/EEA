@@ -34,8 +34,9 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     // So the value of this index can be used to retrieve the corresponding graph node from the MentionGraph.
     private int nodeIndex;
 
-    // Here is the node decoding results for each token. There are multiple possible types for a token, so each token
-    // is corresponding multiple decoding results.
+    // Here is the node decoding results. Each item in the outer list correspond to a node in the graph (which
+    // includes the root node as well). There are multiple possible types for a node, so each node is corresponding
+    // multiple decoding results (The inner list).
     private List<List<DecodingResult>> nodeResults;
 
     private MentionSubGraph decodingTree;

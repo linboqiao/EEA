@@ -143,7 +143,7 @@ public class DDLatentTreeCrfDecoder {
 
     private boolean matches(SequenceSolution typeSolution, MentionSubGraph corefTree) {
         corefTree.resolveCoreference();
-        int[][] corefChains = corefTree.getCorefChains();
+        List<org.javatuples.Pair<Integer, String>>[] corefChains = corefTree.getCorefChains();
         int[][] corefAdjacentList = chainAsAdjacentList(corefChains, typeSolution.getSequenceLength());
 
         boolean achieveOptimal = true;
@@ -222,14 +222,16 @@ public class DDLatentTreeCrfDecoder {
      * @param numNodes    Number of nodes in the sequence.
      * @return A adjacent list represent all coreference, using sequence id.
      */
-    private int[][] chainAsAdjacentList(int[][] corefChains, int numNodes) {
+    private int[][] chainAsAdjacentList(List<org.javatuples.Pair<Integer, String>>[] corefChains, int numNodes) {
         int[][] adjacentList = new int[numNodes][numNodes];
 
         Set<Pair<Integer, Integer>> corefs = new HashSet<>();
 
-        for (int[] corefChain : corefChains) {
-            for (int firstNodeId : corefChain) {
-                for (int secondNodeId : corefChain) {
+        for (List<org.javatuples.Pair<Integer, String>> corefChain : corefChains) {
+            for (org.javatuples.Pair<Integer, String> firstNode : corefChain) {
+                int firstNodeId = firstNode.getValue0();
+                for (org.javatuples.Pair<Integer, String> secondNode : corefChain) {
+                    int secondNodeId = secondNode.getValue0();
                     // Root nodes are not considered in coref links.
                     if (firstNodeId > 0 && secondNodeId > 0 && firstNodeId != secondNodeId) {
                         corefs.add(Pair.of(firstNodeId - 1, secondNodeId - 1));
