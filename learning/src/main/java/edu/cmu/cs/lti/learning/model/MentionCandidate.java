@@ -48,7 +48,7 @@ public class MentionCandidate {
     }
 
     public static boolean isRootKey(List<DecodingResult> key) {
-        return key.size() > 1 && key.get(0).equals(rootKey.get(0));
+        return key.size() > 0 && key.get(0).equals(rootKey.get(0));
     }
 
     /**

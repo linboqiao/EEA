@@ -89,7 +89,6 @@ public class LabelLinkAgenda {
                        List<EdgeType> linkType, List<DecodingResult> govKeys, List<DecodingResult> depKeys,
                        double additionalScore, GraphFeatureVector newLabelFv,
                        List<Pair<EdgeType, FeatureVector>> newCorefFv) {
-
         if (linkType.size() != govKeys.size() || antecedent.size() != linkType.size() ||
                 govKeys.size() != antecedent.size() || govKeys.size() != depKeys.size()) {
             throw new IllegalArgumentException(String.format("Wrong state input. gov key size : %d,  dep key size : " +

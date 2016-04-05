@@ -196,11 +196,11 @@ public class MentionSubGraph {
      * Convert the tree to transitive and equivalence resolved graph
      */
     public void resolveCoreference(int untilNode) {
-        List<Set<Integer>> clusters = new ArrayList<>();
+//        List<Set<Integer>> clusters = new ArrayList<>();
         SetMultimap<EdgeType, Pair<Integer, Integer>> allRelations = HashMultimap.create();
         SetMultimap<EdgeType, Pair<Integer, Integer>> interRelations = HashMultimap.create();
 
-        List<Set<Pair<Integer, String>>> typedClusters = new ArrayList<>();
+//        List<Set<Pair<Integer, String>>> typedClusters = new ArrayList<>();
         SetMultimap<Integer, Pair<Integer, String>> indexedTypedClusters = HashMultimap.create();
         SetMultimap<EdgeType, Pair<Pair<Integer, String>, Pair<Integer, String>>> allTypedRelations =
                 HashMultimap.create();
@@ -209,6 +209,7 @@ public class MentionSubGraph {
         int typedClusterId = 0;
         for (SubGraphEdge edge : edgeTable.values()) {
             EdgeType type = edge.getEdgeType();
+
             int govNode = edge.getGov();
             int depNode = edge.getDep();
 
@@ -220,38 +221,16 @@ public class MentionSubGraph {
             Pair<Integer, String> typedDepNode = Pair.with(depNode, depKey.getMentionType());
 
             if (govNode > untilNode || depNode > untilNode) {
+                // Don't break here since we are not sure that the edges are sorted.
                 continue;
             }
 
             if (type.equals(EdgeType.Root)) {
                 // If this link to root, start a new cluster.
-                Set<Integer> newCluster = new HashSet<>();
-                newCluster.add(depNode);
-                clusters.add(newCluster);
-
-                Set<Pair<Integer, String>> newTypedCluster = new HashSet<>();
-                newTypedCluster.add(typedDepNode);
-                typedClusters.add(newTypedCluster);
-
-                // Created a new cluster.
                 indexedTypedClusters.put(typedClusterId, typedDepNode);
                 typedClusterId++;
             } else if (type.equals(EdgeType.Coreference)) {
-                // Add the node to one of the existing node.
-                for (Set<Integer> cluster : clusters) {
-                    if (cluster.contains(govNode)) {
-                        cluster.add(depNode);
-                        break;
-                    }
-                }
-
-                for (Set<Pair<Integer, String>> typedCluster : typedClusters) {
-                    if (typedCluster.contains(typedDepNode)) {
-                        typedCluster.add(typedDepNode);
-                        break;
-                    }
-                }
-
+                // Add the node to one of the existing cluster.
                 for (Integer eventId : indexedTypedClusters.keySet()) {
                     Set<Pair<Integer, String>> typedCluster = indexedTypedClusters.get(eventId);
                     if (typedCluster.contains(typedGovNode)) {
@@ -262,13 +241,11 @@ public class MentionSubGraph {
 
             } else {
                 // For all other relation types, simply record them first.
+                logger.info(String.format("Adding relation %s between %s and %s", type, govNode, depNode));
                 allRelations.put(type, Pair.with(govNode, depNode));
                 allTypedRelations.put(type, Pair.with(typedGovNode, typedDepNode));
             }
         }
-
-//        Multimap<Integer, Pair<Integer, Integer>> group2Clusters = ArrayListMultimap.create();
-//        TIntIntMap node2ClusterId = new TIntIntHashMap();
 
         TObjectIntMap<Pair<Integer, String>> node2ClusterId = new TObjectIntHashMap<>();
 

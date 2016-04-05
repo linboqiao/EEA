@@ -781,8 +781,8 @@ public class EventMentionPipeline {
     }
 
     private CollectionReaderDescription beamJointSpanCoref(Configuration config, CollectionReaderDescription reader,
-                                                           String modelDir, String mainDir, String outputBase,
-                                                           boolean skipTest) throws
+                                                           String modelDir, String realisDir, String mainDir,
+                                                           String outputBase, boolean skipTest) throws
             UIMAException, SAXException, CpeDescriptorException, IOException {
         logger.info("Running joint beam mention detection and coreference, output at " + outputBase);
 
@@ -801,7 +801,8 @@ public class EventMentionPipeline {
                     AnalysisEngineDescription jointDecoder = AnalysisEngineFactory.createEngineDescription(
                             JointMentionCorefAnnotator.class, typeSystemDescription,
                             JointMentionCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
-                            JointMentionCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir
+                            JointMentionCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                            JointMentionCorefAnnotator.PARAM_REALIS_MODEL_DIRECTORY, realisDir
                     );
 
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();
@@ -1004,19 +1005,24 @@ public class EventMentionPipeline {
                 skipCorefTest);
 
         CollectionReaderDescription jointSpanCorefMentions = beamJointSpanCoref(taskConfig, testReader,
-                beamJointModel, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix,
-                        "joint_span_coref"), skipBeamTest);
+                beamJointModel, realisModelDir, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "joint_span_coref"), skipBeamTest);
 
         CollectionReaderDescription corefGoldType = corefResolution(taskConfig, goldTypeSystemRealis,
                 treeCorefModel, trainingWorkingDir,
                 FileUtils.joinPaths(middleResults, sliceSuffix, "coref_gold_type"), true,
                 skipCorefTest);
+
         CollectionReaderDescription corefGoldTypeRealis = corefResolution(taskConfig, goldMentionAll,
                 treeCorefModel, trainingWorkingDir,
                 FileUtils.joinPaths(middleResults, sliceSuffix, "coref_gold_type+realis"), true,
                 skipCorefTest);
 
         // Write the predictions.
+        writeResults(
+                corefSentMentions,
+                FileUtils.joinPaths(evalDir, "lv1_coref_" + sliceSuffix + ".tbf"), "tree_coref"
+        );
         writeResults(corefGoldType,
                 FileUtils.joinPaths(evalDir, "gold_type_coref_" + sliceSuffix + ".tbf"), "gold_types"
         );
@@ -1025,11 +1031,7 @@ public class EventMentionPipeline {
                 FileUtils.joinPaths(evalDir, "gold_type_realis_coref_" + sliceSuffix + ".tbf"), "tree_coref"
         );
         writeResults(
-                corefSentMentions,
-                FileUtils.joinPaths(evalDir, "lv1_coref_" + sliceSuffix + ".tbf"), "tree_coref"
-        );
-        writeResults(
-                jointSpanCorefMentions, FileUtils.joinPaths(evalDir, "joint_span_coref" + sliceSuffix + ".tbf"),
+                jointSpanCorefMentions, FileUtils.joinPaths(evalDir, "joint_span_coref_" + sliceSuffix + ".tbf"),
                 "tree_coref"
         );
 

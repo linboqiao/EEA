@@ -143,7 +143,7 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
 //        logger.debug("Creating mention graph.");
 
         MentionGraph mentionGraph = new MentionGraph(goldCandidates, candidate2Split, splitCandidateTypes,
-                splitCandidate2EventId, relations, mentionPairExtractor);
+                splitCandidate2EventId, relations, mentionPairExtractor, true);
 
 //        logger.debug("Starting decoding.");
         decoder.decode(aJCas, mentionGraph, systemCandidates, goldCandidates, false);

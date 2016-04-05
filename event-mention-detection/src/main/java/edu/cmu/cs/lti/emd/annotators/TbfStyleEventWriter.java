@@ -72,8 +72,8 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             mention2Id.put(mention, eid);
         }
 
-
         int corefIndex = 1;
+//        logger.info("Number of clusters : " + JCasUtil.select(aJCas, Event.class).size());
         for (Event event : JCasUtil.select(aJCas, Event.class)) {
             // Print non-singleton mentions only.
             List<String> eventMentionIds = new ArrayList<>();

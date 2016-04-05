@@ -46,7 +46,7 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
 
 
                 LabelledMentionGraphEdge mentionGraphEdge = mentionGraph.getMentionGraphEdge(curr, ant)
-                        .getLabelledEdge(mentionCandidates, currentKey, antKey);
+                        .getLabelledEdge(mentionCandidates, antKey, currentKey);
 
                 Pair<MentionGraphEdge.EdgeType, Double> bestLabelScore = mentionGraphEdge.getBestLabelScore(weights);
                 double score = bestLabelScore.getValue1();

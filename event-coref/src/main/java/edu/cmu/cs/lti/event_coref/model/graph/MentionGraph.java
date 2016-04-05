@@ -59,9 +59,8 @@ public class MentionGraph implements Serializable {
     /**
      * Provide to the graph with only a list of mentions, no coreference information.
      */
-    public MentionGraph(List<MentionCandidate> mentions, PairFeatureExtractor extractor,
-                        boolean useAverage) {
-        this(mentions, HashMultimap.create(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), extractor);
+    public MentionGraph(List<MentionCandidate> mentions, PairFeatureExtractor extractor, boolean useAverage) {
+        this(mentions, HashMultimap.create(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), extractor, false);
         this.useAverage = useAverage;
     }
 
@@ -79,51 +78,53 @@ public class MentionGraph implements Serializable {
      */
     public MentionGraph(List<MentionCandidate> candidates, SetMultimap<Integer, Integer> candidate2Labelled,
                         List<String> labelledCandidateTypes, Map<Integer, Integer> labelledCandidate2EventIndex,
-                        Map<Pair<Integer, Integer>, String> relations, PairFeatureExtractor extractor) {
-        this.useAverage = false;
+                        Map<Pair<Integer, Integer>, String> relations, PairFeatureExtractor extractor,
+                        boolean isTraining) {
         this.extractor = extractor;
-
-        // Candidates are the index for the actual tokens (or spans) in text, on one candidate there might be
-        // multiple mentions.
-        // mentions are real annotated mentions, where multiple mentions can corresponds to one single candidate.
-        // Nodes is almost corresponded to candidates, we just add one more root node.
-
-        TIntIntMap mention2Nodes = new TIntIntHashMap();
-        for (Map.Entry<Integer, Collection<Integer>> candidate2Mentions : candidate2Labelled.asMap().entrySet()) {
-            int nodeIndex = getNodeIndex(candidate2Mentions.getKey());
-            for (Integer mention : candidate2Mentions.getValue()) {
-                mention2Nodes.put(mention, nodeIndex);
-            }
-        }
-
         numNodes = candidates.size() + 1;
 
-        // Each cluster is represented as a mapping from the event id to the event mention id list.
-        SetMultimap<Integer, Pair<Integer, String>> nodeClusters = HashMultimap.create();
-        SetMultimap<Integer, Integer> labelledClusters = HashMultimap.create();
-
-        groupEventClusters(labelledCandidate2EventIndex, candidate2Labelled, labelledCandidateTypes, nodeClusters,
-                labelledClusters);
-
-        // Group mention nodes into clusters, the first is the event id, the second is the node id.
-        typedCorefChains = GraphUtils.createSortedCorefChains(nodeClusters);
-        List<Integer>[] mentionCorefChains = GraphUtils.createSortedCorefChains(labelledClusters);
-
-        // Edges are 2-d arrays, from current to antecedent. The first node (root), does not have any antecedent, nor
-        // link to any other relations. So it is a empty array. Node 0 has no edges.
+        // Initialize the edges.
+        // Edges are 2-d arrays, from current to antecedent. The first node (root), does not have any antecedent,
+        // nor link to any other relations. So it is a empty array. Node 0 has no edges.
         graphEdges = new MentionGraphEdge[numNodes][];
         for (int curr = 1; curr < numNodes; curr++) {
             graphEdges[curr] = new MentionGraphEdge[numNodes];
         }
 
-        storeCoreferenceEdges(candidates);
+        if (isTraining) {
+            this.useAverage = false;
 
-        // This will store all other relations, which are propagated using the gold clusters.
-        resolvedRelations = GraphUtils.resolveRelations(convertToEventRelation(relations, labelledCandidate2EventIndex),
-                nodeClusters);
+            // Candidates are the index for the actual tokens (or spans) in text, on one candidate there might be
+            // multiple mentions.
+            // Mentions are real annotated mentions, where multiple mentions can corresponds to one single candidate.
+            // Nodes is almost corresponded to candidates, we just add one more root node.
+            TIntIntMap mention2Nodes = new TIntIntHashMap();
+            for (Map.Entry<Integer, Collection<Integer>> candidate2Mentions : candidate2Labelled.asMap().entrySet()) {
+                int nodeIndex = getNodeIndex(candidate2Mentions.getKey());
+                for (Integer mention : candidate2Mentions.getValue()) {
+                    mention2Nodes.put(mention, nodeIndex);
+                }
+            }
 
-        // Link lingering nodes to root.
-        linkToRoot(candidates);
+            // Each cluster is represented as a mapping from the event id to the event mention id list.
+            SetMultimap<Integer, Pair<Integer, String>> nodeClusters = HashMultimap.create();
+            SetMultimap<Integer, Integer> labelledClusters = HashMultimap.create();
+
+            groupEventClusters(labelledCandidate2EventIndex, candidate2Labelled, labelledCandidateTypes, nodeClusters,
+                    labelledClusters);
+
+            // Group mention nodes into clusters, the first is the event id, the second is the node id.
+            typedCorefChains = GraphUtils.createSortedCorefChains(nodeClusters);
+
+            storeCoreferenceEdges(candidates);
+
+            // This will store all other relations, which are propagated using the gold clusters.
+            resolvedRelations = GraphUtils.resolveRelations(
+                    convertToEventRelation(relations, labelledCandidate2EventIndex), nodeClusters);
+
+            // Link lingering nodes to root.
+            linkToRoot(candidates);
+        }
     }
 
     private MentionGraphEdge getEdge(int curr, int ant) {

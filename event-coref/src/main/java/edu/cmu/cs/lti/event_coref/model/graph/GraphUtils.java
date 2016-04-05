@@ -87,8 +87,7 @@ public class GraphUtils {
      * @param <M>            The type representing the cluster element.
      * @return List of non-singleton coreference chains sorted by event mention id.
      */
-    public static <E, M extends Comparable> List<M>[] createSortedCorefChains(
-            Multimap<E, M> group2Clusters) {
+    public static <E, M extends Comparable> List<M>[] createSortedCorefChains(Multimap<E, M> group2Clusters) {
         SortedMap<M, List<M>> chainsSortedByHead = new TreeMap<>();
         for (Map.Entry<E, Collection<M>> entry : group2Clusters.asMap().entrySet()) {
             List<M> chainList = new ArrayList<>(entry.getValue());
@@ -97,10 +96,10 @@ public class GraphUtils {
                 M firstElement = chainList.get(0);
                 chainsSortedByHead.put(firstElement, chainList);
             }
+//            logger.info("Chain list is " + chainList);
         }
 
         int clusterId = 0;
-//        int[][] corefChains = new int[chainsSortedByHead.size()][];
         List<M>[] corefChains = new List[chainsSortedByHead.size()];
         for (Map.Entry<M, List<M>> entry : chainsSortedByHead.entrySet()) {
             corefChains[clusterId++] = entry.getValue();

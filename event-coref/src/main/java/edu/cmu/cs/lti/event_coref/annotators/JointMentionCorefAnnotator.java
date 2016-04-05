@@ -1,12 +1,11 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
-import edu.cmu.cs.lti.emd.annotators.crf.MentionTypeCrfTrainer;
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.decoding.model.NodeLinkingState;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
-import edu.cmu.cs.lti.event_coref.train.PaLatentTreeTrainer;
+import edu.cmu.cs.lti.event_coref.train.DelayedLaSOJointTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
@@ -17,6 +16,7 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.uima.UimaContext;
@@ -94,8 +94,10 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
         Map<Pair<Integer, String>, EventMention> node2Mention = new HashMap<>();
 
         List<List<MentionCandidate.DecodingResult>> nodeResults = decodedState.getNodeResults();
+
         for (int nodeIndex = 0; nodeIndex < nodeResults.size(); nodeIndex++) {
             List<MentionCandidate.DecodingResult> decodingResult = nodeResults.get(nodeIndex);
+
             if (MentionCandidate.isRootKey(decodingResult)) {
                 continue;
             }
@@ -123,7 +125,7 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
             List<EventMention> predictedChain = new ArrayList<>();
 
             for (Pair<Integer, String> typedNode : corefChain) {
-                EventMention mention =  node2Mention.get(typedNode);
+                EventMention mention = node2Mention.get(typedNode);
                 predictedChain.add(mention);
             }
 
@@ -136,6 +138,9 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
                 }
             }
         }
+
+        logger.info(String.format("Found %d clusters in document %s", corefChains.length, UimaConvenience
+                .getShortDocumentName(aJCas)));
     }
 
     private void prepareMentionModel() throws ResourceInitializationException {
@@ -144,7 +149,7 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
         FeatureAlphabet alphabet;
         try {
             crfWeights = SerializationUtils.deserialize(new FileInputStream(new File
-                    (jointModelDir, MentionTypeCrfTrainer.MODEL_NAME)));
+                    (jointModelDir, DelayedLaSOJointTrainer.TYPE_MODEL_NAME)));
             alphabet = crfWeights.getFeatureAlphabet();
 //            classAlphabet = crfWeights.getClassAlphabet();
             featureSpec = crfWeights.getFeatureSpec();
@@ -197,7 +202,7 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
 
         try {
             corefWeights = SerializationUtils.deserialize(new FileInputStream(new File(jointModelDir,
-                    PaLatentTreeTrainer.MODEL_NAME)));
+                    DelayedLaSOJointTrainer.COREF_MODEL_NAME)));
             corefFeatureAlphabet = corefWeights.getFeatureAlphabet();
             corefClassAlphabet = corefWeights.getClassAlphabet();
             featureSpec = corefWeights.getFeatureSpec();
