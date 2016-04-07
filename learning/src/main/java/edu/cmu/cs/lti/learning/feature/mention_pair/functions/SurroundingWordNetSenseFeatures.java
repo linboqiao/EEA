@@ -4,6 +4,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -48,9 +49,9 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
-            candidates, int firstIndex, int secondIndex) {
-        MentionCandidate firstCandidate = candidates.get(firstIndex);
-        MentionCandidate secondCandidate = candidates.get(secondIndex);
+            candidates, NodeKey firstNode, NodeKey secondNode) {
+        MentionCandidate firstCandidate = candidates.get(firstNode.getIndex());
+        MentionCandidate secondCandidate = candidates.get(secondNode.getIndex());
 
         WordNetBasedEntity firstClosestEn = closestWordNetEntity(firstCandidate);
         WordNetBasedEntity secondClosestEn = closestWordNetEntity(secondCandidate);
@@ -82,19 +83,19 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
     @Override
     public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
                                         List
-                                                <MentionCandidate> candidates, int firstIndex, int secondIndex) {
+                                                <MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
 
     }
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
-            secondCandidate) {
+            secondCandidate, NodeKey secondNode) {
 
     }
 
     @Override
     public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate
-            secondCandidate) {
+            secondCandidate, NodeKey secondNode) {
 
     }
 

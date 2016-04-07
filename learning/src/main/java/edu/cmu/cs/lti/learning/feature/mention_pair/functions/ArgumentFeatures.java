@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.SimilarityUtils;
@@ -40,9 +41,10 @@ public class ArgumentFeatures extends AbstractMentionPairFeatures {
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures, List<MentionCandidate> candidates, int firstIndex, int secondIndex) {
-        MentionCandidate firstCandidate = candidates.get(firstIndex);
-        MentionCandidate secondCandidate = candidates.get(secondIndex);
+    public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures,
+                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
+        MentionCandidate firstCandidate = candidates.get(firstNode.getIndex());
+        MentionCandidate secondCandidate = candidates.get(secondNode.getIndex());
 
         for (SemanticRelation firstLink : getArgumentLinks(firstCandidate.getHeadWord())) {
             for (SemanticRelation secondLink : getArgumentLinks(secondCandidate.getHeadWord())) {
@@ -52,20 +54,20 @@ public class ArgumentFeatures extends AbstractMentionPairFeatures {
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel, List<MentionCandidate> candidates, int firstIndex, int
-
-            secondIndex) {
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
 
     }
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
-            secondCandidate) {
+            secondCandidate, NodeKey secondNode) {
 
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> rawFeatures, MentionCandidate secondCandidate) {
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> rawFeatures, MentionCandidate
+            secondCandidate, NodeKey secondNode) {
 
     }
 

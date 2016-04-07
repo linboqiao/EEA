@@ -3,8 +3,6 @@ package edu.cmu.cs.lti.learning.model;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.type.Word;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,101 +19,50 @@ public class MentionCandidate {
     private Sentence containedSentence;
     private String realis;
     private String mentionType;
+    private int index;
+    private boolean isEvent;
 
     public static final String REALIS_ROOT = "ROOT";
 
     public static final String TYPE_ROOT = "ROOT";
 
-    public static final List<DecodingResult> rootKey;
+    public static final List<NodeKey> rootKey;
 
     static {
         rootKey = new ArrayList<>();
-        rootKey.add(new DecodingResult(0, 0, TYPE_ROOT, REALIS_ROOT));
+        rootKey.add(new NodeKey(0, 0, TYPE_ROOT, REALIS_ROOT, -1));
     }
 
-//    public final DecodingResult selfKey;
-
-    public MentionCandidate(int begin, int end, Sentence containedSentence, Word headWord) {
+    public MentionCandidate(int begin, int end, Sentence containedSentence, Word headWord, int index) {
         this.begin = begin;
         this.containedSentence = containedSentence;
         this.end = end;
         this.headWord = headWord;
-//        this.selfKey = new DecodingResult(begin, end, realis, mentionType);
+        this.index = index;
+        isEvent = false;
     }
 
     public String toString() {
         return String.format("%s,[%s]_[%s],[%d,%d]", headWord.getCoveredText(), mentionType, realis, begin, end);
     }
 
-    public static boolean isRootKey(List<DecodingResult> key) {
+    public static boolean isRootKey(List<NodeKey> key) {
         return key.size() > 0 && key.get(0).equals(rootKey.get(0));
     }
 
-    /**
-     * This is basically a hashable, serializable representation of the candidate.
-     */
-    public static class DecodingResult {
-        private int begin;
-        private int end;
-        private String realis;
-        private String mentionType;
-
-        public DecodingResult(int begin, int end, String mentionType, String realis) {
-            this.begin = begin;
-            this.end = end;
-            this.mentionType = mentionType;
-            this.realis = realis;
-        }
-
-        public int hashCode() {
-            return new HashCodeBuilder(17, 37).append(begin).append(end).append(realis).append(mentionType)
-                    .toHashCode();
-        }
-
-        public boolean equals(Object o) {
-            if (!(o instanceof DecodingResult)) {
-                return false;
-            }
-            DecodingResult otherKey = (DecodingResult) o;
-
-            return new EqualsBuilder().append(begin, otherKey.begin).append(end, otherKey.end)
-                    .append(realis, otherKey.realis).append(mentionType, otherKey.mentionType).build();
-        }
-
-        public String getRealis() {
-            return realis;
-        }
-
-        public int getBegin() {
-            return begin;
-        }
-
-        public int getEnd() {
-            return end;
-        }
-
-        public String getMentionType() {
-            return mentionType;
-        }
-
-        public String toString() {
-            return String.format("[Result]_[%d:%d]_[%s,%s]", begin, end, realis, mentionType);
-        }
-    }
-
-    public static List<DecodingResult> getRootKey() {
+    public static List<NodeKey> getRootKey() {
         return rootKey;
     }
 
-    public List<DecodingResult> asKey() {
+    public List<NodeKey> asKey() {
         // Make sure the key is up to date.
 
         MentionTypeUtils.splitToTmultipleTypes(mentionType);
 
-        List<DecodingResult> keys = new ArrayList<>();
+        List<NodeKey> keys = new ArrayList<>();
 
         for (String t : MentionTypeUtils.splitToTmultipleTypes(mentionType)) {
-            keys.add(new DecodingResult(begin, end, t, realis));
+            keys.add(new NodeKey(begin, end, t, realis, index));
         }
 
         return keys;
@@ -125,24 +72,12 @@ public class MentionCandidate {
         return begin;
     }
 
-    public void setBegin(int begin) {
-        this.begin = begin;
-    }
-
     public int getEnd() {
         return end;
     }
 
-    public void setEnd(int end) {
-        this.end = end;
-    }
-
     public Word getHeadWord() {
         return headWord;
-    }
-
-    public void setHeadWord(Word headWord) {
-        this.headWord = headWord;
     }
 
     public String getRealis() {
@@ -159,13 +94,20 @@ public class MentionCandidate {
 
     public void setMentionType(String mentionType) {
         this.mentionType = mentionType;
+        if (!mentionType.equals(ClassAlphabet.noneOfTheAboveClass)) {
+            setEvent(true);
+        }
     }
 
     public Sentence getContainedSentence() {
         return containedSentence;
     }
 
-    public void setContainedSentence(Sentence containedSentence) {
-        this.containedSentence = containedSentence;
+    public boolean isEvent() {
+        return isEvent;
+    }
+
+    public void setEvent(boolean event) {
+        isEvent = event;
     }
 }

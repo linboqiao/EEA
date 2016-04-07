@@ -6,7 +6,7 @@ import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
-import edu.cmu.cs.lti.learning.model.MentionCandidate.DecodingResult;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.javatuples.Pair;
@@ -23,11 +23,11 @@ public class StateDelta implements Comparable<StateDelta> {
     private NodeLinkingState existingState;
     private double newScore;
 
-    private List<DecodingResult> nodes;
+    private List<NodeKey> nodes;
     private List<Integer> antecedents;
     private List<MentionGraphEdge.EdgeType> linkTypes;
-    private List<DecodingResult> govKeys;
-    private List<DecodingResult> depKeys;
+    private List<NodeKey> govKeys;
+    private List<NodeKey> depKeys;
 
     private GraphFeatureVector deltaLabelFv;
 
@@ -36,8 +36,8 @@ public class StateDelta implements Comparable<StateDelta> {
     private List<Pair<EdgeType, FeatureVector>> deltaGraphFv;
 
     public StateDelta(NodeLinkingState existingState, List<Integer> antecedents,
-                      List<MentionGraphEdge.EdgeType> linkTypes, List<DecodingResult> govKeys,
-                      List<DecodingResult> depKeys, double additionalScore, GraphFeatureVector newLabelFv,
+                      List<MentionGraphEdge.EdgeType> linkTypes, List<NodeKey> govKeys,
+                      List<NodeKey> depKeys, double additionalScore, GraphFeatureVector newLabelFv,
                       List<Pair<EdgeType, FeatureVector>> newCorefFv) {
         this.existingState = existingState;
         this.antecedents = antecedents;
@@ -88,7 +88,7 @@ public class StateDelta implements Comparable<StateDelta> {
 
     public String toString() {
         String typeStr = MentionTypeUtils.joinMultipleTypes(nodes.stream()
-                .map(MentionCandidate.DecodingResult::getMentionType).collect(Collectors.toSet()));
+                .map(NodeKey::getMentionType).collect(Collectors.toSet()));
         return String.format("[StateDelta] [%s] --%s--> [%d] ", nodes.get(0).toString(), typeStr, antecedents.get(0));
     }
 

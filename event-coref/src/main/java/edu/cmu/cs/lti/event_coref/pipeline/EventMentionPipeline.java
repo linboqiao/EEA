@@ -735,8 +735,8 @@ public class EventMentionPipeline {
     }
 
     public String trainJointSpanModel(Configuration config, CollectionReaderDescription trainingReader,
-                                      String suffix, boolean skipTrain, int initialSeed, String realisModelDir,
-                                      String pretrainedMentionModel, String modelDir)
+                                      boolean useWarmStart, String suffix, boolean skipTrain, int initialSeed,
+                                      String realisModelDir, String pretrainedMentionModel, String modelDir)
             throws UIMAException, IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         logger.info("Start beam based joint training.");
@@ -753,7 +753,8 @@ public class EventMentionPipeline {
                     DelayedLaSOJointTrainer.class, typeSystemDescription,
                     DelayedLaSOJointTrainer.PARAM_CONFIG_PATH, config.getConfigFile().getPath(),
                     DelayedLaSOJointTrainer.PARAM_REALIS_MODEL_DIRECTORY, realisModelDir,
-                    DelayedLaSOJointTrainer.PARAM_PRETRAINED_MENTION_MODEL_DIRECTORY, pretrainedMentionModel
+                    DelayedLaSOJointTrainer.PARAM_PRETRAINED_MENTION_MODEL_DIRECTORY, pretrainedMentionModel,
+                    DelayedLaSOJointTrainer.PARAM_USE_WARM_START, useWarmStart
             );
 
             TrainingLooper trainer = new TrainingLooper(config, cvModelDir, trainingReader, corefEngine) {
@@ -955,9 +956,13 @@ public class EventMentionPipeline {
         String realisModelDir = trainRealisTypes(taskConfig, trainingData, sliceSuffix, skipRealisTrain);
 
         // Train Beam search joint model.
-        String beamJointModel = trainJointSpanModel(taskConfig, trainingData, sliceSuffix,
-                skipBeamTrain, seed, realisModelDir, vanillaSentCrfModel,
-                taskConfig.get("edu.cmu.cs.lti.model.joint.span.dir"));
+        String regularBeamJointModel = trainJointSpanModel(taskConfig, trainingData, false,
+                sliceSuffix, skipBeamTrain, seed, realisModelDir,
+                vanillaSentCrfModel, taskConfig.get("edu.cmu.cs.lti.model.joint.span.dir"));
+
+//        String warmStartBeamJointModel = trainJointSpanModel(taskConfig, trainingData, true,
+//                sliceSuffix, skipBeamTrain, seed, realisModelDir,
+//                vanillaSentCrfModel, taskConfig.get("edu.cmu.cs.lti.model.joint.span.dir"));
 
         // Train coref model.
         String treeCorefModel = trainLatentTreeCoref(taskConfig, trainingData, sliceSuffix, skipCorefTrain, seed,
@@ -1005,7 +1010,7 @@ public class EventMentionPipeline {
                 skipCorefTest);
 
         CollectionReaderDescription jointSpanCorefMentions = beamJointSpanCoref(taskConfig, testReader,
-                beamJointModel, realisModelDir, trainingWorkingDir,
+                regularBeamJointModel, realisModelDir, trainingWorkingDir,
                 FileUtils.joinPaths(middleResults, sliceSuffix, "joint_span_coref"), skipBeamTest);
 
         CollectionReaderDescription corefGoldType = corefResolution(taskConfig, goldTypeSystemRealis,

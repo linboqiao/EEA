@@ -5,7 +5,6 @@ import edu.cmu.cs.lti.event_coref.decoding.model.NodeLinkingState;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge;
 import edu.cmu.cs.lti.event_coref.train.DelayedLaSOJointTrainer;
 import edu.cmu.cs.lti.learning.model.*;
-import edu.cmu.cs.lti.utils.DebugUtils;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.javatuples.Pair;
@@ -94,7 +93,6 @@ public class DiscriminativeUpdater {
 
             // Copy the gold agenda to decoding agenda (LaSO)
             decodingAgenda.copyFrom(goldAgenda);
-
 
             // Clear these features from both agenda, since they are assumed to be the same from here.
             goldAgenda.clearFeatures();
@@ -189,7 +187,7 @@ public class DiscriminativeUpdater {
         return currentLoss;
     }
 
-    public double paUpdate() {
+    public void paUpdate() {
 //        logger.info("PA Updating " + name);
         GraphFeatureVector corefDelta = allDelta.get(corefName);
         GraphFeatureVector mentionDelta = allDelta.get(mentionName);
@@ -219,45 +217,6 @@ public class DiscriminativeUpdater {
             mentionWeights.updateWeightsBy(mentionDelta, tau);
             mentionWeights.updateAverageWeights();
         }
-        return corefLoss;
-    }
-
-    public void vanillaUpdate(String name) {
-        GraphFeatureVector delta = allDelta.get(name);
-        GraphWeightVector weights = allWeights.get(name);
-        weights.updateWeightsBy(delta, defaultStepSize);
-        weights.updateAverageWeights();
-    }
-
-    public double paUpdate(String name) {
-//        logger.info("PA Updating " + name);
-        GraphFeatureVector delta = allDelta.get(name);
-        double loss = allLoss.get(name);
-
-        if (loss != 0) {
-            double l2 = delta.getFeatureL2();
-            double tau = loss / l2;
-
-            // Sometimes we saw INFINITY weight value, it is likely to be cause by a empty l2.
-            if (l2 == 0) {
-                logger.debug(delta.readableNodeVector());
-                logger.debug("Loss is " + loss);
-                logger.debug("Feature L2 is " + l2);
-                logger.debug("Update features by " + tau);
-                DebugUtils.pause(logger);
-            }
-
-            GraphWeightVector weights = allWeights.get(name);
-            weights.updateWeightsBy(delta, tau);
-            weights.updateAverageWeights();
-
-//        weights.nodeWeightIterator().forEachRemaining(nodeWeightVector -> {
-//            logger.debug("Weights for node " + classAlphabets.get(name).getClassName(nodeWeightVector.getValue0()));
-//            logger.debug(nodeWeightVector.getValue1().toReadableString(featureAlphabets.get(name)));
-//        });
-//        DebugUtils.pause(logger);
-        }
-        return loss;
     }
 
     private GraphFeatureVector newDelta(String name) {

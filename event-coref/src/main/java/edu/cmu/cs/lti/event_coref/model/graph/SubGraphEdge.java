@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.event_coref.model.graph;
 
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
-import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 
 import java.util.Comparator;
 
@@ -31,11 +31,11 @@ public class SubGraphEdge {
         this.edgeType = edgeType;
     }
 
-    public MentionCandidate.DecodingResult getDepKey() {
+    public NodeKey getDepKey() {
         return superGraphEdge.getDepKey();
     }
 
-    public MentionCandidate.DecodingResult getGovKey() {
+    public NodeKey getGovKey() {
         return superGraphEdge.getGovKey();
     }
 

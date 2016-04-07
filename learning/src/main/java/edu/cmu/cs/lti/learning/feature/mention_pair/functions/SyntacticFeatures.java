@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.StanfordDependencyRelation;
 import edu.cmu.cs.lti.script.type.StanfordTreeAnnotation;
@@ -46,9 +47,9 @@ public class SyntacticFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
-            candidates, int firstIndex, int secondIndex) {
-        MentionCandidate firstCandidate = candidates.get(firstIndex);
-        MentionCandidate secondCandidate = candidates.get(secondIndex);
+            candidates, NodeKey firstNode, NodeKey secondNode) {
+        MentionCandidate firstCandidate = candidates.get(firstNode.getIndex());
+        MentionCandidate secondCandidate = candidates.get(secondNode.getIndex());
 
         Word firstHead = firstCandidate.getHeadWord();
         Word secondHead = secondCandidate.getHeadWord();
@@ -65,20 +66,19 @@ public class SyntacticFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        List
-                                                <MentionCandidate> candidates, int firstIndex, int secondIndex) {
+                                        List <MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
 
     }
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
-            secondCandidate) {
+            secondCandidate, NodeKey secondNode) {
 
     }
 
     @Override
     public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate
-            secondCandidate) {
+            secondCandidate, NodeKey secondNode) {
 
     }
 

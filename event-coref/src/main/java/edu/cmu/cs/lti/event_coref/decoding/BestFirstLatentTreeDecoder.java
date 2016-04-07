@@ -7,6 +7,7 @@ import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import org.javatuples.Pair;
 
@@ -37,11 +38,11 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
 
             int currentMentionId = mentionGraph.getCandidateIndex(curr);
 
-            MentionCandidate.DecodingResult currentKey = mentionCandidates.get(currentMentionId).asKey().get(0);
+            NodeKey currentKey = mentionCandidates.get(currentMentionId).asKey().get(0);
 
             for (int ant = 0; ant < curr; ant++) {
                 int antMentionId = mentionGraph.getCandidateIndex(ant);
-                MentionCandidate.DecodingResult antKey = mentionGraph.isRoot(ant) ?
+                NodeKey antKey = mentionGraph.isRoot(ant) ?
                         MentionCandidate.getRootKey().get(0) : mentionCandidates.get(antMentionId).asKey().get(0);
 
 

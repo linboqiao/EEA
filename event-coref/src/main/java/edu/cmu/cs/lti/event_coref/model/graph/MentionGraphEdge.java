@@ -5,7 +5,7 @@ import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
-import edu.cmu.cs.lti.learning.model.MentionCandidate.DecodingResult;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.slf4j.Logger;
@@ -32,7 +32,7 @@ public class MentionGraphEdge implements Serializable {
     // Features are expensive, only initialized when needed.
     private TObjectDoubleMap<String> rawFeaturesLabelIndependent;
 
-    private Table<DecodingResult, DecodingResult, LabelledMentionGraphEdge> typedEdges;
+    private Table<NodeKey, NodeKey, LabelledMentionGraphEdge> typedEdges;
 
     private List<LabelledMentionGraphEdge> realLabelledEdges;
 
@@ -46,7 +46,8 @@ public class MentionGraphEdge implements Serializable {
 
     private boolean averageMode;
 
-//    public MentionGraphEdge(MentionGraph graph, PairFeatureExtractor extractor, int gov, int dep, boolean averageMode) {
+//    public MentionGraphEdge(MentionGraph graph, PairFeatureExtractor extractor, int gov, int dep, boolean
+// averageMode) {
 //        this(graph, extractor, gov, dep, null, null, null, new ArrayList<>(), averageMode);
 //    }
 
@@ -61,31 +62,25 @@ public class MentionGraphEdge implements Serializable {
         this.depIdx = dep;
 
         realLabelledEdges = new ArrayList<>();
-//        if (realGovKey != null && realDepKey != null && edgeType != null) {
-//            LabelledMentionGraphEdge edge = createLabelledEdge(candidates, edgeType, realGovKey, realDepKey);
-//            edge.setActualEdgeType(edgeType);
-//            realLabelledEdges.add(edge);
-//        }
     }
 
-    void addRealEdge(List<MentionCandidate> candidates, DecodingResult realGovKey, DecodingResult realDepKey,
+    void addRealEdge(List<MentionCandidate> candidates, NodeKey realGovKey, NodeKey realDepKey,
                      EdgeType edgeType) {
         LabelledMentionGraphEdge edge = createLabelledEdge(candidates, edgeType, realGovKey, realDepKey);
         edge.setActualEdgeType(edgeType);
         realLabelledEdges.add(edge);
     }
 
-    private void extractNoLabelFeatures(List<MentionCandidate> mentions) {
+    private void extractNoLabelFeatures(List<MentionCandidate> mentions, NodeKey govKey, NodeKey depKey) {
         int depMentionIndex = hostingGraph.getCandidateIndex(depIdx);
-        int govMentionIndex = hostingGraph.getCandidateIndex(govIdx);
 
         rawFeaturesLabelIndependent = new TObjectDoubleHashMap<>();
 
         if (isRoot()) {
             MentionCandidate mention = mentions.get(depMentionIndex);
-            extractor.extract(mention, rawFeaturesLabelIndependent);
+            extractor.extract(mention, rawFeaturesLabelIndependent, depKey);
         } else {
-            extractor.extract(mentions, govMentionIndex, depMentionIndex, rawFeaturesLabelIndependent);
+            extractor.extract(mentions, govKey, depKey, rawFeaturesLabelIndependent);
         }
     }
 
@@ -95,31 +90,32 @@ public class MentionGraphEdge implements Serializable {
      * @param mentions
      * @return
      */
-    public TObjectDoubleMap<String> getNodeIndependentFeatures(List<MentionCandidate> mentions) {
+    public TObjectDoubleMap<String> getNodeIndependentFeatures(List<MentionCandidate> mentions, NodeKey govKey,
+                                                               NodeKey depKey) {
         if (rawFeaturesLabelIndependent == null) {
-            extractNoLabelFeatures(mentions);
+            extractNoLabelFeatures(mentions, govKey, depKey);
         }
         return rawFeaturesLabelIndependent;
     }
 
-    public TObjectDoubleMap<String> extractNodeDependentFeatures(List<MentionCandidate> mentions) {
+    public TObjectDoubleMap<String> extractNodeDependentFeatures(List<MentionCandidate> mentions, NodeKey govKey,
+                                                                 NodeKey depKey) {
         int depMentionIdx = hostingGraph.getCandidateIndex(depIdx);
-        int govMentionIdx = hostingGraph.getCandidateIndex(govIdx);
 
         TObjectDoubleMap<String> rawFeaturesNodeDependent = new TObjectDoubleHashMap<>();
 
         if (isRoot()) {
             MentionCandidate mention = mentions.get(depMentionIdx);
-            extractor.extractCandidateRelated(mention, rawFeaturesNodeDependent);
+            extractor.extractCandidateRelated(mention, rawFeaturesNodeDependent, depKey);
         } else {
-            extractor.extractCandidateRelated(mentions, govMentionIdx, depMentionIdx, rawFeaturesNodeDependent);
+            extractor.extractCandidateRelated(mentions, govKey, depKey, rawFeaturesNodeDependent);
         }
 
         return rawFeaturesNodeDependent;
     }
 
-    public LabelledMentionGraphEdge getLabelledEdge(List<MentionCandidate> mentions, DecodingResult govKey,
-                                                    DecodingResult depKey) {
+    public LabelledMentionGraphEdge getLabelledEdge(List<MentionCandidate> mentions, NodeKey govKey,
+                                                    NodeKey depKey) {
         if (typedEdges.contains(govKey, depKey)) {
             return typedEdges.get(govKey, depKey);
         } else {
@@ -128,12 +124,12 @@ public class MentionGraphEdge implements Serializable {
     }
 
     private LabelledMentionGraphEdge createLabelledEdge(List<MentionCandidate> mentions, EdgeType edgeType,
-                                                        DecodingResult govKey, DecodingResult depKey) {
+                                                        NodeKey govKey, NodeKey depKey) {
         LabelledMentionGraphEdge newEdge = new LabelledMentionGraphEdge(this, govKey, depKey, averageMode, edgeType);
         typedEdges.put(govKey, depKey, newEdge);
 
-        TObjectDoubleMap<String> rawFeaturesNeedLabel = extractNodeDependentFeatures(mentions);
-        TObjectDoubleMap<String> rawFeaturesNoLabel = getNodeIndependentFeatures(mentions);
+        TObjectDoubleMap<String> rawFeaturesNeedLabel = extractNodeDependentFeatures(mentions, govKey, depKey);
+        TObjectDoubleMap<String> rawFeaturesNoLabel = getNodeIndependentFeatures(mentions, govKey, depKey);
 
         FeatureVector featureVector = extractor.newFeatureVector();
 

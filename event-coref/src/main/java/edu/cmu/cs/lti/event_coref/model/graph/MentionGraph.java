@@ -7,7 +7,7 @@ import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
-import edu.cmu.cs.lti.learning.model.MentionCandidate.DecodingResult;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.javatuples.Pair;
@@ -138,8 +138,8 @@ public class MentionGraph implements Serializable {
         return edge;
     }
 
-    private MentionGraphEdge createLabelledGoldEdge(int gov, int dep, DecodingResult realGovKey,
-                                                    DecodingResult realDepKey, List<MentionCandidate> candidates,
+    private MentionGraphEdge createLabelledGoldEdge(int gov, int dep, NodeKey realGovKey,
+                                                    NodeKey realDepKey, List<MentionCandidate> candidates,
                                                     EdgeType edgeType) {
         MentionGraphEdge goldEdge = graphEdges[dep][gov];
 
@@ -174,7 +174,7 @@ public class MentionGraph implements Serializable {
     private void storeCoreferenceEdges(List<MentionCandidate> candidates) {
         for (List<Pair<Integer, String>> typedCorefChain : typedCorefChains) {
             // In each chain, we only connect at most one labelled node, we need to record them.
-            List<DecodingResult> actualCorefNodes = new ArrayList<>();
+            List<NodeKey> actualCorefNodes = new ArrayList<>();
 
             for (int i = 0; i < typedCorefChain.size(); i++) {
                 Pair<Integer, String> element = typedCorefChain.get(i);
@@ -182,9 +182,9 @@ public class MentionGraph implements Serializable {
                 int candidateIndex = getCandidateIndex(nodeId);
                 String mentionType = element.getValue1();
 
-                List<DecodingResult> candidateKeys = candidates.get(candidateIndex).asKey();
-                DecodingResult actualCandidate = null;
-                for (DecodingResult candidate : candidateKeys) {
+                List<NodeKey> candidateKeys = candidates.get(candidateIndex).asKey();
+                NodeKey actualCandidate = null;
+                for (NodeKey candidate : candidateKeys) {
                     if (candidate.getMentionType().equals(mentionType)) {
                         actualCandidate = candidate;
                         break;
@@ -196,10 +196,10 @@ public class MentionGraph implements Serializable {
             // Within the cluster, link each antecedent with all its anaphora.
             for (int i = 0; i < typedCorefChain.size() - 1; i++) {
                 int antecedentNode = typedCorefChain.get(i).getValue0();
-                DecodingResult actualAntecedent = actualCorefNodes.get(i);
+                NodeKey actualAntecedent = actualCorefNodes.get(i);
                 for (int j = i + 1; j < typedCorefChain.size(); j++) {
                     int anaphoraNode = typedCorefChain.get(j).getValue0();
-                    DecodingResult actualAnaphora = actualCorefNodes.get(j);
+                    NodeKey actualAnaphora = actualCorefNodes.get(j);
 
                     MentionGraphEdge edge = createLabelledGoldEdge(antecedentNode, anaphoraNode, actualAntecedent,
                             actualAnaphora, candidates, EdgeType.Coreference);
@@ -217,7 +217,7 @@ public class MentionGraph implements Serializable {
 //        logger.debug("Linking to root.");
         // Loop starts from 1, because node 0 is the root itself.
         for (int curr = 1; curr < numNodes(); curr++) {
-            List<DecodingResult> depKeys = candidates.get(getCandidateIndex(curr)).asKey();
+            List<NodeKey> depKeys = candidates.get(getCandidateIndex(curr)).asKey();
             boolean hasEdge = false;
             List<LabelledMentionGraphEdge> realEdges = null;
             for (int ant = 0; ant < curr; ant++) {
@@ -229,15 +229,15 @@ public class MentionGraph implements Serializable {
                 }
             }
 
-            DecodingResult rootKey = MentionCandidate.getRootKey().get(0);
+            NodeKey rootKey = MentionCandidate.getRootKey().get(0);
             if (hasEdge) {
-                for (DecodingResult depKey : depKeys) {
+                for (NodeKey depKey : depKeys) {
                     if (!realEdges.stream().anyMatch(e -> e.getDepKey().equals(depKey))) {
                         createLabelledGoldEdge(0, curr, rootKey, depKey, candidates, EdgeType.Root);
                     }
                 }
             } else {
-                for (DecodingResult depKey : depKeys) {
+                for (NodeKey depKey : depKeys) {
                     createLabelledGoldEdge(0, curr, rootKey, depKey, candidates, EdgeType.Root);
 //                    logger.debug("Linking " + curr + " " + depKey + " to root.");
 //                    logger.debug(edge.getLabelledEdge(candidates, rootKey, depKey).toString());
@@ -337,7 +337,7 @@ public class MentionGraph implements Serializable {
 
             int currMentionIndex = getCandidateIndex(curr);
 
-            List<DecodingResult> currKeys = mentionCandidates.get(currMentionIndex).asKey();
+            List<NodeKey> currKeys = mentionCandidates.get(currMentionIndex).asKey();
 
 //            System.out.println("Finding best edge for " + curr);
 
@@ -346,11 +346,11 @@ public class MentionGraph implements Serializable {
 
                 int antMentionIndex = getCandidateIndex(ant);
 
-                List<DecodingResult> antKeys = isRoot(ant) ? MentionCandidate.getRootKey() :
+                List<NodeKey> antKeys = isRoot(ant) ? MentionCandidate.getRootKey() :
                         mentionCandidates.get(antMentionIndex).asKey();
 
-                for (DecodingResult antKey : antKeys) {
-                    for (DecodingResult currKey : currKeys) {
+                for (NodeKey antKey : antKeys) {
+                    for (NodeKey currKey : currKeys) {
                         LabelledMentionGraphEdge goldEdge = graphEdges[curr][ant].getLabelledEdge(
                                 mentionCandidates,
                                 // In lat only training, these are gold types.

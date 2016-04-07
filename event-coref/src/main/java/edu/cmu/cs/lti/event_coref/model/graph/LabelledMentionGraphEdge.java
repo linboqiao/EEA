@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.event_coref.model.graph;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
-import edu.cmu.cs.lti.learning.model.MentionCandidate.DecodingResult;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +26,9 @@ public class LabelledMentionGraphEdge implements Serializable {
 
     private FeatureVector featureVector;
 
-    private DecodingResult govKey;
+    private NodeKey govKey;
 
-    private DecodingResult depKey;
+    private NodeKey depKey;
 
     private boolean averageMode;
 
@@ -36,7 +36,7 @@ public class LabelledMentionGraphEdge implements Serializable {
 
     private EdgeType actualEdgeType;
 
-    public LabelledMentionGraphEdge(MentionGraphEdge hostingEdge, DecodingResult govKey, DecodingResult depKey,
+    public LabelledMentionGraphEdge(MentionGraphEdge hostingEdge, NodeKey govKey, NodeKey depKey,
                                     boolean averageMode, EdgeType edgeType) {
         this.hostingEdge = hostingEdge;
         this.averageMode = averageMode;
@@ -104,11 +104,11 @@ public class LabelledMentionGraphEdge implements Serializable {
         return edgeType;
     }
 
-    public DecodingResult getDepKey() {
+    public NodeKey getDepKey() {
         return depKey;
     }
 
-    public DecodingResult getGovKey() {
+    public NodeKey getGovKey() {
         return govKey;
     }
 

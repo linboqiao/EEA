@@ -1,8 +1,8 @@
 package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
-import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
@@ -41,26 +41,26 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
-            candidates, int firstIndex, int secondIndex) {
-        MentionCandidate firstCandidate = candidates.get(firstIndex);
-        MentionCandidate secondCandidate = candidates.get(secondIndex);
+            candidates, NodeKey firstNode, NodeKey secondNode) {
+        MentionCandidate firstCandidate = candidates.get(firstNode.getIndex());
+        MentionCandidate secondCandidate = candidates.get(secondNode.getIndex());
         thresholdedSentenceDistance(featuresNoLabel, firstCandidate, secondCandidate);
     }
 
     @Override
     public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        List<MentionCandidate> candidates, int firstIndex, int secondIndex) {
-        thresholdedMentionDistance(featuresNeedLabel, candidates, firstIndex, secondIndex);
+                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
+        thresholdedMentionDistance(featuresNeedLabel, candidates, firstNode, secondNode);
     }
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
-            secondCandidate) {
+            secondCandidate, NodeKey secondNode) {
     }
 
     @Override
     public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate
-            secondCandidate) {
+            secondCandidate, NodeKey secondNode) {
     }
 
     private void thresholdedSentenceDistance(TObjectDoubleMap<String> rawFeatures, MentionCandidate firstCandidate,
@@ -87,7 +87,10 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
     }
 
     private void thresholdedMentionDistance(TObjectDoubleMap<String> rawFeatures, List<MentionCandidate> candidates,
-                                            int firstIndex, int secondIndex) {
+                                            NodeKey firstNode, NodeKey secondNode) {
+        int firstIndex = firstNode.getIndex();
+        int secondIndex = secondNode.getIndex();
+
         int left, right;
         if (firstIndex < secondIndex) {
             left = firstIndex;
@@ -99,7 +102,7 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
 
         int mentionInBetween = 0;
         for (int i = left + 1; i < right; i++) {
-            if (!candidates.get(i).getMentionType().equals(ClassAlphabet.noneOfTheAboveClass)) {
+            if (!candidates.get(i).isEvent()) {
                 mentionInBetween++;
             }
         }

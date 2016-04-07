@@ -8,7 +8,7 @@ import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
-import edu.cmu.cs.lti.learning.model.MentionCandidate.DecodingResult;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.javatuples.Pair;
@@ -37,7 +37,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     // Here is the node decoding results. Each item in the outer list correspond to a node in the graph (which
     // includes the root node as well). There are multiple possible types for a node, so each node is corresponding
     // multiple decoding results (The inner list).
-    private List<List<DecodingResult>> nodeResults;
+    private List<List<NodeKey>> nodeResults;
 
     private MentionSubGraph decodingTree;
 
@@ -55,7 +55,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 
     public static NodeLinkingState getInitialState(MentionGraph graph) {
         NodeLinkingState s = new NodeLinkingState(graph);
-        List<DecodingResult> rootNode = MentionCandidate.getRootKey();
+        List<NodeKey> rootNode = MentionCandidate.getRootKey();
         s.nodeResults.add(rootNode);
         s.nodeIndex += 1; // The first node is added, which is the root.
         return s;
@@ -84,7 +84,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         StringBuilder nodes = new StringBuilder();
         nodes.append("[State Nodes] ");
         for (int i = 0; i < nodeResults.size(); i++) {
-            for (DecodingResult nodeResult : nodeResults.get(i)) {
+            for (NodeKey nodeResult : nodeResults.get(i)) {
                 nodes.append(i).append(":").append(nodeResult.getMentionType()).append(" ");
             }
             nodes.append(";");
@@ -100,15 +100,15 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         return Comparator.reverseOrder();
     }
 
-    public List<DecodingResult> getLastNode() {
+    public List<NodeKey> getLastNode() {
         return getNode(nodeIndex - 1);
     }
 
-    public List<DecodingResult> getNode(int index) {
+    public List<NodeKey> getNode(int index) {
         return nodeResults.get(index);
     }
 
-    public List<List<DecodingResult>> getNodeResults() {
+    public List<List<NodeKey>> getNodeResults() {
         return nodeResults;
     }
 
@@ -130,13 +130,13 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         }
     }
 
-    public void addLinkTo(List<MentionCandidate> candidates, int antecedent, DecodingResult govKey,
-                          DecodingResult depKey, EdgeType type) {
+    public void addLinkTo(List<MentionCandidate> candidates, int antecedent, NodeKey govKey,
+                          NodeKey depKey, EdgeType type) {
         addLink(candidates, antecedent, nodeIndex, govKey, depKey, type);
     }
 
-    public void addLink(List<MentionCandidate> mentionCandidates, int gov, int dep, DecodingResult govKey,
-                        DecodingResult depKey, EdgeType type) {
+    public void addLink(List<MentionCandidate> mentionCandidates, int gov, int dep, NodeKey govKey,
+                        NodeKey depKey, EdgeType type) {
 //        System.out.println("Adding link from " + dep);
 //        System.out.println(govKey.toString());
 //        System.out.println(depKey.toString());
@@ -146,7 +146,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         decodingTree.addEdge(edge, type);
     }
 
-    public void addNode(List<DecodingResult> newNode) {
+    public void addNode(List<NodeKey> newNode) {
         nodeResults.add(newNode);
         nodeIndex++;
     }
@@ -165,20 +165,20 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         return Pair.with(labelLoss, graphLoss);
     }
 
-    private double computeHammingLoss(List<List<DecodingResult>> referenceNodes) {
+    private double computeHammingLoss(List<List<NodeKey>> referenceNodes) {
         double loss = 0;
 
         // Root node is ignored.
         for (int i = 1; i < nodeIndex; i++) {
             double matches = 0;
 
-            List<DecodingResult> decodingResult = nodeResults.get(i);
-            List<DecodingResult> referentReslt = referenceNodes.get(i);
+            List<NodeKey> nodeKey = nodeResults.get(i);
+            List<NodeKey> referentReslt = referenceNodes.get(i);
 
-            Set<String> decodingTypes = decodingResult.stream().map(DecodingResult::getMentionType)
+            Set<String> decodingTypes = nodeKey.stream().map(NodeKey::getMentionType)
                     .collect(Collectors.toSet());
 
-            Set<String> referentTypes = referentReslt.stream().map(DecodingResult::getMentionType)
+            Set<String> referentTypes = referentReslt.stream().map(NodeKey::getMentionType)
                     .collect(Collectors.toSet());
 
             for (String decodedType : decodingTypes) {
@@ -203,7 +203,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     }
 
     public Set<String> getMentionType(int nodeIndex) {
-        return nodeResults.get(nodeIndex).stream().map(DecodingResult::getMentionType).collect(Collectors.toSet());
+        return nodeResults.get(nodeIndex).stream().map(NodeKey::getMentionType).collect(Collectors.toSet());
     }
 
     public static MinMaxPriorityQueue<NodeLinkingState> getReverseHeap(int maxSize) {
@@ -256,7 +256,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         state.score = score;
         state.decodingTree = decodingTree.makeCopy();
         state.nodeIndex = nodeIndex;
-        for (List<DecodingResult> node : nodeResults) {
+        for (List<NodeKey> node : nodeResults) {
             state.nodeResults.add(node);
         }
 

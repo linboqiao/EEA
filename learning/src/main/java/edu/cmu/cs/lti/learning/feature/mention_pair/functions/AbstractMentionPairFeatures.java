@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.uima.jcas.JCas;
@@ -33,47 +34,47 @@ public abstract class AbstractMentionPairFeatures {
 
     /**
      * Extract features from the annotation pair, without label specific features.
-     *
-     * @param documentContext The UIMA context.
+     *  @param documentContext The UIMA context.
      * @param featuresNoLabel Features don't need labels will be added to this raw feature map.
      * @param candidates
-     * @param firstIndex
-     * @param secondIndex
+     * @param firstNode
+     * @param secondNode
      */
     public abstract void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel,
-                                 List<MentionCandidate> candidates, int firstIndex, int secondIndex);
+                                 List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode);
 
     /**
      * Extract features from the annotation pair, with candidate specific features.
      * @param documentContext   The UIMA context.
      * @param featuresNeedLabel Features don't need labels will be added to this raw feature map.
      * @param candidates
-     * @param firstIndex
-     * @param secondIndex
+     * @param firstNode
+     * @param secondNode
      */
     public abstract void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                                 List<MentionCandidate> candidates, int firstIndex, int secondIndex);
+                                                 List<MentionCandidate> candidates, NodeKey firstNode,
+                                                 NodeKey secondNode);
 
 
     /**
      * Extract features from the annotation pair, with label specific features.
-     *
-     * @param documentContext The UIMA context
+     *  @param documentContext The UIMA context
      * @param featuresNoLabel Features need labels will be added to this raw feature map.
      * @param secondCandidate Second mention to extract from.
+     * @param secondNode The node key to extract from.
      */
     public abstract void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel,
-                                 MentionCandidate secondCandidate);
+                                 MentionCandidate secondCandidate, NodeKey secondNode);
 
     /**
      * Extract features from the annotation pair, with label specific features.
-     *
-     * @param documentContext   The UIMA context
+     *  @param documentContext   The UIMA context
      * @param featuresNeedLabel Features need labels will be added to this raw feature map.
      * @param secondCandidate   Second mention to extract from.
+     * @param secondNode The node key to extract from
      */
     public abstract void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                                 MentionCandidate secondCandidate);
+                                                 MentionCandidate secondCandidate, NodeKey secondNode);
 
 
     /**

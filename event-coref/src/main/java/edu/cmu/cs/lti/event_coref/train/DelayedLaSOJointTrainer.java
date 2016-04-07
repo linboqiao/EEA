@@ -65,6 +65,10 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_PRETRAINED_MENTION_MODEL_DIRECTORY)
     private File pretrainedMentionModelDirectory;
 
+    public static final String PARAM_USE_WARM_START = "useWarmStart";
+    @ConfigurationParameter(name = PARAM_USE_WARM_START)
+    private boolean warmStart = true;
+
     private WekaModel realisModel;
 
     private SentenceFeatureExtractor realisExtractor;
@@ -72,7 +76,6 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
     private PairFeatureExtractor mentionPairExtractor;
     private BeamCrfLatentTreeDecoder decoder;
 
-    private boolean warmStart = true;
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
@@ -183,7 +186,6 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
                     mention2SplitCandidate.put(mentionId, splitCandidateId);
                     splitCandidateId++;
                 }
-
             } else {
                 candidate.setMentionType(ClassAlphabet.noneOfTheAboveClass);
                 candidate.setRealis(ClassAlphabet.noneOfTheAboveClass);

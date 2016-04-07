@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.uima.jcas.JCas;
@@ -29,22 +30,15 @@ public class MentionTypeFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
-            candidates, int firstIndex, int secondIndex) {
+            candidates, NodeKey firstNode, NodeKey secondNode) {
 
     }
 
     @Override
     public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        List<MentionCandidate> candidates, int firstIndex, int secondIndex) {
-        MentionCandidate firstCandidate = candidates.get(firstIndex);
-        MentionCandidate secondCandidate = candidates.get(secondIndex);
-
-        String firstType = firstCandidate.getMentionType();
-        String secondType = secondCandidate.getMentionType();
-//
-//        logger.info(firstCandidate.toString());
-//
-//        logger.info(secondCandidate.toString());
+                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
+        String firstType = firstNode.getMentionType();
+        String secondType = secondNode.getMentionType();
 
         if (firstType.equals(secondType)) {
             addBoolean(featuresNeedLabel, "MentionTypeMatch");
@@ -71,13 +65,13 @@ public class MentionTypeFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
-            secondCandidate) {
-        addBoolean(featuresNoLabel, FeatureUtils.formatFeatureName("SingleType", secondCandidate.getMentionType()));
+            secondCandidate, NodeKey secondNode) {
+        addBoolean(featuresNoLabel, FeatureUtils.formatFeatureName("SingleType", secondNode.getMentionType()));
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate
-            secondCandidate) {
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featureNeedLabel,
+                                        MentionCandidate secondCandidate, NodeKey secondNode) {
 
     }
 }

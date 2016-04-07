@@ -5,7 +5,7 @@ import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
-import edu.cmu.cs.lti.learning.model.MentionCandidate.DecodingResult;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.javatuples.Pair;
@@ -213,8 +213,8 @@ public class MentionSubGraph {
             int govNode = edge.getGov();
             int depNode = edge.getDep();
 
-            DecodingResult depKey = edge.getDepKey();
-            DecodingResult govKey = edge.getGovKey();
+            NodeKey depKey = edge.getDepKey();
+            NodeKey govKey = edge.getGovKey();
 
             Pair<Integer, String> typedGovNode = Pair.with(govNode, govKey.getMentionType());
 

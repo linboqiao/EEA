@@ -67,12 +67,12 @@ public class PairFeatureExtractor implements Serializable {
      * other mention is a virtual root.
      *
      * @param mentionCandidate The mention to extract from.
+     * @param depKey           The node key for the dependent.
      * @return Feature vector of this mention against the other
      */
-    public void extract(MentionCandidate mentionCandidate, TObjectDoubleMap<String> rawFeaturesNoLabel) {
-        featureFunctions.forEach(ff -> {
-            ff.extract(context, rawFeaturesNoLabel, mentionCandidate);
-        });
+    public void extract(MentionCandidate mentionCandidate, TObjectDoubleMap<String> rawFeaturesNoLabel,
+                        NodeKey depKey) {
+        featureFunctions.forEach(ff -> ff.extract(context, rawFeaturesNoLabel, mentionCandidate, depKey));
     }
 
     /**
@@ -80,12 +80,13 @@ public class PairFeatureExtractor implements Serializable {
      * other mention is a virtual root.
      *
      * @param mentionCandidate The mention to extract from.
+     * @param depKey           The node key for the dependent
      * @return Feature vector of this mention against the other
      */
     public void extractCandidateRelated(MentionCandidate mentionCandidate, TObjectDoubleMap<String>
-            rawFeaturesNeedLabel) {
+            rawFeaturesNeedLabel, NodeKey depKey) {
         featureFunctions.forEach(ff -> {
-            ff.extractCandidateRelated(context, rawFeaturesNeedLabel, mentionCandidate);
+            ff.extractCandidateRelated(context, rawFeaturesNeedLabel, mentionCandidate, depKey);
         });
     }
 
@@ -94,25 +95,28 @@ public class PairFeatureExtractor implements Serializable {
      * Extract label agnostic features for the mention pair.
      *
      * @param candidates
-     * @param firstIndex
-     * @param secondIndex @return Feature vector of this mention against the other
+     * @param firstNode
+     * @param secondNode @return Feature vector of this mention against the other
      */
-    public void extract(List<MentionCandidate> candidates, int firstIndex, int secondIndex, TObjectDoubleMap<String>
+    public void extract(List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode,
+                        TObjectDoubleMap<String>
             rawFeaturesNoLabel) {
         featureFunctions.forEach(ff -> {
-            ff.extract(context, rawFeaturesNoLabel, candidates, firstIndex, secondIndex);
+            ff.extract(context, rawFeaturesNoLabel, candidates, firstNode, secondNode);
         });
     }
 
     /**
      * Extract label dependent features for the mention pair.
      *
-     * @param candidates@return Feature vector of this mention against the other
+     * @param candidates
+     * @param firstKey
+     * @param secondKey  @return Feature vector of this mention against the other
      */
-    public void extractCandidateRelated(List<MentionCandidate> candidates, int firstIndex, int secondIndex,
+    public void extractCandidateRelated(List<MentionCandidate> candidates, NodeKey firstKey, NodeKey secondKey,
                                         TObjectDoubleMap<String> rawFeaturesNeedLabel) {
         featureFunctions.forEach(ff -> {
-            ff.extractCandidateRelated(context, rawFeaturesNeedLabel, candidates, firstIndex, secondIndex);
+            ff.extractCandidateRelated(context, rawFeaturesNeedLabel, candidates, firstKey, secondKey);
         });
     }
 }

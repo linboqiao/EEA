@@ -6,7 +6,7 @@ import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
-import edu.cmu.cs.lti.learning.model.MentionCandidate.DecodingResult;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import org.javatuples.Pair;
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ public class LabelLinkAgenda {
 
     private int beamSize;
 
-    private List<List<MentionCandidate.DecodingResult>> actualDecodingSequence = new ArrayList<>();
+    private List<List<NodeKey>> actualDecodingSequence = new ArrayList<>();
 
     public LabelLinkAgenda(int beamSize, List<MentionCandidate> candidates, MentionGraph mentionGraph) {
         beamStates = NodeLinkingState.getReverseHeap(beamSize);
@@ -86,7 +86,7 @@ public class LabelLinkAgenda {
      * @param newCorefFv      New coref features for the expanded state.
      */
     public void expand(NodeLinkingState expandingState, List<Integer> antecedent,
-                       List<EdgeType> linkType, List<DecodingResult> govKeys, List<DecodingResult> depKeys,
+                       List<EdgeType> linkType, List<NodeKey> govKeys, List<NodeKey> depKeys,
                        double additionalScore, GraphFeatureVector newLabelFv,
                        List<Pair<EdgeType, FeatureVector>> newCorefFv) {
         if (linkType.size() != govKeys.size() || antecedent.size() != linkType.size() ||
@@ -167,9 +167,9 @@ public class LabelLinkAgenda {
     public void showActualSequence() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < actualDecodingSequence.size(); i++) {
-            List<MentionCandidate.DecodingResult> decodingResult = actualDecodingSequence.get(i);
-            String type = MentionTypeUtils.joinMultipleTypes(decodingResult.stream()
-                    .map(MentionCandidate.DecodingResult::getMentionType).collect(Collectors.toSet()));
+            List<NodeKey> nodeKey = actualDecodingSequence.get(i);
+            String type = MentionTypeUtils.joinMultipleTypes(nodeKey.stream()
+                    .map(NodeKey::getMentionType).collect(Collectors.toSet()));
             sb.append(i).append(":").append(type).append(" ");
         }
         logger.debug(sb.toString());

@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,7 +33,7 @@ public class MentionUtils {
      * @param mentions
      * @return
      */
-    public static List<MentionCandidate> createCandidates(JCas aJCas, Collection<EventMention> mentions, TIntIntMap
+    public static List<MentionCandidate> createCandidates(JCas aJCas, List<EventMention> mentions, TIntIntMap
             mention2Candidate) {
         Map<EventMention, Collection<StanfordCorenlpSentence>> mention2Sentence = JCasUtil.indexCovering(
                 aJCas, EventMention.class, StanfordCorenlpSentence.class);
@@ -41,9 +42,10 @@ public class MentionUtils {
             mention2Candidate.put(i, i);
         }
 
-        return mentions.stream().map(mention -> {
-            MentionCandidate candidate = new MentionCandidate(mention.getBegin(), mention.getEnd(),
-                    Iterables.getFirst(mention2Sentence.get(mention), null), mention.getHeadWord());
+        return IntStream.range(0, mentions.size()).mapToObj(i ->{
+            EventMention mention = mentions.get(i);
+            MentionCandidate candidate =  new MentionCandidate(mention.getBegin(), mention.getEnd(),
+                    Iterables.getFirst(mention2Sentence.get(mention), null), mention.getHeadWord(), i);
             candidate.setRealis(mention.getRealisType());
             candidate.setMentionType(mention.getEventType());
             return candidate;
@@ -59,12 +61,15 @@ public class MentionUtils {
      * @return
      */
     public static List<MentionCandidate> createCandidatesFromTokens(JCas aJCas,
-                                                                    Collection<StanfordCorenlpToken> tokens) {
+                                                                    List<StanfordCorenlpToken> tokens) {
         Map<StanfordCorenlpToken, Collection<StanfordCorenlpSentence>> mention2Sentence = JCasUtil.indexCovering(
                 aJCas, StanfordCorenlpToken.class, StanfordCorenlpSentence.class);
 
-        return tokens.stream().map(token -> new MentionCandidate(token.getBegin(), token.getEnd(),
-                Iterables.getFirst(mention2Sentence.get(token), null), token)).collect(Collectors.toList());
+        return IntStream.range(0, tokens.size()).mapToObj(i -> {
+            StanfordCorenlpToken token = tokens.get(i);
+            return new MentionCandidate(token.getBegin(), token.getEnd(),
+                    Iterables.getFirst(mention2Sentence.get(token), null), token, i);
+        }).collect(Collectors.toList());
     }
 
     /**
