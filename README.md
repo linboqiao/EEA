@@ -27,9 +27,9 @@ Running with existing model
 ----------
 1. Download a copy of all the models package, and unpack it: http://cairo.lti.cs.cmu.edu/~hector/models/EventMentionModelsAndResources20160411.tar.gz
 2. Modify the kbp.properties file with the following:
- a. point edu.cmu.cs.lti.model.dir to the unpacked directory
- b. point edu.cmu.cs.lti.model.event.dir to the unpacked directory
- c. point edu.cmu.cs.lti.resource.dir to the unpacked directory
+    1. point edu.cmu.cs.lti.model.dir to the unpacked directory
+    2. point edu.cmu.cs.lti.model.event.dir to the unpacked directory
+    3. point edu.cmu.cs.lti.resource.dir to the unpacked directory
 3. Test it out by running the following command in cmu-script project directory:
     bin/test/coref_plain_text.sh settings/kbp.properties event-coref/src/test/resources/sample-input ../sample-output
 4. You should be able to find the annotation in TBF format in the following file:
@@ -52,4 +52,4 @@ Detailed explanation of the parameters will come later.
 
 Training the model
 ----------
-To train the model, the easiest way is to use the data provided by TAC-KBP 2015 (http://www.nist.gov/tac/2015/KBP/data.html). One can also create files of similar format to train them.
+To train the model, the easiest way is to use the data provided by [TAC-KBP 2015](http://www.nist.gov/tac/2015/KBP/data.html). One can also create files of similar format to train them.
