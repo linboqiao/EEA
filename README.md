@@ -26,7 +26,7 @@ Building is simple with Maven, under the root directory of the project, do (You 
 Running with existing model
 ----------
 1. Download a copy of all the models package, and unpack it: 
-    > http://cairo.lti.cs.cmu.edu/~hector/models/EventMentionModelsAndResources20160411.tar.gz
+   > http://cairo.lti.cs.cmu.edu/~hector/models/EventMentionModelsAndResources20160411.tar.gz
 2. Modify the kbp.properties file with the following:
     1. point edu.cmu.cs.lti.model.dir to the unpacked directory
     2. point edu.cmu.cs.lti.model.event.dir to the unpacked directory
