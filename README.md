@@ -21,7 +21,7 @@ In addition, it depends on the following modules,
 
 Building is simple with Maven, under the root directory of the project, do (You need to do the same thing for the two modules I mentioned above beforehand.):
     
-    ```mvn clean install```
+    mvn clean install
     
 Running with existing model
 ----------
@@ -31,8 +31,8 @@ Running with existing model
     2. point edu.cmu.cs.lti.model.event.dir to the unpacked directory
     3. point edu.cmu.cs.lti.resource.dir to the unpacked directory
 3. Test it out by running the following command in cmu-script project directory:
-    
-    ```bin/test/coref_plain_text.sh settings/kbp.properties event-coref/src/test/resources/sample-input ../sample-output```
+
+        bin/test/coref_plain_text.sh settings/kbp.properties event-coref/src/test/resources/sample-input ../sample-output
     
 4. You should be able to find the annotation in TBF format in the following file:
   ../sample-output/eval/full_run/lv1_coref.tbf
