@@ -43,6 +43,9 @@ For details about the TBF format, scoring, visit the TAC KBP event task website 
 **Notes:**
     The current models are not the best models since the project is subject to frequent changes recently, I will try to update it as soon as possible.
 
+**Warning about Illegal Thread Exception**
+If you see a java.lang.IllegalThreadStateException saying some threads are not terminated, but also a "BUILD SUCCESS" message, that should be fine. I don't know the reasons for it right now.
+
 About The Configuration File
 ----------
 1. The kbp.properties file contains most of the configuration, most of them are pointers to resources. Some numbers controls the various parameters for training.
