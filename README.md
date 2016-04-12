@@ -21,7 +21,7 @@ In addition, it depends on the following modules,
 
 Building is simple with Maven, under the root directory of the project, do (You need to do the same thing for the two modules I mentioned above beforehand.):
 
-    mvn clean install
+> mvn clean install
     
 Running with existing model
 ----------
@@ -31,7 +31,9 @@ Running with existing model
     2. point edu.cmu.cs.lti.model.event.dir to the unpacked directory
     3. point edu.cmu.cs.lti.resource.dir to the unpacked directory
 3. Test it out by running the following command in cmu-script project directory:
-    bin/test/coref_plain_text.sh settings/kbp.properties event-coref/src/test/resources/sample-input ../sample-output
+
+>  bin/test/coref_plain_text.sh settings/kbp.properties event-coref/src/test/resources/sample-input ../sample-output
+
 4. You should be able to find the annotation in TBF format in the following file:
     ../sample-output/eval/full_run/lv1_coref.tbf
 
@@ -43,11 +45,9 @@ For details about the TBF format, scoring, visit the TAC KBP event task website 
 
 About The Configuration File
 ----------
-The kbp.properties file contains most of the configuration, most of them are pointers to resources. Some numbers controls the various parameters for training.
-
-Most boolean configuration with a "skip" in it will try to skip certain step if the specific output exists, be ware to turn it off when you want to have fresh results.
-
-Detailed explanation of the parameters will come later.
+1. The kbp.properties file contains most of the configuration, most of them are pointers to resources. Some numbers controls the various parameters for training.
+2. Most boolean configuration with a "skip" in it will try to skip certain step if the specific output exists, be ware to turn it off when you want to have fresh results.
+3. Detailed explanation of the parameters will come later.
 
 
 Training the model
