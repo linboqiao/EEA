@@ -25,7 +25,8 @@ Building is simple with Maven, under the root directory of the project, do (You 
     
 Running with existing model
 ----------
-1. Download a copy of all the models package, and unpack it: http://cairo.lti.cs.cmu.edu/~hector/models/EventMentionModelsAndResources20160411.tar.gz
+1. Download a copy of all the models package, and unpack it: 
+    > http://cairo.lti.cs.cmu.edu/~hector/models/EventMentionModelsAndResources20160411.tar.gz
 2. Modify the kbp.properties file with the following:
     1. point edu.cmu.cs.lti.model.dir to the unpacked directory
     2. point edu.cmu.cs.lti.model.event.dir to the unpacked directory
@@ -35,10 +36,10 @@ Running with existing model
         bin/test/coref_plain_text.sh settings/kbp.properties event-coref/src/test/resources/sample-input ../sample-output
     
 4. You should be able to find the annotation in TBF format in the following file:
-  ../sample-output/eval/full_run/lv1_coref.tbf
+   > ../sample-output/eval/full_run/lv1_coref.tbf
 
 For details about the TBF format, scoring, visit the TAC KBP event task website (look for Task Definition):
-    http://cairo.lti.cs.cmu.edu/kbp/2015/event
+   > http://cairo.lti.cs.cmu.edu/kbp/2015/event
    
 **Notes:**
     The current models are not the best models since the project is subject to frequent changes recently, I will try to update it as soon as possible.
