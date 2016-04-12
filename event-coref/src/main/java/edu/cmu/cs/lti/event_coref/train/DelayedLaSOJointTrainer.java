@@ -59,7 +59,7 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
 
     public static final String PARAM_REALIS_MODEL_DIRECTORY = "realisModelDirectory";
     @ConfigurationParameter(name = PARAM_REALIS_MODEL_DIRECTORY)
-    File realisModelDirectory;
+    private File realisModelDirectory;
 
     public static final String PARAM_PRETRAINED_MENTION_MODEL_DIRECTORY = "pretrainedMentionModelDirectory";
     @ConfigurationParameter(name = PARAM_PRETRAINED_MENTION_MODEL_DIRECTORY)
@@ -67,7 +67,7 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
 
     public static final String PARAM_USE_WARM_START = "useWarmStart";
     @ConfigurationParameter(name = PARAM_USE_WARM_START)
-    private boolean warmStart = true;
+    private boolean warmStart;
 
     private WekaModel realisModel;
 
@@ -75,7 +75,6 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
     private SentenceFeatureExtractor crfExtractor;
     private PairFeatureExtractor mentionPairExtractor;
     private BeamCrfLatentTreeDecoder decoder;
-
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
@@ -153,10 +152,8 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
 //        logger.debug("Done decoding last one.");
     }
 
-    private int processCandidates(List<EventMention> mentions,
-                                  List<MentionCandidate> goldCandidates,
-                                  SetMultimap<Integer, Integer> candidate2Split,
-                                  TIntIntMap mention2SplitCandidate,
+    private int processCandidates(List<EventMention> mentions, List<MentionCandidate> goldCandidates,
+                                  SetMultimap<Integer, Integer> candidate2Split, TIntIntMap mention2SplitCandidate,
                                   List<String> splitCandidateTypes) {
         SetMultimap<Word, Integer> head2Mentions = HashMultimap.create();
 
@@ -212,7 +209,8 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
             if (eventId > maxEventId.getValue()) {
                 maxEventId.setValue(eventId);
             }
-//            logger.debug(candidateId + " is linked to mention " + mentionId + ", which is linked to event " + eventId);
+//            logger.debug(candidateId + " is linked to mention " + mentionId + ", which is linked to event " +
+// eventId);
             return true;
         });
 

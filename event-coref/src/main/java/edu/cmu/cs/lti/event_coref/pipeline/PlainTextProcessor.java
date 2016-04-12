@@ -17,6 +17,7 @@ import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
+import edu.cmu.cs.lti.uima.io.reader.PlainTextCollectionReader;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
 import org.apache.uima.UIMAException;
@@ -24,6 +25,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.slf4j.Logger;
@@ -113,7 +115,7 @@ public class PlainTextProcessor {
         String outputDir = argv[2];
 
         PlainTextProcessor processor = new PlainTextProcessor(typeSystemName, taskConfig);
-        processor.run(taskConfig, inputDir, outputDir);
+        processor.run(taskConfig, outputDir, inputDir);
     }
 
     /**
@@ -123,7 +125,7 @@ public class PlainTextProcessor {
      * @throws UIMAException
      * @throws IOException
      */
-    public void run(Configuration taskConfig, String inputDir, String outputDir) throws UIMAException, IOException,
+    public void run(Configuration taskConfig, String outputDir, String... inputDir) throws UIMAException, IOException,
             CpeDescriptorException, SAXException {
 
         prepare(taskConfig, true, outputDir, inputDir);
@@ -301,8 +303,12 @@ public class PlainTextProcessor {
         CollectionReaderDescription[] inputReaders;
         inputReaders = new CollectionReaderDescription[inputDirs.length];
         for (int i = 0; i < inputDirs.length; i++) {
-            CollectionReaderDescription reader = CustomCollectionReaderFactory.createPlainTextReader(inputDirs[i],
-                    typeSystemDescription);
+            CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
+                    PlainTextCollectionReader.class, typeSystemDescription,
+                    PlainTextCollectionReader.PARAM_INPUTDIR, inputDirs[i],
+                    PlainTextCollectionReader.PARAM_LANGUAGE, language,
+                    PlainTextCollectionReader.PARAM_DO_NOISE_FILTER, true
+            );
             inputReaders[i] = reader;
         }
 
@@ -347,7 +353,8 @@ public class PlainTextProcessor {
                                     StanfordCoreNlpAnnotator.class, typeSystemDescription,
                                     StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language
                             );
-                        } else if (name.equals("semafor")) {
+                        }
+                        else if (name.equals("semafor")) {
                             processor = AnalysisEngineFactory.createEngineDescription(
                                     SemaforAnnotator.class, typeSystemDescription,
                                     SemaforAnnotator.SEMAFOR_MODEL_PATH, semaforModelDirectory);

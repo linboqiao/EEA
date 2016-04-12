@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
 import edu.cmu.cs.lti.uima.annotator.AbstractAnnotator;
-import edu.cmu.cs.lti.util.NoiseTextFormatter;
+import edu.cmu.cs.lti.uima.util.NoiseTextFormatter;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CASException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
