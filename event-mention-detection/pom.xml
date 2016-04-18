@@ -60,5 +60,37 @@
             <groupId>edu.cmu.cs.lti.script</groupId>
             <artifactId>learning</artifactId>
         </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>uima-base</artifactId>
+        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>edu.cmu.cs.lti.script</groupId>-->
+        <!--<artifactId>event-mention-detection</artifactId>-->
+        <!--<version>0.0.2</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>edu.cmu.cs.lti.script</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>nz.ac.waikato.cms.weka</groupId>
+            <artifactId>LibSVM</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>nz.ac.waikato.cms.weka</groupId>
+            <artifactId>LibLINEAR</artifactId>
+            <version>1.9.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>de.bwaldvogel</groupId>
+            <artifactId>liblinear</artifactId>
+            <version>1.94</version>
+        </dependency>
     </dependencies>
 </project>

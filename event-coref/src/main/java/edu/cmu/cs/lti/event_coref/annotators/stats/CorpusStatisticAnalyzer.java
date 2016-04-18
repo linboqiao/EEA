@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.event_coref.annotators;
+package edu.cmu.cs.lti.event_coref.annotators.stats;
 
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;

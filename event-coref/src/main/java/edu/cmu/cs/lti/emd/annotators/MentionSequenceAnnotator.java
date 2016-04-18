@@ -1,5 +1,6 @@
-package edu.cmu.cs.lti.emd.annotators.crf;
+package edu.cmu.cs.lti.emd.annotators;
 
+import edu.cmu.cs.lti.emd.annotators.train.MentionSequenceCrfTrainer;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.MultiSentenceFeatureExtractor;

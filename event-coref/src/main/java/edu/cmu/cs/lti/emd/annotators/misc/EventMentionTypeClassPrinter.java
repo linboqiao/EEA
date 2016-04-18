@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.annotators;
+package edu.cmu.cs.lti.emd.annotators.misc;
 
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;

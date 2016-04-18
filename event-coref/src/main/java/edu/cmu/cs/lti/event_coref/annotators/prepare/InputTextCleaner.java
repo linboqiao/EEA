@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.event_coref.annotators;
+package edu.cmu.cs.lti.event_coref.annotators.prepare;
 
 import edu.cmu.cs.lti.uima.annotator.AbstractAnnotator;
 import edu.cmu.cs.lti.uima.util.NoiseTextFormatter;

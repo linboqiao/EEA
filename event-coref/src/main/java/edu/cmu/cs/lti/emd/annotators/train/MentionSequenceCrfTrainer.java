@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.annotators.crf;
+package edu.cmu.cs.lti.emd.annotators.train;
 
 import edu.cmu.cs.lti.learning.annotators.AbstractCrfTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
@@ -131,7 +131,7 @@ public class MentionSequenceCrfTrainer extends AbstractCrfTrainer {
         }
 
         double loss = trainer.trainNext(goldSolution, goldFv, featureExtractor, dummayLagrangian, dummayLagrangian,
-                sequenceFeatures);
+                sequenceFeatures, "hamming");
         trainingStats.addLoss(logger, loss);
 
         if (newSequenceFeatures) {

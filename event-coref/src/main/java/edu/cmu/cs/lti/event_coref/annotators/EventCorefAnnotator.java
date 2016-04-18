@@ -5,7 +5,7 @@ import edu.cmu.cs.lti.event_coref.decoding.BestFirstLatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.decoding.LatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
-import edu.cmu.cs.lti.event_coref.train.PaLatentTreeTrainer;
+import edu.cmu.cs.lti.event_coref.annotators.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;

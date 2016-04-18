@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.event_coref.pipeline;
 
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
-import edu.cmu.cs.lti.emd.annotators.EventMentionTypeClassPrinter;
+import edu.cmu.cs.lti.emd.annotators.misc.EventMentionTypeClassPrinter;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;

@@ -5,7 +5,7 @@ import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.decoding.model.NodeLinkingState;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
-import edu.cmu.cs.lti.event_coref.train.DelayedLaSOJointTrainer;
+import edu.cmu.cs.lti.event_coref.annotators.train.DelayedLaSOJointTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;

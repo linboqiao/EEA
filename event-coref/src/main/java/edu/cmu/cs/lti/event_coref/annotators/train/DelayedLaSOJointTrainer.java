@@ -1,8 +1,8 @@
-package edu.cmu.cs.lti.event_coref.train;
+package edu.cmu.cs.lti.event_coref.annotators.train;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
-import edu.cmu.cs.lti.emd.annotators.crf.MentionTypeCrfTrainer;
+import edu.cmu.cs.lti.emd.annotators.train.MentionTypeCrfTrainer;
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;

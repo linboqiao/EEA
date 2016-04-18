@@ -8,18 +8,20 @@ import edu.cmu.cs.lti.annotators.WordNetBasedEntityAnnotator;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.classification.RealisTypeAnnotator;
-import edu.cmu.cs.lti.emd.annotators.crf.CrfMentionTypeAnnotator;
-import edu.cmu.cs.lti.emd.annotators.crf.MentionSequenceAnnotator;
-import edu.cmu.cs.lti.emd.annotators.crf.MentionSequenceCrfTrainer;
-import edu.cmu.cs.lti.emd.annotators.crf.MentionTypeCrfTrainer;
+import edu.cmu.cs.lti.emd.annotators.CrfMentionTypeAnnotator;
+import edu.cmu.cs.lti.emd.annotators.MentionSequenceAnnotator;
+import edu.cmu.cs.lti.emd.annotators.train.MentionSequenceCrfTrainer;
+import edu.cmu.cs.lti.emd.annotators.train.MentionTypeCrfTrainer;
 import edu.cmu.cs.lti.emd.annotators.postprocessors.MentionTypeSplitter;
 import edu.cmu.cs.lti.emd.pipeline.TrainingLooper;
 import edu.cmu.cs.lti.event_coref.annotators.*;
+import edu.cmu.cs.lti.event_coref.annotators.misc.DifferentTypeCorefCollector;
+import edu.cmu.cs.lti.event_coref.annotators.postprocessors.MentionTypeAncClusterSplitter;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.ArgumentMerger;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EnglishSrlArgumentExtractor;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EventHeadWordAnnotator;
-import edu.cmu.cs.lti.event_coref.train.DelayedLaSOJointTrainer;
-import edu.cmu.cs.lti.event_coref.train.PaLatentTreeTrainer;
+import edu.cmu.cs.lti.event_coref.annotators.train.DelayedLaSOJointTrainer;
+import edu.cmu.cs.lti.event_coref.annotators.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.exceptions.ConfigurationException;
 import edu.cmu.cs.lti.learning.train.RealisClassifierTrainer;
 import edu.cmu.cs.lti.model.UimaConst;
@@ -333,7 +335,7 @@ public class EventMentionPipeline {
     }
 
     public String trainSentLvType(Configuration config, CollectionReaderDescription trainingReader, String suffix,
-                                  boolean skipTrain, boolean usePaTraing, int initialSeed)
+                                  boolean skipTrain, boolean usePaTraing, String lossType, int initialSeed)
             throws UIMAException, IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         logger.info("Starting training sentence level mention type model ...");
@@ -343,6 +345,10 @@ public class EventMentionPipeline {
         File modelFile = new File(modelPath);
 
         MutableInt trainingSeed = new MutableInt(initialSeed);
+
+        if (usePaTraing) {
+            logger.info("Use passive aggressive with loss : " + lossType);
+        }
 
         // Only skip training when model directory exists.
         if (skipTrain && modelFile.exists()) {
@@ -357,7 +363,8 @@ public class EventMentionPipeline {
                     MentionTypeCrfTrainer.PARAM_GOLD_STANDARD_VIEW_NAME, UimaConst.goldViewName,
                     MentionTypeCrfTrainer.PARAM_CONFIGURATION_FILE, config.getConfigFile(),
                     MentionTypeCrfTrainer.PARAM_CACHE_DIRECTORY, cacheDir,
-                    MentionTypeCrfTrainer.PARAM_USE_PA_UPDATE, usePaTraing
+                    MentionTypeCrfTrainer.PARAM_USE_PA_UPDATE, usePaTraing,
+                    MentionTypeCrfTrainer.PARAM_LOSS_TYPE, lossType
             );
 
             TrainingLooper mentionTypeTrainer = new TrainingLooper(config, modelPath,
@@ -682,8 +689,14 @@ public class EventMentionPipeline {
                             EventCorefAnnotator.PARAM_USE_AVERAGE, useAverage
                     );
 
+                    AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
+                            MentionTypeSplitter.class, typeSystemDescription
+                    );
+
+
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();
                     addCorefPreprocessors(annotators);
+                    annotators.add(mentionSplitter);
                     annotators.add(corefAnnotator);
                     return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
                 }
@@ -718,8 +731,8 @@ public class EventMentionPipeline {
                     );
 
                     AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
-                            MentionTypeSplitter.class, typeSystemDescription,
-                            MentionTypeSplitter.PARAM_COREF_RULE_FILE, corefRuleFile
+                            MentionTypeAncClusterSplitter.class, typeSystemDescription,
+                            MentionTypeAncClusterSplitter.PARAM_COREF_RULE_FILE, corefRuleFile
                     );
 
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();
@@ -902,7 +915,7 @@ public class EventMentionPipeline {
     }
 
     /**
-     * Conduct cross validation on various tasks.
+     * Conduct cross validation  on various tasks.
      *
      * @param taskConfig
      * @throws Exception
@@ -947,20 +960,22 @@ public class EventMentionPipeline {
                 seed);
 
         String vanillaSentCrfModel = trainSentLvType(taskConfig, trainingData, sliceSuffix, skipTypeTrain, false,
-                seed);
+                "f1", seed);
 
-//            String paSentCrfModel = trainSentLvType(taskConfig, trainingData, sliceSuffix + "_pa",
-//                    skipTypeTrain, true, seed);
+        String paF1SentCrfModel = trainSentLvType(taskConfig, trainingData, sliceSuffix + "_pa_f1", skipTypeTrain,
+                true, "f1", seed);
+
+        String paHammingSentCrfModel = trainSentLvType(taskConfig, trainingData, sliceSuffix + "_pa_hamming",
+                skipTypeTrain, true, "hamming", seed);
+
+        String paRecallHammingSentCrfModel = trainSentLvType(taskConfig, trainingData,
+                sliceSuffix + "_pa_recall_hamming", skipTypeTrain, true, "recallHamming", seed);
 
         // Train realis model.
         String realisModelDir = trainRealisTypes(taskConfig, trainingData, sliceSuffix, skipRealisTrain);
 
-        // Train Beam search joint model.
-        String regularBeamJointModel = trainJointSpanModel(taskConfig, trainingData, false,
-                sliceSuffix, skipBeamTrain, seed, realisModelDir,
-                vanillaSentCrfModel, taskConfig.get("edu.cmu.cs.lti.model.joint.span.dir"));
-
-//        String warmStartBeamJointModel = trainJointSpanModel(taskConfig, trainingData, true,
+//        // Train Beam search joint model.
+//        String regularBeamJointModel = trainJointSpanModel(taskConfig, trainingData, false,
 //                sliceSuffix, skipBeamTrain, seed, realisModelDir,
 //                vanillaSentCrfModel, taskConfig.get("edu.cmu.cs.lti.model.joint.span.dir"));
 
@@ -968,9 +983,17 @@ public class EventMentionPipeline {
         String treeCorefModel = trainLatentTreeCoref(taskConfig, trainingData, sliceSuffix, skipCorefTrain, seed,
                 taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree"));
 
-//            CollectionReaderDescription paSentTypeMentions = sentenceLevelMentionTagging(taskConfig,
-//                    devSliceReader, paSentCrfModel, trainingWorkingDir,
-//                    FileUtils.joinPaths(middleResults, sliceSuffix, "mentions_lv1_merged_pa"), skipTypeTest);
+        CollectionReaderDescription paF1Mentions = sentenceLevelMentionTagging(taskConfig, testReader,
+                paF1SentCrfModel, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "mentions_lv1_pa_f1"), skipTypeTest);
+
+        CollectionReaderDescription paHammingMentions = sentenceLevelMentionTagging(taskConfig, testReader,
+                paHammingSentCrfModel, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "mentions_lv1_pa_hamming"), skipTypeTest);
+
+        CollectionReaderDescription paRecallHammingMentions = sentenceLevelMentionTagging(taskConfig, testReader,
+                paRecallHammingSentCrfModel, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "mentions_lv1_pa_recall_hamming"), skipTypeTest);
 
         // Mention types from the sentence crf model.
         CollectionReaderDescription vanillaSentTypeMentions = sentenceLevelMentionTagging(taskConfig,
@@ -983,9 +1006,17 @@ public class EventMentionPipeline {
                 FileUtils.joinPaths(middleResults, sliceSuffix, "lv1_realis"), skipRealisTest);
 
         // Run realis on pa trained crf mentions.
-//            CollectionReaderDescription paCrfMentionRealis = realisAnnotation(taskConfig,
-//                    paSentTypeMentions, realisModelDir, trainingWorkingDir,
-//                    FileUtils.joinPaths(middleResults, sliceSuffix, "lv1_realis_merged_pa"), skipRealisTest);
+        CollectionReaderDescription paCrfMentionRealis = realisAnnotation(taskConfig,
+                paF1Mentions, realisModelDir, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "lv1_realis_pa_f1"), skipRealisTest);
+
+        CollectionReaderDescription paHammingMentionRealis = realisAnnotation(taskConfig,
+                paHammingMentions, realisModelDir, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "lv1_realis_pa_hamming"), skipRealisTest);
+
+        CollectionReaderDescription paRecallHammingMentionRealis = realisAnnotation(taskConfig,
+                paRecallHammingMentions, realisModelDir, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "lv1_realis_pa_recall_hamming"), skipRealisTest);
 
         // Gold mention types.
         CollectionReaderDescription goldMentionTypes = goldMentionAnnotator(testReader, trainingWorkingDir,
@@ -995,8 +1026,7 @@ public class EventMentionPipeline {
         // Run realis on gold types.
         CollectionReaderDescription goldTypeSystemRealis = realisAnnotation(taskConfig, goldMentionTypes,
                 realisModelDir, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix,
-                        "gold_system_realis"),
-                skipRealisTest);
+                        "gold_system_realis"), skipRealisTest);
 
         // Run gold mention detection.
         CollectionReaderDescription goldMentionAll = goldMentionAnnotator(testReader, trainingWorkingDir,
@@ -1009,9 +1039,24 @@ public class EventMentionPipeline {
                 FileUtils.joinPaths(middleResults, sliceSuffix, "coref_lv1_mention"), true,
                 skipCorefTest);
 
-        CollectionReaderDescription jointSpanCorefMentions = beamJointSpanCoref(taskConfig, testReader,
-                regularBeamJointModel, realisModelDir, trainingWorkingDir,
-                FileUtils.joinPaths(middleResults, sliceSuffix, "joint_span_coref"), skipBeamTest);
+        CollectionReaderDescription corefPaF1Mentions = corefResolution(taskConfig,
+                paCrfMentionRealis, treeCorefModel, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "coref_lv1_pa_f1_mention"), true,
+                skipCorefTest);
+
+        CollectionReaderDescription corefPaHammingMentions = corefResolution(taskConfig,
+                paHammingMentionRealis, treeCorefModel, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "coref_lv1_pa_hamming_mention"), true,
+                skipCorefTest);
+
+        CollectionReaderDescription corefPaRecallHammingMentions = corefResolution(taskConfig,
+                paRecallHammingMentionRealis, treeCorefModel, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "coref_lv1_pa_recall_hamming_mention"), true,
+                skipCorefTest);
+
+//        CollectionReaderDescription jointSpanCorefMentions = beamJointSpanCoref(taskConfig, testReader,
+//                regularBeamJointModel, realisModelDir, trainingWorkingDir,
+//                FileUtils.joinPaths(middleResults, sliceSuffix, "joint_span_coref"), skipBeamTest);
 
         CollectionReaderDescription corefGoldType = corefResolution(taskConfig, goldTypeSystemRealis,
                 treeCorefModel, trainingWorkingDir,
@@ -1028,6 +1073,19 @@ public class EventMentionPipeline {
                 corefSentMentions,
                 FileUtils.joinPaths(evalDir, "lv1_coref_" + sliceSuffix + ".tbf"), "tree_coref"
         );
+        writeResults(
+                corefPaF1Mentions,
+                FileUtils.joinPaths(evalDir, "lv1_f1_pa_coref_" + sliceSuffix + ".tbf"), "tree_coref"
+        );
+        writeResults(
+                corefPaHammingMentions,
+                FileUtils.joinPaths(evalDir, "lv1_hamming_pa_coref_" + sliceSuffix + ".tbf"), "tree_coref"
+        );
+        writeResults(
+                corefPaRecallHammingMentions,
+                FileUtils.joinPaths(evalDir, "lv1_recall_hamming_pa_coref_" + sliceSuffix + ".tbf"), "tree_coref"
+        );
+
         writeResults(corefGoldType,
                 FileUtils.joinPaths(evalDir, "gold_type_coref_" + sliceSuffix + ".tbf"), "gold_types"
         );
@@ -1035,10 +1093,10 @@ public class EventMentionPipeline {
                 corefGoldTypeRealis,
                 FileUtils.joinPaths(evalDir, "gold_type_realis_coref_" + sliceSuffix + ".tbf"), "tree_coref"
         );
-        writeResults(
-                jointSpanCorefMentions, FileUtils.joinPaths(evalDir, "joint_span_coref_" + sliceSuffix + ".tbf"),
-                "tree_coref"
-        );
+//        writeResults(
+//                jointSpanCorefMentions, FileUtils.joinPaths(evalDir, "joint_span_coref_" + sliceSuffix + ".tbf"),
+//                "tree_coref"
+//        );
 
         // Produce gold standard tbf for easy evaluation.
         writeGold(testReader, FileUtils.joinPaths(evalDir, "gold_" + sliceSuffix + ".tbf"));

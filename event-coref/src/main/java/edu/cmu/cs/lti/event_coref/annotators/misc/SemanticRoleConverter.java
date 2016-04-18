@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.event_coref.annotators;
+package edu.cmu.cs.lti.event_coref.annotators.misc;
 
 import edu.cmu.cs.lti.ling.FrameDataReader;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;

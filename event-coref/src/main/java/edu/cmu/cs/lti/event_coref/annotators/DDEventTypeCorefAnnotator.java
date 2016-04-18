@@ -1,13 +1,13 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.emd.annotators.crf.MentionSequenceCrfTrainer;
+import edu.cmu.cs.lti.emd.annotators.train.MentionSequenceCrfTrainer;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.DDLatentTreeCrfDecoder;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
-import edu.cmu.cs.lti.event_coref.train.PaLatentTreeTrainer;
+import edu.cmu.cs.lti.event_coref.annotators.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.MultiSentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;

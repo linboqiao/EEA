@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.annotators.postprocessors;
+package edu.cmu.cs.lti.event_coref.annotators.postprocessors;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
@@ -27,7 +27,7 @@ import java.util.Map;
  *
  * @author Zhengzhong Liu
  */
-public class MentionTypeSplitter extends AbstractLoggingAnnotator {
+public class MentionTypeAncClusterSplitter extends AbstractLoggingAnnotator {
     public static final String PARAM_COREF_RULE_FILE = "corefRulesFile";
 
     @ConfigurationParameter(name = PARAM_COREF_RULE_FILE)

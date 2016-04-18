@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.annotators.crf;
+package edu.cmu.cs.lti.emd.annotators.train;
 
 import edu.cmu.cs.lti.learning.annotators.AbstractCrfTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
@@ -44,13 +44,18 @@ import java.util.Map;
  * @author Zhengzhong Liu
  */
 public class MentionTypeCrfTrainer extends AbstractCrfTrainer {
-    //TODO rename this class
+    //TODO rename this class and model name.
     public static final String MODEL_NAME = "crfModel";
 
     public static final String PARAM_USE_PA_UPDATE = "usePaUpdate";
 
+    public static final String PARAM_LOSS_TYPE = "lossType";
+
     @ConfigurationParameter(name = PARAM_USE_PA_UPDATE)
     private boolean usePaUpdate;
+
+    @ConfigurationParameter(name = PARAM_LOSS_TYPE)
+    private String lossType;
 
     protected static MultiKeyDiskCacher<ArrayList<TIntObjectMap<FeatureVector[]>>> featureCacher;
 
@@ -172,7 +177,7 @@ public class MentionTypeCrfTrainer extends AbstractCrfTrainer {
             }
 
             double loss = trainer.trainNext(goldSolution, goldFv, featureExtractor, dummyLagrangian, dummyLagrangian,
-                    sentenceFeatures);
+                    sentenceFeatures, lossType);
 
 
             trainingStats.addLoss(logger, loss);

@@ -8,7 +8,7 @@ import edu.cmu.cs.lti.annotators.WordNetBasedEntityAnnotator;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.classification.RealisTypeAnnotator;
-import edu.cmu.cs.lti.emd.annotators.crf.CrfMentionTypeAnnotator;
+import edu.cmu.cs.lti.emd.annotators.CrfMentionTypeAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.EventCorefAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.ArgumentMerger;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EventHeadWordAnnotator;

@@ -10,8 +10,8 @@ gold_standard=${base_dir}"/eval/tree_coref/gold_split_$i.tbf"
 
 #declare -a arr=("gold_type_coref" "gold_type_realis_coref" "lv1_coref" "lv1_coref_merged" "lv2_coref" "lv2_coref_merged" "joint" "coref_gold_span" "coref_gold_span_merged" "joint_gold_span")
 #declare -a arr=("gold_type_realis_coref" "lv1_coref" "lv2_coref" "joint_gold_span" "joint" "coref_gold_span" "gold_type_coref")
-declare -a arr=("gold_type_realis_coref" "lv1_coref" "gold_type_coref" "joint_span_coref")
-
+#declare -a arr=("gold_type_realis_coref" "lv1_coref" "gold_type_coref" "joint_span_coref")
+declare -a arr=("lv1_coref" "lv1_f1_pa_coref" "lv1_hamming_pa_coref" "lv1_recall_hamming_pa_coref")
 
 for sys_name in "${arr[@]}"
 do

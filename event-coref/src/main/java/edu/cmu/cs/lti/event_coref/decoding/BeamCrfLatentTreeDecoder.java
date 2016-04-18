@@ -6,7 +6,7 @@ import edu.cmu.cs.lti.event_coref.model.graph.LabelledMentionGraphEdge;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
-import edu.cmu.cs.lti.event_coref.train.DelayedLaSOJointTrainer;
+import edu.cmu.cs.lti.event_coref.annotators.train.DelayedLaSOJointTrainer;
 import edu.cmu.cs.lti.event_coref.update.DiscriminativeUpdater;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
@@ -60,12 +60,10 @@ public class BeamCrfLatentTreeDecoder {
     private TrainingStats corefTrainingStats;
     private TrainingStats typeTrainingStats;
 
-    // TODO use a smaller beam size for debug.
     private int beamSize = 5;
 
     // A empty feature vector for placeholder, don't use it.
     private final FeatureVector dummyFv;
-
 
     public BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
                                     GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
@@ -84,7 +82,6 @@ public class BeamCrfLatentTreeDecoder {
             throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
         this(mentionWeights, realisModel, corefWeights, realisExtractor, crfExtractor, mentionPairExtractor, false);
-
         logger.info("Starting the Beam Decoder with Testing mode.");
 
     }
@@ -219,7 +216,7 @@ public class BeamCrfLatentTreeDecoder {
                     prunedNodes.add(curr.getValue());
                 }
 
-                // Only take the top 5 classes to expand.
+                // Only take the top k classes to expand.
                 int count = 0;
                 while (!sortedClassScores.isEmpty()) {
                     Pair<Integer, Double> classScore = sortedClassScores.poll();

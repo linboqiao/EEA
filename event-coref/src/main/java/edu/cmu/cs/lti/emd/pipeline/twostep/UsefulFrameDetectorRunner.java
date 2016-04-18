@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.emd.pipeline.twostep;
 
-import edu.cmu.cs.lti.emd.annotators.UsefulFramDetector;
+import edu.cmu.cs.lti.emd.annotators.misc.UsefulFramDetector;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;

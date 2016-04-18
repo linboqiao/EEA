@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.event_coref.annotators;
+package edu.cmu.cs.lti.event_coref.annotators.misc;
 
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.script.type.Event;

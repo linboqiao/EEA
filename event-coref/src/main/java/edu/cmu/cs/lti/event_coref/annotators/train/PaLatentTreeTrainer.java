@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.event_coref.train;
+package edu.cmu.cs.lti.event_coref.annotators.train;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;

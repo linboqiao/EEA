@@ -43,7 +43,6 @@ public class HeadWordPairFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel, List<MentionCandidate> candidates, NodeKey firstNode, NodeKey
-
             secondNode) {
 
     }

@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.event_coref.update;
 import edu.cmu.cs.lti.event_coref.decoding.model.LabelLinkAgenda;
 import edu.cmu.cs.lti.event_coref.decoding.model.NodeLinkingState;
 import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge;
-import edu.cmu.cs.lti.event_coref.train.DelayedLaSOJointTrainer;
+import edu.cmu.cs.lti.event_coref.annotators.train.DelayedLaSOJointTrainer;
 import edu.cmu.cs.lti.learning.model.*;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;

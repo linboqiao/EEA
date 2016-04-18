@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.annotators;
+package edu.cmu.cs.lti.emd.annotators.misc;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;

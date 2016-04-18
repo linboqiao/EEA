@@ -165,8 +165,8 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
             }
 
             EventMention copiedMention = copyMention(toView, aSharedMention, jointType);
-            // Record the number of times of multi tag, we record the syntactic based count here, the multi sense
-            // count are recorded in the joint type.
+            // Record the number of times of multi tagging of the same type on the same span
+            // the multi sense counts are not counted here.
             // We set this to repeat count - 1 to record only additional mentions.
             copiedMention.setMultiTag(repeatCount - 1);
 
