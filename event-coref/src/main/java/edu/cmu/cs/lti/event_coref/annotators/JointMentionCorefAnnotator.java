@@ -2,15 +2,14 @@ package edu.cmu.cs.lti.event_coref.annotators;
 
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
-import edu.cmu.cs.lti.event_coref.decoding.model.NodeLinkingState;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
-import edu.cmu.cs.lti.event_coref.annotators.train.DelayedLaSOJointTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
+import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -19,6 +18,7 @@ import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.commons.lang3.SerializationUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -26,7 +26,6 @@ import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.javatuples.Pair;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,6 +35,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
+import static edu.cmu.cs.lti.learning.model.ModelConstants.TYPE_MODEL_NAME;
 
 /**
  * Created with IntelliJ IDEA.
@@ -93,12 +95,12 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
 
         Map<Pair<Integer, String>, EventMention> node2Mention = new HashMap<>();
 
-        List<List<NodeKey>> nodeResults = decodedState.getNodeResults();
+        List<MultiNodeKey> nodeResults = decodedState.getNodeResults();
 
         for (int nodeIndex = 0; nodeIndex < nodeResults.size(); nodeIndex++) {
-            List<NodeKey> nodeKey = nodeResults.get(nodeIndex);
+            MultiNodeKey nodeKey = nodeResults.get(nodeIndex);
 
-            if (MentionCandidate.isRootKey(nodeKey)) {
+            if (nodeKey.isRoot()) {
                 continue;
             }
 
@@ -108,7 +110,7 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
                     mention.setRealisType(result.getRealis());
                     mention.setEventType(result.getMentionType());
                     UimaAnnotationUtils.finishAnnotation(mention, COMPONENT_ID, 0, aJCas);
-                    node2Mention.put(Pair.with(nodeIndex, result.getMentionType()), mention);
+                    node2Mention.put(Pair.of(nodeIndex, result.getMentionType()), mention);
                 }
             }
         }
@@ -149,7 +151,7 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
         FeatureAlphabet alphabet;
         try {
             crfWeights = SerializationUtils.deserialize(new FileInputStream(new File
-                    (jointModelDir, DelayedLaSOJointTrainer.TYPE_MODEL_NAME)));
+                    (jointModelDir, TYPE_MODEL_NAME)));
             alphabet = crfWeights.getFeatureAlphabet();
 //            classAlphabet = crfWeights.getClassAlphabet();
             featureSpec = crfWeights.getFeatureSpec();
@@ -202,7 +204,7 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
 
         try {
             corefWeights = SerializationUtils.deserialize(new FileInputStream(new File(jointModelDir,
-                    DelayedLaSOJointTrainer.COREF_MODEL_NAME)));
+                    COREF_MODEL_NAME)));
             corefFeatureAlphabet = corefWeights.getFeatureAlphabet();
             corefClassAlphabet = corefWeights.getClassAlphabet();
             featureSpec = corefWeights.getFeatureSpec();

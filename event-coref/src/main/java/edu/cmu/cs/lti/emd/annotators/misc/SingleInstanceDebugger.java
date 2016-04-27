@@ -1,7 +1,9 @@
 package edu.cmu.cs.lti.emd.annotators.misc;
 
-import edu.cmu.cs.lti.emd.annotators.train.MentionSequenceCrfTrainer;
-import edu.cmu.cs.lti.emd.annotators.train.MentionTypeCrfTrainer;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
+import edu.cmu.cs.lti.emd.annotators.train.MentionLevelEventMentionCrfTrainer;
+import edu.cmu.cs.lti.emd.annotators.train.TokenLevelEventMentionCrfTrainer;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.MultiSentenceFeatureExtractor;
@@ -95,9 +97,9 @@ public class SingleInstanceDebugger extends AbstractLoggingAnnotator {
 
         try {
             lv1WeightVector = SerializationUtils.deserialize(new FileInputStream(new File
-                    (lv1ModelDirectory, MentionTypeCrfTrainer.MODEL_NAME)));
+                    (lv1ModelDirectory, TokenLevelEventMentionCrfTrainer.MODEL_NAME)));
             lv2WeightVector = SerializationUtils.deserialize(new FileInputStream(new File
-                    (lv2ModelDirectory, MentionSequenceCrfTrainer.MODEL_NAME)));
+                    (lv2ModelDirectory, MentionLevelEventMentionCrfTrainer.MODEL_NAME)));
         } catch (IOException e) {
             throw new ResourceInitializationException(e);
         }
@@ -230,7 +232,7 @@ public class SingleInstanceDebugger extends AbstractLoggingAnnotator {
     private void inspectTopClasses(int sequenceIndex, UimaSequenceFeatureExtractor extractor,
                                    GraphWeightVector weightVector) {
         FeatureVector nodeFeature = new RealValueHashFeatureVector(weightVector.getFeatureAlphabet());
-        FeatureVector edgeFeature = new RealValueHashFeatureVector(weightVector.getFeatureAlphabet());
+        Table<Integer, Integer, FeatureVector> edgeFeature = HashBasedTable.create();
 
         extractor.extract(sequenceIndex, nodeFeature, edgeFeature);
 

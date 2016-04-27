@@ -1,16 +1,15 @@
-package edu.cmu.cs.lti.event_coref.decoding.model;
+package edu.cmu.cs.lti.learning.model.decoding;
 
 import com.google.common.collect.MinMaxPriorityQueue;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
-import edu.cmu.cs.lti.learning.model.FeatureVector;
-import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
-import edu.cmu.cs.lti.learning.model.MentionCandidate;
-import edu.cmu.cs.lti.learning.model.NodeKey;
+import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
-import org.javatuples.Pair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,14 +19,14 @@ import java.util.stream.Collectors;
  * changes are not directly applied to the states because we need to choose the best deltas.
  */
 public class StateDelta implements Comparable<StateDelta> {
+    private transient final Logger logger = LoggerFactory.getLogger(getClass());
+
     private NodeLinkingState existingState;
     private double newScore;
 
-    private List<NodeKey> nodes;
-    private List<Integer> antecedents;
-    private List<MentionGraphEdge.EdgeType> linkTypes;
-    private List<NodeKey> govKeys;
-    private List<NodeKey> depKeys;
+    private MultiNodeKey nodes;
+
+    private List<EdgeKey> edges;
 
     private GraphFeatureVector deltaLabelFv;
 
@@ -35,19 +34,23 @@ public class StateDelta implements Comparable<StateDelta> {
     // on the anaphora node. This is caused by the fact that there can be multiple types on one mention.
     private List<Pair<EdgeType, FeatureVector>> deltaGraphFv;
 
-    public StateDelta(NodeLinkingState existingState, List<Integer> antecedents,
-                      List<MentionGraphEdge.EdgeType> linkTypes, List<NodeKey> govKeys,
-                      List<NodeKey> depKeys, double additionalScore, GraphFeatureVector newLabelFv,
-                      List<Pair<EdgeType, FeatureVector>> newCorefFv) {
+    public StateDelta(NodeLinkingState existingState) {
         this.existingState = existingState;
-        this.antecedents = antecedents;
-        this.linkTypes = linkTypes;
-        this.newScore = existingState.getScore() + additionalScore;
+        newScore = existingState.getScore();
+        edges = new ArrayList<>();
+        deltaGraphFv = new ArrayList<>();
+    }
+
+    public void setNode(MultiNodeKey nodes, GraphFeatureVector newLabelFv, double nodeScore) {
+        this.nodes = nodes;
         this.deltaLabelFv = newLabelFv;
-        this.deltaGraphFv = newCorefFv;
-        this.govKeys = govKeys;
-        this.depKeys = depKeys;
-        this.nodes = depKeys;
+        newScore += nodeScore;
+    }
+
+    public void addLink(EdgeType linkType, NodeKey govKey, NodeKey depKey, double linkScore, FeatureVector newCorefFv) {
+        edges.add(new EdgeKey(depKey, govKey, linkType));
+        newScore += linkScore;
+        deltaGraphFv.add(Pair.of(linkType, newCorefFv));
     }
 
     @Override
@@ -66,12 +69,16 @@ public class StateDelta implements Comparable<StateDelta> {
     public NodeLinkingState applyUpdate(List<MentionCandidate> candidates) {
         NodeLinkingState state = existingState.makeCopy();
 
-//        System.out.println("Before applying : " + state.showNodes());
+//        logger.info("Before applying : " + state.showNodes());
 
-        for (int i = 0; i < nodes.size(); i++) {
-            Integer antecedent = antecedents.get(i);
-            EdgeType linkType = linkTypes.get(i);
-            state.addLinkTo(candidates, antecedent, govKeys.get(i), depKeys.get(i), linkType);
+//        for (int i = 0; i < nodes.size(); i++) {
+//            Integer antecedent = antecedents.get(i);
+//            EdgeType linkType = linkTypes.get(i);
+//            state.addLinkTo(candidates, antecedent, govKeys.get(i), nodes.get(i), linkType);
+//        }
+
+        for (EdgeKey edge : edges) {
+            state.addLink(candidates, edge);
         }
 
         state.addNode(nodes);
@@ -80,7 +87,7 @@ public class StateDelta implements Comparable<StateDelta> {
 
         state.extendFeatures(deltaLabelFv, deltaGraphFv);
 
-//        System.out.println("After applying : " + state.showNodes());
+//        logger.info("After applying : " + state.showNodes());
 //        DebugUtils.pause();
 
         return state;
@@ -89,7 +96,14 @@ public class StateDelta implements Comparable<StateDelta> {
     public String toString() {
         String typeStr = MentionTypeUtils.joinMultipleTypes(nodes.stream()
                 .map(NodeKey::getMentionType).collect(Collectors.toSet()));
-        return String.format("[StateDelta] [%s] --%s--> [%d] ", nodes.get(0).toString(), typeStr, antecedents.get(0));
+
+        StringBuilder sb = new StringBuilder();
+        for (NodeKey node : nodes) {
+            sb.append("\n");
+            sb.append(node.toString());
+        }
+
+        return String.format("[StateDelta] [%s] [Links:] %s", typeStr, sb.toString());
     }
 
     public List<Pair<EdgeType, FeatureVector>> getDeltaGraphFv() {

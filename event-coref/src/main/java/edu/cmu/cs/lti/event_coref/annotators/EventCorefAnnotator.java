@@ -1,17 +1,17 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
+import edu.cmu.cs.lti.event_coref.annotators.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.event_coref.decoding.BestFirstLatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.decoding.LatentTreeDecoder;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
-import edu.cmu.cs.lti.event_coref.annotators.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
+import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Event;
@@ -22,6 +22,7 @@ import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.lang3.SerializationUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -29,7 +30,6 @@ import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.javatuples.Pair;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -142,7 +142,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
             Map<Span, EventMention> span2Mentions = new HashMap<>();
 
             for (Pair<Integer, String> typedNode : corefChain) {
-                int mentionIndex = mentionGraph.getCandidateIndex(typedNode.getValue0());
+                int mentionIndex = mentionGraph.getCandidateIndex(typedNode.getLeft());
                 EventMention mention = allMentions.get(mentionIndex);
                 Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());
                 if (!span2Mentions.containsKey(mentionSpan)) {

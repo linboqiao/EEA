@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.emd.annotators;
 
-import edu.cmu.cs.lti.emd.annotators.train.MentionTypeCrfTrainer;
+import edu.cmu.cs.lti.emd.annotators.train.TokenLevelEventMentionCrfTrainer;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
@@ -73,7 +73,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
         FeatureAlphabet alphabet;
         try {
             weightVector = SerializationUtils.deserialize(new FileInputStream(new File
-                    (modelDirectory, MentionTypeCrfTrainer.MODEL_NAME)));
+                    (modelDirectory, TokenLevelEventMentionCrfTrainer.MODEL_NAME)));
             alphabet = weightVector.getFeatureAlphabet();
             classAlphabet = weightVector.getClassAlphabet();
             featureSpec = weightVector.getFeatureSpec();

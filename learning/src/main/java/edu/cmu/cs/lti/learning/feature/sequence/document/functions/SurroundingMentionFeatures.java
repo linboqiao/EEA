@@ -1,13 +1,16 @@
 package edu.cmu.cs.lti.learning.feature.sequence.document.functions;
 
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.jcas.JCas;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,13 +37,13 @@ public class SurroundingMentionFeatures extends SequenceFeatureWithFocus<EventMe
     }
 
     @Override
-    public void extract(List<EventMention> sequence, int focus, TObjectDoubleMap<String> features,
-                        TObjectDoubleMap<String> featuresNeedForState) {
+    public void extract(List<EventMention> sequence, int focus, TObjectDoubleMap<String> nodeFeatures,
+                        Table<Pair<Integer, Integer>, String, Double> edgeFeatures) {
         for (int window = 0; window < 3; window++) {
             for (int offset = 0; offset < window; offset++) {
-                addToFeatures(features, String.format("MentionHead@i+%d=%s", window, getMentionHead(sequence, focus +
+                addToFeatures(nodeFeatures, String.format("MentionHead@i+%d=%s", window, getMentionHead(sequence, focus +
                         window)), 1);
-                addToFeatures(features, String.format("MentionHead@i-%d=%s", window, getMentionHead(sequence, focus -
+                addToFeatures(nodeFeatures, String.format("MentionHead@i-%d=%s", window, getMentionHead(sequence, focus -
                         window)), 1);
             }
         }
@@ -52,5 +55,10 @@ public class SurroundingMentionFeatures extends SequenceFeatureWithFocus<EventMe
             return UimaNlpUtils.findHeadFromAnnotation(mention).getLemma().toLowerCase();
         }
         return outsideValue;
+    }
+
+    @Override
+    public void extractGlobal(List<EventMention> sequence, int focus, TObjectDoubleMap<String> globalFeatures, Map<Integer, String> knownStates) {
+
     }
 }

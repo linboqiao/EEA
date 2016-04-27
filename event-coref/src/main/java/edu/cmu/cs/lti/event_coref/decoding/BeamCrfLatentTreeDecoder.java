@@ -1,36 +1,38 @@
 package edu.cmu.cs.lti.event_coref.decoding;
 
-import edu.cmu.cs.lti.event_coref.decoding.model.LabelLinkAgenda;
-import edu.cmu.cs.lti.event_coref.decoding.model.NodeLinkingState;
-import edu.cmu.cs.lti.event_coref.model.graph.LabelledMentionGraphEdge;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
-import edu.cmu.cs.lti.event_coref.annotators.train.DelayedLaSOJointTrainer;
-import edu.cmu.cs.lti.event_coref.update.DiscriminativeUpdater;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
-import edu.cmu.cs.lti.learning.model.NodeKey;
+import edu.cmu.cs.lti.learning.model.decoding.LabelLinkAgenda;
+import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
+import edu.cmu.cs.lti.learning.model.decoding.StateDelta;
+import edu.cmu.cs.lti.learning.model.graph.LabelledMentionGraphEdge;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
+import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.DebugUtils;
-import edu.cmu.cs.lti.utils.Functional;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.apache.commons.lang3.builder.CompareToBuilder;
-import org.apache.commons.lang3.mutable.MutableDouble;
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.javatuples.Pair;
+import org.apache.uima.jcas.tcas.Annotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.function.BiFunction;
+
+import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
+import static edu.cmu.cs.lti.learning.model.ModelConstants.TYPE_MODEL_NAME;
 
 /**
  * Created with IntelliJ IDEA.
@@ -49,7 +51,7 @@ public class BeamCrfLatentTreeDecoder {
     private final WekaModel realisModel;
 
     private final SentenceFeatureExtractor realisExtractor;
-    private final SentenceFeatureExtractor crfExtractor;
+    private final SentenceFeatureExtractor mentionExtractor;
     private final PairFeatureExtractor mentionPairExtractor;
 
     private final GraphWeightVector mentionWeights;
@@ -65,84 +67,94 @@ public class BeamCrfLatentTreeDecoder {
     // A empty feature vector for placeholder, don't use it.
     private final FeatureVector dummyFv;
 
+    private String lossType;
+
     public BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
                                     GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
-                                    SentenceFeatureExtractor crfExtractor, PairFeatureExtractor mentionPairExtractor,
-                                    DiscriminativeUpdater updater)
+                                    SentenceFeatureExtractor mentionExtractor,
+                                    PairFeatureExtractor mentionPairExtractor,
+                                    DiscriminativeUpdater updater, String lossType)
             throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
-        this(mentionWeights, realisModel, corefWeights, realisExtractor, crfExtractor, mentionPairExtractor, true);
+        this(mentionWeights, realisModel, corefWeights, realisExtractor, mentionExtractor, mentionPairExtractor,
+                lossType, true);
         this.updater = updater;
-        logger.info("Starting the Beam Decoder with Training mode.");
+        corefTrainingStats = new TrainingStats(5, "coref");
+        typeTrainingStats = new TrainingStats(5, "type");
+
+        logger.info("Starting the Beam Decoder with joint training.");
     }
 
     public BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
                                     GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
-                                    SentenceFeatureExtractor crfExtractor, PairFeatureExtractor mentionPairExtractor)
+                                    SentenceFeatureExtractor mentionExtractor,
+                                    PairFeatureExtractor mentionPairExtractor)
             throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
-        this(mentionWeights, realisModel, corefWeights, realisExtractor, crfExtractor, mentionPairExtractor, false);
-        logger.info("Starting the Beam Decoder with Testing mode.");
-
+        this(mentionWeights, realisModel, corefWeights, realisExtractor, mentionExtractor, mentionPairExtractor,
+                null, false);
+        logger.info("Starting the Beam Decoder with joint testing.");
     }
 
-    public BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
-                                    GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
-                                    SentenceFeatureExtractor crfExtractor, PairFeatureExtractor mentionPairExtractor,
-                                    boolean isTraining)
+    private BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
+                                     GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
+                                     SentenceFeatureExtractor mentionExtractor,
+                                     PairFeatureExtractor mentionPairExtractor, String lossType, boolean isTraining)
             throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
-        this.corefWeights = corefWeights;
-
+        this.lossType = lossType;
         mentionTypeClassAlphabet = mentionWeights.getClassAlphabet();
         mentionFeatureAlphabet = mentionWeights.getFeatureAlphabet();
+        dummyFv = new RealValueHashFeatureVector(corefWeights.getFeatureAlphabet());
 
+        this.corefWeights = corefWeights;
         this.mentionWeights = mentionWeights;
         this.realisModel = realisModel;
-
         this.realisExtractor = realisExtractor;
-        this.crfExtractor = crfExtractor;
+        this.mentionExtractor = mentionExtractor;
         this.mentionPairExtractor = mentionPairExtractor;
 
         this.isTraining = isTraining;
-
-        if (isTraining) {
-            corefTrainingStats = new TrainingStats(5, "coref");
-            typeTrainingStats = new TrainingStats(5, "type");
-        }
-
-        dummyFv = new RealValueHashFeatureVector(corefWeights.getFeatureAlphabet());
     }
 
+    /**
+     * Deocde method for testing purpose.
+     *
+     * @param aJCas                The JCas container.
+     * @param mentionGraph         The mention graph.
+     * @param predictionCandidates Candidates to be predict.
+     * @param useAverage           Whether to run with average perceptron.
+     * @return The final decoding state.
+     */
     public NodeLinkingState decode(JCas aJCas, MentionGraph mentionGraph, List<MentionCandidate> predictionCandidates,
                                    boolean useAverage) {
         return decode(aJCas, mentionGraph, predictionCandidates, new ArrayList<>(), useAverage);
     }
 
-
+    /**
+     * Decode method for training purpose.
+     *
+     * @param aJCas                The JCas container.
+     * @param mentionGraph         The mention graph.
+     * @param predictionCandidates Candidates to be predict.
+     * @param goldCandidates       Candidates containing gold standard annotation.
+     * @param useAverage           Whether to run with average perceptron.
+     * @return The final decoding state.
+     */
     public NodeLinkingState decode(JCas aJCas, MentionGraph mentionGraph, List<MentionCandidate> predictionCandidates,
                                    List<MentionCandidate> goldCandidates, boolean useAverage) {
-        List<StanfordCorenlpSentence> allSentences = new ArrayList<>(JCasUtil.select(aJCas, StanfordCorenlpSentence
-                .class));
+        List<StanfordCorenlpSentence> allSentences = new ArrayList<>(JCasUtil.select(aJCas,
+                StanfordCorenlpSentence.class));
 
         logger.debug(String.format("Processing document %s, Sentence size : %d, Candidate size : %d, Graph nodes : %d",
                 UimaConvenience.getShortDocumentName(aJCas), allSentences.size(), predictionCandidates.size(),
                 mentionGraph.numNodes()));
 
-        // Dot product function on the node (i.e. only take features depend on current class)
-        BiFunction<FeatureVector, Integer, Double> nodeDotProd = useAverage ?
-                mentionWeights::dotProdAver : mentionWeights::dotProd;
-        // Dot product function on the edge (i.e. take features depend on two classes)
-        Functional.TriFunction<FeatureVector, Integer, Integer, Double> edgeDotProd = useAverage ?
-                mentionWeights::dotProdAver : mentionWeights::dotProd;
-
         // Prepare a gold agenda and a decoding agenda.
         LabelLinkAgenda goldAgenda = new LabelLinkAgenda(beamSize, goldCandidates, mentionGraph);
         LabelLinkAgenda decodingAgenda = new LabelLinkAgenda(beamSize, predictionCandidates, mentionGraph);
 
-        mentionPairExtractor.initWorkspace(aJCas);
-        realisExtractor.initWorkspace(aJCas);
-        crfExtractor.initWorkspace(aJCas);
+        initWorkspace(aJCas);
 
         // Current mention node index, starts from 1, after the root node 0.
         MutableInt curr = new MutableInt(1);
@@ -150,14 +162,13 @@ public class BeamCrfLatentTreeDecoder {
 
         for (int sentIndex = 0; sentIndex < allSentences.size(); sentIndex++) {
             StanfordCorenlpSentence sentence = allSentences.get(sentIndex);
-            realisExtractor.resetWorkspace(aJCas, sentence);
-            crfExtractor.resetWorkspace(aJCas, sentence);
+            resetWorkspace(aJCas, sentence);
 
             List<StanfordCorenlpToken> sentenceTokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
 
             // Move over the tokens.
             for (int sentTokenIndex = 0; sentTokenIndex < sentenceTokens.size(); sentTokenIndex++) {
-                int currentMentionId = mentionGraph.getCandidateIndex(curr.getValue());
+                int currentMentionId = MentionGraph.getCandidateIndex(curr.getValue());
 
 //                logger.debug(String.format("Decoding sentence %d, token %d, mention node index %d, token is %s",
 //                        sentIndex, sentTokenIndex, curr.getValue(),
@@ -169,8 +180,8 @@ public class BeamCrfLatentTreeDecoder {
 
                 // Extract features for the token.
                 FeatureVector nodeFeature = new RealValueHashFeatureVector(mentionFeatureAlphabet);
-                FeatureVector edgeFeature = new RealValueHashFeatureVector(mentionFeatureAlphabet);
-                crfExtractor.extract(sentTokenIndex, nodeFeature, edgeFeature);
+                Table<Integer, Integer, FeatureVector> edgeFeatures = HashBasedTable.create();
+                mentionExtractor.extract(sentTokenIndex, nodeFeature, edgeFeatures);
 
                 // Take the current candidate.
                 final MentionCandidate predictionCandidate = predictionCandidates.get(currentMentionId);
@@ -178,41 +189,13 @@ public class BeamCrfLatentTreeDecoder {
                 // Predicate the realis for each word, the features are not related to mention types.
                 String realis = getRealis((StanfordCorenlpToken) predictionCandidate.getHeadWord());
 
-                Queue<Pair<Integer, Double>> sortedClassScores = new PriorityQueue<>(
-                        (o1, o2) ->
-                                new CompareToBuilder().append(o2.getValue1(), o1.getValue1()).
-                                        append(o2.getValue0(), o1.getValue0()).toComparison()
-                );
+                Queue<Pair<Integer, Double>> sortedClassScores = scoreMentionLocally(nodeFeature, useAverage);
 
-//                Map<Integer, Double> classNodeScores = new HashMap<>();
+                boolean pruneSureNone = localPrune(sortedClassScores);
 
-                MutableDouble noneScore = new MutableDouble(0);
-                MutableDouble maxTypedScore = new MutableDouble(0);
-                MutableInt maxType = new MutableInt(-1);
-
-                // Go over possible crf links.
-                mentionTypeClassAlphabet.getNormalClassesRange().forEach(classIndex -> {
-                    double nodeTypeScore = nodeDotProd.apply(nodeFeature, classIndex);
-//                    classNodeScores.put(classIndex, nodeTypeScore);
-
-                    sortedClassScores.add(Pair.with(classIndex, nodeTypeScore));
-
-//                    // Do a filtering here.
-                    if (classIndex == mentionTypeClassAlphabet.getNoneOfTheAboveClassIndex()) {
-                        noneScore.setValue(nodeTypeScore);
-                    } else {
-                        if (nodeTypeScore > maxTypedScore.getValue() || maxType.getValue() == -1) {
-                            maxTypedScore.setValue(nodeTypeScore);
-                            maxType.setValue(classIndex);
-                        }
-                    }
-                });
-
-                boolean prune = localPrune(sortedClassScores);
-
-                if (prune) {
+                if (pruneSureNone) {
                     sortedClassScores.clear();
-                    sortedClassScores.add(Pair.with(mentionTypeClassAlphabet.getNoneOfTheAboveClassIndex(), 0.0));
+                    sortedClassScores.add(Pair.of(mentionTypeClassAlphabet.getNoneOfTheAboveClassIndex(), 0.0));
                     prunedNodes.add(curr.getValue());
                 }
 
@@ -220,9 +203,9 @@ public class BeamCrfLatentTreeDecoder {
                 int count = 0;
                 while (!sortedClassScores.isEmpty()) {
                     Pair<Integer, Double> classScore = sortedClassScores.poll();
-                    int classIndex = classScore.getValue0();
-                    double nodeTypeScore = classScore.getValue1();
-                    final List<NodeKey> nodeKeys = setUpCandidate(predictionCandidate, classIndex, realis);
+                    int classIndex = classScore.getLeft();
+                    double nodeTypeScore = classScore.getRight();
+                    final MultiNodeKey nodeKeys = setUpCandidate(predictionCandidate, classIndex, realis);
 
                     GraphFeatureVector newDecodingMentionFeatures = new GraphFeatureVector(mentionTypeClassAlphabet,
                             mentionFeatureAlphabet);
@@ -240,8 +223,14 @@ public class BeamCrfLatentTreeDecoder {
                         }
 //                        logger.info(String.format("Decoding class %d for system.", classIndex));
 //                        logger.info(nodeLinkingState.showNodes());
+
                         // Compute the first order CRF edge score.
-                        double newTypeEdgeScore = edgeDotProd.apply(edgeFeature, classIndex, prevClassIndex);
+                        FeatureVector edgeFeature = edgeFeatures.get(prevClassIndex, classIndex);
+
+                        double newTypeEdgeScore = useAverage ?
+                                mentionWeights.dotProdAver(edgeFeature, classIndex, prevClassIndex) :
+                                mentionWeights.dotProd(edgeFeature, classIndex, prevClassIndex);
+
                         newDecodingMentionFeatures.extend(edgeFeature, classIndex, prevClassIndex);
 
                         linkToAntecedent(mentionGraph, decodingAgenda, nodeLinkingState, predictionCandidates,
@@ -255,14 +244,13 @@ public class BeamCrfLatentTreeDecoder {
                     }
                 }
 
-//                logger.debug("Updating states for prediction.");
                 decodingAgenda.updateStates();
 
                 if (isTraining) {
                     // Note that most gold candidate are None type and None realis since they are not mentions.
                     final MentionCandidate goldCandidate = goldCandidates.get(currentMentionId);
-                    final List<NodeKey> goldResults = goldCandidate.asKey();
-                    GraphFeatureVector goldMentionFeature = getGoldMentionFeatures(nodeFeature, edgeFeature,
+                    final MultiNodeKey goldResults = goldCandidate.asKey();
+                    GraphFeatureVector goldMentionFeature = getGoldMentionFeatures(nodeFeature, edgeFeatures,
                             goldCandidates, currentMentionId);
 
                     // Expanding the states for gold agenda.
@@ -274,21 +262,16 @@ public class BeamCrfLatentTreeDecoder {
 
 //                    logger.debug("Updating states for gold.");
                     goldAgenda.updateStates();
+
+                    updater.recordLaSOUpdate(decodingAgenda, goldAgenda, lossType);
                 }
 
-                if (!prune) {
+                if (!pruneSureNone) {
                     logger.debug("Showing decoding agenda");
                     logger.debug(decodingAgenda.showAgendaItems());
                     DebugUtils.pause(logger);
                 }
 
-                // Check if the agenda matches, otherwise record the difference. i.e. add delta to the Updater
-                // And then copy over the agendas
-                if (isTraining) {
-//                logger.debug("Showing gold agenda");
-//                logger.debug(goldAgenda.showAgendaItems());
-                    updater.recordLaSOUpdate(decodingAgenda, goldAgenda);
-                }
                 curr.increment();
             } // Finish iterate tokens in a sentence.
 
@@ -318,18 +301,47 @@ public class BeamCrfLatentTreeDecoder {
             updater.recordFinalUpdate(decodingAgenda, goldAgenda);
 
             // Update based on cumulative errors.
-            logger.debug("Applying updates to " + DelayedLaSOJointTrainer.TYPE_MODEL_NAME);
-            TObjectDoubleMap<String> losses = updater.update();
+            logger.debug("Applying updates to " + TYPE_MODEL_NAME);
+            TObjectDoubleMap<String> losses = updater.update(true);
 
-            typeTrainingStats.addLoss(logger, losses.get(DelayedLaSOJointTrainer.TYPE_MODEL_NAME) / mentionGraph.numNodes());
-            logger.debug("Applying updates to " + DelayedLaSOJointTrainer.COREF_MODEL_NAME);
-            corefTrainingStats.addLoss(logger, losses.get(DelayedLaSOJointTrainer.COREF_MODEL_NAME) / mentionGraph.numNodes());
+            typeTrainingStats.addLoss(logger, losses.get(TYPE_MODEL_NAME) / mentionGraph.numNodes());
+            logger.debug("Applying updates to " + COREF_MODEL_NAME);
+            corefTrainingStats.addLoss(logger, losses.get(COREF_MODEL_NAME) / mentionGraph.numNodes());
         }
 
-        return decodingAgenda.getBeamStates().peek();
+        return decodingAgenda.getBeamStates().get(0);
     }
 
-    private GraphFeatureVector getGoldMentionFeatures(FeatureVector nodeFeature, FeatureVector edgeFeature,
+    private void initWorkspace(JCas aJCas) {
+        mentionPairExtractor.initWorkspace(aJCas);
+        realisExtractor.initWorkspace(aJCas);
+        mentionExtractor.initWorkspace(aJCas);
+    }
+
+    private void resetWorkspace(JCas aJCas, Annotation sentence) {
+        realisExtractor.resetWorkspace(aJCas, sentence);
+        mentionExtractor.resetWorkspace(aJCas, sentence);
+    }
+
+    private Queue<Pair<Integer, Double>> scoreMentionLocally(FeatureVector nodeFeature, boolean useAverage) {
+        Queue<Pair<Integer, Double>> sortedClassScores = new PriorityQueue<>(
+                (o1, o2) ->
+                        new CompareToBuilder().append(o2.getLeft(), o1.getLeft()).
+                                append(o2.getRight(), o1.getRight()).toComparison()
+        );
+
+        // Go over possible crf links.
+        mentionTypeClassAlphabet.getNormalClassesRange().forEach(classIndex -> {
+            double nodeTypeScore = useAverage ? mentionWeights.dotProdAver(nodeFeature, classIndex) :
+                    mentionWeights.dotProd(nodeFeature, classIndex);
+            sortedClassScores.add(Pair.of(classIndex, nodeTypeScore));
+        });
+
+        return sortedClassScores;
+    }
+
+    private GraphFeatureVector getGoldMentionFeatures(FeatureVector nodeFeature,
+                                                      Table<Integer, Integer, FeatureVector> edgeFeatures,
                                                       List<MentionCandidate> goldCandidates, int currentIndex) {
         GraphFeatureVector newGoldMentionFeatures = new GraphFeatureVector(mentionTypeClassAlphabet,
                 mentionFeatureAlphabet);
@@ -337,12 +349,13 @@ public class BeamCrfLatentTreeDecoder {
         int previousClass = currentIndex == 0 ? mentionTypeClassAlphabet.getOutsideClassIndex() :
                 mentionTypeClassAlphabet.getClassIndex(goldCandidates.get(currentIndex - 1).getMentionType());
         newGoldMentionFeatures.extend(nodeFeature, currentClass);
+        FeatureVector edgeFeature = edgeFeatures.get(previousClass, currentClass);
         newGoldMentionFeatures.extend(edgeFeature, currentClass, previousClass);
 
         return newGoldMentionFeatures;
     }
 
-    private List<NodeKey> setUpCandidate(MentionCandidate currPredictionCandidate, int typeIndex, String realis) {
+    private MultiNodeKey setUpCandidate(MentionCandidate currPredictionCandidate, int typeIndex, String realis) {
         currPredictionCandidate.setMentionType(mentionTypeClassAlphabet.getClassName(typeIndex));
         if (currPredictionCandidate.getMentionType().equals(ClassAlphabet.noneOfTheAboveClass)) {
             // If the type of the candidate is none, then set realis to a special value as well.
@@ -360,12 +373,12 @@ public class BeamCrfLatentTreeDecoder {
         double size = sortedClassScores.size();
 
         for (Pair<Integer, Double> classScore : sortedClassScores) {
-            mean += classScore.getValue1();
+            mean += classScore.getRight();
         }
 
         double delta = 0;
         for (Pair<Integer, Double> classScore : sortedClassScores) {
-            delta += Math.pow(classScore.getValue1() - mean, 2);
+            delta += Math.pow(classScore.getRight() - mean, 2);
         }
 
         delta /= size;
@@ -373,9 +386,9 @@ public class BeamCrfLatentTreeDecoder {
         delta = Math.sqrt(delta);
 
         Pair<Integer, Double> best = sortedClassScores.poll();
-        if (best.getValue0() == mentionTypeClassAlphabet.getNoneOfTheAboveClassIndex()) {
+        if (best.getLeft() == mentionTypeClassAlphabet.getNoneOfTheAboveClassIndex()) {
             Pair<Integer, Double> secondBest = sortedClassScores.peek();
-            double diffByDelta = (best.getValue1() - secondBest.getValue1()) / delta;
+            double diffByDelta = (best.getRight() - secondBest.getRight()) / delta;
 
             // The larger diff, the larger the gap between first and second.
             return diffByDelta > 1;
@@ -389,48 +402,40 @@ public class BeamCrfLatentTreeDecoder {
 
     private void linkToAntecedent(MentionGraph mentionGraph, LabelLinkAgenda decodingAgenda,
                                   NodeLinkingState nodeLinkingState, List<MentionCandidate> candidates,
-                                  int currGraphNodeIndex, GraphFeatureVector newDecodingCrfFeatures,
-                                  List<NodeKey> currNodeKeys, double mentionScore,
-                                  Set<Integer> prunedNodes) {
+                                  int currGraphNodeIndex, GraphFeatureVector newMentionFeatures,
+                                  MultiNodeKey currNode, double mentionScore, Set<Integer> prunedNodes) {
 //        logger.debug("Linking to antecedent, number of candidates: " + (currGraphNodeIndex - prunedNodes.size()));
-        if (currNodeKeys.size() == 1) {
-            if (currNodeKeys.get(0).getMentionType().equals(ClassAlphabet.noneOfTheAboveClass)) {
+
+        // Create a new decoding decision, representing the new type assignment, and new link assignment.
+        StateDelta decision = decodingAgenda.expand(nodeLinkingState, currNode, mentionScore, newMentionFeatures);
+
+        // Handling the root node case.
+        if (currNode.size() == 1) {
+            if (currNode.isRoot()) {
                 // If this is non-type, we link it directly to root.
-                List<Integer> zeros = Collections.singletonList(0);
-                List<EdgeType> edgeTypes = Collections.singletonList(EdgeType.Root);
-                List<NodeKey> govKeys = MentionCandidate.getRootKey();
-                decodingAgenda.expand(nodeLinkingState, zeros, edgeTypes, govKeys,
-                        currNodeKeys, mentionScore, newDecodingCrfFeatures,
-                        Collections.singletonList(Pair.with(MentionGraphEdge.EdgeType.Root, dummyFv)));
+                NodeKey govKey = MultiNodeKey.rootKey().takeFirst();
+                for (NodeKey nodeKey : currNode) {
+                    decision.addLink(EdgeType.Root, govKey, nodeKey, 0, dummyFv);
+                }
                 return;
             }
         }
 
-        List<NodeKey> bestGovKeys = new ArrayList<>();
-        List<Integer> bestAntecedents = new ArrayList<>();
-        List<EdgeType> bestEdgeTypes = new ArrayList<>();
-        double fullScore = mentionScore;
-        List<Pair<MentionGraphEdge.EdgeType, FeatureVector>> newCorefFeatures = new ArrayList<>();
-
         // For each label of the current decoding.
-        for (NodeKey currNodeKey : currNodeKeys) {
+        for (NodeKey currNodeKey : currNode) {
             double bestLinkScore = Double.NEGATIVE_INFINITY;
+
             NodeKey bestAntecedentNode = null;
             MentionGraphEdge.EdgeType bestEdgeType = null;
-            int bestAnt = 0;
-            Pair<MentionGraphEdge.EdgeType, FeatureVector> bestNewCorefFeature = null;
+            FeatureVector bestNewCorefFeature = null;
 
             for (int ant = 0; ant < currGraphNodeIndex; ant++) {
                 if (prunedNodes.contains(ant)) {
-//                logger.debug("Antecedent is pruned, not considered");
                     continue;
                 }
 
-//                logger.debug("Training " + ant);
                 // Access the antecedent node.
-                List<NodeKey> antNodeKeys = nodeLinkingState.getNode(ant);
-
-//                logger.debug("Possible results size " + antDecodingResults.size());
+                MultiNodeKey antNodeKeys = nodeLinkingState.getNode(ant);
 
                 for (NodeKey antNodeKey : antNodeKeys) {
                     LabelledMentionGraphEdge mentionGraphEdge = mentionGraph
@@ -439,48 +444,33 @@ public class BeamCrfLatentTreeDecoder {
                     Pair<MentionGraphEdge.EdgeType, Double> bestLabelScore = mentionGraphEdge
                             .getBestLabelScore(corefWeights);
 
-                    double linkScore = bestLabelScore.getValue1();
-                    MentionGraphEdge.EdgeType edgeType = bestLabelScore.getValue0();
-
-//                    logger.debug("Link score is " + linkScore);
+                    double linkScore = bestLabelScore.getRight();
+                    MentionGraphEdge.EdgeType edgeType = bestLabelScore.getLeft();
 
                     if (linkScore > bestLinkScore) {
                         bestLinkScore = linkScore;
                         bestAntecedentNode = antNodeKey;
                         bestEdgeType = edgeType;
-                        bestAnt = ant;
-                        bestNewCorefFeature = Pair.with(bestEdgeType, mentionGraphEdge.getFeatureVector());
+                        bestNewCorefFeature = mentionGraphEdge.getFeatureVector();
                     }
                 }
             }
 
-            bestGovKeys.add(bestAntecedentNode);
-            bestAntecedents.add(bestAnt);
-            bestEdgeTypes.add(bestEdgeType);
-            newCorefFeatures.add(bestNewCorefFeature);
-            fullScore += bestLinkScore;
+            decision.addLink(bestEdgeType, bestAntecedentNode, currNodeKey, bestLinkScore, bestNewCorefFeature);
         }
-
-        decodingAgenda.expand(nodeLinkingState, bestAntecedents, bestEdgeTypes, bestGovKeys,
-                currNodeKeys, fullScore, newDecodingCrfFeatures, newCorefFeatures);
     }
 
     private void linkToCorrectAntecedent(MentionGraph mentionGraph, LabelLinkAgenda goldAgenda,
-                                         NodeLinkingState nodeLinkingState,
-                                         int currGraphNodeIndex, GraphFeatureVector newDecodingCrfFeatures,
-                                         List<NodeKey> currNodeKeys, double mentionScore) {
-        List<NodeKey> correctGovKeys = new ArrayList<>();
-        List<Integer> correctAntecedents = new ArrayList<>();
-        List<EdgeType> correctEdgeTypes = new ArrayList<>();
-        double fullScore = mentionScore;
-        List<Pair<MentionGraphEdge.EdgeType, FeatureVector>> newCorefFeatures = new ArrayList<>();
+                                         NodeLinkingState nodeLinkingState, int currGraphNodeIndex,
+                                         GraphFeatureVector newMentionFeatures, MultiNodeKey currNode,
+                                         double mentionScore) {
 
+        StateDelta decision = goldAgenda.expand(nodeLinkingState, currNode, mentionScore, newMentionFeatures);
 
-        for (NodeKey currNodeKey : currNodeKeys) {
+        for (NodeKey currNodeKey : currNode) {
             double bestLinkScore = Double.NEGATIVE_INFINITY;
-            int bestAntecedent = -1;
             EdgeType bestEdgeType = null;
-            Pair<MentionGraphEdge.EdgeType, FeatureVector> bestFeature = null;
+            FeatureVector bestFeature = null;
             NodeKey bestGovKey = null;
 
             for (int ant = 0; ant < currGraphNodeIndex; ant++) {
@@ -491,31 +481,19 @@ public class BeamCrfLatentTreeDecoder {
                     if (realGraphEdge.getDepKey().equals(currNodeKey)) {
                         Pair<MentionGraphEdge.EdgeType, Double> correctLabelScore = realGraphEdge
                                 .getCorrectLabelScore(corefWeights);
-                        double linkScore = correctLabelScore.getValue1();
-                        EdgeType edgeType = correctLabelScore.getValue0();
+                        double linkScore = correctLabelScore.getRight();
 
                         if (linkScore > bestLinkScore) {
                             bestLinkScore = linkScore;
-                            bestAntecedent = ant;
-                            bestEdgeType = correctLabelScore.getValue0();
-                            bestFeature = Pair.with(edgeType, realGraphEdge.getFeatureVector());
+                            bestEdgeType = correctLabelScore.getLeft();
+                            bestFeature = realGraphEdge.getFeatureVector();
                             bestGovKey = realGraphEdge.getGovKey();
                         }
                     }
                 }
             }
-
-            correctGovKeys.add(bestGovKey);
-            correctAntecedents.add(bestAntecedent);
-            correctEdgeTypes.add(bestEdgeType);
-            newCorefFeatures.add(bestFeature);
-
-            // So, scores from multiple edges are considered.
-            fullScore += bestLinkScore;
+            decision.addLink(bestEdgeType, bestGovKey, currNodeKey, bestLinkScore, bestFeature);
         }
-
-        goldAgenda.expand(nodeLinkingState, correctAntecedents, correctEdgeTypes, correctGovKeys,
-                currNodeKeys, fullScore, newDecodingCrfFeatures, newCorefFeatures);
     }
 
     private String getRealis(StanfordCorenlpToken headToken) {
@@ -523,7 +501,7 @@ public class BeamCrfLatentTreeDecoder {
 
         FeatureVector mentionFeatures = new RealValueHashFeatureVector(realisModel.getAlphabet());
         int head = realisExtractor.getElementIndex(headToken);
-        realisExtractor.extract(head, mentionFeatures, new RealValueHashFeatureVector(realisModel.getAlphabet()));
+        realisExtractor.extract(head, mentionFeatures);
 
         for (FeatureVector.FeatureIterator iter = mentionFeatures.featureIterator(); iter.hasNext(); ) {
             iter.next();
@@ -532,7 +510,7 @@ public class BeamCrfLatentTreeDecoder {
 
         try {
             Pair<Double, String> prediction = realisModel.classify(rawFeatures);
-            return prediction.getValue1();
+            return prediction.getRight();
         } catch (Exception e) {
             e.printStackTrace();
         }

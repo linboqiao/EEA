@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
 import edu.cmu.cs.lti.ling.WordNetSearcher;
@@ -16,10 +17,7 @@ import org.apache.uima.jcas.cas.FSList;
 import org.javatuples.Pair;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
@@ -79,13 +77,19 @@ public class WordNetSenseFeatures extends SequenceFeatureWithFocus<StanfordCoren
     }
 
     @Override
-    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
-                        TObjectDoubleMap<String> featuresNeedForState) {
+    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> nodeFeatures,
+                        Table<org.apache.commons.lang3.tuple.Pair<Integer, Integer>, String, Double> edgeFeatures) {
         if (focus > 0 && focus < sequence.size()) {
             for (BiConsumer<TObjectDoubleMap<String>, StanfordCorenlpToken> featureTemplate : featureTemplates) {
-                featureTemplate.accept(features, sequence.get(focus));
+                featureTemplate.accept(nodeFeatures, sequence.get(focus));
             }
         }
+    }
+
+    @Override
+    public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
+            globalFeatures, Map<Integer, String> knownStates) {
+
     }
 
     private void modifyingJobTitle(TObjectDoubleMap<String> features, StanfordCorenlpToken token) {

@@ -1,8 +1,8 @@
 package edu.cmu.cs.lti.event_coref.decoding;
 
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
+import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
@@ -143,7 +143,7 @@ public class DDLatentTreeCrfDecoder {
 
     private boolean matches(SequenceSolution typeSolution, MentionSubGraph corefTree) {
         corefTree.resolveCoreference();
-        List<org.javatuples.Pair<Integer, String>>[] corefChains = corefTree.getCorefChains();
+        List<Pair<Integer, String>>[] corefChains = corefTree.getCorefChains();
         int[][] corefAdjacentList = chainAsAdjacentList(corefChains, typeSolution.getSequenceLength());
 
         boolean achieveOptimal = true;
@@ -222,16 +222,16 @@ public class DDLatentTreeCrfDecoder {
      * @param numNodes    Number of nodes in the sequence.
      * @return A adjacent list represent all coreference, using sequence id.
      */
-    private int[][] chainAsAdjacentList(List<org.javatuples.Pair<Integer, String>>[] corefChains, int numNodes) {
+    private int[][] chainAsAdjacentList(List<Pair<Integer, String>>[] corefChains, int numNodes) {
         int[][] adjacentList = new int[numNodes][numNodes];
 
         Set<Pair<Integer, Integer>> corefs = new HashSet<>();
 
-        for (List<org.javatuples.Pair<Integer, String>> corefChain : corefChains) {
-            for (org.javatuples.Pair<Integer, String> firstNode : corefChain) {
-                int firstNodeId = firstNode.getValue0();
-                for (org.javatuples.Pair<Integer, String> secondNode : corefChain) {
-                    int secondNodeId = secondNode.getValue0();
+        for (List<Pair<Integer, String>> corefChain : corefChains) {
+            for (Pair<Integer, String> firstNode : corefChain) {
+                int firstNodeId = firstNode.getLeft();
+                for (Pair<Integer, String> secondNode : corefChain) {
+                    int secondNodeId = secondNode.getLeft();
                     // Root nodes are not considered in coref links.
                     if (firstNodeId > 0 && secondNodeId > 0 && firstNodeId != secondNodeId) {
                         corefs.add(Pair.of(firstNodeId - 1, secondNodeId - 1));

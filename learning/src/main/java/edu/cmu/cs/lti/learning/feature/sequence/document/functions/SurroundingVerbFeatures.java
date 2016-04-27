@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.learning.feature.sequence.document.functions;
 
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -8,6 +9,7 @@ import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
@@ -87,8 +89,8 @@ public class SurroundingVerbFeatures<T extends Annotation> extends SequenceFeatu
     }
 
     @Override
-    public void extract(List<T> sequence, int focus, TObjectDoubleMap<String> features, TObjectDoubleMap<String>
-            featuresNeedForState) {
+    public void extract(List<T> sequence, int focus, TObjectDoubleMap<String> nodeFeatures,
+                        Table<Pair<Integer, Integer>, String, Double> edgeFeatures) {
         if (focus < 0 || focus >= sequence.size()) {
             return;
         }
@@ -96,11 +98,20 @@ public class SurroundingVerbFeatures<T extends Annotation> extends SequenceFeatu
         StanfordCorenlpToken token = UimaNlpUtils.findFirstToken(sequence.get(focus));
 
         for (StanfordCorenlpToken lVerb : findVerbs(token, 2, leftJumps)) {
-            addToFeatures(features, FeatureUtils.formatFeatureName("Left2Verb", lVerb.getLemma().toLowerCase()), 1);
+            addToFeatures(nodeFeatures, FeatureUtils.formatFeatureName("Left2Verb", lVerb.getLemma().toLowerCase()), 1);
         }
 
         for (StanfordCorenlpToken rVerb : findVerbs(token, 2, rightJumps)) {
-            addToFeatures(features, FeatureUtils.formatFeatureName("Right2Verb", rVerb.getLemma().toLowerCase()), 1);
+            addToFeatures(nodeFeatures, FeatureUtils.formatFeatureName("Right2Verb", rVerb.getLemma().toLowerCase()),
+                    1);
         }
     }
+
+    @Override
+    public void extractGlobal(List<T> sequence, int focus, TObjectDoubleMap<String> globalFeatures,
+                              Map<Integer, String> knownStates) {
+
+    }
+
+
 }

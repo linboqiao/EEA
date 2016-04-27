@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.learning.feature.sequence.document.functions;
 
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
@@ -7,10 +8,12 @@ import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,8 +48,9 @@ public class ConsequentMentionFeatures extends SequenceFeatureWithFocus<EventMen
     }
 
     @Override
-    public void extract(List<EventMention> sequence, int focus, TObjectDoubleMap<String> features,
-                        TObjectDoubleMap<String> featuresNeedForState) {
+    public void extract(List<EventMention> sequence, int focus,
+                        TObjectDoubleMap<String> nodeFeatures,
+                        Table<Pair<Integer, Integer>, String, Double> edgeFeatures) {
         if (focus > 1 && focus < sequence.size()) {
             EventMention thisItem = sequence.get(focus);
             EventMention previousItem = sequence.get(focus - 1);
@@ -55,8 +59,14 @@ public class ConsequentMentionFeatures extends SequenceFeatureWithFocus<EventMen
 //            logger.debug(sentencePosition.get(thisItem) + "," + sentencePosition.get(previousItem));
 
             if (sentencePosition.get(thisItem) == sentencePosition.get(previousItem)) {
-                addToFeatures(featuresNeedForState, "SameSentence", 1);
+                addToFeatures(edgeFeatures, focus - 1, focus, "SameSentence", 1);
             }
         }
+    }
+
+    @Override
+    public void extractGlobal(List<EventMention> sequence, int focus, TObjectDoubleMap<String> globalFeatures,
+                              Map<Integer, String> knownStates) {
+
     }
 }

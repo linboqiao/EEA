@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
 import edu.cmu.cs.lti.script.type.SemaforAnnotationSet;
@@ -70,8 +71,8 @@ public class FrameFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken
     }
 
     @Override
-    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
-                        TObjectDoubleMap<String> featuresNeedForState) {
+    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> nodeFeatures,
+                        Table<org.apache.commons.lang3.tuple.Pair<Integer, Integer>, String, Double> edgeFeatures) {
         if (focus > sequence.size() - 1 || focus < 0) {
             return;
         }
@@ -80,14 +81,14 @@ public class FrameFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken
         if (triggerToArgs.containsKey(token)) {
             for (Pair<String, String> triggerAndType : triggerToArgs.get(token)) {
                 for (BiConsumer<TObjectDoubleMap<String>, Pair<String, String>> argumentTemplate : argumentTemplates) {
-                    argumentTemplate.accept(features, triggerAndType);
+                    argumentTemplate.accept(nodeFeatures, triggerAndType);
                 }
             }
         }
 
         if (triggerToFrameName.containsKey(token)) {
             for (BiConsumer<TObjectDoubleMap<String>, String> frameTemplate : frameTemplates) {
-                frameTemplate.accept(features, triggerToFrameName.get(token));
+                frameTemplate.accept(nodeFeatures, triggerToFrameName.get(token));
             }
         }
     }
@@ -146,5 +147,11 @@ public class FrameFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken
                 }
             }
         }
+    }
+
+    @Override
+    public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
+            globalFeatures, Map<Integer, String> knownStates) {
+
     }
 }

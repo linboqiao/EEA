@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.emd.annotators.train;
 
+import com.google.common.collect.HashBasedTable;
 import edu.cmu.cs.lti.learning.annotators.AbstractCrfTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
@@ -43,7 +44,7 @@ import java.util.Map;
  *
  * @author Zhengzhong Liu
  */
-public class MentionTypeCrfTrainer extends AbstractCrfTrainer {
+public class TokenLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
     //TODO rename this class and model name.
     public static final String MODEL_NAME = "crfModel";
 
@@ -57,7 +58,8 @@ public class MentionTypeCrfTrainer extends AbstractCrfTrainer {
     @ConfigurationParameter(name = PARAM_LOSS_TYPE)
     private String lossType;
 
-    protected static MultiKeyDiskCacher<ArrayList<TIntObjectMap<FeatureVector[]>>> featureCacher;
+    protected static MultiKeyDiskCacher<ArrayList<TIntObjectMap<
+            Pair<FeatureVector, HashBasedTable<Integer, Integer, FeatureVector>>>>> featureCacher;
 
     protected static MultiKeyDiskCacher<ArrayList<Pair<GraphFeatureVector, SequenceSolution>>> goldCacher;
 
@@ -120,8 +122,10 @@ public class MentionTypeCrfTrainer extends AbstractCrfTrainer {
 
         String documentKey = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
 
-        List<TIntObjectMap<FeatureVector[]>> documentCacheFeatures = featureCacher.get(documentKey);
-        ArrayList<TIntObjectMap<FeatureVector[]>> featuresToCache = new ArrayList<>();
+        ArrayList<TIntObjectMap<Pair<FeatureVector, HashBasedTable<Integer, Integer, FeatureVector>>>>
+                documentCacheFeatures = featureCacher.get(documentKey);
+        ArrayList<TIntObjectMap<Pair<FeatureVector, HashBasedTable<Integer, Integer, FeatureVector>>>>
+                featuresToCache = new ArrayList<>();
 
         List<Pair<GraphFeatureVector, SequenceSolution>> cachedGold = goldCacher.get(documentKey);
         ArrayList<Pair<GraphFeatureVector, SequenceSolution>> goldToCache = new ArrayList<>();
@@ -169,7 +173,7 @@ public class MentionTypeCrfTrainer extends AbstractCrfTrainer {
             }
 
 
-            TIntObjectMap<FeatureVector[]> sentenceFeatures;
+            TIntObjectMap<Pair<FeatureVector, HashBasedTable<Integer, Integer, FeatureVector>>> sentenceFeatures;
             if (documentCacheFeatures != null) {
                 sentenceFeatures = documentCacheFeatures.get(sentenceId);
             } else {

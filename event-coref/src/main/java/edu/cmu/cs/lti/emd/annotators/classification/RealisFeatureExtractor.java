@@ -1,5 +1,7 @@
 package edu.cmu.cs.lti.emd.annotators.classification;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
@@ -49,12 +51,12 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
 
     private String goldTokenComponentId = TbfEventDataReader.class.getSimpleName();
 
+    private Table<Integer, Integer, FeatureVector> dummy = HashBasedTable.create();
+
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         extractor.initWorkspace(aJCas);
         alignmentHelper.loadWord2Stanford(aJCas, goldTokenComponentId);
-
-        FeatureVector dummy = new RealValueHashFeatureVector(alphabet);
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             extractor.resetWorkspace(aJCas, sentence);

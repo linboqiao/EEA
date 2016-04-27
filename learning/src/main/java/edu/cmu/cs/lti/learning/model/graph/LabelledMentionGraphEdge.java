@@ -1,10 +1,10 @@
-package edu.cmu.cs.lti.event_coref.model.graph;
+package edu.cmu.cs.lti.learning.model.graph;
 
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.NodeKey;
-import org.javatuples.Pair;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +58,7 @@ public class LabelledMentionGraphEdge implements Serializable {
         if (actualEdgeType == null) {
             return null;
         }
-        return Pair.with(actualEdgeType, scoreEdge(actualEdgeType, weightVector));
+        return Pair.of(actualEdgeType, scoreEdge(actualEdgeType, weightVector));
     }
 
     public Pair<MentionGraphEdge.EdgeType, Double> getBestLabelScore(GraphWeightVector weightVector) {
@@ -83,7 +83,7 @@ public class LabelledMentionGraphEdge implements Serializable {
                 }
             }
         }
-        return Pair.with(bestLabel, score);
+        return Pair.of(bestLabel, score);
     }
 
     public int getGov() {

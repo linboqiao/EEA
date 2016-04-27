@@ -1,11 +1,13 @@
 package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -99,8 +101,8 @@ public class FanseFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken
     }
 
     @Override
-    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
-                        TObjectDoubleMap<String> featuresNeedForState) {
+    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> nodeFeatures,
+                        Table<Pair<Integer, Integer>, String, Double> edgeFeatures) {
         if (focus > sequence.size() - 1 || focus < 0) {
             return;
         }
@@ -108,13 +110,13 @@ public class FanseFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken
 
         FanseToken fanseToken = align.getFanseToken(token);
 
-        headTemplates.forEach(t -> t.accept(features, fanseToken));
+        headTemplates.forEach(t -> t.accept(nodeFeatures, fanseToken));
 
         FSList childRelations = token.getChildSemanticRelations();
 
         if (childRelations != null) {
             for (FanseSemanticRelation r : FSCollectionFactory.create(childRelations, FanseSemanticRelation.class)) {
-                argumentTemplates.forEach(t -> t.accept(features, r));
+                argumentTemplates.forEach(t -> t.accept(nodeFeatures, r));
             }
         }
     }
@@ -150,5 +152,11 @@ public class FanseFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken
             addToFeatures(features, FeatureUtils.formatFeatureName("FanseArgumentWordNetSense",
                     fanseToken2WordnetType.get(child)), 1);
         }
+    }
+
+    @Override
+    public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
+            globalFeatures, Map<Integer, String> knownStates) {
+
     }
 }

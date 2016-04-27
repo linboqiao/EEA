@@ -1,15 +1,18 @@
 package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
 import edu.cmu.cs.lti.script.type.QuotedContent;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,10 +46,10 @@ public class InQuoteFeatures extends SequenceFeatureWithFocus<StanfordCorenlpTok
     }
 
     @Override
-    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
-                        TObjectDoubleMap<String> featuresNeedForState) {
+    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> nodeFeatures,
+                        Table<Pair<Integer, Integer>, String, Double> edgeFeatures) {
         if (focus > 0 && focus < sequence.size()) {
-            isInPhraseQuote(features, sequence.get(focus));
+            isInPhraseQuote(nodeFeatures, sequence.get(focus));
         }
     }
 
@@ -54,5 +57,11 @@ public class InQuoteFeatures extends SequenceFeatureWithFocus<StanfordCorenlpTok
         if (phraseQuotedTokens.contains(token)) {
             addToFeatures(features, "InPhraseQuote", 1);
         }
+    }
+
+    @Override
+    public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
+            globalFeatures, Map<Integer, String> knownStates) {
+
     }
 }

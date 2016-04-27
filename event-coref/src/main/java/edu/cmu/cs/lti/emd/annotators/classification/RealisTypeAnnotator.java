@@ -1,5 +1,7 @@
 package edu.cmu.cs.lti.emd.annotators.classification;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
@@ -15,13 +17,13 @@ import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.javatuples.Pair;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +56,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
 
     private WekaModel model;
 
-    private FeatureVector dummy;
+    private Table<Integer, Integer, FeatureVector> dummy;
 
     private TokenAlignmentHelper alignmentHelper = new TokenAlignmentHelper();
 
@@ -92,7 +94,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
             e.printStackTrace();
         }
 
-        dummy = new RealValueHashFeatureVector(model.getAlphabet());
+        dummy = HashBasedTable.create();
         logger.info("Model loaded");
         logger.info("Feature size is " + model.getAlphabet().getAlphabetSize());
     }
@@ -123,7 +125,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
                 // Do prediction.
                 try {
                     Pair<Double, String> prediction = model.classify(rawFeatures);
-                    mention.setRealisType(prediction.getValue1());
+                    mention.setRealisType(prediction.getRight());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

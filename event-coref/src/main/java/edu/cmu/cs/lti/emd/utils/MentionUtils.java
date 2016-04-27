@@ -6,9 +6,9 @@ import edu.cmu.cs.lti.script.type.*;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.javatuples.Pair;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -25,7 +25,6 @@ import java.util.stream.IntStream;
  * @author Zhengzhong Liu
  */
 public class MentionUtils {
-
     /**
      * Convert event mentions into mention candidates.
      *
@@ -112,7 +111,7 @@ public class MentionUtils {
             int headMention = mentionIds.get(relation.getHead());
             int childMention = mentionIds.get(relation.getChild());
 
-            relations.put(Pair.with(mention2Candidate.get(headMention), mention2Candidate.get(childMention)),
+            relations.put(Pair.of(mention2Candidate.get(headMention), mention2Candidate.get(childMention)),
                     relation.getRelationType());
         }
 

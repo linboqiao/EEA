@@ -1,14 +1,17 @@
 package edu.cmu.cs.lti.learning.feature.sequence.base;
 
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -93,17 +96,32 @@ public abstract class SequenceFeatureWithFocus<T extends Annotation> {
     /**
      * The extractor function, which may be run multiple times on each of the focus.
      *
-     * @param sequence             The sequence represented as token.
-     * @param focus                The focus to evaluate the features.
-     * @param features             The local feature vector to be filled.
-     * @param featuresNeedForState The feature vector that should depend on a previous state.
+     * @param sequence     The sequence of elements to extract from.
+     * @param focus        The focus to evaluate the features.
+     * @param nodeFeatures The local feature vector to be filled.
+     * @param edgeFeatures The feature vector that should depend on a previous state.
      */
-    public abstract void extract(List<T> sequence, int focus,
-                                 TObjectDoubleMap<String> features,
-                                 TObjectDoubleMap<String> featuresNeedForState);
+    public abstract void extract(List<T> sequence, int focus, TObjectDoubleMap<String> nodeFeatures,
+                                 Table<Pair<Integer, Integer>, String, Double> edgeFeatures);
+
+    /**
+     * The extractor function, which may be run multiple times on each of the focus.
+     *  @param sequence       The sequence of elements to extract from.
+     * @param focus          The focus to evaluate the features.
+     * @param globalFeatures The global feature vector to be filled.
+     * @param knownStates    Previous states that we know.
+     */
+    public abstract void extractGlobal(List<T> sequence, int focus, TObjectDoubleMap<String> globalFeatures,
+                                       Map<Integer, String> knownStates);
+
 
     // TODO think about whether multi-thread will have problem here.
-    public void addToFeatures(TObjectDoubleMap<String> features, String name, double value) {
-        features.adjustOrPutValue(name, value, value);
+    public void addToFeatures(TObjectDoubleMap<String> nodeFeatures, String name, double value) {
+        nodeFeatures.adjustOrPutValue(name, value, value);
+    }
+
+    public void addToFeatures(Table<Pair<Integer, Integer>, String, Double> edgeFeatures, int govIndex, int depIndex,
+                              String name, double value) {
+        edgeFeatures.put(Pair.of(govIndex, depIndex), name, value);
     }
 }

@@ -1,12 +1,15 @@
 package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.jcas.JCas;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Extract character related features from the token. This is mainly used for language such as Chinese, where
@@ -32,8 +35,8 @@ public class CharacterFeatures extends SequenceFeatureWithFocus<StanfordCorenlpT
     }
 
     @Override
-    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
-                        TObjectDoubleMap<String> featuresNeedForState) {
+    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> nodeFeatures,
+                        Table<Pair<Integer, Integer>, String, Double> edgeFeatures) {
         if (focus < 0 || focus >= sequence.size()) {
             return;
         }
@@ -43,16 +46,23 @@ public class CharacterFeatures extends SequenceFeatureWithFocus<StanfordCorenlpT
         char[] characters = targetToken.getCoveredText().toCharArray();
         for (int index = 0; index < characters.length; index++) {
             char character = characters[index];
-            addToFeatures(features, String.format("ContainsChar:%s", character), 1);
-            addToFeatures(features, String.format("ContainsChar:%sWithPos:%s", character, targetToken.getPos()), 1);
+            addToFeatures(nodeFeatures, String.format("ContainsChar:%s", character), 1);
+            addToFeatures(nodeFeatures, String.format("ContainsChar:%sWithPos:%s", character, targetToken.getPos()), 1);
 
             if (index == 0) {
-                addToFeatures(features, String.format("BeginChar:%s", character), 1);
+                addToFeatures(nodeFeatures, String.format("BeginChar:%s", character), 1);
             }
 
             if (index == characters.length - 1) {
-                addToFeatures(features, String.format("EndChar:%s", character), 1);
+                addToFeatures(nodeFeatures, String.format("EndChar:%s", character), 1);
             }
         }
     }
+
+    @Override
+    public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
+            globalFeatures, Map<Integer, String> knownStates) {
+
+    }
+
 }

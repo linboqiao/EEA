@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.event_coref.model.graph;
+package edu.cmu.cs.lti.learning.model.graph;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;

@@ -2,17 +2,17 @@ package edu.cmu.cs.lti.event_coref.annotators.train;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
-import edu.cmu.cs.lti.emd.annotators.train.MentionTypeCrfTrainer;
+import edu.cmu.cs.lti.emd.annotators.train.TokenLevelEventMentionCrfTrainer;
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge;
-import edu.cmu.cs.lti.event_coref.update.DiscriminativeUpdater;
+import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -24,13 +24,13 @@ import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.javatuples.Pair;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,6 +40,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
+import static edu.cmu.cs.lti.learning.model.ModelConstants.TYPE_MODEL_NAME;
+
 /**
  * Use Beam Search to do joint training of event head detection and event corefrence, using delayed LaSO to make use
  * of more training examples.
@@ -48,10 +51,10 @@ import java.util.stream.Collectors;
  */
 public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
     private static DiscriminativeUpdater updater;
-
-    public static final String TYPE_MODEL_NAME = "CRF";
-
-    public static final String COREF_MODEL_NAME = "COREF";
+//
+//    public static final String TYPE_MODEL_NAME = "CRF";
+//
+//    public static final String COREF_MODEL_NAME = "COREF";
 
     public static final String PARAM_CONFIG_PATH = "configPath";
     @ConfigurationParameter(name = PARAM_CONFIG_PATH)
@@ -69,6 +72,10 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_USE_WARM_START)
     private boolean warmStart;
 
+    public static final String PARAM_MENTION_LOSS_TYPE = "mentionLossType";
+    @ConfigurationParameter(name = PARAM_MENTION_LOSS_TYPE)
+    private String mentionLossType;
+
     private WekaModel realisModel;
 
     private SentenceFeatureExtractor realisExtractor;
@@ -81,7 +88,7 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
         logger.info("Preparing the Delayed LaSO Trainer...");
         super.initialize(context);
 
-        updater = new DiscriminativeUpdater();
+        updater = new DiscriminativeUpdater(true, true);
 
         // Doing warm start.
         if (warmStart) {
@@ -107,7 +114,7 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
         try {
             decoder = new BeamCrfLatentTreeDecoder(updater.getWeightVector(TYPE_MODEL_NAME), realisModel,
                     updater.getWeightVector(COREF_MODEL_NAME), realisExtractor, crfExtractor, mentionPairExtractor,
-                    updater);
+                    updater, mentionLossType);
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException
                 | InstantiationException e) {
             e.printStackTrace();
@@ -139,11 +146,8 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
         Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2SplitCandidate,
                 allMentions);
 
+        // Init here so that we can extract features for mention graph.
         this.mentionPairExtractor.initWorkspace(aJCas);
-
-//        UimaConvenience.printProcessLog(aJCas, logger);
-//        logger.debug("Creating mention graph.");
-
         MentionGraph mentionGraph = new MentionGraph(goldCandidates, candidate2Split, splitCandidateTypes,
                 splitCandidate2EventId, relations, mentionPairExtractor, true);
 
@@ -209,8 +213,6 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
             if (eventId > maxEventId.getValue()) {
                 maxEventId.setValue(eventId);
             }
-//            logger.debug(candidateId + " is linked to mention " + mentionId + ", which is linked to event " +
-// eventId);
             return true;
         });
 
@@ -278,7 +280,7 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
         GraphWeightVector weightVector;
         try {
             weightVector = SerializationUtils.deserialize(new FileInputStream(new File
-                    (pretrainedMentionModelDirectory, MentionTypeCrfTrainer.MODEL_NAME)));
+                    (pretrainedMentionModelDirectory, TokenLevelEventMentionCrfTrainer.MODEL_NAME)));
         } catch (FileNotFoundException e) {
             throw new ResourceInitializationException(e);
         }

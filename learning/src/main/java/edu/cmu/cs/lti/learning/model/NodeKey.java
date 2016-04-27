@@ -1,12 +1,13 @@
 package edu.cmu.cs.lti.learning.model;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
  * Represent possible node that can be associated on a mention candidate.
  */
-public class NodeKey {
+public class NodeKey implements Comparable<NodeKey> {
     private int begin;
     private int end;
     private String realis;
@@ -57,6 +58,11 @@ public class NodeKey {
     }
 
     public String toString() {
-        return String.format("[Result]_[%d:%d]_[%s,%s]", begin, end, realis, mentionType);
+        return String.format("[Node]_[%d:%d]_[%s,%s]", begin, end, realis, mentionType);
+    }
+
+    @Override
+    public int compareTo(NodeKey o) {
+        return new CompareToBuilder().append(index, o.index).build();
     }
 }

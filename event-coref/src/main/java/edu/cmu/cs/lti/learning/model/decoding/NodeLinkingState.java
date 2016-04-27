@@ -1,17 +1,15 @@
-package edu.cmu.cs.lti.event_coref.decoding.model;
+package edu.cmu.cs.lti.learning.model.decoding;
 
 import com.google.common.collect.MinMaxPriorityQueue;
-import edu.cmu.cs.lti.event_coref.model.graph.LabelledMentionGraphEdge;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
-import edu.cmu.cs.lti.learning.model.FeatureVector;
-import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
-import edu.cmu.cs.lti.learning.model.MentionCandidate;
-import edu.cmu.cs.lti.learning.model.NodeKey;
+import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.learning.model.graph.LabelledMentionGraphEdge;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
+import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
+import edu.cmu.cs.lti.learning.update.SeqLoss;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
-import org.javatuples.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +35,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     // Here is the node decoding results. Each item in the outer list correspond to a node in the graph (which
     // includes the root node as well). There are multiple possible types for a node, so each node is corresponding
     // multiple decoding results (The inner list).
-    private List<List<NodeKey>> nodeResults;
+    private List<MultiNodeKey> nodeResults;
 
     private MentionSubGraph decodingTree;
 
@@ -49,13 +47,15 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         this.graph = graph;
         this.nodeResults = new ArrayList<>();
         this.nodeIndex = 0;
-        decodingTree = new MentionSubGraph(graph);
+        if (graph != null) {
+            decodingTree = new MentionSubGraph(graph);
+        }
         corefFv = new HashMap<>();
     }
 
     public static NodeLinkingState getInitialState(MentionGraph graph) {
         NodeLinkingState s = new NodeLinkingState(graph);
-        List<NodeKey> rootNode = MentionCandidate.getRootKey();
+        MultiNodeKey rootNode = MultiNodeKey.rootKey();
         s.nodeResults.add(rootNode);
         s.nodeIndex += 1; // The first node is added, which is the root.
         return s;
@@ -72,11 +72,15 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
                 "\n<Nodes>\n" +
                 showNodes() +
                 "\n" +
-                "<Coref Tree>\n" +
-                decodingTree.toString();
+                ((decodingTree == null) ? "[No coreference]" :
+                        "[Coref Tree]\n" + decodingTree.toString());
+
     }
 
     public String showTree() {
+        if (decodingTree == null) {
+            return "[No coreference]";
+        }
         return decodingTree.toString();
     }
 
@@ -100,15 +104,15 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         return Comparator.reverseOrder();
     }
 
-    public List<NodeKey> getLastNode() {
+    public MultiNodeKey getLastNode() {
         return getNode(nodeIndex - 1);
     }
 
-    public List<NodeKey> getNode(int index) {
+    public MultiNodeKey getNode(int index) {
         return nodeResults.get(index);
     }
 
-    public List<List<NodeKey>> getNodeResults() {
+    public List<MultiNodeKey> getNodeResults() {
         return nodeResults;
     }
 
@@ -119,9 +123,10 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 
         this.labelFv.extend(newLabelFv);
 
+
         for (Pair<EdgeType, FeatureVector> newCorefFv : newCorefFvs) {
-            EdgeType fvType = newCorefFv.getValue0();
-            FeatureVector fv = newCorefFv.getValue1();
+            EdgeType fvType = newCorefFv.getLeft();
+            FeatureVector fv = newCorefFv.getRight();
             if (this.corefFv.containsKey(fvType)) {
                 corefFv.get(fvType).extend(fv);
             } else {
@@ -146,52 +151,47 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         decodingTree.addEdge(edge, type);
     }
 
-    public void addNode(List<NodeKey> newNode) {
+    public void addLink(List<MentionCandidate> mentionCandidates, EdgeKey edgeKey) {
+        LabelledMentionGraphEdge edge = graph.getMentionGraphEdge(edgeKey.getDepGraphIndex(),
+                edgeKey.getGovGraphIndex()).getLabelledEdge(mentionCandidates,
+                edgeKey.getGovNode(), edgeKey.getDepNode());
+        decodingTree.addEdge(edge, edgeKey.getType());
+    }
+
+    public void addNode(MultiNodeKey newNode) {
         nodeResults.add(newNode);
         nodeIndex++;
     }
 
-    public Pair<Double, Double> loss(NodeLinkingState referenceState) {
-        double labelLoss = computeHammingLoss(referenceState.getNodeResults());
+    public Pair<Double, Double> loss(NodeLinkingState referenceState, String lossType) {
+        double labelLoss = computeLabelLoss(referenceState.getNodeResults(), lossType);
 
-        double graphLoss;
+        double graphLoss = 0;
 
-        if (!decodingTree.graphMatch(referenceState.decodingTree)) {
-            graphLoss = decodingTree.getLoss(referenceState.decodingTree);
-        } else {
-            graphLoss = 0;
+        if (decodingTree != null) {
+            if (!decodingTree.graphMatch(referenceState.decodingTree)) {
+                graphLoss = decodingTree.getLoss(referenceState.decodingTree);
+            }
         }
 
-        return Pair.with(labelLoss, graphLoss);
+        return Pair.of(labelLoss, graphLoss);
     }
 
-    private double computeHammingLoss(List<List<NodeKey>> referenceNodes) {
-        double loss = 0;
+    private double computeLabelLoss(List<MultiNodeKey> referenceNodes, String lossType) {
+        String[] reference = new String[referenceNodes.size() - 1];
+        String[] prediction = new String[nodeResults.size() - 1];
 
-        // Root node is ignored.
-        for (int i = 1; i < nodeIndex; i++) {
-            double matches = 0;
-
-            List<NodeKey> nodeKey = nodeResults.get(i);
-            List<NodeKey> referentReslt = referenceNodes.get(i);
-
-            Set<String> decodingTypes = nodeKey.stream().map(NodeKey::getMentionType)
-                    .collect(Collectors.toSet());
-
-            Set<String> referentTypes = referentReslt.stream().map(NodeKey::getMentionType)
-                    .collect(Collectors.toSet());
-
-            for (String decodedType : decodingTypes) {
-                if (referentTypes.contains(decodedType)) {
-                    matches += 1;
-                }
-            }
-
-            double dice = 2 * matches / (decodingTypes.size() + referentTypes.size());
-
-            loss += 1 - dice;
+        // The ROOT node is not counted.
+        for (int i = 1; i < referenceNodes.size(); i++) {
+            reference[i - 1] = MentionTypeUtils.joinMultipleTypes(referenceNodes.get(i).stream()
+                    .map(NodeKey::getMentionType).collect(Collectors.toList()));
+            prediction[i - 1] = MentionTypeUtils.joinMultipleTypes(nodeResults.get(i).stream()
+                    .map(NodeKey::getMentionType).collect(Collectors.toList()));
         }
-        return loss;
+
+        SeqLoss seqLoss = SeqLoss.getLoss(lossType);
+
+        return seqLoss.compute(reference, prediction, ClassAlphabet.noneOfTheAboveClass);
     }
 
     public String getCombinedLastNodeType() {
@@ -223,7 +223,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     }
 
     public boolean match(NodeLinkingState otherState) {
-        boolean corefMatch = otherState.decodingTree.graphMatch(decodingTree, nodeIndex);
+        boolean corefMatch = decodingTree == null || otherState.decodingTree.graphMatch(decodingTree, nodeIndex);
 
         boolean labelMatch = true;
         for (int i = 1; i < nodeIndex; i++) {
@@ -233,12 +233,6 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
                 break;
             }
         }
-
-//        if (corefMatch && labelMatch) {
-//            logger.debug("State match between the following.");
-//            logger.debug(this.toString());
-//            logger.debug(otherState.toString());
-//        }
 
         return corefMatch && labelMatch;
     }
@@ -254,9 +248,11 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     public NodeLinkingState makeCopy() {
         NodeLinkingState state = new NodeLinkingState(graph);
         state.score = score;
-        state.decodingTree = decodingTree.makeCopy();
+        if (decodingTree != null) {
+            state.decodingTree = decodingTree.makeCopy();
+        }
         state.nodeIndex = nodeIndex;
-        for (List<NodeKey> node : nodeResults) {
+        for (MultiNodeKey node : nodeResults) {
             state.nodeResults.add(node);
         }
 
@@ -274,5 +270,14 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         }
 
         return state;
+    }
+
+    public Map<Integer, String> getAvailableNodeLabels() {
+        Map<Integer, String> nodeTypes = new HashMap<>();
+        for (int i = 0; i < nodeResults.size(); i++) {
+            String joinedType = MentionTypeUtils.joinMultipleTypes(getMentionType(i));
+            nodeTypes.put(i, joinedType);
+        }
+        return nodeTypes;
     }
 }

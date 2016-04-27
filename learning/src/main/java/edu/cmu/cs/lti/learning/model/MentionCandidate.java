@@ -4,9 +4,6 @@ import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.type.Word;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Contains information useful to extract features about a mention candidate.
  *
@@ -22,16 +19,15 @@ public class MentionCandidate {
     private int index;
     private boolean isEvent;
 
-    public static final String REALIS_ROOT = "ROOT";
+//    public static final String REALIS_ROOT = "ROOT";
+//
+//    public static final String TYPE_ROOT = "ROOT";
 
-    public static final String TYPE_ROOT = "ROOT";
+//    public static final MultiNodeKey rootKey;
 
-    public static final List<NodeKey> rootKey;
-
-    static {
-        rootKey = new ArrayList<>();
-        rootKey.add(new NodeKey(0, 0, TYPE_ROOT, REALIS_ROOT, -1));
-    }
+//    static {
+//        rootKey = new MultiNodeKey(new NodeKey(0, 0, TYPE_ROOT, REALIS_ROOT, -1));
+//    }
 
     public MentionCandidate(int begin, int end, Sentence containedSentence, Word headWord, int index) {
         this.begin = begin;
@@ -46,26 +42,29 @@ public class MentionCandidate {
         return String.format("%s,[%s]_[%s],[%d,%d]", headWord.getCoveredText(), mentionType, realis, begin, end);
     }
 
-    public static boolean isRootKey(List<NodeKey> key) {
-        return key.size() > 0 && key.get(0).equals(rootKey.get(0));
-    }
+//    public static boolean isRootKey(List<NodeKey> key) {
+//        return key.size() > 0 && key.get(0).equals(rootKey.get(0));
+//    }
 
-    public static List<NodeKey> getRootKey() {
-        return rootKey;
-    }
+//    public static MultiNodeKey getRootKey() {
+//        return MultiNodeKey.rootKey();
+//    }
 
-    public List<NodeKey> asKey() {
+    public MultiNodeKey asKey() {
         // Make sure the key is up to date.
 
         MentionTypeUtils.splitToTmultipleTypes(mentionType);
 
-        List<NodeKey> keys = new ArrayList<>();
+//        List<NodeKey> keys = new ArrayList<>();
+
+        MultiNodeKey key = new MultiNodeKey();
 
         for (String t : MentionTypeUtils.splitToTmultipleTypes(mentionType)) {
-            keys.add(new NodeKey(begin, end, t, realis, index));
+//            keys.add(new NodeKey(begin, end, t, realis, index));
+            key.addKey(new NodeKey(begin, end, t, realis, index));
         }
 
-        return keys;
+        return key;
     }
 
     public int getBegin() {

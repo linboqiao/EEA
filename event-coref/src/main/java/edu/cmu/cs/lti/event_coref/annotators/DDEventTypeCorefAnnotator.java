@@ -1,12 +1,12 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.emd.annotators.train.MentionSequenceCrfTrainer;
+import edu.cmu.cs.lti.emd.annotators.train.MentionLevelEventMentionCrfTrainer;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.DDLatentTreeCrfDecoder;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraph;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionSubGraph;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
+import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.event_coref.annotators.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.MultiSentenceFeatureExtractor;
@@ -99,7 +99,7 @@ public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
         String savedSentFeatureSpec;
         try {
             crfWeights = SerializationUtils.deserialize(new FileInputStream(new File
-                    (mentionModelDir, MentionSequenceCrfTrainer.MODEL_NAME)));
+                    (mentionModelDir, MentionLevelEventMentionCrfTrainer.MODEL_NAME)));
             mentionFeatureAlphabet = crfWeights.getFeatureAlphabet();
             mentionClassAlphabet = crfWeights.getClassAlphabet();
             String[] featureSpec = FeatureUtils.splitFeatureSpec(crfWeights.getFeatureSpec());
@@ -222,14 +222,14 @@ public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
     private void annotatePredictedCoreference(JCas aJCas, MentionGraph mentionGraph, MentionSubGraph predictedTree,
                                               List<EventMention> allMentions) {
         predictedTree.resolveCoreference();
-        List<org.javatuples.Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
+        List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
 
-        for (List<org.javatuples.Pair<Integer, String>> corefChain : corefChains) {
+        for (List<Pair<Integer, String>> corefChain : corefChains) {
             List<EventMention> predictedChain = new ArrayList<>();
             Map<Span, EventMention> span2Mentions = new HashMap<>();
 
-            for (org.javatuples.Pair<Integer, String> typedNode : corefChain) {
-                int nodeId = typedNode.getValue0();
+            for (Pair<Integer, String> typedNode : corefChain) {
+                int nodeId = typedNode.getLeft();
                 int mentionIndex = mentionGraph.getCandidateIndex(nodeId);
                 EventMention mention = allMentions.get(mentionIndex);
                 Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());

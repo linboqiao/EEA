@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
@@ -64,27 +66,33 @@ public class WindowWordFeatures extends SequenceFeatureWithFocus<StanfordCorenlp
     }
 
     @Override
-    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
-                        TObjectDoubleMap<String> featuresNeedForState) {
+    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> nodeFeatures,
+                        Table<org.apache.commons.lang3.tuple.Pair<Integer, Integer>, String, Double> edgeFeatures) {
         if (posWindowSize >= 0) {
-            addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getPos, "Pos", posWindowSize);
+            addWindowFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getPos, "Pos", posWindowSize);
 //            // POS conjoined with previous state, we are conservative about window size here.
 //            addWindowFeatures(sequence, focus, featuresNeedForState, StanfordCorenlpToken::getPos, "Pos", 0);
             if (useBigram) {
                 addNgramFeatureWithOffsetRange(sequence, focus, -posWindowSize, posWindowSize, "Pos",
-                        StanfordCorenlpToken::getPos, features, 2);
+                        StanfordCorenlpToken::getPos, nodeFeatures, 2);
             }
         }
         if (lemmaWindowSize >= 0) {
-            addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getLemma, "Lemma", lemmaWindowSize);
+            addWindowFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getLemma, "Lemma", lemmaWindowSize);
             if (useBigram) {
                 addNgramFeatureWithOffsetRange(sequence, focus, -lemmaWindowSize, lemmaWindowSize, "Lemma",
-                        StanfordCorenlpToken::getLemma, features, 2);
+                        StanfordCorenlpToken::getLemma, nodeFeatures, 2);
             }
         }
         if (nerWindowSize >= 0) {
-            addWindowFeatures(sequence, focus, features, StanfordCorenlpToken::getNerTag, "Ner", nerWindowSize);
+            addWindowFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getNerTag, "Ner", nerWindowSize);
         }
+    }
+
+    @Override
+    public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
+            globalFeatures, Map<Integer, String> knownStates) {
+
     }
 
     public void addWindowFeatures(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,

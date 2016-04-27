@@ -1,18 +1,20 @@
-package edu.cmu.cs.lti.event_coref.update;
+package edu.cmu.cs.lti.learning.update;
 
-import edu.cmu.cs.lti.event_coref.decoding.model.LabelLinkAgenda;
-import edu.cmu.cs.lti.event_coref.decoding.model.NodeLinkingState;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge;
-import edu.cmu.cs.lti.event_coref.annotators.train.DelayedLaSOJointTrainer;
 import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.learning.model.decoding.LabelLinkAgenda;
+import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
-import org.javatuples.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
+import static edu.cmu.cs.lti.learning.model.ModelConstants.TYPE_MODEL_NAME;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,18 +40,25 @@ public class DiscriminativeUpdater {
 
     private double defaultStepSize = 0.1; // Default step size used by the perceptron trainer.
 
-    private String mentionName = DelayedLaSOJointTrainer.TYPE_MODEL_NAME;
-    private String corefName = DelayedLaSOJointTrainer.COREF_MODEL_NAME;
+    private String[] modelNames = new String[]{TYPE_MODEL_NAME, COREF_MODEL_NAME};
 
-    private String[] modelNames = new String[]{mentionName, corefName};
+    private boolean updateMention;
+    private boolean updateCoref;
 
-    public DiscriminativeUpdater() {
+    public DiscriminativeUpdater(boolean updateMention, boolean updateCoref) {
         allWeights = new HashMap<>();
         allDelta = new HashMap<>();
         allLoss = new TObjectDoubleHashMap<>();
         classAlphabets = new HashMap<>();
         featureAlphabets = new HashMap<>();
 //        trainingStats = new HashMap<>();
+
+        if (!(updateMention || updateCoref)) {
+            throw new IllegalArgumentException("Cannot use a updater without updating anything.");
+        }
+
+        this.updateMention = updateMention;
+        this.updateCoref = updateCoref;
     }
 
     public void addWeightVector(String name, GraphWeightVector weightVector) {
@@ -65,13 +74,13 @@ public class DiscriminativeUpdater {
         return allWeights.get(weightKey);
     }
 
-    public void recordLaSOUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
+    public void recordLaSOUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda, String lossType) {
         if (!decodingAgenda.contains(goldAgenda)) {
             logger.debug("Recording differences for LaSO update.");
             recordUpdate(decodingAgenda, goldAgenda);
 
-            NodeLinkingState bestDecoding = decodingAgenda.getBeamStates().peek();
-            NodeLinkingState bestGold = goldAgenda.getBeamStates().peek();
+            NodeLinkingState bestDecoding = decodingAgenda.getBeamStates().get(0);
+            NodeLinkingState bestGold = goldAgenda.getBeamStates().get(0);
 
 //            logger.debug(String.valueOf(decodingAgenda.getBeamStates().size()));
 
@@ -83,13 +92,10 @@ public class DiscriminativeUpdater {
 //            logger.debug("Gold agenda is :");
 //            logger.debug(goldAgenda.showAgendaItems());
 
-            logger.debug("Compute losses between best decoding and best gold.");
-            Pair<Double, Double> losses = bestDecoding.loss(bestGold);
+            Pair<Double, Double> losses = bestDecoding.loss(bestGold, lossType);
 
-            logger.debug("Loss value is " + losses);
-
-            addLoss(DelayedLaSOJointTrainer.TYPE_MODEL_NAME, losses.getValue0());
-            addLoss(DelayedLaSOJointTrainer.COREF_MODEL_NAME, losses.getValue1());
+            addLoss(TYPE_MODEL_NAME, losses.getLeft());
+            addLoss(COREF_MODEL_NAME, losses.getRight());
 
             // Copy the gold agenda to decoding agenda (LaSO)
             decodingAgenda.copyFrom(goldAgenda);
@@ -112,7 +118,7 @@ public class DiscriminativeUpdater {
     }
 
     public void recordFinalUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
-        if (!decodingAgenda.getBeamStates().peek().match(goldAgenda.getBeamStates().peek())) {
+        if (!decodingAgenda.getBeamStates().get(0).match(goldAgenda.getBeamStates().get(0))) {
             logger.debug("Recording final update difference between the top states.");
             recordUpdate(decodingAgenda, goldAgenda);
         }
@@ -120,13 +126,13 @@ public class DiscriminativeUpdater {
 
     private void recordUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
         logger.debug("Best decoding state is:");
-        logger.debug(decodingAgenda.getBeamStates().peek().showTree());
+        logger.debug(decodingAgenda.getBeamStates().get(0).showTree());
 
         logger.debug("Best gold state is:");
-        logger.debug(goldAgenda.getBeamStates().peek().showTree());
+        logger.debug(goldAgenda.getBeamStates().get(0).showTree());
 
         // Compute delta on coreferecence.
-        GraphFeatureVector deltaCorefVector = allDelta.get(corefName);
+        GraphFeatureVector deltaCorefVector = allDelta.get(COREF_MODEL_NAME);
 
 //        logger.debug("Computing delta on gold and decoding.");
 
@@ -152,7 +158,7 @@ public class DiscriminativeUpdater {
 //        logger.info("Showing mention features from  decoding");
 //        logger.info(decodingLabelFeature.readableNodeVector());
 
-        GraphFeatureVector deltaMentionVector = allDelta.get(mentionName);
+        GraphFeatureVector deltaMentionVector = allDelta.get(TYPE_MODEL_NAME);
         deltaMentionVector.extend(goldLabelFeature);
         deltaMentionVector.extend(decodingLabelFeature, -1);
 
@@ -167,55 +173,51 @@ public class DiscriminativeUpdater {
 //        logger.debug("Loss for " + name + " is " + loss);
     }
 
-    public TObjectDoubleMap<String> update() {
+    public TObjectDoubleMap<String> update(boolean paUpdate) {
         // Update and then clear accumulated stuff.
-        paUpdate();
+        updateInternal(paUpdate);
 
         // Logging the loss.
         TObjectDoubleMap<String> currentLoss = new TObjectDoubleHashMap<>();
-
-        allLoss.forEachEntry((a, b) -> {
-            currentLoss.put(a, b);
-            return true;
-        });
+        currentLoss.putAll(allLoss);
 
         for (String name : modelNames) {
             allDelta.put(name, newDelta(name));
             allLoss.put(name, 0);
         }
-
         return currentLoss;
     }
 
-    public void paUpdate() {
+    private void updateInternal(boolean paUpdate) {
 //        logger.info("PA Updating " + name);
-        GraphFeatureVector corefDelta = allDelta.get(corefName);
-        GraphFeatureVector mentionDelta = allDelta.get(mentionName);
-        double corefLoss = allLoss.get(corefName);
-        double mentionLoss = allLoss.get(mentionName);
+        GraphFeatureVector corefDelta = allDelta.get(COREF_MODEL_NAME);
+        GraphFeatureVector mentionDelta = allDelta.get(TYPE_MODEL_NAME);
+        double corefLoss = allLoss.get(COREF_MODEL_NAME);
+        double mentionLoss = allLoss.get(TYPE_MODEL_NAME);
 
         double totalLoss = corefLoss + mentionLoss;
 
         if (totalLoss != 0) {
-            double l2 = Math.sqrt(Math.pow(corefDelta.getFeatureL2(), 2) + Math.pow(mentionDelta.getFeatureL2(), 2));
-            double tau = totalLoss / l2;
+            double tau = defaultStepSize;
 
-//            // Sometimes we saw INFINITY weight value, it is likely to be cause by a empty l2.
-//            if (l2 == 0) {
-//                logger.debug(corefDelta.readableNodeVector());
-//                logger.debug("Loss is " + corefLoss);
-//                logger.debug("Feature L2 is " + l2);
-//                logger.debug("Update features by " + tau);
-//                DebugUtils.pause(logger);
-//            }
+            if (paUpdate) {
+                double corefL2 = updateCoref ? corefDelta.getFeatureL2() : 0;
+                double mentionL2 = updateMention ? mentionDelta.getFeatureL2() : 0;
+                double l2 = Math.sqrt(Math.pow(corefL2, 2) + Math.pow(mentionL2, 2));
+                tau = totalLoss / l2;
+            }
 
-            GraphWeightVector corefWeights = allWeights.get(corefName);
-            corefWeights.updateWeightsBy(corefDelta, tau);
-            corefWeights.updateAverageWeights();
+            if (updateCoref) {
+                GraphWeightVector corefWeights = allWeights.get(COREF_MODEL_NAME);
+                corefWeights.updateWeightsBy(corefDelta, tau);
+                corefWeights.updateAverageWeights();
+            }
 
-            GraphWeightVector mentionWeights = allWeights.get(mentionName);
-            mentionWeights.updateWeightsBy(mentionDelta, tau);
-            mentionWeights.updateAverageWeights();
+            if (updateMention) {
+                GraphWeightVector mentionWeights = allWeights.get(TYPE_MODEL_NAME);
+                mentionWeights.updateWeightsBy(mentionDelta, tau);
+                mentionWeights.updateAverageWeights();
+            }
         }
     }
 

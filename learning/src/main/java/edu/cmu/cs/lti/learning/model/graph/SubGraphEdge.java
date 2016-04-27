@@ -1,6 +1,6 @@
-package edu.cmu.cs.lti.event_coref.model.graph;
+package edu.cmu.cs.lti.learning.model.graph;
 
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.NodeKey;
 

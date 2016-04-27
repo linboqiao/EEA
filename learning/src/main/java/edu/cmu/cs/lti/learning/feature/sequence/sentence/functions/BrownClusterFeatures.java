@@ -1,10 +1,12 @@
 package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.jcas.JCas;
 
 import java.io.File;
@@ -57,8 +59,8 @@ public class BrownClusterFeatures extends SequenceFeatureWithFocus<StanfordCoren
     }
 
     @Override
-    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features,
-                        TObjectDoubleMap<String> featuresNeedForState) {
+    public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> nodeFeatures,
+                        Table<Pair<Integer, Integer>, String, Double> edgeFeatures) {
         String lemma = operateWithOutsideLowerCase(sequence, StanfordCorenlpToken::getLemma, focus);
 
         if (brownClusters.containsKey(lemma)) {
@@ -66,10 +68,17 @@ public class BrownClusterFeatures extends SequenceFeatureWithFocus<StanfordCoren
             for (int prefixLength : brownClusterPrefix) {
                 if (prefixLength <= fullClusterId.length()) {
                     String brownClusterLabel = fullClusterId.substring(0, prefixLength);
-                    addToFeatures(features, String.format("HeadLemmaBrown@%d=%s", prefixLength, brownClusterLabel), 1);
+                    addToFeatures(nodeFeatures, String.format("HeadLemmaBrown@%d=%s", prefixLength,
+                            brownClusterLabel), 1);
                 }
             }
-            addToFeatures(features, String.format("HeadLemmaBrownFull=%s", fullClusterId), 1);
+            addToFeatures(nodeFeatures, String.format("HeadLemmaBrownFull=%s", fullClusterId), 1);
         }
+    }
+
+    @Override
+    public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
+            globalFeatures, Map<Integer, String> knownStates) {
+
     }
 }

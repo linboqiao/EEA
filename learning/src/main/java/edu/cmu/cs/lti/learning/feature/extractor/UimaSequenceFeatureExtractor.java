@@ -1,5 +1,7 @@
 package edu.cmu.cs.lti.learning.feature.extractor;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
 import edu.cmu.cs.lti.learning.model.ChainFeatureExtractor;
@@ -11,6 +13,7 @@ import gnu.trove.iterator.TObjectDoubleIterator;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
@@ -21,6 +24,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -53,7 +57,9 @@ public abstract class UimaSequenceFeatureExtractor<T extends Annotation> extends
             IllegalAccessException {
         super(alphabet);
         clazz = elementClass;
+        logger.info("Registering sentence level features.");
         addFeatureFunctions(generalConfig, sentenceFeatureConfig, sentenceFeatureFunctions);
+        logger.info("Registering document level features.");
         addFeatureFunctions(generalConfig, docFeatureConfig, documentFeatureFunctions);
         this.useStateFeatures = useStateFeatures;
     }
@@ -117,37 +123,62 @@ public abstract class UimaSequenceFeatureExtractor<T extends Annotation> extends
     }
 
     @Override
-    public void extract(int focus, FeatureVector featuresNoState, FeatureVector featuresNeedForState) {
-        TObjectDoubleMap<String> rawFeaturesNoState = new TObjectDoubleHashMap<>();
-        TObjectDoubleMap<String> rawFeaturesNeedForState = new TObjectDoubleHashMap<>();
+    public void extract(int focus, FeatureVector nodeFeatures, Table<Integer, Integer, FeatureVector> edgeFeatures) {
+        TObjectDoubleMap<String> rawNodeFeatures = new TObjectDoubleHashMap<>();
+
+        Table<Pair<Integer, Integer>, String, Double> rawEdgeFeatures = HashBasedTable.create();
 
         List<StanfordCorenlpToken> sentenceTokens = getSentenceTokens(focus);
 
         if (focus < sequenceElements.size() && focus >= 0) {
             sentenceFeatureFunctions.forEach(ff -> ff.extract(sentenceTokens, getSentenceFocus(focus),
-                    rawFeaturesNoState, rawFeaturesNeedForState));
+                    rawNodeFeatures, rawEdgeFeatures));
         }
 
-        documentFeatureFunctions.forEach(ff -> ff.extract(sequenceElements, focus, rawFeaturesNoState,
-                rawFeaturesNeedForState));
+        documentFeatureFunctions.forEach(ff -> ff.extract(sequenceElements, focus, rawNodeFeatures,
+                rawEdgeFeatures));
 
-        for (TObjectDoubleIterator<String> iter = rawFeaturesNoState.iterator(); iter.hasNext(); ) {
+        for (TObjectDoubleIterator<String> iter = rawNodeFeatures.iterator(); iter.hasNext(); ) {
             iter.advance();
-            featuresNoState.addFeature(iter.key(), iter.value());
+            nodeFeatures.addFeature(iter.key(), iter.value());
         }
 
         if (useStateFeatures) {
             logger.debug("Using state features.");
-            for (TObjectDoubleIterator<String> iter = rawFeaturesNeedForState.iterator(); iter.hasNext(); ) {
-                iter.advance();
-                featuresNeedForState.addFeature(iter.key(), iter.value());
-            }
-        }
 
+            rawEdgeFeatures.cellSet().forEach(edgeFeature -> {
+                Pair<Integer, Integer> edge = edgeFeature.getRowKey();
+                String featureName = edgeFeature.getColumnKey();
+                double value = edgeFeature.getValue();
+
+                FeatureVector fv =
+                        edgeFeatures.contains(edge.getLeft(), edge.getRight()) ?
+                                edgeFeatures.get(edge.getLeft(), edge.getRight()) : nodeFeatures.newFeatureVector();
+                fv.addFeature(featureName, value);
+            });
+        }
 //        logger.debug("Extracted state features are : ");
 //        logger.debug(featuresNeedForState.readableString());
 //
 //        DebugUtils.pause(logger);
+    }
+
+    @Override
+    public void extractGlobal(int focus, FeatureVector globalFeatures, Map<Integer, String> knownStates) {
+        List<StanfordCorenlpToken> sentenceTokens = getSentenceTokens(focus);
+        TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
+
+        if (focus < sequenceElements.size() && focus >= 0) {
+            sentenceFeatureFunctions.forEach(ff -> ff.extractGlobal(sentenceTokens, getSentenceFocus(focus),
+                    rawFeatures, knownStates));
+        }
+
+        documentFeatureFunctions.forEach(ff -> ff.extractGlobal(sequenceElements, focus, rawFeatures, knownStates));
+
+        for (TObjectDoubleIterator<String> iter = rawFeatures.iterator(); iter.hasNext(); ){
+            iter.advance();
+            globalFeatures.addFeature(iter.key(), iter.value());
+        }
     }
 
     public int getElementIndex(T token) {

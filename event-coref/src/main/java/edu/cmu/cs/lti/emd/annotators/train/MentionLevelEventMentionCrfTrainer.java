@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.emd.annotators.train;
 
+import com.google.common.collect.HashBasedTable;
 import edu.cmu.cs.lti.learning.annotators.AbstractCrfTrainer;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.MultiSentenceFeatureExtractor;
@@ -35,10 +36,11 @@ import java.util.Collection;
  *
  * @author Zhengzhong Liu
  */
-public class MentionSequenceCrfTrainer extends AbstractCrfTrainer {
+public class MentionLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
     public static final String MODEL_NAME = "mentionSequenceModel";
 
-    private static MultiKeyDiskCacher<TIntObjectHashMap<FeatureVector[]>> featureCacher;
+    private static MultiKeyDiskCacher<TIntObjectHashMap<Pair<FeatureVector, HashBasedTable<Integer, Integer, FeatureVector>>>> featureCacher;
+
 
     private static MultiKeyDiskCacher<Pair<GraphFeatureVector, SequenceSolution>> goldCacher;
 
@@ -106,7 +108,8 @@ public class MentionSequenceCrfTrainer extends AbstractCrfTrainer {
 
         String documentKey = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
 
-        TIntObjectHashMap<FeatureVector[]> sequenceFeatures = featureCacher.get(documentKey);
+        TIntObjectHashMap<Pair<FeatureVector, HashBasedTable<Integer, Integer, FeatureVector>>> sequenceFeatures =
+                featureCacher.get(documentKey);
         Pair<GraphFeatureVector, SequenceSolution> cachedGold = goldCacher.get(documentKey);
 
         SequenceSolution goldSolution;

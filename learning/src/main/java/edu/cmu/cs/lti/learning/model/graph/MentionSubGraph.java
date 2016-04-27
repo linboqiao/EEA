@@ -1,14 +1,14 @@
-package edu.cmu.cs.lti.event_coref.model.graph;
+package edu.cmu.cs.lti.learning.model.graph;
 
 import com.google.common.collect.*;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.NodeKey;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
-import org.javatuples.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -216,9 +216,9 @@ public class MentionSubGraph {
             NodeKey depKey = edge.getDepKey();
             NodeKey govKey = edge.getGovKey();
 
-            Pair<Integer, String> typedGovNode = Pair.with(govNode, govKey.getMentionType());
+            Pair<Integer, String> typedGovNode = Pair.of(govNode, govKey.getMentionType());
 
-            Pair<Integer, String> typedDepNode = Pair.with(depNode, depKey.getMentionType());
+            Pair<Integer, String> typedDepNode = Pair.of(depNode, depKey.getMentionType());
 
             if (govNode > untilNode || depNode > untilNode) {
                 // Don't break here since we are not sure that the edges are sorted.
@@ -242,8 +242,8 @@ public class MentionSubGraph {
             } else {
                 // For all other relation types, simply record them first.
                 logger.info(String.format("Adding relation %s between %s and %s", type, govNode, depNode));
-                allRelations.put(type, Pair.with(govNode, depNode));
-                allTypedRelations.put(type, Pair.with(typedGovNode, typedDepNode));
+                allRelations.put(type, Pair.of(govNode, depNode));
+                allTypedRelations.put(type, Pair.of(typedGovNode, typedDepNode));
             }
         }
 
@@ -257,10 +257,10 @@ public class MentionSubGraph {
 
         // Propagate relations within cluster.
         for (Map.Entry<EdgeType, Pair<Integer, Integer>> relation : allRelations.entries()) {
-            int govNode = relation.getValue().getValue0();
-            int depNode = relation.getValue().getValue1();
+            int govNode = relation.getValue().getLeft();
+            int depNode = relation.getValue().getRight();
             interRelations.put(relation.getKey(),
-                    Pair.with(node2ClusterId.get(govNode), node2ClusterId.get(depNode)));
+                    Pair.of(node2ClusterId.get(govNode), node2ClusterId.get(depNode)));
         }
 
         // Create links for nodes in clusters.

@@ -1,10 +1,10 @@
-package edu.cmu.cs.lti.event_coref.model.graph;
+package edu.cmu.cs.lti.learning.model.graph;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
-import edu.cmu.cs.lti.event_coref.model.graph.MentionGraphEdge.EdgeType;
-import org.javatuples.Pair;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +33,8 @@ public class GraphUtils {
         ArrayListMultimap<T, T> reverseRelations = ArrayListMultimap.create();
 
         for (Pair<T, T> r : relations) {
-            T gov = r.getValue0();
-            T dep = r.getValue1();
+            T gov = r.getLeft();
+            T dep = r.getRight();
             transitiveResolvedRelations.put(gov, dep);
             reverseRelations.put(dep, gov);
             for (T govHead : reverseRelations.get(gov)) {
