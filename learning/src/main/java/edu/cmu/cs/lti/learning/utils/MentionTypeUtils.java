@@ -19,6 +19,8 @@ import java.util.*;
 public class MentionTypeUtils {
     public static String TYPE_NAME_JOINER = " ; ";
 
+    private static Map<String, String[]> typeSplitCache = new HashMap<>();
+
     /**
      * The same span might be annotated as multiple types, we join them together.
      *
@@ -45,8 +47,14 @@ public class MentionTypeUtils {
         return Joiner.on(TYPE_NAME_JOINER).join(uniqueSortedTypes);
     }
 
-    public static String[] splitToTmultipleTypes(String joinedType) {
-        return joinedType.split(TYPE_NAME_JOINER);
+    public static String[] splitToMultipleTypes(String joinedType) {
+        if (typeSplitCache.containsKey(joinedType)){
+            return typeSplitCache.get(joinedType);
+        }else{
+            String[] t = joinedType.split(TYPE_NAME_JOINER);
+            typeSplitCache.put(joinedType, t);
+            return t;
+        }
     }
 
     public static Map<Integer, Set<Integer>> treatTypesAsEquivalent(ClassAlphabet alphabet, List<String>
@@ -123,8 +131,8 @@ public class MentionTypeUtils {
     }
 
     public static boolean partialEquivalence(String type1, String type2) {
-        Set<String> type1Parts = new HashSet<>(Arrays.asList(MentionTypeUtils.splitToTmultipleTypes(type1)));
-        Set<String> type2Parts = new HashSet<>(Arrays.asList(MentionTypeUtils.splitToTmultipleTypes(type2)));
+        Set<String> type1Parts = new HashSet<>(Arrays.asList(MentionTypeUtils.splitToMultipleTypes(type1)));
+        Set<String> type2Parts = new HashSet<>(Arrays.asList(MentionTypeUtils.splitToMultipleTypes(type2)));
         type1Parts.retainAll(type2Parts);
 
         return type1Parts.size() > 0;

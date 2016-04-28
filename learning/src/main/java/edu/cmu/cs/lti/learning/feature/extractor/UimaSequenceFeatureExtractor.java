@@ -4,9 +4,10 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
-import edu.cmu.cs.lti.learning.model.ChainFeatureExtractor;
+import edu.cmu.cs.lti.learning.ChainFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
+import edu.cmu.cs.lti.learning.model.MultiNodeKey;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.iterator.TObjectDoubleIterator;
@@ -24,7 +25,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -164,7 +164,7 @@ public abstract class UimaSequenceFeatureExtractor<T extends Annotation> extends
     }
 
     @Override
-    public void extractGlobal(int focus, FeatureVector globalFeatures, Map<Integer, String> knownStates) {
+    public void extractGlobal(int focus, FeatureVector globalFeatures, List<MultiNodeKey> knownStates) {
         List<StanfordCorenlpToken> sentenceTokens = getSentenceTokens(focus);
         TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
 

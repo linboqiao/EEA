@@ -6,6 +6,7 @@ import edu.cmu.cs.lti.annotators.OpenNlpChunker;
 import edu.cmu.cs.lti.annotators.QuoteAnnotator;
 import edu.cmu.cs.lti.annotators.WordNetBasedEntityAnnotator;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
+import edu.cmu.cs.lti.emd.annotators.BeamTypeAnnotator;
 import edu.cmu.cs.lti.emd.annotators.CrfMentionTypeAnnotator;
 import edu.cmu.cs.lti.emd.annotators.MentionSequenceAnnotator;
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
@@ -399,6 +400,38 @@ public class EventMentionPipeline {
         return modelPath;
     }
 
+    public CollectionReaderDescription sentenceLevelMentionTagging(Configuration taskConfig,
+                                                                   CollectionReaderDescription reader,
+                                                                   String modelDir, String mainDir, String baseOutput,
+                                                                   boolean skipTest)
+            throws UIMAException, IOException, CpeDescriptorException, SAXException {
+        File outputFile = new File(mainDir, baseOutput);
+
+        if (skipTest && outputFile.exists()) {
+            logger.info("Skipping sent level tagging because output exists.");
+            return CustomCollectionReaderFactory.createXmiReader(mainDir, baseOutput);
+        } else {
+            return new BasicPipeline(new ProcessorWrapper() {
+                @Override
+                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
+                    return reader;
+                }
+
+                @Override
+                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
+                    AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
+                            CrfMentionTypeAnnotator.class, typeSystemDescription,
+                            CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                            CrfMentionTypeAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
+                    );
+
+                    return new AnalysisEngineDescription[]{sentenceLevelTagger};
+                }
+            }, mainDir, baseOutput).runWithOutput();
+        }
+    }
+
+
     public String trainBeamTypeModel(Configuration config, CollectionReaderDescription trainingReader, String suffix,
                                      boolean skipTrain, boolean usePaTraing, String lossType, boolean delayedLaso,
                                      int initialSeed) throws UIMAException, NoSuchMethodException, IOException,
@@ -448,10 +481,10 @@ public class EventMentionPipeline {
         return modelPath;
     }
 
-    public CollectionReaderDescription sentenceLevelMentionTagging(Configuration taskConfig,
-                                                                   CollectionReaderDescription reader,
-                                                                   String modelDir, String mainDir, String baseOutput,
-                                                                   boolean skipTest)
+
+    public CollectionReaderDescription beamMentionTagging(Configuration taskConfig, CollectionReaderDescription reader,
+                                                          String modelDir, String mainDir, String baseOutput,
+                                                          boolean skipTest)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
         File outputFile = new File(mainDir, baseOutput);
 
@@ -468,9 +501,9 @@ public class EventMentionPipeline {
                 @Override
                 public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
                     AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
-                            CrfMentionTypeAnnotator.class, typeSystemDescription,
-                            CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            CrfMentionTypeAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
+                            BeamTypeAnnotator.class, typeSystemDescription,
+                            BeamTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                            BeamTypeAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
                     );
 
                     return new AnalysisEngineDescription[]{sentenceLevelTagger};
@@ -478,6 +511,7 @@ public class EventMentionPipeline {
             }, mainDir, baseOutput).runWithOutput();
         }
     }
+
 
     public String trainDocLvType(Configuration config, CollectionReaderDescription trainingReader, String suffix,
                                  boolean skipTrain, int initialSeed)
@@ -800,7 +834,7 @@ public class EventMentionPipeline {
         }
     }
 
-    public String trainJointSpanModel(Configuration config, CollectionReaderDescription trainingReader,
+    public String trainJointSpanModel(Configuration config, CollectionReaderDescription trainingReader, String lossType,
                                       boolean useWarmStart, String suffix, boolean skipTrain, int initialSeed,
                                       String realisModelDir, String pretrainedMentionModel, String modelDir)
             throws UIMAException, IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
@@ -820,7 +854,8 @@ public class EventMentionPipeline {
                     DelayedLaSOJointTrainer.PARAM_CONFIG_PATH, config.getConfigFile().getPath(),
                     DelayedLaSOJointTrainer.PARAM_REALIS_MODEL_DIRECTORY, realisModelDir,
                     DelayedLaSOJointTrainer.PARAM_PRETRAINED_MENTION_MODEL_DIRECTORY, pretrainedMentionModel,
-                    DelayedLaSOJointTrainer.PARAM_USE_WARM_START, useWarmStart
+                    DelayedLaSOJointTrainer.PARAM_USE_WARM_START, useWarmStart,
+                    DelayedLaSOJointTrainer.PARAM_MENTION_LOSS_TYPE, lossType
             );
 
             TrainingLooper trainer = new TrainingLooper(config, cvModelDir, trainingReader, corefEngine) {
@@ -1015,6 +1050,26 @@ public class EventMentionPipeline {
         writeResults(corefSentMentions, FileUtils.joinPaths(evalDir, runName + "_" + sliceSuffix + ".tbf"), runName);
     }
 
+    private void runBeamModels(Configuration taskConfig, CollectionReaderDescription reader,
+                               String typeModel, String realisModel, String corefModel,
+                               String sliceSuffix, String runName, String evalDir,
+                               boolean skipType, boolean skipRealis, boolean skipCoref) throws SAXException,
+            UIMAException, CpeDescriptorException, IOException {
+        String annotatedOutput = FileUtils.joinPaths(middleResults, sliceSuffix, runName);
+
+        CollectionReaderDescription mentionOutput = beamMentionTagging(taskConfig, reader, typeModel,
+                trainingWorkingDir, FileUtils.joinPaths(annotatedOutput, "mention"), skipType);
+
+        CollectionReaderDescription realisOutput = realisAnnotation(taskConfig, mentionOutput, realisModel,
+                trainingWorkingDir, FileUtils.joinPaths(annotatedOutput, "realis"), skipType && skipRealis);
+
+        CollectionReaderDescription corefSentMentions = corefResolution(taskConfig,
+                realisOutput, corefModel, trainingWorkingDir, FileUtils.joinPaths(annotatedOutput, "coref"),
+                skipType && skipRealis && skipCoref);
+
+        writeResults(corefSentMentions, FileUtils.joinPaths(evalDir, runName + "_" + sliceSuffix + ".tbf"), runName);
+    }
+
     private void experiment(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainReader,
                             CollectionReaderDescription testReader, String evalDir, int seed, boolean runAll
     ) throws Exception {
@@ -1028,11 +1083,15 @@ public class EventMentionPipeline {
         boolean skipCorefTest = runAll || taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
         boolean skipBeamTest = runAll || taskConfig.getBoolean("edu.cmu.cs.lti.joint_span.skiptest", false);
 
-        String[] lossTypes = {"hamming", "recallHamming", "noneHamming"};
+//        String[] lossTypes = {"recallHamming", "hamming", "noneHamming"};
+        String[] lossTypes = taskConfig.getList("edu.cmu.cs.lti.mention.loss_types");
 
         CollectionReaderDescription trainingData = prepareTraining(trainReader,
                 trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix, "prepared_training"), false,
                 seed);
+
+        // Train realis model.
+        String realisModelDir = trainRealisTypes(taskConfig, trainingData, sliceSuffix, skipRealisTrain);
 
         String[] paSentMentionModels = new String[lossTypes.length];
         String[] paBeamMentionModels = new String[lossTypes.length];
@@ -1040,21 +1099,19 @@ public class EventMentionPipeline {
 
         for (int i = 0; i < lossTypes.length; i++) {
             String lossType = lossTypes[i];
-            paBeamMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData, sliceSuffix + "_beam_" + lossType,
+            paBeamMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData, sliceSuffix + "_" + lossType,
                     skipTypeTrain, true, lossType, false, seed);
             delayedPaBeamMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
-                    sliceSuffix + "_beam_delayed_" + lossType, skipTypeTrain, true, lossType, true, seed);
+                    sliceSuffix + "_delayed_" + lossType, skipTypeTrain, true, lossType, true, seed);
             paSentMentionModels[i] = trainSentLvType(taskConfig, trainingData, sliceSuffix + "_" + lossType,
                     skipTypeTrain, true, lossType, seed);
         }
 
+        String vanillaBeamMentionModel = trainBeamTypeModel(taskConfig, trainingData, sliceSuffix, skipTypeTrain,
+                true, null, false, seed);
+
         String vanillaSentCrfModel = trainSentLvType(taskConfig, trainingData, sliceSuffix, skipTypeTrain, false,
                 "f1", seed);
-        String vanillaBeamMentionModel = trainBeamTypeModel(taskConfig, trainingData,
-                sliceSuffix + "_beam", skipTypeTrain, true, null, false, seed);
-
-        // Train realis model.
-        String realisModelDir = trainRealisTypes(taskConfig, trainingData, sliceSuffix, skipRealisTrain);
 
 //        // Train Beam search joint model.
 //        String regularBeamJointModel = trainJointSpanModel(taskConfig, trainingData, false,
@@ -1079,10 +1136,10 @@ public class EventMentionPipeline {
             runSeparateModels(taskConfig, testReader, paModel, realisModelDir, treeCorefModel, sliceSuffix,
                     "paMention_" + lossType, evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
             String beamModel = paBeamMentionModels[i];
-            runSeparateModels(taskConfig, testReader, beamModel, realisModelDir, treeCorefModel, sliceSuffix,
+            runBeamModels(taskConfig, testReader, beamModel, realisModelDir, treeCorefModel, sliceSuffix,
                     "beamMention_" + lossType, evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
             String delayedBeamModel = delayedPaBeamMentionModels[i];
-            runSeparateModels(taskConfig, testReader, delayedBeamModel, realisModelDir, treeCorefModel, sliceSuffix,
+            runBeamModels(taskConfig, testReader, delayedBeamModel, realisModelDir, treeCorefModel, sliceSuffix,
                     "delayedBeamMention_" + lossType, evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
         }
 

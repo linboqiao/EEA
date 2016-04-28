@@ -52,6 +52,4 @@
             <version>1.94</version>
         </dependency>
     </dependencies>
-
-    <distributionManagement></distributionManagement>
 </project>

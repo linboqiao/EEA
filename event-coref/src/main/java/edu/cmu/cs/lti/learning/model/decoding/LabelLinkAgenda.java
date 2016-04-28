@@ -6,7 +6,7 @@ import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.MultiNodeKey;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
+import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,11 +28,11 @@ public class LabelLinkAgenda {
 
     private List<NodeLinkingState> nextBeamStates;
 
-    private MinMaxPriorityQueue<StateDelta> stateDeltas;
+    private  MinMaxPriorityQueue<StateDelta> stateDeltas;
 
     private List<MentionCandidate> candidates;
 
-    private StateDelta currentDelta;
+//    private StateDelta currentDelta;
 
     private int beamSize;
 
@@ -102,25 +102,6 @@ public class LabelLinkAgenda {
             StateDelta delta = stateDeltas.poll();
             NodeLinkingState updatedState = delta.applyUpdate(candidates);
             nextBeamStates.add(updatedState);
-
-//            if (isFirst) {
-//                bestDeltaLabelFv = delta.getDeltaLabelFv();
-//                bestDeltaCorefVectors = delta.getDeltaGraphFv();
-//
-//                isFirst = false;
-//
-//                actualDecodingSequence.add(updatedState.getLastNode());
-//
-////                logger.debug("Update states with best label features");
-////                logger.debug(bestDeltaLabelFv.readableNodeVector());
-////                logger.debug("Update with best graph features for each antecedents.");
-////
-////                for (Pair<EdgeType, FeatureVector> typeFeatureVector : bestDeltaCorefVectors) {
-////                    logger.debug("Edge type is " + typeFeatureVector.getValue0());
-////                    logger.debug(typeFeatureVector.getValue1().readableString());
-////                }
-////                DebugUtils.pause(logger);
-//            }
         }
         beamStates = nextBeamStates;
         nextBeamStates = new ArrayList<>(beamSize);

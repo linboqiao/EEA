@@ -5,6 +5,7 @@ import com.google.common.collect.SetMultimap;
 import edu.cmu.cs.lti.emd.annotators.train.TokenLevelEventMentionCrfTrainer;
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
+import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
@@ -12,7 +13,6 @@ import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtract
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -51,10 +51,6 @@ import static edu.cmu.cs.lti.learning.model.ModelConstants.TYPE_MODEL_NAME;
  */
 public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
     private static DiscriminativeUpdater updater;
-//
-//    public static final String TYPE_MODEL_NAME = "CRF";
-//
-//    public static final String COREF_MODEL_NAME = "COREF";
 
     public static final String PARAM_CONFIG_PATH = "configPath";
     @ConfigurationParameter(name = PARAM_CONFIG_PATH)
@@ -88,7 +84,7 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
         logger.info("Preparing the Delayed LaSO Trainer...");
         super.initialize(context);
 
-        updater = new DiscriminativeUpdater(true, true);
+        updater = new DiscriminativeUpdater(true, true, mentionLossType);
 
         // Doing warm start.
         if (warmStart) {
@@ -291,7 +287,7 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
         logger.info("Initializing Coreference weights.");
 
         ClassAlphabet classAlphabet = new ClassAlphabet();
-        for (MentionGraphEdge.EdgeType edgeType : MentionGraphEdge.EdgeType.values()) {
+        for (EdgeType edgeType : EdgeType.values()) {
             classAlphabet.addClass(edgeType.name());
         }
 
@@ -343,7 +339,7 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
         ).parseFeatureFunctionSpecs(featureSpec);
 
         ClassAlphabet classAlphabet = new ClassAlphabet();
-        for (MentionGraphEdge.EdgeType edgeType : MentionGraphEdge.EdgeType.values()) {
+        for (EdgeType edgeType : EdgeType.values()) {
             classAlphabet.addClass(edgeType.name());
         }
 

@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
+import edu.cmu.cs.lti.learning.model.MultiNodeKey;
 import edu.cmu.cs.lti.script.type.Dependency;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.StanfordEntityMention;
@@ -162,7 +163,7 @@ public class DependentWordFeatures extends SequenceFeatureWithFocus<StanfordCore
 
     @Override
     public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
-            globalFeatures, Map<Integer, String> knownStates) {
+            globalFeatures, List<MultiNodeKey> knownStates) {
 
     }
 }

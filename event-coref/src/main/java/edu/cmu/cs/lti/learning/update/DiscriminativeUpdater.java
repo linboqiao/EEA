@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.learning.update;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.decoding.LabelLinkAgenda;
 import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge;
+import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.apache.commons.lang3.tuple.Pair;
@@ -40,17 +40,20 @@ public class DiscriminativeUpdater {
 
     private double defaultStepSize = 0.1; // Default step size used by the perceptron trainer.
 
+    private SeqLoss labelLosser;
+
     private String[] modelNames = new String[]{TYPE_MODEL_NAME, COREF_MODEL_NAME};
 
     private boolean updateMention;
     private boolean updateCoref;
 
-    public DiscriminativeUpdater(boolean updateMention, boolean updateCoref) {
+    public DiscriminativeUpdater(boolean updateMention, boolean updateCoref, String lossType) {
         allWeights = new HashMap<>();
         allDelta = new HashMap<>();
         allLoss = new TObjectDoubleHashMap<>();
         classAlphabets = new HashMap<>();
         featureAlphabets = new HashMap<>();
+        labelLosser = SeqLoss.getLoss(lossType);
 //        trainingStats = new HashMap<>();
 
         if (!(updateMention || updateCoref)) {
@@ -74,7 +77,7 @@ public class DiscriminativeUpdater {
         return allWeights.get(weightKey);
     }
 
-    public void recordLaSOUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda, String lossType) {
+    public void recordLaSOUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
         if (!decodingAgenda.contains(goldAgenda)) {
             logger.debug("Recording differences for LaSO update.");
             recordUpdate(decodingAgenda, goldAgenda);
@@ -82,17 +85,8 @@ public class DiscriminativeUpdater {
             NodeLinkingState bestDecoding = decodingAgenda.getBeamStates().get(0);
             NodeLinkingState bestGold = goldAgenda.getBeamStates().get(0);
 
-//            logger.debug(String.valueOf(decodingAgenda.getBeamStates().size()));
 
-//            logger.debug("Agenda not matching.");
-//
-//            logger.debug("Decoding agenda is :");
-//            logger.debug(decodingAgenda.showAgendaItems());
-//
-//            logger.debug("Gold agenda is :");
-//            logger.debug(goldAgenda.showAgendaItems());
-
-            Pair<Double, Double> losses = bestDecoding.loss(bestGold, lossType);
+            Pair<Double, Double> losses = bestDecoding.loss(bestGold, labelLosser);
 
             addLoss(TYPE_MODEL_NAME, losses.getLeft());
             addLoss(COREF_MODEL_NAME, losses.getRight());
@@ -103,18 +97,7 @@ public class DiscriminativeUpdater {
             // Clear these features from both agenda, since they are assumed to be the same from here.
             goldAgenda.clearFeatures();
             decodingAgenda.clearFeatures();
-
-//            logger.debug("Copied agenda, now showing new system:");
-//            logger.debug("Now showing system:");
-//            logger.debug(decodingAgenda.showAgendaItems());
-
-//            DebugUtils.pause(logger);
-        } else {
-//            addLoss(DelayedLaSOJointTrainer.TYPE_MODEL_NAME, 0);
-//            logger.debug("Agendas contains same element, skipping update.");
         }
-
-//        DebugUtils.pause();
     }
 
     public void recordFinalUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
@@ -136,13 +119,13 @@ public class DiscriminativeUpdater {
 
 //        logger.debug("Computing delta on gold and decoding.");
 
-        for (Map.Entry<MentionGraphEdge.EdgeType, FeatureVector> goldFv : goldAgenda.getBestDeltaCorefVectors()
+        for (Map.Entry<EdgeType, FeatureVector> goldFv : goldAgenda.getBestDeltaCorefVectors()
                 .entrySet()) {
             deltaCorefVector.extend(goldFv.getValue(), goldFv.getKey().name());
             logger.debug("Gold feature edge type : " + goldFv.getKey());
             logger.debug(goldFv.getValue().toString());
         }
-        for (Map.Entry<MentionGraphEdge.EdgeType, FeatureVector> decoding : decodingAgenda.getBestDeltaCorefVectors()
+        for (Map.Entry<EdgeType, FeatureVector> decoding : decodingAgenda.getBestDeltaCorefVectors()
                 .entrySet()) {
             deltaCorefVector.extend(decoding.getValue().negation(), decoding.getKey().name());
             logger.debug("System feature edge type : " + decoding.getValue());

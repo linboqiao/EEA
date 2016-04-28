@@ -10,8 +10,7 @@ import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
 import edu.cmu.cs.lti.learning.model.decoding.StateDelta;
 import edu.cmu.cs.lti.learning.model.graph.LabelledMentionGraphEdge;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
+import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -263,7 +262,7 @@ public class BeamCrfLatentTreeDecoder {
 //                    logger.debug("Updating states for gold.");
                     goldAgenda.updateStates();
 
-                    updater.recordLaSOUpdate(decodingAgenda, goldAgenda, lossType);
+                    updater.recordLaSOUpdate(decodingAgenda, goldAgenda);
                 }
 
                 if (!pruneSureNone) {
@@ -303,7 +302,6 @@ public class BeamCrfLatentTreeDecoder {
             // Update based on cumulative errors.
             logger.debug("Applying updates to " + TYPE_MODEL_NAME);
             TObjectDoubleMap<String> losses = updater.update(true);
-
             typeTrainingStats.addLoss(logger, losses.get(TYPE_MODEL_NAME) / mentionGraph.numNodes());
             logger.debug("Applying updates to " + COREF_MODEL_NAME);
             corefTrainingStats.addLoss(logger, losses.get(COREF_MODEL_NAME) / mentionGraph.numNodes());
@@ -426,7 +424,7 @@ public class BeamCrfLatentTreeDecoder {
             double bestLinkScore = Double.NEGATIVE_INFINITY;
 
             NodeKey bestAntecedentNode = null;
-            MentionGraphEdge.EdgeType bestEdgeType = null;
+            EdgeType bestEdgeType = null;
             FeatureVector bestNewCorefFeature = null;
 
             for (int ant = 0; ant < currGraphNodeIndex; ant++) {
@@ -441,11 +439,11 @@ public class BeamCrfLatentTreeDecoder {
                     LabelledMentionGraphEdge mentionGraphEdge = mentionGraph
                             .getMentionGraphEdge(currGraphNodeIndex, ant)
                             .getLabelledEdge(candidates, antNodeKey, currNodeKey);
-                    Pair<MentionGraphEdge.EdgeType, Double> bestLabelScore = mentionGraphEdge
+                    Pair<EdgeType, Double> bestLabelScore = mentionGraphEdge
                             .getBestLabelScore(corefWeights);
 
                     double linkScore = bestLabelScore.getRight();
-                    MentionGraphEdge.EdgeType edgeType = bestLabelScore.getLeft();
+                    EdgeType edgeType = bestLabelScore.getLeft();
 
                     if (linkScore > bestLinkScore) {
                         bestLinkScore = linkScore;
@@ -479,7 +477,7 @@ public class BeamCrfLatentTreeDecoder {
 
                 for (LabelledMentionGraphEdge realGraphEdge : realGraphEdges) {
                     if (realGraphEdge.getDepKey().equals(currNodeKey)) {
-                        Pair<MentionGraphEdge.EdgeType, Double> correctLabelScore = realGraphEdge
+                        Pair<EdgeType, Double> correctLabelScore = realGraphEdge
                                 .getCorrectLabelScore(corefWeights);
                         double linkScore = correctLabelScore.getRight();
 

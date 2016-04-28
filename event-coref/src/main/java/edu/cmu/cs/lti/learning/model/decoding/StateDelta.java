@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.learning.model.decoding;
 
 import com.google.common.collect.MinMaxPriorityQueue;
 import edu.cmu.cs.lti.learning.model.*;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
+import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.tuple.Pair;

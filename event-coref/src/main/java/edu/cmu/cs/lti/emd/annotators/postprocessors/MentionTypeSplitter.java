@@ -26,7 +26,7 @@ public class MentionTypeSplitter extends AbstractLoggingAnnotator {
 
         // Copy mentions.
         for (EventMention candidate : originalMentions) {
-            String[] predictedTypes = MentionTypeUtils.splitToTmultipleTypes(candidate.getEventType());
+            String[] predictedTypes = MentionTypeUtils.splitToMultipleTypes(candidate.getEventType());
             // Split each stored mention by the duplicated type count.
             for (int duplicateTagCount = 0; duplicateTagCount < candidate.getMultiTag() + 1; duplicateTagCount++) {
                 for (String predictedType : predictedTypes) {

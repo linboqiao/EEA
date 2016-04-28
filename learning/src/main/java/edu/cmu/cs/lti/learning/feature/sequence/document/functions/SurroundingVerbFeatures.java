@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.learning.feature.sequence.document.functions;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
+import edu.cmu.cs.lti.learning.model.MultiNodeKey;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -109,7 +110,7 @@ public class SurroundingVerbFeatures<T extends Annotation> extends SequenceFeatu
 
     @Override
     public void extractGlobal(List<T> sequence, int focus, TObjectDoubleMap<String> globalFeatures,
-                              Map<Integer, String> knownStates) {
+                              List<MultiNodeKey> knownStates) {
 
     }
 

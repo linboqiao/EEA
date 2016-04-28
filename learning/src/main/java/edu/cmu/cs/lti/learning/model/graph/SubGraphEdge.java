@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.learning.model.graph;
 
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.NodeKey;
 

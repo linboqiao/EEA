@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
+import edu.cmu.cs.lti.learning.model.MultiNodeKey;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
@@ -9,7 +10,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.jcas.JCas;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Extract character related features from the token. This is mainly used for language such as Chinese, where
@@ -61,7 +61,7 @@ public class CharacterFeatures extends SequenceFeatureWithFocus<StanfordCorenlpT
 
     @Override
     public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
-            globalFeatures, Map<Integer, String> knownStates) {
+            globalFeatures, List<MultiNodeKey> knownStates) {
 
     }
 

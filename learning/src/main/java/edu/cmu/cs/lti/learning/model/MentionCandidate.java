@@ -19,15 +19,7 @@ public class MentionCandidate {
     private int index;
     private boolean isEvent;
 
-//    public static final String REALIS_ROOT = "ROOT";
-//
-//    public static final String TYPE_ROOT = "ROOT";
-
-//    public static final MultiNodeKey rootKey;
-
-//    static {
-//        rootKey = new MultiNodeKey(new NodeKey(0, 0, TYPE_ROOT, REALIS_ROOT, -1));
-//    }
+    private MultiNodeKey key;
 
     public MentionCandidate(int begin, int end, Sentence containedSentence, Word headWord, int index) {
         this.begin = begin;
@@ -42,29 +34,20 @@ public class MentionCandidate {
         return String.format("%s,[%s]_[%s],[%d,%d]", headWord.getCoveredText(), mentionType, realis, begin, end);
     }
 
-//    public static boolean isRootKey(List<NodeKey> key) {
-//        return key.size() > 0 && key.get(0).equals(rootKey.get(0));
-//    }
-
-//    public static MultiNodeKey getRootKey() {
-//        return MultiNodeKey.rootKey();
-//    }
-
     public MultiNodeKey asKey() {
-        // Make sure the key is up to date.
-
-        MentionTypeUtils.splitToTmultipleTypes(mentionType);
-
-//        List<NodeKey> keys = new ArrayList<>();
-
-        MultiNodeKey key = new MultiNodeKey();
-
-        for (String t : MentionTypeUtils.splitToTmultipleTypes(mentionType)) {
-//            keys.add(new NodeKey(begin, end, t, realis, index));
-            key.addKey(new NodeKey(begin, end, t, realis, index));
+        if (key == null) {
+            makeKey();
         }
-
         return key;
+    }
+
+    private void makeKey() {
+        String[] types = MentionTypeUtils.splitToMultipleTypes(mentionType);
+        NodeKey[] singleKeys = new NodeKey[types.length];
+        for (int i = 0; i < types.length; i++) {
+            singleKeys[i] = new NodeKey(begin, end, types[i], realis, index);
+        }
+        key = new MultiNodeKey(mentionType, singleKeys);
     }
 
     public int getBegin() {
@@ -93,6 +76,7 @@ public class MentionCandidate {
 
     public void setMentionType(String mentionType) {
         this.mentionType = mentionType;
+        makeKey();
         if (!mentionType.equals(ClassAlphabet.noneOfTheAboveClass)) {
             setEvent(true);
         }

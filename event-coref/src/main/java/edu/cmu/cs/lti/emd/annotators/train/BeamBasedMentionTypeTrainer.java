@@ -68,7 +68,7 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
         logger.info(String.format("Beam Trainer using PA update : %s, Delayed LaSO : %s, Loss Type : %s",
                 usePaUpdate, delayedLaso, lossType));
 
-        updater = new DiscriminativeUpdater(true, false);
+        updater = new DiscriminativeUpdater(true, false, lossType);
         updater.addWeightVector(ModelConstants.TYPE_MODEL_NAME, prepareCrfWeights());
 
         try {
@@ -79,7 +79,7 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
         }
 
         decoder = new BeamCrfDecoder(updater.getWeightVector(ModelConstants.TYPE_MODEL_NAME), sentExtractor, updater,
-                usePaUpdate, delayedLaso, lossType);
+                usePaUpdate, delayedLaso);
     }
 
     private SentenceFeatureExtractor initializeCrfExtractor(Configuration config) throws ClassNotFoundException,

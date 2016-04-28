@@ -5,7 +5,6 @@ import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.NodeKey;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.commons.lang3.tuple.Pair;

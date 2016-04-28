@@ -9,7 +9,7 @@ import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
+import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;

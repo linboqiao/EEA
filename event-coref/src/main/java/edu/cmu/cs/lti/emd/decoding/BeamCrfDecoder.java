@@ -11,9 +11,9 @@ import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +23,8 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 import static edu.cmu.cs.lti.learning.model.ModelConstants.TYPE_MODEL_NAME;
+
+//import org.javatuples.Pair;
 
 /**
  * Approximate CRF decoding with Beam search.
@@ -46,22 +48,18 @@ public class BeamCrfDecoder {
 
     private boolean delayUpdate;
 
-    private String lossType;
-
     private int beamSize = 5;
 
     /**
      * For training
-     *
-     * @param mentionWeights   The weights.
+     *  @param mentionWeights   The weights.
      * @param mentionExtractor The feature extractor
      * @param updater          The updater.
      * @param usePaUpdate
-     * @param lossType
      */
     public BeamCrfDecoder(GraphWeightVector mentionWeights, SentenceFeatureExtractor mentionExtractor,
-                          DiscriminativeUpdater updater, boolean usePaUpdate, boolean delayUpdate, String lossType) {
-        this(mentionWeights, mentionExtractor, true, usePaUpdate, delayUpdate, lossType);
+                          DiscriminativeUpdater updater, boolean usePaUpdate, boolean delayUpdate) {
+        this(mentionWeights, mentionExtractor, true, usePaUpdate, delayUpdate);
         this.updater = updater;
     }
 
@@ -70,15 +68,13 @@ public class BeamCrfDecoder {
      *
      * @param mentionWeights   The weights.
      * @param mentionExtractor The feature extractor.
-     * @param lossType         The Loss type used for training only.
      */
-    public BeamCrfDecoder(GraphWeightVector mentionWeights, SentenceFeatureExtractor mentionExtractor,
-                          String lossType) {
-        this(mentionWeights, mentionExtractor, false, false, false, lossType);
+    public BeamCrfDecoder(GraphWeightVector mentionWeights, SentenceFeatureExtractor mentionExtractor) {
+        this(mentionWeights, mentionExtractor, false, false, false);
     }
 
     private BeamCrfDecoder(GraphWeightVector mentionWeights, SentenceFeatureExtractor mentionExtractor,
-                           boolean isTraining, boolean usePaUpdate, boolean delayUpdate, String lossType) {
+                           boolean isTraining, boolean usePaUpdate, boolean delayUpdate) {
         this.isTraining = isTraining;
         this.usePaUpdate = usePaUpdate;
         this.delayUpdate = delayUpdate;
@@ -88,8 +84,7 @@ public class BeamCrfDecoder {
         mentionFeatureAlphabet = mentionWeights.getFeatureAlphabet();
 
         //If delayed update, we check training stats in 5 sentences, if not, we check in 1000 tokens.
-        typeTrainingStats = new TrainingStats(delayUpdate ? 5 : 1000, "Mention_" + lossType);
-        this.lossType = lossType;
+        typeTrainingStats = new TrainingStats(delayUpdate ? 5 : 1000, "Mention");
     }
 
     public NodeLinkingState decode(JCas aJCas, List<MentionCandidate> predictionCandidates, List<MentionCandidate>
@@ -110,6 +105,14 @@ public class BeamCrfDecoder {
 
             List<StanfordCorenlpToken> sentenceTokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
 
+//            List<Pair<FeatureVector, Table<Integer, Integer, FeatureVector>>> featureVectors = new ArrayList<>();
+//            IntStream.range(0, sentenceTokens.size()).parallel().forEach(sentTokenIndex ->{
+//                FeatureVector nodeFeature = new RealValueHashFeatureVector(mentionFeatureAlphabet);
+//                Table<Integer, Integer, FeatureVector> edgeFeatures = HashBasedTable.create();
+//                mentionExtractor.extract(sentTokenIndex, nodeFeature, edgeFeatures);
+//                featureVectors.add(Pair.of(nodeFeature, edgeFeatures));
+//            });
+
             for (int sentTokenIndex = 0; sentTokenIndex < sentenceTokens.size(); sentTokenIndex++) {
 //                logger.info(String.format("Decoding sentence %d, token %d.", sentIndex, sentTokenIndex));
                 decodingAgenda.prepareExpand();
@@ -120,6 +123,9 @@ public class BeamCrfDecoder {
                 Table<Integer, Integer, FeatureVector> edgeFeatures = HashBasedTable.create();
 
                 mentionExtractor.extract(sentTokenIndex, nodeFeature, edgeFeatures);
+//                Pair<FeatureVector, Table<Integer, Integer, FeatureVector>> vectors = featureVectors.get(sentTokenIndex);
+//                FeatureVector nodeFeature = vectors.getLeft();
+//                Table<Integer, Integer, FeatureVector> edgeFeatures = vectors.getRight();
 
                 Queue<Pair<Integer, Double>> sortedClassScores = scoreMentionLocally(nodeFeature, useAverage);
 
@@ -128,8 +134,8 @@ public class BeamCrfDecoder {
 
                 while (!sortedClassScores.isEmpty()) {
                     Pair<Integer, Double> classScore = sortedClassScores.poll();
-                    int classIndex = classScore.getValue0();
-                    double nodeTypeScore = classScore.getValue1();
+                    int classIndex = classScore.getKey();
+                    double nodeTypeScore = classScore.getValue();
 
                     final MultiNodeKey nodeKeys = setUpCandidate(predictionCandidates.get(docTokenIndex),
                             classIndex, ClassAlphabet.noneOfTheAboveClass);
@@ -139,12 +145,10 @@ public class BeamCrfDecoder {
                     newMentionFeatures.extend(nodeFeature, classIndex);
 
                     FeatureVector globalFeature = new RealValueHashFeatureVector(mentionFeatureAlphabet);
+
                     for (NodeLinkingState nodeLinkingState : decodingAgenda.getBeamStates()) {
                         mentionExtractor.extractGlobal(sentTokenIndex, globalFeature,
-                                nodeLinkingState.getAvailableNodeLabels());
-//
-//                        logger.info("Global features:");
-//                        logger.info(globalFeature.readableString());
+                                nodeLinkingState.getNodeResults());
 
                         int prevClassIndex = sentTokenIndex == 0 ?
                                 mentionTypeClassAlphabet.getOutsideClassIndex() :
@@ -185,7 +189,7 @@ public class BeamCrfDecoder {
                         goldAgenda.expand(goldState, goldResults, 0, goldMentionFeature);
                     }
                     goldAgenda.updateStates();
-                    updater.recordLaSOUpdate(decodingAgenda, goldAgenda, lossType);
+                    updater.recordLaSOUpdate(decodingAgenda, goldAgenda);
 
                     if (!delayUpdate) {
                         // If do not delay updates, we immediately update the parameters.
@@ -221,15 +225,15 @@ public class BeamCrfDecoder {
     private Queue<Pair<Integer, Double>> scoreMentionLocally(FeatureVector nodeFeature, boolean useAverage) {
         Queue<Pair<Integer, Double>> sortedClassScores = new PriorityQueue<>(
                 (o1, o2) ->
-                        new CompareToBuilder().append(o2.getValue1(), o1.getValue1()).
-                                append(o2.getValue0(), o1.getValue0()).toComparison()
+                        new CompareToBuilder().append(o2.getLeft(), o1.getLeft()).
+                                append(o2.getRight(), o1.getRight()).toComparison()
         );
 
         // Go over possible crf links.
         mentionTypeClassAlphabet.getNormalClassesRange().forEach(classIndex -> {
             double nodeTypeScore = useAverage ? mentionWeights.dotProdAver(nodeFeature, classIndex) :
                     mentionWeights.dotProd(nodeFeature, classIndex);
-            sortedClassScores.add(Pair.with(classIndex, nodeTypeScore));
+            sortedClassScores.add(Pair.of(classIndex, nodeTypeScore));
         });
 
         return sortedClassScores;
@@ -251,8 +255,7 @@ public class BeamCrfDecoder {
         }
 
         FeatureVector globalFeature = new RealValueHashFeatureVector(mentionFeatureAlphabet);
-        mentionExtractor.extractGlobal(currentIndex, globalFeature,
-                goldState.getAvailableNodeLabels());
+        mentionExtractor.extractGlobal(currentIndex, globalFeature, goldState.getNodeResults());
 
         return newGoldMentionFeatures;
     }

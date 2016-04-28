@@ -1,10 +1,9 @@
 package edu.cmu.cs.lti.learning.model.decoding;
 
-import com.google.common.collect.MinMaxPriorityQueue;
 import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.LabelledMentionGraphEdge;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.update.SeqLoss;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
@@ -32,9 +31,8 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     // So the value of this index can be used to retrieve the corresponding graph node from the MentionGraph.
     private int nodeIndex;
 
-    // Here is the node decoding results. Each item in the outer list correspond to a node in the graph (which
-    // includes the root node as well). There are multiple possible types for a node, so each node is corresponding
-    // multiple decoding results (The inner list).
+    // Here is the node decoding results. Each item correspond to a node in the graph (which includes the root node
+    // as well).
     private List<MultiNodeKey> nodeResults;
 
     private MentionSubGraph decodingTree;
@@ -152,8 +150,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     }
 
     public void addLink(List<MentionCandidate> mentionCandidates, EdgeKey edgeKey) {
-        LabelledMentionGraphEdge edge = graph.getMentionGraphEdge(edgeKey.getDepGraphIndex(),
-                edgeKey.getGovGraphIndex()).getLabelledEdge(mentionCandidates,
+        LabelledMentionGraphEdge edge = graph.getLabelledEdge(mentionCandidates,
                 edgeKey.getGovNode(), edgeKey.getDepNode());
         decodingTree.addEdge(edge, edgeKey.getType());
     }
@@ -163,8 +160,11 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         nodeIndex++;
     }
 
-    public Pair<Double, Double> loss(NodeLinkingState referenceState, String lossType) {
-        double labelLoss = computeLabelLoss(referenceState.getNodeResults(), lossType);
+    public Pair<Double, Double> loss(NodeLinkingState referenceState, SeqLoss labelLosser) {
+        double labelLoss = computeLabelLoss(referenceState.getNodeResults(), labelLosser);
+
+//        logger.info("Label loss is " + labelLoss);
+//        DebugUtils.pause();
 
         double graphLoss = 0;
 
@@ -177,7 +177,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         return Pair.of(labelLoss, graphLoss);
     }
 
-    private double computeLabelLoss(List<MultiNodeKey> referenceNodes, String lossType) {
+    private double computeLabelLoss(List<MultiNodeKey> referenceNodes, SeqLoss labelLosser) {
         String[] reference = new String[referenceNodes.size() - 1];
         String[] prediction = new String[nodeResults.size() - 1];
 
@@ -189,9 +189,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
                     .map(NodeKey::getMentionType).collect(Collectors.toList()));
         }
 
-        SeqLoss seqLoss = SeqLoss.getLoss(lossType);
-
-        return seqLoss.compute(reference, prediction, ClassAlphabet.noneOfTheAboveClass);
+        return labelLosser.compute(reference, prediction, ClassAlphabet.noneOfTheAboveClass);
     }
 
     public String getCombinedLastNodeType() {
@@ -199,15 +197,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     }
 
     public String getCombinedMentionType(int nodeIndex) {
-        return MentionTypeUtils.joinMultipleTypes(getMentionType(nodeIndex));
-    }
-
-    public Set<String> getMentionType(int nodeIndex) {
-        return nodeResults.get(nodeIndex).stream().map(NodeKey::getMentionType).collect(Collectors.toSet());
-    }
-
-    public static MinMaxPriorityQueue<NodeLinkingState> getReverseHeap(int maxSize) {
-        return MinMaxPriorityQueue.orderedBy(NodeLinkingState.reverseComparator()).maximumSize(maxSize).create();
+        return nodeResults.get(nodeIndex).getCombinedType();
     }
 
     public double getScore() {
@@ -227,8 +217,8 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 
         boolean labelMatch = true;
         for (int i = 1; i < nodeIndex; i++) {
-            Set<String> otherTypes = otherState.getMentionType(i);
-            if (!getMentionType(i).equals(otherTypes)) {
+            String otherType = otherState.getCombinedMentionType(i);
+            if (!getCombinedMentionType(i).equals(otherType)) {
                 labelMatch = false;
                 break;
             }
@@ -271,13 +261,13 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 
         return state;
     }
-
-    public Map<Integer, String> getAvailableNodeLabels() {
-        Map<Integer, String> nodeTypes = new HashMap<>();
-        for (int i = 0; i < nodeResults.size(); i++) {
-            String joinedType = MentionTypeUtils.joinMultipleTypes(getMentionType(i));
-            nodeTypes.put(i, joinedType);
-        }
-        return nodeTypes;
-    }
+//
+//    public Map<Integer, String> getAvailableNodeLabels() {
+//        Map<Integer, String> nodeTypes = new HashMap<>();
+//        for (int i = 0; i < nodeResults.size(); i++) {
+//            String joinedType = getCombinedMentionType(i);
+//            nodeTypes.put(i, joinedType);
+//        }
+//        return nodeTypes;
+//    }
 }

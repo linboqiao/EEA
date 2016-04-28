@@ -4,6 +4,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
+import edu.cmu.cs.lti.learning.model.MultiNodeKey;
 import edu.cmu.cs.lti.script.type.SemaforAnnotationSet;
 import edu.cmu.cs.lti.script.type.SemaforLabel;
 import edu.cmu.cs.lti.script.type.SemaforLayer;
@@ -151,7 +152,7 @@ public class FrameFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken
 
     @Override
     public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
-            globalFeatures, Map<Integer, String> knownStates) {
+            globalFeatures, List<MultiNodeKey> knownStates) {
 
     }
 }

@@ -8,7 +8,6 @@ import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.MultiNodeKey;
 import edu.cmu.cs.lti.learning.model.NodeKey;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.lang3.tuple.Pair;
@@ -284,13 +283,13 @@ public class MentionGraph implements Serializable {
      * @param relations Relations between event mentions.
      * @return Map from edge type to event-event relation.
      */
-    private HashMultimap<MentionGraphEdge.EdgeType, Pair<Integer, Integer>> convertToEventRelation(
+    private HashMultimap<EdgeType, Pair<Integer, Integer>> convertToEventRelation(
             Map<Pair<Integer, Integer>, String> relations, Map<Integer, Integer> mention2EventIndex) {
-        HashMultimap<MentionGraphEdge.EdgeType, Pair<Integer, Integer>> allRelations = HashMultimap.create();
+        HashMultimap<EdgeType, Pair<Integer, Integer>> allRelations = HashMultimap.create();
         for (Map.Entry<Pair<Integer, Integer>, String> relation : relations.entrySet()) {
             int govMention = relation.getKey().getLeft();
             int depMention = relation.getKey().getRight();
-            MentionGraphEdge.EdgeType type = MentionGraphEdge.EdgeType.valueOf(relation.getValue());
+            EdgeType type = EdgeType.valueOf(relation.getValue());
             allRelations.put(type, Pair.of(mention2EventIndex.get(govMention), mention2EventIndex.get(depMention)));
         }
         return allRelations;
@@ -309,6 +308,12 @@ public class MentionGraph implements Serializable {
             return null;
         }
         return getEdge(dep, gov);
+    }
+
+    public LabelledMentionGraphEdge getLabelledEdge(List<MentionCandidate> mentions, NodeKey govKey,
+                                                    NodeKey depKey) {
+        return getEdge(getNodeIndex(depKey.getIndex()), getNodeIndex(govKey.getIndex()))
+                .getLabelledEdge(mentions, govKey, depKey);
     }
 
     public int numNodes() {
@@ -333,7 +338,7 @@ public class MentionGraph implements Serializable {
         MentionSubGraph latentTree = new MentionSubGraph(this, limit);
 
         for (int curr = 1; curr < limit; curr++) {
-            Pair<LabelledMentionGraphEdge, MentionGraphEdge.EdgeType> bestEdge = null;
+            Pair<LabelledMentionGraphEdge, EdgeType> bestEdge = null;
             double bestScore = Double.NEGATIVE_INFINITY;
 
             int currMentionIndex = getCandidateIndex(curr);
@@ -360,7 +365,7 @@ public class MentionGraph implements Serializable {
                         );
 
                         if (goldEdge != null) {// TODO check null maybe redundant
-                            Pair<MentionGraphEdge.EdgeType, Double> correctLabelScore = goldEdge.getCorrectLabelScore
+                            Pair<EdgeType, Double> correctLabelScore = goldEdge.getCorrectLabelScore
                                     (weights);
 //                    System.out.println("Correct label score is  " + correctLabelScore);
 
@@ -369,7 +374,7 @@ public class MentionGraph implements Serializable {
                                 continue;
                             }
 
-                            MentionGraphEdge.EdgeType label = correctLabelScore.getLeft();
+                            EdgeType label = correctLabelScore.getLeft();
 
                             double score = correctLabelScore.getRight();
 

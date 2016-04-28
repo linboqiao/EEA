@@ -3,7 +3,6 @@ package edu.cmu.cs.lti.learning.model.graph;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.NodeKey;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +48,7 @@ public class LabelledMentionGraphEdge implements Serializable {
         return featureVector;
     }
 
-    public double scoreEdge(MentionGraphEdge.EdgeType type, GraphWeightVector weightVector) {
+    public double scoreEdge(EdgeType type, GraphWeightVector weightVector) {
         return averageMode ? weightVector.dotProdAver(featureVector, type.name()) :
                 weightVector.dotProd(featureVector, type.name());
     }
@@ -61,7 +60,7 @@ public class LabelledMentionGraphEdge implements Serializable {
         return Pair.of(actualEdgeType, scoreEdge(actualEdgeType, weightVector));
     }
 
-    public Pair<MentionGraphEdge.EdgeType, Double> getBestLabelScore(GraphWeightVector weightVector) {
+    public Pair<EdgeType, Double> getBestLabelScore(GraphWeightVector weightVector) {
         double score = Double.NEGATIVE_INFINITY;
         EdgeType bestLabel = null;
 

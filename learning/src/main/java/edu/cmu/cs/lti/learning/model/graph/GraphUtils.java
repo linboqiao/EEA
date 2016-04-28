@@ -3,7 +3,6 @@ package edu.cmu.cs.lti.learning.model.graph;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge.EdgeType;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

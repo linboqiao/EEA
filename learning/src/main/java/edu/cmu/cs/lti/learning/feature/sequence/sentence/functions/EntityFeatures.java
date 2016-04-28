@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
+import edu.cmu.cs.lti.learning.model.MultiNodeKey;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.StanfordEntityMention;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -12,7 +13,6 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -72,7 +72,7 @@ public class EntityFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToke
 
     @Override
     public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
-            globalFeatures, Map<Integer, String> knownStates) {
+            globalFeatures, List<MultiNodeKey> knownStates) {
 
     }
 

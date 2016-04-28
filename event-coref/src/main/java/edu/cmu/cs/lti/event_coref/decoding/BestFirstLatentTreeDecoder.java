@@ -5,10 +5,7 @@ import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.MultiNodeKey;
 import edu.cmu.cs.lti.learning.model.NodeKey;
-import edu.cmu.cs.lti.learning.model.graph.LabelledMentionGraphEdge;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge;
-import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
+import edu.cmu.cs.lti.learning.model.graph.*;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -34,7 +31,7 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
         MentionSubGraph bestFirstTree = new MentionSubGraph(mentionGraph);
 
         for (int curr = 1; curr < mentionGraph.numNodes(); curr++) {
-            Pair<LabelledMentionGraphEdge, MentionGraphEdge.EdgeType> bestEdge = null;
+            Pair<LabelledMentionGraphEdge, EdgeType> bestEdge = null;
             double bestScore = Double.NEGATIVE_INFINITY;
 
             int currentMentionId = mentionGraph.getCandidateIndex(curr);
@@ -50,9 +47,9 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
                 LabelledMentionGraphEdge mentionGraphEdge = mentionGraph.getMentionGraphEdge(curr, ant)
                         .getLabelledEdge(mentionCandidates, antKey, currentKey);
 
-                Pair<MentionGraphEdge.EdgeType, Double> bestLabelScore = mentionGraphEdge.getBestLabelScore(weights);
+                Pair<EdgeType, Double> bestLabelScore = mentionGraphEdge.getBestLabelScore(weights);
                 double score = bestLabelScore.getRight();
-                MentionGraphEdge.EdgeType edgeType = bestLabelScore.getLeft();
+                EdgeType edgeType = bestLabelScore.getLeft();
 
                 // We have a special root node at the begin, so we minus one to get the original sequence index.
                 double lagrangianPenalty = 0;

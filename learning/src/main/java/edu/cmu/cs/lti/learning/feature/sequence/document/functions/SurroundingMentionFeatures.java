@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.learning.feature.sequence.document.functions;
 
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
+import edu.cmu.cs.lti.learning.model.MultiNodeKey;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -10,7 +11,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.jcas.JCas;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -58,7 +58,8 @@ public class SurroundingMentionFeatures extends SequenceFeatureWithFocus<EventMe
     }
 
     @Override
-    public void extractGlobal(List<EventMention> sequence, int focus, TObjectDoubleMap<String> globalFeatures, Map<Integer, String> knownStates) {
+    public void extractGlobal(List<EventMention> sequence, int focus, TObjectDoubleMap<String> globalFeatures, List
+            <MultiNodeKey> knownStates) {
 
     }
 }
