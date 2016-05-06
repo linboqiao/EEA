@@ -43,7 +43,6 @@ import static edu.cmu.cs.lti.learning.model.ModelConstants.TYPE_MODEL_NAME;
 public class BeamCrfLatentTreeDecoder {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    //    private final MentionGraph mentionGraph;
     private final GraphWeightVector corefWeights;
     private final FeatureAlphabet mentionFeatureAlphabet;
     private final ClassAlphabet mentionTypeClassAlphabet;
@@ -213,13 +212,10 @@ public class BeamCrfLatentTreeDecoder {
                     for (NodeLinkingState nodeLinkingState : decodingAgenda.getBeamStates()) {
                         // The previous type class is defined on sentence base, so we will ad a special sentence
                         // boundary class before each one.
-                        int prevClassIndex;
-                        if (sentTokenIndex == 0) {
-                            prevClassIndex = mentionTypeClassAlphabet.getOutsideClassIndex();
-                        } else {
-                            prevClassIndex = mentionTypeClassAlphabet.getClassIndex(
-                                    nodeLinkingState.getCombinedLastNodeType());
-                        }
+                        int prevClassIndex = sentTokenIndex == 0 ?
+                                mentionTypeClassAlphabet.getOutsideClassIndex() :
+                                mentionTypeClassAlphabet.getClassIndex(nodeLinkingState.getCombinedLastNodeType());
+
 //                        logger.info(String.format("Decoding class %d for system.", classIndex));
 //                        logger.info(nodeLinkingState.showNodes());
 
@@ -273,25 +269,7 @@ public class BeamCrfLatentTreeDecoder {
 
                 curr.increment();
             } // Finish iterate tokens in a sentence.
-
-//            if (isTraining) {
-////                logger.debug("Applying updates to " + DelayedLaSOJointTrainer.TYPE_MODEL_NAME);
-//                updater.update(DelayedLaSOJointTrainer.TYPE_MODEL_NAME);
-//            }
-
-//            decodingAgenda.showActualSequence();
-//            goldAgenda.showActualSequence();
-//            DebugUtils.pause(logger);
-
         }// Finish iterate sentences.
-
-//        logger.debug("Pruned nodes " + prunedNodes.size());
-
-//        logger.debug("Checking gold nodes.");
-//        logger.debug(goldAgenda.getBeamStates().peek().showNodes());
-//        logger.debug("Checking system nodes.");
-//        logger.debug(decodingAgenda.getBeamStates().peek().showNodes());
-//        DebugUtils.pause(logger);
 
         if (isTraining) {
             logger.debug("Check for final updates");
@@ -301,7 +279,7 @@ public class BeamCrfLatentTreeDecoder {
 
             // Update based on cumulative errors.
             logger.debug("Applying updates to " + TYPE_MODEL_NAME);
-            TObjectDoubleMap<String> losses = updater.update(true);
+            TObjectDoubleMap<String> losses = updater.update();
             typeTrainingStats.addLoss(logger, losses.get(TYPE_MODEL_NAME) / mentionGraph.numNodes());
             logger.debug("Applying updates to " + COREF_MODEL_NAME);
             corefTrainingStats.addLoss(logger, losses.get(COREF_MODEL_NAME) / mentionGraph.numNodes());

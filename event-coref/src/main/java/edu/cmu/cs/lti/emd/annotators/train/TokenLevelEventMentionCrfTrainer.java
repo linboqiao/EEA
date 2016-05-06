@@ -104,7 +104,7 @@ public class TokenLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
         }
 
         trainer = new AveragePerceptronTrainer(decoder, classAlphabet, featureAlphabet,
-                FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec), usePaUpdate);
+                FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec), usePaUpdate, lossType);
 
         logger.info("Training with the following specification: ");
         logger.info("[Sentence Spec]" + sentFeatureSpec);
@@ -146,19 +146,6 @@ public class TokenLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
                 }
             }
 
-//            StringBuilder sb = new StringBuilder();
-//            int tokenId = 0;
-//            for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence)) {
-//                sb.append(tokenId++).append(": ").append(token.getCoveredText()).append(" ");
-//            }
-//
-//            logger.debug(sb.toString());
-
-            if (mentions.size() == 0) {
-                // TODO what if we also train empty type sentences?
-                continue;
-            }
-
             SequenceSolution goldSolution;
             GraphFeatureVector goldFv;
 
@@ -181,8 +168,9 @@ public class TokenLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
             }
 
             double loss = trainer.trainNext(goldSolution, goldFv, featureExtractor, dummyLagrangian, dummyLagrangian,
-                    sentenceFeatures, lossType);
+                    sentenceFeatures);
 
+//            logger.info("Loss is " + loss);
 
             trainingStats.addLoss(logger, loss);
             sentenceId++;

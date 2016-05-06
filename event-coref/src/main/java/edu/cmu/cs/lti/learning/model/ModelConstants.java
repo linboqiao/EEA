@@ -8,8 +8,8 @@ package edu.cmu.cs.lti.learning.model;
  * @author Zhengzhong Liu
  */
 public class ModelConstants {
-    public static final String TYPE_MODEL_NAME = "CRF";
+    public static final String TYPE_MODEL_NAME = "Mention_CRF";
 
-    public static final String COREF_MODEL_NAME = "COREF";
+    public static final String COREF_MODEL_NAME = "Coref_Latent_Tree";
 
 }

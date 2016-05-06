@@ -24,7 +24,6 @@
         <module>cross-document-script</module>
         <module>sequence-modeling</module>
         <module>script-core</module>
-        <module>event-mention-detection</module>
         <module>script-preprocessor</module>
         <module>argument-modeling</module>
         <module>chain-script</module>

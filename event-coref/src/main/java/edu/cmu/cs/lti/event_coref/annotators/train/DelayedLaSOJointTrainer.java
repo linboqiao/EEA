@@ -84,7 +84,7 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
         logger.info("Preparing the Delayed LaSO Trainer...");
         super.initialize(context);
 
-        updater = new DiscriminativeUpdater(true, true, mentionLossType);
+        updater = new DiscriminativeUpdater(true, true, true, mentionLossType);
 
         // Doing warm start.
         if (warmStart) {

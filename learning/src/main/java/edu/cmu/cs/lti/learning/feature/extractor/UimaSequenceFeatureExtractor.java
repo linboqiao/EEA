@@ -144,15 +144,12 @@ public abstract class UimaSequenceFeatureExtractor<T extends Annotation> extends
         }
 
         if (useStateFeatures) {
-            logger.debug("Using state features.");
-
             rawEdgeFeatures.cellSet().forEach(edgeFeature -> {
                 Pair<Integer, Integer> edge = edgeFeature.getRowKey();
                 String featureName = edgeFeature.getColumnKey();
                 double value = edgeFeature.getValue();
 
-                FeatureVector fv =
-                        edgeFeatures.contains(edge.getLeft(), edge.getRight()) ?
+                FeatureVector fv = edgeFeatures.contains(edge.getLeft(), edge.getRight()) ?
                                 edgeFeatures.get(edge.getLeft(), edge.getRight()) : nodeFeatures.newFeatureVector();
                 fv.addFeature(featureName, value);
             });

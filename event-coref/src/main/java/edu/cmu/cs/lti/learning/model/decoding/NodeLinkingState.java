@@ -65,7 +65,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     }
 
     public String toString() {
-        return "[Node Linking State]\n" +
+        return "[Node Linking State] " + Integer.toHexString(hashCode()) + "\n" +
                 "Score: " + score +
                 "\n<Nodes>\n" +
                 showNodes() +
@@ -86,8 +86,9 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         StringBuilder nodes = new StringBuilder();
         nodes.append("[State Nodes] ");
         for (int i = 0; i < nodeResults.size(); i++) {
+            nodes.append(i).append(":");
             for (NodeKey nodeResult : nodeResults.get(i)) {
-                nodes.append(i).append(":").append(nodeResult.getMentionType()).append(" ");
+                nodes.append(" ").append(nodeResult.getMentionType());
             }
             nodes.append(";");
         }
@@ -114,13 +115,17 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         return nodeResults;
     }
 
+    public List<MultiNodeKey> getActualNodeResults() {
+        return nodeResults.subList(1, nodeResults.size());
+    }
+
+
     public void extendFeatures(GraphFeatureVector newLabelFv, List<Pair<EdgeType, FeatureVector>> newCorefFvs) {
         if (this.labelFv == null) {
             this.labelFv = newLabelFv.newGraphFeatureVector();
         }
 
         this.labelFv.extend(newLabelFv);
-
 
         for (Pair<EdgeType, FeatureVector> newCorefFv : newCorefFvs) {
             EdgeType fvType = newCorefFv.getLeft();

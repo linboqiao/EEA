@@ -69,14 +69,6 @@ public class StateDelta implements Comparable<StateDelta> {
     public NodeLinkingState applyUpdate(List<MentionCandidate> candidates) {
         NodeLinkingState state = existingState.makeCopy();
 
-//        logger.info("Before applying : " + state.showNodes());
-
-//        for (int i = 0; i < nodes.size(); i++) {
-//            Integer antecedent = antecedents.get(i);
-//            EdgeType linkType = linkTypes.get(i);
-//            state.addLinkTo(candidates, antecedent, govKeys.get(i), nodes.get(i), linkType);
-//        }
-
         for (EdgeKey edge : edges) {
             state.addLink(candidates, edge);
         }
@@ -86,9 +78,6 @@ public class StateDelta implements Comparable<StateDelta> {
         state.setScore(newScore);
 
         state.extendFeatures(deltaLabelFv, deltaGraphFv);
-
-//        logger.info("After applying : " + state.showNodes());
-//        DebugUtils.pause();
 
         return state;
     }

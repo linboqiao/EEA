@@ -68,7 +68,7 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
         logger.info(String.format("Beam Trainer using PA update : %s, Delayed LaSO : %s, Loss Type : %s",
                 usePaUpdate, delayedLaso, lossType));
 
-        updater = new DiscriminativeUpdater(true, false, lossType);
+        updater = new DiscriminativeUpdater(true, false, usePaUpdate, lossType);
         updater.addWeightVector(ModelConstants.TYPE_MODEL_NAME, prepareCrfWeights());
 
         try {
@@ -79,7 +79,7 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
         }
 
         decoder = new BeamCrfDecoder(updater.getWeightVector(ModelConstants.TYPE_MODEL_NAME), sentExtractor, updater,
-                usePaUpdate, delayedLaso);
+                delayedLaso);
     }
 
     private SentenceFeatureExtractor initializeCrfExtractor(Configuration config) throws ClassNotFoundException,
@@ -131,6 +131,7 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+//        UimaConvenience.printProcessLog(aJCas, logger);
         List<StanfordCorenlpToken> allTokens = new ArrayList<>(JCasUtil.select(aJCas, StanfordCorenlpToken.class));
         List<MentionCandidate> systemCandidates = MentionUtils.createCandidatesFromTokens(aJCas, allTokens);
         List<MentionCandidate> goldCandidates = MentionUtils.createCandidatesFromTokens(aJCas, allTokens);

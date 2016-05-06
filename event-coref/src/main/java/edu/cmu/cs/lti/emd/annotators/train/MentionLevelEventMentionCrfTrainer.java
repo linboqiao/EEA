@@ -21,6 +21,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.DocumentAnnotation;
@@ -39,8 +40,13 @@ import java.util.Collection;
 public class MentionLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
     public static final String MODEL_NAME = "mentionSequenceModel";
 
-    private static MultiKeyDiskCacher<TIntObjectHashMap<Pair<FeatureVector, HashBasedTable<Integer, Integer, FeatureVector>>>> featureCacher;
+    public static final String PARAM_LOSS_TYPE = "lossType";
 
+    @ConfigurationParameter(name = PARAM_LOSS_TYPE)
+    private String lossType;
+
+    private static MultiKeyDiskCacher<TIntObjectHashMap<Pair<FeatureVector, HashBasedTable<Integer, Integer,
+            FeatureVector>>>> featureCacher;
 
     private static MultiKeyDiskCacher<Pair<GraphFeatureVector, SequenceSolution>> goldCacher;
 
@@ -83,7 +89,7 @@ public class MentionLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
         }
 
         trainer = new AveragePerceptronTrainer(decoder, classAlphabet, featureAlphabet,
-                FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec), false);
+                FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec), false, lossType);
 
         logger.info("Training with the following specification: ");
         logger.info("[Sentence Spec]" + sentFeatureSpec);
@@ -134,7 +140,7 @@ public class MentionLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
         }
 
         double loss = trainer.trainNext(goldSolution, goldFv, featureExtractor, dummayLagrangian, dummayLagrangian,
-                sequenceFeatures, "hamming");
+                sequenceFeatures);
         trainingStats.addLoss(logger, loss);
 
         if (newSequenceFeatures) {

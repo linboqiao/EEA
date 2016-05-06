@@ -152,7 +152,7 @@ public class PlainTextProcessor {
         // Run coreference.
         CollectionReaderDescription corefSentMentions = corefResolution(taskConfig,
                 lv1MentionRealisResults, corefModelDir, outputDir,
-                FileUtils.joinPaths(middleResults, "coref_lv1_mention"), true, skipCorefTest);
+                FileUtils.joinPaths(middleResults, "coref_lv1_mention"), skipCorefTest);
 
         // Output final result.
         String evalDir = FileUtils.joinPaths(outputDir, evalBase, "full_run");
@@ -194,7 +194,7 @@ public class PlainTextProcessor {
 
     public CollectionReaderDescription corefResolution(Configuration config, CollectionReaderDescription reader,
                                                        String modelDir, String mainDir, String outputBase,
-                                                       boolean useAverage, boolean skipCorefTest)
+                                                       boolean skipCorefTest)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
         logger.info("Running coreference resolution, output at " + outputBase);
         if (skipCorefTest && new File(mainDir, outputBase).exists()) {
@@ -212,8 +212,7 @@ public class PlainTextProcessor {
                     AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
                             EventCorefAnnotator.class, typeSystemDescription,
                             EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            EventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
-                            EventCorefAnnotator.PARAM_USE_AVERAGE, useAverage
+                            EventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile()
                     );
 
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();

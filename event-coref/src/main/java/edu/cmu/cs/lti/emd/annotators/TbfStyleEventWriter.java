@@ -20,19 +20,21 @@ import java.util.*;
  */
 public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine {
     public static final String PARAM_SYSTEM_ID = "systemId";
-
-    public static final String PARAM_GOLD_TOKEN_COMPONENT_ID = "goldTokenComponentId";
-
-    public static final String PARAM_USE_CHARACTER_OFFSET = "useCharacterOffsets";
-
     @ConfigurationParameter(name = PARAM_SYSTEM_ID)
     private String systemId;
 
+    public static final String PARAM_GOLD_TOKEN_COMPONENT_ID = "goldTokenComponentId";
     @ConfigurationParameter(name = PARAM_GOLD_TOKEN_COMPONENT_ID)
     public String goldComponentId;
 
+    public static final String PARAM_USE_CHARACTER_OFFSET = "useCharacterOffsets";
     @ConfigurationParameter(name = PARAM_USE_CHARACTER_OFFSET, defaultValue = "false")
     private boolean useCharacter;
+
+    public static final String PARAM_ADD_SEMANTIC_ROLE = "addSemanticRole";
+    @ConfigurationParameter(name = PARAM_ADD_SEMANTIC_ROLE, defaultValue = "false")
+    private boolean addSemanticRole;
+
 
     @Override
     public String getTextToPrint(JCas aJCas) {
@@ -99,29 +101,10 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         return sb.toString();
     }
 
-    private void asTokens() {
+    private String formatArguments(Word headWord){
+        List<String> argumentComponents = new ArrayList<>();
 
-    }
-
-    private void asCharacters() {
-
-    }
-
-    private List<Word> mapToGoldWordsTest(ComponentAnnotation candidate, TokenAlignmentHelper align) {
-
-        List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, candidate);
-
-        List<Word> tokenBasedMapping = new ArrayList<>();
-
-        for (StanfordCorenlpToken token : tokens) {
-            Word word = align.getWord(token);
-            if (word == null) {
-//                System.err.println(token.getCoveredText() + " cannot map");
-            } else {
-                tokenBasedMapping.add(word);
-            }
-        }
-        return tokenBasedMapping;
+        return Joiner.on("\t").join(argumentComponents);
     }
 
     /**

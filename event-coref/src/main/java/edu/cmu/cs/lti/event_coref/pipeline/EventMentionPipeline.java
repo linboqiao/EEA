@@ -352,7 +352,7 @@ public class EventMentionPipeline {
         MutableInt trainingSeed = new MutableInt(initialSeed);
 
         if (usePaTraing) {
-            logger.info("Use passive aggressive with loss : " + lossType);
+            logger.info("Use PA with loss : " + lossType);
         }
 
         // Only skip training when model directory exists.
@@ -360,8 +360,8 @@ public class EventMentionPipeline {
             logger.info("Skipping mention type training, taking existing models.");
         } else {
             logger.info("Model file " + modelPath + " not exists, start training.");
-            File cacheDir = new File(FileUtils.joinPaths(trainingWorkingDir, config.get("edu.cmu.cs.lti.mention.cache" +
-                    ".base")));
+            File cacheDir = new File(FileUtils.joinPaths(trainingWorkingDir,
+                    config.get("edu.cmu.cs.lti.mention.cache.base")));
 
             AnalysisEngineDescription trainingEngine = AnalysisEngineFactory.createEngineDescription(
                     TokenLevelEventMentionCrfTrainer.class, typeSystemDescription,
@@ -442,6 +442,11 @@ public class EventMentionPipeline {
                 suffix);
 
         File modelFile = new File(modelPath);
+
+        if (usePaTraing) {
+            logger.info(String.format("Will use PA with loss %s, delayed = %s.", lossType, delayedLaso));
+        }
+
 
         if (skipTrain && modelFile.exists()) {
             logger.info("Skip Beam based type training.");
@@ -987,10 +992,47 @@ public class EventMentionPipeline {
         }).run();
     }
 
+    public void runVanilla(Configuration taskConfig) throws Exception {
+        boolean skipCorefTrain = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
+        boolean skipTypeTrain = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
+        boolean skipRealisTrain =  taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
+
+        boolean skipTypeTest = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
+        boolean skipRealisTest =  taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
+        boolean skipCorefTest = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
+
+        int seed = taskConfig.getInt("edu.cmu.cs.lti.random.seed", 17);
+
+        CollectionReaderDescription trainReader = CustomCollectionReaderFactory.createXmiReader(
+                typeSystemDescription, trainingWorkingDir, preprocessBase);
+
+        CollectionReaderDescription testReader = CustomCollectionReaderFactory.createXmiReader(
+                typeSystemDescription, testingWorkingDir, preprocessBase);
+
+        String evalDir = FileUtils.joinPaths(testingWorkingDir, evalBase, "full_run");
+
+        CollectionReaderDescription trainingData = prepareTraining(trainReader,
+                trainingWorkingDir, FileUtils.joinPaths(middleResults, fullRunSuffix, "prepared_training"), false,
+                seed);
+
+        // Train realis model.
+        String realisModelDir = trainRealisTypes(taskConfig, trainingData, fullRunSuffix, skipRealisTrain);
+
+        String vanillaSentCrfModel = trainSentLvType(taskConfig, trainingData, fullRunSuffix, skipTypeTrain, false,
+                "hamming", seed);
+
+        // Train coref model.
+        String treeCorefModel = trainLatentTreeCoref(taskConfig, trainingData, fullRunSuffix, skipCorefTrain, seed,
+                taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree"));
+
+        // Run the vanilla model.
+        runSeparateModels(taskConfig, testReader, vanillaSentCrfModel, realisModelDir, treeCorefModel, fullRunSuffix,
+                "vanillaMention", evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
+    }
+
     public void trainTest(Configuration taskConfig, boolean runAll) throws Exception {
         int seed = taskConfig.getInt("edu.cmu.cs.lti.random.seed", 17);
 
-        logger.info("Staring training a full model on all data in " + preprocessBase);
         CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createXmiReader(
                 typeSystemDescription, trainingWorkingDir, preprocessBase);
 
@@ -1012,7 +1054,7 @@ public class EventMentionPipeline {
         int numSplit = taskConfig.getInt("edu.cmu.cs.lti.cv.split", 5);
         int seed = taskConfig.getInt("edu.cmu.cs.lti.random.seed", 17);
 
-        String crossEvalDir = FileUtils.joinPaths(trainingWorkingDir, evalBase, "tree_coref");
+        String crossEvalDir = FileUtils.joinPaths(trainingWorkingDir, evalBase, "coref_cv");
         edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(crossEvalDir);
 
         logger.info(String.format("Will conduct %d fold cross validation.", numSplit));
@@ -1035,6 +1077,8 @@ public class EventMentionPipeline {
                                    String sliceSuffix, String runName, String evalDir,
                                    boolean skipType, boolean skipRealis, boolean skipCoref)
             throws SAXException, UIMAException, CpeDescriptorException, IOException {
+        logger.info(String.format("Type model is %s, Realis Model is %s, Coref Model is %s.", typeModel, realisModel, typeModel));
+
         String annotatedOutput = FileUtils.joinPaths(middleResults, sliceSuffix, runName);
 
         CollectionReaderDescription mentionOutput = sentenceLevelMentionTagging(taskConfig, reader, typeModel,
@@ -1055,6 +1099,8 @@ public class EventMentionPipeline {
                                String sliceSuffix, String runName, String evalDir,
                                boolean skipType, boolean skipRealis, boolean skipCoref) throws SAXException,
             UIMAException, CpeDescriptorException, IOException {
+        logger.info(String.format("Type model is %s, Realis Model is %s, Coref Model is %s.", typeModel, realisModel, typeModel));
+
         String annotatedOutput = FileUtils.joinPaths(middleResults, sliceSuffix, runName);
 
         CollectionReaderDescription mentionOutput = beamMentionTagging(taskConfig, reader, typeModel,
@@ -1095,23 +1141,24 @@ public class EventMentionPipeline {
 
         String[] paSentMentionModels = new String[lossTypes.length];
         String[] paBeamMentionModels = new String[lossTypes.length];
-        String[] delayedPaBeamMentionModels = new String[lossTypes.length];
+//        String[] delayedPaBeamMentionModels = new String[lossTypes.length];
 
         for (int i = 0; i < lossTypes.length; i++) {
             String lossType = lossTypes[i];
             paBeamMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData, sliceSuffix + "_" + lossType,
                     skipTypeTrain, true, lossType, false, seed);
-            delayedPaBeamMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
-                    sliceSuffix + "_delayed_" + lossType, skipTypeTrain, true, lossType, true, seed);
             paSentMentionModels[i] = trainSentLvType(taskConfig, trainingData, sliceSuffix + "_" + lossType,
                     skipTypeTrain, true, lossType, seed);
+//            delayedPaBeamMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
+//                    sliceSuffix + "_delayed_" + lossType, skipTypeTrain, true, lossType, true, seed);
         }
 
+        // A beam search model that do not use PA loss.
         String vanillaBeamMentionModel = trainBeamTypeModel(taskConfig, trainingData, sliceSuffix, skipTypeTrain,
-                true, null, false, seed);
+                false, "hamming", false, seed);
 
         String vanillaSentCrfModel = trainSentLvType(taskConfig, trainingData, sliceSuffix, skipTypeTrain, false,
-                "f1", seed);
+                "hamming", seed);
 
 //        // Train Beam search joint model.
 //        String regularBeamJointModel = trainJointSpanModel(taskConfig, trainingData, false,
@@ -1126,7 +1173,7 @@ public class EventMentionPipeline {
         runSeparateModels(taskConfig, testReader, vanillaSentCrfModel, realisModelDir, treeCorefModel, sliceSuffix,
                 "vanillaMention", evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
 
-        runSeparateModels(taskConfig, testReader, vanillaBeamMentionModel, realisModelDir, treeCorefModel, sliceSuffix,
+        runBeamModels(taskConfig, testReader, vanillaBeamMentionModel, realisModelDir, treeCorefModel, sliceSuffix,
                 "vanillaBeamMention", evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
 
         // Run the sent models.
@@ -1138,9 +1185,9 @@ public class EventMentionPipeline {
             String beamModel = paBeamMentionModels[i];
             runBeamModels(taskConfig, testReader, beamModel, realisModelDir, treeCorefModel, sliceSuffix,
                     "beamMention_" + lossType, evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
-            String delayedBeamModel = delayedPaBeamMentionModels[i];
-            runBeamModels(taskConfig, testReader, delayedBeamModel, realisModelDir, treeCorefModel, sliceSuffix,
-                    "delayedBeamMention_" + lossType, evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
+//            String delayedBeamModel = delayedPaBeamMentionModels[i];
+//            runBeamModels(taskConfig, testReader, delayedBeamModel, realisModelDir, treeCorefModel, sliceSuffix,
+//                    "delayedBeamMention_" + lossType, evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
         }
 
         // Gold mention types.

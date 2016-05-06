@@ -20,8 +20,8 @@ import java.util.List;
  *
  * @author Zhengzhong Liu
  */
-public class TypeHistoryFeatures extends SequenceFeatureWithFocus<EventMention> {
-    public TypeHistoryFeatures(Configuration generalConfig, Configuration featureConfig) {
+public class EventPairFeatures extends SequenceFeatureWithFocus<EventMention> {
+    public EventPairFeatures(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
     }
 
@@ -44,10 +44,12 @@ public class TypeHistoryFeatures extends SequenceFeatureWithFocus<EventMention> 
     @Override
     public void extractGlobal(List<EventMention> sequence, int focus, TObjectDoubleMap<String> globalFeatures,
                               List<MultiNodeKey> knownStates) {
+        //TODO extract this feature carefully, do not include all pairs.
         for (int i = 0; i < focus; i++) {
             MultiNodeKey historyType = knownStates.get(i);
             for (NodeKey s : historyType.getKeys()) {
-                addToFeatures(globalFeatures, FeatureUtils.formatFeatureName("history_type", s.getMentionType()), 1);
+                String type = s.getMentionType();
+                addToFeatures(globalFeatures, FeatureUtils.formatFeatureName("TypeHistory", type), 1);
             }
         }
     }

@@ -132,7 +132,7 @@ public class BeamTypeAnnotator extends AbstractLoggingAnnotator {
 
         NodeLinkingState decodeResult = decoder.decode(aJCas, systemCandidates, new ArrayList<>(), true);
 
-        for (MultiNodeKey nodeKey : decodeResult.getNodeResults()) {
+        for (MultiNodeKey nodeKey : decodeResult.getActualNodeResults()) {
             if (!nodeKey.getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass)) {
                 for (NodeKey key : nodeKey.getKeys()) {
                     EventMention mention = new EventMention(aJCas);

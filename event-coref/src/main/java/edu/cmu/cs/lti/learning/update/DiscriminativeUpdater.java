@@ -42,12 +42,14 @@ public class DiscriminativeUpdater {
 
     private SeqLoss labelLosser;
 
+    private boolean usePa;
+
     private String[] modelNames = new String[]{TYPE_MODEL_NAME, COREF_MODEL_NAME};
 
     private boolean updateMention;
     private boolean updateCoref;
 
-    public DiscriminativeUpdater(boolean updateMention, boolean updateCoref, String lossType) {
+    public DiscriminativeUpdater(boolean updateMention, boolean updateCoref, boolean usePaUpdate, String lossType) {
         allWeights = new HashMap<>();
         allDelta = new HashMap<>();
         allLoss = new TObjectDoubleHashMap<>();
@@ -59,6 +61,8 @@ public class DiscriminativeUpdater {
         if (!(updateMention || updateCoref)) {
             throw new IllegalArgumentException("Cannot use a updater without updating anything.");
         }
+
+        usePa = usePaUpdate;
 
         this.updateMention = updateMention;
         this.updateCoref = updateCoref;
@@ -79,17 +83,18 @@ public class DiscriminativeUpdater {
 
     public void recordLaSOUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
         if (!decodingAgenda.contains(goldAgenda)) {
-            logger.debug("Recording differences for LaSO update.");
+//            logger.debug("Recording differences for LaSO update.");
             recordUpdate(decodingAgenda, goldAgenda);
 
             NodeLinkingState bestDecoding = decodingAgenda.getBeamStates().get(0);
             NodeLinkingState bestGold = goldAgenda.getBeamStates().get(0);
 
-
             Pair<Double, Double> losses = bestDecoding.loss(bestGold, labelLosser);
 
             addLoss(TYPE_MODEL_NAME, losses.getLeft());
             addLoss(COREF_MODEL_NAME, losses.getRight());
+
+//            logger.debug("Label loss is " + losses.getLeft());
 
             // Copy the gold agenda to decoding agenda (LaSO)
             decodingAgenda.copyFrom(goldAgenda);
@@ -102,17 +107,17 @@ public class DiscriminativeUpdater {
 
     public void recordFinalUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
         if (!decodingAgenda.getBeamStates().get(0).match(goldAgenda.getBeamStates().get(0))) {
-            logger.debug("Recording final update difference between the top states.");
+//            logger.debug("Recording final update difference between the top states.");
             recordUpdate(decodingAgenda, goldAgenda);
         }
     }
 
     private void recordUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
-        logger.debug("Best decoding state is:");
-        logger.debug(decodingAgenda.getBeamStates().get(0).showTree());
-
-        logger.debug("Best gold state is:");
-        logger.debug(goldAgenda.getBeamStates().get(0).showTree());
+//        logger.debug("Best decoding state is:");
+//        logger.debug(decodingAgenda.getBeamStates().get(0).toString());
+//
+//        logger.debug("Best gold state is:");
+//        logger.debug(goldAgenda.getBeamStates().get(0).toString());
 
         // Compute delta on coreferecence.
         GraphFeatureVector deltaCorefVector = allDelta.get(COREF_MODEL_NAME);
@@ -122,24 +127,24 @@ public class DiscriminativeUpdater {
         for (Map.Entry<EdgeType, FeatureVector> goldFv : goldAgenda.getBestDeltaCorefVectors()
                 .entrySet()) {
             deltaCorefVector.extend(goldFv.getValue(), goldFv.getKey().name());
-            logger.debug("Gold feature edge type : " + goldFv.getKey());
-            logger.debug(goldFv.getValue().toString());
+//            logger.debug("Gold feature edge type : " + goldFv.getKey());
+//            logger.debug(goldFv.getValue().toString());
         }
         for (Map.Entry<EdgeType, FeatureVector> decoding : decodingAgenda.getBestDeltaCorefVectors()
                 .entrySet()) {
             deltaCorefVector.extend(decoding.getValue().negation(), decoding.getKey().name());
-            logger.debug("System feature edge type : " + decoding.getValue());
-            logger.debug(decoding.getValue().toString());
+//            logger.debug("System feature edge type : " + decoding.getValue());
+//            logger.debug(decoding.getValue().toString());
         }
 
         // Compute delta on labeling.
         GraphFeatureVector goldLabelFeature = goldAgenda.getBestDeltaLabelFv();
         GraphFeatureVector decodingLabelFeature = decodingAgenda.getBestDeltaLabelFv();
 
-//        logger.info("Showing mention features from  gold");
-//        logger.info(goldLabelFeature.readableNodeVector());
-//        logger.info("Showing mention features from  decoding");
-//        logger.info(decodingLabelFeature.readableNodeVector());
+//        logger.debug("Showing mention features from  gold");
+//        logger.debug(goldLabelFeature.readableNodeVector());
+//        logger.debug("Showing mention features from  decoding");
+//        logger.debug(decodingLabelFeature.readableNodeVector());
 
         GraphFeatureVector deltaMentionVector = allDelta.get(TYPE_MODEL_NAME);
         deltaMentionVector.extend(goldLabelFeature);
@@ -148,7 +153,6 @@ public class DiscriminativeUpdater {
 //        logger.debug("Record the delta");
 //        logger.debug("Current delta:");
 //        logger.debug(deltaMentionVector.readableNodeVector());
-//        DebugUtils.pause(logger);
     }
 
     private void addLoss(String name, double loss) {
@@ -156,9 +160,9 @@ public class DiscriminativeUpdater {
 //        logger.debug("Loss for " + name + " is " + loss);
     }
 
-    public TObjectDoubleMap<String> update(boolean paUpdate) {
+    public TObjectDoubleMap<String> update() {
         // Update and then clear accumulated stuff.
-        updateInternal(paUpdate);
+        updateInternal(usePa);
 
         // Logging the loss.
         TObjectDoubleMap<String> currentLoss = new TObjectDoubleHashMap<>();
@@ -172,7 +176,6 @@ public class DiscriminativeUpdater {
     }
 
     private void updateInternal(boolean paUpdate) {
-//        logger.info("PA Updating " + name);
         GraphFeatureVector corefDelta = allDelta.get(COREF_MODEL_NAME);
         GraphFeatureVector mentionDelta = allDelta.get(TYPE_MODEL_NAME);
         double corefLoss = allLoss.get(COREF_MODEL_NAME);
@@ -189,6 +192,8 @@ public class DiscriminativeUpdater {
                 double l2 = Math.sqrt(Math.pow(corefL2, 2) + Math.pow(mentionL2, 2));
                 tau = totalLoss / l2;
             }
+
+//            logger.debug("Update with loss " + tau);
 
             if (updateCoref) {
                 GraphWeightVector corefWeights = allWeights.get(COREF_MODEL_NAME);

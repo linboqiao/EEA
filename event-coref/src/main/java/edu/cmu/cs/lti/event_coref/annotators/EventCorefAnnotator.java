@@ -56,10 +56,6 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
     File modelDirectory;
 
-    public static final String PARAM_USE_AVERAGE = "useAverage";
-    @ConfigurationParameter(name = PARAM_USE_AVERAGE)
-    boolean useAverage;
-
     private PairFeatureExtractor extractor;
     private LatentTreeDecoder decoder;
 
@@ -124,7 +120,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
         List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions, mention2Candidate);
 
         extractor.initWorkspace(aJCas);
-        MentionGraph mentionGraph = new MentionGraph(candidates, extractor, useAverage);
+        MentionGraph mentionGraph = new MentionGraph(candidates, extractor, true);
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, extractor, lagrangian,
                 lagrangian);
 

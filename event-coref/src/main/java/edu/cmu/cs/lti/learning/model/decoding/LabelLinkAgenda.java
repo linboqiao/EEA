@@ -96,7 +96,7 @@ public class LabelLinkAgenda {
      * Update the beam states, by converting the deltas to new states, and remove the old ones.
      */
     public void updateStates() {
-        logger.debug("Update states with " + stateDeltas.size() + " deltas.");
+//        logger.debug("Update states with " + stateDeltas.size() + " deltas.");
 
         while (!stateDeltas.isEmpty()) {
             StateDelta delta = stateDeltas.poll();
@@ -109,7 +109,7 @@ public class LabelLinkAgenda {
 
 
     public boolean contains(LabelLinkAgenda anotherAgenda) {
-        return beamStates.stream().anyMatch(s -> anotherAgenda.beamStates.stream().anyMatch(g -> s.match(g)));
+        return beamStates.stream().anyMatch(s -> anotherAgenda.beamStates.stream().anyMatch(s::match));
     }
 
     public void copyFrom(LabelLinkAgenda anotherAgenda) {

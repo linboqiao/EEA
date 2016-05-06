@@ -95,7 +95,7 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
 
         Map<Pair<Integer, String>, EventMention> node2Mention = new HashMap<>();
 
-        List<MultiNodeKey> nodeResults = decodedState.getNodeResults();
+        List<MultiNodeKey> nodeResults = decodedState.getActualNodeResults();
 
         for (int nodeIndex = 0; nodeIndex < nodeResults.size(); nodeIndex++) {
             MultiNodeKey nodeKey = nodeResults.get(nodeIndex);
