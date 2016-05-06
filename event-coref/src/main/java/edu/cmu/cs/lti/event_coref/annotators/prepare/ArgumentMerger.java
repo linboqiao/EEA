@@ -5,16 +5,27 @@ import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.model.SemaforConstants;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
+import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
+import edu.cmu.cs.lti.utils.Configuration;
+import org.apache.uima.UIMAException;
+import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
+import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.javatuples.Pair;
+import org.uimafit.factory.TypeSystemDescriptionFactory;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -177,6 +188,9 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
 
         for (FanseToken token : JCasUtil.select(aJCas, FanseToken.class)) {
             StanfordCorenlpToken predicateHead = helper.getStanfordToken(token);
+
+            logger.info("Head word is " + token.getCoveredText());
+
             if (predicateHead != null) {
                 Map<StanfordCorenlpToken, Pair<String, Span>> fanseFrame = new HashMap<>();
 
@@ -184,6 +198,8 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
                 if (semanticRelationsFS != null) {
                     for (FanseSemanticRelation childRelation : JCasUtil.select(semanticRelationsFS,
                             FanseSemanticRelation.class)) {
+
+                        logger.info("Relation is " + childRelation.getSemanticAnnotation());
 
                         Pair<StanfordCorenlpToken, Span> realSpan = findFanseSpan(childRelation);
 
@@ -206,6 +222,13 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
 
     private Pair<StanfordCorenlpToken, Span> findFanseSpan(FanseSemanticRelation childRelation) {
         FanseToken fanseChild = (FanseToken) childRelation.getChildHead();
+        if (fanseChild == null) {
+            // For backward compatibility.
+            fanseChild = (FanseToken) childRelation.getChild();
+        }
+
+        logger.info("Child is " + fanseChild);
+
 
         Set<String> lightPosSet = new HashSet<>();
         lightPosSet.add("IN");
@@ -239,5 +262,22 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
         }
 
         return realSpan;
+    }
+
+    public static void main(String argv[]) throws IOException, UIMAException {
+        Configuration commonConfig = new Configuration("settings/common.properties");
+        String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
+        TypeSystemDescription typeSystem = TypeSystemDescriptionFactory.createTypeSystemDescription(typeSystemName);
+
+        String workingDir = argv[0];
+        String inputDir = argv[1];
+        String outputDir = argv[2];
+
+        CollectionReaderDescription inputReader = CustomCollectionReaderFactory.createXmiReader(workingDir, inputDir);
+        AnalysisEngineDescription merger = AnalysisEngineFactory.createEngineDescription(ArgumentMerger.class,
+                typeSystem);
+        AnalysisEngineDescription outputWriter = CustomAnalysisEngineFactory.createXmiWriter(workingDir, outputDir);
+
+        SimplePipeline.runPipeline(inputReader, merger, outputWriter);
     }
 }
