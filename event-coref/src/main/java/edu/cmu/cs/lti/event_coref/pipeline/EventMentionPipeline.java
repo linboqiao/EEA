@@ -16,15 +16,13 @@ import edu.cmu.cs.lti.emd.annotators.train.BeamBasedMentionTypeTrainer;
 import edu.cmu.cs.lti.emd.annotators.train.MentionLevelEventMentionCrfTrainer;
 import edu.cmu.cs.lti.emd.annotators.train.TokenLevelEventMentionCrfTrainer;
 import edu.cmu.cs.lti.emd.pipeline.TrainingLooper;
-import edu.cmu.cs.lti.event_coref.annotators.DDEventTypeCorefAnnotator;
-import edu.cmu.cs.lti.event_coref.annotators.EventCorefAnnotator;
-import edu.cmu.cs.lti.event_coref.annotators.GoldStandardEventMentionAnnotator;
-import edu.cmu.cs.lti.event_coref.annotators.JointMentionCorefAnnotator;
+import edu.cmu.cs.lti.event_coref.annotators.*;
 import edu.cmu.cs.lti.event_coref.annotators.misc.DifferentTypeCorefCollector;
 import edu.cmu.cs.lti.event_coref.annotators.postprocessors.MentionTypeAncClusterSplitter;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.ArgumentMerger;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EnglishSrlArgumentExtractor;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EventHeadWordAnnotator;
+import edu.cmu.cs.lti.event_coref.annotators.train.BeamBasedCorefTrainer;
 import edu.cmu.cs.lti.event_coref.annotators.train.DelayedLaSOJointTrainer;
 import edu.cmu.cs.lti.event_coref.annotators.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.exceptions.ConfigurationException;
@@ -303,7 +301,7 @@ public class EventMentionPipeline {
     }
 
     private AnalysisEngineDescription getGoldAnnotator(boolean copyType, boolean copyRealis, boolean copyCluster,
-                                                       boolean mergetSameSpan)
+                                                       boolean mergeSameSpan)
             throws ResourceInitializationException {
         return AnalysisEngineFactory.createEngineDescription(
                 GoldStandardEventMentionAnnotator.class, typeSystemDescription,
@@ -312,7 +310,7 @@ public class EventMentionPipeline {
                 GoldStandardEventMentionAnnotator.PARAM_COPY_MENTION_TYPE, copyType,
                 GoldStandardEventMentionAnnotator.PARAM_COPY_REALIS, copyRealis,
                 GoldStandardEventMentionAnnotator.PARAM_COPY_CLUSTER, copyCluster,
-                GoldStandardEventMentionAnnotator.PARAM_MERGE_SAME_SPAN, mergetSameSpan
+                GoldStandardEventMentionAnnotator.PARAM_MERGE_SAME_SPAN, mergeSameSpan
         );
     }
 
@@ -391,7 +389,6 @@ public class EventMentionPipeline {
                 protected void saveModel(File modelOutputDir) throws IOException {
                     TokenLevelEventMentionCrfTrainer.saveModels(modelOutputDir, TokenLevelEventMentionCrfTrainer
                             .MODEL_NAME);
-
                 }
             };
             mentionTypeTrainer.runLoopPipeline();
@@ -548,10 +545,6 @@ public class EventMentionPipeline {
                 @Override
                 protected void loopActions() {
                     super.loopActions();
-                    trainingSeed.add(2);
-                    //TODO the seed update doesn't work for the moment.
-                    logger.debug("Update the training seed to " + trainingSeed.intValue());
-                    trainingReader.setAttributeValue(RandomizedXmiCollectionReader.PARAM_SEED, trainingSeed.getValue());
                 }
 
                 @Override
@@ -698,6 +691,49 @@ public class EventMentionPipeline {
         }
     }
 
+
+    public String trainBeamBasedCoref(Configuration config, CollectionReaderDescription trainingReader,
+                                      String suffix, boolean skipTrain, int initialSeed, String modelDir,
+                                      boolean mergeMention, boolean delayedLaso) throws
+            UIMAException, NoSuchMethodException, InstantiationException, IOException,
+            IllegalAccessException, InvocationTargetException, ClassNotFoundException {
+        logger.info("Start beam based coreference training.");
+
+        String cvModelDir = FileUtils.joinPaths(eventModelDir, modelDir, suffix);
+
+        boolean modelExists = new File(cvModelDir).exists();
+        if (skipTrain && modelExists) {
+            logger.info("Skipping training, taking existing models.");
+        } else {
+            logger.info("Saving model directory at : " + cvModelDir);
+            AnalysisEngineDescription corefEngine = AnalysisEngineFactory.createEngineDescription(
+                    BeamBasedCorefTrainer.class, typeSystemDescription,
+                    BeamBasedCorefTrainer.PARAM_CONFIGURATION_FILE, config.getConfigFile().getPath(),
+                    BeamBasedCorefTrainer.PARAM_DELAYED_LASO, delayedLaso,
+                    BeamBasedCorefTrainer.PARAM_MERGE_MENTION, mergeMention
+            );
+
+            TrainingLooper corefTrainer = new TrainingLooper(config, cvModelDir, trainingReader, corefEngine) {
+                @Override
+                protected void loopActions() {
+                    super.loopActions();
+                }
+
+                @Override
+                protected void finish() throws IOException {
+                }
+
+                @Override
+                protected void saveModel(File modelOutputDir) throws IOException {
+                    BeamBasedCorefTrainer.saveModels(modelOutputDir);
+                }
+            };
+
+            corefTrainer.runLoopPipeline();
+        }
+        return cvModelDir;
+    }
+
     /**
      * Train the latent tree model coreference resolver.
      *
@@ -715,30 +751,24 @@ public class EventMentionPipeline {
         logger.info("Start coreference training.");
         String cvModelDir = FileUtils.joinPaths(eventModelDir, modelDir, suffix);
 
+
         boolean modelExists = new File(cvModelDir).exists();
-
-        MutableInt trainingSeed = new MutableInt(initialSeed);
-
         if (skipTrain && modelExists) {
-            logger.info("Skipping coreference training, taking existing models.");
+            logger.info("Skipping training, taking existing models.");
         } else {
             logger.info("Saving model directory at : " + cvModelDir);
-
             String cacheDir = FileUtils.joinPaths(trainingWorkingDir, config.get("edu.cmu.cs.lti.coref.cache.base"));
-
             AnalysisEngineDescription corefEngine = AnalysisEngineFactory.createEngineDescription(
                     PaLatentTreeTrainer.class, typeSystemDescription,
                     PaLatentTreeTrainer.PARAM_CONFIG_PATH, config.getConfigFile().getPath(),
                     PaLatentTreeTrainer.PARAM_CACHE_DIRECTORY, cacheDir
             );
 
+
             TrainingLooper corefTrainer = new TrainingLooper(config, cvModelDir, trainingReader, corefEngine) {
                 @Override
                 protected void loopActions() {
                     super.loopActions();
-//                    trainingSeed.add(2);
-//                    trainingReader.setAttributeValue(RandomizedXmiCollectionReader.PARAM_SEED, trainingSeed
-// .getValue());
                 }
 
                 @Override
@@ -751,10 +781,7 @@ public class EventMentionPipeline {
                     PaLatentTreeTrainer.saveModels(modelOutputDir);
                 }
             };
-
             corefTrainer.runLoopPipeline();
-
-            logger.info("Coreference training finished ...");
         }
         return cvModelDir;
     }
@@ -780,6 +807,44 @@ public class EventMentionPipeline {
                             EventCorefAnnotator.class, typeSystemDescription,
                             EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
                             EventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile()
+                    );
+
+                    AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
+                            MentionTypeSplitter.class, typeSystemDescription
+                    );
+
+                    List<AnalysisEngineDescription> annotators = new ArrayList<>();
+                    addCorefPreprocessors(annotators);
+                    annotators.add(mentionSplitter);
+                    annotators.add(corefAnnotator);
+                    return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
+                }
+            }, mainDir, outputBase).runWithOutput();
+        }
+    }
+
+    private CollectionReaderDescription beamCorefResolution(Configuration config, CollectionReaderDescription reader,
+                                                            String modelDir, String mainDir, String outputBase,
+                                                            boolean mergeMentions, boolean skipCorefTest)
+            throws UIMAException, IOException, CpeDescriptorException, SAXException {
+        logger.info("Running coreference resolution, output at " + outputBase);
+        if (skipCorefTest && new File(mainDir, outputBase).exists()) {
+            logger.info("Skipping running coreference, using existing results.");
+            return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, outputBase);
+        } else {
+            return new BasicPipeline(new ProcessorWrapper() {
+                @Override
+                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
+                    return reader;
+                }
+
+                @Override
+                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
+                    AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
+                            BeamEventCorefAnnotator.class, typeSystemDescription,
+                            BeamEventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                            BeamEventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
+                            BeamEventCorefAnnotator.PARAM_MERGE_MENTION, mergeMentions
                     );
 
                     AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
@@ -995,10 +1060,10 @@ public class EventMentionPipeline {
     public void runVanilla(Configuration taskConfig) throws Exception {
         boolean skipCorefTrain = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
         boolean skipTypeTrain = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
-        boolean skipRealisTrain =  taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
+        boolean skipRealisTrain = taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
 
         boolean skipTypeTest = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
-        boolean skipRealisTest =  taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
+        boolean skipRealisTest = taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
         boolean skipCorefTest = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
 
         int seed = taskConfig.getInt("edu.cmu.cs.lti.random.seed", 17);
@@ -1026,7 +1091,7 @@ public class EventMentionPipeline {
                 taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree"));
 
         // Run the vanilla model.
-        runSeparateModels(taskConfig, testReader, vanillaSentCrfModel, realisModelDir, treeCorefModel, fullRunSuffix,
+        runPlainModels(taskConfig, testReader, vanillaSentCrfModel, realisModelDir, treeCorefModel, fullRunSuffix,
                 "vanillaMention", evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
     }
 
@@ -1072,12 +1137,13 @@ public class EventMentionPipeline {
         }
     }
 
-    private void runSeparateModels(Configuration taskConfig, CollectionReaderDescription reader,
-                                   String typeModel, String realisModel, String corefModel,
-                                   String sliceSuffix, String runName, String evalDir,
-                                   boolean skipType, boolean skipRealis, boolean skipCoref)
+    private void runPlainModels(Configuration taskConfig, CollectionReaderDescription reader,
+                                String typeModel, String realisModel, String corefModel,
+                                String sliceSuffix, String runName, String evalDir,
+                                boolean skipType, boolean skipRealis, boolean skipCoref)
             throws SAXException, UIMAException, CpeDescriptorException, IOException {
-        logger.info(String.format("Type model is %s, Realis Model is %s, Coref Model is %s.", typeModel, realisModel, typeModel));
+        logger.info(String.format("Type model is %s, Realis Model is %s, Coref Model is %s.", typeModel, realisModel,
+                typeModel));
 
         String annotatedOutput = FileUtils.joinPaths(middleResults, sliceSuffix, runName);
 
@@ -1094,12 +1160,13 @@ public class EventMentionPipeline {
         writeResults(corefSentMentions, FileUtils.joinPaths(evalDir, runName + "_" + sliceSuffix + ".tbf"), runName);
     }
 
-    private void runBeamModels(Configuration taskConfig, CollectionReaderDescription reader,
-                               String typeModel, String realisModel, String corefModel,
-                               String sliceSuffix, String runName, String evalDir,
-                               boolean skipType, boolean skipRealis, boolean skipCoref) throws SAXException,
+    private void runBeamMentions(Configuration taskConfig, CollectionReaderDescription reader,
+                                 String typeModel, String realisModel, String corefModel,
+                                 String sliceSuffix, String runName, String evalDir,
+                                 boolean skipType, boolean skipRealis, boolean skipCoref) throws SAXException,
             UIMAException, CpeDescriptorException, IOException {
-        logger.info(String.format("Type model is %s, Realis Model is %s, Coref Model is %s.", typeModel, realisModel, typeModel));
+        logger.info(String.format("Type model is %s, Realis Model is %s, Coref Model is %s.", typeModel, realisModel,
+                typeModel));
 
         String annotatedOutput = FileUtils.joinPaths(middleResults, sliceSuffix, runName);
 
@@ -1157,6 +1224,7 @@ public class EventMentionPipeline {
         String vanillaBeamMentionModel = trainBeamTypeModel(taskConfig, trainingData, sliceSuffix, skipTypeTrain,
                 false, "hamming", false, seed);
 
+        // The vanilla crf model.
         String vanillaSentCrfModel = trainSentLvType(taskConfig, trainingData, sliceSuffix, skipTypeTrain, false,
                 "hamming", seed);
 
@@ -1165,25 +1233,38 @@ public class EventMentionPipeline {
 //                sliceSuffix, skipBeamTrain, seed, realisModelDir,
 //                vanillaSentCrfModel, taskConfig.get("edu.cmu.cs.lti.model.joint.span.dir"));
 
+        // Train beamed based coref model.
+        String beamDelayedMerged = trainBeamBasedCoref(taskConfig, trainingData, sliceSuffix, skipCorefTrain, seed,
+                taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree.beam"), true, true);
+
+        String beamNotDelayedMerged = trainBeamBasedCoref(taskConfig, trainingData, sliceSuffix, skipCorefTrain, seed,
+                taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree.beam"), true, false);
+
+        String beamNotDelayedUnMerge = trainBeamBasedCoref(taskConfig, trainingData, sliceSuffix + "_delayed_unmerge",
+                skipCorefTrain, seed, taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree.beam"), false, false);
+
+        String beamDelayedUnMerge = trainBeamBasedCoref(taskConfig, trainingData, sliceSuffix + "_delayed_unmerge",
+                skipCorefTrain, seed, taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree.beam"), false, true);
+
         // Train coref model.
         String treeCorefModel = trainLatentTreeCoref(taskConfig, trainingData, sliceSuffix, skipCorefTrain, seed,
                 taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree"));
 
         // Run the vanilla model.
-        runSeparateModels(taskConfig, testReader, vanillaSentCrfModel, realisModelDir, treeCorefModel, sliceSuffix,
+        runPlainModels(taskConfig, testReader, vanillaSentCrfModel, realisModelDir, treeCorefModel, sliceSuffix,
                 "vanillaMention", evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
 
-        runBeamModels(taskConfig, testReader, vanillaBeamMentionModel, realisModelDir, treeCorefModel, sliceSuffix,
+        runBeamMentions(taskConfig, testReader, vanillaBeamMentionModel, realisModelDir, treeCorefModel, sliceSuffix,
                 "vanillaBeamMention", evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
 
         // Run the sent models.
         for (int i = 0; i < lossTypes.length; i++) {
             String lossType = lossTypes[i];
             String paModel = paSentMentionModels[i];
-            runSeparateModels(taskConfig, testReader, paModel, realisModelDir, treeCorefModel, sliceSuffix,
+            runPlainModels(taskConfig, testReader, paModel, realisModelDir, treeCorefModel, sliceSuffix,
                     "paMention_" + lossType, evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
             String beamModel = paBeamMentionModels[i];
-            runBeamModels(taskConfig, testReader, beamModel, realisModelDir, treeCorefModel, sliceSuffix,
+            runBeamMentions(taskConfig, testReader, beamModel, realisModelDir, treeCorefModel, sliceSuffix,
                     "beamMention_" + lossType, evalDir, skipTypeTest, skipRealisTest, skipCorefTest);
 //            String delayedBeamModel = delayedPaBeamMentionModels[i];
 //            runBeamModels(taskConfig, testReader, delayedBeamModel, realisModelDir, treeCorefModel, sliceSuffix,
@@ -1208,13 +1289,11 @@ public class EventMentionPipeline {
         // Coreference with gold components.
         CollectionReaderDescription corefGoldType = corefResolution(taskConfig, goldTypeSystemRealis,
                 treeCorefModel, trainingWorkingDir,
-                FileUtils.joinPaths(middleResults, sliceSuffix, "coref_gold_type"),
-                skipCorefTest);
+                FileUtils.joinPaths(middleResults, sliceSuffix, "coref_gold_type"), skipCorefTest);
 
         CollectionReaderDescription corefGoldTypeRealis = corefResolution(taskConfig, goldMentionAll,
                 treeCorefModel, trainingWorkingDir,
-                FileUtils.joinPaths(middleResults, sliceSuffix, "coref_gold_type+realis"),
-                skipCorefTest);
+                FileUtils.joinPaths(middleResults, sliceSuffix, "coref_gold_type+realis"), skipCorefTest);
 
         writeResults(corefGoldType,
                 FileUtils.joinPaths(evalDir, "gold_type_coref_" + sliceSuffix + ".tbf"), "gold_types"
@@ -1222,6 +1301,43 @@ public class EventMentionPipeline {
         writeResults(
                 corefGoldTypeRealis,
                 FileUtils.joinPaths(evalDir, "gold_type_realis_coref_" + sliceSuffix + ".tbf"), "tree_coref"
+        );
+
+        // Beam coreference with gold components.
+        CollectionReaderDescription beamCorefDelayedGold = beamCorefResolution(taskConfig, goldMentionAll,
+                beamDelayedUnMerge, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix,
+                        "beam_coref_delayed_gold"), skipCorefTest, false);
+
+        CollectionReaderDescription beamCorefEarlyGold = beamCorefResolution(taskConfig, goldMentionAll,
+                beamNotDelayedUnMerge, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix,
+                        "beam_coref_early_gold"), skipCorefTest, false);
+
+        CollectionReaderDescription beamCorefDelayedGoldMerged = beamCorefResolution(taskConfig, goldMentionAll,
+                beamDelayedMerged, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix,
+                        "beam_coref_delayed_gold_merged"), skipCorefTest, false);
+
+        CollectionReaderDescription beamCorefEarlyGoldMerged = beamCorefResolution(taskConfig, goldMentionAll,
+                beamNotDelayedMerged, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix,
+                        "beam_coref_early_gold_merged"), skipCorefTest, false);
+
+        writeResults(
+                beamCorefDelayedGold,
+                FileUtils.joinPaths(evalDir, "beam_coref_delayed_gold_" + sliceSuffix + ".tbf"), "tree_coref"
+        );
+
+        writeResults(
+                beamCorefEarlyGold,
+                FileUtils.joinPaths(evalDir, "beam_coref_early_gold_" + sliceSuffix + ".tbf"), "tree_coref"
+        );
+
+        writeResults(
+                beamCorefDelayedGoldMerged,
+                FileUtils.joinPaths(evalDir, "beam_coref_delayed_merged_gold_" + sliceSuffix + ".tbf"), "tree_coref"
+        );
+
+        writeResults(
+                beamCorefEarlyGoldMerged,
+                FileUtils.joinPaths(evalDir, "beam_coref_early_merged_gold_" + sliceSuffix + ".tbf"), "tree_coref"
         );
 
 //        writeResults(

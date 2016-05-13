@@ -20,8 +20,8 @@ import java.util.List;
  *
  * @author Zhengzhong Liu
  */
-public class EventPairFeatures extends SequenceFeatureWithFocus<EventMention> {
-    public EventPairFeatures(Configuration generalConfig, Configuration featureConfig) {
+public class EventHistoryFeatures extends SequenceFeatureWithFocus<EventMention> {
+    public EventHistoryFeatures(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
     }
 

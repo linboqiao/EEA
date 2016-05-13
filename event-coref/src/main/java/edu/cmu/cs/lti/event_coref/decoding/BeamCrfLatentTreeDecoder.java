@@ -3,7 +3,6 @@ package edu.cmu.cs.lti.event_coref.decoding;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
-import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.decoding.LabelLinkAgenda;
 import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
@@ -50,7 +49,6 @@ public class BeamCrfLatentTreeDecoder {
 
     private final SentenceFeatureExtractor realisExtractor;
     private final SentenceFeatureExtractor mentionExtractor;
-    private final PairFeatureExtractor mentionPairExtractor;
 
     private final GraphWeightVector mentionWeights;
 
@@ -69,12 +67,11 @@ public class BeamCrfLatentTreeDecoder {
 
     public BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
                                     GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
-                                    SentenceFeatureExtractor mentionExtractor,
-                                    PairFeatureExtractor mentionPairExtractor,
-                                    DiscriminativeUpdater updater, String lossType)
+                                    SentenceFeatureExtractor mentionExtractor, DiscriminativeUpdater updater,
+                                    String lossType)
             throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
-        this(mentionWeights, realisModel, corefWeights, realisExtractor, mentionExtractor, mentionPairExtractor,
+        this(mentionWeights, realisModel, corefWeights, realisExtractor, mentionExtractor,
                 lossType, true);
         this.updater = updater;
         corefTrainingStats = new TrainingStats(5, "coref");
@@ -85,19 +82,17 @@ public class BeamCrfLatentTreeDecoder {
 
     public BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
                                     GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
-                                    SentenceFeatureExtractor mentionExtractor,
-                                    PairFeatureExtractor mentionPairExtractor)
+                                    SentenceFeatureExtractor mentionExtractor)
             throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
-        this(mentionWeights, realisModel, corefWeights, realisExtractor, mentionExtractor, mentionPairExtractor,
+        this(mentionWeights, realisModel, corefWeights, realisExtractor, mentionExtractor,
                 null, false);
         logger.info("Starting the Beam Decoder with joint testing.");
     }
 
     private BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
                                      GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
-                                     SentenceFeatureExtractor mentionExtractor,
-                                     PairFeatureExtractor mentionPairExtractor, String lossType, boolean isTraining)
+                                     SentenceFeatureExtractor mentionExtractor, String lossType, boolean isTraining)
             throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
         this.lossType = lossType;
@@ -110,7 +105,6 @@ public class BeamCrfLatentTreeDecoder {
         this.realisModel = realisModel;
         this.realisExtractor = realisExtractor;
         this.mentionExtractor = mentionExtractor;
-        this.mentionPairExtractor = mentionPairExtractor;
 
         this.isTraining = isTraining;
     }
@@ -174,7 +168,9 @@ public class BeamCrfLatentTreeDecoder {
 
                 // Prepare expansion, initialize all the deltas.
                 decodingAgenda.prepareExpand();
-                goldAgenda.prepareExpand();
+                if (isTraining) {
+                    goldAgenda.prepareExpand();
+                }
 
                 // Extract features for the token.
                 FeatureVector nodeFeature = new RealValueHashFeatureVector(mentionFeatureAlphabet);
@@ -239,6 +235,7 @@ public class BeamCrfLatentTreeDecoder {
                     }
                 }
 
+//                logger.info("Update states for decoding.");
                 decodingAgenda.updateStates();
 
                 if (isTraining) {
@@ -255,7 +252,7 @@ public class BeamCrfLatentTreeDecoder {
                                 .getValue(), goldMentionFeature, goldResults, 0);
                     }
 
-//                    logger.debug("Updating states for gold.");
+//                    logger.info("Updating states for gold.");
                     goldAgenda.updateStates();
 
                     updater.recordLaSOUpdate(decodingAgenda, goldAgenda);
@@ -263,7 +260,7 @@ public class BeamCrfLatentTreeDecoder {
 
                 if (!pruneSureNone) {
                     logger.debug("Showing decoding agenda");
-                    logger.debug(decodingAgenda.showAgendaItems());
+                    logger.debug(decodingAgenda.toString());
                     DebugUtils.pause(logger);
                 }
 
@@ -289,7 +286,6 @@ public class BeamCrfLatentTreeDecoder {
     }
 
     private void initWorkspace(JCas aJCas) {
-        mentionPairExtractor.initWorkspace(aJCas);
         realisExtractor.initWorkspace(aJCas);
         mentionExtractor.initWorkspace(aJCas);
     }
@@ -383,7 +379,9 @@ public class BeamCrfLatentTreeDecoder {
 //        logger.debug("Linking to antecedent, number of candidates: " + (currGraphNodeIndex - prunedNodes.size()));
 
         // Create a new decoding decision, representing the new type assignment, and new link assignment.
-        StateDelta decision = decodingAgenda.expand(nodeLinkingState, currNode, mentionScore, newMentionFeatures);
+        StateDelta decision = new StateDelta(nodeLinkingState);
+//        StateDelta decision = decodingAgenda.expand(nodeLinkingState);
+        decision.addNode(currNode, newMentionFeatures, mentionScore);
 
         // Handling the root node case.
         if (currNode.size() == 1) {
@@ -434,14 +432,16 @@ public class BeamCrfLatentTreeDecoder {
 
             decision.addLink(bestEdgeType, bestAntecedentNode, currNodeKey, bestLinkScore, bestNewCorefFeature);
         }
+
+       decodingAgenda.expand(decision);
     }
 
     private void linkToCorrectAntecedent(MentionGraph mentionGraph, LabelLinkAgenda goldAgenda,
                                          NodeLinkingState nodeLinkingState, int currGraphNodeIndex,
                                          GraphFeatureVector newMentionFeatures, MultiNodeKey currNode,
                                          double mentionScore) {
-
-        StateDelta decision = goldAgenda.expand(nodeLinkingState, currNode, mentionScore, newMentionFeatures);
+        StateDelta decision = new StateDelta(nodeLinkingState);
+        decision.addNode(currNode, newMentionFeatures, mentionScore);
 
         for (NodeKey currNodeKey : currNode) {
             double bestLinkScore = Double.NEGATIVE_INFINITY;
@@ -450,26 +450,28 @@ public class BeamCrfLatentTreeDecoder {
             NodeKey bestGovKey = null;
 
             for (int ant = 0; ant < currGraphNodeIndex; ant++) {
-                List<LabelledMentionGraphEdge> realGraphEdges = mentionGraph
+                Table<NodeKey, NodeKey, LabelledMentionGraphEdge> realGraphEdges = mentionGraph
                         .getMentionGraphEdge(currGraphNodeIndex, ant).getRealLabelledEdges();
+                MultiNodeKey antNodeKeys = nodeLinkingState.getNode(ant);
 
-                for (LabelledMentionGraphEdge realGraphEdge : realGraphEdges) {
-                    if (realGraphEdge.getDepKey().equals(currNodeKey)) {
-                        Pair<EdgeType, Double> correctLabelScore = realGraphEdge
-                                .getCorrectLabelScore(corefWeights);
-                        double linkScore = correctLabelScore.getRight();
+                for (NodeKey antNodeKey : antNodeKeys) {
+                    LabelledMentionGraphEdge realGraphEdge = realGraphEdges.get(antNodeKey, currNodeKey);
+                    Pair<EdgeType, Double> correctLabelScore = realGraphEdge
+                            .getCorrectLabelScore(corefWeights);
+                    double linkScore = correctLabelScore.getRight();
 
-                        if (linkScore > bestLinkScore) {
-                            bestLinkScore = linkScore;
-                            bestEdgeType = correctLabelScore.getLeft();
-                            bestFeature = realGraphEdge.getFeatureVector();
-                            bestGovKey = realGraphEdge.getGovKey();
-                        }
+                    if (linkScore > bestLinkScore) {
+                        bestLinkScore = linkScore;
+                        bestEdgeType = correctLabelScore.getLeft();
+                        bestFeature = realGraphEdge.getFeatureVector();
+                        bestGovKey = realGraphEdge.getGovKey();
                     }
                 }
             }
             decision.addLink(bestEdgeType, bestGovKey, currNodeKey, bestLinkScore, bestFeature);
         }
+
+        goldAgenda.expand(decision);
     }
 
     private String getRealis(StanfordCorenlpToken headToken) {

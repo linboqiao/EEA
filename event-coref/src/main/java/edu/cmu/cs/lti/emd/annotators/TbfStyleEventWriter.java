@@ -8,6 +8,7 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSList;
 import org.javatuples.Pair;
 
 import java.util.*;
@@ -34,7 +35,6 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
     public static final String PARAM_ADD_SEMANTIC_ROLE = "addSemanticRole";
     @ConfigurationParameter(name = PARAM_ADD_SEMANTIC_ROLE, defaultValue = "false")
     private boolean addSemanticRole;
-
 
     @Override
     public String getTextToPrint(JCas aJCas) {
@@ -69,7 +69,15 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             }
             parts.add(mention.getEventType());
             parts.add(mention.getRealisType() == null ? "Actual" : mention.getRealisType());
-            sb.append(Joiner.on("\t").join(parts)).append("\n");
+            sb.append(Joiner.on("\t").join(parts));
+
+            // Adding semantic roles.
+            if (addSemanticRole) {
+                sb.append("\t").append(formatArguments(mention.getHeadWord()));
+            }
+
+            sb.append("\n");
+
             mention.setId(eid);
             mention2Id.put(mention, eid);
         }
@@ -101,10 +109,42 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         return sb.toString();
     }
 
-    private String formatArguments(Word headWord){
+    private String formatArguments(Word headWord) {
         List<String> argumentComponents = new ArrayList<>();
 
+        FSList semanticRelationsFS = headWord.getChildSemanticRelations();
+
+        String pbSense = handleNull(headWord.getPropbankSense());
+        String frameName = handleNull(headWord.getFrameName());
+
+        argumentComponents.add(pbSense);
+        argumentComponents.add(frameName);
+
+        if (semanticRelationsFS != null) {
+            for (SemanticRelation semanticRelation : FSCollectionFactory.create(semanticRelationsFS, SemanticRelation
+                    .class)) {
+                Word childHead = semanticRelation.getChildHead();
+                String headText = childHead.getCoveredText().replaceAll("\\s", " ");
+
+                ComponentAnnotation childSpan = semanticRelation.getChildSpan();
+                String spanText = childSpan.getCoveredText().replaceAll("\\s", " ");
+
+                String pbName = handleNull(semanticRelation.getPropbankRoleName());
+                String vnName = handleNull(semanticRelation.getFrameElementName());
+
+                argumentComponents.add(String.format("%d-%d:%s,%d-%d:%s,%s,%s",
+                        childHead.getBegin(), childHead.getEnd(), headText,
+                        childSpan.getBegin(), childSpan.getEnd(), spanText,
+                        pbName, vnName
+                ));
+            }
+        }
+
         return Joiner.on("\t").join(argumentComponents);
+    }
+
+    private String handleNull(String s){
+        return s == null ? "N/A" : s;
     }
 
     /**

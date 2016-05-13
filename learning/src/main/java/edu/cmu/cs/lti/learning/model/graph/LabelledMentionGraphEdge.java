@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -84,6 +86,26 @@ public class LabelledMentionGraphEdge implements Serializable {
         }
         return Pair.of(bestLabel, score);
     }
+
+    public Map<EdgeType, Double> getAllLabelScore(GraphWeightVector weightVector) {
+        Map<EdgeType, Double> allLabelScores = new HashMap<>();
+
+        if (hostingEdge.isRoot()) {
+            // The only possible relation with the root node is ROOT.
+            allLabelScores.put(EdgeType.Root, scoreEdge(EdgeType.Root, weightVector));
+        } else {
+            for (EdgeType label : EdgeType.values()) {
+                if (label.equals(EdgeType.Root)){
+                    // If the edge is not a root edge, we will not test for Root edge type.
+                    continue;
+                }
+                double typeScore = scoreEdge(label, weightVector);
+                allLabelScores.put(label, typeScore);
+            }
+        }
+        return allLabelScores;
+    }
+
 
     public int getGov() {
         return hostingEdge.getGovIdx();

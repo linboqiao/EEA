@@ -3,7 +3,6 @@ package edu.cmu.cs.lti.learning.model.decoding;
 import com.google.common.collect.MinMaxPriorityQueue;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
-import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Represent a delta on a previous state, which includes change in score, features, and decoding results. These
@@ -22,7 +20,7 @@ public class StateDelta implements Comparable<StateDelta> {
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
     private NodeLinkingState existingState;
-    private double newScore;
+    private double updatedScore;
 
     private MultiNodeKey nodes;
 
@@ -36,26 +34,27 @@ public class StateDelta implements Comparable<StateDelta> {
 
     public StateDelta(NodeLinkingState existingState) {
         this.existingState = existingState;
-        newScore = existingState.getScore();
+        updatedScore = existingState.getScore();
         edges = new ArrayList<>();
         deltaGraphFv = new ArrayList<>();
     }
 
-    public void setNode(MultiNodeKey nodes, GraphFeatureVector newLabelFv, double nodeScore) {
+    public void addNode(MultiNodeKey nodes, GraphFeatureVector newLabelFv, double nodeScore) {
         this.nodes = nodes;
         this.deltaLabelFv = newLabelFv;
-        newScore += nodeScore;
+        updatedScore += nodeScore;
     }
 
     public void addLink(EdgeType linkType, NodeKey govKey, NodeKey depKey, double linkScore, FeatureVector newCorefFv) {
-        edges.add(new EdgeKey(depKey, govKey, linkType));
-        newScore += linkScore;
+        EdgeKey edge = new EdgeKey(depKey, govKey, linkType);
+        edges.add(edge);
+        updatedScore += linkScore;
         deltaGraphFv.add(Pair.of(linkType, newCorefFv));
     }
 
     @Override
     public int compareTo(StateDelta o) {
-        return new CompareToBuilder().append(newScore, o.newScore).build();
+        return new CompareToBuilder().append(updatedScore, o.updatedScore).build();
     }
 
     public static Comparator<StateDelta> reverseComparator() {
@@ -75,7 +74,7 @@ public class StateDelta implements Comparable<StateDelta> {
 
         state.addNode(nodes);
 
-        state.setScore(newScore);
+        state.setScore(updatedScore);
 
         state.extendFeatures(deltaLabelFv, deltaGraphFv);
 
@@ -83,16 +82,13 @@ public class StateDelta implements Comparable<StateDelta> {
     }
 
     public String toString() {
-        String typeStr = MentionTypeUtils.joinMultipleTypes(nodes.stream()
-                .map(NodeKey::getMentionType).collect(Collectors.toSet()));
-
         StringBuilder sb = new StringBuilder();
         for (NodeKey node : nodes) {
             sb.append("\n");
             sb.append(node.toString());
         }
 
-        return String.format("[StateDelta] [%s] [Links:] %s", typeStr, sb.toString());
+        return String.format("[StateDelta]\n [Nodes] %s\n [Links]\n [Score] %.4f", sb.toString(), updatedScore);
     }
 
     public List<Pair<EdgeType, FeatureVector>> getDeltaGraphFv() {

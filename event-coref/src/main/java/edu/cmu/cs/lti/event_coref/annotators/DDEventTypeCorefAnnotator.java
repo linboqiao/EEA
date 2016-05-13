@@ -2,25 +2,23 @@ package edu.cmu.cs.lti.event_coref.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.annotators.train.MentionLevelEventMentionCrfTrainer;
-import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
-import edu.cmu.cs.lti.event_coref.decoding.DDLatentTreeCrfDecoder;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
-import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.event_coref.annotators.train.PaLatentTreeTrainer;
+import edu.cmu.cs.lti.event_coref.decoding.DDLatentTreeCrfDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.MultiSentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
+import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
+import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.utils.Configuration;
-import gnu.trove.map.TIntIntMap;
-import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -197,8 +195,7 @@ public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
 
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
 
-        TIntIntMap mention2Candidate = new TIntIntHashMap();
-        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions, mention2Candidate);
+        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions);
 
         MentionGraph mentionGraph = new MentionGraph(candidates, corefFeatureExtractor, true);
 

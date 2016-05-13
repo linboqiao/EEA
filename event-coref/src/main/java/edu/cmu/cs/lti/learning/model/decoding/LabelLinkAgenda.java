@@ -4,9 +4,8 @@ import com.google.common.collect.MinMaxPriorityQueue;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
-import edu.cmu.cs.lti.learning.model.MultiNodeKey;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,11 +27,9 @@ public class LabelLinkAgenda {
 
     private List<NodeLinkingState> nextBeamStates;
 
-    private  MinMaxPriorityQueue<StateDelta> stateDeltas;
+    private MinMaxPriorityQueue<StateDelta> stateDeltas;
 
     private List<MentionCandidate> candidates;
-
-//    private StateDelta currentDelta;
 
     private int beamSize;
 
@@ -56,7 +53,7 @@ public class LabelLinkAgenda {
         stateDeltas = StateDelta.getReverseHeap(beamSize);
     }
 
-    public String showAgendaItems() {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Showing beam states:\n");
@@ -74,14 +71,8 @@ public class LabelLinkAgenda {
         }
     }
 
-    public StateDelta expand(NodeLinkingState expandingState, MultiNodeKey node, double nodeScore,
-                             GraphFeatureVector newLabelFv) {
-        StateDelta delta = new StateDelta(expandingState);
-        delta.setNode(node, newLabelFv, nodeScore);
-
+    public void expand(StateDelta delta) {
         stateDeltas.offer(delta);
-
-        return delta;
     }
 
     public Map<EdgeType, FeatureVector> getBestDeltaCorefVectors() {
@@ -96,14 +87,15 @@ public class LabelLinkAgenda {
      * Update the beam states, by converting the deltas to new states, and remove the old ones.
      */
     public void updateStates() {
-//        logger.debug("Update states with " + stateDeltas.size() + " deltas.");
-
+//        logger.info("Updating with " + stateDeltas.size() + " deltas.");
         while (!stateDeltas.isEmpty()) {
             StateDelta delta = stateDeltas.poll();
             NodeLinkingState updatedState = delta.applyUpdate(candidates);
             nextBeamStates.add(updatedState);
         }
         beamStates = nextBeamStates;
+
+//        logger.info("After update, we have " + beamStates.size() + " states.");
         nextBeamStates = new ArrayList<>(beamSize);
     }
 

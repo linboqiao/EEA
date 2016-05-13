@@ -1,19 +1,24 @@
 package edu.cmu.cs.lti.emd.utils;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.SetMultimap;
+import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
+import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.*;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.javatuples.Quartet;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -32,23 +37,115 @@ public class MentionUtils {
      * @param mentions
      * @return
      */
-    public static List<MentionCandidate> createCandidates(JCas aJCas, List<EventMention> mentions, TIntIntMap
-            mention2Candidate) {
+    public static List<MentionCandidate> createCandidates(JCas aJCas, List<EventMention> mentions) {
+        int sentIndex = 0;
+        for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
+            sentence.setIndex(sentIndex++);
+        }
+
         Map<EventMention, Collection<StanfordCorenlpSentence>> mention2Sentence = JCasUtil.indexCovering(
                 aJCas, EventMention.class, StanfordCorenlpSentence.class);
 
-        for (int i = 0; i < mentions.size(); i++) {
-            mention2Candidate.put(i, i);
-        }
-
-        return IntStream.range(0, mentions.size()).mapToObj(i ->{
+        return IntStream.range(0, mentions.size()).mapToObj(i -> {
             EventMention mention = mentions.get(i);
-            MentionCandidate candidate =  new MentionCandidate(mention.getBegin(), mention.getEnd(),
+            MentionCandidate candidate = new MentionCandidate(mention.getBegin(), mention.getEnd(),
                     Iterables.getFirst(mention2Sentence.get(mention), null), mention.getHeadWord(), i);
             candidate.setRealis(mention.getRealisType());
             candidate.setMentionType(mention.getEventType());
             return candidate;
         }).collect(Collectors.toList());
+    }
+
+    /**
+     * Convert event mentions into mention candidates.
+     *
+     * @param aJCas
+     * @param mentions
+     * @return
+     */
+    public static List<MentionCandidate> createMergedCandidates(JCas aJCas, List<EventMention> mentions) {
+        int sentIndex = 0;
+        for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
+            sentence.setIndex(sentIndex++);
+        }
+
+        Map<EventMention, Collection<StanfordCorenlpSentence>> mention2Sentence = JCasUtil.indexCovering(
+                aJCas, EventMention.class, StanfordCorenlpSentence.class);
+
+
+        ArrayListMultimap<Span, EventMention> span2Mentions = ArrayListMultimap.create();
+
+        for (int i = 0; i < mentions.size(); i++) {
+            EventMention mention = mentions.get(i);
+            span2Mentions.put(Span.of(mention.getBegin(), mention.getEnd()), mention);
+        }
+
+        List<MentionCandidate> candidates = new ArrayList<>();
+        int candidaateIndex = 0;
+        for (Map.Entry<Span, Collection<EventMention>> s2m : span2Mentions.asMap().entrySet()) {
+            Set<String> allTypes = s2m.getValue().stream().map(EventMention::getEventType).collect(Collectors.toSet());
+            String type = MentionTypeUtils.joinMultipleTypes(allTypes);
+            EventMention mention = Iterables.get(s2m.getValue(), 0);
+            String realis = mention.getRealisType();
+            MentionCandidate candidate = new MentionCandidate(mention.getBegin(), mention.getEnd(),
+                    Iterables.get(mention2Sentence.get(mention), 0), mention.getHeadWord(), candidaateIndex);
+            candidate.setMentionType(type);
+            candidate.setRealis(realis);
+            candidaateIndex++;
+            candidates.add(candidate);
+        }
+
+        return candidates;
+    }
+
+    /**
+     * Keep only one mention when multiple ones have the same span and types.
+     *
+     * @param mentions The original mentions.
+     * @return The filtered result.
+     */
+    public static List<EventMention> clearDuplicates(List<EventMention> mentions) {
+        ArrayListMultimap<Quartet<Integer, Integer, String, String>, EventMention> counter = ArrayListMultimap.create();
+        for (EventMention mention : mentions) {
+            counter.put(new Quartet<>(mention.getBegin(), mention.getEnd(), mention.getEventType(),
+                    mention.getEpistemicStatus()), mention);
+        }
+
+        Set<EventMention> removalMentions = new HashSet<>();
+
+        for (Map.Entry<Quartet<Integer, Integer, String, String>, Collection<EventMention>> item :
+                counter.asMap().entrySet()) {
+            Collection<EventMention> duplicates = item.getValue();
+
+            EventMention keptMention = null;
+
+            for (EventMention duplicate : duplicates) {
+                if (duplicate.getReferringEvent() != null) {
+                    keptMention = duplicate;
+                    break;
+                }
+            }
+
+            if (keptMention == null) {
+                keptMention = Iterables.getFirst(duplicates, null);
+            }
+
+            for (EventMention duplicate : duplicates) {
+                if (duplicate != keptMention) {
+                    removalMentions.add(duplicate);
+                }
+            }
+        }
+
+
+        List<EventMention> filteredMentions = new ArrayList<>();
+        for (EventMention mention : mentions) {
+            if (!removalMentions.contains(mention)) {
+                filteredMentions.add(mention);
+            }
+        }
+
+        return filteredMentions;
     }
 
     /**
@@ -97,9 +194,10 @@ public class MentionUtils {
         return mentionId2EventId;
     }
 
-    public static Map<Pair<Integer, Integer>, String> indexRelations(JCas aJCas, TIntIntMap mention2Candidate,
+    public static Map<Pair<Integer, Integer>, String> indexRelations(JCas aJCas, TIntIntMap mention2SplitNodes,
                                                                      List<EventMention> allMentions) {
         Map<Pair<Integer, Integer>, String> relations = new HashMap<>();
+
 
         TObjectIntMap<EventMention> mentionIds = new TObjectIntHashMap<>();
         for (int i = 0; i < allMentions.size(); i++) {
@@ -111,10 +209,75 @@ public class MentionUtils {
             int headMention = mentionIds.get(relation.getHead());
             int childMention = mentionIds.get(relation.getChild());
 
-            relations.put(Pair.of(mention2Candidate.get(headMention), mention2Candidate.get(childMention)),
+            relations.put(Pair.of(mention2SplitNodes.get(headMention), mention2SplitNodes.get(childMention)),
                     relation.getRelationType());
         }
 
         return relations;
+    }
+
+
+    public static int processCandidates(List<EventMention> mentions, List<MentionCandidate> goldCandidates,
+                                        SetMultimap<Integer, Integer> candidate2Split,
+                                        TIntIntMap mention2SplitCandidate, List<String> splitCandidateTypes) {
+        SetMultimap<Word, Integer> head2Mentions = HashMultimap.create();
+
+        for (int i = 0; i < mentions.size(); i++) {
+            head2Mentions.put(mentions.get(i).getHeadWord(), i);
+        }
+
+        int splitCandidateId = 0;
+        for (int candidateIndex = 0; candidateIndex < goldCandidates.size(); candidateIndex++) {
+            MentionCandidate candidate = goldCandidates.get(candidateIndex);
+            Word candidateHead = candidate.getHeadWord();
+            if (head2Mentions.containsKey(candidateHead)) {
+                Set<Integer> correspondingMentions = head2Mentions.get(candidateHead);
+                String mentionType = MentionTypeUtils.joinMultipleTypes(correspondingMentions.stream()
+                        .map(mentions::get).map(EventMention::getEventType).collect(Collectors.toList()));
+                candidate.setMentionType(mentionType);
+
+                for (Integer mentionId : head2Mentions.get(candidateHead)) {
+                    EventMention mention = mentions.get(mentionId);
+                    candidate.setRealis(mention.getRealisType());
+                    candidate2Split.put(candidateIndex, splitCandidateId);
+                    splitCandidateTypes.add(mention.getEventType());
+                    mention2SplitCandidate.put(mentionId, splitCandidateId);
+                    splitCandidateId++;
+                }
+            } else {
+                candidate.setMentionType(ClassAlphabet.noneOfTheAboveClass);
+                candidate.setRealis(ClassAlphabet.noneOfTheAboveClass);
+                splitCandidateTypes.add(ClassAlphabet.noneOfTheAboveClass);
+                candidate2Split.put(candidateIndex, splitCandidateId);
+                splitCandidateId++;
+            }
+        }
+
+        return splitCandidateId;
+    }
+
+    public static Map<Integer, Integer> mapCandidate2Events(int numCandidates, TIntIntMap mention2Candidate,
+                                                            Map<Integer, Integer> mention2event) {
+        Map<Integer, Integer> candidate2Events = new HashMap<>();
+
+        final MutableInt maxEventId = new MutableInt(0);
+        mention2Candidate.forEachEntry((mentionId, candidateId) -> {
+            int eventId = mention2event.get(mentionId);
+            candidate2Events.put(candidateId, eventId);
+            if (eventId > maxEventId.getValue()) {
+                maxEventId.setValue(eventId);
+            }
+            return true;
+        });
+
+
+        for (int i = 0; i < numCandidates; i++) {
+            if (!candidate2Events.containsKey(i)) {
+                maxEventId.increment();
+                candidate2Events.put(i, maxEventId.getValue());
+            }
+        }
+
+        return candidate2Events;
     }
 }

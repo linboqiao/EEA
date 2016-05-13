@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.learning.model.graph;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
@@ -55,6 +56,8 @@ public class MentionGraph implements Serializable {
     private final int rootIndex = 0;
 
     private final int numNodes;
+
+    private Set<NodeKey> keysWithAntecedents;
 
     /**
      * Provide to the graph with only a list of mentions, no coreference information.
@@ -116,14 +119,14 @@ public class MentionGraph implements Serializable {
             // Group mention nodes into clusters, the first is the event id, the second is the node id.
             typedCorefChains = GraphUtils.createSortedCorefChains(nodeClusters);
 
-            storeCoreferenceEdges(candidates);
+            keysWithAntecedents = storeCoreferenceEdges(candidates);
 
             // This will store all other relations, which are propagated using the gold clusters.
             resolvedRelations = GraphUtils.resolveRelations(
                     convertToEventRelation(relations, labelledCandidate2EventIndex), nodeClusters);
 
             // Link lingering nodes to root.
-            linkToRoot(candidates);
+            linkToRoot(candidates, keysWithAntecedents);
         }
     }
 
@@ -150,30 +153,16 @@ public class MentionGraph implements Serializable {
 
         goldEdge.addRealEdge(candidates, realGovKey, realDepKey, edgeType);
 
-
-//        if (!edgeType.equals(EdgeType.Root) ) {
-//            logger.debug(String.format("Creating gold edge between %d [%s] and %d [%s]", gov, realGovKey, dep,
-//                    realDepKey));
-//            logger.debug(newEdge.toString());
-//            logger.debug("Size of the labelled edge is now " + newEdge.getRealLabelledEdges().size());
-//        }
-
-//        if (dep == 238) {
-//            logger.debug(String.format("Creating gold edge between %d [%s] and %d [%s]", gov, realGovKey, dep,
-//                    realDepKey));
-//            logger.debug(goldEdge.toString());
-//            logger.debug("Size of the labelled edge is now " + goldEdge.getRealLabelledEdges().size());
-//        }
-
         return goldEdge;
     }
 
     /**
      * Store coreference information as graph edges.
      */
-    private void storeCoreferenceEdges(List<MentionCandidate> candidates) {
+    private Set<NodeKey> storeCoreferenceEdges(List<MentionCandidate> candidates) {
+        Set<NodeKey> keysWithAntecedents = new HashSet<>();
         for (List<Pair<Integer, String>> typedCorefChain : typedCorefChains) {
-            // In each chain, we only connect at most one labelled node, we need to record them.
+            // Go through the chain, and find out which NodeKeys are in the chain after considering the type.
             List<NodeKey> actualCorefNodes = new ArrayList<>();
 
             for (int i = 0; i < typedCorefChain.size(); i++) {
@@ -183,64 +172,47 @@ public class MentionGraph implements Serializable {
                 String mentionType = element.getRight();
 
                 MultiNodeKey candidateKeys = candidates.get(candidateIndex).asKey();
-                NodeKey actualCandidate = null;
+                NodeKey actualNode = null;
                 for (NodeKey candidate : candidateKeys) {
                     if (candidate.getMentionType().equals(mentionType)) {
-                        actualCandidate = candidate;
+                        actualNode = candidate;
                         break;
                     }
                 }
-                actualCorefNodes.add(actualCandidate);
+                actualCorefNodes.add(actualNode);
             }
 
             // Within the cluster, link each antecedent with all its anaphora.
             for (int i = 0; i < typedCorefChain.size() - 1; i++) {
-                int antecedentNode = typedCorefChain.get(i).getLeft();
+                int antecedentNodeId = typedCorefChain.get(i).getLeft();
                 NodeKey actualAntecedent = actualCorefNodes.get(i);
                 for (int j = i + 1; j < typedCorefChain.size(); j++) {
-                    int anaphoraNode = typedCorefChain.get(j).getLeft();
+                    int anaphoraNodeId = typedCorefChain.get(j).getLeft();
                     NodeKey actualAnaphora = actualCorefNodes.get(j);
 
-                    MentionGraphEdge edge = createLabelledGoldEdge(antecedentNode, anaphoraNode, actualAntecedent,
-                            actualAnaphora, candidates, EdgeType.Coreference);
+                    createLabelledGoldEdge(antecedentNodeId, anaphoraNodeId, actualAntecedent, actualAnaphora,
+                            candidates, EdgeType.Coreference);
+
+                    keysWithAntecedents.add(actualAnaphora);
                 }
             }
         }
-
-//        DebugUtils.pause(logger);
+        return keysWithAntecedents;
     }
 
     /**
      * If a node is link to nowhere, link it to root.
      */
-    private void linkToRoot(List<MentionCandidate> candidates) {
-//        logger.debug("Linking to root.");
+    private void linkToRoot(List<MentionCandidate> candidates, Set<NodeKey> keysWithAntecedents) {
         // Loop starts from 1, because node 0 is the root itself.
         for (int curr = 1; curr < numNodes(); curr++) {
             MultiNodeKey depKeys = candidates.get(getCandidateIndex(curr)).asKey();
-            boolean hasEdge = false;
-            List<LabelledMentionGraphEdge> realEdges = null;
-            for (int ant = 0; ant < curr; ant++) {
-                realEdges = getEdge(curr, ant).getRealLabelledEdges();
-                if (realEdges.size() > 0) {
-//                    logger.debug("have a real edge here " + realEdge);
-                    hasEdge = true;
-                    break;
-                }
-            }
-
             NodeKey rootKey = MultiNodeKey.rootKey().takeFirst();
-            if (hasEdge) {
-                for (NodeKey depKey : depKeys) {
-                    if (!realEdges.stream().anyMatch(e -> e.getDepKey().equals(depKey))) {
-                        createLabelledGoldEdge(0, curr, rootKey, depKey, candidates, EdgeType.Root);
-                    }
-                }
-            } else {
-                for (NodeKey depKey : depKeys) {
+
+            // We assume no two mention contains the same depKey in input.
+            for (NodeKey depKey : depKeys) {
+                if (!keysWithAntecedents.contains(depKey)) {
                     createLabelledGoldEdge(0, curr, rootKey, depKey, candidates, EdgeType.Root);
-//                    logger.debug("Linking " + curr + " " + depKey + " to root.");
-//                    logger.debug(edge.getLabelledEdge(candidates, rootKey, depKey).toString());
                 }
             }
         }
@@ -295,14 +267,6 @@ public class MentionGraph implements Serializable {
         return allRelations;
     }
 
-//    public MentionNode getNode(int index) {
-//        return mentionNodes[index];
-//    }
-
-//    public MentionNode[] getMentionNodes() {
-//        return mentionNodes;
-//    }
-
     public MentionGraphEdge getMentionGraphEdge(int dep, int gov) {
         if (dep == 0) {
             return null;
@@ -310,9 +274,8 @@ public class MentionGraph implements Serializable {
         return getEdge(dep, gov);
     }
 
-    public LabelledMentionGraphEdge getLabelledEdge(List<MentionCandidate> mentions, NodeKey govKey,
-                                                    NodeKey depKey) {
-        return getEdge(getNodeIndex(depKey.getIndex()), getNodeIndex(govKey.getIndex()))
+    public LabelledMentionGraphEdge getLabelledEdge(List<MentionCandidate> mentions, NodeKey govKey, NodeKey depKey) {
+        return getEdge(getNodeIndex(depKey.getCandidateIndex()), getNodeIndex(govKey.getCandidateIndex()))
                 .getLabelledEdge(mentions, govKey, depKey);
     }
 
@@ -404,7 +367,10 @@ public class MentionGraph implements Serializable {
             if (mentionGraphEdgeArray != null) {
                 for (MentionGraphEdge mentionGraphEdge : mentionGraphEdgeArray) {
                     if (mentionGraphEdge != null) {
-                        sb.append("\t").append(mentionGraphEdge.toString()).append("\n");
+                        for (Table.Cell<NodeKey, NodeKey, LabelledMentionGraphEdge> edgeCell : mentionGraphEdge
+                                .getRealLabelledEdges().cellSet()) {
+                            sb.append("\t").append(edgeCell.getValue().toString()).append("\n");
+                        }
                     }
                 }
             }
@@ -427,5 +393,9 @@ public class MentionGraph implements Serializable {
 
     public boolean isRoot(int nodeIndex) {
         return nodeIndex == rootIndex;
+    }
+
+    public boolean hasAntecedent(NodeKey anaphoraNode) {
+        return keysWithAntecedents.contains(anaphoraNode);
     }
 }

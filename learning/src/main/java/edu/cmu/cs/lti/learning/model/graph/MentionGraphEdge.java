@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +33,8 @@ public class MentionGraphEdge implements Serializable {
 
     private Table<NodeKey, NodeKey, LabelledMentionGraphEdge> typedEdges;
 
-    private List<LabelledMentionGraphEdge> realLabelledEdges;
+    // Gov key, dep Key, the actual edge.
+    private Table<NodeKey, NodeKey, LabelledMentionGraphEdge> realLabelledEdges;
 
     private final MentionGraph hostingGraph;
     private final int govIdx;
@@ -59,14 +59,14 @@ public class MentionGraphEdge implements Serializable {
         this.govIdx = gov;
         this.depIdx = dep;
 
-        realLabelledEdges = new ArrayList<>();
+        realLabelledEdges = HashBasedTable.create();
     }
 
     void addRealEdge(List<MentionCandidate> candidates, NodeKey realGovKey, NodeKey realDepKey,
                      EdgeType edgeType) {
         LabelledMentionGraphEdge edge = createLabelledEdge(candidates, edgeType, realGovKey, realDepKey);
         edge.setActualEdgeType(edgeType);
-        realLabelledEdges.add(edge);
+        realLabelledEdges.put(edge.getGovKey(), edge.getDepKey(), edge);
     }
 
     private void extractNoLabelFeatures(List<MentionCandidate> mentions, NodeKey govKey, NodeKey depKey) {
@@ -96,6 +96,15 @@ public class MentionGraphEdge implements Serializable {
         return rawFeaturesLabelIndependent;
     }
 
+    /**
+     * Some features are dependent of the node, specifically, depends on the type or realis of the node. Such
+     * features should be extracted when needed.
+     *
+     * @param mentions
+     * @param govKey
+     * @param depKey
+     * @return
+     */
     public TObjectDoubleMap<String> extractNodeDependentFeatures(List<MentionCandidate> mentions, NodeKey govKey,
                                                                  NodeKey depKey) {
         int depMentionIdx = hostingGraph.getCandidateIndex(depIdx);
@@ -104,9 +113,9 @@ public class MentionGraphEdge implements Serializable {
 
         if (isRoot()) {
             MentionCandidate mention = mentions.get(depMentionIdx);
-            extractor.extractCandidateRelated(mention, rawFeaturesNodeDependent, depKey);
+            extractor.extractLabelRelated(mention, rawFeaturesNodeDependent, depKey);
         } else {
-            extractor.extractCandidateRelated(mentions, govKey, depKey, rawFeaturesNodeDependent);
+            extractor.extractLabelRelated(mentions, govKey, depKey, rawFeaturesNodeDependent);
         }
 
         return rawFeaturesNodeDependent;
@@ -147,13 +156,14 @@ public class MentionGraphEdge implements Serializable {
     }
 
     public EdgeType getRealEdgeType() {
-        if (realLabelledEdges.size() == 0) {
-            return null;
+        EdgeType type = null;
+        for (Table.Cell<NodeKey, NodeKey, LabelledMentionGraphEdge> edgeCell : realLabelledEdges.cellSet()) {
+            type = edgeCell.getValue().getEdgeType();
         }
-        return realLabelledEdges.get(0).getEdgeType();
+        return type;
     }
 
-    public List<LabelledMentionGraphEdge> getRealLabelledEdges() {
+    public Table<NodeKey, NodeKey, LabelledMentionGraphEdge> getRealLabelledEdges() {
         return realLabelledEdges;
     }
 

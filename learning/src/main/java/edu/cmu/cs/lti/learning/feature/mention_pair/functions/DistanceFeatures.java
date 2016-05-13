@@ -37,13 +37,16 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
     @Override
     public void initDocumentWorkspace(JCas context) {
         documentType = getDocumentType(context);
+
+
+
     }
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
             candidates, NodeKey firstNode, NodeKey secondNode) {
-        MentionCandidate firstCandidate = candidates.get(firstNode.getIndex());
-        MentionCandidate secondCandidate = candidates.get(secondNode.getIndex());
+        MentionCandidate firstCandidate = candidates.get(firstNode.getCandidateIndex());
+        MentionCandidate secondCandidate = candidates.get(secondNode.getCandidateIndex());
         thresholdedSentenceDistance(featuresNoLabel, firstCandidate, secondCandidate);
     }
 
@@ -70,7 +73,6 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
 
         if (firstSentence.getIndex() == 0 && secondSentence.getIndex() == 1) {
             addBoolean(rawFeatures, "TitleAndFirstSent");
-
         }
 
         int sentenceInBetween = Math.abs(firstSentence.getIndex() - secondSentence.getIndex());
@@ -82,14 +84,13 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
             }
         }
 
-        rawFeatures.put(FeatureUtils.formatFeatureName("SentenceDistance", "i>" +
-                lastSentenceThreshold), 1);
+        rawFeatures.put(FeatureUtils.formatFeatureName("SentenceDistance", "i>" + lastSentenceThreshold), 1);
     }
 
     private void thresholdedMentionDistance(TObjectDoubleMap<String> rawFeatures, List<MentionCandidate> candidates,
                                             NodeKey firstNode, NodeKey secondNode) {
-        int firstIndex = firstNode.getIndex();
-        int secondIndex = secondNode.getIndex();
+        int firstIndex = firstNode.getCandidateIndex();
+        int secondIndex = secondNode.getCandidateIndex();
 
         int left, right;
         if (firstIndex < secondIndex) {
@@ -102,10 +103,13 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
 
         int mentionInBetween = 0;
         for (int i = left + 1; i < right; i++) {
-            if (!candidates.get(i).isEvent()) {
+//            logger.debug(i + " is " + candidates.get(i).getMentionType() + " " + candidates.get(i).isEvent());
+            if (candidates.get(i).isEvent()) {
                 mentionInBetween++;
             }
         }
+
+//        logger.debug("Mention distance is " + mentionInBetween + " between " + left + " " + right);
 
         for (int mentionThreshold : mentionThresholds) {
             if (mentionInBetween <= mentionThreshold) {
@@ -114,8 +118,7 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
                 return;
             }
         }
-        rawFeatures.put(FeatureUtils.formatFeatureName("MentionDistance",
-                "i>" + lastMentionTreshold), 1);
+        rawFeatures.put(FeatureUtils.formatFeatureName("MentionDistance", "i>" + lastMentionTreshold), 1);
     }
 
     private String getDocumentType(JCas context) {

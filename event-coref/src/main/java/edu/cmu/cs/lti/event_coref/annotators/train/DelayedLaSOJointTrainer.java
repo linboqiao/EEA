@@ -5,25 +5,22 @@ import com.google.common.collect.SetMultimap;
 import edu.cmu.cs.lti.emd.annotators.train.TokenLevelEventMentionCrfTrainer;
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
-import edu.cmu.cs.lti.learning.model.graph.EdgeType;
-import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
-import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
+import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SerializationUtils;
-import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -37,8 +34,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
 import static edu.cmu.cs.lti.learning.model.ModelConstants.TYPE_MODEL_NAME;
@@ -109,7 +107,7 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
 
         try {
             decoder = new BeamCrfLatentTreeDecoder(updater.getWeightVector(TYPE_MODEL_NAME), realisModel,
-                    updater.getWeightVector(COREF_MODEL_NAME), realisExtractor, crfExtractor, mentionPairExtractor,
+                    updater.getWeightVector(COREF_MODEL_NAME), realisExtractor, crfExtractor,
                     updater, mentionLossType);
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException
                 | InstantiationException e) {
@@ -120,7 +118,9 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         List<StanfordCorenlpToken> allTokens = new ArrayList<>(JCasUtil.select(aJCas, StanfordCorenlpToken.class));
-        List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
+        List<EventMention> allMentions = MentionUtils.clearDuplicates(
+                new ArrayList<>(JCasUtil.select(aJCas, EventMention.class))
+        );
 
         // Each token is a candidate.
         List<MentionCandidate> systemCandidates = MentionUtils.createCandidatesFromTokens(aJCas, allTokens);
@@ -130,12 +130,12 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
         SetMultimap<Integer, Integer> candidate2Split = HashMultimap.create();
         List<String> splitCandidateTypes = new ArrayList<>();
         TIntIntMap mention2SplitCandidate = new TIntIntHashMap();
-        int numSplitCandidates = processCandidates(allMentions, goldCandidates, candidate2Split,
+        int numSplitCandidates = MentionUtils.processCandidates(allMentions, goldCandidates, candidate2Split,
                 mention2SplitCandidate, splitCandidateTypes);
 
         // Convert mention clusters to split candidate clusters.
         Map<Integer, Integer> mention2event = MentionUtils.groupEventClusters(allMentions);
-        Map<Integer, Integer> splitCandidate2EventId = mapCandidate2Events(numSplitCandidates,
+        Map<Integer, Integer> splitCandidate2EventId = MentionUtils.mapCandidate2Events(numSplitCandidates,
                 mention2SplitCandidate, mention2event);
 
         // Read the relations.
@@ -151,78 +151,6 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
         decoder.decode(aJCas, mentionGraph, systemCandidates, goldCandidates, false);
 //        logger.debug("Done decoding last one.");
     }
-
-    private int processCandidates(List<EventMention> mentions, List<MentionCandidate> goldCandidates,
-                                  SetMultimap<Integer, Integer> candidate2Split, TIntIntMap mention2SplitCandidate,
-                                  List<String> splitCandidateTypes) {
-        SetMultimap<Word, Integer> head2Mentions = HashMultimap.create();
-
-        for (int i = 0; i < mentions.size(); i++) {
-            head2Mentions.put(mentions.get(i).getHeadWord(), i);
-        }
-
-        int splitCandidateId = 0;
-        for (int candidateIndex = 0; candidateIndex < goldCandidates.size(); candidateIndex++) {
-            MentionCandidate candidate = goldCandidates.get(candidateIndex);
-            Word candidateHead = candidate.getHeadWord();
-            if (head2Mentions.containsKey(candidateHead)) {
-
-                Set<Integer> correspondingMentions = head2Mentions.get(candidateHead);
-                String mentionType = MentionTypeUtils.joinMultipleTypes(correspondingMentions.stream()
-                        .map(mentions::get).map(EventMention::getEventType).collect(Collectors.toList()));
-                candidate.setMentionType(mentionType);
-
-//                logger.debug(String.format("Candidate Id : %d, split type : %d", candidateIndex, splitCandidateId));
-//                logger.debug(String.format("%s types: %s", correspondingMentions.size(), mentionType));
-
-                for (Integer mentionId : head2Mentions.get(candidateHead)) {
-                    EventMention mention = mentions.get(mentionId);
-                    candidate.setRealis(mention.getRealisType());
-                    candidate2Split.put(candidateIndex, splitCandidateId);
-                    splitCandidateTypes.add(mention.getEventType());
-                    mention2SplitCandidate.put(mentionId, splitCandidateId);
-                    splitCandidateId++;
-                }
-            } else {
-                candidate.setMentionType(ClassAlphabet.noneOfTheAboveClass);
-                candidate.setRealis(ClassAlphabet.noneOfTheAboveClass);
-                splitCandidateTypes.add(ClassAlphabet.noneOfTheAboveClass);
-                candidate2Split.put(candidateIndex, splitCandidateId);
-                splitCandidateId++;
-            }
-        }
-
-//        logger.debug(String.format("Number of mentions %d, number of candidates %d, number of split types %d",
-//                mentions.size(), goldCandidates.size(), splitCandidateId));
-
-        return splitCandidateId;
-    }
-
-    private Map<Integer, Integer> mapCandidate2Events(int numCandidates, TIntIntMap mention2Candidate,
-                                                      Map<Integer, Integer> mention2event) {
-        Map<Integer, Integer> candidate2Events = new HashMap<>();
-
-        final MutableInt maxEventId = new MutableInt(0);
-        mention2Candidate.forEachEntry((mentionId, candidateId) -> {
-            int eventId = mention2event.get(mentionId);
-            candidate2Events.put(candidateId, eventId);
-            if (eventId > maxEventId.getValue()) {
-                maxEventId.setValue(eventId);
-            }
-            return true;
-        });
-
-
-        for (int i = 0; i < numCandidates; i++) {
-            if (!candidate2Events.containsKey(i)) {
-                maxEventId.increment();
-                candidate2Events.put(i, maxEventId.getValue());
-            }
-        }
-
-        return candidate2Events;
-    }
-
 
     public static void saveModels(File modelOutputDirectory) throws FileNotFoundException {
         edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(modelOutputDirectory);

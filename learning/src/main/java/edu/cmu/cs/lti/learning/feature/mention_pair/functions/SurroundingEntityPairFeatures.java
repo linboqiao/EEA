@@ -44,22 +44,19 @@ public class SurroundingEntityPairFeatures extends AbstractMentionPairFeatures {
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
             candidates, NodeKey firstNode, NodeKey secondNode) {
-        MentionCandidate firstCandidate = candidates.get(firstNode.getIndex());
-        MentionCandidate secondCandidate = candidates.get(secondNode.getIndex());
+        MentionCandidate firstCandidate = candidates.get(firstNode.getCandidateIndex());
+        MentionCandidate secondCandidate = candidates.get(secondNode.getCandidateIndex());
 
-        StanfordEntityMention firstCloestMention = closestEntityMention(firstCandidate);
-        StanfordEntityMention secondCloestMention = closestEntityMention(secondCandidate);
+        StanfordEntityMention firstClosestMention = closestEntityMention(firstCandidate);
+        StanfordEntityMention secondClosestMention = closestEntityMention(secondCandidate);
 
-        closestTypePairFeature(featuresNoLabel, firstCloestMention, secondCloestMention);
-        closestSurfacePairFeature(featuresNoLabel, firstCloestMention, secondCloestMention);
-
+        closestTypePairFeature(featuresNoLabel, firstClosestMention, secondClosestMention);
+        closestSurfacePairFeature(featuresNoLabel, firstClosestMention, secondClosestMention);
     }
 
     @Override
     public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey
-
-                                                secondNode) {
+                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
 
     }
 
@@ -123,7 +120,11 @@ public class SurroundingEntityPairFeatures extends AbstractMentionPairFeatures {
         for (StanfordEntityMention entityMention : mentionsBySentence.get(candidate.getContainedSentence())) {
             int distance = Math.abs(entityMention.getHead().getIndex() - candidate.getHeadWord().getIndex());
             if (distance < minDistance) {
-                closestEntityMention = entityMention;
+                // TODO currently only take entities with a type.
+                if (entityMention.getEntityType() != null) {
+                    closestEntityMention = entityMention;
+                    minDistance = distance;
+                }
             }
         }
         return closestEntityMention;

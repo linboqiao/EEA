@@ -83,7 +83,7 @@ public class PairFeatureExtractor implements Serializable {
      * @param depKey           The node key for the dependent
      * @return Feature vector of this mention against the other
      */
-    public void extractCandidateRelated(MentionCandidate mentionCandidate, TObjectDoubleMap<String>
+    public void extractLabelRelated(MentionCandidate mentionCandidate, TObjectDoubleMap<String>
             rawFeaturesNeedLabel, NodeKey depKey) {
         featureFunctions.forEach(ff -> {
             ff.extractCandidateRelated(context, rawFeaturesNeedLabel, mentionCandidate, depKey);
@@ -96,11 +96,11 @@ public class PairFeatureExtractor implements Serializable {
      *
      * @param candidates
      * @param firstNode
-     * @param secondNode @return Feature vector of this mention against the other
+     * @param secondNode
+     * @return Feature vector of this mention against the other
      */
     public void extract(List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode,
-                        TObjectDoubleMap<String>
-            rawFeaturesNoLabel) {
+                        TObjectDoubleMap<String> rawFeaturesNoLabel) {
         featureFunctions.forEach(ff -> {
             ff.extract(context, rawFeaturesNoLabel, candidates, firstNode, secondNode);
         });
@@ -111,10 +111,11 @@ public class PairFeatureExtractor implements Serializable {
      *
      * @param candidates
      * @param firstKey
-     * @param secondKey  @return Feature vector of this mention against the other
+     * @param secondKey
+     * @return Feature vector of this mention against the other
      */
-    public void extractCandidateRelated(List<MentionCandidate> candidates, NodeKey firstKey, NodeKey secondKey,
-                                        TObjectDoubleMap<String> rawFeaturesNeedLabel) {
+    public void extractLabelRelated(List<MentionCandidate> candidates, NodeKey firstKey, NodeKey secondKey,
+                                    TObjectDoubleMap<String> rawFeaturesNeedLabel) {
         featureFunctions.forEach(ff -> {
             ff.extractCandidateRelated(context, rawFeaturesNeedLabel, candidates, firstKey, secondKey);
         });

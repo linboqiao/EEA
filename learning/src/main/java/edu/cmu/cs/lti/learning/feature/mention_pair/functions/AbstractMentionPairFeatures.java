@@ -35,7 +35,7 @@ public abstract class AbstractMentionPairFeatures {
     /**
      * Extract features from the annotation pair, without label specific features.
      *  @param documentContext The UIMA context.
-     * @param featuresNoLabel Features don't need labels will be added to this raw feature map.
+     * @param featuresNoLabel Features don't need labels.
      * @param candidates
      * @param firstNode
      * @param secondNode
@@ -44,9 +44,9 @@ public abstract class AbstractMentionPairFeatures {
                                  List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode);
 
     /**
-     * Extract features from the annotation pair, with candidate specific features.
+     * Extract features from the annotation pair, with Label specific features.
      * @param documentContext   The UIMA context.
-     * @param featuresNeedLabel Features don't need labels will be added to this raw feature map.
+     * @param featuresNeedLabel Features labels will be added to this raw feature map.
      * @param candidates
      * @param firstNode
      * @param secondNode
@@ -59,7 +59,7 @@ public abstract class AbstractMentionPairFeatures {
     /**
      * Extract features from the annotation pair, with label specific features.
      *  @param documentContext The UIMA context
-     * @param featuresNoLabel Features need labels will be added to this raw feature map.
+     * @param featuresNoLabel Features don't need labels.
      * @param secondCandidate Second mention to extract from.
      * @param secondNode The node key to extract from.
      */

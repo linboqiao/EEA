@@ -132,7 +132,7 @@ public class MentionSubGraph {
             SubGraphEdge thisEdge = thisEdgesFromDep.entrySet().iterator().next().getValue();
 
             if (referenceEdge.getGov() != thisEdge.getGov()) {
-                logger.debug("Loss because different antecedent : " + thisEdge + " vs " + referenceEdge);
+//                logger.debug("Loss because different antecedent : " + thisEdge + " vs " + referenceEdge);
                 if (thisEdge.getEdgeType() == EdgeType.Root) {
                     loss += 1.5;
                 } else {
@@ -142,14 +142,14 @@ public class MentionSubGraph {
                 if (referenceEdge.getEdgeType() != thisEdge.getEdgeType()) {
                     // NOTE: this should not happen when we only have one type other than root, because types will be
                     // deterministic.
-                    logger.debug("Loss because different type : " + thisEdge + " vs " + referenceEdge);
+//                    logger.debug("Loss because different type : " + thisEdge + " vs " + referenceEdge);
                     loss += 1;
                 } else if (!referenceEdge.getDepKey().getMentionType().equals(thisEdge.getDepKey().getMentionType())) {
                     loss += 0.5;
-                    logger.debug("Loss because different dep key type : " + thisEdge + " vs " + referenceEdge);
+//                    logger.debug("Loss because different dep key type : " + thisEdge + " vs " + referenceEdge);
                 } else if (!referenceEdge.getGovKey().getMentionType().equals(thisEdge.getGovKey().getMentionType())) {
                     loss += 0.5;
-                    logger.debug("Loss because different gov key type : " + thisEdge + " vs " + referenceEdge);
+//                    logger.debug("Loss because different gov key type : " + thisEdge + " vs " + referenceEdge);
                 }
             }
         }
@@ -237,7 +237,6 @@ public class MentionSubGraph {
                         break;
                     }
                 }
-
             } else {
                 // For all other relation types, simply record them first.
                 logger.info(String.format("Adding relation %s between %s and %s", type, govNode, depNode));

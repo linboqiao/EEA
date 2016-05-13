@@ -74,7 +74,8 @@ public class DiscriminativeUpdater {
         featureAlphabets.put(name, weightVector.getFeatureAlphabet());
         allDelta.put(name, newDelta(name));
         allLoss.put(name, 0);
-//        trainingStats.put(name, new TrainingStats(5, name));
+
+        logger.info("Adding weight vector " + name);
     }
 
     public GraphWeightVector getWeightVector(String weightKey) {
@@ -83,7 +84,7 @@ public class DiscriminativeUpdater {
 
     public void recordLaSOUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
         if (!decodingAgenda.contains(goldAgenda)) {
-//            logger.debug("Recording differences for LaSO update.");
+//            logger.info("Recording differences for LaSO update.");
             recordUpdate(decodingAgenda, goldAgenda);
 
             NodeLinkingState bestDecoding = decodingAgenda.getBeamStates().get(0);
@@ -120,39 +121,57 @@ public class DiscriminativeUpdater {
 //        logger.debug(goldAgenda.getBeamStates().get(0).toString());
 
         // Compute delta on coreferecence.
-        GraphFeatureVector deltaCorefVector = allDelta.get(COREF_MODEL_NAME);
+        if (updateCoref) {
+            GraphFeatureVector deltaCorefVector = allDelta.get(COREF_MODEL_NAME);
+//            logger.debug("Computing delta on gold and decoding.");
 
-//        logger.debug("Computing delta on gold and decoding.");
+            for (Map.Entry<EdgeType, FeatureVector> goldFv : goldAgenda.getBestDeltaCorefVectors().entrySet()) {
+                deltaCorefVector.extend(goldFv.getValue(), goldFv.getKey().name());
+//                logger.debug("Gold feature edge type : " + goldFv.getKey());
+//                logger.debug(goldFv.getValue().readableString());
+            }
+            for (Map.Entry<EdgeType, FeatureVector> decoding : decodingAgenda.getBestDeltaCorefVectors().entrySet()) {
+                deltaCorefVector.extend(decoding.getValue().negation(), decoding.getKey().name());
+//                logger.debug("System feature edge type : " + decoding.getKey());
+//                logger.debug(decoding.getValue().readableString());
+            }
 
-        for (Map.Entry<EdgeType, FeatureVector> goldFv : goldAgenda.getBestDeltaCorefVectors()
-                .entrySet()) {
-            deltaCorefVector.extend(goldFv.getValue(), goldFv.getKey().name());
-//            logger.debug("Gold feature edge type : " + goldFv.getKey());
-//            logger.debug(goldFv.getValue().toString());
+            if (deltaCorefVector.getFeatureL2() == 0) {
+                double loss = decodingAgenda.getBeamStates().get(0).getDecodingTree().getLoss(goldAgenda
+                        .getBeamStates().get(0).getDecodingTree());
+
+                logger.warn("Loss is  " + loss + " but L2 is 0 for coref vector, features are not good enough.");
+
+                logger.warn("Best Decoding is : ");
+                logger.warn(decodingAgenda.getBeamStates().get(0).toString());
+
+                logger.warn("Gold is : ");
+                logger.warn(goldAgenda.getBeamStates().get(0).toString());
+
+                logger.warn("Delta coref vector is :");
+                logger.warn(deltaCorefVector.readableNodeVector());
+            }
         }
-        for (Map.Entry<EdgeType, FeatureVector> decoding : decodingAgenda.getBestDeltaCorefVectors()
-                .entrySet()) {
-            deltaCorefVector.extend(decoding.getValue().negation(), decoding.getKey().name());
-//            logger.debug("System feature edge type : " + decoding.getValue());
-//            logger.debug(decoding.getValue().toString());
-        }
 
-        // Compute delta on labeling.
-        GraphFeatureVector goldLabelFeature = goldAgenda.getBestDeltaLabelFv();
-        GraphFeatureVector decodingLabelFeature = decodingAgenda.getBestDeltaLabelFv();
+        if (updateMention) {
+            // Compute delta on labeling.
+            GraphFeatureVector goldLabelFeature = goldAgenda.getBestDeltaLabelFv();
+            GraphFeatureVector decodingLabelFeature = decodingAgenda.getBestDeltaLabelFv();
 
 //        logger.debug("Showing mention features from  gold");
 //        logger.debug(goldLabelFeature.readableNodeVector());
 //        logger.debug("Showing mention features from  decoding");
 //        logger.debug(decodingLabelFeature.readableNodeVector());
 
-        GraphFeatureVector deltaMentionVector = allDelta.get(TYPE_MODEL_NAME);
-        deltaMentionVector.extend(goldLabelFeature);
-        deltaMentionVector.extend(decodingLabelFeature, -1);
+            GraphFeatureVector deltaMentionVector = allDelta.get(TYPE_MODEL_NAME);
+            deltaMentionVector.extend(goldLabelFeature);
+            deltaMentionVector.extend(decodingLabelFeature, -1);
 
-//        logger.debug("Record the delta");
-//        logger.debug("Current delta:");
-//        logger.debug(deltaMentionVector.readableNodeVector());
+//            logger.debug("Record the delta");
+//            logger.debug("Current delta:");
+//            logger.debug(deltaMentionVector.readableNodeVector());
+
+        }
     }
 
     private void addLoss(String name, double loss) {
@@ -186,25 +205,33 @@ public class DiscriminativeUpdater {
         if (totalLoss != 0) {
             double tau = defaultStepSize;
 
+            boolean isValid = true;
             if (paUpdate) {
                 double corefL2 = updateCoref ? corefDelta.getFeatureL2() : 0;
                 double mentionL2 = updateMention ? mentionDelta.getFeatureL2() : 0;
                 double l2 = Math.sqrt(Math.pow(corefL2, 2) + Math.pow(mentionL2, 2));
+
                 tau = totalLoss / l2;
+
+                if (l2 == 0) {
+                    //Make sure we don't update when the features are the same, but decoding results are different.
+                    isValid = false;
+                }
             }
 
-//            logger.debug("Update with loss " + tau);
+//            logger.debug("Update with step size " + tau);
+            if (isValid) {
+                if (updateCoref) {
+                    GraphWeightVector corefWeights = allWeights.get(COREF_MODEL_NAME);
+                    corefWeights.updateWeightsBy(corefDelta, tau);
+                    corefWeights.updateAverageWeights();
+                }
 
-            if (updateCoref) {
-                GraphWeightVector corefWeights = allWeights.get(COREF_MODEL_NAME);
-                corefWeights.updateWeightsBy(corefDelta, tau);
-                corefWeights.updateAverageWeights();
-            }
-
-            if (updateMention) {
-                GraphWeightVector mentionWeights = allWeights.get(TYPE_MODEL_NAME);
-                mentionWeights.updateWeightsBy(mentionDelta, tau);
-                mentionWeights.updateAverageWeights();
+                if (updateMention) {
+                    GraphWeightVector mentionWeights = allWeights.get(TYPE_MODEL_NAME);
+                    mentionWeights.updateWeightsBy(mentionDelta, tau);
+                    mentionWeights.updateAverageWeights();
+                }
             }
         }
     }

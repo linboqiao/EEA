@@ -16,17 +16,18 @@ public class MentionCandidate {
     private Sentence containedSentence;
     private String realis;
     private String mentionType;
-    private int index;
+    private int candidateIndex;
     private boolean isEvent;
 
     private MultiNodeKey key;
 
-    public MentionCandidate(int begin, int end, Sentence containedSentence, Word headWord, int index) {
+    // TODO check whether the index is used correctly.
+    public MentionCandidate(int begin, int end, Sentence containedSentence, Word headWord, int candidateIndex) {
         this.begin = begin;
         this.containedSentence = containedSentence;
         this.end = end;
         this.headWord = headWord;
-        this.index = index;
+        this.candidateIndex = candidateIndex;
         isEvent = false;
     }
 
@@ -45,7 +46,7 @@ public class MentionCandidate {
         String[] types = MentionTypeUtils.splitToMultipleTypes(mentionType);
         NodeKey[] singleKeys = new NodeKey[types.length];
         for (int i = 0; i < types.length; i++) {
-            singleKeys[i] = new NodeKey(begin, end, types[i], realis, index);
+            singleKeys[i] = new NodeKey(begin, end, types[i], realis, candidateIndex);
         }
         key = new MultiNodeKey(mentionType, singleKeys);
     }
@@ -93,4 +94,8 @@ public class MentionCandidate {
     public void setEvent(boolean event) {
         isEvent = event;
     }
+
+//    public int getMentionIndex() {
+//        return mentionIndex;
+//    }
 }

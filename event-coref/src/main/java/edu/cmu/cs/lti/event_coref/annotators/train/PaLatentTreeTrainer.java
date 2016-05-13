@@ -8,15 +8,15 @@ import edu.cmu.cs.lti.event_coref.decoding.LatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
-import edu.cmu.cs.lti.script.type.EventMentionRelation;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import edu.cmu.cs.lti.utils.FileUtils;
 import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;
 import gnu.trove.iterator.TIntObjectIterator;
@@ -113,9 +113,9 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
-        List<EventMentionRelation> allMentionRelations = new ArrayList<>(
-                JCasUtil.select(aJCas, EventMentionRelation.class));
+        List<EventMention> allMentions = MentionUtils.clearDuplicates(
+                new ArrayList<>(JCasUtil.select(aJCas, EventMention.class))
+        );
 
         int eventIdx = 0;
         for (Event event : JCasUtil.select(aJCas, Event.class)) {
@@ -131,26 +131,25 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         Map<Integer, Integer> mentionId2EventId = MentionUtils.groupEventClusters(allMentions);
 
-        TIntIntMap mention2Candidate = new TIntIntHashMap();
-        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions, mention2Candidate);
+        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions);
 
-        SetMultimap<Integer, Integer> candidate2SplitMentions = HashMultimap.create();
+        // Each candidate can correspond to multiple nodes.
+        SetMultimap<Integer, Integer> candidate2SplitNodes = HashMultimap.create();
+        // A gold mention has a one to one mapping to a node in current case.
+        TIntIntMap mention2SplitNodes = new TIntIntHashMap();
+        for (int i = 0; i < allMentions.size(); i++) {
+            candidate2SplitNodes.put(i, i);
+            mention2SplitNodes.put(i, i);
+        }
 
-        // Mention and candidate have a one to one match in this case, but you must provide the actual mentions (do
-        // not merge types)
-        mention2Candidate.forEachEntry((mentionId, candidateId) -> {
-            candidate2SplitMentions.put(mentionId, candidateId);
-            return true;
-        });
-
-        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas,
-                mention2Candidate, allMentions);
+        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2SplitNodes,
+                allMentions);
 
         List<String> mentionTypes = allMentions.stream().map(EventMention::getEventType).collect(Collectors.toList());
 
 
         if (mentionGraph == null) {
-            mentionGraph = new MentionGraph(candidates, candidate2SplitMentions, mentionTypes, mentionId2EventId,
+            mentionGraph = new MentionGraph(candidates, candidate2SplitNodes, mentionTypes, mentionId2EventId,
                     relations, extractor, true);
             graphCacher.addWithMultiKey(mentionGraph, cacheKey);
         }
@@ -159,10 +158,9 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, extractor);
         if (!predictedTree.graphMatch()) {
             MentionSubGraph latentTree = mentionGraph.getLatentTree(weights, candidates);
-            double loss = predictedTree.getLoss(latentTree);
-            trainingStats.addLoss(logger, loss / mentionGraph.numNodes());
-            update(predictedTree, latentTree);
+            double loss = update(predictedTree, latentTree);
 
+            trainingStats.addLoss(logger, loss / mentionGraph.numNodes());
 //            logger.debug("Loss is " + loss);
 //            logger.debug("Predicted tree.");
 //            logger.debug(predictedTree.toString());
@@ -180,8 +178,8 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
      * @param predictedTree The predicted tree.
      * @param latentTree    The gold latent tree.
      */
-    private void update(MentionSubGraph predictedTree, MentionSubGraph latentTree) {
-        passiveAggressiveUpdate(predictedTree, latentTree);
+    private double update(MentionSubGraph predictedTree, MentionSubGraph latentTree) {
+        return passiveAggressiveUpdate(predictedTree, latentTree);
     }
 
     /**
@@ -206,25 +204,28 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
      * @param predictedTree The predicted tree.
      * @param latentTree    The gold latent tree.
      */
-    private void passiveAggressiveUpdate(MentionSubGraph predictedTree, MentionSubGraph latentTree) {
+    private double passiveAggressiveUpdate(MentionSubGraph predictedTree, MentionSubGraph latentTree) {
 //        logger.info(predictedTree.toString());
 //
 //        logger.info(latentTree.toString());
 
         GraphFeatureVector delta = latentTree.getDelta(predictedTree, classAlphabet, featureAlphabet);
 
-//        logger.info("Delta between the features are: ");
-//        logger.info(delta.readableNodeVector());
+        logger.info("Delta between the features are: ");
+        logger.info(delta.readableNodeVector());
         double loss = predictedTree.getLoss(latentTree);
         double l2 = getFeatureL2(delta);
-//        double deltaDotProd = weights.dotProd(delta);
-//        double tau = (deltaDotProd - loss) / l2;
+
         double tau = loss / l2;
 
-//        logger.info("Loss is " + loss + " update rate is " + tau + " l2 is " + l2);
+        logger.info("Loss is " + loss + " update rate is " + tau + " l2 is " + l2);
 
         weights.updateWeightsBy(delta, tau);
         weights.updateAverageWeights();
+
+        DebugUtils.pause();
+
+        return loss;
     }
 
     /**

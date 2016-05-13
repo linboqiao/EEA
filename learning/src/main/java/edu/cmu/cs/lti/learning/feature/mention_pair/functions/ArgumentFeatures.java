@@ -43,8 +43,8 @@ public class ArgumentFeatures extends AbstractMentionPairFeatures {
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures,
                         List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
-        MentionCandidate firstCandidate = candidates.get(firstNode.getIndex());
-        MentionCandidate secondCandidate = candidates.get(secondNode.getIndex());
+        MentionCandidate firstCandidate = candidates.get(firstNode.getCandidateIndex());
+        MentionCandidate secondCandidate = candidates.get(secondNode.getCandidateIndex());
 
         for (SemanticRelation firstLink : getArgumentLinks(firstCandidate.getHeadWord())) {
             for (SemanticRelation secondLink : getArgumentLinks(secondCandidate.getHeadWord())) {

@@ -51,15 +51,15 @@ public class EntityFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToke
     }
 
     private void closestEntityType(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> features) {
-        int closest = Integer.MAX_VALUE;
+        int minDistance = Integer.MAX_VALUE;
         String closestMentionType = null;
 
         for (int i = 0; i < sequence.size(); i++) {
             StanfordCorenlpToken token = sequence.get(i);
             if (token.getNerTag() != null) {
                 int distance = Math.abs(focus - i);
-                if (distance < closest) {
-                    closest = distance;
+                if (distance < minDistance) {
+                    minDistance = distance;
                     closestMentionType = token.getNerTag();
                 }
             }
@@ -73,7 +73,6 @@ public class EntityFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToke
     @Override
     public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
             globalFeatures, List<MultiNodeKey> knownStates) {
-
     }
 
 }

@@ -26,9 +26,10 @@ public class ForumRepeatFeature extends AbstractMentionPairFeatures {
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
-        MentionCandidate firstCandidate = candidates.get(firstNode.getIndex());
-        MentionCandidate secondCandidate = candidates.get(secondNode.getIndex());
+    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
+            candidates, NodeKey firstNode, NodeKey secondNode) {
+        MentionCandidate firstCandidate = candidates.get(firstNode.getCandidateIndex());
+        MentionCandidate secondCandidate = candidates.get(secondNode.getCandidateIndex());
 
         StanfordCorenlpSentence sentence1 = (StanfordCorenlpSentence) firstCandidate.getContainedSentence();
         StanfordCorenlpSentence sentence2 = (StanfordCorenlpSentence) secondCandidate.getContainedSentence();
@@ -48,9 +49,8 @@ public class ForumRepeatFeature extends AbstractMentionPairFeatures {
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel, List<MentionCandidate> candidates, NodeKey firstNode, NodeKey
-
-            secondNode) {
+    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
 
     }
 

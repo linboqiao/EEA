@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.learning.model.decoding;
 
+import com.google.common.collect.MinMaxPriorityQueue;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.LabelledMentionGraphEdge;
@@ -111,10 +112,16 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         return nodeResults.get(index);
     }
 
+    /**
+     * @return All nodes, including the root note.
+     */
     public List<MultiNodeKey> getNodeResults() {
         return nodeResults;
     }
 
+    /**
+     * @return Only the actual nodes.
+     */
     public List<MultiNodeKey> getActualNodeResults() {
         return nodeResults.subList(1, nodeResults.size());
     }
@@ -138,21 +145,6 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         }
     }
 
-    public void addLinkTo(List<MentionCandidate> candidates, int antecedent, NodeKey govKey,
-                          NodeKey depKey, EdgeType type) {
-        addLink(candidates, antecedent, nodeIndex, govKey, depKey, type);
-    }
-
-    public void addLink(List<MentionCandidate> mentionCandidates, int gov, int dep, NodeKey govKey,
-                        NodeKey depKey, EdgeType type) {
-//        System.out.println("Adding link from " + dep);
-//        System.out.println(govKey.toString());
-//        System.out.println(depKey.toString());
-
-        LabelledMentionGraphEdge edge = graph.getMentionGraphEdge(dep, gov).getLabelledEdge(mentionCandidates,
-                govKey, depKey);
-        decodingTree.addEdge(edge, type);
-    }
 
     public void addLink(List<MentionCandidate> mentionCandidates, EdgeKey edgeKey) {
         LabelledMentionGraphEdge edge = graph.getLabelledEdge(mentionCandidates,
@@ -167,9 +159,6 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 
     public Pair<Double, Double> loss(NodeLinkingState referenceState, SeqLoss labelLosser) {
         double labelLoss = computeLabelLoss(referenceState.getNodeResults(), labelLosser);
-
-//        logger.info("Label loss is " + labelLoss);
-//        DebugUtils.pause();
 
         double graphLoss = 0;
 
@@ -266,6 +255,11 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 
         return state;
     }
+
+    public static MinMaxPriorityQueue<NodeLinkingState> getReverseHeap(int maxSize) {
+        return MinMaxPriorityQueue.orderedBy(reverseComparator()).maximumSize(maxSize).create();
+    }
+
 //
 //    public Map<Integer, String> getAvailableNodeLabels() {
 //        Map<Integer, String> nodeTypes = new HashMap<>();

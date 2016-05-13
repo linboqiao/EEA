@@ -136,7 +136,6 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
         }
 
         for (Map.Entry<Span, Collection<EventMention>> shareSpanMentions : spanToMentions.asMap().entrySet()) {
-            Span mentionSpan = shareSpanMentions.getKey();
             Collection<EventMention> allSharedMentions = shareSpanMentions.getValue();
 
             // Create a merged type.
@@ -152,6 +151,7 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
 
             String jointType = MentionTypeUtils.joinMultipleTypes(allTypes.keySet());
 
+            // TODO investigate this, if it is correct here we don't need to filter later.
             int repeatCount = 0;
             for (TObjectIntIterator<String> iter = allTypes.iterator(); iter.hasNext(); ) {
                 iter.advance();
@@ -167,7 +167,7 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
             EventMention copiedMention = copyMention(toView, aSharedMention, jointType);
             // Record the number of times of multi tagging of the same type on the same span
             // the multi sense counts are not counted here.
-            // We set this to repeat count - 1 to record only additional mentions.
+            // We set this to (repeat count - 1) to record only additional mentions.
             copiedMention.setMultiTag(repeatCount - 1);
 
             // Multiple mentions can be mapped to one copied mention.

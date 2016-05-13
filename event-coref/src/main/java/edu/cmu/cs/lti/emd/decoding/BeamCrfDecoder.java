@@ -6,6 +6,7 @@ import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.decoding.LabelLinkAgenda;
 import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
+import edu.cmu.cs.lti.learning.model.decoding.StateDelta;
 import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -108,7 +109,9 @@ public class BeamCrfDecoder {
 //                logger.info(String.format("Decoding sentence %d, token %d: %s", sentIndex, sentTokenIndex,
 //                        sentenceTokens.get(sentTokenIndex).getCoveredText()));
                 decodingAgenda.prepareExpand();
-                goldAgenda.prepareExpand();
+                if (isTraining) {
+                    goldAgenda.prepareExpand();
+                }
 
                 // Extract features for the token.
                 FeatureVector nodeFeature = new RealValueHashFeatureVector(mentionFeatureAlphabet);
@@ -125,7 +128,8 @@ public class BeamCrfDecoder {
                     int classIndex = classScore.getKey();
                     double nodeTypeScore = classScore.getValue();
 
-//                    logger.debug("Type score for " + mentionTypeClassAlphabet.getClassName(classIndex) + " is " + nodeTypeScore);
+//                    logger.debug("Type score for " + mentionTypeClassAlphabet.getClassName(classIndex) + " is " +
+// nodeTypeScore);
 
                     final MultiNodeKey nodeKeys = setUpCandidate(predictionCandidates.get(docTokenIndex),
                             classIndex, ClassAlphabet.noneOfTheAboveClass);
@@ -161,8 +165,12 @@ public class BeamCrfDecoder {
 
                         newMentionFeatures.extend(globalFeature, classIndex);
 
-                        decodingAgenda.expand(nodeLinkingState, nodeKeys, nodeTypeScore + edgeTypeScore + globalScore,
-                                newMentionFeatures);
+//                        StateDelta decision = decodingAgenda.expand(nodeLinkingState);
+                        StateDelta decision = new StateDelta(nodeLinkingState);
+
+                        decision.addNode(nodeKeys, newMentionFeatures, nodeTypeScore + edgeTypeScore + globalScore);
+
+                        decodingAgenda.expand(decision);
                     }
                 }
 
@@ -179,7 +187,10 @@ public class BeamCrfDecoder {
                                 edgeFeatures, goldCandidates, docTokenIndex);
                         // For mention only decoding, the score of the gold mentions doesnt matter, since there is
                         // only one solution.
-                        goldAgenda.expand(goldState, goldResults, 0, goldMentionFeature);
+//                        StateDelta decision = goldAgenda.expand(goldState);
+                        StateDelta decision = new StateDelta(goldState);
+                        decision.addNode(goldResults, goldMentionFeature, 0);
+                        goldAgenda.expand(decision);
                     }
                     goldAgenda.updateStates();
 //                    logger.debug("Gold agenda: ");

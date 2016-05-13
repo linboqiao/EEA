@@ -50,8 +50,8 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
             candidates, NodeKey firstNode, NodeKey secondNode) {
-        MentionCandidate firstCandidate = candidates.get(firstNode.getIndex());
-        MentionCandidate secondCandidate = candidates.get(secondNode.getIndex());
+        MentionCandidate firstCandidate = candidates.get(firstNode.getCandidateIndex());
+        MentionCandidate secondCandidate = candidates.get(secondNode.getCandidateIndex());
 
         WordNetBasedEntity firstClosestEn = closestWordNetEntity(firstCandidate);
         WordNetBasedEntity secondClosestEn = closestWordNetEntity(secondCandidate);

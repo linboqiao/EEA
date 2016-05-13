@@ -19,8 +19,6 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.utils.Configuration;
-import gnu.trove.map.TIntIntMap;
-import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
@@ -116,8 +114,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
 //        logger.info("Clustering " + allMentions.size() + " mentions.");
 
-        TIntIntMap mention2Candidate = new TIntIntHashMap();
-        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions, mention2Candidate);
+        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions);
 
         extractor.initWorkspace(aJCas);
         MentionGraph mentionGraph = new MentionGraph(candidates, extractor, true);
@@ -138,7 +135,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
             Map<Span, EventMention> span2Mentions = new HashMap<>();
 
             for (Pair<Integer, String> typedNode : corefChain) {
-                int mentionIndex = mentionGraph.getCandidateIndex(typedNode.getLeft());
+                int mentionIndex = MentionGraph.getCandidateIndex(typedNode.getLeft());
                 EventMention mention = allMentions.get(mentionIndex);
                 Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());
                 if (!span2Mentions.containsKey(mentionSpan)) {
