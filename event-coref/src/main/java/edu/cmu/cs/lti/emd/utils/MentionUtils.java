@@ -17,6 +17,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.javatuples.Quartet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,6 +32,8 @@ import java.util.stream.IntStream;
  * @author Zhengzhong Liu
  */
 public class MentionUtils {
+    private static final Logger logger = LoggerFactory.getLogger(MentionUtils.class);
+
     /**
      * Convert event mentions into mention candidates.
      *
@@ -81,17 +85,18 @@ public class MentionUtils {
         }
 
         List<MentionCandidate> candidates = new ArrayList<>();
-        int candidaateIndex = 0;
+        int candidateIndex = 0;
         for (Map.Entry<Span, Collection<EventMention>> s2m : span2Mentions.asMap().entrySet()) {
             Set<String> allTypes = s2m.getValue().stream().map(EventMention::getEventType).collect(Collectors.toSet());
             String type = MentionTypeUtils.joinMultipleTypes(allTypes);
+
             EventMention mention = Iterables.get(s2m.getValue(), 0);
             String realis = mention.getRealisType();
             MentionCandidate candidate = new MentionCandidate(mention.getBegin(), mention.getEnd(),
-                    Iterables.get(mention2Sentence.get(mention), 0), mention.getHeadWord(), candidaateIndex);
+                    Iterables.get(mention2Sentence.get(mention), 0), mention.getHeadWord(), candidateIndex);
             candidate.setMentionType(type);
             candidate.setRealis(realis);
-            candidaateIndex++;
+            candidateIndex++;
             candidates.add(candidate);
         }
 
@@ -220,23 +225,23 @@ public class MentionUtils {
     public static int processCandidates(List<EventMention> mentions, List<MentionCandidate> goldCandidates,
                                         SetMultimap<Integer, Integer> candidate2Split,
                                         TIntIntMap mention2SplitCandidate, List<String> splitCandidateTypes) {
-        SetMultimap<Word, Integer> head2Mentions = HashMultimap.create();
+        SetMultimap<Span, Integer> span2Mentions = HashMultimap.create();
 
         for (int i = 0; i < mentions.size(); i++) {
-            head2Mentions.put(mentions.get(i).getHeadWord(), i);
+            span2Mentions.put(Span.of(mentions.get(i).getBegin(), mentions.get(i).getEnd()), i);
         }
 
         int splitCandidateId = 0;
         for (int candidateIndex = 0; candidateIndex < goldCandidates.size(); candidateIndex++) {
             MentionCandidate candidate = goldCandidates.get(candidateIndex);
-            Word candidateHead = candidate.getHeadWord();
-            if (head2Mentions.containsKey(candidateHead)) {
-                Set<Integer> correspondingMentions = head2Mentions.get(candidateHead);
+            Span candidateSpan = Span.of(candidate.getBegin(), candidate.getEnd());
+            if (span2Mentions.containsKey(candidateSpan)) {
+                Set<Integer> correspondingMentions = span2Mentions.get(candidateSpan);
                 String mentionType = MentionTypeUtils.joinMultipleTypes(correspondingMentions.stream()
                         .map(mentions::get).map(EventMention::getEventType).collect(Collectors.toList()));
                 candidate.setMentionType(mentionType);
 
-                for (Integer mentionId : head2Mentions.get(candidateHead)) {
+                for (Integer mentionId : span2Mentions.get(candidateSpan)) {
                     EventMention mention = mentions.get(mentionId);
                     candidate.setRealis(mention.getRealisType());
                     candidate2Split.put(candidateIndex, splitCandidateId);

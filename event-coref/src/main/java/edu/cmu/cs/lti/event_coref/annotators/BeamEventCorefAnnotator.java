@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
@@ -10,6 +11,7 @@ import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
+import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
@@ -80,27 +82,36 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
                 | InstantiationException e) {
             e.printStackTrace();
         }
+
+        logger.info("Using merged mentions " + mergeMention);
     }
 
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        // TODO make sure the mapping is correct.
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
 
-
         corefExtractor.initWorkspace(aJCas);
+
         Pair<MentionGraph, List<MentionCandidate>> graphAndCands = mergeMention ? getCombinedGraph(aJCas, allMentions) :
                 getSeparateGraph(aJCas, allMentions);
 
         MentionGraph mentionGraph = graphAndCands.getKey();
         List<MentionCandidate> candidates = graphAndCands.getValue();
+
         NodeLinkingState decodingState = decoder.decode(aJCas, mentionGraph, candidates);
 
-        logger.info(decodingState.toString());
+        ArrayListMultimap<Pair<Integer, String>, EventMention> node2Mention = ArrayListMultimap.create();
 
-        Map<Pair<Integer, String>, EventMention> node2Mention = new HashMap<>();
+        Map<Pair<Span, String>, EventMention> mentionMap = new HashMap<>();
+
+        for (EventMention mention : allMentions) {
+            mentionMap.put(Pair.of(Span.of(mention.getBegin(), mention.getEnd()), mention.getEventType()), mention);
+        }
 
         List<MultiNodeKey> nodeResults = decodingState.getNodeResults();
+
 
         for (int nodeIndex = 0; nodeIndex < nodeResults.size(); nodeIndex++) {
             MultiNodeKey nodeKey = nodeResults.get(nodeIndex);
@@ -111,36 +122,37 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
 
             for (NodeKey result : nodeKey) {
                 if (!result.getMentionType().equals(ClassAlphabet.noneOfTheAboveClass)) {
-                    EventMention mention = new EventMention(aJCas, result.getBegin(), result.getEnd());
-                    mention.setRealisType(result.getRealis());
-                    mention.setEventType(result.getMentionType());
-                    UimaAnnotationUtils.finishAnnotation(mention, COMPONENT_ID, 0, aJCas);
-                    node2Mention.put(Pair.of(nodeIndex, result.getMentionType()), mention);
+                    EventMention mention = mentionMap.get(Pair.of(Span.of(result.getBegin(), result.getEnd()),
+                            result.getMentionType()));
 
-                    logger.info(nodeIndex + " " + result + " is mapped to " + mention.getCoveredText());
+                    if (mention == null) {
+                        logger.warn("Cannot find mention at " + result);
+                    }
+
+                    node2Mention.put(Pair.of(nodeIndex, result.getMentionType()), mention);
                 }
             }
         }
-
         annotatePredictedCoreference(aJCas, decodingState.getDecodingTree(), node2Mention);
     }
 
     private void annotatePredictedCoreference(JCas aJCas, MentionSubGraph predictedTree,
-                                              Map<Pair<Integer, String>, EventMention> node2Mention) {
+                                              ArrayListMultimap<Pair<Integer, String>, EventMention> node2Mention) {
         predictedTree.resolveCoreference();
         List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
 
         for (List<Pair<Integer, String>> corefChain : corefChains) {
+
             List<EventMention> predictedChain = new ArrayList<>();
 
             for (Pair<Integer, String> typedNode : corefChain) {
-                EventMention mention = node2Mention.get(typedNode);
+                List<EventMention> mentions = node2Mention.get(typedNode);
 
-                if (mention == null) {
-                    logger.info(typedNode + " is not mapped.");
+                if (mentions == null) {
+                    logger.error(typedNode + " is not mapped.");
                 }
 
-                predictedChain.add(mention);
+                predictedChain.addAll(mentions);
             }
 
             if (predictedChain.size() > 1) {

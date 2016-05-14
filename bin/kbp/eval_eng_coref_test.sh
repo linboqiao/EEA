@@ -9,12 +9,20 @@ sys_predicted=${eval_dir}"lv1_realis_coref_all.tbf"
 gold_base="../data/project_data/cmu-script/mention/LDC/LDC2015R26/data/"
 gold_standard=${gold_base}"tbf/EvalEventHopper20150903.tbf"
 token_dir=${gold_base}"tkn"
-log_file_base="../logs/cmu-script/kbp/eng/eval/tree_coref/final"
+log_file_base="../logs/cmu-script/kbp/eng/eval/test/"
 
 
 #declare -a arr=("gold_type_realis_coref" "lv1_coref" "lv2_coref" "joint_gold_span" "joint" "coref_gold_span" "gold_type_coref" "lv1_coref_pa")
 #declare -a arr=("gold_type_realis_coref" "lv1_coref" "gold_type_coref" "lv1_coref_pa")
-declare -a arr=("lv1_coref" "lv1_coref_pa")
+#declare -a arr=("lv1_coref" "lv1_coref_pa")
+
+declare -a arr=("paMention_hamming" "paMention_noneHamming" "paMention_recallHamming" \
+"beamMention_hamming" "beamMention_recallHamming" "beamMention_noneHamming" \
+"delayedBeamMention_hamming" "delayedBeamMention_recallHamming" "delayedBeamMention_noneHamming" \
+"vanillaBeamMention" "vanillaMention" \
+"gold_type_coref" "gold_type_realis_coref" \
+"beam_coref_delayed_gold" "beam_coref_delayed_merged_gold" \
+"beam_coref_early_gold" "beam_coref_early_merged_gold")
 
 for sys_name in "${arr[@]}"
 do
