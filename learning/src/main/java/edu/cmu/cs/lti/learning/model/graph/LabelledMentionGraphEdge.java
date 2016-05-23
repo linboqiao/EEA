@@ -51,8 +51,10 @@ public class LabelledMentionGraphEdge implements Serializable {
     }
 
     public double scoreEdge(EdgeType type, GraphWeightVector weightVector) {
-        return averageMode ? weightVector.dotProdAver(featureVector, type.name()) :
+        double s = averageMode ? weightVector.dotProdAver(featureVector, type.name()) :
                 weightVector.dotProd(featureVector, type.name());
+//        logger.info("Mode is " + averageMode);
+        return s;
     }
 
     public Pair<EdgeType, Double> getCorrectLabelScore(GraphWeightVector weightVector) {

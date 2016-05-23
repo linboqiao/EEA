@@ -34,7 +34,7 @@ public class RegressionPipeline {
         String testWorkingDir = FileUtils.joinPaths(regressionDir, base, "test");
         String modelOutputDir = FileUtils.joinPaths(config.get("edu.cmu.cs.lti.regression.model.output.dir"), base);
 
-        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, config);
+        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, config, true);
 
         pipeline.regression(config);
     }

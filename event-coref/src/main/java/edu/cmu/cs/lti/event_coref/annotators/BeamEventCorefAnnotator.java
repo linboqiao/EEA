@@ -64,6 +64,10 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_MERGE_MENTION)
     private boolean mergeMention;
 
+    public static final String PARAM_BEAM_SIZE = "beamSize";
+    @ConfigurationParameter(name = PARAM_BEAM_SIZE)
+    private int beamSize;
+
     private BeamLatentTreeDecoder decoder;
 
     private GraphWeightVector corefWeights;
@@ -77,18 +81,21 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
         prepareCorefModel();
 
         try {
-            decoder = new BeamLatentTreeDecoder(corefWeights, corefExtractor);
+            decoder = new BeamLatentTreeDecoder(corefWeights, corefExtractor, beamSize);
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException
                 | InstantiationException e) {
             e.printStackTrace();
         }
 
-        logger.info("Using merged mentions " + mergeMention);
+        logger.info(String.format("Beam size : %d, merged mention : %s", beamSize, mergeMention));
     }
 
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+//        UimaConvenience.printProcessLog(aJCas);
+//        DebugUtils.pause();
+
         // TODO make sure the mapping is correct.
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
 
@@ -112,7 +119,6 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
 
         List<MultiNodeKey> nodeResults = decodingState.getNodeResults();
 
-
         for (int nodeIndex = 0; nodeIndex < nodeResults.size(); nodeIndex++) {
             MultiNodeKey nodeKey = nodeResults.get(nodeIndex);
 
@@ -134,6 +140,8 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
             }
         }
         annotatePredictedCoreference(aJCas, decodingState.getDecodingTree(), node2Mention);
+
+//        DebugUtils.pause();
     }
 
     private void annotatePredictedCoreference(JCas aJCas, MentionSubGraph predictedTree,
@@ -141,9 +149,16 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
         predictedTree.resolveCoreference();
         List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
 
+//        logger.info(predictedTree.toString());
+//
+//        for (List<Pair<Integer, String>> corefChain : corefChains) {
+//            logger.info(corefChain.toString());
+//        }
+
         for (List<Pair<Integer, String>> corefChain : corefChains) {
 
             List<EventMention> predictedChain = new ArrayList<>();
+            Map<Span, EventMention> span2Mentions = new HashMap<>();
 
             for (Pair<Integer, String> typedNode : corefChain) {
                 List<EventMention> mentions = node2Mention.get(typedNode);
@@ -152,7 +167,15 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
                     logger.error(typedNode + " is not mapped.");
                 }
 
-                predictedChain.addAll(mentions);
+                // Add an additional filtering layer to remove coreference on the same mention.
+                for (EventMention mention : mentions) {
+                    Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());
+                    if (!span2Mentions.containsKey(mentionSpan)) {
+                        span2Mentions.put(mentionSpan, mention);
+                        predictedChain.add(mention);
+                    }
+                }
+//                predictedChain.addAll(mentions);
             }
 
             if (predictedChain.size() > 1) {
@@ -214,6 +237,10 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
             mention2SplitNodes.put(i, i);
         }
 
+//        for (MentionCandidate candidate : candidates) {
+//            logger.info(candidate.toString());
+//        }
+
         Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2SplitNodes,
                 allMentions);
 
@@ -222,7 +249,7 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
         Map<Integer, Integer> mentionId2EventId = MentionUtils.groupEventClusters(allMentions);
 
         MentionGraph graph = new MentionGraph(candidates, candidate2SplitNodes, mentionTypes, mentionId2EventId,
-                relations, corefExtractor, true);
+                relations, corefExtractor, false);
 
         return Pair.of(graph, candidates);
     }
@@ -249,7 +276,7 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
                 allMentions);
 
         MentionGraph graph = new MentionGraph(candidates, candidate2Node, nodeTypes, node2EventId, relations,
-                corefExtractor, true);
+                corefExtractor, false);
 
         return Pair.of(graph, candidates);
     }

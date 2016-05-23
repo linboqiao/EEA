@@ -21,8 +21,10 @@ declare -a arr=("paMention_hamming" "paMention_noneHamming" "paMention_recallHam
 "delayedBeamMention_hamming" "delayedBeamMention_recallHamming" "delayedBeamMention_noneHamming" \
 "vanillaBeamMention" "vanillaMention" \
 "gold_type_coref" "gold_type_realis_coref" \
-"beam_coref_delayed_gold" "beam_coref_delayed_merged_gold" \
-"beam_coref_early_gold" "beam_coref_early_merged_gold")
+"gold_type_delayed_merge" "gold_type_delayed_unmerge" \
+"gold_type_early_merge" "gold_type_early_unmerge" \
+"beamMention_recallHamming_delayed_merge" "beamMention_recallHamming_delayed_unmerge" \
+"beamMention_recallHamming_early_merge" "beamMention_recallHamming_early_unmerge")
 
 for sys_name in "${arr[@]}"
 do

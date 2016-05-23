@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.event_coref.decoding;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
-import edu.cmu.cs.lti.learning.model.decoding.LabelLinkAgenda;
+import edu.cmu.cs.lti.learning.model.decoding.JointLabelLinkAgenda;
 import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
 import edu.cmu.cs.lti.learning.model.decoding.StateDelta;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
@@ -40,9 +40,11 @@ public class BeamLatentTreeDecoder {
 
     private TrainingStats corefTrainingStats;
 
-    private int beamSize = 5;
+    private final int beamSize;
 
     private final GraphFeatureVector dummyMentionFv;
+
+    private final boolean useLaSO;
 
     private final boolean delayUpdate;
 
@@ -52,33 +54,46 @@ public class BeamLatentTreeDecoder {
      * @param corefWeights          Weight vector for coreference.
      * @param interMentionExtractor Extractor for inter event features.
      * @param updater               Updater that controls the update.
-     * @param delayUpdate           Whether to do delayed LaSO update.
+     * @param useLaSo               Whether to use Learning with Search Optimization (LaSO)
+     * @param delayUpdate           Whether to do delayed LaSO update.  @throws ClassNotFoundException
+     * @param beamSize              The beam size to search.   @throws NoSuchMethodException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     */
+    public BeamLatentTreeDecoder(GraphWeightVector corefWeights, PairFeatureExtractor interMentionExtractor,
+                                 DiscriminativeUpdater updater, boolean useLaSo, boolean delayUpdate, int beamSize)
+            throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
+            InvocationTargetException {
+        this(corefWeights, interMentionExtractor, useLaSo, delayUpdate, beamSize, true);
+        this.updater = updater;
+        corefTrainingStats = delayUpdate ? new TrainingStats(5, "coref") : new TrainingStats(250, "coref");
+
+        logger.info("Starting the Beam Decoder for coreference training.");
+    }
+
+    /**
+     * Testing constructor
+     *
+     * @param corefWeights         The weights.
+     * @param mentionPairExtractor The coreference feature extractor.
+     * @param beamSize             Beam size used for searching.
      * @throws ClassNotFoundException
      * @throws NoSuchMethodException
      * @throws InstantiationException
      * @throws IllegalAccessException
      * @throws InvocationTargetException
      */
-    public BeamLatentTreeDecoder(GraphWeightVector corefWeights, PairFeatureExtractor interMentionExtractor,
-                                 DiscriminativeUpdater updater, boolean delayUpdate)
+    public BeamLatentTreeDecoder(GraphWeightVector corefWeights, PairFeatureExtractor mentionPairExtractor,
+                                 int beamSize)
             throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
-        this(corefWeights, interMentionExtractor, delayUpdate, true);
-        this.updater = updater;
-        corefTrainingStats = delayUpdate ? new TrainingStats(5, "coref") : new TrainingStats(250, "coref");
-
-        logger.info("Starting the Beam Decoder with joint training.");
-    }
-
-    public BeamLatentTreeDecoder(GraphWeightVector corefWeights, PairFeatureExtractor mentionPairExtractor)
-            throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
-            InvocationTargetException {
-        this(corefWeights, mentionPairExtractor, false, false);
-        logger.info("Starting the Beam Decoder with joint testing.");
+        this(corefWeights, mentionPairExtractor, false, false, beamSize, false);
+        logger.info("Starting the Beam Decoder for coreference testing.");
     }
 
     private BeamLatentTreeDecoder(GraphWeightVector corefWeights, PairFeatureExtractor mentionPairExtractor,
-                                  boolean delayUpdate, boolean isTraining)
+                                  boolean useLaSo, boolean delayUpdate, int beamSize, boolean isTraining)
             throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
 
@@ -87,6 +102,8 @@ public class BeamLatentTreeDecoder {
 
         this.isTraining = isTraining;
         this.delayUpdate = delayUpdate;
+        this.beamSize = beamSize;
+        this.useLaSO = useLaSo;
 
         // The alphabet here are not so correct.
         dummyMentionFv = new GraphFeatureVector(corefWeights.getClassAlphabet(), corefWeights.getFeatureAlphabet());
@@ -102,8 +119,8 @@ public class BeamLatentTreeDecoder {
      */
     public NodeLinkingState decode(JCas aJCas, MentionGraph mentionGraph, List<MentionCandidate> candidates) {
         // Prepare a gold agenda and a decoding agenda.
-        LabelLinkAgenda goldAgenda = new LabelLinkAgenda(beamSize, candidates, mentionGraph);
-        LabelLinkAgenda decodingAgenda = new LabelLinkAgenda(beamSize, candidates, mentionGraph);
+        JointLabelLinkAgenda goldAgenda = new JointLabelLinkAgenda(beamSize, candidates, mentionGraph);
+        JointLabelLinkAgenda decodingAgenda = new JointLabelLinkAgenda(beamSize, candidates, mentionGraph);
 
         mentionPairExtractor.initWorkspace(aJCas);
 
@@ -119,38 +136,56 @@ public class BeamLatentTreeDecoder {
 //            logger.info("Update states for decoding.");
             decodingAgenda.updateStates();
 
+//            logger.info("Showing current agenda");
+//            logger.info(decodingAgenda.toString());
+
             if (isTraining) {
                 // Expand for gold.
 //                logger.info("Update states for gold.");
                 goldAgenda.updateStates();
-                // Record updates;
-                updater.recordLaSOUpdate(decodingAgenda, goldAgenda);
-                if (!delayUpdate) {
-                    TObjectDoubleMap<String> losses = updater.update();
-                    corefTrainingStats.addLoss(logger, losses.get(COREF_MODEL_NAME));
+
+                if (useLaSO) {
+                    // Record updates;
+                    updater.recordLaSOUpdate(decodingAgenda, goldAgenda);
+                    if (!delayUpdate) {
+                        TObjectDoubleMap<String> losses = updater.update();
+                        corefTrainingStats.addLoss(logger, losses.get(COREF_MODEL_NAME));
+//                        logger.info("Loss is " + losses.get(COREF_MODEL_NAME));
+                    }
                 }
+
             }
-//            logger.info("Gold agenda.");
-//
-//            logger.info(goldAgenda.toString());
-//
 //            DebugUtils.pause();
         }
 
         if (isTraining) {
+//            logger.info("List of decodings in order");
+//            for (NodeLinkingState nodeLinkingState : decodingAgenda.getOrderedStates()) {
+//                logger.info(nodeLinkingState.toString());
+//            }
+//
+//            logger.info("Best Gold.");
+//            logger.info(goldAgenda.getBestBeamState().getDecodingTree().toString());
+//
+//            logger.info("Best Decoding.");
+//            logger.info(decodingAgenda.getBestBeamState().getDecodingTree().toString());
+
             // The final check matches the first item in the agendas, while the searching check only ensure containment.
             updater.recordFinalUpdate(decodingAgenda, goldAgenda);
             // Update based on cumulative errors.
             TObjectDoubleMap<String> losses = updater.update();
             corefTrainingStats.addLoss(logger, losses.get(COREF_MODEL_NAME) / mentionGraph.numNodes());
+
+//            logger.info("Loss is " + losses.get(COREF_MODEL_NAME) / mentionGraph.numNodes());
+//            DebugUtils.pause();
         }
 
 
-        return decodingAgenda.getBeamStates().get(0);
+        return decodingAgenda.getBestBeamState();
     }
 
     private void expandCorefLinks(MentionGraph mentionGraph, List<MentionCandidate> candidates, int candidateIndex,
-                                  LabelLinkAgenda agenda) {
+                                  JointLabelLinkAgenda agenda) {
         MentionCandidate candidate = candidates.get(candidateIndex);
         MultiNodeKey currNode = candidate.asKey();
 
@@ -159,17 +194,23 @@ public class BeamLatentTreeDecoder {
                 MultiNodeKey antNodeKeys = nodeLinkingState.getNode(ant);
                 for (NodeKey currNodeKey : currNode) {
                     for (NodeKey antNodeKey : antNodeKeys) {
+                        // A candidate can be split to two nodes, we do not create links between them.N
+                        if (currNodeKey.getCandidateIndex() == antNodeKey.getCandidateIndex()) {
+                            continue;
+                        }
+
                         StateDelta decision = new StateDelta(nodeLinkingState);
                         decision.addNode(currNode, dummyMentionFv, 0);
 
                         LabelledMentionGraphEdge edge = mentionGraph
                                 .getLabelledEdge(candidates, antNodeKey, currNodeKey);
 
-//                        logger.debug("Edge is " + edge);
+//                        logger.info(edge.getFeatureVector().readableString());
+//                        logger.info("Edge is " + edge);
 
                         for (Map.Entry<EdgeType, Double> labelScore : edge.getAllLabelScore(corefWeights).entrySet()) {
 
-//                            logger.debug("Extending " + labelScore.getKey());
+//                            logger.info("Extending with " + labelScore);
 //                            logger.debug(edge.getFeatureVector().readableString());
 
                             decision.addLink(labelScore.getKey(), antNodeKey, currNodeKey, labelScore.getValue(),
@@ -185,7 +226,7 @@ public class BeamLatentTreeDecoder {
     }
 
     private void expandGoldLink(MentionGraph mentionGraph, List<MentionCandidate> candidates, int candidateIndex,
-                                LabelLinkAgenda agenda) {
+                                JointLabelLinkAgenda agenda) {
         MentionCandidate candidate = candidates.get(candidateIndex);
         MultiNodeKey currNode = candidate.asKey();
 

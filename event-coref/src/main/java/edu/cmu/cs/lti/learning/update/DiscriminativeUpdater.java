@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.learning.update;
 
 import edu.cmu.cs.lti.learning.model.*;
-import edu.cmu.cs.lti.learning.model.decoding.LabelLinkAgenda;
+import edu.cmu.cs.lti.learning.model.decoding.JointLabelLinkAgenda;
 import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import gnu.trove.map.TObjectDoubleMap;
@@ -82,18 +82,18 @@ public class DiscriminativeUpdater {
         return allWeights.get(weightKey);
     }
 
-    public void recordLaSOUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
+    public void recordLaSOUpdate(JointLabelLinkAgenda decodingAgenda, JointLabelLinkAgenda goldAgenda) {
         if (!decodingAgenda.contains(goldAgenda)) {
 //            logger.info("Recording differences for LaSO update.");
             recordUpdate(decodingAgenda, goldAgenda);
 
-            NodeLinkingState bestDecoding = decodingAgenda.getBeamStates().get(0);
-            NodeLinkingState bestGold = goldAgenda.getBeamStates().get(0);
-
-            Pair<Double, Double> losses = bestDecoding.loss(bestGold, labelLosser);
-
-            addLoss(TYPE_MODEL_NAME, losses.getLeft());
-            addLoss(COREF_MODEL_NAME, losses.getRight());
+//            NodeLinkingState bestDecoding = decodingAgenda.getBeamStates().get(0);
+//            NodeLinkingState bestGold = goldAgenda.getBeamStates().get(0);
+//
+//            Pair<Double, Double> losses = bestDecoding.loss(bestGold, labelLosser);
+//
+//            addLoss(TYPE_MODEL_NAME, losses.getLeft());
+//            addLoss(COREF_MODEL_NAME, losses.getRight());
 
 //            logger.debug("Label loss is " + losses.getLeft());
 
@@ -106,19 +106,27 @@ public class DiscriminativeUpdater {
         }
     }
 
-    public void recordFinalUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
-        if (!decodingAgenda.getBeamStates().get(0).match(goldAgenda.getBeamStates().get(0))) {
+    public void recordFinalUpdate(JointLabelLinkAgenda decodingAgenda, JointLabelLinkAgenda goldAgenda) {
+        if (!decodingAgenda.getBestBeamState().match(goldAgenda.getBestBeamState())) {
 //            logger.debug("Recording final update difference between the top states.");
             recordUpdate(decodingAgenda, goldAgenda);
         }
     }
 
-    private void recordUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
-//        logger.debug("Best decoding state is:");
-//        logger.debug(decodingAgenda.getBeamStates().get(0).toString());
+    private void recordUpdate(JointLabelLinkAgenda decodingAgenda, JointLabelLinkAgenda goldAgenda) {
+//        logger.info("Best decoding state is:");
+//        logger.info(decodingAgenda.getBestBeamState().toString());
 //
-//        logger.debug("Best gold state is:");
-//        logger.debug(goldAgenda.getBeamStates().get(0).toString());
+//        logger.info("Best gold state is:");
+//        logger.info(goldAgenda.getBestBeamState().toString());
+
+        NodeLinkingState bestDecoding = decodingAgenda.getBestBeamState();
+        NodeLinkingState bestGold = goldAgenda.getBestBeamState();
+
+        Pair<Double, Double> losses = bestDecoding.loss(bestGold, labelLosser);
+
+        addLoss(TYPE_MODEL_NAME, losses.getLeft());
+        addLoss(COREF_MODEL_NAME, losses.getRight());
 
         // Compute delta on coreferecence.
         if (updateCoref) {
@@ -136,20 +144,26 @@ public class DiscriminativeUpdater {
 //                logger.debug(decoding.getValue().readableString());
             }
 
-            if (deltaCorefVector.getFeatureL2() == 0) {
-                double loss = decodingAgenda.getBeamStates().get(0).getDecodingTree().getLoss(goldAgenda
-                        .getBeamStates().get(0).getDecodingTree());
+//            logger.info("Coreference delta is.");
+//            logger.info(deltaCorefVector.readableNodeVector());
+//            logger.info("Coref loss is " + losses.getRight() + " new loss is now " + allLoss.get(COREF_MODEL_NAME));
 
-                logger.warn("Loss is  " + loss + " but L2 is 0 for coref vector, features are not good enough.");
+            if (!updateMention) {
+                if (deltaCorefVector.getFeatureL2() == 0) {
+                    double loss = decodingAgenda.getBestBeamState().getDecodingTree().getLoss(goldAgenda
+                            .getBestBeamState().getDecodingTree());
 
-                logger.warn("Best Decoding is : ");
-                logger.warn(decodingAgenda.getBeamStates().get(0).toString());
+                    logger.warn("Loss is  " + loss + " but L2 is 0 for coref vector, features are not good enough.");
 
-                logger.warn("Gold is : ");
-                logger.warn(goldAgenda.getBeamStates().get(0).toString());
+                    logger.warn("Best Decoding is : ");
+                    logger.warn(decodingAgenda.getBestBeamState().toString());
 
-                logger.warn("Delta coref vector is :");
-                logger.warn(deltaCorefVector.readableNodeVector());
+                    logger.warn("Gold is : ");
+                    logger.warn(goldAgenda.getBestBeamState().toString());
+
+                    logger.warn("Delta coref vector is :");
+                    logger.warn(deltaCorefVector.readableNodeVector());
+                }
             }
         }
 
@@ -197,10 +211,17 @@ public class DiscriminativeUpdater {
     private void updateInternal(boolean paUpdate) {
         GraphFeatureVector corefDelta = allDelta.get(COREF_MODEL_NAME);
         GraphFeatureVector mentionDelta = allDelta.get(TYPE_MODEL_NAME);
-        double corefLoss = allLoss.get(COREF_MODEL_NAME);
-        double mentionLoss = allLoss.get(TYPE_MODEL_NAME);
 
-        double totalLoss = corefLoss + mentionLoss;
+
+        double totalLoss = 0;
+
+        // So when we update one model, we will only add the loss on its part, which literally ignore the other one.
+        if (updateCoref){
+            totalLoss +=allLoss.get(COREF_MODEL_NAME);
+        }
+        if (updateMention){
+            totalLoss += allLoss.get(TYPE_MODEL_NAME);
+        }
 
         if (totalLoss != 0) {
             double tau = defaultStepSize;
@@ -217,9 +238,12 @@ public class DiscriminativeUpdater {
                     //Make sure we don't update when the features are the same, but decoding results are different.
                     isValid = false;
                 }
+//                logger.info("Total loss is " + totalLoss + ", L2 is " + l2);
             }
 
-//            logger.debug("Update with step size " + tau);
+//            logger.info("Update with step size " + tau );
+//            logger.info("Coref delta is:");
+//            logger.info(corefDelta.readableNodeVector());
             if (isValid) {
                 if (updateCoref) {
                     GraphWeightVector corefWeights = allWeights.get(COREF_MODEL_NAME);

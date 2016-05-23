@@ -2,7 +2,6 @@ package edu.cmu.cs.lti.event_coref.annotators.train;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
-import edu.cmu.cs.lti.emd.annotators.train.TokenLevelEventMentionCrfTrainer;
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
@@ -20,7 +19,6 @@ import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -30,7 +28,6 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -47,7 +44,7 @@ import static edu.cmu.cs.lti.learning.model.ModelConstants.TYPE_MODEL_NAME;
  *
  * @author Zhengzhong Liu
  */
-public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
+public class BeamJointTrainer extends AbstractLoggingAnnotator {
     private static DiscriminativeUpdater updater;
 
     public static final String PARAM_CONFIG_PATH = "configPath";
@@ -58,17 +55,25 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_REALIS_MODEL_DIRECTORY)
     private File realisModelDirectory;
 
-    public static final String PARAM_PRETRAINED_MENTION_MODEL_DIRECTORY = "pretrainedMentionModelDirectory";
-    @ConfigurationParameter(name = PARAM_PRETRAINED_MENTION_MODEL_DIRECTORY)
-    private File pretrainedMentionModelDirectory;
+//    public static final String PARAM_PRETRAINED_MENTION_MODEL_DIRECTORY = "pretrainedMentionModelDirectory";
+//    @ConfigurationParameter(name = PARAM_PRETRAINED_MENTION_MODEL_DIRECTORY)
+//    private File pretrainedMentionModelDirectory;
 
     public static final String PARAM_USE_WARM_START = "useWarmStart";
-    @ConfigurationParameter(name = PARAM_USE_WARM_START)
+    @ConfigurationParameter(name = PARAM_USE_WARM_START, defaultValue = "false")
     private boolean warmStart;
 
     public static final String PARAM_MENTION_LOSS_TYPE = "mentionLossType";
     @ConfigurationParameter(name = PARAM_MENTION_LOSS_TYPE)
     private String mentionLossType;
+
+    public static final String PARAM_BEAM_SIZE = "beamSize";
+    @ConfigurationParameter(name = PARAM_BEAM_SIZE)
+    private int beamSize;
+
+    public static final String PARAM_USE_LASO = "useLaso";
+    @ConfigurationParameter(name = PARAM_USE_LASO)
+    private boolean useLaSO;
 
     private WekaModel realisModel;
 
@@ -86,8 +91,9 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
 
         // Doing warm start.
         if (warmStart) {
-            logger.info("Starting delayered LaSO trainer with label warm start.");
-            updater.addWeightVector(TYPE_MODEL_NAME, usePretrainedCrfWeights());
+//            logger.info("Starting delayered LaSO trainer with label warm start.");
+//            updater.addWeightVector(TYPE_MODEL_NAME, usePretrainedCrfWeights());
+            throw new IllegalArgumentException("Warm Start not implemented");
         } else {
             updater.addWeightVector(TYPE_MODEL_NAME, prepareCrfWeights());
         }
@@ -108,7 +114,7 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
         try {
             decoder = new BeamCrfLatentTreeDecoder(updater.getWeightVector(TYPE_MODEL_NAME), realisModel,
                     updater.getWeightVector(COREF_MODEL_NAME), realisExtractor, crfExtractor,
-                    updater, mentionLossType);
+                    updater, mentionLossType, beamSize, useLaSO);
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException
                 | InstantiationException e) {
             e.printStackTrace();
@@ -200,16 +206,16 @@ public class DelayedLaSOJointTrainer extends AbstractLoggingAnnotator {
                 FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec));
     }
 
-    private GraphWeightVector usePretrainedCrfWeights() throws ResourceInitializationException {
-        GraphWeightVector weightVector;
-        try {
-            weightVector = SerializationUtils.deserialize(new FileInputStream(new File
-                    (pretrainedMentionModelDirectory, TokenLevelEventMentionCrfTrainer.MODEL_NAME)));
-        } catch (FileNotFoundException e) {
-            throw new ResourceInitializationException(e);
-        }
-        return weightVector;
-    }
+//    private GraphWeightVector usePretrainedCrfWeights() throws ResourceInitializationException {
+//        GraphWeightVector weightVector;
+//        try {
+//            weightVector = SerializationUtils.deserialize(new FileInputStream(new File
+//                    (pretrainedMentionModelDirectory, TokenLevelEventMentionCrfTrainer.MODEL_NAME)));
+//        } catch (FileNotFoundException e) {
+//            throw new ResourceInitializationException(e);
+//        }
+//        return weightVector;
+//    }
 
     private GraphWeightVector preareCorefWeights() {
         logger.info("Initializing Coreference weights.");

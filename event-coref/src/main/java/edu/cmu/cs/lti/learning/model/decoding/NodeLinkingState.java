@@ -8,7 +8,7 @@ import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.update.SeqLoss;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
-import org.apache.commons.lang3.builder.CompareToBuilder;
+import edu.cmu.cs.lti.utils.MathUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +73,6 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
                 "\n" +
                 ((decodingTree == null) ? "[No coreference]" :
                         "[Coref Tree]\n" + decodingTree.toString());
-
     }
 
     public String showTree() {
@@ -97,7 +96,37 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     }
 
     public int compareTo(NodeLinkingState s) {
-        return new CompareToBuilder().append(score, s.score).build();
+        // The ranking option, higher score is larger, smaller distance is larger.
+
+        // Compare the states considering the double precision and distance.
+//        if (Math.abs(score - s.score) < comparePrecision) {
+        if (MathUtils.almostEqual(score, s.score)) {
+            // In case we don't do coreference, decodingTree doesn't exists.
+            if (decodingTree != null) {
+                int thisDistance = decodingTree.getTotalDistance();
+                int thatDistance = s.decodingTree.getTotalDistance();
+
+                // The max element in our queue will be emitted, since we use a reverse comparator, that means the least
+                // element in our queue will be emitted. Since we want to emit larger distance, larger distance
+                // should be
+                // considered as smaller.
+                if (thisDistance > thatDistance) {
+                    return -1;
+                } else if (thisDistance < thatDistance) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            } else {
+                return 0;
+            }
+        } else if (score > s.score) {
+            return 1;
+        } else if (score < s.score) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 
     public static Comparator<NodeLinkingState> reverseComparator() {
@@ -259,6 +288,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     public static MinMaxPriorityQueue<NodeLinkingState> getReverseHeap(int maxSize) {
         return MinMaxPriorityQueue.orderedBy(reverseComparator()).maximumSize(maxSize).create();
     }
+
 
 //
 //    public Map<Integer, String> getAvailableNodeLabels() {

@@ -116,6 +116,10 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
 
         List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions);
 
+//        for (MentionCandidate candidate : candidates) {
+//            logger.info(candidate.toString());
+//        }
+
         extractor.initWorkspace(aJCas);
         MentionGraph mentionGraph = new MentionGraph(candidates, extractor, true);
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, extractor, lagrangian,
@@ -125,6 +129,10 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
         List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
 
 //        logger.info(predictedTree.toString());
+//
+//        for (List<Pair<Integer, String>> corefChain : corefChains) {
+//            logger.info(corefChain.toString());
+//        }
 //
 //        logger.info(String.valueOf(corefChains.length));
 
@@ -139,7 +147,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
                 EventMention mention = allMentions.get(mentionIndex);
                 Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());
                 if (!span2Mentions.containsKey(mentionSpan)) {
-                    span2Mentions.put(Span.of(mention.getBegin(), mention.getEnd()), mention);
+                    span2Mentions.put(mentionSpan, mention);
                     predictedChain.add(mention);
                 }
             }
@@ -147,7 +155,6 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
             if (predictedChain.size() > 1) {
                 Event event = new Event(aJCas);
                 event.setEventMentions(FSCollectionFactory.createFSArray(aJCas, predictedChain));
-//                logger.info("Cluster size is " + predictedChain.size());
                 UimaAnnotationUtils.finishTop(event, COMPONENT_ID, 0, aJCas);
                 for (EventMention eventMention : predictedChain) {
                     eventMention.setReferringEvent(event);

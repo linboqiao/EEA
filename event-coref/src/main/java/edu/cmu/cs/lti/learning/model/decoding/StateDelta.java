@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.learning.model.decoding;
 import com.google.common.collect.MinMaxPriorityQueue;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
-import org.apache.commons.lang3.builder.CompareToBuilder;
+import edu.cmu.cs.lti.utils.MathUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +19,8 @@ import java.util.List;
 public class StateDelta implements Comparable<StateDelta> {
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
+    private double comparePrecision = 1e-11;
+
     private NodeLinkingState existingState;
     private double updatedScore;
 
@@ -27,6 +29,8 @@ public class StateDelta implements Comparable<StateDelta> {
     private List<EdgeKey> edges;
 
     private GraphFeatureVector deltaLabelFv;
+
+    private int totalDistance;
 
     // The list of features are corresponding to each possible antecedent decoding, one for each of the possible type
     // on the anaphora node. This is caused by the fact that there can be multiple types on one mention.
@@ -37,9 +41,11 @@ public class StateDelta implements Comparable<StateDelta> {
         updatedScore = existingState.getScore();
         edges = new ArrayList<>();
         deltaGraphFv = new ArrayList<>();
+        totalDistance = 0;
     }
 
     public void addNode(MultiNodeKey nodes, GraphFeatureVector newLabelFv, double nodeScore) {
+//        logger.info("Adding node " + nodes.getCombinedType() + " with score " + nodeScore);
         this.nodes = nodes;
         this.deltaLabelFv = newLabelFv;
         updatedScore += nodeScore;
@@ -50,11 +56,30 @@ public class StateDelta implements Comparable<StateDelta> {
         edges.add(edge);
         updatedScore += linkScore;
         deltaGraphFv.add(Pair.of(linkType, newCorefFv));
+
+        // Need to determine gov is not root.
+        if (!govKey.isRoot()) {
+            int govIndex = govKey.getCandidateIndex();
+            int depIndex = depKey.getCandidateIndex();
+            totalDistance = depIndex - govIndex;
+        }
     }
 
     @Override
     public int compareTo(StateDelta o) {
-        return new CompareToBuilder().append(updatedScore, o.updatedScore).build();
+        // Compare the states considering the double precision and distance.
+        int scoreCompare = MathUtils.approxCompare(updatedScore, o.updatedScore);
+        if (scoreCompare == 0) {
+            if (totalDistance > o.totalDistance) {
+                return -1;
+            } else if (totalDistance < o.totalDistance) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } else {
+            return scoreCompare;
+        }
     }
 
     public static Comparator<StateDelta> reverseComparator() {
@@ -88,7 +113,8 @@ public class StateDelta implements Comparable<StateDelta> {
             sb.append(node.toString());
         }
 
-        return String.format("[StateDelta]\n [Nodes] %s\n [Links]\n [Score] %.4f", sb.toString(), updatedScore);
+        return String.format("[StateDelta]\n [Nodes] %s\n [Links]\n [Distance] %d\n, [Score] %.4f", sb.toString(),
+                totalDistance, updatedScore);
     }
 
     public List<Pair<EdgeType, FeatureVector>> getDeltaGraphFv() {

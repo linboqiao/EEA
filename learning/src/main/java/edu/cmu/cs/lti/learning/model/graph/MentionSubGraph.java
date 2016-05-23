@@ -45,6 +45,8 @@ public class MentionSubGraph {
     // <mention id, mention type> representing the mentions in the chain.
     private List<Pair<Integer, String>>[] typedCorefChains;
 
+    private int totalDistance = 0;
+
     /**
      * Initialize a mention subgraph with all the super graph's node. The edges are empty.
      *
@@ -60,6 +62,7 @@ public class MentionSubGraph {
         MentionSubGraph subgraph = new MentionSubGraph(parentGraph);
         subgraph.score = score;
         subgraph.numNodes = numNodes;
+        subgraph.totalDistance = totalDistance;
 
         for (Table.Cell<Integer, Integer, SubGraphEdge> cell : edgeTable.cellSet()) {
             subgraph.edgeTable.put(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
@@ -81,8 +84,13 @@ public class MentionSubGraph {
     }
 
     public void addEdge(LabelledMentionGraphEdge labelledMentionGraphEdge, EdgeType newType) {
-        edgeTable.put(labelledMentionGraphEdge.getDep(), labelledMentionGraphEdge.getGov(),
-                new SubGraphEdge(labelledMentionGraphEdge, newType));
+        int dep = labelledMentionGraphEdge.getDep();
+        int gov = labelledMentionGraphEdge.getGov();
+        edgeTable.put(dep, gov, new SubGraphEdge(labelledMentionGraphEdge, newType));
+        if (gov != 0) {
+            // We consider root to be special, which does not add distanc to the tree.
+            totalDistance += dep - gov;
+        }
     }
 
     public SubGraphEdge getEdge(int depIdx, int govIdx) {
@@ -132,7 +140,7 @@ public class MentionSubGraph {
             SubGraphEdge thisEdge = thisEdgesFromDep.entrySet().iterator().next().getValue();
 
             if (referenceEdge.getGov() != thisEdge.getGov()) {
-//                logger.debug("Loss because different antecedent : " + thisEdge + " vs " + referenceEdge);
+//                logger.info("Loss because different antecedent : " + thisEdge + " vs " + referenceEdge);
                 if (thisEdge.getEdgeType() == EdgeType.Root) {
                     loss += 1.5;
                 } else {
@@ -142,14 +150,14 @@ public class MentionSubGraph {
                 if (referenceEdge.getEdgeType() != thisEdge.getEdgeType()) {
                     // NOTE: this should not happen when we only have one type other than root, because types will be
                     // deterministic.
-//                    logger.debug("Loss because different type : " + thisEdge + " vs " + referenceEdge);
+//                    logger.info("Loss because different type : " + thisEdge + " vs " + referenceEdge);
                     loss += 1;
                 } else if (!referenceEdge.getDepKey().getMentionType().equals(thisEdge.getDepKey().getMentionType())) {
                     loss += 0.5;
-//                    logger.debug("Loss because different dep key type : " + thisEdge + " vs " + referenceEdge);
+//                    logger.info("Loss because different dep key type : " + thisEdge + " vs " + referenceEdge);
                 } else if (!referenceEdge.getGovKey().getMentionType().equals(thisEdge.getGovKey().getMentionType())) {
                     loss += 0.5;
-//                    logger.debug("Loss because different gov key type : " + thisEdge + " vs " + referenceEdge);
+//                    logger.info("Loss because different gov key type : " + thisEdge + " vs " + referenceEdge);
                 }
             }
         }
@@ -337,7 +345,7 @@ public class MentionSubGraph {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("SubGraph (non root edges only):\n");
+        sb.append(String.format("SubGraph (non root edges only) of distance %d:\n", totalDistance));
 
         for (SubGraphEdge edge : edgeTable.values()) {
             if (!edge.getEdgeType().equals(EdgeType.Root)) {
@@ -346,5 +354,9 @@ public class MentionSubGraph {
         }
 
         return sb.toString();
+    }
+
+    public int getTotalDistance() {
+        return totalDistance;
     }
 }

@@ -3,6 +3,8 @@ package edu.cmu.cs.lti.learning.model;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.type.Word;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Contains information useful to extract features about a mention candidate.
@@ -10,6 +12,8 @@ import edu.cmu.cs.lti.script.type.Word;
  * @author Zhengzhong Liu
  */
 public class MentionCandidate {
+    protected transient final Logger logger = LoggerFactory.getLogger(getClass());
+
     private int begin;
     private int end;
     private Word headWord;
@@ -45,6 +49,7 @@ public class MentionCandidate {
     private void makeKey() {
         String[] types = MentionTypeUtils.splitToMultipleTypes(mentionType);
         NodeKey[] singleKeys = new NodeKey[types.length];
+//        logger.info("Making key realis is " + realis);
         for (int i = 0; i < types.length; i++) {
             singleKeys[i] = new NodeKey(begin, end, types[i], realis, candidateIndex);
         }
@@ -69,6 +74,9 @@ public class MentionCandidate {
 
     public void setRealis(String realis) {
         this.realis = realis;
+        if (mentionType != null) {
+            makeKey();
+        }
     }
 
     public String getMentionType() {

@@ -57,17 +57,26 @@ public class BeamBasedCorefTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_MERGE_MENTION)
     private boolean mergeMention;
 
+    public static final String PARAM_USE_LASO = "useLaso";
+    @ConfigurationParameter(name = PARAM_USE_LASO)
+    private boolean useLaSO;
+
+    public static final String PARAM_BEAM_SIZE = "beamSize";
+    @ConfigurationParameter(name = PARAM_BEAM_SIZE)
+    private int beamSize;
+
     private BeamLatentTreeDecoder decoder;
 
     private PairFeatureExtractor mentionPairExtractor;
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
-        logger.info("Preparing the Beam based Trainer for mention type detection...");
+        logger.info("Preparing the Beam based Trainer for coreference ...");
         super.initialize(context);
 
-        logger.info(String.format("Beam Trainer using PA update : %s, Delayed LaSO : %s, Loss Type : %s, Merge " +
-                "mentions : %s", true, delayedLaso, "hamming", mergeMention));
+        logger.info(String.format("Beam Trainer using PA update : %s, use LaSO: %s, Delayed LaSO : %s, Loss Type : " +
+                        "%s, Merge mentions : %s, Beam size : %d", true, useLaSO, delayedLaso, "hamming", mergeMention,
+                beamSize));
 
         updater = new DiscriminativeUpdater(false, true, true, "hamming");
         updater.addWeightVector(ModelConstants.COREF_MODEL_NAME, preareCorefWeights());
@@ -81,7 +90,7 @@ public class BeamBasedCorefTrainer extends AbstractLoggingAnnotator {
 
         try {
             decoder = new BeamLatentTreeDecoder(updater.getWeightVector(ModelConstants.COREF_MODEL_NAME),
-                    mentionPairExtractor, updater, delayedLaso);
+                    mentionPairExtractor, updater, useLaSO, delayedLaso, beamSize);
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException
                 | InstantiationException e) {
             e.printStackTrace();
@@ -135,6 +144,9 @@ public class BeamBasedCorefTrainer extends AbstractLoggingAnnotator {
         Pair<MentionGraph, List<MentionCandidate>> graphAndCands = mergeMention ? getCombinedGraph(aJCas, allMentions) :
                 getSeparateGraph(aJCas, allMentions);
 
+//        logger.info("Number of mentions " + allMentions.size());
+//        logger.info("Number of nodes " + graphAndCands.getKey().numNodes());
+
         decoder.decode(aJCas, graphAndCands.getKey(), graphAndCands.getValue());
     }
 
@@ -166,6 +178,11 @@ public class BeamBasedCorefTrainer extends AbstractLoggingAnnotator {
     private Pair<MentionGraph, List<MentionCandidate>> getCombinedGraph(JCas aJCas, List<EventMention> allMentions) {
         List<MentionCandidate> candidates = MentionUtils.createMergedCandidates(aJCas, allMentions);
 
+//        logger.info("Showing merged candidates.");
+//        for (MentionCandidate candidate : candidates) {
+//            logger.info(candidate.getHeadWord().getCoveredText() + " " + candidate.getMentionType());
+//        }
+
         // A candidate is unique on a specific span.
         // Multiple nodes with different types can be on the same span.
 
@@ -181,15 +198,13 @@ public class BeamBasedCorefTrainer extends AbstractLoggingAnnotator {
         Map<Integer, Integer> mention2event = MentionUtils.groupEventClusters(allMentions);
         Map<Integer, Integer> node2EventId = mapCandidate2Events(numNodes, mention2Node, mention2event);
 
-        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2Node,
-                allMentions);
+        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2Node, allMentions);
 
-        MentionGraph graph = new MentionGraph(candidates, candidate2Node, nodeTypes,
-                node2EventId, relations, mentionPairExtractor, true);
+        MentionGraph graph = new MentionGraph(candidates, candidate2Node, nodeTypes, node2EventId, relations,
+                mentionPairExtractor, true);
 
         return Pair.of(graph, candidates);
     }
-
 
     public static void saveModels(File modelOutputDirectory) throws IOException {
         edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(modelOutputDirectory);

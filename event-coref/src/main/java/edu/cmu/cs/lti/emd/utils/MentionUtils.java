@@ -85,20 +85,37 @@ public class MentionUtils {
         }
 
         List<MentionCandidate> candidates = new ArrayList<>();
-        int candidateIndex = 0;
-        for (Map.Entry<Span, Collection<EventMention>> s2m : span2Mentions.asMap().entrySet()) {
-            Set<String> allTypes = s2m.getValue().stream().map(EventMention::getEventType).collect(Collectors.toSet());
+//        int candidateIndex = 0;
+        MutableInt candidateIndex = new MutableInt();
+
+        span2Mentions.keySet().stream().sorted(Collections.reverseOrder()).forEach(span ->{
+            Set<String> allTypes = span2Mentions.get(span).stream().map(EventMention::getEventType)
+                    .collect(Collectors.toSet());
             String type = MentionTypeUtils.joinMultipleTypes(allTypes);
 
-            EventMention mention = Iterables.get(s2m.getValue(), 0);
+            EventMention mention = Iterables.get(span2Mentions.get(span), 0);
             String realis = mention.getRealisType();
             MentionCandidate candidate = new MentionCandidate(mention.getBegin(), mention.getEnd(),
-                    Iterables.get(mention2Sentence.get(mention), 0), mention.getHeadWord(), candidateIndex);
+                    Iterables.get(mention2Sentence.get(mention), 0), mention.getHeadWord(), candidateIndex.getValue());
             candidate.setMentionType(type);
             candidate.setRealis(realis);
-            candidateIndex++;
+            candidateIndex.increment();
             candidates.add(candidate);
-        }
+        });
+//
+//        for (Map.Entry<Span, Collection<EventMention>> s2m : span2Mentions.asMap().entrySet()) {
+//            Set<String> allTypes = s2m.getValue().stream().map(EventMention::getEventType).collect(Collectors.toSet());
+//            String type = MentionTypeUtils.joinMultipleTypes(allTypes);
+//
+//            EventMention mention = Iterables.get(s2m.getValue(), 0);
+//            String realis = mention.getRealisType();
+//            MentionCandidate candidate = new MentionCandidate(mention.getBegin(), mention.getEnd(),
+//                    Iterables.get(mention2Sentence.get(mention), 0), mention.getHeadWord(), candidateIndex);
+//            candidate.setMentionType(type);
+//            candidate.setRealis(realis);
+//            candidateIndex++;
+//            candidates.add(candidate);
+//        }
 
         return candidates;
     }
@@ -241,7 +258,7 @@ public class MentionUtils {
                         .map(mentions::get).map(EventMention::getEventType).collect(Collectors.toList()));
                 candidate.setMentionType(mentionType);
 
-                for (Integer mentionId : span2Mentions.get(candidateSpan)) {
+                for (Integer mentionId : correspondingMentions) {
                     EventMention mention = mentions.get(mentionId);
                     candidate.setRealis(mention.getRealisType());
                     candidate2Split.put(candidateIndex, splitCandidateId);

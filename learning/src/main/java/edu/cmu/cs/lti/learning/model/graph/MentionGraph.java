@@ -9,6 +9,7 @@ import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.MultiNodeKey;
 import edu.cmu.cs.lti.learning.model.NodeKey;
+import edu.cmu.cs.lti.utils.MathUtils;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.lang3.tuple.Pair;
@@ -127,6 +128,8 @@ public class MentionGraph implements Serializable {
 
             // Link lingering nodes to root.
             linkToRoot(candidates, keysWithAntecedents);
+        }else{
+            this.useAverage = true;
         }
     }
 
@@ -171,11 +174,14 @@ public class MentionGraph implements Serializable {
                 int candidateIndex = getCandidateIndex(nodeId);
                 String mentionType = element.getRight();
 
+//                logger.info("Candidate realis is " + candidates.get(candidateIndex).getRealis());
                 MultiNodeKey candidateKeys = candidates.get(candidateIndex).asKey();
+
                 NodeKey actualNode = null;
-                for (NodeKey candidate : candidateKeys) {
-                    if (candidate.getMentionType().equals(mentionType)) {
-                        actualNode = candidate;
+                for (NodeKey key : candidateKeys) {
+//                    logger.info(key.getMentionType() + " " + key.getRealis());
+                    if (key.getMentionType().equals(mentionType)) {
+                        actualNode = key;
                         break;
                     }
                 }
@@ -328,8 +334,7 @@ public class MentionGraph implements Serializable {
                         );
 
                         if (goldEdge != null) {// TODO check null maybe redundant
-                            Pair<EdgeType, Double> correctLabelScore = goldEdge.getCorrectLabelScore
-                                    (weights);
+                            Pair<EdgeType, Double> correctLabelScore = goldEdge.getCorrectLabelScore(weights);
 //                    System.out.println("Correct label score is  " + correctLabelScore);
 
                             if (correctLabelScore == null) {
@@ -341,9 +346,10 @@ public class MentionGraph implements Serializable {
 
                             double score = correctLabelScore.getRight();
 
-//                    System.out.println("Best label is for " + curr + " " + ant + " " + label);
 
-                            if (score > bestScore) {
+//                            if (score > bestScore) {
+                            if (MathUtils.almostLeq(score, bestScore)) {
+//                                logger.info("Best gold label is for " + curr + " " + ant + " " + label+  " with score " + score);
                                 bestEdge = Pair.of(goldEdge, label);
                                 bestScore = score;
                             }

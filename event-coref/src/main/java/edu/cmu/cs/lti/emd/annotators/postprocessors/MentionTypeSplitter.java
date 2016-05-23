@@ -2,12 +2,15 @@ package edu.cmu.cs.lti.emd.annotators.postprocessors;
 
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.script.type.EventMention;
+import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSList;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -41,6 +44,10 @@ public class MentionTypeSplitter extends AbstractLoggingAnnotator {
                     } catch (IllegalAccessException | InvocationTargetException e) {
                         e.printStackTrace();
                     }
+
+                    // Create new FSLists so that we won't get warnings.
+                    mention.setArguments(duplicateArgumentFS(aJCas, candidate));
+
                     // Mention type should be set explicitly.
                     mention.setEventType(predictedType);
                     UimaAnnotationUtils.finishAnnotation(mention, candidate.getBegin(), candidate.getEnd(),
@@ -52,5 +59,16 @@ public class MentionTypeSplitter extends AbstractLoggingAnnotator {
         for (EventMention originalMention : originalMentions) {
             originalMention.removeFromIndexes();
         }
+    }
+
+    private FSList duplicateArgumentFS(JCas aJCas, EventMention mention) {
+        FSList argumentsFS = mention.getArguments();
+
+        if (argumentsFS == null) {
+            return null;
+        }
+
+        return FSCollectionFactory.createFSList(aJCas, FSCollectionFactory.create(argumentsFS,
+                EventMentionArgumentLink.class));
     }
 }

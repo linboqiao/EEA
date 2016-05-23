@@ -51,7 +51,7 @@ public class ChineseEventMentionPipeline {
         SimplePipeline.runPipeline(trainReader, classPrinter);
 
         // Now prepare the real pipeline.
-        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
+        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig, true);
 
 //        boolean skipTypeTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
 //        boolean skipLv2TypeTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.lv2.skiptrain", false);

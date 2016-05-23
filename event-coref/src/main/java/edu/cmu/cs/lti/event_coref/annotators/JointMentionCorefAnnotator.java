@@ -59,6 +59,14 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_REALIS_MODEL_DIRECTORY)
     File realisModelDirectory;
 
+    public static final String PARAM_BEAM_SIZE = "beamSize";
+    @ConfigurationParameter(name = PARAM_BEAM_SIZE)
+    int beamSize;
+
+    public static final String PARAM_USE_LASO = "useLaso";
+    @ConfigurationParameter(name = PARAM_USE_LASO)
+    private boolean useLaSO;
+
     private GraphWeightVector crfWeights;
     private GraphWeightVector corefWeights;
     private WekaModel realisModel;
@@ -78,7 +86,7 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
 
         try {
             decoder = new BeamCrfLatentTreeDecoder(crfWeights, realisModel,
-                    corefWeights, realisExtractor, mentionExtractor);
+                    corefWeights, realisExtractor, mentionExtractor, beamSize, useLaSO);
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException
                 | InstantiationException e) {
             throw new ResourceInitializationException(e);

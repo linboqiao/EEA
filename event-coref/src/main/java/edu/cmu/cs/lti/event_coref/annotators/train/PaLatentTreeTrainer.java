@@ -16,7 +16,6 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.DebugUtils;
 import edu.cmu.cs.lti.utils.FileUtils;
 import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;
 import gnu.trove.iterator.TIntObjectIterator;
@@ -107,7 +106,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
                 | IllegalAccessException e) {
             e.printStackTrace();
         }
-        trainingStats = new TrainingStats(5);
+        trainingStats = new TrainingStats(5, "PlainLatentTree");
         logger.info("Latent Tree trainer initialized.");
     }
 
@@ -158,15 +157,21 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, extractor);
         if (!predictedTree.graphMatch()) {
             MentionSubGraph latentTree = mentionGraph.getLatentTree(weights, candidates);
+
+//            logger.info("Best Gold Tree.");
+//            logger.info(latentTree.toString());
+//
+//            logger.info("Best Decoding Tree.");
+//            logger.info(predictedTree.toString());
+
             double loss = update(predictedTree, latentTree);
 
             trainingStats.addLoss(logger, loss / mentionGraph.numNodes());
-//            logger.debug("Loss is " + loss);
-//            logger.debug("Predicted tree.");
-//            logger.debug(predictedTree.toString());
-//            logger.debug("Actual tree.");
-//            logger.debug(latentTree.toString());
-//            DebugUtils.pause(logger);
+
+//            logger.info("Loss is " + loss);
+//            logger.info("Loss is " + loss / mentionGraph.numNodes());
+
+//            DebugUtils.pause();
         } else {
             trainingStats.addLoss(logger, 0);
         }
@@ -211,19 +216,17 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         GraphFeatureVector delta = latentTree.getDelta(predictedTree, classAlphabet, featureAlphabet);
 
-        logger.info("Delta between the features are: ");
-        logger.info(delta.readableNodeVector());
         double loss = predictedTree.getLoss(latentTree);
         double l2 = getFeatureL2(delta);
 
         double tau = loss / l2;
 
-        logger.info("Loss is " + loss + " update rate is " + tau + " l2 is " + l2);
+//        logger.info("Updating with step " + tau);
+//        logger.info("Delta is ");
+//        logger.info(delta.readableNodeVector());
 
         weights.updateWeightsBy(delta, tau);
         weights.updateAverageWeights();
-
-        DebugUtils.pause();
 
         return loss;
     }

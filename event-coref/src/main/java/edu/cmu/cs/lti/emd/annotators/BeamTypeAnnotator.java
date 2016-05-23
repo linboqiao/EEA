@@ -54,6 +54,10 @@ public class BeamTypeAnnotator extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_CONFIG)
     private Configuration config;
 
+    public static final String PARAM_BEAM_SIZE = "beamSize";
+    @ConfigurationParameter(name = PARAM_BEAM_SIZE)
+    private int beamSize;
+
 //    public static final String PARAM_LOSS_TYPE = "lossType";
 //    @ConfigurationParameter(name = PARAM_LOSS_TYPE)
 //    private String lossType;
@@ -110,7 +114,7 @@ public class BeamTypeAnnotator extends AbstractLoggingAnnotator {
             e.printStackTrace();
         }
 
-        decoder = new BeamCrfDecoder(weightVector, sentenceExtractor);
+        decoder = new BeamCrfDecoder(weightVector, sentenceExtractor, beamSize);
 
     }
 
@@ -132,6 +136,7 @@ public class BeamTypeAnnotator extends AbstractLoggingAnnotator {
 
         NodeLinkingState decodeResult = decoder.decode(aJCas, systemCandidates, new ArrayList<>(), true);
 
+//        int numMentions = 0;
         for (MultiNodeKey nodeKey : decodeResult.getActualNodeResults()) {
             if (!nodeKey.getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass)) {
                 for (NodeKey key : nodeKey.getKeys()) {
@@ -141,5 +146,6 @@ public class BeamTypeAnnotator extends AbstractLoggingAnnotator {
                 }
             }
         }
+//        logger.info("Number of event mentions is " + numMentions);
     }
 }

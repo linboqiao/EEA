@@ -57,6 +57,14 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_LOSS_TYPE)
     private String lossType;
 
+    public static final String PARAM_BEAM_SIZE = "bemaSize";
+    @ConfigurationParameter(name = PARAM_BEAM_SIZE)
+    private int beamSize;
+
+    public static final String PARAM_USE_LASO = "useLaso";
+    @ConfigurationParameter(name = PARAM_USE_LASO)
+    private boolean useLaSO;
+
     private SentenceFeatureExtractor sentExtractor;
     private BeamCrfDecoder decoder;
 
@@ -65,8 +73,8 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
         logger.info("Preparing the Beam based Trainer for mention type detection...");
         super.initialize(context);
 
-        logger.info(String.format("Beam Trainer using PA update : %s, Delayed LaSO : %s, Loss Type : %s",
-                usePaUpdate, delayedLaso, lossType));
+        logger.info(String.format("Beam Trainer using PA update : %s, Use LaSO: %s, Delayed LaSO : %s, Loss Type : %s",
+                usePaUpdate, useLaSO, delayedLaso, lossType));
 
         updater = new DiscriminativeUpdater(true, false, usePaUpdate, lossType);
         updater.addWeightVector(ModelConstants.TYPE_MODEL_NAME, prepareCrfWeights());
@@ -79,7 +87,7 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
         }
 
         decoder = new BeamCrfDecoder(updater.getWeightVector(ModelConstants.TYPE_MODEL_NAME), sentExtractor, updater,
-                delayedLaso);
+                useLaSO, delayedLaso, beamSize);
     }
 
     private SentenceFeatureExtractor initializeCrfExtractor(Configuration config) throws ClassNotFoundException,

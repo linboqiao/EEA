@@ -3,13 +3,16 @@ package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.NodeKey;
+import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,7 +40,6 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
     @Override
     public void initDocumentWorkspace(JCas context) {
         documentType = getDocumentType(context);
-
 
 
     }
@@ -78,8 +80,7 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
         int sentenceInBetween = Math.abs(firstSentence.getIndex() - secondSentence.getIndex());
         for (int sentenceThreshold : sentenceThresholds) {
             if (sentenceInBetween <= sentenceThreshold) {
-                addBoolean(rawFeatures, FeatureUtils.formatFeatureName("SentenceDistance",
-                        "i<=" + sentenceThreshold));
+                addBoolean(rawFeatures, FeatureUtils.formatFeatureName("SentenceDistance", "i<=" + sentenceThreshold));
                 return;
             }
         }
@@ -101,18 +102,22 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
             right = firstIndex;
         }
 
-        int mentionInBetween = 0;
+        Set<Span> mentionsInBetween = new HashSet<>();
+
         for (int i = left + 1; i < right; i++) {
 //            logger.debug(i + " is " + candidates.get(i).getMentionType() + " " + candidates.get(i).isEvent());
-            if (candidates.get(i).isEvent()) {
-                mentionInBetween++;
+            MentionCandidate c = candidates.get(i);
+            if (c.isEvent()) {
+                mentionsInBetween.add(Span.of(c.getBegin(), c.getEnd()));
             }
         }
+
+        int numMentionInBetween = mentionsInBetween.size();
 
 //        logger.debug("Mention distance is " + mentionInBetween + " between " + left + " " + right);
 
         for (int mentionThreshold : mentionThresholds) {
-            if (mentionInBetween <= mentionThreshold) {
+            if (numMentionInBetween <= mentionThreshold) {
                 rawFeatures.put(FeatureUtils.formatFeatureName("MentionDistance",
                         "i<=" + mentionThreshold), 1);
                 return;
