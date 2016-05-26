@@ -65,6 +65,14 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_USE_LASO)
     private boolean useLaSO;
 
+//    public static final String PARAM_WARM_START_MENTION_MODEL = "pretrainedMentionModelDirectory";
+//    @ConfigurationParameter(name = PARAM_WARM_START_MENTION_MODEL, mandatory = false)
+//    private File warmStartMentionModel;
+
+    public static final String PARAM_AGGRESSIVE_PARAMETER = "aggressiveParameter";
+    @ConfigurationParameter(name = PARAM_AGGRESSIVE_PARAMETER, mandatory = false)
+    private Double aggressiveParameter;
+
     private SentenceFeatureExtractor sentExtractor;
     private BeamCrfDecoder decoder;
 
@@ -76,8 +84,20 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
         logger.info(String.format("Beam Trainer using PA update : %s, Use LaSO: %s, Delayed LaSO : %s, Loss Type : %s",
                 usePaUpdate, useLaSO, delayedLaso, lossType));
 
-        updater = new DiscriminativeUpdater(true, false, usePaUpdate, lossType);
+        if (aggressiveParameter != null) {
+            updater = new DiscriminativeUpdater(true, false, usePaUpdate, lossType, aggressiveParameter);
+            logger.info("Mention type trainer started with warm start.");
+        } else {
+            updater = new DiscriminativeUpdater(true, false, usePaUpdate, lossType);
+        }
+
         updater.addWeightVector(ModelConstants.TYPE_MODEL_NAME, prepareCrfWeights());
+
+//        if (warmStartMentionModel != null) {
+//            updater.addWeightVector(ModelConstants.TYPE_MODEL_NAME, usePretrainedCrfWeights());
+//        } else {
+//            updater.addWeightVector(ModelConstants.TYPE_MODEL_NAME, prepareCrfWeights());
+//        }
 
         try {
             this.sentExtractor = initializeCrfExtractor(config);
@@ -176,6 +196,16 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
             }
         }
     }
+
+//    private GraphWeightVector usePretrainedCrfWeights() throws ResourceInitializationException {
+//        GraphWeightVector weightVector;
+//        try {
+//            weightVector = SerializationUtils.deserialize(new FileInputStream((warmStartMentionModel)));
+//        } catch (FileNotFoundException e) {
+//            throw new ResourceInitializationException(e);
+//        }
+//        return weightVector;
+//    }
 
     public static void saveModels(File modelOutputDirectory) throws IOException {
         edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(modelOutputDirectory);

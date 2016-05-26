@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.learning.model.decoding;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.MinMaxPriorityQueue;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
@@ -113,8 +114,8 @@ public class StateDelta implements Comparable<StateDelta> {
             sb.append(node.toString());
         }
 
-        return String.format("[StateDelta]\n [Nodes] %s\n [Links]\n [Distance] %d\n, [Score] %.4f", sb.toString(),
-                totalDistance, updatedScore);
+        return String.format("[StateDelta]\n [Nodes] %s\n [Links]\n %s\n [Distance] %d\n, [Score] %.4f", sb.toString(),
+                Joiner.on("\n").join(edges), totalDistance, updatedScore);
     }
 
     public List<Pair<EdgeType, FeatureVector>> getDeltaGraphFv() {

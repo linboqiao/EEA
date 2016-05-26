@@ -89,7 +89,9 @@ public class BeamCrfDecoder {
         mentionFeatureAlphabet = mentionWeights.getFeatureAlphabet();
 
         //If delayed update, we check training stats in 5 documents, if not, we check in 2000 tokens.
-        typeTrainingStats = new TrainingStats(delayUpdate ? 5 : 2000, "Mention");
+        if (isTraining) {
+            typeTrainingStats = new TrainingStats(delayUpdate ? 5 : 2000, "Mention");
+        }
     }
 
     public NodeLinkingState decode(JCas aJCas, List<MentionCandidate> predictionCandidates, List<MentionCandidate>
@@ -224,7 +226,7 @@ public class BeamCrfDecoder {
 
 
         if (isTraining) {
-//            logger.debug("Check for final updates");
+            logger.debug("Check for final updates");
             // The final check matches the first item in the agendas, instead of ensuring containment.
             updater.recordFinalUpdate(decodingAgenda, goldAgenda);
 
@@ -234,6 +236,8 @@ public class BeamCrfDecoder {
             typeTrainingStats.addLoss(logger, losses.get(TYPE_MODEL_NAME));
         }
 
+
+//        DebugUtils.pause();
         return decodingAgenda.getBestBeamState();
     }
 

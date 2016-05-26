@@ -4,6 +4,7 @@ import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.decoding.JointLabelLinkAgenda;
+import edu.cmu.cs.lti.learning.model.decoding.LabelLinkAgenda;
 import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
 import edu.cmu.cs.lti.learning.model.decoding.StateDelta;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
@@ -131,7 +132,7 @@ public class BeamLatentTreeDecoder {
                 expandGoldLink(mentionGraph, candidates, candidateIndex, goldAgenda);
             }
 
-            expandCorefLinks(mentionGraph, candidates, candidateIndex, decodingAgenda);
+            expandState(mentionGraph, candidates, candidateIndex, decodingAgenda);
 
 //            logger.info("Update states for decoding.");
             decodingAgenda.updateStates();
@@ -184,8 +185,8 @@ public class BeamLatentTreeDecoder {
         return decodingAgenda.getBestBeamState();
     }
 
-    private void expandCorefLinks(MentionGraph mentionGraph, List<MentionCandidate> candidates, int candidateIndex,
-                                  JointLabelLinkAgenda agenda) {
+    private void expandState(MentionGraph mentionGraph, List<MentionCandidate> candidates, int candidateIndex,
+                             LabelLinkAgenda agenda) {
         MentionCandidate candidate = candidates.get(candidateIndex);
         MultiNodeKey currNode = candidate.asKey();
 
@@ -194,7 +195,7 @@ public class BeamLatentTreeDecoder {
                 MultiNodeKey antNodeKeys = nodeLinkingState.getNode(ant);
                 for (NodeKey currNodeKey : currNode) {
                     for (NodeKey antNodeKey : antNodeKeys) {
-                        // A candidate can be split to two nodes, we do not create links between them.N
+                        // A candidate can be split to two nodes, we do not create links between them.
                         if (currNodeKey.getCandidateIndex() == antNodeKey.getCandidateIndex()) {
                             continue;
                         }

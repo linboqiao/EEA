@@ -55,9 +55,9 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_REALIS_MODEL_DIRECTORY)
     private File realisModelDirectory;
 
-//    public static final String PARAM_PRETRAINED_MENTION_MODEL_DIRECTORY = "pretrainedMentionModelDirectory";
-//    @ConfigurationParameter(name = PARAM_PRETRAINED_MENTION_MODEL_DIRECTORY)
-//    private File pretrainedMentionModelDirectory;
+//    public static final String PARAM_WARM_START_MENTION_MODEL = "pretrainedMentionModelDirectory";
+//    @ConfigurationParameter(name = PARAM_WARM_START_MENTION_MODEL, mandatory = false)
+//    private File warmStartMentionModel;
 
     public static final String PARAM_USE_WARM_START = "useWarmStart";
     @ConfigurationParameter(name = PARAM_USE_WARM_START, defaultValue = "false")
@@ -92,8 +92,9 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         // Doing warm start.
         if (warmStart) {
 //            logger.info("Starting delayered LaSO trainer with label warm start.");
+//            logger.info("Warm start model is " + warmStartMentionModel);
 //            updater.addWeightVector(TYPE_MODEL_NAME, usePretrainedCrfWeights());
-            throw new IllegalArgumentException("Warm Start not implemented");
+            throw new IllegalArgumentException("Not implemented warm start.");
         } else {
             updater.addWeightVector(TYPE_MODEL_NAME, prepareCrfWeights());
         }
@@ -123,6 +124,8 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+//        UimaConvenience.printProcessLog(aJCas, logger);
+
         List<StanfordCorenlpToken> allTokens = new ArrayList<>(JCasUtil.select(aJCas, StanfordCorenlpToken.class));
         List<EventMention> allMentions = MentionUtils.clearDuplicates(
                 new ArrayList<>(JCasUtil.select(aJCas, EventMention.class))
@@ -209,8 +212,7 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
 //    private GraphWeightVector usePretrainedCrfWeights() throws ResourceInitializationException {
 //        GraphWeightVector weightVector;
 //        try {
-//            weightVector = SerializationUtils.deserialize(new FileInputStream(new File
-//                    (pretrainedMentionModelDirectory, TokenLevelEventMentionCrfTrainer.MODEL_NAME)));
+//            weightVector = SerializationUtils.deserialize(new FileInputStream((warmStartMentionModel)));
 //        } catch (FileNotFoundException e) {
 //            throw new ResourceInitializationException(e);
 //        }

@@ -3,16 +3,13 @@ package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.NodeKey;
-import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -102,17 +99,18 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
             right = firstIndex;
         }
 
-        Set<Span> mentionsInBetween = new HashSet<>();
-
+        int numMentionInBetween = 0;
+        int lastBegin = -1;
         for (int i = left + 1; i < right; i++) {
 //            logger.debug(i + " is " + candidates.get(i).getMentionType() + " " + candidates.get(i).isEvent());
             MentionCandidate c = candidates.get(i);
             if (c.isEvent()) {
-                mentionsInBetween.add(Span.of(c.getBegin(), c.getEnd()));
+                if (c.getBegin() != lastBegin) {
+                    lastBegin = c.getBegin();
+                    numMentionInBetween++;
+                }
             }
         }
-
-        int numMentionInBetween = mentionsInBetween.size();
 
 //        logger.debug("Mention distance is " + mentionInBetween + " between " + left + " " + right);
 

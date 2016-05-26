@@ -448,7 +448,7 @@ public class EventMentionPipeline {
 
     public String trainBeamTypeModel(Configuration config, CollectionReaderDescription trainingReader, String suffix,
                                      boolean usePaTraing, String lossType, boolean useLaSO, boolean delayedLaso,
-                                     int beamSize, int initialSeed, boolean skipTrain)
+                                     int beamSize, Float aggressiveParameter, int initialSeed, boolean skipTrain)
             throws UIMAException, NoSuchMethodException, IOException, InstantiationException, IllegalAccessException,
             InvocationTargetException, ClassNotFoundException {
         logger.info("Start training beam based type model.");
@@ -475,13 +475,13 @@ public class EventMentionPipeline {
                     BeamBasedMentionTypeTrainer.PARAM_LOSS_TYPE, lossType,
                     BeamBasedMentionTypeTrainer.PARAM_DELAYED_LASO, delayedLaso,
                     BeamBasedMentionTypeTrainer.PARAM_BEAM_SIZE, beamSize,
-                    BeamBasedMentionTypeTrainer.PARAM_USE_LASO, useLaSO
+                    BeamBasedMentionTypeTrainer.PARAM_USE_LASO, useLaSO,
+                    BeamBasedMentionTypeTrainer.PARAM_AGGRESSIVE_PARAMETER, aggressiveParameter
             );
 
             MutableInt trainingSeed = new MutableInt(initialSeed);
 
-            new TrainingLooper(config, modelPath,
-                    trainingReader, trainer) {
+            new TrainingLooper(config, modelPath, trainingReader, trainer) {
                 @Override
                 protected void loopActions() {
                     super.loopActions();
@@ -929,14 +929,14 @@ public class EventMentionPipeline {
         }
     }
 
-    public String trainJointSpanModel(Configuration config, CollectionReaderDescription trainingReader, String lossType,
-                                      String suffix, boolean skipTrain, int initialSeed, String realisModelDir,
-                                      String modelDir, int beamSize, boolean useLaSo)
+    public String trainJointSpanModel(Configuration config, CollectionReaderDescription trainingReader,
+                                      String mentionLossType, String suffix, boolean skipTrain, int initialSeed,
+                                      String realisModelDir, String modelDir, int beamSize, boolean useLaSo)
             throws UIMAException, IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         logger.info("Start beam based joint training.");
         String cvModelDir = FileUtils.joinPaths(eventModelDir, modelDir,
-                String.format("loss=%s_laso=%s_beamSize=%d_%s", lossType, useLaSo, beamSize, suffix));
+                String.format("loss=%s_laso=%s_beamSize=%d_%s", mentionLossType, useLaSo, beamSize, suffix));
 
         boolean modelExists = new File(cvModelDir).exists();
 
@@ -949,9 +949,10 @@ public class EventMentionPipeline {
                     BeamJointTrainer.class, typeSystemDescription,
                     BeamJointTrainer.PARAM_CONFIG_PATH, config.getConfigFile().getPath(),
                     BeamJointTrainer.PARAM_REALIS_MODEL_DIRECTORY, realisModelDir,
-                    BeamJointTrainer.PARAM_MENTION_LOSS_TYPE, lossType,
+                    BeamJointTrainer.PARAM_MENTION_LOSS_TYPE, mentionLossType,
                     BeamJointTrainer.PARAM_BEAM_SIZE, beamSize,
-                    BeamJointTrainer.PARAM_USE_LASO, useLaSo
+                    BeamJointTrainer.PARAM_USE_LASO, useLaSo,
+                    BeamJointTrainer.PARAM_USE_WARM_START, false
             );
 
             TrainingLooper trainer = new TrainingLooper(config, cvModelDir, trainingReader, corefEngine) {
@@ -980,8 +981,9 @@ public class EventMentionPipeline {
 
     private CollectionReaderDescription beamJointSpanCoref(Configuration config, CollectionReaderDescription reader,
                                                            String modelDir, String realisDir, String mainDir,
-                                                           String outputBase, boolean skipTest) throws
-            UIMAException, SAXException, CpeDescriptorException, IOException {
+                                                           String outputBase, int beamSize, boolean useLaso,
+                                                           boolean skipTest)
+            throws UIMAException, SAXException, CpeDescriptorException, IOException {
         logger.info("Running joint beam mention detection and coreference, output at " + outputBase);
 
         if (skipTest && new File(mainDir, outputBase).exists()) {
@@ -1000,7 +1002,9 @@ public class EventMentionPipeline {
                             JointMentionCorefAnnotator.class, typeSystemDescription,
                             JointMentionCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
                             JointMentionCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            JointMentionCorefAnnotator.PARAM_REALIS_MODEL_DIRECTORY, realisDir
+                            JointMentionCorefAnnotator.PARAM_REALIS_MODEL_DIRECTORY, realisDir,
+                            JointMentionCorefAnnotator.PARAM_BEAM_SIZE, beamSize,
+                            JointMentionCorefAnnotator.PARAM_USE_LASO, useLaso
                     );
 
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();
@@ -1346,7 +1350,7 @@ public class EventMentionPipeline {
 
         int mentionBeamSize = taskConfig.getInt("edu.cmu.cs.lti.mention.beam.size", 5);
         int corefBeamSize = taskConfig.getInt("edu.cmu.cs.lti.coref.beam.size", 5);
-        int jointBeamSize = taskConfig.getInt("edu.cmu.cs.lti.joint.beam.size", 10);
+        int jointBeamSize = taskConfig.getInt("edu.cmu.cs.lti.joint.beam.size", 5);
 
         String[] lossTypes = taskConfig.getList("edu.cmu.cs.lti.mention.loss_types");
 
@@ -1377,41 +1381,35 @@ public class EventMentionPipeline {
                 realisModelDir, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix,
                         "gold_system_realis"), skipRealisTest);
 
-
         String[] paSentMentionModels = new String[lossTypes.length];
         String[] paBeamLaSOMentionModels = new String[lossTypes.length];
         String[] paBeamVanillaMentionModels = new String[lossTypes.length];
-
         String[] delayedPaBeamMentionModels = new String[lossTypes.length];
 
-        // Train Beam search joint model.
-//        String laSoBeamJointModel = trainJointSpanModel(taskConfig, trainingData, "recallHamming",
-//                sliceSuffix, skipBeamTrain, seed, realisModelDir,
-//                taskConfig.get("edu.cmu.cs.lti.model.joint.span.dir"), jointBeamSize, true);
-
-//        String vanillaBeamJointModel = trainJointSpanModel(taskConfig, trainingData, "recallHamming",
-//                sliceSuffix, skipBeamTrain, seed, realisModelDir,
-//                taskConfig.get("edu.cmu.cs.lti.model.joint.span.dir"), jointBeamSize, false);
-
-//        trainLatentTreeCoref(taskConfig, trainingData, sliceSuffix,
-//                taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree"), seed, skipCorefTrain
-//        );
+        trainLatentTreeCoref(taskConfig, trainingData, sliceSuffix,
+                taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree"), seed, skipCorefTrain
+        );
 
         // Train beam based crf models.
         for (int i = 0; i < lossTypes.length; i++) {
             String lossType = lossTypes[i];
-            // TODO check delayed.
-            delayedPaBeamMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
-                    sliceSuffix + "_delayed_" + lossType, true, lossType, true, true, mentionBeamSize, seed,
-                    skipTypeTrain);
             paBeamLaSOMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
-                    sliceSuffix + "_laso_" + lossType, true, lossType, true, false, mentionBeamSize, seed,
-                    skipTypeTrain);
+                    sliceSuffix + "_laso_" + lossType, true, lossType, true, false, mentionBeamSize, null,
+                    seed, skipTypeTrain);
             paBeamVanillaMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
-                    sliceSuffix + "_vanilla_" + lossType, true, lossType, false, false, mentionBeamSize, seed,
-                    skipTypeTrain);
+                    sliceSuffix + "_vanilla_" + lossType, true, lossType, false, false, mentionBeamSize, null,
+                    seed, skipTypeTrain);
             paSentMentionModels[i] = trainSentLvType(taskConfig, trainingData, sliceSuffix + "_" + lossType,
                     true, lossType, seed, skipTypeTrain);
+
+            //  TODO check delayed. A normal delayed model probably doesn't work very well.
+//            delayedPaBeamMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
+//                    sliceSuffix + "_delayed_" + lossType, true, lossType, true, true, mentionBeamSize, paWSModelPath,
+//                    seed, skipTypeTrain);
+
+            delayedPaBeamMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
+                    sliceSuffix + "_delayed_" + lossType, true, lossType, true, true, mentionBeamSize, null,
+                    seed, skipTypeTrain);
         }
 
         // Train beamed based coref model.
@@ -1442,11 +1440,22 @@ public class EventMentionPipeline {
             }
         }
 
+        Map<String, String> jointModels = new HashMap<>();
+        for (int i = 0; i < lossTypes.length; i++) {
+//            String paWarmStartDir = paBeamLaSOMentionModels[i] + "_" + delayedMentionWarmStartIter;
+//            String paWSModelPath = new File(paWarmStartDir, ModelConstants.TYPE_MODEL_NAME).getPath();
+            String lossType = lossTypes[i];
+            String laSoBeamJointModel = trainJointSpanModel(taskConfig, trainingData, lossType, sliceSuffix,
+                    skipBeamTrain, seed, realisModelDir, taskConfig.get("edu.cmu.cs.lti.model.joint.span.dir"),
+                    jointBeamSize, true);
+            jointModels.put(lossType, laSoBeamJointModel);
+        }
+
         // A beam search model that do not use PA loss.
         String noPaVanillaBeamMentionModel = trainBeamTypeModel(taskConfig, trainingData, sliceSuffix + "_vanilla",
-                false, "hamming", false, false, mentionBeamSize, seed, skipTypeTrain);
+                false, "hamming", false, false, mentionBeamSize, null, seed, skipTypeTrain);
         String noPaLaSoBeamMentionModel = trainBeamTypeModel(taskConfig, trainingData, sliceSuffix + "_laso",
-                false, "hamming", true, false, mentionBeamSize, seed, skipTypeTrain);
+                false, "hamming", true, false, mentionBeamSize, null, seed, skipTypeTrain);
 
         // The vanilla crf model.
         String vanillaSentCrfModel = trainSentLvType(taskConfig, trainingData, sliceSuffix, false, "hamming", seed,
@@ -1483,8 +1492,8 @@ public class EventMentionPipeline {
 
             String outputName = "gold_type_" + coreModelName;
             CollectionReaderDescription goldBeamCorefResult = beamCorefResolution(taskConfig, goldMentionAll,
-                    beamCorefModel, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix,
-                            outputName), skipCorefTest, false, beamSize);
+                    beamCorefModel, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix, outputName),
+                    skipCorefTest, false, beamSize);
             String goldBeamCorefOut = FileUtils.joinPaths(processOutDir, outputName + "_" + sliceSuffix + ".tbf");
             writeResults(goldBeamCorefResult, goldBeamCorefOut, "tree_coref");
             eval(goldStandardPath, goldBeamCorefOut, subEvalDir, outputName, sliceSuffix);
@@ -1538,21 +1547,17 @@ public class EventMentionPipeline {
             }
         }
 
-//     CollectionReaderDescription laSoBeamResults = beamJointSpanCoref(taskConfig, testReader, laSoBeamJointModel,
-//                realisModelDir, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix, "joint_span"),
-//                skipJointTest);
-//
-//        CollectionReaderDescription vanillaBeamResults = beamJointSpanCoref(taskConfig, testReader,
-//                vanillaBeamJointModel, realisModelDir, trainingWorkingDir, FileUtils.joinPaths(middleResults,
-//                        sliceSuffix, "joint_span"), skipJointTest);
-//
-//        writeResults(
-//              laSoBeamResults, FileUtils.joinPaths(evalDir, "joint_span_coref_" + sliceSuffix + ".tbf"), "tree_coref"
-//        );
-//
-//        writeResults(
-//           vanillaBeamResults, FileUtils.joinPaths(evalDir, "joint_span_coref_" + sliceSuffix + ".tbf"), "tree_coref"
-//        );
+        for (Map.Entry<String, String> jointModelWithLoss : jointModels.entrySet()) {
+            String loss = jointModelWithLoss.getKey();
+            String model = jointModelWithLoss.getValue();
+            CollectionReaderDescription laSoBeamResults = beamJointSpanCoref(taskConfig, testReader, model,
+                    realisModelDir, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix, "joint_span"),
+                    jointBeamSize, true, skipJointTest);
+            String jointTbf = FileUtils.joinPaths(processOutDir,
+                    "joint_span_coref_" + loss + "_" + sliceSuffix + ".tbf");
+            writeResults(laSoBeamResults, jointTbf, "joint");
+            eval(goldStandardPath, jointTbf, subEvalDir, "joint_" + loss, sliceSuffix);
+        }
 
     }
 }

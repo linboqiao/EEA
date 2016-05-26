@@ -176,6 +176,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 
 
     public void addLink(List<MentionCandidate> mentionCandidates, EdgeKey edgeKey) {
+//        logger.info("Adding edge " + edgeKey);
         LabelledMentionGraphEdge edge = graph.getLabelledEdge(mentionCandidates,
                 edgeKey.getGovNode(), edgeKey.getDepNode());
         decodingTree.addEdge(edge, edgeKey.getType());
@@ -236,7 +237,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     }
 
     public boolean match(NodeLinkingState otherState) {
-        boolean corefMatch = decodingTree == null || otherState.decodingTree.graphMatch(decodingTree, nodeIndex);
+        boolean corefMatch = decodingTree == null || otherState.decodingTree.graphMatch(decodingTree);
 
         boolean labelMatch = true;
         for (int i = 1; i < nodeIndex; i++) {
