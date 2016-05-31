@@ -69,6 +69,7 @@ public class BeamBasedCorefTrainer extends AbstractLoggingAnnotator {
 
     private PairFeatureExtractor mentionPairExtractor;
 
+
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         logger.info("Preparing the Beam based Trainer for coreference ...");
@@ -134,6 +135,7 @@ public class BeamBasedCorefTrainer extends AbstractLoggingAnnotator {
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
 //        UimaConvenience.printProcessLog(aJCas, logger);
+
 
         List<EventMention> allMentions = MentionUtils.clearDuplicates(
                 new ArrayList<>(JCasUtil.select(aJCas, EventMention.class))

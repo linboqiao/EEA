@@ -52,7 +52,7 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
     @Override
     public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
                                         List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
-        thresholdedMentionDistance(featuresNeedLabel, candidates, firstNode, secondNode);
+//        thresholdedMentionDistance(featuresNeedLabel, candidates, firstNode, secondNode);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
         int numMentionInBetween = 0;
         int lastBegin = -1;
         for (int i = left + 1; i < right; i++) {
-//            logger.debug(i + " is " + candidates.get(i).getMentionType() + " " + candidates.get(i).isEvent());
+            logger.debug(i + " is " + candidates.get(i).getMentionType() + " " + candidates.get(i).isEvent());
             MentionCandidate c = candidates.get(i);
             if (c.isEvent()) {
                 if (c.getBegin() != lastBegin) {
@@ -112,7 +112,8 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
             }
         }
 
-//        logger.debug("Mention distance is " + mentionInBetween + " between " + left + " " + right);
+//        logger.debug("Mention distance is " + numMentionInBetween + " between " + candidates.get(left) + " " +
+//                candidates.get(right));
 
         for (int mentionThreshold : mentionThresholds) {
             if (numMentionInBetween <= mentionThreshold) {

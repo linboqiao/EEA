@@ -10,6 +10,7 @@ import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
+import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -17,6 +18,7 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
@@ -79,6 +81,7 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
         logger.info("Initialize Joint Span, Coreference annotator.");
+        logger.info(String.format("Joint decoder started with beam size : %d, laso : %s", beamSize, useLaSO));
 
         prepareMentionModel();
         prepareCorefModel();
@@ -95,13 +98,20 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        UimaConvenience.printProcessLog(aJCas, logger);
+
         List<StanfordCorenlpToken> allTokens = new ArrayList<>(JCasUtil.select(aJCas, StanfordCorenlpToken.class));
         List<MentionCandidate> candidates = MentionUtils.createCandidatesFromTokens(aJCas, allTokens);
 
         corefExtractor.initWorkspace(aJCas);
+
         MentionGraph mentionGraph = new MentionGraph(candidates, corefExtractor, true);
 
         NodeLinkingState decodedState = decoder.decode(aJCas, mentionGraph, candidates, true);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug(decodedState.toString());
+        }
 
         Map<Pair<Integer, String>, EventMention> node2Mention = new HashMap<>();
 
@@ -126,6 +136,8 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
         }
 
         annotatePredictedCoreference(aJCas, decodedState.getDecodingTree(), node2Mention);
+
+        DebugUtils.pause(logger);
     }
 
     private void annotatePredictedCoreference(JCas aJCas, MentionSubGraph predictedTree,
@@ -134,11 +146,23 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
         List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
 
         for (List<Pair<Integer, String>> corefChain : corefChains) {
-            List<EventMention> predictedChain = new ArrayList<>();
 
+            if (logger.isDebugEnabled()) {
+                logger.debug(corefChain.toString());
+            }
+
+            List<EventMention> predictedChain = new ArrayList<>();
+            Map<Span, EventMention> span2Mentions = new HashMap<>();
+
+            // Add an additional filtering layer to remove coreference on the same mention.
             for (Pair<Integer, String> typedNode : corefChain) {
                 EventMention mention = node2Mention.get(typedNode);
-                predictedChain.add(mention);
+                Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());
+
+                if (!span2Mentions.containsKey(mentionSpan)) {
+                    span2Mentions.put(mentionSpan, mention);
+                    predictedChain.add(mention);
+                }
             }
 
             if (predictedChain.size() > 1) {

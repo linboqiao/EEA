@@ -44,6 +44,8 @@ public class MentionGraphEdge implements Serializable {
 
     private boolean averageMode;
 
+    private EdgeType actualEdgeType;
+
 //    public MentionGraphEdge(MentionGraph graph, PairFeatureExtractor extractor, int gov, int dep, boolean
 // averageMode) {
 //        this(graph, extractor, gov, dep, null, null, null, new ArrayList<>(), averageMode);
@@ -62,10 +64,10 @@ public class MentionGraphEdge implements Serializable {
         realLabelledEdges = HashBasedTable.create();
     }
 
-    void addRealEdge(List<MentionCandidate> candidates, NodeKey realGovKey, NodeKey realDepKey,
-                     EdgeType edgeType) {
-        LabelledMentionGraphEdge edge = createLabelledEdge(candidates, edgeType, realGovKey, realDepKey);
-        edge.setActualEdgeType(edgeType);
+    void addRealEdge(List<MentionCandidate> candidates, NodeKey realGovKey, NodeKey realDepKey, EdgeType edgeType) {
+        LabelledMentionGraphEdge edge = createLabelledEdge(candidates, realGovKey, realDepKey);
+        this.actualEdgeType = edgeType;
+//        edge.setActualEdgeType(edgeType);
         realLabelledEdges.put(edge.getGovKey(), edge.getDepKey(), edge);
     }
 
@@ -121,18 +123,29 @@ public class MentionGraphEdge implements Serializable {
         return rawFeaturesNodeDependent;
     }
 
-    public LabelledMentionGraphEdge getLabelledEdge(List<MentionCandidate> mentions, NodeKey govKey,
-                                                    NodeKey depKey) {
+    public LabelledMentionGraphEdge getLabelledEdge(List<MentionCandidate> mentions, NodeKey govKey, NodeKey depKey) {
         if (typedEdges.contains(govKey, depKey)) {
             return typedEdges.get(govKey, depKey);
         } else {
-            return createLabelledEdge(mentions, getRealEdgeType(), govKey, depKey);
+            return createLabelledEdge(mentions, govKey, depKey);
         }
     }
 
-    private LabelledMentionGraphEdge createLabelledEdge(List<MentionCandidate> mentions, EdgeType edgeType,
+    public LabelledMentionGraphEdge getExistingLabelledEdge(NodeKey govKey, NodeKey depKey) {
+//        logger.info("getting existing at " + govKey + " " + depKey);
+        return typedEdges.get(govKey, depKey);
+    }
+
+    public void createLabelledEdgeWithFeatures(NodeKey govKey, NodeKey depKey, FeatureVector featureVector) {
+        LabelledMentionGraphEdge newEdge = new LabelledMentionGraphEdge(this, govKey, depKey, averageMode);
+        newEdge.setFeatureVector(featureVector);
+        typedEdges.put(govKey, depKey, newEdge);
+    }
+
+    private LabelledMentionGraphEdge createLabelledEdge(List<MentionCandidate> mentions,
                                                         NodeKey govKey, NodeKey depKey) {
-        LabelledMentionGraphEdge newEdge = new LabelledMentionGraphEdge(this, govKey, depKey, averageMode, edgeType);
+//        logger.info("Created labelled edge at " + govKey + " " + depKey);
+        LabelledMentionGraphEdge newEdge = new LabelledMentionGraphEdge(this, govKey, depKey, averageMode);
         typedEdges.put(govKey, depKey, newEdge);
 
         TObjectDoubleMap<String> rawFeaturesNeedLabel = extractNodeDependentFeatures(mentions, govKey, depKey);
@@ -156,11 +169,11 @@ public class MentionGraphEdge implements Serializable {
     }
 
     public EdgeType getRealEdgeType() {
-        EdgeType type = null;
-        for (Table.Cell<NodeKey, NodeKey, LabelledMentionGraphEdge> edgeCell : realLabelledEdges.cellSet()) {
-            type = edgeCell.getValue().getEdgeType();
-        }
-        return type;
+//        EdgeType type = null;
+//        for (Table.Cell<NodeKey, NodeKey, LabelledMentionGraphEdge> edgeCell : realLabelledEdges.cellSet()) {
+//            type = edgeCell.getValue().getActualEdgeType();
+//        }
+        return actualEdgeType;
     }
 
     public Table<NodeKey, NodeKey, LabelledMentionGraphEdge> getRealLabelledEdges() {

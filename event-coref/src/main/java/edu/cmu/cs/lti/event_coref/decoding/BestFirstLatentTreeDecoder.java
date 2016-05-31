@@ -38,7 +38,7 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
             Pair<LabelledMentionGraphEdge, EdgeType> bestEdge = null;
             double bestScore = Double.NEGATIVE_INFINITY;
 
-            int currentMentionId = mentionGraph.getCandidateIndex(curr);
+            int currentMentionId = MentionGraph.getCandidateIndex(curr);
 
             NodeKey currentKey = mentionCandidates.get(currentMentionId).asKey().takeFirst();
 

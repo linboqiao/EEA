@@ -11,6 +11,7 @@ import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.LabelledMentionGraphEdge;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
+import edu.cmu.cs.lti.utils.CollectionUtils;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.jcas.JCas;
@@ -18,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -177,10 +179,8 @@ public class BeamLatentTreeDecoder {
             TObjectDoubleMap<String> losses = updater.update();
             corefTrainingStats.addLoss(logger, losses.get(COREF_MODEL_NAME) / mentionGraph.numNodes());
 
-//            logger.info("Loss is " + losses.get(COREF_MODEL_NAME) / mentionGraph.numNodes());
-//            DebugUtils.pause();
+            logger.debug("Loss is " + losses.get(COREF_MODEL_NAME) / mentionGraph.numNodes());
         }
-
 
         return decodingAgenda.getBestBeamState();
     }
@@ -190,44 +190,56 @@ public class BeamLatentTreeDecoder {
         MentionCandidate candidate = candidates.get(candidateIndex);
         MultiNodeKey currNode = candidate.asKey();
 
-        for (int ant = 0; ant < MentionGraph.getNodeIndex(candidateIndex); ant++) {
-            for (NodeLinkingState nodeLinkingState : agenda.getBeamStates()) {
-                MultiNodeKey antNodeKeys = nodeLinkingState.getNode(ant);
-                for (NodeKey currNodeKey : currNode) {
+        for (NodeLinkingState nodeLinkingState : agenda.getBeamStates()) {
+            List<List<Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>>>> allLinks = new
+                    ArrayList<>();
+
+            for (NodeKey currNodeKey : currNode) {
+                // First store all the possible links that can be formed from this node.
+                List<Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>>> currLinks = new
+                        ArrayList<>();
+
+                for (int ant = 0; ant < MentionGraph.getNodeIndex(candidateIndex); ant++) {
+                    MultiNodeKey antNodeKeys = nodeLinkingState.getNode(ant);
+
                     for (NodeKey antNodeKey : antNodeKeys) {
-                        // A candidate can be split to two nodes, we do not create links between them.
-                        if (currNodeKey.getCandidateIndex() == antNodeKey.getCandidateIndex()) {
-                            continue;
-                        }
-
-                        StateDelta decision = new StateDelta(nodeLinkingState);
-                        decision.addNode(currNode, dummyMentionFv, 0);
-
                         LabelledMentionGraphEdge edge = mentionGraph
                                 .getLabelledEdge(candidates, antNodeKey, currNodeKey);
 
-//                        logger.info(edge.getFeatureVector().readableString());
-//                        logger.info("Edge is " + edge);
-
                         for (Map.Entry<EdgeType, Double> labelScore : edge.getAllLabelScore(corefWeights).entrySet()) {
 
-//                            logger.info("Extending with " + labelScore);
-//                            logger.debug(edge.getFeatureVector().readableString());
-
-                            decision.addLink(labelScore.getKey(), antNodeKey, currNodeKey, labelScore.getValue(),
-                                    edge.getFeatureVector());
-
-//                            DebugUtils.pause();
+                            double linkScore = labelScore.getValue();
+                            EdgeType edgeType = labelScore.getKey();
+                            currLinks.add(Pair.of(Pair.of(currNodeKey, edge), Pair.of(edgeType, linkScore)));
                         }
-                        agenda.expand(decision);
                     }
                 }
+                allLinks.add(currLinks);
+            }
+
+            // So now what if each node choose a link? we have their cartesian number of possible linking state.
+            List<List<Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>>>> possibleLinkComb =
+                    CollectionUtils.cartesian(allLinks);
+
+            for (List<Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>>> links : possibleLinkComb) {
+                StateDelta decision = new StateDelta(nodeLinkingState);
+                decision.addNode(currNode, dummyMentionFv, 0);
+                for (Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>> link : links) {
+                    NodeKey dep = link.getLeft().getLeft();
+                    LabelledMentionGraphEdge edge = link.getLeft().getRight();
+                    NodeKey gov = edge.getGovKey();
+                    Pair<EdgeType, Double> labelScore = link.getRight();
+
+                    decision.addLink(labelScore.getKey(), gov, dep, labelScore.getValue(), edge.getFeatureVector());
+                }
+                agenda.expand(decision);
             }
         }
     }
 
     private void expandGoldLink(MentionGraph mentionGraph, List<MentionCandidate> candidates, int candidateIndex,
                                 JointLabelLinkAgenda agenda) {
+
         MentionCandidate candidate = candidates.get(candidateIndex);
         MultiNodeKey currNode = candidate.asKey();
 
@@ -235,9 +247,17 @@ public class BeamLatentTreeDecoder {
 
         // Expand each possible beam state.
         for (NodeLinkingState nodeLinkingState : agenda.getBeamStates()) {
+
+            // Each list store the possible edge for one current key.
+            // We need to get the combination of these edges to create all possible linking.
+            List<List<Pair<NodeKey, LabelledMentionGraphEdge>>> allLinks = new ArrayList<>();
+
             // Decide the link for each node key.
             for (NodeKey currNodeKey : currNode) {
                 int numPossibleCorrectLinks = 0;
+
+                List<Pair<NodeKey, LabelledMentionGraphEdge>> currLinks = new ArrayList<>();
+
                 for (int ant = 0; ant < MentionGraph.getNodeIndex(candidateIndex); ant++) {
                     Table<NodeKey, NodeKey, LabelledMentionGraphEdge> realGraphEdges = mentionGraph
                             .getMentionGraphEdge(currentNodeIndex, ant).getRealLabelledEdges();
@@ -248,21 +268,35 @@ public class BeamLatentTreeDecoder {
                     for (Map.Entry<NodeKey, LabelledMentionGraphEdge> correctAntEdge : correctAntEdges.entrySet()) {
                         NodeKey correctAnt = correctAntEdge.getKey();
                         LabelledMentionGraphEdge realGraphEdge = realGraphEdges.get(correctAnt, currNodeKey);
-                        Pair<EdgeType, Double> correctLabelScore = realGraphEdge.getCorrectLabelScore(corefWeights);
-                        double linkScore = correctLabelScore.getRight();
 
-                        // Expand for each possible link.
-                        StateDelta decision = new StateDelta(nodeLinkingState);
-                        decision.addNode(currNode, dummyMentionFv, 0);
-                        decision.addLink(correctLabelScore.getLeft(), realGraphEdge.getGovKey(), currNodeKey,
-                                linkScore, realGraphEdge.getFeatureVector());
-                        agenda.expand(decision);
+                        currLinks.add(Pair.of(currNodeKey, realGraphEdge));
                     }
                 }
+
+                allLinks.add(currLinks);
+
 
                 if (numPossibleCorrectLinks == 0) {
                     throw new IllegalStateException("No possible links for for " + currNodeKey);
                 }
+            }
+
+            List<List<Pair<NodeKey, LabelledMentionGraphEdge>>> possibleLinkCartesian = CollectionUtils.cartesian
+                    (allLinks);
+
+            for (List<Pair<NodeKey, LabelledMentionGraphEdge>> links : possibleLinkCartesian) {
+                StateDelta decision = new StateDelta(nodeLinkingState);
+                decision.addNode(currNode, dummyMentionFv, 0);
+                for (Pair<NodeKey, LabelledMentionGraphEdge> link : links) {
+                    NodeKey dep = link.getLeft();
+                    LabelledMentionGraphEdge edge = link.getRight();
+                    NodeKey gov = edge.getGovKey();
+                    Pair<EdgeType, Double> correctLabelScore = edge.getCorrectLabelScore(corefWeights);
+
+                    decision.addLink(correctLabelScore.getKey(), gov, dep, correctLabelScore.getValue(), edge
+                            .getFeatureVector());
+                }
+                agenda.expand(decision);
             }
         }
     }

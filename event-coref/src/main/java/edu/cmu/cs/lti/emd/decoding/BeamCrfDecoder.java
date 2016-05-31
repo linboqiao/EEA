@@ -104,6 +104,15 @@ public class BeamCrfDecoder {
 
         mentionExtractor.initWorkspace(aJCas);
 
+//        for (int i = 0; i < goldCandidates.size(); i++) {
+//            String t = goldCandidates.get(i).getMentionType();
+//            if (!t.equals(ClassAlphabet.noneOfTheAboveClass)) {
+//                logger.info(i + 1 + " " + goldCandidates.get(i).getMentionType());
+//            }
+//        }
+//        DebugUtils.pause();
+
+
 //        int numTokens = 0;
         int docTokenIndex = 0;
         for (int sentIndex = 0; sentIndex < allSentences.size(); sentIndex++) {
@@ -132,16 +141,18 @@ public class BeamCrfDecoder {
 
                 Queue<Pair<Integer, Double>> sortedClassScores = scoreMentionLocally(nodeFeature, useAverage);
 
+//                logger.debug("Number of classes scored : " + sortedClassScores.size());
+//                logger.debug("Number of classes "  + mentionTypeClassAlphabet.getNormalClassesRange().count());
+
+                // Only take the top k classes to expand.
+                int count = 0;
                 while (!sortedClassScores.isEmpty()) {
                     Pair<Integer, Double> classScore = sortedClassScores.poll();
                     int classIndex = classScore.getKey();
                     double nodeTypeScore = classScore.getValue();
 
-//                    logger.info("Type score for " + mentionTypeClassAlphabet.getClassName(classIndex) + " is " +
-//                            nodeTypeScore);
-
-                    final MultiNodeKey nodeKeys = setUpCandidate(predictionCandidates.get(docTokenIndex),
-                            classIndex, ClassAlphabet.noneOfTheAboveClass);
+                    final MultiNodeKey nodeKeys = setUpCandidate(predictionCandidates.get(docTokenIndex), classIndex,
+                            ClassAlphabet.noneOfTheAboveClass);
 
 //                    logger.info(nodeKeys.getCombinedType());
 
@@ -178,10 +189,14 @@ public class BeamCrfDecoder {
 
 //                        StateDelta decision = decodingAgenda.expand(nodeLinkingState);
                         StateDelta decision = new StateDelta(nodeLinkingState);
-
                         decision.addNode(nodeKeys, newMentionFeatures, nodeTypeScore + edgeTypeScore + globalScore);
-
                         decodingAgenda.expand(decision);
+                    }
+
+                    count++;
+
+                    if (count == beamSize) {
+                        break; // Only expand top k classes.
                     }
                 }
 
@@ -219,7 +234,6 @@ public class BeamCrfDecoder {
                     }
                 }
 
-//                DebugUtils.pause();
                 docTokenIndex++;
             }
         }
@@ -233,7 +247,15 @@ public class BeamCrfDecoder {
             // Update based on cumulative errors.
 //            logger.debug("Applying updates to " + TYPE_MODEL_NAME);
             TObjectDoubleMap<String> losses = updater.update();
-            typeTrainingStats.addLoss(logger, losses.get(TYPE_MODEL_NAME));
+
+            double lastMentionLoss = losses.get(TYPE_MODEL_NAME);
+
+            if (delayUpdate) {
+                // Divided to get a per token loss.
+                lastMentionLoss /= docTokenIndex;
+            }
+
+            typeTrainingStats.addLoss(logger, lastMentionLoss);
         }
 
 
@@ -244,8 +266,8 @@ public class BeamCrfDecoder {
     private Queue<Pair<Integer, Double>> scoreMentionLocally(FeatureVector nodeFeature, boolean useAverage) {
         Queue<Pair<Integer, Double>> sortedClassScores = new PriorityQueue<>(
                 (o1, o2) ->
-                        new CompareToBuilder().append(o2.getLeft(), o1.getLeft()).
-                                append(o2.getRight(), o1.getRight()).toComparison()
+                        new CompareToBuilder().append(o2.getRight(), o1.getRight()).
+                                append(o2.getLeft(), o1.getLeft()).toComparison()
         );
 
         // Go over possible crf links.

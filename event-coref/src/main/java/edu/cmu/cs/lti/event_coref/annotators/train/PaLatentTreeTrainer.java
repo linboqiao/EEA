@@ -155,23 +155,26 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         // Decoding.
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, extractor);
+
         if (!predictedTree.graphMatch()) {
+//            logger.debug("Found unmatched graph");
+
             MentionSubGraph latentTree = mentionGraph.getLatentTree(weights, candidates);
 
-//            logger.info("Best Gold Tree.");
-//            logger.info(latentTree.toString());
+//            logger.debug("Best Gold Tree.");
+//            logger.debug(latentTree.toString());
 //
-//            logger.info("Best Decoding Tree.");
-//            logger.info(predictedTree.toString());
+//            logger.debug("Best Decoding Tree.");
+//            logger.debug(predictedTree.toString());
 
             double loss = update(predictedTree, latentTree);
 
             trainingStats.addLoss(logger, loss / mentionGraph.numNodes());
 
-//            logger.info("Loss is " + loss);
-//            logger.info("Loss is " + loss / mentionGraph.numNodes());
-
-//            DebugUtils.pause();
+//            logger.debug("Loss is " + loss);
+//            logger.debug("Averaged Loss is " + loss / mentionGraph.numNodes());
+//
+//            DebugUtils.pause(logger);
         } else {
             trainingStats.addLoss(logger, 0);
         }
@@ -217,11 +220,13 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         GraphFeatureVector delta = latentTree.getDelta(predictedTree, classAlphabet, featureAlphabet);
 
         double loss = predictedTree.getLoss(latentTree);
-        double l2 = getFeatureL2(delta);
+//        double l2 = getFeatureL2(delta);
 
-        double tau = loss / l2;
+        double l2Sqaure= delta.getFeatureSquare();
 
-//        logger.info("Updating with step " + tau);
+        double tau = loss / l2Sqaure;
+
+        logger.debug("Updating with step " + tau);
 //        logger.info("Delta is ");
 //        logger.info(delta.readableNodeVector());
 

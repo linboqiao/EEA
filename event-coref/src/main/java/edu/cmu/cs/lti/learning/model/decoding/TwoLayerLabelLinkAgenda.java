@@ -25,8 +25,6 @@ public class TwoLayerLabelLinkAgenda extends LabelLinkAgenda {
 
     private MinMaxPriorityQueue<NodeLinkingState> beamStates;
 
-//    private List<NodeLinkingState> nextBeamStates;
-
     private MinMaxPriorityQueue<NodeLinkingState> nextBeamStates;
 
     private MinMaxPriorityQueue<StateDelta> topStateDeltas;
@@ -35,20 +33,22 @@ public class TwoLayerLabelLinkAgenda extends LabelLinkAgenda {
 
     private List<MentionCandidate> candidates;
 
-    private int beamSize;
+    private int mentionBeamSize;
 
-    private boolean fastMode = true;
+    private int corefBeamSize;
 
-    public TwoLayerLabelLinkAgenda(int beamSize, List<MentionCandidate> candidates) {
-        this(beamSize, candidates, null);
+    public TwoLayerLabelLinkAgenda(int nodeBeamSize, int corefBeamSize, List<MentionCandidate> candidates) {
+        this(nodeBeamSize, corefBeamSize, candidates, null);
     }
 
-    public TwoLayerLabelLinkAgenda(int beamSize, List<MentionCandidate> candidates, MentionGraph mentionGraph) {
-        beamStates = NodeLinkingState.getReverseHeap(beamSize);
-        nextBeamStates = NodeLinkingState.getReverseHeap(beamSize);
-        topStateDeltas = StateDelta.getReverseHeap(beamSize);
+    public TwoLayerLabelLinkAgenda(int mentionBeamSize, int corefBeamSize, List<MentionCandidate> candidates,
+                                   MentionGraph mentionGraph) {
+        beamStates = NodeLinkingState.getReverseHeap(mentionBeamSize);
+        nextBeamStates = NodeLinkingState.getReverseHeap(mentionBeamSize);
+        topStateDeltas = StateDelta.getReverseHeap(mentionBeamSize);
 
-        this.beamSize = beamSize;
+        this.mentionBeamSize = mentionBeamSize;
+        this.corefBeamSize = corefBeamSize;
         this.candidates = candidates;
         beamStates.add(NodeLinkingState.getInitialState(mentionGraph));
     }
@@ -120,7 +120,7 @@ public class TwoLayerLabelLinkAgenda extends LabelLinkAgenda {
             nextBeamStates.offer(updatedState);
         }
         beamStates = nextBeamStates;
-        nextBeamStates = NodeLinkingState.getReverseHeap(beamSize);
+        nextBeamStates = NodeLinkingState.getReverseHeap(mentionBeamSize);
     }
 
     @Override

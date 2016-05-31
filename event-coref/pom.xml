@@ -11,10 +11,15 @@
 
     <artifactId>event-coref</artifactId>
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>edu.cmu.cs.lti.script</groupId>-->
+            <!--<artifactId>event-mention-detection</artifactId>-->
+            <!--<version>0.0.2</version>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>edu.cmu.cs.lti.script</groupId>
-            <artifactId>event-mention-detection</artifactId>
-            <version>0.0.2</version>
+            <groupId>de.bwaldvogel</groupId>
+            <artifactId>liblinear</artifactId>
+            <version>1.94</version>
         </dependency>
         <dependency>
             <groupId>edu.cmu.cs.lti</groupId>
@@ -56,6 +61,16 @@
         <dependency>
             <groupId>edu.cmu.cs.lti.script</groupId>
             <artifactId>learning</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
         </dependency>
     </dependencies>
 </project>

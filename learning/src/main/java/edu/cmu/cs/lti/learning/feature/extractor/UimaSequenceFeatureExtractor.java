@@ -135,8 +135,7 @@ public abstract class UimaSequenceFeatureExtractor<T extends Annotation> extends
                     rawNodeFeatures, rawEdgeFeatures));
         }
 
-        documentFeatureFunctions.forEach(ff -> ff.extract(sequenceElements, focus, rawNodeFeatures,
-                rawEdgeFeatures));
+        documentFeatureFunctions.forEach(ff -> ff.extract(sequenceElements, focus, rawNodeFeatures, rawEdgeFeatures));
 
         for (TObjectDoubleIterator<String> iter = rawNodeFeatures.iterator(); iter.hasNext(); ) {
             iter.advance();

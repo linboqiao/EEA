@@ -1,7 +1,9 @@
 package edu.cmu.cs.lti.event_coref.annotators.train;
 
+import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.emd.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
@@ -10,15 +12,20 @@ import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtract
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
+import edu.cmu.cs.lti.learning.model.graph.LabelledMentionGraphEdge;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge;
 import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -27,13 +34,14 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
 import static edu.cmu.cs.lti.learning.model.ModelConstants.TYPE_MODEL_NAME;
@@ -55,6 +63,14 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_REALIS_MODEL_DIRECTORY)
     private File realisModelDirectory;
 
+    public static final String PARAM_ADD_COREFERNCE_CONSTRAINT = "corefTrainingConstraint";
+    @ConfigurationParameter(name = PARAM_ADD_COREFERNCE_CONSTRAINT, defaultValue = "false")
+    private boolean addCorefTrainingConstraint;
+
+    public static final String PARAM_STRATEGY_TYPE = "strategyType";
+    @ConfigurationParameter(name = PARAM_STRATEGY_TYPE, defaultValue = "0")
+    private int strategyType;
+
 //    public static final String PARAM_WARM_START_MENTION_MODEL = "pretrainedMentionModelDirectory";
 //    @ConfigurationParameter(name = PARAM_WARM_START_MENTION_MODEL, mandatory = false)
 //    private File warmStartMentionModel;
@@ -75,6 +91,10 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_USE_LASO)
     private boolean useLaSO;
 
+    public static final String PARAM_CACHE_DIR = "cacheDir";
+    @ConfigurationParameter(name = PARAM_CACHE_DIR)
+    private File cacheDir;
+
     private WekaModel realisModel;
 
     private SentenceFeatureExtractor realisExtractor;
@@ -82,12 +102,22 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
     private PairFeatureExtractor mentionPairExtractor;
     private BeamCrfLatentTreeDecoder decoder;
 
+    private static int numIters = 0;
+
+    private Map<String, MentionGraph> graphCache;
+
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
-        logger.info("Preparing the Delayed LaSO Trainer...");
+        logger.info("Preparing the Delayed LaSO Joint Trainer...");
         super.initialize(context);
 
         updater = new DiscriminativeUpdater(true, true, true, mentionLossType);
+        if (addCorefTrainingConstraint) {
+            updater.useCorefUpdateConstraint(strategyType);
+            logger.info("We are gonna train with constraint strategy " + strategyType);
+        } else {
+            logger.info("We are not gonna train with coreference constraint.");
+        }
 
         // Doing warm start.
         if (warmStart) {
@@ -120,11 +150,21 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
                 | InstantiationException e) {
             e.printStackTrace();
         }
+
+        edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(cacheDir);
+        logger.info("Cache will be put at " + cacheDir.getAbsolutePath());
+
+        graphCache = new HashMap<>();
     }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
 //        UimaConvenience.printProcessLog(aJCas, logger);
+//        logger.debug("[LOSS TRACK] Joint trainer " + UimaConvenience.getDocId(aJCas));
+//        if (UimaConvenience.getDocId(aJCas).equals("bolt-eng-DF-170-181125-9125545.txt")){
+//            DebugUtils.pause(logger);
+//            DiscriminativeUpdater.debugger = true;
+//        }
 
         List<StanfordCorenlpToken> allTokens = new ArrayList<>(JCasUtil.select(aJCas, StanfordCorenlpToken.class));
         List<EventMention> allMentions = MentionUtils.clearDuplicates(
@@ -135,30 +175,143 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         List<MentionCandidate> systemCandidates = MentionUtils.createCandidatesFromTokens(aJCas, allTokens);
         List<MentionCandidate> goldCandidates = MentionUtils.createCandidatesFromTokens(aJCas, allTokens);
 
+
         // A candidate can corresponds to multiple types.
-        SetMultimap<Integer, Integer> candidate2Split = HashMultimap.create();
-        List<String> splitCandidateTypes = new ArrayList<>();
-        TIntIntMap mention2SplitCandidate = new TIntIntHashMap();
-        int numSplitCandidates = MentionUtils.processCandidates(allMentions, goldCandidates, candidate2Split,
-                mention2SplitCandidate, splitCandidateTypes);
+        SetMultimap<Integer, Integer> candidate2Node = HashMultimap.create();
+        List<String> nodeTypes = new ArrayList<>();
+        TIntIntMap mention2Node = new TIntIntHashMap();
+        int numNodes = MentionUtils.processCandidates(allMentions, goldCandidates, candidate2Node, mention2Node,
+                nodeTypes);
 
         // Convert mention clusters to split candidate clusters.
         Map<Integer, Integer> mention2event = MentionUtils.groupEventClusters(allMentions);
-        Map<Integer, Integer> splitCandidate2EventId = MentionUtils.mapCandidate2Events(numSplitCandidates,
-                mention2SplitCandidate, mention2event);
+        Map<Integer, Integer> node2EventId = MentionUtils.mapCandidate2Events(numNodes, mention2Node, mention2event);
 
         // Read the relations.
-        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2SplitCandidate,
-                allMentions);
+        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2Node, allMentions);
 
         // Init here so that we can extract features for mention graph.
         this.mentionPairExtractor.initWorkspace(aJCas);
-        MentionGraph mentionGraph = new MentionGraph(goldCandidates, candidate2Split, splitCandidateTypes,
-                splitCandidate2EventId, relations, mentionPairExtractor, true);
+        MentionGraph mentionGraph = new MentionGraph(goldCandidates, candidate2Node, nodeTypes, node2EventId,
+                relations, mentionPairExtractor, true);
 
 //        logger.debug("Starting decoding.");
-        decoder.decode(aJCas, mentionGraph, systemCandidates, goldCandidates, false);
-//        logger.debug("Done decoding last one.");
+
+        String name = UimaConvenience.getShortDocumentNameWithOffset(aJCas);
+
+//        logger.info("Reading cache.");
+//        try {
+//            preloadFeature(cacheDir, name, mentionGraph);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        if (graphCache.containsKey(name)) {
+            mentionGraph = graphCache.get(name);
+        }
+//        logger.info("Done reading.");
+
+        boolean skipCoref = numIters < 5;
+
+        // TODO debug purpose.
+        if (skipCoref) {
+            DiscriminativeUpdater.debugger = false;
+        } else {
+            DiscriminativeUpdater.debugger = true;
+        }
+
+//        if (skipCoref) {
+//            logger.info("Skipping coreference training for this round to wait for stable: numIters =" + numIters);
+//        }
+
+//        logger.info("Start deocding.");
+        decoder.decode(aJCas, mentionGraph, systemCandidates, goldCandidates, skipCoref);
+//        logger.info("Done decoding last one.");
+
+        graphCache.put(name, mentionGraph);
+
+//        logger.info("Writing features.");
+//        try {
+//            saveFeatures(cacheDir, name, mentionGraph, goldCandidates, systemCandidates);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        logger.info("Done writing.");
+
+//        UimaConvenience.printProcessLog(aJCas, logger);
+        DebugUtils.pause(logger);
+    }
+
+    private void saveFeatures(File cacheDir, String fileName, MentionGraph mentionGraph,
+                              List<MentionCandidate> gold, List<MentionCandidate> system) throws IOException {
+        int numNodes = mentionGraph.numNodes();
+        List[][] allFeatures = new List[numNodes][];
+
+        for (int gov = 0; gov < numNodes - 1; gov++) {
+            allFeatures[gov] = new List[numNodes];
+            for (int dep = 1; dep < numNodes; dep++) {
+                Table<NodeKey, NodeKey, FeatureVector> featureTable = HashBasedTable.create();
+                MentionGraphEdge edge = mentionGraph.getMentionGraphEdge(dep, gov);
+                storeEdgeFeature(gov, dep, gold, edge, featureTable);
+                storeEdgeFeature(gov, dep, system, edge, featureTable);
+
+                allFeatures[gov][dep] = new ArrayList<>();
+
+                for (Table.Cell<NodeKey, NodeKey, FeatureVector> featureItem : featureTable.cellSet()) {
+                    allFeatures[gov][dep].add(featureItem);
+                }
+            }
+        }
+
+        File featureCahe = new File(cacheDir, fileName + ".ser");
+        SerializationUtils.serialize(allFeatures, new GZIPOutputStream(new FileOutputStream(featureCahe, false)));
+    }
+
+    private void storeEdgeFeature(int gov, int dep, List<MentionCandidate>
+            candidates, MentionGraphEdge edge, Table<NodeKey, NodeKey, FeatureVector> featureTable) {
+        MultiNodeKey govKeys = gov == 0 ? MultiNodeKey.rootKey() : candidates.get(MentionGraph
+                .getCandidateIndex(gov)).asKey();
+        MultiNodeKey depKeys = candidates.get(MentionGraph.getCandidateIndex(dep)).asKey();
+
+        for (NodeKey govKey : govKeys) {
+            for (NodeKey depKey : depKeys) {
+                if (!featureTable.contains(govKey, depKey)) {
+                    LabelledMentionGraphEdge existingEdge = edge.getExistingLabelledEdge(govKey, depKey);
+                    if (existingEdge != null) {
+                        FeatureVector features = edge.getExistingLabelledEdge(govKey, depKey).getFeatureVector();
+                        featureTable.put(govKey, depKey, features);
+                    }
+                }
+            }
+        }
+    }
+
+    private void preloadFeature(File cacheDir, String fileName, MentionGraph mentionGraph) throws IOException {
+        File featureCahe = new File(cacheDir, fileName + ".ser");
+
+        if (!featureCahe.exists()) {
+            return;
+        }
+
+        List[][] allFeatures = SerializationUtils.deserialize(new GZIPInputStream(new FileInputStream(featureCahe)));
+
+        FeatureAlphabet alphabet = updater.getWeightVector(COREF_MODEL_NAME).getFeatureAlphabet();
+
+        int numNodes = mentionGraph.numNodes();
+
+        for (int gov = 0; gov < numNodes - 1; gov++) {
+            for (int dep = 1; dep < numNodes; dep++) {
+                MentionGraphEdge edge = mentionGraph.getMentionGraphEdge(dep, gov);
+                List<Table.Cell<NodeKey, NodeKey, FeatureVector>> labelledFeatures = allFeatures[gov][dep];
+
+                for (Table.Cell<NodeKey, NodeKey, FeatureVector> labelledFeature : labelledFeatures) {
+                    NodeKey govKey = labelledFeature.getRowKey();
+                    NodeKey depKey = labelledFeature.getColumnKey();
+                    FeatureVector fv = labelledFeature.getValue();
+                    fv.setAlpabhet(alphabet);
+                    edge.createLabelledEdgeWithFeatures(govKey, depKey, labelledFeature.getValue());
+                }
+            }
+        }
     }
 
     public static void saveModels(File modelOutputDirectory) throws FileNotFoundException {
@@ -167,8 +320,12 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         updater.getWeightVector(TYPE_MODEL_NAME).write(new File(modelOutputDirectory, TYPE_MODEL_NAME));
     }
 
-    public static void finish() {
+    public static void loopAction() {
+        numIters++;
+    }
 
+    public static void finish() {
+        numIters = 0;
     }
 
     private void prepareRealis() throws ResourceInitializationException {
@@ -202,7 +359,7 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
             throw new ResourceInitializationException(new Throwable("No classes provided for training"));
         }
 
-        ClassAlphabet classAlphabet = new ClassAlphabet(classes, false, true);
+        ClassAlphabet classAlphabet = new ClassAlphabet(classes, true, true);
         HashAlphabet featureAlphabet = new HashAlphabet(alphabetBits, readableModel);
 
         return new GraphWeightVector(classAlphabet, featureAlphabet,

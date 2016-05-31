@@ -20,10 +20,11 @@ import java.util.List;
 public class StateDelta implements Comparable<StateDelta> {
     private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private double comparePrecision = 1e-11;
-
     private NodeLinkingState existingState;
-    private double updatedScore;
+//    private double updatedScore;
+
+    private double stateLinkScore;
+    private double stateNodeScore;
 
     private MultiNodeKey nodes;
 
@@ -39,7 +40,10 @@ public class StateDelta implements Comparable<StateDelta> {
 
     public StateDelta(NodeLinkingState existingState) {
         this.existingState = existingState;
-        updatedScore = existingState.getScore();
+//        updatedScore = existingState.getTotalScore();
+        stateLinkScore = existingState.getLinkScore();
+        stateNodeScore = existingState.getNodeScore();
+
         edges = new ArrayList<>();
         deltaGraphFv = new ArrayList<>();
         totalDistance = 0;
@@ -49,13 +53,13 @@ public class StateDelta implements Comparable<StateDelta> {
 //        logger.info("Adding node " + nodes.getCombinedType() + " with score " + nodeScore);
         this.nodes = nodes;
         this.deltaLabelFv = newLabelFv;
-        updatedScore += nodeScore;
+        stateNodeScore += nodeScore;
     }
 
     public void addLink(EdgeType linkType, NodeKey govKey, NodeKey depKey, double linkScore, FeatureVector newCorefFv) {
         EdgeKey edge = new EdgeKey(depKey, govKey, linkType);
         edges.add(edge);
-        updatedScore += linkScore;
+        stateLinkScore += linkScore;
         deltaGraphFv.add(Pair.of(linkType, newCorefFv));
 
         // Need to determine gov is not root.
@@ -69,7 +73,8 @@ public class StateDelta implements Comparable<StateDelta> {
     @Override
     public int compareTo(StateDelta o) {
         // Compare the states considering the double precision and distance.
-        int scoreCompare = MathUtils.approxCompare(updatedScore, o.updatedScore);
+        int scoreCompare = MathUtils.approxCompare(stateNodeScore + stateLinkScore,
+                o.stateNodeScore + o.stateLinkScore);
         if (scoreCompare == 0) {
             if (totalDistance > o.totalDistance) {
                 return -1;
@@ -100,7 +105,9 @@ public class StateDelta implements Comparable<StateDelta> {
 
         state.addNode(nodes);
 
-        state.setScore(updatedScore);
+        state.setNodeScore(stateNodeScore);
+
+        state.setLinkScore(stateLinkScore);
 
         state.extendFeatures(deltaLabelFv, deltaGraphFv);
 
@@ -114,8 +121,9 @@ public class StateDelta implements Comparable<StateDelta> {
             sb.append(node.toString());
         }
 
-        return String.format("[StateDelta]\n [Nodes] %s\n [Links]\n %s\n [Distance] %d\n, [Score] %.4f", sb.toString(),
-                Joiner.on("\n").join(edges), totalDistance, updatedScore);
+        return String.format(
+                "[StateDelta]\n [Nodes] %s\n [Links]\n %s\n [Distance] %d\n, [Node Score] %.4f, [Link Score] %.4f",
+                sb.toString(), Joiner.on("\n").join(edges), totalDistance, stateNodeScore, stateLinkScore);
     }
 
     public List<Pair<EdgeType, FeatureVector>> getDeltaGraphFv() {

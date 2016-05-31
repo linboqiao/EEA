@@ -19,8 +19,9 @@ import java.lang.reflect.InvocationTargetException;
  */
 public abstract class TrainingLooper extends LoopPipeline {
     private int maxIteration;
-    private int numIteration;
+    protected int numIteration;
     private String modelBasename;
+    private int numberIterToSave = 3;
 
     public TrainingLooper(Configuration taskConfig, String modelOutputBasename,
                           CollectionReaderDescription reader, AnalysisEngineDescription trainer) throws
@@ -31,6 +32,20 @@ public abstract class TrainingLooper extends LoopPipeline {
         this.numIteration = 0;
         this.modelBasename = modelOutputBasename;
         logger.info("Trainer started, maximum iteration is " + maxIteration);
+    }
+
+    public TrainingLooper(String modelOutputBasename, CollectionReaderDescription reader, AnalysisEngineDescription
+            trainer, int maxIter) throws ResourceInitializationException, ClassNotFoundException, NoSuchMethodException,
+            InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
+        super(reader, trainer);
+        this.maxIteration = maxIter;
+        this.numIteration = 0;
+        this.modelBasename = modelOutputBasename;
+        logger.info("Trainer started, maximum iteration is " + maxIteration);
+    }
+
+    public void setNumberIterToSave(int numIterToSave){
+        this.numberIterToSave = numIterToSave;
     }
 
     @Override
@@ -51,17 +66,20 @@ public abstract class TrainingLooper extends LoopPipeline {
     }
 
     @Override
-    protected void loopActions() {
+    protected boolean loopActions() {
         numIteration++;
-        if (numIteration % 3 == 0) {
+        boolean modelSaved = false;
+        if (numIteration % numberIterToSave == 0) {
             try {
                 logger.info("Saving models for iteration " + numIteration);
                 saveModel(new File(modelBasename + "_iter" + numIteration));
+                modelSaved = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         logger.info(String.format("Iteration %d finished ...", numIteration));
+        return modelSaved;
     }
 
     protected abstract void finish() throws IOException;

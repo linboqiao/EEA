@@ -18,6 +18,7 @@ import edu.cmu.cs.lti.emd.annotators.train.TokenLevelEventMentionCrfTrainer;
 import edu.cmu.cs.lti.emd.pipeline.TrainingLooper;
 import edu.cmu.cs.lti.event_coref.annotators.*;
 import edu.cmu.cs.lti.event_coref.annotators.misc.DifferentTypeCorefCollector;
+import edu.cmu.cs.lti.event_coref.annotators.misc.GoldRemover;
 import edu.cmu.cs.lti.event_coref.annotators.postprocessors.MentionTypeAncClusterSplitter;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.ArgumentMerger;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EnglishSrlArgumentExtractor;
@@ -326,12 +327,11 @@ public class EventMentionPipeline {
         );
     }
 
-    public CollectionReaderDescription goldMentionAnnotator(CollectionReaderDescription reader, String mainDir,
+    public CollectionReaderDescription annotateGoldMentions(CollectionReaderDescription reader, String mainDir,
                                                             String baseOutput, boolean copyType, boolean copyRealis,
-                                                            boolean copyCluster, boolean mergeSameSpan,
-                                                            boolean skipGold)
+                                                            boolean copyCluster, boolean mergeSameSpan, boolean skip)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
-        if (skipGold && new File(mainDir, baseOutput).exists()) {
+        if (skip && new File(mainDir, baseOutput).exists()) {
             logger.info("Skipping gold annotator since exists.");
         } else {
             new BasicPipeline(new ProcessorWrapper() {
@@ -390,11 +390,12 @@ public class EventMentionPipeline {
             TrainingLooper mentionTypeTrainer = new TrainingLooper(config, modelPath,
                     trainingReader, trainingEngine) {
                 @Override
-                protected void loopActions() {
+                protected boolean loopActions() {
                     super.loopActions();
                     trainingSeed.add(2);
                     logger.debug("Update the training seed to " + trainingSeed.intValue());
                     trainingReader.setAttributeValue(RandomizedXmiCollectionReader.PARAM_SEED, trainingSeed.getValue());
+                    return false;
                 }
 
                 @Override
@@ -448,7 +449,8 @@ public class EventMentionPipeline {
 
     public String trainBeamTypeModel(Configuration config, CollectionReaderDescription trainingReader, String suffix,
                                      boolean usePaTraing, String lossType, boolean useLaSO, boolean delayedLaso,
-                                     int beamSize, Float aggressiveParameter, int initialSeed, boolean skipTrain)
+                                     int beamSize, int maxIter, Float aggressiveParameter, int initialSeed,
+                                     boolean skipTrain)
             throws UIMAException, NoSuchMethodException, IOException, InstantiationException, IllegalAccessException,
             InvocationTargetException, ClassNotFoundException {
         logger.info("Start training beam based type model.");
@@ -481,13 +483,14 @@ public class EventMentionPipeline {
 
             MutableInt trainingSeed = new MutableInt(initialSeed);
 
-            new TrainingLooper(config, modelPath, trainingReader, trainer) {
+            new TrainingLooper(modelPath, trainingReader, trainer, maxIter) {
                 @Override
-                protected void loopActions() {
+                protected boolean loopActions() {
                     super.loopActions();
                     trainingSeed.add(2);
                     logger.debug("Update the training seed to " + trainingSeed.intValue());
                     trainingReader.setAttributeValue(RandomizedXmiCollectionReader.PARAM_SEED, trainingSeed.getValue());
+                    return false;
                 }
 
                 @Override
@@ -564,8 +567,9 @@ public class EventMentionPipeline {
             TrainingLooper mentionTypeTrainer = new TrainingLooper(config, modelPath,
                     trainingReader, trainingEngine) {
                 @Override
-                protected void loopActions() {
+                protected boolean loopActions() {
                     super.loopActions();
+                    return false;
                 }
 
                 @Override
@@ -738,8 +742,9 @@ public class EventMentionPipeline {
 
             TrainingLooper corefTrainer = new TrainingLooper(config, cvModelDir, trainingReader, corefEngine) {
                 @Override
-                protected void loopActions() {
+                protected boolean loopActions() {
                     super.loopActions();
+                    return false;
                 }
 
                 @Override
@@ -790,8 +795,9 @@ public class EventMentionPipeline {
 
             TrainingLooper corefTrainer = new TrainingLooper(config, cvModelDir, trainingReader, corefEngine) {
                 @Override
-                protected void loopActions() {
+                protected boolean loopActions() {
                     super.loopActions();
+                    return false;
                 }
 
                 @Override
@@ -929,14 +935,46 @@ public class EventMentionPipeline {
         }
     }
 
-    public String trainJointSpanModel(Configuration config, CollectionReaderDescription trainingReader,
-                                      String mentionLossType, String suffix, boolean skipTrain, int initialSeed,
-                                      String realisModelDir, String modelDir, int beamSize, boolean useLaSo)
+    private void testAndEvalJoint(Configuration config, CollectionReaderDescription devReader, String modelDir,
+                                  String modelSuffix, String modelName, int beamSize, String realisModelDir,
+                                  boolean skipTest, String processOutputDir, String subEvalDir, String goldStandard,
+                                  String outputSuffix, String sliceSuffix)
+            throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
+        String runName = "joint_span_coref_" + modelName + modelSuffix + "_" + outputSuffix;
+        CollectionReaderDescription results = beamJointSpanCoref(config, devReader, modelDir + modelSuffix,
+                realisModelDir, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix, runName),
+                beamSize, true, skipTest);
+        String jointTbf = FileUtils.joinPaths(processOutputDir, runName + "_" + sliceSuffix + ".tbf");
+        writeResults(results, jointTbf, "joint");
+        logger.info("Evaluating with " + goldStandard + " and " + jointTbf);
+        eval(goldStandard, jointTbf, subEvalDir, runName, sliceSuffix);
+    }
+
+    private void evalJointModels(String processOutputDir, String subEvalDir, String goldStandard, String modelName,
+                                 String sliceSuffix) throws IOException, InterruptedException {
+        int[] iters = {3, 6, 9, 15};
+
+        for (int numIteration : iters) {
+            String modelSuffix = "_iter" + numIteration;
+            String runName = "joint_span_coref_" + modelName + modelSuffix + "_train";
+            String jointTbf = FileUtils.joinPaths(processOutputDir, runName + "_" + sliceSuffix + ".tbf");
+            eval(goldStandard, jointTbf, subEvalDir, runName, sliceSuffix);
+        }
+    }
+
+    public String trainJointSpanModel(Configuration config, CollectionReaderDescription trainReader,
+                                      CollectionReaderDescription devReader, String mentionLossType, String modelName,
+                                      boolean skipTrain, boolean skipTest, int maxIter, String realisModelDir,
+                                      String modelDir, int beamSize, boolean useLaSo, boolean corefTrainingConstraint,
+                                      int constraintType, String processOutputDir, String trainGold, String devGold,
+                                      String subEvalDir, String sliceSuffix)
             throws UIMAException, IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         logger.info("Start beam based joint training.");
-        String cvModelDir = FileUtils.joinPaths(eventModelDir, modelDir,
-                String.format("loss=%s_laso=%s_beamSize=%d_%s", mentionLossType, useLaSo, beamSize, suffix));
+        String cvModelDir = FileUtils.joinPaths(eventModelDir, modelDir, modelName);
+
+        File cacheDir = new File(FileUtils.joinPaths(trainingWorkingDir,
+                config.get("edu.cmu.cs.lti.joint.cache.base")));
 
         boolean modelExists = new File(cvModelDir).exists();
 
@@ -945,25 +983,62 @@ public class EventMentionPipeline {
         } else {
             logger.info("Saving model directory at : " + cvModelDir);
 
-            AnalysisEngineDescription corefEngine = AnalysisEngineFactory.createEngineDescription(
+            AnalysisEngineDescription trainEngine = AnalysisEngineFactory.createEngineDescription(
                     BeamJointTrainer.class, typeSystemDescription,
                     BeamJointTrainer.PARAM_CONFIG_PATH, config.getConfigFile().getPath(),
                     BeamJointTrainer.PARAM_REALIS_MODEL_DIRECTORY, realisModelDir,
                     BeamJointTrainer.PARAM_MENTION_LOSS_TYPE, mentionLossType,
                     BeamJointTrainer.PARAM_BEAM_SIZE, beamSize,
                     BeamJointTrainer.PARAM_USE_LASO, useLaSo,
-                    BeamJointTrainer.PARAM_USE_WARM_START, false
+                    BeamJointTrainer.PARAM_USE_WARM_START, false,
+                    BeamJointTrainer.PARAM_ADD_COREFERNCE_CONSTRAINT, corefTrainingConstraint,
+                    BeamJointTrainer.PARAM_STRATEGY_TYPE, constraintType,
+                    BeamJointTrainer.PARAM_CACHE_DIR, cacheDir
             );
 
-            TrainingLooper trainer = new TrainingLooper(config, cvModelDir, trainingReader, corefEngine) {
+            TrainingLooper trainer = new TrainingLooper(cvModelDir, trainReader, trainEngine, maxIter) {
                 @Override
-                protected void loopActions() {
-                    super.loopActions();
+                protected boolean loopActions() {
+                    boolean modelSaved = super.loopActions();
+                    BeamJointTrainer.loopAction();
+
+                    if (modelSaved) {
+//                        try {
+//                            if (numIteration > 1) {
+//                                testAndEvalJoint(config, trainReader, cvModelDir, "_iter" + numIteration, modelName,
+//                                        beamSize, realisModelDir, skipTest, processOutputDir, subEvalDir, trainGold,
+//                                        "train", sliceSuffix);
+//                            }
+//                        } catch (SAXException | InterruptedException | IOException | CpeDescriptorException |
+//                                UIMAException e) {
+//                            e.printStackTrace();
+//                        }
+
+                        if (numIteration > 5 && numIteration % 3 == 0) {
+                            try {
+                                testAndEvalJoint(config, devReader, cvModelDir, "_iter" + numIteration, modelName,
+                                        beamSize, realisModelDir, skipTest, processOutputDir, subEvalDir, devGold,
+                                        "dev", sliceSuffix);
+                            } catch (SAXException | InterruptedException | IOException | CpeDescriptorException |
+                                    UIMAException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    return modelSaved;
                 }
 
                 @Override
                 protected void finish() throws IOException {
                     BeamJointTrainer.finish();
+                    try {
+                        // Test using the final model.
+                        testAndEvalJoint(config, devReader, cvModelDir, "", modelName, beamSize,
+                                realisModelDir, skipTest, processOutputDir, subEvalDir, devGold, "dev", sliceSuffix);
+                    } catch (SAXException | InterruptedException | IOException | CpeDescriptorException |
+                            UIMAException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
@@ -972,12 +1047,15 @@ public class EventMentionPipeline {
                 }
             };
 
+            trainer.setNumberIterToSave(1);
+
             trainer.runLoopPipeline();
 
             logger.info("Joint training finished ...");
         }
         return cvModelDir;
     }
+
 
     private CollectionReaderDescription beamJointSpanCoref(Configuration config, CollectionReaderDescription reader,
                                                            String modelDir, String realisDir, String mainDir,
@@ -998,6 +1076,9 @@ public class EventMentionPipeline {
 
                 @Override
                 public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
+                    AnalysisEngineDescription goldRemover = AnalysisEngineFactory.createEngineDescription(
+                            GoldRemover.class, typeSystemDescription);
+
                     AnalysisEngineDescription jointDecoder = AnalysisEngineFactory.createEngineDescription(
                             JointMentionCorefAnnotator.class, typeSystemDescription,
                             JointMentionCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
@@ -1009,6 +1090,7 @@ public class EventMentionPipeline {
 
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();
                     addCorefPreprocessors(annotators);
+                    annotators.add(goldRemover);
                     annotators.add(jointDecoder);
 
                     return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
@@ -1025,6 +1107,8 @@ public class EventMentionPipeline {
 
         String evalOutDir = FileUtils.joinPaths(evalLogOutputDir, subDir, runName);
         logger.info("Evaluating, saving results to " + evalOutDir);
+        logger.info("Gold file is " + gold);
+        logger.info("System file is " + system);
 
         ProcessBuilder pb = new ProcessBuilder("python", evalScript, "-g", gold, "-s", system, "-t", tokenDir,
                 "-d", FileUtils.joinPaths(evalOutDir, suffix + ".cmp"),
@@ -1186,6 +1270,8 @@ public class EventMentionPipeline {
         String evalDir = FileUtils.joinPaths(testingWorkingDir, evalBase, "full_run");
 
         experiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, evalDir, seed, runAll);
+        jointExperiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, evalDir, seed, runAll);
+
     }
 
     /**
@@ -1212,7 +1298,8 @@ public class EventMentionPipeline {
             CollectionReaderDescription devSliceReader = CustomCollectionReaderFactory.createCrossValidationReader(
                     typeSystemDescription, trainingWorkingDir, preprocessBase, true, seed, numSplit, slice);
 
-            experiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, crossEvalDir, seed, false);
+//            experiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, crossEvalDir, seed, false);
+            jointExperiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, crossEvalDir, seed, false);
         }
     }
 
@@ -1335,127 +1422,159 @@ public class EventMentionPipeline {
         return tbfOutput;
     }
 
+    private void jointExperiment(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainReader,
+                                 CollectionReaderDescription testReader, String processOutDir, int seed, boolean runAll
+    ) throws Exception {
+        boolean skipRealisTrain = runAll || taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
+        boolean skipJointTrain = runAll || taskConfig.getBoolean("edu.cmu.cs.lti.joint_span.skiptrain", false);
+        boolean skipJointTest = runAll || taskConfig.getBoolean("edu.cmu.cs.lti.joint_span.skiptest", false);
+        int jointBeamSize = taskConfig.getInt("edu.cmu.cs.lti.joint.beam.size", 5);
+
+        String[] lossTypes = taskConfig.getList("edu.cmu.cs.lti.mention.loss_types");
+
+        String subEvalDir = sliceSuffix.equals(fullRunSuffix) ? "final" : "cv";
+        int jointMaxIter = taskConfig.getInt("edu.cmu.cs.lti.perceptron.joint.maxiter", 30);
+
+        // TODO remember to set back training dir.
+//        CollectionReaderDescription trainingData = prepareTraining(trainReader, trainingWorkingDir,
+//                FileUtils.joinPaths(middleResults, sliceSuffix, "prepared_training"), false, seed);
+        CollectionReaderDescription trainingData = prepareTraining(trainReader, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "prepared_training"), false, seed);
+
+        // Produce gold standard tbf for evaluation.
+        String devGold = FileUtils.joinPaths(processOutDir, "gold_dev_" + sliceSuffix + ".tbf");
+        writeGold(testReader, devGold);
+
+        String trainGold = FileUtils.joinPaths(processOutDir, "gold_train_" + sliceSuffix + ".tbf");
+        writeGold(trainingData, trainGold);
+
+        // Train realis model.
+        String realisModelDir = trainRealisTypes(taskConfig, trainingData, sliceSuffix, skipRealisTrain);
+
+        for (int i = 0; i < lossTypes.length; i++) {
+            String lossType = lossTypes[i];
+
+            for (int strategy = 1; strategy <= 1; strategy++) {
+                String constrainModelSuffix = String.format("%s_loss=%s_beamSize=%d_con=%d", sliceSuffix,
+                        lossType, jointBeamSize, strategy);
+                trainJointSpanModel(taskConfig, trainingData, testReader, lossType, constrainModelSuffix,
+                        skipJointTrain, skipJointTest, jointMaxIter, realisModelDir,
+                        taskConfig.get("edu.cmu.cs.lti.model.joint.span.dir"), jointBeamSize, true, true, strategy,
+                        processOutDir, trainGold, devGold, subEvalDir, sliceSuffix);
+//                evalJointModels(processOutDir, subEvalDir, trainGold, constrainModelSuffix, sliceSuffix);
+            }
+
+//            String modelSuffix = String.format("%s_loss=%s_beamSize=%d", sliceSuffix, lossType, jointBeamSize);
+//
+//            trainJointSpanModel(taskConfig, trainingData, testReader, lossType, modelSuffix,
+//                    skipJointTrain, skipJointTest, jointMaxIter, realisModelDir,
+//                    taskConfig.get("edu.cmu.cs.lti.model.joint.span.dir"), jointBeamSize, true, false, 0,
+//                    processOutDir, trainGold, devGold, subEvalDir, sliceSuffix);
+//
+//            evalJointModels(processOutDir, subEvalDir, trainGold, modelSuffix, sliceSuffix);
+        }
+    }
+
+    private CollectionReaderDescription removeGold(CollectionReaderDescription trainingData, String mainDir, String
+            baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {
+
+        return new BasicPipeline(new ProcessorWrapper() {
+            @Override
+            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
+                return trainingData;
+            }
+
+            @Override
+            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
+                AnalysisEngineDescription goldRemover = AnalysisEngineFactory.createEngineDescription(
+                        GoldRemover.class, typeSystemDescription);
+
+                return new AnalysisEngineDescription[]{goldRemover};
+            }
+        }, mainDir, baseDir).runWithOutput();
+    }
+
     private void experiment(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainReader,
                             CollectionReaderDescription testReader, String processOutDir, int seed, boolean runAll
     ) throws Exception {
         boolean skipCorefTrain = runAll || taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
         boolean skipTypeTrain = runAll || taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
         boolean skipRealisTrain = runAll || taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
-        boolean skipBeamTrain = runAll || taskConfig.getBoolean("edu.cmu.cs.lti.joint_span.skiptrain", false);
 
         boolean skipTypeTest = runAll || taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
         boolean skipRealisTest = runAll || taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
         boolean skipCorefTest = runAll || taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
-        boolean skipJointTest = runAll || taskConfig.getBoolean("edu.cmu.cs.lti.joint_span.skiptest", false);
 
         int mentionBeamSize = taskConfig.getInt("edu.cmu.cs.lti.mention.beam.size", 5);
         int corefBeamSize = taskConfig.getInt("edu.cmu.cs.lti.coref.beam.size", 5);
-        int jointBeamSize = taskConfig.getInt("edu.cmu.cs.lti.joint.beam.size", 5);
 
         String[] lossTypes = taskConfig.getList("edu.cmu.cs.lti.mention.loss_types");
 
         String subEvalDir = sliceSuffix.equals(fullRunSuffix) ? "final" : "cv";
+        int maxIteration = taskConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 15);
+        int delayedMaxIter = taskConfig.getInt("edu.cmu.cs.lti.perceptron.delayed.maxiter", 24);
 
-        CollectionReaderDescription trainingData = prepareTraining(trainReader,
-                trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix, "prepared_training"), false, seed);
-
-        // Produce gold standard tbf for evaluation.
-        String goldStandardPath = FileUtils.joinPaths(processOutDir, "gold_" + sliceSuffix + ".tbf");
-        writeGold(testReader, goldStandardPath);
-
-        // Produce gold mention (type + realis) detection.
-        CollectionReaderDescription goldMentionAll = goldMentionAnnotator(testReader, trainingWorkingDir,
-                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions"), true, true, false, true, false
-                    /* copy type, realis, not coref, merge types, skip*/);
+        CollectionReaderDescription trainingData = prepareTraining(trainReader, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "prepared_training"), false, seed);
 
         // Train realis model.
         String realisModelDir = trainRealisTypes(taskConfig, trainingData, sliceSuffix, skipRealisTrain);
 
-        // Gold mention types.
-        CollectionReaderDescription goldMentionTypes = goldMentionAnnotator(testReader, trainingWorkingDir,
-                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_type"), true, false, false, true, false
-                    /* copy type, not realis, not coref, merge types, skip*/);
+//        // TODO debug stuff:
+//        boolean smallTrainDebug = true;
+//        if (smallTrainDebug) {
+//            // TODO remember to set back training dir.
+//            CollectionReaderDescription smallTrainingData = prepareTraining(trainReader, trainingWorkingDir,
+//                    FileUtils.joinPaths(middleResults, sliceSuffix, "prepared_training_test"), false, seed);
+//
+//            CollectionReaderDescription trainingDataWithoutGold = removeGold(smallTrainingData, trainingWorkingDir,
+//                    FileUtils.joinPaths(middleResults, sliceSuffix, "training_without_gold"));
+//
+//            CollectionReaderDescription goldMentionWithTrain = annotateGoldMentions(trainingDataWithoutGold,
+//                    trainingWorkingDir,
+//                    FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions_on_small_train"), true, true,
+// false,
+//                    true, true
+//                    /* copy type, realis, not coref, merge types, skip*/);
+//
+//            String smallTrainGold = FileUtils.joinPaths(processOutDir, "gold_train_" + sliceSuffix + "_small.tbf");
+//            writeGold(smallTrainingData, smallTrainGold);
+//
+//            // The vanilla crf model.
+//            String smallSentModel = trainSentLvType(taskConfig, smallTrainingData, sliceSuffix + "_small", false,
+//                    "hamming",
+//                    seed, skipTypeTrain
+//            );
+//
+//            // The vanilla coref model.
+//            String smallTreeModel = trainLatentTreeCoref(taskConfig, smallTrainingData, sliceSuffix,
+//                    taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree"), seed, skipCorefTrain
+//            );
+//
+//            runPlainModels(taskConfig, trainingDataWithoutGold, smallSentModel, realisModelDir, smallTreeModel,
+//                    sliceSuffix, "vanillaMention_ON_train_small", processOutDir, subEvalDir, smallTrainGold,
+//                    skipTypeTest, skipRealisTest, skipCorefTest);
+//
+//            CollectionReaderDescription corefGoldTypeRealisOnSmallTrain = corefResolution(taskConfig,
+//                    goldMentionWithTrain, smallTreeModel, trainingWorkingDir,
+//                    FileUtils.joinPaths(middleResults, sliceSuffix, "coref_gold_type+realis_on_small_train"),
+//                    skipCorefTest);
+//            String vanillaCorefOnGoldMentionsOnSmallTrain = FileUtils.joinPaths(processOutDir,
+//                    "gold_type_realis_vanilla_coref_on_small_train_" + sliceSuffix + ".tbf");
+//            writeResults(corefGoldTypeRealisOnSmallTrain, vanillaCorefOnGoldMentionsOnSmallTrain, "tree_coref");
+//            eval(smallTrainGold, vanillaCorefOnGoldMentionsOnSmallTrain, subEvalDir,
+//                    "gold_type_realis_vanilla_coref_on_small_train", sliceSuffix);
+//            DebugUtils.pause();
+//        }
 
-        // Run realis on gold types.
-        CollectionReaderDescription goldTypeSystemRealis = realisAnnotation(taskConfig, goldMentionTypes,
-                realisModelDir, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix,
-                        "gold_system_realis"), skipRealisTest);
 
-        String[] paSentMentionModels = new String[lossTypes.length];
-        String[] paBeamLaSOMentionModels = new String[lossTypes.length];
-        String[] paBeamVanillaMentionModels = new String[lossTypes.length];
-        String[] delayedPaBeamMentionModels = new String[lossTypes.length];
+        // Produce gold standard tbf for evaluation.
+        String devGold = FileUtils.joinPaths(processOutDir, "gold_dev_" + sliceSuffix + ".tbf");
+        writeGold(testReader, devGold);
 
-        trainLatentTreeCoref(taskConfig, trainingData, sliceSuffix,
-                taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree"), seed, skipCorefTrain
-        );
+        String trainGold = FileUtils.joinPaths(processOutDir, "gold_train_" + sliceSuffix + ".tbf");
+        writeGold(trainingData, devGold);
 
-        // Train beam based crf models.
-        for (int i = 0; i < lossTypes.length; i++) {
-            String lossType = lossTypes[i];
-            paBeamLaSOMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
-                    sliceSuffix + "_laso_" + lossType, true, lossType, true, false, mentionBeamSize, null,
-                    seed, skipTypeTrain);
-            paBeamVanillaMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
-                    sliceSuffix + "_vanilla_" + lossType, true, lossType, false, false, mentionBeamSize, null,
-                    seed, skipTypeTrain);
-            paSentMentionModels[i] = trainSentLvType(taskConfig, trainingData, sliceSuffix + "_" + lossType,
-                    true, lossType, seed, skipTypeTrain);
-
-            //  TODO check delayed. A normal delayed model probably doesn't work very well.
-//            delayedPaBeamMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
-//                    sliceSuffix + "_delayed_" + lossType, true, lossType, true, true, mentionBeamSize, paWSModelPath,
-//                    seed, skipTypeTrain);
-
-            delayedPaBeamMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
-                    sliceSuffix + "_delayed_" + lossType, true, lossType, true, true, mentionBeamSize, null,
-                    seed, skipTypeTrain);
-        }
-
-        // Train beamed based coref model.
-        Map<String, String> beamCorefModels = new HashMap<>();
-        Map<String, Integer> modelBeamSize = new HashMap<>();
-
-        int[] sizes = {5};
-        boolean[] useLaSO = {true}; // When using local features, whether to use LaSO is equivalent.
-        boolean[] delayed = {false, true};
-        boolean[] merged = {false, true};
-
-        for (int size : sizes) {
-            for (boolean laso : useLaSO) {
-                for (boolean d : delayed) {
-                    if (!laso && !d) {
-                        // When not using LaSO, delayed doesn't matter.
-                        continue;
-                    }
-                    for (boolean m : merged) {
-                        String name = String.format("coref_laso=%s_delayed=%s_merged=%s_beamSize=%d", laso, d, m, size);
-                        String modelName = sliceSuffix + "_" + name;
-                        String beamCoref = trainBeamBasedCoref(taskConfig, trainingData, modelName, skipCorefTrain,
-                                seed, taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree.beam"), m, laso, d, size);
-                        beamCorefModels.put(name, beamCoref);
-                        modelBeamSize.put(name, size);
-                    }
-                }
-            }
-        }
-
-        Map<String, String> jointModels = new HashMap<>();
-        for (int i = 0; i < lossTypes.length; i++) {
-//            String paWarmStartDir = paBeamLaSOMentionModels[i] + "_" + delayedMentionWarmStartIter;
-//            String paWSModelPath = new File(paWarmStartDir, ModelConstants.TYPE_MODEL_NAME).getPath();
-            String lossType = lossTypes[i];
-            String laSoBeamJointModel = trainJointSpanModel(taskConfig, trainingData, lossType, sliceSuffix,
-                    skipBeamTrain, seed, realisModelDir, taskConfig.get("edu.cmu.cs.lti.model.joint.span.dir"),
-                    jointBeamSize, true);
-            jointModels.put(lossType, laSoBeamJointModel);
-        }
-
-        // A beam search model that do not use PA loss.
-        String noPaVanillaBeamMentionModel = trainBeamTypeModel(taskConfig, trainingData, sliceSuffix + "_vanilla",
-                false, "hamming", false, false, mentionBeamSize, null, seed, skipTypeTrain);
-        String noPaLaSoBeamMentionModel = trainBeamTypeModel(taskConfig, trainingData, sliceSuffix + "_laso",
-                false, "hamming", true, false, mentionBeamSize, null, seed, skipTypeTrain);
 
         // The vanilla crf model.
         String vanillaSentCrfModel = trainSentLvType(taskConfig, trainingData, sliceSuffix, false, "hamming", seed,
@@ -1467,14 +1586,98 @@ public class EventMentionPipeline {
                 taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree"), seed, skipCorefTrain
         );
 
+
+        // Train beamed based coref model.
+        Map<String, String> beamCorefModels = new HashMap<>();
+        Map<String, Integer> modelBeamSize = new HashMap<>();
+
+        int[] sizes = {5};
+        boolean[] useLaSO = {true}; // When using local features, whether to use LaSO is equivalent.
+        boolean[] delayed = {true, false};
+        boolean[] merged = {true, false};
+
+        for (int size : sizes) {
+            for (boolean laso : useLaSO) {
+                for (boolean d : delayed) {
+                    if (!laso && !d) {
+                        // When not using LaSO, delayed doesn't matter.
+                        continue;
+                    }
+                    for (boolean m : merged) {
+                        String name = String.format("coref_laso=%s_delayed=%s_merged=%s_beamSize=%d", laso, d, m,
+                                size);
+                        String modelName = sliceSuffix + "_" + name;
+                        String beamCoref = trainBeamBasedCoref(taskConfig, trainingData, modelName, skipCorefTrain,
+                                seed, taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree.beam"), m, laso, d,
+                                size);
+                        beamCorefModels.put(name, beamCoref);
+                        modelBeamSize.put(name, size);
+                    }
+                }
+            }
+        }
+
+        String[] paSentMentionModels = new String[lossTypes.length];
+        String[] paBeamLaSOMentionModels = new String[lossTypes.length];
+        String[] delayedPaBeamMentionModels = new String[lossTypes.length];
+//        String[] paBeamVanillaMentionModels = new String[lossTypes.length];
+
+        // Train beam based crf models.
+        for (int i = 0; i < lossTypes.length; i++) {
+            String lossType = lossTypes[i];
+
+            // PA, LaSO, delayed.
+            delayedPaBeamMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
+                    sliceSuffix + "_delayed_" + lossType, true, lossType, true, true, mentionBeamSize, delayedMaxIter,
+                    null, seed, skipTypeTrain);
+
+            // PA, LaSO, but not delayed.
+            paBeamLaSOMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
+                    sliceSuffix + "_laso_" + lossType, true, lossType, true, false, mentionBeamSize, maxIteration,
+                    null, seed, skipTypeTrain);
+
+            // PA, no beam search.
+            paSentMentionModels[i] = trainSentLvType(taskConfig, trainingData, sliceSuffix + "_" + lossType,
+                    true, lossType, seed, skipTypeTrain);
+
+            //            // PA, not laso, not delayed.
+//            paBeamVanillaMentionModels[i] = trainBeamTypeModel(taskConfig, trainingData,
+//                    sliceSuffix + "_vanilla_" + lossType, true, lossType, false, false, mentionBeamSize,
+// maxIteration,
+//                    null, seed, skipTypeTrain);
+        }
+
+
+        // A beam search model that do not use PA loss.
+        String noPaVanillaBeamMentionModel = trainBeamTypeModel(taskConfig, trainingData, sliceSuffix + "_vanilla",
+                false, "hamming", false, false, mentionBeamSize, maxIteration, null, seed, skipTypeTrain);
+        String noPaLaSoBeamMentionModel = trainBeamTypeModel(taskConfig, trainingData, sliceSuffix + "_laso",
+                false, "hamming", true, false, mentionBeamSize, maxIteration, null, seed, skipTypeTrain);
+
+        // Produce gold mention (type + realis) detection.
+        CollectionReaderDescription goldMentionAll = annotateGoldMentions(testReader, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions"), true, true, false, true, true
+                    /* copy type, realis, not coref, merge types, skip*/);
+
+        // Gold mention types.
+        CollectionReaderDescription goldMentionTypes = annotateGoldMentions(testReader, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_type"), true, false, false, true, true
+                    /* copy type, not realis, not coref, merge types, skip*/);
+
+        // Run realis on gold types.
+        CollectionReaderDescription goldTypeSystemRealis = realisAnnotation(taskConfig, goldMentionTypes,
+                realisModelDir, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix,
+                        "gold_system_realis"), skipRealisTest);
+
         // Coreference with gold components.
         CollectionReaderDescription corefGoldTypeRealis = corefResolution(taskConfig, goldMentionAll,
                 treeCorefModel, trainingWorkingDir,
                 FileUtils.joinPaths(middleResults, sliceSuffix, "coref_gold_type+realis"), skipCorefTest);
+
         String vanillaCorefOnGoldMentions = FileUtils.joinPaths(processOutDir,
                 "gold_type_realis_vanilla_coref_" + sliceSuffix + ".tbf");
         writeResults(corefGoldTypeRealis, vanillaCorefOnGoldMentions, "tree_coref");
-        eval(goldStandardPath, vanillaCorefOnGoldMentions, subEvalDir, "gold_type_realis_vanilla_coref", sliceSuffix);
+        eval(devGold, vanillaCorefOnGoldMentions, subEvalDir, "gold_type_realis_vanilla_coref", sliceSuffix);
 
         CollectionReaderDescription corefGoldType = corefResolution(taskConfig, goldTypeSystemRealis,
                 treeCorefModel, trainingWorkingDir,
@@ -1482,7 +1685,7 @@ public class EventMentionPipeline {
 
         String vanillaCorefOnGoldType = FileUtils.joinPaths(processOutDir, "gold_type_coref_" + sliceSuffix + ".tbf");
         writeResults(corefGoldType, vanillaCorefOnGoldType, "gold_types");
-        eval(goldStandardPath, vanillaCorefOnGoldType, subEvalDir, "gold_type_vanilla_coref", sliceSuffix);
+        eval(devGold, vanillaCorefOnGoldType, subEvalDir, "gold_type_vanilla_coref", sliceSuffix);
 
         // Beam coreference with gold components.
         for (Map.Entry<String, String> beamCorefModelWithName : beamCorefModels.entrySet()) {
@@ -1496,20 +1699,20 @@ public class EventMentionPipeline {
                     skipCorefTest, false, beamSize);
             String goldBeamCorefOut = FileUtils.joinPaths(processOutDir, outputName + "_" + sliceSuffix + ".tbf");
             writeResults(goldBeamCorefResult, goldBeamCorefOut, "tree_coref");
-            eval(goldStandardPath, goldBeamCorefOut, subEvalDir, outputName, sliceSuffix);
+            eval(devGold, goldBeamCorefOut, subEvalDir, outputName, sliceSuffix);
         }
 
         // Run the vanilla model.
         runPlainModels(taskConfig, testReader, vanillaSentCrfModel, realisModelDir, treeCorefModel,
-                sliceSuffix, "vanillaMention", processOutDir, subEvalDir, goldStandardPath,
+                sliceSuffix, "vanillaMention", processOutDir, subEvalDir, devGold,
                 skipTypeTest, skipRealisTest, skipCorefTest);
 
         runBeamMentions(taskConfig, testReader, noPaVanillaBeamMentionModel, realisModelDir, treeCorefModel,
                 sliceSuffix, "noPaVanillaBeamMention", processOutDir, mentionBeamSize,
-                subEvalDir, goldStandardPath, skipTypeTest, skipRealisTest, skipCorefTest);
+                subEvalDir, devGold, skipTypeTest, skipRealisTest, skipCorefTest);
 
         runBeamMentions(taskConfig, testReader, noPaLaSoBeamMentionModel, realisModelDir, treeCorefModel, sliceSuffix,
-                "noPaLasoBeamMention", processOutDir, mentionBeamSize, subEvalDir, goldStandardPath,
+                "noPaLasoBeamMention", processOutDir, mentionBeamSize, subEvalDir, devGold,
                 skipTypeTest, skipRealisTest, skipCorefTest);
 
         // Run the sent models.
@@ -1517,47 +1720,38 @@ public class EventMentionPipeline {
             String lossType = lossTypes[i];
             String paModel = paSentMentionModels[i];
             runPlainModels(taskConfig, testReader, paModel, realisModelDir, treeCorefModel, sliceSuffix,
-                    "paMention_" + lossType, processOutDir, subEvalDir, goldStandardPath,
+                    "paMention_" + lossType, processOutDir, subEvalDir, devGold,
                     skipTypeTest, skipRealisTest, skipCorefTest);
 
             String laSoBeamModel = paBeamLaSOMentionModels[i];
-            String vanillaBeamModel = paBeamVanillaMentionModels[i];
+//            String vanillaBeamModel = paBeamVanillaMentionModels[i];
             runBeamMentions(taskConfig, testReader, laSoBeamModel, realisModelDir, treeCorefModel, sliceSuffix,
-                    "laSoBeamMention_" + lossType, processOutDir, mentionBeamSize, subEvalDir, goldStandardPath,
+                    "laSoBeamMention_" + lossType, processOutDir, mentionBeamSize, subEvalDir, devGold,
                     skipTypeTest, skipRealisTest, skipCorefTest);
 
-            runBeamMentions(taskConfig, testReader, vanillaBeamModel, realisModelDir, treeCorefModel, sliceSuffix,
-                    "vanillaBeamMention_" + lossType, processOutDir, mentionBeamSize, subEvalDir, goldStandardPath,
-                    skipTypeTest, skipRealisTest, skipCorefTest);
+//            runBeamMentions(taskConfig, testReader, vanillaBeamModel, realisModelDir, treeCorefModel, sliceSuffix,
+//                    "vanillaBeamMention_" + lossType, processOutDir, mentionBeamSize, subEvalDir, devGold,
+//                    skipTypeTest, skipRealisTest, skipCorefTest);
 
             String delayedBeamModel = delayedPaBeamMentionModels[i];
             runBeamMentions(taskConfig, testReader, delayedBeamModel, realisModelDir, treeCorefModel, sliceSuffix,
-                    "delayedBeamMention_" + lossType, processOutDir, mentionBeamSize, subEvalDir, goldStandardPath,
+                    "delayedBeamMention_" + lossType, processOutDir, mentionBeamSize, subEvalDir, devGold,
                     skipTypeTest, skipRealisTest, skipCorefTest);
 
             for (Map.Entry<String, String> beamCorefModelWithName : beamCorefModels.entrySet()) {
                 String coreModelName = beamCorefModelWithName.getKey();
                 String beamCorefModel = beamCorefModelWithName.getValue();
-                runBeamAll(taskConfig, testReader, vanillaBeamModel, realisModelDir, beamCorefModel, sliceSuffix,
-                        "vanillaBeamMention_" + lossType + "_" + coreModelName, processOutDir, mentionBeamSize,
-                        corefBeamSize, subEvalDir, goldStandardPath, skipTypeTest, skipRealisTest, skipCorefTest);
+//                runBeamAll(taskConfig, testReader, vanillaBeamModel, realisModelDir, beamCorefModel, sliceSuffix,
+//                        "vanillaBeamMention_" + lossType + "_" + coreModelName, processOutDir, mentionBeamSize,
+//                        corefBeamSize, subEvalDir, devGold, skipTypeTest, skipRealisTest, skipCorefTest);
                 runBeamAll(taskConfig, testReader, laSoBeamModel, realisModelDir, beamCorefModel, sliceSuffix,
                         "laSoBeamMention_" + lossType + "_" + coreModelName, processOutDir, mentionBeamSize,
-                        corefBeamSize, subEvalDir, goldStandardPath, skipTypeTest, skipRealisTest, skipCorefTest);
+                        corefBeamSize, subEvalDir, devGold, skipTypeTest, skipRealisTest, skipCorefTest);
+
+                runBeamAll(taskConfig, testReader, delayedBeamModel, realisModelDir, beamCorefModel, sliceSuffix,
+                        "delayedBeamMention_" + lossType + "_" + coreModelName, processOutDir, mentionBeamSize,
+                        corefBeamSize, subEvalDir, devGold, skipTypeTest, skipRealisTest, skipCorefTest);
             }
         }
-
-        for (Map.Entry<String, String> jointModelWithLoss : jointModels.entrySet()) {
-            String loss = jointModelWithLoss.getKey();
-            String model = jointModelWithLoss.getValue();
-            CollectionReaderDescription laSoBeamResults = beamJointSpanCoref(taskConfig, testReader, model,
-                    realisModelDir, trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix, "joint_span"),
-                    jointBeamSize, true, skipJointTest);
-            String jointTbf = FileUtils.joinPaths(processOutDir,
-                    "joint_span_coref_" + loss + "_" + sliceSuffix + ".tbf");
-            writeResults(laSoBeamResults, jointTbf, "joint");
-            eval(goldStandardPath, jointTbf, subEvalDir, "joint_" + loss, sliceSuffix);
-        }
-
     }
 }

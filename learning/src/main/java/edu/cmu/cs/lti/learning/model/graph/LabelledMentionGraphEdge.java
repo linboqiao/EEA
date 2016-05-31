@@ -33,17 +33,16 @@ public class LabelledMentionGraphEdge implements Serializable {
 
     private boolean averageMode;
 
-    private EdgeType edgeType;
+//    private EdgeType edgeType;
 
-    private EdgeType actualEdgeType;
+//    private EdgeType actualEdgeType;
 
-    public LabelledMentionGraphEdge(MentionGraphEdge hostingEdge, NodeKey govKey, NodeKey depKey,
-                                    boolean averageMode, EdgeType edgeType) {
+    public LabelledMentionGraphEdge(MentionGraphEdge hostingEdge, NodeKey govKey, NodeKey depKey, boolean averageMode) {
         this.hostingEdge = hostingEdge;
         this.averageMode = averageMode;
         this.govKey = govKey;
         this.depKey = depKey;
-        this.edgeType = edgeType;
+//        this.edgeType = edgeType;
     }
 
     public FeatureVector getFeatureVector() {
@@ -58,6 +57,7 @@ public class LabelledMentionGraphEdge implements Serializable {
     }
 
     public Pair<EdgeType, Double> getCorrectLabelScore(GraphWeightVector weightVector) {
+        EdgeType actualEdgeType = hostingEdge.getRealEdgeType();
         if (actualEdgeType == null) {
             return null;
         }
@@ -97,7 +97,7 @@ public class LabelledMentionGraphEdge implements Serializable {
             allLabelScores.put(EdgeType.Root, scoreEdge(EdgeType.Root, weightVector));
         } else {
             for (EdgeType label : EdgeType.values()) {
-                if (label.equals(EdgeType.Root)){
+                if (label.equals(EdgeType.Root)) {
                     // If the edge is not a root edge, we will not test for Root edge type.
                     continue;
                 }
@@ -123,9 +123,9 @@ public class LabelledMentionGraphEdge implements Serializable {
         this.featureVector = featureVector;
     }
 
-    public EdgeType getEdgeType() {
-        return edgeType;
-    }
+//    public EdgeType getEdgeType() {
+//        return edgeType;
+//    }
 
     public NodeKey getDepKey() {
         return depKey;
@@ -140,8 +140,12 @@ public class LabelledMentionGraphEdge implements Serializable {
                 govKey.getRealis(), depKey.getMentionType(), depKey.getRealis());
     }
 
-    public void setActualEdgeType(EdgeType actualEdgeType) {
-//        logger.debug("Actual edge type is set " + toString());
-        this.actualEdgeType = actualEdgeType;
-    }
+//    public void setActualEdgeType(EdgeType actualEdgeType) {
+////        logger.debug("Actual edge type is set " + toString());
+//        this.actualEdgeType = actualEdgeType;
+//    }
+//
+//    public EdgeType getActualEdgeType() {
+//        return actualEdgeType;
+//    }
 }

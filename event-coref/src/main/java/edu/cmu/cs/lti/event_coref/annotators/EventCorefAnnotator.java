@@ -128,11 +128,11 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
         predictedTree.resolveCoreference();
         List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
 
-//        logger.info(predictedTree.toString());
-//
-//        for (List<Pair<Integer, String>> corefChain : corefChains) {
-//            logger.info(corefChain.toString());
-//        }
+        logger.debug(predictedTree.toString());
+
+        for (List<Pair<Integer, String>> corefChain : corefChains) {
+            logger.debug(corefChain.toString());
+        }
 //
 //        logger.info(String.valueOf(corefChains.length));
 

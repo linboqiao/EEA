@@ -5,6 +5,7 @@ import com.google.common.collect.*;
 import edu.cmu.cs.lti.learning.model.*;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -250,7 +251,14 @@ public class MentionSubGraph {
 
         // Collect stuff from the edgeTable, until the limit.
         int typedClusterId = 0;
-        for (SubGraphEdge edge : edgeTable.values()) {
+
+
+        List<SubGraphEdge> allEdges = new ArrayList<>(edgeTable.values());
+
+        Collections.sort(allEdges, (o1, o2) -> new CompareToBuilder().append(o1.getDep(), o2.getDep())
+                .append(o1.getGov(), o2.getGov()).build());
+
+        for (SubGraphEdge edge : allEdges) {
             EdgeType type = edge.getEdgeType();
 
             int govNode = edge.getGov();

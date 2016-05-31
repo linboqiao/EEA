@@ -88,7 +88,7 @@ public class MentionUtils {
 //        int candidateIndex = 0;
         MutableInt candidateIndex = new MutableInt();
 
-        span2Mentions.keySet().stream().sorted(Collections.reverseOrder()).forEach(span ->{
+        span2Mentions.keySet().stream().sorted(Collections.reverseOrder()).forEach(span -> {
             Set<String> allTypes = span2Mentions.get(span).stream().map(EventMention::getEventType)
                     .collect(Collectors.toSet());
             String type = MentionTypeUtils.joinMultipleTypes(allTypes);
@@ -104,7 +104,8 @@ public class MentionUtils {
         });
 //
 //        for (Map.Entry<Span, Collection<EventMention>> s2m : span2Mentions.asMap().entrySet()) {
-//            Set<String> allTypes = s2m.getValue().stream().map(EventMention::getEventType).collect(Collectors.toSet());
+//            Set<String> allTypes = s2m.getValue().stream().map(EventMention::getEventType).collect(Collectors.toSet
+// ());
 //            String type = MentionTypeUtils.joinMultipleTypes(allTypes);
 //
 //            EventMention mention = Iterables.get(s2m.getValue(), 0);
@@ -238,22 +239,27 @@ public class MentionUtils {
         return relations;
     }
 
-
     public static int processCandidates(List<EventMention> mentions, List<MentionCandidate> goldCandidates,
                                         SetMultimap<Integer, Integer> candidate2Split,
                                         TIntIntMap mention2SplitCandidate, List<String> splitCandidateTypes) {
-        SetMultimap<Span, Integer> span2Mentions = HashMultimap.create();
+//        SetMultimap<Span, Integer> span2Mentions = HashMultimap.create();
+        SetMultimap<Word, Integer> head2Mentions = HashMultimap.create();
+
 
         for (int i = 0; i < mentions.size(); i++) {
-            span2Mentions.put(Span.of(mentions.get(i).getBegin(), mentions.get(i).getEnd()), i);
+//            span2Mentions.put(Span.of(mentions.get(i).getBegin(), mentions.get(i).getEnd()), i);
+            head2Mentions.put(mentions.get(i).getHeadWord(), i);
         }
 
         int splitCandidateId = 0;
         for (int candidateIndex = 0; candidateIndex < goldCandidates.size(); candidateIndex++) {
             MentionCandidate candidate = goldCandidates.get(candidateIndex);
-            Span candidateSpan = Span.of(candidate.getBegin(), candidate.getEnd());
-            if (span2Mentions.containsKey(candidateSpan)) {
-                Set<Integer> correspondingMentions = span2Mentions.get(candidateSpan);
+            Word candidateHead = candidate.getHeadWord();
+//            Span candidateSpan = Span.of(candidate.getBegin(), candidate.getEnd());
+            if (head2Mentions.containsKey(candidateHead)) {
+                Set<Integer> correspondingMentions = head2Mentions.get(candidateHead);
+
+                // The type is done by joining multiple types on the same span.
                 String mentionType = MentionTypeUtils.joinMultipleTypes(correspondingMentions.stream()
                         .map(mentions::get).map(EventMention::getEventType).collect(Collectors.toList()));
                 candidate.setMentionType(mentionType);
@@ -277,6 +283,45 @@ public class MentionUtils {
 
         return splitCandidateId;
     }
+
+//    public static int processCandidates(List<EventMention> mentions, List<MentionCandidate> goldCandidates,
+//                                        SetMultimap<Integer, Integer> candidate2Split,
+//                                        TIntIntMap mention2SplitCandidate, List<String> splitCandidateTypes) {
+//        SetMultimap<Span, Integer> span2Mentions = HashMultimap.create();
+//
+//        for (int i = 0; i < mentions.size(); i++) {
+//            span2Mentions.put(Span.of(mentions.get(i).getBegin(), mentions.get(i).getEnd()), i);
+//        }
+//
+//        int splitCandidateId = 0;
+//        for (int candidateIndex = 0; candidateIndex < goldCandidates.size(); candidateIndex++) {
+//            MentionCandidate candidate = goldCandidates.get(candidateIndex);
+//            Span candidateSpan = Span.of(candidate.getBegin(), candidate.getEnd());
+//            if (span2Mentions.containsKey(candidateSpan)) {
+//                Set<Integer> correspondingMentions = span2Mentions.get(candidateSpan);
+//                String mentionType = MentionTypeUtils.joinMultipleTypes(correspondingMentions.stream()
+//                        .map(mentions::get).map(EventMention::getEventType).collect(Collectors.toList()));
+//                candidate.setMentionType(mentionType);
+//
+//                for (Integer mentionId : correspondingMentions) {
+//                    EventMention mention = mentions.get(mentionId);
+//                    candidate.setRealis(mention.getRealisType());
+//                    candidate2Split.put(candidateIndex, splitCandidateId);
+//                    splitCandidateTypes.add(mention.getEventType());
+//                    mention2SplitCandidate.put(mentionId, splitCandidateId);
+//                    splitCandidateId++;
+//                }
+//            } else {
+//                candidate.setMentionType(ClassAlphabet.noneOfTheAboveClass);
+//                candidate.setRealis(ClassAlphabet.noneOfTheAboveClass);
+//                splitCandidateTypes.add(ClassAlphabet.noneOfTheAboveClass);
+//                candidate2Split.put(candidateIndex, splitCandidateId);
+//                splitCandidateId++;
+//            }
+//        }
+//
+//        return splitCandidateId;
+//    }
 
     public static Map<Integer, Integer> mapCandidate2Events(int numCandidates, TIntIntMap mention2Candidate,
                                                             Map<Integer, Integer> mention2event) {

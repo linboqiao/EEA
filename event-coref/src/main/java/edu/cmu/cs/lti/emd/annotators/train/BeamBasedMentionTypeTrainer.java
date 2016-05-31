@@ -14,6 +14,7 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.UimaContext;
@@ -86,7 +87,7 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
 
         if (aggressiveParameter != null) {
             updater = new DiscriminativeUpdater(true, false, usePaUpdate, lossType, aggressiveParameter);
-            logger.info("Mention type trainer started with warm start.");
+            logger.info("Mention type trainer started with aggressive parameter.");
         } else {
             updater = new DiscriminativeUpdater(true, false, usePaUpdate, lossType);
         }
@@ -149,7 +150,7 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
             throw new ResourceInitializationException(new Throwable("No classes provided for training"));
         }
 
-        ClassAlphabet classAlphabet = new ClassAlphabet(classes, false, true);
+        ClassAlphabet classAlphabet = new ClassAlphabet(classes, true, true);
         HashAlphabet featureAlphabet = new HashAlphabet(alphabetBits, readableModel);
 
         return new GraphWeightVector(classAlphabet, featureAlphabet,
@@ -159,7 +160,15 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        UimaConvenience.printProcessLog(aJCas, logger);
+        UimaConvenience.printProcessLog(aJCas, logger);
+
+//        logger.debug("[LOSS TRACK] Type trainer " + UimaConvenience.getDocId(aJCas));
+//
+//        if (UimaConvenience.getDocId(aJCas).equals("bolt-eng-DF-170-181125-9125545.txt")){
+//            DebugUtils.pause(logger);
+//            DiscriminativeUpdater.debugger = true;
+//        }
+
         List<StanfordCorenlpToken> allTokens = new ArrayList<>(JCasUtil.select(aJCas, StanfordCorenlpToken.class));
         List<MentionCandidate> systemCandidates = MentionUtils.createCandidatesFromTokens(aJCas, allTokens);
         List<MentionCandidate> goldCandidates = MentionUtils.createCandidatesFromTokens(aJCas, allTokens);
@@ -186,7 +195,7 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
                         .map(mentions::get).map(EventMention::getEventType).collect(Collectors.toList()));
                 candidate.setMentionType(mentionType);
 
-                for (Integer mentionId : head2Mentions.get(candidateHead)) {
+                for (Integer mentionId : correspondingMentions) {
                     EventMention mention = mentions.get(mentionId);
                     candidate.setRealis(mention.getRealisType());
                 }

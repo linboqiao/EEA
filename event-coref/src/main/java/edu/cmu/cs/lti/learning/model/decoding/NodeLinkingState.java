@@ -24,7 +24,11 @@ import java.util.stream.Collectors;
 public class NodeLinkingState implements Comparable<NodeLinkingState> {
     protected transient final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private double score;
+//    private double score;
+
+    private double nodeScore;
+
+    private double linkScore;
 
     private MentionGraph graph;
 
@@ -67,7 +71,8 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 
     public String toString() {
         return "[Node Linking State] " + Integer.toHexString(hashCode()) + "\n" +
-                "Score: " + score +
+                "Node Score: " + nodeScore +
+                " Link Score: " + linkScore +
                 "\n<Nodes>\n" +
                 showNodes() +
                 "\n" +
@@ -100,7 +105,10 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 
         // Compare the states considering the double precision and distance.
 //        if (Math.abs(score - s.score) < comparePrecision) {
-        if (MathUtils.almostEqual(score, s.score)) {
+        double score = nodeScore + linkScore;
+        double otherScore = s.nodeScore + s.linkScore;
+
+        if (MathUtils.almostEqual(score, otherScore)) {
             // In case we don't do coreference, decodingTree doesn't exists.
             if (decodingTree != null) {
                 int thisDistance = decodingTree.getTotalDistance();
@@ -120,9 +128,9 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
             } else {
                 return 0;
             }
-        } else if (score > s.score) {
+        } else if (score > otherScore) {
             return 1;
-        } else if (score < s.score) {
+        } else if (score < otherScore) {
             return -1;
         } else {
             return 0;
@@ -146,6 +154,10 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
      */
     public List<MultiNodeKey> getNodeResults() {
         return nodeResults;
+    }
+
+    public MultiNodeKey getLastNodeResult() {
+        return nodeResults.get(nodeResults.size() - 1);
     }
 
     /**
@@ -176,7 +188,6 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 
 
     public void addLink(List<MentionCandidate> mentionCandidates, EdgeKey edgeKey) {
-//        logger.info("Adding edge " + edgeKey);
         LabelledMentionGraphEdge edge = graph.getLabelledEdge(mentionCandidates,
                 edgeKey.getGovNode(), edgeKey.getDepNode());
         decodingTree.addEdge(edge, edgeKey.getType());
@@ -224,12 +235,24 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         return nodeResults.get(nodeIndex).getCombinedType();
     }
 
-    public double getScore() {
-        return score;
+    public double getTotalScore() {
+        return nodeScore + linkScore;
     }
 
-    public void setScore(double score) {
-        this.score = score;
+    public double getLinkScore() {
+        return linkScore;
+    }
+
+    public double getNodeScore() {
+        return nodeScore;
+    }
+
+    public void setNodeScore(double nodeScore) {
+        this.nodeScore = nodeScore;
+    }
+
+    public void setLinkScore(double linkScore) {
+        this.linkScore = linkScore;
     }
 
     public MentionSubGraph getDecodingTree() {
@@ -261,7 +284,8 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 
     public NodeLinkingState makeCopy() {
         NodeLinkingState state = new NodeLinkingState(graph);
-        state.score = score;
+        state.nodeScore = nodeScore;
+        state.linkScore = linkScore;
         if (decodingTree != null) {
             state.decodingTree = decodingTree.makeCopy();
         }

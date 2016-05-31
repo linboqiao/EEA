@@ -140,8 +140,6 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
             }
         }
         annotatePredictedCoreference(aJCas, decodingState.getDecodingTree(), node2Mention);
-
-//        DebugUtils.pause();
     }
 
     private void annotatePredictedCoreference(JCas aJCas, MentionSubGraph predictedTree,
@@ -156,7 +154,6 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
 //        }
 
         for (List<Pair<Integer, String>> corefChain : corefChains) {
-
             List<EventMention> predictedChain = new ArrayList<>();
             Map<Span, EventMention> span2Mentions = new HashMap<>();
 

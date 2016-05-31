@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
@@ -52,6 +53,15 @@ public class DiscriminativeUpdater {
 
     private double aggressiveness;
     private boolean usePAI;
+
+    // TODO temporary debug clause;
+    public static boolean debugger = true;
+
+    private boolean useCorefUpdateConstraint = false;
+
+    private int corefUpdateStrategy;
+
+    private int numCorefUpdates = 0;
 
     public DiscriminativeUpdater(boolean updateMention, boolean updateCoref, boolean usePaUpdate, String lossType,
                                  double aggressiveness) {
@@ -95,6 +105,18 @@ public class DiscriminativeUpdater {
         this.updateCoref = updateCoref;
     }
 
+    public void useCorefUpdateConstraint(int strategy) {
+        useCorefUpdateConstraint = true;
+        corefUpdateStrategy = strategy;
+
+        if (strategy != 0 && strategy != 1 && strategy != 2) {
+            throw new IllegalArgumentException("Unknown coreference constraint strategy!");
+        }
+
+        logger.info("Updater started with coreference constraint of strategy " + strategy);
+        DebugUtils.pause(logger);
+    }
+
     public void addWeightVector(String name, GraphWeightVector weightVector) {
         allWeights.put(name, weightVector);
         classAlphabets.put(name, weightVector.getClassAlphabet());
@@ -110,48 +132,113 @@ public class DiscriminativeUpdater {
     }
 
     public void recordLaSOUpdate(JointLabelLinkAgenda decodingAgenda, JointLabelLinkAgenda goldAgenda) {
+        // TODO temporary debug clause.
+        if (debugger) {
+            MultiNodeKey currentGold = goldAgenda.getBestBeamState().getLastNodeResult();
+
+            if (!currentGold.getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass)) {
+//                logger.debug("Recording laso update.");
+//                logger.debug("Decoding states.");
+//                for (NodeLinkingState s : decodingAgenda.getOrderedStates()) {
+//                    logger.debug(s.toString());
+//                }
+//
+//                logger.debug("Gold states.");
+//                for (NodeLinkingState nodeLinkingState : goldAgenda.getOrderedStates()) {
+//                    logger.debug(nodeLinkingState.toString());
+//                }
+            }
+        }
+
+        boolean nothingToRecord = false;
         if (!decodingAgenda.contains(goldAgenda)) {
 //            logger.debug("Recording differences for LaSO update.");
             recordUpdate(decodingAgenda, goldAgenda);
 
-            // Copy the gold agenda to decoding agenda (LaSO)
+            // Copy the gold agenda to decoding agenda (LaSO).
             decodingAgenda.copyFrom(goldAgenda);
 
             // Clear these features from both agenda, since they are assumed to be the same from here.
             goldAgenda.clearFeatures();
             decodingAgenda.clearFeatures();
+        } else {
+            nothingToRecord = true;
+        }
 
+        // TODO temporary debug clause.
+        if (debugger) {
+            if (nothingToRecord) {
+//                logger.debug("Nothing to record.");
+            }
+//            DebugUtils.pause(logger);
         }
     }
 
     public void recordFinalUpdate(JointLabelLinkAgenda decodingAgenda, JointLabelLinkAgenda goldAgenda) {
+        logger.debug("Recording final update difference between the top states.");
+        logger.debug("Final decoding is ");
+        logger.debug(decodingAgenda.getBestBeamState().toString());
+
+        logger.debug("Final gold is ");
+        logger.debug(goldAgenda.getBeamStates().toString());
+
         if (!decodingAgenda.getBestBeamState().match(goldAgenda.getBestBeamState())) {
-//            logger.debug("Recording final update difference between the top states.");
             recordUpdate(decodingAgenda, goldAgenda);
         }
     }
 
     private void recordUpdate(JointLabelLinkAgenda decodingAgenda, JointLabelLinkAgenda goldAgenda) {
-//        logger.debug("Recording update.");
-//
-//        logger.debug("Decoding state are:");
-//        logger.debug(decodingAgenda.toString());
-//
-//        logger.debug("Best gold state is:");
-//        logger.debug(goldAgenda.getBestBeamState().toString());
-
-//        DebugUtils.pause();
-
         NodeLinkingState bestDecoding = decodingAgenda.getBestBeamState();
         NodeLinkingState bestGold = goldAgenda.getBestBeamState();
 
         Pair<Double, Double> losses = bestDecoding.loss(bestGold, labelLosser);
 
-        addLoss(TYPE_MODEL_NAME, losses.getLeft());
-        addLoss(COREF_MODEL_NAME, losses.getRight());
+        Double typeLoss = losses.getLeft();
+        Double corefLoss = losses.getRight();
+
+        addLoss(TYPE_MODEL_NAME, typeLoss);
+
+        if (updateMention) {
+            // Compute delta on labeling.
+            GraphFeatureVector goldLabelFeature = goldAgenda.getBestDeltaLabelFv();
+            GraphFeatureVector decodingLabelFeature = decodingAgenda.getBestDeltaLabelFv();
+
+//            logger.debug("Showing mention features from  gold");
+//            logger.debug(goldLabelFeature.readableNodeVector());
+//            logger.debug("Showing mention features from  decoding");
+//            logger.debug(decodingLabelFeature.readableNodeVector());
+
+            GraphFeatureVector deltaMentionVector = allDelta.get(TYPE_MODEL_NAME);
+            deltaMentionVector.extend(goldLabelFeature);
+            deltaMentionVector.extend(decodingLabelFeature, -1);
+
+//            logger.debug("Current mention delta:");
+//            logger.debug(deltaMentionVector.readableNodeVector());
+//            logger.debug("New mention loss is " + losses.getLeft() + " total is now " + allLoss.get(TYPE_MODEL_NAME));
+//            logger.debug("Mention loss is " + losses.getLeft());
+        }
 
         // Compute delta on coreferecence.
         if (updateCoref) {
+            if (useCorefUpdateConstraint) {
+                if (!allowCorefUpdate(bestDecoding, bestGold)) {
+                    if (debugger) {
+//                        logger.debug("Do not update because mention types criteria is not met.");
+//                        logger.debug(bestDecoding.showNodes());
+//                        logger.debug(bestGold.showNodes());
+                    }
+                    return;
+                }
+
+                if (typeLoss != 0) {
+                    return;
+                }
+            }
+
+            addLoss(COREF_MODEL_NAME, corefLoss);
+
+            numCorefUpdates++;
+
             GraphFeatureVector deltaCorefVector = allDelta.get(COREF_MODEL_NAME);
 //            logger.debug("Computing delta on gold and decoding.");
 
@@ -166,9 +253,32 @@ public class DiscriminativeUpdater {
 //                logger.debug(decoding.getValue().readableString());
             }
 
-//            logger.debug("Coreference delta is.");
-//            logger.debug(deltaCorefVector.readableNodeVector());
-//            logger.debug("New coref loss is " + losses.getRight() + " total is now " + allLoss.get(COREF_MODEL_NAME));
+            if (logger.isDebugEnabled() && debugger) {
+//                logger.debug("Best decoding.");
+//                logger.debug(bestDecoding.toString());
+//
+//                logger.debug("Best gold.");
+//                logger.debug(bestGold.toString());
+//
+//                for (Map.Entry<EdgeType, FeatureVector> goldFv : goldAgenda.getBestDeltaCorefVectors().entrySet()) {
+//                    logger.debug("Gold feature edge type : " + goldFv.getKey());
+//                    logger.debug(goldFv.getValue().readableString());
+//                }
+//
+//                for (Map.Entry<EdgeType, FeatureVector> decoding : decodingAgenda.getBestDeltaCorefVectors().entrySet
+//                        ()) {
+//                    logger.debug("System feature edge type : " + decoding.getKey());
+//                    logger.debug(decoding.getValue().readableString());
+//                }
+//
+//                logger.debug("Coreference delta is.");
+//                logger.debug(deltaCorefVector.readableNodeVector());
+//                logger.debug("New coref loss is " + losses.getRight() + " total is now " +
+//                        allLoss.get(COREF_MODEL_NAME));
+//                if (losses.getRight() != 0) {
+//                    DebugUtils.pause(logger);
+//                }
+            }
 
             if (!updateMention) {
                 if (deltaCorefVector.getFeatureL2() == 0) {
@@ -188,28 +298,78 @@ public class DiscriminativeUpdater {
                 }
             }
         }
+    }
 
-        if (updateMention) {
-            // Compute delta on labeling.
-            GraphFeatureVector goldLabelFeature = goldAgenda.getBestDeltaLabelFv();
-            GraphFeatureVector decodingLabelFeature = decodingAgenda.getBestDeltaLabelFv();
-
-//            logger.debug("Showing mention features from  gold");
-//            logger.debug(goldLabelFeature.readableNodeVector());
-//            logger.debug("Showing mention features from  decoding");
-//            logger.debug(decodingLabelFeature.readableNodeVector());
-
-            GraphFeatureVector deltaMentionVector = allDelta.get(TYPE_MODEL_NAME);
-            deltaMentionVector.extend(goldLabelFeature);
-            deltaMentionVector.extend(decodingLabelFeature, -1);
-
-//            logger.debug("Current mention delta:");
-//            logger.debug(deltaMentionVector.readableNodeVector());
-//            logger.debug("New mention loss is " + losses.getLeft() + " total is now " + allLoss.get(TYPE_MODEL_NAME));
+    private boolean allowCorefUpdate(NodeLinkingState bestDecodingState, NodeLinkingState bestGoldState) {
+        List<MultiNodeKey> bestDecoding = bestDecodingState.getNodeResults();
+        List<MultiNodeKey> bestGold = bestGoldState.getNodeResults();
+        switch (corefUpdateStrategy) {
+            case 0:
+                return updateWithFullHistoryMentionCorrect(bestDecoding, bestGold);
+            case 1:
+                return updateWithFullHistoryTypeCorrect(bestDecoding, bestGold);
+            case 2:
+                return updateWithFullHistoryNonInvention(bestDecoding, bestGold);
+            default:
+                throw new IllegalArgumentException("Unknown coreference update strategy: " + corefUpdateStrategy);
         }
     }
 
+    private boolean updateWithFullHistoryMentionCorrect(List<MultiNodeKey> bestDecoding, List<MultiNodeKey> bestGold) {
+        for (int i = 0; i < bestDecoding.size(); i++) {
+            boolean dIsMention = !bestDecoding.get(i).getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass);
+            boolean gIsMention = !bestGold.get(i).getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass);
+
+            // If one mention prediction is not the same, do not allow update.
+            if (dIsMention != gIsMention) {
+                return false;
+            }
+        }
+
+        // If all mention prediction are the same, allow update.
+        return true;
+    }
+
+    private boolean updateWithFullHistoryTypeCorrect(List<MultiNodeKey> bestDecoding, List<MultiNodeKey> bestGold) {
+        for (int i = 0; i < bestDecoding.size(); i++) {
+//            if (!bestDecoding.get(i).getCombinedType().equals(bestGold.get(i).getCombinedType())) {
+//                return false;
+//            }
+
+            boolean hasSameType = false;
+
+            for (NodeKey nodeKey : bestDecoding.get(i)) {
+                for (NodeKey goldKey : bestGold.get(i)) {
+                    if (nodeKey.getMentionType().equals(goldKey.getMentionType())) {
+                        hasSameType = true;
+                    }
+                }
+            }
+
+            if (!hasSameType) {
+                return false;
+            }
+
+        }
+        return true;
+    }
+
+
+    private boolean updateWithFullHistoryNonInvention(List<MultiNodeKey> bestDecoding, List<MultiNodeKey> bestGold) {
+        for (int i = 0; i < bestDecoding.size(); i++) {
+            boolean dIsMention = !bestDecoding.get(i).getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass);
+            boolean gIsMention = !bestGold.get(i).getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass);
+
+            // If we invent any mention, do not update.
+            if (dIsMention && !gIsMention) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void addLoss(String name, double loss) {
+//        logger.debug("Adding loss " + loss + " for " + name);
         allLoss.adjustValue(name, loss);
     }
 
@@ -232,38 +392,54 @@ public class DiscriminativeUpdater {
         GraphFeatureVector corefDelta = allDelta.get(COREF_MODEL_NAME);
         GraphFeatureVector mentionDelta = allDelta.get(TYPE_MODEL_NAME);
 
-
         double totalLoss = 0;
 
         // So when we update one model, we will only add the loss on its part, which literally ignore the other one.
         if (updateCoref) {
             totalLoss += allLoss.get(COREF_MODEL_NAME);
-//            logger.info("Coref loss is " + allLoss.get(COREF_MODEL_NAME));
+            logger.debug("Coref loss is " + allLoss.get(COREF_MODEL_NAME));
         }
         if (updateMention) {
             totalLoss += allLoss.get(TYPE_MODEL_NAME);
-//            logger.info("Type loss is " + allLoss.get(TYPE_MODEL_NAME));
+            logger.debug("Type loss is " + allLoss.get(TYPE_MODEL_NAME));
         }
 
         if (totalLoss != 0) {
-//            logger.debug("Mention delta is:");
-//            logger.debug(mentionDelta.readableNodeVector());
-
             double tau = defaultStepSize;
 
+//            double tau_coref = defaultStepSize;
+//
+//            double tau_mention = defaultStepSize;
+
             boolean isValid = true;
+            boolean isCorefValid = true;
+            boolean isMentionValid = true;
+
             if (paUpdate) {
                 double corefSquare = updateCoref ? corefDelta.getFeatureSquare() : 0;
                 double mentionSquare = updateMention ? mentionDelta.getFeatureSquare() : 0;
-                double totalFeatureSquare = corefSquare  + mentionSquare;
+                double totalFeatureSquare = corefSquare + mentionSquare;
 
                 tau = totalLoss / totalFeatureSquare;
+
+//                tau_coref = allLoss.get(COREF_MODEL_NAME) / corefSquare;
+//                tau_mention = allLoss.get(TYPE_MODEL_NAME) / mentionSquare;
 
                 if (totalFeatureSquare == 0) {
                     //Make sure we don't update when the features are the same, but decoding results are different.
                     isValid = false;
                 }
-//                logger.info("Total loss is " + totalLoss + ", L2 is " + l2);
+
+                if (corefSquare == 0) {
+                    isCorefValid = false;
+                }
+
+                if (mentionSquare == 0) {
+                    isMentionValid = false;
+                }
+
+                logger.debug("Mention L2 Square is " + mentionSquare + " coref L2 Square is " + corefSquare);
+                logger.debug("Total loss is " + totalLoss + ", L2 square is " + totalFeatureSquare);
             }
 
             logger.debug("Update with step size " + tau);
@@ -279,8 +455,12 @@ public class DiscriminativeUpdater {
                     corefWeights.updateWeightsBy(corefDelta, tau);
                     corefWeights.updateAverageWeights();
 
-//                    logger.debug("Coreference delta is:");
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Coreference delta is:");
 //                    logger.debug(corefDelta.readableNodeVector());
+                        logger.debug(corefDelta.matchNodeVector("MentionDistance"));
+                        logger.debug("Number of coreference update is " + numCorefUpdates);
+                    }
                 }
 
                 if (updateMention) {
@@ -292,8 +472,16 @@ public class DiscriminativeUpdater {
 //                    logger.debug(mentionDelta.readableNodeVector());
                 }
             }
-            DebugUtils.pause(logger);
+//            if (updateCount > 11) {
+//                debugger = true;
+//                logger.debug("Update count is " + updateCount);
+//                DebugUtils.pause(logger);
+//            }
         }
+
+        numCorefUpdates = 0;
+
+//        DebugUtils.pause(logger);
     }
 
     private GraphFeatureVector newDelta(String name) {
