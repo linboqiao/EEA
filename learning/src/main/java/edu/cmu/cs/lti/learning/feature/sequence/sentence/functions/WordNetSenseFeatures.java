@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
-import edu.cmu.cs.lti.learning.model.MultiNodeKey;
+import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.ling.WordNetSearcher;
 import edu.cmu.cs.lti.script.type.Dependency;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -89,7 +89,7 @@ public class WordNetSenseFeatures extends SequenceFeatureWithFocus<StanfordCoren
 
     @Override
     public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
-            globalFeatures, List<MultiNodeKey> knownStates) {
+            globalFeatures, List<MentionKey> knownStates, MentionKey currentState) {
 
     }
 

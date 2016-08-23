@@ -146,7 +146,7 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
                     }
                 } else if (layerName.equals(SemaforConstants.FRAME_ELEMENT_LAYER_NAME)) {
                     for (SemaforLabel label : JCasUtil.select(layer.getLabels(), SemaforLabel.class)) {
-                        StanfordCorenlpToken argumentHead = UimaNlpUtils.findHeadFromAnnotation(label);
+                        StanfordCorenlpToken argumentHead = UimaNlpUtils.findHeadFromStanfordAnnotation(label);
 
 //                        if (argumentHead == null){
 //                            System.out.println("Cannot find stanford token for " + label.get);

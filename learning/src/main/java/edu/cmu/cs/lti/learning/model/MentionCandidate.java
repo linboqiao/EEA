@@ -23,7 +23,7 @@ public class MentionCandidate {
     private int candidateIndex;
     private boolean isEvent;
 
-    private MultiNodeKey key;
+    private MentionKey key;
 
     // TODO check whether the index is used correctly.
     public MentionCandidate(int begin, int end, Sentence containedSentence, Word headWord, int candidateIndex) {
@@ -39,7 +39,7 @@ public class MentionCandidate {
         return String.format("%s,[%s]_[%s],[%d,%d]", headWord.getCoveredText(), mentionType, realis, begin, end);
     }
 
-    public MultiNodeKey asKey() {
+    public MentionKey asKey() {
         if (key == null) {
             makeKey();
         }
@@ -53,7 +53,7 @@ public class MentionCandidate {
         for (int i = 0; i < types.length; i++) {
             singleKeys[i] = new NodeKey(begin, end, types[i], realis, candidateIndex);
         }
-        key = new MultiNodeKey(mentionType, singleKeys);
+        key = new MentionKey(headWord, mentionType, singleKeys);
     }
 
     public int getBegin() {

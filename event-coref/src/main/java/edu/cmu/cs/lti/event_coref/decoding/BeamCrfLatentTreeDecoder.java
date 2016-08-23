@@ -4,20 +4,17 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
-import edu.cmu.cs.lti.learning.model.decoding.JointLabelLinkAgenda;
-import edu.cmu.cs.lti.learning.model.decoding.LabelLinkAgenda;
-import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
-import edu.cmu.cs.lti.learning.model.decoding.StateDelta;
+import edu.cmu.cs.lti.learning.model.decoding.*;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.LabelledMentionGraphEdge;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.utils.CollectionUtils;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -27,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.stream.StreamSupport;
 
 import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
 import static edu.cmu.cs.lti.learning.model.ModelConstants.TYPE_MODEL_NAME;
@@ -79,7 +77,7 @@ public class BeamCrfLatentTreeDecoder {
         corefTrainingStats = new TrainingStats(5, "coref");
         typeTrainingStats = new TrainingStats(5, "type");
 
-        logger.info("Starting the Beam Decoder with joint training.");
+        logger.info("Starting the Beam Decoder with joint training, parallel expansion.");
     }
 
     public BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
@@ -120,12 +118,12 @@ public class BeamCrfLatentTreeDecoder {
      * @param aJCas                The JCas container.
      * @param mentionGraph         The mention graph.
      * @param predictionCandidates Candidates to be predict.
-     * @param useAverage           Whether to run with average perceptron.
-     * @return The final decoding state.
+     * @param useAverage           Whether to run with average perceptron.  @return The final decoding state.
+     * @param useTwoLayer
      */
     public NodeLinkingState decode(JCas aJCas, MentionGraph mentionGraph, List<MentionCandidate> predictionCandidates,
-                                   boolean useAverage) {
-        return decode(aJCas, mentionGraph, predictionCandidates, new ArrayList<>(), useAverage, false);
+                                   boolean useAverage, boolean useTwoLayer) {
+        return decode(aJCas, mentionGraph, predictionCandidates, new ArrayList<>(), useAverage, useTwoLayer, false);
     }
 
     /**
@@ -135,12 +133,13 @@ public class BeamCrfLatentTreeDecoder {
      * @param mentionGraph
      * @param predictionCandidates
      * @param goldCandidates
+     * @param useTwoLayer
      * @param skipCoref
      * @return
      */
     public NodeLinkingState decode(JCas aJCas, MentionGraph mentionGraph, List<MentionCandidate> predictionCandidates,
-                                   List<MentionCandidate> goldCandidates, boolean skipCoref) {
-        return decode(aJCas, mentionGraph, predictionCandidates, goldCandidates, false, skipCoref);
+                                   List<MentionCandidate> goldCandidates, boolean useTwoLayer, boolean skipCoref) {
+        return decode(aJCas, mentionGraph, predictionCandidates, goldCandidates, false, useTwoLayer, skipCoref);
     }
 
     /**
@@ -151,25 +150,38 @@ public class BeamCrfLatentTreeDecoder {
      * @param predictionCandidates Candidates to be predict.
      * @param goldCandidates       Candidates containing gold standard annotation.
      * @param useAverage           Whether to run with average perceptron.
-     * @param skipCoref
-     * @return The final decoding state.
+     * @param useTwoLayer
+     * @param skipCoref            @return The final decoding state.
      */
     private NodeLinkingState decode(JCas aJCas, MentionGraph mentionGraph, List<MentionCandidate> predictionCandidates,
-                                    List<MentionCandidate> goldCandidates, boolean useAverage, boolean skipCoref) {
+                                    List<MentionCandidate> goldCandidates, boolean useAverage, boolean useTwoLayer,
+                                    boolean skipCoref) {
         List<StanfordCorenlpSentence> allSentences = new ArrayList<>(JCasUtil.select(aJCas,
                 StanfordCorenlpSentence.class));
         int numTokens = mentionGraph.numNodes() - 1;
 
         // Prepare a gold agenda and a decoding agenda.
-        JointLabelLinkAgenda goldAgenda = new JointLabelLinkAgenda(beamSize, goldCandidates, mentionGraph);
-        JointLabelLinkAgenda decodingAgenda = new JointLabelLinkAgenda(beamSize, predictionCandidates, mentionGraph);
+        LabelLinkAgenda goldAgenda = useTwoLayer ?
+                new TwoLayerLabelLinkAgenda(beamSize, beamSize, goldCandidates, mentionGraph) :
+                new JointLabelLinkAgenda(beamSize, goldCandidates, mentionGraph);
+
+        LabelLinkAgenda decodingAgenda = useTwoLayer ?
+                new TwoLayerLabelLinkAgenda(beamSize, beamSize, predictionCandidates, mentionGraph) :
+                new JointLabelLinkAgenda(beamSize, predictionCandidates, mentionGraph);
+
+//        if (useTwoLayer) {
+//            logger.debug("Using two layer agenda.");
+//        }
 
         initWorkspace(aJCas);
 
         // Current mention node index, starts from 1, after the root node 0.
-//        MutableInt curr = new MutableInt(1);
-        int curr = 1;
+        final MutableInt curr = new MutableInt(1);
+//        int curr = 1;
+
 //        Set<Integer> prunedNodes = new HashSet<>();
+
+        Map<EdgeKey, Double> scoreCache = new HashMap<>();
 
         int numGoldMentions = 0;
 
@@ -181,7 +193,7 @@ public class BeamCrfLatentTreeDecoder {
 
             // Move over the tokens.
             for (int sentTokenIndex = 0; sentTokenIndex < sentenceTokens.size(); sentTokenIndex++) {
-                int currentMentionId = MentionGraph.getCandidateIndex(curr);
+                int currentMentionId = MentionGraph.getCandidateIndex(curr.getValue());
 
                 // Prepare expansion, initialize all the deltas.
                 decodingAgenda.prepareExpand();
@@ -200,19 +212,27 @@ public class BeamCrfLatentTreeDecoder {
                 // Predicate the realis for each word, the features are not related to mention types.
                 String predictedRealis = getRealis((StanfordCorenlpToken) predictionCandidate.getHeadWord());
 
+//                logger.debug("Scoring for token " + predictionCandidate.getHeadWord().getCoveredText());
                 Queue<Pair<Integer, Double>> sortedClassScores = scoreMentionLocally(nodeFeature, useAverage);
+//                logger.debug("Scoring for token " + predictionCandidate.getHeadWord().getCoveredText());
+//                DebugUtils.pause(logger);
 
-                boolean isNotAGoldMention = false;
-                String goldRealis = null;
+                final boolean isGoldMention;
+                final String goldRealis;
                 if (isTraining) {
                     final MentionCandidate currentGoldCandidate = goldCandidates.get(currentMentionId);
                     if (currentGoldCandidate.getMentionType().equals(ClassAlphabet.noneOfTheAboveClass)) {
                         // We do not need to expand coreference link for tokens that are not gold standard.
-                        isNotAGoldMention = true;
+                        isGoldMention = false;
+                        goldRealis = ClassAlphabet.noneOfTheAboveClass;
                     } else {
                         goldRealis = currentGoldCandidate.getRealis();
                         numGoldMentions++;
+                        isGoldMention = true;
                     }
+                } else {
+                    isGoldMention = false;
+                    goldRealis = null;
                 }
 
                 if (!isTraining) {
@@ -220,24 +240,36 @@ public class BeamCrfLatentTreeDecoder {
                     if (localPrune(sortedClassScores)) {
                         sortedClassScores.clear();
                         sortedClassScores.add(Pair.of(mentionTypeClassAlphabet.getNoneOfTheAboveClassIndex(), 0.0));
-                        // Keep a record for all nodes pruned, we won't link to them anyway.
-//                    prunedNodes.add(curr.getValue());
+
+                        logger.debug("This node is considered NONE: " + predictionCandidate.getHeadWord()
+                                .getCoveredText());
                     }
                 }
 
                 // Only take the top k classes to expand.
                 int count = 0;
 //                logger.debug("Number of classes scored : " + sortedClassScores.size());
+
+                List<Pair<Integer, Double>> topScores = new ArrayList<>();
                 while (!sortedClassScores.isEmpty()) {
-                    Pair<Integer, Double> classScore = sortedClassScores.poll();
+                    topScores.add(sortedClassScores.poll());
+                    count++;
+                    if (count == beamSize) {
+                        break;
+                    }
+                }
+
+                boolean firstTokenInSent = sentTokenIndex == 0;
+
+                topScores.stream().forEach(classScore -> {
                     int classIndex = classScore.getLeft();
                     double nodeTypeScore = classScore.getRight();
-                    final MultiNodeKey nodeKeys = setUpCandidate(predictionCandidate, classIndex, predictedRealis);
+                    final MentionKey currentKey = setUpCandidate(predictionCandidate, classIndex, predictedRealis);
 
-//                    logger.debug("Type score for " + mentionTypeClassAlphabet.getClassName(classIndex) + " is " +
-//                            nodeTypeScore);
+                    logger.debug("Type score for " + mentionTypeClassAlphabet.getClassName(classIndex) + " is " +
+                            nodeTypeScore);
 
-                    if (isTraining && !isNotAGoldMention) {
+                    if (isTraining && isGoldMention) {
                         //At test time, use the real realis.
                         predictionCandidate.setRealis(goldRealis);
                     }
@@ -248,17 +280,20 @@ public class BeamCrfLatentTreeDecoder {
                     newMentionFeatures.extend(nodeFeature, classIndex);
 
 //                    logger.info(String.format("Decoding class %s of score %.2f.", mentionTypeClassAlphabet
-// .getClassName(classIndex), nodeTypeScore));
+//                            .getClassName(classIndex), nodeTypeScore));
 
-                    for (NodeLinkingState nodeLinkingState : decodingAgenda.getBeamStates()) {
+                    StreamSupport.stream(decodingAgenda.spliterator(), false).forEach(nodeLinkingState -> {
+//                        logger.info("Running to expand " + nodeLinkingState.getCombinedLastNodeType() + " " +
+//                                nodeLinkingState.hashCode());
+
                         FeatureVector globalFeature = new RealValueHashFeatureVector(mentionFeatureAlphabet);
                         // The focus is simply a token index here, which can correctly index actual nodes.
                         mentionExtractor.extractGlobal(currentMentionId, globalFeature,
-                                nodeLinkingState.getActualNodeResults());
+                                nodeLinkingState.getActualNodeResults(), currentKey);
 
                         // The previous type class is defined on sentence base, so we will ad a special sentence
                         // boundary class before each one.
-                        int prevClassIndex = sentTokenIndex == 0 ?
+                        int prevClassIndex = firstTokenInSent ?
                                 mentionTypeClassAlphabet.getOutsideClassIndex() :
                                 mentionTypeClassAlphabet.getClassIndex(nodeLinkingState.getCombinedLastNodeType());
 
@@ -279,46 +314,43 @@ public class BeamCrfLatentTreeDecoder {
 
                         newMentionFeatures.extend(globalFeature, classIndex);
 
-                        expandState(mentionGraph, decodingAgenda, nodeLinkingState, predictionCandidates, curr,
-                                newMentionFeatures, nodeKeys, nodeTypeScore + edgeTypeScore + globalScore, skipCoref);
-                    }
+                        expandState(mentionGraph, decodingAgenda, nodeLinkingState, predictionCandidates,
+                                curr.getValue(), newMentionFeatures, currentKey,
+                                nodeTypeScore + edgeTypeScore + globalScore, skipCoref, scoreCache);
+                    });
+                });
 
-                    count++;
-
-                    if (count == beamSize) {
-                        break; // Only expand top k classes.
-                    }
-                }
-
-//                logger.info("Update states for decoding.");
-//                logger.info(decodingAgenda.toString());
-//                DebugUtils.pause();
                 decodingAgenda.updateStates();
+
+//                if (sortedClassScores.size() > 1 && logger.isDebugEnabled()) {
+//                    logger.debug("Update states for decoding.");
+//                    logger.debug(decodingAgenda.toString());
+//                    DebugUtils.pause(logger);
+//                }
 
                 if (isTraining) {
                     // Note that most gold candidate are None type and None realis since they are not mentions.
                     final MentionCandidate goldCandidate = goldCandidates.get(currentMentionId);
-                    final MultiNodeKey goldResults = goldCandidate.asKey();
+                    final MentionKey goldKey = goldCandidate.asKey();
 
                     // Expanding the states for gold agenda.
-                    for (NodeLinkingState goldState : goldAgenda.getBeamStates()) {
+                    for (NodeLinkingState goldState : goldAgenda) {
                         GraphFeatureVector goldMentionFeature = getGoldMentionFeatures(goldState, nodeFeature,
-                                edgeFeatures, goldCandidates, currentMentionId);
+                                edgeFeatures, goldCandidates, currentMentionId, goldKey);
 
 //                    logger.info(String.format("Decoding antecedent at node %d for gold.", curr.getValue()));
 
-                        expandGoldState(mentionGraph, goldAgenda, goldState, curr, goldMentionFeature, goldResults, 0,
-                                skipCoref);
+                        expandGoldState(mentionGraph, goldAgenda, goldState, curr.getValue(), goldMentionFeature,
+                                goldKey, 0, skipCoref);
                     }
 
-//                    logger.info("Updating states for gold.");
                     goldAgenda.updateStates();
 
                     if (useLaSo) {
                         updater.recordLaSOUpdate(decodingAgenda, goldAgenda);
                     }
                 }
-                curr++;
+                curr.increment();
             } // Finish iterate tokens in a sentence.
         }// Finish iterate sentences.
 
@@ -365,8 +397,9 @@ public class BeamCrfLatentTreeDecoder {
                                 .append(o2.getLeft(), o1.getLeft()).toComparison()
         );
 
-        // Go over possible crf links.
         mentionTypeClassAlphabet.getNormalClassesRange().forEach(classIndex -> {
+//            logger.debug("Scoring for class " + mentionTypeClassAlphabet.getClassName(classIndex));
+//            logger.debug("");
             double nodeTypeScore = useAverage ? mentionWeights.dotProdAver(nodeFeature, classIndex) :
                     mentionWeights.dotProd(nodeFeature, classIndex);
             sortedClassScores.add(Pair.of(classIndex, nodeTypeScore));
@@ -377,7 +410,8 @@ public class BeamCrfLatentTreeDecoder {
 
     private GraphFeatureVector getGoldMentionFeatures(NodeLinkingState goldState, FeatureVector nodeFeature,
                                                       Table<Integer, Integer, FeatureVector> edgeFeatures,
-                                                      List<MentionCandidate> goldCandidates, int currentIndex) {
+                                                      List<MentionCandidate> goldCandidates, int currentIndex,
+                                                      MentionKey goldKey) {
         GraphFeatureVector newGoldMentionFeatures = new GraphFeatureVector(mentionTypeClassAlphabet,
                 mentionFeatureAlphabet);
         int currentClass = mentionTypeClassAlphabet.getClassIndex(goldCandidates.get(currentIndex).getMentionType());
@@ -391,14 +425,14 @@ public class BeamCrfLatentTreeDecoder {
         }
 
         FeatureVector globalFeature = new RealValueHashFeatureVector(mentionFeatureAlphabet);
-        mentionExtractor.extractGlobal(currentIndex, globalFeature, goldState.getActualNodeResults());
+        mentionExtractor.extractGlobal(currentIndex, globalFeature, goldState.getActualNodeResults(), goldKey);
 
         newGoldMentionFeatures.extend(globalFeature, currentClass);
 
         return newGoldMentionFeatures;
     }
 
-    private MultiNodeKey setUpCandidate(MentionCandidate currPredictionCandidate, int typeIndex, String realis) {
+    private MentionKey setUpCandidate(MentionCandidate currPredictionCandidate, int typeIndex, String realis) {
         currPredictionCandidate.setMentionType(mentionTypeClassAlphabet.getClassName(typeIndex));
         if (currPredictionCandidate.getMentionType().equals(ClassAlphabet.noneOfTheAboveClass)) {
             // If the type of the candidate is none, then set realis to a special value as well.
@@ -430,13 +464,23 @@ public class BeamCrfLatentTreeDecoder {
         // This is the std deviation.
         delta = Math.sqrt(delta);
 
+        logger.debug("Mean is " + mean + " delta is " + delta);
+
         Pair<Integer, Double> best = sortedClassScores.poll();
         if (best.getLeft() == mentionTypeClassAlphabet.getNoneOfTheAboveClassIndex()) {
             Pair<Integer, Double> secondBest = sortedClassScores.peek();
             double diffByDelta = (best.getRight() - secondBest.getRight()) / delta;
             // The larger diff, the larger the gap between first and second.
-            willPrune = diffByDelta > 1;
+            willPrune = diffByDelta > 3;
+
+            logger.debug("Diff by delta is " + diffByDelta);
+            if (willPrune) {
+                logger.debug("Best is " + best + " second best is " + secondBest + " delta is " + delta);
+                logger.debug("Best is " + mentionTypeClassAlphabet.getClassName(best.getLeft()) + ", second best is "
+                        + mentionTypeClassAlphabet.getClassName(secondBest.getLeft()));
+            }
         }
+
         // Put the best item back.
         sortedClassScores.add(best);
 
@@ -445,8 +489,8 @@ public class BeamCrfLatentTreeDecoder {
 
     private void expandState(MentionGraph mentionGraph, LabelLinkAgenda decodingAgenda,
                              NodeLinkingState nodeLinkingState, List<MentionCandidate> candidates,
-                             int currGraphNodeIndex, GraphFeatureVector newMentionFeatures,
-                             MultiNodeKey currNode, double mentionScore, boolean skipCoref) {
+                             int currGraphNodeIndex, GraphFeatureVector newMentionFeatures, MentionKey currNode,
+                             double mentionScore, boolean skipCoref, Map<EdgeKey, Double> scoreCache) {
         if (currNode.getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass) || skipCoref) {
             StateDelta decision = new StateDelta(nodeLinkingState);
             decision.addNode(currNode, newMentionFeatures, mentionScore);
@@ -455,6 +499,7 @@ public class BeamCrfLatentTreeDecoder {
         }
 
         // For each label of the current decoding.
+        // This list contains possible links of each node type.
         List<List<Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>>>> allLinks = new ArrayList<>();
 
         for (NodeKey currNodeKey : currNode) {
@@ -463,11 +508,13 @@ public class BeamCrfLatentTreeDecoder {
 
             for (int ant = 0; ant < currGraphNodeIndex; ant++) {
                 // Access the antecedent node.
-                MultiNodeKey antNodeKeys = nodeLinkingState.getNode(ant);
+                MentionKey antNodeKeys = nodeLinkingState.getNode(ant);
 
                 if (antNodeKeys.getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass)) {
                     continue;
                 }
+
+                EdgeType possibleType = ant == 0 ? EdgeType.Root : EdgeType.Coreference;
 
                 for (NodeKey antNodeKey : antNodeKeys) {
                     LabelledMentionGraphEdge mentionGraphEdge = mentionGraph.getLabelledEdge(candidates, antNodeKey,
@@ -475,48 +522,33 @@ public class BeamCrfLatentTreeDecoder {
 //                            .getMentionGraphEdge(currGraphNodeIndex, ant)
 //                            .getLabelledEdge(candidates, antNodeKey, currNodeKey);
 
-                    for (Map.Entry<EdgeType, Double> labelScore : mentionGraphEdge.getAllLabelScore(corefWeights)
-                            .entrySet()) {
-                        double linkScore = labelScore.getValue();
-                        EdgeType edgeType = labelScore.getKey();
-                        currLinks.add(Pair.of(Pair.of(currNodeKey, mentionGraphEdge), Pair.of(edgeType, linkScore)));
+                    EdgeKey edgeKey = new EdgeKey(currNodeKey, antNodeKey, possibleType);
+                    if (scoreCache.containsKey(edgeKey)) {
+                        double linkScore = scoreCache.get(edgeKey);
+                        currLinks.add(Pair.of(Pair.of(currNodeKey, mentionGraphEdge),
+                                Pair.of(possibleType, linkScore)));
+                    } else {
+                        for (Map.Entry<EdgeType, Double> labelScore : mentionGraphEdge.getAllLabelScore(corefWeights)
+                                .entrySet()) {
+                            double linkScore = labelScore.getValue();
+                            EdgeType edgeType = labelScore.getKey();
+                            currLinks.add(Pair.of(Pair.of(currNodeKey, mentionGraphEdge),
+                                    Pair.of(edgeType, linkScore)));
+                            scoreCache.put(new EdgeKey(currNodeKey, antNodeKey, edgeType), linkScore);
+                        }
                     }
                 }
             }
             allLinks.add(currLinks);
         }
 
-        // So now what if each node choose a link? we have their cartesian number of possible linking state.
-        List<List<Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>>>> possibleLinkComb =
-                CollectionUtils.cartesian(allLinks);
-
-        for (List<Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>>> links : possibleLinkComb) {
-            StateDelta decision = new StateDelta(nodeLinkingState);
-            decision.addNode(currNode, newMentionFeatures, mentionScore);
-            for (Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>> link : links) {
-                NodeKey dep = link.getLeft().getLeft();
-                LabelledMentionGraphEdge edge = link.getLeft().getRight();
-                NodeKey gov = edge.getGovKey();
-                Pair<EdgeType, Double> labelScore = link.getRight();
-
-                decision.addLink(labelScore.getKey(), gov, dep, labelScore.getValue(), edge.getFeatureVector());
-
-                if (logger.isDebugEnabled()) {
-                    if (!gov.isRoot()) {
-//                        logger.debug("Current node id is " + currGraphNodeIndex);
-//                        logger.debug("Link is " + gov + " to " + dep + " : " + labelScore);
-//                        logger.debug(edge.getFeatureVector().readableString());
-//                        DebugUtils.pause(logger);
-                    }
-                }
-            }
-            decodingAgenda.expand(decision);
-        }
+        stupidMakeLinks(allLinks, nodeLinkingState, newMentionFeatures, currNode, mentionScore, decodingAgenda);
     }
 
-    private void expandGoldState(MentionGraph mentionGraph, JointLabelLinkAgenda goldAgenda,
+
+    private void expandGoldState(MentionGraph mentionGraph, LabelLinkAgenda goldAgenda,
                                  NodeLinkingState nodeLinkingState, int currGraphNodeIndex,
-                                 GraphFeatureVector newMentionFeatures, MultiNodeKey goldResult, double mentionScore,
+                                 GraphFeatureVector newMentionFeatures, MentionKey goldResult, double mentionScore,
                                  boolean skipCoref) {
         if (goldResult.getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass) || skipCoref) {
             StateDelta decision = new StateDelta(nodeLinkingState);
@@ -527,12 +559,13 @@ public class BeamCrfLatentTreeDecoder {
 
         // Each list store the possible edge for one current key.
         // We need to get the combination of these edges to create all possible linking.
-        List<List<Pair<NodeKey, LabelledMentionGraphEdge>>> allLinks = new ArrayList<>();
+//        List<List<Pair<NodeKey, LabelledMentionGraphEdge>>> allLinks = new ArrayList<>();
+        List<List<Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>>>> allLinks = new ArrayList<>();
 
         for (NodeKey currNodeKey : goldResult) {
             int numPossibleCorrectLinks = 0;
 
-            List<Pair<NodeKey, LabelledMentionGraphEdge>> currLinks = new ArrayList<>();
+            List<Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>>> currLinks = new ArrayList<>();
 
             for (int ant = 0; ant < currGraphNodeIndex; ant++) {
                 Table<NodeKey, NodeKey, LabelledMentionGraphEdge> realGraphEdges = mentionGraph
@@ -543,8 +576,8 @@ public class BeamCrfLatentTreeDecoder {
                 for (Map.Entry<NodeKey, LabelledMentionGraphEdge> correctAntEdge : correctAntEdges.entrySet()) {
                     NodeKey correctAnt = correctAntEdge.getKey();
                     LabelledMentionGraphEdge realGraphEdge = realGraphEdges.get(correctAnt, currNodeKey);
-
-                    currLinks.add(Pair.of(currNodeKey, realGraphEdge));
+                    Pair<EdgeType, Double> correctLabelScore = realGraphEdge.getCorrectLabelScore(corefWeights);
+                    currLinks.add(Pair.of(Pair.of(currNodeKey, realGraphEdge), correctLabelScore));
                 }
             }
             allLinks.add(currLinks);
@@ -554,23 +587,72 @@ public class BeamCrfLatentTreeDecoder {
             }
         }
 
-        List<List<Pair<NodeKey, LabelledMentionGraphEdge>>> possibleLinkCartesian = CollectionUtils.cartesian(allLinks);
+        stupidMakeLinks(allLinks, nodeLinkingState, newMentionFeatures, goldResult, mentionScore, goldAgenda);
+    }
 
-        for (List<Pair<NodeKey, LabelledMentionGraphEdge>> links : possibleLinkCartesian) {
-            StateDelta decision = new StateDelta(nodeLinkingState);
-            decision.addNode(goldResult, newMentionFeatures, mentionScore);
-            for (Pair<NodeKey, LabelledMentionGraphEdge> link : links) {
-                NodeKey dep = link.getLeft();
-                LabelledMentionGraphEdge edge = link.getRight();
-                NodeKey gov = edge.getGovKey();
-                Pair<EdgeType, Double> correctLabelScore = edge.getCorrectLabelScore(corefWeights);
+    /**
+     * Manually expand the cartesian under 3, to make it a little faster.
+     *
+     * @param allLinks
+     * @param nodeLinkingState
+     * @param newMentionFeatures
+     * @param currNode
+     * @param mentionScore
+     * @param decodingAgenda
+     */
+    private void stupidMakeLinks(
+            List<List<Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>>>> allLinks,
+            NodeLinkingState nodeLinkingState, GraphFeatureVector newMentionFeatures, MentionKey currNode,
+            double mentionScore, LabelLinkAgenda decodingAgenda) {
 
-                decision.addLink(correctLabelScore.getKey(), gov, dep, correctLabelScore.getValue(), edge
-                        .getFeatureVector());
+        if (allLinks.size() == 1) {
+            for (Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>> firstLink : allLinks.get(0)) {
+                StateDelta decision = new StateDelta(nodeLinkingState);
+                decision.addNode(currNode, newMentionFeatures, mentionScore);
+                addLink(decision, firstLink);
+                decodingAgenda.expand(decision);
             }
-            goldAgenda.expand(decision);
+        } else if (allLinks.size() == 2) {
+            for (Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>> firstLink : allLinks.get(0)) {
+                for (Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>> secondLink :
+                        allLinks.get(1)) {
+                    StateDelta decision = new StateDelta(nodeLinkingState);
+                    decision.addNode(currNode, newMentionFeatures, mentionScore);
+                    addLink(decision, firstLink);
+                    addLink(decision, secondLink);
+                    decodingAgenda.expand(decision);
+                }
+            }
+        } else {
+            for (Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>> firstLink : allLinks.get(0)) {
+                for (Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>> secondLink :
+                        allLinks.get(1)) {
+                    for (Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>> thirdLink :
+                            allLinks.get(2)) {
+                        StateDelta decision = new StateDelta(nodeLinkingState);
+                        decision.addNode(currNode, newMentionFeatures, mentionScore);
+                        addLink(decision, firstLink);
+                        addLink(decision, secondLink);
+                        addLink(decision, thirdLink);
+                        decodingAgenda.expand(decision);
+                    }
+                }
+            }
+            if (allLinks.size() > 3) {
+                logger.warn("Data set contains multi-type more than 3.");
+            }
         }
     }
+
+    private void addLink(StateDelta decision,
+                         Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>> link) {
+        NodeKey dep = link.getLeft().getLeft();
+        LabelledMentionGraphEdge edge = link.getLeft().getRight();
+        NodeKey gov = edge.getGovKey();
+        Pair<EdgeType, Double> labelScore = link.getRight();
+        decision.addLink(labelScore.getKey(), gov, dep, labelScore.getValue(), edge.getFeatureVector());
+    }
+
 
     private String getRealis(StanfordCorenlpToken headToken) {
         TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();

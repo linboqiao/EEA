@@ -5,7 +5,7 @@ import edu.cmu.cs.lti.learning.feature.extractor.UimaSequenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.HashAlphabet;
 import edu.cmu.cs.lti.learning.model.TrainingStats;
-import edu.cmu.cs.lti.learning.training.AveragePerceptronTrainer;
+import edu.cmu.cs.lti.learning.train.AveragePerceptronTrainer;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;

@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.emd.annotators;
 
 import edu.cmu.cs.lti.emd.decoding.BeamCrfDecoder;
-import edu.cmu.cs.lti.emd.utils.MentionUtils;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
@@ -137,7 +137,7 @@ public class BeamTypeAnnotator extends AbstractLoggingAnnotator {
         NodeLinkingState decodeResult = decoder.decode(aJCas, systemCandidates, new ArrayList<>(), true);
 
 //        int numMentions = 0;
-        for (MultiNodeKey nodeKey : decodeResult.getActualNodeResults()) {
+        for (MentionKey nodeKey : decodeResult.getActualNodeResults()) {
             if (!nodeKey.getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass)) {
                 for (NodeKey key : nodeKey.getKeys()) {
                     EventMention mention = new EventMention(aJCas);

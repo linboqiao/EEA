@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.learning.feature.sequence.document.functions;
 
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
-import edu.cmu.cs.lti.learning.model.MultiNodeKey;
+import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
@@ -41,7 +41,8 @@ public class StatePairFeatures extends SequenceFeatureWithFocus<EventMention> {
 
     @Override
     public void extractGlobal(List<EventMention> sequence, int focus,
-                              TObjectDoubleMap<String> globalFeatures, List<MultiNodeKey> knownStates) {
+                              TObjectDoubleMap<String> globalFeatures, List<MentionKey> knownStates, MentionKey
+                                          currentState) {
 
     }
 }

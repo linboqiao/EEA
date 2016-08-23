@@ -6,8 +6,6 @@ import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.utils.MathUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,15 +16,17 @@ import java.util.List;
  * changes are not directly applied to the states because we need to choose the best deltas.
  */
 public class StateDelta implements Comparable<StateDelta> {
-    private transient final Logger logger = LoggerFactory.getLogger(getClass());
+//    private transient final Logger logger = LoggerFactory.getLogger(getClass());
 
     private NodeLinkingState existingState;
-//    private double updatedScore;
 
     private double stateLinkScore;
     private double stateNodeScore;
 
-    private MultiNodeKey nodes;
+    private long currentStateHash;
+
+
+    private MentionKey nodes;
 
     private List<EdgeKey> edges;
 
@@ -47,9 +47,11 @@ public class StateDelta implements Comparable<StateDelta> {
         edges = new ArrayList<>();
         deltaGraphFv = new ArrayList<>();
         totalDistance = 0;
+
+        currentStateHash = existingState.getNodeHash();
     }
 
-    public void addNode(MultiNodeKey nodes, GraphFeatureVector newLabelFv, double nodeScore) {
+    public void addNode(MentionKey nodes, GraphFeatureVector newLabelFv, double nodeScore) {
 //        logger.info("Adding node " + nodes.getCombinedType() + " with score " + nodeScore);
         this.nodes = nodes;
         this.deltaLabelFv = newLabelFv;
@@ -110,8 +112,16 @@ public class StateDelta implements Comparable<StateDelta> {
         state.setLinkScore(stateLinkScore);
 
         state.extendFeatures(deltaLabelFv, deltaGraphFv);
-
         return state;
+    }
+
+
+    public double getStateLinkScore() {
+        return stateLinkScore;
+    }
+
+    public double getStateNodeScore() {
+        return stateNodeScore;
     }
 
     public String toString() {
@@ -132,5 +142,13 @@ public class StateDelta implements Comparable<StateDelta> {
 
     public GraphFeatureVector getDeltaLabelFv() {
         return deltaLabelFv;
+    }
+
+    public long getCurrentStateHash() {
+        return currentStateHash;
+    }
+
+    public MentionKey getNodes() {
+        return nodes;
     }
 }

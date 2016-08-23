@@ -4,7 +4,7 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Table;
-import edu.cmu.cs.lti.emd.utils.MentionUtils;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
@@ -21,7 +21,6 @@ import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.DebugUtils;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.io.FileUtils;
@@ -71,13 +70,9 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_STRATEGY_TYPE, defaultValue = "0")
     private int strategyType;
 
-//    public static final String PARAM_WARM_START_MENTION_MODEL = "pretrainedMentionModelDirectory";
-//    @ConfigurationParameter(name = PARAM_WARM_START_MENTION_MODEL, mandatory = false)
-//    private File warmStartMentionModel;
-
-    public static final String PARAM_USE_WARM_START = "useWarmStart";
-    @ConfigurationParameter(name = PARAM_USE_WARM_START, defaultValue = "false")
-    private boolean warmStart;
+    public static final String PARAM_WARM_START_MENTION_MODEL = "pretrainedMentionModelDirectory";
+    @ConfigurationParameter(name = PARAM_WARM_START_MENTION_MODEL, mandatory = false)
+    private File warmStartModelDir;
 
     public static final String PARAM_MENTION_LOSS_TYPE = "mentionLossType";
     @ConfigurationParameter(name = PARAM_MENTION_LOSS_TYPE)
@@ -95,6 +90,14 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_CACHE_DIR)
     private File cacheDir;
 
+    public static final String PARAM_TWO_LAYER = "twoLayer";
+    @ConfigurationParameter(name = PARAM_TWO_LAYER)
+    private boolean useTwoLayer;
+
+    public static final String PARAM_WARM_START_ITER = "warmStartIter";
+    @ConfigurationParameter(name = PARAM_WARM_START_ITER)
+    private int warmStartIter;
+
     private WekaModel realisModel;
 
     private SentenceFeatureExtractor realisExtractor;
@@ -105,6 +108,8 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
     private static int numIters = 0;
 
     private Map<String, MentionGraph> graphCache;
+
+    private boolean warmStartNotProvided = false;
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
@@ -120,13 +125,15 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         }
 
         // Doing warm start.
-        if (warmStart) {
-//            logger.info("Starting delayered LaSO trainer with label warm start.");
-//            logger.info("Warm start model is " + warmStartMentionModel);
-//            updater.addWeightVector(TYPE_MODEL_NAME, usePretrainedCrfWeights());
-            throw new IllegalArgumentException("Not implemented warm start.");
+        if (warmStartModelDir != null && warmStartModelDir.exists()) {
+            logger.info("Starting delayered LaSO trainer with label warm start.");
+            logger.info("Warm start model is " + warmStartModelDir);
+            updater.addWeightVector(TYPE_MODEL_NAME, usePretrainedCrfWeights());
+            warmStartNotProvided = false;
         } else {
+            logger.info("Warm start model not provided or not exists, will run warm start myself.");
             updater.addWeightVector(TYPE_MODEL_NAME, prepareCrfWeights());
+            warmStartNotProvided = true;
         }
 
         updater.addWeightVector(COREF_MODEL_NAME, preareCorefWeights());
@@ -155,11 +162,13 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         logger.info("Cache will be put at " + cacheDir.getAbsolutePath());
 
         graphCache = new HashMap<>();
+
+        logger.info("Will not use in memory cache.");
     }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        UimaConvenience.printProcessLog(aJCas, logger);
+        UimaConvenience.printProcessLog(aJCas, logger);
 //        logger.debug("[LOSS TRACK] Joint trainer " + UimaConvenience.getDocId(aJCas));
 //        if (UimaConvenience.getDocId(aJCas).equals("bolt-eng-DF-170-181125-9125545.txt")){
 //            DebugUtils.pause(logger);
@@ -205,12 +214,14 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        if (graphCache.containsKey(name)) {
-            mentionGraph = graphCache.get(name);
-        }
+
+//        if (graphCache.containsKey(name)) {
+//            mentionGraph = graphCache.get(name);
+//        }
 //        logger.info("Done reading.");
 
-        boolean skipCoref = numIters < 5;
+        // If we do not have warm start, we will skip the first few iteration to train mention alone.
+        boolean skipCoref = numIters < warmStartIter && warmStartNotProvided;
 
         // TODO debug purpose.
         if (skipCoref) {
@@ -224,10 +235,10 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
 //        }
 
 //        logger.info("Start deocding.");
-        decoder.decode(aJCas, mentionGraph, systemCandidates, goldCandidates, skipCoref);
+        decoder.decode(aJCas, mentionGraph, systemCandidates, goldCandidates, useTwoLayer, skipCoref);
 //        logger.info("Done decoding last one.");
 
-        graphCache.put(name, mentionGraph);
+//        graphCache.put(name, mentionGraph);
 
 //        logger.info("Writing features.");
 //        try {
@@ -238,7 +249,6 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
 //        logger.info("Done writing.");
 
 //        UimaConvenience.printProcessLog(aJCas, logger);
-        DebugUtils.pause(logger);
     }
 
     private void saveFeatures(File cacheDir, String fileName, MentionGraph mentionGraph,
@@ -268,9 +278,9 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
 
     private void storeEdgeFeature(int gov, int dep, List<MentionCandidate>
             candidates, MentionGraphEdge edge, Table<NodeKey, NodeKey, FeatureVector> featureTable) {
-        MultiNodeKey govKeys = gov == 0 ? MultiNodeKey.rootKey() : candidates.get(MentionGraph
+        MentionKey govKeys = gov == 0 ? MentionKey.rootKey() : candidates.get(MentionGraph
                 .getCandidateIndex(gov)).asKey();
-        MultiNodeKey depKeys = candidates.get(MentionGraph.getCandidateIndex(dep)).asKey();
+        MentionKey depKeys = candidates.get(MentionGraph.getCandidateIndex(dep)).asKey();
 
         for (NodeKey govKey : govKeys) {
             for (NodeKey depKey : depKeys) {
@@ -366,15 +376,16 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
                 FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec));
     }
 
-//    private GraphWeightVector usePretrainedCrfWeights() throws ResourceInitializationException {
-//        GraphWeightVector weightVector;
-//        try {
-//            weightVector = SerializationUtils.deserialize(new FileInputStream((warmStartMentionModel)));
-//        } catch (FileNotFoundException e) {
-//            throw new ResourceInitializationException(e);
-//        }
-//        return weightVector;
-//    }
+    private GraphWeightVector usePretrainedCrfWeights() throws ResourceInitializationException {
+        GraphWeightVector weightVector;
+        try {
+            weightVector = SerializationUtils.deserialize(new FileInputStream((new File(warmStartModelDir,
+                    TYPE_MODEL_NAME))));
+        } catch (FileNotFoundException e) {
+            throw new ResourceInitializationException(e);
+        }
+        return weightVector;
+    }
 
     private GraphWeightVector preareCorefWeights() {
         logger.info("Initializing Coreference weights.");

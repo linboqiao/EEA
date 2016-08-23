@@ -151,7 +151,7 @@ public class BeamCrfDecoder {
                     int classIndex = classScore.getKey();
                     double nodeTypeScore = classScore.getValue();
 
-                    final MultiNodeKey nodeKeys = setUpCandidate(predictionCandidates.get(docTokenIndex), classIndex,
+                    final MentionKey currentKey = setUpCandidate(predictionCandidates.get(docTokenIndex), classIndex,
                             ClassAlphabet.noneOfTheAboveClass);
 
 //                    logger.info(nodeKeys.getCombinedType());
@@ -160,11 +160,11 @@ public class BeamCrfDecoder {
                             mentionFeatureAlphabet);
                     newMentionFeatures.extend(nodeFeature, classIndex);
 
-                    for (NodeLinkingState nodeLinkingState : decodingAgenda.getBeamStates()) {
+                    for (NodeLinkingState nodeLinkingState : decodingAgenda) {
                         FeatureVector globalFeature = new RealValueHashFeatureVector(mentionFeatureAlphabet);
                         // The focus is simply a token index here, which can correctly index actual nodes.
                         mentionExtractor.extractGlobal(docTokenIndex, globalFeature,
-                                nodeLinkingState.getActualNodeResults());
+                                nodeLinkingState.getActualNodeResults(), currentKey);
 
                         // Here we are adding invisible sentence boundary class at each sentence start.
                         int prevClassIndex = sentTokenIndex == 0 ?
@@ -189,7 +189,7 @@ public class BeamCrfDecoder {
 
 //                        StateDelta decision = decodingAgenda.expand(nodeLinkingState);
                         StateDelta decision = new StateDelta(nodeLinkingState);
-                        decision.addNode(nodeKeys, newMentionFeatures, nodeTypeScore + edgeTypeScore + globalScore);
+                        decision.addNode(currentKey, newMentionFeatures, nodeTypeScore + edgeTypeScore + globalScore);
                         decodingAgenda.expand(decision);
                     }
 
@@ -206,16 +206,16 @@ public class BeamCrfDecoder {
 //                logger.info(decodingAgenda.toString());
 
                 if (isTraining) {
-                    final MultiNodeKey goldResults = goldCandidates.get(docTokenIndex).asKey();
+                    final MentionKey currentGoldKey = goldCandidates.get(docTokenIndex).asKey();
 
-                    for (NodeLinkingState goldState : goldAgenda.getBeamStates()) {
+                    for (NodeLinkingState goldState : goldAgenda) {
                         GraphFeatureVector goldMentionFeature = getGoldMentionFeatures(goldState, nodeFeature,
-                                edgeFeatures, goldCandidates, docTokenIndex);
+                                edgeFeatures, goldCandidates, docTokenIndex, currentGoldKey);
                         // For mention only decoding, the score of the gold mentions doesnt matter, since there is
                         // only one solution.
 //                        StateDelta decision = goldAgenda.expand(goldState);
                         StateDelta decision = new StateDelta(goldState);
-                        decision.addNode(goldResults, goldMentionFeature, 0);
+                        decision.addNode(currentGoldKey, goldMentionFeature, 0);
                         goldAgenda.expand(decision);
                     }
                     goldAgenda.updateStates();
@@ -282,7 +282,8 @@ public class BeamCrfDecoder {
 
     private GraphFeatureVector getGoldMentionFeatures(NodeLinkingState goldState, FeatureVector nodeFeature,
                                                       Table<Integer, Integer, FeatureVector> edgeFeatures,
-                                                      List<MentionCandidate> goldCandidates, int docTokenIndex) {
+                                                      List<MentionCandidate> goldCandidates, int docTokenIndex,
+                                                      MentionKey currentGoldKey) {
 
         GraphFeatureVector newGoldMentionFeatures = new GraphFeatureVector(mentionTypeClassAlphabet,
                 mentionFeatureAlphabet);
@@ -298,14 +299,24 @@ public class BeamCrfDecoder {
         }
 
         FeatureVector globalFeature = new RealValueHashFeatureVector(mentionFeatureAlphabet);
-        mentionExtractor.extractGlobal(docTokenIndex, globalFeature, goldState.getActualNodeResults());
+        mentionExtractor.extractGlobal(docTokenIndex, globalFeature, goldState.getActualNodeResults(), currentGoldKey);
+
+//        String g = globalFeature.readableString();
+//        if (g.contains("\n")) {
+//            logger.debug("Gold global features");
+//            logger.debug("Current token is " + goldCandidates.get(docTokenIndex).getHeadWord().getCoveredText());
+//            logger.debug(globalFeature.readableString());
+//            logger.debug(goldResults.getCombinedType());
+//            logger.debug(goldState.showNodes());
+//            DebugUtils.pause(logger);
+//        }
 
         newGoldMentionFeatures.extend(globalFeature, currentClass);
 
         return newGoldMentionFeatures;
     }
 
-    private MultiNodeKey setUpCandidate(MentionCandidate currPredictionCandidate, int typeIndex, String realis) {
+    private MentionKey setUpCandidate(MentionCandidate currPredictionCandidate, int typeIndex, String realis) {
 //        logger.info("Type is " + mentionTypeClassAlphabet.getClassName(typeIndex));
         currPredictionCandidate.setMentionType(mentionTypeClassAlphabet.getClassName(typeIndex));
         if (currPredictionCandidate.getMentionType().equals(ClassAlphabet.noneOfTheAboveClass)) {

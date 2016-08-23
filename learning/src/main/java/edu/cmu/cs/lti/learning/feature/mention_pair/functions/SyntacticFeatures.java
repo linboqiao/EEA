@@ -3,10 +3,7 @@ package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.NodeKey;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.script.type.StanfordDependencyRelation;
-import edu.cmu.cs.lti.script.type.StanfordTreeAnnotation;
-import edu.cmu.cs.lti.script.type.Word;
+import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.uima.fit.util.FSCollectionFactory;
@@ -35,7 +32,7 @@ public class SyntacticFeatures extends AbstractMentionPairFeatures {
     @Override
     public void initDocumentWorkspace(JCas context) {
         for (StanfordTreeAnnotation tree : JCasUtil.select(context, StanfordTreeAnnotation.class)) {
-            StanfordCorenlpToken head = tree.getHead();
+            StanfordCorenlpToken head = (StanfordCorenlpToken) tree.getHead();
             if (head2LargestSpanTree.containsKey(head)) {
                 StanfordTreeAnnotation previousTree = head2LargestSpanTree.get(head);
                 if (tree.getCoveredText().length() > previousTree.getCoveredText().length()) {
@@ -66,13 +63,24 @@ public class SyntacticFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        List <MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
+                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
 
     }
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
             secondCandidate, NodeKey secondNode) {
+        Word secondHead = secondCandidate.getHeadWord();
+
+        FSList depsFs = secondHead.getChildDependencyRelations();
+
+        if (depsFs != null) {
+            for (Dependency dependency : FSCollectionFactory.create(depsFs, Dependency.class)) {
+                if (dependency.getChild().getLemma().equalsIgnoreCase("the")) {
+                    addBoolean(featuresNoLabel, "ModifyByThe");
+                }
+            }
+        }
 
     }
 

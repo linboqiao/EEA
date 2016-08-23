@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
-import edu.cmu.cs.lti.learning.model.MultiNodeKey;
+import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
@@ -61,7 +61,7 @@ public class CharacterFeatures extends SequenceFeatureWithFocus<StanfordCorenlpT
 
     @Override
     public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
-            globalFeatures, List<MultiNodeKey> knownStates) {
+            globalFeatures, List<MentionKey> knownStates, MentionKey currentState) {
 
     }
 

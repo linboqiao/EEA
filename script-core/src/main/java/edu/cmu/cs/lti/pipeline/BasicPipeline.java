@@ -271,30 +271,4 @@ public class BasicPipeline {
             aggregateAnalysisEngine.destroy();
         }
     }
-
-//    /**
-//     * Run processors from existing data source.
-//     *
-//     * @param outputParent Parent directory of the data.
-//     * @param outputBase   Directory directly containing the data.
-//     * @throws UIMAException
-//     * @throws IOException
-//     */
-//    public void runProcessors(String outputParent, String outputBase) throws
-//            UIMAException, IOException {
-//        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription,
-//                outputParent, outputBase);
-//        SimplePipeline.runPipeline(reader, engines);
-//    }
-//
-//    /**
-//     * Run processors from existing data source.
-//     *
-//     * @throws UIMAException
-//     * @throws IOException
-//     */
-//    public void runProcessors(CollectionReaderDescription reader) throws
-//            UIMAException, IOException {
-//        SimplePipeline.runPipeline(reader, engines);
-//    }
 }

@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.event_coref.annotators;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
-import edu.cmu.cs.lti.emd.utils.MentionUtils;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamLatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
@@ -40,8 +40,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static edu.cmu.cs.lti.emd.utils.MentionUtils.mapCandidate2Events;
-import static edu.cmu.cs.lti.emd.utils.MentionUtils.processCandidates;
+import static edu.cmu.cs.lti.utils.MentionUtils.mapCandidate2Events;
+import static edu.cmu.cs.lti.utils.MentionUtils.processCandidates;
 import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
 
 /**
@@ -117,10 +117,10 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
             mentionMap.put(Pair.of(Span.of(mention.getBegin(), mention.getEnd()), mention.getEventType()), mention);
         }
 
-        List<MultiNodeKey> nodeResults = decodingState.getNodeResults();
+        List<MentionKey> nodeResults = decodingState.getNodeResults();
 
         for (int nodeIndex = 0; nodeIndex < nodeResults.size(); nodeIndex++) {
-            MultiNodeKey nodeKey = nodeResults.get(nodeIndex);
+            MentionKey nodeKey = nodeResults.get(nodeIndex);
 
             if (nodeKey.isRoot()) {
                 continue;

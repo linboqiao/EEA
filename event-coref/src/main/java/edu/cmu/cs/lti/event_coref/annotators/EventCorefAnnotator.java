@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
-import edu.cmu.cs.lti.emd.utils.MentionUtils;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.annotators.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.event_coref.decoding.BestFirstLatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.decoding.LatentTreeDecoder;

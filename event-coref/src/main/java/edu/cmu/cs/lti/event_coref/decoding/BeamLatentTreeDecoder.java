@@ -188,9 +188,9 @@ public class BeamLatentTreeDecoder {
     private void expandState(MentionGraph mentionGraph, List<MentionCandidate> candidates, int candidateIndex,
                              LabelLinkAgenda agenda) {
         MentionCandidate candidate = candidates.get(candidateIndex);
-        MultiNodeKey currNode = candidate.asKey();
+        MentionKey currNode = candidate.asKey();
 
-        for (NodeLinkingState nodeLinkingState : agenda.getBeamStates()) {
+        for (NodeLinkingState nodeLinkingState : agenda) {
             List<List<Pair<Pair<NodeKey, LabelledMentionGraphEdge>, Pair<EdgeType, Double>>>> allLinks = new
                     ArrayList<>();
 
@@ -200,7 +200,7 @@ public class BeamLatentTreeDecoder {
                         ArrayList<>();
 
                 for (int ant = 0; ant < MentionGraph.getNodeIndex(candidateIndex); ant++) {
-                    MultiNodeKey antNodeKeys = nodeLinkingState.getNode(ant);
+                    MentionKey antNodeKeys = nodeLinkingState.getNode(ant);
 
                     for (NodeKey antNodeKey : antNodeKeys) {
                         LabelledMentionGraphEdge edge = mentionGraph
@@ -241,12 +241,12 @@ public class BeamLatentTreeDecoder {
                                 JointLabelLinkAgenda agenda) {
 
         MentionCandidate candidate = candidates.get(candidateIndex);
-        MultiNodeKey currNode = candidate.asKey();
+        MentionKey currNode = candidate.asKey();
 
         int currentNodeIndex = MentionGraph.getNodeIndex(candidateIndex);
 
         // Expand each possible beam state.
-        for (NodeLinkingState nodeLinkingState : agenda.getBeamStates()) {
+        for (NodeLinkingState nodeLinkingState : agenda) {
 
             // Each list store the possible edge for one current key.
             // We need to get the combination of these edges to create all possible linking.

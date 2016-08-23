@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.learning.feature.sequence.document.functions;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
-import edu.cmu.cs.lti.learning.model.MultiNodeKey;
+import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -96,7 +96,7 @@ public class SurroundingVerbFeatures<T extends Annotation> extends SequenceFeatu
             return;
         }
 
-        StanfordCorenlpToken token = UimaNlpUtils.findFirstToken(sequence.get(focus));
+        StanfordCorenlpToken token = UimaNlpUtils.findFirstToken(sequence.get(focus), StanfordCorenlpToken.class);
 
         for (StanfordCorenlpToken lVerb : findVerbs(token, 2, leftJumps)) {
             addToFeatures(nodeFeatures, FeatureUtils.formatFeatureName("Left2Verb", lVerb.getLemma().toLowerCase()), 1);
@@ -110,7 +110,7 @@ public class SurroundingVerbFeatures<T extends Annotation> extends SequenceFeatu
 
     @Override
     public void extractGlobal(List<T> sequence, int focus, TObjectDoubleMap<String> globalFeatures,
-                              List<MultiNodeKey> knownStates) {
+                              List<MentionKey> knownStates, MentionKey currentState) {
 
     }
 

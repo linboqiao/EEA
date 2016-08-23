@@ -5,7 +5,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.emd.pipeline.twostep.EventMentionTrainer;
-import edu.cmu.cs.lti.emd.utils.WordNetSenseIdentifier;
+import edu.cmu.cs.lti.utils.WordNetSenseIdentifier;
 import edu.cmu.cs.lti.learning.feature.sentence.generator.EventMentionFeatureGenerator;
 import edu.cmu.cs.lti.learning.feature.sentence.generator.impl.FrameArgumentLemmaFeatureGenerator;
 import edu.cmu.cs.lti.learning.feature.sentence.generator.impl.FrameNameFeatureGenerator;

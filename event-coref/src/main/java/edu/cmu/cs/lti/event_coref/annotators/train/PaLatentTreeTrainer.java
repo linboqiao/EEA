@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.event_coref.annotators.train;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
-import edu.cmu.cs.lti.emd.utils.MentionUtils;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BestFirstLatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.decoding.LatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;

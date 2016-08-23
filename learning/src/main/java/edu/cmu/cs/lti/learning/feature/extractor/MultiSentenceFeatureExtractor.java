@@ -51,7 +51,7 @@ public class MultiSentenceFeatureExtractor<T extends Annotation> extends UimaSeq
             List<StanfordCorenlpToken> sentenceTokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
             for (T mention : JCasUtil.selectCovered(clazz, sentence)) {
                 int tokenIndex = 0;
-                Word headWord = UimaNlpUtils.findHeadFromAnnotation(mention);
+                Word headWord = UimaNlpUtils.findHeadFromStanfordAnnotation(mention);
                 for (StanfordCorenlpToken token : sentenceTokens) {
                     if (headWord.equals(token)) {
                         headWordOffsets.put(mention, tokenIndex);

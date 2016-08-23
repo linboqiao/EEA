@@ -196,6 +196,16 @@
                 <artifactId>commons-beanutils</artifactId>
                 <version>1.9.2</version>
             </dependency>
+            <dependency>
+                <groupId>edu.cmu.cs.lti</groupId>
+                <artifactId>mate-tools</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>edu.cmu.cs.lti</groupId>
+                <artifactId>zpar</artifactId>
+                <version>0.0.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

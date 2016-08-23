@@ -1,16 +1,11 @@
 package edu.cmu.cs.lti.event_coref.pipeline;
 
 import edu.cmu.cs.lti.collection_reader.EreCorpusReader;
-import edu.cmu.cs.lti.emd.annotators.misc.EventMentionTypeClassPrinter;
 import edu.cmu.cs.lti.utils.Configuration;
-import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
-import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
-import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,52 +25,30 @@ public class ChineseEventMentionPipeline {
 
         Configuration kbpConfig = new Configuration(argv[0]);
 
-        TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
-                .createTypeSystemDescription(typeSystemName);
-
-        CollectionReaderDescription trainReader = getEreReader(typeSystemDescription,
-                kbpConfig.get("edu.cmu.cs.lti.training.source_text.dir"),
-                kbpConfig.get("edu.cmu.cs.lti.training.ere.annotation"),
-                kbpConfig.get("edu.cmu.cs.lti.data.ere.suffix"),
-                kbpConfig.get("edu.cmu.cs.lti.data.source.suffix")
-                );
-
-        AnalysisEngineDescription classPrinter = AnalysisEngineFactory.createEngineDescription(
-                EventMentionTypeClassPrinter.class, typeSystemDescription,
-                EventMentionTypeClassPrinter.CLASS_OUTPUT_PATH,
-                edu.cmu.cs.lti.utils.FileUtils.joinPaths(
-                        kbpConfig.get("edu.cmu.cs.lti.training.working.dir"), "mention_types.txt")
-        );
-
-        // Create the classes first.
-        SimplePipeline.runPipeline(trainReader, classPrinter);
-
         // Now prepare the real pipeline.
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig, true);
 
-//        boolean skipTypeTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
-//        boolean skipLv2TypeTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.lv2.skiptrain", false);
-//        boolean skipRealisTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
-//        boolean skipCorefTrain = kbpConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
-//
-//        boolean skipLv1Test = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
-//        boolean skipLv2Test = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_type.lv2.skiptest", false);
-//        boolean skipRealisTest = kbpConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
-//        boolean skipCorefTest = kbpConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
-//        boolean skipJointTest = kbpConfig.getBoolean("edu.cmu.cs.lti.joint.skiptest", false);
+        pipeline.prepare(kbpConfig);
 
-        pipeline.prepare(kbpConfig, trainReader, null /*test data not exist now.*/);
-        pipeline.crossValidation(kbpConfig);
+//        pipeline.tryAnnotator(kbpConfig);
+
+        if (kbpConfig.getBoolean("edu.cmu.cs.lti.development", false)) {
+            pipeline.crossValidation(kbpConfig);
+        }
+
+        if (kbpConfig.getBoolean("edu.cmu.cs.lti.test", false)) {
+            pipeline.trainTest(kbpConfig, true);
+        }
     }
 
     private static CollectionReaderDescription getEreReader(TypeSystemDescription typeSystemDescription, String
-            sourceDir, String annotationDir, String ereSuffix, String sourceSuffix) throws
+            sourceDir, String annotationDir, String ereExt, String sourceExt) throws
             ResourceInitializationException {
         return CollectionReaderFactory.createReaderDescription(EreCorpusReader.class, typeSystemDescription,
                 EreCorpusReader.PARAM_ERE_ANNOTATION_DIR, annotationDir,
                 EreCorpusReader.PARAM_SOURCE_TEXT_DIR, sourceDir,
-                EreCorpusReader.PARAM_ERE_ANNOTATION_EXT, ereSuffix,
-                EreCorpusReader.PARAM_SOURCE_EXT, sourceSuffix,
+                EreCorpusReader.PARAM_ERE_ANNOTATION_EXT, ereExt,
+                EreCorpusReader.PARAM_SOURCE_EXT, sourceExt,
                 EreCorpusReader.PARAM_LANGUAGE, "zh");
     }
 }

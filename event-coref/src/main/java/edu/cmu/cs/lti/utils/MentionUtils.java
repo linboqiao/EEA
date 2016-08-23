@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.utils;
+package edu.cmu.cs.lti.utils;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashMultimap;

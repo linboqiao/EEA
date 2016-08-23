@@ -44,7 +44,7 @@ public class EnglishSrlArgumentExtractor extends AbstractLoggingAnnotator {
                     semaforRoles = frameNameAndRoles.getValue1();
                     mention.setFrameName(frameNameAndRoles.getValue0());
                     for (Map.Entry<String, SemaforLabel> aSemaforArgument : semaforRoles.entrySet()) {
-                        StanfordCorenlpToken argumentHead = UimaNlpUtils.findHeadFromAnnotation(aSemaforArgument
+                        StanfordCorenlpToken argumentHead = UimaNlpUtils.findHeadFromStanfordAnnotation(aSemaforArgument
                                 .getValue());
                         String roleName = aSemaforArgument.getKey();
                         if (argumentHead != null) {

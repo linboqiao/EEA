@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
-import edu.cmu.cs.lti.learning.model.MultiNodeKey;
+import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.StanfordEntityMention;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -28,17 +28,23 @@ import java.util.stream.IntStream;
 public class WindowWordFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken> {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private int posWindowSize;
-    private int lemmaWindowSize;
-    private int nerWindowSize;
-    private boolean useBigram;
+    private  int posWindowSize;
+    private  int lemmaWindowSize;
+    private  int nerWindowSize;
+    private  boolean useBigram;
+
+    private  boolean useCoarsePos;
+    private  boolean useFinePos;
 
     public WindowWordFeatures(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
+
         posWindowSize = getIntFromConfig(featureConfig, "PosWindowSize", -1);
         lemmaWindowSize = getIntFromConfig(featureConfig, "LemmaWindowSize", -1);
         nerWindowSize = getIntFromConfig(featureConfig, "NerWindowSize", -1);
         useBigram = getBoolFromConfig(featureConfig, "Bigram", false);
+        useCoarsePos = getBoolFromConfig(featureConfig, "Coarse", true);
+        useFinePos = getBoolFromConfig(featureConfig, "Fine", true);
     }
 
     private int getIntFromConfig(Configuration config, String paramName, int defaultVal) {
@@ -69,12 +75,26 @@ public class WindowWordFeatures extends SequenceFeatureWithFocus<StanfordCorenlp
     public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> nodeFeatures,
                         Table<org.apache.commons.lang3.tuple.Pair<Integer, Integer>, String, Double> edgeFeatures) {
         if (posWindowSize >= 0) {
-            addWindowFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getPos, "Pos", posWindowSize);
+            if (useFinePos) {
+                addWindowFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getPos, "Pos", posWindowSize);
+            }
+
+            if (useCoarsePos) {
+                addWindowFeatures(sequence, focus, nodeFeatures, this::getCoarsePOS, "CoarsePos", posWindowSize);
+            }
+
 //            // POS conjoined with previous state, we are conservative about window size here.
 //            addWindowFeatures(sequence, focus, featuresNeedForState, StanfordCorenlpToken::getPos, "Pos", 0);
             if (useBigram) {
-                addNgramFeatureWithOffsetRange(sequence, focus, -posWindowSize, posWindowSize, "Pos",
-                        StanfordCorenlpToken::getPos, nodeFeatures, 2);
+                if (useFinePos) {
+                    addNgramFeatureWithOffsetRange(sequence, focus, -posWindowSize, posWindowSize, "Pos",
+                            StanfordCorenlpToken::getPos, nodeFeatures, 2);
+                }
+
+                if (useCoarsePos) {
+                    addNgramFeatureWithOffsetRange(sequence, focus, -posWindowSize, posWindowSize, "CoarsePos",
+                            this::getCoarsePOS, nodeFeatures, 2);
+                }
             }
         }
         if (lemmaWindowSize >= 0) {
@@ -89,9 +109,14 @@ public class WindowWordFeatures extends SequenceFeatureWithFocus<StanfordCorenlp
         }
     }
 
+    private String getCoarsePOS(StanfordCorenlpToken token) {
+        String pos = token.getPos();
+        return pos.length() > 2 ? token.getPos().substring(0, 2) : pos;
+    }
+
     @Override
     public void extractGlobal(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String>
-            globalFeatures, List<MultiNodeKey> knownStates) {
+            globalFeatures, List<MentionKey> knownStates, MentionKey currentState) {
 
     }
 

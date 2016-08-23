@@ -9,7 +9,7 @@ import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.SequenceSolution;
-import edu.cmu.cs.lti.learning.training.AveragePerceptronTrainer;
+import edu.cmu.cs.lti.learning.train.AveragePerceptronTrainer;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
@@ -96,8 +96,7 @@ public class TokenLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
 
         try {
             featureExtractor = new SentenceFeatureExtractor(featureAlphabet, config, sentFeatureConfig,
-                    docFeatureConfig,
-                    false);
+                    docFeatureConfig, false);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException
                 | IllegalAccessException e) {
             e.printStackTrace();

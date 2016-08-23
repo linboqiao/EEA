@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.event_coref.annotators.train;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
-import edu.cmu.cs.lti.emd.utils.MentionUtils;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamLatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static edu.cmu.cs.lti.emd.utils.MentionUtils.mapCandidate2Events;
-import static edu.cmu.cs.lti.emd.utils.MentionUtils.processCandidates;
+import static edu.cmu.cs.lti.utils.MentionUtils.mapCandidate2Events;
+import static edu.cmu.cs.lti.utils.MentionUtils.processCandidates;
 import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
 
 /**

@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.event_coref.decoding;
 
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.learning.ChainFeatureExtractor;
+import edu.cmu.cs.lti.learning.feature.extractor.ChainFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;

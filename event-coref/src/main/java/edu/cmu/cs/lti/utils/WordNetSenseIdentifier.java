@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.emd.utils;
+package edu.cmu.cs.lti.utils;
 
 import edu.cmu.cs.lti.ling.WordNetSearcher;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;

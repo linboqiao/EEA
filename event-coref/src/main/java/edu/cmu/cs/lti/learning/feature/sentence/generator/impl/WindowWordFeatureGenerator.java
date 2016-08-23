@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.learning.feature.sentence.generator.impl;
 
 import edu.cmu.cs.lti.learning.feature.sentence.generator.EventMentionFeatureGenerator;
-import edu.cmu.cs.lti.emd.utils.WordNetSenseIdentifier;
+import edu.cmu.cs.lti.utils.WordNetSenseIdentifier;
 import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.Word;

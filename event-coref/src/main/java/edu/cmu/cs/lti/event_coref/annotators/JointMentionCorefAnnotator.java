@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
-import edu.cmu.cs.lti.emd.utils.MentionUtils;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
@@ -65,6 +65,10 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_BEAM_SIZE)
     int beamSize;
 
+    public static final String PARAM_TWO_LAYER = "twoLayer";
+    @ConfigurationParameter(name= PARAM_TWO_LAYER)
+    boolean useTwoLayer;
+
     public static final String PARAM_USE_LASO = "useLaso";
     @ConfigurationParameter(name = PARAM_USE_LASO)
     private boolean useLaSO;
@@ -107,18 +111,19 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
 
         MentionGraph mentionGraph = new MentionGraph(candidates, corefExtractor, true);
 
-        NodeLinkingState decodedState = decoder.decode(aJCas, mentionGraph, candidates, true);
+        NodeLinkingState decodedState = decoder.decode(aJCas, mentionGraph, candidates, true, useTwoLayer);
 
         if (logger.isDebugEnabled()) {
             logger.debug(decodedState.toString());
+            DebugUtils.pause(logger);
         }
 
         Map<Pair<Integer, String>, EventMention> node2Mention = new HashMap<>();
 
-        List<MultiNodeKey> nodeResults = decodedState.getNodeResults();
+        List<MentionKey> nodeResults = decodedState.getNodeResults();
 
         for (int nodeIndex = 0; nodeIndex < nodeResults.size(); nodeIndex++) {
-            MultiNodeKey nodeKey = nodeResults.get(nodeIndex);
+            MentionKey nodeKey = nodeResults.get(nodeIndex);
 
             if (nodeKey.isRoot()) {
                 continue;
@@ -136,8 +141,6 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
         }
 
         annotatePredictedCoreference(aJCas, decodedState.getDecodingTree(), node2Mention);
-
-        DebugUtils.pause(logger);
     }
 
     private void annotatePredictedCoreference(JCas aJCas, MentionSubGraph predictedTree,

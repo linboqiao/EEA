@@ -3,7 +3,7 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd ${script_dir}/../../../EvmEval
 eval_script=scorer_v1.7.py
 
-eval_dir="../data/project_data/cmu-script/mention/kbp/LDC2015E95/eval/full_run/"
+eval_dir="../data/project_data/cmu-script/mention/kbp/LDC2015E95/experiments/eval/full_run/"
 gold_predicted=${eval_dir}"gold_coref_all.tbf"
 sys_predicted=${eval_dir}"lv1_realis_coref_all.tbf"
 gold_base="../data/project_data/cmu-script/mention/LDC/LDC2015R26/data/"
@@ -16,15 +16,12 @@ log_file_base="../logs/cmu-script/kbp/eng/eval/test/"
 #declare -a arr=("gold_type_realis_coref" "lv1_coref" "gold_type_coref" "lv1_coref_pa")
 #declare -a arr=("lv1_coref" "lv1_coref_pa")
 
-declare -a arr=("paMention_hamming" "paMention_noneHamming" "paMention_recallHamming" \
-"beamMention_hamming" "beamMention_recallHamming" "beamMention_noneHamming" \
-"delayedBeamMention_hamming" "delayedBeamMention_recallHamming" "delayedBeamMention_noneHamming" \
-"vanillaBeamMention" "vanillaMention" \
-"gold_type_coref" "gold_type_realis_coref" \
-"gold_type_delayed_merge" "gold_type_delayed_unmerge" \
-"gold_type_early_merge" "gold_type_early_unmerge" \
-"beamMention_recallHamming_delayed_merge" "beamMention_recallHamming_delayed_unmerge" \
-"beamMention_recallHamming_early_merge" "beamMention_recallHamming_early_unmerge")
+declare -a arr=(
+"delayedBeamMention_hamming" "vanillaMention_iter27" \
+"gold_type_vanilla_coref_iter27" "gold_type_realis_vanilla_coref_iter27" \
+"delayedBeamMention_hamming_coref_laso=true_delayed=true_merged=true_beamSize=5" \
+"gold_type_coref_laso=true_delayed=true_merged=true_beamSize=5"
+)
 
 for sys_name in "${arr[@]}"
 do

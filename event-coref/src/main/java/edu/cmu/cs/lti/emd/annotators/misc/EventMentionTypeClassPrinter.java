@@ -36,9 +36,9 @@ import java.util.*;
  */
 public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
 
-    public static final String CLASS_OUTPUT_PATH = "classOutputPath";
+    public static final String CLASS_OUTPUT_FILE = "classOutputPath";
 
-    @ConfigurationParameter(name = CLASS_OUTPUT_PATH)
+    @ConfigurationParameter(name = CLASS_OUTPUT_FILE)
     private File classOutputFile;
 
     TObjectIntMap<String> goldClassesWithJoint = new TObjectIntHashMap<>();
@@ -106,6 +106,7 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
         });
 
         Collections.sort(classesLines);
+        logger.info(String.format("Found %d classes here.", classesLines.size()));
         try {
             FileUtils.writeLines(classOutputFile, classesLines);
         } catch (IOException e) {
@@ -133,7 +134,7 @@ public class EventMentionTypeClassPrinter extends AbstractLoggingAnnotator {
 
         AnalysisEngineDescription runner = AnalysisEngineFactory.createEngineDescription(
                 EventMentionTypeClassPrinter.class, typeSystemDescription,
-                EventMentionTypeClassPrinter.CLASS_OUTPUT_PATH,
+                EventMentionTypeClassPrinter.CLASS_OUTPUT_FILE,
                 edu.cmu.cs.lti.utils.FileUtils.joinPaths(
                         taskConfig.get("edu.cmu.cs.lti.training.working.dir"), "mention_types.txt")
         );

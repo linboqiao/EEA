@@ -10,7 +10,7 @@ import edu.cmu.cs.lti.learning.feature.extractor.MultiSentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.extractor.UimaSequenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
-import edu.cmu.cs.lti.learning.training.SequenceDecoder;
+import edu.cmu.cs.lti.learning.decoding.SequenceDecoder;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;

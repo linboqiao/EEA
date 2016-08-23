@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.learning.update;
 
 import edu.cmu.cs.lti.learning.model.*;
-import edu.cmu.cs.lti.learning.model.decoding.JointLabelLinkAgenda;
+import edu.cmu.cs.lti.learning.model.decoding.LabelLinkAgenda;
 import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.utils.DebugUtils;
@@ -131,26 +131,7 @@ public class DiscriminativeUpdater {
         return allWeights.get(weightKey);
     }
 
-    public void recordLaSOUpdate(JointLabelLinkAgenda decodingAgenda, JointLabelLinkAgenda goldAgenda) {
-        // TODO temporary debug clause.
-        if (debugger) {
-            MultiNodeKey currentGold = goldAgenda.getBestBeamState().getLastNodeResult();
-
-            if (!currentGold.getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass)) {
-//                logger.debug("Recording laso update.");
-//                logger.debug("Decoding states.");
-//                for (NodeLinkingState s : decodingAgenda.getOrderedStates()) {
-//                    logger.debug(s.toString());
-//                }
-//
-//                logger.debug("Gold states.");
-//                for (NodeLinkingState nodeLinkingState : goldAgenda.getOrderedStates()) {
-//                    logger.debug(nodeLinkingState.toString());
-//                }
-            }
-        }
-
-        boolean nothingToRecord = false;
+    public void recordLaSOUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
         if (!decodingAgenda.contains(goldAgenda)) {
 //            logger.debug("Recording differences for LaSO update.");
             recordUpdate(decodingAgenda, goldAgenda);
@@ -161,33 +142,27 @@ public class DiscriminativeUpdater {
             // Clear these features from both agenda, since they are assumed to be the same from here.
             goldAgenda.clearFeatures();
             decodingAgenda.clearFeatures();
-        } else {
-            nothingToRecord = true;
-        }
-
-        // TODO temporary debug clause.
-        if (debugger) {
-            if (nothingToRecord) {
-//                logger.debug("Nothing to record.");
-            }
-//            DebugUtils.pause(logger);
         }
     }
 
-    public void recordFinalUpdate(JointLabelLinkAgenda decodingAgenda, JointLabelLinkAgenda goldAgenda) {
-        logger.debug("Recording final update difference between the top states.");
-        logger.debug("Final decoding is ");
-        logger.debug(decodingAgenda.getBestBeamState().toString());
+    public void recordFinalUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Recording final update difference between the top states.");
+            logger.debug("Final decoding is ");
+            logger.debug(decodingAgenda.getBestBeamState().toString());
 
-        logger.debug("Final gold is ");
-        logger.debug(goldAgenda.getBeamStates().toString());
+            logger.debug("Final gold is ");
+            for (NodeLinkingState goldState : goldAgenda) {
+                logger.debug(goldState.toString());
+            }
+        }
 
         if (!decodingAgenda.getBestBeamState().match(goldAgenda.getBestBeamState())) {
             recordUpdate(decodingAgenda, goldAgenda);
         }
     }
 
-    private void recordUpdate(JointLabelLinkAgenda decodingAgenda, JointLabelLinkAgenda goldAgenda) {
+    private void recordUpdate(LabelLinkAgenda decodingAgenda, LabelLinkAgenda goldAgenda) {
         NodeLinkingState bestDecoding = decodingAgenda.getBestBeamState();
         NodeLinkingState bestGold = goldAgenda.getBestBeamState();
 
@@ -253,33 +228,6 @@ public class DiscriminativeUpdater {
 //                logger.debug(decoding.getValue().readableString());
             }
 
-            if (logger.isDebugEnabled() && debugger) {
-//                logger.debug("Best decoding.");
-//                logger.debug(bestDecoding.toString());
-//
-//                logger.debug("Best gold.");
-//                logger.debug(bestGold.toString());
-//
-//                for (Map.Entry<EdgeType, FeatureVector> goldFv : goldAgenda.getBestDeltaCorefVectors().entrySet()) {
-//                    logger.debug("Gold feature edge type : " + goldFv.getKey());
-//                    logger.debug(goldFv.getValue().readableString());
-//                }
-//
-//                for (Map.Entry<EdgeType, FeatureVector> decoding : decodingAgenda.getBestDeltaCorefVectors().entrySet
-//                        ()) {
-//                    logger.debug("System feature edge type : " + decoding.getKey());
-//                    logger.debug(decoding.getValue().readableString());
-//                }
-//
-//                logger.debug("Coreference delta is.");
-//                logger.debug(deltaCorefVector.readableNodeVector());
-//                logger.debug("New coref loss is " + losses.getRight() + " total is now " +
-//                        allLoss.get(COREF_MODEL_NAME));
-//                if (losses.getRight() != 0) {
-//                    DebugUtils.pause(logger);
-//                }
-            }
-
             if (!updateMention) {
                 if (deltaCorefVector.getFeatureL2() == 0) {
                     double loss = decodingAgenda.getBestBeamState().getDecodingTree().getLoss(goldAgenda
@@ -301,8 +249,8 @@ public class DiscriminativeUpdater {
     }
 
     private boolean allowCorefUpdate(NodeLinkingState bestDecodingState, NodeLinkingState bestGoldState) {
-        List<MultiNodeKey> bestDecoding = bestDecodingState.getNodeResults();
-        List<MultiNodeKey> bestGold = bestGoldState.getNodeResults();
+        List<MentionKey> bestDecoding = bestDecodingState.getNodeResults();
+        List<MentionKey> bestGold = bestGoldState.getNodeResults();
         switch (corefUpdateStrategy) {
             case 0:
                 return updateWithFullHistoryMentionCorrect(bestDecoding, bestGold);
@@ -315,7 +263,7 @@ public class DiscriminativeUpdater {
         }
     }
 
-    private boolean updateWithFullHistoryMentionCorrect(List<MultiNodeKey> bestDecoding, List<MultiNodeKey> bestGold) {
+    private boolean updateWithFullHistoryMentionCorrect(List<MentionKey> bestDecoding, List<MentionKey> bestGold) {
         for (int i = 0; i < bestDecoding.size(); i++) {
             boolean dIsMention = !bestDecoding.get(i).getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass);
             boolean gIsMention = !bestGold.get(i).getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass);
@@ -330,7 +278,7 @@ public class DiscriminativeUpdater {
         return true;
     }
 
-    private boolean updateWithFullHistoryTypeCorrect(List<MultiNodeKey> bestDecoding, List<MultiNodeKey> bestGold) {
+    private boolean updateWithFullHistoryTypeCorrect(List<MentionKey> bestDecoding, List<MentionKey> bestGold) {
         for (int i = 0; i < bestDecoding.size(); i++) {
 //            if (!bestDecoding.get(i).getCombinedType().equals(bestGold.get(i).getCombinedType())) {
 //                return false;
@@ -355,7 +303,7 @@ public class DiscriminativeUpdater {
     }
 
 
-    private boolean updateWithFullHistoryNonInvention(List<MultiNodeKey> bestDecoding, List<MultiNodeKey> bestGold) {
+    private boolean updateWithFullHistoryNonInvention(List<MentionKey> bestDecoding, List<MentionKey> bestGold) {
         for (int i = 0; i < bestDecoding.size(); i++) {
             boolean dIsMention = !bestDecoding.get(i).getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass);
             boolean gIsMention = !bestGold.get(i).getCombinedType().equals(ClassAlphabet.noneOfTheAboveClass);
@@ -457,7 +405,7 @@ public class DiscriminativeUpdater {
 
                     if (logger.isDebugEnabled()) {
                         logger.debug("Coreference delta is:");
-//                    logger.debug(corefDelta.readableNodeVector());
+//                        logger.debug(corefDelta.readableNodeVector());
                         logger.debug(corefDelta.matchNodeVector("MentionDistance"));
                         logger.debug("Number of coreference update is " + numCorefUpdates);
                     }
@@ -468,8 +416,14 @@ public class DiscriminativeUpdater {
                     mentionWeights.updateWeightsBy(mentionDelta, tau);
                     mentionWeights.updateAverageWeights();
 
-//                    logger.debug("Mention delta is:");
-//                    logger.debug(mentionDelta.readableNodeVector());
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Mention delta is:");
+                        String f = mentionDelta.matchNodeVector("MentionPair_");
+                        logger.debug(f);
+                        if (f.contains("\n")) {
+                            DebugUtils.pause(logger);
+                        }
+                    }
                 }
             }
 //            if (updateCount > 11) {

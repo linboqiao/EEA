@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.event_coref.decoding;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
-import edu.cmu.cs.lti.learning.model.MultiNodeKey;
+import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.LabelledMentionGraphEdge;
@@ -45,7 +45,7 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
             for (int ant = 0; ant < curr; ant++) {
                 int antMentionId = mentionGraph.getCandidateIndex(ant);
                 NodeKey antKey = mentionGraph.isRoot(ant) ?
-                        MultiNodeKey.rootKey().takeFirst() : mentionCandidates.get(antMentionId).asKey().takeFirst();
+                        MentionKey.rootKey().takeFirst() : mentionCandidates.get(antMentionId).asKey().takeFirst();
 
                 LabelledMentionGraphEdge mentionGraphEdge = mentionGraph.getMentionGraphEdge(curr, ant)
                         .getLabelledEdge(mentionCandidates, antKey, currentKey);

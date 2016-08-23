@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.learning.feature.sequence.base;
 
 import com.google.common.collect.Table;
-import edu.cmu.cs.lti.learning.model.MultiNodeKey;
+import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
@@ -22,11 +22,10 @@ import java.util.function.Function;
  * @author Zhengzhong Liu
  */
 public abstract class SequenceFeatureWithFocus<T extends Annotation> {
-    protected final Logger logger;
+    protected Logger logger;
 
     protected Configuration featureConfig;
     protected Configuration generalConfig;
-
 
     public SequenceFeatureWithFocus(Configuration generalConfig, Configuration featureConfig) {
         this.featureConfig = featureConfig;
@@ -106,16 +105,16 @@ public abstract class SequenceFeatureWithFocus<T extends Annotation> {
 
     /**
      * The extractor function, which may be run multiple times on each of the focus.
-     * @param sequence       The sequence of elements to extract from.
+     *  @param sequence       The sequence of elements to extract from.
      * @param focus          The focus to evaluate the features.
      * @param globalFeatures The global feature vector to be filled.
      * @param knownStates    Previous states that we know.
+     * @param currentState
      */
     public abstract void extractGlobal(List<T> sequence, int focus, TObjectDoubleMap<String> globalFeatures,
-                                       List<MultiNodeKey> knownStates);
+                                       List<MentionKey> knownStates, MentionKey currentState);
 
 
-    // TODO think about whether multi-thread will have problem here.
     public void addToFeatures(TObjectDoubleMap<String> nodeFeatures, String name, double value) {
         nodeFeatures.adjustOrPutValue(name, value, value);
     }

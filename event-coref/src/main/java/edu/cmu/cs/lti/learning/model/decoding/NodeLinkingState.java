@@ -10,8 +10,6 @@ import edu.cmu.cs.lti.learning.update.SeqLoss;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.utils.MathUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,7 +20,7 @@ import java.util.stream.Collectors;
  * @author Zhengzhong Liu
  */
 public class NodeLinkingState implements Comparable<NodeLinkingState> {
-    protected transient final Logger logger = LoggerFactory.getLogger(getClass());
+//    protected transient final Logger logger = LoggerFactory.getLogger(getClass());
 
 //    private double score;
 
@@ -38,7 +36,9 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 
     // Here is the node decoding results. Each item correspond to a node in the graph (which includes the root node
     // as well).
-    private List<MultiNodeKey> nodeResults;
+    private List<MentionKey> nodeResults;
+
+    private long nodeHash;
 
     private MentionSubGraph decodingTree;
 
@@ -54,11 +54,12 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
             decodingTree = new MentionSubGraph(graph);
         }
         corefFv = new HashMap<>();
+        nodeHash = 0;
     }
 
     public static NodeLinkingState getInitialState(MentionGraph graph) {
         NodeLinkingState s = new NodeLinkingState(graph);
-        MultiNodeKey rootNode = MultiNodeKey.rootKey();
+        MentionKey rootNode = MentionKey.rootKey();
         s.nodeResults.add(rootNode);
         s.nodeIndex += 1; // The first node is added, which is the root.
         return s;
@@ -73,7 +74,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         return "[Node Linking State] " + Integer.toHexString(hashCode()) + "\n" +
                 "Node Score: " + nodeScore +
                 " Link Score: " + linkScore +
-                "\n<Nodes>\n" +
+                "\n<Nodes> (hash=" + nodeHash + ")\n" +
                 showNodes() +
                 "\n" +
                 ((decodingTree == null) ? "[No coreference]" :
@@ -91,11 +92,14 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         StringBuilder nodes = new StringBuilder();
         nodes.append("[State Nodes] ");
         for (int i = 0; i < nodeResults.size(); i++) {
-            nodes.append(i).append(":");
-            for (NodeKey nodeResult : nodeResults.get(i)) {
-                nodes.append(" ").append(nodeResult.getMentionType());
+            String t = nodeResults.get(i).getCombinedType();
+            if (!t.equals(ClassAlphabet.noneOfTheAboveClass)) {
+                nodes.append(i).append(":");
+                for (NodeKey nodeResult : nodeResults.get(i)) {
+                    nodes.append(" ").append(nodeResult.getMentionType());
+                }
+                nodes.append(";");
             }
-            nodes.append(";");
         }
         return nodes.toString();
     }
@@ -141,29 +145,29 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         return Comparator.reverseOrder();
     }
 
-    public MultiNodeKey getLastNode() {
+    public MentionKey getLastNode() {
         return getNode(nodeIndex - 1);
     }
 
-    public MultiNodeKey getNode(int index) {
+    public MentionKey getNode(int index) {
         return nodeResults.get(index);
     }
 
     /**
-     * @return All nodes, including the root note.
+     * @return All nodes, including the root node
      */
-    public List<MultiNodeKey> getNodeResults() {
+    public List<MentionKey> getNodeResults() {
         return nodeResults;
     }
 
-    public MultiNodeKey getLastNodeResult() {
-        return nodeResults.get(nodeResults.size() - 1);
-    }
+//    public MultiNodeKey getLastNodeResult() {
+//        return nodeResults.get(nodeResults.size() - 1);
+//    }
 
     /**
      * @return Only the actual nodes.
      */
-    public List<MultiNodeKey> getActualNodeResults() {
+    public List<MentionKey> getActualNodeResults() {
         return nodeResults.subList(1, nodeResults.size());
     }
 
@@ -193,9 +197,13 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         decodingTree.addEdge(edge, edgeKey.getType());
     }
 
-    public void addNode(MultiNodeKey newNode) {
+    public void addNode(MentionKey newNode) {
         nodeResults.add(newNode);
         nodeIndex++;
+
+        long nextNodeHash = newNode == null ? 0 : newNode.hashCode();
+        nodeHash += nextNodeHash * nodeIndex;
+
     }
 
     public Pair<Double, Double> loss(NodeLinkingState referenceState, SeqLoss labelLosser) {
@@ -212,7 +220,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         return Pair.of(labelLoss, graphLoss);
     }
 
-    private double computeLabelLoss(List<MultiNodeKey> referenceNodes, SeqLoss labelLosser) {
+    private double computeLabelLoss(List<MentionKey> referenceNodes, SeqLoss labelLosser) {
         String[] reference = new String[referenceNodes.size() - 1];
         String[] prediction = new String[nodeResults.size() - 1];
 
@@ -286,11 +294,13 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         NodeLinkingState state = new NodeLinkingState(graph);
         state.nodeScore = nodeScore;
         state.linkScore = linkScore;
+        state.nodeHash = nodeHash;
+
         if (decodingTree != null) {
             state.decodingTree = decodingTree.makeCopy();
         }
         state.nodeIndex = nodeIndex;
-        for (MultiNodeKey node : nodeResults) {
+        for (MentionKey node : nodeResults) {
             state.nodeResults.add(node);
         }
 
@@ -314,6 +324,9 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         return MinMaxPriorityQueue.orderedBy(reverseComparator()).maximumSize(maxSize).create();
     }
 
+    public long getNodeHash() {
+        return nodeHash;
+    }
 
 //
 //    public Map<Integer, String> getAvailableNodeLabels() {

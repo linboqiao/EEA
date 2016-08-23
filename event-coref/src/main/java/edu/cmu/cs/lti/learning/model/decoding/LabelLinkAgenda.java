@@ -6,8 +6,6 @@ import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,22 +15,22 @@ import java.util.Map;
  *
  * @author Zhengzhong Liu
  */
-public abstract class LabelLinkAgenda {
+public abstract class LabelLinkAgenda implements Iterable<NodeLinkingState>{
     protected transient final Logger logger = LoggerFactory.getLogger(getClass());
 
     public LabelLinkAgenda() {
     }
 
-    public abstract Collection<NodeLinkingState> getBeamStates();
+//    public abstract Collection<NodeLinkingState> getBeamStates();
 
     public abstract NodeLinkingState getBestBeamState();
 
-    /**
-     * Take the states out in order as a list. This requires one full creation of a Queue and a list.
-     *
-     * @return The ordered states in a list.
-     */
-    public abstract List<NodeLinkingState> getOrderedStates();
+//    /**
+//     * Take the states out in order as a list. This requires one full creation of a Queue and a list.
+//     *
+//     * @return The ordered states in a list.
+//     */
+//    public abstract List<NodeLinkingState> getOrderedStates();
 
     public abstract void prepareExpand();
 
@@ -40,9 +38,13 @@ public abstract class LabelLinkAgenda {
 
     public abstract void expand(StateDelta delta);
 
-    public abstract Map<EdgeType, FeatureVector> getBestDeltaCorefVectors();
+    public Map<EdgeType, FeatureVector> getBestDeltaCorefVectors(){
+        return getBestBeamState().getCorefFv();
+    }
 
-    public abstract GraphFeatureVector getBestDeltaLabelFv();
+    public  GraphFeatureVector getBestDeltaLabelFv(){
+        return getBestBeamState().getLabelFv();
+    }
 
     /**
      * Update the beam states, by converting the deltas to new states, and remove the old ones.

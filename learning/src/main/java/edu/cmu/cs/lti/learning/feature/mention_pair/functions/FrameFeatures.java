@@ -18,8 +18,17 @@ import java.util.List;
  * @author Zhengzhong Liu
  */
 public class FrameFeatures extends AbstractMentionPairFeatures {
+//    private Table<String, String, String> frameRelations;
+
     public FrameFeatures(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
+
+//        String fnRelationPath = FileUtils.joinPaths(
+//                generalConfig.get("edu.cmu.cs.lti.resource.dir"),
+//                generalConfig.get("edu.cmu.cs.lti.fn_relation.path")
+//        );
+
+//        frameRelations = FrameDataReader.getFrameOnlyRelations(fnRelationPath);
     }
 
     @Override
@@ -28,23 +37,35 @@ public class FrameFeatures extends AbstractMentionPairFeatures {
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
+    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
+            candidates, NodeKey firstNode, NodeKey secondNode) {
         MentionCandidate firstCandidate = candidates.get(firstNode.getCandidateIndex());
         MentionCandidate secondCandidate = candidates.get(secondNode.getCandidateIndex());
 
         Word firstHead = firstCandidate.getHeadWord();
         Word secondHead = secondCandidate.getHeadWord();
 
-        if (firstHead.getFrameName() != null && secondHead.getFrameName() != null) {
+        String firstFrame = firstHead.getFrameName();
+        String secondFrame = secondHead.getFrameName();
+
+        if (firstFrame != null && secondFrame != null) {
             addBoolean(featuresNoLabel, FeatureUtils.formatFeatureName("FramePair", FeatureUtils.sortedJoin(
-                    firstHead.getFrameName(), secondHead.getFrameName())));
+                    firstFrame, secondFrame)));
+
+//            String relation = frameRelations.get(firstFrame, secondFrame);
+//            if (relation == null) {
+//                relation = frameRelations.get(secondFrame, firstFrame);
+//            }
+//
+//            if (relation != null) {
+//                addBoolean(featuresNoLabel, FeatureUtils.formatFeatureName("FrameRelation", relation));
+//            }
         }
     }
 
     @Override
     public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        List
-                                                <MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
+                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
 
     }
 

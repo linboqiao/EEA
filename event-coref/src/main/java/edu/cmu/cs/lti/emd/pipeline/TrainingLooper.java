@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.emd.pipeline;
 
 import edu.cmu.cs.lti.uima.pipeline.LoopPipeline;
-import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -23,16 +22,16 @@ public abstract class TrainingLooper extends LoopPipeline {
     private String modelBasename;
     private int numberIterToSave = 3;
 
-    public TrainingLooper(Configuration taskConfig, String modelOutputBasename,
-                          CollectionReaderDescription reader, AnalysisEngineDescription trainer) throws
-            ResourceInitializationException, ClassNotFoundException, NoSuchMethodException,
-            InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
-        super(reader, trainer);
-        this.maxIteration = taskConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
-        this.numIteration = 0;
-        this.modelBasename = modelOutputBasename;
-        logger.info("Trainer started, maximum iteration is " + maxIteration);
-    }
+//    public TrainingLooper(Configuration taskConfig, String modelOutputBasename,
+//                          CollectionReaderDescription reader, AnalysisEngineDescription trainer) throws
+//            ResourceInitializationException, ClassNotFoundException, NoSuchMethodException,
+//            InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
+//        super(reader, trainer);
+//        this.maxIteration = taskConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
+//        this.numIteration = 0;
+//        this.modelBasename = modelOutputBasename;
+//        logger.info("Trainer started, maximum iteration is " + maxIteration);
+//    }
 
     public TrainingLooper(String modelOutputBasename, CollectionReaderDescription reader, AnalysisEngineDescription
             trainer, int maxIter) throws ResourceInitializationException, ClassNotFoundException, NoSuchMethodException,

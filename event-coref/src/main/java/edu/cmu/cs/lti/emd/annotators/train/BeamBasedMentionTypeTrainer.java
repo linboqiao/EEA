@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.emd.annotators.train;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import edu.cmu.cs.lti.emd.decoding.BeamCrfDecoder;
-import edu.cmu.cs.lti.emd.utils.MentionUtils;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
@@ -160,8 +160,9 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        UimaConvenience.printProcessLog(aJCas, logger);
-
+        if (logger.isDebugEnabled()) {
+            UimaConvenience.printProcessLog(aJCas, logger);
+        }
 //        logger.debug("[LOSS TRACK] Type trainer " + UimaConvenience.getDocId(aJCas));
 //
 //        if (UimaConvenience.getDocId(aJCas).equals("bolt-eng-DF-170-181125-9125545.txt")){

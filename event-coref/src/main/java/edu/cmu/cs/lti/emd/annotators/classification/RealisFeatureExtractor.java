@@ -15,17 +15,21 @@ import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import gnu.trove.map.TIntDoubleMap;
 import gnu.trove.map.hash.TIntDoubleHashMap;
 import org.apache.uima.UIMAException;
+import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.javatuples.Pair;
 
@@ -54,7 +58,17 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
     private Table<Integer, Integer, FeatureVector> dummy = HashBasedTable.create();
 
     @Override
+    public void initialize(UimaContext aContext) throws ResourceInitializationException {
+        super.initialize(aContext);
+        logger.info("Preparing to extract realis features.");
+    }
+
+    @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        UimaConvenience.printProcessLog(aJCas);
+
+        logger.info(JCasUtil.select(aJCas, StanfordCorenlpSentence.class).size() + " sentences found.");
+
         extractor.initWorkspace(aJCas);
         alignmentHelper.loadWord2Stanford(aJCas, goldTokenComponentId);
 
@@ -63,18 +77,28 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
 
             List<EventMention> mentions = JCasUtil.selectCovered(aJCas, EventMention.class, sentence);
 
+            logger.info("Number of mentions is " + mentions.size());
+
             for (EventMention mention : mentions) {
                 FeatureVector rawFeatures = new RealValueHashFeatureVector(alphabet);
                 int head = extractor.getElementIndex(getHead(aJCas, mention.getBegin(), mention.getEnd()));
                 extractor.extract(head, rawFeatures, dummy);
                 classAlphabet.addClass(mention.getRealisType());
                 TIntDoubleMap indexedFeatures = new TIntDoubleHashMap();
+
+                logger.info("Extracting features for " + mention.getCoveredText());
+
                 for (FeatureVector.FeatureIterator iter = rawFeatures.featureIterator(); iter.hasNext(); ) {
                     iter.next();
                     indexedFeatures.put(iter.featureIndex(), iter.featureValue());
+                    logger.info("Feature is " + iter.featureIndex() + " " + iter.featureValue());
                 }
                 features.add(Pair.with(indexedFeatures, mention.getRealisType()));
+
             }
+
+            DebugUtils.pause();
+
         }
     }
 

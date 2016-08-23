@@ -7,7 +7,7 @@ import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
-import edu.cmu.cs.lti.learning.model.MultiNodeKey;
+import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.utils.MathUtils;
 import gnu.trove.map.TIntIntMap;
@@ -175,7 +175,7 @@ public class MentionGraph implements Serializable {
                 String mentionType = element.getRight();
 
 //                logger.info("Candidate realis is " + candidates.get(candidateIndex).getRealis());
-                MultiNodeKey candidateKeys = candidates.get(candidateIndex).asKey();
+                MentionKey candidateKeys = candidates.get(candidateIndex).asKey();
 
                 NodeKey actualNode = null;
                 for (NodeKey key : candidateKeys) {
@@ -212,8 +212,8 @@ public class MentionGraph implements Serializable {
     private void linkToRoot(List<MentionCandidate> candidates, Set<NodeKey> keysWithAntecedents) {
         // Loop starts from 1, because node 0 is the root itself.
         for (int curr = 1; curr < numNodes(); curr++) {
-            MultiNodeKey depKeys = candidates.get(getCandidateIndex(curr)).asKey();
-            NodeKey rootKey = MultiNodeKey.rootKey().takeFirst();
+            MentionKey depKeys = candidates.get(getCandidateIndex(curr)).asKey();
+            NodeKey rootKey = MentionKey.rootKey().takeFirst();
 
             // We assume no two mention contains the same depKey in input.
             for (NodeKey depKey : depKeys) {
@@ -280,7 +280,7 @@ public class MentionGraph implements Serializable {
         return getEdge(dep, gov);
     }
 
-    public LabelledMentionGraphEdge getLabelledEdge(List<MentionCandidate> mentions, NodeKey govKey, NodeKey depKey) {
+    public synchronized LabelledMentionGraphEdge getLabelledEdge(List<MentionCandidate> mentions, NodeKey govKey, NodeKey depKey) {
         return getEdge(getNodeIndex(depKey.getCandidateIndex()), getNodeIndex(govKey.getCandidateIndex()))
                 .getLabelledEdge(mentions, govKey, depKey);
     }
@@ -312,7 +312,7 @@ public class MentionGraph implements Serializable {
 
             int currMentionIndex = getCandidateIndex(curr);
 
-            MultiNodeKey currKeys = mentionCandidates.get(currMentionIndex).asKey();
+            MentionKey currKeys = mentionCandidates.get(currMentionIndex).asKey();
 
 //            System.out.println("Finding best edge for " + curr);
 
@@ -321,7 +321,7 @@ public class MentionGraph implements Serializable {
 
                 int antMentionIndex = getCandidateIndex(ant);
 
-                MultiNodeKey antKeys = isRoot(ant) ? MultiNodeKey.rootKey() :
+                MentionKey antKeys = isRoot(ant) ? MentionKey.rootKey() :
                         mentionCandidates.get(antMentionIndex).asKey();
 
                 for (NodeKey antKey : antKeys) {

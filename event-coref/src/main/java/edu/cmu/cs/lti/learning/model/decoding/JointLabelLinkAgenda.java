@@ -1,17 +1,15 @@
 package edu.cmu.cs.lti.learning.model.decoding;
 
 import com.google.common.collect.MinMaxPriorityQueue;
-import edu.cmu.cs.lti.learning.model.FeatureVector;
-import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
-import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.Spliterator;
 
 /**
  * Created with IntelliJ IDEA.
@@ -52,9 +50,9 @@ public class JointLabelLinkAgenda extends LabelLinkAgenda {
         beamStates.add(NodeLinkingState.getInitialState(mentionGraph));
     }
 
-    public MinMaxPriorityQueue<NodeLinkingState> getBeamStates() {
-        return beamStates;
-    }
+//    public MinMaxPriorityQueue<NodeLinkingState> getBeamStates() {
+//        return beamStates;
+//    }
 
     public NodeLinkingState getBestBeamState() {
         return beamStates.peek();
@@ -76,6 +74,7 @@ public class JointLabelLinkAgenda extends LabelLinkAgenda {
     }
 
     public void prepareExpand() {
+        topStateDeltas = StateDelta.getReverseHeap(beamSize);
         stateDeltas = new ArrayList<>();
     }
 
@@ -97,7 +96,7 @@ public class JointLabelLinkAgenda extends LabelLinkAgenda {
         }
     }
 
-    public void expand(StateDelta delta) {
+    public synchronized void expand(StateDelta delta) {
         if (fastMode) {
             fastExpand(delta);
         } else {
@@ -119,14 +118,6 @@ public class JointLabelLinkAgenda extends LabelLinkAgenda {
     private int fastExpand(StateDelta delta) {
         topStateDeltas.offer(delta);
         return topStateDeltas.size();
-    }
-
-    public Map<EdgeType, FeatureVector> getBestDeltaCorefVectors() {
-        return beamStates.peek().getCorefFv();
-    }
-
-    public GraphFeatureVector getBestDeltaLabelFv() {
-        return beamStates.peek().getLabelFv();
     }
 
     /**
@@ -185,4 +176,13 @@ public class JointLabelLinkAgenda extends LabelLinkAgenda {
         anotherAgenda.beamStates.iterator().forEachRemaining(s -> beamStates.add(s));
     }
 
+    @Override
+    public Iterator<NodeLinkingState> iterator() {
+        return beamStates.iterator();
+    }
+
+    @Override
+    public Spliterator<NodeLinkingState> spliterator() {
+        return beamStates.spliterator();
+    }
 }

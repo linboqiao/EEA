@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.learning.feature.sequence.document.functions;
 
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
-import edu.cmu.cs.lti.learning.model.MultiNodeKey;
+import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -52,14 +52,14 @@ public class SurroundingMentionFeatures extends SequenceFeatureWithFocus<EventMe
     private String getMentionHead(List<EventMention> sequence, int location) {
         if (location > 0 && location < sequence.size()) {
             EventMention mention = sequence.get(location);
-            return UimaNlpUtils.findHeadFromAnnotation(mention).getLemma().toLowerCase();
+            return UimaNlpUtils.findHeadFromStanfordAnnotation(mention).getLemma().toLowerCase();
         }
         return outsideValue;
     }
 
     @Override
     public void extractGlobal(List<EventMention> sequence, int focus, TObjectDoubleMap<String> globalFeatures, List
-            <MultiNodeKey> knownStates) {
+            <MentionKey> knownStates, MentionKey currentState) {
 
     }
 }

@@ -4,10 +4,9 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
-import edu.cmu.cs.lti.learning.ChainFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
-import edu.cmu.cs.lti.learning.model.MultiNodeKey;
+import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.iterator.TObjectDoubleIterator;
@@ -149,7 +148,7 @@ public abstract class UimaSequenceFeatureExtractor<T extends Annotation> extends
                 double value = edgeFeature.getValue();
 
                 FeatureVector fv = edgeFeatures.contains(edge.getLeft(), edge.getRight()) ?
-                                edgeFeatures.get(edge.getLeft(), edge.getRight()) : nodeFeatures.newFeatureVector();
+                        edgeFeatures.get(edge.getLeft(), edge.getRight()) : nodeFeatures.newFeatureVector();
                 fv.addFeature(featureName, value);
             });
         }
@@ -160,18 +159,20 @@ public abstract class UimaSequenceFeatureExtractor<T extends Annotation> extends
     }
 
     @Override
-    public void extractGlobal(int focus, FeatureVector globalFeatures, List<MultiNodeKey> knownStates) {
+    public void extractGlobal(int focus, FeatureVector globalFeatures, List<MentionKey> knownStates, MentionKey
+            currentState) {
         List<StanfordCorenlpToken> sentenceTokens = getSentenceTokens(focus);
         TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
 
         if (focus < sequenceElements.size() && focus >= 0) {
             sentenceFeatureFunctions.forEach(ff -> ff.extractGlobal(sentenceTokens, getSentenceFocus(focus),
-                    rawFeatures, knownStates));
+                    rawFeatures, knownStates, currentState));
         }
 
-        documentFeatureFunctions.forEach(ff -> ff.extractGlobal(sequenceElements, focus, rawFeatures, knownStates));
+        documentFeatureFunctions.forEach(ff -> ff.extractGlobal(sequenceElements, focus, rawFeatures, knownStates,
+                currentState));
 
-        for (TObjectDoubleIterator<String> iter = rawFeatures.iterator(); iter.hasNext(); ){
+        for (TObjectDoubleIterator<String> iter = rawFeatures.iterator(); iter.hasNext(); ) {
             iter.advance();
             globalFeatures.addFeature(iter.key(), iter.value());
         }
