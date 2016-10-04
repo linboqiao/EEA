@@ -187,7 +187,13 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
         }
 
         if (copyRealis) {
-            targetMention.setRealisType(sourceMention.getRealisType());
+            if (sourceMention.getRealisType() != null) {
+                targetMention.setRealisType(sourceMention.getRealisType());
+            }else{
+                // If the gold standard didn't provide a realis type, we make it up.
+                sourceMention.setRealisType("Actual");
+                targetMention.setRealisType("Actual");
+            }
         }
         UimaAnnotationUtils.finishAnnotation(targetMention, COMPONENT_ID, sourceMention.getId(), toView);
 

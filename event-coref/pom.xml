@@ -80,5 +80,9 @@
             <groupId>edu.cmu.cs.lti</groupId>
             <artifactId>zpar</artifactId>
         </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>ltp-parser</artifactId>
+        </dependency>
     </dependencies>
 </project>

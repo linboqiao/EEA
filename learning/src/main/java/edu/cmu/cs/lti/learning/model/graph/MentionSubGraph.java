@@ -229,6 +229,16 @@ public class MentionSubGraph {
         return deltaFeatureVector;
     }
 
+    public GraphFeatureVector getAllFeatures(ClassAlphabet classAlphabet, FeatureAlphabet featureAlphabet) {
+        GraphFeatureVector allFeatures = new GraphFeatureVector(classAlphabet, featureAlphabet);
+
+        // For edges in this subgraph.
+        for (SubGraphEdge edge : edgeTable.values()) {
+            allFeatures.extend(edge.getEdgeFeatures(), edge.getEdgeType().name());
+        }
+        return allFeatures;
+    }
+
     /**
      * Convert the tree to transitive and equivalence resolved graph
      */

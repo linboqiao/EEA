@@ -3,7 +3,6 @@ package edu.cmu.cs.lti.emd.annotators.train;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import edu.cmu.cs.lti.emd.decoding.BeamCrfDecoder;
-import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
@@ -16,6 +15,7 @@ import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -71,8 +71,8 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
 //    private File warmStartMentionModel;
 
     public static final String PARAM_AGGRESSIVE_PARAMETER = "aggressiveParameter";
-    @ConfigurationParameter(name = PARAM_AGGRESSIVE_PARAMETER, mandatory = false)
-    private Double aggressiveParameter;
+    @ConfigurationParameter(name = PARAM_AGGRESSIVE_PARAMETER, defaultValue = "0")
+    private double aggressiveParameter;
 
     private SentenceFeatureExtractor sentExtractor;
     private BeamCrfDecoder decoder;
@@ -85,11 +85,9 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
         logger.info(String.format("Beam Trainer using PA update : %s, Use LaSO: %s, Delayed LaSO : %s, Loss Type : %s",
                 usePaUpdate, useLaSO, delayedLaso, lossType));
 
-        if (aggressiveParameter != null) {
-            updater = new DiscriminativeUpdater(true, false, usePaUpdate, lossType, aggressiveParameter);
+        updater = new DiscriminativeUpdater(true, false, usePaUpdate, lossType, aggressiveParameter, 0);
+        if (aggressiveParameter > 0) {
             logger.info("Mention type trainer started with aggressive parameter.");
-        } else {
-            updater = new DiscriminativeUpdater(true, false, usePaUpdate, lossType);
         }
 
         updater.addWeightVector(ModelConstants.TYPE_MODEL_NAME, prepareCrfWeights());
@@ -135,10 +133,11 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
         String sentFeatureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.sentence.spec");
         String docFeatureSpec = config.get("edu.cmu.cs.lti.features.type.beam.doc.spec");
-        File classFile = config.getFile("edu.cmu.cs.lti.mention.classes.path");
+        File classFile = new File(edu.cmu.cs.lti.utils.FileUtils.joinPaths(
+                config.get("edu.cmu.cs.lti.training.working.dir"), "mention_types.txt"));
 
         String[] classes;
-        if (classFile != null) {
+        if (classFile.exists()) {
             try {
                 classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
                         .filter(p -> p.length >= 1).map(p -> p[0]).toArray(String[]::new);

@@ -9,10 +9,8 @@ import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.SequenceSolution;
-import edu.cmu.cs.lti.learning.train.AveragePerceptronTrainer;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
-import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -21,7 +19,6 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.DocumentAnnotation;
@@ -40,17 +37,12 @@ import java.util.Collection;
 public class MentionLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
     public static final String MODEL_NAME = "mentionSequenceModel";
 
-    public static final String PARAM_LOSS_TYPE = "lossType";
-
-    @ConfigurationParameter(name = PARAM_LOSS_TYPE)
-    private String lossType;
-
     private static MultiKeyDiskCacher<TIntObjectHashMap<Pair<FeatureVector, HashBasedTable<Integer, Integer,
             FeatureVector>>>> featureCacher;
 
     private static MultiKeyDiskCacher<Pair<GraphFeatureVector, SequenceSolution>> goldCacher;
 
-    private CubicLagrangian dummayLagrangian = new DummyCubicLagrangian();
+    private CubicLagrangian dummyLagrangian = new DummyCubicLagrangian();
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -66,9 +58,18 @@ public class MentionLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    protected ClassAlphabet initClassAlphabet(String[] classes) {
+        return new ClassAlphabet(classes, false, true);
+    }
+
+    @Override
+    protected void parseFeatureSpec() {
         String sentFeatureSpec = config.get("edu.cmu.cs.lti.features.type.lv2.sentence.spec");
         String docFeatureSpec = config.get("edu.cmu.cs.lti.features.type.lv2.doc.spec");
+        featureSpec = FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec);
 
         Configuration sentFeatureConfig = new FeatureSpecParser(
                 config.get("edu.cmu.cs.lti.feature.sentence.package.name")
@@ -88,19 +89,11 @@ public class MentionLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
             e.printStackTrace();
         }
 
-        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, featureAlphabet,
-                FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec), false, lossType);
-
         logger.info("Training with the following specification: ");
         logger.info("[Sentence Spec]" + sentFeatureSpec);
         logger.info("[Document Spec]" + docFeatureSpec);
     }
 
-
-    @Override
-    protected ClassAlphabet initClassAlphabet(String[] classes) {
-        return new ClassAlphabet(classes, false, true);
-    }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
@@ -112,7 +105,7 @@ public class MentionLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
 
         featureExtractor.resetWorkspace(aJCas, document.getBegin(), document.getEnd());
 
-        String documentKey = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
+        String documentKey = UimaConvenience.getShortDocumentNameWithOffset(aJCas);
 
         TIntObjectHashMap<Pair<FeatureVector, HashBasedTable<Integer, Integer, FeatureVector>>> sequenceFeatures =
                 featureCacher.get(documentKey);
@@ -139,8 +132,11 @@ public class MentionLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
             sequenceFeatures = new TIntObjectHashMap<>();
         }
 
-        double loss = trainer.trainNext(goldSolution, goldFv, featureExtractor, dummayLagrangian, dummayLagrangian,
-                sequenceFeatures);
+        decoder.decode(featureExtractor, weightVector, goldSolution.getSequenceLength(), dummyLagrangian,
+                dummyLagrangian, sequenceFeatures);
+        SequenceSolution prediction = decoder.getDecodedPrediction();
+
+        double loss = trainNext(goldSolution, prediction, goldFv);
         trainingStats.addLoss(logger, loss);
 
         if (newSequenceFeatures) {

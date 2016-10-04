@@ -2,10 +2,8 @@ package edu.cmu.cs.lti.learning.annotators;
 
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.extractor.UimaSequenceFeatureExtractor;
-import edu.cmu.cs.lti.learning.model.ClassAlphabet;
-import edu.cmu.cs.lti.learning.model.HashAlphabet;
-import edu.cmu.cs.lti.learning.model.TrainingStats;
-import edu.cmu.cs.lti.learning.train.AveragePerceptronTrainer;
+import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.learning.update.SeqLoss;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;
@@ -30,11 +28,26 @@ public abstract class AbstractCrfTrainer extends AbstractLoggingAnnotator {
 
     public static final String PARAM_CONFIGURATION_FILE = "configurationFile";
 
+    public static final String PARAM_USE_PA_UPDATE = "usePaUpdate";
+
+    public static final String PARAM_LOSS_TYPE = "lossType";
+
+    public static final String PARAM_IGNORE_UNANNOTATED_SENTENCE = "ignoreUnannotatedSentence";
+
     @ConfigurationParameter(name = PARAM_CACHE_DIRECTORY)
     private File cacheDir;
 
     @ConfigurationParameter(name = PARAM_CONFIGURATION_FILE)
     protected Configuration config;
+
+    @ConfigurationParameter(name = PARAM_USE_PA_UPDATE)
+    protected boolean usePaUpdate;
+
+    @ConfigurationParameter(name = PARAM_LOSS_TYPE)
+    private String lossType;
+
+    @ConfigurationParameter(name = PARAM_IGNORE_UNANNOTATED_SENTENCE, defaultValue = "false")
+    protected boolean ignoreUnannotatedSentence;
 
     protected HashAlphabet featureAlphabet;
 
@@ -46,9 +59,16 @@ public abstract class AbstractCrfTrainer extends AbstractLoggingAnnotator {
 
     protected UimaSequenceFeatureExtractor featureExtractor;
 
-    protected double stepSize;
+    protected static GraphWeightVector weightVector;
 
-    protected static AveragePerceptronTrainer trainer;
+    private SeqLoss seqLoss;
+
+    protected String featureSpec;
+
+    // This doesn't really change the weight descent speed, but it may affect the granularity of the weights, as long
+    // as the weight does not overflow, it will be fine.
+    private double defaultStepSize = 1;
+
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -57,12 +77,13 @@ public abstract class AbstractCrfTrainer extends AbstractLoggingAnnotator {
         int alphabetBits = config.getInt("edu.cmu.cs.lti.mention.feature.alphabet_bits", 24);
         int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
-        stepSize = config.getDouble("edu.cmu.cs.lti.perceptron.stepsize", 0.01);
 
-        File classFile = config.getFile("edu.cmu.cs.lti.mention.classes.path");
+        File classFile = new File(edu.cmu.cs.lti.utils.FileUtils.joinPaths(
+                config.get("edu.cmu.cs.lti.training.working.dir"), "mention_types.txt"));
+
         String[] classes = new String[0];
 
-        if (classFile != null) {
+        if (classFile.exists()) {
             try {
                 classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
                         .filter(p -> p.length >= 1).map(p -> p[0]).toArray(String[]::new);
@@ -76,13 +97,29 @@ public abstract class AbstractCrfTrainer extends AbstractLoggingAnnotator {
 
         classAlphabet = initClassAlphabet(classes);
 
+
         featureAlphabet = new HashAlphabet(alphabetBits, readableModel);
         trainingStats = new TrainingStats(printLossOverPreviousN);
 
         decoder = new ViterbiDecoder(featureAlphabet, classAlphabet);
 
+        parseFeatureSpec();
+
+        weightVector = new GraphWeightVector(classAlphabet, featureAlphabet, featureSpec);
+
+        seqLoss = SeqLoss.getLoss(lossType);
+
         logger.info("Initializing gold cacher with " + cacheDir.getAbsolutePath());
+
+        if (ignoreUnannotatedSentence) {
+            logger.info("The training process will ignore the unannotated sentences.");
+        } else {
+            logger.info("The training process will use all sentences.");
+        }
+
     }
+
+    protected abstract void parseFeatureSpec();
 
     protected abstract ClassAlphabet initClassAlphabet(String[] classes);
 
@@ -98,19 +135,38 @@ public abstract class AbstractCrfTrainer extends AbstractLoggingAnnotator {
                 maxCachedInstance, discardAfter, "feature_cache");
     }
 
-    public static void saveModels(File modelOutputDirectory, String modelName) throws IOException {
-        boolean directoryExist = true;
-        if (!modelOutputDirectory.exists()) {
-            if (!modelOutputDirectory.mkdirs()) {
-                directoryExist = false;
+    public double trainNext(SequenceSolution goldSolution, SequenceSolution prediction, GraphFeatureVector goldFv) {
+        double loss = seqLoss.compute(goldSolution.asIntArray(), prediction.asIntArray(),
+                classAlphabet.getNoneOfTheAboveClassIndex());
+
+        if (loss != 0) {
+            GraphFeatureVector bestDecodingFeatures = decoder.getBestDecodingFeatures();
+            GraphFeatureVector delta = goldFv.newGraphFeatureVector();
+            goldFv.diff(bestDecodingFeatures, delta);
+
+            if (usePaUpdate) {
+                double l2 = delta.getFeatureL2();
+                double tau = loss / l2;
+                updateWeights(goldFv, bestDecodingFeatures, tau);
+            } else {
+                updateWeights(goldFv, bestDecodingFeatures, defaultStepSize);
             }
         }
 
-        if (directoryExist) {
-            trainer.write(new File(modelOutputDirectory, modelName));
-        } else {
-            throw new IOException(String.format("Cannot create directory : [%s]", modelOutputDirectory.toString()));
-        }
+        return loss;
+    }
+
+
+    private void updateWeights(GraphFeatureVector goldFv, GraphFeatureVector predictedFv, double stepSize) {
+        weightVector.updateWeightsBy(goldFv, stepSize);
+        weightVector.updateWeightsBy(predictedFv, -stepSize);
+        weightVector.updateAverageWeights();
+    }
+
+
+    public static void saveModels(File modelOutputDirectory, String modelName) throws IOException {
+        edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(modelOutputDirectory);
+        weightVector.write(new File(modelOutputDirectory, modelName));
     }
 
 }

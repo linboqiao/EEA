@@ -1,11 +1,6 @@
 package edu.cmu.cs.lti.event_coref.pipeline;
 
-import edu.cmu.cs.lti.collection_reader.EreCorpusReader;
 import edu.cmu.cs.lti.utils.Configuration;
-import org.apache.uima.collection.CollectionReaderDescription;
-import org.apache.uima.fit.factory.CollectionReaderFactory;
-import org.apache.uima.resource.ResourceInitializationException;
-import org.apache.uima.resource.metadata.TypeSystemDescription;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,29 +21,20 @@ public class ChineseEventMentionPipeline {
         Configuration kbpConfig = new Configuration(argv[0]);
 
         // Now prepare the real pipeline.
-        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig, true);
+        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
         pipeline.prepare(kbpConfig);
 
 //        pipeline.tryAnnotator(kbpConfig);
+
+//        pipeline.computeStats();
 
         if (kbpConfig.getBoolean("edu.cmu.cs.lti.development", false)) {
             pipeline.crossValidation(kbpConfig);
         }
 
         if (kbpConfig.getBoolean("edu.cmu.cs.lti.test", false)) {
-            pipeline.trainTest(kbpConfig, true);
+            pipeline.trainTest(kbpConfig, false);
         }
-    }
-
-    private static CollectionReaderDescription getEreReader(TypeSystemDescription typeSystemDescription, String
-            sourceDir, String annotationDir, String ereExt, String sourceExt) throws
-            ResourceInitializationException {
-        return CollectionReaderFactory.createReaderDescription(EreCorpusReader.class, typeSystemDescription,
-                EreCorpusReader.PARAM_ERE_ANNOTATION_DIR, annotationDir,
-                EreCorpusReader.PARAM_SOURCE_TEXT_DIR, sourceDir,
-                EreCorpusReader.PARAM_ERE_ANNOTATION_EXT, ereExt,
-                EreCorpusReader.PARAM_SOURCE_EXT, sourceExt,
-                EreCorpusReader.PARAM_LANGUAGE, "zh");
     }
 }

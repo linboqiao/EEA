@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.emd.annotators;
 
 import edu.cmu.cs.lti.emd.annotators.train.TokenLevelEventMentionCrfTrainer;
+import edu.cmu.cs.lti.learning.decoding.SequenceDecoder;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
@@ -10,7 +11,6 @@ import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.SequenceSolution;
-import edu.cmu.cs.lti.learning.decoding.SequenceDecoder;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
@@ -19,7 +19,6 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -157,7 +156,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
             }
         }
 
-        DebugUtils.pause(logger);
+//        DebugUtils.pause(logger);
     }
 
     private List<Triplet<Integer, Integer, String>> convertTypeTagsToChunks(SequenceSolution solution) {

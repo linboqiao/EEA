@@ -9,33 +9,27 @@ import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.SequenceSolution;
-import edu.cmu.cs.lti.learning.train.AveragePerceptronTrainer;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
-import edu.cmu.cs.lti.model.Span;
-import edu.cmu.cs.lti.script.type.Article;
-import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,25 +39,16 @@ import java.util.Map;
  * @author Zhengzhong Liu
  */
 public class TokenLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
-    //TODO rename this class and model name.
     public static final String MODEL_NAME = "crfModel";
 
-    public static final String PARAM_USE_PA_UPDATE = "usePaUpdate";
-
-    public static final String PARAM_LOSS_TYPE = "lossType";
-
-    @ConfigurationParameter(name = PARAM_USE_PA_UPDATE)
-    private boolean usePaUpdate;
-
-    @ConfigurationParameter(name = PARAM_LOSS_TYPE)
-    private String lossType;
-
-    protected static MultiKeyDiskCacher<ArrayList<TIntObjectMap<
+    private static MultiKeyDiskCacher<ArrayList<TIntObjectMap<
             Pair<FeatureVector, HashBasedTable<Integer, Integer, FeatureVector>>>>> featureCacher;
 
-    protected static MultiKeyDiskCacher<ArrayList<Pair<GraphFeatureVector, SequenceSolution>>> goldCacher;
+    private static MultiKeyDiskCacher<ArrayList<Pair<GraphFeatureVector, SequenceSolution>>> goldCacher;
 
     private CubicLagrangian dummyLagrangian = new DummyCubicLagrangian();
+
+    public static boolean TOGGLE_CHECK_UPDATE = false;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -81,14 +66,21 @@ public class TokenLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    protected ClassAlphabet initClassAlphabet(String[] classes) {
+        return new ClassAlphabet(classes, true, true);
+    }
+
+    protected void parseFeatureSpec() {
         String sentFeatureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.sentence.spec");
         String docFeatureSpec = config.getOrElse("edu.cmu.cs.lti.features.type.lv1.doc.spec", "");
+        featureSpec = FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec);
 
         Configuration sentFeatureConfig = new FeatureSpecParser(
                 config.get("edu.cmu.cs.lti.feature.sentence.package.name")
         ).parseFeatureFunctionSpecs(sentFeatureSpec);
-
 
         Configuration docFeatureConfig = new FeatureSpecParser(
                 config.get("edu.cmu.cs.lti.feature.document.package.name")
@@ -102,24 +94,19 @@ public class TokenLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
             e.printStackTrace();
         }
 
-        trainer = new AveragePerceptronTrainer(decoder, classAlphabet, featureAlphabet,
-                FeatureUtils.joinFeatureSpec(sentFeatureSpec, docFeatureSpec), usePaUpdate, lossType);
-
         logger.info("Training with the following specification: ");
         logger.info("[Sentence Spec]" + sentFeatureSpec);
         logger.info("[Document Spec]" + docFeatureSpec);
     }
 
     @Override
-    protected ClassAlphabet initClassAlphabet(String[] classes) {
-        return new ClassAlphabet(classes, true, true);
-    }
-
-    @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        if (TOGGLE_CHECK_UPDATE) {
+            UimaConvenience.printProcessLog(aJCas, logger);
+        }
         featureExtractor.initWorkspace(aJCas);
 
-        String documentKey = JCasUtil.selectSingle(aJCas, Article.class).getArticleName();
+        String documentKey = UimaConvenience.getShortDocumentNameWithOffset(aJCas);
 
         ArrayList<TIntObjectMap<Pair<FeatureVector, HashBasedTable<Integer, Integer, FeatureVector>>>>
                 documentCacheFeatures = featureCacher.get(documentKey);
@@ -129,20 +116,28 @@ public class TokenLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
         List<Pair<GraphFeatureVector, SequenceSolution>> cachedGold = goldCacher.get(documentKey);
         ArrayList<Pair<GraphFeatureVector, SequenceSolution>> goldToCache = new ArrayList<>();
 
+        Set<String> watchingTypes = new HashSet<>();
+        watchingTypes.add("transaction_transfermoney");
+
         int sentenceId = 0;
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             featureExtractor.resetWorkspace(aJCas, sentence);
 
-            Map<StanfordCorenlpToken, String> tokenTypes = new HashMap<>();
-            List<EventMention> mentions = JCasUtil.selectCovered(aJCas, EventMention.class, sentence);
-            Map<Span, String> mergedMentions = MentionTypeUtils.mergeMentionTypes(mentions);
-            for (Map.Entry<Span, String> spanToType : mergedMentions.entrySet()) {
-                Span span = spanToType.getKey();
-                String type = spanToType.getValue();
-                for (StanfordCorenlpToken token : JCasUtil.selectCovered(aJCas, StanfordCorenlpToken.class, span
-                        .getBegin(), span.getEnd())) {
-                    tokenTypes.put(token, type);
+            List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
+
+            if (logger.isDebugEnabled()) {
+                StringBuilder sb = new StringBuilder();
+                int i = 0;
+                for (StanfordCorenlpToken token : tokens) {
+                    sb.append(i++).append(":").append(token.getCoveredText()).append(" ");
                 }
+                logger.debug(sb.toString());
+            }
+
+            Map<StanfordCorenlpToken, String> tokenTypes = MentionTypeUtils.getTokenTypes(aJCas, sentence);
+
+            if (ignoreUnannotatedSentence && tokenTypes.size() == 0) {
+                continue;
             }
 
             SequenceSolution goldSolution;
@@ -158,25 +153,41 @@ public class TokenLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
                 goldToCache.add(Pair.of(goldFv, goldSolution));
             }
 
-
-            TIntObjectMap<Pair<FeatureVector, HashBasedTable<Integer, Integer, FeatureVector>>> sentenceFeatures;
+            TIntObjectMap<Pair<FeatureVector, HashBasedTable<Integer, Integer, FeatureVector>>> cachedSentFeatures;
             if (documentCacheFeatures != null) {
-                sentenceFeatures = documentCacheFeatures.get(sentenceId);
+                cachedSentFeatures = documentCacheFeatures.get(sentenceId);
             } else {
-                sentenceFeatures = new TIntObjectHashMap<>();
+                cachedSentFeatures = new TIntObjectHashMap<>();
             }
 
-            double loss = trainer.trainNext(goldSolution, goldFv, featureExtractor, dummyLagrangian, dummyLagrangian,
-                    sentenceFeatures);
+            decoder.decode(featureExtractor, weightVector, goldSolution.getSequenceLength(), dummyLagrangian,
+                    dummyLagrangian, cachedSentFeatures);
+            SequenceSolution prediction = decoder.getDecodedPrediction();
 
-//            logger.info("Loss is " + loss);
+            boolean foundError = false;
+            if (TOGGLE_CHECK_UPDATE) {
+                foundError = checkUpdateReason(aJCas, goldSolution, prediction, watchingTypes,
+                        decoder.getBestVectorAtEachIndex(), tokens, false);
+            }
+
+            double loss = trainNext(goldSolution, prediction, goldFv);
+
+            if (TOGGLE_CHECK_UPDATE) {
+                checkUpdateReason(aJCas, goldSolution, prediction, watchingTypes,
+                        decoder.getBestVectorAtEachIndex(), tokens, true);
+            }
+
+            if (foundError) {
+                DebugUtils.pause();
+            }
 
             trainingStats.addLoss(logger, loss);
-            sentenceId++;
 
             if (documentCacheFeatures == null) {
-                featuresToCache.add(sentenceFeatures);
+                featuresToCache.add(cachedSentFeatures);
             }
+
+            sentenceId++;
         }
 
         if (documentCacheFeatures == null) {
@@ -208,6 +219,83 @@ public class TokenLevelEventMentionCrfTrainer extends AbstractCrfTrainer {
         }
 
         return new SequenceSolution(decoder.getClassAlphabet(), goldSequence);
+    }
+
+
+    private boolean checkUpdateReason(JCas aJCas, SequenceSolution goldSolution, SequenceSolution prediction,
+                                      Set<String> targetTypes, FeatureVector[] bestFvAtEachIndex,
+                                      List<StanfordCorenlpToken> tokens, boolean afterUpdate) {
+        boolean foundDifferences = false;
+        boolean precisionError = false;
+        for (int i = 0; i < prediction.getSequenceLength(); i++) {
+            int tag = prediction.getClassAt(i);
+            String predictedType = classAlphabet.getClassName(tag);
+
+            int goldTag = goldSolution.getClassAt(i);
+            String goldType = classAlphabet.getClassName(goldTag);
+
+            StanfordCorenlpToken token = tokens.get(i);
+
+            if (tag == classAlphabet.getNoneOfTheAboveClassIndex()) {
+                // Prediction say no mention.
+                if (goldTag != classAlphabet.getNoneOfTheAboveClassIndex()) {
+                    if (targetTypes.contains(goldType)) {
+//                        logger.info("Prediction miss this mention.");
+//                        logger.info(String.format("Surface: %s, Span: [%d,%d], Gold Type: [%s], Predicted: None",
+//                                token.getCoveredText(), token.getBegin(), token.getEnd(), goldType));
+//                        logger.info("Features at the current index for gold class " + goldType);
+//                        weightVector.dotProdAverDebug(bestFvAtEachIndex[i], goldType, logger);
+//
+//                        logger.info("Features at the current index for predicted class " + predictedType);
+//                        weightVector.dotProdAverDebug(bestFvAtEachIndex[i], predictedType, logger);
+//                        foundDifferences = true;
+                    }
+                }
+            } else {
+                if (goldTag == classAlphabet.getNoneOfTheAboveClassIndex()) {
+                    // Prediction say mention but gold say no.
+                    if (targetTypes.contains(predictedType)) {
+                        logger.info("Prediction invent this mention.");
+                        logger.info(String.format("Surface: %s, Span: [%d,%d], Gold Type: None, Predicted: [%s]",
+                                token.getCoveredText(), token.getBegin(), token.getEnd(), predictedType));
+                        logger.info("Features at the current index for gold class " + goldType);
+                        weightVector.dotProdAverDebug(bestFvAtEachIndex[i], goldType, logger);
+
+                        logger.info("Features at the current index for predicted class " + predictedType);
+                        weightVector.dotProdAverDebug(bestFvAtEachIndex[i], predictedType, logger);
+                        foundDifferences = true;
+                        precisionError = true;
+                    }
+                } else {
+                    if (tag != goldTag) {
+                        if (targetTypes.contains(predictedType) || targetTypes.contains(goldType)) {
+                            logger.info("Prediction get the type wrong.");
+                            logger.info(String.format("Surface: %s, Span: [%d,%d], Gold Type: [%s], Predicted: [%s]",
+                                    token.getCoveredText(), token.getBegin(), token.getEnd(), goldType, predictedType));
+                            logger.info("Features at the current index for gold class " + goldType);
+                            weightVector.dotProdAverDebug(bestFvAtEachIndex[i], goldType, logger);
+
+                            logger.info("Features at the current index for predicted class " + predictedType);
+                            weightVector.dotProdAverDebug(bestFvAtEachIndex[i], predictedType, logger);
+                            foundDifferences = true;
+                            precisionError = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (precisionError) {
+            if (afterUpdate) {
+                logger.info("Just checked updated results.");
+            } else {
+                logger.info("Just checked update reasons.");
+            }
+            logger.info("Final prediction is :");
+            logger.info(prediction.toString());
+        }
+
+        return precisionError;
     }
 
 

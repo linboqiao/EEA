@@ -61,7 +61,7 @@ public class EnglishSrlArgumentExtractor extends AbstractLoggingAnnotator {
             if (childSemanticRelations != null) {
                 for (FanseSemanticRelation childRelation : JCasUtil.select(childSemanticRelations,
                         FanseSemanticRelation.class)) {
-                    FanseToken fanseChild = (FanseToken) childRelation.getChildHead();
+                    FanseToken fanseChild = (FanseToken) childRelation.getChild().getHead();
                     StanfordCorenlpToken argumentHead = helper.getStanfordToken(fanseChild);
                     if (argumentHead != null) {
                         fanseHeadWord2Role.put(argumentHead, childRelation.getSemanticAnnotation());

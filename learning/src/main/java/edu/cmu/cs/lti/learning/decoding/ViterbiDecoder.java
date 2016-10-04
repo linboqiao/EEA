@@ -30,6 +30,8 @@ public class ViterbiDecoder extends SequenceDecoder {
 
     private GraphFeatureVector bestVector;
 
+    private FeatureVector[] bestVectorAtEachIndex;
+
     private int kBest;
 
     private CubicLagrangian dummyLagrangian = new DummyCubicLagrangian();
@@ -70,7 +72,7 @@ public class ViterbiDecoder extends SequenceDecoder {
                        CubicLagrangian u, CubicLagrangian v,
                        TIntObjectMap<Pair<FeatureVector, HashBasedTable<Integer, Integer, FeatureVector>>> featureCache,
                        boolean useAverage) {
-        solution = new SequenceSolution(classAlphabet, sequenceLength , kBest);
+        solution = new SequenceSolution(classAlphabet, sequenceLength, kBest);
 
         // Dot product function on the node (i.e. only take features depend on current class)
         BiFunction<FeatureVector, Integer, Double> nodeDotProd = useAverage ?
@@ -84,6 +86,8 @@ public class ViterbiDecoder extends SequenceDecoder {
 
         final GraphFeatureVector[] currentFeatureVectors = new GraphFeatureVector[classAlphabet.size()];
         final GraphFeatureVector[] previousColFeatureVectors = new GraphFeatureVector[classAlphabet.size()];
+
+        final FeatureVector[][] featureAtEachIndex = new FeatureVector[sequenceLength + 1][classAlphabet.size()];
 
         for (int i = 0; i < currentFeatureVectors.length; i++) {
             currentFeatureVectors[i] = newGraphFeatureVector();
@@ -108,6 +112,7 @@ public class ViterbiDecoder extends SequenceDecoder {
             if (allBaseFeatures == null) {
                 nodeFeature = newFeatureVector();
                 edgeFeatures = HashBasedTable.create();
+                // If features are not found in the cache, we extract them here.
                 extractor.extract(sequenceIndex, nodeFeature, edgeFeatures);
                 if (featureCache != null) {
                     featureCache.put(sequenceIndex, Pair.of(nodeFeature, edgeFeatures));
@@ -126,7 +131,6 @@ public class ViterbiDecoder extends SequenceDecoder {
             }
 
             // Fill up lattice score for each of class in the current column.
-            // TODO currently this creates a IllegalThreadState, some threads didn't exits.
             solution.getCurrentPossibleClassIndices().parallel().forEach(classIndex -> {
                 double lagrangianPenalty = solution.isRightLimit() ? 0 :
                         u.getSumOverJVariable(sequenceIndex, classIndex)
@@ -166,6 +170,9 @@ public class ViterbiDecoder extends SequenceDecoder {
                 currentFeatureVectors[classIndex].extend(nodeFeature, classIndex);
                 // Taking features from previous best cell.
                 currentFeatureVectors[classIndex].extend(previousColFeatureVectors[bestPrev]);
+
+                featureAtEachIndex[sequenceIndex][classIndex] = nodeFeature;
+
                 // Adding features for the edge.
                 if (edgeFeatures.contains(bestPrev, classIndex)) {
                     currentFeatureVectors[classIndex].extend(edgeFeatures.get(bestPrev, classIndex), classIndex,
@@ -173,7 +180,19 @@ public class ViterbiDecoder extends SequenceDecoder {
                 }
             });
         }
+
         solution.backTrace();
+
+        // Since we remembered the feature vector we calculated at each place, we can use the final solution to get it.
+        bestVectorAtEachIndex = new FeatureVector[solution.getSequenceLength()];
+        for (int i = 0; i < solution.getSequenceLength(); i++) {
+            int tag = solution.getClassAt(i);
+            bestVectorAtEachIndex[i] = featureAtEachIndex[i][tag];
+        }
+
+        // TODO: we only need to keep either bestVectorAtEachIndex or currentFeatureVectors, but we need to make sure
+        // the implementation is correct for both.
+
         bestVector = currentFeatureVectors[classAlphabet.getOutsideClassIndex()];
     }
 
@@ -204,6 +223,10 @@ public class ViterbiDecoder extends SequenceDecoder {
     @Override
     public GraphFeatureVector getBestDecodingFeatures() {
         return bestVector;
+    }
+
+    public FeatureVector[] getBestVectorAtEachIndex() {
+        return bestVectorAtEachIndex;
     }
 
     @Override

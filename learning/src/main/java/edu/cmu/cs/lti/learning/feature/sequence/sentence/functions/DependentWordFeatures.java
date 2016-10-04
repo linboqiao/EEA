@@ -15,7 +15,10 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -27,11 +30,16 @@ import java.util.function.Function;
  */
 public class DependentWordFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken> {
     Set<String> featureTemplates;
+    private HashSet<String> puncPos;
 
     public DependentWordFeatures(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
-        featureTemplates = new HashSet<>(Arrays.asList(featureConfig.getList(this.getClass().getSimpleName() + "" +
-                ".templates")));
+        featureTemplates = new HashSet<>(Arrays.asList(featureConfig.getList(featureConfigKey("templates"))));
+
+        puncPos = new HashSet<>();
+        puncPos.add("pu");
+        puncPos.add(".");
+        puncPos.add("\"");
     }
 
     @Override
@@ -54,28 +62,36 @@ public class DependentWordFeatures extends SequenceFeatureWithFocus<StanfordCore
     public void extract(List<StanfordCorenlpToken> sequence, int focus, TObjectDoubleMap<String> nodeFeatures,
                         Table<Pair<Integer, Integer>, String, Double> edgeFeatures) {
         if (featureTemplates.contains("ChildLemma")) {
-            addDependentFeatures(sequence, focus, nodeFeatures, Word::getLemma, "ChildLemma");
+            addDependentFeatures(sequence, focus, nodeFeatures, Word::getLemma, this::posFilter, "ChildLemma");
         }
         if (featureTemplates.contains("ChildNer")) {
-            addDependentFeatures(sequence, focus, nodeFeatures, Word::getNerTag, "ChildNer");
+            addDependentFeatures(sequence, focus, nodeFeatures, Word::getNerTag, this::posFilter, "ChildNer");
         }
         if (featureTemplates.contains("ChildPos")) {
-            addDependentFeatures(sequence, focus, nodeFeatures, Word::getPos, "ChildPos");
+            addDependentFeatures(sequence, focus, nodeFeatures, Word::getPos, this::posFilter, "ChildPos");
         }
         if (featureTemplates.contains("ChildDepType")) {
             addDependentLabelFeatures(sequence, focus, nodeFeatures, "ChildDepType");
         }
         if (featureTemplates.contains("HeadLemma")) {
-            addGovnerFeatures(sequence, focus, nodeFeatures, Word::getLemma, "HeadLemma");
+            addGovnerFeatures(sequence, focus, nodeFeatures, Word::getLemma, this::posFilter, "HeadLemma");
         }
         if (featureTemplates.contains("HeadNer")) {
-            addGovnerFeatures(sequence, focus, nodeFeatures, Word::getNerTag, "HeadNer");
+            addGovnerFeatures(sequence, focus, nodeFeatures, Word::getNerTag, this::posFilter, "HeadNer");
         }
         if (featureTemplates.contains("HeadPos")) {
-            addGovnerFeatures(sequence, focus, nodeFeatures, Word::getPos, "HeadPos");
+            addGovnerFeatures(sequence, focus, nodeFeatures, Word::getPos, this::posFilter, "HeadPos");
         }
         if (featureTemplates.contains("HeadDepType")) {
             addGovnerLabelFeatures(sequence, focus, nodeFeatures, "HeadDepType");
+        }
+    }
+
+    private boolean posFilter(Word word) {
+        if (puncPos.contains(word.getPos().toLowerCase())){
+            return false;
+        }else{
+            return true;
         }
     }
 
@@ -120,7 +136,8 @@ public class DependentWordFeatures extends SequenceFeatureWithFocus<StanfordCore
     }
 
     public void addDependentFeatures(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,
-                                     Function<Word, String> operator, String featureType) {
+                                     Function<Word, String> operator, Function<Word, Boolean> filter,
+                                     String featureType) {
         if (focus < 0 || focus > sentence.size() - 1) {
             return;
         }
@@ -133,15 +150,17 @@ public class DependentWordFeatures extends SequenceFeatureWithFocus<StanfordCore
 
         for (Dependency dep : FSCollectionFactory.create(childDependencies, Dependency.class)) {
             Word dependent = dep.getChild();
-            String featureVal = operator.apply(dependent);
-            if (featureVal != null) {
-                addToFeatures(features, String.format("%s=%s", featureType, featureVal), 1);
+            if (filter.apply(dependent)) {
+                String featureVal = operator.apply(dependent);
+                if (featureVal != null) {
+                    addToFeatures(features, String.format("%s=%s", featureType, featureVal), 1);
+                }
             }
         }
     }
 
     public void addGovnerFeatures(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,
-                                  Function<Word, String> operator, String featureType) {
+                                  Function<Word, String> operator, Function<Word, Boolean> filter, String featureType) {
         if (focus < 0 || focus > sentence.size() - 1) {
             return;
         }
@@ -154,9 +173,11 @@ public class DependentWordFeatures extends SequenceFeatureWithFocus<StanfordCore
 
         for (Dependency dep : FSCollectionFactory.create(headDependencyRelations, Dependency.class)) {
             Word gov = dep.getHead();
-            String featureVal = operator.apply(gov);
-            if (featureVal != null) {
-                addToFeatures(features, String.format("%s=%s", featureType, featureVal), 1);
+            if (filter.apply(gov)) {
+                String featureVal = operator.apply(gov);
+                if (featureVal != null) {
+                    addToFeatures(features, String.format("%s=%s", featureType, featureVal), 1);
+                }
             }
         }
     }

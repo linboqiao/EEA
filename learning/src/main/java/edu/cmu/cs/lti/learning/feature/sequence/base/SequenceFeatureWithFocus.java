@@ -2,7 +2,6 @@ package edu.cmu.cs.lti.learning.feature.sequence.base;
 
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.model.MentionKey;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.commons.lang3.tuple.Pair;
@@ -34,6 +33,11 @@ public abstract class SequenceFeatureWithFocus<T extends Annotation> {
         logger.info("Register feature extractor : " + featureName());
     }
 
+    protected String featureConfigKey(String baseKey) {
+        return this.getClass().getSimpleName() + "." + baseKey;
+    }
+
+
     public static String outsideValue = "<OUTSIDE>";
     public static String startPlaceholder = "<START>";
     public static String endPlaceholder = "<END>";
@@ -47,9 +51,8 @@ public abstract class SequenceFeatureWithFocus<T extends Annotation> {
      * @param index    The index of the token in interested relative to the sequence.
      * @return The operation result. A special outside value will be return if out of boundary.
      */
-    protected String operateWithOutsideLowerCase(List<StanfordCorenlpToken> sequence,
-                                                 Function<StanfordCorenlpToken, String> operator,
-                                                 int index) {
+    protected String operateWithOutsideLowerCase(List<T> sequence,
+                                                 Function<T, String> operator, int index) {
         if (index < -1) {
             return outsideValue;
         } else if (index > sequence.size()) {
@@ -66,7 +69,7 @@ public abstract class SequenceFeatureWithFocus<T extends Annotation> {
 
         String operatedValue = operator.apply(sequence.get(index));
 
-        return operatedValue == null ? outsideValue : operatedValue.toLowerCase();
+        return operatedValue == null ? null : operatedValue.toLowerCase();
     }
 
     /**
@@ -105,7 +108,8 @@ public abstract class SequenceFeatureWithFocus<T extends Annotation> {
 
     /**
      * The extractor function, which may be run multiple times on each of the focus.
-     *  @param sequence       The sequence of elements to extract from.
+     *
+     * @param sequence       The sequence of elements to extract from.
      * @param focus          The focus to evaluate the features.
      * @param globalFeatures The global feature vector to be filled.
      * @param knownStates    Previous states that we know.

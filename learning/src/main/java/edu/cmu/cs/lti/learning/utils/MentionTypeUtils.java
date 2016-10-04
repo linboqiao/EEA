@@ -4,8 +4,12 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Sets;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
-import edu.cmu.cs.lti.model.Span;
+import edu.cmu.cs.lti.script.type.CharacterAnnotation;
 import edu.cmu.cs.lti.script.type.EventMention;
+import edu.cmu.cs.lti.script.type.Sentence;
+import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
+import org.apache.uima.fit.util.JCasUtil;
+import org.apache.uima.jcas.JCas;
 
 import java.util.*;
 
@@ -21,25 +25,62 @@ public class MentionTypeUtils {
 
     private static Map<String, String[]> typeSplitCache = new HashMap<>();
 
-    /**
-     * The same span might be annotated as multiple types, we join them together.
-     *
-     * @param mentions All the mentions of interested.
-     * @return From the mention span to the type.
-     */
-    public static TreeMap<Span, String> mergeMentionTypes(Collection<EventMention> mentions) {
-        ArrayListMultimap<Span, String> mergedMentionTypes = ArrayListMultimap.create();
+//    /**
+//     * The same span might be annotated as multiple types, we join them together.
+//     *
+//     * @param mentions All the mentions of interested.
+//     * @return From the mention span to the type.
+//     */
+//    public static TreeMap<Span, String> mergeMentionTypes(Collection<EventMention> mentions) {
+//        ArrayListMultimap<Span, String> mergedMentionTypes = ArrayListMultimap.create();
+//        for (EventMention mention : mentions) {
+//            mergedMentionTypes.put(Span.of(mention.getBegin(), mention.getEnd()), mention.getEventType());
+//        }
+//
+//        TreeMap<Span, String> mentionWithMergedTypes = new TreeMap<>(Collections.reverseOrder());
+//
+//        for (Span span : mergedMentionTypes.keySet()) {
+//            mentionWithMergedTypes.put(span, joinMultipleTypes(mergedMentionTypes.get(span)));
+//        }
+//
+//        return mentionWithMergedTypes;
+//    }
+
+    public static Map<StanfordCorenlpToken, String> getTokenTypes(JCas aJCas, Sentence sentence) {
+        ArrayListMultimap<StanfordCorenlpToken, String> unmergedTypes = ArrayListMultimap.create();
+
+        List<EventMention> mentions = JCasUtil.selectCovered(aJCas, EventMention.class, sentence);
+
+        Map<CharacterAnnotation, Collection<StanfordCorenlpToken>> characterCovering = JCasUtil.indexCovering(aJCas,
+                CharacterAnnotation.class, StanfordCorenlpToken.class);
+
         for (EventMention mention : mentions) {
-            mergedMentionTypes.put(Span.of(mention.getBegin(), mention.getEnd()), mention.getEventType());
+            String type = mention.getEventType();
+
+            List<CharacterAnnotation> containedCharacters = JCasUtil.selectCovered(aJCas, CharacterAnnotation.class,
+                    mention);
+
+            if (containedCharacters.size() != 0) {
+                for (CharacterAnnotation containedCharacter : containedCharacters) {
+                    for (StanfordCorenlpToken token : characterCovering.get(containedCharacter)) {
+                        unmergedTypes.put(token, type);
+                    }
+                }
+            } else {
+                List<StanfordCorenlpToken> containedTokens = JCasUtil.selectCovered(aJCas, StanfordCorenlpToken.class,
+                        mention);
+                for (StanfordCorenlpToken token : containedTokens) {
+                    unmergedTypes.put(token, type);
+                }
+            }
         }
 
-        TreeMap<Span, String> mentionWithMergedTypes = new TreeMap<>(Collections.reverseOrder());
-
-        for (Span span : mergedMentionTypes.keySet()) {
-            mentionWithMergedTypes.put(span, joinMultipleTypes(mergedMentionTypes.get(span)));
+        Map<StanfordCorenlpToken, String> tokenTypes = new HashMap<>();
+        for (Map.Entry<StanfordCorenlpToken, Collection<String>> unmergedType : unmergedTypes.asMap().entrySet()) {
+            tokenTypes.put(unmergedType.getKey(), joinMultipleTypes(unmergedType.getValue()));
         }
 
-        return mentionWithMergedTypes;
+        return tokenTypes;
     }
 
     public static String joinMultipleTypes(Iterable<String> types) {
@@ -48,9 +89,9 @@ public class MentionTypeUtils {
     }
 
     public static String[] splitToMultipleTypes(String joinedType) {
-        if (typeSplitCache.containsKey(joinedType)){
+        if (typeSplitCache.containsKey(joinedType)) {
             return typeSplitCache.get(joinedType);
-        }else{
+        } else {
             String[] t = joinedType.split(TYPE_NAME_JOINER);
             typeSplitCache.put(joinedType, t);
             return t;
@@ -136,6 +177,10 @@ public class MentionTypeUtils {
         type1Parts.retainAll(type2Parts);
 
         return type1Parts.size() > 0;
+    }
+
+    public static String canonicalize(String line) {
+        return line.trim().replaceAll("\\s", "").toLowerCase().replaceAll("\\p{Punct}+", "");
     }
 
 }

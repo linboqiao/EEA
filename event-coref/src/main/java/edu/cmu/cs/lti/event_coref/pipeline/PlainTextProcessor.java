@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.event_coref.pipeline;
 
-import edu.cmu.cs.lti.annotator.StanfordCoreNlpAnnotator;
+import edu.cmu.cs.lti.annotators.StanfordCoreNlpAnnotator;
 import edu.cmu.cs.lti.annotators.FanseAnnotator;
 import edu.cmu.cs.lti.annotators.OpenNlpChunker;
 import edu.cmu.cs.lti.annotators.QuoteAnnotator;

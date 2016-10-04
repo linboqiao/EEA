@@ -38,7 +38,7 @@ public class RunOnlyPipeline {
         );
 
         // Now prepare the real pipeline.
-        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig, false);
+        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
         pipeline.prepareToProcess(kbpConfig, reader);
         pipeline.runVanilla(kbpConfig);

@@ -116,14 +116,14 @@ public class SemanticParseBasedEventMentionTupleExtractor extends AbstractEntity
 
         if (relation.endsWith(invertedSign)) {
             relation = relation.substring(0, relation.length() - invertedSign.length());
-            headToken = fsr.getChildHead();
+            headToken = fsr.getChild().getHead();
             argumentToken = fsr.getHead();
 
             //TODO Fanse parser sometimes messed up VBN and VBD, which leads to incorrect semantic parsing here
 
         } else {
             headToken = fsr.getHead();
-            argumentToken = fsr.getChildHead();
+            argumentToken = fsr.getChild().getHead();
         }
 
         Word verbPrep = null;

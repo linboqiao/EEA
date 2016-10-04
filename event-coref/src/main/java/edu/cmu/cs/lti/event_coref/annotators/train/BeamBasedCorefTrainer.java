@@ -54,7 +54,7 @@ public class BeamBasedCorefTrainer extends AbstractLoggingAnnotator {
     private boolean delayedLaso;
 
     public static final String PARAM_MERGE_MENTION = "mergeMention";
-    @ConfigurationParameter(name = PARAM_MERGE_MENTION)
+    @ConfigurationParameter(name = PARAM_MERGE_MENTION, defaultValue = "True")
     private boolean mergeMention;
 
     public static final String PARAM_USE_LASO = "useLaso";

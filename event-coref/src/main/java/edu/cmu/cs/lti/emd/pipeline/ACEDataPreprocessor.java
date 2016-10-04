@@ -38,7 +38,7 @@ public class ACEDataPreprocessor {
 
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                 AceDataCollectionReader.class, typeSystemDescription,
-                AceDataCollectionReader.PARAM_ACE_ENGLISH_DATA_PATH, paramInputDir,
+                AceDataCollectionReader.PARAM_ACE_DATA_PATH, paramInputDir,
                 AceDataCollectionReader.PARAM_GOLD_STANDARD_VIEW_NAME, goldView
         );
 //        AnalysisEngineDescription goldstandardAnnotator = AnalysisEngineFactory.createEngineDescription(

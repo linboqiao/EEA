@@ -1,8 +1,8 @@
 package edu.cmu.cs.lti.learning.train;
 
 import com.google.common.collect.HashBasedTable;
-import edu.cmu.cs.lti.learning.feature.extractor.ChainFeatureExtractor;
 import edu.cmu.cs.lti.learning.decoding.SequenceDecoder;
+import edu.cmu.cs.lti.learning.feature.extractor.ChainFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.update.SeqLoss;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
@@ -91,12 +91,6 @@ public class AveragePerceptronTrainer {
         weightVector.updateWeightsBy(goldFv, stepSize);
         weightVector.updateWeightsBy(predictedFv, -stepSize);
         weightVector.updateAverageWeights();
-
-//        logger.debug("Update gold feature vector");
-//        logger.debug(goldFv.readableNodeVector());
-//
-//        logger.debug("Update decoding feature vector");
-//        logger.debug(predictedFv.readableNodeVector());
     }
 
     public void write(File outputFile) throws FileNotFoundException {

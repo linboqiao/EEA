@@ -54,6 +54,11 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
                 double score = bestLabelScore.getRight();
                 EdgeType edgeType = bestLabelScore.getLeft();
 
+                if (Double.isNaN(score)) {
+                    logger.error("Link score is NaN : " + mentionGraphEdge.toString());
+                    throw new RuntimeException("Link score is NaN, there might be errors in weights.");
+                }
+
                 // We have a special root node at the begin, so we minus one to get the original sequence index.
                 double lagrangianPenalty = 0;
                 if (ant > 0) {
@@ -67,7 +72,7 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
                     bestEdge = Pair.of(mentionGraphEdge, edgeType);
 
 //                    logger.info(mentionGraphEdge.getFeatureVector().readableString());
-//
+
 //                    logger.info("Best edge is " + mentionGraphEdge.toString());
 //                    logger.info("Best edge type is " + edgeType);
 //                    logger.info("Best score is " + score + " sure larger than current best " + bestScore);
@@ -90,6 +95,8 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
 //                    logger.info("Discarded score is " + score);
                 }
             }
+
+
             bestFirstTree.addEdge(bestEdge.getLeft(), bestEdge.getRight());
         }
         return bestFirstTree;

@@ -74,10 +74,10 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
                     SemanticRelation relation = new SemanticRelation(aJCas);
 
                     relation.setPropbankRoleName(argRoleName);
-                    relation.setChildHead(argHead);
-                    ComponentAnnotation childSpan = new ComponentAnnotation(aJCas, frameSpan.getBegin(), frameSpan
-                            .getEnd());
-                    relation.setChildSpan(childSpan);
+                    SemanticArgument arg = new SemanticArgument(aJCas, frameSpan.getBegin(), frameSpan.getEnd());
+                    arg.setHead(argHead);
+                    relation.setChild(arg);
+                    UimaAnnotationUtils.finishAnnotation(arg, COMPONENT_ID, 0, aJCas);
                     mergedArguments.put(argHead, relation);
                 }
             }
@@ -93,11 +93,10 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
                             new SemanticRelation(aJCas);
 
                     relation.setFrameElementName(feName);
-                    relation.setChildHead(argHead);
+                    SemanticArgument arg = new SemanticArgument(aJCas, frameSpan.getBegin(), frameSpan.getEnd());
+                    arg.setHead(argHead);
+                    relation.setChild(arg);
 
-                    ComponentAnnotation childSpan = new ComponentAnnotation(aJCas, frameSpan.getBegin(), frameSpan
-                            .getEnd());
-                    relation.setChildSpan(childSpan);
                     mergedArguments.put(semaforArg.getKey(), relation);
                 }
                 token.setFrameName(frameNetName);
@@ -107,19 +106,19 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
             for (Map.Entry<StanfordCorenlpToken, SemanticRelation> argument : mergedArguments.entrySet()) {
                 SemanticRelation relation = argument.getValue();
                 UimaAnnotationUtils.finishTop(relation, COMPONENT_ID, 0, aJCas);
-                UimaAnnotationUtils.finishAnnotation(relation.getChildSpan(), COMPONENT_ID, 0, aJCas);
+                UimaAnnotationUtils.finishAnnotation(relation.getChild(), COMPONENT_ID, 0, aJCas);
 
                 argumentByChild.put(argument.getKey(), relation);
             }
             token.setChildSemanticRelations(FSCollectionFactory.createFSList(aJCas, mergedArguments.values()));
         }
 
-        for (Map.Entry<StanfordCorenlpToken, Collection<SemanticRelation>> headArguments : argumentByChild.asMap()
-                .entrySet()) {
-            StanfordCorenlpToken childToken = headArguments.getKey();
-
-            childToken.setHeadSemanticRelations(FSCollectionFactory.createFSList(aJCas, headArguments.getValue()));
-        }
+//        for (Map.Entry<StanfordCorenlpToken, Collection<SemanticRelation>> headArguments : argumentByChild.asMap()
+//                .entrySet()) {
+//            StanfordCorenlpToken childToken = headArguments.getKey();
+//
+//            childToken.setHeadSemanticRelations(FSCollectionFactory.createFSList(aJCas, headArguments.getValue()));
+//        }
     }
 
     private Map<StanfordCorenlpToken, Pair<String, Map<StanfordCorenlpToken, Pair<String, Span>>>>
@@ -222,11 +221,7 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
     }
 
     private Pair<StanfordCorenlpToken, Span> findFanseSpan(FanseSemanticRelation childRelation) {
-        FanseToken fanseChild = (FanseToken) childRelation.getChildHead();
-        if (fanseChild == null) {
-            // For backward compatibility.
-            fanseChild = (FanseToken) childRelation.getChild();
-        }
+        FanseToken fanseChild = (FanseToken) childRelation.getChild().getHead();
 
         Set<String> lightPosSet = new HashSet<>();
         lightPosSet.add("IN");

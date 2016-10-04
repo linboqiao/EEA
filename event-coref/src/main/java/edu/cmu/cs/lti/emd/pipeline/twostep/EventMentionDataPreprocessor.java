@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.emd.pipeline.twostep;
 
-import edu.cmu.cs.lti.annotator.StanfordCoreNlpAnnotator;
+import edu.cmu.cs.lti.annotators.StanfordCoreNlpAnnotator;
 import edu.cmu.cs.lti.annotators.FanseAnnotator;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;

@@ -123,18 +123,19 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         if (semanticRelationsFS != null) {
             for (SemanticRelation semanticRelation : FSCollectionFactory.create(semanticRelationsFS, SemanticRelation
                     .class)) {
-                Word childHead = semanticRelation.getChildHead();
+                SemanticArgument argument = semanticRelation.getChild();
+
+                Word childHead = argument.getHead();
                 String headText = childHead.getCoveredText().replaceAll("\\s", " ");
 
-                ComponentAnnotation childSpan = semanticRelation.getChildSpan();
-                String spanText = childSpan.getCoveredText().replaceAll("\\s", " ");
+                String spanText = argument.getCoveredText().replaceAll("\\s", " ");
 
                 String pbName = handleNull(semanticRelation.getPropbankRoleName());
                 String vnName = handleNull(semanticRelation.getFrameElementName());
 
                 argumentComponents.add(String.format("%d-%d:%s,%d-%d:%s,%s,%s",
                         childHead.getBegin(), childHead.getEnd(), headText,
-                        childSpan.getBegin(), childSpan.getEnd(), spanText,
+                        argument.getBegin(), argument.getEnd(), spanText,
                         pbName, vnName
                 ));
             }

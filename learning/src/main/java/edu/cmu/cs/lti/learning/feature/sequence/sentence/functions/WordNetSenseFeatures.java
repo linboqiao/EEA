@@ -44,7 +44,7 @@ public class WordNetSenseFeatures extends SequenceFeatureWithFocus<StanfordCoren
 
         featureTemplates = new ArrayList<>();
 
-        for (String templateName : featureConfig.getList(this.getClass().getSimpleName() + ".templates")) {
+        for (String templateName : featureConfig.getList(featureConfigKey("templates"))) {
             switch (templateName) {
                 case "JobTitle":
                     featureTemplates.add(this::modifyingJobTitle);

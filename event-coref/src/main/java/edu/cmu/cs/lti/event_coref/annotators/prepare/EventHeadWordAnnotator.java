@@ -5,8 +5,8 @@ import edu.cmu.cs.lti.script.type.CharacterAnnotation;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -25,21 +25,26 @@ public class EventHeadWordAnnotator extends AbstractLoggingAnnotator {
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         String language = JCasUtil.selectSingle(aJCas, Article.class).getLanguage();
 
-        UimaConvenience.printProcessLog(aJCas, logger, true);
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
 
             StanfordCorenlpToken headWord = UimaNlpUtils.findHeadFromStanfordAnnotation(mention);
 
             if (language.equals("zh")) {
-                CharacterAnnotation headCharacter = UimaNlpUtils.findHeadCharacterFromZparAnnotatoin(mention);
+                CharacterAnnotation headCharacter = UimaNlpUtils.findHeadCharacterFromZparAnnotation(mention);
                 if (headWord == null) {
-                    List<StanfordCorenlpToken> headCharacterWords = JCasUtil.selectCovered
+                    List<StanfordCorenlpToken> headCharacterWords = JCasUtil.selectCovering
                             (StanfordCorenlpToken.class, headCharacter);
                     if (headCharacterWords.size() > 0) {
                         headWord = headCharacterWords.get(0);
                     }
                 }
                 mention.setHeadCharacter(headCharacter);
+            }
+
+            if (headWord == null) {
+                logger.debug(String.format("Cannot find head word for annotation [%s]-[%d:%d].",
+                        mention.getCoveredText(), mention.getBegin(), mention.getEnd()));
+                DebugUtils.pause(logger);
             }
 
             mention.setHeadWord(headWord);

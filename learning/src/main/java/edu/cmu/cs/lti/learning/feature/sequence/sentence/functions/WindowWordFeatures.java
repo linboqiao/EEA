@@ -7,14 +7,19 @@ import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.StanfordEntityMention;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.ResourceUtils;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
@@ -28,27 +33,48 @@ import java.util.stream.IntStream;
 public class WindowWordFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken> {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private  int posWindowSize;
-    private  int lemmaWindowSize;
-    private  int nerWindowSize;
-    private  boolean useBigram;
+    private int posWindowSize;
+    private int lemmaWindowSize;
+    private int nerWindowSize;
+    private int lemmaPosWindowSize;
+    private int posBigramWindow;
+    private int lemmaBigramWindow;
 
-    private  boolean useCoarsePos;
-    private  boolean useFinePos;
+    private boolean useCoarsePos;
+    private boolean useFinePos;
+
+    private boolean useHeadCilin;
+
+    private Map<String, String> word2CilinId;
+
+    private Set<String> puncPos;
 
     public WindowWordFeatures(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
 
-        posWindowSize = getIntFromConfig(featureConfig, "PosWindowSize", -1);
-        lemmaWindowSize = getIntFromConfig(featureConfig, "LemmaWindowSize", -1);
-        nerWindowSize = getIntFromConfig(featureConfig, "NerWindowSize", -1);
-        useBigram = getBoolFromConfig(featureConfig, "Bigram", false);
+        posWindowSize = getIntFromConfig(featureConfig, "PosWindow", -1);
+        lemmaWindowSize = getIntFromConfig(featureConfig, "LemmaWindow", -1);
+        lemmaPosWindowSize = getIntFromConfig(featureConfig, "LemmaPosWindow", -1);
+        nerWindowSize = getIntFromConfig(featureConfig, "NerWindow", -1);
+        posBigramWindow = getIntFromConfig(featureConfig, "PosBigramWindow", -1);
+        lemmaBigramWindow = getIntFromConfig(featureConfig, "LemmaBigramWindow", -1);
         useCoarsePos = getBoolFromConfig(featureConfig, "Coarse", true);
         useFinePos = getBoolFromConfig(featureConfig, "Fine", true);
+        useHeadCilin = getBoolFromConfig(featureConfig, "HeadCiLin", false);
+
+        if (useHeadCilin) {
+            word2CilinId = ResourceUtils.readCilin(new File(generalConfig.get("edu.cmu.cs.lti.resource.dir"),
+                    generalConfig.get("edu.cmu.cs.lti.synonym.cilin")));
+        }
+
+        puncPos = new HashSet<>();
+        puncPos.add("pu");
+        puncPos.add(".");
+        puncPos.add("\"");
     }
 
     private int getIntFromConfig(Configuration config, String paramName, int defaultVal) {
-        return config.getInt(this.getClass().getSimpleName() + "." + paramName, defaultVal);
+        return config.getInt(featureConfigKey(paramName), defaultVal);
     }
 
     private boolean getBoolFromConfig(Configuration config, String paramName, boolean defaultVal) {
@@ -76,37 +102,97 @@ public class WindowWordFeatures extends SequenceFeatureWithFocus<StanfordCorenlp
                         Table<org.apache.commons.lang3.tuple.Pair<Integer, Integer>, String, Double> edgeFeatures) {
         if (posWindowSize >= 0) {
             if (useFinePos) {
-                addWindowFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getPos, "Pos", posWindowSize);
+                addOffsetFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getPos,
+                        this::surroundingPunctFilter, "Pos", posWindowSize);
+                addWindowFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getPos,
+                        this::surroundingPunctFilter, "Pos", posWindowSize, false);
             }
 
             if (useCoarsePos) {
-                addWindowFeatures(sequence, focus, nodeFeatures, this::getCoarsePOS, "CoarsePos", posWindowSize);
-            }
-
-//            // POS conjoined with previous state, we are conservative about window size here.
-//            addWindowFeatures(sequence, focus, featuresNeedForState, StanfordCorenlpToken::getPos, "Pos", 0);
-            if (useBigram) {
-                if (useFinePos) {
-                    addNgramFeatureWithOffsetRange(sequence, focus, -posWindowSize, posWindowSize, "Pos",
-                            StanfordCorenlpToken::getPos, nodeFeatures, 2);
-                }
-
-                if (useCoarsePos) {
-                    addNgramFeatureWithOffsetRange(sequence, focus, -posWindowSize, posWindowSize, "CoarsePos",
-                            this::getCoarsePOS, nodeFeatures, 2);
-                }
+                addOffsetFeatures(sequence, focus, nodeFeatures, this::getCoarsePOS, this::surroundingPunctFilter,
+                        "CoarsePos", posWindowSize);
+                addWindowFeatures(sequence, focus, nodeFeatures, this::getCoarsePOS, this::surroundingPunctFilter,
+                        "CoarsePos", posWindowSize, false);
             }
         }
+
+        if (posBigramWindow > 0) {
+            if (useFinePos) {
+                addNgramFeatureWithOffsetRange(sequence, focus, -posWindowSize, posWindowSize, "Pos",
+                        StanfordCorenlpToken::getPos, nodeFeatures, 2);
+            }
+
+            if (useCoarsePos) {
+                addNgramFeatureWithOffsetRange(sequence, focus, -posWindowSize, posWindowSize, "CoarsePos",
+                        this::getCoarsePOS, nodeFeatures, 2);
+            }
+        }
+
+        if (lemmaBigramWindow > 0) {
+            addNgramFeatureWithOffsetRange(sequence, focus, -lemmaBigramWindow, lemmaBigramWindow, "Lemma_",
+                    StanfordCorenlpToken::getLemma, nodeFeatures, 2);
+        }
+
         if (lemmaWindowSize >= 0) {
-            addWindowFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getLemma, "Lemma", lemmaWindowSize);
-            if (useBigram) {
-                addNgramFeatureWithOffsetRange(sequence, focus, -lemmaWindowSize, lemmaWindowSize, "Lemma",
-                        StanfordCorenlpToken::getLemma, nodeFeatures, 2);
+            addOffsetFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getLemma,
+                    this::surroundingPunctFilter, "Lemma", lemmaWindowSize);
+//            addWindowFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getLemma,
+//                    this::surroundingPunctFilter, "Lemma", lemmaWindowSize, true);
+            addWindowFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getLemma,
+                    this::surroundingPunctFilter, "Lemma", lemmaWindowSize, false);
+        }
+
+        if (nerWindowSize >= 0) {
+            addOffsetFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getNerTag,
+                    this::indexFilter, "Ner", nerWindowSize);
+            addWindowFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getNerTag, this::indexFilter,
+                    "Ner", nerWindowSize, false);
+        }
+
+        if (lemmaPosWindowSize >= 0) {
+            if (useFinePos) {
+                addOffsetFeatures(sequence, focus, nodeFeatures, this::getLemmaAndPos, this::surroundingPunctFilter,
+                        "LemmaPos", lemmaPosWindowSize);
+//                addWindowFeatures(sequence, focus, nodeFeatures, this::getLemmaAndPos, this::surroundingPunctFilter,
+//                        "LemmaPos", lemmaPosWindowSize, true);
+                addWindowFeatures(sequence, focus, nodeFeatures, this::getLemmaAndPos, this::surroundingPunctFilter,
+                        "LemmaPos", lemmaPosWindowSize, false);
+            }
+            if (useCoarsePos) {
+                addOffsetFeatures(sequence, focus, nodeFeatures, this::getLemmaAndCoarsePos,
+                        this::surroundingPunctFilter, "LemmaPos", lemmaPosWindowSize);
+//                addWindowFeatures(sequence, focus, nodeFeatures, this::getLemmaAndCoarsePos,
+//                        this::surroundingPunctFilter, "LemmaPos", lemmaPosWindowSize, true);
+                addWindowFeatures(sequence, focus, nodeFeatures, this::getLemmaAndCoarsePos,
+                        this::surroundingPunctFilter, "LemmaPos", lemmaPosWindowSize, false);
             }
         }
-        if (nerWindowSize >= 0) {
-            addWindowFeatures(sequence, focus, nodeFeatures, StanfordCorenlpToken::getNerTag, "Ner", nerWindowSize);
+
+        if (useHeadCilin) {
+            if (focus > 0 && focus < sequence.size()) {
+                String lemma = sequence.get(focus).getLemma().toLowerCase();
+                if (word2CilinId.containsKey(lemma)) {
+                    String entryId = word2CilinId.get(lemma);
+                    addToFeatures(nodeFeatures, FeatureUtils.formatFeatureName("CilinEntryId", entryId), 1);
+                }
+            }
         }
+    }
+
+    private boolean indexFilter(List<StanfordCorenlpToken> tokens, int index) {
+        return index >= 0 && index < tokens.size();
+    }
+
+    private boolean surroundingPunctFilter(List<StanfordCorenlpToken> tokens, int index) {
+        return indexFilter(tokens, index) && !puncPos.contains(tokens.get(index).getPos().toLowerCase());
+    }
+
+    private String getLemmaAndPos(StanfordCorenlpToken token) {
+        return token.getLemma() + "_" + getCoarsePOS(token);
+    }
+
+    private String getLemmaAndCoarsePos(StanfordCorenlpToken token) {
+        return token.getLemma() + "_" + getCoarsePOS(token);
     }
 
     private String getCoarsePOS(StanfordCorenlpToken token) {
@@ -120,46 +206,53 @@ public class WindowWordFeatures extends SequenceFeatureWithFocus<StanfordCorenlp
 
     }
 
-    public void addWindowFeatures(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,
-                                  Function<StanfordCorenlpToken, String> operator, String featureType, int windowSize) {
-        putWithoutOutside(features, computeWordFeature(sentence, featureType, operator, focus, 0));
+    private void addOffsetFeatures(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,
+                                   Function<StanfordCorenlpToken, String> operator,
+                                   BiFunction<List<StanfordCorenlpToken>, Integer, Boolean> filter,
+                                   String featureType, int windowSize) {
+        String currentFeature = computeWordOffsetFeature(sentence, featureType, operator, focus, 0);
+        if (currentFeature != null) {
+            addToFeatures(features, currentFeature, 1);
+        }
 
-        addPositionFeatureWithOffsetRange(sentence, focus, -windowSize, -1, featureType, operator, features);
-        addPositionFeatureWithOffsetRange(sentence, focus, 1, windowSize, featureType, operator, features);
-
-        addWindowFeatureWithOffsetRange(sentence, focus, 1, windowSize, featureType, operator, features);
-//        addWindowFeatureWithOffsetRange(sentence, focus, 1, windowSize, featureType, operator, features);
+        addOffsetFeatureWithRange(sentence, focus, -windowSize, -1, featureType, operator, filter, features);
+        addOffsetFeatureWithRange(sentence, focus, 1, windowSize, featureType, operator, filter, features);
     }
 
-    public void addPositionFeatureWithOffsetRange(List<StanfordCorenlpToken> sentence, int focus, int begin, int end,
-                                                  String prefix, Function<StanfordCorenlpToken, String> operator,
-                                                  TObjectDoubleMap<String> features) {
-        IntStream.rangeClosed(begin, end)
-                .mapToObj(offset -> computeWordFeature(sentence, prefix, operator, focus, offset))
-                .forEach(featureTypeAndName -> putWithoutOutside(features, featureTypeAndName));
-    }
+    private void addWindowFeatures(List<StanfordCorenlpToken> sentence, int focus, TObjectDoubleMap<String> features,
+                                   Function<StanfordCorenlpToken, String> operator,
+                                   BiFunction<List<StanfordCorenlpToken>, Integer, Boolean> filter,
+                                   String featureType, int maxWindowSize, boolean withDirection) {
+        IntStream.rangeClosed(1, maxWindowSize).forEach(windowSize -> {
+            String leftPrefix = withDirection ? featureType + "_left" : featureType;
+            String rightPrefix = withDirection ? featureType + "_right" : featureType;
 
-    public void addWindowFeatureWithOffsetRange(List<StanfordCorenlpToken> sentence, int focus,
-                                                int limitStart, int limitEnd, String prefix,
-                                                Function<StanfordCorenlpToken, String> operator,
-                                                TObjectDoubleMap<String> features) {
-        IntStream.rangeClosed(limitStart, limitEnd).forEach(windowLimit -> {
-            IntStream.rangeClosed(1, windowLimit)
-                    .mapToObj(offset -> computeWindowWordFeature(sentence, prefix, operator, windowLimit, focus,
+            IntStream.rangeClosed(1, windowSize).filter(offset -> filter.apply(sentence, focus + offset))
+                    .mapToObj(offset -> computeWindowWordFeature(sentence, rightPrefix, operator, windowSize, focus,
                             offset))
-                    .forEach(featureTypeAndName -> putWithoutOutside(features, featureTypeAndName));
-            IntStream.rangeClosed(-windowLimit, -1)
-                    .mapToObj(offset -> computeWindowWordFeature(sentence, prefix, operator, windowLimit, focus,
+                    .filter(f -> f != null).forEach(f -> addToFeatures(features, f, 1));
+
+            IntStream.rangeClosed(-windowSize, -1).filter(offset -> filter.apply(sentence, focus + offset))
+                    .mapToObj(offset -> computeWindowWordFeature(sentence, leftPrefix, operator, windowSize, focus,
                             offset))
-                    .forEach(featureTypeAndName -> putWithoutOutside(features, featureTypeAndName));
+                    .filter(f -> f != null).forEach(f -> addToFeatures(features, f, 1));
         });
     }
 
-    public void addNgramFeatureWithOffsetRange(List<StanfordCorenlpToken> sentence, int focus, int begin, int end,
-                                               String prefix, Function<StanfordCorenlpToken, String> operator,
-                                               TObjectDoubleMap<String> features, int n) {
-        int left = Math.min(focus + begin, -1);
-        int right = Math.max(focus + end, sentence.size());
+    private void addOffsetFeatureWithRange(List<StanfordCorenlpToken> sentence, int focus, int begin, int end,
+                                           String prefix, Function<StanfordCorenlpToken, String> operator,
+                                           BiFunction<List<StanfordCorenlpToken>, Integer, Boolean> filter,
+                                           TObjectDoubleMap<String> features) {
+        IntStream.rangeClosed(begin, end).filter(offset -> filter.apply(sentence, focus + offset))
+                .mapToObj(offset -> computeWordOffsetFeature(sentence, prefix, operator, focus, offset))
+                .filter(f -> f != null).forEach(f -> addToFeatures(features, f, 1));
+    }
+
+    private void addNgramFeatureWithOffsetRange(List<StanfordCorenlpToken> sentence, int focus, int begin, int end,
+                                                String prefix, Function<StanfordCorenlpToken, String> operator,
+                                                TObjectDoubleMap<String> features, int n) {
+        int left = Math.max(focus + begin, 0);
+        int right = Math.min(focus + end, sentence.size());
 
         int[] runners = new int[n];
         for (int i = 0; i < n; i++) {
@@ -169,44 +262,56 @@ public class WindowWordFeatures extends SequenceFeatureWithFocus<StanfordCorenlp
             }
         }
 
-        String ngramPrefix = "window_" + n + "gram" + prefix;
+        String ngramPrefix = "window_" + n + "gram_" + prefix;
 
         while (true) {
             StringBuilder sb = new StringBuilder();
-            String ngramSep = "";
+            // This line add the begin offset information to the N-Gram. For example, a bigram start from -1, means
+            // the previous word and current word; a bigram start from 0 means the current word and next word.
+            sb.append("left_offset_").append(runners[0] - focus);
             for (int i = 0; i < runners.length; i++) {
-                sb.append(ngramSep);
-                ngramSep = "_";
+                sb.append("_");
+
                 // Operate with outside will ensure we get a feature value. However, we do not allow outside here, this
                 // function will simply create <outside> for tokens without NER.
                 String val = operateWithOutsideLowerCase(sentence, operator, runners[i]);
+
                 sb.append(val);
-                runners[i]++;
+
                 if (runners[i] > right) {
                     return;
                 }
+                runners[i]++;
             }
+//            logger.info("Adding feature " + sb.toString());
             addToFeatures(features, FeatureUtils.formatFeatureName(ngramPrefix, sb.toString()), 1);
         }
     }
 
-    public void putWithoutOutside(TObjectDoubleMap<String> features, Pair<String, String> featureTypeAndName) {
-        if (!featureTypeAndName.getValue1().equals(outsideValue)) {
-            addToFeatures(features, FeatureUtils.formatFeatureName(featureTypeAndName), 1);
-        }
-    }
-
-    public Pair<String, String> computeWordFeature(List<StanfordCorenlpToken> sentence, String
-            prefix, Function<StanfordCorenlpToken, String> operator, int focus, int offset) {
+    private String computeWordOffsetFeature(List<StanfordCorenlpToken> sentence, String prefix,
+                                            Function<StanfordCorenlpToken, String> operator,
+                                            int focus, int offset) {
         // NOTE all word features are lowercased.
-        return Pair.with(String.format("%s_offset=%d", prefix, offset), operateWithOutsideLowerCase(sentence, operator,
-                focus + offset));
+        String value = operateWithOutsideLowerCase(sentence, operator, focus + offset);
+        if (value != null) {
+            return FeatureUtils.formatFeatureName(String.format("%s_offset=%d", prefix, offset), value);
+        } else {
+            return null;
+        }
+//
+//        return Pair.with(String.format("%s_offset=%d", prefix, offset), operateWithOutsideLowerCase(sentence,
+// operator,
+//                focus + offset));
     }
 
-    public Pair<String, String> computeWindowWordFeature(List<StanfordCorenlpToken> sentence, String
+    private String computeWindowWordFeature(List<StanfordCorenlpToken> sentence, String
             prefix, Function<StanfordCorenlpToken, String> operator, int windowSize, int focus, int offset) {
         // NOTE all word features are lowercased.
-        return Pair.with(String.format("%s_window=%d", prefix, windowSize), operateWithOutsideLowerCase(sentence,
-                operator, focus + offset));
+        String featureValue = operateWithOutsideLowerCase(sentence, operator, focus + offset);
+        if (featureValue != null) {
+            return FeatureUtils.formatFeatureName(String.format("%s_window=%d", prefix, windowSize), featureValue);
+        } else {
+            return null;
+        }
     }
 }

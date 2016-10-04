@@ -61,7 +61,7 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
     File modelDirectory;
 
     public static final String PARAM_MERGE_MENTION = "mergeMention";
-    @ConfigurationParameter(name = PARAM_MERGE_MENTION)
+    @ConfigurationParameter(name = PARAM_MERGE_MENTION, defaultValue = "True")
     private boolean mergeMention;
 
     public static final String PARAM_BEAM_SIZE = "beamSize";
@@ -93,10 +93,6 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        UimaConvenience.printProcessLog(aJCas);
-//        DebugUtils.pause();
-
-        // TODO make sure the mapping is correct.
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
 
         corefExtractor.initWorkspace(aJCas);

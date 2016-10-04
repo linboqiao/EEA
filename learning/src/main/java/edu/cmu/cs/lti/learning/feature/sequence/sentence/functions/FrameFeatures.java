@@ -42,7 +42,7 @@ public class FrameFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken
         super(generalConfig, featureConfig);
 
         featureTemplates = new ArrayList<>();
-        for (String templateName : featureConfig.getList(this.getClass().getSimpleName() + ".templates")) {
+        for (String templateName : featureConfig.getList(featureConfigKey("templates"))) {
             switch (templateName) {
                 case "FrameArgumentLemma":
                     featureTemplates.add(this::frameArgumentLemma);

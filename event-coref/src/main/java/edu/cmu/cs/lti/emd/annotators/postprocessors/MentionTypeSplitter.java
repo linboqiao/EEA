@@ -17,7 +17,8 @@ import java.util.List;
 
 
 /**
- * During processing all double taggings are merged, we need to separate them.
+ * During processing all double taggings are merged, we need to separate them. This do not handle coreference so
+ * coreference should be done after it, or handle the splitting itself.
  *
  * @author Zhengzhong Liu
  */

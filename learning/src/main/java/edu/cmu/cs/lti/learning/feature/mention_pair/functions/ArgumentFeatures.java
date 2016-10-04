@@ -86,8 +86,8 @@ public class ArgumentFeatures extends AbstractMentionPairFeatures {
                 .getPropbankRoleName());
 
 
-        ComponentAnnotation argument1 = firstLink.getChildSpan();
-        ComponentAnnotation argument2 = secondLink.getChildSpan();
+        ComponentAnnotation argument1 = firstLink.getChild();
+        ComponentAnnotation argument2 = secondLink.getChild();
 
         String argumentText1 = argument1.getCoveredText();
         String argumentText2 = argument2.getCoveredText();

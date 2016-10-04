@@ -26,18 +26,25 @@ import java.util.Map;
 public class BrownClusterFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken> {
     private int[] brownClusterPrefix;
 
-//    private ArrayListMultimap<String, String> brownClusters;
-
     private Map<String, String> brownClusters;
 
-    private String brownClusteringPath;
+    private String name = "default";
 
     public BrownClusterFeatures(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
-        brownClusteringPath = edu.cmu.cs.lti.utils.FileUtils.joinPaths(
+
+        String brownClusteringPath = edu.cmu.cs.lti.utils.FileUtils.joinPaths(
                 generalConfig.get("edu.cmu.cs.lti.resource.dir"),
-                generalConfig.get("edu.cmu.cs.lti.brown_cluster.path"));
+                featureConfig.get(featureConfigKey("path")));
+
+        String dataName = featureConfig.get(featureConfigKey("name"));
+
+        if (dataName != null) {
+            name = dataName;
+        }
+
         brownClusters = new HashMap<>();
+
         try {
             for (String line : FileUtils.readLines(new File(brownClusteringPath))) {
                 String[] parts = line.split("\t");
@@ -64,16 +71,18 @@ public class BrownClusterFeatures extends SequenceFeatureWithFocus<StanfordCoren
                         Table<Pair<Integer, Integer>, String, Double> edgeFeatures) {
         String lemma = operateWithOutsideLowerCase(sequence, StanfordCorenlpToken::getLemma, focus);
 
-        if (brownClusters.containsKey(lemma)) {
-            String fullClusterId = brownClusters.get(lemma);
-            for (int prefixLength : brownClusterPrefix) {
-                if (prefixLength <= fullClusterId.length()) {
-                    String brownClusterLabel = fullClusterId.substring(0, prefixLength);
-                    addToFeatures(nodeFeatures, String.format("HeadLemmaBrown@%d=%s", prefixLength,
-                            brownClusterLabel), 1);
+        if (lemma != null) {
+            if (brownClusters.containsKey(lemma)) {
+                String fullClusterId = brownClusters.get(lemma);
+                for (int prefixLength : brownClusterPrefix) {
+                    if (prefixLength <= fullClusterId.length()) {
+                        String brownClusterLabel = fullClusterId.substring(0, prefixLength);
+                        addToFeatures(nodeFeatures, String.format("HeadLemmaBrown@%d=%s_from_%s", prefixLength,
+                                brownClusterLabel, name), 1);
+                    }
                 }
+                addToFeatures(nodeFeatures, String.format("HeadLemmaBrownFull=%s_from_%s", fullClusterId, name), 1);
             }
-            addToFeatures(nodeFeatures, String.format("HeadLemmaBrownFull=%s", fullClusterId), 1);
         }
     }
 

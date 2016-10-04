@@ -15,9 +15,7 @@ import java.io.File;
  *
  * @author Zhengzhong Liu
  */
-public class KBP2015EventTaskPipeline {
-
-
+public class KbpEnglishEventMentionPipeline {
     public static void main(String argv[]) throws Exception {
         if (argv.length < 1) {
             System.err.println("Please provide one argument for the settings file.");
@@ -29,16 +27,16 @@ public class KBP2015EventTaskPipeline {
         Configuration kbpConfig = new Configuration(argv[0]);
 
         // Now prepare the real pipeline.
-        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig, true);
+        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
         pipeline.prepare(kbpConfig);
 
-        if (kbpConfig.getBoolean("edu.cmu.cs.lti.development", false)) {
-            pipeline.crossValidation(kbpConfig);
+        if (kbpConfig.getBoolean("edu.cmu.cs.lti.test", false)) {
+            pipeline.trainTest(kbpConfig, false);
         }
 
-        if (kbpConfig.getBoolean("edu.cmu.cs.lti.test", false)) {
-            pipeline.trainTest(kbpConfig, true);
+        if (kbpConfig.getBoolean("edu.cmu.cs.lti.development", false)) {
+            pipeline.crossValidation(kbpConfig);
         }
 
 //        for (int i = 1; i < 23; i++) {

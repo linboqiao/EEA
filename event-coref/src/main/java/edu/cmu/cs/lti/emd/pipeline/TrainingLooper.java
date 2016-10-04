@@ -34,17 +34,15 @@ public abstract class TrainingLooper extends LoopPipeline {
 //    }
 
     public TrainingLooper(String modelOutputBasename, CollectionReaderDescription reader, AnalysisEngineDescription
-            trainer, int maxIter) throws ResourceInitializationException, ClassNotFoundException, NoSuchMethodException,
+            trainer, int maxIter, int numIterToSave)
+            throws ResourceInitializationException, ClassNotFoundException, NoSuchMethodException,
             InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
         super(reader, trainer);
         this.maxIteration = maxIter;
         this.numIteration = 0;
+        this.numberIterToSave = numIterToSave;
         this.modelBasename = modelOutputBasename;
         logger.info("Trainer started, maximum iteration is " + maxIteration);
-    }
-
-    public void setNumberIterToSave(int numIterToSave){
-        this.numberIterToSave = numIterToSave;
     }
 
     @Override

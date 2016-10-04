@@ -27,7 +27,7 @@ import java.util.function.BiConsumer;
  *
  * @author Zhengzhong Liu
  */
-public class FanseFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken>  {
+public class FanseFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken> {
     private TokenAlignmentHelper align;
 
     private List<BiConsumer<TObjectDoubleMap<String>, FanseToken>> headTemplates;
@@ -48,7 +48,7 @@ public class FanseFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken
         headTemplates = new ArrayList<>();
         argumentTemplates = new ArrayList<>();
 
-        for (String templateName : featureConfig.getList(this.getClass().getSimpleName() + ".templates")) {
+        for (String templateName : featureConfig.getList(featureConfigKey("templates"))) {
             switch (templateName) {
                 case "FanseHeadSense":
                     headTemplates.add(this::fanseHeadSenseTemplate);
@@ -140,15 +140,16 @@ public class FanseFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken
 
     private void fanseArgumentLemma(TObjectDoubleMap<String> features, FanseSemanticRelation relation) {
         addToFeatures(features,
-                FeatureUtils.formatFeatureName("FanseArgumentLemma", relation.getChildHead().getLemma()), 1);
+                FeatureUtils.formatFeatureName("FanseArgumentLemma", relation.getChild().getHead().getLemma()), 1);
     }
 
     private void fanseArgumentNer(TObjectDoubleMap<String> features, FanseSemanticRelation relation) {
-        addToFeatures(features, FeatureUtils.formatFeatureName("FanseArgumentNer", relation.getChildHead().getNerTag()), 1);
+        addToFeatures(features, FeatureUtils.formatFeatureName("FanseArgumentNer",
+                relation.getChild().getHead().getNerTag()), 1);
     }
 
     private void fanseArgumentWordNetSense(TObjectDoubleMap<String> features, FanseSemanticRelation relation) {
-        Word child = relation.getChildHead();
+        Word child = relation.getChild().getHead();
         if (fanseToken2WordnetType.containsKey(child)) {
             addToFeatures(features, FeatureUtils.formatFeatureName("FanseArgumentWordNetSense",
                     fanseToken2WordnetType.get(child)), 1);

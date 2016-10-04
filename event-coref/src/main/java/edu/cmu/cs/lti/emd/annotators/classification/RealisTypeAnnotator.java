@@ -44,13 +44,13 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
     public static final String PARAM_CONFIG_PATH = "configPath";
 
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
-    File modelDirectory;
+    private File modelDirectory;
 
     @ConfigurationParameter(name = PARAM_CONFIG_PATH)
-    File configPath;
+    private File configPath;
 
     @ConfigurationParameter(name = PARAM_FEATURE_PACKAGE_NAME)
-    String featurePackageName;
+    private String featurePackageName;
 
     private static SentenceFeatureExtractor extractor;
 
@@ -65,6 +65,10 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
+        loadModel();
+    }
+
+    private void loadModel() throws ResourceInitializationException {
         logger.info("Loading models ...");
         try {
             model = new WekaModel(modelDirectory);
@@ -101,6 +105,10 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        annotateViaModel(aJCas);
+    }
+
+    private void annotateViaModel(JCas aJCas) {
         extractor.initWorkspace(aJCas);
         alignmentHelper.loadWord2Stanford(aJCas, goldTokenComponentId);
 

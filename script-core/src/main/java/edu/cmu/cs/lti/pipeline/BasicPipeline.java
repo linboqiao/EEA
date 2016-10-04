@@ -129,8 +129,6 @@ public class BasicPipeline {
      * @throws UIMAException
      */
     public void run() throws IOException, UIMAException {
-//        logger.info(readerDescription.toString());
-//        logger.info(aggregateAnalysisEngineDesc.toString());
         SimplePipeline.runPipeline(readerDescription, aggregateAnalysisEngineDesc);
     }
 

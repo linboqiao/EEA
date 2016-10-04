@@ -57,20 +57,21 @@ public class DiscriminativeUpdater {
     // TODO temporary debug clause;
     public static boolean debugger = true;
 
-    private boolean useCorefUpdateConstraint = false;
+//    private boolean useCorefUpdateConstraint = false;
 
     private int corefUpdateStrategy;
 
     private int numCorefUpdates = 0;
 
     public DiscriminativeUpdater(boolean updateMention, boolean updateCoref, boolean usePaUpdate, String lossType,
-                                 double aggressiveness) {
+                                 double aggressiveness, int constraintType) {
         allWeights = new HashMap<>();
         allDelta = new HashMap<>();
         allLoss = new TObjectDoubleHashMap<>();
         classAlphabets = new HashMap<>();
         featureAlphabets = new HashMap<>();
         labelLosser = SeqLoss.getLoss(lossType);
+        this.corefUpdateStrategy = constraintType;
 //        trainingStats = new HashMap<>();
 
         if (!(updateMention || updateCoref)) {
@@ -83,39 +84,31 @@ public class DiscriminativeUpdater {
         this.updateCoref = updateCoref;
 
         this.aggressiveness = aggressiveness;
-        usePAI = true;
+        if (aggressiveness > 0) {
+            usePAI = true;
+            logger.info("Agressive parameter is set as " + aggressiveness);
+        }
+
+        if (constraintType != 0){
+            logger.info("Coreferenc update constraint is set to " + constraintType);
+        }
     }
 
     public DiscriminativeUpdater(boolean updateMention, boolean updateCoref, boolean usePaUpdate, String lossType) {
-        allWeights = new HashMap<>();
-        allDelta = new HashMap<>();
-        allLoss = new TObjectDoubleHashMap<>();
-        classAlphabets = new HashMap<>();
-        featureAlphabets = new HashMap<>();
-        labelLosser = SeqLoss.getLoss(lossType);
-//        trainingStats = new HashMap<>();
-
-        if (!(updateMention || updateCoref)) {
-            throw new IllegalArgumentException("Cannot use a updater without updating anything.");
-        }
-
-        usePa = usePaUpdate;
-
-        this.updateMention = updateMention;
-        this.updateCoref = updateCoref;
+        this(updateMention, updateCoref, usePaUpdate, lossType, 0, 0);
     }
 
-    public void useCorefUpdateConstraint(int strategy) {
-        useCorefUpdateConstraint = true;
-        corefUpdateStrategy = strategy;
-
-        if (strategy != 0 && strategy != 1 && strategy != 2) {
-            throw new IllegalArgumentException("Unknown coreference constraint strategy!");
-        }
-
-        logger.info("Updater started with coreference constraint of strategy " + strategy);
-        DebugUtils.pause(logger);
-    }
+//    public void useCorefUpdateConstraint(int strategy) {
+//        useCorefUpdateConstraint = true;
+//        corefUpdateStrategy = strategy;
+//
+//        if (strategy != 0 && strategy != 1 && strategy != 2) {
+//            throw new IllegalArgumentException("Unknown coreference constraint strategy!");
+//        }
+//
+//        logger.info("Updater started with coreference constraint of strategy " + strategy);
+//        DebugUtils.pause(logger);
+//    }
 
     public void addWeightVector(String name, GraphWeightVector weightVector) {
         allWeights.put(name, weightVector);
@@ -195,19 +188,17 @@ public class DiscriminativeUpdater {
 
         // Compute delta on coreferecence.
         if (updateCoref) {
-            if (useCorefUpdateConstraint) {
-                if (!allowCorefUpdate(bestDecoding, bestGold)) {
-                    if (debugger) {
+            if (!allowCorefUpdate(bestDecoding, bestGold)) {
+                if (debugger) {
 //                        logger.debug("Do not update because mention types criteria is not met.");
 //                        logger.debug(bestDecoding.showNodes());
 //                        logger.debug(bestGold.showNodes());
-                    }
-                    return;
                 }
+                return;
+            }
 
-                if (typeLoss != 0) {
-                    return;
-                }
+            if (typeLoss != 0) {
+                return;
             }
 
             addLoss(COREF_MODEL_NAME, corefLoss);
@@ -253,10 +244,12 @@ public class DiscriminativeUpdater {
         List<MentionKey> bestGold = bestGoldState.getNodeResults();
         switch (corefUpdateStrategy) {
             case 0:
-                return updateWithFullHistoryMentionCorrect(bestDecoding, bestGold);
+                return true;
             case 1:
-                return updateWithFullHistoryTypeCorrect(bestDecoding, bestGold);
+                return updateWithFullHistoryMentionCorrect(bestDecoding, bestGold);
             case 2:
+                return updateWithFullHistoryTypeCorrect(bestDecoding, bestGold);
+            case 3:
                 return updateWithFullHistoryNonInvention(bestDecoding, bestGold);
             default:
                 throw new IllegalArgumentException("Unknown coreference update strategy: " + corefUpdateStrategy);

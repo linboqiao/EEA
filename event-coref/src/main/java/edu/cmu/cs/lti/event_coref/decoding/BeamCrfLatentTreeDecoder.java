@@ -61,18 +61,17 @@ public class BeamCrfLatentTreeDecoder {
     private final FeatureVector dummyFv;
 
     private String lossType;
-    private final boolean useLaSo;
 
     private boolean updateRealMentions;
 
     public BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
                                     GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
                                     SentenceFeatureExtractor mentionExtractor, DiscriminativeUpdater updater,
-                                    String lossType, int beamSize, boolean useLaSo)
+                                    String lossType, int beamSize)
             throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
         this(mentionWeights, realisModel, corefWeights, realisExtractor, mentionExtractor,
-                lossType, beamSize, useLaSo, true);
+                lossType, beamSize, true);
         this.updater = updater;
         corefTrainingStats = new TrainingStats(5, "coref");
         typeTrainingStats = new TrainingStats(5, "type");
@@ -82,18 +81,18 @@ public class BeamCrfLatentTreeDecoder {
 
     public BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
                                     GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
-                                    SentenceFeatureExtractor mentionExtractor, int beamSize, boolean useLaSo)
+                                    SentenceFeatureExtractor mentionExtractor, int beamSize)
             throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
         this(mentionWeights, realisModel, corefWeights, realisExtractor, mentionExtractor,
-                null, beamSize, useLaSo, false);
+                null, beamSize, false);
         logger.info("Starting the Beam Decoder with joint testing.");
     }
 
     private BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
                                      GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
                                      SentenceFeatureExtractor mentionExtractor, String lossType, int beamSize,
-                                     boolean useLaSo, boolean isTraining)
+                                     boolean isTraining)
             throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
         this.lossType = lossType;
@@ -109,7 +108,6 @@ public class BeamCrfLatentTreeDecoder {
 
         this.isTraining = isTraining;
         this.beamSize = beamSize;
-        this.useLaSo = useLaSo;
     }
 
     /**
@@ -346,9 +344,7 @@ public class BeamCrfLatentTreeDecoder {
 
                     goldAgenda.updateStates();
 
-                    if (useLaSo) {
-                        updater.recordLaSOUpdate(decodingAgenda, goldAgenda);
-                    }
+                    updater.recordLaSOUpdate(decodingAgenda, goldAgenda);
                 }
                 curr.increment();
             } // Finish iterate tokens in a sentence.

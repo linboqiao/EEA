@@ -62,6 +62,8 @@ public abstract class SequenceDecoder {
 
     public abstract GraphFeatureVector getBestDecodingFeatures();
 
+    public abstract FeatureVector[] getBestVectorAtEachIndex();
+
     public abstract GraphFeatureVector getSolutionFeatures(ChainFeatureExtractor extractor, SequenceSolution
             solution);
 }

@@ -2,7 +2,6 @@ package edu.cmu.cs.lti.event_coref.annotators.train;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
-import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BestFirstLatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.decoding.LatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
@@ -17,8 +16,8 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;
-import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.lang3.tuple.Pair;
@@ -112,6 +111,8 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+//        UimaConvenience.printProcessLog(aJCas, logger);
+
         List<EventMention> allMentions = MentionUtils.clearDuplicates(
                 new ArrayList<>(JCasUtil.select(aJCas, EventMention.class))
         );
@@ -220,38 +221,35 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         GraphFeatureVector delta = latentTree.getDelta(predictedTree, classAlphabet, featureAlphabet);
 
         double loss = predictedTree.getLoss(latentTree);
-//        double l2 = getFeatureL2(delta);
+        double l2Sqaure = delta.getFeatureSquare();
 
-        double l2Sqaure= delta.getFeatureSquare();
+        if (l2Sqaure != 0) {
+            double tau = loss / l2Sqaure;
+            weights.updateWeightsBy(delta, tau);
+            weights.updateAverageWeights();
+        }
+//        else{
+//            logger.error("Predicted tree is: ");
+//            logger.error(predictedTree.toString());
+//            logger.error("Predicted tree features: ");
+//            logger.error(predictedTree.getAllFeatures(classAlphabet, featureAlphabet).readableNodeVector());
+//
+//            logger.error("Latent tree is: ");
+//            logger.error(latentTree.toString());
+//            logger.error("Latent tree features: ");
+//            logger.error(latentTree.getAllFeatures(classAlphabet, featureAlphabet).readableNodeVector());
+//            logger.error("Delta feature is: ");
+//            logger.error(delta.readableNodeVector());
+//            throw new RuntimeException("L2 is 0, cannot perform update.");
+//        }
 
-        double tau = loss / l2Sqaure;
+//        logger.debug(String.format("Updating with step %.2f, loss is %.2f, l2 square is %.2f", tau, loss, l2Sqaure));
 
-        logger.debug("Updating with step " + tau);
 //        logger.info("Delta is ");
 //        logger.info(delta.readableNodeVector());
 
-        weights.updateWeightsBy(delta, tau);
-        weights.updateAverageWeights();
 
         return loss;
-    }
-
-    /**
-     * Compute the L2 norm of the feature vector.
-     *
-     * @param typedFeatures A vector that store features with each type separated.
-     * @return The L2 norm of the feature vector.
-     */
-    public double getFeatureL2(GraphFeatureVector typedFeatures) {
-        double l2Sq = 0;
-
-        // We can consider this operation by flatten the whole feature into a long vector and compute its L2 norm.
-        for (TIntObjectIterator<FeatureVector> iter = typedFeatures.nodeFvIter(); iter.hasNext(); ) {
-            iter.advance();
-            FeatureVector fv = iter.value();
-            l2Sq += fv.dotProd(fv);
-        }
-        return Math.sqrt(l2Sq);
     }
 
     public static void saveModels(File modelOutputDirectory) throws IOException {

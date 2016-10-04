@@ -4,7 +4,6 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Table;
-import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
@@ -21,6 +20,7 @@ import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.io.FileUtils;
@@ -62,9 +62,9 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_REALIS_MODEL_DIRECTORY)
     private File realisModelDirectory;
 
-    public static final String PARAM_ADD_COREFERNCE_CONSTRAINT = "corefTrainingConstraint";
-    @ConfigurationParameter(name = PARAM_ADD_COREFERNCE_CONSTRAINT, defaultValue = "false")
-    private boolean addCorefTrainingConstraint;
+//    public static final String PARAM_ADD_COREFERNCE_CONSTRAINT = "corefTrainingConstraint";
+//    @ConfigurationParameter(name = PARAM_ADD_COREFERNCE_CONSTRAINT, defaultValue = "false")
+//    private boolean addCorefTrainingConstraint;
 
     public static final String PARAM_STRATEGY_TYPE = "strategyType";
     @ConfigurationParameter(name = PARAM_STRATEGY_TYPE, defaultValue = "0")
@@ -81,10 +81,6 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
     public static final String PARAM_BEAM_SIZE = "beamSize";
     @ConfigurationParameter(name = PARAM_BEAM_SIZE)
     private int beamSize;
-
-    public static final String PARAM_USE_LASO = "useLaso";
-    @ConfigurationParameter(name = PARAM_USE_LASO)
-    private boolean useLaSO;
 
     public static final String PARAM_CACHE_DIR = "cacheDir";
     @ConfigurationParameter(name = PARAM_CACHE_DIR)
@@ -116,13 +112,7 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         logger.info("Preparing the Delayed LaSO Joint Trainer...");
         super.initialize(context);
 
-        updater = new DiscriminativeUpdater(true, true, true, mentionLossType);
-        if (addCorefTrainingConstraint) {
-            updater.useCorefUpdateConstraint(strategyType);
-            logger.info("We are gonna train with constraint strategy " + strategyType);
-        } else {
-            logger.info("We are not gonna train with coreference constraint.");
-        }
+        updater = new DiscriminativeUpdater(true, true, true, mentionLossType, 0, strategyType);
 
         // Doing warm start.
         if (warmStartModelDir != null && warmStartModelDir.exists()) {
@@ -152,7 +142,7 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         try {
             decoder = new BeamCrfLatentTreeDecoder(updater.getWeightVector(TYPE_MODEL_NAME), realisModel,
                     updater.getWeightVector(COREF_MODEL_NAME), realisExtractor, crfExtractor,
-                    updater, mentionLossType, beamSize, useLaSO);
+                    updater, mentionLossType, beamSize);
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException
                 | InstantiationException e) {
             e.printStackTrace();
@@ -354,10 +344,11 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
         String sentFeatureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.sentence.spec");
         String docFeatureSpec = config.getOrElse("edu.cmu.cs.lti.features.type.lv1.doc.spec", "");
-        File classFile = config.getFile("edu.cmu.cs.lti.mention.classes.path");
+        File classFile = new File(edu.cmu.cs.lti.utils.FileUtils.joinPaths(
+                config.get("edu.cmu.cs.lti.training.working.dir"), "mention_types.txt"));
 
         String[] classes;
-        if (classFile != null) {
+        if (classFile.exists()) {
             try {
                 classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
                         .filter(p -> p.length >= 1).map(p -> p[0]).toArray(String[]::new);
