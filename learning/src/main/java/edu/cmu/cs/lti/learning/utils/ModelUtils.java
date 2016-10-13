@@ -3,8 +3,6 @@ package edu.cmu.cs.lti.learning.utils;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
 
-import java.io.File;
-
 /**
  * Created with IntelliJ IDEA.
  * Date: 10/3/16
@@ -13,9 +11,26 @@ import java.io.File;
  * @author Zhengzhong Liu
  */
 public class ModelUtils {
-    public static File getModelPath(String base, Configuration config) {
-        return FileUtils.joinPathsAsFile(base,
-                config.get("edu.cmu.cs.lti.model.experiment.name"), config.get("edu.cmu.cs.lti.model.type"),
-                config.get("edu.cmu.cs.lti.model.test.choice"));
+    public static final String finalModelSuffix = "all";
+
+    public static String getTestModelFile(String base, Configuration config) {
+        return getTestModelFile(base, config, finalModelSuffix);
+    }
+
+    public static String getTestModelFile(String modelDir, Configuration config, String suffix) {
+        String modelChoice = config.get("edu.cmu.cs.lti.model.test.choice");
+        String modelName = modelChoice == null ? suffix : suffix + "_" + modelChoice;
+        return FileUtils.joinPaths(modelDir, config.get("edu.cmu.cs.lti.model.experiment.name"),
+                config.get("edu.cmu.cs.lti.model.type"), modelName);
+    }
+
+    public static String getTrainModelPath(String modelDir, Configuration config, String suffix) {
+        return getTrainModelPath(modelDir, config, suffix, null);
+    }
+
+    public static String getTrainModelPath(String modelDir, Configuration config, String suffix, String modelChoice) {
+        String modelName = modelChoice == null ? suffix : suffix + "_" + modelChoice;
+        return FileUtils.joinPaths(modelDir, config.get("edu.cmu.cs.lti.model.experiment.name"),
+                config.get("edu.cmu.cs.lti.model.type"), modelName);
     }
 }

@@ -1,14 +1,10 @@
 package edu.cmu.cs.lti.event_coref.pipeline;
 
-import edu.cmu.cs.lti.annotators.StanfordCoreNlpAnnotator;
-import edu.cmu.cs.lti.annotators.FanseAnnotator;
-import edu.cmu.cs.lti.annotators.OpenNlpChunker;
-import edu.cmu.cs.lti.annotators.QuoteAnnotator;
-import edu.cmu.cs.lti.annotators.WordNetBasedEntityAnnotator;
+import edu.cmu.cs.lti.annotators.*;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
+import edu.cmu.cs.lti.emd.annotators.CrfMentionTypeAnnotator;
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.classification.RealisTypeAnnotator;
-import edu.cmu.cs.lti.emd.annotators.CrfMentionTypeAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.EventCorefAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.ArgumentMerger;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EventHeadWordAnnotator;
@@ -248,9 +244,7 @@ public class PlainTextProcessor {
                     AnalysisEngineDescription realisAnnotator = AnalysisEngineFactory.createEngineDescription(
                             RealisTypeAnnotator.class, typeSystemDescription,
                             RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            RealisTypeAnnotator.PARAM_CONFIG_PATH, taskConfig.getConfigFile(),
-                            RealisTypeAnnotator.PARAM_FEATURE_PACKAGE_NAME,
-                            taskConfig.get("edu.cmu.cs.lti.feature.sentence.package.name")
+                            RealisTypeAnnotator.PARAM_CONFIG_PATH, taskConfig.getConfigFile()
                     );
                     return new AnalysisEngineDescription[]{realisAnnotator};
                 }
@@ -352,8 +346,7 @@ public class PlainTextProcessor {
                                     StanfordCoreNlpAnnotator.class, typeSystemDescription,
                                     StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language
                             );
-                        }
-                        else if (name.equals("semafor")) {
+                        } else if (name.equals("semafor")) {
                             processor = AnalysisEngineFactory.createEngineDescription(
                                     SemaforAnnotator.class, typeSystemDescription,
                                     SemaforAnnotator.SEMAFOR_MODEL_PATH, semaforModelDirectory);

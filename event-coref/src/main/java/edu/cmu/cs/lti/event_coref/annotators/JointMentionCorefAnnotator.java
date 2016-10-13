@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
-import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
@@ -19,6 +18,7 @@ import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.DebugUtils;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
@@ -55,19 +55,19 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
 
     public static final String PARAM_MODEL_DIRECTORY = "jointModeLDirectory";
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
-    File jointModelDir;
+    private File jointModelDir;
 
     public static final String PARAM_REALIS_MODEL_DIRECTORY = "realisModelDirectory";
     @ConfigurationParameter(name = PARAM_REALIS_MODEL_DIRECTORY)
-    File realisModelDirectory;
+    private File realisModelDirectory;
 
     public static final String PARAM_BEAM_SIZE = "beamSize";
     @ConfigurationParameter(name = PARAM_BEAM_SIZE)
-    int beamSize;
+    private int beamSize;
 
     public static final String PARAM_TWO_LAYER = "twoLayer";
-    @ConfigurationParameter(name= PARAM_TWO_LAYER)
-    boolean useTwoLayer;
+    @ConfigurationParameter(name = PARAM_TWO_LAYER)
+    private boolean useTwoLayer;
 
     public static final String PARAM_USE_LASO = "useLaso";
     @ConfigurationParameter(name = PARAM_USE_LASO)
@@ -236,8 +236,6 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
         String featureSpec;
         FeatureAlphabet corefFeatureAlphabet;
         ClassAlphabet corefClassAlphabet;
-
-        boolean useBinaryFeatures = config.getBoolean("edu.cmu.cs.lti.coref.binaryFeature", false);
 
         try {
             corefWeights = SerializationUtils.deserialize(new FileInputStream(new File(jointModelDir,

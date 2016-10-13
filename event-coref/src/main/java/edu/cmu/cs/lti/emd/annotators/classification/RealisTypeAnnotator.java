@@ -15,6 +15,7 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.apache.commons.lang3.tuple.Pair;
@@ -39,8 +40,6 @@ import java.lang.reflect.InvocationTargetException;
 public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
     public static final String PARAM_MODEL_DIRECTORY = "modelDirectory";
 
-    public static final String PARAM_FEATURE_PACKAGE_NAME = "featurePakcageName";
-
     public static final String PARAM_CONFIG_PATH = "configPath";
 
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
@@ -48,9 +47,6 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
 
     @ConfigurationParameter(name = PARAM_CONFIG_PATH)
     private File configPath;
-
-    @ConfigurationParameter(name = PARAM_FEATURE_PACKAGE_NAME)
-    private String featurePackageName;
 
     private static SentenceFeatureExtractor extractor;
 
@@ -85,7 +81,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
 
         String featureSpec = config.get("edu.cmu.cs.lti.features.realis.spec");
 
-        FeatureSpecParser parser = new FeatureSpecParser(featurePackageName);
+        FeatureSpecParser parser = new FeatureSpecParser(config.get("edu.cmu.cs.lti.feature.sentence.package.name"));
         Configuration realisSpec = parser.parseFeatureFunctionSpecs(featureSpec);
 
         // Currently no document level realis features.
@@ -115,6 +111,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
         FeatureAlphabet alphabet = model.getAlphabet();
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
+            logger.info(sentence.getCoveredText());
             extractor.resetWorkspace(aJCas, sentence);
 
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sentence)) {
@@ -123,6 +120,8 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
                 FeatureVector mentionFeatures = new RealValueHashFeatureVector(alphabet);
                 int head = extractor.getElementIndex(UimaNlpUtils.findHeadFromRange(aJCas, mention.getBegin(),
                         mention.getEnd()));
+
+                // If the head is null, this will quietly produce the first label, which is bad.
                 extractor.extract(head, mentionFeatures, dummy);
 
                 for (FeatureVector.FeatureIterator iter = mentionFeatures.featureIterator(); iter.hasNext(); ) {
@@ -138,6 +137,8 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
                     e.printStackTrace();
                 }
             }
+
+            DebugUtils.pause();
         }
     }
 }

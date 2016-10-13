@@ -147,8 +147,6 @@ public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
         FeatureAlphabet corefFeatureAlphabet;
         ClassAlphabet corefClassAlphabet;
 
-        boolean useBinaryFeatures = config.getBoolean("edu.cmu.cs.lti.coref.binaryFeature", false);
-
         try {
             corefWeights = SerializationUtils.deserialize(new FileInputStream(new File(corefModelDir,
                     PaLatentTreeTrainer.MODEL_NAME)));

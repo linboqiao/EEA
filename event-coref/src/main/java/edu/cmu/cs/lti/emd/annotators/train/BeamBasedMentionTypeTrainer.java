@@ -46,6 +46,10 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_CONFIGURATION_FILE)
     private Configuration config;
 
+    public static final String PARAM_TYPE_FILE_PATH = "typeFilePath";
+    @ConfigurationParameter(name = PARAM_TYPE_FILE_PATH)
+    private File classFile;
+
     public static final String PARAM_DELAYED_LASO = "delayedLaso";
     @ConfigurationParameter(name = PARAM_DELAYED_LASO)
     private boolean delayedLaso;
@@ -65,10 +69,6 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
     public static final String PARAM_USE_LASO = "useLaso";
     @ConfigurationParameter(name = PARAM_USE_LASO)
     private boolean useLaSO;
-
-//    public static final String PARAM_WARM_START_MENTION_MODEL = "pretrainedMentionModelDirectory";
-//    @ConfigurationParameter(name = PARAM_WARM_START_MENTION_MODEL, mandatory = false)
-//    private File warmStartMentionModel;
 
     public static final String PARAM_AGGRESSIVE_PARAMETER = "aggressiveParameter";
     @ConfigurationParameter(name = PARAM_AGGRESSIVE_PARAMETER, defaultValue = "0")
@@ -123,7 +123,7 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
         ).parseFeatureFunctionSpecs(docFeatureSpec);
 
         return new SentenceFeatureExtractor(updater.getWeightVector(ModelConstants.TYPE_MODEL_NAME)
-                .getFeatureAlphabet(), config, sentFeatureConfig, docFeatureConfig, false /**use state feature?**/);
+                .getFeatureAlphabet(), config, sentFeatureConfig, docFeatureConfig, false /*use state feature?*/);
     }
 
     private GraphWeightVector prepareCrfWeights() throws ResourceInitializationException {
@@ -133,8 +133,6 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
         String sentFeatureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.sentence.spec");
         String docFeatureSpec = config.get("edu.cmu.cs.lti.features.type.beam.doc.spec");
-        File classFile = new File(edu.cmu.cs.lti.utils.FileUtils.joinPaths(
-                config.get("edu.cmu.cs.lti.training.working.dir"), "mention_types.txt"));
 
         String[] classes;
         if (classFile.exists()) {
@@ -146,7 +144,7 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
                 throw new ResourceInitializationException(e);
             }
         } else {
-            throw new ResourceInitializationException(new Throwable("No classes provided for training"));
+            throw new ResourceInitializationException(new Exception("No classes provided for training"));
         }
 
         ClassAlphabet classAlphabet = new ClassAlphabet(classes, true, true);
@@ -205,16 +203,6 @@ public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
             }
         }
     }
-
-//    private GraphWeightVector usePretrainedCrfWeights() throws ResourceInitializationException {
-//        GraphWeightVector weightVector;
-//        try {
-//            weightVector = SerializationUtils.deserialize(new FileInputStream((warmStartMentionModel)));
-//        } catch (FileNotFoundException e) {
-//            throw new ResourceInitializationException(e);
-//        }
-//        return weightVector;
-//    }
 
     public static void saveModels(File modelOutputDirectory) throws IOException {
         edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(modelOutputDirectory);

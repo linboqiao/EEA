@@ -131,8 +131,8 @@ public class MultiModelMentionTypeAnnotator extends AbstractLoggingAnnotator {
         for (int i = 0; i < configPaths.length; i++) {
             try {
                 Configuration config = new Configuration(configPaths[i]);
-                File modelDirectory = ModelUtils.getModelPath(mainModelDirectory, config);
-                Model model = loadModel(modelDirectory, config);
+                String modelDirectory = ModelUtils.getTestModelFile(mainModelDirectory, config);
+                Model model = loadModel(new File(modelDirectory), config);
                 models.put(model.modelName, model);
             } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
                     InvocationTargetException | IllegalAccessException | IOException e) {

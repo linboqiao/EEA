@@ -79,12 +79,17 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
 
             for (EventMention mention : mentions) {
                 FeatureVector rawFeatures = new RealValueHashFeatureVector(alphabet);
-                int head = extractor.getElementIndex(getHead(aJCas, mention.getBegin(), mention.getEnd()));
+                StanfordCorenlpToken mentionHead = UimaNlpUtils.findHeadFromRange(aJCas, mention.getBegin(),
+                        mention.getEnd());
+                int head = extractor.getElementIndex(mentionHead);
                 extractor.extract(head, rawFeatures, dummy);
                 classAlphabet.addClass(mention.getRealisType());
                 TIntDoubleMap indexedFeatures = new TIntDoubleHashMap();
 
-//                logger.info("Extracting features for " + mention.getCoveredText());
+                if (mentionHead == null || head == -1) {
+                    logger.info("Will not be able to find features for mention " + mention.getCoveredText() +
+                            ", since the mention head is not found.");
+                }
 
                 for (FeatureVector.FeatureIterator iter = rawFeatures.featureIterator(); iter.hasNext(); ) {
                     iter.next();
@@ -114,10 +119,10 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
     public static void getFeatures(
             CollectionReaderDescription reader, TypeSystemDescription typeSystemDescription,
             List<Pair<TIntDoubleMap, String>> features, FeatureAlphabet alphabet, ClassAlphabet classAlphabet,
-            Configuration kbpConfig) throws UIMAException, IOException, ClassNotFoundException,
+            Configuration config) throws UIMAException, IOException, ClassNotFoundException,
             NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         // Prepare feature functions.
-        setupFeatureExtractor(features, alphabet, classAlphabet, kbpConfig);
+        setupFeatureExtractor(features, alphabet, classAlphabet, config);
         SimplePipeline.runPipeline(reader, AnalysisEngineFactory.createEngineDescription(RealisFeatureExtractor
                 .class, typeSystemDescription));
     }

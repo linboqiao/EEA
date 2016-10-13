@@ -15,7 +15,6 @@ import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.FileUtils;
 import edu.stanford.nlp.util.StringUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -136,14 +135,12 @@ public class SubmissionPipeline {
                             AllActualRealisAnnotator.class
                     );
                 } else {
-                    File modelDir = ModelUtils.getModelPath(mainModelDir, config);
+                    String modelDir = ModelUtils.getTestModelFile(mainModelDir, config);
 
                     realisAnnotator = AnalysisEngineFactory.createEngineDescription(
                             RealisTypeAnnotator.class, typeSystemDescription,
                             RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            RealisTypeAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
-                            RealisTypeAnnotator.PARAM_FEATURE_PACKAGE_NAME,
-                            config.get("edu.cmu.cs.lti.feature.sentence.package.name")
+                            RealisTypeAnnotator.PARAM_CONFIG_PATH, config.getConfigFile()
                     );
                 }
                 return new AnalysisEngineDescription[]{realisAnnotator};
@@ -164,7 +161,7 @@ public class SubmissionPipeline {
 
             @Override
             public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                File modelDir = ModelUtils.getModelPath(mainModelDir, modelConfig);
+                String modelDir = ModelUtils.getTestModelFile(mainModelDir, modelConfig);
 
                 AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
                         EventCorefAnnotator.class, typeSystemDescription,
@@ -224,9 +221,9 @@ public class SubmissionPipeline {
         }).run();
     }
 
-    private void runAll(String mainOutputDir, List<String> inputDirs,
-                        String[] typeConfigs, String selectedTypeFile, Configuration realisModelConfig,
-                        Configuration corefModelConfig, String typeMergeStrategy, String systemName)
+    private void runAll(String mainOutputDir, List<String> inputDirs, String[] typeConfigs, String selectedTypeFile,
+                        Configuration realisModelConfig, Configuration corefModelConfig, String typeMergeStrategy,
+                        String systemName)
             throws UIMAException, SAXException, CpeDescriptorException, IOException {
         CollectionReaderDescription[] inputReaders = new CollectionReaderDescription[inputDirs.size()];
         for (int i = 0; i < inputDirs.size(); i++) {
@@ -267,7 +264,7 @@ public class SubmissionPipeline {
         String configDir = "settings/nugget/models";
 
         String[] typeConfigs = StringUtils.split(argv[4], ",").stream()
-                .map(p -> FileUtils.joinPaths(configDir, p + ".properties")).toArray(String[]::new);
+                .map(p -> loadModelConfig(configDir, p)).toArray(String[]::new);
 
         Configuration corefConfig = loadModelConfig(configDir, argv[5]);
 

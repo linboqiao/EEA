@@ -77,8 +77,10 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         final JCas goldStandard = JCasUtil.getView(aJCas, goldStandardViewName, false);
+
         for (String targetViewName : targetViewNames) {
             JCas targetView = JCasUtil.getView(aJCas, targetViewName, false);
+
 
             Map<EventMention, EventMention> from2toMentionMap = mergeTypes ?
                     copyMentionsWithMerge(goldStandard, targetView) : copyMentions(goldStandard, targetView);
@@ -90,7 +92,7 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
     }
 
     private Map<EventMention, EventMention> copyMentions(JCas fromView, JCas toView) {
-        // Delete the mentions first.
+        // Delete the mentions from the target view first.
         for (EventMention mention : UimaConvenience.getAnnotationList(toView, EventMention.class)) {
             mention.removeFromIndexes();
         }
@@ -103,6 +105,7 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
                 from2toMentionMap.put(goldMention, copiedMention);
             }
         }
+
         return from2toMentionMap;
     }
 

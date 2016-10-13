@@ -34,8 +34,13 @@ public abstract class AbstractCrfTrainer extends AbstractLoggingAnnotator {
 
     public static final String PARAM_IGNORE_UNANNOTATED_SENTENCE = "ignoreUnannotatedSentence";
 
+    public static final String PARAM_CLASS_FILE = "classTypeFile";
+
     @ConfigurationParameter(name = PARAM_CACHE_DIRECTORY)
     private File cacheDir;
+
+    @ConfigurationParameter(name = PARAM_CLASS_FILE)
+    private File classFile;
 
     @ConfigurationParameter(name = PARAM_CONFIGURATION_FILE)
     protected Configuration config;
@@ -78,11 +83,9 @@ public abstract class AbstractCrfTrainer extends AbstractLoggingAnnotator {
         int printLossOverPreviousN = config.getInt("edu.cmu.cs.lti.avergelossN", 50);
         boolean readableModel = config.getBoolean("edu.cmu.cs.lti.mention.readableModel", false);
 
-        File classFile = new File(edu.cmu.cs.lti.utils.FileUtils.joinPaths(
-                config.get("edu.cmu.cs.lti.training.working.dir"), "mention_types.txt"));
-
         String[] classes = new String[0];
 
+        logger.info(classFile.getPath());
         if (classFile.exists()) {
             try {
                 classes = FileUtils.readLines(classFile).stream().map(l -> l.split("\t"))
