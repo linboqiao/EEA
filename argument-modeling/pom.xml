@@ -10,6 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>argument</artifactId>
+    <version>0.0.2</version>
+
     <dependencies>
         <dependency>
             <groupId>edu.cmu.cs.lti</groupId>

@@ -58,6 +58,8 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+//import edu.cmu.cs.lti.annotators.*;
+
 
 /**
  * A pipeline structure for KBP 2015 event task of both Mention Detection and Coreference.
@@ -578,7 +580,7 @@ public class EventMentionPipeline {
         return modelPath;
     }
 
-    public CollectionReaderDescription sentenceLevelMentionTagging(Configuration taskConfig,
+    public CollectionReaderDescription sentenceLevelMentionTagging(Configuration crfConfig,
                                                                    CollectionReaderDescription reader,
                                                                    String modelDir, String mainDir, String baseOutput,
                                                                    boolean skipTest)
@@ -600,7 +602,7 @@ public class EventMentionPipeline {
                     AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
                             CrfMentionTypeAnnotator.class, typeSystemDescription,
                             CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            CrfMentionTypeAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
+                            CrfMentionTypeAnnotator.PARAM_CONFIG, crfConfig.getConfigFile().getPath()
                     );
 
                     AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
@@ -1904,7 +1906,7 @@ public class EventMentionPipeline {
 
         Configuration realisConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.realis"));
         Configuration tokenCrfConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.token_crf"));
-        Configuration beamTokenCrfConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.beam.crf"));
+//        Configuration beamTokenCrfConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.beam.crf"));
         Configuration corefConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.coreference"));
 
         String subEvalDir = sliceSuffix.equals(fullRunSuffix) ? "final" : "cv";
@@ -2097,9 +2099,10 @@ public class EventMentionPipeline {
         CollectionReaderDescription plainMentionOutput = testPlainMentionModel(tokenCrfConfig, testReader,
                 vanillaTypeModel, sliceSuffix, "vanillaMention", processOutDir, subEvalDir, testGold, skipTypeTest);
         CollectionReaderDescription realisOutput = testRealis(realisConfig, plainMentionOutput, realisModelDir,
-                sliceSuffix, "vanillaMentionRealis", processOutDir, subEvalDir, testGold, skipRealisTest);
+                sliceSuffix, "vanillaMentionRealis", processOutDir, subEvalDir, testGold,
+                skipTypeTest && skipRealisTest);
         testCoref(corefConfig, realisOutput, treeCorefModel, sliceSuffix, "corefDownStreamTest", processOutDir,
-                subEvalDir, testGold, skipCorefTest);
+                subEvalDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);
 
 //        for (Map.Entry<String, String> beamCorefModelWithName : beamCorefModels.entrySet()) {
 //            String corefModelName = beamCorefModelWithName.getKey();

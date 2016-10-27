@@ -263,8 +263,14 @@ public class SubmissionPipeline {
 
         String configDir = "settings/nugget/models";
 
+//        List<String> typeConfigNames = StringUtils.split(argv[4], ",");
+//        String[] typeConfigs = new String[typeConfigNames.size()];
+//        for (String configName : typeConfigNames) {
+//            typeCon
+//        }
+
         String[] typeConfigs = StringUtils.split(argv[4], ",").stream()
-                .map(p -> loadModelConfig(configDir, p)).toArray(String[]::new);
+                .map(p -> new File(configDir, p + ".properties").getAbsolutePath()).toArray(String[]::new);
 
         Configuration corefConfig = loadModelConfig(configDir, argv[5]);
 

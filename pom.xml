@@ -77,7 +77,7 @@
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>semafor-parser</artifactId>
-                <version>0.0.1</version>
+                <version>0.0.2</version>
             </dependency>
             <dependency>
                 <groupId>edu.stanford.nlp</groupId>
@@ -92,54 +92,19 @@
                 <classifier>models</classifier>
             </dependency>
             <dependency>
-                <groupId>edu.cmu.cs.lti</groupId>
-                <artifactId>stanford-corenlp</artifactId>
-                <version>0.0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>edu.cmu.cs.lti</groupId>
-                <artifactId>fanse-parser</artifactId>
-                <version>0.0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>edu.cmu.cs.lti</groupId>
-                <artifactId>discourse-parser</artifactId>
-                <version>0.0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>edu.cmu.cs.lti</groupId>
-                <artifactId>opennlp</artifactId>
-                <version>0.0.1</version>
-            </dependency>
-            <dependency>
                 <groupId>edu.cmu.cs.lti.script</groupId>
                 <artifactId>core</artifactId>
                 <version>0.0.2</version>
             </dependency>
             <dependency>
-                <groupId>edu.cmu.cs.lti</groupId>
-                <artifactId>corpus-reader</artifactId>
-                <version>0.0.1</version>
+                <groupId>org.apache.uima</groupId>
+                <artifactId>uimaj-tools</artifactId>
+                <version>2.7.0</version>
             </dependency>
             <dependency>
                 <groupId>org.uimafit</groupId>
                 <artifactId>uimafit</artifactId>
                 <version>1.4.0</version>
-            </dependency>
-            <dependency>
-                <groupId>edu.cmu.cs.lti</groupId>
-                <artifactId>uima-util</artifactId>
-                <version>0.0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>edu.cmu.cs.lti</groupId>
-                <artifactId>uima-base</artifactId>
-                <version>0.0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.uima</groupId>
-                <artifactId>uimaj-tools</artifactId>
-                <version>2.7.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.uima</groupId>
@@ -189,7 +154,7 @@
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>misc-annotators</artifactId>
-                <version>0.0.1</version>
+                <version>0.0.2</version>
             </dependency>
             <dependency>
                 <groupId>commons-beanutils</groupId>
@@ -198,18 +163,53 @@
             </dependency>
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
+                <artifactId>stanford-corenlp</artifactId>
+                <version>0.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>edu.cmu.cs.lti</groupId>
+                <artifactId>fanse-parser</artifactId>
+                <version>0.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>edu.cmu.cs.lti</groupId>
+                <artifactId>discourse-parser</artifactId>
+                <version>0.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>edu.cmu.cs.lti</groupId>
+                <artifactId>opennlp</artifactId>
+                <version>0.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>edu.cmu.cs.lti</groupId>
+                <artifactId>corpus-reader</artifactId>
+                <version>0.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>edu.cmu.cs.lti</groupId>
+                <artifactId>uima-util</artifactId>
+                <version>0.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>edu.cmu.cs.lti</groupId>
+                <artifactId>uima-base</artifactId>
+                <version>0.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>mate-tools</artifactId>
-                <version>0.0.1</version>
+                <version>0.0.2</version>
             </dependency>
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>zpar</artifactId>
-                <version>0.0.1</version>
+                <version>0.0.2</version>
             </dependency>
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>ltp-parser</artifactId>
-                <version>0.0.1</version>
+                <version>0.0.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

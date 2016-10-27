@@ -15,6 +15,7 @@ import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TIntDoubleMap;
@@ -63,12 +64,15 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        UimaConvenience.printProcessLog(aJCas, logger);
+        UimaConvenience.printProcessLog(aJCas, logger);
+        logger.info("Extracting feature");
 
 //        logger.info(JCasUtil.select(aJCas, StanfordCorenlpSentence.class).size() + " sentences found.");
 
         extractor.initWorkspace(aJCas);
         alignmentHelper.loadWord2Stanford(aJCas, goldTokenComponentId);
+
+        boolean isLower = false;
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             extractor.resetWorkspace(aJCas, sentence);
@@ -79,12 +83,16 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
 
             for (EventMention mention : mentions) {
                 FeatureVector rawFeatures = new RealValueHashFeatureVector(alphabet);
-                StanfordCorenlpToken mentionHead = UimaNlpUtils.findHeadFromRange(aJCas, mention.getBegin(),
-                        mention.getEnd());
+
+                StanfordCorenlpToken mentionHead = UimaNlpUtils.findHeadFromStanfordAnnotation(mention);
                 int head = extractor.getElementIndex(mentionHead);
                 extractor.extract(head, rawFeatures, dummy);
                 classAlphabet.addClass(mention.getRealisType());
                 TIntDoubleMap indexedFeatures = new TIntDoubleHashMap();
+
+                if (mention.getRealisType().equals("actual")){
+                    isLower = true;
+                }
 
                 if (mentionHead == null || head == -1) {
                     logger.info("Will not be able to find features for mention " + mention.getCoveredText() +
@@ -99,6 +107,12 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
                 features.add(Pair.with(indexedFeatures, mention.getRealisType()));
 
             }
+        }
+
+        if (isLower){
+            logger.info("Realis type is lower");
+        }else{
+            logger.info("Realis type is upper");
         }
     }
 

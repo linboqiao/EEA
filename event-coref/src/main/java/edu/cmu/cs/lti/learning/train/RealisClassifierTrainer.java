@@ -47,7 +47,7 @@ public class RealisClassifierTrainer extends WekaBasedTrainer {
         Map<String, Classifier> classifiers = new HashMap<>();
         classifierNames = new ArrayList<>();
         classifiers.put("lib-linear", getClassifiers(new LibLINEAR(), "-S", "0", "-C", "1.0", "-E", "0.0001", "-B",
-                "1.0", "-Z"));
+                "1.0", "-Z", "-P"));
 //        classifiers.put("svm-linear", getClassifiers(new LibSVM(), "-K", "0"));
 //        classifiers.put("svm-poly", getClassifiers(new LibSVM(), "-K", "1"));
         classifierNames.addAll(classifiers.keySet());

@@ -11,11 +11,12 @@ import edu.cmu.cs.lti.learning.model.RealValueHashFeatureVector;
 import edu.cmu.cs.lti.learning.model.WekaModel;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
+import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.DebugUtils;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 import org.apache.commons.lang3.tuple.Pair;
@@ -101,6 +102,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        UimaConvenience.printProcessLog(aJCas);
         annotateViaModel(aJCas);
     }
 
@@ -111,15 +113,21 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
         FeatureAlphabet alphabet = model.getAlphabet();
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
-            logger.info(sentence.getCoveredText());
             extractor.resetWorkspace(aJCas, sentence);
 
             for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sentence)) {
                 TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
 
                 FeatureVector mentionFeatures = new RealValueHashFeatureVector(alphabet);
-                int head = extractor.getElementIndex(UimaNlpUtils.findHeadFromRange(aJCas, mention.getBegin(),
-                        mention.getEnd()));
+                StanfordCorenlpToken headWord = UimaNlpUtils.findHeadFromRange(aJCas,
+                        mention.getBegin(), mention.getEnd());
+
+                int head = extractor.getElementIndex(headWord);
+
+                if (head < 0) {
+                    logger.warn(String.format("Cannot find headword [%s] from index %d.", headWord.getCoveredText(),
+                            head));
+                }
 
                 // If the head is null, this will quietly produce the first label, which is bad.
                 extractor.extract(head, mentionFeatures, dummy);
@@ -129,16 +137,22 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
                     rawFeatures.put(alphabet.getFeatureNames(iter.featureIndex())[0], iter.featureValue());
                 }
 
+                logger.info("Number of raw features " + rawFeatures.size());
+
                 // Do prediction.
                 try {
                     Pair<Double, String> prediction = model.classify(rawFeatures);
                     mention.setRealisType(prediction.getRight());
+                    mention.setRealisConfidence(prediction.getLeft());
+                    if (prediction.getRight().equals("actual")) {
+                        logger.info("Realis is smaller case for mention: " + mention.getCoveredText());
+                    }
+
+                    logger.info("Realis type is " + mention.getRealisType());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-
-            DebugUtils.pause();
         }
     }
 }

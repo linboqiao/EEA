@@ -7,11 +7,9 @@ import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.extractor.UimaSequenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
-import edu.cmu.cs.lti.learning.model.ClassAlphabet;
-import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
-import edu.cmu.cs.lti.learning.model.GraphWeightVector;
-import edu.cmu.cs.lti.learning.model.SequenceSolution;
+import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
+import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
@@ -19,6 +17,7 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -139,47 +138,87 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
             // Extract features for this sentence and send in.
             decoder.decode(sentenceExtractor, weightVector, tokens.size(), lagrangian, lagrangian, true);
 
+//            debug();
+
             SequenceSolution prediction = decoder.getDecodedPrediction();
+
+            double[] probs = prediction.getSoftMaxLabelProbs();
 
             logger.debug(prediction.toString());
 
-            List<Triplet<Integer, Integer, String>> mentionChunks = convertTypeTagsToChunks(prediction);
+            List<Triplet<Span, String, Double>> mentionChunks = convertTypeTagsToChunks(prediction, probs);
 
-            for (Triplet<Integer, Integer, String> chunk : mentionChunks) {
-                StanfordCorenlpToken firstToken = tokens.get(chunk.getValue0());
-                StanfordCorenlpToken lastToken = tokens.get(chunk.getValue1());
+            for (Triplet<Span, String, Double> chunk : mentionChunks) {
+                StanfordCorenlpToken firstToken = tokens.get(chunk.getValue0().getBegin());
+                StanfordCorenlpToken lastToken = tokens.get(chunk.getValue0().getEnd());
 
                 EventMention predictedMention = new EventMention(aJCas);
-                predictedMention.setEventType(chunk.getValue2());
+                predictedMention.setEventType(chunk.getValue1());
+                predictedMention.setEventTypeConfidence(chunk.getValue2());
+
                 UimaAnnotationUtils.finishAnnotation(predictedMention, firstToken.getBegin(), lastToken
                         .getEnd(), COMPONENT_ID, 0, aJCas);
+
+//                logger.info("Adding event mention: " + predictedMention.getCoveredText() + " of type " +
+//                        predictedMention.getEventType());
+            }
+        }
+    }
+
+    private void debug() {
+        SequenceSolution prediction = decoder.getDecodedPrediction();
+
+        FeatureVector[] bestFvAtEachIndex = decoder.getBestVectorAtEachIndex();
+
+        logger.info(prediction.toString());
+
+        for (int i = 0; i < prediction.getSequenceLength(); i++) {
+            int tag = prediction.getClassAt(i);
+            if (tag != classAlphabet.getNoneOfTheAboveClassIndex()) {
+                logger.info(String.format("Predicting %s because of following features.", classAlphabet.getClassName
+                        (tag)));
+                logger.info(bestFvAtEachIndex[i].readableString());
             }
         }
 
-//        DebugUtils.pause(logger);
+        DebugUtils.pause();
     }
 
-    private List<Triplet<Integer, Integer, String>> convertTypeTagsToChunks(SequenceSolution solution) {
-        List<Triplet<Integer, Integer, String>> chunkEndPoints = new ArrayList<>();
+    private List<Triplet<Span, String, Double>> convertTypeTagsToChunks(SequenceSolution solution, double[] probs) {
+        List<Triplet<Span, String, Double>> mentionChunks = new ArrayList<>();
+
+        int begin = -1;
+        int end = -1;
+        String previousType = null;
+        double prob = 1;
 
         for (int i = 0; i < solution.getSequenceLength(); i++) {
             int tag = solution.getClassAt(i);
             if (tag != classAlphabet.getNoneOfTheAboveClassIndex()) {
-                String className = classAlphabet.getClassName(tag);
-                if (chunkEndPoints.size() > 0) {
-                    Triplet<Integer, Integer, String> lastChunk = chunkEndPoints.get(chunkEndPoints.size() - 1);
-                    if (lastChunk.getValue1() == i - 1) {
-                        if (lastChunk.getValue2().equals(className)) {
-                            // Update endpoint.
-                            lastChunk.setAt1(i);
-                            continue;
-                        }
+                String currentType = classAlphabet.getClassName(tag);
+                if (previousType != null) {
+                    if (end == i - 1 && previousType.equals(currentType)) {
+                        // Update endpoint.
+                        end = i;
+                    } else {
+                        // If not adjacent to previous chunks.
+                        mentionChunks.add(Triplet.with(Span.of(begin, end), previousType, prob));
+                        previousType = null;
                     }
+                } else {
+                    previousType = currentType;
+                    begin = i;
+                    end = i;
+                    prob *= probs[i];
                 }
-                // If not adjacent to previous chunks.
-                chunkEndPoints.add(Triplet.with(i, i, className));
             }
         }
-        return chunkEndPoints;
+
+        // Add the last found mention.
+        if (previousType != null){
+            mentionChunks.add(Triplet.with(Span.of(begin, end), previousType, prob));
+        }
+
+        return mentionChunks;
     }
 }

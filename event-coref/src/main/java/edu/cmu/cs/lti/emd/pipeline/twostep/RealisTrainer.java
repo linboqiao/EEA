@@ -34,13 +34,13 @@ public class RealisTrainer {
 
     private ArffSaver saver = new ArffSaver();
 
-    public static final String featureConfigOutputName = "featureConfig";
+    private static final String featureConfigOutputName = "featureConfig";
 
-    public static final String featureNamePath = "featureNames";
+    private static final String featureNamePath = "featureNames";
 
-    public static final String predictionLabels = "labelNames";
+    private static final String predictionLabels = "labelNames";
 
-    public void configFeatures(BiMap<String, Integer> featureNameMap, List<String> allClasses, File outputDir) throws
+    private void configFeatures(BiMap<String, Integer> featureNameMap, List<String> allClasses, File outputDir) throws
             Exception {
         featureConfiguration = new ArrayList<>();
         ArrayList<Map.Entry<String, Integer>> featureNames = new ArrayList<>(featureNameMap.entrySet());
@@ -128,7 +128,6 @@ public class RealisTrainer {
             }
         }
     }
-
 
     private Instances prepareDataSet(List<Pair<TIntDoubleMap, String>> featuresAndClass, String dataSetOutputPath)
             throws Exception {

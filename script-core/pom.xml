@@ -10,6 +10,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>core</artifactId>
+    <version>0.0.2</version>
 
     <!-- Use local lib directory as a Maven repository -->
     <repositories>
@@ -94,10 +95,10 @@
             <groupId>edu.cmu.cs.lti</groupId>
             <artifactId>uima-base</artifactId>
         </dependency>
-        <dependency>
-            <groupId>edu.cmu.cs.lti</groupId>
-            <artifactId>opennlp</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>edu.cmu.cs.lti</groupId>-->
+            <!--<artifactId>opennlp</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.mapdb</groupId>
             <artifactId>mapdb</artifactId>
