@@ -119,14 +119,12 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
                 TObjectDoubleMap<String> rawFeatures = new TObjectDoubleHashMap<>();
 
                 FeatureVector mentionFeatures = new RealValueHashFeatureVector(alphabet);
-                StanfordCorenlpToken headWord = UimaNlpUtils.findHeadFromRange(aJCas,
-                        mention.getBegin(), mention.getEnd());
+                StanfordCorenlpToken headWord = UimaNlpUtils.findHeadFromStanfordAnnotation(mention);
 
                 int head = extractor.getElementIndex(headWord);
 
                 if (head < 0) {
-                    logger.warn(String.format("Cannot find headword [%s] from index %d.", headWord.getCoveredText(),
-                            head));
+                    logger.warn(String.format("Cannot find headword for mention [%s].", mention.getCoveredText()));
                 }
 
                 // If the head is null, this will quietly produce the first label, which is bad.
@@ -137,18 +135,11 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
                     rawFeatures.put(alphabet.getFeatureNames(iter.featureIndex())[0], iter.featureValue());
                 }
 
-                logger.info("Number of raw features " + rawFeatures.size());
-
                 // Do prediction.
                 try {
                     Pair<Double, String> prediction = model.classify(rawFeatures);
                     mention.setRealisType(prediction.getRight());
                     mention.setRealisConfidence(prediction.getLeft());
-                    if (prediction.getRight().equals("actual")) {
-                        logger.info("Realis is smaller case for mention: " + mention.getCoveredText());
-                    }
-
-                    logger.info("Realis type is " + mention.getRealisType());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

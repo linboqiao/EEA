@@ -12,10 +12,8 @@ import edu.cmu.cs.lti.learning.model.RealValueHashFeatureVector;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TIntDoubleMap;
@@ -64,15 +62,13 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        UimaConvenience.printProcessLog(aJCas, logger);
-        logger.info("Extracting feature");
+//        UimaConvenience.printProcessLog(aJCas, logger);
+//        logger.info("Extracting feature");
 
 //        logger.info(JCasUtil.select(aJCas, StanfordCorenlpSentence.class).size() + " sentences found.");
 
         extractor.initWorkspace(aJCas);
         alignmentHelper.loadWord2Stanford(aJCas, goldTokenComponentId);
-
-        boolean isLower = false;
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             extractor.resetWorkspace(aJCas, sentence);
@@ -90,12 +86,8 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
                 classAlphabet.addClass(mention.getRealisType());
                 TIntDoubleMap indexedFeatures = new TIntDoubleHashMap();
 
-                if (mention.getRealisType().equals("actual")){
-                    isLower = true;
-                }
-
                 if (mentionHead == null || head == -1) {
-                    logger.info("Will not be able to find features for mention " + mention.getCoveredText() +
+                    logger.warn("Will not be able to find features for mention " + mention.getCoveredText() +
                             ", since the mention head is not found.");
                 }
 
@@ -108,27 +100,8 @@ public class RealisFeatureExtractor extends AbstractLoggingAnnotator {
 
             }
         }
-
-        if (isLower){
-            logger.info("Realis type is lower");
-        }else{
-            logger.info("Realis type is upper");
-        }
     }
 
-    private StanfordCorenlpToken getHead(JCas aJCas, int begin, int end) {
-        StanfordCorenlpToken head = UimaNlpUtils.findHeadFromRange(aJCas, begin, end);
-        if (head == null) {
-            head = UimaNlpUtils.findFirstToken(aJCas, begin, end);
-        }
-        if (head == null) {
-            Word word = UimaNlpUtils.findFirstWord(aJCas, begin, end, goldTokenComponentId);
-            if (word != null) {
-                head = alignmentHelper.getStanfordToken(word);
-            }
-        }
-        return head;
-    }
 
     public static void getFeatures(
             CollectionReaderDescription reader, TypeSystemDescription typeSystemDescription,
