@@ -14,7 +14,6 @@ import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
@@ -102,7 +101,7 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        UimaConvenience.printProcessLog(aJCas);
+//        UimaConvenience.printProcessLog(aJCas);
         annotateViaModel(aJCas);
     }
 

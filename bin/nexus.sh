@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 artifacts=(
-#'argument'
-#'chain-script'
-#'cds'
+'argument'
+'chain-script'
+'cds'
 'event-coref'
-#'learning'
-#'core'
-#'preprocessor'
-#'seq'
+'learning'
+'core'
+'preprocessor'
+'seq'
 )
 subdirs=(
-#'argument-modeling'
-#'chain-script'
-#'cross-document-script'
+'argument-modeling'
+'chain-script'
+'cross-document-script'
 'event-coref'
-#'learning'
-#'script-core'
-#'script-preprocessor'
-#'sequence-modeling'
+'learning'
+'script-core'
+'script-preprocessor'
+'sequence-modeling'
 )
 
 version='0.0.2'

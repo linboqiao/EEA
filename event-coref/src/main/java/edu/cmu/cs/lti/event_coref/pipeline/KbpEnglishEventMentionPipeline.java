@@ -31,12 +31,12 @@ public class KbpEnglishEventMentionPipeline {
 
         pipeline.prepare(kbpConfig);
 
-        if (kbpConfig.getBoolean("edu.cmu.cs.lti.development", false)) {
-            pipeline.crossValidation(kbpConfig);
-        }
-
         if (kbpConfig.getBoolean("edu.cmu.cs.lti.test", false)) {
             pipeline.trainTest(kbpConfig, false);
+        }
+
+        if (kbpConfig.getBoolean("edu.cmu.cs.lti.development", false)) {
+            pipeline.crossValidation(kbpConfig);
         }
 
 //        for (int i = 1; i < 23; i++) {
