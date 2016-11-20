@@ -20,7 +20,7 @@ subdirs=(
 'sequence-modeling'
 )
 
-version='0.0.2'
+version='0.0.5'
 
 mvn deploy:deploy-file -DgroupId=edu.cmu.cs.lti.script -Dversion=${version} -DartifactId=cmu-script -Dfile=pom.xml -Dpackaging=pom -Durl=http://deftpack.bbn.com:8081/nexus/content/repositories/DEFTLibraryDependencies -DrepositoryId=DEFTLibraryDependencies
 

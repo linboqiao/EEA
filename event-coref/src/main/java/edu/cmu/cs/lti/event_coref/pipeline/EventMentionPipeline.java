@@ -40,6 +40,7 @@ import edu.cmu.cs.lti.uima.pipeline.MorePipeline;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -312,6 +313,16 @@ public class EventMentionPipeline {
         final String mateModel = generalModelDir + "/mate/CoNLL2009-ST-Chinese-ALL.anna-3.3.srl-4.1.srl.model";
         final String zparChineseModel = generalModelDir + "/zpar/chinese";
 
+        String os = System.getProperty("os.name").toLowerCase();
+        final String zparBinPath;
+        if (os.contains("mac")) {
+            zparBinPath = generalModelDir + "/zpar/zpar-07-mac/dist/zpar.zh";
+        } else if (os.contains("nix") || os.contains("nux")) {
+            zparBinPath = generalModelDir + "/zpar/zpar-linux/dist/zpar.zh";
+        } else {
+            throw new NotImplementedException(String.format("Not implemented for OS %s.", os));
+        }
+
         for (CollectionReaderDescription reader : inputReaders) {
             new BasicPipeline(new ProcessorWrapper() {
                 @Override
@@ -366,9 +377,9 @@ public class EventMentionPipeline {
                         } else if (name.equals("zpar")) {
                             processor = AnalysisEngineFactory.createEngineDescription(
                                     ZParChineseCharacterConstituentParser.class, typeSystemDescription,
-                                    ZParChineseCharacterConstituentParser.PARAM_CHINESE_MODEL,
-                                    zparChineseModel);
-
+                                    ZParChineseCharacterConstituentParser.PARAM_CHINESE_MODEL, zparChineseModel,
+                                    ZParChineseCharacterConstituentParser.PARAM_ZPAR_BIN_PATH, zparBinPath
+                            );
                         } else if (name.equals("ltp")) {
                             processor = AnalysisEngineFactory.createEngineDescription(
                                     LtpAnnotator.class, typeSystemDescription,

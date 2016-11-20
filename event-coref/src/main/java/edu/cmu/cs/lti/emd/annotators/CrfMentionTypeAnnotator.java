@@ -115,11 +115,22 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
         decoder = new ViterbiDecoder(alphabet, classAlphabet);
     }
 
-    private void warning(String savedSpec, String oldSpec) {
-        if (!oldSpec.equals(savedSpec)) {
+    private void warning(String savedSpec, String currentSpec) {
+        if (savedSpec == null){
+            logger.warn("The model did not save any feature specifications!");
+            return;
+        }
+
+        if (currentSpec == null){
+            logger.warn("The configuration did not provide any feature specifications!");
+            return;
+        }
+
+        if (!currentSpec.equals(savedSpec)) {
             logger.warn("Current feature specification is not the same with the trained model.");
-            logger.warn("Will use the stored specification, it might create unexpected errors");
-            logger.warn("Using Spec:" + savedSpec);
+            logger.warn("Will use the stored specification, it might create unexpected errors: ");
+            logger.warn("Saved spec will be used:");
+            logger.warn(savedSpec);
         }
     }
 

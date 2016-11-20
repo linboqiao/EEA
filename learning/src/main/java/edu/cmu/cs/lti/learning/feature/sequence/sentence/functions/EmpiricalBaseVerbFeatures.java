@@ -57,6 +57,7 @@ public class EmpiricalBaseVerbFeatures extends SequenceFeatureWithFocus<Stanford
         List<CharacterAnnotation> characters = JCasUtil.selectCovered(CharacterAnnotation.class, token);
 
         List<String> posSeq = new ArrayList<>();
+        List<String> verbStructures = new ArrayList<>();
 
         for (CharacterAnnotation character : characters) {
 //            if (character.getPos() == null) {
@@ -65,10 +66,13 @@ public class EmpiricalBaseVerbFeatures extends SequenceFeatureWithFocus<Stanford
 //                logger.info(character.getBegin() + " " + character.getEnd());
 //                DebugUtils.pause();
 //            }
+            if (character.getPos() == null){
+                logger.warn("No POS tagging for the characters available");
+                return verbStructures;
+            }
             posSeq.add(character.getPos().toLowerCase());
         }
 
-        List<String> verbStructures = new ArrayList<>();
 
         if (posSeq.size() == 1) {
             if (posSeq.get(0).startsWith("v")) {

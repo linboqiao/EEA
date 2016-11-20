@@ -6,14 +6,19 @@ import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.cas.FSList;
+import org.apache.uima.jcas.tcas.Annotation;
 
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
+import static org.apache.commons.beanutils.BeanUtils.copyProperty;
 
 
 /**
@@ -35,16 +40,22 @@ public class MentionTypeSplitter extends AbstractLoggingAnnotator {
             for (int duplicateTagCount = 0; duplicateTagCount < candidate.getMultiTag() + 1; duplicateTagCount++) {
                 for (String predictedType : predictedTypes) {
                     EventMention mention = new EventMention(aJCas);
-//                    mention.setBegin(candidate.getBegin());
-//                    mention.setEnd(candidate.getEnd());
-//                    mention.setRealisType(candidate.getRealisType());
-//                    mention.setHeadWord(candidate.getHeadWord());
-//                    mention.setArguments(candidate.getArguments());
                     try {
-                        BeanUtils.copyProperties(mention, candidate);
+                        // Currently, I found that the regions property cannot be set successful on some remote
+                        // machines. One guess is that BeanUtils fail to access setter(s), because regions have two
+                        // setters (it is a FSArray).
+                        // We will explicitly copy that
+                        // property if needed. Here we do not show to much debug info to avoid spamming the console.
+
+//                        BeanUtils.copyProperties(mention, candidate);
+
+                        copyProperties(mention, candidate);
                     } catch (IllegalAccessException | InvocationTargetException e) {
-                        e.printStackTrace();
+                        logger.warn("");
                     }
+
+                    // Copy the regions explicitly.
+                    mention.setRegions(duplicateRegionFS(aJCas, candidate));
 
                     // Create new FSLists so that we won't get warnings.
                     mention.setArguments(duplicateArgumentFS(aJCas, candidate));
@@ -60,6 +71,41 @@ public class MentionTypeSplitter extends AbstractLoggingAnnotator {
         for (EventMention originalMention : originalMentions) {
             originalMention.removeFromIndexes();
         }
+    }
+
+    private void copyProperties(Object dest, Object orig) throws InvocationTargetException, IllegalAccessException {
+        PropertyDescriptor[] origDescriptors =
+                BeanUtilsBean.getInstance().getPropertyUtils().getPropertyDescriptors(orig);
+        for (int i = 0; i < origDescriptors.length; i++) {
+            String name = origDescriptors[i].getName();
+            if ("class".equals(name)) {
+                continue; // No point in trying to set an object's class.
+            }
+
+            if ("regions".equals(name)) {
+                continue; // We ignore regions because sometimes the setter might not be found.
+            }
+
+            if (BeanUtilsBean.getInstance().getPropertyUtils().isReadable(orig, name) &&
+                    BeanUtilsBean.getInstance().getPropertyUtils().isWriteable(dest, name)) {
+                try {
+                    Object value = BeanUtilsBean.getInstance().getPropertyUtils().getSimpleProperty(orig, name);
+                    copyProperty(dest, name, value);
+                } catch (NoSuchMethodException e) {
+                    // Should not happen.
+                }
+            }
+        }
+    }
+
+    private FSArray duplicateRegionFS(JCas aJCas, EventMention mention) {
+        FSArray regionsFS = mention.getRegions();
+
+        if (regionsFS == null) {
+            return null;
+        }
+
+        return FSCollectionFactory.createFSArray(aJCas, FSCollectionFactory.create(regionsFS, Annotation.class));
     }
 
     private FSList duplicateArgumentFS(JCas aJCas, EventMention mention) {

@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.learning.feature.sequence.sentence.functions;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.sequence.base.SequenceFeatureWithFocus;
 import edu.cmu.cs.lti.learning.model.MentionKey;
+import edu.cmu.cs.lti.script.type.CharacterAnnotation;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -49,6 +50,12 @@ public class ChineseHeadTokenFeatures extends SequenceFeatureWithFocus<StanfordC
     }
 
     private String getHeadCharacter(StanfordCorenlpToken token) {
-        return UimaNlpUtils.findHeadCharacterFromZparAnnotation(token).getCoveredText();
+        CharacterAnnotation headCharacter = UimaNlpUtils.findHeadCharacterFromZparAnnotation(token);
+        if (headCharacter == null){
+            // In case we do not have ZPar ready, we use the first token instead.
+            headCharacter = UimaNlpUtils.findFirstToken(token, CharacterAnnotation.class);
+        }
+
+        return headCharacter.getCoveredText();
     }
 }
