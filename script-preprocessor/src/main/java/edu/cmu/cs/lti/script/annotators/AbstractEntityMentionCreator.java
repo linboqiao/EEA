@@ -33,10 +33,10 @@ public abstract class AbstractEntityMentionCreator extends AbstractLoggingAnnota
         for (EntityMention mention : entityMentions) {
             head2EntityMention.put(UimaAnnotationUtils.toSpan(mention.getHead()), mention);
         }
-        subprocess(aJCas);
+//        subprocess(aJCas);
     }
 
-    public abstract void subprocess(JCas aJCas);
+//    public abstract void subprocess(JCas aJCas);
 
 
     protected EventMentionArgumentLink createArgumentLink(JCas aJCas, EventMention evm, String roleName, Word argument, Word prep) {

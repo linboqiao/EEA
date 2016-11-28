@@ -6,6 +6,7 @@ import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -34,9 +35,10 @@ public class SyntacticDirectArgumentFixer extends AbstractEntityMentionCreator {
     }
 
     @Override
-    public void subprocess(JCas aJCas) {
-        logger.info(progressInfo(aJCas));
+    public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        super.process(aJCas);
 
+        logger.info(progressInfo(aJCas));
 //
 //        ArrayListMultimap<Span, EntityMention> eventHead2Arg0 = ArrayListMultimap.create();
 //        ArrayListMultimap<Span, EntityMention> eventHead2Arg1 = ArrayListMultimap.create();

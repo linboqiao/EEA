@@ -59,7 +59,7 @@ public class EventMentionTupleExtractorRunner {
 
 //        AnalysisEngineDescription syntaticDirectArgumentExtractor = AnalysisEngineFactory.createEngineDescription(SyntacticDirectArgumentFixer.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
-        AnalysisEngineDescription SyntacticArgumentPropagater = AnalysisEngineFactory.createEngineDescription(SyntacticArgumentPropagateAnnotator.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
+        AnalysisEngineDescription SyntacticArgumentPropagator = AnalysisEngineFactory.createEngineDescription(SyntacticArgumentPropagateAnnotator.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
         AnalysisEngineDescription goalMentionAnnotator = AnalysisEngineFactory.createEngineDescription(GoalMentionAnnotator.class, typeSystemDescription, AbstractLoggingAnnotator.PARAM_KEEP_QUIET, true);
 
@@ -76,7 +76,7 @@ public class EventMentionTupleExtractorRunner {
                 parentDir, paramBaseOutputDirName, stepnum, paramOutputFileSuffix);
 
         // Run the pipeline.
-        SimplePipeline.runPipeline(reader, fixer, whLinker, tupleExtractor, SyntacticArgumentPropagater, goalMentionAnnotator, idAssigRunner, writer);
+        SimplePipeline.runPipeline(reader, fixer, whLinker, tupleExtractor, SyntacticArgumentPropagator, goalMentionAnnotator, idAssigRunner, writer);
         System.out.println(className + " completed.");
     }
 }

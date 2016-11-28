@@ -27,8 +27,8 @@ import java.util.*;
  */
 public class StanfordCoreNlpUtils {
 
-    public static Word fixByDependencyHead(ComponentAnnotation anno, Word currentHead){
-        return fixByDependencyHead(anno, currentHead,new HashSet<Word>());
+    public static Word fixByDependencyHead(ComponentAnnotation anno, Word currentHead) {
+        return fixByDependencyHead(anno, currentHead, new HashSet<Word>());
     }
 
 
@@ -37,12 +37,13 @@ public class StanfordCoreNlpUtils {
             return null;
         } else {
             if (currentHead.getHeadDependencyRelations() != null) {
-                //actually we normally have one head, this for is not looping anyway
-                for (StanfordDependencyRelation headDep : FSCollectionFactory.create(currentHead.getHeadDependencyRelations(), StanfordDependencyRelation.class)) {
+                // Actually we normally have one head, this for is not looping anyway.
+                for (StanfordDependencyRelation headDep : FSCollectionFactory.create(currentHead
+                        .getHeadDependencyRelations(), StanfordDependencyRelation.class)) {
                     Word headToken = headDep.getHead();
-                    if (visitedHeadNodes.contains(headToken)){
+                    if (visitedHeadNodes.contains(headToken)) {
                         return currentHead;
-                    }else{
+                    } else {
                         visitedHeadNodes.add(headToken);
                     }
 
@@ -55,7 +56,7 @@ public class StanfordCoreNlpUtils {
                 }
             }
 
-            // no head dependency, either a root or a collapsed prep
+            // No head dependency, either a root or a collapsed prep.
             return currentHead;
         }
     }
@@ -73,7 +74,8 @@ public class StanfordCoreNlpUtils {
      * @param uimaTree
      * @return The head token if found, otherwise null.
      */
-    public static StanfordCorenlpToken findHead(JCas aJCas, HeadFinder finder, TreeFactory tf, StanfordTreeAnnotation uimaTree) {
+    public static StanfordCorenlpToken findHead(JCas aJCas, HeadFinder finder, TreeFactory tf, StanfordTreeAnnotation
+            uimaTree) {
         int offset = uimaTree.getBegin();
 
         Tree tree = toStanfordTree(tf, uimaTree);

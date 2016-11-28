@@ -21,7 +21,5 @@ public class HeadWordFixer extends AbstractLoggingAnnotator {
         for (EntityMention mention : JCasUtil.select(aJCas, EntityMention.class)) {
             mention.setHead(StanfordCoreNlpUtils.fixByDependencyHead(mention, mention.getHead()));
         }
-
-
     }
 }

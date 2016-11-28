@@ -6,6 +6,7 @@ import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -25,7 +26,9 @@ public class SyntacticBasedEventMentionTupleExtractor extends AbstractEntityMent
     }
 
     @Override
-    public void subprocess(JCas aJCas) {
+    public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        super.process(aJCas);
+
         int mentionId = 0;
         for (StanfordCorenlpToken token : JCasUtil.select(aJCas, StanfordCorenlpToken.class)) {
             if (token.getPos().startsWith(PennTreeTagSet.VERB_PREFIX) && !isCopula(token)) {

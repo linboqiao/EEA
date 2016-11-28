@@ -9,6 +9,7 @@ import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -36,7 +37,9 @@ public class SyntacticArgumentPropagateAnnotator extends AbstractEntityMentionCr
     //TODO: There is a couple of problems on sharing, 1) all stuff need to be shared at once 2) sharing conflicts should be used to correct old stuff 3)conj might help share more than only Arg0 and Arg1
 
     @Override
-    public void subprocess(JCas aJCas) {
+    public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        super.process(aJCas);
+
         logger.info(progressInfo(aJCas));
         findShareSubjVerbs(aJCas);
 

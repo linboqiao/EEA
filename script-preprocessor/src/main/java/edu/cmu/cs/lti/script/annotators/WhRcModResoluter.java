@@ -9,6 +9,7 @@ import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.model.AnnotationCondition;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -39,7 +40,9 @@ public class WhRcModResoluter extends AbstractEntityMentionCreator {
     }
 
     @Override
-    public void subprocess(JCas aJCas) {
+    public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        super.process(aJCas);
+
         logger.info(progressInfo(aJCas));
 
         head2EntityMention = new HashMap<>();
@@ -116,17 +119,5 @@ public class WhRcModResoluter extends AbstractEntityMentionCreator {
         }
         return relativeClauseCoreferences;
     }
-
-//    private EntityMention getOrCreateEntityMention(JCas jcas, Word headWord) {
-//        EntityMention mention = head2EntityMention.get(Utils.toSpan(headWord));
-//        if (mention == null) {
-//            mention = UimaNlpUtils.createEntityMention(jcas, headWord.getBegin(), headWord.getEnd(),
-//                    COMPONENT_ID);
-//            UimaAnnotationUtils.finishAnnotation(mention, headWord.getBegin(), headWord.getEnd(), COMPONENT_ID, null, jcas);
-//            head2EntityMention.put(Utils.toSpan(headWord), mention);
-//
-//        }
-//        return mention;
-//    }
 
 }

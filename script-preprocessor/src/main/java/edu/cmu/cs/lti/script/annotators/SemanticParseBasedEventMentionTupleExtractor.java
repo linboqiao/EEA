@@ -4,6 +4,7 @@ import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -49,7 +50,9 @@ public class SemanticParseBasedEventMentionTupleExtractor extends AbstractEntity
     }
 
     @Override
-    public void subprocess(JCas aJCas) {
+    public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        super.process(aJCas);
+
         logger.info(progressInfo(aJCas));
 
         eventWithSemanticRolesAndPrep = new HashMap<>();
