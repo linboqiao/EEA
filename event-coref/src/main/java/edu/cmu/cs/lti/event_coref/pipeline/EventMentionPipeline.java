@@ -35,8 +35,6 @@ import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.reader.RandomizedXmiCollectionReader;
-import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
-import edu.cmu.cs.lti.uima.pipeline.MorePipeline;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -48,6 +46,7 @@ import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.slf4j.Logger;
@@ -106,8 +105,7 @@ public class EventMentionPipeline {
 
     private String evalScript;
 
-
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Logger logger = LoggerFactory.getLogger(EventMentionPipeline.class);
 
     /**
      * A constructor that take both the training and testing directory.
@@ -169,9 +167,10 @@ public class EventMentionPipeline {
         this.evalMode = config.get("edu.cmu.cs.lti.eval.mode");
 
         if (evalMode.equals("token")) {
+            logger.info("Evaluation mode is token based.");
             this.tokenDir = config.get("edu.cmu.cs.lti.training.token_map.dir");
         } else if (evalMode.equals("char")) {
-
+            logger.info("Evaluaton mode is character based.");
         } else {
             throw new IllegalArgumentException(String.format("Unknown evaluation mode: %s.", evalMode));
         }
@@ -181,19 +180,21 @@ public class EventMentionPipeline {
         this.evalScript = config.get("edu.cmu.cs.lti.eval.script");
     }
 
-    private CollectionReaderDescription[] getDatasetReaders(String datasetConfigPath, String[] datasetNames)
-            throws IOException, ResourceInitializationException {
+    private CollectionReaderDescription readDatasets(String datasetConfigPath, String[] datasetNames,
+                                                     String parentDir, boolean skipReading)
+            throws IOException, UIMAException, SAXException, CpeDescriptorException {
         logger.info(String.format("%d datasets to be read, which are %s",
                 datasetNames.length, Joiner.on(",").join(datasetNames)));
-        CollectionReaderDescription[] readers = new CollectionReaderDescription[datasetNames.length];
 
-        for (int i = 0; i < datasetNames.length; i++) {
-            String datasetName = datasetNames[i];
+        EventDataReader reader = new EventDataReader(parentDir, rawBase, skipReading);
+
+        for (String datasetName : datasetNames) {
+            logger.info("Reading dataset : " + datasetName);
             Configuration datasetConfig = new Configuration(new File(datasetConfigPath, datasetName + ".properties"));
-            readers[i] = EventDataReader.getReader(datasetConfig, typeSystemDescription);
+            reader.readData(datasetConfig, typeSystemDescription);
         }
 
-        return readers;
+        return reader.getReader();
     }
 
     /**
@@ -212,8 +213,12 @@ public class EventMentionPipeline {
         String[] trainingDatasets = taskConfig.getList("edu.cmu.cs.lti.training.datasets");
         String[] testDatasets = taskConfig.getList("edu.cmu.cs.lti.testing.datasets");
 
-        CollectionReaderDescription[] trainingReaders = getDatasetReaders(datasetSettingDir, trainingDatasets);
-        CollectionReaderDescription[] testReaders = getDatasetReaders(datasetSettingDir, testDatasets);
+        boolean skipRaw = taskConfig.getBoolean("edu.cmu.cs.lti.skip.raw", false);
+
+        CollectionReaderDescription trainingReader = readDatasets(datasetSettingDir, trainingDatasets,
+                trainingWorkingDir, skipRaw);
+        CollectionReaderDescription testReader = readDatasets(datasetSettingDir, testDatasets,
+                testingWorkingDir, skipRaw);
 
         File classFile = new File(FileUtils.joinPaths(trainingWorkingDir, "mention_types.txt"));
         if (classFile.exists()) {
@@ -222,46 +227,22 @@ public class EventMentionPipeline {
             }
         }
 
-        boolean skipRaw = taskConfig.getBoolean("edu.cmu.cs.lti.skip.raw", false);
 
-        if (trainingReaders.length != 0) {
+        if (trainingDatasets.length != 0) {
             logger.info("Writing possible classes from training data.");
             AnalysisEngineDescription classPrinter = AnalysisEngineFactory.createEngineDescription(
                     EventMentionTypeClassPrinter.class, typeSystemDescription,
                     EventMentionTypeClassPrinter.CLASS_OUTPUT_FILE, classFile
             );
-            MorePipeline.runPipelineWithMultiReaderDesc(Arrays.asList(trainingReaders), classPrinter);
-
-            if (skipRaw && new File(trainingWorkingDir, rawBase).exists()) {
-                logger.info("Skip training raw writing.");
-            } else {
-                logger.info("Writing raw training data to disk, not skipping");
-                MorePipeline.runPipelineWithMultiReaderDesc(Arrays.asList(trainingReaders),
-                        CustomAnalysisEngineFactory.createXmiWriter(trainingWorkingDir, rawBase));
-            }
-
-            logger.info("Preprocessing the raw training data.");
-            CollectionReaderDescription rawReader = CustomCollectionReaderFactory.createXmiReader(trainingWorkingDir,
-                    rawBase);
-            prepare(taskConfig, trainingWorkingDir, skipTrainPrepare, rawReader);
+            SimplePipeline.runPipeline(trainingReader, classPrinter);
+            prepare(taskConfig, trainingWorkingDir, skipTrainPrepare, trainingReader);
         } else {
             logger.warn("No training readers specified.");
         }
 
-        if (testReaders.length != 0) {
-            if (skipRaw && new File(testingWorkingDir, rawBase).exists()) {
-                logger.info("Skip test raw writing.");
-            } else {
-                logger.info("Writing raw test data to disk, not skipping");
-                MorePipeline.runPipelineWithMultiReaderDesc(Arrays.asList(testReaders),
-                        CustomAnalysisEngineFactory.createXmiWriter(testingWorkingDir, rawBase));
-            }
-
-            CollectionReaderDescription rawReader = CustomCollectionReaderFactory.createXmiReader(testingWorkingDir,
-                    rawBase);
-
-            logger.info("Preprocesisng the raw testing data.");
-            prepare(taskConfig, testingWorkingDir, skipTestPrepare, rawReader);
+        if (testDatasets.length != 0) {
+            logger.info("Preprocessing the raw testing data.");
+            prepare(taskConfig, testingWorkingDir, skipTestPrepare, testReader);
         } else {
             logger.warn("No test readers specified.");
         }

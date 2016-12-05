@@ -10,7 +10,6 @@ import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.uima.pipeline.MorePipeline;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.emory.mathcs.backport.java.util.Collections;
@@ -32,6 +31,7 @@ import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -284,6 +284,9 @@ public class EventMentionSurfaceCoverageReport extends AbstractLoggingAnnotator 
         // "../data/stats/kbp/chinese_mention_coverage_report"
         String statOutputDir = args[1];
 
+        // A place to put intermediate files.
+        String workingDir = args[2];
+
         Configuration commonConfig = new Configuration("settings/common.properties");
         String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
 
@@ -292,14 +295,15 @@ public class EventMentionSurfaceCoverageReport extends AbstractLoggingAnnotator 
 
         String[] datasetNames = {"LDC2014E114", "LDC2015E105", "LDC2015E78", "LDC2015E112_R2", "ACE2005_Chinese"};
 
-        List<CollectionReaderDescription> readerDescriptions = new ArrayList<>();
+        EventDataReader dataReader = new EventDataReader(workingDir, "all", false);
 
         for (String datasetName : datasetNames) {
             Configuration datasetConfig = new Configuration(
                     new File(commonConfig.get("edu.cmu.cs.lti.dataset.settings.path"), datasetName + ".properties"));
-            CollectionReaderDescription reader = EventDataReader.getReader(datasetConfig, typeSystemDescription);
-            readerDescriptions.add(reader);
+            dataReader.readData(datasetConfig, typeSystemDescription);
         }
+
+        CollectionReaderDescription reader = dataReader.getReader();
 
         AnalysisEngineDescription goldAnnotator = AnalysisEngineFactory.createEngineDescription(
                 GoldStandardEventMentionAnnotator.class, typeSystemDescription,
@@ -316,13 +320,14 @@ public class EventMentionSurfaceCoverageReport extends AbstractLoggingAnnotator 
                         EventMentionSurfaceCollector.PARAM_OUTPUT_FILE_PATH, mentionSurfaceFile
                 );
 
-
-        MorePipeline.runPipelineWithMultiReaderDesc(readerDescriptions, goldAnnotator, surfaceCollector);
+        SimplePipeline.runPipeline(reader, goldAnnotator, surfaceCollector);
 
         for (int i = 0; i < datasetNames.length; i++) {
+            EventDataReader datasetEventReader = new EventDataReader(workingDir, datasetNames[i], false);
+
             String datasetName = datasetNames[i];
 
-            CollectionReaderDescription reader = readerDescriptions.get(i);
+            CollectionReaderDescription dataSetReader = datasetEventReader.getReader();
 
             AnalysisEngineDescription stanfordProcessor = AnalysisEngineFactory.createEngineDescription(
                     StanfordCoreNlpAnnotator.class, typeSystemDescription,
@@ -341,7 +346,7 @@ public class EventMentionSurfaceCoverageReport extends AbstractLoggingAnnotator 
             new BasicPipeline(new ProcessorWrapper() {
                 @Override
                 public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
+                    return dataSetReader;
                 }
 
                 @Override
