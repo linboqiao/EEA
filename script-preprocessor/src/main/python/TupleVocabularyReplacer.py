@@ -22,6 +22,7 @@ oov_symbol = "<OOV>"
 print "Number of input files: %d" % len(tuple_files)
 print "Output directory is: ", tuple_out_dir
 
+
 class Vocabulary:
     def __init__(self, size):
         self.size = size
@@ -41,6 +42,7 @@ class Vocabulary:
             for word, count in self.vocab.most_common(self.size):
                 out.write("%s\t%d\n" % (word, count))
 
+
 noun_vocab = Vocabulary(noun_size)
 prep_vocab = Vocabulary(preposition_size)
 verb_vocab = Vocabulary(verb_size)
@@ -50,8 +52,7 @@ for filepath in tuple_files:
         i = 0
 
         for line in tuple_file:
-            print filepath, line, str(i)
-            i+=1
+            i += 1
 
             fields = line.strip().split("\t")
 
@@ -72,9 +73,11 @@ for filepath in tuple_files:
 
             if len(fields) > 9:
                 prep_words = fields[8:]
-                for prep, noun, noun_id in [prep_words[i: i + 3] for i in range(0, len(prep_words), 3)]:
-                    noun_vocab.add(noun)
-                    prep_vocab.add(prep)
+                for prep_tuple in [prep_words[i: i + 3] for i in range(0, len(prep_words), 3)]:
+                    if len(prep_tuple) == 3:
+                        prep, noun, noun_id = prep_tuple
+                        noun_vocab.add(noun)
+                        prep_vocab.add(prep)
 
 if not os.path.isdir(tuple_out_dir):
     os.makedirs(tuple_out_dir)
@@ -87,16 +90,18 @@ common_nouns = noun_vocab.get_most_common()
 common_preps = prep_vocab.get_most_common()
 common_verbs = verb_vocab.get_most_common()
 
-for filepath in glob.glob(tuple_files):
+for filepath in tuple_files:
     out_path = os.path.join(tuple_out_dir, os.path.basename(filepath))
 
     with open(filepath) as tuple_file, open(out_path, 'w') as out_file:
-        new_fields = []
-
         for line in tuple_file:
-            fields = line.strip().split("\t")
+            new_fields = []
 
-            i += 1
+            if not line.strip():
+                out_file.write("\n")
+                continue
+
+            fields = line.strip().split("\t")
 
             if len(fields) >= 7:
                 subj, verb, dobj, iobj = fields[:4]
@@ -129,20 +134,26 @@ for filepath in glob.glob(tuple_files):
 
             if len(fields) > 9:
                 prep_words = fields[8:]
-                for prep, noun, noun_id in [prep_words[i: i + 3] for i in range(0, len(prep_words), 3)]:
-                    if prep in common_preps:
-                        new_fields.append(prep)
-                    else:
-                        new_fields.append(oov_symbol)
+                for prep_tuple in [prep_words[i: i + 3] for i in range(0, len(prep_words), 3)]:
+                    if len(prep_tuple) == 3:
+                        prep, noun, noun_id = prep_tuple
+                        noun_vocab.add(noun)
+                        prep_vocab.add(prep)
 
-                    if noun in common_nouns:
-                        new_fields.append(noun)
-                    else:
-                        new_fields.append(oov_symbol)
+                        if prep in common_preps:
+                            new_fields.append(prep)
+                        else:
+                            new_fields.append(oov_symbol)
 
-                    new_fields.append(noun_id)
+                        if noun in common_nouns:
+                            new_fields.append(noun)
+                        else:
+                            new_fields.append(oov_symbol)
+
+                        new_fields.append(noun_id)
 
             if len(fields) == 1:
-                out_file.write(line)
+                if fields[0].startswith("#"):
+                    out_file.write(line)
             else:
                 out_file.write("\t".join(new_fields) + "\n")
