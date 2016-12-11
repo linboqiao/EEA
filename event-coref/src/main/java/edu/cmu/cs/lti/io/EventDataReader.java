@@ -131,24 +131,25 @@ public class EventDataReader {
     private static void writeAsXmi(CollectionReaderDescription reader, String parentDir,
                                    String rawBase, boolean skipReading)
             throws SAXException, UIMAException, CpeDescriptorException, IOException {
-
         if (!skipReading || !new File(parentDir, rawBase).exists()) {
             AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(parentDir, rawBase);
             SimplePipeline.runPipeline(reader, writer);
         }
     }
 
-    private void readBratAfter(Configuration datasetConfig, TypeSystemDescription typeSystemDescription,
-                               String rawBase)
+    private void readBratAfter(Configuration datasetConfig, TypeSystemDescription typeSystemDescription, String rawBase)
             throws SAXException, UIMAException, CpeDescriptorException, IOException {
-        CollectionReaderDescription baseReader = getBaseReader(datasetConfig, typeSystemDescription, "before_after");
-        AnalysisEngineDescription goldAfterLinker = AnalysisEngineFactory.createEngineDescription(
-                AfterLinkGoldStandardAnnotator.class, typeSystemDescription,
-                AfterLinkGoldStandardAnnotator.PARAM_ANNOTATION_DIR,
-                datasetConfig.get("edu.cmu.cs.lti.data.annotation.path")
-        );
-        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(workingDir, rawBase);
-        SimplePipeline.runPipeline(baseReader, goldAfterLinker, writer);
+        if (!skipRaw || !new File(workingDir, rawBase).exists()) {
+            CollectionReaderDescription baseReader = getBaseReader(datasetConfig, typeSystemDescription,
+                    "before_after");
+            AnalysisEngineDescription goldAfterLinker = AnalysisEngineFactory.createEngineDescription(
+                    AfterLinkGoldStandardAnnotator.class, typeSystemDescription,
+                    AfterLinkGoldStandardAnnotator.PARAM_ANNOTATION_DIR,
+                    datasetConfig.get("edu.cmu.cs.lti.data.annotation.path")
+            );
+            AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(workingDir, rawBase);
+            SimplePipeline.runPipeline(baseReader, goldAfterLinker, writer);
+        }
     }
 
     private CollectionReaderDescription getBaseReader(Configuration datasetConfig,

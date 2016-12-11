@@ -215,6 +215,12 @@ public class EventMentionPipeline {
 
         boolean skipRaw = taskConfig.getBoolean("edu.cmu.cs.lti.skip.raw", false);
 
+        if (skipRaw) {
+            logger.info("Will not read raw files from corpus again.");
+        }else{
+            logger.info("Will read raw files from corpus.");
+        }
+
         CollectionReaderDescription trainingReader = readDatasets(datasetSettingDir, trainingDatasets,
                 trainingWorkingDir, skipRaw);
         CollectionReaderDescription testReader = readDatasets(datasetSettingDir, testDatasets,

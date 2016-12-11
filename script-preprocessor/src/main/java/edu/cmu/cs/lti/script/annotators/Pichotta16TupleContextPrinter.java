@@ -71,8 +71,11 @@ public class Pichotta16TupleContextPrinter extends AbstractTupleContextPrinter {
         }
 
         for (int i = 0; i < tupleFields.length; i++) {
-            if (tupleFields[i] == null) {
+            String v = tupleFields[i];
+            if (v == null) {
                 tupleFields[i] = "-";
+            } else {
+                tupleFields[i] = v.replaceAll("\t", " ").replaceAll("\n", " ");
             }
         }
 
@@ -128,8 +131,6 @@ public class Pichotta16TupleContextPrinter extends AbstractTupleContextPrinter {
             if (sharedSubjFromParent != null) {
                 tupleFields[0] = sharedSubjFromParent.getLemma().toLowerCase();
                 tupleFields[4] = String.valueOf(getClusterId(sharedSubjFromParent));
-//                logger.info("Find a subject through parent, the head is " + head.getLemma() + " , the subject is " + sharedSubjFromParent.getLemma());
-//                DebugUtils.pause();
             }
         }
     }

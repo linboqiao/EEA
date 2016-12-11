@@ -7,7 +7,6 @@ import numpy as np
 
 import gensim
 
-
 def parse_entity_info(cells):
     headwords = {}
     types = {}
