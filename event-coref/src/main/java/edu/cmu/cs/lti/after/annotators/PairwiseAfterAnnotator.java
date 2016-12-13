@@ -15,7 +15,7 @@ import java.io.File;
  *
  * @author Zhengzhong Liu
  */
-public class AfterAnnotator extends AbstractLoggingAnnotator{
+public class PairwiseAfterAnnotator extends AbstractLoggingAnnotator{
 
     public static final String PARAM_MODEL_DIRECTORY = "modelDirectory";
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)

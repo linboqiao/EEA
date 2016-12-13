@@ -77,7 +77,7 @@ public class MentionGraph implements Serializable {
      *                                     labelled counter part.
      * @param labelledCandidateTypes       Type for each labelled candidate.
      * @param labelledCandidate2EventIndex Event for each labelled candidate.
-     * @param relations                    Relation between labelled candidate.
+     * @param relations                    Relation between candidates (unlabelled).
      * @param extractor                    The feature extractor.
      */
     public MentionGraph(List<MentionCandidate> candidates, SetMultimap<Integer, Integer> candidate2Labelled,
@@ -303,7 +303,6 @@ public class MentionGraph implements Serializable {
 
     public MentionSubGraph getSubLatentTree(GraphWeightVector weights, List<MentionCandidate> mentionCandidates,
                                             int limit) {
-        // TODO: check boundary case of limit.
         MentionSubGraph latentTree = new MentionSubGraph(this, limit);
 
         for (int curr = 1; curr < limit; curr++) {

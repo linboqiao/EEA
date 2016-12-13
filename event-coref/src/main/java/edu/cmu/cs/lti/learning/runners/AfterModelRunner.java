@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.learning.runners;
 
-import edu.cmu.cs.lti.after.annotators.AfterAnnotator;
-import edu.cmu.cs.lti.after.train.AfterTrainer;
+import edu.cmu.cs.lti.after.annotators.PairwiseAfterAnnotator;
+import edu.cmu.cs.lti.after.train.PairwiseAfterTrainer;
 import edu.cmu.cs.lti.emd.pipeline.TrainingLooper;
 import edu.cmu.cs.lti.event_coref.annotators.train.BeamJointTrainer;
 import edu.cmu.cs.lti.learning.utils.ModelUtils;
@@ -54,7 +54,7 @@ public class AfterModelRunner extends AbstractMentionModelRunner {
         } else {
             logger.info("Saving model directory at : " + cvModelDir);
             AnalysisEngineDescription trainEngine = AnalysisEngineFactory.createEngineDescription(
-                    AfterTrainer.class, typeSystemDescription
+                    PairwiseAfterTrainer.class, typeSystemDescription
             );
 
             TrainingLooper trainer = new TrainingLooper(cvModelDir, trainReader, trainEngine, jointMaxIter,
@@ -141,9 +141,9 @@ public class AfterModelRunner extends AbstractMentionModelRunner {
                 @Override
                 public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
                     AnalysisEngineDescription afterLinker = AnalysisEngineFactory.createEngineDescription(
-                            AfterAnnotator.class, typeSystemDescription,
-                            AfterAnnotator.PARAM_MODEL_DIRECTORY, model,
-                            AfterAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
+                            PairwiseAfterAnnotator.class, typeSystemDescription,
+                            PairwiseAfterAnnotator.PARAM_MODEL_DIRECTORY, model,
+                            PairwiseAfterAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
                     );
 
                     return new AnalysisEngineDescription[]{afterLinker};

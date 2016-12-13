@@ -111,18 +111,48 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        UimaConvenience.printProcessLog(aJCas, logger);
-
         List<EventMention> allMentions = MentionUtils.clearDuplicates(
                 new ArrayList<>(JCasUtil.select(aJCas, EventMention.class))
         );
 
+        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions);
+
+        extractor.initWorkspace(aJCas);
+
+        MentionGraph mentionGraph = getMentionGraph(aJCas, allMentions);
+
+        // Decoding.
+        MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, extractor);
+
+        if (!predictedTree.graphMatch()) {
+//            logger.debug("Found unmatched graph");
+
+            MentionSubGraph latentTree = mentionGraph.getLatentTree(weights, candidates);
+
+//            logger.debug("Best Gold Tree.");
+//            logger.debug(latentTree.toString());
+//
+//            logger.debug("Best Decoding Tree.");
+//            logger.debug(predictedTree.toString());
+
+            double loss = update(predictedTree, latentTree);
+
+            trainingStats.addLoss(logger, loss / mentionGraph.numNodes());
+
+//            logger.debug("Loss is " + loss);
+//            logger.debug("Averaged Loss is " + loss / mentionGraph.numNodes());
+//
+//            DebugUtils.pause(logger);
+        } else {
+            trainingStats.addLoss(logger, 0);
+        }
+    }
+
+    private MentionGraph getMentionGraph(JCas aJCas, List<EventMention> allMentions){
         int eventIdx = 0;
         for (Event event : JCasUtil.select(aJCas, Event.class)) {
             event.setIndex(eventIdx++);
         }
-
-        extractor.initWorkspace(aJCas);
 
         String cacheKey = UimaConvenience.getShortDocumentNameWithOffset(aJCas);
 
@@ -153,32 +183,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
                     relations, extractor, true);
             graphCacher.addWithMultiKey(mentionGraph, cacheKey);
         }
-
-        // Decoding.
-        MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, extractor);
-
-        if (!predictedTree.graphMatch()) {
-//            logger.debug("Found unmatched graph");
-
-            MentionSubGraph latentTree = mentionGraph.getLatentTree(weights, candidates);
-
-//            logger.debug("Best Gold Tree.");
-//            logger.debug(latentTree.toString());
-//
-//            logger.debug("Best Decoding Tree.");
-//            logger.debug(predictedTree.toString());
-
-            double loss = update(predictedTree, latentTree);
-
-            trainingStats.addLoss(logger, loss / mentionGraph.numNodes());
-
-//            logger.debug("Loss is " + loss);
-//            logger.debug("Averaged Loss is " + loss / mentionGraph.numNodes());
-//
-//            DebugUtils.pause(logger);
-        } else {
-            trainingStats.addLoss(logger, 0);
-        }
+        return mentionGraph;
     }
 
     /**
@@ -228,27 +233,6 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
             weights.updateWeightsBy(delta, tau);
             weights.updateAverageWeights();
         }
-//        else{
-//            logger.error("Predicted tree is: ");
-//            logger.error(predictedTree.toString());
-//            logger.error("Predicted tree features: ");
-//            logger.error(predictedTree.getAllFeatures(classAlphabet, featureAlphabet).readableNodeVector());
-//
-//            logger.error("Latent tree is: ");
-//            logger.error(latentTree.toString());
-//            logger.error("Latent tree features: ");
-//            logger.error(latentTree.getAllFeatures(classAlphabet, featureAlphabet).readableNodeVector());
-//            logger.error("Delta feature is: ");
-//            logger.error(delta.readableNodeVector());
-//            throw new RuntimeException("L2 is 0, cannot perform update.");
-//        }
-
-//        logger.debug(String.format("Updating with step %.2f, loss is %.2f, l2 square is %.2f", tau, loss, l2Sqaure));
-
-//        logger.info("Delta is ");
-//        logger.info(delta.readableNodeVector());
-
-
         return loss;
     }
 

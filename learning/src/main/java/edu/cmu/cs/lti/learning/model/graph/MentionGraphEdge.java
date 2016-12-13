@@ -26,8 +26,6 @@ public class MentionGraphEdge implements Serializable {
 
     private static final long serialVersionUID = -4402367559083671750L;
 
-//    private LabelledMentionGraphEdge realLabelledEdge;
-
     // Features are expensive, only initialized when needed.
     private TObjectDoubleMap<String> rawFeaturesLabelIndependent;
 
@@ -45,11 +43,6 @@ public class MentionGraphEdge implements Serializable {
     private boolean averageMode;
 
     private EdgeType actualEdgeType;
-
-//    public MentionGraphEdge(MentionGraph graph, PairFeatureExtractor extractor, int gov, int dep, boolean
-// averageMode) {
-//        this(graph, extractor, gov, dep, null, null, null, new ArrayList<>(), averageMode);
-//    }
 
     public MentionGraphEdge(MentionGraph graph, PairFeatureExtractor extractor, int gov, int dep,
                             boolean averageMode) {
@@ -149,6 +142,8 @@ public class MentionGraphEdge implements Serializable {
         typedEdges.put(govKey, depKey, newEdge);
 
         TObjectDoubleMap<String> rawFeaturesNeedLabel = extractNodeDependentFeatures(mentions, govKey, depKey);
+
+        // Node independent features can be shared, may have already existed.
         TObjectDoubleMap<String> rawFeaturesNoLabel = getNodeIndependentFeatures(mentions, govKey, depKey);
 
         FeatureVector featureVector = extractor.newFeatureVector();

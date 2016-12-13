@@ -1,9 +1,6 @@
 package edu.cmu.cs.lti.io;
 
-import edu.cmu.cs.lti.collection_reader.AceDataCollectionReader;
-import edu.cmu.cs.lti.collection_reader.AfterLinkGoldStandardAnnotator;
-import edu.cmu.cs.lti.collection_reader.EreCorpusReader;
-import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
+import edu.cmu.cs.lti.collection_reader.*;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
@@ -95,7 +92,6 @@ public class EventDataReader {
                     EreCorpusReader.PARAM_SOURCE_TEXT_DIR, datasetConfig.get("edu.cmu.cs.lti.data.source.path"),
                     EreCorpusReader.PARAM_ERE_ANNOTATION_EXT, datasetConfig.get("edu.cmu.cs.lti.data.annotation" +
                             ".extension"),
-
                     EreCorpusReader.PARAM_SOURCE_EXT, datasetConfig.get("edu.cmu.cs.lti.data.source.extension"),
                     EreCorpusReader.PARAM_ERE_EVENT_SPLIT_DOC,
                     datasetConfig.getBoolean("edu.cmu.cs.lti.data.event.split_doc", false),
@@ -132,8 +128,13 @@ public class EventDataReader {
                                    String rawBase, boolean skipReading)
             throws SAXException, UIMAException, CpeDescriptorException, IOException {
         if (!skipReading || !new File(parentDir, rawBase).exists()) {
+            // We insert EventMentionSpan annotation here.
+            AnalysisEngineDescription emsAnnotator = AnalysisEngineFactory.createEngineDescription(
+                    EventMentionSpanAnnotator.class
+            );
             AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(parentDir, rawBase);
-            SimplePipeline.runPipeline(reader, writer);
+
+            SimplePipeline.runPipeline(reader,emsAnnotator,  writer);
         }
     }
 

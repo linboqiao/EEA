@@ -31,7 +31,6 @@ public class PairFeatureExtractor implements Serializable {
 
     private JCas context;
 
-    // TODO Extractor is highly depended on event mentions now. let's what can be done
     public PairFeatureExtractor(FeatureAlphabet featureAlphabet, ClassAlphabet classAlphabet,
                                 Configuration generalConfig, Configuration featureConfig)
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException,

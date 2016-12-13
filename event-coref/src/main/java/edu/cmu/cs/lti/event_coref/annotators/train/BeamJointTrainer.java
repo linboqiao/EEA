@@ -159,11 +159,6 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         UimaConvenience.printProcessLog(aJCas, logger);
-//        logger.debug("[LOSS TRACK] Joint trainer " + UimaConvenience.getDocId(aJCas));
-//        if (UimaConvenience.getDocId(aJCas).equals("bolt-eng-DF-170-181125-9125545.txt")){
-//            DebugUtils.pause(logger);
-//            DiscriminativeUpdater.debugger = true;
-//        }
 
         List<StanfordCorenlpToken> allTokens = new ArrayList<>(JCasUtil.select(aJCas, StanfordCorenlpToken.class));
         List<EventMention> allMentions = MentionUtils.clearDuplicates(
@@ -173,7 +168,6 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         // Each token is a candidate.
         List<MentionCandidate> systemCandidates = MentionUtils.createCandidatesFromTokens(aJCas, allTokens);
         List<MentionCandidate> goldCandidates = MentionUtils.createCandidatesFromTokens(aJCas, allTokens);
-
 
         // A candidate can corresponds to multiple types.
         SetMultimap<Integer, Integer> candidate2Node = HashMultimap.create();
