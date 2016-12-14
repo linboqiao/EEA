@@ -1,22 +1,20 @@
 package edu.cmu.cs.lti.utils;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.SetMultimap;
+import com.google.common.collect.*;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
-import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.uima.util.MentionTypeUtils;
+import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TObjectIntMap;
-import gnu.trove.map.hash.TIntIntHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.javatuples.Quartet;
@@ -37,40 +35,109 @@ import java.util.stream.IntStream;
 public class MentionUtils {
     private static final Logger logger = LoggerFactory.getLogger(MentionUtils.class);
 
-
-    // TODO create a MentionGraph.
-    public MentionGraph createMentionGraph(JCas aJCas, PairFeatureExtractor extractor) {
+    public static MentionGraph createMentionGraph(JCas aJCas, List<MentionCandidate> candidates,
+                                                  PairFeatureExtractor extractor, boolean isTraining) {
+        // Currently, we still could not handle cases where mentions have the same attributes and spans.
         List<EventMention> allMentions = MentionUtils.clearDuplicates(
                 new ArrayList<>(JCasUtil.select(aJCas, EventMention.class))
         );
 
+        // Create singleton events if not existed yet.
+        createSingleEvents(aJCas, allMentions);
+
+        TObjectIntMap<EventMention> mentionIndices = new TObjectIntHashMap<>();
+        for (int i = 0; i < allMentions.size(); i++) {
+            EventMention mention = allMentions.get(i);
+            mention.setIndex(i);
+            mentionIndices.put(mention, i);
+        }
+
+        List<EventMentionSpan> mentionSpans = new ArrayList<>(JCasUtil.select(aJCas, EventMentionSpan.class));
+
         int eventIdx = 0;
+        int[] mentionId2EventId = new int[allMentions.size()];
+
         for (Event event : JCasUtil.select(aJCas, Event.class)) {
             event.setIndex(eventIdx++);
+            // Here we only store non-singletons.
+            int clusterSize = event.getEventMentions().size();
+            if (clusterSize > 1) {
+                for (int i = 0; i < event.getEventMentions().size(); i++) {
+                    EventMention mention = event.getEventMentions(i);
+                    mentionId2EventId[mention.getIndex()] = event.getIndex();
+                }
+            }
         }
 
+        // Create some mapping for creating the event graph.
+        int[][] candidate2Mentions = new int[candidates.size()][];
+        String[] mentionTypes = new String[allMentions.size()];
 
-        Map<Integer, Integer> mentionId2EventId = MentionUtils.groupEventClusters(allMentions);
+        TObjectIntMap<EventMentionSpan> mentionIds = new TObjectIntHashMap<>();
+        for (int i = 0; i < mentionSpans.size(); i++) {
+            // i is the candidate id, a.k.a, the mention span id.
+            EventMentionSpan ems = mentionSpans.get(i);
+            mentionIds.put(ems, i);
 
-        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions);
+            Collection<EventMention> mentions = FSCollectionFactory.create(ems.getEventMentions(), EventMention.class);
 
-        // Each candidate can correspond to multiple nodes.
-        SetMultimap<Integer, Integer> candidate2SplitNodes = HashMultimap.create();
-        // A gold mention has a one to one mapping to a node in current case.
-        TIntIntMap mention2SplitNodes = new TIntIntHashMap();
-        for (int i = 0; i < allMentions.size(); i++) {
-            candidate2SplitNodes.put(i, i);
-            mention2SplitNodes.put(i, i);
+            candidate2Mentions[i] = new int[mentions.size()];
+
+            int j = 0;
+            for (EventMention mention : mentions) {
+                int mentionIndex = mention.getIndex();
+                candidate2Mentions[i][j] = mentionIndex;
+                mentionTypes[mentionIndex] = mention.getEventType();
+                j++;
+            }
         }
 
-        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2SplitNodes,
-                allMentions);
+        Table<Integer, Integer, String> relations = indexSpanRelations(aJCas, mentionIds);
 
-        List<String> mentionTypes = allMentions.stream().map(EventMention::getEventType).collect(Collectors.toList());
-
-        return new MentionGraph(candidates, candidate2SplitNodes, mentionTypes, mentionId2EventId,
-                relations, extractor, true);
+        return new MentionGraph(candidates, candidate2Mentions, mentionTypes, mentionId2EventId,
+                relations, extractor, isTraining);
     }
+
+    private static void createSingleEvents(JCas aJCas, List<EventMention> mentions) {
+        for (int i = 0; i < mentions.size(); i++) {
+            EventMention mention = mentions.get(i);
+
+            if (mention.getReferringEvent() == null) {
+                Event event = new Event(aJCas);
+                event.setEventMentions(FSCollectionFactory.createFSArray(aJCas, Collections.singletonList(mention)));
+                mention.setReferringEvent(event);
+                UimaAnnotationUtils.finishTop(event, "Singleton", 0, aJCas);
+            }
+        }
+    }
+
+    public static List<MentionCandidate> getSpanBasedCandidates(JCas aJCas) {
+        int sentIndex = 0;
+        List<EventMentionSpan> mentionSpans = new ArrayList<>(JCasUtil.select(aJCas, EventMentionSpan.class));
+
+        for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
+            sentence.setIndex(sentIndex++);
+        }
+
+        Map<EventMentionSpan, Collection<StanfordCorenlpSentence>> mention2Sentence = JCasUtil.indexCovering(
+                aJCas, EventMentionSpan.class, StanfordCorenlpSentence.class);
+
+        List<MentionCandidate> allCandidates = new ArrayList<>();
+
+        for (int i = 0; i < mentionSpans.size(); i++) {
+            EventMentionSpan eventMentionSpan = mentionSpans.get(i);
+            MentionCandidate candidate = new MentionCandidate(eventMentionSpan.getBegin(), eventMentionSpan.getEnd(),
+                    Iterables.getFirst(mention2Sentence.get(eventMentionSpan), null),
+                    eventMentionSpan.getHeadWord(), i
+            );
+            candidate.setRealis(eventMentionSpan.getRealisType());
+            candidate.setMentionType(eventMentionSpan.getEventType());
+            allCandidates.add(candidate);
+        }
+
+        return allCandidates;
+    }
+
 
     /**
      * Convert event mentions into mention candidates.
@@ -216,8 +283,8 @@ public class MentionUtils {
     /**
      * @return Map from the mention to the event index it refers.
      */
-    public static Map<Integer, Integer> groupEventClusters(List<EventMention> mentions) {
-        Map<Integer, Integer> mentionId2EventId = new HashMap<>();
+    public static int[] groupEventClusters(List<EventMention> mentions) {
+        int[] mentionId2EventId = new int[mentions.size()];
         int eventIndex = 0;
 
         Map<Event, Integer> eventIndices = new HashMap<>();
@@ -225,18 +292,31 @@ public class MentionUtils {
         for (int i = 0; i < mentions.size(); i++) {
             Event referringEvent = mentions.get(i).getReferringEvent();
             if (referringEvent == null) {
-                mentionId2EventId.put(i, eventIndex);
+                mentionId2EventId[i] = eventIndex;
                 eventIndex++;
             } else if (eventIndices.containsKey(referringEvent)) {
                 Integer referringIndex = eventIndices.get(referringEvent);
-                mentionId2EventId.put(i, referringIndex);
+                mentionId2EventId[i] = referringIndex;
             } else {
-                mentionId2EventId.put(i, eventIndex);
+                mentionId2EventId[i] = eventIndex;
                 eventIndices.put(referringEvent, eventIndex);
                 eventIndex++;
             }
         }
         return mentionId2EventId;
+    }
+
+    public static Table<Integer, Integer, String> indexSpanRelations(JCas aJCas,
+                                                                     TObjectIntMap<EventMentionSpan> spanIds) {
+        Table<Integer, Integer, String> relations = HashBasedTable.create();
+
+        for (EventMentionSpanRelation relation : JCasUtil.select(aJCas, EventMentionSpanRelation.class)) {
+            int head = spanIds.get(relation.getHead());
+            int child = spanIds.get(relation.getChild());
+            relations.put(head, child, relation.getRelationType());
+        }
+
+        return relations;
     }
 
     public static Map<Pair<Integer, Integer>, String> indexRelations(JCas aJCas, TIntIntMap mention2SplitNodes,

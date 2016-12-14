@@ -130,7 +130,7 @@ public class EventDataReader {
         if (!skipReading || !new File(parentDir, rawBase).exists()) {
             // We insert EventMentionSpan annotation here.
             AnalysisEngineDescription emsAnnotator = AnalysisEngineFactory.createEngineDescription(
-                    EventMentionSpanAnnotator.class
+                    EventSpanProcessor.class
             );
             AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(parentDir, rawBase);
 

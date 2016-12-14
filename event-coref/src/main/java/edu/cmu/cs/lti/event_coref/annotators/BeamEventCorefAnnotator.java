@@ -1,9 +1,6 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.SetMultimap;
-import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.decoding.BeamLatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
@@ -18,8 +15,7 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
-import gnu.trove.map.TIntIntMap;
-import gnu.trove.map.hash.TIntIntHashMap;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
@@ -38,10 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import static edu.cmu.cs.lti.utils.MentionUtils.mapCandidate2Events;
-import static edu.cmu.cs.lti.utils.MentionUtils.processCandidates;
 import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
 
 /**
@@ -60,9 +53,9 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
     File modelDirectory;
 
-    public static final String PARAM_MERGE_MENTION = "mergeMention";
-    @ConfigurationParameter(name = PARAM_MERGE_MENTION, defaultValue = "True")
-    private boolean mergeMention;
+//    public static final String PARAM_MERGE_MENTION = "mergeMention";
+//    @ConfigurationParameter(name = PARAM_MERGE_MENTION, defaultValue = "True")
+//    private boolean mergeMention;
 
     public static final String PARAM_BEAM_SIZE = "beamSize";
     @ConfigurationParameter(name = PARAM_BEAM_SIZE)
@@ -87,7 +80,7 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
             e.printStackTrace();
         }
 
-        logger.info(String.format("Beam size : %d, merged mention : %s", beamSize, mergeMention));
+        logger.info(String.format("Beam size : %d.", beamSize));
     }
 
 
@@ -97,11 +90,11 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
 
         corefExtractor.initWorkspace(aJCas);
 
-        Pair<MentionGraph, List<MentionCandidate>> graphAndCands = mergeMention ? getCombinedGraph(aJCas, allMentions) :
-                getSeparateGraph(aJCas, allMentions);
+//        Pair<MentionGraph, List<MentionCandidate>> graphAndCands = mergeMention ? getCombinedGraph(aJCas, allMentions) :
+//                getSeparateGraph(aJCas, allMentions);
 
-        MentionGraph mentionGraph = graphAndCands.getKey();
-        List<MentionCandidate> candidates = graphAndCands.getValue();
+        List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
+        MentionGraph mentionGraph = MentionUtils.createMentionGraph(aJCas, candidates, corefExtractor, false);
 
         NodeLinkingState decodingState = decoder.decode(aJCas, mentionGraph, candidates);
 
@@ -142,12 +135,6 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
                                               ArrayListMultimap<Pair<Integer, String>, EventMention> node2Mention) {
         predictedTree.resolveCoreference();
         List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
-
-//        logger.info(predictedTree.toString());
-//
-//        for (List<Pair<Integer, String>> corefChain : corefChains) {
-//            logger.info(corefChain.toString());
-//        }
 
         for (List<Pair<Integer, String>> corefChain : corefChains) {
             List<EventMention> predictedChain = new ArrayList<>();
@@ -218,61 +205,50 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
         }
     }
 
-    private Pair<MentionGraph, List<MentionCandidate>> getSeparateGraph(JCas aJCas, List<EventMention> allMentions) {
-        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions);
-
-        // Each candidate can correspond to multiple nodes.
-        SetMultimap<Integer, Integer> candidate2SplitNodes = HashMultimap.create();
-        // A gold mention has a one to one mapping to a node in current case.
-        TIntIntMap mention2SplitNodes = new TIntIntHashMap();
-        for (int i = 0; i < allMentions.size(); i++) {
-            candidate2SplitNodes.put(i, i);
-            mention2SplitNodes.put(i, i);
-        }
-
-//        for (MentionCandidate candidate : candidates) {
-//            logger.info(candidate.toString());
+//    private Pair<MentionGraph, List<MentionCandidate>> getSeparateGraph(JCas aJCas, List<EventMention> allMentions) {
+//        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions);
+//
+//        // Each candidate can correspond to multiple nodes.
+//        SetMultimap<Integer, Integer> candidate2SplitNodes = HashMultimap.create();
+//        // A gold mention has a one to one mapping to a node in current case.
+//        TIntIntMap mention2SplitNodes = new TIntIntHashMap();
+//        for (int i = 0; i < allMentions.size(); i++) {
+//            candidate2SplitNodes.put(i, i);
+//            mention2SplitNodes.put(i, i);
 //        }
-
-        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2SplitNodes,
-                allMentions);
-
-        List<String> mentionTypes = allMentions.stream().map(EventMention::getEventType).collect(Collectors.toList());
-
-        Map<Integer, Integer> mentionId2EventId = MentionUtils.groupEventClusters(allMentions);
-
-        MentionGraph graph = new MentionGraph(candidates, candidate2SplitNodes, mentionTypes, mentionId2EventId,
-                relations, corefExtractor, false);
-
-        return Pair.of(graph, candidates);
-    }
-
-    private Pair<MentionGraph, List<MentionCandidate>> getCombinedGraph(JCas aJCas, List<EventMention> allMentions) {
-        List<MentionCandidate> candidates = MentionUtils.createMergedCandidates(aJCas, allMentions);
-
-        // A candidate is unique on a specific span.
-        // Multiple nodes with different types can be on the same span.
-
-        // A map from the candidate id to node id, a candidate can correspond to more than one node.
-        SetMultimap<Integer, Integer> candidate2Node = HashMultimap.create();
-        // The type of each node, indexed.
-        List<String> nodeTypes = new ArrayList<>();
-        // A map from the event mention to the node id.
-        TIntIntMap mention2Node = new TIntIntHashMap();
-        int numNodes = processCandidates(allMentions, candidates, candidate2Node, mention2Node, nodeTypes);
-
-        // Convert mention clusters to split candidate clusters.
-        Map<Integer, Integer> mention2event = MentionUtils.groupEventClusters(allMentions);
-        Map<Integer, Integer> node2EventId = mapCandidate2Events(numNodes, mention2Node, mention2event);
-
-        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2Node,
-                allMentions);
-
-        MentionGraph graph = new MentionGraph(candidates, candidate2Node, nodeTypes, node2EventId, relations,
-                corefExtractor, false);
-
-        return Pair.of(graph, candidates);
-    }
+//
+//        MentionGraph graph = MentionUtils.createMentionGraph(aJCas, corefExtractor, false);
+//
+//        return Pair.of(graph, candidates);
+//    }
+//
+//    private Pair<MentionGraph, List<MentionCandidate>> getCombinedGraph(JCas aJCas, List<EventMention> allMentions) {
+//        List<MentionCandidate> candidates = MentionUtils.createMergedCandidates(aJCas, allMentions);
+//
+//        // A candidate is unique on a specific span.
+//        // Multiple nodes with different types can be on the same span.
+//
+//        // A map from the candidate id to node id, a candidate can correspond to more than one node.
+//        SetMultimap<Integer, Integer> candidate2Node = HashMultimap.create();
+//        // The type of each node, indexed.
+//        List<String> nodeTypes = new ArrayList<>();
+//        // A map from the event mention to the node id.
+//        TIntIntMap mention2Node = new TIntIntHashMap();
+//        int numNodes = processCandidates(allMentions, candidates, candidate2Node, mention2Node, nodeTypes);
+//
+//        // Convert mention clusters to split candidate clusters.
+//        Map<Integer, Integer> mention2event = MentionUtils.groupEventClusters(allMentions);
+//        Map<Integer, Integer> node2EventId = mapCandidate2Events(numNodes, mention2Node, mention2event);
+//
+//        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2Node,
+//                allMentions);
+//
+//        MentionGraph graph = new MentionGraph(candidates, candidate2Node, nodeTypes, node2EventId, relations,
+//                corefExtractor, false);
+//
+//
+//        return Pair.of(graph, candidates);
+//    }
 
     private void specWarning(String oldSpec, String newSpec) {
         if (!oldSpec.equals(newSpec)) {

@@ -12,7 +12,7 @@ import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
-import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
+import edu.cmu.cs.lti.uima.util.MentionTypeUtils;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;

@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.event_coref.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
-import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
+import edu.cmu.cs.lti.uima.util.MentionTypeUtils;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.DiscontinuousComponentAnnotation;
 import edu.cmu.cs.lti.script.type.Event;

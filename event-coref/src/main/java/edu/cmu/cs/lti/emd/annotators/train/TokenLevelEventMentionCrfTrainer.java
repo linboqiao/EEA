@@ -11,7 +11,7 @@ import edu.cmu.cs.lti.learning.model.GraphFeatureVector;
 import edu.cmu.cs.lti.learning.model.SequenceSolution;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
-import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
+import edu.cmu.cs.lti.uima.util.MentionTypeUtils;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;

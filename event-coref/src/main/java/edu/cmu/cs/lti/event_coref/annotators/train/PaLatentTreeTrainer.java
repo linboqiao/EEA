@@ -1,7 +1,5 @@
 package edu.cmu.cs.lti.event_coref.annotators.train;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.SetMultimap;
 import edu.cmu.cs.lti.event_coref.decoding.BestFirstLatentTreeDecoder;
 import edu.cmu.cs.lti.event_coref.decoding.LatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
@@ -18,9 +16,6 @@ import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
 import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;
-import gnu.trove.map.TIntIntMap;
-import gnu.trove.map.hash.TIntIntHashMap;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -33,8 +28,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA.
@@ -159,28 +152,9 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         // A mention graph represent all the mentions and contains features among them.
         MentionGraph mentionGraph = graphCacher.get(cacheKey);
 
-        Map<Integer, Integer> mentionId2EventId = MentionUtils.groupEventClusters(allMentions);
-
-        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions);
-
-        // Each candidate can correspond to multiple nodes.
-        SetMultimap<Integer, Integer> candidate2SplitNodes = HashMultimap.create();
-        // A gold mention has a one to one mapping to a node in current case.
-        TIntIntMap mention2SplitNodes = new TIntIntHashMap();
-        for (int i = 0; i < allMentions.size(); i++) {
-            candidate2SplitNodes.put(i, i);
-            mention2SplitNodes.put(i, i);
-        }
-
-        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2SplitNodes,
-                allMentions);
-
-        List<String> mentionTypes = allMentions.stream().map(EventMention::getEventType).collect(Collectors.toList());
-
-
         if (mentionGraph == null) {
-            mentionGraph = new MentionGraph(candidates, candidate2SplitNodes, mentionTypes, mentionId2EventId,
-                    relations, extractor, true);
+            List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
+             mentionGraph = MentionUtils.createMentionGraph(aJCas, candidates, extractor, false);
             graphCacher.addWithMultiKey(mentionGraph, cacheKey);
         }
         return mentionGraph;

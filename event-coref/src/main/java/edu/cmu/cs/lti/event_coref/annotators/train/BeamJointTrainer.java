@@ -25,7 +25,6 @@ import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SerializationUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -98,7 +97,7 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
 
     private SentenceFeatureExtractor realisExtractor;
     private SentenceFeatureExtractor crfExtractor;
-    private PairFeatureExtractor mentionPairExtractor;
+    private PairFeatureExtractor corefExtractor;
     private BeamCrfLatentTreeDecoder decoder;
 
     private static int numIters = 0;
@@ -133,7 +132,7 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         try {
             this.realisExtractor = initializeRealisExtractor(config);
             this.crfExtractor = initializeCrfExtractor(config);
-            this.mentionPairExtractor = initializeMentionPairExtractor(config);
+            this.corefExtractor = initializeMentionPairExtractor(config);
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException
                 | InstantiationException e) {
             e.printStackTrace();
@@ -176,17 +175,22 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         int numNodes = MentionUtils.processCandidates(allMentions, goldCandidates, candidate2Node, mention2Node,
                 nodeTypes);
 
-        // Convert mention clusters to split candidate clusters.
-        Map<Integer, Integer> mention2event = MentionUtils.groupEventClusters(allMentions);
-        Map<Integer, Integer> node2EventId = MentionUtils.mapCandidate2Events(numNodes, mention2Node, mention2event);
-
-        // Read the relations.
-        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2Node, allMentions);
+//        // Convert mention clusters to split candidate clusters.
+//        Map<Integer, Integer> mention2event = MentionUtils.groupEventClusters(allMentions);
+//        Map<Integer, Integer> node2EventId = MentionUtils.mapCandidate2Events(numNodes, mention2Node, mention2event);
+//
+//        // Read the relations.
+//        Map<Pair<Integer, Integer>, String> relations = MentionUtils.indexRelations(aJCas, mention2Node, allMentions);
 
         // Init here so that we can extract features for mention graph.
-        this.mentionPairExtractor.initWorkspace(aJCas);
-        MentionGraph mentionGraph = new MentionGraph(goldCandidates, candidate2Node, nodeTypes, node2EventId,
-                relations, mentionPairExtractor, true);
+        this.corefExtractor.initWorkspace(aJCas);
+
+
+        List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
+        MentionGraph mentionGraph = MentionUtils.createMentionGraph(aJCas, candidates, corefExtractor, true);
+
+//        MentionGraph mentionGraph = new MentionGraph(goldCandidates, candidate2Node, nodeTypes, node2EventId,
+//                relations, mentionPairExtractor, true);
 
 //        logger.debug("Starting decoding.");
 

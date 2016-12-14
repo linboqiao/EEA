@@ -7,7 +7,7 @@ import edu.cmu.cs.lti.learning.model.graph.LabelledMentionGraphEdge;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.update.SeqLoss;
-import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
+import edu.cmu.cs.lti.uima.util.MentionTypeUtils;
 import edu.cmu.cs.lti.utils.MathUtils;
 import org.apache.commons.lang3.tuple.Pair;
 

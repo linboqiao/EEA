@@ -1,8 +1,8 @@
 package edu.cmu.cs.lti.learning.model;
 
-import edu.cmu.cs.lti.learning.utils.MentionTypeUtils;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.type.Word;
+import edu.cmu.cs.lti.uima.util.MentionTypeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

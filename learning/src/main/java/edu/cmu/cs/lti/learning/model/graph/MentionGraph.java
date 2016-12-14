@@ -1,17 +1,12 @@
 package edu.cmu.cs.lti.learning.model.graph;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.SetMultimap;
-import com.google.common.collect.Table;
+import com.google.common.collect.*;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.utils.MathUtils;
-import gnu.trove.map.TIntIntMap;
-import gnu.trove.map.hash.TIntIntHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +41,6 @@ public class MentionGraph implements Serializable {
     // first element.
     // This chain is used to store the gold standard coreference chains during training. Decoding chains are obtained
     // via a similar field in the subgraph.
-//    private int[][] nodeCorefChains;
     private List<Pair<Integer, String>>[] typedCorefChains;
 
     // Represent each relation with a adjacent list.
@@ -64,7 +58,7 @@ public class MentionGraph implements Serializable {
      * Provide to the graph with only a list of mentions, no coreference information.
      */
     public MentionGraph(List<MentionCandidate> mentions, PairFeatureExtractor extractor, boolean useAverage) {
-        this(mentions, HashMultimap.create(), new ArrayList<>(), new HashMap<>(), new HashMap<>(), extractor, false);
+        this(mentions, new int[0][], new String[0], new int[0], HashBasedTable.create(), extractor, false);
         this.useAverage = useAverage;
     }
 
@@ -72,18 +66,17 @@ public class MentionGraph implements Serializable {
      * Provide to the graph a list of mentions and predefined event relations. Nodes without these relations will be
      * link to root implicitly.
      *
-     * @param candidates                   List of candidates for linking. Each candidate corresponds to a unique span.
-     * @param candidate2Labelled           Map from candidate to its labelled version, one candidate can have multiple
-     *                                     labelled counter part.
-     * @param labelledCandidateTypes       Type for each labelled candidate.
-     * @param labelledCandidate2EventIndex Event for each labelled candidate.
-     * @param relations                    Relation between candidates (unlabelled).
-     * @param extractor                    The feature extractor.
+     * @param candidates         List of candidates for linking. Each candidate corresponds to a unique span.
+     * @param candidate2Mentions Map from candidate to its labelled version, one candidate can have multiple
+     *                           labelled counter part.
+     * @param mentionTypes       Type for each labelled candidate.
+     * @param mention2EventIndex Event for each labelled candidate.
+     * @param spanRelations      Relation between candidates (unlabelled).
+     * @param extractor          The feature extractor.
      */
-    public MentionGraph(List<MentionCandidate> candidates, SetMultimap<Integer, Integer> candidate2Labelled,
-                        List<String> labelledCandidateTypes, Map<Integer, Integer> labelledCandidate2EventIndex,
-                        Map<Pair<Integer, Integer>, String> relations, PairFeatureExtractor extractor,
-                        boolean isTraining) {
+    public MentionGraph(List<MentionCandidate> candidates, int[][] candidate2Mentions, String[] mentionTypes,
+                        int[] mention2EventIndex, Table<Integer, Integer, String> spanRelations,
+                        PairFeatureExtractor extractor, boolean isTraining) {
         this.extractor = extractor;
         numNodes = candidates.size() + 1;
 
@@ -98,24 +91,10 @@ public class MentionGraph implements Serializable {
         if (isTraining) {
             this.useAverage = false;
 
-            // Candidates are the index for the actual tokens (or spans) in text, on one candidate there might be
-            // multiple mentions.
-            // Mentions are real annotated mentions, where multiple mentions can corresponds to one single candidate.
-            // Nodes is almost corresponded to candidates, we just add one more root node.
-            TIntIntMap mention2Nodes = new TIntIntHashMap();
-            for (Map.Entry<Integer, Collection<Integer>> candidate2Mentions : candidate2Labelled.asMap().entrySet()) {
-                int nodeIndex = getNodeIndex(candidate2Mentions.getKey());
-                for (Integer mention : candidate2Mentions.getValue()) {
-                    mention2Nodes.put(mention, nodeIndex);
-                }
-            }
-
             // Each cluster is represented as a mapping from the event id to the event mention id list.
             SetMultimap<Integer, Pair<Integer, String>> nodeClusters = HashMultimap.create();
-            SetMultimap<Integer, Integer> labelledClusters = HashMultimap.create();
 
-            groupEventClusters(labelledCandidate2EventIndex, candidate2Labelled, labelledCandidateTypes, nodeClusters,
-                    labelledClusters);
+            groupEventClusters(mention2EventIndex, candidate2Mentions, mentionTypes, nodeClusters);
 
             // Group mention nodes into clusters, the first is the event id, the second is the node id.
             typedCorefChains = GraphUtils.createSortedCorefChains(nodeClusters);
@@ -124,11 +103,11 @@ public class MentionGraph implements Serializable {
 
             // This will store all other relations, which are propagated using the gold clusters.
             resolvedRelations = GraphUtils.resolveRelations(
-                    convertToEventRelation(relations, labelledCandidate2EventIndex), nodeClusters);
+                    convertToEventRelation(spanRelations, mention2EventIndex), nodeClusters);
 
             // Link lingering nodes to root.
             linkToRoot(candidates, keysWithAntecedents);
-        }else{
+        } else {
             this.useAverage = true;
         }
     }
@@ -229,26 +208,18 @@ public class MentionGraph implements Serializable {
      * index, where event mention indices are based on their index in the input list. Note that mention node index is
      * not the same to mention index because it include artificial nodes (e.g. Root).
      */
-    private void groupEventClusters(Map<Integer, Integer> labelled2EventIndex,
-                                    SetMultimap<Integer, Integer> candidate2Labelled,
-                                    List<String> labelledTypes,
-                                    SetMultimap<Integer, Pair<Integer, String>> nodeClusters,
-                                    SetMultimap<Integer, Integer> labelledClusters) {
-//        ArrayListMultimap<Integer, Integer> event2Clusters = ArrayListMultimap.create();
+    private void groupEventClusters(int[] mention2EventIndex,
+                                    int[][] candidate2MentionIndex,
+                                    String[] mentionTypes,
+                                    SetMultimap<Integer, Pair<Integer, String>> nodeClusters) {
         for (int nodeIndex = 0; nodeIndex < numNodes(); nodeIndex++) {
             if (!isRoot(nodeIndex)) {
                 int candidateIndex = getCandidateIndex(nodeIndex);
-                // A candidate can be mapped to multiple mentions (due to multi-tagging). Hence, a cluster can
-                // potentially contains many nodes.
-//                logger.debug("Candidate index " + candidateIndex);
-                for (Integer labelledIndex : candidate2Labelled.get(candidateIndex)) {
-//                    logger.debug("Mention index " + mentionIndex);
-                    if (labelled2EventIndex.containsKey(labelledIndex)) {
-                        int eventIndex = labelled2EventIndex.get(labelledIndex);
-                        nodeClusters.put(eventIndex, Pair.of(nodeIndex, labelledTypes.get(labelledIndex)));
-                        labelledClusters.put(eventIndex, labelledIndex);
-//                        logger.debug("Putting " + eventIndex + " " + mentionIndex);
-                    }
+                // A candidate can be mapped to multiple mentions (due to multi-tagging).
+                // To handle multi-tagging, we represent each element as a pair of node and the type.
+                for (int mentionIndex : candidate2MentionIndex[candidateIndex]) {
+                    int eventIndex = mention2EventIndex[mentionIndex];
+                    nodeClusters.put(eventIndex, Pair.of(nodeIndex, mentionTypes[mentionIndex]));
                 }
             }
         }
@@ -262,13 +233,14 @@ public class MentionGraph implements Serializable {
      * @return Map from edge type to event-event relation.
      */
     private HashMultimap<EdgeType, Pair<Integer, Integer>> convertToEventRelation(
-            Map<Pair<Integer, Integer>, String> relations, Map<Integer, Integer> mention2EventIndex) {
+            Table<Integer, Integer, String> relations, int[] mention2EventIndex) {
         HashMultimap<EdgeType, Pair<Integer, Integer>> allRelations = HashMultimap.create();
-        for (Map.Entry<Pair<Integer, Integer>, String> relation : relations.entrySet()) {
-            int govMention = relation.getKey().getLeft();
-            int depMention = relation.getKey().getRight();
+
+        for (Table.Cell<Integer, Integer, String> relation : relations.cellSet()) {
+            int govMention = relation.getRowKey();
+            int depMention = relation.getColumnKey();
             EdgeType type = EdgeType.valueOf(relation.getValue());
-            allRelations.put(type, Pair.of(mention2EventIndex.get(govMention), mention2EventIndex.get(depMention)));
+            allRelations.put(type, Pair.of(mention2EventIndex[govMention], mention2EventIndex[depMention]));
         }
         return allRelations;
     }
@@ -280,7 +252,8 @@ public class MentionGraph implements Serializable {
         return getEdge(dep, gov);
     }
 
-    public synchronized LabelledMentionGraphEdge getLabelledEdge(List<MentionCandidate> mentions, NodeKey govKey, NodeKey depKey) {
+    public synchronized LabelledMentionGraphEdge getLabelledEdge(List<MentionCandidate> mentions, NodeKey govKey,
+                                                                 NodeKey depKey) {
         return getEdge(getNodeIndex(depKey.getCandidateIndex()), getNodeIndex(govKey.getCandidateIndex()))
                 .getLabelledEdge(mentions, govKey, depKey);
     }
@@ -348,7 +321,8 @@ public class MentionGraph implements Serializable {
 
 //                            if (score > bestScore) {
                             if (MathUtils.almostLeq(score, bestScore)) {
-//                                logger.info("Best gold label is for " + curr + " " + ant + " " + label+  " with score " + score);
+//                                logger.info("Best gold label is for " + curr + " " + ant + " " + label+  " with
+// score " + score);
                                 bestEdge = Pair.of(goldEdge, label);
                                 bestScore = score;
                             }
