@@ -15,15 +15,19 @@ public class AfterLinkPipeline {
         Configuration commonConfig = new Configuration("settings/common.properties");
         String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
 
-        Configuration kbpConfig = new Configuration(argv[0]);
+        Configuration config = new Configuration(argv[0]);
 
         // Now prepare the real pipeline.
-        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
+        EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, config);
 
-        pipeline.prepare(kbpConfig);
+        pipeline.prepare(config);
 
-        if (kbpConfig.getBoolean("edu.cmu.cs.lti.test", false)) {
-            pipeline.trainTest(kbpConfig, false);
+        if (config.getBoolean("edu.cmu.cs.lti.development", false)){
+            pipeline.crossValidation(config);
+        }
+
+        if (config.getBoolean("edu.cmu.cs.lti.test", false)) {
+            pipeline.trainTest(config, false);
         }
     }
 }

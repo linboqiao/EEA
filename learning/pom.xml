@@ -57,9 +57,5 @@
             <artifactId>nd4j-native</artifactId>
             <version>0.5.0</version>
         </dependency>
-        <dependency>
-            <groupId>edu.cmu.cs.lti</groupId>
-            <artifactId>uima-tools</artifactId>
-        </dependency>
     </dependencies>
 </project>

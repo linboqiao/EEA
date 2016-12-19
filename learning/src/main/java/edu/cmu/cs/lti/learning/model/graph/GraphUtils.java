@@ -19,6 +19,7 @@ import java.util.*;
 public class GraphUtils {
     private static final Logger logger = LoggerFactory.getLogger(GraphUtils.class.getName());
 
+    // TODO: rewrite the transitive part.
     /**
      * Given a list of relations, produce a adjacent list of transitive resolved relations
      *

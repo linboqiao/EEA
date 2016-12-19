@@ -462,7 +462,7 @@ public class EventMentionPipeline {
         CollectionReaderDescription trainingReader = CustomCollectionReaderFactory.createXmiReader(
                 typeSystemDescription, trainingWorkingDir, preprocessBase);
         CollectionReaderDescription trainingData = prepareTraining(trainingReader, trainingWorkingDir,
-                FileUtils.joinPaths(middleResults, fullRunSuffix, "prepared_training"), false, false, 1);
+                FileUtils.joinPaths(middleResults, fullRunSuffix, "prepared_training"), false, 1);
 
         new BasicPipeline(new ProcessorWrapper() {
             @Override
@@ -481,7 +481,7 @@ public class EventMentionPipeline {
     }
 
     /**
-     * Prepare dataset for training. It copy the annotations to the system mentions and annotate arguments.
+     * Prepare dataset for training. It copies the annotations to the system mentions and annotate arguments.
      *
      * @param reader     The data to be prepared.
      * @param workingDir The working directory.
@@ -492,8 +492,7 @@ public class EventMentionPipeline {
      * @throws IOException
      */
     private CollectionReaderDescription prepareTraining(CollectionReaderDescription reader, String workingDir,
-                                                        String outputBase, boolean skipTrainPrepare, boolean mergeTypes,
-                                                        int seed)
+                                                        String outputBase, boolean skipTrainPrepare, int seed)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
 
         File preparedDir = new File(workingDir, outputBase);
@@ -509,7 +508,7 @@ public class EventMentionPipeline {
                 @Override
                 public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
                     AnalysisEngineDescription mentionAndCorefGoldAnnotator = RunnerUtils.getGoldAnnotator(true, true,
-                            true, mergeTypes);
+                            true, false);
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();
                     annotators.add(mentionAndCorefGoldAnnotator);
                     RunnerUtils.addCorefPreprocessors(annotators, language);
@@ -550,7 +549,7 @@ public class EventMentionPipeline {
         String processDir = FileUtils.joinPaths(testingWorkingDir, evalBase, "full_run");
 
         CollectionReaderDescription trainingData = prepareTraining(trainReader, trainingWorkingDir,
-                FileUtils.joinPaths(middleResults, fullRunSuffix, "prepared_training"), skipTrainPrepare, false, seed);
+                FileUtils.joinPaths(middleResults, fullRunSuffix, "prepared_training"), skipTrainPrepare, seed);
 
         TokenMentionModelRunner tokenModel = new TokenMentionModelRunner(mainConfig,
                 typeSystemDescription);
@@ -774,7 +773,7 @@ public class EventMentionPipeline {
             throws SAXException, UIMAException, CpeDescriptorException, IOException {
         boolean skipTrainPrepare = taskConfig.getBoolean("edu.cmu.cs.lti.train.skip.prepare", false);
         CollectionReaderDescription trainingData = prepareTraining(trainReader, trainingWorkingDir,
-                FileUtils.joinPaths(middleResults, sliceSuffix, "prepared_training"), skipTrainPrepare, false, seed);
+                FileUtils.joinPaths(middleResults, sliceSuffix, "prepared_training"), skipTrainPrepare, seed);
 
         // Produce gold standard tbf for evaluation.
         String testGold = null;

@@ -44,7 +44,7 @@ public class MentionGraph implements Serializable {
     private List<Pair<Integer, String>>[] typedCorefChains;
 
     // Represent each relation with a adjacent list.
-    private Map<EdgeType, ListMultimap<Pair<Integer, String>, Pair<Integer, String>>> resolvedRelations;
+    private Map<EdgeType, ListMultimap<Integer, Integer>> resolvedRelations;
 
     private boolean useAverage = false;
 
@@ -82,7 +82,7 @@ public class MentionGraph implements Serializable {
 
         // Initialize the edges.
         // Edges are 2-d arrays, from current to antecedent. The first node (root), does not have any antecedent,
-        // nor link to any other relations. So it is a empty array. Node 0 has no edges.
+        // nor link to any other relations. So it is a empty array: Node 0 has no edges.
         graphEdges = new MentionGraphEdge[numNodes][];
         for (int curr = 1; curr < numNodes; curr++) {
             graphEdges[curr] = new MentionGraphEdge[numNodes];
@@ -92,24 +92,37 @@ public class MentionGraph implements Serializable {
             this.useAverage = false;
 
             // Each cluster is represented as a mapping from the event id to the event mention id list.
-            SetMultimap<Integer, Pair<Integer, String>> nodeClusters = HashMultimap.create();
-
-            groupEventClusters(mention2EventIndex, candidate2Mentions, mentionTypes, nodeClusters);
+            SetMultimap<Integer, Pair<Integer, String>> typedNodeClusters =
+                    groupEventClusters(mention2EventIndex, candidate2Mentions, mentionTypes);
 
             // Group mention nodes into clusters, the first is the event id, the second is the node id.
-            typedCorefChains = GraphUtils.createSortedCorefChains(nodeClusters);
+            typedCorefChains = GraphUtils.createSortedCorefChains(typedNodeClusters);
 
             keysWithAntecedents = storeCoreferenceEdges(candidates);
 
+            Multimap<Integer, Integer> nodeClusters = relaxCoreference(mention2EventIndex, candidate2Mentions);
+
             // This will store all other relations, which are propagated using the gold clusters.
             resolvedRelations = GraphUtils.resolveRelations(
-                    convertToEventRelation(spanRelations, mention2EventIndex), nodeClusters);
+                    convertToEventRelation(spanRelations, candidate2Mentions, mention2EventIndex), nodeClusters);
 
             // Link lingering nodes to root.
             linkToRoot(candidates, keysWithAntecedents);
         } else {
             this.useAverage = true;
         }
+    }
+
+    private Multimap<Integer, Integer> relaxCoreference(int[] mention2EventIndex, int[][] candidate2Mentions) {
+        Multimap<Integer, Integer> event2NodeId = ArrayListMultimap.create();
+        // Put candidates into cluster first.
+        for (int candidateId = 0; candidateId < candidate2Mentions.length; candidateId++) {
+            for (int mentionId : candidate2Mentions[candidateId]) {
+                int eventId = mention2EventIndex[mentionId];
+                event2NodeId.put(eventId, getNodeIndex(candidateId));
+            }
+        }
+        return event2NodeId;
     }
 
     private MentionGraphEdge getEdge(int curr, int ant) {
@@ -208,10 +221,10 @@ public class MentionGraph implements Serializable {
      * index, where event mention indices are based on their index in the input list. Note that mention node index is
      * not the same to mention index because it include artificial nodes (e.g. Root).
      */
-    private void groupEventClusters(int[] mention2EventIndex,
-                                    int[][] candidate2MentionIndex,
-                                    String[] mentionTypes,
-                                    SetMultimap<Integer, Pair<Integer, String>> nodeClusters) {
+    private SetMultimap<Integer, Pair<Integer, String>> groupEventClusters(int[] mention2EventIndex,
+                                                                           int[][] candidate2MentionIndex,
+                                                                           String[] mentionTypes) {
+        SetMultimap<Integer, Pair<Integer, String>> nodeClusters = HashMultimap.create();
         for (int nodeIndex = 0; nodeIndex < numNodes(); nodeIndex++) {
             if (!isRoot(nodeIndex)) {
                 int candidateIndex = getCandidateIndex(nodeIndex);
@@ -223,24 +236,30 @@ public class MentionGraph implements Serializable {
                 }
             }
         }
+        return nodeClusters;
     }
 
     /**
      * Convert event mention relation to event relations. Input relations must be transferable to its corresponding
      * events.
      *
-     * @param relations Relations between event mentions.
+     * @param spanRelations Relations between event spans.
      * @return Map from edge type to event-event relation.
      */
     private HashMultimap<EdgeType, Pair<Integer, Integer>> convertToEventRelation(
-            Table<Integer, Integer, String> relations, int[] mention2EventIndex) {
+            Table<Integer, Integer, String> spanRelations, int[][] span2mention, int[] mention2EventIndex) {
         HashMultimap<EdgeType, Pair<Integer, Integer>> allRelations = HashMultimap.create();
 
-        for (Table.Cell<Integer, Integer, String> relation : relations.cellSet()) {
-            int govMention = relation.getRowKey();
-            int depMention = relation.getColumnKey();
+        for (Table.Cell<Integer, Integer, String> relation : spanRelations.cellSet()) {
+            int[] govMentions = span2mention[relation.getRowKey()];
+            int[] depMentions = span2mention[relation.getColumnKey()];
             EdgeType type = EdgeType.valueOf(relation.getValue());
-            allRelations.put(type, Pair.of(mention2EventIndex[govMention], mention2EventIndex[depMention]));
+
+            for (int govMention : govMentions) {
+                for (int depMention : depMentions) {
+                    allRelations.put(type, Pair.of(mention2EventIndex[govMention], mention2EventIndex[depMention]));
+                }
+            }
         }
         return allRelations;
     }
@@ -266,7 +285,7 @@ public class MentionGraph implements Serializable {
         return typedCorefChains;
     }
 
-    public Map<EdgeType, ListMultimap<Pair<Integer, String>, Pair<Integer, String>>> getResolvedRelations() {
+    public Map<EdgeType, ListMultimap<Integer, Integer>> getResolvedRelations() {
         return resolvedRelations;
     }
 

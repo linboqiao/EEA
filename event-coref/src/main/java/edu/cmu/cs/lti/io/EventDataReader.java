@@ -133,7 +133,6 @@ public class EventDataReader {
                     EventSpanProcessor.class
             );
             AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(parentDir, rawBase);
-
             SimplePipeline.runPipeline(reader,emsAnnotator,  writer);
         }
     }
