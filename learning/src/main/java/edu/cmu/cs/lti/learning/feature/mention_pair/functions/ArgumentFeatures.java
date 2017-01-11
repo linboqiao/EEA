@@ -42,9 +42,9 @@ public class ArgumentFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> rawFeatures,
-                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
-        MentionCandidate firstCandidate = candidates.get(firstNode.getCandidateIndex());
-        MentionCandidate secondCandidate = candidates.get(secondNode.getCandidateIndex());
+                        List<MentionCandidate> candidates, int firstCandidateId, int secondCandidateId) {
+        MentionCandidate firstCandidate = candidates.get(firstCandidateId);
+        MentionCandidate secondCandidate = candidates.get(secondCandidateId);
 
         for (SemanticRelation firstLink : getArgumentLinks(firstCandidate.getHeadWord())) {
             for (SemanticRelation secondLink : getArgumentLinks(secondCandidate.getHeadWord())) {
@@ -54,20 +54,21 @@ public class ArgumentFeatures extends AbstractMentionPairFeatures {
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                   List<MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey
+                                           secondNodeKey) {
 
     }
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
-            secondCandidate, NodeKey secondNode) {
+            candidate) {
 
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> rawFeatures, MentionCandidate
-            secondCandidate, NodeKey secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> rawFeatures, MentionCandidate
+            secondCandidate, NodeKey secondNodeKey) {
 
     }
 

@@ -27,25 +27,26 @@ public class EventMentionPairFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
-            candidates, NodeKey firstNode, NodeKey secondNode) {
+            candidates, int firstCandidateId, int secondCandidateId) {
 
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                   List<MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey
+                                           secondNodeKey) {
 
     }
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
-            secondCandidate, NodeKey secondNode) {
+            candidate) {
 
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        MentionCandidate secondCandidate, NodeKey secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                   MentionCandidate secondCandidate, NodeKey secondNodeKey) {
 
     }
 }

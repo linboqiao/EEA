@@ -77,7 +77,7 @@ public class RunnerUtils {
     }
 
     public static AnalysisEngineDescription getGoldAnnotator(boolean copyType, boolean copyRealis, boolean copyCluster,
-                                                             boolean mergeSameSpan)
+                                                             boolean copyRelations)
             throws ResourceInitializationException {
         return AnalysisEngineFactory.createEngineDescription(
                 GoldStandardEventMentionAnnotator.class,
@@ -86,7 +86,7 @@ public class RunnerUtils {
                 GoldStandardEventMentionAnnotator.PARAM_COPY_MENTION_TYPE, copyType,
                 GoldStandardEventMentionAnnotator.PARAM_COPY_REALIS, copyRealis,
                 GoldStandardEventMentionAnnotator.PARAM_COPY_CLUSTER, copyCluster,
-                GoldStandardEventMentionAnnotator.PARAM_MERGE_SAME_SPAN, mergeSameSpan
+                GoldStandardEventMentionAnnotator.PARAM_COPY_RELATIONS, copyRelations
         );
     }
 
@@ -100,13 +100,14 @@ public class RunnerUtils {
 
             @Override
             public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                AnalysisEngineDescription goldCopier = getGoldAnnotator(true, true, true, false);
+                AnalysisEngineDescription goldCopier = getGoldAnnotator(true, true, true, true);
                 AnalysisEngineDescription resultWriter = AnalysisEngineFactory.createEngineDescription(
                         TbfStyleEventWriter.class,
                         TbfStyleEventWriter.PARAM_OUTPUT_PATH, goldTbfOutput,
                         TbfStyleEventWriter.PARAM_SYSTEM_ID, "gold",
                         TbfStyleEventWriter.PARAM_GOLD_TOKEN_COMPONENT_ID, TbfEventDataReader.COMPONENT_ID,
-                        TbfStyleEventWriter.PARAM_USE_CHARACTER_OFFSET, useCharOffset
+                        TbfStyleEventWriter.PARAM_USE_CHARACTER_OFFSET, useCharOffset,
+                        TbfStyleEventWriter.PARAM_TARGET_VIEW_NAME, UimaConst.goldViewName
                 );
                 return new AnalysisEngineDescription[]{goldCopier, resultWriter};
             }

@@ -22,7 +22,6 @@ import org.apache.uima.jcas.tcas.Annotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.StreamSupport;
 
@@ -67,9 +66,7 @@ public class BeamCrfLatentTreeDecoder {
     public BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
                                     GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
                                     SentenceFeatureExtractor mentionExtractor, DiscriminativeUpdater updater,
-                                    String lossType, int beamSize)
-            throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
-            InvocationTargetException {
+                                    String lossType, int beamSize) {
         this(mentionWeights, realisModel, corefWeights, realisExtractor, mentionExtractor,
                 lossType, beamSize, true);
         this.updater = updater;
@@ -81,9 +78,7 @@ public class BeamCrfLatentTreeDecoder {
 
     public BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
                                     GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
-                                    SentenceFeatureExtractor mentionExtractor, int beamSize)
-            throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
-            InvocationTargetException {
+                                    SentenceFeatureExtractor mentionExtractor, int beamSize) {
         this(mentionWeights, realisModel, corefWeights, realisExtractor, mentionExtractor,
                 null, beamSize, false);
         logger.info("Starting the Beam Decoder with joint testing.");
@@ -92,9 +87,7 @@ public class BeamCrfLatentTreeDecoder {
     private BeamCrfLatentTreeDecoder(GraphWeightVector mentionWeights, WekaModel realisModel,
                                      GraphWeightVector corefWeights, SentenceFeatureExtractor realisExtractor,
                                      SentenceFeatureExtractor mentionExtractor, String lossType, int beamSize,
-                                     boolean isTraining)
-            throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException,
-            InvocationTargetException {
+                                     boolean isTraining) {
         this.lossType = lossType;
         mentionTypeClassAlphabet = mentionWeights.getClassAlphabet();
         mentionFeatureAlphabet = mentionWeights.getFeatureAlphabet();
@@ -572,8 +565,12 @@ public class BeamCrfLatentTreeDecoder {
                 for (Map.Entry<NodeKey, LabelledMentionGraphEdge> correctAntEdge : correctAntEdges.entrySet()) {
                     NodeKey correctAnt = correctAntEdge.getKey();
                     LabelledMentionGraphEdge realGraphEdge = realGraphEdges.get(correctAnt, currNodeKey);
-                    Pair<EdgeType, Double> correctLabelScore = realGraphEdge.getCorrectLabelScore(corefWeights);
-                    currLinks.add(Pair.of(Pair.of(currNodeKey, realGraphEdge), correctLabelScore));
+
+                    if (realGraphEdge.hasActualEdgeType()) {
+                        double correctLabelScore = realGraphEdge.getCorrectLabelScore(corefWeights);
+                        currLinks.add(Pair.of(Pair.of(currNodeKey, realGraphEdge),
+                                Pair.of(realGraphEdge.getActualEdgeType(), correctLabelScore)));
+                    };
                 }
             }
             allLinks.add(currLinks);

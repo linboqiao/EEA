@@ -194,7 +194,7 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
     public void addLink(List<MentionCandidate> mentionCandidates, EdgeKey edgeKey) {
         LabelledMentionGraphEdge edge = graph.getLabelledEdge(mentionCandidates,
                 edgeKey.getGovNode(), edgeKey.getDepNode());
-        decodingTree.addEdge(edge, edgeKey.getType());
+        decodingTree.addLabelledEdge(edge, edgeKey.getType());
     }
 
     public void addNode(MentionKey newNode) {
@@ -206,9 +206,11 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
 
     }
 
-    public Pair<Double, Double> loss(NodeLinkingState referenceState, SeqLoss labelLosser) {
-        double labelLoss = computeLabelLoss(referenceState.getNodeResults(), labelLosser);
+    public double labelLoss(NodeLinkingState referenceState, SeqLoss labelLosser){
+        return computeLabelLoss(referenceState.getNodeResults(), labelLosser);
+    }
 
+    public double graphLoss(NodeLinkingState referenceState){
         double graphLoss = 0;
 
         if (decodingTree != null) {
@@ -217,8 +219,22 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
             }
         }
 
-        return Pair.of(labelLoss, graphLoss);
+        return graphLoss;
     }
+
+//    public Pair<Double, Double> loss(NodeLinkingState referenceState, SeqLoss labelLosser) {
+//        double labelLoss = computeLabelLoss(referenceState.getNodeResults(), labelLosser);
+//
+//        double graphLoss = 0;
+//
+//        if (decodingTree != null) {
+//            if (!decodingTree.graphMatch(referenceState.decodingTree)) {
+//                graphLoss = decodingTree.getLoss(referenceState.decodingTree);
+//            }
+//        }
+//
+//        return Pair.of(labelLoss, graphLoss);
+//    }
 
     private double computeLabelLoss(List<MentionKey> referenceNodes, SeqLoss labelLosser) {
         String[] reference = new String[referenceNodes.size() - 1];

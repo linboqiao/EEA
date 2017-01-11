@@ -5,16 +5,15 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Table;
 import edu.cmu.cs.lti.event_coref.decoding.BeamCrfLatentTreeDecoder;
-import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.*;
-import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.LabelledMentionGraphEdge;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge;
 import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
+import edu.cmu.cs.lti.learning.utils.LearningUtils;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
@@ -33,12 +32,10 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
@@ -60,10 +57,6 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
     public static final String PARAM_REALIS_MODEL_DIRECTORY = "realisModelDirectory";
     @ConfigurationParameter(name = PARAM_REALIS_MODEL_DIRECTORY)
     private File realisModelDirectory;
-
-//    public static final String PARAM_ADD_COREFERNCE_CONSTRAINT = "corefTrainingConstraint";
-//    @ConfigurationParameter(name = PARAM_ADD_COREFERNCE_CONSTRAINT, defaultValue = "false")
-//    private boolean addCorefTrainingConstraint;
 
     public static final String PARAM_STRATEGY_TYPE = "strategyType";
     @ConfigurationParameter(name = PARAM_STRATEGY_TYPE, defaultValue = "0")
@@ -125,27 +118,27 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
             warmStartNotProvided = true;
         }
 
-        updater.addWeightVector(COREF_MODEL_NAME, preareCorefWeights());
+        updater.addWeightVector(COREF_MODEL_NAME, LearningUtils.preareGraphWeights(config,
+                "edu.cmu.cs.lti.features.coref.spec"));
 
         prepareRealis();
 
-        try {
-            this.realisExtractor = initializeRealisExtractor(config);
-            this.crfExtractor = initializeCrfExtractor(config);
-            this.corefExtractor = initializeMentionPairExtractor(config);
-        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException
-                | InstantiationException e) {
-            e.printStackTrace();
-        }
+        this.realisExtractor = LearningUtils.initializeRealisExtractor(config, "edu.cmu.cs.lti.features.realis.spec",
+                realisModel.getAlphabet());
 
-        try {
-            decoder = new BeamCrfLatentTreeDecoder(updater.getWeightVector(TYPE_MODEL_NAME), realisModel,
-                    updater.getWeightVector(COREF_MODEL_NAME), realisExtractor, crfExtractor,
-                    updater, mentionLossType, beamSize);
-        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException
-                | InstantiationException e) {
-            e.printStackTrace();
-        }
+        this.crfExtractor = LearningUtils.initializeCrfExtractor(config,
+                "edu.cmu.cs.lti.features.type.lv1.sentence.spec",
+                "edu.cmu.cs.lti.features.type.lv1.doc.spec",
+                updater.getWeightVector(TYPE_MODEL_NAME).getFeatureAlphabet()
+        );
+        this.corefExtractor = LearningUtils.initializeMentionPairExtractor(config, "edu.cmu.cs.lti.features.coref.spec",
+                updater.getWeightVector(COREF_MODEL_NAME).getFeatureAlphabet());
+
+
+        decoder = new BeamCrfLatentTreeDecoder(updater.getWeightVector(TYPE_MODEL_NAME), realisModel,
+                updater.getWeightVector(COREF_MODEL_NAME), realisExtractor, crfExtractor,
+                updater, mentionLossType, beamSize);
+
 
         edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(cacheDir);
         logger.info("Cache will be put at " + cacheDir.getAbsolutePath());
@@ -184,7 +177,6 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
 
         // Init here so that we can extract features for mention graph.
         this.corefExtractor.initWorkspace(aJCas);
-
 
         List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
         MentionGraph mentionGraph = MentionUtils.createMentionGraph(aJCas, candidates, corefExtractor, true);
@@ -283,34 +275,34 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         }
     }
 
-    private void preloadFeature(File cacheDir, String fileName, MentionGraph mentionGraph) throws IOException {
-        File featureCahe = new File(cacheDir, fileName + ".ser");
-
-        if (!featureCahe.exists()) {
-            return;
-        }
-
-        List[][] allFeatures = SerializationUtils.deserialize(new GZIPInputStream(new FileInputStream(featureCahe)));
-
-        FeatureAlphabet alphabet = updater.getWeightVector(COREF_MODEL_NAME).getFeatureAlphabet();
-
-        int numNodes = mentionGraph.numNodes();
-
-        for (int gov = 0; gov < numNodes - 1; gov++) {
-            for (int dep = 1; dep < numNodes; dep++) {
-                MentionGraphEdge edge = mentionGraph.getMentionGraphEdge(dep, gov);
-                List<Table.Cell<NodeKey, NodeKey, FeatureVector>> labelledFeatures = allFeatures[gov][dep];
-
-                for (Table.Cell<NodeKey, NodeKey, FeatureVector> labelledFeature : labelledFeatures) {
-                    NodeKey govKey = labelledFeature.getRowKey();
-                    NodeKey depKey = labelledFeature.getColumnKey();
-                    FeatureVector fv = labelledFeature.getValue();
-                    fv.setAlpabhet(alphabet);
-                    edge.createLabelledEdgeWithFeatures(govKey, depKey, labelledFeature.getValue());
-                }
-            }
-        }
-    }
+//    private void preloadFeature(File cacheDir, String fileName, MentionGraph mentionGraph) throws IOException {
+//        File featureCahe = new File(cacheDir, fileName + ".ser");
+//
+//        if (!featureCahe.exists()) {
+//            return;
+//        }
+//
+//        List[][] allFeatures = SerializationUtils.deserialize(new GZIPInputStream(new FileInputStream(featureCahe)));
+//
+//        FeatureAlphabet alphabet = updater.getWeightVector(COREF_MODEL_NAME).getFeatureAlphabet();
+//
+//        int numNodes = mentionGraph.numNodes();
+//
+//        for (int gov = 0; gov < numNodes - 1; gov++) {
+//            for (int dep = 1; dep < numNodes; dep++) {
+//                MentionGraphEdge edge = mentionGraph.getMentionGraphEdge(dep, gov);
+//                List<Table.Cell<NodeKey, NodeKey, FeatureVector>> labelledFeatures = allFeatures[gov][dep];
+//
+//                for (Table.Cell<NodeKey, NodeKey, FeatureVector> labelledFeature : labelledFeatures) {
+//                    NodeKey govKey = labelledFeature.getRowKey();
+//                    NodeKey depKey = labelledFeature.getColumnKey();
+//                    FeatureVector fv = labelledFeature.getValue();
+//                    fv.setAlpabhet(alphabet);
+//                    edge.createLabelledEdgeWithFeatures(govKey, depKey, labelledFeature.getValue());
+//                }
+//            }
+//        }
+//    }
 
     public static void saveModels(File modelOutputDirectory) throws FileNotFoundException {
         edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(modelOutputDirectory);
@@ -375,69 +367,4 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         }
         return weightVector;
     }
-
-    private GraphWeightVector preareCorefWeights() {
-        logger.info("Initializing Coreference weights.");
-
-        ClassAlphabet classAlphabet = new ClassAlphabet();
-        for (EdgeType edgeType : EdgeType.values()) {
-            classAlphabet.addClass(edgeType.name());
-        }
-
-        int alphabetBits = config.getInt("edu.cmu.cs.lti.coref.feature.alphabet_bits", 22);
-        boolean readableModel = config.getBoolean("edu.cmu.cs.lti.coref.readableModel", false);
-
-        HashAlphabet featureAlphabet = new HashAlphabet(alphabetBits, readableModel);
-        String featureSpec = config.get("edu.cmu.cs.lti.features.coref.spec");
-
-        return new GraphWeightVector(classAlphabet, featureAlphabet, featureSpec);
-    }
-
-
-    private SentenceFeatureExtractor initializeRealisExtractor(Configuration config) throws ClassNotFoundException,
-            NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        String featurePackageName = config.get("edu.cmu.cs.lti.feature.sentence.package.name");
-        String featureSpec = config.get("edu.cmu.cs.lti.features.realis.spec");
-
-        FeatureSpecParser parser = new FeatureSpecParser(featurePackageName);
-        Configuration realisSpec = parser.parseFeatureFunctionSpecs(featureSpec);
-
-        // Currently no document level realis features.
-        Configuration placeHolderSpec = new Configuration();
-        return new SentenceFeatureExtractor(realisModel.getAlphabet(), config, realisSpec, placeHolderSpec, false);
-    }
-
-    private SentenceFeatureExtractor initializeCrfExtractor(Configuration config) throws ClassNotFoundException,
-            NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        String sentFeatureSpec = config.get("edu.cmu.cs.lti.features.type.lv1.sentence.spec");
-        String docFeatureSpec = config.getOrElse("edu.cmu.cs.lti.features.type.lv1.doc.spec", "");
-
-        Configuration sentFeatureConfig = new FeatureSpecParser(
-                config.get("edu.cmu.cs.lti.feature.sentence.package.name")
-        ).parseFeatureFunctionSpecs(sentFeatureSpec);
-
-        Configuration docFeatureConfig = new FeatureSpecParser(
-                config.get("edu.cmu.cs.lti.feature.document.package.name")
-        ).parseFeatureFunctionSpecs(docFeatureSpec);
-        return new SentenceFeatureExtractor(updater.getWeightVector(TYPE_MODEL_NAME).getFeatureAlphabet(), config,
-                sentFeatureConfig, docFeatureConfig, false /**use state feature?**/);
-    }
-
-    private PairFeatureExtractor initializeMentionPairExtractor(Configuration config) throws ClassNotFoundException,
-            NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        String featureSpec = config.get("edu.cmu.cs.lti.features.coref.spec");
-
-        Configuration featureConfig = new FeatureSpecParser(
-                config.get("edu.cmu.cs.lti.feature.pair.package.name")
-        ).parseFeatureFunctionSpecs(featureSpec);
-
-        ClassAlphabet classAlphabet = new ClassAlphabet();
-        for (EdgeType edgeType : EdgeType.values()) {
-            classAlphabet.addClass(edgeType.name());
-        }
-
-        return new PairFeatureExtractor(updater.getWeightVector(COREF_MODEL_NAME).getFeatureAlphabet(),
-                classAlphabet, config, featureConfig);
-    }
-
 }

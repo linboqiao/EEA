@@ -12,4 +12,5 @@ public class ModelConstants {
 
     public static final String COREF_MODEL_NAME = "Coref_Latent_Tree";
 
+    public static final String AFTER_MODEL_NAME = "After_Model";
 }

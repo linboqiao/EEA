@@ -312,7 +312,7 @@ public class EventMentionSurfaceCoverageReport extends AbstractLoggingAnnotator 
                 GoldStandardEventMentionAnnotator.PARAM_COPY_MENTION_TYPE, true,
                 GoldStandardEventMentionAnnotator.PARAM_COPY_REALIS, true,
                 GoldStandardEventMentionAnnotator.PARAM_COPY_CLUSTER, true,
-                GoldStandardEventMentionAnnotator.PARAM_MERGE_SAME_SPAN, true
+                GoldStandardEventMentionAnnotator.PARAM_COPY_RELATIONS, true
         );
 
         AnalysisEngineDescription surfaceCollector = AnalysisEngineFactory

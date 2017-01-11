@@ -30,27 +30,32 @@ public class RealisFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
-            candidates, NodeKey firstNode, NodeKey secondNode) {
+            candidates, int firstCandidateId, int secondCandidateId) {
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
-        String[] realisTypes = {firstNode.getRealis(), secondNode.getRealis()};
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                   List<MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey
+                                           secondNodeKey) {
+        String[] realisTypes = {
+                firstNodeKey.getRealis(),
+                secondNodeKey.getRealis()
+        };
         Arrays.sort(realisTypes);
         addBoolean(featuresNeedLabel, FeatureUtils.formatFeatureName("RealisPair", Joiner.on(":").join(realisTypes)));
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate
-            secondCandidate, NodeKey secondNode) {
-        addBoolean(featureNoLabel, FeatureUtils.formatFeatureName("SingleRealis", secondCandidate.getRealis()));
+    public void extract(JCas documentContext, TObjectDoubleMap<String> featureNoLabel,
+                        MentionCandidate candidate) {
+        addBoolean(featureNoLabel, FeatureUtils.formatFeatureName("SingleRealis",
+                candidate.getRealis()));
     }
 
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel,
-                                        MentionCandidate secondCandidate, NodeKey secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel,
+                                   MentionCandidate secondCandidate, NodeKey secondNodeKey) {
 
     }
 }

@@ -30,15 +30,16 @@ public class MentionTypeFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
-            candidates, NodeKey firstNode, NodeKey secondNode) {
+            candidates, int firstCandidateId, int secondCandidateId) {
 
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
-        String firstType = firstNode.getMentionType();
-        String secondType = secondNode.getMentionType();
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                   List<MentionCandidate> candidates, NodeKey firstNodeKey,
+                                   NodeKey secondNodeKey) {
+        String firstType = firstNodeKey.getMentionType();
+        String secondType = secondNodeKey.getMentionType();
 
         if (firstType.equals(secondType)) {
             addBoolean(featuresNeedLabel, "MentionTypeMatch");
@@ -65,13 +66,14 @@ public class MentionTypeFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
-            secondCandidate, NodeKey secondNode) {
-        addBoolean(featuresNoLabel, FeatureUtils.formatFeatureName("SingleType", secondNode.getMentionType()));
+            candidate) {
+        addBoolean(featuresNoLabel, FeatureUtils.formatFeatureName("SingleType",
+                candidate.getMentionType()));
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featureNeedLabel,
-                                        MentionCandidate secondCandidate, NodeKey secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featureNeedLabel,
+                                   MentionCandidate secondCandidate, NodeKey secondNodeKey) {
 
     }
 }

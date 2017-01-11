@@ -1,13 +1,11 @@
 package edu.cmu.cs.lti.event_coref.annotators.prepare;
 
-import edu.cmu.cs.lti.script.type.Article;
-import edu.cmu.cs.lti.script.type.CharacterAnnotation;
-import edu.cmu.cs.lti.script.type.EventMention;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
+import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
@@ -26,7 +24,6 @@ public class EventHeadWordAnnotator extends AbstractLoggingAnnotator {
         String language = JCasUtil.selectSingle(aJCas, Article.class).getLanguage();
 
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
-
             StanfordCorenlpToken headWord = UimaNlpUtils.findHeadFromStanfordAnnotation(mention);
 
             if (language.equals("zh")) {
@@ -48,6 +45,12 @@ public class EventHeadWordAnnotator extends AbstractLoggingAnnotator {
             }
 
             mention.setHeadWord(headWord);
+        }
+
+        for (EventMentionSpan ems : JCasUtil.select(aJCas, EventMentionSpan.class)) {
+            for (EventMention eventMention : FSCollectionFactory.create(ems.getEventMentions(), EventMention.class)) {
+                ems.setHeadWord(eventMention.getHeadWord());
+            }
         }
     }
 }

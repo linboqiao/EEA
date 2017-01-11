@@ -291,10 +291,13 @@ public class BeamLatentTreeDecoder {
                     NodeKey dep = link.getLeft();
                     LabelledMentionGraphEdge edge = link.getRight();
                     NodeKey gov = edge.getGovKey();
-                    Pair<EdgeType, Double> correctLabelScore = edge.getCorrectLabelScore(corefWeights);
 
-                    decision.addLink(correctLabelScore.getKey(), gov, dep, correctLabelScore.getValue(), edge
-                            .getFeatureVector());
+
+                    if (edge.hasActualEdgeType()) {
+                        double correctLabelScore = edge.getCorrectLabelScore(corefWeights);
+                        decision.addLink(edge.getActualEdgeType(), gov, dep, correctLabelScore, edge
+                                .getFeatureVector());
+                    }
                 }
                 agenda.expand(decision);
             }

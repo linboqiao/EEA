@@ -63,16 +63,12 @@ public class ClusterBuilder<T extends Comparable<T>> {
         addElement(element1);
         addElement(element2);
 
-//        logger.info("Cluster assignment is now.");
-//        logger.info(clusterAssignments.toString());
-
-//        logger.info("Clusters are now");
-//        for (TreeSet<T> cluster : clusters) {
-//            logger.info(cluster.toString());
-//        }
-
         int clusterId1 = clusterAssignments.get(element1);
         int clusterId2 = clusterAssignments.get(element2);
+
+        if (clusterId1 == clusterId2){
+            return;
+        }
 
         TreeSet<T> cluster1 = clusters.get(clusterId1);
         TreeSet<T> cluster2 = clusters.get(clusterId2);

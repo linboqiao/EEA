@@ -2,18 +2,11 @@ package edu.cmu.cs.lti.event_coref.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
-import edu.cmu.cs.lti.uima.util.MentionTypeUtils;
-import edu.cmu.cs.lti.model.Span;
-import edu.cmu.cs.lti.script.type.DiscontinuousComponentAnnotation;
-import edu.cmu.cs.lti.script.type.Event;
-import edu.cmu.cs.lti.script.type.EventMention;
+import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import gnu.trove.iterator.TObjectIntIterator;
-import gnu.trove.map.TObjectIntMap;
-import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -57,7 +50,7 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
 
     public static final String PARAM_COPY_CLUSTER = "copyCluster";
 
-    public static final String PARAM_MERGE_SAME_SPAN = "mergeSameSpan";
+    public static final String PARAM_COPY_RELATIONS = "copyRelations";
 
     @ConfigurationParameter(name = PARAM_TARGET_VIEWS)
     private String[] targetViewNames;
@@ -71,8 +64,11 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
     @ConfigurationParameter(name = PARAM_COPY_CLUSTER, defaultValue = "false")
     private boolean copyCluster;
 
-    @ConfigurationParameter(name = PARAM_MERGE_SAME_SPAN, defaultValue = "false")
-    private boolean mergeTypes;
+//    @ConfigurationParameter(name = PARAM_MERGE_SAME_SPAN, defaultValue = "false")
+//    private boolean mergeTypes;
+
+    @ConfigurationParameter(name = PARAM_COPY_RELATIONS, defaultValue = "false")
+    private boolean copyRelations;
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
@@ -82,12 +78,54 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
             JCas targetView = JCasUtil.getView(aJCas, targetViewName, false);
 
 
-            Map<EventMention, EventMention> from2toMentionMap = mergeTypes ?
-                    copyMentionsWithMerge(goldStandard, targetView) : copyMentions(goldStandard, targetView);
+            Map<EventMention, EventMention> from2toMentionMap = copyMentions(goldStandard, targetView);
+            Map<EventMentionSpan, EventMentionSpan> from2toSpanMap = copyMentionSpans(goldStandard, targetView,
+                    from2toMentionMap);
 
             if (copyCluster) {
                 copyEvents(goldStandard, targetView, from2toMentionMap);
             }
+
+            if (copyRelations) {
+                copyRelations(goldStandard, targetView, from2toSpanMap);
+            }
+        }
+    }
+
+    private void copyRelations(JCas fromView, JCas toView, Map<EventMentionSpan, EventMentionSpan> from2toSpanMap) {
+        for (EventMentionSpanRelation relation : UimaConvenience.getAnnotationList(toView,
+                EventMentionSpanRelation.class)) {
+            relation.removeFromIndexes();
+        }
+
+        Collection<EventMentionSpanRelation> sourceRelations = JCasUtil.select(fromView,
+                EventMentionSpanRelation.class);
+
+        ArrayListMultimap<EventMentionSpan, EventMentionSpanRelation> headRelations = ArrayListMultimap.create();
+        ArrayListMultimap<EventMentionSpan, EventMentionSpanRelation> childRelations = ArrayListMultimap.create();
+
+        for (EventMentionSpanRelation relation : JCasUtil.select(fromView, EventMentionSpanRelation.class)) {
+            EventMentionSpan copiedHead = from2toSpanMap.get(relation.getHead());
+            EventMentionSpan copiedChild = from2toSpanMap.get(relation.getChild());
+
+            EventMentionSpanRelation copiedRelation = new EventMentionSpanRelation(toView);
+
+            copiedRelation.setHead(copiedHead);
+            copiedRelation.setChild(copiedChild);
+            copiedRelation.setRelationType(relation.getRelationType());
+
+            headRelations.put(copiedChild, copiedRelation);
+            childRelations.put(copiedHead, copiedRelation);
+
+            UimaAnnotationUtils.finishTop(copiedRelation, COMPONENT_ID, relation.getId(), toView);
+        }
+
+        for (EventMentionSpan child : headRelations.keySet()) {
+            child.setHeadEventRelations(FSCollectionFactory.createFSList(toView, headRelations.get(child)));
+        }
+
+        for (EventMentionSpan head : childRelations.keySet()) {
+            head.setChildEventRelations(FSCollectionFactory.createFSList(toView, childRelations.get(head)));
         }
     }
 
@@ -95,6 +133,10 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
         // Delete the mentions from the target view first.
         for (EventMention mention : UimaConvenience.getAnnotationList(toView, EventMention.class)) {
             mention.removeFromIndexes();
+        }
+
+        for (EventMentionSpan eventMentionSpan : UimaConvenience.getAnnotationList(toView, EventMentionSpan.class)) {
+            eventMentionSpan.removeFromIndexes();
         }
 
         Map<EventMention, EventMention> from2toMentionMap = new HashMap<>();
@@ -106,80 +148,29 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
             }
         }
 
+
         return from2toMentionMap;
     }
 
-    /**
-     * Copy the mentions so that double tagged event mentions are merged.
-     *
-     * @param fromView
-     * @param toView
-     * @return
-     */
-    private Map<EventMention, EventMention> copyMentionsWithMerge(JCas fromView, JCas toView) {
-        // Delete the mentions first.
-        for (EventMention mention : UimaConvenience.getAnnotationList(toView, EventMention.class)) {
-            mention.removeFromIndexes();
+    private Map<EventMentionSpan, EventMentionSpan> copyMentionSpans(JCas fromView, JCas toView,
+                                                                     Map<EventMention, EventMention>
+                                                                             from2toMentionMap) {
+        for (EventMentionSpan eventMentionSpan : UimaConvenience.getAnnotationList(toView, EventMentionSpan.class)) {
+            eventMentionSpan.removeFromIndexes();
         }
 
-        // Here we copy multiple mentions into one, so multiple "from" can be mapped to one mention.
-        Map<EventMention, EventMention> from2toMentionMap = new HashMap<>();
+        Map<EventMentionSpan, EventMentionSpan> from2toSpanMap = new HashMap<>();
 
-        ArrayListMultimap<Span, EventMention> spanToMentions = ArrayListMultimap.create();
-
-        // Here is what we do about double tagging for sequence training.
-        // We merge all mentions with same span to one single mention.
-        // 1. If it is multi-type tagging, that means we are creating a new type by joining the types.
-        // 2. If it is a syntactic multi tagging, that means we discard one of them.
-        for (EventMention goldMention : JCasUtil.select(fromView, EventMention.class)) {
+        for (EventMentionSpan goldMention : JCasUtil.select(fromView, EventMentionSpan.class)) {
             if (validate(goldMention, toView)) {
-                Span mentionSpan = Span.of(goldMention.getBegin(), goldMention.getEnd());
-                spanToMentions.put(mentionSpan, goldMention);
+                EventMentionSpan copiedMention = copyMentionSpan(toView, goldMention, from2toMentionMap);
+                from2toSpanMap.put(goldMention, copiedMention);
             }
         }
 
-        for (Map.Entry<Span, Collection<EventMention>> shareSpanMentions : spanToMentions.asMap().entrySet()) {
-            Collection<EventMention> allSharedMentions = shareSpanMentions.getValue();
-
-            // Create a merged type.
-            TObjectIntMap<String> allTypes = new TObjectIntHashMap<>();
-            EventMention aSharedMention = null;
-            for (EventMention mention : allSharedMentions) {
-                allTypes.adjustOrPutValue(mention.getEventType(), 1, 1);
-//                logger.info(mention.getEventType());
-                if (aSharedMention == null) {
-                    aSharedMention = mention;
-                }
-            }
-
-            String jointType = MentionTypeUtils.joinMultipleTypes(allTypes.keySet());
-
-            // TODO investigate this, if it is correct here we don't need to filter later.
-            int repeatCount = 0;
-            for (TObjectIntIterator<String> iter = allTypes.iterator(); iter.hasNext(); ) {
-                iter.advance();
-//                logger.info(iter.key() + " " + iter.value());
-                if (iter.value() > repeatCount) {
-                    if (repeatCount != 0) {
-                        logger.warn("Repeat count of different types are different!");
-                    }
-                    repeatCount = iter.value();
-                }
-            }
-
-            EventMention copiedMention = copyMention(toView, aSharedMention, jointType);
-            // Record the number of times of multi tagging of the same type on the same span
-            // the multi sense counts are not counted here.
-            // We set this to (repeat count - 1) to record only additional mentions.
-            copiedMention.setMultiTag(repeatCount - 1);
-
-            // Multiple mentions can be mapped to one copied mention.
-            for (EventMention mention : allSharedMentions) {
-                from2toMentionMap.put(mention, copiedMention);
-            }
-        }
-        return from2toMentionMap;
+        return from2toSpanMap;
     }
+
 
     private EventMention copyMention(JCas toView, EventMention sourceMention, String mentionType) {
         EventMention targetMention = new EventMention(toView, sourceMention.getBegin(), sourceMention.getEnd());
@@ -192,7 +183,7 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
         if (copyRealis) {
             if (sourceMention.getRealisType() != null) {
                 targetMention.setRealisType(sourceMention.getRealisType());
-            }else{
+            } else {
                 // If the gold standard didn't provide a realis type, we make it up.
                 sourceMention.setRealisType("Actual");
                 targetMention.setRealisType("Actual");
@@ -203,7 +194,30 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
         return targetMention;
     }
 
-    private boolean validate(EventMention goldMention, JCas targetView) {
+    private EventMentionSpan copyMentionSpan(JCas toView, EventMentionSpan sourceSpan,
+                                             Map<EventMention, EventMention> from2toMentionMap) {
+        EventMentionSpan ems = new EventMentionSpan(toView, sourceSpan.getBegin(), sourceSpan.getEnd());
+
+        List<EventMention> targetMentions = new ArrayList<>();
+
+        Word headWord = null;
+        for (EventMention srcMention : FSCollectionFactory.create(sourceSpan.getEventMentions(), EventMention.class)) {
+            EventMention targetMention = from2toMentionMap.get(srcMention);
+            targetMentions.add(targetMention);
+            headWord = targetMention.getHeadWord();
+        }
+
+        ems.setEventMentions(FSCollectionFactory.createFSList(toView, targetMentions));
+        ems.setEventType(sourceSpan.getEventType());
+        ems.setRealisType(sourceSpan.getRealisType());
+        ems.setHeadWord(headWord);
+
+        UimaAnnotationUtils.finishAnnotation(ems, COMPONENT_ID, sourceSpan.getId(), toView);
+        return ems;
+    }
+
+
+    private boolean validate(ComponentAnnotation goldMention, JCas targetView) {
         if (targetView.getDocumentText().substring(goldMention.getBegin(), goldMention.getEnd()).trim().equals("")) {
             return false;
         }

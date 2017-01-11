@@ -91,13 +91,8 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
         prepareCorefModel();
         prepareRealis();
 
-        try {
-            decoder = new BeamCrfLatentTreeDecoder(crfWeights, realisModel,
-                    corefWeights, realisExtractor, mentionExtractor, beamSize);
-        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException
-                | InstantiationException e) {
-            throw new ResourceInitializationException(e);
-        }
+        decoder = new BeamCrfLatentTreeDecoder(crfWeights, realisModel, corefWeights, realisExtractor,
+                mentionExtractor, beamSize);
     }
 
     @Override

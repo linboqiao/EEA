@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.event_coref.annotators.train;
 
 import edu.cmu.cs.lti.event_coref.decoding.BestFirstLatentTreeDecoder;
-import edu.cmu.cs.lti.event_coref.decoding.LatentTreeDecoder;
+import edu.cmu.cs.lti.learning.decoding.LatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
@@ -115,12 +115,12 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         MentionGraph mentionGraph = getMentionGraph(aJCas, allMentions);
 
         // Decoding.
-        MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, extractor);
+        MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
 
         if (!predictedTree.graphMatch()) {
 //            logger.debug("Found unmatched graph");
 
-            MentionSubGraph latentTree = mentionGraph.getLatentTree(weights, candidates);
+            MentionSubGraph latentTree = decoder.decode(mentionGraph, candidates, weights, true);
 
 //            logger.debug("Best Gold Tree.");
 //            logger.debug(latentTree.toString());
@@ -128,7 +128,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 //            logger.debug("Best Decoding Tree.");
 //            logger.debug(predictedTree.toString());
 
-            double loss = update(predictedTree, latentTree);
+            double loss = predictedTree.paUpdate(latentTree, weights);
 
             trainingStats.addLoss(logger, loss / mentionGraph.numNodes());
 
@@ -141,7 +141,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         }
     }
 
-    private MentionGraph getMentionGraph(JCas aJCas, List<EventMention> allMentions){
+    private MentionGraph getMentionGraph(JCas aJCas, List<EventMention> allMentions) {
         int eventIdx = 0;
         for (Event event : JCasUtil.select(aJCas, Event.class)) {
             event.setIndex(eventIdx++);
@@ -154,60 +154,10 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         if (mentionGraph == null) {
             List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
-             mentionGraph = MentionUtils.createMentionGraph(aJCas, candidates, extractor, false);
+            mentionGraph = MentionUtils.createMentionGraph(aJCas, candidates, extractor, false);
             graphCacher.addWithMultiKey(mentionGraph, cacheKey);
         }
         return mentionGraph;
-    }
-
-    /**
-     * Update the weights by the difference of the predicted tree and the gold latent tree.
-     *
-     * @param predictedTree The predicted tree.
-     * @param latentTree    The gold latent tree.
-     */
-    private double update(MentionSubGraph predictedTree, MentionSubGraph latentTree) {
-        return passiveAggressiveUpdate(predictedTree, latentTree);
-    }
-
-    /**
-     * A vanilla update that update by the difference of the predicted tree and the gold latent tree, with a fixed
-     * step size.
-     *
-     * @param predictedTree The predicted tree.
-     * @param latentTree    The gold latent tree.
-     */
-    private void vanillaUpdate(MentionSubGraph predictedTree, MentionSubGraph latentTree) {
-        GraphFeatureVector delta = latentTree.getDelta(predictedTree, classAlphabet, featureAlphabet);
-//        logger.info("Delta between the features are: ");
-//        logger.info(delta.readableNodeVector());
-        weights.updateWeightsBy(delta, 0.1);
-        weights.updateAverageWeights();
-    }
-
-    /**
-     * Update the weights by the difference of the predicted tree and the gold latent tree using Passive-Aggressive
-     * algorithm.
-     *
-     * @param predictedTree The predicted tree.
-     * @param latentTree    The gold latent tree.
-     */
-    private double passiveAggressiveUpdate(MentionSubGraph predictedTree, MentionSubGraph latentTree) {
-//        logger.info(predictedTree.toString());
-//
-//        logger.info(latentTree.toString());
-
-        GraphFeatureVector delta = latentTree.getDelta(predictedTree, classAlphabet, featureAlphabet);
-
-        double loss = predictedTree.getLoss(latentTree);
-        double l2Sqaure = delta.getFeatureSquare();
-
-        if (l2Sqaure != 0) {
-            double tau = loss / l2Sqaure;
-            weights.updateWeightsBy(delta, tau);
-            weights.updateAverageWeights();
-        }
-        return loss;
     }
 
     public static void saveModels(File modelOutputDirectory) throws IOException {

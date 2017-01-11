@@ -4,6 +4,8 @@ import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.cas.CAS;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
@@ -40,8 +42,8 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
     public String getTextToPrint(JCas aJCas) {
         StringBuilder sb = new StringBuilder();
 
-        Article article = JCasUtil.selectSingle(aJCas, Article.class);
-
+        JCas initialView = JCasUtil.getView(aJCas, CAS.NAME_DEFAULT_SOFA, aJCas);
+        Article article = JCasUtil.selectSingle(initialView, Article.class);
         String articleName = article.getArticleName();
 
         sb.append("#BeginOfDocument ").append(articleName).append("\n");
@@ -49,7 +51,19 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         TokenAlignmentHelper align = new TokenAlignmentHelper();
         align.loadWord2Stanford(aJCas, goldComponentId);
 
-        Map<EventMention, String> mention2Id = new HashMap<>();
+        Map<EventMention, String> mentionIds = new HashMap<>();
+        Map<EventMentionSpan, String> spanIds = new HashMap<>();
+
+        Map<EventMention, EventMentionSpan> toSpan = new HashMap<>();
+
+        int spanIndex = 1;
+        for (EventMentionSpan eventMentionSpan : JCasUtil.select(aJCas, EventMentionSpan.class)) {
+            for (EventMention eventMention : JCasUtil.selectCovered(EventMention.class, eventMentionSpan)) {
+                toSpan.put(eventMention, eventMentionSpan);
+            }
+            spanIds.put(eventMentionSpan, "S" + spanIndex);
+            spanIndex++;
+        }
 
         int eventMentionIndex = 1;
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
@@ -69,6 +83,10 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             }
             parts.add(mention.getEventType());
             parts.add(mention.getRealisType() == null ? "Actual" : mention.getRealisType());
+
+            String spanId = spanIds.get(toSpan.get(mention));
+            parts.add(spanId);
+
             sb.append(Joiner.on("\t").join(parts));
 
             // Adding semantic roles.
@@ -76,20 +94,21 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
                 sb.append("\t").append(formatArguments(mention.getHeadWord()));
             }
 
+
             sb.append("\n");
 
             mention.setId(eid);
-            mention2Id.put(mention, eid);
+            mentionIds.put(mention, eid);
         }
 
-        int corefIndex = 1;
+        int relationIndex = 1;
 //        logger.info("Number of clusters : " + JCasUtil.select(aJCas, Event.class).size());
         for (Event event : JCasUtil.select(aJCas, Event.class)) {
             // Print non-singleton mentions only.
             List<String> eventMentionIds = new ArrayList<>();
             if (event.getEventMentions().size() > 1) {
                 for (EventMention mention : FSCollectionFactory.create(event.getEventMentions(), EventMention.class)) {
-                    String mentionId = mention2Id.get(mention);
+                    String mentionId = mentionIds.get(mention);
                     if (mentionId != null) {
                         eventMentionIds.add(mentionId);
                     }
@@ -97,13 +116,24 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             }
 
             if (eventMentionIds.size() > 1) {
-                String corefId = "R" + corefIndex;
+                String corefId = "R" + relationIndex;
                 sb.append("@Coreference").append("\t").append(corefId).append("\t");
                 sb.append(Joiner.on(",").join(eventMentionIds));
                 sb.append("\n");
-                corefIndex++;
+                relationIndex++;
             }
         }
+
+
+        for (EventMentionSpanRelation relation : JCasUtil.select(aJCas, EventMentionSpanRelation.class)) {
+            String afterId = "R" + relationIndex;
+            sb.append("@After").append("\t").append(afterId).append("\t");
+            sb.append(spanIds.get(relation.getHead()));
+            sb.append(spanIds.get(relation.getChild()));
+            sb.append("\n");
+            relationIndex ++;
+        }
+
         sb.append("#EndOfDocument\n");
 
         return sb.toString();
@@ -144,7 +174,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         return Joiner.on("\t").join(argumentComponents);
     }
 
-    private String handleNull(String s){
+    private String handleNull(String s) {
         return s == null ? "N/A" : s;
     }
 
@@ -204,5 +234,10 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         return Pair.with(Joiner.on(",").join(wordIds), Joiner.on(" ").join(surface));
     }
 
+    @Override
+    public void collectionProcessComplete() throws AnalysisEngineProcessException {
+        super.collectionProcessComplete();
+        logger.info("File successfully output at : " + getOutputPath());
+    }
 }
 

@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.learning.runners;
 
-import edu.cmu.cs.lti.after.annotators.PairwiseAfterAnnotator;
-import edu.cmu.cs.lti.after.train.PairwiseAfterTrainer;
+import edu.cmu.cs.lti.after.annotators.LatentTreeAfterAnnotator;
+import edu.cmu.cs.lti.after.train.LatentTreeAfterTrainer;
 import edu.cmu.cs.lti.emd.pipeline.TrainingLooper;
 import edu.cmu.cs.lti.event_coref.annotators.train.BeamJointTrainer;
 import edu.cmu.cs.lti.learning.utils.ModelUtils;
@@ -29,8 +29,8 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @author Zhengzhong Liu
  */
-public class AfterModelRunner extends AbstractMentionModelRunner {
-    public AfterModelRunner(Configuration mainConfig, TypeSystemDescription typeSystemDescription) {
+public class TreeAfterModelRunner extends AbstractMentionModelRunner {
+    public TreeAfterModelRunner(Configuration mainConfig, TypeSystemDescription typeSystemDescription) {
         super(mainConfig, typeSystemDescription);
     }
 
@@ -54,7 +54,8 @@ public class AfterModelRunner extends AbstractMentionModelRunner {
         } else {
             logger.info("Saving model directory at : " + cvModelDir);
             AnalysisEngineDescription trainEngine = AnalysisEngineFactory.createEngineDescription(
-                    PairwiseAfterTrainer.class, typeSystemDescription
+                    LatentTreeAfterTrainer.class, typeSystemDescription,
+                    LatentTreeAfterTrainer.PARAM_CONFIG_PATH, config.getConfigFile()
             );
 
             TrainingLooper trainer = new TrainingLooper(cvModelDir, trainReader, trainEngine, jointMaxIter,
@@ -94,13 +95,14 @@ public class AfterModelRunner extends AbstractMentionModelRunner {
 
                 @Override
                 protected void saveModel(File modelOutputDir) throws IOException {
-                    BeamJointTrainer.saveModels(modelOutputDir);
+                    File modelOut = LatentTreeAfterTrainer.saveModels(modelOutputDir);
+                    logger.info(String.format("Model is saved at : %s", modelOut));
                 }
             };
 
             trainer.runLoopPipeline();
 
-            logger.info("Joint training finished ...");
+            logger.info("Tree Based After training finished ...");
         }
         return cvModelDir;
     }
@@ -141,9 +143,9 @@ public class AfterModelRunner extends AbstractMentionModelRunner {
                 @Override
                 public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
                     AnalysisEngineDescription afterLinker = AnalysisEngineFactory.createEngineDescription(
-                            PairwiseAfterAnnotator.class, typeSystemDescription,
-                            PairwiseAfterAnnotator.PARAM_MODEL_DIRECTORY, model,
-                            PairwiseAfterAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
+                            LatentTreeAfterAnnotator.class, typeSystemDescription,
+                            LatentTreeAfterAnnotator.PARAM_MODEL_DIRECTORY, model,
+                            LatentTreeAfterAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
                     );
 
                     return new AnalysisEngineDescription[]{afterLinker};

@@ -25,7 +25,6 @@ public class MentionCandidate {
 
     private MentionKey key;
 
-    // TODO check whether the index is used correctly.
     public MentionCandidate(int begin, int end, Sentence containedSentence, Word headWord, int candidateIndex) {
         this.begin = begin;
         this.containedSentence = containedSentence;

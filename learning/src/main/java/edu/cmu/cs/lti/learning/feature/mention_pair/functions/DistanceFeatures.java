@@ -43,26 +43,27 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
-            candidates, NodeKey firstNode, NodeKey secondNode) {
-        MentionCandidate firstCandidate = candidates.get(firstNode.getCandidateIndex());
-        MentionCandidate secondCandidate = candidates.get(secondNode.getCandidateIndex());
+            candidates, int firstCandidateId, int secondCandidateId) {
+        MentionCandidate firstCandidate = candidates.get(firstCandidateId);
+        MentionCandidate secondCandidate = candidates.get(secondCandidateId);
         thresholdedSentenceDistance(featuresNoLabel, firstCandidate, secondCandidate);
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                   List<MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey
+                                           secondNodeKey) {
 //        thresholdedMentionDistance(featuresNeedLabel, candidates, firstNode, secondNode);
     }
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
-            secondCandidate, NodeKey secondNode) {
+            candidate) {
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate
-            secondCandidate, NodeKey secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate
+            secondCandidate, NodeKey secondNodeKey) {
     }
 
     private void thresholdedSentenceDistance(TObjectDoubleMap<String> rawFeatures, MentionCandidate firstCandidate,

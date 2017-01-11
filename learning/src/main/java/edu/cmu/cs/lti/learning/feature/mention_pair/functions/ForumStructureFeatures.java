@@ -4,7 +4,6 @@ import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.TaggedArea;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
 import org.apache.uima.fit.util.JCasUtil;
@@ -67,9 +66,9 @@ public class ForumStructureFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
-            candidates, NodeKey firstNode, NodeKey secondNode) {
-        MentionCandidate firstCandidate = candidates.get(firstNode.getCandidateIndex());
-        MentionCandidate secondCandidate = candidates.get(secondNode.getCandidateIndex());
+            candidates, int firstCandidateId, int secondCandidateId) {
+        MentionCandidate firstCandidate = candidates.get(firstCandidateId);
+        MentionCandidate secondCandidate = candidates.get(secondCandidateId);
 
 
         TaggedArea firstTag = sentence2Tag.get(firstCandidate.getContainedSentence());
@@ -111,20 +110,21 @@ public class ForumStructureFeatures extends AbstractMentionPairFeatures {
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                   List<MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey
+                                           secondNodeKey) {
 
     }
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
-            secondCandidate, NodeKey secondNode) {
+            candidate) {
 
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        MentionCandidate secondCandidate, NodeKey secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                   MentionCandidate secondCandidate, NodeKey secondNodeKey) {
 
     }
 }

@@ -27,9 +27,9 @@ public class PosPairFeatures extends AbstractMentionPairFeatures {
     }
 
     @Override
-    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
-        MentionCandidate firstCandidate = candidates.get(firstNode.getCandidateIndex());
-        MentionCandidate secondCandidate = candidates.get(secondNode.getCandidateIndex());
+    public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate> candidates, int firstCandidateId, int secondCandidateId) {
+        MentionCandidate firstCandidate = candidates.get(firstCandidateId);
+        MentionCandidate secondCandidate = candidates.get(secondCandidateId);
 
         addBoolean(featuresNoLabel, FeatureUtils.formatFeatureName("PosPair",
                 FeatureUtils.sortedJoin(firstCandidate.getHeadWord().getPos(), secondCandidate.getHeadWord().getPos()))
@@ -37,21 +37,21 @@ public class PosPairFeatures extends AbstractMentionPairFeatures {
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel, List<MentionCandidate> candidates, NodeKey firstNode, NodeKey
-
-            secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                   List<MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey
+                                           secondNodeKey) {
 
     }
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
-            secondCandidate, NodeKey secondNode) {
+            candidate) {
 
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate
-            secondCandidate, NodeKey secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate
+            secondCandidate, NodeKey secondNodeKey) {
 
     }
 }

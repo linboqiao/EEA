@@ -49,9 +49,9 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, List<MentionCandidate>
-            candidates, NodeKey firstNode, NodeKey secondNode) {
-        MentionCandidate firstCandidate = candidates.get(firstNode.getCandidateIndex());
-        MentionCandidate secondCandidate = candidates.get(secondNode.getCandidateIndex());
+            candidates, int firstCandidateId, int secondCandidateId) {
+        MentionCandidate firstCandidate = candidates.get(firstCandidateId);
+        MentionCandidate secondCandidate = candidates.get(secondCandidateId);
 
         WordNetBasedEntity firstClosestEn = closestWordNetEntity(firstCandidate);
         WordNetBasedEntity secondClosestEn = closestWordNetEntity(secondCandidate);
@@ -81,21 +81,22 @@ public class SurroundingWordNetSenseFeatures extends AbstractMentionPairFeatures
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                        List
-                                                <MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
+                                   List
+                                                <MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey
+                                           secondNodeKey) {
 
     }
 
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
-            secondCandidate, NodeKey secondNode) {
+            candidate) {
 
     }
 
     @Override
-    public void extractCandidateRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate
-            secondCandidate, NodeKey secondNode) {
+    public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featureNoLabel, MentionCandidate
+            secondCandidate, NodeKey secondNodeKey) {
 
     }
 

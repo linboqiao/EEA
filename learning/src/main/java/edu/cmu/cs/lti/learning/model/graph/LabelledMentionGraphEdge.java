@@ -3,7 +3,6 @@ package edu.cmu.cs.lti.learning.model.graph;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.NodeKey;
-import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,9 +32,7 @@ public class LabelledMentionGraphEdge implements Serializable {
 
     private boolean averageMode;
 
-//    private EdgeType edgeType;
-
-//    private EdgeType actualEdgeType;
+    private EdgeType actualEdgeType;
 
     public LabelledMentionGraphEdge(MentionGraphEdge hostingEdge, NodeKey govKey, NodeKey depKey, boolean averageMode) {
         this.hostingEdge = hostingEdge;
@@ -50,28 +47,46 @@ public class LabelledMentionGraphEdge implements Serializable {
     }
 
     public double scoreEdge(EdgeType type, GraphWeightVector weightVector) {
-        double s = averageMode ? weightVector.dotProdAver(featureVector, type.name()) :
+        double nodeDependentScore = averageMode ? weightVector.dotProdAver(featureVector, type.name()) :
                 weightVector.dotProd(featureVector, type.name());
-//        logger.info("Mode is " + averageMode);
-        return s;
+
+        double nodeAgnosticScore = averageMode ?
+                weightVector.dotProdAver(hostingEdge.getNodeAgnosticFeatures(), type.name()) :
+                weightVector.dotProd(hostingEdge.getNodeAgnosticFeatures(), type.name());
+
+        return nodeDependentScore + nodeAgnosticScore;
     }
 
-    public Pair<EdgeType, Double> getCorrectLabelScore(GraphWeightVector weightVector) {
-        EdgeType actualEdgeType = hostingEdge.getRealEdgeType();
+    public boolean hasActualEdgeType() {
+        return actualEdgeType != null;
+    }
+
+    public double getCorrectLabelScore(GraphWeightVector weightVector) {
         if (actualEdgeType == null) {
-            return null;
+            return Double.NaN;
         }
-        return Pair.of(actualEdgeType, scoreEdge(actualEdgeType, weightVector));
+        return scoreEdge(actualEdgeType, weightVector);
     }
 
-    public Pair<EdgeType, Double> getBestLabelScore(GraphWeightVector weightVector) {
-        double score = Double.NEGATIVE_INFINITY;
-        EdgeType bestLabel = null;
+//
+//    public Pair<EdgeType, Double> getCorrectLabelScore(GraphWeightVector weightVector) {
+//        EdgeType actualEdgeType = hostingEdge.getRealUnlabelledEdgeType();
+//        if (actualEdgeType == null) {
+//            return null;
+//        }
+//        return Pair.of(actualEdgeType, scoreEdge(actualEdgeType, weightVector));
+//    }
+
+    public Map<EdgeType, Double> getBestLabelScore(GraphWeightVector weightVector) {
+//        double score = Double.NEGATIVE_INFINITY;
+//        EdgeType bestLabel = null;
+
+        Map<EdgeType, Double> labelScores = new HashMap<>();
 
         if (hostingEdge.isRoot()) {
             // The only possible relation with the root node is ROOT.
-            score = scoreEdge(EdgeType.Root, weightVector);
-            bestLabel = EdgeType.Root;
+//            bestLabel = EdgeType.Root;
+            labelScores.put(EdgeType.Root, scoreEdge(EdgeType.Root, weightVector));
         } else {
             for (EdgeType label : EdgeType.values()) {
                 if (label.equals(EdgeType.Root)) {
@@ -80,13 +95,15 @@ public class LabelledMentionGraphEdge implements Serializable {
                 }
                 double typeScore = scoreEdge(label, weightVector);
 
-                if (typeScore > score) {
-                    score = typeScore;
-                    bestLabel = label;
-                }
+                labelScores.put(label, typeScore);
+
+//                if (typeScore > score) {
+//                    score = typeScore;
+//                    bestLabel = label;
+//                }
             }
         }
-        return Pair.of(bestLabel, score);
+        return labelScores;
     }
 
     public Map<EdgeType, Double> getAllLabelScore(GraphWeightVector weightVector) {
@@ -110,11 +127,11 @@ public class LabelledMentionGraphEdge implements Serializable {
 
 
     public int getGov() {
-        return hostingEdge.getGovIdx();
+        return hostingEdge.getGov();
     }
 
     public int getDep() {
-        return hostingEdge.getDepIdx();
+        return hostingEdge.getDep();
     }
 
     public static final Comparator<LabelledMentionGraphEdge> edgeDepComparator = (o1, o2) -> o1.getDep() - o2.getDep();
@@ -136,16 +153,25 @@ public class LabelledMentionGraphEdge implements Serializable {
     }
 
     public String toString() {
-        return String.format("%s, Labels: [T:%s,R:%s]-[T:%s,R:%s]", hostingEdge.toString(), govKey.getMentionType(),
-                govKey.getRealis(), depKey.getMentionType(), depKey.getRealis());
+        return String.format("Label edge: [T:%s,R:%s]-[T:%s,R:%s], Gold Type: %s",
+                govKey.getMentionType(), govKey.getRealis(), depKey.getMentionType(), depKey.getRealis(),
+                actualEdgeType);
     }
 
-//    public void setActualEdgeType(EdgeType actualEdgeType) {
-////        logger.debug("Actual edge type is set " + toString());
-//        this.actualEdgeType = actualEdgeType;
-//    }
-//
-//    public EdgeType getActualEdgeType() {
-//        return actualEdgeType;
-//    }
+    public void setActualEdgeType(EdgeType actualEdgeType) {
+        this.actualEdgeType = actualEdgeType;
+    }
+
+    public EdgeType getActualEdgeType() {
+        return actualEdgeType;
+    }
+
+    public boolean notNoneType() {
+        return actualEdgeType != null;
+    }
+
+    public MentionGraphEdge getHostingEdge() {
+        return hostingEdge;
+    }
+
 }

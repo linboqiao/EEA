@@ -1,12 +1,12 @@
 package edu.cmu.cs.lti.event_coref.decoding;
 
 import com.google.common.collect.ArrayListMultimap;
-import edu.cmu.cs.lti.learning.feature.extractor.ChainFeatureExtractor;
-import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
-import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
+import edu.cmu.cs.lti.learning.feature.extractor.ChainFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
+import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -24,6 +24,7 @@ import java.util.Set;
  * Time: 2:56 PM
  *
  * @author Zhengzhong Liu
+ * @deprecated Dual Decomposition method is useful but not effective on current datasets.
  */
 public class DDLatentTreeCrfDecoder {
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -91,7 +92,8 @@ public class DDLatentTreeCrfDecoder {
             // NOTE: we annotate predicted type into JCas here.
             annotatePredictedTypes(viterbiDecoder.getDecodedPrediction(), allCandidates);
 
-            subGraph = latentTreeDecoder.decode(mentionGraph, allCandidates, corefWeights, corefFeatureExtractor, u, v);
+
+            subGraph = latentTreeDecoder.decode(mentionGraph, allCandidates, corefWeights, false);
             typeSolution = viterbiDecoder.getDecodedPrediction();
 
 //            logger.debug(typeSolution.showBestBackPointerMap());

@@ -12,6 +12,8 @@ import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import gnu.trove.set.TIntSet;
+import gnu.trove.set.hash.TIntHashSet;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.fit.util.FSCollectionFactory;
@@ -37,7 +39,7 @@ public class MentionUtils {
 
     public static MentionGraph createMentionGraph(JCas aJCas, List<MentionCandidate> candidates,
                                                   PairFeatureExtractor extractor, boolean isTraining) {
-        // Currently, we still could not handle cases where mentions have the same attributes and spans.
+        // Note: We consider mentions with the same attributes and spans as duplication. We remove them from the list.
         List<EventMention> allMentions = MentionUtils.clearDuplicates(
                 new ArrayList<>(JCasUtil.select(aJCas, EventMention.class))
         );
@@ -45,54 +47,76 @@ public class MentionUtils {
         // Create singleton events if not existed yet.
         createSingleEvents(aJCas, allMentions);
 
-        TObjectIntMap<EventMention> mentionIndices = new TObjectIntHashMap<>();
+        Set<EventMention> validMentions = new HashSet<>();
+        String[] mentionTypes = new String[allMentions.size()];
+
         for (int i = 0; i < allMentions.size(); i++) {
             EventMention mention = allMentions.get(i);
             mention.setIndex(i);
-            mentionIndices.put(mention, i);
+            mentionTypes[i] = mention.getEventType();
+            validMentions.add(mention);
         }
 
         List<EventMentionSpan> mentionSpans = new ArrayList<>(JCasUtil.select(aJCas, EventMentionSpan.class));
 
         int eventIdx = 0;
         int[] mentionId2EventId = new int[allMentions.size()];
+        TIntSet nonSingletons = new TIntHashSet();
 
         for (Event event : JCasUtil.select(aJCas, Event.class)) {
-            event.setIndex(eventIdx++);
+            event.setIndex(eventIdx);
             // Here we only store non-singletons.
             int clusterSize = event.getEventMentions().size();
             if (clusterSize > 1) {
                 for (int i = 0; i < event.getEventMentions().size(); i++) {
                     EventMention mention = event.getEventMentions(i);
-                    mentionId2EventId[mention.getIndex()] = event.getIndex();
+                    int mentionIndex = mention.getIndex();
+                    mentionId2EventId[mentionIndex] = eventIdx;
+                    nonSingletons.add(mentionIndex);
                 }
+                eventIdx++;
+            }
+        }
+
+        for (EventMention mention : allMentions) {
+            int mentionIndex = mention.getIndex();
+            if (!nonSingletons.contains(mentionIndex)){
+                mentionId2EventId[mentionIndex] = eventIdx;
+                eventIdx ++;
             }
         }
 
         // Create some mapping for creating the event graph.
         int[][] candidate2Mentions = new int[candidates.size()][];
-        String[] mentionTypes = new String[allMentions.size()];
 
-        TObjectIntMap<EventMentionSpan> mentionIds = new TObjectIntHashMap<>();
+        TObjectIntMap<EventMentionSpan> spanIds = new TObjectIntHashMap<>();
         for (int i = 0; i < mentionSpans.size(); i++) {
             // i is the candidate id, a.k.a, the mention span id.
             EventMentionSpan ems = mentionSpans.get(i);
-            mentionIds.put(ems, i);
+            spanIds.put(ems, i);
 
             Collection<EventMention> mentions = FSCollectionFactory.create(ems.getEventMentions(), EventMention.class);
 
-            candidate2Mentions[i] = new int[mentions.size()];
+            int numValidMentions = 0;
+            for (EventMention mention : mentions) {
+                if (validMentions.contains(mention)){
+                    numValidMentions ++;
+                }
+            }
+
+            candidate2Mentions[i] = new int[numValidMentions];
 
             int j = 0;
             for (EventMention mention : mentions) {
-                int mentionIndex = mention.getIndex();
-                candidate2Mentions[i][j] = mentionIndex;
-                mentionTypes[mentionIndex] = mention.getEventType();
-                j++;
+                if (validMentions.contains(mention)){
+                    int mentionIndex = mention.getIndex();
+                    candidate2Mentions[i][j] = mentionIndex;
+                    j++;
+                }
             }
         }
 
-        Table<Integer, Integer, String> relations = indexSpanRelations(aJCas, mentionIds);
+        Table<Integer, Integer, String> relations = indexSpanRelations(aJCas, spanIds);
 
         return new MentionGraph(candidates, candidate2Mentions, mentionTypes, mentionId2EventId,
                 relations, extractor, isTraining);
@@ -311,9 +335,11 @@ public class MentionUtils {
         Table<Integer, Integer, String> relations = HashBasedTable.create();
 
         for (EventMentionSpanRelation relation : JCasUtil.select(aJCas, EventMentionSpanRelation.class)) {
+//            logger.info(String.format("Relation is %s -> %s: %s", relation.getHead().getCoveredText(), relation.getChild().getCoveredText(), relation.getRelationType()));
             int head = spanIds.get(relation.getHead());
             int child = spanIds.get(relation.getChild());
             relations.put(head, child, relation.getRelationType());
+//            logger.info(String.format("Find relation from %d to %d of type %s", head, child, relation.getRelationType()));
         }
 
         return relations;

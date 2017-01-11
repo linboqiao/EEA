@@ -65,13 +65,11 @@ public class PairFeatureExtractor implements Serializable {
      * Extract label agnostic features from one mention only when the other is deliberately omitted, for example, the
      * other mention is a virtual root.
      *
-     * @param mentionCandidate The mention to extract from.
-     * @param depKey           The node key for the dependent.
-     * @return Feature vector of this mention against the other
+     * @param mentionCandidate   The mention to extract from.
+     * @param rawFeaturesNoLabel Feature vector of this mention against the other
      */
-    public void extract(MentionCandidate mentionCandidate, TObjectDoubleMap<String> rawFeaturesNoLabel,
-                        NodeKey depKey) {
-        featureFunctions.forEach(ff -> ff.extract(context, rawFeaturesNoLabel, mentionCandidate, depKey));
+    public void extract(MentionCandidate mentionCandidate, TObjectDoubleMap<String> rawFeaturesNoLabel) {
+        featureFunctions.forEach(ff -> ff.extract(context, rawFeaturesNoLabel, mentionCandidate));
     }
 
     /**
@@ -79,13 +77,13 @@ public class PairFeatureExtractor implements Serializable {
      * other mention is a virtual root.
      *
      * @param mentionCandidate The mention to extract from.
-     * @param depKey           The node key for the dependent
+     * @param nodeKey
      * @return Feature vector of this mention against the other
      */
-    public void extractLabelRelated(MentionCandidate mentionCandidate, TObjectDoubleMap<String>
-            rawFeaturesNeedLabel, NodeKey depKey) {
+    public void extractLabelRelated(MentionCandidate mentionCandidate, NodeKey nodeKey, TObjectDoubleMap<String>
+            rawFeaturesNeedLabel) {
         featureFunctions.forEach(ff -> {
-            ff.extractCandidateRelated(context, rawFeaturesNeedLabel, mentionCandidate, depKey);
+            ff.extractNodeRelated(context, rawFeaturesNeedLabel, mentionCandidate, nodeKey);
         });
     }
 
@@ -94,14 +92,14 @@ public class PairFeatureExtractor implements Serializable {
      * Extract label agnostic features for the mention pair.
      *
      * @param candidates
-     * @param firstNode
-     * @param secondNode
+     * @param firstCandidateIndex
+     * @param secondCandidateIndex
      * @return Feature vector of this mention against the other
      */
-    public void extract(List<MentionCandidate> candidates, NodeKey firstNode, NodeKey secondNode,
+    public void extract(List<MentionCandidate> candidates, int firstCandidateIndex, int secondCandidateIndex,
                         TObjectDoubleMap<String> rawFeaturesNoLabel) {
         featureFunctions.forEach(ff -> {
-            ff.extract(context, rawFeaturesNoLabel, candidates, firstNode, secondNode);
+            ff.extract(context, rawFeaturesNoLabel, candidates, firstCandidateIndex, secondCandidateIndex);
         });
     }
 
@@ -116,7 +114,7 @@ public class PairFeatureExtractor implements Serializable {
     public void extractLabelRelated(List<MentionCandidate> candidates, NodeKey firstKey, NodeKey secondKey,
                                     TObjectDoubleMap<String> rawFeaturesNeedLabel) {
         featureFunctions.forEach(ff -> {
-            ff.extractCandidateRelated(context, rawFeaturesNeedLabel, candidates, firstKey, secondKey);
+            ff.extractNodeRelated(context, rawFeaturesNeedLabel, candidates, firstKey, secondKey);
         });
     }
 }

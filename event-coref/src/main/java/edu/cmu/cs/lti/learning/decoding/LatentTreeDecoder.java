@@ -1,11 +1,9 @@
-package edu.cmu.cs.lti.event_coref.decoding;
+package edu.cmu.cs.lti.learning.decoding;
 
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
-import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
-import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,25 +31,9 @@ public abstract class LatentTreeDecoder {
      *
      * @param mentionGraph The base graph to be decode.
      * @param weights      The weight vector used to decode.
-     * @param u            The Lagrangian multiplier for decoding.
-     * @param v
+     * @param getGoldTree
      * @return The subgraph containing only the selected weights.
      */
     public abstract MentionSubGraph decode(MentionGraph mentionGraph, List<MentionCandidate> mentionCandidates,
-                                           GraphWeightVector weights, PairFeatureExtractor extractor,
-                                           CubicLagrangian u, CubicLagrangian v);
-
-
-    /**
-     * Decode the graph to produce a best tree structure.
-     *
-     * @param mentionGraph The base graph to be decode.
-     * @param weights      The weight vector used to decode.
-     * @return The subgraph containing only the selected weights.
-     */
-    public MentionSubGraph decode(MentionGraph mentionGraph, List<MentionCandidate> mentionCandidates,
-                                           GraphWeightVector weights, PairFeatureExtractor extractor){
-        return decode(mentionGraph, mentionCandidates, weights, extractor, dummyLagrangian, dummyLagrangian);
-    }
-
+                                           GraphWeightVector weights, boolean getGoldTree);
 }

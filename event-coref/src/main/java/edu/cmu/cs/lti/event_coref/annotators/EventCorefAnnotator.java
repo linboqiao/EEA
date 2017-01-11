@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.event_coref.annotators;
 import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.annotators.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.event_coref.decoding.BestFirstLatentTreeDecoder;
-import edu.cmu.cs.lti.event_coref.decoding.LatentTreeDecoder;
+import edu.cmu.cs.lti.learning.decoding.LatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.ClassAlphabet;
@@ -122,8 +122,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
 
         extractor.initWorkspace(aJCas);
         MentionGraph mentionGraph = new MentionGraph(candidates, extractor, true);
-        MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, extractor, lagrangian,
-                lagrangian);
+        MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
 
         predictedTree.resolveCoreference();
         List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();

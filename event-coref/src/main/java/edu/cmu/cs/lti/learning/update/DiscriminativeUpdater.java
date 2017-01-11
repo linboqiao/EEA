@@ -7,7 +7,6 @@ import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.utils.DebugUtils;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
-import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,8 +56,6 @@ public class DiscriminativeUpdater {
     // TODO temporary debug clause;
     public static boolean debugger = true;
 
-//    private boolean useCorefUpdateConstraint = false;
-
     private int corefUpdateStrategy;
 
     private int numCorefUpdates = 0;
@@ -70,12 +67,15 @@ public class DiscriminativeUpdater {
         allLoss = new TObjectDoubleHashMap<>();
         classAlphabets = new HashMap<>();
         featureAlphabets = new HashMap<>();
-        labelLosser = SeqLoss.getLoss(lossType);
         this.corefUpdateStrategy = constraintType;
 //        trainingStats = new HashMap<>();
 
         if (!(updateMention || updateCoref)) {
             throw new IllegalArgumentException("Cannot use a updater without updating anything.");
+        }
+
+        if (updateMention){
+            labelLosser = SeqLoss.getLoss(lossType);
         }
 
         usePa = usePaUpdate;
@@ -97,18 +97,6 @@ public class DiscriminativeUpdater {
     public DiscriminativeUpdater(boolean updateMention, boolean updateCoref, boolean usePaUpdate, String lossType) {
         this(updateMention, updateCoref, usePaUpdate, lossType, 0, 0);
     }
-
-//    public void useCorefUpdateConstraint(int strategy) {
-//        useCorefUpdateConstraint = true;
-//        corefUpdateStrategy = strategy;
-//
-//        if (strategy != 0 && strategy != 1 && strategy != 2) {
-//            throw new IllegalArgumentException("Unknown coreference constraint strategy!");
-//        }
-//
-//        logger.info("Updater started with coreference constraint of strategy " + strategy);
-//        DebugUtils.pause(logger);
-//    }
 
     public void addWeightVector(String name, GraphWeightVector weightVector) {
         allWeights.put(name, weightVector);
@@ -159,14 +147,10 @@ public class DiscriminativeUpdater {
         NodeLinkingState bestDecoding = decodingAgenda.getBestBeamState();
         NodeLinkingState bestGold = goldAgenda.getBestBeamState();
 
-        Pair<Double, Double> losses = bestDecoding.loss(bestGold, labelLosser);
-
-        Double typeLoss = losses.getLeft();
-        Double corefLoss = losses.getRight();
-
-        addLoss(TYPE_MODEL_NAME, typeLoss);
-
         if (updateMention) {
+            double typeLoss = bestDecoding.labelLoss(bestGold, labelLosser);
+            addLoss(TYPE_MODEL_NAME, typeLoss);
+
             // Compute delta on labeling.
             GraphFeatureVector goldLabelFeature = goldAgenda.getBestDeltaLabelFv();
             GraphFeatureVector decodingLabelFeature = decodingAgenda.getBestDeltaLabelFv();
@@ -197,11 +181,13 @@ public class DiscriminativeUpdater {
                 return;
             }
 
-            if (typeLoss != 0) {
-                return;
-            }
 
-            addLoss(COREF_MODEL_NAME, corefLoss);
+//            if (typeLoss != 0) {
+//                return;
+//            }
+
+            double graphLoss = bestDecoding.graphLoss(bestGold);
+            addLoss(COREF_MODEL_NAME, graphLoss);
 
             numCorefUpdates++;
 

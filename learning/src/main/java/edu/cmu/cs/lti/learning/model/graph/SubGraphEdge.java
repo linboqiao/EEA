@@ -1,9 +1,13 @@
 package edu.cmu.cs.lti.learning.model.graph;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.NodeKey;
 
-import java.util.Comparator;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,56 +17,95 @@ import java.util.Comparator;
  * @author Zhengzhong Liu
  */
 public class SubGraphEdge {
-    private EdgeType edgeType;
+    private final MentionGraphEdge graphEdge;
 
-    private final LabelledMentionGraphEdge superGraphEdge;
+    private EdgeType unlabelledType;
 
-    public SubGraphEdge(LabelledMentionGraphEdge edge, EdgeType edgeType) {
-        this.edgeType = edgeType;
-        this.superGraphEdge = edge;
+    private Table<NodeKey, NodeKey, LabelledMentionGraphEdge> labelledEdges;
+
+    private Map<LabelledMentionGraphEdge, EdgeType> labelledTypes;
+
+    private boolean hasUnlabelledType;
+
+    private int labelledNonRootLinks;
+
+    public SubGraphEdge(MentionGraphEdge edge) {
+        graphEdge = edge;
+        labelledEdges = HashBasedTable.create();
+        labelledTypes = new HashMap<>();
+        hasUnlabelledType = false;
+        labelledNonRootLinks = 0;
     }
 
-    public EdgeType getEdgeType() {
-        return edgeType;
-    }
+    public void addLabelledEdge(LabelledMentionGraphEdge labelledEdge, EdgeType type) {
+        // Unlabelled types and labelled ones are mutually exclusive.
+        this.unlabelledType = null;
+        hasUnlabelledType = false;
 
-    public void setEdgeType(EdgeType edgeType) {
-        this.edgeType = edgeType;
-    }
+        labelledEdges.put(labelledEdge.getGovKey(), labelledEdge.getDepKey(), labelledEdge);
+        labelledTypes.put(labelledEdge, type);
 
-    public NodeKey getDepKey() {
-        return superGraphEdge.getDepKey();
-    }
-
-    public NodeKey getGovKey() {
-        return superGraphEdge.getGovKey();
-    }
-
-    public static final Comparator<SubGraphEdge> subgraphComparator = new Comparator<SubGraphEdge>() {
-        @Override
-        public int compare(SubGraphEdge o1, SubGraphEdge o2) {
-            return LabelledMentionGraphEdge.edgeDepComparator.compare(o1.superGraphEdge, o2.superGraphEdge);
+        if (type != EdgeType.Root) {
+            labelledNonRootLinks += 1;
         }
-    };
+    }
+
+    public LabelledMentionGraphEdge getLabelledEdge(NodeKey govKey, NodeKey depKey) {
+        return labelledEdges.get(govKey, depKey);
+    }
+
+    public Collection<LabelledMentionGraphEdge> getAllLabelledEdge() {
+        return labelledEdges.values();
+    }
+
+    public int numLabelledNonRootLinks() {
+        return labelledNonRootLinks;
+    }
+
+
+    public EdgeType getUnlabelledType() {
+        return unlabelledType;
+    }
+
+    public void setUnlabelledType(EdgeType unlabelledType) {
+        this.unlabelledType = unlabelledType;
+        hasUnlabelledType = true;
+        labelledTypes = new HashMap<>();
+        labelledEdges = HashBasedTable.create();
+    }
+
+    public EdgeType getLabelledType(NodeKey govKey, NodeKey depKey) {
+        return labelledTypes.get(getLabelledEdge(govKey, depKey));
+    }
+
+    public EdgeType getLabelledType(LabelledMentionGraphEdge labelledEge) {
+        return labelledTypes.get(labelledEge);
+    }
+
+    public boolean hasUnlabelledType() {
+        return hasUnlabelledType;
+    }
 
     public int getGov() {
-        return superGraphEdge.getGov();
+        return graphEdge.getGov();
     }
 
     public int getDep() {
-        return superGraphEdge.getDep();
+        return graphEdge.getDep();
     }
 
     public String toString() {
-        return String.format("SubGraphEdge: (%d:%s,%d:%s) [%s]", getGov(), getGovKey().getMentionType(),
-                getDep(), getDepKey().getMentionType(), edgeType);
-    }
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("SubGraphEdge: (%d,%d) [%s]", getGov(), getDep(), unlabelledType));
+        for (Map.Entry<LabelledMentionGraphEdge, EdgeType> edgeWithType : labelledTypes.entrySet()) {
+            sb.append("\t");
+            sb.append(String.format("%s, predicted as: %s.", edgeWithType.getKey(), edgeWithType.getValue()));
+        }
 
-    public LabelledMentionGraphEdge getSuperGraphEdge() {
-        return superGraphEdge;
+        return sb.toString();
     }
 
     public FeatureVector getEdgeFeatures() {
-        return superGraphEdge.getFeatureVector();
+        return graphEdge.getNodeAgnosticFeatures();
     }
 }
