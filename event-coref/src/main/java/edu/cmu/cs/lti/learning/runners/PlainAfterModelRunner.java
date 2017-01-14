@@ -29,8 +29,8 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @author Zhengzhong Liu
  */
-public class TreeAfterModelRunner extends AbstractMentionModelRunner {
-    public TreeAfterModelRunner(Configuration mainConfig, TypeSystemDescription typeSystemDescription) {
+public class PlainAfterModelRunner extends AbstractMentionModelRunner {
+    public PlainAfterModelRunner(Configuration mainConfig, TypeSystemDescription typeSystemDescription) {
         super(mainConfig, typeSystemDescription);
     }
 

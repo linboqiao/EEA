@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.learning.model.graph;
 import com.google.common.base.Joiner;
 import com.google.common.collect.*;
 import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -94,9 +95,15 @@ public class MentionSubGraph {
         return newEdge;
     }
 
-    public void addUnlabelledEdge(MentionGraphEdge edge, EdgeType newType) {
+    public void addUnlabelledEdge(List<MentionCandidate> candidates, MentionGraphEdge edge,
+                                  EdgeType newType, EdgeDirection direction) {
         SubGraphEdge newEdge = addEdge(edge);
-        newEdge.setUnlabelledType(newType);
+        newEdge.setUnlabelledType(newType, direction);
+
+        for (LabelledMentionGraphEdge labelledEdge : edge.getAllLabelledEdges(candidates,
+                direction == EdgeDirection.Backword)) {
+            newEdge.addLabelledEdge(labelledEdge, newType);
+        }
     }
 
     public void addLabelledEdge(LabelledMentionGraphEdge labelledMentionGraphEdge, EdgeType newType) {
@@ -119,7 +126,6 @@ public class MentionSubGraph {
             clusterBuilder.addLink(Pair.of(govNode, govKey.getMentionType()),
                     Pair.of(depNode, depKey.getMentionType()));
         }
-
     }
 
     public SubGraphEdge getEdge(int depIdx, int govIdx) {
@@ -186,7 +192,7 @@ public class MentionSubGraph {
             if (referentEdge.getGov() != targetGovEdge.getGov()) {
                 // First, compare the gov index.
                 for (LabelledMentionGraphEdge labelledTargetEdge : targetGovEdge.getAllLabelledEdge()) {
-                    if (targetGovEdge.getLabelledType(labelledTargetEdge) == EdgeType.Root) {
+                    if (targetGovEdge.getLabelledType(labelledTargetEdge) == EdgeType.Coref_Root) {
                         loss += 1.5;
                     } else {
                         loss += 1;
@@ -229,7 +235,7 @@ public class MentionSubGraph {
 
             if (referentEdge.getGov() != targetGovEdge.getGov()) {
                 // First, compare the gov index.
-                if (targetGovEdge.getUnlabelledType() == EdgeType.Root) {
+                if (targetGovEdge.getUnlabelledType() == EdgeType.Coref_Root) {
                     loss += 1.5;
                 } else {
                     loss += 1;
@@ -263,44 +269,47 @@ public class MentionSubGraph {
 
         // For edges in this subgraph.
         for (SubGraphEdge edge : edgeTable.values()) {
-            edge.getEdgeFeatures();
-
             for (LabelledMentionGraphEdge labelledEdge : edge.getAllLabelledEdge()) {
-                deltaFeatureVector.extend(labelledEdge.getFeatureVector(), edge.getLabelledType(labelledEdge).name());
+                logger.info("Adding features from:");
+                logger.info(labelledEdge.toString());
+                String classNameForFeature = edge.hasUnlabelledType() ?
+                        edge.getUnlabelledType().name() : edge.getLabelledType(labelledEdge).name();
+
+                // TODO we saw nulls, probably due to labelled edges are directional
+                if (edge.getEdgeFeatures() == null){
+                    logger.info("Features for " + labelledEdge + " is null.");
+                    DebugUtils.pause();
+                }
+
+                deltaFeatureVector.extend(edge.getEdgeFeatures(), classNameForFeature);
+                deltaFeatureVector.extend(labelledEdge.getFeatureVector(), classNameForFeature);
             }
         }
 
         // For edges in the other subgraph.
         for (SubGraphEdge edge : otherGraph.edgeTable.values()) {
             for (LabelledMentionGraphEdge labelledEdge : edge.getAllLabelledEdge()) {
-                deltaFeatureVector.extend(labelledEdge.getFeatureVector().negation(),
-                        edge.getLabelledType(labelledEdge).name());
+                String classNameForFeature = edge.hasUnlabelledType() ?
+                        edge.getUnlabelledType().name() : edge.getLabelledType(labelledEdge).name();
+                deltaFeatureVector.extend(edge.getEdgeFeatures(), classNameForFeature);
+                deltaFeatureVector.extend(labelledEdge.getFeatureVector().negation(), classNameForFeature);
             }
         }
         return deltaFeatureVector;
     }
 
-//    public GraphFeatureVector getAllFeatures(ClassAlphabet classAlphabet, FeatureAlphabet featureAlphabet) {
-//        GraphFeatureVector allFeatures = new GraphFeatureVector(classAlphabet, featureAlphabet);
-//
-//        // For edges in this subgraph.
-//        for (SubGraphEdge edge : edgeTable.values()) {
-//            allFeatures.extend(edge.getEdgeFeatures(), edge.getUnlabelledType().name());
-//        }
-//        return allFeatures;
-//    }
 
     /**
      * Convert the tree to transitive and equivalence resolved graph
      */
-    public void resolveCoreference() {
-        resolveCoreference(numNodes);
+    public void resolveGraph() {
+        resolveGraph(numNodes);
     }
 
     /**
      * Convert the tree to transitive and equivalence resolved graph
      */
-    public void resolveCoreference(int untilNode) {
+    public void resolveGraph(int untilNode) {
         SetMultimap<EdgeType, Pair<Integer, Integer>> allRelations = HashMultimap.create();
         SetMultimap<EdgeType, Pair<Integer, Integer>> interRelations = HashMultimap.create();
 
@@ -340,7 +349,7 @@ public class MentionSubGraph {
                     continue;
                 }
 
-                if (type.equals(EdgeType.Root)) {
+                if (type.equals(EdgeType.Coref_Root)) {
                     // If this link to root, start a new cluster.
                     indexedTypedClusters.put(typedClusterId, typedDepNode);
                     relaxedClusters.put(typedClusterId, depKey.getCandidateIndex());
@@ -362,8 +371,6 @@ public class MentionSubGraph {
                         }
                     }
                 } else {
-                    // For all other relation types, simply record them first.
-                    logger.info(String.format("Adding relation %s between %s and %s", type, govNode, depNode));
                     allRelations.put(type, Pair.of(govNode, depNode));
                     allTypedRelations.put(type, Pair.of(typedGovNode, typedDepNode));
                 }
@@ -407,7 +414,7 @@ public class MentionSubGraph {
      * @return
      */
     public boolean graphMatch(int until) {
-        this.resolveCoreference(until);
+        this.resolveGraph(until);
 
         // Variable indicating whether the coreference clusters are matched.
         boolean corefMatch = Arrays.deepEquals(this.getCorefChains(), this.parentGraph.getNodeCorefChains());
@@ -437,7 +444,7 @@ public class MentionSubGraph {
         sb.append(String.format("SubGraph (non root edges only) of distance %d:\n", totalDistance));
 
         for (SubGraphEdge edge : edgeTable.values()) {
-            if (edge.hasUnlabelledType() || edge.numLabelledNonRootLinks() > 0){
+            if (edge.hasUnlabelledType() || edge.numLabelledNonRootLinks() > 0) {
                 sb.append("\t").append(edge.toString()).append("\n");
             }
         }
@@ -466,6 +473,9 @@ public class MentionSubGraph {
 
         double loss = this.getLoss(referentTree);
         double l2Sqaure = delta.getFeatureSquare();
+
+        logger.info("Updating weights by: ");
+        logger.info(delta.readableNodeVector());
 
         if (l2Sqaure != 0) {
             double tau = loss / l2Sqaure;

@@ -211,6 +211,11 @@
                 <artifactId>ltp-parser</artifactId>
                 <version>0.0.5</version>
             </dependency>
+            <dependency>
+                <groupId>org.jgrapht</groupId>
+                <artifactId>jgrapht-core</artifactId>
+                <version>1.0.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

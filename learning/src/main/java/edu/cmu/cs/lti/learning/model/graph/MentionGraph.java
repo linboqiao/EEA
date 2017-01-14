@@ -76,7 +76,7 @@ public class MentionGraph implements Serializable {
                         int[] mention2EventIndex, Table<Integer, Integer, String> spanRelations,
                         PairFeatureExtractor extractor, boolean isTraining) {
         if (extractor == null) {
-            throw new IllegalArgumentException("The extractor is not initialized.");
+            logger.error("The extractor is not initialized.");
         }
 
         this.extractor = extractor;
@@ -93,29 +93,29 @@ public class MentionGraph implements Serializable {
             }
         }
 
+        // Each cluster is represented as a mapping from the event id to the event mention id list.
+        SetMultimap<Integer, Pair<Integer, String>> typedNodeClusters =
+                groupEventClusters(mention2EventIndex, candidate2Mentions, mentionTypes);
+
+        // Group mention nodes into clusters, the first is the event id, the second is the node id.
+        typedCorefChains = GraphUtils.createSortedCorefChains(typedNodeClusters);
+
+        // This step consider use each span as the minimum unit. So it puts spans into clusters. Roughly, this
+        // clustering actually represents "simultaneous" relation. Since if a span corresponds to two mentions,
+        // these two mentions are mostly happening simultaneously (at least according to the current annotation
+        // scheme).
+        Multimap<Integer, Integer> nodeClusters = relaxCoreference(mention2EventIndex, candidate2Mentions);
+
+        // This will store all other relations, which are propagated using the gold clusters.
+        resolvedRelations = GraphUtils.resolveRelations(
+                convertToEventRelation(spanRelations, candidate2Mentions, mention2EventIndex), nodeClusters);
+
+
         if (isTraining) {
             this.useAverage = false;
 
-            // Each cluster is represented as a mapping from the event id to the event mention id list.
-            SetMultimap<Integer, Pair<Integer, String>> typedNodeClusters =
-                    groupEventClusters(mention2EventIndex, candidate2Mentions, mentionTypes);
-
-            // Group mention nodes into clusters, the first is the event id, the second is the node id.
-            typedCorefChains = GraphUtils.createSortedCorefChains(typedNodeClusters);
-
-            // This step consider use each span as the minimum unit. So it puts spans into clusters. Roughly, this
-            // clustering actually represents "simultaneous" relation. Since if a span corresponds to two mentions,
-            // these two mentions are mostly happening simultaneously (at least according to the current annotation
-            // scheme).
-            Multimap<Integer, Integer> nodeClusters = relaxCoreference(mention2EventIndex, candidate2Mentions);
-
-            // This will store all other relations, which are propagated using the gold clusters.
-            resolvedRelations = GraphUtils.resolveRelations(
-                    convertToEventRelation(spanRelations, candidate2Mentions, mention2EventIndex), nodeClusters);
-
             Set<NodeKey> keysWithAntecedents = storeCoreferenceEdges(candidates);
             TIntObjectMap<EdgeType> nodesWithAntecedents = storeUnlabelledEdges();
-
             cleanupEdges(candidates);
 
             // Link lingering nodes to root.
@@ -274,7 +274,7 @@ public class MentionGraph implements Serializable {
             // We assume no two mention contains the same depKey in input.
             for (NodeKey depKey : depKeys) {
                 if (!keysWithAntecedents.contains(depKey)) {
-                    createLabelledGoldEdge(0, curr, rootKey, depKey, candidates, EdgeType.Root);
+                    createLabelledGoldEdge(0, curr, rootKey, depKey, candidates, EdgeType.Coref_Root);
                 }
             }
         }
@@ -362,7 +362,7 @@ public class MentionGraph implements Serializable {
             if (mentionGraphEdgeArray != null) {
                 for (MentionGraphEdge mentionGraphEdge : mentionGraphEdgeArray) {
                     if (mentionGraphEdge != null) {
-                        if (mentionGraphEdge.hasGoldUnlabelledType() || mentionGraphEdge.hasLabelledEdge()) {
+                        if (mentionGraphEdge.hasGoldUnlabelledType() || mentionGraphEdge.hasRealLabelledEdge()) {
                             sb.append("\t").append(mentionGraphEdge).append("\n");
                         }
                     }

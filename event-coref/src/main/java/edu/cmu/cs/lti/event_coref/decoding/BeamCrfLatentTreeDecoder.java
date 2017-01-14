@@ -503,7 +503,7 @@ public class BeamCrfLatentTreeDecoder {
                     continue;
                 }
 
-                EdgeType possibleType = ant == 0 ? EdgeType.Root : EdgeType.Coreference;
+                EdgeType possibleType = ant == 0 ? EdgeType.Coref_Root : EdgeType.Coreference;
 
                 for (NodeKey antNodeKey : antNodeKeys) {
                     LabelledMentionGraphEdge mentionGraphEdge = mentionGraph.getLabelledEdge(candidates, antNodeKey,

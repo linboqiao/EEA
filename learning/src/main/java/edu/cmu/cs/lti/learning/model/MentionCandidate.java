@@ -23,19 +23,23 @@ public class MentionCandidate {
     private int candidateIndex;
     private boolean isEvent;
 
+    private String text;
+
     private MentionKey key;
 
-    public MentionCandidate(int begin, int end, Sentence containedSentence, Word headWord, int candidateIndex) {
+    public MentionCandidate(int begin, int end, String text,
+                            Sentence containedSentence, Word headWord, int candidateIndex) {
         this.begin = begin;
         this.containedSentence = containedSentence;
         this.end = end;
         this.headWord = headWord;
         this.candidateIndex = candidateIndex;
         isEvent = false;
+        this.text = text;
     }
 
     public String toString() {
-        return String.format("%s,[%s]_[%s],[%d,%d]", headWord.getCoveredText(), mentionType, realis, begin, end);
+        return String.format("%s,[%s]_[%s],[%d,%d]", text, mentionType, realis, begin, end);
     }
 
     public MentionKey asKey() {

@@ -206,8 +206,10 @@ public class EventMentionPipeline {
             logger.info("Will read raw files from corpus.");
         }
 
+        logger.info("Reading training data.");
         CollectionReaderDescription trainingReader = readDatasets(datasetSettingDir, trainingDatasets,
                 trainingWorkingDir, skipRaw);
+        logger.info("Reading test data.");
         CollectionReaderDescription testReader = readDatasets(datasetSettingDir, testDatasets,
                 testingWorkingDir, skipRaw);
 
@@ -659,6 +661,7 @@ public class EventMentionPipeline {
 
         if (taskConfig.getBoolean("edu.cmu.lti.after.models", true)) {
             logger.info("Will run after model experiments.");
+            afterExperiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, evalDir, runAll);
         }
     }
 
@@ -702,7 +705,6 @@ public class EventMentionPipeline {
             if (taskConfig.getBoolean("edu.cmu.lti.after.models", true)) {
                 logger.info("Will run after model experiments.");
                 afterExperiment(taskConfig, sliceSuffix, trainingData, devSliceReader, crossEvalDir, false);
-
             }
         }
     }
@@ -778,13 +780,12 @@ public class EventMentionPipeline {
         // Produce gold standard tbf for evaluation.
         if (hasTestGold) {
             logger.info("Writing development data as TBF.");
-            String testGold = FileUtils.joinPaths(trainingWorkingDir, evalDir,
-                    "gold_test_" + sliceSuffix + ".tbf");
+            String testGold = FileUtils.joinPaths(evalDir, "gold_test_" + sliceSuffix + ".tbf");
             RunnerUtils.writeGold(testReader, testGold, useCharOffset);
         }
 
         logger.info("Writing training data as TBF.");
-        String trainGold = FileUtils.joinPaths(trainingWorkingDir, evalDir, "gold_train_" + sliceSuffix + ".tbf");
+        String trainGold = FileUtils.joinPaths(evalDir, "gold_train_" + sliceSuffix + ".tbf");
         RunnerUtils.writeGold(trainingData, trainGold, useCharOffset);
 
         return trainingData;
@@ -804,7 +805,7 @@ public class EventMentionPipeline {
         CollectionReaderDescription goldMentionAll = annotateGoldMentions(testReader, trainingWorkingDir,
                 FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions"), true, true, false, false, false);
 
-        TreeAfterModelRunner runner = new TreeAfterModelRunner(mainConfig, typeSystemDescription);
+        PlainAfterModelRunner runner = new PlainAfterModelRunner(mainConfig, typeSystemDescription);
 
         runner.trainAfterModel(afterConfig, trainingData, testReader, processOutDir, sliceSuffix, testGold,
                 skipAfterTrain, skipAfterTest);
@@ -832,7 +833,6 @@ public class EventMentionPipeline {
 
         // Train realis model.
         String realisModelDir = realisModelRunner.trainRealis(realisConfig, trainingData, sliceSuffix, skipRealisTrain);
-
 
         // We try experiments with different settings of the following:
         // 1. Loss type

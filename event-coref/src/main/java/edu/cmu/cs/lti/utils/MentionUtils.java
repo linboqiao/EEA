@@ -80,9 +80,9 @@ public class MentionUtils {
 
         for (EventMention mention : allMentions) {
             int mentionIndex = mention.getIndex();
-            if (!nonSingletons.contains(mentionIndex)){
+            if (!nonSingletons.contains(mentionIndex)) {
                 mentionId2EventId[mentionIndex] = eventIdx;
-                eventIdx ++;
+                eventIdx++;
             }
         }
 
@@ -99,8 +99,8 @@ public class MentionUtils {
 
             int numValidMentions = 0;
             for (EventMention mention : mentions) {
-                if (validMentions.contains(mention)){
-                    numValidMentions ++;
+                if (validMentions.contains(mention)) {
+                    numValidMentions++;
                 }
             }
 
@@ -108,7 +108,7 @@ public class MentionUtils {
 
             int j = 0;
             for (EventMention mention : mentions) {
-                if (validMentions.contains(mention)){
+                if (validMentions.contains(mention)) {
                     int mentionIndex = mention.getIndex();
                     candidate2Mentions[i][j] = mentionIndex;
                     j++;
@@ -151,9 +151,8 @@ public class MentionUtils {
         for (int i = 0; i < mentionSpans.size(); i++) {
             EventMentionSpan eventMentionSpan = mentionSpans.get(i);
             MentionCandidate candidate = new MentionCandidate(eventMentionSpan.getBegin(), eventMentionSpan.getEnd(),
-                    Iterables.getFirst(mention2Sentence.get(eventMentionSpan), null),
-                    eventMentionSpan.getHeadWord(), i
-            );
+                    eventMentionSpan.getCoveredText(), Iterables.getFirst(mention2Sentence.get(eventMentionSpan), null),
+                    eventMentionSpan.getHeadWord(), i);
             candidate.setRealis(eventMentionSpan.getRealisType());
             candidate.setMentionType(eventMentionSpan.getEventType());
             allCandidates.add(candidate);
@@ -182,7 +181,8 @@ public class MentionUtils {
         return IntStream.range(0, mentions.size()).mapToObj(i -> {
             EventMention mention = mentions.get(i);
             MentionCandidate candidate = new MentionCandidate(mention.getBegin(), mention.getEnd(),
-                    Iterables.getFirst(mention2Sentence.get(mention), null), mention.getHeadWord(), i);
+                    mention.getCoveredText(), Iterables.getFirst(mention2Sentence.get(mention), null),
+                    mention.getHeadWord(), i);
             candidate.setRealis(mention.getRealisType());
             candidate.setMentionType(mention.getEventType());
             return candidate;
@@ -225,7 +225,8 @@ public class MentionUtils {
             EventMention mention = Iterables.get(span2Mentions.get(span), 0);
             String realis = mention.getRealisType();
             MentionCandidate candidate = new MentionCandidate(mention.getBegin(), mention.getEnd(),
-                    Iterables.get(mention2Sentence.get(mention), 0), mention.getHeadWord(), candidateIndex.getValue());
+                    mention.getCoveredText(), Iterables.get(mention2Sentence.get(mention), 0),
+                    mention.getHeadWord(), candidateIndex.getValue());
             candidate.setMentionType(type);
             candidate.setRealis(realis);
             candidateIndex.increment();
@@ -299,7 +300,7 @@ public class MentionUtils {
 
         return IntStream.range(0, tokens.size()).mapToObj(i -> {
             StanfordCorenlpToken token = tokens.get(i);
-            return new MentionCandidate(token.getBegin(), token.getEnd(),
+            return new MentionCandidate(token.getBegin(), token.getEnd(), token.getCoveredText(),
                     Iterables.getFirst(mention2Sentence.get(token), null), token, i);
         }).collect(Collectors.toList());
     }
@@ -335,11 +336,13 @@ public class MentionUtils {
         Table<Integer, Integer, String> relations = HashBasedTable.create();
 
         for (EventMentionSpanRelation relation : JCasUtil.select(aJCas, EventMentionSpanRelation.class)) {
-//            logger.info(String.format("Relation is %s -> %s: %s", relation.getHead().getCoveredText(), relation.getChild().getCoveredText(), relation.getRelationType()));
+//            logger.info(String.format("Relation is %s -> %s: %s", relation.getHead().getCoveredText(), relation
+// .getChild().getCoveredText(), relation.getRelationType()));
             int head = spanIds.get(relation.getHead());
             int child = spanIds.get(relation.getChild());
             relations.put(head, child, relation.getRelationType());
-//            logger.info(String.format("Find relation from %d to %d of type %s", head, child, relation.getRelationType()));
+//            logger.info(String.format("Find relation from %d to %d of type %s", head, child, relation
+// .getRelationType()));
         }
 
         return relations;

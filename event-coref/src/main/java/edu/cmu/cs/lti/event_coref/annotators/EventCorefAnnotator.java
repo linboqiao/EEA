@@ -124,7 +124,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
         MentionGraph mentionGraph = new MentionGraph(candidates, extractor, true);
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
 
-        predictedTree.resolveCoreference();
+        predictedTree.resolveGraph();
         List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
 
         logger.debug(predictedTree.toString());

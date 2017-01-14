@@ -112,7 +112,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         extractor.initWorkspace(aJCas);
 
-        MentionGraph mentionGraph = getMentionGraph(aJCas, allMentions);
+        MentionGraph mentionGraph = getMentionGraph(aJCas);
 
         // Decoding.
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
@@ -141,7 +141,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         }
     }
 
-    private MentionGraph getMentionGraph(JCas aJCas, List<EventMention> allMentions) {
+    private MentionGraph getMentionGraph(JCas aJCas) {
         int eventIdx = 0;
         for (Event event : JCasUtil.select(aJCas, Event.class)) {
             event.setIndex(eventIdx++);

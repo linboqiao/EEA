@@ -70,7 +70,7 @@ public abstract class ModelTester {
         RunnerUtils.writeResults(output, tbfOutput, runName, charOffset);
 
         if (gold.isFile()) {
-            logger.info("Evaluating over all event mentions.");
+            logger.info("Evaluating over all event types.");
             eval(gold, tbfOutput, subEval, runName, sliceSuffix, null);
             String selectedTypePath = taskConfig.get("edu.cmu.cs.lti.eval.selected_type.file");
             if (selectedTypePath != null) {
@@ -110,6 +110,7 @@ public abstract class ModelTester {
                 "-d", FileUtils.joinPaths(evalDir, suffix + ".cmp"),
                 "-o", FileUtils.joinPaths(evalDir, suffix + ".scores"),
                 "-c", FileUtils.joinPaths(evalDir, suffix + ".coref_out"),
+                "-a", FileUtils.joinPaths(evalDir, suffix + "_sequencing"),
                 "--eval_mode", evalMode
         ));
 
@@ -124,10 +125,6 @@ public abstract class ModelTester {
         }
 
         ProcessBuilder pb = new ProcessBuilder(commands.toArray(new String[commands.size()]));
-
-//        for (String s : pb.command()) {
-//            System.out.println(s);
-//        }
 
         Process p = pb.start();
 

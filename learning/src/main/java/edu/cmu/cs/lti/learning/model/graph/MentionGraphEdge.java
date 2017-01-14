@@ -11,6 +11,7 @@ import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public class MentionGraphEdge implements Serializable {
 
     private boolean averageMode;
 
-    private boolean hasLabelledEdge = false;
+    private boolean hasRealLabelledEdge = false;
 
     // Currently using NULL to represent a NONE type.
     private EdgeType realUnlabelledType;
@@ -66,8 +67,8 @@ public class MentionGraphEdge implements Serializable {
         return realUnlabelledType != null;
     }
 
-    public boolean hasLabelledEdge() {
-        return hasLabelledEdge;
+    public boolean hasRealLabelledEdge() {
+        return hasRealLabelledEdge;
     }
 
     public void addRealLabelledEdge(List<MentionCandidate> candidates, NodeKey realGovKey, NodeKey realDepKey,
@@ -75,7 +76,7 @@ public class MentionGraphEdge implements Serializable {
         LabelledMentionGraphEdge edge = createLabelledEdge(candidates, realGovKey, realDepKey);
         edge.setActualEdgeType(edgeType);
         realLabelledEdges.put(edge.getGovKey(), edge.getDepKey(), edge);
-        hasLabelledEdge = true;
+        hasRealLabelledEdge = true;
     }
 
     /**
@@ -199,5 +200,30 @@ public class MentionGraphEdge implements Serializable {
 
     public int getDep() {
         return depIdx;
+    }
+
+    public List<LabelledMentionGraphEdge> getAllLabelledEdges(List<MentionCandidate> candidates) {
+        return getAllLabelledEdges(candidates, false);
+    }
+
+    public List<LabelledMentionGraphEdge> getAllLabelledEdges(List<MentionCandidate> candidates,
+                                                                   boolean reverse) {
+        int currentCandidateId = MentionGraph.getCandidateIndex(depIdx);
+        int antCandidateId = MentionGraph.getCandidateIndex(govIdx);
+
+        if (reverse) {
+            currentCandidateId = MentionGraph.getCandidateIndex(govIdx);
+            antCandidateId = MentionGraph.getCandidateIndex(depIdx);
+        }
+
+        List<LabelledMentionGraphEdge> labelledEdges = new ArrayList<>();
+
+        for (NodeKey govKey : candidates.get(antCandidateId).asKey()) {
+            for (NodeKey depKey : candidates.get(currentCandidateId).asKey()) {
+                labelledEdges.add(getLabelledEdge(candidates, govKey, depKey));
+            }
+        }
+        return labelledEdges;
+
     }
 }

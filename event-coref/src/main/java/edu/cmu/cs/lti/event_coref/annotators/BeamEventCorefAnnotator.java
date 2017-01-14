@@ -133,7 +133,7 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
 
     private void annotatePredictedCoreference(JCas aJCas, MentionSubGraph predictedTree,
                                               ArrayListMultimap<Pair<Integer, String>, EventMention> node2Mention) {
-        predictedTree.resolveCoreference();
+        predictedTree.resolveGraph();
         List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
 
         for (List<Pair<Integer, String>> corefChain : corefChains) {

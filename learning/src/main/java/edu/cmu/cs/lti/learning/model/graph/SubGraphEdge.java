@@ -21,6 +21,9 @@ public class SubGraphEdge {
 
     private EdgeType unlabelledType;
 
+    // This direction is for the unlabelled type edge.
+    private EdgeDirection direction;
+
     private Table<NodeKey, NodeKey, LabelledMentionGraphEdge> labelledEdges;
 
     private Map<LabelledMentionGraphEdge, EdgeType> labelledTypes;
@@ -38,14 +41,10 @@ public class SubGraphEdge {
     }
 
     public void addLabelledEdge(LabelledMentionGraphEdge labelledEdge, EdgeType type) {
-        // Unlabelled types and labelled ones are mutually exclusive.
-        this.unlabelledType = null;
-        hasUnlabelledType = false;
-
         labelledEdges.put(labelledEdge.getGovKey(), labelledEdge.getDepKey(), labelledEdge);
         labelledTypes.put(labelledEdge, type);
 
-        if (type != EdgeType.Root) {
+        if (type != EdgeType.Coref_Root) {
             labelledNonRootLinks += 1;
         }
     }
@@ -62,13 +61,13 @@ public class SubGraphEdge {
         return labelledNonRootLinks;
     }
 
-
     public EdgeType getUnlabelledType() {
         return unlabelledType;
     }
 
-    public void setUnlabelledType(EdgeType unlabelledType) {
+    public void setUnlabelledType(EdgeType unlabelledType, EdgeDirection direction) {
         this.unlabelledType = unlabelledType;
+        this.direction = direction;
         hasUnlabelledType = true;
         labelledTypes = new HashMap<>();
         labelledEdges = HashBasedTable.create();
@@ -107,5 +106,9 @@ public class SubGraphEdge {
 
     public FeatureVector getEdgeFeatures() {
         return graphEdge.getNodeAgnosticFeatures();
+    }
+
+    public EdgeDirection getDirection() {
+        return direction;
     }
 }

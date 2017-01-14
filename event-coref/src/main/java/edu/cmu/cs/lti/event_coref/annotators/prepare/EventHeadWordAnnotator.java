@@ -5,6 +5,8 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.cas.CAS;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -19,8 +21,19 @@ import java.util.List;
  * @author Zhengzhong Liu
  */
 public class EventHeadWordAnnotator extends AbstractLoggingAnnotator {
+
+
+    public static final String PARAM_TARGET_VIEW_NAME = "targetViewName";
+    @ConfigurationParameter(name = PARAM_TARGET_VIEW_NAME, defaultValue = CAS.NAME_DEFAULT_SOFA)
+    private String targetViewName;
+
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        JCas view = JCasUtil.getView(aJCas, targetViewName, aJCas);
+        annotate(view);
+    }
+
+    private void annotate(JCas aJCas) {
         String language = JCasUtil.selectSingle(aJCas, Article.class).getLanguage();
 
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
