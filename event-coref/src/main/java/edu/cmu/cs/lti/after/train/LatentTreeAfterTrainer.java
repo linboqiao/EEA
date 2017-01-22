@@ -26,7 +26,7 @@ import java.util.List;
 import static edu.cmu.cs.lti.learning.model.ModelConstants.AFTER_MODEL_NAME;
 
 /**
- * Train a pairwise based after linking model.
+ * Train a pairwise based after linking model. zb
  * <p>
  * Date: 12/12/16
  * Time: 3:35 PM
@@ -75,7 +75,8 @@ public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
         extractor.initWorkspace(aJCas);
 
         List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
-        MentionGraph mentionGraph = MentionUtils.createMentionGraph(aJCas, candidates, extractor, true);
+
+        MentionGraph mentionGraph = MentionUtils.createSpanBasedMentionGraph(aJCas, candidates, extractor, true);
 
 //        logger.info("The mention graph is:");
 //        System.out.println(mentionGraph.toString());
@@ -87,14 +88,14 @@ public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
 
 //        logger.info("Predicted tree is :");
-//        logger.info(predictedTree.toString());
+//        logger.info(predictedTree.fullTree());
 
         if (!predictedTree.graphMatch()) {
 //            logger.info("Gold tree is :");
 
             MentionSubGraph latentTree = decoder.decode(mentionGraph, candidates, weights, true);
 
-//            logger.info(latentTree.toString());
+//            logger.info(latentTree.fullTree());
 
             double loss = predictedTree.paUpdate(latentTree, weights);
 

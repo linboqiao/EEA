@@ -1,17 +1,14 @@
 package edu.cmu.cs.lti.event_coref.decoding;
 
-import com.google.common.collect.ListMultimap;
 import edu.cmu.cs.lti.learning.decoding.LatentTreeDecoder;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
-import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.learning.model.graph.*;
+import edu.cmu.cs.lti.utils.MathUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -59,24 +56,34 @@ public class BFAfterLatentTreeDecoder extends LatentTreeDecoder {
             return;
         }
 
-        ListMultimap<Integer, Integer> afterAdjacentMap = mentionGraph.getResolvedRelations().get(EdgeType.After);
+        Map<NodeKey, List<NodeKey>> afterAdjacentMap = mentionGraph.getResolvedRelations().get(EdgeType.After);
 
-        for (Map.Entry<Integer, Collection<Integer>> afterLinks : afterAdjacentMap.asMap().entrySet()) {
-            int from = afterLinks.getKey();
+        Set<NodeKey> linkedNodes = new HashSet<>();
 
-            for (Integer to : afterLinks.getValue()) {
-                MentionGraphEdge edge;
-                EdgeDirection direction;
-                if (from > to) {
-                    edge = mentionGraph.getMentionGraphEdge(from, to);
-                    direction = EdgeDirection.Forward;
-                } else {
-                    edge = mentionGraph.getMentionGraphEdge(to, from);
-                    direction = EdgeDirection.Backword;
+        for (MentionCandidate candidate : candidates) {
+            for (NodeKey fromNode : candidate.asKey()) {
+                if (afterAdjacentMap.containsKey(fromNode)) {
+                    for (NodeKey toNode : afterAdjacentMap.get(fromNode)) {
+                        MentionGraphEdge edge = mentionGraph.getEdge(fromNode.getNodeIndex(), toNode.getNodeIndex());
+                        LabelledMentionGraphEdge labelledEdge = edge.getLabelledEdge(candidates, fromNode, toNode);
+
+                        goldTree.addLabelledEdge(labelledEdge, EdgeType.After);
+
+                        // The latter node is considered as linked to the former one.
+                        if (fromNode.compareTo(toNode) > 0) {
+                            linkedNodes.add(fromNode);
+                        } else {
+                            linkedNodes.add(toNode);
+                        }
+                    }
                 }
-                logger.info("Adding edge from " + from + " to " + to);
-                logger.info("Adding edge from " + candidates.get(from-1).getHeadWord().getCoveredText() + " to " + candidates.get(to-1).getHeadWord().getCoveredText());
-                goldTree.addUnlabelledEdge(candidates, edge, EdgeType.After, direction);
+
+                // No previous node link to it. And it does not link to previous nodes. We link to ROOT.
+                if (!linkedNodes.contains(fromNode)) {
+                    MentionGraphEdge edge = mentionGraph.getEdge(fromNode.getNodeIndex(), 0);
+                    LabelledMentionGraphEdge rootEdge = edge.getLabelledEdge(candidates, NodeKey.rootKey(), fromNode);
+                    goldTree.addLabelledEdge(rootEdge, EdgeType.Root);
+                }
             }
         }
     }
@@ -84,74 +91,54 @@ public class BFAfterLatentTreeDecoder extends LatentTreeDecoder {
     private void getMinimumTree(MentionGraph mentionGraph, MentionSubGraph goldTree) {
     }
 
-    private MentionSubGraph systemDecode(MentionGraph mentionGraph, List<MentionCandidate> mentionCandidates,
+    private MentionSubGraph systemDecode(MentionGraph mentionGraph, List<MentionCandidate> candidates,
                                          GraphWeightVector weights) {
         MentionSubGraph bestFirstTree = new MentionSubGraph(mentionGraph);
 
         for (int curr = 1; curr < mentionGraph.numNodes(); curr++) {
-            int currentCandidateId = MentionGraph.getCandidateIndex(curr);
-            MentionCandidate candidate = mentionCandidates.get(currentCandidateId);
+            Map<LabelledMentionGraphEdge, Pair<EdgeType, Double>> forwardLinks = new HashMap<>();
+            Map<LabelledMentionGraphEdge, Pair<EdgeType, Double>> backwardLinks = new HashMap<>();
 
-            double rootScore = Double.NEGATIVE_INFINITY;
+            MentionGraphEdge rootEdge = mentionGraph.getEdge(curr, 0);
+            rootEdge.extractNodeAgnosticFeatures(candidates);
+            LabelledMentionGraphEdge labelledRootEdge = rootEdge.getAllLabelledEdges(candidates).get(0);
 
-            Map<MentionGraphEdge, Double> forwardLinks = new HashMap<>();
-            Map<MentionGraphEdge, Double> backwardLinks = new HashMap<>();
+            double rootScore = labelledRootEdge.getRootScore(weights);
 
-            for (int ant = 0; ant < curr; ant++) {
-                MentionGraphEdge edge = mentionGraph.getMentionGraphEdge(curr, ant);
-                edge.extractNodeAgnosticFeatures(mentionCandidates);
+            for (int ant = 1; ant < curr; ant++) {
+                MentionGraphEdge edge = mentionGraph.getEdge(curr, ant);
+                edge.extractNodeAgnosticFeatures(candidates);
 
-                int antMentionId = MentionGraph.getCandidateIndex(ant);
-                MentionKey antMention = mentionGraph.isRoot(ant) ?
-                        MentionKey.rootKey() : mentionCandidates.get(antMentionId).asKey();
+                for (NodeKey antecedent : edge.getAntKey(candidates)) {
+                    for (NodeKey precedent : edge.getPrecKey(candidates)) {
+                        LabelledMentionGraphEdge forwardEdge = edge.getLabelledEdge(candidates, antecedent, precedent);
+                        LabelledMentionGraphEdge backwardEdge = edge.getLabelledEdge(candidates, precedent, antecedent);
 
-                double forwardScore = 0;
-                double backwardScore = 0;
+                        Pair<EdgeType, Double> bestForwardScore = forwardEdge.getBestLabelScore(weights);
+                        Pair<EdgeType, Double> bestBackwardScore = backwardEdge.getBestLabelScore(weights);
 
-                int numKeyPairs = 0;
+                        double forwardScore = bestForwardScore.getRight();
+                        double backwardScore = bestBackwardScore.getRight();
 
-                for (NodeKey currentKey : candidate.asKey()) {
-                    for (NodeKey antKey : antMention) {
-                        LabelledMentionGraphEdge forwardEdge = edge.getLabelledEdge(mentionCandidates,
-                                antKey, currentKey);
-                        numKeyPairs++;
-
-                        if (mentionGraph.isRoot(ant)) {
-                            // We don't need backward, forward two edges.
-                            rootScore += forwardEdge.scoreEdge(EdgeType.After_Root, weights);
+                        if (MathUtils.sureLarger(backwardScore, forwardScore)) {
+                            if (MathUtils.sureLarger(backwardScore, rootScore)) {
+                                backwardLinks.put(backwardEdge, bestBackwardScore);
+                            }
                         } else {
-                            LabelledMentionGraphEdge backwardEdge = edge.getLabelledEdge(mentionCandidates,
-                                    currentKey, antKey);
-                            forwardScore += forwardEdge.scoreEdge(EdgeType.After, weights);
-                            backwardScore += backwardEdge.scoreEdge(EdgeType.After, weights);
+                            if (MathUtils.sureLarger(forwardScore, rootScore)) {
+                                forwardLinks.put(forwardEdge, bestForwardScore);
+                            }
                         }
+
                     }
                 }
-
-                forwardScore /= numKeyPairs;
-                backwardScore /= numKeyPairs;
-                rootScore /= numKeyPairs;
-
-                if (forwardScore > backwardScore && forwardScore > rootScore) {
-                    // Has a forward link.
-                    forwardLinks.put(edge, forwardScore);
-                    logger.info("Adding forward link " + edge);
-                } else if (backwardScore > forwardScore & backwardScore > rootScore) {
-                    // Has a backward link.
-                    backwardLinks.put(edge, backwardScore);
-                    logger.info("Adding backward link " + edge);
-                }
             }
 
-            for (Map.Entry<MentionGraphEdge, Double> forwardLink : forwardLinks.entrySet()) {
-                bestFirstTree.addUnlabelledEdge(mentionCandidates, forwardLink.getKey(), EdgeType.After,
-                        EdgeDirection.Forward);
+            if (forwardLinks.isEmpty() && backwardLinks.isEmpty()) {
+                bestFirstTree.addLabelledEdge(labelledRootEdge, EdgeType.Root);
             }
-
-            for (Map.Entry<MentionGraphEdge, Double> backwardLink : backwardLinks.entrySet()) {
-                bestFirstTree.addUnlabelledEdge(mentionCandidates, backwardLink.getKey(), EdgeType.After,
-                        EdgeDirection.Backword);
-            }
+            forwardLinks.forEach((link, typeScore) -> bestFirstTree.addLabelledEdge(link, typeScore.getLeft()));
+            backwardLinks.forEach((link, typeScore) -> bestFirstTree.addLabelledEdge(link, typeScore.getLeft()));
         }
         return bestFirstTree;
     }

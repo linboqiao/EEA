@@ -67,7 +67,7 @@ public abstract class ModelTester {
         CollectionReaderDescription output = runModel(taskConfig, reader, trainingWorkingDir, annotatedOutput);
 
         String tbfOutput = FileUtils.joinPaths(outputDir, sliceSuffix, modelName, runName + ".tbf");
-        RunnerUtils.writeResults(output, tbfOutput, runName, charOffset);
+        RunnerUtils.writeResults(output, tbfOutput, runName, charOffset, false);
 
         if (gold.isFile()) {
             logger.info("Evaluating over all event types.");

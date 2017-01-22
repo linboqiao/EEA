@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.learning.model;
 
+import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.util.MentionTypeUtils;
@@ -54,7 +55,7 @@ public class MentionCandidate {
         NodeKey[] singleKeys = new NodeKey[types.length];
 //        logger.info("Making key realis is " + realis);
         for (int i = 0; i < types.length; i++) {
-            singleKeys[i] = new NodeKey(begin, end, types[i], realis, candidateIndex);
+            singleKeys[i] = new NodeKey(begin, end, i, types[i], realis, MentionGraph.getNodeIndex(candidateIndex));
         }
         key = new MentionKey(headWord, mentionType, singleKeys);
     }
@@ -106,7 +107,7 @@ public class MentionCandidate {
         isEvent = event;
     }
 
-//    public int getMentionIndex() {
-//        return mentionIndex;
-//    }
+    public String getText() {
+        return text;
+    }
 }

@@ -39,6 +39,10 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
         super(config, typeSystemDescription);
     }
 
+    public String getModelPath(Configuration config, String suffix, String lossType) {
+        return ModelUtils.getTrainModelPath(eventModelDir, config, suffix, "loss=" + lossType);
+    }
+
     public String trainSentLvType(Configuration config, CollectionReaderDescription trainingReader,
                                   CollectionReaderDescription testReader, String suffix, boolean usePaTraing,
                                   String lossType, String processOutputDir, File testGold,
@@ -49,7 +53,7 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
 
         String subEvalDir = suffix.equals(fullRunSuffix) ? "final" : "cv";
 
-        String modelPath = ModelUtils.getTrainModelPath(eventModelDir, config, suffix, "loss=" + lossType);
+        String modelPath = getModelPath(config, suffix, "loss=" + lossType);
         File modelFile = new File(modelPath);
 
 
@@ -190,7 +194,7 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
     }
 
     public void tokenMentionErrorAnalysis(Configuration taskConfig,
-                                           CollectionReaderDescription reader, String tokenModel) throws
+                                          CollectionReaderDescription reader, String tokenModel) throws
             SAXException, UIMAException, CpeDescriptorException, IOException {
         new BasicPipeline(new ProcessorWrapper() {
             @Override

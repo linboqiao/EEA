@@ -20,7 +20,6 @@ import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.DebugUtils;
 import edu.cmu.cs.lti.utils.MentionUtils;
 import org.apache.commons.lang3.SerializationUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -113,7 +112,7 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
             DebugUtils.pause(logger);
         }
 
-        Map<Pair<Integer, String>, EventMention> node2Mention = new HashMap<>();
+        Map<NodeKey, EventMention> node2Mention = new HashMap<>();
 
         List<MentionKey> nodeResults = decodedState.getNodeResults();
 
@@ -130,7 +129,7 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
                     mention.setRealisType(result.getRealis());
                     mention.setEventType(result.getMentionType());
                     UimaAnnotationUtils.finishAnnotation(mention, COMPONENT_ID, 0, aJCas);
-                    node2Mention.put(Pair.of(nodeIndex, result.getMentionType()), mention);
+                    node2Mention.put(result, mention);
                 }
             }
         }
@@ -139,11 +138,11 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
     }
 
     private void annotatePredictedCoreference(JCas aJCas, MentionSubGraph predictedTree,
-                                              Map<Pair<Integer, String>, EventMention> node2Mention) {
+                                              Map<NodeKey, EventMention> node2Mention) {
         predictedTree.resolveGraph();
-        List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
+        List<NodeKey>[] corefChains = predictedTree.getCorefChains();
 
-        for (List<Pair<Integer, String>> corefChain : corefChains) {
+        for (List<NodeKey> corefChain : corefChains) {
 
             if (logger.isDebugEnabled()) {
                 logger.debug(corefChain.toString());
@@ -153,8 +152,8 @@ public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
             Map<Span, EventMention> span2Mentions = new HashMap<>();
 
             // Add an additional filtering layer to remove coreference on the same mention.
-            for (Pair<Integer, String> typedNode : corefChain) {
-                EventMention mention = node2Mention.get(typedNode);
+            for (NodeKey nodeKey : corefChain) {
+                EventMention mention = node2Mention.get(nodeKey);
                 Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());
 
                 if (!span2Mentions.containsKey(mentionSpan)) {

@@ -154,7 +154,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         if (mentionGraph == null) {
             List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
-            mentionGraph = MentionUtils.createMentionGraph(aJCas, candidates, extractor, false);
+            mentionGraph = MentionUtils.createSpanBasedMentionGraph(aJCas, candidates, extractor, false);
             graphCacher.addWithMultiKey(mentionGraph, cacheKey);
         }
         return mentionGraph;

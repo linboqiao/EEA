@@ -66,8 +66,8 @@ public class StateDelta implements Comparable<StateDelta> {
 
         // Need to determine gov is not root.
         if (!govKey.isRoot()) {
-            int govIndex = govKey.getCandidateIndex();
-            int depIndex = depKey.getCandidateIndex();
+            int govIndex = govKey.getNodeIndex();
+            int depIndex = depKey.getNodeIndex();
             totalDistance = depIndex - govIndex;
         }
     }

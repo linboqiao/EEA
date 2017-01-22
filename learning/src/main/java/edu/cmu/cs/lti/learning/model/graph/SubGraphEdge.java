@@ -44,7 +44,7 @@ public class SubGraphEdge {
         labelledEdges.put(labelledEdge.getGovKey(), labelledEdge.getDepKey(), labelledEdge);
         labelledTypes.put(labelledEdge, type);
 
-        if (type != EdgeType.Coref_Root) {
+        if (type != EdgeType.Root) {
             labelledNonRootLinks += 1;
         }
     }
@@ -95,10 +95,10 @@ public class SubGraphEdge {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("SubGraphEdge: (%d,%d) [%s]", getGov(), getDep(), unlabelledType));
+        sb.append(String.format("SubGraphEdge: (%d,%d)", getGov(), getDep()));
         for (Map.Entry<LabelledMentionGraphEdge, EdgeType> edgeWithType : labelledTypes.entrySet()) {
             sb.append("\t");
-            sb.append(String.format("%s, predicted as: %s.", edgeWithType.getKey(), edgeWithType.getValue()));
+            sb.append(String.format("%s, decoded as: %s.", edgeWithType.getKey(), edgeWithType.getValue()));
         }
 
         return sb.toString();

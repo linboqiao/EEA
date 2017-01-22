@@ -1,26 +1,21 @@
 package edu.cmu.cs.lti.event_coref.annotators;
 
-import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.annotators.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.event_coref.decoding.BestFirstLatentTreeDecoder;
 import edu.cmu.cs.lti.learning.decoding.LatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
-import edu.cmu.cs.lti.learning.model.ClassAlphabet;
-import edu.cmu.cs.lti.learning.model.FeatureAlphabet;
-import edu.cmu.cs.lti.learning.model.GraphWeightVector;
-import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
-import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import org.apache.commons.lang3.SerializationUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -34,9 +29,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -125,30 +118,25 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
 
         predictedTree.resolveGraph();
-        List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
+        List<NodeKey>[] corefChains = predictedTree.getCorefChains();
 
-        logger.debug(predictedTree.toString());
-
-        for (List<Pair<Integer, String>> corefChain : corefChains) {
-            logger.debug(corefChain.toString());
-        }
+//        UimaConvenience.printProcessLog(aJCas, logger);
 //
-//        logger.info(String.valueOf(corefChains.length));
+//        logger.info(predictedTree.toString());
 
-        for (List<Pair<Integer, String>> corefChain : corefChains) {
-//            logger.info("Chain size " + corefChain.size());
-
+        for (List<NodeKey> corefChain : corefChains) {
             List<EventMention> predictedChain = new ArrayList<>();
-            Map<Span, EventMention> span2Mentions = new HashMap<>();
+//            Map<Span, EventMention> span2Mentions = new HashMap<>();
 
-            for (Pair<Integer, String> typedNode : corefChain) {
-                int mentionIndex = MentionGraph.getCandidateIndex(typedNode.getLeft());
+            for (NodeKey typedNode : corefChain) {
+                int mentionIndex = MentionGraph.getCandidateIndex(typedNode.getNodeIndex());
                 EventMention mention = allMentions.get(mentionIndex);
-                Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());
-                if (!span2Mentions.containsKey(mentionSpan)) {
-                    span2Mentions.put(mentionSpan, mention);
-                    predictedChain.add(mention);
-                }
+                predictedChain.add(mention);
+//                Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());
+//                if (!span2Mentions.containsKey(mentionSpan)) {
+//                    span2Mentions.put(mentionSpan, mention);
+//                    predictedChain.add(mention);
+//                }
             }
 
             if (predictedChain.size() > 1) {

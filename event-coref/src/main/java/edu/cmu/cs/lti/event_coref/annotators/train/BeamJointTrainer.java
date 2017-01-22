@@ -165,7 +165,7 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         SetMultimap<Integer, Integer> candidate2Node = HashMultimap.create();
         List<String> nodeTypes = new ArrayList<>();
         TIntIntMap mention2Node = new TIntIntHashMap();
-        int numNodes = MentionUtils.processCandidates(allMentions, goldCandidates, candidate2Node, mention2Node,
+        int numNodes = MentionUtils.labelTokenCandidates(allMentions, goldCandidates, candidate2Node, mention2Node,
                 nodeTypes);
 
 //        // Convert mention clusters to split candidate clusters.
@@ -178,8 +178,9 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
         // Init here so that we can extract features for mention graph.
         this.corefExtractor.initWorkspace(aJCas);
 
+        //TODO need to use token based candidates.
         List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
-        MentionGraph mentionGraph = MentionUtils.createMentionGraph(aJCas, candidates, corefExtractor, true);
+        MentionGraph mentionGraph = MentionUtils.createSpanBasedMentionGraph(aJCas, candidates, corefExtractor, true);
 
 //        MentionGraph mentionGraph = new MentionGraph(goldCandidates, candidate2Node, nodeTypes, node2EventId,
 //                relations, mentionPairExtractor, true);
@@ -240,7 +241,7 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
             allFeatures[gov] = new List[numNodes];
             for (int dep = 1; dep < numNodes; dep++) {
                 Table<NodeKey, NodeKey, FeatureVector> featureTable = HashBasedTable.create();
-                MentionGraphEdge edge = mentionGraph.getMentionGraphEdge(dep, gov);
+                MentionGraphEdge edge = mentionGraph.getEdge(dep, gov);
                 storeEdgeFeature(gov, dep, gold, edge, featureTable);
                 storeEdgeFeature(gov, dep, system, edge, featureTable);
 

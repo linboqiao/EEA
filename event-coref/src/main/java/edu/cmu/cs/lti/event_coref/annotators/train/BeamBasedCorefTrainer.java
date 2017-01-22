@@ -140,7 +140,7 @@ public class BeamBasedCorefTrainer extends AbstractLoggingAnnotator {
 //        logger.info("Number of nodes " + graphAndCands.getKey().numNodes());
 
         List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
-        MentionGraph mentionGraph = MentionUtils.createMentionGraph(aJCas, candidates, mentionPairExtractor, false);
+        MentionGraph mentionGraph = MentionUtils.createSpanBasedMentionGraph(aJCas, candidates, mentionPairExtractor, false);
 
         decoder.decode(aJCas, mentionGraph, candidates);
     }

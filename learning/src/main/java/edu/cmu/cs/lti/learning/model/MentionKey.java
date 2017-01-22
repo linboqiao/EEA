@@ -23,15 +23,11 @@ public class MentionKey implements Iterable<NodeKey> {
 
     private Word headWord;
 
-    public static final String REALIS_ROOT = "ROOT";
-
-    public static final String TYPE_ROOT = "ROOT";
-
     private static MentionKey root;
 
     static {
-        NodeKey singleRoot = new NodeKey(0, 0, TYPE_ROOT, REALIS_ROOT, -1);
-        root = new MentionKey(null, TYPE_ROOT);
+        NodeKey singleRoot = NodeKey.rootKey();
+        root = new MentionKey(null, singleRoot.getMentionType());
         root.isRoot = true;
         root.keys.add(singleRoot);
     }

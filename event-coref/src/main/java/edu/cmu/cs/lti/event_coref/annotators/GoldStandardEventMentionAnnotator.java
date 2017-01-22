@@ -25,7 +25,10 @@ import org.slf4j.LoggerFactory;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -87,19 +90,51 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
             }
 
             if (copyRelations) {
-                copyRelations(goldStandard, targetView, from2toSpanMap);
+                copySpanRelations(goldStandard, targetView, from2toSpanMap);
+                copyMentionRelations(goldStandard, targetView, from2toMentionMap);
             }
         }
     }
 
-    private void copyRelations(JCas fromView, JCas toView, Map<EventMentionSpan, EventMentionSpan> from2toSpanMap) {
+    private void copyMentionRelations(JCas fromView, JCas toView, Map<EventMention, EventMention> from2toMap) {
+        for (EventMentionRelation relation : UimaConvenience.getAnnotationList(toView, EventMentionRelation.class)) {
+            relation.removeFromIndexes();
+        }
+
+
+        ArrayListMultimap<EventMention, EventMentionRelation> headRelations = ArrayListMultimap.create();
+        ArrayListMultimap<EventMention, EventMentionRelation> childRelations = ArrayListMultimap.create();
+
+        for (EventMentionRelation relation : JCasUtil.select(fromView, EventMentionRelation.class)) {
+            EventMention copiedHead = from2toMap.get(relation.getHead());
+            EventMention copiedChild = from2toMap.get(relation.getChild());
+
+            EventMentionRelation copiedRelation = new EventMentionRelation(toView);
+
+            copiedRelation.setHead(copiedHead);
+            copiedRelation.setChild(copiedChild);
+            copiedRelation.setRelationType(relation.getRelationType());
+
+            headRelations.put(copiedChild, copiedRelation);
+            childRelations.put(copiedHead, copiedRelation);
+
+            UimaAnnotationUtils.finishTop(copiedRelation, COMPONENT_ID, relation.getId(), toView);
+        }
+
+        for (EventMention child : headRelations.keySet()) {
+            child.setHeadEventRelations(FSCollectionFactory.createFSList(toView, headRelations.get(child)));
+        }
+
+        for (EventMention head : childRelations.keySet()) {
+            head.setChildEventRelations(FSCollectionFactory.createFSList(toView, childRelations.get(head)));
+        }
+    }
+
+    private void copySpanRelations(JCas fromView, JCas toView, Map<EventMentionSpan, EventMentionSpan> from2toSpanMap) {
         for (EventMentionSpanRelation relation : UimaConvenience.getAnnotationList(toView,
                 EventMentionSpanRelation.class)) {
             relation.removeFromIndexes();
         }
-
-        Collection<EventMentionSpanRelation> sourceRelations = JCasUtil.select(fromView,
-                EventMentionSpanRelation.class);
 
         ArrayListMultimap<EventMentionSpan, EventMentionSpanRelation> headRelations = ArrayListMultimap.create();
         ArrayListMultimap<EventMentionSpan, EventMentionSpanRelation> childRelations = ArrayListMultimap.create();

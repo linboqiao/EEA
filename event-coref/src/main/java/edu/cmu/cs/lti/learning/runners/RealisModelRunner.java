@@ -32,11 +32,13 @@ public class RealisModelRunner extends AbstractMentionModelRunner {
         super(mainConfig, typeSystemDescription);
     }
 
-
+    public String getModelPath(Configuration config, String suffix){
+       return ModelUtils.getTrainModelPath(eventModelDir, config, suffix);
+    }
 
     public String trainRealis(Configuration config, CollectionReaderDescription trainingReader, String suffix,
                               boolean skipTrain) throws Exception {
-        String realisCvModelDir = ModelUtils.getTrainModelPath(eventModelDir, config, suffix);
+        String realisCvModelDir = getModelPath(config, suffix);
 
         if (skipTrain && new File(realisCvModelDir).exists()) {
             logger.info("Skipping realis training, taking existing models: " + realisCvModelDir);

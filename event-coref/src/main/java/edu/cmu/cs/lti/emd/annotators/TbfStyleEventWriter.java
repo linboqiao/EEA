@@ -52,18 +52,6 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         align.loadWord2Stanford(aJCas, goldComponentId);
 
         Map<EventMention, String> mentionIds = new HashMap<>();
-        Map<EventMentionSpan, String> spanIds = new HashMap<>();
-
-        Map<EventMention, EventMentionSpan> toSpan = new HashMap<>();
-
-        int spanIndex = 1;
-        for (EventMentionSpan eventMentionSpan : JCasUtil.select(aJCas, EventMentionSpan.class)) {
-            for (EventMention eventMention : JCasUtil.selectCovered(EventMention.class, eventMentionSpan)) {
-                toSpan.put(eventMention, eventMentionSpan);
-            }
-            spanIds.put(eventMentionSpan, "S" + spanIndex);
-            spanIndex++;
-        }
 
         int eventMentionIndex = 1;
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
@@ -84,16 +72,12 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             parts.add(mention.getEventType());
             parts.add(mention.getRealisType() == null ? "Actual" : mention.getRealisType());
 
-            String spanId = spanIds.get(toSpan.get(mention));
-            parts.add(spanId);
-
             sb.append(Joiner.on("\t").join(parts));
 
             // Adding semantic roles.
             if (addSemanticRole) {
                 sb.append("\t").append(formatArguments(mention.getHeadWord()));
             }
-
 
             sb.append("\n");
 
@@ -125,11 +109,11 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         }
 
 
-        for (EventMentionSpanRelation relation : JCasUtil.select(aJCas, EventMentionSpanRelation.class)) {
+        for (EventMentionRelation relation : JCasUtil.select(aJCas, EventMentionRelation.class)) {
             String afterId = "R" + relationIndex;
             sb.append("@After").append("\t").append(afterId).append("\t");
-            sb.append(spanIds.get(relation.getHead()));
-            sb.append(spanIds.get(relation.getChild()));
+            sb.append(mentionIds.get(relation.getHead()));
+            sb.append(mentionIds.get(relation.getChild()));
             sb.append("\n");
             relationIndex ++;
         }

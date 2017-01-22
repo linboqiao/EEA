@@ -80,8 +80,6 @@ public class EventMentionPipeline {
 
     private String tokenDir;
 
-    private String evalMode;
-
     private String evalLogOutputDir;
 
     private String evalScript;
@@ -138,7 +136,7 @@ public class EventMentionPipeline {
      */
     public EventMentionPipeline(String typeSystemName, Configuration config) {
         this(typeSystemName, config.getOrElse("edu.cmu.cs.lti.language", "en"),
-                config.getBoolean("edu.cmu.cs.lti.output.character.offset", false),
+                config.getBoolean("edu.cmu.cs.lti.output.character.offset", true),
                 config.get("edu.cmu.cs.lti.model.dir"),
                 config.get("edu.cmu.cs.lti.model.event.dir"),
                 config.get("edu.cmu.cs.lti.training.working.dir"),
@@ -147,15 +145,12 @@ public class EventMentionPipeline {
                 config.get("edu.cmu.cs.lti.process.base.dir") + "_" + config.get("edu.cmu.cs.lti.experiment.name")
         );
 
-        this.evalMode = config.get("edu.cmu.cs.lti.eval.mode");
+        if (config.getBoolean("edu.cmu.cs.lti.output.character.offset", true)){
+            logger.info("Evaluation mode is character based.");
 
-        if (evalMode.equals("token")) {
+        }else{
             logger.info("Evaluation mode is token based.");
             this.tokenDir = config.get("edu.cmu.cs.lti.training.token_map.dir");
-        } else if (evalMode.equals("char")) {
-            logger.info("Evaluaton mode is character based.");
-        } else {
-            throw new IllegalArgumentException(String.format("Unknown evaluation mode: %s.", evalMode));
         }
 
         this.evalLogOutputDir = FileUtils.joinPaths(config.get("edu.cmu.cs.lti.eval.log_dir"),
@@ -524,57 +519,35 @@ public class EventMentionPipeline {
     }
 
     public void runVanilla(Configuration taskConfig) throws Exception {
-        boolean skipCorefTrain = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
-        boolean skipTypeTrain = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
-        boolean skipRealisTrain = taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
-
         // When training is not skipped, testing must be performed.
-        boolean skipTypeTest = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false) && skipTypeTrain;
-        boolean skipRealisTest = taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false) &&
-                skipRealisTrain;
-        boolean skipCorefTest = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false) && skipCorefTrain;
+        boolean skipTypeTest = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
+        boolean skipRealisTest = taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
+        boolean skipCorefTest = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
 
-        boolean skipTrainPrepare = taskConfig.getBoolean("edu.cmu.cs.lti.train.skip.prepare", false);
+        boolean addSemanticRole = taskConfig.getBoolean("edu.cmu.cs.lti.semantic.role", false);
 
         Configuration realisConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.realis"));
         Configuration tokenCrfConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.token_crf"));
         Configuration corefConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.coreference"));
-
-        int seed = taskConfig.getInt("edu.cmu.cs.lti.random.seed", 17);
-
-        CollectionReaderDescription trainReader = CustomCollectionReaderFactory.createXmiReader(
-                typeSystemDescription, trainingWorkingDir, preprocessBase);
 
         CollectionReaderDescription testReader = CustomCollectionReaderFactory.createXmiReader(
                 typeSystemDescription, testingWorkingDir, preprocessBase);
 
         String processDir = FileUtils.joinPaths(testingWorkingDir, evalBase, "full_run");
 
-        CollectionReaderDescription trainingData = prepareTraining(trainReader, trainingWorkingDir,
-                FileUtils.joinPaths(middleResults, fullRunSuffix, "prepared_training"), skipTrainPrepare, seed);
-
-        TokenMentionModelRunner tokenModel = new TokenMentionModelRunner(mainConfig,
-                typeSystemDescription);
-
-        CorefModelRunner corefModel = new CorefModelRunner(mainConfig, typeSystemDescription);
-
+        TokenMentionModelRunner tokenRunner = new TokenMentionModelRunner(mainConfig, typeSystemDescription);
+        CorefModelRunner corefRunner = new CorefModelRunner(mainConfig, typeSystemDescription);
         RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
 
         // Train realis model.
-        String realisModelDir = realisModelRunner.trainRealis(realisConfig, trainingData, fullRunSuffix,
-                skipRealisTrain);
-
-        String vanillaSentCrfModel = tokenModel.trainSentLvType(tokenCrfConfig, trainingData, testReader, fullRunSuffix,
-                false, "hamming", processDir, null, skipTypeTrain, skipTypeTest);
-
-        // Train coref model.
-        String treeCorefModel = corefModel.trainLatentTreeCoref(corefConfig, trainingData, testReader, fullRunSuffix,
-                processDir, null, null, skipCorefTrain, skipCorefTest);
+        String realisModelDir = realisModelRunner.getModelPath(realisConfig, fullRunSuffix);
+        String vanillaSentCrfModel = tokenRunner.getModelPath(tokenCrfConfig, fullRunSuffix, "hamming");
+        String treeCorefModel = corefRunner.getModelPath(corefConfig, fullRunSuffix);
 
         // Run the vanilla model.
         runOnly(tokenCrfConfig, realisConfig, corefConfig, testReader, vanillaSentCrfModel, realisModelDir,
-                treeCorefModel, fullRunSuffix, "vanillaMention", processDir, skipTypeTest, skipRealisTest,
-                skipCorefTest);
+                treeCorefModel, addSemanticRole, fullRunSuffix, "vanillaMention", processDir, skipTypeTest,
+                skipRealisTest, skipCorefTest);
     }
 
     public void tryAnnotator(Configuration taskConfig) throws SAXException, UIMAException, CpeDescriptorException,
@@ -711,11 +684,14 @@ public class EventMentionPipeline {
 
     private String runOnly(Configuration tokenCrfConfig, Configuration realisConfig, Configuration corefConfig,
                            CollectionReaderDescription reader, String typeModel, String realisModel, String corefModel,
-                           String sliceSuffix, String runName, String outputDir, boolean skipType, boolean skipRealis,
-                           boolean skipCoref)
+                           boolean addSemanticRole, String sliceSuffix, String runName, String outputDir,
+                           boolean skipType, boolean skipRealis, boolean skipCoref)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         logger.info(String.format("Type model is %s, Realis Model is %s, Coref Model is %s.", typeModel, realisModel,
                 typeModel));
+        if (addSemanticRole) {
+            logger.info("Processor will append semantic role at the end.");
+        }
 
         String annotatedOutput = FileUtils.joinPaths(middleResults, sliceSuffix, runName);
         TokenMentionModelRunner tokenModel = new TokenMentionModelRunner(mainConfig,
@@ -736,7 +712,7 @@ public class EventMentionPipeline {
                 skipType && skipRealis && skipCoref);
 
         String tbfOutput = FileUtils.joinPaths(outputDir, sliceSuffix, runName + ".tbf");
-        RunnerUtils.writeResults(corefSentMentions, tbfOutput, runName, useCharOffset);
+        RunnerUtils.writeResults(corefSentMentions, tbfOutput, runName, useCharOffset, addSemanticRole);
 
         return tbfOutput;
     }

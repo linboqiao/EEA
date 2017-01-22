@@ -1,18 +1,22 @@
 package edu.cmu.cs.lti.learning.model.graph;
 
-import com.google.common.collect.*;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.learning.model.NodeKey;
-import gnu.trove.map.TIntObjectMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,10 +45,11 @@ public class MentionGraph implements Serializable {
     // first element.
     // This chain is used to store the gold standard coreference chains during training. Decoding chains are obtained
     // via a similar field in the subgraph.
-    private List<Pair<Integer, String>>[] typedCorefChains;
+    private List<NodeKey>[] keyCorefChains;
 
-    // Represent each relation with a adjacent list, relations are for unlabelled links between graph nodes.
-    private Map<EdgeType, ListMultimap<Integer, Integer>> resolvedRelations;
+    // Represent each relation with a adjacent list. Each vertex in the relation is a NodeKey,
+    // which uniquely point to one mention in the node.
+    private Map<EdgeType, Map<NodeKey, List<NodeKey>>> resolvedRelations;
 
     private boolean useAverage = false;
 
@@ -52,11 +57,14 @@ public class MentionGraph implements Serializable {
 
     private final int numNodes;
 
+    // Store gold mention types.
+    private String[] mentionTypes;
+
     /**
      * Provide to the graph with only a list of mentions, no coreference information.
      */
     public MentionGraph(List<MentionCandidate> mentions, PairFeatureExtractor extractor, boolean useAverage) {
-        this(mentions, new int[0][], new String[0], new int[0], HashBasedTable.create(), extractor, false);
+        this(mentions, new int[0][], new int[0], HashBasedTable.create(), extractor, false, false);
         this.useAverage = useAverage;
     }
 
@@ -67,18 +75,13 @@ public class MentionGraph implements Serializable {
      * @param candidates         List of candidates for linking. Each candidate corresponds to a unique span.
      * @param candidate2Mentions Map from candidate to its labelled version, one candidate can have multiple
      *                           labelled counter part.
-     * @param mentionTypes       Type for each labelled candidate.
      * @param mention2EventIndex Event for each labelled candidate.
-     * @param spanRelations      Relation between candidates (unlabelled).
+     * @param relations          Relation between mentions (labelled candidate).
      * @param extractor          The feature extractor.
      */
-    public MentionGraph(List<MentionCandidate> candidates, int[][] candidate2Mentions, String[] mentionTypes,
-                        int[] mention2EventIndex, Table<Integer, Integer, String> spanRelations,
-                        PairFeatureExtractor extractor, boolean isTraining) {
-        if (extractor == null) {
-            logger.error("The extractor is not initialized.");
-        }
-
+    public MentionGraph(List<MentionCandidate> candidates, int[][] candidate2Mentions,
+                        int[] mention2EventIndex, Table<Integer, Integer, String> relations,
+                        PairFeatureExtractor extractor, boolean isTraining, boolean hasGold) {
         this.extractor = extractor;
         numNodes = candidates.size() + 1;
 
@@ -93,188 +96,116 @@ public class MentionGraph implements Serializable {
             }
         }
 
-        // Each cluster is represented as a mapping from the event id to the event mention id list.
-        SetMultimap<Integer, Pair<Integer, String>> typedNodeClusters =
-                groupEventClusters(mention2EventIndex, candidate2Mentions, mentionTypes);
+        if (hasGold) {
+            // Each cluster is represented as a mapping from the event id to the node keys.
+            SetMultimap<Integer, NodeKey> keyClusters =
+                    groupEventClusters(mention2EventIndex, candidate2Mentions, candidates);
 
-        // Group mention nodes into clusters, the first is the event id, the second is the node id.
-        typedCorefChains = GraphUtils.createSortedCorefChains(typedNodeClusters);
+            // Group mention nodes into clusters, the first is the event id, the second is the node id.
+            keyCorefChains = GraphUtils.createSortedCorefChains(keyClusters);
 
-        // This step consider use each span as the minimum unit. So it puts spans into clusters. Roughly, this
-        // clustering actually represents "simultaneous" relation. Since if a span corresponds to two mentions,
-        // these two mentions are mostly happening simultaneously (at least according to the current annotation
-        // scheme).
-        Multimap<Integer, Integer> nodeClusters = relaxCoreference(mention2EventIndex, candidate2Mentions);
-
-        // This will store all other relations, which are propagated using the gold clusters.
-        resolvedRelations = GraphUtils.resolveRelations(
-                convertToEventRelation(spanRelations, candidate2Mentions, mention2EventIndex), nodeClusters);
-
+            // This will store all other relations, which are propagated using the gold clusters.
+            HashMultimap<EdgeType, Pair<Integer, Integer>> eventRelations = asEventRelations(relations,
+                    mention2EventIndex);
+            resolvedRelations = GraphUtils.resolveRelations(eventRelations, keyClusters);
+        }
 
         if (isTraining) {
+            if (extractor == null) {
+                throw new IllegalArgumentException("The feature extractor is not initialized.");
+            }
+
             this.useAverage = false;
 
-            Set<NodeKey> keysWithAntecedents = storeCoreferenceEdges(candidates);
-            TIntObjectMap<EdgeType> nodesWithAntecedents = storeUnlabelledEdges();
-            cleanupEdges(candidates);
+            Set<NodeKey> keysWithAntecedents = new HashSet<>();
+            storeCoreferenceEdges(candidates, keysWithAntecedents);
+
+            // This may overwrite coreference relations? Actually we should clean up gold standard to avoid that.
+            storeRelations(candidates, keysWithAntecedents);
 
             // Link lingering nodes to root.
             // We consider nodes that do not directly connecting to another via an unlabelled edge, or sub node keys
             // that do not connect to other node keys as lingering.
-            linkToRoot(candidates, keysWithAntecedents, nodesWithAntecedents);
+            linkToRoot(candidates, keysWithAntecedents);
         } else {
             this.useAverage = true;
         }
     }
 
-    private Multimap<Integer, Integer> relaxCoreference(int[] mention2EventIndex, int[][] candidate2Mentions) {
-        Multimap<Integer, Integer> event2NodeId = ArrayListMultimap.create();
-        // Put candidates into cluster first.
-        for (int candidateId = 0; candidateId < candidate2Mentions.length; candidateId++) {
-            for (int mentionId : candidate2Mentions[candidateId]) {
-                int eventId = mention2EventIndex[mentionId];
-                event2NodeId.put(eventId, getNodeIndex(candidateId));
-            }
-        }
-        return event2NodeId;
-    }
+    public MentionGraphEdge getEdge(int dep, int gov) {
+        int precedent = Math.min(dep, gov);
+        int succedent = Math.max(dep, gov);
 
-    private MentionGraphEdge getEdge(int curr, int ant) {
-        MentionGraphEdge edge;
-        if (graphEdges[curr][ant] == null) {
-            edge = new MentionGraphEdge(this, extractor, ant, curr, useAverage);
-            graphEdges[curr][ant] = edge;
+        if (succedent == 0) {
+            // No link available for the first node.
+            return null;
         } else {
-            edge = graphEdges[curr][ant];
+            return graphEdges[succedent][precedent];
         }
-        return edge;
     }
 
-    private MentionGraphEdge createUnlabelledGoldEdge(int gov, int dep, EdgeType edgeType) {
-        MentionGraphEdge goldEdge = getEdge(dep, gov);
-        goldEdge.setRealUnlabelledType(edgeType);
-        return goldEdge;
+    private NodeKey getKeyByIndex(List<MentionCandidate> candidates, int index, int nthKey) {
+        return candidates.get(index).asKey().getKeys().get(nthKey);
     }
 
-    private MentionGraphEdge createLabelledGoldEdge(int gov, int dep, NodeKey realGovKey,
-                                                    NodeKey realDepKey, List<MentionCandidate> candidates,
-                                                    EdgeType edgeType) {
+    private MentionGraphEdge createLabelledGoldEdge(NodeKey realGovKey, NodeKey realDepKey,
+                                                    List<MentionCandidate> candidates, EdgeType edgeType) {
+        int gov = realGovKey.getNodeIndex();
+        int dep = realDepKey.getNodeIndex();
         MentionGraphEdge goldEdge = getEdge(dep, gov);
+
+        logger.info("Creating node between " + gov + " and " + dep);
         goldEdge.addRealLabelledEdge(candidates, realGovKey, realDepKey, edgeType);
         return goldEdge;
     }
 
     /**
-     * One problem in this multi type edge graph is that we don't want edges to conflict each other. However, even
-     * the annotations contains errors: some coreference links are actually subevents. In this function we clear up
-     * such conflicts.
-     */
-    private void cleanupEdges(List<MentionCandidate> candidates) {
-        for (int dep = 2; dep < graphEdges.length; dep++) {
-            MentionKey depKeys = candidates.get(getCandidateIndex(dep)).asKey();
-            for (int gov = 1; gov < graphEdges[dep].length; gov++) {
-                MentionKey govKeys = candidates.get(getCandidateIndex(gov)).asKey();
-                MentionGraphEdge edge = getMentionGraphEdge(dep, gov);
-
-                // If there is a unlabelled type for this link, clear all the labelled links. (unlabelled overwrites)
-                if (edge.hasGoldUnlabelledType()) {
-                    for (NodeKey depKey : depKeys) {
-                        for (NodeKey govKey : govKeys) {
-                            LabelledMentionGraphEdge labelledEdge = edge.getLabelledEdge(candidates, govKey, depKey);
-                            if (labelledEdge.notNoneType()) {
-                                labelledEdge.setActualEdgeType(null);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * Store unlabelled edges, such as After and Subevent.
      */
-    private TIntObjectMap<EdgeType> storeUnlabelledEdges() {
-        TIntObjectMap<EdgeType> nodesWithAntecedents = new TIntObjectHashMap<>();
-
-        for (Map.Entry<EdgeType, ListMultimap<Integer, Integer>> typedRelations : resolvedRelations.entrySet()) {
+    private void storeRelations(List<MentionCandidate> candidates, Set<NodeKey> keysWithAntecedents) {
+        for (Map.Entry<EdgeType, Map<NodeKey, List<NodeKey>>> typedRelations : resolvedRelations.entrySet()) {
             EdgeType type = typedRelations.getKey();
-            ListMultimap<Integer, Integer> adjacentLists = typedRelations.getValue();
-            for (Map.Entry<Integer, Collection<Integer>> adjList : adjacentLists.asMap().entrySet()) {
-                int in = adjList.getKey();
-                for (int out : adjList.getValue()) {
-                    createUnlabelledGoldEdge(in, out, type);
-                    nodesWithAntecedents.put(out, type);
+            Map<NodeKey, List<NodeKey>> adjacentLists = typedRelations.getValue();
+            for (Map.Entry<NodeKey, List<NodeKey>> adjList : adjacentLists.entrySet()) {
+                NodeKey inKey = adjList.getKey();
+                for (NodeKey outKey : adjList.getValue()) {
+                    MentionGraphEdge e = createLabelledGoldEdge(inKey, outKey, candidates, type);
+                    keysWithAntecedents.add(outKey);
                 }
             }
         }
-
-        return nodesWithAntecedents;
     }
 
     /**
      * Store coreference information as graph edges.
      */
-    private Set<NodeKey> storeCoreferenceEdges(List<MentionCandidate> candidates) {
-        Set<NodeKey> keysWithAntecedents = new HashSet<>();
-        for (List<Pair<Integer, String>> typedCorefChain : typedCorefChains) {
-            // Go through the chain, and find out which NodeKeys are in the chain after considering the type.
-            List<NodeKey> actualCorefNodes = new ArrayList<>();
-
-            for (int i = 0; i < typedCorefChain.size(); i++) {
-                Pair<Integer, String> element = typedCorefChain.get(i);
-                int nodeId = element.getLeft();
-                int candidateIndex = getCandidateIndex(nodeId);
-                String mentionType = element.getRight();
-
-                MentionKey candidateKeys = candidates.get(candidateIndex).asKey();
-
-                NodeKey actualNode = null;
-                for (NodeKey key : candidateKeys) {
-                    if (key.getMentionType().equals(mentionType)) {
-                        actualNode = key;
-                        break;
-                    }
-                }
-                actualCorefNodes.add(actualNode);
-            }
-
+    private void storeCoreferenceEdges(List<MentionCandidate> candidates, Set<NodeKey> keysWithAntecedents) {
+        for (List<NodeKey> keyCorefChain : keyCorefChains) {
             // Within the cluster, link each antecedent with all its anaphora.
-            for (int i = 0; i < typedCorefChain.size() - 1; i++) {
-                int antecedentNodeId = typedCorefChain.get(i).getLeft();
-                NodeKey actualAntecedent = actualCorefNodes.get(i);
-                for (int j = i + 1; j < typedCorefChain.size(); j++) {
-                    int anaphoraNodeId = typedCorefChain.get(j).getLeft();
-                    NodeKey actualAnaphora = actualCorefNodes.get(j);
-
-                    createLabelledGoldEdge(antecedentNodeId, anaphoraNodeId, actualAntecedent, actualAnaphora,
-                            candidates, EdgeType.Coreference);
-
+            for (int i = 0; i < keyCorefChain.size() - 1; i++) {
+                NodeKey actualAntecedent = keyCorefChain.get(i);
+                for (int j = i + 1; j < keyCorefChain.size(); j++) {
+                    NodeKey actualAnaphora = keyCorefChain.get(j);
+                    createLabelledGoldEdge(actualAntecedent, actualAnaphora, candidates, EdgeType.Coreference);
                     keysWithAntecedents.add(actualAnaphora);
                 }
             }
         }
-        return keysWithAntecedents;
     }
 
     /**
      * If a node is link to nowhere, link it to root.
      */
-    private void linkToRoot(List<MentionCandidate> candidates, Set<NodeKey> keysWithAntecedents,
-                            TIntObjectMap<EdgeType> nodesWithAntecedents) {
+    private void linkToRoot(List<MentionCandidate> candidates, Set<NodeKey> keysWithAntecedents) {
         // Loop starts from 1, because node 0 is the root itself.
         for (int curr = 1; curr < numNodes(); curr++) {
-            if (nodesWithAntecedents.containsKey(curr)) {
-                continue;
-            }
-
             MentionKey depKeys = candidates.get(getCandidateIndex(curr)).asKey();
             NodeKey rootKey = MentionKey.rootKey().takeFirst();
 
             // We assume no two mention contains the same depKey in input.
             for (NodeKey depKey : depKeys) {
                 if (!keysWithAntecedents.contains(depKey)) {
-                    createLabelledGoldEdge(0, curr, rootKey, depKey, candidates, EdgeType.Coref_Root);
+                    createLabelledGoldEdge(rootKey, depKey, candidates, EdgeType.Root);
                 }
             }
         }
@@ -285,19 +216,22 @@ public class MentionGraph implements Serializable {
      * index, where event mention indices are based on their index in the input list. Note that mention node index is
      * not the same to mention index because it include artificial nodes (e.g. Root).
      */
-    private SetMultimap<Integer, Pair<Integer, String>> groupEventClusters(int[] mention2EventIndex,
-                                                                           int[][] candidate2MentionIndex,
-                                                                           String[] mentionTypes) {
-        SetMultimap<Integer, Pair<Integer, String>> nodeClusters = HashMultimap.create();
+    private SetMultimap<Integer, NodeKey> groupEventClusters(int[] mention2EventIndex,
+                                                             int[][] candidate2MentionIndex,
+                                                             List<MentionCandidate> candidates) {
+        SetMultimap<Integer, NodeKey> nodeClusters = HashMultimap.create();
 
         for (int nodeIndex = 0; nodeIndex < numNodes(); nodeIndex++) {
             if (!isRoot(nodeIndex)) {
                 int candidateIndex = getCandidateIndex(nodeIndex);
+                List<NodeKey> keys = candidates.get(candidateIndex).asKey().getKeys();
+
                 // A candidate can be mapped to multiple mentions (due to multi-tagging).
                 // To handle multi-tagging, we represent each element as a pair of node and the type.
-                for (int mentionIndex : candidate2MentionIndex[candidateIndex]) {
+                for (int nthMention = 0; nthMention < candidate2MentionIndex[candidateIndex].length; nthMention++) {
+                    int mentionIndex = candidate2MentionIndex[candidateIndex][nthMention];
                     int eventIndex = mention2EventIndex[mentionIndex];
-                    nodeClusters.put(eventIndex, Pair.of(nodeIndex, mentionTypes[mentionIndex]));
+                    nodeClusters.put(eventIndex, keys.get(nthMention));
                 }
             }
         }
@@ -308,49 +242,36 @@ public class MentionGraph implements Serializable {
      * Convert event mention relation to event relations. Input relations must be transferable to its corresponding
      * events.
      *
-     * @param spanRelations Relations between event spans.
+     * @param mentionRelations Relations between event mentions.
      * @return Map from edge type to event-event relation.
      */
-    private HashMultimap<EdgeType, Pair<Integer, Integer>> convertToEventRelation(
-            Table<Integer, Integer, String> spanRelations, int[][] span2mention, int[] mention2EventIndex) {
+    private HashMultimap<EdgeType, Pair<Integer, Integer>> asEventRelations(
+            Table<Integer, Integer, String> mentionRelations, int[] mention2EventIndex) {
         HashMultimap<EdgeType, Pair<Integer, Integer>> allRelations = HashMultimap.create();
 
-        for (Table.Cell<Integer, Integer, String> relation : spanRelations.cellSet()) {
-            int[] govMentions = span2mention[relation.getRowKey()];
-            int[] depMentions = span2mention[relation.getColumnKey()];
+        for (Table.Cell<Integer, Integer, String> relation : mentionRelations.cellSet()) {
             EdgeType type = EdgeType.valueOf(relation.getValue());
-
-            for (int govMention : govMentions) {
-                for (int depMention : depMentions) {
-                    allRelations.put(type, Pair.of(mention2EventIndex[govMention], mention2EventIndex[depMention]));
-                }
-            }
+            int gov = mention2EventIndex[relation.getRowKey()];
+            int dep = mention2EventIndex[relation.getColumnKey()];
+            allRelations.put(type, Pair.of(gov, dep));
         }
         return allRelations;
     }
 
-    public MentionGraphEdge getMentionGraphEdge(int dep, int gov) {
-        if (dep == 0) {
-            return null;
-        }
-        return getEdge(dep, gov);
-    }
-
     public synchronized LabelledMentionGraphEdge getLabelledEdge(List<MentionCandidate> mentions, NodeKey govKey,
                                                                  NodeKey depKey) {
-        return getEdge(getNodeIndex(depKey.getCandidateIndex()), getNodeIndex(govKey.getCandidateIndex()))
-                .getLabelledEdge(mentions, govKey, depKey);
+        return getEdge(depKey.getNodeIndex(), govKey.getNodeIndex()).getLabelledEdge(mentions, govKey, depKey);
     }
 
     public int numNodes() {
         return numNodes;
     }
 
-    public List<Pair<Integer, String>>[] getNodeCorefChains() {
-        return typedCorefChains;
+    public List<NodeKey>[] getNodeCorefChains() {
+        return keyCorefChains;
     }
 
-    public Map<EdgeType, ListMultimap<Integer, Integer>> getResolvedRelations() {
+    public Map<EdgeType, Map<NodeKey, List<NodeKey>>> getResolvedRelations() {
         return resolvedRelations;
     }
 

@@ -20,16 +20,24 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
     }
 
     @Override
-    public MentionSubGraph decode(MentionGraph mentionGraph, List<MentionCandidate> mentionCandidates,
+    public MentionSubGraph decode(MentionGraph mentionGraph, List<MentionCandidate> candidates,
                                   GraphWeightVector weights, boolean getGoldTree) {
         MentionSubGraph bestFirstTree = new MentionSubGraph(mentionGraph);
+
+
 
         for (int curr = 1; curr < mentionGraph.numNodes(); curr++) {
             Pair<LabelledMentionGraphEdge, EdgeType> bestEdge = null;
             double bestScore = Double.NEGATIVE_INFINITY;
 
+            MentionGraphEdge rootEdge = mentionGraph.getEdge(curr, 0);
+            rootEdge.extractNodeAgnosticFeatures(candidates);
+            LabelledMentionGraphEdge labelledRootEdge = rootEdge.getAllLabelledEdges(candidates).get(0);
+            double rootScore = labelledRootEdge.getRootScore(weights);
+
             for (int ant = 0; ant < curr; ant++) {
-                MentionGraphEdge edge = mentionGraph.getMentionGraphEdge(curr, ant);
+                MentionGraphEdge edge = mentionGraph.getEdge(curr, ant);
+                edge.extractNodeAgnosticFeatures(candidates);
 
                 if (getGoldTree) {
                     if (!edge.hasRealLabelledEdge()) {
@@ -37,7 +45,7 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
                     }
                 }
 
-                for (LabelledMentionGraphEdge labelledEdge : edge.getAllLabelledEdges(mentionCandidates)) {
+                for (LabelledMentionGraphEdge labelledEdge : edge.getAllLabelledEdges(candidates)) {
                     double score;
                     EdgeType edgeType;
 
@@ -61,33 +69,24 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
 
                     if (MathUtils.sureLarger(score, bestScore)) {
                         bestEdge = Pair.of(labelledEdge, edgeType);
-
-//                    logger.info(mentionGraphEdge.getFeatureVector().readableString());
-
-//                    logger.info("Best edge is " + mentionGraphEdge.toString());
-//                    logger.info("Best edge type is " + edgeType);
-//                    logger.info("Best score is " + score + " sure larger than current best " + bestScore);
-
                         bestScore = score;
                     } else if (MathUtils.almostEqual(score, bestScore)) {
                         // When tie, we break tie using the distance. Since the distance to root is considered 0, we
                         // never override a ROOT link decision.
-                        if (bestEdge == null || !bestEdge.getValue().equals(EdgeType.Coref_Root)) {
+                        if (bestEdge == null) {
                             bestEdge = Pair.of(labelledEdge, edgeType);
                             bestScore = score;
-
-//                        logger.info("Tie break winner edge is between " + mentionGraphEdge.toString());
-//                        logger.info("Tie break winner edge type is " + edgeType);
-//                        logger.info("Tie break winner score is " + bestScore);
                         }
-
-//                    logger.info("Discarded edge is between " + mentionGraphEdge.toString());
-//                    logger.info("Discarded edge type is " + edgeType);
-//                    logger.info("Discarded score is " + score);
                     }
                 }
+            }
 
+            if (MathUtils.sureLarger(bestScore, rootScore)) {
+//                logger.info(String.format("Edge score %.2f is higher than root score %.2f.", bestScore, rootScore));
+//                logger.info(bestEdge.toString());
                 bestFirstTree.addLabelledEdge(bestEdge.getLeft(), bestEdge.getRight());
+            }else{
+                bestFirstTree.addLabelledEdge(labelledRootEdge, EdgeType.Root);
             }
         }
         return bestFirstTree;

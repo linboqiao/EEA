@@ -94,11 +94,11 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
 //                getSeparateGraph(aJCas, allMentions);
 
         List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
-        MentionGraph mentionGraph = MentionUtils.createMentionGraph(aJCas, candidates, corefExtractor, false);
+        MentionGraph mentionGraph = MentionUtils.createSpanBasedMentionGraph(aJCas, candidates, corefExtractor, false);
 
         NodeLinkingState decodingState = decoder.decode(aJCas, mentionGraph, candidates);
 
-        ArrayListMultimap<Pair<Integer, String>, EventMention> node2Mention = ArrayListMultimap.create();
+        ArrayListMultimap<NodeKey, EventMention> node2Mention = ArrayListMultimap.create();
 
         Map<Pair<Span, String>, EventMention> mentionMap = new HashMap<>();
 
@@ -124,7 +124,7 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
                         logger.warn("Cannot find mention at " + result);
                     }
 
-                    node2Mention.put(Pair.of(nodeIndex, result.getMentionType()), mention);
+                    node2Mention.put(result, mention);
                 }
             }
         }
@@ -132,15 +132,15 @@ public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
     }
 
     private void annotatePredictedCoreference(JCas aJCas, MentionSubGraph predictedTree,
-                                              ArrayListMultimap<Pair<Integer, String>, EventMention> node2Mention) {
+                                              ArrayListMultimap<NodeKey, EventMention> node2Mention) {
         predictedTree.resolveGraph();
-        List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
+        List<NodeKey>[] corefChains = predictedTree.getCorefChains();
 
-        for (List<Pair<Integer, String>> corefChain : corefChains) {
+        for (List<NodeKey> corefChain : corefChains) {
             List<EventMention> predictedChain = new ArrayList<>();
             Map<Span, EventMention> span2Mentions = new HashMap<>();
 
-            for (Pair<Integer, String> typedNode : corefChain) {
+            for (NodeKey typedNode : corefChain) {
                 List<EventMention> mentions = node2Mention.get(typedNode);
 
                 if (mentions == null) {

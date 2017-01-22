@@ -88,8 +88,8 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
 
     private void thresholdedMentionDistance(TObjectDoubleMap<String> rawFeatures, List<MentionCandidate> candidates,
                                             NodeKey firstNode, NodeKey secondNode) {
-        int firstIndex = firstNode.getCandidateIndex();
-        int secondIndex = secondNode.getCandidateIndex();
+        int firstIndex = firstNode.getNodeIndex();
+        int secondIndex = secondNode.getNodeIndex();
 
         int left, right;
         if (firstIndex < secondIndex) {

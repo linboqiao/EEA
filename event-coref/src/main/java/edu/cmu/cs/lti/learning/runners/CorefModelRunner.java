@@ -38,6 +38,10 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
         super(mainConfig, typeSystemDescription);
     }
 
+    public String getModelPath(Configuration config, String suffix) {
+        return ModelUtils.getTrainModelPath(eventModelDir, config, suffix);
+    }
+
     /**
      * Train the latent tree model coreference resolver.
      *
@@ -56,7 +60,7 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
             IllegalAccessException, InvocationTargetException {
         logger.info("Start coreference training.");
 
-        String modelPath = ModelUtils.getTrainModelPath(eventModelDir, config, suffix);
+        String modelPath = getModelPath(config, suffix);
 
         int maxIter = config.getInt("edu.cmu.cs.lti.perceptron.maxiter", 15);
         int modelOutputFreq = config.getInt("edu.cmu.cs.lti.perceptron.model.save.frequency", 1);

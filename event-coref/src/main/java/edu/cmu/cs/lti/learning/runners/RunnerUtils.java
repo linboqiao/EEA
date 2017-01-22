@@ -34,7 +34,7 @@ public class RunnerUtils {
     private static final Logger logger = LoggerFactory.getLogger(RunnerUtils.class);
 
     public static void writeResults(CollectionReaderDescription processedResultReader, String tbfOutput,
-                                    String systemId, boolean useCharOffset)
+                                    String systemId, boolean useCharOffset, boolean addSemanticRole)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
         logger.info("Writing results to " + tbfOutput);
 
@@ -52,7 +52,8 @@ public class RunnerUtils {
                         TbfStyleEventWriter.PARAM_OUTPUT_PATH, tbfOutput,
                         TbfStyleEventWriter.PARAM_SYSTEM_ID, systemId,
                         TbfStyleEventWriter.PARAM_GOLD_TOKEN_COMPONENT_ID, TbfEventDataReader.COMPONENT_ID,
-                        TbfStyleEventWriter.PARAM_USE_CHARACTER_OFFSET, useCharOffset
+                        TbfStyleEventWriter.PARAM_USE_CHARACTER_OFFSET, useCharOffset,
+                        TbfStyleEventWriter.PARAM_ADD_SEMANTIC_ROLE, addSemanticRole
                 );
                 return new AnalysisEngineDescription[]{resultWriter};
             }

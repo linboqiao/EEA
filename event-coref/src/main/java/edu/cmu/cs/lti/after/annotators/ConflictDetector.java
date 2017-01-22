@@ -2,15 +2,13 @@ package edu.cmu.cs.lti.after.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.MentionUtils;
-import gnu.trove.map.TIntIntMap;
-import gnu.trove.map.hash.TIntIntHashMap;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -26,7 +24,7 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 import java.io.IOException;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -47,43 +45,45 @@ public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
         JCas goldStandardView = JCasUtil.getView(aJCas, goldStandardViewName, aJCas);
 
         List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(goldStandardView);
-        MentionGraph mentionGraph = MentionUtils.createMentionGraph(goldStandardView, candidates, null, false);
+        MentionGraph mentionGraph = MentionUtils.createSpanBasedMentionGraph(goldStandardView, candidates, null, false, true);
 
-        TIntIntMap candidate2EventMap = new TIntIntHashMap();
-
-        ArrayListMultimap<Integer, Integer> event2CandidateMap = ArrayListMultimap.create();
+        Map<NodeKey, Integer> node2EventMap = new HashMap<>();
+        ArrayListMultimap<Integer, NodeKey> event2KeyMap = ArrayListMultimap.create();
 
         int eventId = 0;
-        for (List<Pair<Integer, String>> corefChain : mentionGraph.getNodeCorefChains()) {
-            for (Pair<Integer, String> typedNode : corefChain) {
-                int candidateId = MentionGraph.getCandidateIndex(typedNode.getKey());
-                candidate2EventMap.put(candidateId, eventId);
-                event2CandidateMap.put(eventId, candidateId);
+        for (List<NodeKey> corefChain : mentionGraph.getNodeCorefChains()) {
+            for (NodeKey key : corefChain) {
+                node2EventMap.put(key, eventId);
+                event2KeyMap.put(eventId, key);
             }
             eventId++;
         }
 
-        for (int candidateId = 0; candidateId < candidates.size(); candidateId++) {
-            if (!candidate2EventMap.containsKey(candidateId)) {
-                event2CandidateMap.put(eventId, candidateId);
-                candidate2EventMap.put(candidateId, eventId);
-                eventId++;
+
+
+        for (MentionCandidate candidate : candidates) {
+            for (NodeKey nodeKey : candidate.asKey()) {
+                if (!node2EventMap.containsKey(nodeKey)) {
+                    event2KeyMap.put(eventId, nodeKey);
+                    node2EventMap.put(nodeKey, eventId);
+                    eventId++;
+                }
             }
         }
 
         for (EdgeType edgeType : mentionGraph.getResolvedRelations().keySet()) {
             DirectedGraph<Integer, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
-            for (Integer event : event2CandidateMap.keys()) {
+            for (Integer event : event2KeyMap.keys()) {
                 graph.addVertex(event);
             }
 
-            for (Map.Entry<Integer, Collection<Integer>> adjacentList : mentionGraph.getResolvedRelations()
-                    .get(edgeType).asMap().entrySet()) {
-                int fromEvent = candidate2EventMap.get(MentionGraph.getCandidateIndex(adjacentList.getKey()));
-                for (Integer toNode : adjacentList.getValue()) {
-                    int toCandidate = MentionGraph.getCandidateIndex(toNode);
-                    int toEvent = candidate2EventMap.get(toCandidate);
+            for (Map.Entry<NodeKey, List<NodeKey>> adjacentList : mentionGraph.getResolvedRelations()
+                    .get(edgeType).entrySet()) {
+                int fromEvent = node2EventMap.get(adjacentList.getKey());
+
+                for (NodeKey toNode : adjacentList.getValue()) {
+                    int toEvent = node2EventMap.get(toNode);
                     graph.addEdge(fromEvent, toEvent);
                 }
             }
@@ -95,9 +95,12 @@ public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
                 sb.append(UimaConvenience.getDocId(aJCas)).append("\n");
                 sb.append("Showing event cycles for type ").append(edgeType).append("\n");
                 for (int eventInCycle : cycles) {
-                    for (int candidateId : event2CandidateMap.get(eventInCycle)) {
-                        MentionCandidate c = candidates.get(candidateId);
-                        sb.append(c).append(" ");
+                    sb.append(String.format("In event %d\t", eventInCycle));
+                    for (NodeKey node : event2KeyMap.get(eventInCycle)) {
+                        int candidateIndex = MentionGraph.getCandidateIndex(node.getNodeIndex());
+                        String repr = String.format("%s [%d:%d] %s", candidates.get(candidateIndex).getText(),
+                                node.getBegin(), node.getEnd(), node.getMentionType());
+                        sb.append(repr).append(" ");
                     }
                 }
                 sb.append("\n");

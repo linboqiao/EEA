@@ -115,7 +115,7 @@ public class GraphUtils {
      * @param clusters              Nodes contained in the cluster.
      * @return The resolved graph as adjacent list, stored separated for each edge type.
      */
-    public static <T extends Comparable> Map<EdgeType, ListMultimap<T, T>> resolveRelations(
+    public static <T extends Comparable> Map<EdgeType, Map<T, List<T>>> resolveRelations(
             Multimap<EdgeType, Pair<Integer, Integer>> interClusterRelations, Multimap<Integer, T> clusters) {
         Map<EdgeType, ListMultimap<T, T>> relationAdjacentLists = new HashMap<>();
 
@@ -129,6 +129,19 @@ public class GraphUtils {
                     GraphUtils.resolveEquivalence(eventRelationAdjacentList, clusters);
             relationAdjacentLists.put(relationsByType.getKey(), mentionAdjacentArray);
         }
-        return relationAdjacentLists;
+
+        Map<EdgeType, Map<T, List<T>>> sortedAdjacentLists = new HashMap<>();
+        for (Map.Entry<EdgeType, ListMultimap<T, T>> typedList : relationAdjacentLists.entrySet()) {
+            Map<T, List<T>> adjacentList = new HashMap<>();
+
+            for (Map.Entry<T, Collection<T>> l : typedList.getValue().asMap().entrySet()) {
+                ArrayList<T> sortedList = new ArrayList<>(l.getValue());
+                Collections.sort(sortedList);
+                adjacentList.put(l.getKey(), sortedList);
+            }
+            sortedAdjacentLists.put(typedList.getKey(), adjacentList);
+        }
+
+        return sortedAdjacentLists;
     }
 }

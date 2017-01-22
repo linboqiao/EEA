@@ -6,6 +6,7 @@ import com.google.common.collect.Table;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.FeatureVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.model.MentionKey;
 import edu.cmu.cs.lti.learning.model.NodeKey;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
@@ -73,7 +74,7 @@ public class MentionGraphEdge implements Serializable {
 
     public void addRealLabelledEdge(List<MentionCandidate> candidates, NodeKey realGovKey, NodeKey realDepKey,
                                     EdgeType edgeType) {
-        LabelledMentionGraphEdge edge = createLabelledEdge(candidates, realGovKey, realDepKey);
+        LabelledMentionGraphEdge edge = getLabelledEdge(candidates, realGovKey, realDepKey);
         edge.setActualEdgeType(edgeType);
         realLabelledEdges.put(edge.getGovKey(), edge.getDepKey(), edge);
         hasRealLabelledEdge = true;
@@ -98,7 +99,6 @@ public class MentionGraphEdge implements Serializable {
             extractor.extract(mention, rawFeaturesNodeAgnostic);
         } else {
             int govCandidateId = MentionGraph.getCandidateIndex(govIdx);
-
             extractor.extract(mentions, govCandidateId, depCandidateIndex, rawFeaturesNodeAgnostic);
         }
 
@@ -186,8 +186,8 @@ public class MentionGraphEdge implements Serializable {
 
 
     public String toString() {
-        return String.format("Edge: (%d->%d), [Gold Type: %s], Gold Labelled Edges: %s.", govIdx, depIdx,
-                realUnlabelledType, Joiner.on(" ; ").join(realLabelledEdges.values()));
+        return String.format("Edge: (%d->%d), Gold Labelled Edges: %s.", govIdx, depIdx,
+                Joiner.on(" ; ").join(realLabelledEdges.values()));
     }
 
     public boolean isRoot() {
@@ -202,28 +202,31 @@ public class MentionGraphEdge implements Serializable {
         return depIdx;
     }
 
-    public List<LabelledMentionGraphEdge> getAllLabelledEdges(List<MentionCandidate> candidates) {
-        return getAllLabelledEdges(candidates, false);
+    public MentionKey getAntKey(List<MentionCandidate> candidates) {
+        int candidateId = MentionGraph.getCandidateIndex(depIdx);
+        return candidates.get(candidateId).asKey();
     }
 
-    public List<LabelledMentionGraphEdge> getAllLabelledEdges(List<MentionCandidate> candidates,
-                                                                   boolean reverse) {
-        int currentCandidateId = MentionGraph.getCandidateIndex(depIdx);
-        int antCandidateId = MentionGraph.getCandidateIndex(govIdx);
+    public MentionKey getPrecKey(List<MentionCandidate> candidates) {
+        int candidateId = MentionGraph.getCandidateIndex(govIdx);
+        return candidates.get(candidateId).asKey();
+    }
 
-        if (reverse) {
-            currentCandidateId = MentionGraph.getCandidateIndex(govIdx);
-            antCandidateId = MentionGraph.getCandidateIndex(depIdx);
-        }
+    public List<LabelledMentionGraphEdge> getAllLabelledEdges(List<MentionCandidate> candidates) {
+        int depCandidateId = MentionGraph.getCandidateIndex(depIdx);
+        int govCandidateId = MentionGraph.getCandidateIndex(govIdx);
 
         List<LabelledMentionGraphEdge> labelledEdges = new ArrayList<>();
 
-        for (NodeKey govKey : candidates.get(antCandidateId).asKey()) {
-            for (NodeKey depKey : candidates.get(currentCandidateId).asKey()) {
+        MentionKey govKeys = hostingGraph.isRoot(govIdx) ? MentionKey.rootKey() :
+                candidates.get(govCandidateId).asKey();
+
+        for (NodeKey govKey : govKeys) {
+            for (NodeKey depKey : candidates.get(depCandidateId).asKey()) {
                 labelledEdges.add(getLabelledEdge(candidates, govKey, depKey));
             }
         }
-        return labelledEdges;
 
+        return labelledEdges;
     }
 }

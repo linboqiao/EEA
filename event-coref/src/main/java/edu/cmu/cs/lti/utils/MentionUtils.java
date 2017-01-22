@@ -37,28 +37,40 @@ import java.util.stream.IntStream;
 public class MentionUtils {
     private static final Logger logger = LoggerFactory.getLogger(MentionUtils.class);
 
-    public static MentionGraph createMentionGraph(JCas aJCas, List<MentionCandidate> candidates,
-                                                  PairFeatureExtractor extractor, boolean isTraining) {
+    public static MentionGraph createSpanBasedMentionGraph(JCas aJCas,
+                                                           List<MentionCandidate> candidates,
+                                                           PairFeatureExtractor extractor,
+                                                           boolean isTraining) {
+        // Normally, when it is training, we have gold standard, otherwise we don't have gold standard.
+        return createSpanBasedMentionGraph(aJCas, candidates, extractor, isTraining, isTraining);
+    }
+
+    public static MentionGraph createSpanBasedMentionGraph(JCas aJCas,
+                                                           List<MentionCandidate> candidates,
+                                                           PairFeatureExtractor extractor,
+                                                           boolean isTraining, boolean hasGold) {
         // Note: We consider mentions with the same attributes and spans as duplication. We remove them from the list.
         List<EventMention> allMentions = MentionUtils.clearDuplicates(
                 new ArrayList<>(JCasUtil.select(aJCas, EventMention.class))
         );
 
-        // Create singleton events if not existed yet.
-        createSingleEvents(aJCas, allMentions);
-
-        Set<EventMention> validMentions = new HashSet<>();
-        String[] mentionTypes = new String[allMentions.size()];
-
-        for (int i = 0; i < allMentions.size(); i++) {
-            EventMention mention = allMentions.get(i);
-            mention.setIndex(i);
-            mentionTypes[i] = mention.getEventType();
-            validMentions.add(mention);
+        for (int mentionIndex = 0; mentionIndex < allMentions.size(); mentionIndex++) {
+            allMentions.get(mentionIndex).setIndex(mentionIndex);
         }
 
-        List<EventMentionSpan> mentionSpans = new ArrayList<>(JCasUtil.select(aJCas, EventMentionSpan.class));
+        int[] mentionId2EventId = indexMentionClusters(aJCas, allMentions);
+        int[][] candidate2Mentions = getCandidateMappingFromSpans(aJCas, allMentions, candidates);
 
+        Table<Integer, Integer, String> relations = indexMentionRelations(aJCas, allMentions);
+        return new MentionGraph(candidates, candidate2Mentions, mentionId2EventId,
+                relations, extractor, isTraining, hasGold);
+    }
+
+    public static void createTokenBasedMentionGraph() {
+
+    }
+
+    private static int[] indexMentionClusters(JCas aJCas, List<EventMention> allMentions) {
         int eventIdx = 0;
         int[] mentionId2EventId = new int[allMentions.size()];
         TIntSet nonSingletons = new TIntHashSet();
@@ -86,16 +98,35 @@ public class MentionUtils {
             }
         }
 
+        return mentionId2EventId;
+    }
+
+    private static int[][] getCandidateMappingFromSpans(JCas aJCas, List<EventMention> allMentions,
+                                                        List<MentionCandidate> candidates) {
+        createSingleEvents(aJCas, allMentions);
+
+        // We clear some duplicates before, so we need to use a set to make sure we don't use them any more.
+        Set<EventMention> validMentions = new HashSet<>(allMentions);
+
+        for (int i = 0; i < allMentions.size(); i++) {
+            EventMention mention = allMentions.get(i);
+            mention.setIndex(i);
+        }
+
         // Create some mapping for creating the event graph.
         int[][] candidate2Mentions = new int[candidates.size()][];
 
+        List<EventMentionSpan> mentionSpans = new ArrayList<>(JCasUtil.select(aJCas, EventMentionSpan.class));
         TObjectIntMap<EventMentionSpan> spanIds = new TObjectIntHashMap<>();
+
         for (int i = 0; i < mentionSpans.size(); i++) {
             // i is the candidate id, a.k.a, the mention span id.
             EventMentionSpan ems = mentionSpans.get(i);
             spanIds.put(ems, i);
 
-            Collection<EventMention> mentions = FSCollectionFactory.create(ems.getEventMentions(), EventMention.class);
+            List<EventMention> mentions = new ArrayList<>(FSCollectionFactory.create(ems.getEventMentions(),
+                    EventMention.class));
+            mentions.sort(Comparator.comparing(EventMention::getEventType));
 
             int numValidMentions = 0;
             for (EventMention mention : mentions) {
@@ -115,11 +146,7 @@ public class MentionUtils {
                 }
             }
         }
-
-        Table<Integer, Integer, String> relations = indexSpanRelations(aJCas, spanIds);
-
-        return new MentionGraph(candidates, candidate2Mentions, mentionTypes, mentionId2EventId,
-                relations, extractor, isTraining);
+        return candidate2Mentions;
     }
 
     private static void createSingleEvents(JCas aJCas, List<EventMention> mentions) {
@@ -257,6 +284,7 @@ public class MentionUtils {
             EventMention keptMention = null;
 
             for (EventMention duplicate : duplicates) {
+                // We keep the mention that have the coreference linking to make things easier.
                 if (duplicate.getReferringEvent() != null) {
                     keptMention = duplicate;
                     break;
@@ -336,13 +364,27 @@ public class MentionUtils {
         Table<Integer, Integer, String> relations = HashBasedTable.create();
 
         for (EventMentionSpanRelation relation : JCasUtil.select(aJCas, EventMentionSpanRelation.class)) {
-//            logger.info(String.format("Relation is %s -> %s: %s", relation.getHead().getCoveredText(), relation
-// .getChild().getCoveredText(), relation.getRelationType()));
             int head = spanIds.get(relation.getHead());
             int child = spanIds.get(relation.getChild());
             relations.put(head, child, relation.getRelationType());
-//            logger.info(String.format("Find relation from %d to %d of type %s", head, child, relation
-// .getRelationType()));
+        }
+        return relations;
+    }
+
+    public static Table<Integer, Integer, String> indexMentionRelations(JCas aJCas, List<EventMention> allMentions) {
+        Table<Integer, Integer, String> relations = HashBasedTable.create();
+
+        TObjectIntMap<EventMention> mentionIds = new TObjectIntHashMap<>();
+        for (EventMention mention : allMentions) {
+            mentionIds.put(mention, mention.getIndex());
+        }
+
+        for (EventMentionRelation relation : JCasUtil.select(aJCas, EventMentionRelation.class)) {
+            if (mentionIds.containsKey(relation.getHead()) && mentionIds.containsKey(relation.getChild())) {
+                int headMention = mentionIds.get(relation.getHead());
+                int childMention = mentionIds.get(relation.getChild());
+                relations.put(headMention, childMention, relation.getRelationType());
+            }
         }
 
         return relations;
@@ -369,9 +411,19 @@ public class MentionUtils {
         return relations;
     }
 
-    public static int processCandidates(List<EventMention> mentions, List<MentionCandidate> goldCandidates,
-                                        SetMultimap<Integer, Integer> candidate2Split,
-                                        TIntIntMap mention2SplitCandidate, List<String> splitCandidateTypes) {
+    /**
+     * Find out the type for token based candidates.
+     *
+     * @param mentions
+     * @param goldCandidates
+     * @param candidate2Split
+     * @param mention2SplitCandidate
+     * @param splitCandidateTypes
+     * @return
+     */
+    public static int labelTokenCandidates(List<EventMention> mentions, List<MentionCandidate> goldCandidates,
+                                           SetMultimap<Integer, Integer> candidate2Split,
+                                           TIntIntMap mention2SplitCandidate, List<String> splitCandidateTypes) {
         SetMultimap<Word, Integer> head2Mentions = HashMultimap.create();
 
         for (int i = 0; i < mentions.size(); i++) {

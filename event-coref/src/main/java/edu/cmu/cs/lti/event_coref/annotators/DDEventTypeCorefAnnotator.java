@@ -201,7 +201,7 @@ public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
                 crfWeights, mentionGraph, candidates, corefFeatureExtractor, corefWeights, true);
 
         annotatePredictedTypes(decodeResult.getLeft(), allMentions);
-        annotatePredictedCoreference(aJCas, mentionGraph, decodeResult.getRight(), allMentions);
+        annotatePredictedCoreference(aJCas, decodeResult.getRight(), allMentions);
 
 //        DebugUtils.pause(logger);
     }
@@ -214,18 +214,18 @@ public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
     }
 
     // TODO separate clusters merged by joint types.
-    private void annotatePredictedCoreference(JCas aJCas, MentionGraph mentionGraph, MentionSubGraph predictedTree,
+    private void annotatePredictedCoreference(JCas aJCas, MentionSubGraph predictedTree,
                                               List<EventMention> allMentions) {
         predictedTree.resolveGraph();
-        List<Pair<Integer, String>>[] corefChains = predictedTree.getCorefChains();
+        List<NodeKey>[] corefChains = predictedTree.getCorefChains();
 
-        for (List<Pair<Integer, String>> corefChain : corefChains) {
+        for (List<NodeKey> corefChain : corefChains) {
             List<EventMention> predictedChain = new ArrayList<>();
             Map<Span, EventMention> span2Mentions = new HashMap<>();
 
-            for (Pair<Integer, String> typedNode : corefChain) {
-                int nodeId = typedNode.getLeft();
-                int mentionIndex = mentionGraph.getCandidateIndex(nodeId);
+            for (NodeKey typedNode : corefChain) {
+                int nodeId = typedNode.getNodeIndex();
+                int mentionIndex = MentionGraph.getCandidateIndex(nodeId);
                 EventMention mention = allMentions.get(mentionIndex);
                 Span mentionSpan = Span.of(mention.getBegin(), mention.getEnd());
                 if (!span2Mentions.containsKey(mentionSpan)) {

@@ -69,14 +69,9 @@ public class LabelledMentionGraphEdge implements Serializable {
         return scoreEdge(actualEdgeType, weightVector);
     }
 
-//
-//    public Pair<EdgeType, Double> getCorrectLabelScore(GraphWeightVector weightVector) {
-//        EdgeType actualEdgeType = hostingEdge.getRealUnlabelledEdgeType();
-//        if (actualEdgeType == null) {
-//            return null;
-//        }
-//        return Pair.of(actualEdgeType, scoreEdge(actualEdgeType, weightVector));
-//    }
+    public double getRootScore(GraphWeightVector weightVector) {
+        return scoreEdge(EdgeType.Root, weightVector);
+    }
 
     public Pair<EdgeType, Double> getBestLabelScore(GraphWeightVector weightVector) {
         double score = Double.NEGATIVE_INFINITY;
@@ -84,11 +79,11 @@ public class LabelledMentionGraphEdge implements Serializable {
 
         if (hostingEdge.isRoot()) {
             // The only possible relation with the root node is ROOT.
-            score = scoreEdge(EdgeType.Coref_Root, weightVector);
-            bestLabel = EdgeType.Coref_Root;
+            score = scoreEdge(EdgeType.Root, weightVector);
+            bestLabel = EdgeType.Root;
         } else {
             for (EdgeType label : EdgeType.values()) {
-                if (label.equals(EdgeType.Coref_Root)) {
+                if (label.equals(EdgeType.Root)) {
                     // If the edge is not a root edge, we will not test for Root edge type.
                     continue;
                 }
@@ -103,16 +98,15 @@ public class LabelledMentionGraphEdge implements Serializable {
         return Pair.of(bestLabel, score);
     }
 
-
     public Map<EdgeType, Double> getAllLabelScore(GraphWeightVector weightVector) {
         Map<EdgeType, Double> allLabelScores = new HashMap<>();
 
         if (hostingEdge.isRoot()) {
             // The only possible relation with the root node is ROOT.
-            allLabelScores.put(EdgeType.Coref_Root, scoreEdge(EdgeType.Coref_Root, weightVector));
+            allLabelScores.put(EdgeType.Root, scoreEdge(EdgeType.Root, weightVector));
         } else {
             for (EdgeType label : EdgeType.values()) {
-                if (label.equals(EdgeType.Coref_Root)) {
+                if (label.equals(EdgeType.Root)) {
                     // If the edge is not a root edge, we will not test for Root edge type.
                     continue;
                 }
@@ -151,8 +145,7 @@ public class LabelledMentionGraphEdge implements Serializable {
     }
 
     public String toString() {
-        return String.format("Label edge: %s-%s, Gold Type: %s",
-                govKey, depKey, actualEdgeType);
+        return String.format("Label edge: %s-%s, Gold Type: %s", govKey, depKey, actualEdgeType);
     }
 
     public void setActualEdgeType(EdgeType actualEdgeType) {
