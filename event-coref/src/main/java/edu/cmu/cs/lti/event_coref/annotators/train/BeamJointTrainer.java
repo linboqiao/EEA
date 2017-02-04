@@ -9,6 +9,7 @@ import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.LabelledMentionGraphEdge;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraphEdge;
@@ -241,7 +242,7 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
             allFeatures[gov] = new List[numNodes];
             for (int dep = 1; dep < numNodes; dep++) {
                 Table<NodeKey, NodeKey, FeatureVector> featureTable = HashBasedTable.create();
-                MentionGraphEdge edge = mentionGraph.getEdge(dep, gov);
+                MentionGraphEdge edge = mentionGraph.getEdge(gov, dep);
                 storeEdgeFeature(gov, dep, gold, edge, featureTable);
                 storeEdgeFeature(gov, dep, system, edge, featureTable);
 
@@ -259,9 +260,22 @@ public class BeamJointTrainer extends AbstractLoggingAnnotator {
 
     private void storeEdgeFeature(int gov, int dep, List<MentionCandidate>
             candidates, MentionGraphEdge edge, Table<NodeKey, NodeKey, FeatureVector> featureTable) {
-        MentionKey govKeys = gov == 0 ? MentionKey.rootKey() : candidates.get(MentionGraph
-                .getCandidateIndex(gov)).asKey();
         MentionKey depKeys = candidates.get(MentionGraph.getCandidateIndex(dep)).asKey();
+
+        if (gov ==0){
+            NodeKey govKey = NodeKey.getRootKey(EdgeType.Coreference);
+            for (NodeKey depKey : depKeys) {
+                if (!featureTable.contains(govKey, depKey)) {
+                    LabelledMentionGraphEdge existingEdge = edge.getExistingLabelledEdge(govKey, depKey);
+                    if (existingEdge != null) {
+                        FeatureVector features = edge.getExistingLabelledEdge(govKey, depKey).getFeatureVector();
+                        featureTable.put(govKey, depKey, features);
+                    }
+                }
+            }
+        }
+
+        MentionKey govKeys = candidates.get(MentionGraph.getCandidateIndex(gov)).asKey();
 
         for (NodeKey govKey : govKeys) {
             for (NodeKey depKey : depKeys) {

@@ -20,7 +20,7 @@ public class ModelUtils {
     public static String getTestModelFile(String modelDir, Configuration config, String suffix) {
         String modelChoice = config.get("edu.cmu.cs.lti.model.test.choice");
         String modelName = modelChoice == null ? suffix : suffix + "_" + modelChoice;
-        return FileUtils.joinPaths(modelDir, config.get("edu.cmu.cs.lti.model.experiment.name"),
+        return FileUtils.joinPaths(modelDir, config.get("edu.cmu.cs.lti.model.name"),
                 config.get("edu.cmu.cs.lti.model.type"), modelName);
     }
 
@@ -30,7 +30,7 @@ public class ModelUtils {
 
     public static String getTrainModelPath(String modelDir, Configuration config, String suffix, String modelChoice) {
         String modelName = modelChoice == null ? suffix : suffix + "_" + modelChoice;
-        return FileUtils.joinPaths(modelDir, config.get("edu.cmu.cs.lti.model.experiment.name"),
+        return FileUtils.joinPaths(modelDir, config.get("edu.cmu.cs.lti.model.name"),
                 config.get("edu.cmu.cs.lti.model.type"), modelName);
     }
 }

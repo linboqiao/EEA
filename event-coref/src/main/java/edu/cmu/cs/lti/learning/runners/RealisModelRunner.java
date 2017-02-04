@@ -97,6 +97,6 @@ public class RealisModelRunner extends AbstractMentionModelRunner {
                     mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {
                 return realisAnnotation(taskConfig, reader, realisModel, trainingWorkingDir, baseDir, skipTest);
             }
-        }.run(taskConfig, reader, sliceSuffix, runName, outputDir, subEval, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, subEval, gold);
     }
 }

@@ -21,6 +21,8 @@ import org.xml.sax.SAXException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,7 +47,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
         String subEvalDir = suffix.equals(fullRunSuffix) ? "final" : "cv";
 
         int jointMaxIter = config.getInt("edu.cmu.cs.lti.perceptron.joint.maxiter", 30);
-        int modelOutputFreq = config.getInt("edu.cmu.cs.lti.perceptron.model.save.frequency", 1);
+        int modelOutputFreq = config.getInt("edu.cmu.cs.lti.perceptron.model.save.frequency", 3);
 
         boolean modelExists = new File(cvModelDir).exists();
 
@@ -76,7 +78,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                 protected void finish() throws IOException {
                     BeamJointTrainer.finish();
                     // Test using the final model.
-                    String runName = "joint_heldout_final";
+                    String runName = "after_heldout_final";
                     String modelPath = cvModelDir + "_iter" + numIteration;
                     test(modelPath, runName);
                 }
@@ -115,14 +117,14 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                                                  String sliceSuffix, String runName, String outputDir,
                                                  String subEval, File gold, boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
-        return new ModelTester(mainConfig, "token_based_mention") {
+        return new ModelTester(mainConfig, "plain_after_model") {
             @Override
             CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException,
                     CpeDescriptorException, IOException {
                 return afterLinking(taskConfig, reader, afterModel, trainingWorkingDir, baseDir, skipTest);
             }
-        }.run(taskConfig, reader, sliceSuffix, runName, outputDir, subEval, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, subEval, gold);
     }
 
     public CollectionReaderDescription afterLinking(Configuration taskConfig, CollectionReaderDescription reader,
@@ -148,7 +150,10 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                             LatentTreeAfterAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
                     );
 
-                    return new AnalysisEngineDescription[]{afterLinker};
+                    List<AnalysisEngineDescription> annotators = new ArrayList<>();
+                    RunnerUtils.addCorefPreprocessors(annotators, language);
+                    annotators.add(afterLinker);
+                    return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
                 }
             }, mainDir, baseOutput).runWithOutput();
         }

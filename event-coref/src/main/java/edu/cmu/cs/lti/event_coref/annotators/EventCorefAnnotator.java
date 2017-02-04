@@ -50,8 +50,8 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
     private PairFeatureExtractor extractor;
     private LatentTreeDecoder decoder;
 
-    // The resulting weights.
-    private static GraphWeightVector weights;
+    // The weights.
+    private GraphWeightVector weights;
 
     // Dummy lagrangians.
     private DummyCubicLagrangian lagrangian = new DummyCubicLagrangian();
@@ -117,7 +117,7 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
         MentionGraph mentionGraph = new MentionGraph(candidates, extractor, true);
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
 
-        predictedTree.resolveGraph();
+        predictedTree.resolveCoreference();
         List<NodeKey>[] corefChains = predictedTree.getCorefChains();
 
 //        UimaConvenience.printProcessLog(aJCas, logger);
@@ -148,8 +148,6 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
                 }
             }
         }
-
-//        DebugUtils.pause();
     }
 
 }

@@ -115,8 +115,8 @@ public class NodeLinkingState implements Comparable<NodeLinkingState> {
         if (MathUtils.almostEqual(score, otherScore)) {
             // In case we don't do coreference, decodingTree doesn't exists.
             if (decodingTree != null) {
-                int thisDistance = decodingTree.getTotalDistance();
-                int thatDistance = s.decodingTree.getTotalDistance();
+                int thisDistance = decodingTree.getTotalCorefDistance();
+                int thatDistance = s.decodingTree.getTotalCorefDistance();
 
                 // The max element in our queue will be emitted, since we use a reverse comparator, that means the least
                 // element in our queue will be emitted. Since we want to emit larger distance, larger distance

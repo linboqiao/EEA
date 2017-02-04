@@ -260,7 +260,7 @@ public class BeamLatentTreeDecoder {
 
                 for (int ant = 0; ant < MentionGraph.getNodeIndex(candidateIndex); ant++) {
                     Table<NodeKey, NodeKey, LabelledMentionGraphEdge> realGraphEdges = mentionGraph
-                            .getEdge(currentNodeIndex, ant).getRealLabelledEdges();
+                            .getEdge(ant, currentNodeIndex).getRealLabelledEdges();
 
                     Map<NodeKey, LabelledMentionGraphEdge> correctAntEdges = realGraphEdges.column(currNodeKey);
                     numPossibleCorrectLinks += correctAntEdges.size();

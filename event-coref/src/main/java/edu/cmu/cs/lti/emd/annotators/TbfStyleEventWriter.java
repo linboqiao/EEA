@@ -111,8 +111,9 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
 
         for (EventMentionRelation relation : JCasUtil.select(aJCas, EventMentionRelation.class)) {
             String afterId = "R" + relationIndex;
-            sb.append("@After").append("\t").append(afterId).append("\t");
+            sb.append("@").append(relation.getRelationType()).append("\t").append(afterId).append("\t");
             sb.append(mentionIds.get(relation.getHead()));
+            sb.append(",");
             sb.append(mentionIds.get(relation.getChild()));
             sb.append("\n");
             relationIndex ++;

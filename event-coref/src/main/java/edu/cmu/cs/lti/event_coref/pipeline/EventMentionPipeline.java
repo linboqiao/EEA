@@ -145,10 +145,10 @@ public class EventMentionPipeline {
                 config.get("edu.cmu.cs.lti.process.base.dir") + "_" + config.get("edu.cmu.cs.lti.experiment.name")
         );
 
-        if (config.getBoolean("edu.cmu.cs.lti.output.character.offset", true)){
+        if (config.getBoolean("edu.cmu.cs.lti.output.character.offset", true)) {
             logger.info("Evaluation mode is character based.");
 
-        }else{
+        } else {
             logger.info("Evaluation mode is token based.");
             this.tokenDir = config.get("edu.cmu.cs.lti.training.token_map.dir");
         }
@@ -363,6 +363,9 @@ public class EventMentionPipeline {
                                     LtpAnnotator.PARAM_SRL_MODEL,
                                     new File(generalModelDir, "ltp_models/ltp_data/srl")
                             );
+                        } else if (name.equals("discourse")){
+                            processor = AnalysisEngineFactory.createEngineDescription(
+                                    DiscourseParserAnnotator.class, typeSystemDescription);
                         } else {
                             throw new ConfigurationException("Unknown preprocessor specified : " + name);
                         }
@@ -622,19 +625,22 @@ public class EventMentionPipeline {
 
         String evalDir = FileUtils.joinPaths(testingWorkingDir, evalBase, "full_run");
 
+        CollectionReaderDescription trainingData = prepareExperimentData(taskConfig, trainingReader,
+                testDataReader, evalDir, "full_run", true, seed);
+
         if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", true)) {
             logger.info("Will run individual model experiments.");
-            experiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, evalDir, runAll);
+            experiment(taskConfig, fullRunSuffix, trainingData, testDataReader, evalDir, runAll);
         }
 
         if (taskConfig.getBoolean("edu.cmu.cs.lti.joint.models", true)) {
             logger.info("Will run joint model experiments.");
-            jointExperiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, evalDir, runAll);
+            jointExperiment(taskConfig, fullRunSuffix, trainingData, testDataReader, evalDir, runAll);
         }
 
         if (taskConfig.getBoolean("edu.cmu.lti.after.models", true)) {
             logger.info("Will run after model experiments.");
-            afterExperiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, evalDir, runAll);
+            afterExperiment(taskConfig, fullRunSuffix, trainingData, testDataReader, evalDir, runAll);
         }
     }
 
@@ -712,7 +718,8 @@ public class EventMentionPipeline {
                 skipType && skipRealis && skipCoref);
 
         String tbfOutput = FileUtils.joinPaths(outputDir, sliceSuffix, runName + ".tbf");
-        RunnerUtils.writeResults(corefSentMentions, tbfOutput, runName, useCharOffset, addSemanticRole);
+        RunnerUtils.writeResults(corefSentMentions, typeSystemDescription, tbfOutput, runName, useCharOffset,
+                addSemanticRole);
 
         return tbfOutput;
     }
@@ -779,11 +786,19 @@ public class EventMentionPipeline {
 
         logger.info("Producing partial gold standards to tag after links.");
         CollectionReaderDescription goldMentionAll = annotateGoldMentions(testReader, trainingWorkingDir,
-                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions"), true, true, false, false, false);
+                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions"), true, true, true, false, false);
+
+//        AnalysisEngineDescription featureCheck = AnalysisEngineFactory.createEngineDescription(
+//                AfterFeatureChecker.class, typeSystemDescription,
+//                AfterFeatureChecker.PARAM_CONFIG_PATH, afterConfig.getConfigFile(),
+//                AfterFeatureChecker.PARAM_OUTPUT_DIR,
+//                new File(taskConfig.get("edu.cmu.cs.lti.stats.dir"), "after_feature_check"));
+//
+//        SimplePipeline.runPipeline(trainingData, featureCheck);
 
         PlainAfterModelRunner runner = new PlainAfterModelRunner(mainConfig, typeSystemDescription);
 
-        runner.trainAfterModel(afterConfig, trainingData, testReader, processOutDir, sliceSuffix, testGold,
+        runner.trainAfterModel(afterConfig, trainingData, goldMentionAll, processOutDir, sliceSuffix, testGold,
                 skipAfterTrain, skipAfterTest);
     }
 

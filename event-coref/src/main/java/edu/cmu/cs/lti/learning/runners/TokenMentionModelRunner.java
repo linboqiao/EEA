@@ -155,7 +155,7 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
                 return sentenceLevelMentionTagging(taskConfig, reader, typeModel,
                         trainingWorkingDir, baseDir, skipTest);
             }
-        }.run(taskConfig, reader, sliceSuffix, runName, outputDir, subEval, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, subEval, gold);
     }
 
     public CollectionReaderDescription sentenceLevelMentionTagging(Configuration crfConfig,

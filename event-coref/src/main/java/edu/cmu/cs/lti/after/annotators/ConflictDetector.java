@@ -9,6 +9,7 @@ import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.MentionUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -45,7 +46,8 @@ public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
         JCas goldStandardView = JCasUtil.getView(aJCas, goldStandardViewName, aJCas);
 
         List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(goldStandardView);
-        MentionGraph mentionGraph = MentionUtils.createSpanBasedMentionGraph(goldStandardView, candidates, null, false, true);
+        MentionGraph mentionGraph = MentionUtils.createSpanBasedMentionGraph(goldStandardView, candidates, null,
+                false, true);
 
         Map<NodeKey, Integer> node2EventMap = new HashMap<>();
         ArrayListMultimap<Integer, NodeKey> event2KeyMap = ArrayListMultimap.create();
@@ -58,8 +60,6 @@ public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
             }
             eventId++;
         }
-
-
 
         for (MentionCandidate candidate : candidates) {
             for (NodeKey nodeKey : candidate.asKey()) {
@@ -78,14 +78,10 @@ public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
                 graph.addVertex(event);
             }
 
-            for (Map.Entry<NodeKey, List<NodeKey>> adjacentList : mentionGraph.getResolvedRelations()
-                    .get(edgeType).entrySet()) {
-                int fromEvent = node2EventMap.get(adjacentList.getKey());
-
-                for (NodeKey toNode : adjacentList.getValue()) {
-                    int toEvent = node2EventMap.get(toNode);
-                    graph.addEdge(fromEvent, toEvent);
-                }
+            for (Pair<NodeKey, NodeKey> relation : mentionGraph.getResolvedRelations().get(edgeType)) {
+                int fromEvent = node2EventMap.get(relation.getKey());
+                int toEvent = node2EventMap.get(relation.getValue());
+                graph.addEdge(fromEvent, toEvent);
             }
 
             CycleDetector<Integer, DefaultEdge> detector = new CycleDetector<>(graph);

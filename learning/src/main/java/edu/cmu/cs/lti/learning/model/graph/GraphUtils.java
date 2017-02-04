@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.learning.model.graph;
 
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -19,29 +18,90 @@ import java.util.*;
 public class GraphUtils {
     private static final Logger logger = LoggerFactory.getLogger(GraphUtils.class.getName());
 
-    // TODO: rewrite the transitive part.
-    /**
-     * Given a list of relations, produce a adjacent list of transitive resolved relations
-     *
-     * @param relations List of binary relations
-     * @param <T>       The class of the relation argument
-     * @return Transitive resolved relations, represented as adjacent map
-     */
-    public static <T> ArrayListMultimap<T, T> linkTransitiveRelations(Collection<Pair<T, T>> relations) {
-        ArrayListMultimap<T, T> transitiveResolvedRelations = ArrayListMultimap.create();
+    public static <T extends Comparable> Map<T, List<T>> transitiveClosure(Collection<Pair<T, T>> relations) {
+        Map<T, List<T>> closureGraph = new HashMap<>();
 
-        ArrayListMultimap<T, T> reverseRelations = ArrayListMultimap.create();
+        Set<T> vertexSet = new HashSet<>();
+        for (Pair<T, T> relation : relations) {
+            vertexSet.add(relation.getKey());
+            vertexSet.add(relation.getValue());
+        }
 
-        for (Pair<T, T> r : relations) {
-            T gov = r.getLeft();
-            T dep = r.getRight();
-            transitiveResolvedRelations.put(gov, dep);
-            reverseRelations.put(dep, gov);
-            for (T govHead : reverseRelations.get(gov)) {
-                transitiveResolvedRelations.put(govHead, dep);
+        List<T> sortedVertex = new ArrayList<>(vertexSet);
+        Collections.sort(sortedVertex);
+
+        Map<T, Integer> indices = new HashMap<>();
+
+        int index = 0;
+        for (T t : sortedVertex) {
+            indices.put(t, index);
+            index++;
+        }
+
+        int numVertex = sortedVertex.size();
+
+        boolean[][] reach = new boolean[numVertex][numVertex];
+
+        for (Pair<T, T> relation : relations) {
+            reach[indices.get(relation.getKey())][indices.get(relation.getValue())] = true;
+        }
+
+        for (int k = 0; k < numVertex; k++) {
+            for (int i = 0; i < numVertex; i++) {
+                for (int j = 0; j < numVertex; j++) {
+                    reach[i][j] = reach[i][j] || (reach[i][k] && reach[k][j]);
+                }
             }
         }
-        return transitiveResolvedRelations;
+
+        for (int i = 0; i < numVertex; i++) {
+            T gov = sortedVertex.get(i);
+            List<T> deps = new ArrayList<>();
+            for (int j = 0; j < numVertex; j++) {
+                if (reach[i][j]) {
+                    T dep = sortedVertex.get(j);
+                    deps.add(dep);
+                }
+            }
+
+            if (!deps.isEmpty()) {
+                closureGraph.put(gov, deps);
+            }
+        }
+
+        return closureGraph;
+    }
+
+    public static <T extends Comparable> Map<T, List<T>> transitiveReduction(Map<T, List<T>> closureGraph) {
+
+        Map<T, List<T>> reducedGraph = new HashMap<>();
+
+        Set<Pair<T, T>> indirectLinks = new HashSet<>();
+
+        for (Map.Entry<T, List<T>> row : closureGraph.entrySet()) {
+            T from = row.getKey();
+            for (T to : row.getValue()) {
+                if (closureGraph.containsKey(to)) {
+                    for (T k : closureGraph.get(to)) {
+                        indirectLinks.add(Pair.of(from, k));
+                    }
+                }
+            }
+        }
+
+        for (Map.Entry<T, List<T>> row : closureGraph.entrySet()) {
+            T from = row.getKey();
+            List<T> toList = new ArrayList<>();
+            for (T to : row.getValue()) {
+                if (!indirectLinks.contains(Pair.of(from, to))) {
+                    toList.add(to);
+                }
+            }
+            Collections.sort(toList);
+
+            reducedGraph.put(from, toList);
+        }
+        return reducedGraph;
     }
 
     /**
@@ -54,17 +114,19 @@ public class GraphUtils {
      * @return
      */
     public static <E, M extends Comparable> ArrayListMultimap<M, M> resolveEquivalence(
-            Multimap<E, E> clusterAdjacent, Multimap<E, M> group2Clusters) {
+            Map<E, List<E>> clusterAdjacent, Multimap<E, M> group2Clusters) {
         ArrayListMultimap<M, M> mentionAdjacent = ArrayListMultimap.create();
         ArrayListMultimap<M, M> sortedMentionAdjacent = ArrayListMultimap.create();
 
-        for (Map.Entry<E, E> relationEventPair : clusterAdjacent.entries()) {
-            Collection<M> govCluster = group2Clusters.get(relationEventPair.getKey());
-            Collection<M> depCluster = group2Clusters.get(relationEventPair.getValue());
+        for (Map.Entry<E, List<E>> adjacent : clusterAdjacent.entrySet()) {
+            Collection<M> govCluster = group2Clusters.get(adjacent.getKey());
 
-            for (M govMention : govCluster) {
-                for (M depMention : depCluster) {
-                    mentionAdjacent.put(govMention, depMention);
+            for (E dep : adjacent.getValue()) {
+                Collection<M> depCluster = group2Clusters.get(dep);
+                for (M govMention : govCluster) {
+                    for (M depMention : depCluster) {
+                        mentionAdjacent.put(govMention, depMention);
+                    }
                 }
             }
         }
@@ -115,33 +177,29 @@ public class GraphUtils {
      * @param clusters              Nodes contained in the cluster.
      * @return The resolved graph as adjacent list, stored separated for each edge type.
      */
-    public static <T extends Comparable> Map<EdgeType, Map<T, List<T>>> resolveRelations(
+    public static <T extends Comparable> Map<EdgeType, Set<Pair<T, T>>> resolveRelations(
             Multimap<EdgeType, Pair<Integer, Integer>> interClusterRelations, Multimap<Integer, T> clusters) {
-        Map<EdgeType, ListMultimap<T, T>> relationAdjacentLists = new HashMap<>();
+        Map<EdgeType, Set<Pair<T, T>>> allRelations = new HashMap<>();
 
         for (Map.Entry<EdgeType, Collection<Pair<Integer, Integer>>> relationsByType : interClusterRelations
                 .asMap().entrySet()) {
             // Resolve transitive.
-            ArrayListMultimap<Integer, Integer> eventRelationAdjacentList =
-                    GraphUtils.linkTransitiveRelations(relationsByType.getValue());
+            Map<Integer, List<Integer>> eventClosure = GraphUtils.transitiveClosure(relationsByType
+                    .getValue());
             // Resolve equivalence.
             ArrayListMultimap<T, T> mentionAdjacentArray =
-                    GraphUtils.resolveEquivalence(eventRelationAdjacentList, clusters);
-            relationAdjacentLists.put(relationsByType.getKey(), mentionAdjacentArray);
-        }
+                    GraphUtils.resolveEquivalence(eventClosure, clusters);
 
-        Map<EdgeType, Map<T, List<T>>> sortedAdjacentLists = new HashMap<>();
-        for (Map.Entry<EdgeType, ListMultimap<T, T>> typedList : relationAdjacentLists.entrySet()) {
-            Map<T, List<T>> adjacentList = new HashMap<>();
-
-            for (Map.Entry<T, Collection<T>> l : typedList.getValue().asMap().entrySet()) {
-                ArrayList<T> sortedList = new ArrayList<>(l.getValue());
-                Collections.sort(sortedList);
-                adjacentList.put(l.getKey(), sortedList);
+            Set<Pair<T, T>> relations = new HashSet<>();
+            for (Map.Entry<T, Collection<T>> mentionAdjacent : mentionAdjacentArray.asMap().entrySet()) {
+                for (T toMention : mentionAdjacent.getValue()) {
+                    relations.add(Pair.of(mentionAdjacent.getKey(), toMention));
+                }
             }
-            sortedAdjacentLists.put(typedList.getKey(), adjacentList);
+            allRelations.put(relationsByType.getKey(), relations);
         }
 
-        return sortedAdjacentLists;
+
+        return allRelations;
     }
 }

@@ -27,10 +27,6 @@ public class ArgumentFeatures extends AbstractMentionPairFeatures {
         super(generalConfig, featureConfig);
     }
 
-    //TODO add entity coreference
-
-    // TODO this feature is very slow right now!
-
     @Override
     public void initDocumentWorkspace(JCas context) {
         for (StanfordEntityMention mention : JCasUtil.select(context, StanfordEntityMention.class)) {

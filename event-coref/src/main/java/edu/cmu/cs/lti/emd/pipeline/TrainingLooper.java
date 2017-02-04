@@ -22,17 +22,6 @@ public abstract class TrainingLooper extends LoopPipeline {
     private String modelBasename;
     private int numberIterToSave = 3;
 
-//    public TrainingLooper(Configuration taskConfig, String modelOutputBasename,
-//                          CollectionReaderDescription reader, AnalysisEngineDescription trainer) throws
-//            ResourceInitializationException, ClassNotFoundException, NoSuchMethodException,
-//            InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
-//        super(reader, trainer);
-//        this.maxIteration = taskConfig.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
-//        this.numIteration = 0;
-//        this.modelBasename = modelOutputBasename;
-//        logger.info("Trainer started, maximum iteration is " + maxIteration);
-//    }
-
     public TrainingLooper(String modelOutputBasename, CollectionReaderDescription reader, AnalysisEngineDescription
             trainer, int maxIter, int numIterToSave)
             throws ResourceInitializationException, ClassNotFoundException, NoSuchMethodException,
@@ -68,7 +57,7 @@ public abstract class TrainingLooper extends LoopPipeline {
         boolean modelSaved = false;
         if (numIteration % numberIterToSave == 0) {
             try {
-                logger.info("Saving models for iteration " + numIteration);
+                logger.info("Saving models for iteration " + numIteration + " using the " + numberIterToSave + " loop.");
                 saveModel(new File(modelBasename + "_iter" + numIteration));
                 modelSaved = true;
             } catch (IOException e) {

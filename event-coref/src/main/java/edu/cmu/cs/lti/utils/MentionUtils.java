@@ -101,7 +101,7 @@ public class MentionUtils {
         return mentionId2EventId;
     }
 
-    private static int[][] getCandidateMappingFromSpans(JCas aJCas, List<EventMention> allMentions,
+    public static int[][] getCandidateMappingFromSpans(JCas aJCas, List<EventMention> allMentions,
                                                         List<MentionCandidate> candidates) {
         createSingleEvents(aJCas, allMentions);
 

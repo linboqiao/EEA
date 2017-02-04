@@ -88,5 +88,9 @@
             <groupId>org.jgrapht</groupId>
             <artifactId>jgrapht-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>discourse-parser</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -1,10 +1,13 @@
 package edu.cmu.cs.lti.after.train;
 
+import com.google.common.collect.SetMultimap;
 import edu.cmu.cs.lti.event_coref.decoding.BFAfterLatentTreeDecoder;
 import edu.cmu.cs.lti.learning.feature.mention_pair.extractor.PairFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
+import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.learning.model.TrainingStats;
+import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
@@ -12,6 +15,7 @@ import edu.cmu.cs.lti.learning.utils.LearningUtils;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import edu.cmu.cs.lti.utils.MentionUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -41,7 +45,6 @@ public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
 
     private TrainingStats trainingStats;
 
-
     public static final String PARAM_CONFIG_PATH = "configPath";
     @ConfigurationParameter(name = PARAM_CONFIG_PATH)
     private Configuration config;
@@ -61,7 +64,7 @@ public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
         extractor = LearningUtils.initializeMentionPairExtractor(config, afterFeatureSpec,
                 weights.getFeatureAlphabet());
 
-        int trainingStrategy = config.getInt("edu.cmu.cs.lti.after.train.strategy", 1);
+        int trainingStrategy = config.getInt("edu.cmu.cs.lti.after.train.strategy", 0);
 
         decoder = new BFAfterLatentTreeDecoder(trainingStrategy);
         trainingStats = new TrainingStats(5, "AfterLink");
@@ -70,43 +73,58 @@ public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        UimaConvenience.printProcessLog(aJCas, logger);
-
         extractor.initWorkspace(aJCas);
-
         List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
 
         MentionGraph mentionGraph = MentionUtils.createSpanBasedMentionGraph(aJCas, candidates, extractor, true);
+        SetMultimap<Integer, NodeKey> corefClusters = mentionGraph.getEvent2NodeKeys();
 
 //        logger.info("The mention graph is:");
 //        System.out.println(mentionGraph.toString());
 //
 //        DebugUtils.pause();
 
+
         GraphWeightVector weights = updater.getWeightVector(AFTER_MODEL_NAME);
 
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
 
-//        logger.info("Predicted tree is :");
-//        logger.info(predictedTree.fullTree());
+        boolean debug = false;
+
+//        debug = predictedTree.hasNonRoot();
+
+//        if (UimaConvenience.getDocId(aJCas).contains("APW_ENG_20101024.0551")) {
+//            debug = true;
+//        }
+
+        if (debug) {
+            UimaConvenience.printProcessLog(aJCas, logger);
+            logger.info("Predicted tree is :");
+            logger.info(predictedTree.fullTree());
+        }
 
         if (!predictedTree.graphMatch()) {
-//            logger.info("Gold tree is :");
-
             MentionSubGraph latentTree = decoder.decode(mentionGraph, candidates, weights, true);
+            latentTree.resolveCoreference();
 
-//            logger.info(latentTree.fullTree());
+            // Resolve the gold relations using the gold clusters.
+            latentTree.resolveRelations(corefClusters);
+            double loss = predictedTree.paUpdate(latentTree, weights, EdgeType.After, EdgeType.Subevent);
 
-            double loss = predictedTree.paUpdate(latentTree, weights);
-
-//            logger.info("Loss is " + loss);
+            if (debug) {
+                logger.info("Gold tree is :");
+                logger.info(latentTree.fullTree());
+                logger.info("Loss is " + loss);
+            }
 
             trainingStats.addLoss(logger, loss / mentionGraph.numNodes());
-        }else{
+        } else {
             trainingStats.addLoss(logger, 0);
         }
 
-//        DebugUtils.pause();
+        if (debug) {
+            DebugUtils.pause();
+        }
     }
 
     public static File saveModels(File modelOutputDirectory) throws FileNotFoundException {

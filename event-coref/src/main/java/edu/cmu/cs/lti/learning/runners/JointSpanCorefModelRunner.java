@@ -142,7 +142,7 @@ public class JointSpanCorefModelRunner extends AbstractMentionModelRunner {
                 return beamJointSpanCoref(taskConfig, devReader, modelDir, realisModelDir, trainingWorkingDir,
                         processOutputDir, beamSize, true, skipTest);
             }
-        }.run(taskConfig, devReader, sliceSuffix, runName, processOutputDir, subEvalDir, goldStandard);
+        }.run(taskConfig, devReader, typeSystemDescription, sliceSuffix, runName, processOutputDir, subEvalDir, goldStandard);
 
     }
 

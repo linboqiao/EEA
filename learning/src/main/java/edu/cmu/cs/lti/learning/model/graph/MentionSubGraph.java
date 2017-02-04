@@ -1,10 +1,7 @@
 package edu.cmu.cs.lti.learning.model.graph;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.SetMultimap;
-import com.google.common.collect.Table;
+import com.google.common.collect.*;
 import edu.cmu.cs.lti.learning.model.*;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
@@ -27,22 +24,24 @@ import java.util.*;
 public class MentionSubGraph {
     private final transient Logger logger = LoggerFactory.getLogger(getClass());
 
-    // Dep, Gov, Edge
-    private Table<Integer, Integer, SubGraphEdge> edgeTable;
+    // Gov, Dep, Edge
+    private Table<NodeKey, NodeKey, LabelledMentionGraphEdge> edgeTable;
+
+    private Map<LabelledMentionGraphEdge, EdgeType> edgeTypes;
 
     private int numNodes;
 
     // The parent graph of this subgraph.
     private MentionGraph parentGraph;
 
-    // Store edges other than the cluster edges, as adjacent list.
-    private Map<EdgeType, Map<NodeKey, List<NodeKey>>> resolvedRelations;
+    // Store edges other than the cluster edges.
+    private Map<EdgeType, Set<Pair<NodeKey, NodeKey>>> resolvedRelations;
 
     // Store typed coreference chains, each list represent a chain, where the elements are the
     // <mention id, mention type> representing the mentions in the chain.
     private List<NodeKey>[] typedCorefChains;
 
-    private int totalDistance = 0;
+    private int totalCorefDistance = 0;
 
     private ClusterBuilder<Pair<Integer, String>> clusterBuilder;
 
@@ -56,16 +55,18 @@ public class MentionSubGraph {
         numNodes = parentGraph.numNodes();
         this.parentGraph = parentGraph;
         clusterBuilder = new ClusterBuilder<>();
+        edgeTypes = new HashMap<>();
     }
 
     public MentionSubGraph makeCopy() {
         MentionSubGraph subgraph = new MentionSubGraph(parentGraph);
         subgraph.numNodes = numNodes;
-        subgraph.totalDistance = totalDistance;
+        subgraph.totalCorefDistance = totalCorefDistance;
 
-        for (Table.Cell<Integer, Integer, SubGraphEdge> cell : edgeTable.cellSet()) {
+        for (Table.Cell<NodeKey, NodeKey, LabelledMentionGraphEdge> cell : edgeTable.cellSet()) {
             subgraph.edgeTable.put(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
         }
+        subgraph.edgeTypes.putAll(edgeTypes);
         subgraph.clusterBuilder = clusterBuilder.makeCopy();
         return subgraph;
     }
@@ -87,49 +88,35 @@ public class MentionSubGraph {
         int dep = edge.getDep();
         int gov = edge.getGov();
 
-        SubGraphEdge newEdge;
-        if (edgeTable.contains(dep, gov)) {
-            newEdge = edgeTable.get(dep, gov);
-        } else {
-            newEdge = new SubGraphEdge(edge);
-            edgeTable.put(dep, gov, newEdge);
-        }
+        SubGraphEdge newEdge = new SubGraphEdge(edge);
+
         return newEdge;
     }
 
-    public void addLabelledEdge(LabelledMentionGraphEdge labelledMentionGraphEdge, EdgeType newType) {
-        int dep = labelledMentionGraphEdge.getDep();
-        int gov = labelledMentionGraphEdge.getGov();
+    public Map<LabelledMentionGraphEdge, EdgeType> getEdgeTypes() {
+        return edgeTypes;
+    }
 
-        SubGraphEdge newEdge = addEdge(labelledMentionGraphEdge.getHostingEdge());
-        newEdge.addLabelledEdge(labelledMentionGraphEdge, newType);
+    public void addLabelledEdge(LabelledMentionGraphEdge labelledEdge, EdgeType newType) {
+        int dep = labelledEdge.getDepKey().getNodeIndex();
+        int gov = labelledEdge.getGovKey().getNodeIndex();
+
+        edgeTable.put(labelledEdge.getGovKey(), labelledEdge.getDepKey(), labelledEdge);
+        edgeTypes.put(labelledEdge, newType);
 
         if (gov != 0) {
-            // We consider root to be special, which does not add distance to the tree.
-            totalDistance += dep - gov;
-
-            int govNode = newEdge.getGov();
-            int depNode = newEdge.getDep();
-
-            NodeKey govKey = labelledMentionGraphEdge.getGovKey();
-            NodeKey depKey = labelledMentionGraphEdge.getDepKey();
-
             if (newType == EdgeType.Coreference) {
-                clusterBuilder.addLink(Pair.of(govNode, govKey.getMentionType()),
-                        Pair.of(depNode, depKey.getMentionType()));
+                NodeKey govKey = labelledEdge.getGovKey();
+                NodeKey depKey = labelledEdge.getDepKey();
+                // We consider root to be special, which does not add distance to the tree.
+                totalCorefDistance += Math.abs(dep - gov);
+                clusterBuilder.addLink(Pair.of(gov, govKey.getMentionType()),
+                        Pair.of(dep, depKey.getMentionType()));
             }
         }
     }
 
-    public SubGraphEdge getEdge(int depIdx, int govIdx) {
-        return edgeTable.get(depIdx, govIdx);
-    }
-
-    public int getNumEdges() {
-        return edgeTable.size();
-    }
-
-    public Map<EdgeType, Map<NodeKey, List<NodeKey>>> getResolvedRelations() {
+    public Map<EdgeType, Set<Pair<NodeKey, NodeKey>>> getResolvedRelations() {
         return resolvedRelations;
     }
 
@@ -150,38 +137,109 @@ public class MentionSubGraph {
 
         double loss = 0;
 
-        Set<Pair<Integer, Integer>> checkedEdges = new HashSet<>();
-        for (Map.Entry<Integer, Map<Integer, SubGraphEdge>> govners : referenceGraph.edgeTable.rowMap().entrySet()) {
-            int depIdx = govners.getKey();
-            for (Map.Entry<Integer, SubGraphEdge> govLink : govners.getValue().entrySet()) {
-                int govIdx = govLink.getKey();
-                SubGraphEdge referentEdge = govLink.getValue();
+        Map<NodeKey, NodeKey> referentCorefAntecedents = new HashMap<>();
 
-                checkedEdges.add(Pair.of(depIdx, govIdx));
+        Map<NodeKey, EdgeType> couldBeLinked = new HashMap<>();
+        for (Map.Entry<EdgeType, Set<Pair<NodeKey, NodeKey>>> edgesByType : referenceGraph.resolvedRelations
+                .entrySet()) {
+            EdgeType type = edgesByType.getKey();
+            for (Pair<NodeKey, NodeKey> link : edgesByType.getValue()) {
+                NodeKey latterKey = link.getKey();
+                if (link.getValue().compareTo(latterKey) > 0) {
+                    latterKey = link.getValue();
+                }
+//                logger.info(latterKey + " could be linked as " + type + " by " + link);
+                couldBeLinked.put(latterKey, type);
+            }
+        }
 
-                if (edgeTable.contains(depIdx, govIdx)) {
-                    SubGraphEdge thisEdge = edgeTable.get(depIdx, govIdx);
-                    loss += compareEdge(referentEdge, thisEdge);
+        // When you link a coreferece link to a wrong position, you will be penalize for 2 things:
+        // 1. We cannot find the correct link in the gold tree, loss += 1
+        // 2. We find a wrong link in the system tree
+        // 2.1 If the wrong link is a normal link, loss += 1
+        // 2.2 If the wrong link is a root link, loss += 2
+        // That means a link get penalty of 2 if it is a normal error, get 3 if it is a root attachment error.
+        // This is the same as using 1 for each node that find the wrong antecedent, 1.5 for each node that incorrect
+        // root attachment.
+
+        for (Table.Cell<NodeKey, NodeKey, LabelledMentionGraphEdge> edge : referenceGraph.edgeTable.cellSet()) {
+            NodeKey gov = edge.getRowKey();
+            NodeKey dep = edge.getColumnKey();
+            LabelledMentionGraphEdge referentEdge = edge.getValue();
+            EdgeType referentType = referenceGraph.edgeTypes.get(referentEdge);
+
+            if (referentType == EdgeType.Coreference) {
+                referentCorefAntecedents.put(dep, gov);
+            }
+
+            if (edgeTable.contains(gov, dep)) {
+                LabelledMentionGraphEdge thisEdge = edgeTable.get(gov, dep);
+                if (edgeTypes.get(thisEdge) != referenceGraph.edgeTypes.get(referentEdge)) {
+                    // Wrong type on edge.
+//                    logger.info("Loss because wrong type on edge " + referentEdge);
+                    loss += 1;
+                }
+            } else {
+                // No such link predicted by this system.
+                if (referenceGraph.edgeTypes.get(referentEdge).equals(EdgeType.Root)) {
+                    EdgeType couldLinkTo = couldBeLinked.get(dep);
+                    // If the dep node can actually link to some other node of the specific type, we should not
+                    // penalize the ROOT loss.
+                    if (couldBeLinked.containsKey(dep) &&
+                            referentEdge.getGovKey().getMentionType().equals(couldLinkTo.name())) {
+//                        logger.info("Root link not found, but inferred: " + referentEdge);
+                    } else {
+//                        logger.info("Loss because did not connect to root: " + referentEdge);
+                        loss += 1;
+                    }
                 } else {
-                    loss += referentEdge.numLabelledNonRootLinks();
+//                    logger.info("Loss because missing edge " + referentEdge);
+                    loss += 1;
                 }
             }
         }
 
-        for (Table.Cell<Integer, Integer, SubGraphEdge> targetEdge : edgeTable.cellSet()) {
-            SubGraphEdge subgraphEdge = targetEdge.getValue();
-            if (!checkedEdges.contains(Pair.of(targetEdge.getRowKey(), targetEdge.getColumnKey()))) {
-                for (LabelledMentionGraphEdge labelledEdge : subgraphEdge.getAllLabelledEdge()) {
-                    if (subgraphEdge.getLabelledType(labelledEdge) == EdgeType.Root) {
-                        // Erroneous root attachment.
-                        loss += 1.5;
+        for (Table.Cell<NodeKey, NodeKey, LabelledMentionGraphEdge> targetEdge : edgeTable.cellSet()) {
+            NodeKey from = targetEdge.getRowKey();
+            NodeKey to = targetEdge.getColumnKey();
+            LabelledMentionGraphEdge labelledTargetEdge = targetEdge.getValue();
+
+            EdgeType type = edgeTypes.get(labelledTargetEdge);
+
+            if (type.equals(EdgeType.Coreference)) {
+                NodeKey referentAntecedent = referentCorefAntecedents.get(to);
+                if (!referentAntecedent.equals(from)) {
+                    if (from.isRoot()) {
+                        // Wrong root attachment for coreference.
+                        loss += 2;
                     } else {
+                        loss += 1;
+                    }
+                }
+            } else {
+                if (referenceGraph.resolvedRelations.containsKey(type) &&
+                        referenceGraph.resolvedRelations.get(type).contains(Pair.of(from, to))) {
+//                    logger.info("Referent contains edge : " + labelledTargetEdge);
+                } else {
+                    if (referenceGraph.edgeTable.contains(from, to)) {
+                        LabelledMentionGraphEdge referentEdge = referenceGraph.edgeTable.get(from, to);
+
+                        // Wrong type is already penalized.
+                        if (referenceGraph.edgeTypes.get(referentEdge).equals(type)) {
+                            if (!from.isRoot()) {
+                                logger.error(referentEdge.toString());
+                                throw new IllegalStateException("Referent graph contains this edge, " +
+                                        "but it is not in the resolved relations, that's not possible.");
+                            }
+                        }
+                    } else {
+                        // Invented edges, which cannot be inferred given the coreference.
+//                        logger.info("Loss because invented edge " + labelledTargetEdge);
                         loss += 1;
                     }
                 }
             }
         }
-
         return loss;
     }
 
@@ -241,117 +299,206 @@ public class MentionSubGraph {
     /**
      * Compute the difference of features on this graph against another subgraph.
      *
-     * @param otherGraph      The other subgraph.
+     * @param referentGraph   The other subgraph.
      * @param classAlphabet   The class labels alphabet.
      * @param featureAlphabet The feature alphabet.
+     * @param ignoreInferred  Do not penalize inferred links.
      * @return The delta of the features on these graphs.
      */
-    public GraphFeatureVector getDelta(MentionSubGraph otherGraph, ClassAlphabet classAlphabet,
-                                       FeatureAlphabet featureAlphabet) {
-        if (parentGraph != otherGraph.parentGraph) {
-            throw new IllegalArgumentException("To compute delta, both graph should have the same parent.");
-        }
-
+    public GraphFeatureVector getDelta(MentionSubGraph referentGraph, ClassAlphabet classAlphabet,
+                                       FeatureAlphabet featureAlphabet, boolean ignoreInferred,
+                                       EdgeType... targetTypes) {
         GraphFeatureVector deltaFeatureVector = new GraphFeatureVector(classAlphabet, featureAlphabet);
 
-        TObjectIntMap<Pair<LabelledMentionGraphEdge, String>> edgeFeatureInclusions = new TObjectIntHashMap<>();
+        for (EdgeType targetType : targetTypes) {
+            TObjectIntMap<Pair<LabelledMentionGraphEdge, String>> deltas =
+                    getDelta(referentGraph, targetType, ignoreInferred);
+            deltas.forEachEntry((edgeWithType, multiplier) -> {
+                LabelledMentionGraphEdge edge = edgeWithType.getKey();
+                String className = edgeWithType.getValue();
 
-        // For edges in this subgraph.
-        for (SubGraphEdge edge : edgeTable.values()) {
-            for (LabelledMentionGraphEdge labelledEdge : edge.getAllLabelledEdge()) {
-                String classNameForFeature = edge.getLabelledType(labelledEdge).name();
-//                deltaFeatureVector.extend(edge.getEdgeFeatures(), classNameForFeature);
-//                deltaFeatureVector.extend(labelledEdge.getFeatureVector(), classNameForFeature);
-                edgeFeatureInclusions.adjustOrPutValue(Pair.of(labelledEdge, classNameForFeature), 1, 1);
-            }
+                if (multiplier != 0) {
+//                    logger.info(String.format("Adding features with multiplier %d  for type %s from:", multiplier,
+//                            className));
+//                    logger.info(edge.toString());
+                    deltaFeatureVector.extend(edge.getFeatureVector(), className, multiplier);
+                    deltaFeatureVector.extend(edge.getHostingEdge().getNodeAgnosticFeatures(), className, multiplier);
+                }
+                return true;
+            });
         }
-
-        // For edges in the other subgraph.
-        for (SubGraphEdge edge : otherGraph.edgeTable.values()) {
-            for (LabelledMentionGraphEdge labelledEdge : edge.getAllLabelledEdge()) {
-                String classNameForFeature = edge.getLabelledType(labelledEdge).name();
-//                deltaFeatureVector.extend(edge.getEdgeFeatures(), classNameForFeature, -1);
-//                deltaFeatureVector.extend(labelledEdge.getFeatureVector(), classNameForFeature, -1);
-                edgeFeatureInclusions.adjustOrPutValue(Pair.of(labelledEdge, classNameForFeature), -1, -1);
-            }
-        }
-
-        edgeFeatureInclusions.forEachEntry((edgeWithType, multiplier) -> {
-            LabelledMentionGraphEdge edge = edgeWithType.getKey();
-            String className = edgeWithType.getValue();
-
-            if (multiplier != 0) {
-//                logger.info(String.format("Adding features with multiplier %d  for type %s from:", multiplier,
-//                        className));
-//                logger.info(edge.toString());
-                deltaFeatureVector.extend(edge.getFeatureVector(), className, multiplier);
-                deltaFeatureVector.extend(edge.getHostingEdge().getNodeAgnosticFeatures(), className, multiplier);
-            }
-            return true;
-        });
 
         return deltaFeatureVector;
     }
 
+    /**
+     * Compute the difference of features on this graph against another subgraph.
+     *
+     * @param referentGraph  The other subgraph.
+     * @param ignoreInferred Do not penalize inferred links.
+     * @return The delta of the features on these graphs.
+     */
+    private TObjectIntMap<Pair<LabelledMentionGraphEdge, String>> getDelta(MentionSubGraph referentGraph,
+                                                                           EdgeType targetType,
+                                                                           boolean ignoreInferred) {
+        if (parentGraph != referentGraph.parentGraph) {
+            throw new IllegalArgumentException("To compute delta, both graph should have the same parent.");
+        }
+
+        TObjectIntMap<Pair<LabelledMentionGraphEdge, String>> edgeFeatureInclusions = new TObjectIntHashMap<>();
+
+        // Record links link to the targetType ROOT.
+        Set<LabelledMentionGraphEdge> thisRoots = new HashSet<>();
+        Set<LabelledMentionGraphEdge> referentRoots = new HashSet<>();
+
+        // Record the inferred decedents from the system graph.
+        Set<NodeKey> inferredDecedents = new HashSet<>();
+
+        // For edges in the system subgraph. We deduct them.
+        for (LabelledMentionGraphEdge edge : edgeTable.values()) {
+            EdgeType edgeType = edgeTypes.get(edge);
+
+            if (edgeType == EdgeType.Root) {
+                if (edge.getGovKey().getMentionType().equals(targetType.name())) {
+                    // This root link links to the targetType ROOT.
+                    thisRoots.add(edge);
+                }
+            }
+
+            if (!(edgeType == targetType)) {
+                continue;
+            }
+
+            if (ignoreInferred) {
+                if (edgeType.equals(EdgeType.After) || edgeType.equals(EdgeType.Subevent)) {
+                    Set<Pair<NodeKey, NodeKey>> relations = referentGraph.resolvedRelations.get(edgeType);
+                    if (relations != null && relations.contains(Pair.of(edge.getGovKey(), edge.getDepKey()))) {
+                        // We make a record of nodes that can link to something.
+                        inferredDecedents.add(edge.getDecedent());
+                        continue;
+                    }
+                }
+            }
+//            logger.info("Deduct features on system graph: ");
+//            logger.info(edgeType.name() + "\t" + edge);
+            edgeFeatureInclusions.adjustOrPutValue(Pair.of(edge, edgeType.name()), -1, -1);
+        }
+
+        // For edges in the referent subgraph. We add them.
+        for (LabelledMentionGraphEdge edge : referentGraph.edgeTable.values()) {
+            EdgeType edgeType = referentGraph.edgeTypes.get(edge);
+
+            if (edgeType == EdgeType.Root) {
+                if (edge.getGovKey().getMentionType().equals(targetType.name())) {
+                    // This root link links to the targetType ROOT.
+                    referentRoots.add(edge);
+                }
+            }
+
+            if (!edgeType.equals(targetType)) {
+                continue;
+            }
+
+//            logger.info("Add features on referent graph: ");
+//            logger.info(edgeType.name() + "\t" + edge);
+            edgeFeatureInclusions.adjustOrPutValue(Pair.of(edge, edgeType.name()), 1, 1);
+        }
+
+        Sets.SetView<LabelledMentionGraphEdge> onlyInThis = Sets.difference(thisRoots, referentRoots);
+        Sets.SetView<LabelledMentionGraphEdge> onlyInReferent = Sets.difference(referentRoots, thisRoots);
+
+        // These means invented root keys from the system.
+        for (LabelledMentionGraphEdge rootEdgeInThis : onlyInThis) {
+//            logger.info("Deduct root features on system graph: ");
+//            logger.info(EdgeType.Root + "\t" + rootEdgeInThis);
+            edgeFeatureInclusions.adjustOrPutValue(Pair.of(rootEdgeInThis, EdgeType.Root.name()), -1, -1);
+        }
+
+        // These are root edges from the referent graph, but we filter out those ROOT link where the decedent can link
+        // to somewhere in the resolved graph.
+        for (LabelledMentionGraphEdge rootEdgeInReferent : onlyInReferent) {
+            if (!inferredDecedents.contains(rootEdgeInReferent.getDecedent())) {
+//                logger.info(EdgeType.Root + "\t" + rootEdgeInReferent);
+                edgeFeatureInclusions.adjustOrPutValue(Pair.of(rootEdgeInReferent, EdgeType.Root.name()), 1, 1);
+            }
+        }
+
+        return edgeFeatureInclusions;
+    }
+
 
     /**
      * Convert the tree to transitive and equivalence resolved graph
      */
-    public void resolveGraph() {
-        resolveGraph(numNodes);
+    public SetMultimap<Integer, NodeKey> resolveCoreference() {
+        return resolveCoreference(numNodes);
     }
 
     /**
      * Convert the tree to transitive and equivalence resolved graph
      */
-    public void resolveGraph(int untilNode) {
+    public SetMultimap<Integer, NodeKey> resolveCoreference(int untilNode) {
         SetMultimap<Integer, NodeKey> keyClusters = HashMultimap.create();
-        SetMultimap<EdgeType, Pair<NodeKey, NodeKey>> keyRelations = HashMultimap.create();
 
         // Collect stuff from the edgeTable, until the limit.
+        List<LabelledMentionGraphEdge> allEdges = new ArrayList<>(edgeTable.values());
+
+        allEdges.sort((o1, o2) -> new CompareToBuilder().append(o1.getDepKey(), o2.getDepKey())
+                .append(o1.getGovKey(), o2.getGovKey()).build());
+
         int clusterId = 0;
+        for (LabelledMentionGraphEdge labelledEdge : allEdges) {
+            EdgeType type = edgeTypes.get(labelledEdge);
 
-        List<SubGraphEdge> allEdges = new ArrayList<>(edgeTable.values());
+            NodeKey depKey = labelledEdge.getDepKey();
+            NodeKey govKey = labelledEdge.getGovKey();
 
-        allEdges.sort((o1, o2) -> new CompareToBuilder().append(o1.getDep(), o2.getDep())
-                .append(o1.getGov(), o2.getGov()).build());
+            int govIndex = govKey.getNodeIndex();
+            int depIndex = depKey.getNodeIndex();
 
-        if (numNodes > 1){
-            // First add first node to ROOT.
-            clusterId ++;
+            if (govIndex > untilNode || depIndex > untilNode) {
+                // Don't break here since we are not sure that the edges are sorted.
+                continue;
+            }
+
+            if (type.equals(EdgeType.Root)) {
+                // If this link to root, start a new cluster.
+                keyClusters.put(clusterId, depKey);
+                clusterId++;
+            } else if (type.equals(EdgeType.Coreference)) {
+                // Add the node to one of the existing cluster.
+                for (Integer eventId : keyClusters.keys()) {
+                    Set<NodeKey> nodeCluster = keyClusters.get(eventId);
+                    if (nodeCluster.contains(govKey)) {
+                        nodeCluster.add(depKey);
+                        break;
+                    }
+                }
+            }
         }
 
-        for (SubGraphEdge edge : allEdges) {
-            int govNode = edge.getGov();
-            int depNode = edge.getDep();
+        // Create a coreference chain.
+        typedCorefChains = GraphUtils.createSortedCorefChains(keyClusters);
 
-            for (LabelledMentionGraphEdge labelledEdge : edge.getAllLabelledEdge()) {
-                EdgeType type = edge.getLabelledType(labelledEdge);
+        return keyClusters;
+    }
 
-                NodeKey depKey = labelledEdge.getDepKey();
-                NodeKey govKey = labelledEdge.getGovKey();
+    public void resolveRelations(SetMultimap<Integer, NodeKey> keyClusters) {
+        SetMultimap<EdgeType, Pair<NodeKey, NodeKey>> keyRelations = HashMultimap.create();
 
-                if (govNode > untilNode || depNode > untilNode) {
-                    // Don't break here since we are not sure that the edges are sorted.
-                    continue;
-                }
+        List<LabelledMentionGraphEdge> allEdges = new ArrayList<>(edgeTable.values());
 
-                if (type.equals(EdgeType.Root)) {
-                    // If this link to root, start a new cluster.
-                    keyClusters.put(clusterId, depKey);
-                    clusterId++;
-                } else if (type.equals(EdgeType.Coreference)) {
-                    // Add the node to one of the existing cluster.
-                    for (Integer eventId : keyClusters.keys()) {
-                        Set<NodeKey> nodeCluster = keyClusters.get(eventId);
-                        if (nodeCluster.contains(govKey)) {
-                            nodeCluster.add(depKey);
-                            break;
-                        }
-                    }
-                } else {
-                    keyRelations.put(type, Pair.of(govKey, depKey));
-                }
+        allEdges.sort((o1, o2) -> new CompareToBuilder().append(o1.getDepKey(), o2.getDepKey())
+                .append(o1.getGovKey(), o2.getGovKey()).build());
+
+        for (LabelledMentionGraphEdge labelledEdge : allEdges) {
+            EdgeType type = edgeTypes.get(labelledEdge);
+
+            NodeKey depKey = labelledEdge.getDepKey();
+            NodeKey govKey = labelledEdge.getGovKey();
+
+            if (type.equals(EdgeType.After) || type.equals(EdgeType.Subevent)) {
+                keyRelations.put(type, Pair.of(govKey, depKey));
             }
         }
 
@@ -372,11 +519,15 @@ public class MentionSubGraph {
                     Pair.of(node2ClusterId.get(govNode), node2ClusterId.get(depNode)));
         }
 
-        // Create links for nodes in clusters.
         resolvedRelations = GraphUtils.resolveRelations(interRelations, keyClusters);
         // Create a coreference chain.
         typedCorefChains = GraphUtils.createSortedCorefChains(keyClusters);
     }
+
+    public Map<LabelledMentionGraphEdge, EdgeType> getDecodedEdges(){
+        return edgeTypes;
+    }
+
 
     /**
      * Whether the subgraph matches the gold standard.
@@ -393,10 +544,13 @@ public class MentionSubGraph {
      * @return
      */
     public boolean graphMatch(int until) {
-        this.resolveGraph(until);
+        SetMultimap<Integer, NodeKey> keyClusters = this.resolveCoreference(until);
 
         // Variable indicating whether the coreference clusters are matched.
         boolean corefMatch = Arrays.deepEquals(this.getCorefChains(), this.parentGraph.getNodeCorefChains());
+
+        // Use the own cluster to resolve relations.
+        this.resolveRelations(keyClusters);
 
         // Variable indicating whether the other mention links are matched.
         boolean linkMatch = this.getResolvedRelations().equals(this.parentGraph.getResolvedRelations());
@@ -415,10 +569,15 @@ public class MentionSubGraph {
 
     public String fullTree() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("SubGraph of distance %d:\n", totalDistance));
+        sb.append(String.format("SubGraph of distance %d:\n", totalCorefDistance));
 
-        for (SubGraphEdge edge : edgeTable.values()) {
-            sb.append("\t").append(edge.toString()).append("\n");
+        List<LabelledMentionGraphEdge> edgeValues = new ArrayList<>(edgeTable.values());
+        edgeValues.sort((o1, o2)
+                -> new CompareToBuilder().append(edgeTypes.get(o1), edgeTypes.get(o2))
+                .append(o1.getDep(), o2.getDep()).append(o1.getGov(), o2.getGov()).build());
+
+        for (LabelledMentionGraphEdge edge : edgeValues) {
+            sb.append("\t").append(edgeTypes.get(edge)).append(" : ").append(edge.toString()).append("\n");
         }
 
         sb.append("Cluster view:\n");
@@ -429,13 +588,28 @@ public class MentionSubGraph {
         return sb.toString();
     }
 
+    public boolean hasNonRoot() {
+        for (LabelledMentionGraphEdge edge : edgeTable.values()) {
+            if (!edge.isRoot()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("SubGraph (non root edges only) of distance %d:\n", totalDistance));
+        sb.append(String.format("SubGraph (non root edges only) of distance %d:\n", totalCorefDistance));
 
-        for (SubGraphEdge edge : edgeTable.values()) {
-            if (edge.hasUnlabelledType() || edge.numLabelledNonRootLinks() > 0) {
-                sb.append("\t").append(edge.toString()).append("\n");
+        List<LabelledMentionGraphEdge> edgeValues = new ArrayList<>(edgeTable.values());
+
+        edgeValues.sort((o1, o2)
+                -> new CompareToBuilder().append(edgeTypes.get(o1), edgeTypes.get(o2))
+                .append(o1.getDep(), o2.getDep()).append(o1.getGov(), o2.getGov()).build());
+
+        for (LabelledMentionGraphEdge edge : edgeValues) {
+            if (!edge.isRoot()) {
+                sb.append("\t").append(edgeTypes.get(edge)).append(" : ").append(edge.toString()).append("\n");
             }
         }
 
@@ -447,8 +621,8 @@ public class MentionSubGraph {
         return sb.toString();
     }
 
-    public int getTotalDistance() {
-        return totalDistance;
+    public int getTotalCorefDistance() {
+        return totalCorefDistance;
     }
 
     /**
@@ -457,20 +631,26 @@ public class MentionSubGraph {
      *
      * @param referentTree The gold latent tree.
      */
-    public double paUpdate(MentionSubGraph referentTree, GraphWeightVector weights) {
-        GraphFeatureVector delta = referentTree.getDelta(this, weights.getClassAlphabet(),
-                weights.getFeatureAlphabet());
+    public double paUpdate(MentionSubGraph referentTree, GraphWeightVector weights, EdgeType... targetEdgeTypes) {
+        GraphFeatureVector delta = this.getDelta(referentTree, weights.getClassAlphabet(),
+                weights.getFeatureAlphabet(), true, targetEdgeTypes);
 
         double loss = this.getLoss(referentTree);
         double l2Sqaure = delta.getFeatureSquare();
 
-//        logger.info("Updating weights by: ");
-//        logger.info(delta.readableNodeVector());
-
         if (l2Sqaure != 0) {
             double tau = loss / l2Sqaure;
+
+//            logger.info("Updating weights by: " + tau);
+//            logger.info(delta.readableNodeVector());
+
             weights.updateWeightsBy(delta, tau);
             weights.updateAverageWeights();
+
+//            logger.info("After update:");
+//            logger.info(weights.getNodeWeights("Root").toReadableString(weights.getFeatureAlphabet()));
+//            DebugUtils.pause();
+
         }
         return loss;
     }

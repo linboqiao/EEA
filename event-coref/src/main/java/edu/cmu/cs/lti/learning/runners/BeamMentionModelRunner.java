@@ -184,6 +184,6 @@ public class BeamMentionModelRunner extends AbstractMentionModelRunner {
                 return beamMentionTagging(taskConfig, reader, typeModel, trainingWorkingDir, baseDir, beamSize,
                         skipTest);
             }
-        }.run(config, reader, sliceSuffix, runName, outputDir, subEval, gold);
+        }.run(config, reader, typeSystemDescription, sliceSuffix, runName, outputDir, subEval, gold);
     }
 }

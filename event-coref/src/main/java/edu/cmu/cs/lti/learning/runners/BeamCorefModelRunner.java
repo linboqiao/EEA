@@ -156,6 +156,6 @@ public class BeamCorefModelRunner extends AbstractMentionModelRunner {
                         config.getInt("edu.cmu.cs.lti.coref.beam.size", 5)
                 );
             }
-        }.run(config, reader, sliceSuffix, runName, outputDir, subEval, gold);
+        }.run(config, reader,typeSystemDescription , sliceSuffix, runName, outputDir, subEval, gold);
     }
 }

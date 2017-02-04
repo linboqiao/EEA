@@ -558,7 +558,7 @@ public class BeamCrfLatentTreeDecoder {
 
             for (int ant = 0; ant < currGraphNodeIndex; ant++) {
                 Table<NodeKey, NodeKey, LabelledMentionGraphEdge> realGraphEdges = mentionGraph
-                        .getEdge(currGraphNodeIndex, ant).getRealLabelledEdges();
+                        .getEdge(ant, currGraphNodeIndex).getRealLabelledEdges();
                 Map<NodeKey, LabelledMentionGraphEdge> correctAntEdges = realGraphEdges.column(currNodeKey);
                 numPossibleCorrectLinks += correctAntEdges.size();
 

@@ -216,7 +216,7 @@ public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
     // TODO separate clusters merged by joint types.
     private void annotatePredictedCoreference(JCas aJCas, MentionSubGraph predictedTree,
                                               List<EventMention> allMentions) {
-        predictedTree.resolveGraph();
+        predictedTree.resolveCoreference();
         List<NodeKey>[] corefChains = predictedTree.getCorefChains();
 
         for (List<NodeKey> corefChain : corefChains) {

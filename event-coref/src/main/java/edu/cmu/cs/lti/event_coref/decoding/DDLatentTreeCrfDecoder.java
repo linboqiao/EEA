@@ -145,7 +145,7 @@ public class DDLatentTreeCrfDecoder {
     }
 
     private boolean matches(SequenceSolution typeSolution, MentionSubGraph corefTree) {
-        corefTree.resolveGraph();
+        corefTree.resolveCoreference();
         List<NodeKey>[] corefChains = corefTree.getCorefChains();
         int[][] corefAdjacentList = chainAsAdjacentList(corefChains, typeSolution.getSequenceLength());
 

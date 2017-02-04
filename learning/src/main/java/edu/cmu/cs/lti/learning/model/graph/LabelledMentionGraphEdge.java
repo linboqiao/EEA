@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +32,10 @@ public class LabelledMentionGraphEdge implements Serializable {
 
     private NodeKey depKey;
 
+    private NodeKey decedent;
+
+    private NodeKey antecedent;
+
     private boolean averageMode;
 
     private EdgeType actualEdgeType;
@@ -40,7 +45,9 @@ public class LabelledMentionGraphEdge implements Serializable {
         this.averageMode = averageMode;
         this.govKey = govKey;
         this.depKey = depKey;
-//        this.edgeType = edgeType;
+
+        antecedent = govKey.compareTo(depKey) > 0 ? depKey : govKey;
+        decedent = govKey.compareTo(depKey) > 0 ? govKey : depKey;
     }
 
     public FeatureVector getFeatureVector() {
@@ -71,6 +78,31 @@ public class LabelledMentionGraphEdge implements Serializable {
 
     public double getRootScore(GraphWeightVector weightVector) {
         return scoreEdge(EdgeType.Root, weightVector);
+    }
+
+    public Pair<EdgeType, Double> getBestLabelScore(GraphWeightVector weightVector, List<EdgeType> typeSet) {
+        double score = Double.NEGATIVE_INFINITY;
+        EdgeType bestLabel = null;
+
+        if (hostingEdge.isRoot()) {
+            // The only possible relation with the root node is ROOT.
+            score = scoreEdge(EdgeType.Root, weightVector);
+            bestLabel = EdgeType.Root;
+        } else {
+            for (EdgeType label : typeSet) {
+                if (label.equals(EdgeType.Root)) {
+                    // We will not test for Root edge type.
+                    continue;
+                }
+                double typeScore = scoreEdge(label, weightVector);
+
+                if (typeScore > score) {
+                    score = typeScore;
+                    bestLabel = label;
+                }
+            }
+        }
+        return Pair.of(bestLabel, score);
     }
 
     public Pair<EdgeType, Double> getBestLabelScore(GraphWeightVector weightVector) {
@@ -117,13 +149,20 @@ public class LabelledMentionGraphEdge implements Serializable {
         return allLabelScores;
     }
 
-
     public int getGov() {
-        return hostingEdge.getGov();
+        return govKey.getNodeIndex();
     }
 
     public int getDep() {
-        return hostingEdge.getDep();
+        return depKey.getNodeIndex();
+    }
+
+    public NodeKey getDecedent() {
+        return decedent;
+    }
+
+    public NodeKey getAntecedent() {
+        return antecedent;
     }
 
     public static final Comparator<LabelledMentionGraphEdge> edgeDepComparator = (o1, o2) -> o1.getDep() - o2.getDep();
@@ -145,7 +184,7 @@ public class LabelledMentionGraphEdge implements Serializable {
     }
 
     public String toString() {
-        return String.format("Label edge: %s-%s, Gold Type: %s", govKey, depKey, actualEdgeType);
+        return String.format("Label edge: %s-%s", govKey, depKey);
     }
 
     public void setActualEdgeType(EdgeType actualEdgeType) {
@@ -162,6 +201,10 @@ public class LabelledMentionGraphEdge implements Serializable {
 
     public MentionGraphEdge getHostingEdge() {
         return hostingEdge;
+    }
+
+    public boolean isRoot() {
+        return hostingEdge.isRoot();
     }
 
 }

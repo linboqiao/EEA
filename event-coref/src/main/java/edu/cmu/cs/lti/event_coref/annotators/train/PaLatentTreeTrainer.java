@@ -119,7 +119,6 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
         if (!predictedTree.graphMatch()) {
 //            logger.debug("Found unmatched graph");
-
             MentionSubGraph latentTree = decoder.decode(mentionGraph, candidates, weights, true);
 
 //            logger.debug("Best Gold Tree.");
@@ -128,7 +127,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 //            logger.debug("Best Decoding Tree.");
 //            logger.debug(predictedTree.toString());
 
-            double loss = predictedTree.paUpdate(latentTree, weights);
+            double loss = predictedTree.paUpdate(latentTree, weights, EdgeType.Coreference);
 
             trainingStats.addLoss(logger, loss / mentionGraph.numNodes());
 

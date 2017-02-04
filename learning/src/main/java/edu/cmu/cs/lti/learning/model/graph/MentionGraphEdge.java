@@ -12,7 +12,6 @@ import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -164,6 +163,9 @@ public class MentionGraphEdge implements Serializable {
 
         TObjectDoubleMap<String> rawFeaturesNodeRelated = extractNodeDependentFeatures(mentions, govKey, depKey);
 
+//        System.out.println(String.format("Extracted %d features from %s and %s.", rawFeaturesNodeRelated.size(),
+//                govKey, depKey));
+
         FeatureVector featureVector = extractor.newFeatureVector();
 
         rawFeaturesNodeRelated.forEachEntry((featureName, featureValue) -> {
@@ -203,30 +205,16 @@ public class MentionGraphEdge implements Serializable {
     }
 
     public MentionKey getAntKey(List<MentionCandidate> candidates) {
-        int candidateId = MentionGraph.getCandidateIndex(depIdx);
-        return candidates.get(candidateId).asKey();
-    }
+        if (isRoot()){
+            return MentionKey.rootKey();
+        }
 
-    public MentionKey getPrecKey(List<MentionCandidate> candidates) {
         int candidateId = MentionGraph.getCandidateIndex(govIdx);
         return candidates.get(candidateId).asKey();
     }
 
-    public List<LabelledMentionGraphEdge> getAllLabelledEdges(List<MentionCandidate> candidates) {
-        int depCandidateId = MentionGraph.getCandidateIndex(depIdx);
-        int govCandidateId = MentionGraph.getCandidateIndex(govIdx);
-
-        List<LabelledMentionGraphEdge> labelledEdges = new ArrayList<>();
-
-        MentionKey govKeys = hostingGraph.isRoot(govIdx) ? MentionKey.rootKey() :
-                candidates.get(govCandidateId).asKey();
-
-        for (NodeKey govKey : govKeys) {
-            for (NodeKey depKey : candidates.get(depCandidateId).asKey()) {
-                labelledEdges.add(getLabelledEdge(candidates, govKey, depKey));
-            }
-        }
-
-        return labelledEdges;
+    public MentionKey getSuccKey(List<MentionCandidate> candidates) {
+        int candidateId = MentionGraph.getCandidateIndex(depIdx);
+        return candidates.get(candidateId).asKey();
     }
 }

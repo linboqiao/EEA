@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.learning.model;
 
+import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.script.type.Word;
 
 import java.util.ArrayList;
@@ -26,10 +27,12 @@ public class MentionKey implements Iterable<NodeKey> {
     private static MentionKey root;
 
     static {
-        NodeKey singleRoot = NodeKey.rootKey();
-        root = new MentionKey(null, singleRoot.getMentionType());
+        root = new MentionKey(null, "ROOT");
         root.isRoot = true;
-        root.keys.add(singleRoot);
+
+        for (EdgeType edgeType : EdgeType.getNormalTypes()) {
+            root.keys.add(NodeKey.getRootKey(edgeType));
+        }
     }
 
     public MentionKey(Word headWord, String combinedType, NodeKey... ks) {

@@ -48,8 +48,7 @@ public class RealisFeatures extends AbstractMentionPairFeatures {
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featureNoLabel,
                         MentionCandidate candidate) {
-        addBoolean(featureNoLabel, FeatureUtils.formatFeatureName("SingleRealis",
-                candidate.getRealis()));
+        addBoolean(featureNoLabel, FeatureUtils.formatFeatureName("SingleRealis", candidate.getRealis()));
     }
 
 

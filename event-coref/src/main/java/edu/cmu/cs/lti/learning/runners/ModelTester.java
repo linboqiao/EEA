@@ -6,6 +6,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
+import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -44,12 +45,13 @@ public abstract class ModelTester {
     /**
      * @param taskConfig
      * @param reader
+     * @param typeSystemDescription
      * @param sliceSuffix
      * @param runName
      * @param outputDir
      * @param subEval
      * @param gold
-     * @return
+     * @return System output of the collection.
      * @throws SAXException
      * @throws UIMAException
      * @throws CpeDescriptorException
@@ -57,8 +59,8 @@ public abstract class ModelTester {
      * @throws InterruptedException
      */
     CollectionReaderDescription run(Configuration taskConfig, CollectionReaderDescription reader,
-                                    String sliceSuffix, String runName, String outputDir, String subEval,
-                                    File gold)
+                                    TypeSystemDescription typeSystemDescription, String sliceSuffix, String runName,
+                                    String outputDir, String subEval, File gold)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         logger.info(String.format("Running model %s", modelName));
 
@@ -67,7 +69,7 @@ public abstract class ModelTester {
         CollectionReaderDescription output = runModel(taskConfig, reader, trainingWorkingDir, annotatedOutput);
 
         String tbfOutput = FileUtils.joinPaths(outputDir, sliceSuffix, modelName, runName + ".tbf");
-        RunnerUtils.writeResults(output, tbfOutput, runName, charOffset, false);
+        RunnerUtils.writeResults(output, typeSystemDescription, tbfOutput, runName, charOffset, false);
 
         if (gold.isFile()) {
             logger.info("Evaluating over all event types.");
@@ -125,15 +127,10 @@ public abstract class ModelTester {
         }
 
         ProcessBuilder pb = new ProcessBuilder(commands.toArray(new String[commands.size()]));
+        pb.redirectErrorStream();
 
         Process p = pb.start();
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while ((line = br.readLine()) != null) {
-            writer.write(line);
-            writer.write("\n");
-        }
+        writeStream(writer, p.getInputStream());
 
         Thread thread = new Thread(() -> {
             try {
@@ -145,7 +142,15 @@ public abstract class ModelTester {
         });
 
         thread.start();
-//        thread.join(300000); // 300 seconds
+    }
+
+    private void writeStream(Writer writer, InputStream stream) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+        String line;
+        while ((line = br.readLine()) != null) {
+            writer.write(line);
+            writer.write("\n");
+        }
     }
 
     abstract CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader,

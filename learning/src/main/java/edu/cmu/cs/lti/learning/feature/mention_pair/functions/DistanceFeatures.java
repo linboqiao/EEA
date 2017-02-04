@@ -22,11 +22,7 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
 
     private int[] sentenceThresholds = {0, 1, 3, 5};
 
-    private int[] mentionThresholds = {0, 1, 3, 5};
-
     private int lastSentenceThreshold = sentenceThresholds[sentenceThresholds.length - 1];
-
-    private int lastMentionTreshold = mentionThresholds[mentionThresholds.length - 1];
 
     private String documentType = "UNKNOWN";
 
@@ -37,8 +33,6 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
     @Override
     public void initDocumentWorkspace(JCas context) {
         documentType = getDocumentType(context);
-
-
     }
 
     @Override
@@ -84,46 +78,6 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
         }
 
         rawFeatures.put(FeatureUtils.formatFeatureName("SentenceDistance", "i>" + lastSentenceThreshold), 1);
-    }
-
-    private void thresholdedMentionDistance(TObjectDoubleMap<String> rawFeatures, List<MentionCandidate> candidates,
-                                            NodeKey firstNode, NodeKey secondNode) {
-        int firstIndex = firstNode.getNodeIndex();
-        int secondIndex = secondNode.getNodeIndex();
-
-        int left, right;
-        if (firstIndex < secondIndex) {
-            left = firstIndex;
-            right = secondIndex;
-        } else {
-            left = secondIndex;
-            right = firstIndex;
-        }
-
-        int numMentionInBetween = 0;
-        int lastBegin = -1;
-        for (int i = left + 1; i < right; i++) {
-            logger.debug(i + " is " + candidates.get(i).getMentionType() + " " + candidates.get(i).isEvent());
-            MentionCandidate c = candidates.get(i);
-            if (c.isEvent()) {
-                if (c.getBegin() != lastBegin) {
-                    lastBegin = c.getBegin();
-                    numMentionInBetween++;
-                }
-            }
-        }
-
-//        logger.debug("Mention distance is " + numMentionInBetween + " between " + candidates.get(left) + " " +
-//                candidates.get(right));
-
-        for (int mentionThreshold : mentionThresholds) {
-            if (numMentionInBetween <= mentionThreshold) {
-                rawFeatures.put(FeatureUtils.formatFeatureName("MentionDistance",
-                        "i<=" + mentionThreshold), 1);
-                return;
-            }
-        }
-        rawFeatures.put(FeatureUtils.formatFeatureName("MentionDistance", "i>" + lastMentionTreshold), 1);
     }
 
     private String getDocumentType(JCas context) {

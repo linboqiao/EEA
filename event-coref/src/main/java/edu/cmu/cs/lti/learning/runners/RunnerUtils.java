@@ -16,6 +16,7 @@ import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -33,7 +34,8 @@ import java.util.List;
 public class RunnerUtils {
     private static final Logger logger = LoggerFactory.getLogger(RunnerUtils.class);
 
-    public static void writeResults(CollectionReaderDescription processedResultReader, String tbfOutput,
+    public static void writeResults(CollectionReaderDescription processedResultReader,
+                                    TypeSystemDescription typeSystemDescription, String tbfOutput,
                                     String systemId, boolean useCharOffset, boolean addSemanticRole)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
         logger.info("Writing results to " + tbfOutput);
@@ -48,7 +50,7 @@ public class RunnerUtils {
             public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
 
                 AnalysisEngineDescription resultWriter = AnalysisEngineFactory.createEngineDescription(
-                        TbfStyleEventWriter.class,
+                        TbfStyleEventWriter.class, typeSystemDescription,
                         TbfStyleEventWriter.PARAM_OUTPUT_PATH, tbfOutput,
                         TbfStyleEventWriter.PARAM_SYSTEM_ID, systemId,
                         TbfStyleEventWriter.PARAM_GOLD_TOKEN_COMPONENT_ID, TbfEventDataReader.COMPONENT_ID,

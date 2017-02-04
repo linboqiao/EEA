@@ -168,7 +168,7 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
                     mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {
                 return corefResolution(taskConfig, reader, corefModel, trainingWorkingDir, baseDir, skipTest);
             }
-        }.run(taskConfig, reader, sliceSuffix, runName, outputDir, subEval, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, subEval, gold);
     }
 
 
