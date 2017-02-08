@@ -134,6 +134,8 @@ public class EventDataReader {
             );
             AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(parentDir, rawBase);
             SimplePipeline.runPipeline(reader,emsAnnotator,  writer);
+//            SimplePipeline.runPipeline(reader, writer);
+
         }
     }
 

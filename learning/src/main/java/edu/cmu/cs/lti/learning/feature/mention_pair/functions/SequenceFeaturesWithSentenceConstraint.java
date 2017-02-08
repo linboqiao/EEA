@@ -8,6 +8,7 @@ import gnu.trove.map.TObjectDoubleMap;
 import org.apache.uima.jcas.JCas;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,14 +17,13 @@ import java.util.List;
  *
  * @author Zhengzhong Liu
  */
-public class SequenceFeaturesWithSentenceConstraint extends AbstractMentionPairFeatures {
+public class SequenceFeaturesWithSentenceConstraint extends AbstractSequenceFeatures {
     public SequenceFeaturesWithSentenceConstraint(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
     }
 
     @Override
     public void initDocumentWorkspace(JCas context) {
-
     }
 
     @Override
@@ -35,9 +35,6 @@ public class SequenceFeaturesWithSentenceConstraint extends AbstractMentionPairF
     @Override
     public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
                                    List<MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey secondNodeKey) {
-        String firstType = firstNodeKey.getMentionType();
-        String secondType = secondNodeKey.getMentionType();
-
         MentionCandidate firstCandidate = candidates.get(MentionGraph.getCandidateIndex(firstNodeKey.getNodeIndex()));
         MentionCandidate secondCandidate = candidates.get(MentionGraph.getCandidateIndex(secondNodeKey.getNodeIndex()));
 
@@ -45,32 +42,17 @@ public class SequenceFeaturesWithSentenceConstraint extends AbstractMentionPairF
         int secondSentenceIndex = secondCandidate.getContainedSentence().getIndex();
 
         String firstRealis = firstNodeKey.getRealis();
-        String secondRealis = secondNodeKey.getRealis();
 
         int sentDist = Math.abs(secondSentenceIndex - firstSentenceIndex);
 
-        if (sentDist < 3) {
-            if (!firstNodeKey.getRealis().equals("Other") && firstRealis.equals(secondRealis)) {
-                if (firstCandidate.getBegin() < secondCandidate.getBegin()) {
-                    addBoolean(featuresNeedLabel,
-                            String.format("ForwardMentionTypePair_SentDist=%d_Realis=%s::%s:%s", sentDist,
-                                    firstRealis, firstType, secondType)
-                    );
-                    addBoolean(featuresNeedLabel,
-                            String.format("ForwardHeadwordPair_SentDist=%d_Realis=%s::%s:%s", sentDist, firstRealis,
-                                    firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                    secondCandidate.getHeadWord().getLemma().toLowerCase())
-                    );
-                } else {
-                    addBoolean(featuresNeedLabel,
-                            String.format("BackwardMentionTypePair_SentDist=%d_Realis=%s::%s:%s", sentDist,
-                                    firstRealis, firstType, secondType)
-                    );
-                    addBoolean(featuresNeedLabel,
-                            String.format("BackwardHeadwordPair_SentDist=%d_Realis=%s::%s:%s", sentDist, firstRealis,
-                                    firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                    secondCandidate.getHeadWord().getLemma().toLowerCase())
-                    );
+        if (utils.sentenceWindowConstraint(firstCandidate, secondCandidate, 3)) {
+            if (utils.strictEqualRealisConstraint(firstNodeKey, secondNodeKey)) {
+                for (Map.Entry<String, Double> compatibleFeature : utils.generateScriptCompabilityFeatures
+                        (firstCandidate, secondCandidate).entrySet()) {
+                    String compatibleFeatureName = compatibleFeature.getKey();
+                    double compatibleScore = compatibleFeature.getValue();
+                    addWithScore(featuresNeedLabel, String.format("%s_SentDist=%d_Realis=%s",
+                            compatibleFeatureName, sentDist, firstRealis), compatibleScore);
                 }
             }
         }

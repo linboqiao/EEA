@@ -11,6 +11,7 @@ import org.apache.uima.jcas.JCas;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
@@ -20,7 +21,7 @@ import java.util.regex.Pattern;
  *
  * @author Zhengzhong Liu
  */
-public class SequenceFeaturesWithFunctionWordInBetween extends AbstractMentionPairFeatures {
+public class SequenceFeaturesWithFunctionWordInBetween extends AbstractSequenceFeatures {
     public SequenceFeaturesWithFunctionWordInBetween(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
     }
@@ -39,62 +40,29 @@ public class SequenceFeaturesWithFunctionWordInBetween extends AbstractMentionPa
     @Override
     public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
                                    List<MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey secondNodeKey) {
-        String firstType = firstNodeKey.getMentionType();
-        String secondType = secondNodeKey.getMentionType();
-
         MentionCandidate firstCandidate = candidates.get(MentionGraph.getCandidateIndex(firstNodeKey.getNodeIndex()));
         MentionCandidate secondCandidate = candidates.get(MentionGraph.getCandidateIndex(secondNodeKey.getNodeIndex()));
 
-        int firstSentenceIndex = firstCandidate.getContainedSentence().getIndex();
-        int secondSentenceIndex = secondCandidate.getContainedSentence().getIndex();
-
         String firstRealis = firstNodeKey.getRealis();
-        String secondRealis = secondNodeKey.getRealis();
 
+        if (utils.sentenceWindowConstraint(firstCandidate, secondCandidate, 0)) {
+            if (utils.strictEqualRealisConstraint(firstNodeKey, secondNodeKey)) {
+                Map<String, Double> compatibleFeatures =
+                        utils.generateScriptCompabilityFeatures(firstCandidate, secondCandidate, true);
 
-        if (secondSentenceIndex - firstSentenceIndex == 0) {
-            for (String word : findWordInBetween(firstCandidate, secondCandidate)) {
-                addBoolean(featuresNeedLabel,
-                        String.format("MentionTypePair_Realis=%s_WordInBetween=%s::%s:%s",
-                                firstRealis, word, firstType, secondType)
-                );
-                addBoolean(featuresNeedLabel,
-                        String.format("HeadwordPair_Realis=%s_WordInBetween=%s::%s:%s",
-                                firstRealis, word,
-                                firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                secondCandidate.getHeadWord().getLemma().toLowerCase())
-                );
-
-                if (!firstNodeKey.getRealis().equals("Other") && firstRealis.equals(secondRealis)) {
-                    if (firstCandidate.getBegin() < secondCandidate.getBegin()) {
-                        addBoolean(featuresNeedLabel,
-                                String.format("ForwardMentionTypePair_Realis=%s_WordInBetween=%s::%s:%s",
-                                        firstRealis, word, firstType, secondType)
-                        );
-                        addBoolean(featuresNeedLabel,
-                                String.format("ForwardHeadwordPair_Realis=%s_WordInBetween=%s::%s:%s",
-                                        firstRealis, word,
-                                        firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                        secondCandidate.getHeadWord().getLemma().toLowerCase())
-                        );
-                    } else {
-                        addBoolean(featuresNeedLabel,
-                                String.format("BackwardMentionTypePair_Realis=%s_WordInBetween=%s::%s:%s",
-                                        firstRealis, word, firstType, secondType)
-                        );
-                        addBoolean(featuresNeedLabel,
-                                String.format("BackwardHeadwordPair_Realis=%s_WordInBetween=%s::%s:%s",
-                                        firstRealis, word,
-                                        firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                        secondCandidate.getHeadWord().getLemma().toLowerCase())
-                        );
+                for (String word : findWordInBetween(firstCandidate, secondCandidate)) {
+                    for (Map.Entry<String, Double> compatibleFeature : compatibleFeatures.entrySet()) {
+                        String compatibleFeatureName = compatibleFeature.getKey();
+                        double compatibleScore = compatibleFeature.getValue();
+                        addWithScore(featuresNeedLabel, String.format("%s_Realis=%s_WordInBetween=%s",
+                                compatibleFeatureName, firstRealis, word), compatibleScore);
                     }
                 }
             }
         }
     }
 
-    private List<String> findWordInBetween(MentionCandidate firstCandidate, MentionCandidate secondCandidate){
+    private List<String> findWordInBetween(MentionCandidate firstCandidate, MentionCandidate secondCandidate) {
         int left, right;
 
         if (firstCandidate.getEnd() < secondCandidate.getBegin()) {
@@ -109,7 +77,7 @@ public class SequenceFeaturesWithFunctionWordInBetween extends AbstractMentionPa
 
         for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class,
                 firstCandidate.getContainedSentence())) {
-            if (token.getBegin() > left && token.getEnd() < right){
+            if (token.getBegin() > left && token.getEnd() < right) {
                 String pos = token.getPos();
                 if (!Pattern.matches("\\p{Punct}", token.getCoveredText())) {
                     if (!pos.startsWith("N") && !pos.startsWith("V") && !pos.startsWith("J")

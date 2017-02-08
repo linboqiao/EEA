@@ -67,7 +67,7 @@ public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
         int trainingStrategy = config.getInt("edu.cmu.cs.lti.after.train.strategy", 0);
 
         decoder = new BFAfterLatentTreeDecoder(trainingStrategy);
-        trainingStats = new TrainingStats(5, "AfterLink");
+        trainingStats = new TrainingStats(10, "AfterLink");
         logger.info("After link decoder initialized.");
     }
 
@@ -83,7 +83,6 @@ public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
 //        System.out.println(mentionGraph.toString());
 //
 //        DebugUtils.pause();
-
 
         GraphWeightVector weights = updater.getWeightVector(AFTER_MODEL_NAME);
 

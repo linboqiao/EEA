@@ -40,19 +40,23 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                                   CollectionReaderDescription testReader, String processOutputDir, String suffix,
                                   File testGold, boolean skipTrain, boolean skipTest)
             throws UIMAException, IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
-            IllegalAccessException, InvocationTargetException {
+            IllegalAccessException, InvocationTargetException, CpeDescriptorException, InterruptedException,
+            SAXException {
         logger.info("Start after model training.");
         String cvModelDir = ModelUtils.getTrainModelPath(eventModelDir, config, suffix);
 
-        String subEvalDir = suffix.equals(fullRunSuffix) ? "final" : "cv";
-
-        int jointMaxIter = config.getInt("edu.cmu.cs.lti.perceptron.joint.maxiter", 30);
+        int jointMaxIter = config.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
         int modelOutputFreq = config.getInt("edu.cmu.cs.lti.perceptron.model.save.frequency", 3);
 
         boolean modelExists = new File(cvModelDir).exists();
 
         if (skipTrain && modelExists) {
-            logger.info("Skipping beam joint training, taking existing models.");
+            logger.info("Skipping after training, taking existing models.");
+
+            logger.info("Directly run the test and evaluate the performance.");
+            logger.info("Gold standard is : " + testGold);
+            testAfter(config, testReader, cvModelDir, suffix, "test_only", processOutputDir,
+                    testGold, skipTest);
         } else {
             logger.info("Saving model directory at : " + cvModelDir);
             AnalysisEngineDescription trainEngine = AnalysisEngineFactory.createEngineDescription(
@@ -79,15 +83,14 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                     BeamJointTrainer.finish();
                     // Test using the final model.
                     String runName = "after_heldout_final";
-                    String modelPath = cvModelDir + "_iter" + numIteration;
-                    test(modelPath, runName);
+                    test(cvModelDir, runName);
                 }
 
                 private void test(String model, String runName) {
                     if (testReader != null) {
                         try {
                             testAfter(config, testReader, model, suffix, runName, processOutputDir,
-                                    subEvalDir, testGold, skipTest);
+                                    testGold, skipTest);
                         } catch (SAXException | InterruptedException | IOException | CpeDescriptorException |
                                 UIMAException e) {
                             e.printStackTrace();
@@ -115,8 +118,10 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
     public CollectionReaderDescription testAfter(Configuration taskConfig,
                                                  CollectionReaderDescription reader, String afterModel,
                                                  String sliceSuffix, String runName, String outputDir,
-                                                 String subEval, File gold, boolean skipTest)
+                                                 File gold, boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
+        String subEvalDir = sliceSuffix.equals(fullRunSuffix) ? "final" : "cv";
+
         return new ModelTester(mainConfig, "plain_after_model") {
             @Override
             CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
@@ -124,7 +129,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                     CpeDescriptorException, IOException {
                 return afterLinking(taskConfig, reader, afterModel, trainingWorkingDir, baseDir, skipTest);
             }
-        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, subEval, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, subEvalDir, gold);
     }
 
     public CollectionReaderDescription afterLinking(Configuration taskConfig, CollectionReaderDescription reader,

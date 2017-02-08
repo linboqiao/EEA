@@ -63,7 +63,7 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
         String modelPath = getModelPath(config, suffix);
 
         int maxIter = config.getInt("edu.cmu.cs.lti.perceptron.maxiter", 15);
-        int modelOutputFreq = config.getInt("edu.cmu.cs.lti.perceptron.model.save.frequency", 1);
+        int modelOutputFreq = config.getInt("edu.cmu.cs.lti.perceptron.model.save.frequency", 3);
 
         boolean modelExists = new File(modelPath).exists();
         if (skipTrain && modelExists) {

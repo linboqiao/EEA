@@ -34,8 +34,9 @@ public abstract class AbstractMentionPairFeatures {
 
     /**
      * Extract features from the annotation pair, without label specific features.
-     * @param documentContext The UIMA context.
-     * @param featuresNoLabel Features don't need labels.
+     *
+     * @param documentContext   The UIMA context.
+     * @param featuresNoLabel   Features don't need labels.
      * @param candidates
      * @param firstCandidateId
      * @param secondCandidateId
@@ -45,6 +46,7 @@ public abstract class AbstractMentionPairFeatures {
 
     /**
      * Extract features from the annotation pair, with Label specific features.
+     *
      * @param documentContext   The UIMA context.
      * @param featuresNeedLabel Features labels will be added to this raw feature map.
      * @param candidates
@@ -58,6 +60,7 @@ public abstract class AbstractMentionPairFeatures {
 
     /**
      * Extract features from the annotation pair, with label specific features.
+     *
      * @param documentContext The UIMA context
      * @param featuresNoLabel Features don't need labels.
      * @param candidate
@@ -67,6 +70,7 @@ public abstract class AbstractMentionPairFeatures {
 
     /**
      * Extract features from the annotation pair, with label specific features.
+     *
      * @param documentContext   The UIMA context
      * @param featuresNeedLabel Features need labels will be added to this raw feature map.
      * @param secondCandidate   Second mention to extract from.
@@ -88,5 +92,10 @@ public abstract class AbstractMentionPairFeatures {
     protected void addBoolean(TObjectDoubleMap<String> rawFeatures, String featureName) {
         rawFeatures.put(featureName, 1);
     }
+
+    protected void addWithScore(TObjectDoubleMap<String> rawFeatures, String featureName, double score) {
+        rawFeatures.adjustOrPutValue(featureName, score, score);
+    }
+
 
 }

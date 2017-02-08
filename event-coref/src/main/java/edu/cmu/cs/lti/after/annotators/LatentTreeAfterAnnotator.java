@@ -91,7 +91,7 @@ public class LatentTreeAfterAnnotator extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        UimaConvenience.printProcessLog(aJCas, logger);
+//        UimaConvenience.printProcessLog(aJCas, logger);
 
         if (UimaConvenience.getDocId(aJCas).contains("bolt-eng-DF-170-181125-9125545")) {
             BFAfterLatentTreeDecoder.startDebug();

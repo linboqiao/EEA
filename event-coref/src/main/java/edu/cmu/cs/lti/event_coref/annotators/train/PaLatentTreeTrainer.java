@@ -8,10 +8,7 @@ import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
-import edu.cmu.cs.lti.script.type.Event;
-import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
 import edu.cmu.cs.lti.utils.MentionUtils;
@@ -19,14 +16,12 @@ import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
-import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -98,65 +93,45 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
                 | IllegalAccessException e) {
             e.printStackTrace();
         }
-        trainingStats = new TrainingStats(5, "PlainLatentTree");
+        trainingStats = new TrainingStats(10, "PlainLatentTree");
         logger.info("Latent Tree trainer initialized.");
     }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        List<EventMention> allMentions = MentionUtils.clearDuplicates(
-                new ArrayList<>(JCasUtil.select(aJCas, EventMention.class))
-        );
-
-        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions);
+//        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions);
+        List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
 
         extractor.initWorkspace(aJCas);
 
-        MentionGraph mentionGraph = getMentionGraph(aJCas);
+//        MentionGraph mentionGraph = getMentionGraph(aJCas);
+        MentionGraph mentionGraph = MentionUtils.createSpanBasedMentionGraph(aJCas, candidates, extractor, true);
 
         // Decoding.
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
 
+//        logger.info(predictedTree.toString());
+
         if (!predictedTree.graphMatch()) {
-//            logger.debug("Found unmatched graph");
             MentionSubGraph latentTree = decoder.decode(mentionGraph, candidates, weights, true);
 
-//            logger.debug("Best Gold Tree.");
-//            logger.debug(latentTree.toString());
-//
-//            logger.debug("Best Decoding Tree.");
-//            logger.debug(predictedTree.toString());
+//            logger.info("Best Gold Tree.");
+//            logger.info(latentTree.toString());
+
+//            logger.info("Best Decoding Tree.");
+//            logger.info(predictedTree.toString());
 
             double loss = predictedTree.paUpdate(latentTree, weights, EdgeType.Coreference);
 
             trainingStats.addLoss(logger, loss / mentionGraph.numNodes());
 
-//            logger.debug("Loss is " + loss);
-//            logger.debug("Averaged Loss is " + loss / mentionGraph.numNodes());
-//
-//            DebugUtils.pause(logger);
+//            logger.info("Loss is " + loss);
+//            logger.info("Averaged Loss is " + loss / mentionGraph.numNodes());
+//            DebugUtils.pause();
+
         } else {
             trainingStats.addLoss(logger, 0);
         }
-    }
-
-    private MentionGraph getMentionGraph(JCas aJCas) {
-        int eventIdx = 0;
-        for (Event event : JCasUtil.select(aJCas, Event.class)) {
-            event.setIndex(eventIdx++);
-        }
-
-        String cacheKey = UimaConvenience.getShortDocumentNameWithOffset(aJCas);
-
-        // A mention graph represent all the mentions and contains features among them.
-        MentionGraph mentionGraph = graphCacher.get(cacheKey);
-
-        if (mentionGraph == null) {
-            List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
-            mentionGraph = MentionUtils.createSpanBasedMentionGraph(aJCas, candidates, extractor, false);
-            graphCacher.addWithMultiKey(mentionGraph, cacheKey);
-        }
-        return mentionGraph;
     }
 
     public static void saveModels(File modelOutputDirectory) throws IOException {

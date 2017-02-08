@@ -13,6 +13,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,7 +22,7 @@ import java.util.List;
  *
  * @author Zhengzhong Liu
  */
-public class SequenceFeaturesWithTemporalHints extends AbstractMentionPairFeatures {
+public class SequenceFeaturesWithTemporalHints extends AbstractSequenceFeatures {
     public SequenceFeaturesWithTemporalHints(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
     }
@@ -40,43 +41,23 @@ public class SequenceFeaturesWithTemporalHints extends AbstractMentionPairFeatur
     @Override
     public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
                                    List<MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey secondNodeKey) {
-        String firstType = firstNodeKey.getMentionType();
-        String secondType = secondNodeKey.getMentionType();
-
         MentionCandidate firstCandidate = candidates.get(MentionGraph.getCandidateIndex(firstNodeKey.getNodeIndex()));
         MentionCandidate secondCandidate = candidates.get(MentionGraph.getCandidateIndex(secondNodeKey.getNodeIndex()));
 
-        int firstSentenceIndex = firstCandidate.getContainedSentence().getIndex();
-        int secondSentenceIndex = secondCandidate.getContainedSentence().getIndex();
-
         String firstRealis = firstNodeKey.getRealis();
-        String secondRealis = secondNodeKey.getRealis();
 
-        int sentDist = Math.abs(secondSentenceIndex - firstSentenceIndex);
-
-        if (sentDist < 3) {
-            if (!firstNodeKey.getRealis().equals("Other") && firstRealis.equals(secondRealis)) {
+        if (utils.sentenceWindowConstraint(firstCandidate, secondCandidate, 3)) {
+            if (utils.strictEqualRealisConstraint(firstNodeKey, secondNodeKey)) {
                 if (hasTemporalHint(firstCandidate) && hasTemporalHint(secondCandidate)) {
-                    if (firstCandidate.getBegin() < secondCandidate.getBegin()) {
-                        addBoolean(featuresNeedLabel,
-                                String.format("ForwardMentionTypePair_WithTime_Realis=%s::%s:%s",
-                                        firstRealis, firstType, secondType)
-                        );
-                        addBoolean(featuresNeedLabel,
-                                String.format("ForwardHeadwordPair_WithTime_Realis=%s::%s:%s", firstRealis,
-                                        firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                        secondCandidate.getHeadWord().getLemma().toLowerCase())
-                        );
-                    } else {
-                        addBoolean(featuresNeedLabel,
-                                String.format("BackwardMentionTypePair_WithTime_Realis=%s::%s:%s",
-                                        firstRealis, firstType, secondType)
-                        );
-                        addBoolean(featuresNeedLabel,
-                                String.format("BackwardHeadwordPair_WithTime_Realis=%s::%s:%s", firstRealis,
-                                        firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                        secondCandidate.getHeadWord().getLemma().toLowerCase())
-                        );
+
+                    utils.generateScriptCompabilityFeatures(firstCandidate, secondCandidate);
+
+                    for (Map.Entry<String, Double> compatibleFeature :
+                            utils.generateScriptCompabilityFeatures(firstCandidate, secondCandidate).entrySet()) {
+                        String compatibleFeatureName = compatibleFeature.getKey();
+                        double compatibleScore = compatibleFeature.getValue();
+                        addWithScore(featuresNeedLabel, String.format("%s_Realis=%s_WithTime",
+                                compatibleFeatureName, firstRealis), compatibleScore);
                     }
                 }
             }

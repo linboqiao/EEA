@@ -139,19 +139,8 @@ public class MentionSubGraph {
 
         Map<NodeKey, NodeKey> referentCorefAntecedents = new HashMap<>();
 
-        Map<NodeKey, EdgeType> couldBeLinked = new HashMap<>();
-        for (Map.Entry<EdgeType, Set<Pair<NodeKey, NodeKey>>> edgesByType : referenceGraph.resolvedRelations
-                .entrySet()) {
-            EdgeType type = edgesByType.getKey();
-            for (Pair<NodeKey, NodeKey> link : edgesByType.getValue()) {
-                NodeKey latterKey = link.getKey();
-                if (link.getValue().compareTo(latterKey) > 0) {
-                    latterKey = link.getValue();
-                }
-//                logger.info(latterKey + " could be linked as " + type + " by " + link);
-                couldBeLinked.put(latterKey, type);
-            }
-        }
+
+        Map<NodeKey, EdgeType> couldBeLinked = couldBeLinkedByInference(referenceGraph);
 
         // When you link a coreferece link to a wrong position, you will be penalize for 2 things:
         // 1. We cannot find the correct link in the gold tree, loss += 1
@@ -175,12 +164,12 @@ public class MentionSubGraph {
             if (edgeTable.contains(gov, dep)) {
                 LabelledMentionGraphEdge thisEdge = edgeTable.get(gov, dep);
                 if (edgeTypes.get(thisEdge) != referenceGraph.edgeTypes.get(referentEdge)) {
-                    // Wrong type on edge.
+                    // Wrong type on edge, that actually means one additional link and one missing link.
 //                    logger.info("Loss because wrong type on edge " + referentEdge);
-                    loss += 1;
+                    loss += 2;
                 }
             } else {
-                // No such link predicted by this system.
+                // No such link predicted by this system, but some ROOT penalty can be avoided.
                 if (referenceGraph.edgeTypes.get(referentEdge).equals(EdgeType.Root)) {
                     EdgeType couldLinkTo = couldBeLinked.get(dep);
                     // If the dep node can actually link to some other node of the specific type, we should not
@@ -199,6 +188,7 @@ public class MentionSubGraph {
             }
         }
 
+        // We then check for invented links in the prediction graph.
         for (Table.Cell<NodeKey, NodeKey, LabelledMentionGraphEdge> targetEdge : edgeTable.cellSet()) {
             NodeKey from = targetEdge.getRowKey();
             NodeKey to = targetEdge.getColumnKey();
@@ -207,40 +197,61 @@ public class MentionSubGraph {
             EdgeType type = edgeTypes.get(labelledTargetEdge);
 
             if (type.equals(EdgeType.Coreference)) {
+                // For coreference, check against the antecedent is sufficient.
                 NodeKey referentAntecedent = referentCorefAntecedents.get(to);
-                if (!referentAntecedent.equals(from)) {
-                    if (from.isRoot()) {
-                        // Wrong root attachment for coreference.
-                        loss += 2;
-                    } else {
-                        loss += 1;
-                    }
+                if (referentAntecedent == null || !referentAntecedent.equals(from)) {
+                    loss += 1;
                 }
             } else {
-                if (referenceGraph.resolvedRelations.containsKey(type) &&
-                        referenceGraph.resolvedRelations.get(type).contains(Pair.of(from, to))) {
-//                    logger.info("Referent contains edge : " + labelledTargetEdge);
-                } else {
-                    if (referenceGraph.edgeTable.contains(from, to)) {
-                        LabelledMentionGraphEdge referentEdge = referenceGraph.edgeTable.get(from, to);
-
-                        // Wrong type is already penalized.
-                        if (referenceGraph.edgeTypes.get(referentEdge).equals(type)) {
-                            if (!from.isRoot()) {
-                                logger.error(referentEdge.toString());
-                                throw new IllegalStateException("Referent graph contains this edge, " +
-                                        "but it is not in the resolved relations, that's not possible.");
-                            }
+                if (type.equals(EdgeType.Root)) {
+                    // Invented root links. Type matching is not required because there is only ROOT type.
+                    if (!referenceGraph.edgeTable.contains(from, to)) {
+                        if (from.getMentionType().equals(EdgeType.Coreference.name())) {
+                            // Adding a new cluster is penalized more.
+                            loss += 2;
+                        } else {
+                            loss += 1;
                         }
-                    } else {
+                    }
+                } else {
+                    // Now we see if there are invented "After" or "Subevent" links.
+                    if (!referenceGraph.resolvedRelations.containsKey(type) ||
+                            !referenceGraph.resolvedRelations.get(type).contains(Pair.of(from, to))) {
                         // Invented edges, which cannot be inferred given the coreference.
-//                        logger.info("Loss because invented edge " + labelledTargetEdge);
+                        // logger.info("Loss because invented edge " + labelledTargetEdge);
                         loss += 1;
                     }
                 }
             }
         }
         return loss;
+    }
+
+    /**
+     * Find out nodes that could be linked to be inference. This can be used to avoid penalize wrong root
+     * attachment.
+     *
+     * @param referenceGraph
+     * @return
+     */
+    private Map<NodeKey, EdgeType> couldBeLinkedByInference(MentionSubGraph referenceGraph) {
+        Map<NodeKey, EdgeType> couldBeLinked = new HashMap<>();
+
+        if (referenceGraph.getResolvedRelations() != null) {
+            for (Map.Entry<EdgeType, Set<Pair<NodeKey, NodeKey>>> edgesByType : referenceGraph.resolvedRelations
+                    .entrySet()) {
+                EdgeType type = edgesByType.getKey();
+                for (Pair<NodeKey, NodeKey> link : edgesByType.getValue()) {
+                    NodeKey latterKey = link.getKey();
+                    if (link.getValue().compareTo(latterKey) > 0) {
+                        latterKey = link.getValue();
+                    }
+//                logger.info(latterKey + " could be linked as " + type + " by " + link);
+                    couldBeLinked.put(latterKey, type);
+                }
+            }
+        }
+        return couldBeLinked;
     }
 
     private double compareEdge(SubGraphEdge referentEdge, SubGraphEdge targetEdge) {
@@ -524,7 +535,7 @@ public class MentionSubGraph {
         typedCorefChains = GraphUtils.createSortedCorefChains(keyClusters);
     }
 
-    public Map<LabelledMentionGraphEdge, EdgeType> getDecodedEdges(){
+    public Map<LabelledMentionGraphEdge, EdgeType> getDecodedEdges() {
         return edgeTypes;
     }
 

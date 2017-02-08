@@ -12,6 +12,7 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,7 +21,7 @@ import java.util.List;
  *
  * @author Zhengzhong Liu
  */
-public class SequenceFeaturesWithMentionInBetween extends AbstractMentionPairFeatures {
+public class SequenceFeaturesWithMentionInBetween extends AbstractSequenceFeatures {
     private TObjectIntHashMap<Word> head2Entity;
 
     public SequenceFeaturesWithMentionInBetween(Configuration generalConfig, Configuration featureConfig) {
@@ -55,95 +56,36 @@ public class SequenceFeaturesWithMentionInBetween extends AbstractMentionPairFea
         MentionCandidate firstCandidate = candidates.get(firstCandIndex);
         MentionCandidate secondCandidate = candidates.get(secondCandIndex);
 
-        int firstSentenceIndex = firstCandidate.getContainedSentence().getIndex();
-        int secondSentenceIndex = secondCandidate.getContainedSentence().getIndex();
 
         String firstRealis = firstNodeKey.getRealis();
-        String secondRealis = secondNodeKey.getRealis();
-
-        int sentDist = Math.abs(secondSentenceIndex - firstSentenceIndex);
 
         int leftCandIndex = Math.min(firstCandIndex, secondCandIndex);
         int rightCandIndex = Math.max(firstCandIndex, secondCandIndex);
 
-        if (sentDist < 3) {
-            if (!firstNodeKey.getRealis().equals("Other") && firstRealis.equals(secondRealis)) {
+        if (utils.sentenceWindowConstraint(firstCandidate, secondCandidate, 3)) {
+            if (utils.strictEqualRealisConstraint(firstNodeKey, secondNodeKey)) {
+                Map<String, Double> compatibleFeatures = utils.generateScriptCompabilityFeatures(
+                        firstCandidate, secondCandidate, true);
+
                 int numMib = rightCandIndex - leftCandIndex - 1;
                 for (int mibIndex = leftCandIndex + 1; mibIndex < rightCandIndex; mibIndex++) {
                     for (NodeKey nodeKey : candidates.get(mibIndex).asKey()) {
                         String mibType = nodeKey.getMentionType();
 
-                        addBoolean(featuresNeedLabel,
-                                String.format("MentionTypePair_Realis=%s_MentionInBetween=%s::%s:%s",
-                                        firstRealis, mibType, firstType, secondType)
-                        );
-                        addBoolean(featuresNeedLabel,
-                                String.format("HeadwordPair_Realis=%s_MentionInBetween=%s::%s:%s",
-                                        firstRealis, mibType,
-                                        firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                        secondCandidate.getHeadWord().getLemma().toLowerCase())
-                        );
-
-                        if (firstCandidate.getBegin() < secondCandidate.getBegin()) {
-                            addBoolean(featuresNeedLabel,
-                                    String.format("ForwardMentionTypePair_Realis=%s_MentionInBetween=%s::%s:%s",
-                                            firstRealis, mibType, firstType, secondType)
-                            );
-                            addBoolean(featuresNeedLabel,
-                                    String.format("ForwardHeadwordPair_Realis=%s_MentionInBetween=%s::%s:%s",
-                                            firstRealis, mibType,
-                                            firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                            secondCandidate.getHeadWord().getLemma().toLowerCase())
-                            );
-                        } else {
-                            addBoolean(featuresNeedLabel,
-                                    String.format("BackwardMentionTypePair_Realis=%s_MentionInBetween=%s::%s:%s",
-                                            firstRealis, mibType, firstType, secondType)
-                            );
-                            addBoolean(featuresNeedLabel,
-                                    String.format("BackwardHeadwordPair_Realis=%s_MentionInBetween=%s::%s:%s",
-                                            firstRealis, mibType,
-                                            firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                            secondCandidate.getHeadWord().getLemma().toLowerCase())
-                            );
+                        for (Map.Entry<String, Double> compatibleFeature : compatibleFeatures.entrySet()) {
+                            String compatibleFeatureName = compatibleFeature.getKey();
+                            double compatibleScore = compatibleFeature.getValue();
+                            addWithScore(featuresNeedLabel,String.format("%s_Realis=%s_MentionInBetween=%s",
+                                    compatibleFeatureName, firstRealis, mibType), compatibleScore);
                         }
                     }
                 }
 
-                addBoolean(featuresNeedLabel,
-                        String.format("MentionTypePair_Realis=%s_NumMib=%d::%s:%s",
-                                firstRealis, numMib, firstType, secondType)
-                );
-                addBoolean(featuresNeedLabel,
-                        String.format("HeadwordPair_Realis=%s_NumMib=%d::%s:%s",
-                                firstRealis, numMib,
-                                firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                secondCandidate.getHeadWord().getLemma().toLowerCase())
-                );
-
-
-                if (firstCandidate.getBegin() < secondCandidate.getBegin()) {
-                    addBoolean(featuresNeedLabel,
-                            String.format("ForwardMentionTypePair_Realis=%s_NumMib=%d::%s:%s",
-                                    firstRealis, numMib, firstType, secondType)
-                    );
-                    addBoolean(featuresNeedLabel,
-                            String.format("ForwardHeadwordPair_Realis=%s_NumMib=%d::%s:%s",
-                                    firstRealis, numMib,
-                                    firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                    secondCandidate.getHeadWord().getLemma().toLowerCase())
-                    );
-                }else{
-                    addBoolean(featuresNeedLabel,
-                            String.format("BackwardMentionTypePair_Realis=%s_NumMib=%d::%s:%s",
-                                    firstRealis, numMib, firstType, secondType)
-                    );
-                    addBoolean(featuresNeedLabel,
-                            String.format("BackwardHeadwordPair_Realis=%s_NumMib=%d::%s:%s",
-                                    firstRealis, numMib,
-                                    firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                    secondCandidate.getHeadWord().getLemma().toLowerCase())
-                    );
+                for (Map.Entry<String, Double> compatibleFeature : compatibleFeatures.entrySet()) {
+                    String compatibleFeatureName = compatibleFeature.getKey();
+                    double compatibleScore = compatibleFeature.getValue();
+                    addWithScore(featuresNeedLabel, String.format("%s_Realis=%s_NumMib=%d",
+                            compatibleFeatureName, firstRealis, numMib), compatibleScore);
                 }
             }
         }

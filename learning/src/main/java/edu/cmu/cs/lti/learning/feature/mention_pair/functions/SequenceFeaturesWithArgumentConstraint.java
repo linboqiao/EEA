@@ -27,7 +27,7 @@ import java.util.function.Function;
  *
  * @author Zhengzhong Liu
  */
-public class SequenceFeaturesWithArgumentConstraint extends AbstractMentionPairFeatures {
+public class SequenceFeaturesWithArgumentConstraint extends AbstractSequenceFeatures {
     private TObjectIntHashMap<Word> head2Entity;
 
     public SequenceFeaturesWithArgumentConstraint(Configuration generalConfig, Configuration featureConfig) {
@@ -54,25 +54,16 @@ public class SequenceFeaturesWithArgumentConstraint extends AbstractMentionPairF
     @Override
     public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
                                    List<MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey secondNodeKey) {
-        String firstType = firstNodeKey.getMentionType();
-        String secondType = secondNodeKey.getMentionType();
-
         MentionCandidate firstCandidate = candidates.get(MentionGraph.getCandidateIndex(firstNodeKey.getNodeIndex()));
         MentionCandidate secondCandidate = candidates.get(MentionGraph.getCandidateIndex(secondNodeKey.getNodeIndex()));
 
-        int firstSentenceIndex = firstCandidate.getContainedSentence().getIndex();
-        int secondSentenceIndex = secondCandidate.getContainedSentence().getIndex();
-
-        String firstRealis = firstNodeKey.getRealis();
-        String secondRealis = secondNodeKey.getRealis();
-
-        int sentDist = Math.abs(secondSentenceIndex - firstSentenceIndex);
-
-        if (sentDist < 3) {
-            if (!firstNodeKey.getRealis().equals("Other") && firstRealis.equals(secondRealis)) {
-
+        if (utils.sentenceWindowConstraint(firstCandidate, secondCandidate, 3)) {
+            if (utils.strictEqualRealisConstraint(firstNodeKey, secondNodeKey)) {
                 Word firstHead = firstCandidate.getHeadWord();
                 Word secondHead = secondCandidate.getHeadWord();
+
+                Map<String, Double> compatibleFeatures = utils.generateScriptCompabilityFeatures(
+                        firstCandidate, secondCandidate, true);
 
                 List<Function<SemanticRelation, String>> possibleRoles = new ArrayList<>();
                 possibleRoles.add(SemanticRelation::getPropbankRoleName);
@@ -82,21 +73,19 @@ public class SequenceFeaturesWithArgumentConstraint extends AbstractMentionPairF
                     Map<Word, String> firstRoles = getArgs(firstHead, role);
                     Map<Word, String> secondRoles = getArgs(secondHead, role);
 
-                    pairCorefFeatures(firstRoles, secondRoles,
-                            String.format("MentionTypePair_%s:%s", firstType, secondType),
-                            featuresNeedLabel);
-                    pairCorefFeatures(firstRoles, secondRoles,
-                            String.format("HeadWordPair_%s:%s",
-                                    firstHead.getLemma().toLowerCase(), secondHead.getLemma().toLowerCase()),
-                            featuresNeedLabel);
-                    // Analysis seems to show that forward backward does not matter here.
+                    for (Map.Entry<String, Double> compatibleFeature : compatibleFeatures.entrySet()) {
+                        String compatibleFeatureName = compatibleFeature.getKey();
+                        double compatibleScore = compatibleFeature.getValue();
+                        pairCorefFeatures(firstRoles, secondRoles, compatibleFeatureName, featuresNeedLabel,
+                                compatibleScore);
+                    }
                 }
             }
         }
     }
 
     private void pairCorefFeatures(Map<Word, String> first, Map<Word, String> second, String baseFeatureName,
-                                   TObjectDoubleMap<String> features) {
+                                   TObjectDoubleMap<String> features, double score) {
         for (Map.Entry<Word, String> firstArgType : first.entrySet()) {
             Word firstHead = firstArgType.getKey();
             String firstRole = firstArgType.getValue();
@@ -115,13 +104,13 @@ public class SequenceFeaturesWithArgumentConstraint extends AbstractMentionPairF
 
                 if (firstEntity != -1 && secondEntity != -1) {
                     if (firstEntity == secondEntity) {
-                        addBoolean(features, String.format("%s::CorefOn::%s:%s", baseFeatureName, firstRole,
-                                secondRole));
+                        addWithScore(features, String.format("%s::CorefOn::%s:%s", baseFeatureName, firstRole,
+                                secondRole), score);
                     }
                 } else {
                     if (firstHead.equals(secondHead)) {
-                        addBoolean(features, String.format("%s::CorefOn::%s:%s", baseFeatureName, firstRole,
-                                secondRole));
+                        addWithScore(features, String.format("%s::CorefOn::%s:%s", baseFeatureName, firstRole,
+                                secondRole), score);
                     }
                 }
             }

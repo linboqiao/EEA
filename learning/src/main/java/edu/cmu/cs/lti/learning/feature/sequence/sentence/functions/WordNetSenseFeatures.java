@@ -15,7 +15,6 @@ import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
-import org.javatuples.Pair;
 
 import java.io.IOException;
 import java.util.*;
@@ -113,8 +112,8 @@ public class WordNetSenseFeatures extends SequenceFeatureWithFocus<StanfordCoren
     private void derivationFeatures(TObjectDoubleMap<String> features, StanfordCorenlpToken token) {
         Set<String> derivedWordType = new HashSet<>();
 
-        for (Pair<String, String> der : searcher.getDerivations(token.getLemma().toLowerCase(), token.getPos())) {
-            derivedWordType.add(der.getValue0());
+        for (Map.Entry<String, String> der : searcher.getDerivations(token.getLemma().toLowerCase(), token.getPos()).entries()) {
+            derivedWordType.add(der.getValue());
         }
 
         if (!derivedWordType.isEmpty()) {

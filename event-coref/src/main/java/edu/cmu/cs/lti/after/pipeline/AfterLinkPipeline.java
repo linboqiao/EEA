@@ -26,8 +26,10 @@ public class AfterLinkPipeline {
             pipeline.crossValidation(config);
         }
 
+
         if (config.getBoolean("edu.cmu.cs.lti.test", false)) {
             pipeline.trainTest(config, false);
         }
+
     }
 }

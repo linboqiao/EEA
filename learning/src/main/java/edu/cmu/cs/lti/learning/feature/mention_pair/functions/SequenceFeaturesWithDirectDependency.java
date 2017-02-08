@@ -12,6 +12,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,7 +21,7 @@ import java.util.List;
  *
  * @author Zhengzhong Liu
  */
-public class SequenceFeaturesWithDirectDependency extends AbstractMentionPairFeatures {
+public class SequenceFeaturesWithDirectDependency extends AbstractSequenceFeatures {
     public SequenceFeaturesWithDirectDependency(Configuration generalConfig, Configuration featureConfig) {
         super(generalConfig, featureConfig);
     }
@@ -39,46 +40,37 @@ public class SequenceFeaturesWithDirectDependency extends AbstractMentionPairFea
     @Override
     public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
                                    List<MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey secondNodeKey) {
-        String firstType = firstNodeKey.getMentionType();
-        String secondType = secondNodeKey.getMentionType();
-
         MentionCandidate firstCandidate = candidates.get(MentionGraph.getCandidateIndex(firstNodeKey.getNodeIndex()));
         MentionCandidate secondCandidate = candidates.get(MentionGraph.getCandidateIndex(secondNodeKey.getNodeIndex()));
 
-        int firstSentenceIndex = firstCandidate.getContainedSentence().getIndex();
-        int secondSentenceIndex = secondCandidate.getContainedSentence().getIndex();
-
         String firstRealis = firstNodeKey.getRealis();
-        String secondRealis = secondNodeKey.getRealis();
 
-        int sentDist = Math.abs(secondSentenceIndex - firstSentenceIndex);
-
-        if (sentDist == 0) {
-            if (!firstNodeKey.getRealis().equals("Other") && firstRealis.equals(secondRealis)) {
+        if (utils.sentenceWindowConstraint(firstCandidate, secondCandidate, 0)) {
+            if (utils.strictEqualRealisConstraint(firstNodeKey, secondNodeKey)) {
                 String forwardDep = checkDirectDependency(firstCandidate, secondCandidate);
 
-                if (forwardDep != null){
-                    addBoolean(featuresNeedLabel,
-                            String.format("MentionTypePair_ForwardDep=%s_Realis=%s::%s:%s", forwardDep,
-                                    firstRealis, firstType, secondType)
-                    );
-                    addBoolean(featuresNeedLabel,
-                            String.format("HeadwordPair_ForwardDep=%s_Realis=%s::%s:%s", forwardDep, firstRealis,
-                                    firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                    secondCandidate.getHeadWord().getLemma().toLowerCase())
-                    );
-                }else{
+                if (forwardDep != null) {
+                    Map<String, Double> compatibleFeatures =
+                            utils.generateScriptCompabilityFeatures(firstCandidate, secondCandidate, true);
+
+                    for (Map.Entry<String, Double> compatibleFeature : compatibleFeatures.entrySet()) {
+                        String compatibleFeatureName = compatibleFeature.getKey();
+                        double compatibleScore = compatibleFeature.getValue();
+                        addWithScore(featuresNeedLabel, String.format("%s_Realis=%s_ForwardDep=%s",
+                                compatibleFeatureName, firstRealis, forwardDep), compatibleScore);
+                    }
+                } else {
                     String backwardDep = checkDirectDependency(secondCandidate, firstCandidate);
-                    if (backwardDep != null){
-                        addBoolean(featuresNeedLabel,
-                                String.format("MentionTypePair_BackwardDep=%s_Realis=%s::%s:%s", backwardDep,
-                                        firstRealis, firstType, secondType)
-                        );
-                        addBoolean(featuresNeedLabel,
-                                String.format("HeadwordPair_BackwardDep=%s_Realis=%s::%s:%s", backwardDep, firstRealis,
-                                        firstCandidate.getHeadWord().getLemma().toLowerCase(),
-                                        secondCandidate.getHeadWord().getLemma().toLowerCase())
-                        );
+                    if (backwardDep != null) {
+                        Map<String, Double> compatibleFeatures =
+                                utils.generateScriptCompabilityFeatures(firstCandidate, secondCandidate, true);
+
+                        for (Map.Entry<String, Double> compatibleFeature : compatibleFeatures.entrySet()) {
+                            String compatibleFeatureName = compatibleFeature.getKey();
+                            double compatibleScore = compatibleFeature.getValue();
+                            addWithScore(featuresNeedLabel, String.format("%s_Realis=%s_BackwardDep=%s",
+                                    compatibleFeatureName, firstRealis, backwardDep), compatibleScore);
+                        }
                     }
                 }
             }

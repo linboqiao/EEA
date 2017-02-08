@@ -363,7 +363,7 @@ public class EventMentionPipeline {
                                     LtpAnnotator.PARAM_SRL_MODEL,
                                     new File(generalModelDir, "ltp_models/ltp_data/srl")
                             );
-                        } else if (name.equals("discourse")){
+                        } else if (name.equals("discourse")) {
                             processor = AnalysisEngineFactory.createEngineDescription(
                                     DiscourseParserAnnotator.class, typeSystemDescription);
                         } else {
@@ -623,22 +623,22 @@ public class EventMentionPipeline {
         CollectionReaderDescription testDataReader = CustomCollectionReaderFactory.createXmiReader(
                 typeSystemDescription, testingWorkingDir, preprocessBase);
 
-        String evalDir = FileUtils.joinPaths(testingWorkingDir, evalBase, "full_run");
+        String evalDir = FileUtils.joinPaths(testingWorkingDir, evalBase, fullRunSuffix);
 
         CollectionReaderDescription trainingData = prepareExperimentData(taskConfig, trainingReader,
-                testDataReader, evalDir, "full_run", true, seed);
+                testDataReader, evalDir, fullRunSuffix, true, seed);
 
-        if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", true)) {
+        if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", false)) {
             logger.info("Will run individual model experiments.");
             experiment(taskConfig, fullRunSuffix, trainingData, testDataReader, evalDir, runAll);
         }
 
-        if (taskConfig.getBoolean("edu.cmu.cs.lti.joint.models", true)) {
+        if (taskConfig.getBoolean("edu.cmu.cs.lti.joint.models", false)) {
             logger.info("Will run joint model experiments.");
             jointExperiment(taskConfig, fullRunSuffix, trainingData, testDataReader, evalDir, runAll);
         }
 
-        if (taskConfig.getBoolean("edu.cmu.lti.after.models", true)) {
+        if (taskConfig.getBoolean("edu.cmu.lti.after.models", false)) {
             logger.info("Will run after model experiments.");
             afterExperiment(taskConfig, fullRunSuffix, trainingData, testDataReader, evalDir, runAll);
         }
@@ -777,7 +777,8 @@ public class EventMentionPipeline {
     private void afterExperiment(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainingData,
                                  CollectionReaderDescription testReader, String processOutDir, boolean runAll)
             throws IOException, UIMAException, SAXException, CpeDescriptorException, ClassNotFoundException,
-            NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+            NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException,
+            InterruptedException {
         boolean skipAfterTrain = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.after.skiptrain", false);
         boolean skipAfterTest = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.after.skiptest", false);
         Configuration afterConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.after"));
@@ -786,15 +787,7 @@ public class EventMentionPipeline {
 
         logger.info("Producing partial gold standards to tag after links.");
         CollectionReaderDescription goldMentionAll = annotateGoldMentions(testReader, trainingWorkingDir,
-                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions"), true, true, true, false, false);
-
-//        AnalysisEngineDescription featureCheck = AnalysisEngineFactory.createEngineDescription(
-//                AfterFeatureChecker.class, typeSystemDescription,
-//                AfterFeatureChecker.PARAM_CONFIG_PATH, afterConfig.getConfigFile(),
-//                AfterFeatureChecker.PARAM_OUTPUT_DIR,
-//                new File(taskConfig.get("edu.cmu.cs.lti.stats.dir"), "after_feature_check"));
-//
-//        SimplePipeline.runPipeline(trainingData, featureCheck);
+                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions"), true, true, true, false, true);
 
         PlainAfterModelRunner runner = new PlainAfterModelRunner(mainConfig, typeSystemDescription);
 
@@ -873,46 +866,49 @@ public class EventMentionPipeline {
         // Take gold standard tbf for evaluation.
         File testGold = FileUtils.joinPathsAsFile(tbfOutDir, "gold_test_" + sliceSuffix + ".tbf");
 
-        /*####################################################
-         * Begin of gold standard benchmarks.
-         ###################################################*/
-        // Produce gold mention (type + realis) detection.
+//        /*####################################################
+//         * Begin of gold standard benchmarks.
+//         ###################################################*/
+//        // Produce gold mention (type + realis) detection.
         logger.info("Producing partial gold standards.");
         CollectionReaderDescription goldMentionAll = annotateGoldMentions(testReader, trainingWorkingDir,
-                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions"), true, true, false, false, false);
-
-        // Gold mention types.
-        CollectionReaderDescription goldMentionTypes = annotateGoldMentions(testReader, trainingWorkingDir,
-                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_type"), true, false, false, false, false);
-
-        String realisModelDir = null;
-        RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
-
-        if (hasRealis) {
-            // Train realis model.
-            realisModelDir = realisModelRunner.trainRealis(realisConfig, trainingData, sliceSuffix, skipRealisTrain);
-            realisModelRunner.testRealis(realisConfig, goldMentionTypes, realisModelDir,
-                    sliceSuffix, "gold_mention_realis", tbfOutDir, subEvalDir, testGold, skipRealisTest);
-        }
-
-        /*####################################################
-         * End of gold standard benchmarks.
-         ###################################################*/
+                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions"), true, true, false, false, true);
+//
+//        // Gold mention types.
+//        CollectionReaderDescription goldMentionTypes = annotateGoldMentions(testReader, trainingWorkingDir,
+//                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_type"), true, false, false, false, false);
+//
+//        String realisModelDir = null;
+//        RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
+//
+//        if (hasRealis) {
+//            // Train realis model.
+//            realisModelDir = realisModelRunner.trainRealis(realisConfig, trainingData, sliceSuffix, skipRealisTrain);
+//            realisModelRunner.testRealis(realisConfig, goldMentionTypes, realisModelDir,
+//                    sliceSuffix, "gold_mention_realis", tbfOutDir, subEvalDir, testGold, skipRealisTest);
+//        }
+//
+//        /*####################################################
+//         * End of gold standard benchmarks.
+//         ###################################################*/
 
         /*#################################################
          * BEGIN of the Vanilla perceptron models training:
          ################################################*/
 
-        TokenMentionModelRunner tokenModel = new TokenMentionModelRunner(mainConfig,
-                typeSystemDescription);
-        CorefModelRunner corefModel = new CorefModelRunner(mainConfig, typeSystemDescription);
-
-        // The vanilla crf model.
-        String vanillaTypeModel = tokenModel.trainSentLvType(tokenCrfConfig, trainingData, testReader, sliceSuffix,
-                false,
-                "hamming", tbfOutDir, testGold, skipTypeTrain, skipTypeTest);
+        // The token models.
+//        TokenMentionModelRunner tokenModel = new TokenMentionModelRunner(mainConfig,
+//                typeSystemDescription);
+//        // The vanilla crf model.
+//        String vanillaTypeModel = tokenModel.trainSentLvType(tokenCrfConfig, trainingData, testReader, sliceSuffix,
+//                false,
+//                "hamming", tbfOutDir, testGold, skipTypeTrain, skipTypeTest);
 
 //        tokenMentionErrorAnalysis(tokenCrfConfig, testReader, vanillaTypeModel);
+
+
+        // The coreference models.
+        CorefModelRunner corefModel = new CorefModelRunner(mainConfig, typeSystemDescription);
 
         // The vanilla coref model.
         String treeCorefModel = corefModel.trainLatentTreeCoref(corefConfig, trainingData, goldMentionAll, sliceSuffix,
@@ -1048,13 +1044,13 @@ public class EventMentionPipeline {
          /*#################################################
          * BEGIN to use test coreference after simple type detection and realis
          ################################################*/
-        CollectionReaderDescription plainMentionOutput = tokenModel.testPlainMentionModel(tokenCrfConfig, testReader,
-                vanillaTypeModel, sliceSuffix, "vanillaMention", tbfOutDir, subEvalDir, testGold, skipTypeTest);
-        CollectionReaderDescription realisOutput = realisModelRunner.testRealis(realisConfig, plainMentionOutput,
-                realisModelDir, sliceSuffix, "vanillaMentionRealis", tbfOutDir, subEvalDir, testGold,
-                skipTypeTest && skipRealisTest);
-        corefModel.testCoref(corefConfig, realisOutput, treeCorefModel, sliceSuffix, "corefDownStreamTest",
-                tbfOutDir, subEvalDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);
+//        CollectionReaderDescription plainMentionOutput = tokenModel.testPlainMentionModel(tokenCrfConfig, testReader,
+//                vanillaTypeModel, sliceSuffix, "vanillaMention", tbfOutDir, subEvalDir, testGold, skipTypeTest);
+//        CollectionReaderDescription realisOutput = realisModelRunner.testRealis(realisConfig, plainMentionOutput,
+//                realisModelDir, sliceSuffix, "vanillaMentionRealis", tbfOutDir, subEvalDir, testGold,
+//                skipTypeTest && skipRealisTest);
+//        corefModel.testCoref(corefConfig, realisOutput, treeCorefModel, sliceSuffix, "corefDownStreamTest",
+//                tbfOutDir, subEvalDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);
 
 //        for (Map.Entry<String, String> beamCorefModelWithName : beamCorefModels.entrySet()) {
 //            String corefModelName = beamCorefModelWithName.getKey();
@@ -1062,8 +1058,5 @@ public class EventMentionPipeline {
 //            testBeamCoref(corefConfig, realisOutput, beamCorefModel, sliceSuffix,
 //                    "corefDownStreamTest_" + corefModelName, evalDir, subEvalDir, testGold, skipCorefTest);
 //        }
-        /*#################################################
-         * END of the Beam coreference models testing
-        ################################################*/
     }
 }
