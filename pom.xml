@@ -77,7 +77,7 @@
             <dependency>
                 <groupId>edu.cmu.cs.lti</groupId>
                 <artifactId>semafor-parser</artifactId>
-                <version>0.0.2</version>
+                <version>0.0.5</version>
             </dependency>
             <dependency>
                 <groupId>edu.stanford.nlp</groupId>
