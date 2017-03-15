@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.io;
 import edu.cmu.cs.lti.collection_reader.*;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
+import edu.cmu.cs.lti.uima.io.reader.PlainTextCollectionReader;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.uima.UIMAException;
@@ -63,6 +64,9 @@ public class EventDataReader {
                 break;
             case "bratafter":
                 readBratAfter(datasetConfig, typeSystemDescription, rawBase);
+                break;
+            case "brat":
+                readBrat(datasetConfig, typeSystemDescription, rawBase);
                 break;
             default:
                 throw new IllegalArgumentException(String.format("Unknown dataset format %s.", datasetFormat));
@@ -133,9 +137,35 @@ public class EventDataReader {
                     EventSpanProcessor.class
             );
             AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(parentDir, rawBase);
-            SimplePipeline.runPipeline(reader,emsAnnotator,  writer);
-//            SimplePipeline.runPipeline(reader, writer);
+            SimplePipeline.runPipeline(reader, emsAnnotator, writer);
+        }
+    }
 
+    private void readBrat(Configuration datasetConfig, TypeSystemDescription typeSystemDescription, String rawBase)
+            throws UIMAException, IOException {
+        if (!skipRaw || !new File(workingDir, rawBase).exists()) {
+            CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
+                    PlainTextCollectionReader.class, typeSystemDescription,
+                    PlainTextCollectionReader.PARAM_INPUTDIR, datasetConfig.get("edu.cmu.cs.lti.data.source.path"),
+                    PlainTextCollectionReader.PARAM_TEXT_SUFFIX,
+                    datasetConfig.get("edu.cmu.cs.lti.data.source.extension")
+            );
+
+            AnalysisEngineDescription goldAnnotator = AnalysisEngineFactory.createEngineDescription(
+                    BratEventGoldStandardAnnotator.class, typeSystemDescription,
+                    BratEventGoldStandardAnnotator.PARAM_ANNOTATION_DIR,
+                    datasetConfig.get("edu.cmu.cs.lti.data.annotation.path"),
+                    BratEventGoldStandardAnnotator.PARAM_TEXT_FILE_SUFFIX, ".txt",
+                    BratEventGoldStandardAnnotator.PARAM_ANNOTATION_FILE_NAME_SUFFIX, ".ann"
+            );
+
+            AnalysisEngineDescription emsAnnotator = AnalysisEngineFactory.createEngineDescription(
+                    EventSpanProcessor.class
+            );
+
+            AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(workingDir, rawBase);
+
+            SimplePipeline.runPipeline(reader, goldAnnotator, emsAnnotator, writer);
         }
     }
 
@@ -149,8 +179,11 @@ public class EventDataReader {
                     AfterLinkGoldStandardAnnotator.PARAM_ANNOTATION_DIR,
                     datasetConfig.get("edu.cmu.cs.lti.data.annotation.path")
             );
+            AnalysisEngineDescription emsAnnotator = AnalysisEngineFactory.createEngineDescription(
+                    EventSpanProcessor.class
+            );
             AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(workingDir, rawBase);
-            SimplePipeline.runPipeline(baseReader, goldAfterLinker, writer);
+            SimplePipeline.runPipeline(baseReader, goldAfterLinker, emsAnnotator, writer);
         }
     }
 

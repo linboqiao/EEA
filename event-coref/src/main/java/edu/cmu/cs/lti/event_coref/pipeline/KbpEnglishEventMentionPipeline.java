@@ -32,7 +32,7 @@ public class KbpEnglishEventMentionPipeline {
         pipeline.prepare(kbpConfig);
 
         if (kbpConfig.getBoolean("edu.cmu.cs.lti.test", false)) {
-            pipeline.trainTest(kbpConfig, false);
+            pipeline.trainTest(kbpConfig, false, kbpConfig.getBoolean("edu.cmu.cs.lti.test.has_gold", false));
         }
 
         if (kbpConfig.getBoolean("edu.cmu.cs.lti.development", false)) {

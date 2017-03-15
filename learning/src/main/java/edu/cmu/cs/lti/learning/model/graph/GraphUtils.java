@@ -82,6 +82,7 @@ public class GraphUtils {
             T from = row.getKey();
             for (T to : row.getValue()) {
                 if (closureGraph.containsKey(to)) {
+                    // Show that the "to" node can be reached from another way, thus "indirect link".
                     for (T k : closureGraph.get(to)) {
                         indirectLinks.add(Pair.of(from, k));
                     }

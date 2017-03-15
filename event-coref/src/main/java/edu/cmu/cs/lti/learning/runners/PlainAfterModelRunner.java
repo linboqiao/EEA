@@ -52,9 +52,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
 
         if (skipTrain && modelExists) {
             logger.info("Skipping after training, taking existing models.");
-
             logger.info("Directly run the test and evaluate the performance.");
-            logger.info("Gold standard is : " + testGold);
             testAfter(config, testReader, cvModelDir, suffix, "test_only", processOutputDir,
                     testGold, skipTest);
         } else {
@@ -110,6 +108,10 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
             logger.info("Tree Based After training finished ...");
         }
         return cvModelDir;
+    }
+
+    public void processEvalOutput(){
+
     }
 
     /**

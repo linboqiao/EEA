@@ -34,7 +34,7 @@ public class ChineseEventMentionPipeline {
         }
 
         if (kbpConfig.getBoolean("edu.cmu.cs.lti.test", false)) {
-            pipeline.trainTest(kbpConfig, false);
+            pipeline.trainTest(kbpConfig, false, kbpConfig.getBoolean("edu.cmu.cs.lti.test.has_gold", false));
         }
     }
 }

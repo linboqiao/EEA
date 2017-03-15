@@ -102,7 +102,7 @@ public class MentionUtils {
     }
 
     public static int[][] getCandidateMappingFromSpans(JCas aJCas, List<EventMention> allMentions,
-                                                        List<MentionCandidate> candidates) {
+                                                       List<MentionCandidate> candidates) {
         createSingleEvents(aJCas, allMentions);
 
         // We clear some duplicates before, so we need to use a set to make sure we don't use them any more.
@@ -118,6 +118,12 @@ public class MentionUtils {
 
         List<EventMentionSpan> mentionSpans = new ArrayList<>(JCasUtil.select(aJCas, EventMentionSpan.class));
         TObjectIntMap<EventMentionSpan> spanIds = new TObjectIntHashMap<>();
+
+        if (mentionSpans.size() == 0 && allMentions.size() != 0) {
+            logger.error(String.format("Number of mention span is 0, but number of mention is %d, probably you forgot" +
+                    " to annotate mention spans.", allMentions.size()));
+            throw new IllegalStateException("Event mention spans not annotated, cannot get span based candidates.");
+        }
 
         for (int i = 0; i < mentionSpans.size(); i++) {
             // i is the candidate id, a.k.a, the mention span id.

@@ -22,14 +22,12 @@ public class AfterLinkPipeline {
 
         pipeline.prepare(config);
 
-        if (config.getBoolean("edu.cmu.cs.lti.development", false)){
+        if (config.getBoolean("edu.cmu.cs.lti.test", false)) {
+            pipeline.trainTest(config, false, config.getBoolean("edu.cmu.cs.lti.test.has_gold", false));
+        }
+
+        if (config.getBoolean("edu.cmu.cs.lti.development", false)) {
             pipeline.crossValidation(config);
         }
-
-
-        if (config.getBoolean("edu.cmu.cs.lti.test", false)) {
-            pipeline.trainTest(config, false);
-        }
-
     }
 }

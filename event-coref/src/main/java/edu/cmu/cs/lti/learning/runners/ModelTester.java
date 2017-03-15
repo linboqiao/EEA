@@ -71,8 +71,8 @@ public abstract class ModelTester {
         String tbfOutput = FileUtils.joinPaths(outputDir, sliceSuffix, modelName, runName + ".tbf");
         RunnerUtils.writeResults(output, typeSystemDescription, tbfOutput, runName, charOffset, false);
 
-        if (gold.isFile()) {
-            logger.info("Evaluating over all event types.");
+        if (gold != null && gold.isFile()) {
+            logger.info("Evaluating over all event types, gold is from: " + gold);
             eval(gold, tbfOutput, subEval, runName, sliceSuffix, null);
             String selectedTypePath = taskConfig.get("edu.cmu.cs.lti.eval.selected_type.file");
             if (selectedTypePath != null) {

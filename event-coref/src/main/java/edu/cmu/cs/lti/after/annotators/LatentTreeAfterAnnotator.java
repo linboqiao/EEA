@@ -114,7 +114,7 @@ public class LatentTreeAfterAnnotator extends AbstractLoggingAnnotator {
 
         for (Map.Entry<LabelledMentionGraphEdge, EdgeType> decodedEdge : predictedTree
                 .getDecodedEdges().entrySet()) {
-            if (decodedEdge.getKey().isRoot()){
+            if (decodedEdge.getKey().isRoot()) {
                 continue;
             }
 
