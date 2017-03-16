@@ -170,10 +170,6 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
             mention.removeFromIndexes();
         }
 
-        for (EventMentionSpan eventMentionSpan : UimaConvenience.getAnnotationList(toView, EventMentionSpan.class)) {
-            eventMentionSpan.removeFromIndexes();
-        }
-
         Map<EventMention, EventMention> from2toMentionMap = new HashMap<>();
 
         for (EventMention goldMention : JCasUtil.select(fromView, EventMention.class)) {

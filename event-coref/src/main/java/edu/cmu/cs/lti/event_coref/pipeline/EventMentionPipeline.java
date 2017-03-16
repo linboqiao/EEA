@@ -924,6 +924,9 @@ public class EventMentionPipeline {
         String treeCorefModel = corefModel.trainLatentTreeCoref(corefConfig, trainingData, goldMentionAll, sliceSuffix,
                 resultDir, subEvalDir, testGold, skipCorefTrain, skipTypeTest && skipCorefTest);
 
+        corefModel.testCoref(corefConfig, goldMentionAll, treeCorefModel, sliceSuffix, "coref_test",
+                resultDir, subEvalDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);
+
         /*#################################################
          * END of the Vanilla perceptron models training:
          ################################################*/
