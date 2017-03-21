@@ -67,8 +67,10 @@ public class KBP2015EventTaskPipeline {
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
         pipeline.prepare(kbpConfig, trainReader, testReader);
-        pipeline.crossValidation(kbpConfig);
+
         pipeline.trainTest(kbpConfig, false);
+
+//        pipeline.crossValidation(kbpConfig);
 
 //        for (int i = 1; i < 23; i++) {
 //            pipeline.trainAll(kbpConfig, skipTypeTrain, skipLv2TypeTrain, skipRealisTrain, skipCorefTrain, i);

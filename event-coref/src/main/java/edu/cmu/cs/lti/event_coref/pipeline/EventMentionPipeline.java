@@ -557,7 +557,10 @@ public class EventMentionPipeline {
                                                         String outputBase, boolean mergeTypes, int seed)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
 
-        if (!new File(workingDir, outputBase).exists()) {
+        File trainingDataDir = new File(workingDir, outputBase);
+
+        if (!trainingDataDir.exists()) {
+            logger.info("Preparing training data into: " + trainingDataDir);
             new BasicPipeline(new ProcessorWrapper() {
                 @Override
                 public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
@@ -898,7 +901,8 @@ public class EventMentionPipeline {
 
         String evalDir = FileUtils.joinPaths(testingWorkingDir, evalBase, "full_run");
 
-        experiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, evalDir, seed, runAll);
+        experimentCoref(taskConfig, fullRunSuffix, trainingReader, testDataReader, evalDir, seed);
+//        experiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, evalDir, seed, runAll);
     }
 
     /**
@@ -927,6 +931,36 @@ public class EventMentionPipeline {
 
             experiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, crossEvalDir, seed, false);
         }
+    }
+
+    private void experimentCoref(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainReader,
+                                 CollectionReaderDescription testReader, String evalDir, int seed) throws Exception {
+        CollectionReaderDescription trainingData = prepareTraining(trainReader,
+                trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix, "prepared_training"), false,
+                seed);
+
+        // Train coref model.
+        String treeCorefModel = trainLatentTreeCoref(taskConfig, trainingData, sliceSuffix, false, seed,
+                taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree"));
+
+        // Run gold mention detection.
+        CollectionReaderDescription goldMentionAll = goldMentionAnnotator(testReader, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions"), true, true, false, true
+                    /* copy type, realis, not coref, merge types*/);
+
+        CollectionReaderDescription corefGoldTypeRealis = corefResolution(taskConfig, goldMentionAll,
+                treeCorefModel, trainingWorkingDir,
+                FileUtils.joinPaths(middleResults, sliceSuffix, "coref_gold_type+realis"), true,
+                false);
+
+        // Write the predictions.
+        writeResults(
+                corefGoldTypeRealis,
+                FileUtils.joinPaths(evalDir, "gold_type_realis_coref_" + sliceSuffix + ".tbf"), "tree_coref"
+        );
+
+        // Produce gold standard tbf for easy evaluation.
+        writeGold(testReader, FileUtils.joinPaths(evalDir, "gold_" + sliceSuffix + ".tbf"));
     }
 
     private void experiment(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainReader,
