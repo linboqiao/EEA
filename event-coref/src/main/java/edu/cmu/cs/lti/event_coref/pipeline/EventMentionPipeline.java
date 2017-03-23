@@ -139,13 +139,14 @@ public class EventMentionPipeline {
      * @param config Configuration file.
      * @throws Exception
      */
-    public void regression(Configuration config, CollectionReaderDescription... inputReaders) throws Exception {
+    public void regression(Configuration config, CollectionReaderDescription trainReader,
+                           CollectionReaderDescription testReader) throws Exception {
         if (trainingWorkingDir != null) {
-            prepare(config, inputReaders, trainingWorkingDir, false);
+            prepare(config, trainReader, trainingWorkingDir, false);
         }
 
         if (testingWorkingDir != null) {
-            prepare(config, inputReaders, testingWorkingDir, false);
+            prepare(config, testReader, testingWorkingDir, false);
         }
 
         trainTest(config, true);
@@ -158,17 +159,20 @@ public class EventMentionPipeline {
      * @throws IOException
      * @throws UIMAException
      */
-    public void prepare(Configuration taskConfig, CollectionReaderDescription... readers) throws IOException,
+    public void prepare(Configuration taskConfig, CollectionReaderDescription trainingReader,
+                        CollectionReaderDescription testReader) throws IOException,
             UIMAException, CpeDescriptorException, SAXException {
         boolean skipTrainPrepare = taskConfig.getBoolean("edu.cmu.cs.lti.train.skip.preprocess", false);
         boolean skipTestPrepare = taskConfig.getBoolean("edu.cmu.cs.lti.test.skip.preprocess", false);
 
         if (trainingWorkingDir != null) {
-            prepare(taskConfig, readers, trainingWorkingDir, skipTrainPrepare);
+            logger.info("Running prepare for training.");
+            prepare(taskConfig, trainingReader, trainingWorkingDir, skipTrainPrepare);
         }
 
         if (testingWorkingDir != null) {
-            prepare(taskConfig, readers, testingWorkingDir, skipTestPrepare);
+            logger.info("Running prepare for testing.");
+            prepare(taskConfig, testReader, testingWorkingDir, skipTestPrepare);
         }
     }
 
@@ -181,7 +185,7 @@ public class EventMentionPipeline {
      * @throws UIMAException
      * @throws IOException
      */
-    public void prepare(Configuration taskConfig, CollectionReaderDescription[] inputReaders, String workingDirPath,
+    public void prepare(Configuration taskConfig, CollectionReaderDescription inputReader, String workingDirPath,
                         boolean skipIfExists) throws
             UIMAException, IOException, CpeDescriptorException, SAXException {
         if (workingDirPath == null) {
@@ -210,64 +214,62 @@ public class EventMentionPipeline {
         final String fanseModelDirectory = generalModelDir + "/fanse_models";
         final String opennlpDirectory = generalModelDir + "/opennlp/en-chunker.bin";
 
-        for (CollectionReaderDescription reader : inputReaders) {
-            new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
+        new BasicPipeline(new ProcessorWrapper() {
+            @Override
+            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
+                return inputReader;
+            }
 
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription[] preprocessors = new AnalysisEngineDescription[preprocessorNames.size()];
+            @Override
+            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
+                AnalysisEngineDescription[] preprocessors = new AnalysisEngineDescription[preprocessorNames.size()];
 
-                    for (int i = 0; i < preprocessorNames.size(); i++) {
-                        String name = preprocessorNames.get(i);
-                        AnalysisEngineDescription processor;
+                for (int i = 0; i < preprocessorNames.size(); i++) {
+                    String name = preprocessorNames.get(i);
+                    AnalysisEngineDescription processor;
 
-                        if (name.equals("corenlp")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    StanfordCoreNlpAnnotator.class, typeSystemDescription,
-                                    StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language
-                            );
-                        } else if (name.equals("semafor")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    SemaforAnnotator.class, typeSystemDescription,
-                                    SemaforAnnotator.SEMAFOR_MODEL_PATH, semaforModelDirectory);
-                        } else if (name.equals("fanse")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    FanseAnnotator.class, typeSystemDescription,
-                                    FanseAnnotator.PARAM_MODEL_BASE_DIR, fanseModelDirectory);
-                        } else if (name.equals("opennlp")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    OpenNlpChunker.class, typeSystemDescription,
-                                    OpenNlpChunker.PARAM_MODEL_PATH, opennlpDirectory);
-                        } else if (name.equals("wordnetEntity")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    WordNetBasedEntityAnnotator.class, typeSystemDescription,
-                                    WordNetBasedEntityAnnotator.PARAM_WN_PATH,
-                                    FileUtils.joinPaths(taskConfig.get("edu.cmu.cs.lti.resource.dir"),
-                                            taskConfig.get("edu.cmu.cs.lti.wndict.path"))
-                            );
-                        } else if (name.equals("quote")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    QuoteAnnotator.class, typeSystemDescription
-                            );
-                        } else if (name.equals("ArgumentMerger")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(ArgumentMerger.class,
-                                    typeSystemDescription);
-                        } else {
-                            throw new ConfigurationException("Unknown preprocessor specified : " + name);
-                        }
-
-                        logger.info("Adding preprocessor " + name);
-
-                        preprocessors[i] = processor;
+                    if (name.equals("corenlp")) {
+                        processor = AnalysisEngineFactory.createEngineDescription(
+                                StanfordCoreNlpAnnotator.class, typeSystemDescription,
+                                StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language
+                        );
+                    } else if (name.equals("semafor")) {
+                        processor = AnalysisEngineFactory.createEngineDescription(
+                                SemaforAnnotator.class, typeSystemDescription,
+                                SemaforAnnotator.SEMAFOR_MODEL_PATH, semaforModelDirectory);
+                    } else if (name.equals("fanse")) {
+                        processor = AnalysisEngineFactory.createEngineDescription(
+                                FanseAnnotator.class, typeSystemDescription,
+                                FanseAnnotator.PARAM_MODEL_BASE_DIR, fanseModelDirectory);
+                    } else if (name.equals("opennlp")) {
+                        processor = AnalysisEngineFactory.createEngineDescription(
+                                OpenNlpChunker.class, typeSystemDescription,
+                                OpenNlpChunker.PARAM_MODEL_PATH, opennlpDirectory);
+                    } else if (name.equals("wordnetEntity")) {
+                        processor = AnalysisEngineFactory.createEngineDescription(
+                                WordNetBasedEntityAnnotator.class, typeSystemDescription,
+                                WordNetBasedEntityAnnotator.PARAM_WN_PATH,
+                                FileUtils.joinPaths(taskConfig.get("edu.cmu.cs.lti.resource.dir"),
+                                        taskConfig.get("edu.cmu.cs.lti.wndict.path"))
+                        );
+                    } else if (name.equals("quote")) {
+                        processor = AnalysisEngineFactory.createEngineDescription(
+                                QuoteAnnotator.class, typeSystemDescription
+                        );
+                    } else if (name.equals("ArgumentMerger")) {
+                        processor = AnalysisEngineFactory.createEngineDescription(ArgumentMerger.class,
+                                typeSystemDescription);
+                    } else {
+                        throw new ConfigurationException("Unknown preprocessor specified : " + name);
                     }
-                    return preprocessors;
+
+                    logger.info("Adding preprocessor " + name);
+
+                    preprocessors[i] = processor;
                 }
-            }, workingDirPath, preprocessBase).runWithOutput();
-        }
+                return preprocessors;
+            }
+        }, workingDirPath, preprocessBase).runWithOutput();
     }
 
     private List<String> validatePreprocessors(String[] preprocessorNames) {
@@ -939,17 +941,19 @@ public class EventMentionPipeline {
                 trainingWorkingDir, FileUtils.joinPaths(middleResults, sliceSuffix, "prepared_training"), false,
                 seed);
 
+        boolean skipCorefTrain = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
+
         // Train coref model.
-        String treeCorefModel = trainLatentTreeCoref(taskConfig, trainingData, sliceSuffix, false, seed,
+        String treeCorefModel = trainLatentTreeCoref(taskConfig, trainingData, sliceSuffix, skipCorefTrain, seed,
                 taskConfig.get("edu.cmu.cs.lti.model.event.latent_tree"));
 
         // Run gold mention detection.
-        CollectionReaderDescription goldMentionAll = goldMentionAnnotator(testReader, trainingWorkingDir,
+        CollectionReaderDescription goldMentionAll = goldMentionAnnotator(testReader, testingWorkingDir,
                 FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions"), true, true, false, true
                     /* copy type, realis, not coref, merge types*/);
 
         CollectionReaderDescription corefGoldTypeRealis = corefResolution(taskConfig, goldMentionAll,
-                treeCorefModel, trainingWorkingDir,
+                treeCorefModel, testingWorkingDir,
                 FileUtils.joinPaths(middleResults, sliceSuffix, "coref_gold_type+realis"), true,
                 false);
 

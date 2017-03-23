@@ -36,6 +36,6 @@ public class RegressionPipeline {
 
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, config);
 
-        pipeline.regression(config);
+//        pipeline.regression(config);
     }
 }
