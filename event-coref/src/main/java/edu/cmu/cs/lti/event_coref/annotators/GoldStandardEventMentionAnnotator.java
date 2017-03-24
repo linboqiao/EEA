@@ -15,6 +15,7 @@ import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.uima.UIMAException;
+import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CAS;
@@ -26,6 +27,7 @@ import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
+import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +76,14 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
     @ConfigurationParameter(name = PARAM_MERGE_SAME_SPAN, defaultValue = "false")
     private boolean mergeTypes;
 
+    private int numMentions = 0;
+
+    @Override
+    public void initialize(UimaContext context) throws ResourceInitializationException {
+        super.initialize(context);
+        numMentions = 0;
+    }
+
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         final JCas goldStandard = JCasUtil.getView(aJCas, goldStandardViewName, false);
@@ -87,6 +97,12 @@ public class GoldStandardEventMentionAnnotator extends AbstractAnnotator {
                 copyEvents(goldStandard, targetView, from2toMentionMap);
             }
         }
+    }
+
+    @Override
+    public void collectionProcessComplete() throws AnalysisEngineProcessException {
+        super.collectionProcessComplete();
+//        logger.info(String.format("Finished gold standard annotation, number of mentions copied is %d.", numMentions));
     }
 
     private Map<EventMention, EventMention> copyMentions(JCas fromView, JCas toView) {

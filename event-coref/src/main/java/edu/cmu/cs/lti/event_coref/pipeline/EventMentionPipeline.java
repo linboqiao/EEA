@@ -949,7 +949,7 @@ public class EventMentionPipeline {
 
         // Run gold mention detection.
         CollectionReaderDescription goldMentionAll = goldMentionAnnotator(testReader, testingWorkingDir,
-                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions"), true, true, false, true
+                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_mentions"), true, true, false, false
                     /* copy type, realis, not coref, merge types*/);
 
         CollectionReaderDescription corefGoldTypeRealis = corefResolution(taskConfig, goldMentionAll,

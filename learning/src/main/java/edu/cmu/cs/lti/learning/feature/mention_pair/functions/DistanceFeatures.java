@@ -70,7 +70,6 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
 
         if (firstSentence.getIndex() == 0 && secondSentence.getIndex() == 1) {
             addBoolean(rawFeatures, "TitleAndFirstSent");
-
         }
 
         int sentenceInBetween = Math.abs(firstSentence.getIndex() - secondSentence.getIndex());
