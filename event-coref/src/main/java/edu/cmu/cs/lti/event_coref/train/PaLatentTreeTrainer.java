@@ -17,6 +17,7 @@ import edu.cmu.cs.lti.script.type.EventMentionRelation;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import edu.cmu.cs.lti.utils.FileUtils;
 import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;
 import gnu.trove.iterator.TIntObjectIterator;
@@ -113,6 +114,8 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        UimaConvenience.printProcessLog(aJCas, logger);
+
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
         List<EventMentionRelation> allMentionRelations = new ArrayList<>(
                 JCasUtil.select(aJCas, EventMentionRelation.class));
@@ -207,24 +210,21 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
      * @param latentTree    The gold latent tree.
      */
     private void passiveAggressiveUpdate(MentionSubGraph predictedTree, MentionSubGraph latentTree) {
-//        logger.info(predictedTree.toString());
-//
-//        logger.info(latentTree.toString());
-
         GraphFeatureVector delta = latentTree.getDelta(predictedTree, classAlphabet, featureAlphabet);
 
-//        logger.info("Delta between the features are: ");
-//        logger.info(delta.readableNodeVector());
         double loss = predictedTree.getLoss(latentTree);
         double l2 = getFeatureL2(delta);
-//        double deltaDotProd = weights.dotProd(delta);
-//        double tau = (deltaDotProd - loss) / l2;
         double tau = loss / l2;
-
-//        logger.info("Loss is " + loss + " update rate is " + tau + " l2 is " + l2);
 
         weights.updateWeightsBy(delta, tau);
         weights.updateAverageWeights();
+
+        logger.info(predictedTree.toString());
+        logger.info(latentTree.toString());
+        logger.info("Delta between the features are: ");
+        logger.info(delta.readableNodeVector());
+        logger.info("Loss is " + loss + " update rate is " + tau + " l2 is " + l2);
+        DebugUtils.pause();
     }
 
     /**
