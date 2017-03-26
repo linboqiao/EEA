@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.learning.model.graph;
 import com.google.common.base.Joiner;
 import com.google.common.collect.*;
 import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -652,15 +653,15 @@ public class MentionSubGraph {
         if (l2Sqaure != 0) {
             double tau = loss / l2Sqaure;
 
-//            logger.info("Updating weights by: " + tau);
-//            logger.info(delta.readableNodeVector());
+            logger.info("Updating weights by: " + tau);
+            logger.info(delta.readableNodeVector());
 
             weights.updateWeightsBy(delta, tau);
             weights.updateAverageWeights();
 
-//            logger.info("After update:");
-//            logger.info(weights.getNodeWeights("Root").toReadableString(weights.getFeatureAlphabet()));
-//            DebugUtils.pause();
+            logger.info("After update:");
+            logger.info(weights.getNodeWeights("Root").toReadableString(weights.getFeatureAlphabet()));
+            DebugUtils.pause();
 
         }
         return loss;

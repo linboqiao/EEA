@@ -59,7 +59,7 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         logger.info("Initialize latent tree perceptron trainer");
 
         int alphabetBits = config.getInt("edu.cmu.cs.lti.coref.feature.alphabet_bits", 22);
-        boolean readableModel = config.getBoolean("edu.cmu.cs.lti.coref.readableModel", false);
+        boolean readableModel = config.getBoolean("edu.cmu.cs.lti.readableModel", false);
         boolean discardAfter = config.getBoolean("edu.cmu.cs.lti.coref.cache.discard_after", true);
         long weightLimit = config.getLong("edu.cmu.cs.lti.coref.weightlimit", 1250000);
 

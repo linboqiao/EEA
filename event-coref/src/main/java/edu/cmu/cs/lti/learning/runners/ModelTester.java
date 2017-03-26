@@ -35,8 +35,8 @@ public abstract class ModelTester {
         tokenDir = config.get("edu.cmu.cs.lti.training.token_map.dir");
 
         trainingWorkingDir = config.get("edu.cmu.cs.lti.training.working.dir");
-        String processOutputDir = config.get("edu.cmu.cs.lti.process.base.dir") + "_" + config.get("edu.cmu.cs.lti" +
-                ".experiment.name");
+        String processOutputDir = FileUtils.joinPaths(config.get("edu.cmu.cs.lti.process.base.dir"),
+                config.get("edu.cmu.cs.lti.experiment.name"));
 
         this.middleResults = processOutputDir + "/intermediate";
         this.modelName = modelName;

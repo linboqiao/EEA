@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.learning.runners;
 
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.FileUtils;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +31,8 @@ public abstract class AbstractMentionModelRunner {
         this.typeSystemDescription = typeSystemDescription;
         this.trainingWorkingDir = mainConfig.get("edu.cmu.cs.lti.training.working.dir");
         this.testingWorkingDir = mainConfig.get("edu.cmu.cs.lti.test.working.dir");
-        this.processOut = mainConfig.get("edu.cmu.cs.lti.process.base.dir") + "_" +
-                mainConfig.get("edu.cmu.cs.lti.experiment.name");
+        this.processOut = FileUtils.joinPaths(mainConfig.get("edu.cmu.cs.lti.process.base.dir"),
+                mainConfig.get("edu.cmu.cs.lti.experiment.name"));
         this.eventModelDir = mainConfig.get("edu.cmu.cs.lti.model.event.dir");
         this.mainConfig = mainConfig;
         this.language = mainConfig.getOrElse("edu.cmu.cs.lti.language", "en");

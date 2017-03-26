@@ -138,11 +138,15 @@ public class EventMentionPipeline {
         this(typeSystemName, config.getOrElse("edu.cmu.cs.lti.language", "en"),
                 config.getBoolean("edu.cmu.cs.lti.output.character.offset", true),
                 config.get("edu.cmu.cs.lti.model.dir"),
-                config.get("edu.cmu.cs.lti.model.event.dir"),
+                // Each model are saved in their own experiment folder to avoid confusion.
+                FileUtils.joinPaths(config.get("edu.cmu.cs.lti.model.event.dir"),
+                        config.get("edu.cmu.cs.lti.experiment.name")),
                 config.get("edu.cmu.cs.lti.training.working.dir"),
                 config.get("edu.cmu.cs.lti.test.working.dir"),
                 config.get("edu.cmu.cs.lti.model.config.dir"),
-                config.get("edu.cmu.cs.lti.process.base.dir") + "_" + config.get("edu.cmu.cs.lti.experiment.name")
+                // Experiment data are also put into their own experiemnt folders.
+                FileUtils.joinPaths(config.get("edu.cmu.cs.lti.process.base.dir"),
+                        config.get("edu.cmu.cs.lti.experiment.name"))
         );
 
         if (config.getBoolean("edu.cmu.cs.lti.output.character.offset", true)) {
@@ -196,9 +200,9 @@ public class EventMentionPipeline {
         boolean skipRaw = taskConfig.getBoolean("edu.cmu.cs.lti.skip.raw", false);
 
         if (skipRaw) {
-            logger.info("Will not read raw files from corpus again.");
+            logger.info("Existing raw dataset will not be read from corpus again.");
         } else {
-            logger.info("Will read raw files from corpus.");
+            logger.info("Datasets will always be read from corpus.");
         }
 
         logger.info("Reading training data.");
@@ -673,17 +677,17 @@ public class EventMentionPipeline {
             CollectionReaderDescription trainingData = prepareExperimentData(taskConfig, trainingSliceReader,
                     devSliceReader, crossEvalDir, sliceSuffix, true, seed);
 
-            if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", true)) {
+            if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", false)) {
                 logger.info("Will run individual model experiments.");
                 experiment(taskConfig, sliceSuffix, trainingData, devSliceReader, crossEvalDir, false);
             }
 
-            if (taskConfig.getBoolean("edu.cmu.cs.lti.joint.models", true)) {
+            if (taskConfig.getBoolean("edu.cmu.cs.lti.joint.models", false)) {
                 logger.info("Will run joint model experiments.");
                 jointExperiment(taskConfig, sliceSuffix, trainingData, devSliceReader, crossEvalDir, false);
             }
 
-            if (taskConfig.getBoolean("edu.cmu.lti.after.models", true)) {
+            if (taskConfig.getBoolean("edu.cmu.lti.after.models", false)) {
                 logger.info("Will run after model experiments.");
                 afterExperiment(taskConfig, sliceSuffix, trainingData, devSliceReader, crossEvalDir, false);
             }

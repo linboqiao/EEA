@@ -113,17 +113,30 @@ public class EventDataReader {
     private void readTbf(Configuration datasetConfig, TypeSystemDescription typeSystemDescription, String rawBase)
             throws UIMAException, SAXException, CpeDescriptorException, IOException {
         if (!skipRaw || !new File(workingDir, rawBase).exists()) {
-            CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
-                    TbfEventDataReader.class, typeSystemDescription,
-                    TbfEventDataReader.PARAM_GOLD_STANDARD_FILE, datasetConfig.get("edu.cmu.cs.lti.data.gold.tbf"),
-                    TbfEventDataReader.PARAM_SOURCE_EXT, datasetConfig.get("edu.cmu.cs.lti.data.source.extension"),
-                    TbfEventDataReader.PARAM_SOURCE_TEXT_DIRECTORY,
-                    datasetConfig.get("edu.cmu.cs.lti.data.source.path"),
-                    TbfEventDataReader.PARAM_TOKEN_DIRECTORY, datasetConfig.get("edu.cmu.cs.lti.token_map.dir"),
-                    TbfEventDataReader.PARAM_TOKEN_EXT, datasetConfig.get("edu.cmu.cs.lti.data.token.extension"),
-                    TbfEventDataReader.PARAM_LANGUAGE, datasetConfig.get("edu.cmu.cs.lti.data.language"),
-                    TbfEventDataReader.PARAM_INPUT_VIEW_NAME, UimaConst.inputViewName
-            );
+            CollectionReaderDescription reader;
+            if (datasetConfig.get("edu.cmu.cs.lti.data.span").equals("token")) {
+                reader = CollectionReaderFactory.createReaderDescription(
+                        TbfEventDataReader.class, typeSystemDescription,
+                        TbfEventDataReader.PARAM_GOLD_STANDARD_FILE, datasetConfig.get("edu.cmu.cs.lti.data.gold.tbf"),
+                        TbfEventDataReader.PARAM_SOURCE_EXT, datasetConfig.get("edu.cmu.cs.lti.data.source.extension"),
+                        TbfEventDataReader.PARAM_SOURCE_TEXT_DIRECTORY,
+                        datasetConfig.get("edu.cmu.cs.lti.data.source.path"),
+                        TbfEventDataReader.PARAM_TOKEN_DIRECTORY, datasetConfig.get("edu.cmu.cs.lti.token_map.dir"),
+                        TbfEventDataReader.PARAM_TOKEN_EXT, datasetConfig.get("edu.cmu.cs.lti.data.token.extension"),
+                        TbfEventDataReader.PARAM_LANGUAGE, datasetConfig.get("edu.cmu.cs.lti.data.language"),
+                        TbfEventDataReader.PARAM_INPUT_VIEW_NAME, UimaConst.inputViewName
+                );
+            } else {
+                reader = CollectionReaderFactory.createReaderDescription(
+                        TbfEventDataReader.class, typeSystemDescription,
+                        TbfEventDataReader.PARAM_GOLD_STANDARD_FILE, datasetConfig.get("edu.cmu.cs.lti.data.gold.tbf"),
+                        TbfEventDataReader.PARAM_SOURCE_EXT, datasetConfig.get("edu.cmu.cs.lti.data.source.extension"),
+                        TbfEventDataReader.PARAM_SOURCE_TEXT_DIRECTORY,
+                        datasetConfig.get("edu.cmu.cs.lti.data.source.path"),
+                        TbfEventDataReader.PARAM_LANGUAGE, datasetConfig.get("edu.cmu.cs.lti.data.language"),
+                        TbfEventDataReader.PARAM_INPUT_VIEW_NAME, UimaConst.inputViewName
+                );
+            }
             writeAsXmi(reader, workingDir, rawBase, skipRaw);
         }
     }
