@@ -21,8 +21,10 @@ import java.util.List;
 public class DistanceFeatures extends AbstractMentionPairFeatures {
 
     private int[] sentenceThresholds = {0, 1, 3, 5};
+    private int[] mentionThresholds = {0, 1, 3, 5};
 
     private int lastSentenceThreshold = sentenceThresholds[sentenceThresholds.length - 1];
+    private int lastMentionTreshold = mentionThresholds[mentionThresholds.length - 1];
 
     private String documentType = "UNKNOWN";
 
@@ -45,9 +47,8 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
 
     @Override
     public void extractNodeRelated(JCas documentContext, TObjectDoubleMap<String> featuresNeedLabel,
-                                   List<MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey
-                                           secondNodeKey) {
-//        thresholdedMentionDistance(featuresNeedLabel, candidates, firstNode, secondNode);
+                                   List<MentionCandidate> candidates, NodeKey firstNodeKey, NodeKey secondNodeKey) {
+        thresholdedMentionDistance(featuresNeedLabel, candidates, firstNodeKey, secondNodeKey);
     }
 
     @Override
@@ -69,15 +70,54 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
             addBoolean(rawFeatures, "TitleAndFirstSent");
         }
 
-        int sentenceInBetween = Math.abs(firstSentence.getIndex() - secondSentence.getIndex());
-        for (int sentenceThreshold : sentenceThresholds) {
-            if (sentenceInBetween <= sentenceThreshold) {
-                addBoolean(rawFeatures, FeatureUtils.formatFeatureName("SentenceDistance", "i<=" + sentenceThreshold));
-                return;
+        // TODO: Edit 3 using wrong sentence and mention distance:
+        addBoolean(rawFeatures, FeatureUtils.formatFeatureName("SentenceDistance", "i<=0"));
+
+//        int sentenceInBetween = Math.abs(firstSentence.getIndex() - secondSentence.getIndex());
+//        for (int sentenceThreshold : sentenceThresholds) {
+//            if (sentenceInBetween <= sentenceThreshold) {
+//                addBoolean(rawFeatures, FeatureUtils.formatFeatureName("SentenceDistance", "i<=" +
+// sentenceThreshold));
+//                return;
+//            }
+//        }
+//
+//        addBoolean(rawFeatures, FeatureUtils.formatFeatureName("SentenceDistance", "i>" + lastSentenceThreshold));
+    }
+
+    private void thresholdedMentionDistance(TObjectDoubleMap<String> rawFeatures, List<MentionCandidate> candidates,
+                                            NodeKey firstNode, NodeKey secondNode) {
+        int firstIndex = firstNode.getNodeIndex();
+        int secondIndex = secondNode.getNodeIndex();
+
+        int left, right;
+        if (firstIndex < secondIndex) {
+            left = firstIndex;
+            right = secondIndex;
+        } else {
+            left = secondIndex;
+            right = firstIndex;
+        }
+
+        int mentionInBetween = 0;
+        for (int i = left + 1; i < right; i++) {
+            if (!candidates.get(i).isEvent()) {
+                mentionInBetween++;
             }
         }
 
-        rawFeatures.put(FeatureUtils.formatFeatureName("SentenceDistance", "i>" + lastSentenceThreshold), 1);
+        // TODO: Edit 3 using wrong sentence and mention distance:
+        addBoolean(rawFeatures, FeatureUtils.formatFeatureName("MentionDistance", "i<=0"));
+
+//        for (int mentionThreshold : mentionThresholds) {
+//            if (mentionInBetween <= mentionThreshold) {
+//                addBoolean(rawFeatures, FeatureUtils.formatFeatureName("MentionDistance",
+//                        "i<=" + mentionThreshold));
+//                return;
+//            }
+//        }
+//        addBoolean(rawFeatures, FeatureUtils.formatFeatureName("MentionDistance",
+//                "i>" + lastMentionTreshold));
     }
 
     private String getDocumentType(JCas context) {

@@ -67,8 +67,8 @@ public class MentionTypeFeatures extends AbstractMentionPairFeatures {
     @Override
     public void extract(JCas documentContext, TObjectDoubleMap<String> featuresNoLabel, MentionCandidate
             candidate) {
-        addBoolean(featuresNoLabel, FeatureUtils.formatFeatureName("SingleType",
-                candidate.getMentionType()));
+//        addBoolean(featuresNoLabel, FeatureUtils.formatFeatureName("SingleType",
+//                candidate.getMentionType()));
     }
 
     @Override

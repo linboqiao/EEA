@@ -1,18 +1,21 @@
 package edu.cmu.cs.lti.after.annotators;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
+import edu.cmu.cs.lti.io.EventDataReader;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.NodeKey;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
-import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.MentionUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
@@ -23,7 +26,9 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.CycleDetector;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
+import org.xml.sax.SAXException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +43,8 @@ import java.util.Set;
  * @author Zhengzhong Liu
  */
 public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
+
+    private TypeSystemDescription typeSystemDescription;
 
     @Override
     public String getTextToPrint(JCas aJCas) {
@@ -88,14 +95,14 @@ public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
             Set<Integer> cycles = detector.findCycles();
 
             if (cycles.size() > 0) {
-                sb.append(UimaConvenience.getDocId(aJCas)).append("\n");
-                sb.append("Showing event cycles for type ").append(edgeType).append("\n");
+                sb.append("In Document: ").append(UimaConvenience.getDocId(aJCas)).append("\n");
+                sb.append("\tConflicts related to: ").append(edgeType).append("\n");
                 for (int eventInCycle : cycles) {
-                    sb.append(String.format("In event %d\t", eventInCycle));
+                    sb.append(String.format("\tIn event %d\t", eventInCycle));
                     for (NodeKey node : event2KeyMap.get(eventInCycle)) {
                         int candidateIndex = MentionGraph.getCandidateIndex(node.getNodeIndex());
-                        String repr = String.format("%s [%d:%d] %s", candidates.get(candidateIndex).getText(),
-                                node.getBegin(), node.getEnd(), node.getMentionType());
+                        String repr = String.format("%s:%s [%d:%d]", candidates.get(candidateIndex).getText(),
+                                node.getMentionType(), node.getBegin(), node.getEnd());
                         sb.append(repr).append(" ");
                     }
                 }
@@ -106,25 +113,68 @@ public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
         return sb.toString();
     }
 
-    public static void main(String[] args) throws UIMAException, IOException {
-
-        if (args.length != 2) {
-            System.out.println("Usage: this [input] [output]");
+    public static void main(String[] args) throws UIMAException, IOException, CpeDescriptorException, SAXException {
+        if (args.length != 1) {
+            System.out.println("Usage: this settings.properties");
             System.exit(1);
         }
 
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription("TaskEventMentionDetectionTypeSystem");
+        ConflictDetector detector = new ConflictDetector(typeSystemDescription);
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(
-                typeSystemDescription, args[0]);
+        Configuration taskConfig = new Configuration(args[0]);
 
+        String datasetSettingDir = taskConfig.get("edu.cmu.cs.lti.dataset.settings.path");
+        String[] trainingDatasets = taskConfig.getList("edu.cmu.cs.lti.training.datasets");
+        String[] testDatasets = taskConfig.getList("edu.cmu.cs.lti.testing.datasets");
+
+        String trainingWorkingDir = taskConfig.get("edu.cmu.cs.lti.training.working.dir");
+        String testingWorkingDir = taskConfig.get("edu.cmu.cs.lti.test.working.dir");
+
+        System.out.println("Reading training data.");
+        CollectionReaderDescription trainingReader = detector.readDatasets(datasetSettingDir, trainingDatasets,
+                trainingWorkingDir);
+        System.out.println("Reading test data.");
+        CollectionReaderDescription testReader = detector.readDatasets(datasetSettingDir, testDatasets,
+                testingWorkingDir);
+
+        detector.findConflicts(trainingReader, new File(trainingWorkingDir, "cycles.txt").getPath());
+        detector.findConflicts(testReader, new File(testingWorkingDir, "cycles.txt").getPath());
+    }
+
+    public ConflictDetector() {
+
+    }
+
+    public ConflictDetector(TypeSystemDescription typeSystemDescription) {
+        this.typeSystemDescription = typeSystemDescription;
+    }
+
+    private void findConflicts(CollectionReaderDescription reader, String outputFile)
+            throws UIMAException, IOException {
         AnalysisEngineDescription engine = AnalysisEngineFactory
                 .createEngineDescription(
                         ConflictDetector.class, typeSystemDescription,
-                        ConflictDetector.PARAM_OUTPUT_PATH, args[1]
+                        ConflictDetector.PARAM_OUTPUT_PATH, outputFile
                 );
-
         SimplePipeline.runPipeline(reader, engine);
+    }
+
+    private CollectionReaderDescription readDatasets(String datasetConfigPath, String[] datasetNames,
+                                                     String parentDir)
+            throws IOException, UIMAException, SAXException, CpeDescriptorException {
+        logger.info(String.format("%d datasets to be read, which are %s",
+                datasetNames.length, Joiner.on(",").join(datasetNames)));
+
+        EventDataReader reader = new EventDataReader(parentDir, "raw", false);
+
+        for (String datasetName : datasetNames) {
+            logger.info("Reading dataset : " + datasetName);
+            Configuration datasetConfig = new Configuration(new File(datasetConfigPath, datasetName + ".properties"));
+            reader.readData(datasetConfig, typeSystemDescription);
+        }
+
+        return reader.getReader();
     }
 }

@@ -9,6 +9,7 @@ import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
 import edu.cmu.cs.lti.utils.MentionUtils;
@@ -102,6 +103,8 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
 //        List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions);
         List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
 
+//        UimaConvenience.printProcessLog(aJCas);
+
         extractor.initWorkspace(aJCas);
 
 //        MentionGraph mentionGraph = getMentionGraph(aJCas);
@@ -110,22 +113,13 @@ public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
         // Decoding.
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
 
-//        logger.info(predictedTree.toString());
-
         if (!predictedTree.graphMatch()) {
             MentionSubGraph latentTree = decoder.decode(mentionGraph, candidates, weights, true);
-
-//            logger.info("Best Gold Tree.");
-//            logger.info(latentTree.toString());
-
-//            logger.info("Best Decoding Tree.");
-//            logger.info(predictedTree.toString());
 
             double loss = predictedTree.paUpdate(latentTree, weights, EdgeType.Coreference);
 
             trainingStats.addLoss(logger, loss / mentionGraph.numNodes());
 
-//            logger.info("Loss is " + loss);
 //            logger.info("Averaged Loss is " + loss / mentionGraph.numNodes());
 //            DebugUtils.pause();
 

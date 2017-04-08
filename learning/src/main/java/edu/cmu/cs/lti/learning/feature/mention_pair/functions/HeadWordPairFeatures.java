@@ -48,7 +48,9 @@ public class HeadWordPairFeatures extends AbstractMentionPairFeatures {
 
         lemmaPairFeature(featuresNoLabel, firstLemma, secondLemma);
         lemmaMatchFeature(featuresNoLabel, firstLemma, secondLemma);
-        lemmaSubstringFeature(featuresNoLabel, firstLemma, secondLemma);
+
+        // TODO: Edit 4 Disable lemma substring feature.
+//        lemmaSubstringFeature(featuresNoLabel, firstLemma, secondLemma);
     }
 
     @Override

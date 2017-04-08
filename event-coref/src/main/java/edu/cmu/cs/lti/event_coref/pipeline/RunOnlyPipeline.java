@@ -32,15 +32,21 @@ public class RunOnlyPipeline {
         String inputPath = argv[1];
         //"data/mention/LDC/LDC2015E77_TAC_KBP_2015_English_Cold_Start_Evaluation_Source_Corpus_V2.0/data/";
 
+        String outputPath = argv[2];
+        //"../data/project_data/cmu-script/mention/kbp/chinese/Chinese_Coled_Start_LDC2016E63"
+
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                 LDCXmlCollectionReader.class, typeSystemDescription,
-                LDCXmlCollectionReader.PARAM_DATA_PATH, inputPath
+                LDCXmlCollectionReader.PARAM_DATA_PATH, inputPath,
+                LDCXmlCollectionReader.PARAM_BASE_NAME_FILE_FILTER,
+                kbpConfig.get("edu.cmu.cs.lti.file.basename.filter"),
+                LDCXmlCollectionReader.PARAM_LANGUAGE, "zh"
         );
 
         // Now prepare the real pipeline.
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
-        pipeline.prepareToProcess(kbpConfig, reader);
-        pipeline.runVanilla(kbpConfig);
+        pipeline.prepareToProcess(kbpConfig, reader, outputPath);
+        pipeline.runVanilla(kbpConfig, outputPath);
     }
 }

@@ -46,6 +46,8 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         Article article = JCasUtil.selectSingle(initialView, Article.class);
         String articleName = article.getArticleName();
 
+        String language = article.getLanguage();
+
         sb.append("#BeginOfDocument ").append(articleName).append("\n");
 
         TokenAlignmentHelper align = new TokenAlignmentHelper();
@@ -76,7 +78,15 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
 
             // Adding semantic roles.
             if (addSemanticRole) {
-                sb.append("\t").append(formatArguments(mention.getHeadWord()));
+                Word mentionHead = mention.getHeadWord();
+
+                // Use LTP token to get the semantic roles if possible. (This indicates we are doing Chinese)
+                List<LtpToken> ltpTokens = JCasUtil.selectCovered(LtpToken.class, mentionHead);
+                if (ltpTokens.size() > 0) {
+                    mentionHead = ltpTokens.get(0);
+                }
+
+                sb.append("\t").append(formatArguments(mentionHead));
             }
 
             sb.append("\n");
@@ -116,7 +126,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             sb.append(",");
             sb.append(mentionIds.get(relation.getChild()));
             sb.append("\n");
-            relationIndex ++;
+            relationIndex++;
         }
 
         sb.append("#EndOfDocument\n");
@@ -139,19 +149,13 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             for (SemanticRelation semanticRelation : FSCollectionFactory.create(semanticRelationsFS, SemanticRelation
                     .class)) {
                 SemanticArgument argument = semanticRelation.getChild();
-
-                Word childHead = argument.getHead();
-                String headText = childHead.getCoveredText().replaceAll("\\s", " ");
-
                 String spanText = argument.getCoveredText().replaceAll("\\s", " ");
 
                 String pbName = handleNull(semanticRelation.getPropbankRoleName());
                 String vnName = handleNull(semanticRelation.getFrameElementName());
 
-                argumentComponents.add(String.format("%d-%d:%s,%d-%d:%s,%s,%s",
-                        childHead.getBegin(), childHead.getEnd(), headText,
-                        argument.getBegin(), argument.getEnd(), spanText,
-                        pbName, vnName
+                argumentComponents.add(String.format("%d-%d:%s,%s,%s",
+                        argument.getBegin(), argument.getEnd(), spanText, pbName, vnName
                 ));
             }
         }

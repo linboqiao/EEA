@@ -117,7 +117,6 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
                         if (labelledEdge.hasActualEdgeType() &&
                                 labelledEdge.getActualEdgeType().equals(EdgeType.Coreference)) {
 
-
                             double score = labelledEdge.getCorrectLabelScore(weights);
 
                             if (Double.isNaN(score)) {
@@ -128,11 +127,13 @@ public class BestFirstLatentTreeDecoder extends LatentTreeDecoder {
                             if (MathUtils.sureLarger(score, bestScore)) {
                                 bestEdge = labelledEdge;
                                 bestScore = score;
-                            } else if (MathUtils.almostEqual(score, bestScore)) {
-                                // When tie, we break tie using the distance. We always favor closer antecedents.
-                                bestEdge = labelledEdge;
-                                bestScore = score;
                             }
+                            // TODO: Edit 1, do not break tie using distance.
+//                            else if (MathUtils.almostEqual(score, bestScore)) {
+//                                // When tie, we break tie using the distance. We always favor closer antecedents.
+//                                bestEdge = labelledEdge;
+//                                bestScore = score;
+//                            }
                         }
                     }
                 }
