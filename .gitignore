@@ -10,3 +10,8 @@ logs/
 /debug/
 grad_compare/
 excluded_classes/
+
+# Intellij
+.idea/
+*.iml
+*.iws
