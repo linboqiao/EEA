@@ -1,8 +1,8 @@
 package edu.cmu.cs.lti.learning.runners;
 
+import edu.cmu.cs.lti.annotators.GoldStandardEventMentionAnnotator;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
-import edu.cmu.cs.lti.event_coref.annotators.GoldStandardEventMentionAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.misc.GoldRemover;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EnglishSrlArgumentExtractor;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EventHeadWordAnnotator;
