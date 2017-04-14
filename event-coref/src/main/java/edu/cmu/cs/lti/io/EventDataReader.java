@@ -160,21 +160,27 @@ public class EventDataReader {
             CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                     PlainTextCollectionReader.class, typeSystemDescription,
                     PlainTextCollectionReader.PARAM_INPUTDIR, datasetConfig.get("edu.cmu.cs.lti.data.source.path"),
-                    PlainTextCollectionReader.PARAM_TEXT_SUFFIX,
-                    datasetConfig.get("edu.cmu.cs.lti.data.source.extension")
+                    PlainTextCollectionReader.PARAM_TEXT_SUFFIX, datasetConfig.get("edu.cmu.cs.lti.data.source" +
+                            ".extension"),
+                    PlainTextCollectionReader.PARAM_REMOVE_QUOTES,
+                    datasetConfig.getBoolean("edu.cmu.cs.lti.data.quotes.remove", true)
             );
+
 
             AnalysisEngineDescription goldAnnotator = AnalysisEngineFactory.createEngineDescription(
                     BratEventGoldStandardAnnotator.class, typeSystemDescription,
                     BratEventGoldStandardAnnotator.PARAM_ANNOTATION_DIR,
                     datasetConfig.get("edu.cmu.cs.lti.data.annotation.path"),
                     BratEventGoldStandardAnnotator.PARAM_TEXT_FILE_SUFFIX, ".txt",
-                    BratEventGoldStandardAnnotator.PARAM_ANNOTATION_FILE_NAME_SUFFIX, ".ann"
+                    BratEventGoldStandardAnnotator.PARAM_ANNOTATION_FILE_NAME_SUFFIX, ".ann",
+                    BratEventGoldStandardAnnotator.PARAM_PREFER_COREF_LINK, true
             );
 
             AnalysisEngineDescription emsAnnotator = AnalysisEngineFactory.createEngineDescription(
-                    EventSpanProcessor.class
+                    EventSpanProcessor.class, typeSystemDescription
             );
+
+            CustomAnalysisEngineFactory.setTypeSystem(typeSystemDescription);
 
             AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(workingDir, rawBase);
 
@@ -193,7 +199,7 @@ public class EventDataReader {
                     datasetConfig.get("edu.cmu.cs.lti.data.annotation.path")
             );
             AnalysisEngineDescription emsAnnotator = AnalysisEngineFactory.createEngineDescription(
-                    EventSpanProcessor.class
+                    EventSpanProcessor.class, typeSystemDescription
             );
             AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(workingDir, rawBase);
             SimplePipeline.runPipeline(baseReader, goldAfterLinker, emsAnnotator, writer);
