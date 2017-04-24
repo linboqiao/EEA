@@ -88,7 +88,7 @@ public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
 
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
 
-        boolean debug = false;
+        boolean debug = true;
 
 //        debug = predictedTree.hasNonRoot();
 

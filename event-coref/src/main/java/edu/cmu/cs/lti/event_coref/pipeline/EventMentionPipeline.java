@@ -14,7 +14,6 @@ import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.DebugUtils;
 import edu.cmu.cs.lti.utils.ExperimentPaths;
 import edu.cmu.cs.lti.utils.FileUtils;
 import org.apache.commons.lang.NotImplementedException;
@@ -702,8 +701,7 @@ public class EventMentionPipeline {
             if (taskConfig.getBoolean("edu.cmu.lti.after.models", false)) {
                 logger.info("Will run after model experiments.");
                 afterExperiment(taskConfig, trainingWorkingDir, sliceSuffix, trainingSliceReader, devSliceReader,
-                        resultDir,
-                        false);
+                        resultDir, false);
             }
         }
     }
@@ -846,9 +844,7 @@ public class EventMentionPipeline {
 
         PlainAfterModelRunner runner = new PlainAfterModelRunner(mainConfig, typeSystemDescription);
 
-        runner.runBaseline(afterConfig, mentionPost, resultDir, sliceSuffix, testGold);
-
-        DebugUtils.pause();
+//        runner.runBaseline(afterConfig, mentionPost, resultDir, sliceSuffix, testGold);
 
         runner.trainAfterModel(afterConfig, trainingData, mentionPost, resultDir, sliceSuffix, testGold,
                 skipAfterTrain, skipAfterTest);

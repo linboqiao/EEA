@@ -71,7 +71,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                     LatentTreeAfterTrainer.PARAM_CONFIG_PATH, config.getConfigFile()
             );
 
-            TrainingLooper trainer = new TrainingLooper(cvModelDir, trainReader, trainEngine, 2,
+            TrainingLooper trainer = new TrainingLooper(cvModelDir, trainReader, trainEngine, maxIter,
                     modelOutputFreq) {
                 @Override
                 protected boolean loopActions() {
@@ -190,7 +190,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                                                                  String sliceSuffix, String outputDir,
                                                                  File gold) throws InterruptedException, SAXException,
             UIMAException, CpeDescriptorException, IOException {
-        logger.info("Running plain temporal baselin.");
+        logger.info("Running plain temporal baseline.");
         String selectedBaselineRun = "selected_temporal_baseline";
         return new ModelTester(mainConfig, "plainTemporal") {
             @Override

@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * A baseline that copy temporal with predicted cluster
+ * A baseline that copy temporal with predicted cluster.
  *
  * @author Zhengzhong Liu
  */

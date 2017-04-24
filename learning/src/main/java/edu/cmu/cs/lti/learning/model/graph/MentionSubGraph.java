@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.learning.model.graph;
 import com.google.common.base.Joiner;
 import com.google.common.collect.*;
 import edu.cmu.cs.lti.learning.model.*;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -643,8 +644,6 @@ public class MentionSubGraph {
      * @param referentTree The gold latent tree.
      */
     public double paUpdate(MentionSubGraph referentTree, GraphWeightVector weights, EdgeType... targetEdgeTypes) {
-
-
         GraphFeatureVector delta = this.getDelta(referentTree, weights.getClassAlphabet(),
                 weights.getFeatureAlphabet(), true, targetEdgeTypes);
 
@@ -657,23 +656,22 @@ public class MentionSubGraph {
             double tau = loss / l2;
             tau /= 2;
 
-
             weights.updateWeightsBy(delta, tau);
             weights.updateAverageWeights();
 
-//            logger.info("Referent Tree.");
-//            logger.info(referentTree.toString());
-//
-//            logger.info("Decoding Tree.");
-//            logger.info(this.toString());
-//
-//            logger.info("Loss is " + loss + " update rate is " + tau + " l2 is " + l2);
-//            logger.info(delta.readableNodeVector());
-//
-//            logger.info("After update:");
-//            logger.info(weights.getNodeWeights("Root").toReadableString(weights.getFeatureAlphabet()));
-//
-//            DebugUtils.pause();
+            logger.info("Referent Tree.");
+            logger.info(referentTree.toString());
+
+            logger.info("Decoding Tree.");
+            logger.info(this.toString());
+
+            logger.info("Loss is " + loss + " update rate is " + tau + " l2 is " + l2);
+            logger.info(delta.readableNodeVector());
+
+            logger.info("After update:");
+            logger.info(weights.getNodeWeights("Root").toReadableString(weights.getFeatureAlphabet()));
+
+            DebugUtils.pause();
 
         }
         return loss;
