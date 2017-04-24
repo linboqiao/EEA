@@ -149,13 +149,13 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         return new ModelTester(mainConfig, "token_based_mention") {
             @Override
-            CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException,
                     CpeDescriptorException, IOException {
                 return sentenceLevelMentionTagging(taskConfig, reader, typeModel,
                         trainingWorkingDir, baseDir, skipTest);
             }
-        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, subEval, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, gold);
     }
 
     public CollectionReaderDescription sentenceLevelMentionTagging(Configuration crfConfig,

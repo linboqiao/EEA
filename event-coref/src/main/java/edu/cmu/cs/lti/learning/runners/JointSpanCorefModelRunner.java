@@ -137,12 +137,12 @@ public class JointSpanCorefModelRunner extends AbstractMentionModelRunner {
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         new ModelTester(mainConfig, "joint") {
             @Override
-            CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {
                 return beamJointSpanCoref(taskConfig, devReader, modelDir, realisModelDir, trainingWorkingDir,
                         processOutputDir, beamSize, true, skipTest);
             }
-        }.run(taskConfig, devReader, typeSystemDescription, sliceSuffix, runName, processOutputDir, subEvalDir, goldStandard);
+        }.run(taskConfig, devReader, typeSystemDescription, sliceSuffix, runName, processOutputDir, goldStandard);
 
     }
 
@@ -181,7 +181,7 @@ public class JointSpanCorefModelRunner extends AbstractMentionModelRunner {
                     );
 
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();
-                    RunnerUtils.addCorefPreprocessors(annotators, language);
+//                    RunnerUtils.addMentionPostprocessors(annotators, language);
                     annotators.add(goldRemover);
                     annotators.add(jointDecoder);
 

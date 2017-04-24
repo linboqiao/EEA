@@ -9,6 +9,7 @@ import edu.cmu.cs.lti.learning.model.GraphWeightVector;
 import edu.cmu.cs.lti.learning.model.HashAlphabet;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.utils.Configuration;
+import org.apache.uima.resource.ResourceInitializationException;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -21,10 +22,9 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class LearningUtils {
     public static PairFeatureExtractor initializeMentionPairExtractor(Configuration config, String featureSetName,
-                                                                      FeatureAlphabet featureAlphabet) {
+                                                                      FeatureAlphabet featureAlphabet) throws
+            ResourceInitializationException {
         String featureSpec = config.get(featureSetName);
-
-
 
         Configuration featureConfig = new FeatureSpecParser(
                 config.get("edu.cmu.cs.lti.feature.pair.package.name")
@@ -39,15 +39,15 @@ public class LearningUtils {
             return new PairFeatureExtractor(featureAlphabet, classAlphabet, config, featureConfig);
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
                 InvocationTargetException e) {
-            e.printStackTrace();
+            throw new ResourceInitializationException(e);
         }
-        return null;
     }
 
     public static SentenceFeatureExtractor initializeCrfExtractor(Configuration config,
                                                                   String sentFeatureSetName,
                                                                   String docFeatureSetName,
-                                                                  FeatureAlphabet featureAlphabet) {
+                                                                  FeatureAlphabet featureAlphabet) throws
+            ResourceInitializationException {
         String sentFeatureSpec = config.get(sentFeatureSetName);
         String docFeatureSpec = config.getOrElse(docFeatureSetName, "");
 
@@ -64,15 +64,14 @@ public class LearningUtils {
                     sentFeatureConfig, docFeatureConfig, false);
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
                 InvocationTargetException e) {
-            e.printStackTrace();
+            throw new ResourceInitializationException(e);
         }
-
-        return null;
     }
 
 
     public static SentenceFeatureExtractor initializeRealisExtractor(Configuration config, String featureSetName,
-                                                                     FeatureAlphabet featureAlphabet) {
+                                                                     FeatureAlphabet featureAlphabet) throws
+            ResourceInitializationException {
         String featurePackageName = config.get("edu.cmu.cs.lti.feature.sentence.package.name");
         String featureSpec = config.get(featureSetName);
 
@@ -86,10 +85,8 @@ public class LearningUtils {
             return new SentenceFeatureExtractor(featureAlphabet, config, realisSpec, placeHolderSpec, false);
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
                 InvocationTargetException e) {
-            e.printStackTrace();
+            throw new ResourceInitializationException(e);
         }
-
-        return null;
     }
 
     public static GraphWeightVector preareGraphWeights(Configuration config, String featureSetName) {

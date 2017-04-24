@@ -38,15 +38,27 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
     @ConfigurationParameter(name = PARAM_ADD_SEMANTIC_ROLE, defaultValue = "false")
     private boolean addSemanticRole;
 
+    public static final String PARAM_USE_GOLD_VIEW = "useGoldView";
+    @ConfigurationParameter(name = PARAM_USE_GOLD_VIEW, defaultValue = "false")
+    private boolean useGoldView;
+
     @Override
     public String getTextToPrint(JCas aJCas) {
-        StringBuilder sb = new StringBuilder();
 
         JCas initialView = JCasUtil.getView(aJCas, CAS.NAME_DEFAULT_SOFA, aJCas);
         Article article = JCasUtil.selectSingle(initialView, Article.class);
         String articleName = article.getArticleName();
 
-        String language = article.getLanguage();
+        if (useGoldView) {
+            JCas goldView = JCasUtil.getView(aJCas, goldStandardViewName, aJCas);
+            return getTbfString(goldView, articleName);
+        } else {
+            return getTbfString(aJCas, articleName);
+        }
+    }
+
+    private String getTbfString(JCas aJCas, String articleName) {
+        StringBuilder sb = new StringBuilder();
 
         sb.append("#BeginOfDocument ").append(articleName).append("\n");
 

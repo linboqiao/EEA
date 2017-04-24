@@ -23,7 +23,7 @@ public class ChineseEventMentionPipeline {
         // Now prepare the real pipeline.
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
-        pipeline.prepare(kbpConfig);
+        pipeline.prepareData(kbpConfig);
 
 //        pipeline.tryAnnotator(kbpConfig);
 

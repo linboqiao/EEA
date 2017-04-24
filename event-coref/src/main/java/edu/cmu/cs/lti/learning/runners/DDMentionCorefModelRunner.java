@@ -65,7 +65,7 @@ public class DDMentionCorefModelRunner extends AbstractMentionModelRunner {
                     );
 
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();
-                    RunnerUtils.addCorefPreprocessors(annotators, language);
+//                    RunnerUtils.addMentionPostprocessors(annotators, language);
                     annotators.add(ddDecoder);
                     annotators.add(mentionSplitter);
 

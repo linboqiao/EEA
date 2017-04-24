@@ -1,9 +1,11 @@
 package edu.cmu.cs.lti.learning.runners;
 
+import edu.cmu.cs.lti.after.annotators.GoldTemporalBaseline;
 import edu.cmu.cs.lti.after.annotators.LatentTreeAfterAnnotator;
+import edu.cmu.cs.lti.after.annotators.SelectedTemporalBaseline;
+import edu.cmu.cs.lti.after.annotators.TemporalBaseline;
 import edu.cmu.cs.lti.after.train.LatentTreeAfterTrainer;
 import edu.cmu.cs.lti.emd.pipeline.TrainingLooper;
-import edu.cmu.cs.lti.event_coref.annotators.train.BeamJointTrainer;
 import edu.cmu.cs.lti.learning.utils.ModelUtils;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
@@ -32,8 +34,15 @@ import java.util.List;
  * @author Zhengzhong Liu
  */
 public class PlainAfterModelRunner extends AbstractMentionModelRunner {
+
     public PlainAfterModelRunner(Configuration mainConfig, TypeSystemDescription typeSystemDescription) {
         super(mainConfig, typeSystemDescription);
+    }
+
+    public void runBaseline(Configuration config, CollectionReaderDescription testReader, String resultDir,
+                            String suffix, File testGold)
+            throws InterruptedException, SAXException, UIMAException, CpeDescriptorException, IOException {
+        goldTemporalBaseline(config, testReader, suffix, resultDir, testGold);
     }
 
     public String trainAfterModel(Configuration config, CollectionReaderDescription trainReader,
@@ -45,7 +54,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
         logger.info("Start after model training.");
         String cvModelDir = ModelUtils.getTrainModelPath(eventModelDir, config, suffix);
 
-        int jointMaxIter = config.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
+        int maxIter = config.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
         int modelOutputFreq = config.getInt("edu.cmu.cs.lti.perceptron.model.save.frequency", 3);
 
         boolean modelExists = new File(cvModelDir).exists();
@@ -62,12 +71,11 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                     LatentTreeAfterTrainer.PARAM_CONFIG_PATH, config.getConfigFile()
             );
 
-            TrainingLooper trainer = new TrainingLooper(cvModelDir, trainReader, trainEngine, jointMaxIter,
+            TrainingLooper trainer = new TrainingLooper(cvModelDir, trainReader, trainEngine, 2,
                     modelOutputFreq) {
                 @Override
                 protected boolean loopActions() {
                     boolean modelSaved = super.loopActions();
-                    BeamJointTrainer.loopAction();
 
                     if (modelSaved) {
                         String modelPath = cvModelDir + "_iter" + numIteration;
@@ -78,19 +86,33 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
 
                 @Override
                 protected void finish() throws IOException {
-                    BeamJointTrainer.finish();
                     // Test using the final model.
                     String runName = "after_heldout_final";
-                    test(cvModelDir, runName);
+                    CollectionReaderDescription testOutput = test(cvModelDir, runName);
+                    // Run the baselines.
+                    baseline(testOutput);
                 }
 
-                private void test(String model, String runName) {
+                private CollectionReaderDescription test(String model, String runName) {
                     if (testReader != null) {
                         try {
-                            testAfter(config, testReader, model, suffix, runName, processOutputDir,
+                            return testAfter(config, testReader, model, suffix, runName, processOutputDir,
                                     testGold, skipTest);
                         } catch (SAXException | InterruptedException | IOException | CpeDescriptorException |
                                 UIMAException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    return null;
+                }
+
+                private void baseline(CollectionReaderDescription reader) {
+                    if (testReader != null) {
+                        try {
+                            selectedTemporalBaseline(config, reader, suffix, processOutputDir, testGold);
+                            temporalBaseline(config, reader, suffix, processOutputDir, testGold);
+                        } catch (InterruptedException | SAXException | UIMAException | IOException |
+                                CpeDescriptorException e) {
                             e.printStackTrace();
                         }
                     }
@@ -110,10 +132,6 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
         return cvModelDir;
     }
 
-    public void processEvalOutput(){
-
-    }
-
     /**
      * Test the token based mention model and return the result directory as a reader
      */
@@ -122,16 +140,66 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                                                  String sliceSuffix, String runName, String outputDir,
                                                  File gold, boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
-        String subEvalDir = sliceSuffix.equals(fullRunSuffix) ? "final" : "cv";
-
         return new ModelTester(mainConfig, "plain_after_model") {
             @Override
-            CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
-                    mainDir, String baseDir) throws SAXException, UIMAException,
-                    CpeDescriptorException, IOException {
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
+                    reader, String mainDir, String baseDir)
+                    throws SAXException, UIMAException, CpeDescriptorException, IOException {
                 return afterLinking(taskConfig, reader, afterModel, trainingWorkingDir, baseDir, skipTest);
             }
-        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, subEvalDir, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, gold);
+    }
+
+    private CollectionReaderDescription goldTemporalBaseline(Configuration taskConfig,
+                                                             CollectionReaderDescription reader,
+                                                             String sliceSuffix,
+                                                             String outputDir,
+                                                             File gold)
+            throws InterruptedException, SAXException, UIMAException, CpeDescriptorException, IOException {
+        logger.info("Running gold based temporal baseline.");
+        String goldBaselineRun = "gold_temporal_baseline";
+        return new ModelTester(mainConfig, "goldTemporal") {
+            @Override
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
+                    reader, String mainDir, String baseDir) throws SAXException,
+                    UIMAException, CpeDescriptorException, IOException {
+                return GoldTemporalBaseline.run(reader, typeSystemDescription, trainingWorkingDir, baseDir);
+            }
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, goldBaselineRun, outputDir, gold);
+    }
+
+    private CollectionReaderDescription temporalBaseline(Configuration taskConfig,
+                                                         CollectionReaderDescription reader,
+                                                         String sliceSuffix, String outputDir,
+                                                         File gold) throws InterruptedException, SAXException,
+            UIMAException, CpeDescriptorException, IOException {
+        logger.info("Running plain temporal baselin.");
+        String plainBaselineRun = "plain_temporal_baseline";
+        return new ModelTester(mainConfig, "plainTemporal") {
+            @Override
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
+                    reader, String mainDir, String baseDir)
+                    throws SAXException, UIMAException, CpeDescriptorException, IOException {
+                return TemporalBaseline.run(reader, typeSystemDescription, trainingWorkingDir, baseDir);
+            }
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, plainBaselineRun, outputDir, gold);
+    }
+
+    private CollectionReaderDescription selectedTemporalBaseline(Configuration taskConfig,
+                                                                 CollectionReaderDescription reader,
+                                                                 String sliceSuffix, String outputDir,
+                                                                 File gold) throws InterruptedException, SAXException,
+            UIMAException, CpeDescriptorException, IOException {
+        logger.info("Running plain temporal baselin.");
+        String selectedBaselineRun = "selected_temporal_baseline";
+        return new ModelTester(mainConfig, "plainTemporal") {
+            @Override
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
+                    reader, String mainDir, String baseDir)
+                    throws SAXException, UIMAException, CpeDescriptorException, IOException {
+                return SelectedTemporalBaseline.run(reader, typeSystemDescription, trainingWorkingDir, baseDir);
+            }
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, selectedBaselineRun, outputDir, gold);
     }
 
     public CollectionReaderDescription afterLinking(Configuration taskConfig, CollectionReaderDescription reader,
@@ -143,6 +211,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
             logger.info("Skipping sent level tagging because output exists.");
             return CustomCollectionReaderFactory.createXmiReader(mainDir, baseOutput);
         } else {
+            logger.info("Running after link.");
             return new BasicPipeline(new ProcessorWrapper() {
                 @Override
                 public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
@@ -158,7 +227,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                     );
 
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();
-                    RunnerUtils.addCorefPreprocessors(annotators, language);
+//                    RunnerUtils.addMentionPostprocessors(annotators, language);
                     annotators.add(afterLinker);
                     return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
                 }

@@ -113,8 +113,13 @@ public class SequenceFeatureUtils {
         }
 
         if (addUnorderFeatures) {
-            features.put(String.format("MentionTypePair_%s:%s",
-                    firstCandidate.getMentionType(), secondCandidate.getMentionType()), 1.0);
+            if (firstCandidate.getMentionType().compareTo(secondCandidate.getMentionType()) > 0) {
+                features.put(String.format("MentionTypePair_%s:%s",
+                        firstCandidate.getMentionType(), secondCandidate.getMentionType()), 1.0);
+            } else {
+                features.put(String.format("MentionTypePair_%s:%s",
+                        secondCandidate.getMentionType(), firstCandidate.getMentionType()), 1.0);
+            }
         }
     }
 
@@ -129,7 +134,11 @@ public class SequenceFeatureUtils {
         }
 
         if (addUnorderFeatures) {
-            features.put(String.format("HeadwordPair_%s:%s", firstHead, secondHead), 1.0);
+            if (firstHead.compareTo(secondHead) > 0) {
+                features.put(String.format("HeadwordPair_%s:%s", firstHead, secondHead), 1.0);
+            } else {
+                features.put(String.format("HeadwordPair_%s:%s", secondHead, secondHead), 1.0);
+            }
         }
     }
 
@@ -149,7 +158,13 @@ public class SequenceFeatureUtils {
         }
 
         if (addUnorderFeatures) {
-            features.put(String.format("FramePair_%s:%s", firstHead.getFrameName(), secondHead.getFrameName()), 1.0);
+            if (firstHead.getFrameName().compareTo(secondHead.getFrameName()) > 0) {
+                features.put(String.format("FramePair_%s:%s", firstHead.getFrameName(), secondHead.getFrameName()),
+                        1.0);
+            } else {
+                features.put(String.format("FramePair_%s:%s", secondHead.getFrameName(), firstHead.getFrameName()),
+                        1.0);
+            }
         }
     }
 

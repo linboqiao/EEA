@@ -62,20 +62,26 @@ public class RunnerUtils {
         }).run();
     }
 
-    public static void addCorefPreprocessors(List<AnalysisEngineDescription> preAnnotators, String language) throws
+    public static void addMentionPostprocessors(List<AnalysisEngineDescription> annotators, String language) throws
             ResourceInitializationException {
         AnalysisEngineDescription headWordExtractor = AnalysisEngineFactory.createEngineDescription(
                 EventHeadWordAnnotator.class
         );
 
         if (language.equals("zh")) {
-            preAnnotators.add(headWordExtractor);
+            annotators.add(headWordExtractor);
         } else {
             AnalysisEngineDescription argumentExtractor = AnalysisEngineFactory.createEngineDescription(
                     EnglishSrlArgumentExtractor.class
             );
-            preAnnotators.add(headWordExtractor);
-            preAnnotators.add(argumentExtractor);
+            annotators.add(headWordExtractor);
+            annotators.add(argumentExtractor);
+
+            // TODO see if caevo can be run.
+//            AnalysisEngineDescription caevo = AnalysisEngineFactory.createEngineDescription(
+//                    CaevoAnnotator.class
+//            );
+//            annotators.add(caevo);
         }
     }
 

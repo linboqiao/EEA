@@ -93,10 +93,10 @@ public class RealisModelRunner extends AbstractMentionModelRunner {
 
         return new ModelTester(mainConfig, "realis_model") {
             @Override
-            CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {
                 return realisAnnotation(taskConfig, reader, realisModel, trainingWorkingDir, baseDir, skipTest);
             }
-        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, subEval, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, gold);
     }
 }

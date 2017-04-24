@@ -48,6 +48,8 @@ public class BasicPipeline {
 
     private boolean withOutput;
 
+    private File fullOutputDir;
+
     public BasicPipeline(ProcessorWrapper wrapper) throws UIMAException,
             CpeDescriptorException, SAXException, IOException {
         this(wrapper, null, null);
@@ -65,6 +67,8 @@ public class BasicPipeline {
                     outputDir));
             outputReader = CustomCollectionReaderFactory.createXmiReader(workingDir, outputDir);
             withOutput = true;
+
+            fullOutputDir = new File(workingDir, outputDir);
         } else {
             withOutput = false;
             engineDescriptions = processers;
@@ -141,7 +145,7 @@ public class BasicPipeline {
      */
     public CollectionReaderDescription runWithOutput() throws UIMAException, IOException {
         if (withOutput) {
-            logger.info("Processing with output.");
+            logger.info("Processing with output at : " + fullOutputDir.getCanonicalPath());
             run();
             return outputReader;
         } else {

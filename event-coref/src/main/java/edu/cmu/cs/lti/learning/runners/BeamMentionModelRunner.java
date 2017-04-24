@@ -178,12 +178,12 @@ public class BeamMentionModelRunner extends AbstractMentionModelRunner {
 
         return new ModelTester(mainConfig, "beam_model") {
             @Override
-            CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException,
                     CpeDescriptorException, IOException {
                 return beamMentionTagging(taskConfig, reader, typeModel, trainingWorkingDir, baseDir, beamSize,
                         skipTest);
             }
-        }.run(config, reader, typeSystemDescription, sliceSuffix, runName, outputDir, subEval, gold);
+        }.run(config, reader, typeSystemDescription, sliceSuffix, runName, outputDir, gold);
     }
 }

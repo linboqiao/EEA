@@ -146,7 +146,7 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
                     );
 
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();
-                    RunnerUtils.addCorefPreprocessors(annotators, language);
+//                    RunnerUtils.addMentionPostprocessors(annotators, language);
 
                     annotators.add(mentionSplitter);
                     annotators.add(corefAnnotator);
@@ -164,11 +164,11 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         return new ModelTester(mainConfig, "treeCoref") {
             @Override
-            CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {
                 return corefResolution(taskConfig, reader, corefModel, trainingWorkingDir, baseDir, skipTest);
             }
-        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, subEval, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, gold);
     }
 
 

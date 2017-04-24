@@ -124,7 +124,6 @@ public class LatentTreeAfterAnnotator extends AbstractLoggingAnnotator {
 
             EventMention fromMention = groupedMentions.get(Span.of(fromKey.getBegin(), fromKey.getEnd())).get
                     (fromKey.getKeyIndex());
-
             EventMention toMention = groupedMentions.get(Span.of(toKey.getBegin(), toKey.getEnd())).get(toKey
                     .getKeyIndex());
             EventMentionRelation relation = new EventMentionRelation(aJCas);

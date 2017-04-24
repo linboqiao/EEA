@@ -49,7 +49,6 @@ public abstract class ModelTester {
      * @param sliceSuffix
      * @param runName
      * @param outputDir
-     * @param subEval
      * @param gold
      * @return System output of the collection.
      * @throws SAXException
@@ -60,30 +59,31 @@ public abstract class ModelTester {
      */
     CollectionReaderDescription run(Configuration taskConfig, CollectionReaderDescription reader,
                                     TypeSystemDescription typeSystemDescription, String sliceSuffix, String runName,
-                                    String outputDir, String subEval, File gold)
+                                    String outputDir, File gold)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         logger.info(String.format("Running model %s", modelName));
 
+        // TODO Output should be obtained outside this funciton.
         String annotatedOutput = FileUtils.joinPaths(middleResults, sliceSuffix, runName, modelName);
 
         CollectionReaderDescription output = runModel(taskConfig, reader, trainingWorkingDir, annotatedOutput);
 
-        String tbfOutput = FileUtils.joinPaths(outputDir, sliceSuffix, modelName, runName + ".tbf");
+        String tbfOutput = FileUtils.joinPaths(outputDir, modelName, runName + ".tbf");
         RunnerUtils.writeResults(output, typeSystemDescription, tbfOutput, runName, charOffset, false);
 
         if (gold != null && gold.isFile()) {
             logger.info("Evaluating over all event types, gold is from: " + gold);
-            eval(gold, tbfOutput, subEval, runName, sliceSuffix, null);
+            eval(gold, tbfOutput, runName, sliceSuffix, null);
             String selectedTypePath = taskConfig.get("edu.cmu.cs.lti.eval.selected_type.file");
             if (selectedTypePath != null) {
                 logger.info("Evaluating on selected event types.");
-                eval(gold, tbfOutput, subEval, runName, sliceSuffix, selectedTypePath);
+                eval(gold, tbfOutput, runName, sliceSuffix, selectedTypePath);
             }
         }
         return output;
     }
 
-    private void eval(File gold, String system, String subDir, String runName, String suffix, String typesPath)
+    private void eval(File gold, String system, String runName, String suffix, String typesPath)
             throws IOException, InterruptedException {
         boolean useSelectedType = typesPath != null;
 
@@ -91,9 +91,9 @@ public abstract class ModelTester {
 
         if (useSelectedType) {
             String typeName = FilenameUtils.removeExtension(FilenameUtils.getBaseName(typesPath));
-            evalDir = FileUtils.joinPaths(evalLogOutputDir, subDir, suffix, typeName, runName);
+            evalDir = FileUtils.joinPaths(evalLogOutputDir, suffix, typeName, runName);
         } else {
-            evalDir = FileUtils.joinPaths(evalLogOutputDir, subDir, suffix, "main", runName);
+            evalDir = FileUtils.joinPaths(evalLogOutputDir, suffix, "main", runName);
         }
 
         String evalLog = FileUtils.joinPaths(evalDir, "scoring_log.txt");
@@ -153,7 +153,7 @@ public abstract class ModelTester {
         }
     }
 
-    abstract CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader,
-                                                  String mainDir, String baseDir)
+    protected abstract CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
+            reader, String mainDir, String baseDir)
             throws SAXException, UIMAException, CpeDescriptorException, IOException;
 }
