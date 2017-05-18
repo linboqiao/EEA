@@ -29,7 +29,7 @@ public class KbpEnglishEventMentionPipeline {
         // Now prepare the real pipeline.
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
-        pipeline.prepare(kbpConfig);
+        pipeline.prepareData(kbpConfig);
 
         if (kbpConfig.getBoolean("edu.cmu.cs.lti.test", false)) {
             pipeline.trainTest(kbpConfig, false, kbpConfig.getBoolean("edu.cmu.cs.lti.test.has_gold", false));

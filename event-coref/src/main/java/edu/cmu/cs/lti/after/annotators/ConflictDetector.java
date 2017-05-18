@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.after.annotators;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.io.EventDataReader;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
@@ -44,8 +43,6 @@ import java.util.Set;
  */
 public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
 
-    private TypeSystemDescription typeSystemDescription;
-
     @Override
     public String getTextToPrint(JCas aJCas) {
         StringBuilder sb = new StringBuilder();
@@ -65,6 +62,7 @@ public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
                 node2EventMap.put(key, eventId);
                 event2KeyMap.put(eventId, key);
             }
+
             eventId++;
         }
 
@@ -97,14 +95,17 @@ public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
             if (cycles.size() > 0) {
                 sb.append("In Document: ").append(UimaConvenience.getDocId(aJCas)).append("\n");
                 sb.append("\tConflicts related to: ").append(edgeType).append("\n");
+
+                sb.append("\tCycle may happend between the following events number:\n");
                 for (int eventInCycle : cycles) {
-                    sb.append(String.format("\tIn event %d\t", eventInCycle));
+                    sb.append(String.format("\tEvent %d, contains mentions: \t", eventInCycle));
                     for (NodeKey node : event2KeyMap.get(eventInCycle)) {
                         int candidateIndex = MentionGraph.getCandidateIndex(node.getNodeIndex());
                         String repr = String.format("%s:%s [%d:%d]", candidates.get(candidateIndex).getText(),
                                 node.getMentionType(), node.getBegin(), node.getEnd());
                         sb.append(repr).append(" ");
                     }
+                    sb.append("\n");
                 }
                 sb.append("\n");
             }
@@ -121,7 +122,6 @@ public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
 
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription("TaskEventMentionDetectionTypeSystem");
-        ConflictDetector detector = new ConflictDetector(typeSystemDescription);
 
         Configuration taskConfig = new Configuration(args[0]);
 
@@ -133,25 +133,21 @@ public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
         String testingWorkingDir = taskConfig.get("edu.cmu.cs.lti.test.working.dir");
 
         System.out.println("Reading training data.");
-        CollectionReaderDescription trainingReader = detector.readDatasets(datasetSettingDir, trainingDatasets,
-                trainingWorkingDir);
+        CollectionReaderDescription trainingReader = readDatasets(datasetSettingDir, trainingDatasets,
+                trainingWorkingDir, typeSystemDescription);
         System.out.println("Reading test data.");
-        CollectionReaderDescription testReader = detector.readDatasets(datasetSettingDir, testDatasets,
-                testingWorkingDir);
+        CollectionReaderDescription testReader = readDatasets(datasetSettingDir, testDatasets,
+                testingWorkingDir, typeSystemDescription);
 
-        detector.findConflicts(trainingReader, new File(trainingWorkingDir, "cycles.txt").getPath());
-        detector.findConflicts(testReader, new File(testingWorkingDir, "cycles.txt").getPath());
+
+        ConflictDetector.findConflicts(typeSystemDescription, trainingReader,
+                new File(trainingWorkingDir, "cycles.txt").getPath());
+        ConflictDetector.findConflicts(typeSystemDescription, testReader,
+                new File(testingWorkingDir, "cycles.txt").getPath());
     }
 
-    public ConflictDetector() {
-
-    }
-
-    public ConflictDetector(TypeSystemDescription typeSystemDescription) {
-        this.typeSystemDescription = typeSystemDescription;
-    }
-
-    private void findConflicts(CollectionReaderDescription reader, String outputFile)
+    public static void findConflicts(TypeSystemDescription typeSystemDescription, CollectionReaderDescription reader,
+                                     String outputFile)
             throws UIMAException, IOException {
         AnalysisEngineDescription engine = AnalysisEngineFactory
                 .createEngineDescription(
@@ -161,16 +157,14 @@ public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
         SimplePipeline.runPipeline(reader, engine);
     }
 
-    private CollectionReaderDescription readDatasets(String datasetConfigPath, String[] datasetNames,
-                                                     String parentDir)
+    public static CollectionReaderDescription readDatasets(String datasetConfigPath, String[] datasetNames,
+                                                           String parentDir, TypeSystemDescription
+                                                                   typeSystemDescription)
             throws IOException, UIMAException, SAXException, CpeDescriptorException {
-        logger.info(String.format("%d datasets to be read, which are %s",
-                datasetNames.length, Joiner.on(",").join(datasetNames)));
-
         EventDataReader reader = new EventDataReader(parentDir, "raw", false);
 
         for (String datasetName : datasetNames) {
-            logger.info("Reading dataset : " + datasetName);
+            System.out.println("Reading dataset : " + datasetName);
             Configuration datasetConfig = new Configuration(new File(datasetConfigPath, datasetName + ".properties"));
             reader.readData(datasetConfig, typeSystemDescription);
         }

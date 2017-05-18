@@ -20,14 +20,14 @@ public class AfterLinkPipeline {
         // Now prepare the real pipeline.
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, config);
 
-        pipeline.prepare(config);
-
-        if (config.getBoolean("edu.cmu.cs.lti.test", false)) {
-            pipeline.trainTest(config, false, config.getBoolean("edu.cmu.cs.lti.test.has_gold", false));
-        }
+        pipeline.prepareData(config);
 
         if (config.getBoolean("edu.cmu.cs.lti.development", false)) {
             pipeline.crossValidation(config);
+        }
+
+        if (config.getBoolean("edu.cmu.cs.lti.test", false)) {
+            pipeline.trainTest(config, false, config.getBoolean("edu.cmu.cs.lti.test.has_gold", false));
         }
     }
 }

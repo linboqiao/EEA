@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.learning.model.graph;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -17,6 +18,41 @@ import java.util.*;
  */
 public class GraphUtils {
     private static final Logger logger = LoggerFactory.getLogger(GraphUtils.class.getName());
+
+    public static <T> List<Set<T>> createCluster(List<T> elements, Collection<Pair<T, T>> relations) {
+        Map<T, Integer> elementId = new HashMap<>();
+
+        int id = 0;
+        for (T element : elements) {
+            elementId.put(element, id);
+            id++;
+        }
+
+        UnionFind uf = new UnionFind(elements.size());
+
+        for (Pair<T, T> relation : relations) {
+            int leftElement = elementId.get(relation.getLeft());
+            int rightElement = elementId.get(relation.getRight());
+            uf.union(leftElement, rightElement);
+        }
+
+        HashMultimap<Integer, T> clusters = HashMultimap.create();
+
+        for (int i = 0; i < elements.size(); i++) {
+            int head = uf.find(i);
+            clusters.put(head, elements.get(i));
+        }
+
+        List<Set<T>> nonSingletonClusters = new ArrayList<>();
+
+        for (Map.Entry<Integer, Collection<T>> cluster : clusters.asMap().entrySet()) {
+            if (cluster.getValue().size() > 1) {
+                nonSingletonClusters.add(new HashSet<>(cluster.getValue()));
+            }
+        }
+
+        return nonSingletonClusters;
+    }
 
     public static <T extends Comparable> Map<T, List<T>> transitiveClosure(Collection<Pair<T, T>> relations) {
         Map<T, List<T>> closureGraph = new HashMap<>();

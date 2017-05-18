@@ -134,7 +134,7 @@ public class BeamCorefModelRunner extends AbstractMentionModelRunner {
                     );
 
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();
-                    RunnerUtils.addCorefPreprocessors(annotators, language);
+//                    RunnerUtils.addMentionPostprocessors(annotators, language);
 //                    annotators.add(mentionSplitter);
                     annotators.add(corefAnnotator);
                     return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
@@ -150,12 +150,12 @@ public class BeamCorefModelRunner extends AbstractMentionModelRunner {
             throws InterruptedException, SAXException, UIMAException, CpeDescriptorException, IOException {
         return new ModelTester(mainConfig, "beamCoref") {
             @Override
-            CollectionReaderDescription runModel(Configuration config, CollectionReaderDescription reader, String
+            protected CollectionReaderDescription runModel(Configuration config, CollectionReaderDescription reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {
                 return beamCorefResolution(config, reader, corefModel, trainingWorkingDir, baseDir, skipTest,
                         config.getInt("edu.cmu.cs.lti.coref.beam.size", 5)
                 );
             }
-        }.run(config, reader,typeSystemDescription , sliceSuffix, runName, outputDir, subEval, gold);
+        }.run(config, reader,typeSystemDescription , sliceSuffix, runName, outputDir, gold);
     }
 }

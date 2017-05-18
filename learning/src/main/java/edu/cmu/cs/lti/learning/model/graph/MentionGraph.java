@@ -258,7 +258,6 @@ public class MentionGraph implements Serializable {
                 if (!isRoot(nodeIndex)) {
                     int candidateIndex = getCandidateIndex(nodeIndex);
                     List<NodeKey> keys = candidates.get(candidateIndex).asKey().getKeys();
-
                     // A candidate can be mapped to multiple mentions (due to multi-tagging).
                     // To handle multi-tagging, we represent each element as a pair of node and the type.
                     for (int nthMention = 0; nthMention < candidate2MentionIndex[candidateIndex].length; nthMention++) {

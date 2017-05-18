@@ -216,6 +216,11 @@
                 <artifactId>jgrapht-core</artifactId>
                 <version>1.0.0</version>
             </dependency>
+            <dependency>
+                <groupId>edu.cmu.cs.lti</groupId>
+                <artifactId>caevo-annotator</artifactId>
+                <version>0.0.5</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

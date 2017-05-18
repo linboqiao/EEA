@@ -52,7 +52,7 @@ public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
-        logger.info("Pairwise After Trainer Initializing...");
+        logger.info("Plain After Trainer Initializing...");
 
         updater = new DiscriminativeUpdater(false, true, true, null, 0, 0);
 
@@ -88,7 +88,7 @@ public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
 
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
 
-        boolean debug = false;
+        boolean debug = true;
 
 //        debug = predictedTree.hasNonRoot();
 

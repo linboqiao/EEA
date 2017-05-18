@@ -386,10 +386,13 @@ public class MentionUtils {
         }
 
         for (EventMentionRelation relation : JCasUtil.select(aJCas, EventMentionRelation.class)) {
-            if (mentionIds.containsKey(relation.getHead()) && mentionIds.containsKey(relation.getChild())) {
-                int headMention = mentionIds.get(relation.getHead());
-                int childMention = mentionIds.get(relation.getChild());
-                relations.put(headMention, childMention, relation.getRelationType());
+            // TODO: Do after only for now.
+            if (relation.getRelationType().equals("After")){
+                if (mentionIds.containsKey(relation.getHead()) && mentionIds.containsKey(relation.getChild())) {
+                    int headMention = mentionIds.get(relation.getHead());
+                    int childMention = mentionIds.get(relation.getChild());
+                    relations.put(headMention, childMention, relation.getRelationType());
+                }
             }
         }
 
