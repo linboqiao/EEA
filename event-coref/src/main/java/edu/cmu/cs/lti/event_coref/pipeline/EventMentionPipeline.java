@@ -64,15 +64,6 @@ public class EventMentionPipeline {
     final private String eventModelDir;
     final private String modelConfigDir;
 
-    // Some conventions of processing data.
-//    final private String preprocessBase = "preprocessed";
-//    final private String prepredTrainingBase = "prepared_training";
-//    final private String rawBase = "raw";
-//    final private String trialBase = "trial";
-//    final private String processOut;
-//    final private String resultBase;
-//    final private String middleResults;
-
     private ExperimentPaths paths;
 
     // When cross validation, we have auto generated suffixes for outputs. Let's make one for the full run too.

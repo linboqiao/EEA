@@ -57,6 +57,8 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
     public static final String PARAM_CONFIG = "configuration";
     @ConfigurationParameter(name = PARAM_CONFIG)
+    private String configPath;
+
     private Configuration config;
 
     // A dummy lagrangian variable.
@@ -65,6 +67,13 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
+
+        try {
+            config = new Configuration(configPath);
+        } catch (IOException e) {
+            throw new ResourceInitializationException(e);
+        }
+
         logger.info("Loading models ...");
 
         String featureSpec;
@@ -81,12 +90,13 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
         logger.info("Model loaded");
         try {
-            FeatureSpecParser sentFeatureSpecParser = new FeatureSpecParser(
-                    config.get("edu.cmu.cs.lti.feature.sentence.package.name"));
+            logger.info("");
 
-            FeatureSpecParser docFeatureSpecParser = new FeatureSpecParser(
-                    config.get("edu.cmu.cs.lti.feature.document.package.name")
-            );
+            String sentenceFeaturePackage = "edu.cmu.cs.lti.feature.sentence.package.name";
+            String documentFeaturePackage = "edu.cmu.cs.lti.feature.document.package.name";
+
+            FeatureSpecParser sentFeatureSpecParser = new FeatureSpecParser(sentenceFeaturePackage);
+            FeatureSpecParser docFeatureSpecParser = new FeatureSpecParser(documentFeaturePackage);
 
             logger.debug(featureSpec);
 
@@ -116,12 +126,12 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     }
 
     private void warning(String savedSpec, String currentSpec) {
-        if (savedSpec == null){
+        if (savedSpec == null) {
             logger.warn("The model did not save any feature specifications!");
             return;
         }
 
-        if (currentSpec == null){
+        if (currentSpec == null) {
             logger.warn("The configuration did not provide any feature specifications!");
             return;
         }
@@ -226,7 +236,7 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
         }
 
         // Add the last found mention.
-        if (previousType != null){
+        if (previousType != null) {
             mentionChunks.add(Triplet.with(Span.of(begin, end), previousType, prob));
         }
 

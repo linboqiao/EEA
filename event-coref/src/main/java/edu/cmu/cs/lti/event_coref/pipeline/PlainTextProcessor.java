@@ -101,19 +101,6 @@ public class PlainTextProcessor {
                 config.get("edu.cmu.cs.lti.model.event.latent_tree"), fullRunSuffix);
     }
 
-    public static void main(String[] argv) throws IOException, UIMAException, SAXException, CpeDescriptorException {
-        Configuration commonConfig = new Configuration("settings/common.properties");
-        String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
-
-        Configuration taskConfig = new Configuration(argv[0]);
-
-        String inputDir = argv[1];
-        String outputDir = argv[2];
-
-        PlainTextProcessor processor = new PlainTextProcessor(typeSystemName, taskConfig);
-        processor.run(taskConfig, outputDir, inputDir);
-    }
-
     /**
      * Run a test, with all the intermediate results retained.
      *
@@ -409,5 +396,20 @@ public class PlainTextProcessor {
         }
 
         return processors;
+    }
+
+
+
+    public static void main(String[] argv) throws IOException, UIMAException, SAXException, CpeDescriptorException {
+        Configuration commonConfig = new Configuration("settings/common.properties");
+        String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
+
+        Configuration taskConfig = new Configuration(argv[0]);
+
+        String inputDir = argv[1];
+        String outputDir = argv[2];
+
+        PlainTextProcessor processor = new PlainTextProcessor(typeSystemName, taskConfig);
+        processor.run(taskConfig, outputDir, inputDir);
     }
 }
