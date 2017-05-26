@@ -30,7 +30,7 @@ import java.util.List;
 import static edu.cmu.cs.lti.learning.model.ModelConstants.AFTER_MODEL_NAME;
 
 /**
- * Train a pairwise based after linking model. zb
+ * Train a structure based after linking model.
  * <p>
  * Date: 12/12/16
  * Time: 3:35 PM
@@ -88,13 +88,9 @@ public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
 
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
 
-        boolean debug = true;
+        boolean debug = false;
 
 //        debug = predictedTree.hasNonRoot();
-
-//        if (UimaConvenience.getDocId(aJCas).contains("APW_ENG_20101024.0551")) {
-//            debug = true;
-//        }
 
         if (debug) {
             UimaConvenience.printProcessLog(aJCas, logger);

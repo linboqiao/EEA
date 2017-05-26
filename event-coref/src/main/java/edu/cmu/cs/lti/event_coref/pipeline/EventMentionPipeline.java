@@ -436,7 +436,6 @@ public class EventMentionPipeline {
                 public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
                     return new AnalysisEngineDescription[]{
                             RunnerUtils.getGoldAnnotator(copyType, copyRealis, copyCluster, copyRelation)
-//                            getGoldAnnotator(true, true, true, false)
                     };
                 }
             }, mainDir, baseOutput).runWithOutput();
@@ -495,7 +494,8 @@ public class EventMentionPipeline {
     }
 
     /**
-     * Prepare dataset for training. It copies the annotations to the system mentions and annotate arguments.
+     * Prepare dataset with gold standard for training. It copies the annotations to the system mentions and annotate
+     * arguments.
      *
      * @param reader     The data to be prepared.
      * @param workingDir The working directory.
@@ -521,10 +521,10 @@ public class EventMentionPipeline {
 
                 @Override
                 public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription mentionAndCorefGoldAnnotator = RunnerUtils.getGoldAnnotator(
+                    AnalysisEngineDescription allGoldAnnotator = RunnerUtils.getGoldAnnotator(
                             true, true, true, true);
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();
-                    annotators.add(mentionAndCorefGoldAnnotator);
+                    annotators.add(allGoldAnnotator);
                     RunnerUtils.addMentionPostprocessors(annotators, language);
                     return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
                 }
@@ -630,10 +630,9 @@ public class EventMentionPipeline {
         CollectionReaderDescription testDataReader = paths.getPreprocessReader(typeSystemDescription,
                 testingWorkingDir);
 
-
         String resultDir = paths.getResultDir(testingWorkingDir, fullRunSuffix);
 
-        writeEvaluationOutput(trainingReader, testDataReader, resultDir, fullRunSuffix, hasTestGold);
+//        writeEvaluationOutput(trainingReader, testDataReader, resultDir, fullRunSuffix, hasTestGold);
 
         if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", false)) {
             logger.info("Will run individual model experiments.");
@@ -676,7 +675,9 @@ public class EventMentionPipeline {
 
             String resultDir = paths.getResultDir(trainingWorkingDir, sliceSuffix);
 
+            logger.info("Writing evaluation output.");
             writeEvaluationOutput(trainingSliceReader, devSliceReader, resultDir, sliceSuffix, true);
+            logger.info("Done writing evaluation output.");
 
             if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", false)) {
                 logger.info("Will run individual model experiments.");
@@ -805,7 +806,7 @@ public class EventMentionPipeline {
             throws SAXException, UIMAException, CpeDescriptorException, IOException {
         // Produce gold standard tbf for evaluation.
         if (hasTestGold) {
-            logger.info("Writing development data as TBF.");
+            logger.info("Writing development gold standard as TBF.");
             RunnerUtils.writeGold(testReader, getTestGoldPath(resultDir, sliceSuffix), useCharOffset);
         }
 
@@ -826,12 +827,15 @@ public class EventMentionPipeline {
 
         File testGold = new File(getTestGoldPath(resultDir, sliceSuffix));
 
-        logger.info("Producing partial gold standards to tag after links.");
+        logger.info("Producing partial gold standards on test data to tag after links.");
         CollectionReaderDescription goldMentionAll = annotateGoldMentions(testReader, workingDir,
                 paths.getMiddleOutputPath(sliceSuffix, "gold_mentions"),
-                true, true, true, false, true);
+                true, true, true, false, false);
+
         CollectionReaderDescription mentionPost = postProcessMention(goldMentionAll, workingDir,
-                paths.getMiddleOutputPath(sliceSuffix, "mention_post"), true);
+                paths.getMiddleOutputPath(sliceSuffix, "mention_post"), false);
+
+        logger.info("Done mention post processing.");
 
         PlainAfterModelRunner runner = new PlainAfterModelRunner(mainConfig, typeSystemDescription);
 

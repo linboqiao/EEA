@@ -76,8 +76,6 @@ public class LatentTreeAfterAnnotator extends AbstractLoggingAnnotator {
 
         decoder = new BFAfterLatentTreeDecoder();
         logger.info("After link decoder initialized.");
-
-//        BFAfterLatentTreeDecoder.startDebug();
     }
 
     private void specWarning(String oldSpec, String newSpec) {
@@ -91,14 +89,6 @@ public class LatentTreeAfterAnnotator extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        UimaConvenience.printProcessLog(aJCas, logger);
-
-        if (UimaConvenience.getDocId(aJCas).contains("bolt-eng-DF-170-181125-9125545")) {
-            BFAfterLatentTreeDecoder.startDebug();
-        } else {
-            BFAfterLatentTreeDecoder.stopDebug();
-        }
-
         extractor.initWorkspace(aJCas);
         List<MentionCandidate> candidates = MentionUtils.getSpanBasedCandidates(aJCas);
 
@@ -126,12 +116,25 @@ public class LatentTreeAfterAnnotator extends AbstractLoggingAnnotator {
                     (fromKey.getKeyIndex());
             EventMention toMention = groupedMentions.get(Span.of(toKey.getBegin(), toKey.getEnd())).get(toKey
                     .getKeyIndex());
-            EventMentionRelation relation = new EventMentionRelation(aJCas);
-            relation.setRelationType(type.name());
-            relation.setHead(fromMention);
-            relation.setChild(toMention);
-            UimaAnnotationUtils.finishTop(relation, COMPONENT_ID, 0, aJCas);
+
+            addRelation(aJCas, fromMention, toMention, type.name());
         }
+    }
+
+    private void addRelation(JCas aJCas, EventMention fromMention, EventMention toMention, String typeName) {
+        EventMentionRelation relation = new EventMentionRelation(aJCas);
+        relation.setRelationType(typeName);
+        relation.setHead(fromMention);
+        relation.setChild(toMention);
+        toMention.setHeadEventRelations(
+                UimaConvenience.appendFSList(aJCas, toMention.getHeadEventRelations(),
+                        relation, EventMentionRelation.class));
+        fromMention.setChildEventRelations(
+                UimaConvenience.appendFSList(aJCas, fromMention.getChildEventRelations(),
+                        relation, EventMentionRelation.class)
+        );
+
+        UimaAnnotationUtils.finishTop(relation, COMPONENT_ID, 0, aJCas);
     }
 
     private Map<Span, List<EventMention>> groupMentions(List<EventMention> allMentions) {

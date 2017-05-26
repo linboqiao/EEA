@@ -4,6 +4,7 @@ import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -105,10 +106,13 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
 
             mention.setId(eid);
             mentionIds.put(mention, eid);
+
+//            logger.info("Adding " + MentionUtils.mentionRepre(mention) + " into list: " + mention.hashCode()
+//                    + " " + mention.getSofa().getSofaID() );
         }
 
         int relationIndex = 1;
-//        logger.info("Number of clusters : " + JCasUtil.select(aJCas, Event.class).size());
+//        logger.info("Number of clusters : " + JCasUtil.select(aJCas//, Event.class).size());
         for (Event event : JCasUtil.select(aJCas, Event.class)) {
             // Print non-singleton mentions only.
             List<String> eventMentionIds = new ArrayList<>();
@@ -130,13 +134,29 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             }
         }
 
-
         for (EventMentionRelation relation : JCasUtil.select(aJCas, EventMentionRelation.class)) {
+            String fromEventId = mentionIds.get(relation.getHead());
+            String toEventId = mentionIds.get(relation.getChild());
+
+            if (fromEventId == null){
+                logger.error(String.format("Event %s in relation is not found in the mention list: %d",
+                        MentionUtils.mentionRepre(relation.getHead()), relation.getHead().hashCode())
+                        + " " + relation.getHead().getSofa().getSofaID());
+                throw new NullPointerException();
+            }
+
+            if (toEventId == null){
+                logger.error(String.format("Event %s in relation is not found in the mention list: %d",
+                        MentionUtils.mentionRepre(relation.getChild()), relation.getHead().hashCode())
+                        + " " + relation.getHead().getSofa().getSofaID());
+                throw new NullPointerException();
+            }
+
             String afterId = "R" + relationIndex;
             sb.append("@").append(relation.getRelationType()).append("\t").append(afterId).append("\t");
-            sb.append(mentionIds.get(relation.getHead()));
+            sb.append(fromEventId);
             sb.append(",");
-            sb.append(mentionIds.get(relation.getChild()));
+            sb.append(toEventId);
             sb.append("\n");
             relationIndex++;
         }

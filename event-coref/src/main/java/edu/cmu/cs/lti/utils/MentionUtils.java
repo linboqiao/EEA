@@ -66,8 +66,9 @@ public class MentionUtils {
                 relations, extractor, isTraining, hasGold);
     }
 
-    public static void createTokenBasedMentionGraph() {
-
+    public static String mentionRepre(EventMention mention) {
+        return String.format("%s [Type: %s] - [%d:%d]",
+                mention.getCoveredText(), mention.getEventType(), mention.getBegin(), mention.getEnd());
     }
 
     private static int[] indexMentionClusters(JCas aJCas, List<EventMention> allMentions) {
@@ -387,7 +388,7 @@ public class MentionUtils {
 
         for (EventMentionRelation relation : JCasUtil.select(aJCas, EventMentionRelation.class)) {
             // TODO: Do after only for now.
-            if (relation.getRelationType().equals("After")){
+            if (relation.getRelationType().equals("After")) {
                 if (mentionIds.containsKey(relation.getHead()) && mentionIds.containsKey(relation.getChild())) {
                     int headMention = mentionIds.get(relation.getHead());
                     int childMention = mentionIds.get(relation.getChild());

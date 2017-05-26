@@ -62,7 +62,6 @@ public class BasicPipeline {
 
         AnalysisEngineDescription[] engineDescriptions;
         if (workingDir != null && outputDir != null) {
-            logger.info("Pipeline with output at " + new File(workingDir, outputDir));
             engineDescriptions = ArrayUtils.add(processers, CustomAnalysisEngineFactory.createXmiWriter(workingDir,
                     outputDir));
             outputReader = CustomCollectionReaderFactory.createXmiReader(workingDir, outputDir);
