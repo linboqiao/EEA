@@ -75,7 +75,6 @@ public abstract class ModelTester {
             logger.info("Evaluating over all event types, gold is from: " + gold);
             eval(gold, tbfOutput, runName, sliceSuffix, null);
 
-
             String selectedTypePath = taskConfig.get("edu.cmu.cs.lti.eval.selected_type.file");
             if (selectedTypePath != null) {
                 logger.info("Evaluating on selected event types.");
@@ -85,7 +84,7 @@ public abstract class ModelTester {
         return output;
     }
 
-    private int eval(File gold, String system, String runName, String suffix, String typesPath)
+    private void eval(File gold, String system, String runName, String suffix, String typesPath)
             throws IOException, InterruptedException {
         boolean useSelectedType = typesPath != null;
 
@@ -151,8 +150,6 @@ public abstract class ModelTester {
         });
 
         thread.start();
-
-        return p.exitValue();
     }
 
     private void writeStream(Writer writer, InputStream stream) throws IOException {
