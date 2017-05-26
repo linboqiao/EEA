@@ -73,25 +73,13 @@ public abstract class ModelTester {
 
         if (gold != null && gold.isFile()) {
             logger.info("Evaluating over all event types, gold is from: " + gold);
-            int exitValue = eval(gold, tbfOutput, runName, sliceSuffix, null);
+            eval(gold, tbfOutput, runName, sliceSuffix, null);
 
-            if (exitValue == 0) {
-                logger.info("Evaluation done successfully.");
-            } else {
-                logger.info(String.format("Evaluation exit with error code %d, please check the evaluation log."
-                        , exitValue));
-            }
 
             String selectedTypePath = taskConfig.get("edu.cmu.cs.lti.eval.selected_type.file");
             if (selectedTypePath != null) {
                 logger.info("Evaluating on selected event types.");
                 eval(gold, tbfOutput, runName, sliceSuffix, selectedTypePath);
-                if (exitValue == 0) {
-                    logger.info("Evaluation done successfully.");
-                } else {
-                    logger.info(String.format("Evaluation exit with error code %d, please check the evaluation log."
-                            , exitValue));
-                }
             }
         }
         return output;
@@ -150,6 +138,13 @@ public abstract class ModelTester {
             try {
                 p.waitFor();
                 writer.close();
+                int exitValue = p.exitValue();
+                if (exitValue == 0) {
+                    logger.info("Evaluation done successfully.");
+                } else {
+                    logger.info(String.format("Evaluation exit with error code %d, please check the evaluation log."
+                            , exitValue));
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
