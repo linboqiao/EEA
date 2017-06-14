@@ -15,3 +15,5 @@ excluded_classes/
 .idea/
 *.iml
 *.iws
+
+!/.gitignore
