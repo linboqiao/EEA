@@ -533,7 +533,7 @@ public class EventMentionPipeline {
                             true, true, true, true);
                     List<AnalysisEngineDescription> annotators = new ArrayList<>();
                     annotators.add(allGoldAnnotator);
-                    RunnerUtils.addMentionPostprocessors(annotators, language);
+                    RunnerUtils.addMentionPostprocessors(annotators, typeSystemDescription, language);
                     return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
                 }
             }, workingDir, outputBase).runWithOutput();
@@ -711,7 +711,7 @@ public class EventMentionPipeline {
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
         List<AnalysisEngineDescription> annotators = new ArrayList<>();
 
-        RunnerUtils.addMentionPostprocessors(annotators, language);
+        RunnerUtils.addMentionPostprocessors(annotators, typeSystemDescription, language);
 
         if (skip && new File(workingDir, outputBase).exists()) {
             logger.info("Skipping mention post processing, using existing results.");

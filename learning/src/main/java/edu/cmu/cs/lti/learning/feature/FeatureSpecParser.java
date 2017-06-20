@@ -38,8 +38,9 @@ public class FeatureSpecParser {
                 allFunctions.add(featureFunctionName);
 
                 if (featureSpecKeyValue.length == 2) {
-                    parseFeatureTemplateSpec(featureSpecKeyValue[1]).entrySet().forEach(entry -> featureSpec.add(
-                            featureFunctionName + "." + entry.getKey(), entry.getValue()));
+                    parseFeatureTemplateSpec(featureSpecKeyValue[1]).forEach(
+                            (key, value) -> featureSpec.add(featureFunctionName + "." + key, value)
+                    );
                 }
             }
         }

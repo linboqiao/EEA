@@ -90,15 +90,12 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
         logger.info("Model loaded");
         try {
-            logger.info("");
+            FeatureSpecParser sentFeatureSpecParser = new FeatureSpecParser(
+                    config.get("edu.cmu.cs.lti.feature.sentence.package.name"));
 
-            String sentenceFeaturePackage = "edu.cmu.cs.lti.feature.sentence.package.name";
-            String documentFeaturePackage = "edu.cmu.cs.lti.feature.document.package.name";
-
-            FeatureSpecParser sentFeatureSpecParser = new FeatureSpecParser(sentenceFeaturePackage);
-            FeatureSpecParser docFeatureSpecParser = new FeatureSpecParser(documentFeaturePackage);
-
-            logger.debug(featureSpec);
+            FeatureSpecParser docFeatureSpecParser = new FeatureSpecParser(
+                    config.get("edu.cmu.cs.lti.feature.document.package.name")
+            );
 
             String[] savedFeatureSpecs = FeatureUtils.splitFeatureSpec(featureSpec);
             String savedSentFeatureSpec = savedFeatureSpecs[0];
@@ -110,11 +107,11 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
             warning(savedSentFeatureSpec, currentSentFeatureSpec);
             warning(savedDocFeatureSpec, currentDocFeatureSpepc);
 
-            logger.info("Sent feature spec : " + savedSentFeatureSpec);
-            logger.info("Doc feature spec : " + savedDocFeatureSpec);
+            logger.info("Sent feature spec : " + currentSentFeatureSpec);
+            logger.info("Doc feature spec : " + currentDocFeatureSpepc);
 
-            Configuration sentFeatureConfig = sentFeatureSpecParser.parseFeatureFunctionSpecs(savedSentFeatureSpec);
-            Configuration docFeatureConfig = docFeatureSpecParser.parseFeatureFunctionSpecs(savedDocFeatureSpec);
+            Configuration sentFeatureConfig = sentFeatureSpecParser.parseFeatureFunctionSpecs(currentSentFeatureSpec);
+            Configuration docFeatureConfig = docFeatureSpecParser.parseFeatureFunctionSpecs(currentDocFeatureSpepc);
 
             sentenceExtractor = new SentenceFeatureExtractor(alphabet, config, sentFeatureConfig, docFeatureConfig,
                     false);
@@ -138,9 +135,8 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
 
         if (!currentSpec.equals(savedSpec)) {
             logger.warn("Current feature specification is not the same with the trained model.");
-            logger.warn("Will use the stored specification, it might create unexpected errors: ");
-            logger.warn("Saved spec will be used:");
-            logger.warn(savedSpec);
+            logger.warn("Will use the current specification, it might create unexpected errors: ");
+            logger.warn("Current spec will be used:");
         }
     }
 

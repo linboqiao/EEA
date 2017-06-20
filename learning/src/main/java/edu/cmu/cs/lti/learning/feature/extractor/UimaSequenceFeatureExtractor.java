@@ -68,6 +68,7 @@ public abstract class UimaSequenceFeatureExtractor<T extends Annotation> extends
             ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         String featureFunctionPackage = featureConfig.get(FeatureSpecParser.FEATURE_FUNCTION_PACKAGE_KEY);
+
         for (String featureFunctionName : featureConfig.getList(FeatureSpecParser.FEATURE_FUNCTION_NAME_KEY)) {
             String ffClassName = featureFunctionPackage + "." + featureFunctionName;
             Class<?> featureFunctionType = Class.forName(ffClassName);

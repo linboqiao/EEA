@@ -21,8 +21,6 @@ import java.util.List;
  * @author Zhengzhong Liu
  */
 public class EventHeadWordAnnotator extends AbstractLoggingAnnotator {
-
-
     public static final String PARAM_TARGET_VIEW_NAME = "targetViewName";
     @ConfigurationParameter(name = PARAM_TARGET_VIEW_NAME, defaultValue = CAS.NAME_DEFAULT_SOFA)
     private String targetViewName;

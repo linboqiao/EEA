@@ -62,17 +62,19 @@ public class RunnerUtils {
         }).run();
     }
 
-    public static void addMentionPostprocessors(List<AnalysisEngineDescription> annotators, String language) throws
+    public static void addMentionPostprocessors(List<AnalysisEngineDescription> annotators,
+                                                TypeSystemDescription typeSystemDescription,
+                                                String language) throws
             ResourceInitializationException {
         AnalysisEngineDescription headWordExtractor = AnalysisEngineFactory.createEngineDescription(
-                EventHeadWordAnnotator.class
+                EventHeadWordAnnotator.class, typeSystemDescription
         );
 
         if (language.equals("zh")) {
             annotators.add(headWordExtractor);
         } else {
             AnalysisEngineDescription argumentExtractor = AnalysisEngineFactory.createEngineDescription(
-                    EnglishSrlArgumentExtractor.class
+                    EnglishSrlArgumentExtractor.class, typeSystemDescription
             );
             annotators.add(headWordExtractor);
             annotators.add(argumentExtractor);
