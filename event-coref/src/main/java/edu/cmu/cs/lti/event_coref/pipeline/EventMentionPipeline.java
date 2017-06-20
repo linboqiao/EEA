@@ -12,6 +12,7 @@ import edu.cmu.cs.lti.learning.runners.*;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
+import edu.cmu.cs.lti.uima.annotator.AbstractAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.ExperimentPaths;
@@ -321,16 +322,23 @@ public class EventMentionPipeline {
                         if (name.equals("corenlp")) {
                             processor = AnalysisEngineFactory.createEngineDescription(
                                     StanfordCoreNlpAnnotator.class, typeSystemDescription,
-                                    StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language
+                                    StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language,
+                                    AbstractAnnotator.MULTI_THREAD, true
                             );
                         } else if (name.equals("semafor")) {
                             processor = AnalysisEngineFactory.createEngineDescription(
                                     SemaforAnnotator.class, typeSystemDescription,
-                                    SemaforAnnotator.SEMAFOR_MODEL_PATH, semaforModelDirectory);
+                                    SemaforAnnotator.SEMAFOR_MODEL_PATH, semaforModelDirectory,
+                                    SemaforAnnotator.PARAM_JSON_OUTPUT_REDIRECT,
+                                    FileUtils.joinPaths(workingDirPath, "semafor_json"),
+                                    AbstractAnnotator.MULTI_THREAD, true
+                            );
                         } else if (name.equals("fanse")) {
                             processor = AnalysisEngineFactory.createEngineDescription(
                                     FanseAnnotator.class, typeSystemDescription,
-                                    FanseAnnotator.PARAM_MODEL_BASE_DIR, fanseModelDirectory);
+                                    FanseAnnotator.PARAM_MODEL_BASE_DIR, fanseModelDirectory,
+                                    AbstractAnnotator.MULTI_THREAD, true
+                            );
                         } else if (name.equals("opennlp")) {
                             processor = AnalysisEngineFactory.createEngineDescription(
                                     OpenNlpChunker.class, typeSystemDescription,
