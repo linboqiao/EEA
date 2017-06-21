@@ -180,7 +180,7 @@ public class EventDataReader {
                     EventSpanProcessor.class, typeSystemDescription
             );
 
-            CustomAnalysisEngineFactory.setTypeSystem(typeSystemDescription);
+//            CustomAnalysisEngineFactory.setTypeSystem(typeSystemDescription);
 
             AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(workingDir, rawBase);
 
