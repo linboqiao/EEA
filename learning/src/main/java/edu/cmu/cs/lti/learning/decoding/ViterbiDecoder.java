@@ -14,7 +14,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.function.BiFunction;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -74,10 +75,10 @@ public class ViterbiDecoder extends SequenceDecoder {
                        boolean useAverage) {
         solution = new SequenceSolution(classAlphabet, sequenceLength, kBest);
 
-        // Dot product function on the node (i.e. only take features depend on current class)
-        BiFunction<FeatureVector, Integer, Double> nodeDotProd = useAverage ?
-                weightVector::dotProdAver :
-                weightVector::dotProd;
+//        // Dot product function on the node (i.e. only take features depend on current class)
+//        BiFunction<FeatureVector, Integer, Double> nodeDotProd = useAverage ?
+//                weightVector::dotProdAver :
+//                weightVector::dotProd;
 
         // Dot product function on the edge (i.e. take features depend on two classes)
         Functional.TriFunction<FeatureVector, Integer, Integer, Double> edgeDotProd = useAverage ?
@@ -92,6 +93,8 @@ public class ViterbiDecoder extends SequenceDecoder {
         for (int i = 0; i < currentFeatureVectors.length; i++) {
             currentFeatureVectors[i] = newGraphFeatureVector();
         }
+
+        List<Double> bestScores = new ArrayList<>();
 
         for (; !solution.finished(); solution.advance()) {
             int sequenceIndex = solution.getCurrentPosition();
@@ -130,6 +133,8 @@ public class ViterbiDecoder extends SequenceDecoder {
                 currentFeatureVectors[i] = newGraphFeatureVector();
             }
 
+            logger.info("========== Current index is : " + sequenceIndex + " ===========");
+
             // Fill up lattice score for each of class in the current column.
             solution.getCurrentPossibleClassIndices().parallel().forEach(classIndex -> {
                 double lagrangianPenalty = solution.isRightLimit() ? 0 :
@@ -138,20 +143,43 @@ public class ViterbiDecoder extends SequenceDecoder {
                                 + v.getSumOverIVariable(sequenceIndex, classIndex)
                                 - getConstraintSumJ(constraints, v, sequenceIndex, classIndex);
 
-                double newNodeScore = nodeDotProd.apply(nodeFeature, classIndex) + lagrangianPenalty;
+                double newNodeScore = lagrangianPenalty;
+
+                synchronized (this) {
+                    double rawScore = useAverage ?
+                            weightVector.dotProdAverDebug(nodeFeature, classAlphabet.getClassName(classIndex), logger)
+                            : weightVector.dotProd(nodeFeature, classIndex);
+
+                    logger.info(String.format("Class %s have score %.4f", classAlphabet.getClassName(classIndex),
+                            rawScore));
+
+                    newNodeScore += rawScore;
+
+                    int index = solution.getCurrentPosition();
+                    if (bestScores.size() == index) {
+                        bestScores.add(newNodeScore);
+                    } else {
+                        if (newNodeScore > bestScores.get(index)) {
+                            bestScores.set(index, newNodeScore);
+                        }
+                    }
+                }
 
                 MutableInt argmaxPreviousState = new MutableInt(-1);
 
                 // Check which previous state gives the best score.
+                //TODO delete this later
+                double finalNewNodeScore = newNodeScore;
                 solution.getPreviousPossibleClassIndices().forEach(prevState -> {
                     for (SequenceSolution.LatticeCell previousBest : solution.getPreviousBests(prevState)) {
                         double newEdgeScore = 0;
                         if (edgeFeatures.contains(prevState, classIndex)) {
                             FeatureVector edgeFeature = edgeFeatures.get(prevState, classIndex);
-                            newEdgeScore = edgeDotProd.apply(edgeFeature, classIndex, prevState);
+                            newEdgeScore = useAverage ? weightVector.dotProdAver(edgeFeature, classIndex, prevState)
+                                    : weightVector.dotProd(edgeFeature, classIndex, prevState);
                         }
 
-                        int addResult = solution.scoreNewEdge(classIndex, previousBest, newEdgeScore, newNodeScore);
+                        int addResult = solution.scoreNewEdge(classIndex, previousBest, newEdgeScore, finalNewNodeScore);
                         if (addResult == 1) {
                             // The new score is the best.
                             argmaxPreviousState.setValue(prevState);
@@ -173,6 +201,9 @@ public class ViterbiDecoder extends SequenceDecoder {
 
                 featureAtEachIndex[sequenceIndex][classIndex] = nodeFeature;
 
+//                logger.info(String.format("Best previous is %s, current class is %s.",
+//                        classAlphabet.getClassName(bestPrev), classAlphabet.getClassName(classIndex)));
+
                 // Adding features for the edge.
                 if (edgeFeatures.contains(bestPrev, classIndex)) {
                     currentFeatureVectors[classIndex].extend(edgeFeatures.get(bestPrev, classIndex), classIndex,
@@ -180,6 +211,8 @@ public class ViterbiDecoder extends SequenceDecoder {
                 }
             });
         }
+
+        logger.info("Score at each position is " + bestScores);
 
         solution.backTrace();
 

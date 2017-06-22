@@ -148,20 +148,18 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             sentenceExtractor.resetWorkspace(aJCas, sentence.getBegin(), sentence.getEnd());
 
-            logger.debug(sentence.getCoveredText());
-
             List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
 
             // Extract features for this sentence and send in.
+            logger.info(sentence.getCoveredText());
             decoder.decode(sentenceExtractor, weightVector, tokens.size(), lagrangian, lagrangian, true);
-
-//            debug();
 
             SequenceSolution prediction = decoder.getDecodedPrediction();
 
             double[] probs = prediction.getSoftMaxLabelProbs();
 
-            logger.debug(prediction.toString());
+            logger.info(sentence.getCoveredText());
+            logger.info(prediction.toString());
 
             List<Triplet<Span, String, Double>> mentionChunks = convertTypeTagsToChunks(prediction, probs);
 
@@ -176,8 +174,10 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
                 UimaAnnotationUtils.finishAnnotation(predictedMention, firstToken.getBegin(), lastToken
                         .getEnd(), COMPONENT_ID, 0, aJCas);
 
-//                logger.info("Adding event mention: " + predictedMention.getCoveredText() + " of type " +
-//                        predictedMention.getEventType());
+                logger.info("Adding event mention: " + predictedMention.getCoveredText() + " of type " +
+                        predictedMention.getEventType() + " with confidence "
+                        + predictedMention.getEventTypeConfidence());
+                DebugUtils.pause();
             }
         }
     }
