@@ -61,7 +61,6 @@ public abstract class ModelTester {
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         logger.info(String.format("Current run name is %s", runName));
 
-        // TODO Output should be obtained outside this function.
         String annotatedOutput = FileUtils.joinPaths(middleResults, sliceSuffix, runName);
 
         CollectionReaderDescription output = runModel(taskConfig, reader, trainingWorkingDir, annotatedOutput);
@@ -107,7 +106,7 @@ public abstract class ModelTester {
         String evalMode = charOffset ? "char" : "token";
 
         List<String> commands = new ArrayList<>(Arrays.asList(
-                "python", evalScript, "-g", gold.getPath(), "-s", system,
+                "python2", evalScript, "-g", gold.getPath(), "-s", system,
                 "-d", FileUtils.joinPaths(evalDir, suffix + ".cmp"),
                 "-o", FileUtils.joinPaths(evalDir, suffix + ".scores"),
                 "-c", FileUtils.joinPaths(evalDir, suffix + ".coref_out"),

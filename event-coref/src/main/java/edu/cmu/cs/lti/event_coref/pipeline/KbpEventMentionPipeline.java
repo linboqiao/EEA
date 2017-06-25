@@ -15,7 +15,7 @@ import java.io.File;
  *
  * @author Zhengzhong Liu
  */
-public class KbpEnglishEventMentionPipeline {
+public class KbpEventMentionPipeline {
     public static void main(String argv[]) throws Exception {
         if (argv.length < 1) {
             System.err.println("Please provide one argument for the settings file.");
