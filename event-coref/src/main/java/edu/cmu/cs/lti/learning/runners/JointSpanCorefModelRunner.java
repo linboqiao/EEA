@@ -135,7 +135,7 @@ public class JointSpanCorefModelRunner extends AbstractMentionModelRunner {
                            String runName, int beamSize, String realisModelDir, boolean skipTest,
                            String processOutputDir, String subEvalDir, File goldStandard, String sliceSuffix)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
-        new ModelTester(mainConfig, "joint") {
+        new ModelTester(mainConfig) {
             @Override
             protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {

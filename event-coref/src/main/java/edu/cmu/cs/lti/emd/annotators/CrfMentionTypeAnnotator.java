@@ -151,15 +151,15 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
             List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
 
             // Extract features for this sentence and send in.
-            logger.info(sentence.getCoveredText());
+            logger.debug(sentence.getCoveredText());
             decoder.decode(sentenceExtractor, weightVector, tokens.size(), lagrangian, lagrangian, true);
 
             SequenceSolution prediction = decoder.getDecodedPrediction();
 
             double[] probs = prediction.getSoftMaxLabelProbs();
 
-            logger.info(sentence.getCoveredText());
-            logger.info(prediction.toString());
+            logger.debug(sentence.getCoveredText());
+            logger.debug(prediction.toString());
 
             List<Triplet<Span, String, Double>> mentionChunks = convertTypeTagsToChunks(prediction, probs);
 
@@ -174,10 +174,10 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
                 UimaAnnotationUtils.finishAnnotation(predictedMention, firstToken.getBegin(), lastToken
                         .getEnd(), COMPONENT_ID, 0, aJCas);
 
-                logger.info("Adding event mention: " + predictedMention.getCoveredText() + " of type " +
+                logger.debug("Adding event mention: " + predictedMention.getCoveredText() + " of type " +
                         predictedMention.getEventType() + " with confidence "
                         + predictedMention.getEventTypeConfidence());
-                DebugUtils.pause();
+                DebugUtils.pause(logger);
             }
         }
     }

@@ -87,8 +87,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                 @Override
                 protected void finish() throws IOException {
                     // Test using the final model.
-                    String runName = "after_heldout_final";
-                    CollectionReaderDescription testOutput = test(cvModelDir, runName);
+                    CollectionReaderDescription testOutput = test(cvModelDir, "after_heldout_final");
                     // Run the baselines.
                     baseline(testOutput);
                 }
@@ -140,7 +139,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                                                  String sliceSuffix, String runName, String outputDir,
                                                  File gold, boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
-        return new ModelTester(mainConfig, "plain_after_model") {
+        return new ModelTester(mainConfig) {
             @Override
             protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
                     reader, String mainDir, String baseDir)
@@ -158,7 +157,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
             throws InterruptedException, SAXException, UIMAException, CpeDescriptorException, IOException {
         logger.info("Running gold based temporal baseline.");
         String goldBaselineRun = "gold_temporal_baseline";
-        return new ModelTester(mainConfig, "goldTemporal") {
+        return new ModelTester(mainConfig) {
             @Override
             protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
                     reader, String mainDir, String baseDir) throws SAXException,
@@ -175,7 +174,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
             UIMAException, CpeDescriptorException, IOException {
         logger.info("Running plain temporal baselin.");
         String plainBaselineRun = "plain_temporal_baseline";
-        return new ModelTester(mainConfig, "plainTemporal") {
+        return new ModelTester(mainConfig) {
             @Override
             protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
                     reader, String mainDir, String baseDir)
@@ -192,7 +191,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
             UIMAException, CpeDescriptorException, IOException {
         logger.info("Running plain temporal baseline.");
         String selectedBaselineRun = "selected_temporal_baseline";
-        return new ModelTester(mainConfig, "plainTemporal") {
+        return new ModelTester(mainConfig) {
             @Override
             protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
                     reader, String mainDir, String baseDir)

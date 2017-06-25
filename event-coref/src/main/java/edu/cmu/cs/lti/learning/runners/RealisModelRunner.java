@@ -32,13 +32,9 @@ public class RealisModelRunner extends AbstractMentionModelRunner {
         super(mainConfig, typeSystemDescription);
     }
 
-    public String getModelPath(Configuration config, String suffix){
-       return ModelUtils.getTrainModelPath(eventModelDir, config, suffix);
-    }
-
     public String trainRealis(Configuration config, CollectionReaderDescription trainingReader, String suffix,
                               boolean skipTrain) throws Exception {
-        String realisCvModelDir = getModelPath(config, suffix);
+        String realisCvModelDir = ModelUtils.getTrainModelPath(eventModelDir, config, suffix);
 
         if (skipTrain && new File(realisCvModelDir).exists()) {
             logger.info("Skipping realis training, taking existing models: " + realisCvModelDir);
@@ -91,9 +87,10 @@ public class RealisModelRunner extends AbstractMentionModelRunner {
                                                   String outputDir, String subEval, File gold, boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
 
-        return new ModelTester(mainConfig, "realis_model") {
+        return new ModelTester(mainConfig) {
             @Override
-            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
+                    reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {
                 return realisAnnotation(taskConfig, reader, realisModel, trainingWorkingDir, baseDir, skipTest);
             }

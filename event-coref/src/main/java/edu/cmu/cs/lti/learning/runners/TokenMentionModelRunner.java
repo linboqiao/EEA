@@ -51,11 +51,8 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
             IllegalAccessException, InvocationTargetException {
         logger.info("Starting training sentence level mention type model ...");
 
-        String subEvalDir = suffix.equals(fullRunSuffix) ? "final" : "cv";
-
-        String modelPath = getModelPath(config, suffix, "loss=" + lossType);
+        String modelPath = ModelUtils.getTrainModelPath(eventModelDir, config, suffix, "loss=" + lossType);
         File modelFile = new File(modelPath);
-
 
         MutableInt trainingSeed = new MutableInt(config.getInt("edu.cmu.cs.lti.random.seed", 17));
         int maxIter = config.getInt("edu.cmu.cs.lti.perceptron.maxiter", 20);
@@ -110,7 +107,7 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
 
                 @Override
                 protected void finish() throws IOException {
-                    test(modelPath + "_iter" + numIteration, "token_mention_heldout_final");
+                    test(modelPath, "token_mention_heldout_final");
                     TokenLevelEventMentionCrfTrainer.loopStopActions();
                 }
 
@@ -118,7 +115,7 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
                     if (testReader != null) {
                         try {
                             testPlainMentionModel(config, testReader, model, suffix, runName, processOutputDir,
-                                    subEvalDir, testGold, skipTest);
+                                    testGold, skipTest);
                         } catch (SAXException | InterruptedException | IOException | CpeDescriptorException |
                                 UIMAException e) {
                             e.printStackTrace();
@@ -145,12 +142,14 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
     public CollectionReaderDescription testPlainMentionModel(Configuration taskConfig,
                                                              CollectionReaderDescription reader, String typeModel,
                                                              String sliceSuffix, String runName, String outputDir,
-                                                             String subEval, File gold, boolean skipTest)
+                                                             File gold, boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
-        return new ModelTester(mainConfig, "token_based_mention") {
+        return new ModelTester(mainConfig) {
             @Override
-            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
-                    mainDir, String baseDir) throws SAXException, UIMAException,
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
+                    reader, String
+                                                                   mainDir, String baseDir) throws SAXException,
+                    UIMAException,
                     CpeDescriptorException, IOException {
                 return sentenceLevelMentionTagging(taskConfig, reader, typeModel,
                         trainingWorkingDir, baseDir, skipTest);

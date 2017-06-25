@@ -148,7 +148,7 @@ public class BeamCorefModelRunner extends AbstractMentionModelRunner {
                                                       String corefModel, String sliceSuffix, String runName,
                                                       String outputDir, String subEval, File gold, boolean skipTest)
             throws InterruptedException, SAXException, UIMAException, CpeDescriptorException, IOException {
-        return new ModelTester(mainConfig, "beamCoref") {
+        return new ModelTester(mainConfig) {
             @Override
             protected CollectionReaderDescription runModel(Configuration config, CollectionReaderDescription reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {

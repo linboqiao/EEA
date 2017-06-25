@@ -38,10 +38,6 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
         super(mainConfig, typeSystemDescription);
     }
 
-    public String getModelPath(Configuration config, String suffix) {
-        return ModelUtils.getTrainModelPath(eventModelDir, config, suffix);
-    }
-
     /**
      * Train the latent tree model coreference resolver.
      *
@@ -60,7 +56,7 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
             IllegalAccessException, InvocationTargetException {
         logger.info("Start coreference training.");
 
-        String modelPath = getModelPath(config, suffix);
+        String modelPath = ModelUtils.getTrainModelPath(eventModelDir, config, suffix);
 
         int maxIter = config.getInt("edu.cmu.cs.lti.perceptron.maxiter", 15);
         int modelOutputFreq = config.getInt("edu.cmu.cs.lti.perceptron.model.save.frequency", 3);
@@ -162,7 +158,7 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
                                                  String sliceSuffix, String runName, String outputDir,
                                                  String subEval, File gold, boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
-        return new ModelTester(mainConfig, "treeCoref") {
+        return new ModelTester(mainConfig) {
             @Override
             protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {

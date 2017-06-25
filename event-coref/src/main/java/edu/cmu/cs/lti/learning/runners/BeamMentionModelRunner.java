@@ -176,7 +176,7 @@ public class BeamMentionModelRunner extends AbstractMentionModelRunner {
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         int beamSize = config.getInt("edu.cmu.cs.lti.mention.beam.size", 5);
 
-        return new ModelTester(mainConfig, "beam_model") {
+        return new ModelTester(mainConfig) {
             @Override
             protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException,

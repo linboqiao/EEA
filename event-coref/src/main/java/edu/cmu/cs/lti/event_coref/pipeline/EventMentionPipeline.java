@@ -9,6 +9,7 @@ import edu.cmu.cs.lti.event_coref.annotators.prepare.ArgumentMerger;
 import edu.cmu.cs.lti.exceptions.ConfigurationException;
 import edu.cmu.cs.lti.io.EventDataReader;
 import edu.cmu.cs.lti.learning.runners.*;
+import edu.cmu.cs.lti.learning.utils.ModelUtils;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
@@ -201,7 +202,6 @@ public class EventMentionPipeline {
 
         int seed = taskConfig.getInt("edu.cmu.cs.lti.random.seed", 17);
 
-
         if (skipRaw) {
             logger.info("Existing raw dataset will not be read from corpus again.");
         } else {
@@ -319,74 +319,88 @@ public class EventMentionPipeline {
                         String name = preprocessorNames.get(i);
                         AnalysisEngineDescription processor;
 
-                        if (name.equals("corenlp")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    StanfordCoreNlpAnnotator.class, typeSystemDescription,
-                                    StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language,
-                                    AbstractAnnotator.MULTI_THREAD, true
-                            );
-                        } else if (name.equals("semafor")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    SemaforAnnotator.class, typeSystemDescription,
-                                    SemaforAnnotator.SEMAFOR_MODEL_PATH, semaforModelDirectory,
-                                    SemaforAnnotator.PARAM_JSON_OUTPUT_REDIRECT,
-                                    FileUtils.joinPaths(workingDirPath, "semafor_json"),
-                                    AbstractAnnotator.MULTI_THREAD, true
-                            );
-                        } else if (name.equals("fanse")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    FanseAnnotator.class, typeSystemDescription,
-                                    FanseAnnotator.PARAM_MODEL_BASE_DIR, fanseModelDirectory,
-                                    AbstractAnnotator.MULTI_THREAD, true
-                            );
-                        } else if (name.equals("opennlp")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    OpenNlpChunker.class, typeSystemDescription,
-                                    OpenNlpChunker.PARAM_MODEL_PATH, opennlpModel);
-                        } else if (name.equals("wordnetEntity")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    WordNetBasedEntityAnnotator.class, typeSystemDescription,
-                                    WordNetBasedEntityAnnotator.PARAM_WN_PATH,
-                                    FileUtils.joinPaths(taskConfig.get("edu.cmu.cs.lti.resource.dir"),
-                                            taskConfig.get("edu.cmu.cs.lti.wndict.path"))
-                            );
-                        } else if (name.equals("quote")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    QuoteAnnotator.class, typeSystemDescription
-                            );
-                        } else if (name.equals("ArgumentMerger")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(ArgumentMerger.class,
-                                    typeSystemDescription);
-                        } else if (name.equals("mateChineseSrl")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    MateChineseSrlAnnotator.class, typeSystemDescription,
-                                    MateChineseSrlAnnotator.PARAM_MODEL_FILE, mateModel
-                            );
-                        } else if (name.equals("zpar")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    ZParChineseCharacterConstituentParser.class, typeSystemDescription,
-                                    ZParChineseCharacterConstituentParser.PARAM_CHINESE_MODEL, zparChineseModel,
-                                    ZParChineseCharacterConstituentParser.PARAM_ZPAR_BIN_PATH, zparBinPath
-                            );
-                        } else if (name.equals("ltp")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    LtpAnnotator.class, typeSystemDescription,
-                                    LtpAnnotator.PARAM_CWS_MODEL,
-                                    new File(generalModelDir, "ltp_models/ltp_data/cws.model"),
-                                    LtpAnnotator.PARAM_POS_MODEL,
-                                    new File(generalModelDir, "ltp_models/ltp_data/pos.model"),
-                                    LtpAnnotator.PARAM_NER_MODEL,
-                                    new File(generalModelDir, "ltp_models/ltp_data/ner.model"),
-                                    LtpAnnotator.PARAM_DEPENDENCY_MODEL,
-                                    new File(generalModelDir, "ltp_models/ltp_data/parser.model"),
-                                    LtpAnnotator.PARAM_SRL_MODEL,
-                                    new File(generalModelDir, "ltp_models/ltp_data/srl")
-                            );
-                        } else if (name.equals("discourse")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    DiscourseParserAnnotator.class, typeSystemDescription);
-                        } else {
-                            throw new ConfigurationException("Unknown preprocessor specified : " + name);
+                        switch (name) {
+                            case "corenlp":
+                                processor = AnalysisEngineFactory.createEngineDescription(
+                                        StanfordCoreNlpAnnotator.class, typeSystemDescription,
+                                        StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language,
+                                        AbstractAnnotator.MULTI_THREAD, true
+                                );
+                                break;
+                            case "semafor":
+                                processor = AnalysisEngineFactory.createEngineDescription(
+                                        SemaforAnnotator.class, typeSystemDescription,
+                                        SemaforAnnotator.SEMAFOR_MODEL_PATH, semaforModelDirectory,
+                                        SemaforAnnotator.PARAM_JSON_OUTPUT_REDIRECT,
+                                        FileUtils.joinPaths(workingDirPath, "semafor_json"),
+                                        AbstractAnnotator.MULTI_THREAD, true
+                                );
+                                break;
+                            case "fanse":
+                                processor = AnalysisEngineFactory.createEngineDescription(
+                                        FanseAnnotator.class, typeSystemDescription,
+                                        FanseAnnotator.PARAM_MODEL_BASE_DIR, fanseModelDirectory,
+                                        AbstractAnnotator.MULTI_THREAD, true
+                                );
+                                break;
+                            case "opennlp":
+                                processor = AnalysisEngineFactory.createEngineDescription(
+                                        OpenNlpChunker.class, typeSystemDescription,
+                                        OpenNlpChunker.PARAM_MODEL_PATH, opennlpModel);
+                                break;
+                            case "wordnetEntity":
+                                processor = AnalysisEngineFactory.createEngineDescription(
+                                        WordNetBasedEntityAnnotator.class, typeSystemDescription,
+                                        WordNetBasedEntityAnnotator.PARAM_WN_PATH,
+                                        FileUtils.joinPaths(taskConfig.get("edu.cmu.cs.lti.resource.dir"),
+                                                taskConfig.get("edu.cmu.cs.lti.wndict.path"))
+                                );
+                                break;
+                            case "quote":
+                                processor = AnalysisEngineFactory.createEngineDescription(
+                                        QuoteAnnotator.class, typeSystemDescription
+                                );
+                                break;
+                            case "ArgumentMerger":
+                                processor = AnalysisEngineFactory.createEngineDescription(ArgumentMerger.class,
+                                        typeSystemDescription);
+                                break;
+                            case "mateChineseSrl":
+                                processor = AnalysisEngineFactory.createEngineDescription(
+                                        MateChineseSrlAnnotator.class, typeSystemDescription,
+                                        MateChineseSrlAnnotator.PARAM_MODEL_FILE, mateModel,
+                                        AbstractAnnotator.MULTI_THREAD, true
+                                );
+                                break;
+                            case "zpar":
+                                processor = AnalysisEngineFactory.createEngineDescription(
+                                        ZParChineseCharacterConstituentParser.class, typeSystemDescription,
+                                        ZParChineseCharacterConstituentParser.PARAM_CHINESE_MODEL, zparChineseModel,
+                                        ZParChineseCharacterConstituentParser.PARAM_ZPAR_BIN_PATH, zparBinPath
+                                );
+                                break;
+                            case "ltp":
+                                processor = AnalysisEngineFactory.createEngineDescription(
+                                        LtpAnnotator.class, typeSystemDescription,
+                                        LtpAnnotator.PARAM_CWS_MODEL,
+                                        new File(generalModelDir, "ltp_models/ltp_data/cws.model"),
+                                        LtpAnnotator.PARAM_POS_MODEL,
+                                        new File(generalModelDir, "ltp_models/ltp_data/pos.model"),
+                                        LtpAnnotator.PARAM_NER_MODEL,
+                                        new File(generalModelDir, "ltp_models/ltp_data/ner.model"),
+                                        LtpAnnotator.PARAM_DEPENDENCY_MODEL,
+                                        new File(generalModelDir, "ltp_models/ltp_data/parser.model"),
+                                        LtpAnnotator.PARAM_SRL_MODEL,
+                                        new File(generalModelDir, "ltp_models/ltp_data/srl"),
+                                        AbstractAnnotator.MULTI_THREAD, true
+                                );
+                                break;
+                            case "discourse":
+                                processor = AnalysisEngineFactory.createEngineDescription(
+                                        DiscourseParserAnnotator.class, typeSystemDescription);
+                                break;
+                            default:
+                                throw new ConfigurationException("Unknown preprocessor specified : " + name);
                         }
 
                         logger.info("Adding preprocessor " + name);
@@ -563,9 +577,12 @@ public class EventMentionPipeline {
         RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
 
         // Train realis model.
-        String realisModelDir = realisModelRunner.getModelPath(realisConfig, fullRunSuffix);
-        String vanillaSentCrfModel = tokenRunner.getModelPath(tokenCrfConfig, fullRunSuffix, "hamming");
-        String treeCorefModel = corefRunner.getModelPath(corefConfig, fullRunSuffix);
+        String realisModelDir = ModelUtils.getTrainModelPath(eventModelDir, realisConfig, fullRunSuffix);
+
+        String vanillaSentCrfModel = ModelUtils.getTrainModelPath(eventModelDir, tokenCrfConfig, fullRunSuffix,
+                "loss=hamming");
+
+        String treeCorefModel = ModelUtils.getTrainModelPath(eventModelDir, corefConfig, fullRunSuffix);
 
         // Run the vanilla model.
         runOnly(tokenCrfConfig, realisConfig, corefConfig, testReader, vanillaSentCrfModel, realisModelDir,
@@ -640,22 +657,23 @@ public class EventMentionPipeline {
 
         String resultDir = paths.getResultDir(testingWorkingDir, fullRunSuffix);
 
-//        writeEvaluationOutput(trainingReader, testDataReader, resultDir, fullRunSuffix, hasTestGold);
+        String testGoldStandard = taskConfig.get("edu.cmu.cs.lti.test.gold_standard");
+        File testGold = testGoldStandard == null ? null : new File(testGoldStandard);
 
         if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", false)) {
             logger.info("Will run individual model experiments.");
-            experiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, resultDir, runAll);
+            experiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, testGold, resultDir, runAll);
         }
 
         if (taskConfig.getBoolean("edu.cmu.cs.lti.joint.models", false)) {
             logger.info("Will run joint model experiments.");
-            jointExperiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, resultDir, runAll);
+            jointExperiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, testGold, resultDir, runAll);
         }
 
         if (taskConfig.getBoolean("edu.cmu.lti.after.models", false)) {
             logger.info("Will run after model experiments.");
-            afterExperiment(taskConfig, testingWorkingDir, fullRunSuffix, trainingReader, testDataReader, resultDir,
-                    runAll);
+            afterExperiment(taskConfig, testingWorkingDir, fullRunSuffix, trainingReader, testDataReader, testGold,
+                    resultDir, runAll);
         }
     }
 
@@ -685,27 +703,41 @@ public class EventMentionPipeline {
 
             logger.info("Writing evaluation output.");
             writeEvaluationOutput(trainingSliceReader, devSliceReader, resultDir, sliceSuffix, true);
+            File testGold = new File(getTestGoldPath(resultDir, sliceSuffix));
             logger.info("Done writing evaluation output.");
 
             if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", false)) {
                 logger.info("Will run individual model experiments.");
-                experiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, resultDir, false);
+                experiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, testGold, resultDir, false);
             }
 
             if (taskConfig.getBoolean("edu.cmu.cs.lti.joint.models", false)) {
                 logger.info("Will run joint model experiments.");
-                jointExperiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, resultDir,
+                jointExperiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, testGold, resultDir,
                         false);
             }
 
             if (taskConfig.getBoolean("edu.cmu.lti.after.models", false)) {
                 logger.info("Will run after model experiments.");
                 afterExperiment(taskConfig, trainingWorkingDir, sliceSuffix, trainingSliceReader, devSliceReader,
-                        resultDir, false);
+                        testGold, resultDir, false);
             }
         }
     }
 
+    /**
+     * Post process the mentions to get important mention component: 1. Mention head word. 2. Mention aguments.
+     *
+     * @param mentionReader
+     * @param workingDir
+     * @param outputBase
+     * @param skip
+     * @return
+     * @throws UIMAException
+     * @throws IOException
+     * @throws CpeDescriptorException
+     * @throws SAXException
+     */
     private CollectionReaderDescription postProcessMention(CollectionReaderDescription mentionReader,
                                                            String workingDir, String outputBase, boolean skip)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
@@ -812,7 +844,7 @@ public class EventMentionPipeline {
                                        String resultDir, String sliceSuffix,
                                        boolean hasTestGold)
             throws SAXException, UIMAException, CpeDescriptorException, IOException {
-        // Produce gold standard tbf for evaluation.
+        // Produce gold standard TBF for evaluation.
         if (hasTestGold) {
             logger.info("Writing development gold standard as TBF.");
             RunnerUtils.writeGold(testReader, getTestGoldPath(resultDir, sliceSuffix), useCharOffset);
@@ -823,8 +855,8 @@ public class EventMentionPipeline {
     }
 
     private void afterExperiment(Configuration taskConfig, String workingDir, String sliceSuffix,
-                                 CollectionReaderDescription trainingData,
-                                 CollectionReaderDescription testReader, String resultDir, boolean runAll)
+                                 CollectionReaderDescription trainingData, CollectionReaderDescription testReader,
+                                 File testGold, String resultDir, boolean runAll)
             throws IOException, UIMAException, SAXException, CpeDescriptorException, ClassNotFoundException,
             NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException,
             InterruptedException {
@@ -832,8 +864,6 @@ public class EventMentionPipeline {
         boolean skipAfterTest = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.after.skiptest", false);
 
         Configuration afterConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.after"));
-
-        File testGold = new File(getTestGoldPath(resultDir, sliceSuffix));
 
         logger.info("Producing partial gold standards on test data to tag after links.");
         CollectionReaderDescription goldMentionAll = annotateGoldMentions(testReader, workingDir,
@@ -854,8 +884,8 @@ public class EventMentionPipeline {
     }
 
     private void jointExperiment(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainingData,
-                                 CollectionReaderDescription testReader, String resultDir, boolean runAll
-    ) throws Exception {
+                                 CollectionReaderDescription testReader, File testGold, String resultDir,
+                                 boolean runAll) throws Exception {
         boolean skipRealisTrain = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
         boolean skipJointTrain = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.joint_span.skiptrain", false);
         boolean skipJointTest = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.joint_span.skiptest", false);
@@ -865,9 +895,6 @@ public class EventMentionPipeline {
         Configuration jointConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.joint"));
 
         String[] lossTypes = jointConfig.getList("edu.cmu.cs.lti.mention.loss_types");
-
-        // Produce gold standard tbf for evaluation.
-        File testGold = new File(getTestGoldPath(resultDir, sliceSuffix));
 
         JointSpanCorefModelRunner jointModelRunner = new JointSpanCorefModelRunner(mainConfig, typeSystemDescription);
 
@@ -893,7 +920,7 @@ public class EventMentionPipeline {
     }
 
     private void experiment(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainingData,
-                            CollectionReaderDescription testReader, String resultDir, boolean runAll)
+                            CollectionReaderDescription testReader, File testGold, String resultDir, boolean runAll)
             throws Exception {
         if (runAll) {
             logger.info("Force to run all experiments, no training will be skipped.");
@@ -907,8 +934,6 @@ public class EventMentionPipeline {
         boolean skipRealisTest = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
         boolean skipCorefTest = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
 
-        boolean hasRealis = taskConfig.getBoolean("edu.cmu.cs.lti.mention.has_realis", true);
-
         logger.info(String.format("Training skips, skip mention : %s, skip realis : %s, skip coref : %s.",
                 skipTypeTrain, skipRealisTrain, skipCorefTrain));
 
@@ -921,56 +946,35 @@ public class EventMentionPipeline {
 
         String subEvalDir = sliceSuffix.equals(fullRunSuffix) ? "final" : "cv";
 
-        // Take gold standard tbf for evaluation.
-        File testGold = new File(getTestGoldPath(resultDir, sliceSuffix));
+        // Produce gold mention (type + realis) detection.
+        logger.info("Producing partial gold standards with type and realis only.");
 
-//        /*####################################################
-//         * Begin of gold standard benchmarks.
-//         ###################################################*/
-//        // Produce gold mention (type + realis) detection.
-        logger.info("Producing partial gold standards.");
-
-        // TODO handle the working directory here.
         CollectionReaderDescription goldMentionAll = annotateGoldMentions(testReader, trainingWorkingDir,
                 paths.getMiddleOutputPath(sliceSuffix, "gold_mentions"), true, true, false, false, true);
 
-        // Post process mentions.
+        // Post process mentions to add headwords and arguments.
         CollectionReaderDescription postMention = postProcessMention(goldMentionAll, trainingWorkingDir,
                 paths.getMiddleOutputPath(sliceSuffix, "mention_post"), skipTypeTest);
 
+        // Produce gold mention types, to test performance of realis detection.
+        CollectionReaderDescription goldMentionTypes = annotateGoldMentions(testReader, trainingWorkingDir,
+                paths.getMiddleOutputPath(sliceSuffix, "gold_type"), true, false, false, false, false);
 
-//        // Gold mention types.
-//        CollectionReaderDescription goldMentionTypes = annotateGoldMentions(testReader, trainingWorkingDir,
-//                FileUtils.joinPaths(middleResults, sliceSuffix, "gold_type"), true, false, false, false, false);
-//
-//        String realisModelDir = null;
-//        RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
-//
-//        if (hasRealis) {
-//            // Train realis model.
-//            realisModelDir = realisModelRunner.trainRealis(realisConfig, trainingData, sliceSuffix, skipRealisTrain);
-//            realisModelRunner.testRealis(realisConfig, goldMentionTypes, realisModelDir,
-//                    sliceSuffix, "gold_mention_realis", resultDir, subEvalDir, testGold, skipRealisTest);
-//        }
-//
-//        /*####################################################
-//         * End of gold standard benchmarks.
-//         ###################################################*/
+        // Train realis model.
+        RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
+        String realisModelDir = realisModelRunner.trainRealis(realisConfig, trainingData, sliceSuffix, skipRealisTrain);
+        realisModelRunner.testRealis(realisConfig, goldMentionTypes, realisModelDir, sliceSuffix,
+                "gold_mention_realis", resultDir, subEvalDir, testGold, skipRealisTest);
 
-        /*#################################################
-         * BEGIN of the Vanilla perceptron models training:
-         ################################################*/
+        // Training the vanilla models.
 
         // The token models.
-//        TokenMentionModelRunner tokenModel = new TokenMentionModelRunner(mainConfig,
-//                typeSystemDescription);
-//        // The vanilla crf model.
-//        String vanillaTypeModel = tokenModel.trainSentLvType(tokenCrfConfig, trainingData, testReader, sliceSuffix,
-//                false,
-//                "hamming", resultDir, testGold, skipTypeTrain, skipTypeTest);
+        TokenMentionModelRunner tokenModel = new TokenMentionModelRunner(mainConfig, typeSystemDescription);
+        // The vanilla crf model.
+        String vanillaTypeModel = tokenModel.trainSentLvType(tokenCrfConfig, trainingData, testReader, sliceSuffix,
+                false, "hamming", resultDir, testGold, skipTypeTrain, skipTypeTest);
 
 //        tokenMentionErrorAnalysis(tokenCrfConfig, testReader, vanillaTypeModel);
-
 
         // The coreference models.
         CorefModelRunner corefModel = new CorefModelRunner(mainConfig, typeSystemDescription);
@@ -979,13 +983,10 @@ public class EventMentionPipeline {
         String treeCorefModel = corefModel.trainLatentTreeCoref(corefConfig, trainingData, postMention, sliceSuffix,
                 resultDir, subEvalDir, testGold, skipCorefTrain, skipTypeTest && skipCorefTest);
 
-
         corefModel.testCoref(corefConfig, postMention, treeCorefModel, sliceSuffix, "coref_test",
                 resultDir, subEvalDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);
 
-        /*#################################################
-         * END of the Vanilla perceptron models training:
-         ################################################*/
+        // End of the vanilla model training.
 
 
 //        /*#################################################
@@ -1110,16 +1111,13 @@ public class EventMentionPipeline {
 //         * END of the mention experiments.
 //         ################################################*/
 
-         /*#################################################
-         * BEGIN to use test coreference after simple type detection and realis
-         ################################################*/
-//        CollectionReaderDescription plainMentionOutput = tokenModel.testPlainMentionModel(tokenCrfConfig, testReader,
-//                vanillaTypeModel, sliceSuffix, "vanillaMention", resultDir, subEvalDir, testGold, skipTypeTest);
-//        CollectionReaderDescription realisOutput = realisModelRunner.testRealis(realisConfig, plainMentionOutput,
-//                realisModelDir, sliceSuffix, "vanillaMentionRealis", resultDir, subEvalDir, testGold,
-//                skipTypeTest && skipRealisTest);
-//        corefModel.testCoref(corefConfig, realisOutput, treeCorefModel, sliceSuffix, "corefDownStreamTest",
-//                resultDir, subEvalDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);
+        CollectionReaderDescription plainMentionOutput = tokenModel.testPlainMentionModel(tokenCrfConfig, testReader,
+                vanillaTypeModel, sliceSuffix, "vanillaMention", resultDir, testGold, skipTypeTest);
+        CollectionReaderDescription realisOutput = realisModelRunner.testRealis(realisConfig, plainMentionOutput,
+                realisModelDir, sliceSuffix, "vanillaMentionRealis", resultDir, subEvalDir, testGold,
+                skipTypeTest && skipRealisTest);
+        corefModel.testCoref(corefConfig, realisOutput, treeCorefModel, sliceSuffix, "vanillaCoref",
+                resultDir, subEvalDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);
 
 //        for (Map.Entry<String, String> beamCorefModelWithName : beamCorefModels.entrySet()) {
 //            String corefModelName = beamCorefModelWithName.getKey();

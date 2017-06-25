@@ -7,15 +7,11 @@ import edu.cmu.cs.lti.learning.feature.extractor.ChainFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
-import edu.cmu.cs.lti.utils.Functional;
 import gnu.trove.map.TIntObjectMap;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -75,16 +71,6 @@ public class ViterbiDecoder extends SequenceDecoder {
                        boolean useAverage) {
         solution = new SequenceSolution(classAlphabet, sequenceLength, kBest);
 
-//        // Dot product function on the node (i.e. only take features depend on current class)
-//        BiFunction<FeatureVector, Integer, Double> nodeDotProd = useAverage ?
-//                weightVector::dotProdAver :
-//                weightVector::dotProd;
-
-        // Dot product function on the edge (i.e. take features depend on two classes)
-        Functional.TriFunction<FeatureVector, Integer, Integer, Double> edgeDotProd = useAverage ?
-                weightVector::dotProdAver :
-                weightVector::dotProd;
-
         final GraphFeatureVector[] currentFeatureVectors = new GraphFeatureVector[classAlphabet.size()];
         final GraphFeatureVector[] previousColFeatureVectors = new GraphFeatureVector[classAlphabet.size()];
 
@@ -94,7 +80,7 @@ public class ViterbiDecoder extends SequenceDecoder {
             currentFeatureVectors[i] = newGraphFeatureVector();
         }
 
-        List<Double> bestScores = new ArrayList<>();
+//        List<Double> bestScores = new ArrayList<>();
 
         for (; !solution.finished(); solution.advance()) {
             int sequenceIndex = solution.getCurrentPosition();
@@ -133,7 +119,7 @@ public class ViterbiDecoder extends SequenceDecoder {
                 currentFeatureVectors[i] = newGraphFeatureVector();
             }
 
-            logger.info("========== Current index is : " + sequenceIndex + " ===========");
+            logger.debug("========== Current index is : " + sequenceIndex + " ===========");
 
             // Fill up lattice score for each of class in the current column.
             solution.getCurrentPossibleClassIndices().parallel().forEach(classIndex -> {
@@ -145,25 +131,23 @@ public class ViterbiDecoder extends SequenceDecoder {
 
                 double newNodeScore = lagrangianPenalty;
 
-                synchronized (this) {
-                    double rawScore = useAverage ?
-                            weightVector.dotProdAverDebug(nodeFeature, classAlphabet.getClassName(classIndex), logger)
-                            : weightVector.dotProd(nodeFeature, classIndex);
+                double rawScore = useAverage ?
+                        weightVector.dotProd(nodeFeature, classAlphabet.getClassName(classIndex)) :
+                        weightVector.dotProd(nodeFeature, classIndex);
 
-                    logger.info(String.format("Class %s have score %.4f", classAlphabet.getClassName(classIndex),
-                            rawScore));
+                logger.debug(String.format("Class %s have score %.4f",
+                        classAlphabet.getClassName(classIndex), rawScore));
 
-                    newNodeScore += rawScore;
+                newNodeScore += rawScore;
 
-                    int index = solution.getCurrentPosition();
-                    if (bestScores.size() == index) {
-                        bestScores.add(newNodeScore);
-                    } else {
-                        if (newNodeScore > bestScores.get(index)) {
-                            bestScores.set(index, newNodeScore);
-                        }
-                    }
-                }
+                int index = solution.getCurrentPosition();
+//                if (bestScores.size() == index) {
+//                    bestScores.add(newNodeScore);
+//                } else {
+//                    if (newNodeScore > bestScores.get(index)) {
+//                        bestScores.set(index, newNodeScore);
+//                    }
+//                }
 
                 MutableInt argmaxPreviousState = new MutableInt(-1);
 
@@ -179,7 +163,8 @@ public class ViterbiDecoder extends SequenceDecoder {
                                     : weightVector.dotProd(edgeFeature, classIndex, prevState);
                         }
 
-                        int addResult = solution.scoreNewEdge(classIndex, previousBest, newEdgeScore, finalNewNodeScore);
+                        int addResult = solution.scoreNewEdge(classIndex, previousBest, newEdgeScore,
+                                finalNewNodeScore);
                         if (addResult == 1) {
                             // The new score is the best.
                             argmaxPreviousState.setValue(prevState);
@@ -201,9 +186,6 @@ public class ViterbiDecoder extends SequenceDecoder {
 
                 featureAtEachIndex[sequenceIndex][classIndex] = nodeFeature;
 
-//                logger.info(String.format("Best previous is %s, current class is %s.",
-//                        classAlphabet.getClassName(bestPrev), classAlphabet.getClassName(classIndex)));
-
                 // Adding features for the edge.
                 if (edgeFeatures.contains(bestPrev, classIndex)) {
                     currentFeatureVectors[classIndex].extend(edgeFeatures.get(bestPrev, classIndex), classIndex,
@@ -212,7 +194,7 @@ public class ViterbiDecoder extends SequenceDecoder {
             });
         }
 
-        logger.info("Score at each position is " + bestScores);
+//        logger.debug("Score at each position is " + bestScores);
 
         solution.backTrace();
 

@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class ModelTester {
-    final private String modelName;
     private final String trainingWorkingDir;
     final private String middleResults;
     private final boolean charOffset;
@@ -27,7 +26,7 @@ public abstract class ModelTester {
     private final String evalScript;
     private final String tokenDir;
 
-    public ModelTester(Configuration config, String modelName) {
+    public ModelTester(Configuration config) {
         charOffset = config.getBoolean("edu.cmu.cs.lti.output.character.offset", true);
         evalLogOutputDir = FileUtils.joinPaths(config.get("edu.cmu.cs.lti.eval.log_dir"),
                 config.get("edu.cmu.cs.lti.experiment.name"));
@@ -39,7 +38,6 @@ public abstract class ModelTester {
                 config.get("edu.cmu.cs.lti.experiment.name"));
 
         this.middleResults = processOutputDir + "/intermediate";
-        this.modelName = modelName;
     }
 
     /**
@@ -61,14 +59,14 @@ public abstract class ModelTester {
                                     TypeSystemDescription typeSystemDescription, String sliceSuffix, String runName,
                                     String outputDir, File gold)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
-        logger.info(String.format("Running model %s", modelName));
+        logger.info(String.format("Current run name is %s", runName));
 
-        // TODO Output should be obtained outside this funciton.
-        String annotatedOutput = FileUtils.joinPaths(middleResults, sliceSuffix, runName, modelName);
+        // TODO Output should be obtained outside this function.
+        String annotatedOutput = FileUtils.joinPaths(middleResults, sliceSuffix, runName);
 
         CollectionReaderDescription output = runModel(taskConfig, reader, trainingWorkingDir, annotatedOutput);
 
-        String tbfOutput = FileUtils.joinPaths(outputDir, modelName, runName + ".tbf");
+        String tbfOutput = FileUtils.joinPaths(outputDir, runName + ".tbf");
         RunnerUtils.writeResults(output, typeSystemDescription, tbfOutput, runName, charOffset, false);
 
         if (gold != null && gold.isFile()) {
