@@ -15,6 +15,7 @@ import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.annotator.AbstractAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
+import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.ExperimentPaths;
 import edu.cmu.cs.lti.utils.FileUtils;
@@ -107,7 +108,6 @@ public class EventMentionPipeline {
 
         this.trainingWorkingDir = trainingWorkingDir;
         this.testingWorkingDir = testingWorkingDir;
-
 
         if (trainingWorkingDir != null) {
             logger.info(String.format("Training directory will be %s.", trainingWorkingDir));
@@ -324,7 +324,11 @@ public class EventMentionPipeline {
                                 processor = AnalysisEngineFactory.createEngineDescription(
                                         StanfordCoreNlpAnnotator.class, typeSystemDescription,
                                         StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language,
-                                        AbstractAnnotator.MULTI_THREAD, true
+                                        // We let Stanford to handle the multi thread themselves.
+                                        // Although the current English pipeline is thread safe, the Chinese one is not.
+                                        // Any future releases may not be thread safe guaranteed.
+                                        StanfordCoreNlpAnnotator.PARAM_NUM_THREADS, 10
+//                                        AbstractAnnotator.MULTI_THREAD, true
                                 );
                                 break;
                             case "semafor":
@@ -439,6 +443,14 @@ public class EventMentionPipeline {
         }
 
         return processors;
+    }
+
+    private CollectionReaderDescription removeEventSutff(CollectionReaderDescription reader, String mainDir,
+                                                         String baseOutput) throws UIMAException, IOException {
+        AnalysisEngineDescription remover = AnalysisEngineFactory.createEngineDescription(EventMentionRemover.class);
+        AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(mainDir, baseOutput);
+        SimplePipeline.runPipeline(reader, remover, writer);
+        return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, baseOutput);
     }
 
     private CollectionReaderDescription annotateGoldMentions(CollectionReaderDescription reader, String mainDir,
@@ -949,12 +961,16 @@ public class EventMentionPipeline {
         // Produce gold mention (type + realis) detection.
         logger.info("Producing partial gold standards with type and realis only.");
 
-        CollectionReaderDescription goldMentionAll = annotateGoldMentions(testReader, trainingWorkingDir,
+        // Make sure no event stuff are annotated on the test data.
+        CollectionReaderDescription noEvent = removeEventSutff(testReader, trainingWorkingDir,
+                paths.getMiddleOutputPath(sliceSuffix, "no_event"));
+
+        CollectionReaderDescription goldMentionAll = annotateGoldMentions(noEvent, trainingWorkingDir,
                 paths.getMiddleOutputPath(sliceSuffix, "gold_mentions"), true, true, false, false, true);
 
         // Post process mentions to add headwords and arguments.
         CollectionReaderDescription postMention = postProcessMention(goldMentionAll, trainingWorkingDir,
-                paths.getMiddleOutputPath(sliceSuffix, "mention_post"), skipTypeTest);
+                paths.getMiddleOutputPath(sliceSuffix, "gold_mentions_post"), skipTypeTest);
 
         // Produce gold mention types, to test performance of realis detection.
         CollectionReaderDescription goldMentionTypes = annotateGoldMentions(testReader, trainingWorkingDir,
@@ -964,14 +980,14 @@ public class EventMentionPipeline {
         RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
         String realisModelDir = realisModelRunner.trainRealis(realisConfig, trainingData, sliceSuffix, skipRealisTrain);
         realisModelRunner.testRealis(realisConfig, goldMentionTypes, realisModelDir, sliceSuffix,
-                "gold_mention_realis", resultDir, subEvalDir, testGold, skipRealisTest);
+                "gold_mention_realis", resultDir, testGold, skipRealisTest);
 
         // Training the vanilla models.
 
         // The token models.
         TokenMentionModelRunner tokenModel = new TokenMentionModelRunner(mainConfig, typeSystemDescription);
         // The vanilla crf model.
-        String vanillaTypeModel = tokenModel.trainSentLvType(tokenCrfConfig, trainingData, testReader, sliceSuffix,
+        String vanillaTypeModel = tokenModel.trainSentLvType(tokenCrfConfig, trainingData, noEvent, sliceSuffix,
                 false, "hamming", resultDir, testGold, skipTypeTrain, skipTypeTest);
 
 //        tokenMentionErrorAnalysis(tokenCrfConfig, testReader, vanillaTypeModel);
@@ -1111,10 +1127,13 @@ public class EventMentionPipeline {
 //         * END of the mention experiments.
 //         ################################################*/
 
-        CollectionReaderDescription plainMentionOutput = tokenModel.testPlainMentionModel(tokenCrfConfig, testReader,
+        CollectionReaderDescription plainMentionOutput = tokenModel.testPlainMentionModel(tokenCrfConfig, noEvent,
                 vanillaTypeModel, sliceSuffix, "vanillaMention", resultDir, testGold, skipTypeTest);
-        CollectionReaderDescription realisOutput = realisModelRunner.testRealis(realisConfig, plainMentionOutput,
-                realisModelDir, sliceSuffix, "vanillaMentionRealis", resultDir, subEvalDir, testGold,
+        // Post process mentions to add headwords and arguments.
+        CollectionReaderDescription mentionWithHeadWord = postProcessMention(plainMentionOutput, trainingWorkingDir,
+                paths.getMiddleOutputPath(sliceSuffix, "vanillaMention_post"), skipTypeTest);
+        CollectionReaderDescription realisOutput = realisModelRunner.testRealis(realisConfig, mentionWithHeadWord,
+                realisModelDir, sliceSuffix, "vanillaMentionRealis", resultDir, testGold,
                 skipTypeTest && skipRealisTest);
         corefModel.testCoref(corefConfig, realisOutput, treeCorefModel, sliceSuffix, "vanillaCoref",
                 resultDir, subEvalDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);

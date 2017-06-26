@@ -84,7 +84,7 @@ public class RealisModelRunner extends AbstractMentionModelRunner {
 
     public CollectionReaderDescription testRealis(Configuration taskConfig, CollectionReaderDescription reader,
                                                   String realisModel, String sliceSuffix, String runName,
-                                                  String outputDir, String subEval, File gold, boolean skipTest)
+                                                  String outputDir, File gold, boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
 
         return new ModelTester(mainConfig) {
