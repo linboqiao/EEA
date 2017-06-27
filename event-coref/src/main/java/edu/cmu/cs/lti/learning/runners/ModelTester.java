@@ -105,6 +105,7 @@ public abstract class ModelTester {
 
         String evalMode = charOffset ? "char" : "token";
 
+        // TODO: having python2 here make it less portable.
         List<String> commands = new ArrayList<>(Arrays.asList(
                 "python2", evalScript, "-g", gold.getPath(), "-s", system,
                 "-d", FileUtils.joinPaths(evalDir, suffix + ".cmp"),

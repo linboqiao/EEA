@@ -76,12 +76,6 @@ public class EventMentionPipeline {
 
     private boolean useCharOffset;
 
-    private String tokenDir;
-
-    private String evalLogOutputDir;
-
-    private String evalScript;
-
     private static final Logger logger = LoggerFactory.getLogger(EventMentionPipeline.class);
 
     private Configuration mainConfig;
@@ -123,10 +117,6 @@ public class EventMentionPipeline {
         this.useCharOffset = useCharOffset;
 
         this.paths = new ExperimentPaths(logger, processOutputDir);
-
-//        this.processOut = processOutputDir;
-//        this.resultBase = processOutputDir + "/results";
-//        this.middleResults = processOutputDir + "/intermediate";
     }
 
     /**
@@ -155,13 +145,7 @@ public class EventMentionPipeline {
 
         } else {
             logger.info("Evaluation mode is token based.");
-            this.tokenDir = config.get("edu.cmu.cs.lti.training.token_map.dir");
         }
-
-        this.evalLogOutputDir = FileUtils.joinPaths(config.get("edu.cmu.cs.lti.eval.log_dir"),
-                config.get("edu.cmu.cs.lti.experiment.name"));
-        this.evalScript = config.get("edu.cmu.cs.lti.eval.script");
-
         this.mainConfig = config;
     }
 
@@ -675,17 +659,20 @@ public class EventMentionPipeline {
         if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", false)) {
             logger.info("Will run individual model experiments.");
             experiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, testGold, resultDir, runAll);
+            logger.info("Experiment done.");
         }
 
         if (taskConfig.getBoolean("edu.cmu.cs.lti.joint.models", false)) {
             logger.info("Will run joint model experiments.");
             jointExperiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, testGold, resultDir, runAll);
+            logger.info("Experiment done.");
         }
 
         if (taskConfig.getBoolean("edu.cmu.lti.after.models", false)) {
             logger.info("Will run after model experiments.");
             afterExperiment(taskConfig, testingWorkingDir, fullRunSuffix, trainingReader, testDataReader, testGold,
                     resultDir, runAll);
+            logger.info("Experiment done.");
         }
     }
 
