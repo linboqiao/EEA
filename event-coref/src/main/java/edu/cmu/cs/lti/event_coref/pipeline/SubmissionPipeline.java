@@ -12,7 +12,6 @@ import edu.cmu.cs.lti.event_coref.annotators.prepare.EnglishSrlArgumentExtractor
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EventHeadWordAnnotator;
 import edu.cmu.cs.lti.learning.utils.ModelUtils;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
-import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.stanford.nlp.util.StringUtils;
@@ -75,17 +74,7 @@ public class SubmissionPipeline {
 
             CollectionReaderDescription output = null;
             for (CollectionReaderDescription reader : readers) {
-                output = new BasicPipeline(new ProcessorWrapper() {
-                    @Override
-                    public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                        return reader;
-                    }
-
-                    @Override
-                    public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                        return new AnalysisEngineDescription[]{engine, mentionSplitter};
-                    }
-                }, mainOutputDir, "type").runWithOutput();
+                output = new BasicPipeline(reader, mainOutputDir, "type", engine, mentionSplitter).run().getOutput();
             }
 
             if (readers.length == 0) {
@@ -103,79 +92,48 @@ public class SubmissionPipeline {
                 TypeBasedMentionSelector.PARAM_SELECTED_MENTION_TYPE_FILE, selectedTypeFile
         );
 
-        return new BasicPipeline(new ProcessorWrapper() {
-            @Override
-            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                return reader;
-            }
-
-            @Override
-            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                return new AnalysisEngineDescription[]{mentionFilter};
-            }
-        }, mainOutputDir, "filtered").runWithOutput();
+        return new BasicPipeline(reader, mainOutputDir, "filtered", mentionFilter).run().getOutput();
     }
 
     // Run realis.
     private CollectionReaderDescription realisAnnotation(Configuration config, CollectionReaderDescription reader,
                                                          String mainOutputDir)
             throws IOException, UIMAException, CpeDescriptorException, SAXException {
+        AnalysisEngineDescription realisAnnotator;
+        if (config == null) {
+            realisAnnotator = AnalysisEngineFactory.createEngineDescription(
+                    AllActualRealisAnnotator.class
+            );
+        } else {
+            String modelDir = ModelUtils.getTestModelFile(mainModelDir, config);
 
-        return new BasicPipeline(new ProcessorWrapper() {
-            @Override
-            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                return reader;
-            }
-
-            @Override
-            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                AnalysisEngineDescription realisAnnotator;
-                if (config == null) {
-                    realisAnnotator = AnalysisEngineFactory.createEngineDescription(
-                            AllActualRealisAnnotator.class
-                    );
-                } else {
-                    String modelDir = ModelUtils.getTestModelFile(mainModelDir, config);
-
-                    realisAnnotator = AnalysisEngineFactory.createEngineDescription(
-                            RealisTypeAnnotator.class, typeSystemDescription,
-                            RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            RealisTypeAnnotator.PARAM_CONFIG_PATH, config.getConfigFile()
-                    );
-                }
-                return new AnalysisEngineDescription[]{realisAnnotator};
-            }
-        }, mainOutputDir, "realis").runWithOutput();
-
+            realisAnnotator = AnalysisEngineFactory.createEngineDescription(
+                    RealisTypeAnnotator.class, typeSystemDescription,
+                    RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                    RealisTypeAnnotator.PARAM_CONFIG_PATH, config.getConfigFile()
+            );
+        }
+        return new BasicPipeline(reader, mainOutputDir, "realis", realisAnnotator).run().getOutput();
     }
 
 
     private CollectionReaderDescription corefResolution(Configuration modelConfig, CollectionReaderDescription reader,
                                                         String mainOutputDir)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
-        return new BasicPipeline(new ProcessorWrapper() {
-            @Override
-            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                return reader;
-            }
+        String modelDir = ModelUtils.getTestModelFile(mainModelDir, modelConfig);
 
-            @Override
-            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                String modelDir = ModelUtils.getTestModelFile(mainModelDir, modelConfig);
+        AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
+                EventCorefAnnotator.class, typeSystemDescription,
+                EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                EventCorefAnnotator.PARAM_CONFIG_PATH, modelConfig.getConfigFile()
+        );
 
-                AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
-                        EventCorefAnnotator.class, typeSystemDescription,
-                        EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                        EventCorefAnnotator.PARAM_CONFIG_PATH, modelConfig.getConfigFile()
-                );
+        List<AnalysisEngineDescription> annotators = new ArrayList<>();
+        addCorefPreprocessors(annotators);
+        annotators.add(corefAnnotator);
 
-                List<AnalysisEngineDescription> annotators = new ArrayList<>();
-                addCorefPreprocessors(annotators);
-
-                annotators.add(corefAnnotator);
-                return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
-            }
-        }, mainOutputDir, "coref").runWithOutput();
+        return new BasicPipeline(reader, mainOutputDir, "coref", annotators.toArray(new
+                AnalysisEngineDescription[annotators.size()])).getOutput();
     }
 
     private void addCorefPreprocessors(List<AnalysisEngineDescription> preAnnotators) throws
@@ -200,25 +158,15 @@ public class SubmissionPipeline {
         File tbfOutput = new File(mainOutputDir, systemId);
         logger.info("Writing results to " + tbfOutput);
 
-        new BasicPipeline(new ProcessorWrapper() {
-            @Override
-            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                return processedResultReader;
-            }
+        AnalysisEngineDescription resultWriter = AnalysisEngineFactory.createEngineDescription(
+                TbfStyleEventWriter.class, typeSystemDescription,
+                TbfStyleEventWriter.PARAM_OUTPUT_PATH, tbfOutput,
+                TbfStyleEventWriter.PARAM_SYSTEM_ID, systemId,
+                TbfStyleEventWriter.PARAM_GOLD_TOKEN_COMPONENT_ID, TbfEventDataReader.COMPONENT_ID,
+                TbfStyleEventWriter.PARAM_USE_CHARACTER_OFFSET, true
+        );
 
-            @Override
-            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-
-                AnalysisEngineDescription resultWriter = AnalysisEngineFactory.createEngineDescription(
-                        TbfStyleEventWriter.class, typeSystemDescription,
-                        TbfStyleEventWriter.PARAM_OUTPUT_PATH, tbfOutput,
-                        TbfStyleEventWriter.PARAM_SYSTEM_ID, systemId,
-                        TbfStyleEventWriter.PARAM_GOLD_TOKEN_COMPONENT_ID, TbfEventDataReader.COMPONENT_ID,
-                        TbfStyleEventWriter.PARAM_USE_CHARACTER_OFFSET, true
-                );
-                return new AnalysisEngineDescription[]{resultWriter};
-            }
-        }).run();
+        new BasicPipeline(processedResultReader, resultWriter).run();
     }
 
     private void runAll(String mainOutputDir, List<String> inputDirs, String[] typeConfigs, String selectedTypeFile,

@@ -27,7 +27,7 @@ import java.util.Map;
  *
  * @author Zhengzhong Liu
  */
-public class MentionTypeAncClusterSplitter extends AbstractLoggingAnnotator {
+public class MentionTypeAndClusterSplitter extends AbstractLoggingAnnotator {
     public static final String PARAM_COREF_RULE_FILE = "corefRulesFile";
 
     @ConfigurationParameter(name = PARAM_COREF_RULE_FILE)

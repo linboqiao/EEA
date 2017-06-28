@@ -8,7 +8,6 @@ import edu.cmu.cs.lti.after.train.LatentTreeAfterTrainer;
 import edu.cmu.cs.lti.emd.pipeline.TrainingLooper;
 import edu.cmu.cs.lti.learning.utils.ModelUtils;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
-import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.uima.UIMAException;
@@ -16,15 +15,12 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
-import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -211,26 +207,13 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
             return CustomCollectionReaderFactory.createXmiReader(mainDir, baseOutput);
         } else {
             logger.info("Running after link.");
-            return new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
+            AnalysisEngineDescription afterLinker = AnalysisEngineFactory.createEngineDescription(
+                    LatentTreeAfterAnnotator.class, typeSystemDescription,
+                    LatentTreeAfterAnnotator.PARAM_MODEL_DIRECTORY, model,
+                    LatentTreeAfterAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
+            );
 
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription afterLinker = AnalysisEngineFactory.createEngineDescription(
-                            LatentTreeAfterAnnotator.class, typeSystemDescription,
-                            LatentTreeAfterAnnotator.PARAM_MODEL_DIRECTORY, model,
-                            LatentTreeAfterAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
-                    );
-
-                    List<AnalysisEngineDescription> annotators = new ArrayList<>();
-//                    RunnerUtils.addMentionPostprocessors(annotators, language);
-                    annotators.add(afterLinker);
-                    return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
-                }
-            }, mainDir, baseOutput).runWithOutput();
+            return new BasicPipeline(reader, mainDir, baseOutput, afterLinker).run().getOutput();
         }
     }
 

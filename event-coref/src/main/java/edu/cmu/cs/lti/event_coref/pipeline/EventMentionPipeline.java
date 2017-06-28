@@ -11,7 +11,6 @@ import edu.cmu.cs.lti.io.EventDataReader;
 import edu.cmu.cs.lti.learning.runners.*;
 import edu.cmu.cs.lti.learning.utils.ModelUtils;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
-import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.annotator.AbstractAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
@@ -27,7 +26,6 @@ import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
-import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -288,116 +286,108 @@ public class EventMentionPipeline {
             throw new NotImplementedException(String.format("Not implemented for OS %s.", os));
         }
 
-        for (CollectionReaderDescription reader : inputReaders) {
-            new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
+        AnalysisEngineDescription[] preprocessors = new AnalysisEngineDescription[preprocessorNames.size()];
 
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription[] preprocessors = new AnalysisEngineDescription[preprocessorNames.size()];
+        for (int i = 0; i < preprocessorNames.size(); i++) {
+            String name = preprocessorNames.get(i);
+            AnalysisEngineDescription processor;
 
-                    for (int i = 0; i < preprocessorNames.size(); i++) {
-                        String name = preprocessorNames.get(i);
-                        AnalysisEngineDescription processor;
-
-                        switch (name) {
-                            case "corenlp":
-                                processor = AnalysisEngineFactory.createEngineDescription(
-                                        StanfordCoreNlpAnnotator.class, typeSystemDescription,
-                                        StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language,
-                                        // We let Stanford to handle the multi thread themselves.
-                                        // Although the current English pipeline is thread safe, the Chinese one is not.
-                                        // Any future releases may not be thread safe guaranteed.
-                                        StanfordCoreNlpAnnotator.PARAM_NUM_THREADS, 10
+            switch (name) {
+                case "corenlp":
+                    processor = AnalysisEngineFactory.createEngineDescription(
+                            StanfordCoreNlpAnnotator.class, typeSystemDescription,
+                            StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language,
+                            // We let Stanford to handle the multi thread themselves.
+                            // Although the current English pipeline is thread safe, the Chinese one is not.
+                            // Any future releases may not be thread safe guaranteed.
+                            StanfordCoreNlpAnnotator.PARAM_NUM_THREADS, 10
 //                                        AbstractAnnotator.MULTI_THREAD, true
-                                );
-                                break;
-                            case "semafor":
-                                processor = AnalysisEngineFactory.createEngineDescription(
-                                        SemaforAnnotator.class, typeSystemDescription,
-                                        SemaforAnnotator.SEMAFOR_MODEL_PATH, semaforModelDirectory,
-                                        SemaforAnnotator.PARAM_JSON_OUTPUT_REDIRECT,
-                                        FileUtils.joinPaths(workingDirPath, "semafor_json"),
-                                        AbstractAnnotator.MULTI_THREAD, true
-                                );
-                                break;
-                            case "fanse":
-                                processor = AnalysisEngineFactory.createEngineDescription(
-                                        FanseAnnotator.class, typeSystemDescription,
-                                        FanseAnnotator.PARAM_MODEL_BASE_DIR, fanseModelDirectory,
-                                        AbstractAnnotator.MULTI_THREAD, true
-                                );
-                                break;
-                            case "opennlp":
-                                processor = AnalysisEngineFactory.createEngineDescription(
-                                        OpenNlpChunker.class, typeSystemDescription,
-                                        OpenNlpChunker.PARAM_MODEL_PATH, opennlpModel);
-                                break;
-                            case "wordnetEntity":
-                                processor = AnalysisEngineFactory.createEngineDescription(
-                                        WordNetBasedEntityAnnotator.class, typeSystemDescription,
-                                        WordNetBasedEntityAnnotator.PARAM_WN_PATH,
-                                        FileUtils.joinPaths(taskConfig.get("edu.cmu.cs.lti.resource.dir"),
-                                                taskConfig.get("edu.cmu.cs.lti.wndict.path"))
-                                );
-                                break;
-                            case "quote":
-                                processor = AnalysisEngineFactory.createEngineDescription(
-                                        QuoteAnnotator.class, typeSystemDescription
-                                );
-                                break;
-                            case "ArgumentMerger":
-                                processor = AnalysisEngineFactory.createEngineDescription(ArgumentMerger.class,
-                                        typeSystemDescription);
-                                break;
-                            case "mateChineseSrl":
-                                processor = AnalysisEngineFactory.createEngineDescription(
-                                        MateChineseSrlAnnotator.class, typeSystemDescription,
-                                        MateChineseSrlAnnotator.PARAM_MODEL_FILE, mateModel,
-                                        AbstractAnnotator.MULTI_THREAD, true
-                                );
-                                break;
-                            case "zpar":
-                                processor = AnalysisEngineFactory.createEngineDescription(
-                                        ZParChineseCharacterConstituentParser.class, typeSystemDescription,
-                                        ZParChineseCharacterConstituentParser.PARAM_CHINESE_MODEL, zparChineseModel,
-                                        ZParChineseCharacterConstituentParser.PARAM_ZPAR_BIN_PATH, zparBinPath
-                                );
-                                break;
-                            case "ltp":
-                                processor = AnalysisEngineFactory.createEngineDescription(
-                                        LtpAnnotator.class, typeSystemDescription,
-                                        LtpAnnotator.PARAM_CWS_MODEL,
-                                        new File(generalModelDir, "ltp_models/ltp_data/cws.model"),
-                                        LtpAnnotator.PARAM_POS_MODEL,
-                                        new File(generalModelDir, "ltp_models/ltp_data/pos.model"),
-                                        LtpAnnotator.PARAM_NER_MODEL,
-                                        new File(generalModelDir, "ltp_models/ltp_data/ner.model"),
-                                        LtpAnnotator.PARAM_DEPENDENCY_MODEL,
-                                        new File(generalModelDir, "ltp_models/ltp_data/parser.model"),
-                                        LtpAnnotator.PARAM_SRL_MODEL,
-                                        new File(generalModelDir, "ltp_models/ltp_data/srl"),
-                                        AbstractAnnotator.MULTI_THREAD, true
-                                );
-                                break;
-                            case "discourse":
-                                processor = AnalysisEngineFactory.createEngineDescription(
-                                        DiscourseParserAnnotator.class, typeSystemDescription);
-                                break;
-                            default:
-                                throw new ConfigurationException("Unknown preprocessor specified : " + name);
-                        }
+                    );
+                    break;
+                case "semafor":
+                    processor = AnalysisEngineFactory.createEngineDescription(
+                            SemaforAnnotator.class, typeSystemDescription,
+                            SemaforAnnotator.SEMAFOR_MODEL_PATH, semaforModelDirectory,
+                            SemaforAnnotator.PARAM_JSON_OUTPUT_REDIRECT,
+                            FileUtils.joinPaths(workingDirPath, "semafor_json"),
+                            AbstractAnnotator.MULTI_THREAD, true
+                    );
+                    break;
+                case "fanse":
+                    processor = AnalysisEngineFactory.createEngineDescription(
+                            FanseAnnotator.class, typeSystemDescription,
+                            FanseAnnotator.PARAM_MODEL_BASE_DIR, fanseModelDirectory,
+                            AbstractAnnotator.MULTI_THREAD, true
+                    );
+                    break;
+                case "opennlp":
+                    processor = AnalysisEngineFactory.createEngineDescription(
+                            OpenNlpChunker.class, typeSystemDescription,
+                            OpenNlpChunker.PARAM_MODEL_PATH, opennlpModel);
+                    break;
+                case "wordnetEntity":
+                    processor = AnalysisEngineFactory.createEngineDescription(
+                            WordNetBasedEntityAnnotator.class, typeSystemDescription,
+                            WordNetBasedEntityAnnotator.PARAM_WN_PATH,
+                            FileUtils.joinPaths(taskConfig.get("edu.cmu.cs.lti.resource.dir"),
+                                    taskConfig.get("edu.cmu.cs.lti.wndict.path"))
+                    );
+                    break;
+                case "quote":
+                    processor = AnalysisEngineFactory.createEngineDescription(
+                            QuoteAnnotator.class, typeSystemDescription
+                    );
+                    break;
+                case "ArgumentMerger":
+                    processor = AnalysisEngineFactory.createEngineDescription(ArgumentMerger.class,
+                            typeSystemDescription);
+                    break;
+                case "mateChineseSrl":
+                    processor = AnalysisEngineFactory.createEngineDescription(
+                            MateChineseSrlAnnotator.class, typeSystemDescription,
+                            MateChineseSrlAnnotator.PARAM_MODEL_FILE, mateModel,
+                            AbstractAnnotator.MULTI_THREAD, true
+                    );
+                    break;
+                case "zpar":
+                    processor = AnalysisEngineFactory.createEngineDescription(
+                            ZParChineseCharacterConstituentParser.class, typeSystemDescription,
+                            ZParChineseCharacterConstituentParser.PARAM_CHINESE_MODEL, zparChineseModel,
+                            ZParChineseCharacterConstituentParser.PARAM_ZPAR_BIN_PATH, zparBinPath
+                    );
+                    break;
+                case "ltp":
+                    processor = AnalysisEngineFactory.createEngineDescription(
+                            LtpAnnotator.class, typeSystemDescription,
+                            LtpAnnotator.PARAM_CWS_MODEL,
+                            new File(generalModelDir, "ltp_models/ltp_data/cws.model"),
+                            LtpAnnotator.PARAM_POS_MODEL,
+                            new File(generalModelDir, "ltp_models/ltp_data/pos.model"),
+                            LtpAnnotator.PARAM_NER_MODEL,
+                            new File(generalModelDir, "ltp_models/ltp_data/ner.model"),
+                            LtpAnnotator.PARAM_DEPENDENCY_MODEL,
+                            new File(generalModelDir, "ltp_models/ltp_data/parser.model"),
+                            LtpAnnotator.PARAM_SRL_MODEL,
+                            new File(generalModelDir, "ltp_models/ltp_data/srl"),
+                            AbstractAnnotator.MULTI_THREAD, true
+                    );
+                    break;
+                case "discourse":
+                    processor = AnalysisEngineFactory.createEngineDescription(
+                            DiscourseParserAnnotator.class, typeSystemDescription);
+                    break;
+                default:
+                    throw new ConfigurationException("Unknown preprocessor specified : " + name);
+            }
 
-                        logger.info("Adding preprocessor " + name);
+            logger.info("Adding preprocessor " + name);
 
-                        preprocessors[i] = processor;
-                    }
-                    return preprocessors;
-                }
-            }, workingDirPath, paths.getPreprocessBase()).runWithOutput();
+            preprocessors[i] = processor;
+        }
+
+        for (CollectionReaderDescription reader : inputReaders) {
+            return new BasicPipeline(reader, workingDirPath, paths.getPreprocessBase(), preprocessors).run()
+                    .getOutput();
         }
 
         return output;
@@ -444,19 +434,9 @@ public class EventMentionPipeline {
         if (skip && new File(mainDir, baseOutput).exists()) {
             logger.info("Skipping gold annotator since exists.");
         } else {
-            new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
-
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    return new AnalysisEngineDescription[]{
-                            RunnerUtils.getGoldAnnotator(copyType, copyRealis, copyCluster, copyRelation)
-                    };
-                }
-            }, mainDir, baseOutput).runWithOutput();
+            AnalysisEngineDescription annotator = RunnerUtils.getGoldAnnotator(copyType, copyRealis, copyCluster,
+                    copyRelation);
+            return new BasicPipeline(reader, mainDir, baseOutput, annotator).run().getOutput();
         }
         return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, baseOutput);
     }
@@ -470,20 +450,10 @@ public class EventMentionPipeline {
     private CollectionReaderDescription splitMentions(CollectionReaderDescription reader, String mainDir,
                                                       String baseOutput) throws SAXException,
             UIMAException, CpeDescriptorException, IOException {
-        return new BasicPipeline(new ProcessorWrapper() {
-            @Override
-            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                return reader;
-            }
-
-            @Override
-            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
-                        MentionTypeSplitter.class, typeSystemDescription
-                );
-                return new AnalysisEngineDescription[]{mentionSplitter};
-            }
-        }, mainDir, baseOutput).runWithOutput();
+        AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
+                MentionTypeSplitter.class, typeSystemDescription
+        );
+        return new BasicPipeline(reader, mainDir, baseOutput, mentionSplitter).run().getOutput();
     }
 
     public void computeStats() throws SAXException, UIMAException, CpeDescriptorException,
@@ -495,20 +465,11 @@ public class EventMentionPipeline {
         CollectionReaderDescription trainingData = prepareTraining(trainingReader, trainingWorkingDir,
                 paths.getMiddleOutputPath(fullRunSuffix, "prepared_training"), false, 1);
 
-        new BasicPipeline(new ProcessorWrapper() {
-            @Override
-            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                return trainingData;
-            }
+        AnalysisEngineDescription stats = AnalysisEngineFactory.createEngineDescription(
+                ChineseMentionStats.class, typeSystemDescription,
+                ChineseMentionStats.PARAM_OUTPUT_PATH, new File(trainingWorkingDir, "stats"));
 
-            @Override
-            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                AnalysisEngineDescription stats = AnalysisEngineFactory.createEngineDescription(
-                        ChineseMentionStats.class, typeSystemDescription,
-                        ChineseMentionStats.PARAM_OUTPUT_PATH, new File(trainingWorkingDir, "stats"));
-                return new AnalysisEngineDescription[]{stats};
-            }
-        }).run();
+        new BasicPipeline(trainingData, stats).run();
     }
 
     /**
@@ -531,22 +492,14 @@ public class EventMentionPipeline {
         if (preparedDir.exists() && skipTrainPrepare) {
             logger.info("Prepared training data exists at : " + preparedDir);
         } else {
-            new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
+            AnalysisEngineDescription allGoldAnnotator = RunnerUtils.getGoldAnnotator(
+                    true, true, true, true);
+            List<AnalysisEngineDescription> annotators = new ArrayList<>();
+            annotators.add(allGoldAnnotator);
+            RunnerUtils.addMentionPostprocessors(annotators, typeSystemDescription, language);
 
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription allGoldAnnotator = RunnerUtils.getGoldAnnotator(
-                            true, true, true, true);
-                    List<AnalysisEngineDescription> annotators = new ArrayList<>();
-                    annotators.add(allGoldAnnotator);
-                    RunnerUtils.addMentionPostprocessors(annotators, typeSystemDescription, language);
-                    return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
-                }
-            }, workingDir, outputBase).runWithOutput();
+            new BasicPipeline(reader, workingDir, outputBase,
+                    annotators.toArray(new AnalysisEngineDescription[annotators.size()])).run();
         }
 
         return CustomCollectionReaderFactory.createRandomizedXmiReader(typeSystemDescription, workingDir, outputBase,
@@ -603,38 +556,16 @@ public class EventMentionPipeline {
         CollectionReaderDescription trainReader = paths.getPreprocessReader(typeSystemDescription, trainingWorkingDir);
         CollectionReaderDescription testReader = paths.getPreprocessReader(typeSystemDescription, testingWorkingDir);
 
-        AnalysisEngineDescription[] processors = new AnalysisEngineDescription[]{ltpAnnotator};
-
         if (paths.preprocessExists(trainingWorkingDir)) {
             logger.info("Trying on training data.");
-            new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return trainReader;
-                }
-
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    return processors;
-                }
-            }, trainingWorkingDir, paths.getTrialBase()).runWithOutput();
+            new BasicPipeline(trainReader, trainingWorkingDir, paths.getTrialBase(), ltpAnnotator).run();
         } else {
             logger.info("Training preprocessed data not found, cannot try annotator");
         }
 
         if (paths.preprocessExists(testingWorkingDir)) {
             logger.info("Trying on test data.");
-            new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return testReader;
-                }
-
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    return processors;
-                }
-            }, testingWorkingDir, paths.getTrialBase()).runWithOutput();
+            new BasicPipeline(trainReader, testingWorkingDir, paths.getTrialBase(), ltpAnnotator).run();
         } else {
             logger.info("Test preprocessed data not found, cannot try annotator");
         }
@@ -748,17 +679,8 @@ public class EventMentionPipeline {
             logger.info("Skipping mention post processing, using existing results.");
             return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, workingDir, outputBase);
         } else {
-            return new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return mentionReader;
-                }
-
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
-                }
-            }, workingDir, outputBase).runWithOutput();
+            return new BasicPipeline(mentionReader, workingDir, outputBase,
+                    annotators.toArray(new AnalysisEngineDescription[annotators.size()])).run().getOutput();
         }
     }
 

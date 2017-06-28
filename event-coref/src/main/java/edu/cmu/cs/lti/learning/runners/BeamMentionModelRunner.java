@@ -7,7 +7,6 @@ import edu.cmu.cs.lti.emd.pipeline.TrainingLooper;
 import edu.cmu.cs.lti.learning.utils.ModelUtils;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
-import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.reader.RandomizedXmiCollectionReader;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -18,7 +17,6 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
-import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.xml.sax.SAXException;
 
@@ -143,28 +141,19 @@ public class BeamMentionModelRunner extends AbstractMentionModelRunner {
             logger.info("Skipping sent level tagging because output exists.");
             return CustomCollectionReaderFactory.createXmiReader(mainDir, baseOutput);
         } else {
-            return new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
+            AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
+                    BeamTypeAnnotator.class, typeSystemDescription,
+                    BeamTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                    BeamTypeAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath(),
+                    BeamTypeAnnotator.PARAM_BEAM_SIZE, beamSize
+            );
 
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
-                            BeamTypeAnnotator.class, typeSystemDescription,
-                            BeamTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            BeamTypeAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath(),
-                            BeamTypeAnnotator.PARAM_BEAM_SIZE, beamSize
-                    );
+            AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
+                    MentionTypeSplitter.class, typeSystemDescription
+            );
 
-                    AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
-                            MentionTypeSplitter.class, typeSystemDescription
-                    );
-
-                    return new AnalysisEngineDescription[]{sentenceLevelTagger, mentionSplitter};
-                }
-            }, mainDir, baseOutput).runWithOutput();
+            return new BasicPipeline(reader, mainDir, baseOutput, sentenceLevelTagger, mentionSplitter).run()
+                    .getOutput();
         }
     }
 
@@ -178,7 +167,8 @@ public class BeamMentionModelRunner extends AbstractMentionModelRunner {
 
         return new ModelTester(mainConfig) {
             @Override
-            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
+                    reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException,
                     CpeDescriptorException, IOException {
                 return beamMentionTagging(taskConfig, reader, typeModel, trainingWorkingDir, baseDir, beamSize,

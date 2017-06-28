@@ -2,9 +2,8 @@ package edu.cmu.cs.lti.learning.runners;
 
 import edu.cmu.cs.lti.event_coref.annotators.DDEventTypeCorefAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.misc.DifferentTypeCorefCollector;
-import edu.cmu.cs.lti.event_coref.annotators.postprocessors.MentionTypeAncClusterSplitter;
+import edu.cmu.cs.lti.event_coref.annotators.postprocessors.MentionTypeAndClusterSplitter;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
-import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.uima.UIMAException;
@@ -12,14 +11,11 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
-import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -43,56 +39,31 @@ public class DDMentionCorefModelRunner extends AbstractMentionModelRunner {
             logger.info("Skipping running Joint, using existing results.");
             return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, outputBase);
         } else {
-            new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
+            AnalysisEngineDescription ddDecoder = AnalysisEngineFactory.createEngineDescription(
+                    DDEventTypeCorefAnnotator.class, typeSystemDescription,
+                    DDEventTypeCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
+                    DDEventTypeCorefAnnotator.PARAM_MENTION_MODEL_DIRECTORY, mentionModelDir,
+                    DDEventTypeCorefAnnotator.PARAM_COREF_MODEL_DIRECTORY, latentTreeDir,
+                    DDEventTypeCorefAnnotator.PARAM_COREF_RULE_FILE, corefRuleFile
+            );
 
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription ddDecoder = AnalysisEngineFactory.createEngineDescription(
-                            DDEventTypeCorefAnnotator.class, typeSystemDescription,
-                            DDEventTypeCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
-                            DDEventTypeCorefAnnotator.PARAM_MENTION_MODEL_DIRECTORY, mentionModelDir,
-                            DDEventTypeCorefAnnotator.PARAM_COREF_MODEL_DIRECTORY, latentTreeDir,
-                            DDEventTypeCorefAnnotator.PARAM_COREF_RULE_FILE, corefRuleFile
-                    );
+            AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
+                    MentionTypeAndClusterSplitter.class, typeSystemDescription,
+                    MentionTypeAndClusterSplitter.PARAM_COREF_RULE_FILE, corefRuleFile
+            );
 
-                    AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
-                            MentionTypeAncClusterSplitter.class, typeSystemDescription,
-                            MentionTypeAncClusterSplitter.PARAM_COREF_RULE_FILE, corefRuleFile
-                    );
-
-                    List<AnalysisEngineDescription> annotators = new ArrayList<>();
-//                    RunnerUtils.addMentionPostprocessors(annotators, language);
-                    annotators.add(ddDecoder);
-                    annotators.add(mentionSplitter);
-
-                    return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
-                }
-            }, mainDir, outputBase).runWithOutput();
-            return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, outputBase);
+            return new BasicPipeline(reader, mainDir, outputBase, ddDecoder, mentionSplitter).run().getOutput();
         }
     }
 
     private void collectCorefConstraint(CollectionReaderDescription reader, File corefRuleFile)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
         // Get type rules.
-        new BasicPipeline(new ProcessorWrapper() {
-            @Override
-            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                return reader;
-            }
+        AnalysisEngineDescription collector = AnalysisEngineFactory.createEngineDescription(
+                DifferentTypeCorefCollector.class, typeSystemDescription,
+                DifferentTypeCorefCollector.PARAM_COREFERENCE_ALLOWED_TYPES, corefRuleFile
+        );
 
-            @Override
-            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                AnalysisEngineDescription collector = AnalysisEngineFactory.createEngineDescription(
-                        DifferentTypeCorefCollector.class, typeSystemDescription,
-                        DifferentTypeCorefCollector.PARAM_COREFERENCE_ALLOWED_TYPES, corefRuleFile
-                );
-                return new AnalysisEngineDescription[]{collector};
-            }
-        }).run();
+        new BasicPipeline(reader, collector).run();
     }
 }

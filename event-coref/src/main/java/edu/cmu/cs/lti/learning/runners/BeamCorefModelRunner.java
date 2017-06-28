@@ -6,7 +6,6 @@ import edu.cmu.cs.lti.event_coref.annotators.BeamEventCorefAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.train.BeamBasedCorefTrainer;
 import edu.cmu.cs.lti.learning.utils.ModelUtils;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
-import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.uima.UIMAException;
@@ -14,15 +13,12 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
-import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -114,32 +110,18 @@ public class BeamCorefModelRunner extends AbstractMentionModelRunner {
             logger.info("Skipping running coreference, using existing results.");
             return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, outputBase);
         } else {
-            return new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
+            AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
+                    BeamEventCorefAnnotator.class, typeSystemDescription,
+                    BeamEventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                    BeamEventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
+                    BeamEventCorefAnnotator.PARAM_BEAM_SIZE, beamSize
+            );
 
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
-                            BeamEventCorefAnnotator.class, typeSystemDescription,
-                            BeamEventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            BeamEventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
-                            BeamEventCorefAnnotator.PARAM_BEAM_SIZE, beamSize
-                    );
+            AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
+                    MentionTypeSplitter.class, typeSystemDescription
+            );
 
-                    AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
-                            MentionTypeSplitter.class, typeSystemDescription
-                    );
-
-                    List<AnalysisEngineDescription> annotators = new ArrayList<>();
-//                    RunnerUtils.addMentionPostprocessors(annotators, language);
-//                    annotators.add(mentionSplitter);
-                    annotators.add(corefAnnotator);
-                    return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
-                }
-            }, mainDir, outputBase).runWithOutput();
+            return new BasicPipeline(reader, mainDir, outputBase, corefAnnotator, mentionSplitter).run().getOutput();
         }
     }
 

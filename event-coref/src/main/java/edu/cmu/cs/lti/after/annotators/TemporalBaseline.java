@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.after.annotators;
 
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
-import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.timeml.MentionLink;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionRelation;
@@ -16,7 +15,6 @@ import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.xml.sax.SAXException;
 
@@ -63,18 +61,8 @@ public class TemporalBaseline extends AbstractLoggingAnnotator {
                                                   TypeSystemDescription typeSystemDescription,
                                                   String mainDir, String baseOutput)
             throws SAXException, UIMAException, CpeDescriptorException, IOException {
-        return new BasicPipeline(new ProcessorWrapper() {
-            @Override
-            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                return reader;
-            }
-
-            @Override
-            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                AnalysisEngineDescription annotator = AnalysisEngineFactory.createEngineDescription(TemporalBaseline
-                        .class, typeSystemDescription);
-                return new AnalysisEngineDescription[]{annotator};
-            }
-        }, mainDir, baseOutput).runWithOutput();
+        AnalysisEngineDescription annotator = AnalysisEngineFactory.createEngineDescription(TemporalBaseline
+                .class, typeSystemDescription);
+        return new BasicPipeline(reader, mainDir, baseOutput, annotator).run().getOutput();
     }
 }

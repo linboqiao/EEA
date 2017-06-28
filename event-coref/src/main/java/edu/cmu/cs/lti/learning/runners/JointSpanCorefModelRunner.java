@@ -6,7 +6,6 @@ import edu.cmu.cs.lti.event_coref.annotators.misc.GoldRemover;
 import edu.cmu.cs.lti.event_coref.annotators.train.BeamJointTrainer;
 import edu.cmu.cs.lti.learning.utils.ModelUtils;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
-import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
@@ -15,15 +14,12 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
-import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -137,7 +133,8 @@ public class JointSpanCorefModelRunner extends AbstractMentionModelRunner {
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         new ModelTester(mainConfig) {
             @Override
-            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
+                    reader, String
                     mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {
                 return beamJointSpanCoref(taskConfig, devReader, modelDir, realisModelDir, trainingWorkingDir,
                         processOutputDir, beamSize, true, skipTest);
@@ -159,36 +156,20 @@ public class JointSpanCorefModelRunner extends AbstractMentionModelRunner {
             logger.info("Skipping running Joint beam, using existing results.");
             return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, outputBase);
         } else {
-            new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
+            AnalysisEngineDescription goldRemover = AnalysisEngineFactory.createEngineDescription(
+                    GoldRemover.class, typeSystemDescription);
 
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription goldRemover = AnalysisEngineFactory.createEngineDescription(
-                            GoldRemover.class, typeSystemDescription);
+            AnalysisEngineDescription jointDecoder = AnalysisEngineFactory.createEngineDescription(
+                    JointMentionCorefAnnotator.class, typeSystemDescription,
+                    JointMentionCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
+                    JointMentionCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                    JointMentionCorefAnnotator.PARAM_REALIS_MODEL_DIRECTORY, realisDir,
+                    JointMentionCorefAnnotator.PARAM_BEAM_SIZE, beamSize,
+                    JointMentionCorefAnnotator.PARAM_USE_LASO, useLaso,
+                    JointMentionCorefAnnotator.PARAM_TWO_LAYER, useTwoLayer
+            );
 
-                    AnalysisEngineDescription jointDecoder = AnalysisEngineFactory.createEngineDescription(
-                            JointMentionCorefAnnotator.class, typeSystemDescription,
-                            JointMentionCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
-                            JointMentionCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            JointMentionCorefAnnotator.PARAM_REALIS_MODEL_DIRECTORY, realisDir,
-                            JointMentionCorefAnnotator.PARAM_BEAM_SIZE, beamSize,
-                            JointMentionCorefAnnotator.PARAM_USE_LASO, useLaso,
-                            JointMentionCorefAnnotator.PARAM_TWO_LAYER, useTwoLayer
-                    );
-
-                    List<AnalysisEngineDescription> annotators = new ArrayList<>();
-//                    RunnerUtils.addMentionPostprocessors(annotators, language);
-                    annotators.add(goldRemover);
-                    annotators.add(jointDecoder);
-
-                    return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
-                }
-            }, mainDir, outputBase).runWithOutput();
-            return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, outputBase);
+            return new BasicPipeline(reader, mainDir, outputBase, goldRemover, jointDecoder).run().getOutput();
         }
     }
 

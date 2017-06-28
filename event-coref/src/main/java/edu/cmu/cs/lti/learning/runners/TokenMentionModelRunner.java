@@ -8,7 +8,6 @@ import edu.cmu.cs.lti.emd.pipeline.TrainingLooper;
 import edu.cmu.cs.lti.learning.utils.ModelUtils;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
-import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.reader.RandomizedXmiCollectionReader;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -19,7 +18,6 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
-import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.xml.sax.SAXException;
 
@@ -168,51 +166,29 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
             logger.info("Skipping sent level tagging because output exists.");
             return CustomCollectionReaderFactory.createXmiReader(mainDir, baseOutput);
         } else {
-            return new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
+            AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
+                    CrfMentionTypeAnnotator.class, typeSystemDescription,
+                    CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                    CrfMentionTypeAnnotator.PARAM_CONFIG, crfConfig.getConfigFile().getPath()
+            );
 
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
-                            CrfMentionTypeAnnotator.class, typeSystemDescription,
-                            CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            CrfMentionTypeAnnotator.PARAM_CONFIG, crfConfig.getConfigFile().getPath()
-                    );
+            AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
+                    MentionTypeSplitter.class, typeSystemDescription
+            );
 
-                    AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
-                            MentionTypeSplitter.class, typeSystemDescription
-                    );
-
-                    return new AnalysisEngineDescription[]{sentenceLevelTagger, mentionSplitter};
-                }
-            }, mainDir, baseOutput).runWithOutput();
+            return new BasicPipeline(reader, mainDir, baseOutput, sentenceLevelTagger, mentionSplitter).run()
+                    .getOutput();
         }
     }
 
     public void tokenMentionErrorAnalysis(Configuration taskConfig,
                                           CollectionReaderDescription reader, String tokenModel) throws
             SAXException, UIMAException, CpeDescriptorException, IOException {
-        new BasicPipeline(new ProcessorWrapper() {
-            @Override
-            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                return reader;
-            }
-
-            @Override
-            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                AnalysisEngineDescription analyzer = AnalysisEngineFactory.createEngineDescription(
-                        TokenBasedMentionErrorAnalyzer.class, typeSystemDescription,
-                        TokenBasedMentionErrorAnalyzer.PARAM_MODEL_DIRECTORY, tokenModel,
-                        TokenBasedMentionErrorAnalyzer.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
-                );
-
-                return new AnalysisEngineDescription[]{
-                        analyzer
-                };
-            }
-        }).run();
+        AnalysisEngineDescription analyzer = AnalysisEngineFactory.createEngineDescription(
+                TokenBasedMentionErrorAnalyzer.class, typeSystemDescription,
+                TokenBasedMentionErrorAnalyzer.PARAM_MODEL_DIRECTORY, tokenModel,
+                TokenBasedMentionErrorAnalyzer.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
+        );
+        new BasicPipeline(reader, analyzer).run();
     }
 }

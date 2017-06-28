@@ -14,7 +14,6 @@ import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.utils.CubicLagrangian;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
-import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
@@ -279,21 +278,13 @@ public class SingleInstanceDebugger extends AbstractLoggingAnnotator {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(typeSystemName);
 
-        new BasicPipeline(new ProcessorWrapper() {
-            @Override
-            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                return CustomCollectionReaderFactory.createXmiReader(trainingWorkingDir, "preprocessed");
-            }
-
-            @Override
-            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                AnalysisEngineDescription debugger = AnalysisEngineFactory.createEngineDescription(
-                        SingleInstanceDebugger.class, typeSystemDescription,
-                        SingleInstanceDebugger.PARAM_CONFIG, kbpConfig.getConfigFile(),
-                        SingleInstanceDebugger.PARAM_TARGET_DOC_NAME, targetDocName,
-                        SingleInstanceDebugger.PARAM_TARGET_WORD, targetWord);
-                return new AnalysisEngineDescription[]{debugger};
-            }
-        }).run();
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(trainingWorkingDir,
+                "preprocessed");
+        AnalysisEngineDescription debugger = AnalysisEngineFactory.createEngineDescription(
+                SingleInstanceDebugger.class, typeSystemDescription,
+                SingleInstanceDebugger.PARAM_CONFIG, kbpConfig.getConfigFile(),
+                SingleInstanceDebugger.PARAM_TARGET_DOC_NAME, targetDocName,
+                SingleInstanceDebugger.PARAM_TARGET_WORD, targetWord);
+        new BasicPipeline(reader, debugger).run();
     }
 }

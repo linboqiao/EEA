@@ -6,7 +6,6 @@ import edu.cmu.cs.lti.annotators.StanfordCoreNlpAnnotator;
 import edu.cmu.cs.lti.io.EventDataReader;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
-import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
@@ -342,18 +341,7 @@ public class EventMentionSurfaceCoverageReport extends AbstractLoggingAnnotator 
                     EventMentionSurfaceCoverageReport.PARAM_DATA_SET_NAME, datasetName
             );
 
-
-            new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return dataSetReader;
-                }
-
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    return new AnalysisEngineDescription[]{goldAnnotator, stanfordProcessor, coverageReport};
-                }
-            }).run();
+            new BasicPipeline(dataSetReader, goldAnnotator, stanfordProcessor, coverageReport).run();
         }
     }
 }

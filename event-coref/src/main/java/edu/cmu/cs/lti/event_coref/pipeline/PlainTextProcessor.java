@@ -10,7 +10,6 @@ import edu.cmu.cs.lti.event_coref.annotators.prepare.ArgumentMerger;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EventHeadWordAnnotator;
 import edu.cmu.cs.lti.exceptions.ConfigurationException;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
-import edu.cmu.cs.lti.pipeline.ProcessorWrapper;
 import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.reader.PlainTextCollectionReader;
@@ -22,7 +21,6 @@ import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
-import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,23 +153,12 @@ public class PlainTextProcessor {
             logger.info("Skipping sent level tagging because output exists.");
             return CustomCollectionReaderFactory.createXmiReader(mainDir, baseOutput);
         } else {
-            return new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
-
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
-                            CrfMentionTypeAnnotator.class, typeSystemDescription,
-                            CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            CrfMentionTypeAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
-                    );
-
-                    return new AnalysisEngineDescription[]{sentenceLevelTagger};
-                }
-            }, mainDir, baseOutput).runWithOutput();
+            AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
+                    CrfMentionTypeAnnotator.class, typeSystemDescription,
+                    CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                    CrfMentionTypeAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
+            );
+            return new BasicPipeline(reader, mainDir, baseOutput, sentenceLevelTagger).run().getOutput();
         }
     }
 
@@ -184,30 +171,16 @@ public class PlainTextProcessor {
             logger.info("Skipping running coreference, using existing results.");
             return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, outputBase);
         } else {
-            return new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
+            AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
+                    EventCorefAnnotator.class, typeSystemDescription,
+                    EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                    EventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile()
+            );
 
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
-                            EventCorefAnnotator.class, typeSystemDescription,
-                            EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            EventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile()
-                    );
-
-                    List<AnalysisEngineDescription> annotators = new ArrayList<>();
-                    AnalysisEngineDescription headWordExtractor = AnalysisEngineFactory.createEngineDescription(
-                            EventHeadWordAnnotator.class, typeSystemDescription
-                    );
-
-                    annotators.add(headWordExtractor);
-                    annotators.add(corefAnnotator);
-                    return annotators.toArray(new AnalysisEngineDescription[annotators.size()]);
-                }
-            }, mainDir, outputBase).runWithOutput();
+            AnalysisEngineDescription headWordExtractor = AnalysisEngineFactory.createEngineDescription(
+                    EventHeadWordAnnotator.class, typeSystemDescription
+            );
+            return new BasicPipeline(reader, mainDir, outputBase, headWordExtractor, corefAnnotator).run().getOutput();
         }
     }
 
@@ -220,22 +193,12 @@ public class PlainTextProcessor {
             logger.info("Skipping realis detection because output exists.");
             return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, realisOutputBase);
         } else {
-            return new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
-
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription realisAnnotator = AnalysisEngineFactory.createEngineDescription(
-                            RealisTypeAnnotator.class, typeSystemDescription,
-                            RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                            RealisTypeAnnotator.PARAM_CONFIG_PATH, taskConfig.getConfigFile()
-                    );
-                    return new AnalysisEngineDescription[]{realisAnnotator};
-                }
-            }, mainDir, realisOutputBase).runWithOutput();
+            AnalysisEngineDescription realisAnnotator = AnalysisEngineFactory.createEngineDescription(
+                    RealisTypeAnnotator.class, typeSystemDescription,
+                    RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
+                    RealisTypeAnnotator.PARAM_CONFIG_PATH, taskConfig.getConfigFile()
+            );
+            return new BasicPipeline(reader, mainDir, realisOutputBase, realisAnnotator).run().getOutput();
         }
     }
 
@@ -244,25 +207,14 @@ public class PlainTextProcessor {
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
         logger.info("Writing results to " + tbfOutput);
 
-        new BasicPipeline(new ProcessorWrapper() {
-            @Override
-            public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                return processedResultReader;
-            }
-
-            @Override
-            public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-
-                AnalysisEngineDescription resultWriter = AnalysisEngineFactory.createEngineDescription(
-                        TbfStyleEventWriter.class, typeSystemDescription,
-                        TbfStyleEventWriter.PARAM_OUTPUT_PATH, tbfOutput,
-                        TbfStyleEventWriter.PARAM_SYSTEM_ID, systemId,
-                        TbfStyleEventWriter.PARAM_GOLD_TOKEN_COMPONENT_ID, TbfEventDataReader.COMPONENT_ID,
-                        TbfStyleEventWriter.PARAM_USE_CHARACTER_OFFSET, useCharOffset
-                );
-                return new AnalysisEngineDescription[]{resultWriter};
-            }
-        }).run();
+        AnalysisEngineDescription resultWriter = AnalysisEngineFactory.createEngineDescription(
+                TbfStyleEventWriter.class, typeSystemDescription,
+                TbfStyleEventWriter.PARAM_OUTPUT_PATH, tbfOutput,
+                TbfStyleEventWriter.PARAM_SYSTEM_ID, systemId,
+                TbfStyleEventWriter.PARAM_GOLD_TOKEN_COMPONENT_ID, TbfEventDataReader.COMPONENT_ID,
+                TbfStyleEventWriter.PARAM_USE_CHARACTER_OFFSET, useCharOffset
+        );
+        new BasicPipeline(processedResultReader, resultWriter).run();
     }
 
     /**
@@ -313,63 +265,54 @@ public class PlainTextProcessor {
         final String fanseModelDirectory = generalModelDir + "/fanse_models";
         final String opennlpDirectory = generalModelDir + "/opennlp/en-chunker.bin";
 
+        AnalysisEngineDescription[] preprocessors = new AnalysisEngineDescription[preprocessorNames.size()];
+
+        for (int i = 0; i < preprocessorNames.size(); i++) {
+            String name = preprocessorNames.get(i);
+            AnalysisEngineDescription processor;
+
+            if (name.equals("corenlp")) {
+                processor = AnalysisEngineFactory.createEngineDescription(
+                        StanfordCoreNlpAnnotator.class, typeSystemDescription,
+                        StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language
+                );
+            } else if (name.equals("semafor")) {
+                processor = AnalysisEngineFactory.createEngineDescription(
+                        SemaforAnnotator.class, typeSystemDescription,
+                        SemaforAnnotator.SEMAFOR_MODEL_PATH, semaforModelDirectory);
+            } else if (name.equals("fanse")) {
+                processor = AnalysisEngineFactory.createEngineDescription(
+                        FanseAnnotator.class, typeSystemDescription,
+                        FanseAnnotator.PARAM_MODEL_BASE_DIR, fanseModelDirectory);
+            } else if (name.equals("opennlp")) {
+                processor = AnalysisEngineFactory.createEngineDescription(
+                        OpenNlpChunker.class, typeSystemDescription,
+                        OpenNlpChunker.PARAM_MODEL_PATH, opennlpDirectory);
+            } else if (name.equals("wordnetEntity")) {
+                processor = AnalysisEngineFactory.createEngineDescription(
+                        WordNetBasedEntityAnnotator.class, typeSystemDescription,
+                        WordNetBasedEntityAnnotator.PARAM_WN_PATH,
+                        FileUtils.joinPaths(taskConfig.get("edu.cmu.cs.lti.resource.dir"),
+                                taskConfig.get("edu.cmu.cs.lti.wndict.path"))
+                );
+            } else if (name.equals("quote")) {
+                processor = AnalysisEngineFactory.createEngineDescription(
+                        QuoteAnnotator.class, typeSystemDescription
+                );
+            } else if (name.equals("ArgumentMerger")) {
+                processor = AnalysisEngineFactory.createEngineDescription(ArgumentMerger.class,
+                        typeSystemDescription);
+            } else {
+                throw new ConfigurationException("Unknown preprocessor specified : " + name);
+            }
+
+            logger.info("Adding preprocessor " + name);
+
+            preprocessors[i] = processor;
+        }
+
         for (CollectionReaderDescription reader : inputReaders) {
-            new BasicPipeline(new ProcessorWrapper() {
-                @Override
-                public CollectionReaderDescription getCollectionReader() throws ResourceInitializationException {
-                    return reader;
-                }
-
-                @Override
-                public AnalysisEngineDescription[] getProcessors() throws ResourceInitializationException {
-                    AnalysisEngineDescription[] preprocessors = new AnalysisEngineDescription[preprocessorNames.size()];
-
-                    for (int i = 0; i < preprocessorNames.size(); i++) {
-                        String name = preprocessorNames.get(i);
-                        AnalysisEngineDescription processor;
-
-                        if (name.equals("corenlp")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    StanfordCoreNlpAnnotator.class, typeSystemDescription,
-                                    StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language
-                            );
-                        } else if (name.equals("semafor")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    SemaforAnnotator.class, typeSystemDescription,
-                                    SemaforAnnotator.SEMAFOR_MODEL_PATH, semaforModelDirectory);
-                        } else if (name.equals("fanse")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    FanseAnnotator.class, typeSystemDescription,
-                                    FanseAnnotator.PARAM_MODEL_BASE_DIR, fanseModelDirectory);
-                        } else if (name.equals("opennlp")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    OpenNlpChunker.class, typeSystemDescription,
-                                    OpenNlpChunker.PARAM_MODEL_PATH, opennlpDirectory);
-                        } else if (name.equals("wordnetEntity")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    WordNetBasedEntityAnnotator.class, typeSystemDescription,
-                                    WordNetBasedEntityAnnotator.PARAM_WN_PATH,
-                                    FileUtils.joinPaths(taskConfig.get("edu.cmu.cs.lti.resource.dir"),
-                                            taskConfig.get("edu.cmu.cs.lti.wndict.path"))
-                            );
-                        } else if (name.equals("quote")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(
-                                    QuoteAnnotator.class, typeSystemDescription
-                            );
-                        } else if (name.equals("ArgumentMerger")) {
-                            processor = AnalysisEngineFactory.createEngineDescription(ArgumentMerger.class,
-                                    typeSystemDescription);
-                        } else {
-                            throw new ConfigurationException("Unknown preprocessor specified : " + name);
-                        }
-
-                        logger.info("Adding preprocessor " + name);
-
-                        preprocessors[i] = processor;
-                    }
-                    return preprocessors;
-                }
-            }, outputDir, preprocessBase).runWithOutput();
+             new BasicPipeline(reader, outputDir, preprocessBase, preprocessors).run();
         }
     }
 
@@ -397,7 +340,6 @@ public class PlainTextProcessor {
 
         return processors;
     }
-
 
 
     public static void main(String[] argv) throws IOException, UIMAException, SAXException, CpeDescriptorException {
