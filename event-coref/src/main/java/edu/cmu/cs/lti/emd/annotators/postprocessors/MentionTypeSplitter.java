@@ -41,14 +41,6 @@ public class MentionTypeSplitter extends AbstractLoggingAnnotator {
                 for (String predictedType : predictedTypes) {
                     EventMention mention = new EventMention(aJCas);
                     try {
-                        // Currently, I found that the regions property cannot be set successful on some remote
-                        // machines. One guess is that BeanUtils fail to access setter(s), because regions have two
-                        // setters (it is a FSArray).
-                        // We will explicitly copy that
-                        // property if needed. Here we do not show to much debug info to avoid spamming the console.
-
-//                        BeanUtils.copyProperties(mention, candidate);
-
                         copyProperties(mention, candidate);
                     } catch (IllegalAccessException | InvocationTargetException e) {
                         logger.warn("");

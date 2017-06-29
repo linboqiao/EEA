@@ -119,17 +119,17 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
             logger.info("Skipping running coreference, using existing results.");
             return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, outputBase);
         } else {
+            AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
+                    MentionTypeSplitter.class, typeSystemDescription
+            );
+
             AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
                     EventCorefAnnotator.class, typeSystemDescription,
                     EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
                     EventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile()
             );
 
-            AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
-                    MentionTypeSplitter.class, typeSystemDescription
-            );
-
-            return new BasicPipeline(reader, mainDir, outputBase, corefAnnotator, mentionSplitter).run().getOutput();
+            return new BasicPipeline(reader, mainDir, outputBase, mentionSplitter, corefAnnotator).run().getOutput();
 
         }
     }

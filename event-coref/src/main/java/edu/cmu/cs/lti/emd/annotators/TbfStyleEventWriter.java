@@ -45,6 +45,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
 
     @Override
     public String getTextToPrint(JCas aJCas) {
+//        UimaConvenience.printProcessLog(aJCas, logger);
 
         JCas initialView = JCasUtil.getView(aJCas, CAS.NAME_DEFAULT_SOFA, aJCas);
         Article article = JCasUtil.selectSingle(initialView, Article.class);
@@ -66,7 +67,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         TokenAlignmentHelper align = new TokenAlignmentHelper();
         align.loadWord2Stanford(aJCas, goldComponentId);
 
-        Map<EventMention, String> mentionIds = new HashMap<>();
+//        Map<EventMention, String> mentionIds = new HashMap<>();
 
         int eventMentionIndex = 1;
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
@@ -105,10 +106,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             sb.append("\n");
 
             mention.setId(eid);
-            mentionIds.put(mention, eid);
-
-//            logger.info("Adding " + MentionUtils.mentionRepre(mention) + " into list: " + mention.hashCode()
-//                    + " " + mention.getSofa().getSofaID() );
+//            mentionIds.put(mention, eid);
         }
 
         int relationIndex = 1;
@@ -118,7 +116,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
             List<String> eventMentionIds = new ArrayList<>();
             if (event.getEventMentions().size() > 1) {
                 for (EventMention mention : FSCollectionFactory.create(event.getEventMentions(), EventMention.class)) {
-                    String mentionId = mentionIds.get(mention);
+                    String mentionId = mention.getId();
                     if (mentionId != null) {
                         eventMentionIds.add(mentionId);
                     }
@@ -135,17 +133,20 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         }
 
         for (EventMentionRelation relation : JCasUtil.select(aJCas, EventMentionRelation.class)) {
-            String fromEventId = mentionIds.get(relation.getHead());
-            String toEventId = mentionIds.get(relation.getChild());
+//            String fromEventId = mentionIds.get(relation.getHead());
+//            String toEventId = mentionIds.get(relation.getChild());
 
-            if (fromEventId == null){
+            String fromEventId = relation.getHead().getId();
+            String toEventId = relation.getChild().getId();
+
+            if (fromEventId == null) {
                 logger.error(String.format("Event %s in relation is not found in the mention list: %d",
                         MentionUtils.mentionRepre(relation.getHead()), relation.getHead().hashCode())
                         + " " + relation.getHead().getSofa().getSofaID());
                 throw new NullPointerException();
             }
 
-            if (toEventId == null){
+            if (toEventId == null) {
                 logger.error(String.format("Event %s in relation is not found in the mention list: %d",
                         MentionUtils.mentionRepre(relation.getChild()), relation.getHead().hashCode())
                         + " " + relation.getHead().getSofa().getSofaID());

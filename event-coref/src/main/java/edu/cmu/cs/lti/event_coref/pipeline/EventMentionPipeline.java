@@ -127,9 +127,7 @@ public class EventMentionPipeline {
         this(typeSystemName, config.getOrElse("edu.cmu.cs.lti.language", "en"),
                 config.getBoolean("edu.cmu.cs.lti.output.character.offset", true),
                 config.get("edu.cmu.cs.lti.model.dir"),
-                // Each model are saved in their own experiment folder to avoid confusion.
-                FileUtils.joinPaths(config.get("edu.cmu.cs.lti.model.event.dir"),
-                        config.get("edu.cmu.cs.lti.experiment.name")),
+                config.get("edu.cmu.cs.lti.model.event.dir"),
                 config.get("edu.cmu.cs.lti.training.working.dir"),
                 config.get("edu.cmu.cs.lti.test.working.dir"),
                 config.get("edu.cmu.cs.lti.model.config.dir"),
@@ -520,18 +518,14 @@ public class EventMentionPipeline {
 
         CollectionReaderDescription testReader = paths.getPreprocessReader(typeSystemDescription, workingDir);
 
-        TokenMentionModelRunner tokenRunner = new TokenMentionModelRunner(mainConfig, typeSystemDescription);
-
-        CorefModelRunner corefRunner = new CorefModelRunner(mainConfig, typeSystemDescription);
-        RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
-
         // Train realis model.
-        String realisModelDir = ModelUtils.getTrainModelPath(eventModelDir, realisConfig, fullRunSuffix);
+        String realisModelDir = ModelUtils.getTestModelFile(eventModelDir, realisConfig);
+        //ModelUtils.getTrainModelPath(eventModelDir, realisConfig, fullRunSuffix);
 
-        String vanillaSentCrfModel = ModelUtils.getTrainModelPath(eventModelDir, tokenCrfConfig, fullRunSuffix,
-                "loss=hamming");
+        String vanillaSentCrfModel = ModelUtils.getTestModelFile(eventModelDir, tokenCrfConfig);
+        //ModelUtils.getTrainModelPath(eventModelDir, tokenCrfConfig, fullRunSuffix, "loss=hamming");
 
-        String treeCorefModel = ModelUtils.getTrainModelPath(eventModelDir, corefConfig, fullRunSuffix);
+        String treeCorefModel = ModelUtils.getTestModelFile(eventModelDir, corefConfig);
 
         // Run the vanilla model.
         runOnly(tokenCrfConfig, realisConfig, corefConfig, testReader, vanillaSentCrfModel, realisModelDir,

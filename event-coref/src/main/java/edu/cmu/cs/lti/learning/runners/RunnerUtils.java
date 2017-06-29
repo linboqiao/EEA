@@ -38,7 +38,6 @@ public class RunnerUtils {
                                     String systemId, boolean useCharOffset, boolean addSemanticRole)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
         logger.info("Writing results to " + tbfOutput);
-
         AnalysisEngineDescription resultWriter = AnalysisEngineFactory.createEngineDescription(
                 TbfStyleEventWriter.class, typeSystemDescription,
                 TbfStyleEventWriter.PARAM_OUTPUT_PATH, tbfOutput,
@@ -48,7 +47,6 @@ public class RunnerUtils {
                 TbfStyleEventWriter.PARAM_ADD_SEMANTIC_ROLE, addSemanticRole
         );
         new BasicPipeline(processedResultReader, resultWriter).run();
-
     }
 
     public static void addMentionPostprocessors(List<AnalysisEngineDescription> annotators,
