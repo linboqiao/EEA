@@ -15,7 +15,7 @@ public class EntityHeadValidator extends AbstractLoggingAnnotator {
             Entity entity = mention.getReferingEntity();
 
             if (entity == null) {
-                logger.info(progressInfo(aJCas));
+                startProcessInfo(aJCas);
                 logger.info("Null entity for [" + mention.getCoveredText() + "] " + mention.getComponentId() + " " + mention.getBegin() + " " + mention.getEnd());
             } else if (entity.getRepresentativeMention() == null) {
                 logger.info("Entity does not have representative mention " + mention.getCoveredText() + " " + mention.getId());

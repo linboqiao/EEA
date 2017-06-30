@@ -34,7 +34,7 @@ public class ArgumentStatisticsCounter extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        logger.info(progressInfo(aJCas));
+        startProcessInfo(aJCas);
 
         for (EventMention evm : JCasUtil.select(aJCas, EventMention.class)) {
             numEvents++;

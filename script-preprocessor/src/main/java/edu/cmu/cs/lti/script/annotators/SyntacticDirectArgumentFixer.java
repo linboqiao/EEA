@@ -38,7 +38,7 @@ public class SyntacticDirectArgumentFixer extends AbstractEntityMentionCreator {
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         super.process(aJCas);
 
-        logger.info(progressInfo(aJCas));
+        startProcessInfo(aJCas);
 //
 //        ArrayListMultimap<Span, EntityMention> eventHead2Arg0 = ArrayListMultimap.create();
 //        ArrayListMultimap<Span, EntityMention> eventHead2Arg1 = ArrayListMultimap.create();

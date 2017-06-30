@@ -40,7 +40,7 @@ public class SyntacticArgumentPropagateAnnotator extends AbstractEntityMentionCr
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         super.process(aJCas);
 
-        logger.info(progressInfo(aJCas));
+        startProcessInfo(aJCas);
         findShareSubjVerbs(aJCas);
 
         ArrayListMultimap<Span, EntityMention> eventHead2Arg0 = ArrayListMultimap.create();

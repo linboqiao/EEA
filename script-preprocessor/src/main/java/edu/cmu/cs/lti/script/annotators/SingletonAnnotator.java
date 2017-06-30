@@ -34,7 +34,7 @@ public class SingletonAnnotator extends AbstractLoggingAnnotator {
    */
   @Override
   public void process(JCas aJCas) throws AnalysisEngineProcessException {
-      logger.info(progressInfo(aJCas));
+    startProcessInfo(aJCas);
     int id = 0;
     Collection<EventMention> eventMentions = JCasUtil.select(aJCas, EventMention.class);
     for (EventMention mention : eventMentions) {

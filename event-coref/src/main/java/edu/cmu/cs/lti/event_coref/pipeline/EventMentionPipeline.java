@@ -292,14 +292,16 @@ public class EventMentionPipeline {
 
             switch (name) {
                 case "corenlp":
+                    boolean multithread = language.equals("en") ? true : false;
+
                     processor = AnalysisEngineFactory.createEngineDescription(
                             StanfordCoreNlpAnnotator.class, typeSystemDescription,
                             StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language,
                             // We let Stanford to handle the multi thread themselves.
                             // Although the current English pipeline is thread safe, the Chinese one is not.
                             // Any future releases may not be thread safe guaranteed.
-                            StanfordCoreNlpAnnotator.PARAM_NUM_THREADS, 10
-//                                        AbstractAnnotator.MULTI_THREAD, true
+                            StanfordCoreNlpAnnotator.PARAM_NUM_THREADS, 10,
+                            AbstractAnnotator.MULTI_THREAD, multithread
                     );
                     break;
                 case "semafor":
@@ -384,8 +386,14 @@ public class EventMentionPipeline {
         }
 
         for (CollectionReaderDescription reader : inputReaders) {
-            return new BasicPipeline(reader, workingDirPath, paths.getPreprocessBase(), preprocessors).run()
-                    .getOutput();
+            boolean robust = taskConfig.getBoolean("edu.cmu.cs.lti.robust", false);
+            if (robust) {
+                return BasicPipeline.getRobust(reader, workingDirPath, paths.getPreprocessBase(), preprocessors)
+                        .run().getOutput();
+            } else {
+                return new BasicPipeline(reader, workingDirPath, paths.getPreprocessBase(), preprocessors)
+                        .run().getOutput();
+            }
         }
 
         return output;
@@ -685,7 +693,7 @@ public class EventMentionPipeline {
                            boolean skipType, boolean skipRealis, boolean skipCoref)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         logger.info(String.format("Type model is %s, Realis Model is %s, Coref Model is %s.", typeModel, realisModel,
-                typeModel));
+                corefModel));
         if (addSemanticRole) {
             logger.info("Processor will append semantic role at the end.");
         }

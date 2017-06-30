@@ -43,7 +43,7 @@ public class WhRcModResoluter extends AbstractEntityMentionCreator {
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         super.process(aJCas);
 
-        logger.info(progressInfo(aJCas));
+        startProcessInfo(aJCas);
 
         head2EntityMention = new HashMap<>();
         Collection<EntityMention> entityMentions = JCasUtil.select(aJCas, EntityMention.class);

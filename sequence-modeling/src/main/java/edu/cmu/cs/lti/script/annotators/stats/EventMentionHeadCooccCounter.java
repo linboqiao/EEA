@@ -71,7 +71,7 @@ public class EventMentionHeadCooccCounter extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        logger.info(progressInfo(aJCas));
+        startProcessInfo(aJCas);
 
         if (DataPool.isBlackList(aJCas, logger)) {
             return;

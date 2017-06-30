@@ -105,7 +105,7 @@ public abstract class MultiArgumentClozeTest extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        logger.info(progressInfo(aJCas));
+        startProcessInfo(aJCas);
 
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
 

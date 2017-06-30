@@ -16,7 +16,7 @@ import org.apache.uima.jcas.JCas;
 public class HeadWordFixer extends AbstractLoggingAnnotator {
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        logger.info(progressInfo(aJCas));
+        startProcessInfo(aJCas);
 
         for (EntityMention mention : JCasUtil.select(aJCas, EntityMention.class)) {
             mention.setHead(StanfordCoreNlpUtils.fixByDependencyHead(mention, mention.getHead()));

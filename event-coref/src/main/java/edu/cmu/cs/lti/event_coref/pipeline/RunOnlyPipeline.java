@@ -40,7 +40,11 @@ public class RunOnlyPipeline {
                 LDCXmlCollectionReader.PARAM_DATA_PATH, inputPath,
                 LDCXmlCollectionReader.PARAM_BASE_NAME_FILE_FILTER,
                 kbpConfig.get("edu.cmu.cs.lti.file.basename.filter"),
-                LDCXmlCollectionReader.PARAM_LANGUAGE, "zh"
+                LDCXmlCollectionReader.PARAM_BASE_NAME_IGNORES,
+                kbpConfig.get("edu.cmu.cs.lti.file.basename.ignores"),
+                LDCXmlCollectionReader.PARAM_LANGUAGE,
+                kbpConfig.get("edu.cmu.cs.lti.language"),
+                LDCXmlCollectionReader.PARAM_RECURSIVE, true
         );
 
         // Now prepare the real pipeline.

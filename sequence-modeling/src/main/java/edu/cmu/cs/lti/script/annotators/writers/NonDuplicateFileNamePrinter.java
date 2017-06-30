@@ -30,8 +30,7 @@ public class NonDuplicateFileNamePrinter extends AbstractCustomizedTextWriterAna
 
     @Override
     public String getTextToPrint(JCas aJCas) {
-        logger.info(progressInfo(aJCas));
-
+        startProcessInfo(aJCas);
         Article article = JCasUtil.selectSingle(aJCas, Article.class);
 
         if (DataPool.blackListedArticleId.contains(article.getArticleName())) {

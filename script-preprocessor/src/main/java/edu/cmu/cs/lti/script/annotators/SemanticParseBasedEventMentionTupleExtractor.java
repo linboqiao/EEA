@@ -53,7 +53,7 @@ public class SemanticParseBasedEventMentionTupleExtractor extends AbstractEntity
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         super.process(aJCas);
 
-        logger.info(progressInfo(aJCas));
+        startProcessInfo(aJCas);
 
         eventWithSemanticRolesAndPrep = new HashMap<>();
 

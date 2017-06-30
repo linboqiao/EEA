@@ -70,7 +70,7 @@ public class StreamingEntityCluster extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        logger.info(progressInfo(aJCas));
+        startProcessInfo(aJCas);
 
         String articleName = UimaConvenience.getShortDocumentNameWithOffset(aJCas);
 
