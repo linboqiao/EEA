@@ -309,6 +309,10 @@ public class EventMentionPipeline {
                         }
                     }
 
+                    if (multithread){
+                        logger.info("CoreNLP started with multi-thread.");
+                    }
+
                     processor = AnalysisEngineFactory.createEngineDescription(
                             StanfordCoreNlpAnnotator.class, typeSystemDescription,
                             StanfordCoreNlpAnnotator.PARAM_LANGUAGE, language,
