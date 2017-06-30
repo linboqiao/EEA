@@ -18,6 +18,7 @@ import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.ExperimentPaths;
 import edu.cmu.cs.lti.utils.FileUtils;
+import edu.stanford.nlp.wordseg.ChineseStringUtils;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UIMAException;
@@ -115,6 +116,8 @@ public class EventMentionPipeline {
         this.useCharOffset = useCharOffset;
 
         this.paths = new ExperimentPaths(logger, processOutputDir);
+
+        logger.info("The language is : " + language);
     }
 
     /**
@@ -292,7 +295,19 @@ public class EventMentionPipeline {
 
             switch (name) {
                 case "corenlp":
+                    // Normally, the Chinese CoreNLP is not thread-safe, but we can use trick to go over it.
                     boolean multithread = language.equals("en") ? true : false;
+
+                    boolean safer = ChineseStringUtils.validate(logger);
+
+                    if (language.equals("zh")) {
+                        if (safer) {
+                            logger.info("Find the customized StringUtils, will run Stanford with multi-thread.");
+                            multithread = true;
+                        }else{
+                            logger.info("Cannot find the customized StringUtils, will not run Stanford with multi-thread.");
+                        }
+                    }
 
                     processor = AnalysisEngineFactory.createEngineDescription(
                             StanfordCoreNlpAnnotator.class, typeSystemDescription,
