@@ -227,12 +227,6 @@ public class EventMentionPipeline {
         }
     }
 
-    public void prepareToProcess(Configuration taskConfig, CollectionReaderDescription reader, String workingDir)
-            throws SAXException, UIMAException, CpeDescriptorException, IOException {
-        boolean skipTestPrepare = taskConfig.getBoolean("edu.cmu.cs.lti.test.skip.preprocess", false);
-        prepareData(taskConfig, workingDir, skipTestPrepare, reader);
-    }
-
     /**
      * Run major preprocessing steps for all the downstream tasks.
      *
@@ -242,7 +236,7 @@ public class EventMentionPipeline {
      * @throws UIMAException
      * @throws IOException
      */
-    private CollectionReaderDescription prepareData(Configuration taskConfig, String workingDirPath, boolean
+    public CollectionReaderDescription prepareData(Configuration taskConfig, String workingDirPath, boolean
             skipIfExists, CollectionReaderDescription... inputReaders) throws
             UIMAException, IOException, CpeDescriptorException, SAXException {
         if (workingDirPath == null) {
@@ -304,12 +298,13 @@ public class EventMentionPipeline {
                         if (safer) {
                             logger.info("Find the customized StringUtils, will run Stanford with multi-thread.");
                             multithread = true;
-                        }else{
-                            logger.info("Cannot find the customized StringUtils, will not run Stanford with multi-thread.");
+                        } else {
+                            logger.info("Cannot find the customized StringUtils, will not run Stanford with " +
+                                    "multi-thread.");
                         }
                     }
 
-                    if (multithread){
+                    if (multithread) {
                         logger.info("CoreNLP started with multi-thread.");
                     }
 

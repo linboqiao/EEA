@@ -228,7 +228,7 @@ public class EventMentionTrainer {
     private void generateFeatures(String inputDir, String baseInputDirName,
                                   int stepNum, boolean isTraining, String modelDir, boolean keep_quite,
                                   Set<String> featureSubset) throws UIMAException, IOException {
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(inputDir, baseInputDirName, stepNum, false);
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(inputDir, baseInputDirName, false);
         AnalysisEngineDescription ana = AnalysisEngineFactory.createEngineDescription(
                 EventMentionTypeLearner.class, typeSystemDescription,
                 EventMentionTypeLearner.PARAM_SEM_LINK_DIR, semLinkDataPath,

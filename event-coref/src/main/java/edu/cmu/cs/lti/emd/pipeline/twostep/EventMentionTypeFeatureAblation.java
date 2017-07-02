@@ -169,7 +169,7 @@ public class EventMentionTypeFeatureAblation {
                 EventMentionTypeLearner.PARAM_WORDNET_PATH, wordnetDataPath
         );
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(workingDir, baseDataDir, 1, false);
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(workingDir, baseDataDir, false);
         AnalysisEngineDescription response = AnalysisEngineFactory.createEngineDescription(TbfStyleEventWriter.class, typeSystemDescription,
                 TbfStyleEventWriter.PARAM_OUTPUT_PATH, responseOutputPath);
         SimplePipeline.runPipeline(reader, mention, response);

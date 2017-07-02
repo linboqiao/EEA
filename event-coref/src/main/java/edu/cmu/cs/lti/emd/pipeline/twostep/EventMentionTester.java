@@ -46,7 +46,7 @@ public class EventMentionTester {
         );
 
         CollectionReaderDescription dev_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir,
-                "dev_data", 1, false);
+                "dev_data", false);
 //        CollectionReaderDescription test_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir,
 // "test_data", 1, false);
 //        CollectionReaderDescription final_reader = CustomCollectionReaderFactory.createXmiReader(paramInputDir +

@@ -50,7 +50,10 @@ public class RunOnlyPipeline {
         // Now prepare the real pipeline.
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
-        pipeline.prepareToProcess(kbpConfig, reader, outputPath);
-        pipeline.runVanilla(kbpConfig, outputPath);
+        boolean skipTestPrepare = kbpConfig.getBoolean("edu.cmu.cs.lti.test.skip.preprocess", false);
+        pipeline.prepareData(kbpConfig, outputPath, skipTestPrepare, reader);
+
+
+//        pipeline.runVanilla(kbpConfig, outputPath);
     }
 }
