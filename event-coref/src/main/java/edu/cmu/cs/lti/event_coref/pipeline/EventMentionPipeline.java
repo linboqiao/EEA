@@ -16,6 +16,7 @@ import edu.cmu.cs.lti.uima.annotator.AbstractAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import edu.cmu.cs.lti.utils.ExperimentPaths;
 import edu.cmu.cs.lti.utils.FileUtils;
 import edu.stanford.nlp.wordseg.ChineseStringUtils;
@@ -527,10 +528,9 @@ public class EventMentionPipeline {
     }
 
     public void runVanilla(Configuration taskConfig, String workingDir) throws Exception {
-        // When training is not skipped, testing must be performed.
-        boolean skipTypeTest = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
-        boolean skipRealisTest = taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
-        boolean skipCorefTest = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
+        boolean skipType = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
+        boolean skipRealis = taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
+        boolean skipCoref = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
 
         boolean addSemanticRole = taskConfig.getBoolean("edu.cmu.cs.lti.semantic.role", false);
 
@@ -539,21 +539,50 @@ public class EventMentionPipeline {
         Configuration corefConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.coreference"));
 
         File blackList = taskConfig.getFile("edu.cmu.cs.lti.file.basename.ignores.mention");
-        CollectionReaderDescription testReader = paths.getPreprocessReader(typeSystemDescription, workingDir, blackList);
+        File whiteList = taskConfig.getFile("edu.cmu.cs.lti.file.basename.accept.mention");
 
-        // Train realis model.
+        CollectionReaderDescription testReader = paths.getPreprocessReader(typeSystemDescription, workingDir,
+                blackList, whiteList);
+
         String realisModelDir = ModelUtils.getTestModelFile(eventModelDir, realisConfig);
-        //ModelUtils.getTrainModelPath(eventModelDir, realisConfig, fullRunSuffix);
-
-        String vanillaSentCrfModel = ModelUtils.getTestModelFile(eventModelDir, tokenCrfConfig);
-        //ModelUtils.getTrainModelPath(eventModelDir, tokenCrfConfig, fullRunSuffix, "loss=hamming");
-
+        String sentCrfModel = ModelUtils.getTestModelFile(eventModelDir, tokenCrfConfig);
         String treeCorefModel = ModelUtils.getTestModelFile(eventModelDir, corefConfig);
 
+        String runName = "vanillaMention";
+
         // Run the vanilla model.
-        runOnly(tokenCrfConfig, realisConfig, corefConfig, testReader, vanillaSentCrfModel, realisModelDir,
-                treeCorefModel, addSemanticRole, fullRunSuffix, "vanillaMention", workingDir, skipTypeTest,
-                skipRealisTest, skipCorefTest);
+        logger.info(String.format("Type model is %s, Realis Model is %s, Coref Model is %s.", sentCrfModel,
+                realisModelDir, treeCorefModel));
+        if (addSemanticRole) {
+            logger.info("Processor will append semantic role at the end.");
+        }
+
+        String annotatedOutput = paths.getMiddleOutputPath(fullRunSuffix, "vanillaMention");
+
+        TokenMentionModelRunner tokenModel = new TokenMentionModelRunner(mainConfig, typeSystemDescription);
+        CorefModelRunner corefModelRunner = new CorefModelRunner(mainConfig, typeSystemDescription);
+        RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
+
+        CollectionReaderDescription mentionOutput = tokenModel.sentenceLevelMentionTagging(tokenCrfConfig, testReader,
+                sentCrfModel, workingDir, FileUtils.joinPaths(annotatedOutput, "mention"), skipType);
+
+        CollectionReaderDescription mentionPost = postProcessMention(mentionOutput, workingDir,
+                FileUtils.joinPaths(annotatedOutput, "mention_post"), skipType);
+
+        DebugUtils.pause();
+
+        CollectionReaderDescription realisOutput = realisModelRunner.realisAnnotation(realisConfig, mentionPost,
+                realisModelDir, workingDir, FileUtils.joinPaths(annotatedOutput, "realis"),
+                skipType && skipRealis);
+
+        CollectionReaderDescription corefSentMentions = corefModelRunner.corefResolution(corefConfig,
+                realisOutput, treeCorefModel, workingDir, FileUtils.joinPaths(annotatedOutput, "coref"),
+                skipType && skipRealis && skipCoref);
+
+        String resultDir = paths.getResultDir(workingDir, fullRunSuffix);
+        String tbfOutput = FileUtils.joinPaths(resultDir, fullRunSuffix, runName + ".tbf");
+        RunnerUtils.writeResults(corefSentMentions, typeSystemDescription, tbfOutput, runName, useCharOffset,
+                addSemanticRole);
     }
 
     public void tryAnnotator(Configuration taskConfig) throws SAXException, UIMAException, CpeDescriptorException,
@@ -701,47 +730,6 @@ public class EventMentionPipeline {
         }
     }
 
-
-    private String runOnly(Configuration tokenCrfConfig, Configuration realisConfig, Configuration corefConfig,
-                           CollectionReaderDescription reader, String typeModel, String realisModel, String corefModel,
-                           boolean addSemanticRole, String sliceSuffix, String runName, String workingDir,
-                           boolean skipType, boolean skipRealis, boolean skipCoref)
-            throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
-        logger.info(String.format("Type model is %s, Realis Model is %s, Coref Model is %s.", typeModel, realisModel,
-                corefModel));
-        if (addSemanticRole) {
-            logger.info("Processor will append semantic role at the end.");
-        }
-
-        String annotatedOutput = paths.getMiddleOutputPath(sliceSuffix, runName);
-
-        TokenMentionModelRunner tokenModel = new TokenMentionModelRunner(mainConfig,
-                typeSystemDescription);
-
-        CorefModelRunner corefModelRunner = new CorefModelRunner(mainConfig, typeSystemDescription);
-        RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
-
-        CollectionReaderDescription mentionOutput = tokenModel.sentenceLevelMentionTagging(tokenCrfConfig, reader,
-                typeModel, workingDir, FileUtils.joinPaths(annotatedOutput, "mention"), skipType);
-
-        CollectionReaderDescription mentionPost = postProcessMention(mentionOutput, workingDir,
-                FileUtils.joinPaths(annotatedOutput, "mention_post"), skipType);
-
-        CollectionReaderDescription realisOutput = realisModelRunner.realisAnnotation(realisConfig, mentionPost,
-                realisModel, workingDir, FileUtils.joinPaths(annotatedOutput, "realis"),
-                skipType && skipRealis);
-
-        CollectionReaderDescription corefSentMentions = corefModelRunner.corefResolution(corefConfig,
-                realisOutput, corefModel, workingDir, FileUtils.joinPaths(annotatedOutput, "coref"),
-                skipType && skipRealis && skipCoref);
-
-        String resultDir = paths.getResultDir(workingDir, fullRunSuffix);
-        String tbfOutput = FileUtils.joinPaths(resultDir, sliceSuffix, runName + ".tbf");
-        RunnerUtils.writeResults(corefSentMentions, typeSystemDescription, tbfOutput, runName, useCharOffset,
-                addSemanticRole);
-
-        return tbfOutput;
-    }
 
 //    /**
 //     * Run two simple downstream tasks after mention detection, to check the performance of mention models.
