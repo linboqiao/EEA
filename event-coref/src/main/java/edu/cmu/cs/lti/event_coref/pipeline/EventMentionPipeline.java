@@ -538,7 +538,8 @@ public class EventMentionPipeline {
         Configuration tokenCrfConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.token_crf"));
         Configuration corefConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.coreference"));
 
-        CollectionReaderDescription testReader = paths.getPreprocessReader(typeSystemDescription, workingDir);
+        File blackList = taskConfig.getFile("edu.cmu.cs.lti.file.basename.ignores.mention");
+        CollectionReaderDescription testReader = paths.getPreprocessReader(typeSystemDescription, workingDir, blackList);
 
         // Train realis model.
         String realisModelDir = ModelUtils.getTestModelFile(eventModelDir, realisConfig);

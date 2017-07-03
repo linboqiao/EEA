@@ -58,6 +58,14 @@ public class ExperimentPaths {
         return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, workingDir, preprocessBase);
     }
 
+    public CollectionReaderDescription getPreprocessReader(TypeSystemDescription typeSystemDescription,
+                                                           String workingDir, File blackList)
+            throws ResourceInitializationException {
+        return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, workingDir, preprocessBase,
+                blackList);
+    }
+
+
     public CollectionReaderDescription randomPreparedTraining(TypeSystemDescription typeSystemDescription,
                                                               String workingDir, int seed)
             throws ResourceInitializationException {
