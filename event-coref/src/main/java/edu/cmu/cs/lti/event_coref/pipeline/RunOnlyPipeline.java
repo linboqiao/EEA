@@ -41,7 +41,7 @@ public class RunOnlyPipeline {
                 LDCXmlCollectionReader.PARAM_BASE_NAME_FILE_FILTER,
                 kbpConfig.get("edu.cmu.cs.lti.file.basename.filter"),
                 LDCXmlCollectionReader.PARAM_BASE_NAME_IGNORES,
-                kbpConfig.get("edu.cmu.cs.lti.file.basename.ignores"),
+                kbpConfig.get("edu.cmu.cs.lti.file.basename.ignores.preprocess"),
                 LDCXmlCollectionReader.PARAM_LANGUAGE,
                 kbpConfig.get("edu.cmu.cs.lti.language"),
                 LDCXmlCollectionReader.PARAM_RECURSIVE, true
@@ -52,7 +52,6 @@ public class RunOnlyPipeline {
 
         boolean skipTestPrepare = kbpConfig.getBoolean("edu.cmu.cs.lti.test.skip.preprocess", false);
         pipeline.prepareData(kbpConfig, outputPath, skipTestPrepare, reader);
-
 
         pipeline.runVanilla(kbpConfig, outputPath);
     }
