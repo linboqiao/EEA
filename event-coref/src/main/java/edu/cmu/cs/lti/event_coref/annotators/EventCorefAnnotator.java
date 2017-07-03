@@ -103,15 +103,9 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        UimaConvenience.printProcessLog(aJCas, logger);
         List<EventMention> allMentions = new ArrayList<>(JCasUtil.select(aJCas, EventMention.class));
-//        logger.info("Clustering " + allMentions.size() + " mentions.");
 
         List<MentionCandidate> candidates = MentionUtils.createCandidates(aJCas, allMentions);
-
-//        for (MentionCandidate candidate : candidates) {
-//            logger.info(candidate.toString());
-//        }
 
         extractor.initWorkspace(aJCas);
         MentionGraph mentionGraph = new MentionGraph(candidates, extractor, true);
@@ -119,10 +113,6 @@ public class EventCorefAnnotator extends AbstractLoggingAnnotator {
 
         predictedTree.resolveCoreference();
         List<NodeKey>[] corefChains = predictedTree.getCorefChains();
-
-//        UimaConvenience.printProcessLog(aJCas, logger);
-//
-//        logger.info(predictedTree.toString());
 
         for (List<NodeKey> corefChain : corefChains) {
             List<EventMention> predictedChain = new ArrayList<>();

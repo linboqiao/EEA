@@ -16,7 +16,6 @@ import edu.cmu.cs.lti.uima.annotator.AbstractAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.DebugUtils;
 import edu.cmu.cs.lti.utils.ExperimentPaths;
 import edu.cmu.cs.lti.utils.FileUtils;
 import edu.stanford.nlp.wordseg.ChineseStringUtils;
@@ -568,8 +567,6 @@ public class EventMentionPipeline {
 
         CollectionReaderDescription mentionPost = postProcessMention(mentionOutput, workingDir,
                 FileUtils.joinPaths(annotatedOutput, "mention_post"), skipType);
-
-        DebugUtils.pause();
 
         CollectionReaderDescription realisOutput = realisModelRunner.realisAnnotation(realisConfig, mentionPost,
                 realisModelDir, workingDir, FileUtils.joinPaths(annotatedOutput, "realis"),

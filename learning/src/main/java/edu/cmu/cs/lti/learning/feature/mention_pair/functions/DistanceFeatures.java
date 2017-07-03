@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.learning.feature.mention_pair.functions;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.MentionCandidate;
 import edu.cmu.cs.lti.learning.model.NodeKey;
+import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.script.type.Sentence;
 import edu.cmu.cs.lti.utils.Configuration;
 import gnu.trove.map.TObjectDoubleMap;
@@ -121,7 +122,12 @@ public class DistanceFeatures extends AbstractMentionPairFeatures {
     }
 
     private String getDocumentType(JCas context) {
-        JCas originalContext = JCasUtil.getView(context, "original", false);
+        JCas originalContext = JCasUtil.getView(context, UimaConst.inputViewName, context);
+
+        if (!originalContext.getViewName().equals(UimaConst.inputViewName)){
+            logger.warn("Cannot find the input view, use current view.");
+        }
+
         String originalText = originalContext.getDocumentText();
         if (originalText.contains("<post")) {
             return "Forum";
