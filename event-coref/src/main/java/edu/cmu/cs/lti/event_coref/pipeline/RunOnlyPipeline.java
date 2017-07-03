@@ -54,6 +54,6 @@ public class RunOnlyPipeline {
         pipeline.prepareData(kbpConfig, outputPath, skipTestPrepare, reader);
 
 
-//        pipeline.runVanilla(kbpConfig, outputPath);
+        pipeline.runVanilla(kbpConfig, outputPath);
     }
 }
