@@ -35,6 +35,7 @@ public class PreparationPipeline {
         String inputDir = args[0];// "/Users/zhengzhongliu/Downloads/agiga_sample"
         String modelBaseDir = args[1];// "../models"
         String parentOutputDir = args[2];
+        String ignores = args[3];
 
         // Parameters for the writer
         String baseOutputDirName = "fanse_parsed";
@@ -49,7 +50,8 @@ public class PreparationPipeline {
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                 AgigaCollectionReader.class, typeSystemDescription,
                 AgigaCollectionReader.PARAM_DATA_PATH, inputDir,
-                AgigaCollectionReader.PARAM_FILE_EXTENSION, ".xml.gz"
+                AgigaCollectionReader.PARAM_FILE_EXTENSION, ".xml.gz",
+                AgigaCollectionReader.PARAM_BASE_NAME_IGNORES, ignores
         );
 
         AnalysisEngineDescription fanseParser = AnalysisEngineFactory.createEngineDescription(
@@ -60,7 +62,7 @@ public class PreparationPipeline {
                 parentOutputDir, baseOutputDirName, 0, null);
 
         // Run the pipeline.
-        new BasicPipeline(reader, 4, fanseParser, writer).run();
+        new BasicPipeline(reader, 5, fanseParser, writer).run();
 
         System.out.println(className + " successfully completed.");
     }
