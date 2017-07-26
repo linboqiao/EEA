@@ -5,6 +5,7 @@ import edu.cmu.cs.lti.script.type.Dependency;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.Word;
+import edu.cmu.cs.lti.uima.annotator.AbstractEntityMentionCreator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.FSCollectionFactory;

@@ -5,6 +5,7 @@ import edu.cmu.cs.lti.ling.PennTreeTagSet;
 import edu.cmu.cs.lti.ling.PropBankTagSet;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.uima.annotator.AbstractEntityMentionCreator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;

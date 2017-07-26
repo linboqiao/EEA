@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.script.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.uima.annotator.AbstractEntityMentionCreator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;

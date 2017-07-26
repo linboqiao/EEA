@@ -2,7 +2,11 @@ package edu.cmu.cs.lti.script.runners; /**
  *
  */
 
-import edu.cmu.cs.lti.script.annotators.*;
+import edu.cmu.cs.lti.annotators.WhRcModResoluter;
+import edu.cmu.cs.lti.script.annotators.GoalMentionAnnotator;
+import edu.cmu.cs.lti.script.annotators.IdAssigner;
+import edu.cmu.cs.lti.script.annotators.SemanticParseBasedEventMentionTupleExtractor;
+import edu.cmu.cs.lti.script.annotators.SyntacticArgumentPropagateAnnotator;
 import edu.cmu.cs.lti.script.annotators.patches.HeadWordFixer;
 import edu.cmu.cs.lti.script.type.Entity;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
