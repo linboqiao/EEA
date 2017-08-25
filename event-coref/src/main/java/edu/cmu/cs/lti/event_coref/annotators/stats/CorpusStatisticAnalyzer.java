@@ -164,7 +164,7 @@ public class CorpusStatisticAnalyzer extends JCasAnnotator_ImplBase {
 
         CollectionReaderDescription trainReader = CollectionReaderFactory.createReaderDescription(
                 XmiCollectionReader.class, typeSystemDescription,
-                XmiCollectionReader.PARAM_INPUT_DIR, trainDatasource
+                XmiCollectionReader.PARAM_DATA_PATH, trainDatasource
         );
         AnalysisEngineDescription trainAnalyzer = AnalysisEngineFactory.createEngineDescription(
                 CorpusStatisticAnalyzer.class, typeSystemDescription,
