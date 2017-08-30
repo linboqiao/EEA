@@ -50,7 +50,7 @@ public class PreparationPipeline {
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                 AgigaCollectionReader.class, typeSystemDescription,
                 AgigaCollectionReader.PARAM_DATA_PATH, inputDir,
-                AgigaCollectionReader.PARAM_FILE_EXTENSION, ".xml.gz",
+                AgigaCollectionReader.PARAM_EXTENSION, ".xml.gz",
                 AgigaCollectionReader.PARAM_BASE_NAME_IGNORES, ignores
         );
 
