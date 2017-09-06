@@ -57,6 +57,7 @@
         <module>chain-script</module>
         <module>event-coref</module>
         <module>learning</module>
+        <module>salience</module>
         <!--Not running the assembly because it take a long time.-->
         <!--<module>assembly</module>-->
     </modules>
