@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import edu.cmu.cs.lti.collection_reader.AnnotatedNytReader;
 import edu.cmu.cs.lti.model.Span;
+import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
@@ -27,7 +28,6 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.StringArray;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.uimafit.pipeline.SimplePipeline;
 import org.xml.sax.SAXException;
 
 import java.io.*;
@@ -231,7 +231,9 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
         String docno = UimaConvenience.getArticleName(mainView);
         String title = asTokenized(JCasUtil.selectSingle(mainView, Headline.class));
 
-        output.write(docno + " " + title + "\n");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(docno).append(" ").append(title).append("\n");
 
         Set<String> abstractEntities = new HashSet<>();
         for (GroundedEntity groundedEntity : JCasUtil.select(abstractView, GroundedEntity.class)) {
@@ -251,7 +253,6 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
             String id = groundedEntity.getKnowledgeBaseId();
             int saliency = abstractEntities.contains(id) ? 1 : 0;
 
-            StringBuilder sb = new StringBuilder();
             sb.append(index);
             sb.append("\t");
             sb.append(saliency);
@@ -274,10 +275,10 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
             sb.append("\t").append(begin).append("\t").append(end).append("\t").append(id).append("\n");
 
             index++;
-            output.write(sb.toString());
-
         }
-        output.write("\n");
+
+        sb.append("\n");
+        output.write(sb.toString());
     }
 
     private void writeTagged(JCas aJCas, Writer output) throws IOException {
@@ -343,7 +344,7 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                 GzippedXmiCollectionReader.class, typeSystemDescription,
                 GzippedXmiCollectionReader.PARAM_PARENT_INPUT_DIR_PATH, workingDir,
-                GzippedXmiCollectionReader.PARAM_BASE_INPUT_DIR_NAME, "tagged_test",
+                GzippedXmiCollectionReader.PARAM_BASE_INPUT_DIR_NAME, "tagged",
                 GzippedXmiCollectionReader.PARAM_EXTENSION, ".xmi.gz"
         );
 
@@ -352,10 +353,11 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
                 GoogleStyleSalienceGoldStandardWriter.PARAM_OUTPUT_DIR, new File(workingDir, splitName),
                 GoogleStyleSalienceGoldStandardWriter.PARAM_TRAIN_SPLIT, trainingSplitFile,
                 GoogleStyleSalienceGoldStandardWriter.PARAM_TEST_SPLIT, testSplitFile,
-                GoogleStyleSalienceGoldStandardWriter.PARAM_OUTPUT_PREFIX, "nyt_salience"
+                GoogleStyleSalienceGoldStandardWriter.PARAM_OUTPUT_PREFIX, "nyt_salience",
+                GoogleStyleSalienceGoldStandardWriter.MULTI_THREAD, true
         );
 
-//        new BasicPipeline(reader, true, true, 1, writer).run();
-        SimplePipeline.runPipeline(reader, writer);
+        new BasicPipeline(reader, true, true, 7, writer).run();
+//        SimplePipeline.runPipeline(reader, writer);
     }
 }
