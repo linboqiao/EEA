@@ -82,6 +82,9 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
             e.printStackTrace();
         }
 
+        logger.info("Number of docs " + trainDocs.size());
+        logger.info("Number of docs " + testDocs.size());
+
         try {
             trainGoldWriter = getWriter(outputDir, "salience", "token", outputPrefix + "_train");
             testGoldWriter = getWriter(outputDir, "salience", "token", outputPrefix + "_test");
@@ -323,6 +326,7 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
                 e.printStackTrace();
             }
         } else if (testDocs.contains(articleName)) {
+            logger.info("Write a test doc.");
             try {
                 writeGold(aJCas, testGoldWriter, true);
                 writeGold(aJCas, testGoldCharWriter, false);
