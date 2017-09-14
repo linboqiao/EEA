@@ -82,8 +82,8 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
             e.printStackTrace();
         }
 
-        logger.info("Number of docs " + trainDocs.size());
-        logger.info("Number of docs " + testDocs.size());
+        logger.info("Number of docs in training: " + trainDocs.size());
+        logger.info("Number of docs in testing: " + testDocs.size());
 
         try {
             trainGoldWriter = getWriter(outputDir, "salience", "token", outputPrefix + "_train");
@@ -127,7 +127,7 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
 
     private Set<String> readList(File splitFile) throws IOException {
         Set<String> docs = new HashSet<>();
-        for (String s : FileUtils.readLines(trainSplitFile)) {
+        for (String s : FileUtils.readLines(splitFile)) {
             docs.add(s.trim());
         }
         return docs;
@@ -326,7 +326,6 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
                 e.printStackTrace();
             }
         } else if (testDocs.contains(articleName)) {
-            logger.info("Write a test doc.");
             try {
                 writeGold(aJCas, testGoldWriter, true);
                 writeGold(aJCas, testGoldCharWriter, false);
@@ -341,7 +340,7 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription("TypeSystem");
         String workingDir = argv[0];
-        String splitName = argv[1];
+        String outputDir = argv[1];
         String trainingSplitFile = argv[2];
         String testSplitFile = argv[3];
 
@@ -354,7 +353,7 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
 
         AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
                 GoogleStyleSalienceGoldStandardWriter.class, typeSystemDescription,
-                GoogleStyleSalienceGoldStandardWriter.PARAM_OUTPUT_DIR, new File(workingDir, splitName),
+                GoogleStyleSalienceGoldStandardWriter.PARAM_OUTPUT_DIR, new File(workingDir, outputDir),
                 GoogleStyleSalienceGoldStandardWriter.PARAM_TRAIN_SPLIT, trainingSplitFile,
                 GoogleStyleSalienceGoldStandardWriter.PARAM_TEST_SPLIT, testSplitFile,
                 GoogleStyleSalienceGoldStandardWriter.PARAM_OUTPUT_PREFIX, "nyt_salience",
