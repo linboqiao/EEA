@@ -1,7 +1,7 @@
 #ifndef __DOCUMENTS_H__
 #define __DOCUMENTS_H__
 
-#include "../utils/utils.h"
+#include "utils/utils.h"
 
 namespace Documents
 {
