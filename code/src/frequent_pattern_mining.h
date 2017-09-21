@@ -1,7 +1,7 @@
 #ifndef __FREQUENT_PATTERN_MINING_H__
 #define __FREQUENT_PATTERN_MINING_H__
 
-#include "./utils/utils.h"
+#include "utils/utils.h"
 #include "documents.h"
 
 namespace FrequentPatternMining
@@ -87,6 +87,15 @@ namespace FrequentPatternMining
 
         inline bool operator == (const Pattern &other) const {
             return hashValue == other.hashValue && tokens == other.tokens;
+        }
+
+        inline string encode_trigger() const {
+            string tmp = "";
+            for (int i = 0; i < tokens.size(); ++ i) {
+                tmp += to_string(tokens[i]);
+                tmp += " ";
+            }
+            return tmp;
         }
 
         inline void show() const {

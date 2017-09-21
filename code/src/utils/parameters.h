@@ -14,5 +14,6 @@ int MIN_SUP = 30;
 int MAX_LEN = 4;
 bool INTERMEDIATE = true;
 
-const string TRAIN_FILE = "tokenized_train.txt";
+const string TRAIN_FILE = "tmp/tokenized_test.txt";
+const string TRIGGER_FILE = "tmp/tokenized_triggers.txt";
 #endif

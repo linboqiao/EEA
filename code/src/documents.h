@@ -8,6 +8,7 @@ namespace Documents
 // === global variables ===
     TOTAL_TOKENS_TYPE totalTokens = 0;
     TOTAL_TOKENS_TYPE totalWordTokens = 0;
+    unordered_set<string> totalTriggers; 
 
     TOKEN_ID_TYPE maxTokenID = 0;
 
@@ -15,7 +16,7 @@ namespace Documents
     bool* wordTokenInfo;
 
     vector<pair<TOTAL_TOKENS_TYPE, TOTAL_TOKENS_TYPE>> sentences;
-    set<string> separatePunc = {",", ".", "\"", ";", "!", ":", "(", ")", "?", "``","$","''"};
+    set<string> separatePunc = {",", ".", "\"", ";", "!", ":", "(", ")", "\""};
 // ===
     inline bool isEndOfSentence(int i) {
         return i < 0 || i + 1 >= totalWordTokens || wordTokenInfo[i];
@@ -84,6 +85,21 @@ namespace Documents
         fclose(in);
 
         cerr << "# of documents = " << docs << endl;
+    }
+
+    inline void loadTriggers(string trigger_in) {
+        FILE* in = tryOpen(trigger_in, "r");
+        while (getLine(in)) {
+            stringstream sin(line);
+            string x = "";
+            for (string temp; sin >> temp; ) {
+                x += temp;
+                x += " ";
+            }
+            totalTriggers.insert(x);
+        }
+        cerr << totalTriggers.size() << endl;
+        fclose(in);
     }
 
     inline void splitIntoSentences() {
