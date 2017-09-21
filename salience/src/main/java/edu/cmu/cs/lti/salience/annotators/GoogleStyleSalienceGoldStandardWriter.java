@@ -1,11 +1,14 @@
 package edu.cmu.cs.lti.salience.annotators;
 
-import com.google.common.base.Joiner;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import edu.cmu.cs.lti.collection_reader.AnnotatedNytReader;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
+import edu.cmu.cs.lti.salience.utils.FeatureUtils;
+import edu.cmu.cs.lti.salience.utils.LookupTable;
+import edu.cmu.cs.lti.salience.utils.SalienceUtils;
+import edu.cmu.cs.lti.salience.utils.TextUtils;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
@@ -31,10 +34,9 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.xml.sax.SAXException;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+import static edu.cmu.cs.lti.salience.utils.FeatureUtils.lexicalPrefix;
 
 /**
  * Created with IntelliJ IDEA.
@@ -60,6 +62,15 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
     @ConfigurationParameter(name = PARAM_OUTPUT_PREFIX)
     private String outputPrefix;
 
+    public static final String PARAM_ENTITY_EMBEDDING = "entityEmbeddingFile";
+    @ConfigurationParameter(name = PARAM_ENTITY_EMBEDDING)
+    private File entityEmbeddingFile;
+
+    public static final String PARAM_FEATURE_OUTPUT_DIR = "featureOutput";
+    @ConfigurationParameter(name = PARAM_FEATURE_OUTPUT_DIR)
+    private String featureOutputDir;
+
+
     private Set<String> trainDocs;
     private Set<String> testDocs;
 
@@ -72,12 +83,25 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
     private BufferedWriter trainTagsWriter;
     private BufferedWriter testTagsWriter;
 
+    private BufferedWriter trainFeatures;
+    private BufferedWriter testFeatures;
+
+    private LookupTable.SimCalculator simCalculator;
+    private LookupTable table;
+
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
         try {
-            trainDocs = readList(trainSplitFile);
-            testDocs = readList(testSplitFile);
+            trainDocs = SalienceUtils.readSplit(trainSplitFile);
+            testDocs = SalienceUtils.readSplit(testSplitFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            table = SalienceUtils.loadEmbedding(entityEmbeddingFile);
+            simCalculator = new LookupTable.SimCalculator(table);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,6 +118,10 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
 
             trainTagsWriter = getWriter(outputDir, "docs", outputPrefix + "_tagged_train.json");
             testTagsWriter = getWriter(outputDir, "docs", outputPrefix + "_tagged_test.json");
+
+            trainFeatures = getWriter(featureOutputDir, "train.tsv");
+            testFeatures = getWriter(featureOutputDir, "test.tsv");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -164,33 +192,40 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
 
         double score;
         String id;
+        Feature feature;
     }
 
-    private Span getSpaceTokenOffset(ArticleComponent articleComponent, ComponentAnnotation annotation) {
-        int tokensBefore = 0;
-        for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, articleComponent)) {
-            if (token.getEnd() - 1 < annotation.getBegin()) {
-                tokensBefore += asTokenized(token).split(" ").length;
-            }
+    class Feature {
+        private Feature(FeatureUtils.SimpleInstance instance) {
+            featureArray = new ArrayList<>();
+            List<Double> lexicalFeatures = new ArrayList<>();
+            instance.getFeatureMap().keySet().stream().sorted().forEach(f -> {
+                if (!f.startsWith(lexicalPrefix)) {
+                    featureArray.add(instance.getFeatureMap().get(f));
+                } else {
+                    String word = f.split("_")[1];
+                    for (double v : table.getEmbedding(word)) {
+                        lexicalFeatures.add(v);
+                    }
+                }
+            });
+            featureArray.addAll(lexicalFeatures);
+            featureNames = instance.getFeatureNames();
         }
 
-        int begin = tokensBefore;
-
-        int annoLength = 0;
-        for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, annotation)) {
-            annoLength += asTokenized(token).split(" ").length;
+        private Feature() {
+            featureArray = new ArrayList<>();
         }
 
-        int end = begin + annoLength;
-
-        return Span.of(begin, end);
+        private List<Double> featureArray;
+        private List<String> featureNames;
     }
 
     private List<Spot> getSpots(ArticleComponent articleComponent) {
         List<Spot> spots = new ArrayList<>();
 
         for (GroundedEntity groundedEntity : JCasUtil.selectCovered(GroundedEntity.class, articleComponent)) {
-            Span tokenOffset = getSpaceTokenOffset(articleComponent, groundedEntity);
+            Span tokenOffset = TextUtils.getSpaceTokenOffset(articleComponent, groundedEntity);
             Spot spot = new Spot();
             spot.loc = new ArrayList<>();
             spot.loc.add(tokenOffset.getBegin());
@@ -220,28 +255,14 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
         return spots;
     }
 
-    private String asTokenized(ComponentAnnotation component) {
-        List<String> words = new ArrayList<>();
-        for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, component)) {
-            words.add(token.getCoveredText());
-        }
-        return Joiner.on(" ").join(words);
-    }
-
     private void writeGold(JCas mainView, Writer output, boolean useToken) throws IOException {
-        JCas abstractView = JCasUtil.getView(mainView, AnnotatedNytReader.ABSTRACT_VIEW_NAME, false);
-
         String docno = UimaConvenience.getArticleName(mainView);
-        String title = asTokenized(JCasUtil.selectSingle(mainView, Headline.class));
-
+        String title = TextUtils.asTokenized(JCasUtil.selectSingle(mainView, Headline.class));
 
         StringBuilder sb = new StringBuilder();
         sb.append(docno).append(" ").append(title).append("\n");
 
-        Set<String> abstractEntities = new HashSet<>();
-        for (GroundedEntity groundedEntity : JCasUtil.select(abstractView, GroundedEntity.class)) {
-            abstractEntities.add(groundedEntity.getKnowledgeBaseId());
-        }
+        Set<String> abstractEntities = SalienceUtils.getAbstractEntities(mainView);
 
         int index = 0;
 
@@ -254,20 +275,21 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
 
         for (GroundedEntity groundedEntity : JCasUtil.selectCovered(GroundedEntity.class, body)) {
             String id = groundedEntity.getKnowledgeBaseId();
-            int saliency = abstractEntities.contains(id) ? 1 : 0;
+            int salience = abstractEntities.contains(id) ? 1 : 0;
 
             sb.append(index);
             sb.append("\t");
-            sb.append(saliency);
+            sb.append(salience);
             sb.append("\t");
             sb.append(entityCounts.get(id));
             sb.append("\t");
-            sb.append(groundedEntity.getCoveredText());
+            sb.append(groundedEntity.getCoveredText().replaceAll("\t", " ")
+                    .replaceAll("\n", " "));
 
             int begin;
             int end;
             if (useToken) {
-                Span tokenSpan = getSpaceTokenOffset(body, groundedEntity);
+                Span tokenSpan = TextUtils.getSpaceTokenOffset(body, groundedEntity);
                 begin = tokenSpan.getBegin();
                 end = tokenSpan.getEnd();
             } else {
@@ -284,14 +306,23 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
         output.write(sb.toString());
     }
 
-    private void writeTagged(JCas aJCas, Writer output) throws IOException {
+    private void writeTagged(JCas aJCas, Writer output, Writer featureWriter) throws IOException {
         Gson gson = new Gson();
 
         Headline title = JCasUtil.selectSingle(aJCas, Headline.class);
+        String titleStr = TextUtils.asTokenized(title);
+        String docid = UimaConvenience.getArticleName(aJCas);
+
         Body body = JCasUtil.selectSingle(aJCas, Body.class);
 
         List<Spot> titleSpots = getSpots(title);
         List<Spot> bodySpots = getSpots(body);
+
+        // Handle features.
+        featureWriter.write(docid + " " + titleStr + "\n");
+        List<FeatureUtils.SimpleInstance> instances = FeatureUtils.getKbInstances(aJCas, simCalculator);
+        writeFeatures(bodySpots, instances, featureWriter);
+        featureWriter.write("\n");
 
         JCas abstractView = JCasUtil.getView(aJCas, AnnotatedNytReader.ABSTRACT_VIEW_NAME, false);
         Article abstractArticle = JCasUtil.selectSingle(abstractView, Article.class);
@@ -304,36 +335,55 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
         allSpots.abstractSpots = abstractSpots;
         allSpots.title = titleSpots;
 
-        doc.bodyText = asTokenized(body);
-        doc.docno = UimaConvenience.getArticleName(aJCas);
+        doc.bodyText = TextUtils.asTokenized(body);
+        doc.docno = docid;
         doc.spot = allSpots;
-        doc.title = asTokenized(title);
-        doc.abstractText = asTokenized(abstractArticle);
+        doc.title = titleStr;
+        doc.abstractText = TextUtils.asTokenized(abstractArticle);
 
         String jsonStr = gson.toJson(doc);
         output.write(jsonStr + "\n");
+
+    }
+
+    private void writeFeatures(List<Spot> bodySpots, List<FeatureUtils.SimpleInstance> instances,
+                               Writer featureWriter) throws IOException {
+        Map<String, FeatureUtils.SimpleInstance> instanceLookup = new HashMap<>();
+        for (FeatureUtils.SimpleInstance instance : instances) {
+            featureWriter.write(instance.toString() + "\n");
+            instanceLookup.put(instance.getInstanceName(), instance);
+        }
+
+        for (Spot bodySpot : bodySpots) {
+            for (Link entity : bodySpot.entities) {
+                FeatureUtils.SimpleInstance instance = instanceLookup.get(entity.id);
+                if (instance != null) {
+                    entity.feature = new Feature(instanceLookup.get(entity.id));
+                } else {
+                    // This should not happen because both spots are looking for entities in the body.
+                    entity.feature = new Feature();
+                }
+            }
+        }
     }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         String articleName = UimaConvenience.getArticleName(aJCas);
-        if (trainDocs.contains(articleName)) {
-            try {
+        try {
+            if (trainDocs.contains(articleName)) {
                 writeGold(aJCas, trainGoldWriter, true);
                 writeGold(aJCas, trainGoldCharWriter, false);
-                writeTagged(aJCas, trainTagsWriter);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else if (testDocs.contains(articleName)) {
-            try {
+                writeTagged(aJCas, trainTagsWriter, trainFeatures);
+            } else if (testDocs.contains(articleName)) {
                 writeGold(aJCas, testGoldWriter, true);
                 writeGold(aJCas, testGoldCharWriter, false);
-                writeTagged(aJCas, testTagsWriter);
-            } catch (IOException e) {
-                e.printStackTrace();
+                writeTagged(aJCas, testTagsWriter, testFeatures);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
 
     public static void main(String[] argv) throws UIMAException, SAXException, CpeDescriptorException, IOException {
@@ -343,6 +393,8 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
         String outputDir = argv[1];
         String trainingSplitFile = argv[2];
         String testSplitFile = argv[3];
+        String featureOutput = argv[4];
+        String embeddingPath = argv[5];
 
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                 GzippedXmiCollectionReader.class, typeSystemDescription,
@@ -357,10 +409,11 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
                 GoogleStyleSalienceGoldStandardWriter.PARAM_TRAIN_SPLIT, trainingSplitFile,
                 GoogleStyleSalienceGoldStandardWriter.PARAM_TEST_SPLIT, testSplitFile,
                 GoogleStyleSalienceGoldStandardWriter.PARAM_OUTPUT_PREFIX, "nyt_salience",
-                GoogleStyleSalienceGoldStandardWriter.MULTI_THREAD, true
+                GoogleStyleSalienceGoldStandardWriter.MULTI_THREAD, true,
+                GoogleStyleSalienceGoldStandardWriter.PARAM_ENTITY_EMBEDDING, embeddingPath,
+                GoogleStyleSalienceGoldStandardWriter.PARAM_FEATURE_OUTPUT_DIR, featureOutput
         );
 
         new BasicPipeline(reader, true, true, 7, writer).run();
-//        SimplePipeline.runPipeline(reader, writer);
     }
 }
