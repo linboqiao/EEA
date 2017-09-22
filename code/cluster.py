@@ -2,7 +2,8 @@ from collections import defaultdict
 
 from scipy.spatial.distance import cosine
 from spherecluster import SphericalKMeans
-from dataset import SubDataSet
+import numpy as np
+import sys
 
 class Clusterer:
 
@@ -23,7 +24,7 @@ class Clusterer:
         self.membership = labels
         self.center_ids = self.gen_center_idx()
         self.inertia_scores = self.clus.inertia_
-        print 'Clustering concentration score:', self.inertia_scores
+        print('Clustering concentration score:', self.inertia_scores)
 
     # find the idx of each cluster center
     def gen_center_idx(self):
@@ -47,4 +48,32 @@ class Clusterer:
 
     def calc_cosine(self, vec_a, vec_b):
         return 1 - cosine(vec_a, vec_b)
+
+def load_emb(emb_path, trigger):
+    with open(emb_path, 'r') as IN, open(trigger, 'r') as TRI:
+        triggers = dict()
+        inv_triggers = dict()
+        for num,line in enumerate(TRI):
+            triggers[line.strip().replace(' ','_')] = 0
+        IN.readline()
+        emb = []
+        for line in IN:
+            line=line.strip().split(' ')
+            if line[0] in triggers:
+                if triggers[line[0]] == 0:
+                    triggers[line[0]] = len(emb)
+                    inv_triggers[len(emb)] = line[0]
+                #print line
+                #print line[0], ' '.join(line[:1]).decode('ascii')
+                emb.append(map(float, line[1:]))
+        return np.array(emb), inv_triggers
+
+if __name__ == '__main__':
+    train_data, triggers = load_emb(sys.argv[1], sys.argv[2])
+    print train_data.shape
+    tmp = Clusterer(train_data, 50)
+    tmp.fit()
+    for k,v in tmp.clusters.iteritems():
+        tmp.clusters[k] = map(lambda x: triggers[x], v)
+    print tmp.clusters
 
