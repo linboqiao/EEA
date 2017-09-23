@@ -129,3 +129,6 @@ ENV/
 *.exe
 *.out
 *.app
+
+# IDEA
+.idea/
