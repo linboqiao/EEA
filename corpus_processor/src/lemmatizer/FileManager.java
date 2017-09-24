@@ -12,7 +12,7 @@ import java.util.List;
 class FileManager {
     private List<Path> files = new ArrayList<>();
 
-    FileManager(Path path) throws IOException{
+    FileManager(Path path) throws IOException {
         listFiles(path);
     }
 
@@ -26,7 +26,7 @@ class FileManager {
                 if (Files.isDirectory(entry)) {
                     listFiles(entry);
                 }
-                if (Files.isRegularFile(entry)){
+                if (Files.isRegularFile(entry)) {
                     files.add(entry);
                 }
             }
@@ -38,8 +38,8 @@ class FileManager {
                 new FileInputStream(path.toFile()));
         int c;
         StringBuilder res = new StringBuilder();
-        while( (c = isr.read()) != -1 ) {
-            res.append((char)c);
+        while ((c = isr.read()) != -1) {
+            res.append((char) c);
         }
         isr.close();
         return res.toString().replace('�', '\'');

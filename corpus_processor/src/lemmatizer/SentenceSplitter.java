@@ -1,5 +1,16 @@
 package lemmatizer;
 
+import com.google.common.base.Charsets;
+import com.google.common.base.Joiner;
+import com.google.common.io.Files;
+import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.TextAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
+import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.pipeline.Annotation;
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.util.CoreMap;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -7,20 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.google.common.base.Charsets;
-import com.google.common.base.Joiner;
-import com.google.common.io.Files;
-import edu.stanford.nlp.ling.CoreAnnotations.TextAnnotation;
-import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
-import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
-import edu.stanford.nlp.ling.CoreLabel;
-import edu.stanford.nlp.pipeline.Annotation;
-import edu.stanford.nlp.pipeline.StanfordCoreNLP;
-import edu.stanford.nlp.util.CoreMap;
-
 public class SentenceSplitter {
 
     private StanfordCoreNLP pipeline;
+
     private SentenceSplitter() throws IOException {
         // Create StanfordCoreNLP object properties, with POS tagging
         // (required for lemmatization), and lemmatization
@@ -53,8 +54,8 @@ public class SentenceSplitter {
         Annotation document = new Annotation(documentText);
         this.pipeline.annotate(document);
         List<CoreMap> sentences = document.get(SentencesAnnotation.class);
-        for(CoreMap sentence: sentences) {
-            sentenceStrings.add(sentence.get(TextAnnotation.class).replaceAll("[\\t\\n\\r]+"," ").replaceAll("_", ""));
+        for (CoreMap sentence : sentences) {
+            sentenceStrings.add(sentence.get(TextAnnotation.class).replaceAll("[\\t\\n\\r]+", " ").replaceAll("_", ""));
         }
         return sentenceStrings;
     }
@@ -67,10 +68,10 @@ public class SentenceSplitter {
         this.pipeline.annotate(document);
         // Iterate over all of the sentences found
         List<CoreMap> sentences = document.get(SentencesAnnotation.class);
-        for(CoreMap sentence: sentences) {
+        for (CoreMap sentence : sentences) {
             // Iterate over all tokens in a sentence
             List<String> sentenceTokens = new ArrayList<>();
-            for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
+            for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
                 // Retrieve and add the lemma for each word into the
                 // list of lemmas
                 sentenceTokens.add(token.get(TextAnnotation.class));
@@ -80,7 +81,7 @@ public class SentenceSplitter {
         return tokensBySentence;
     }
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         if (args.length < 2) {
             System.out.println("ssplit: Missing source text directory, output directory");
             return;
