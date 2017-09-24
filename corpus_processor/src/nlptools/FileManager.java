@@ -1,4 +1,4 @@
-package lemmatizer;
+package nlptools;
 
 import java.io.FileInputStream;
 import java.io.IOException;

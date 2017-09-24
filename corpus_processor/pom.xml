@@ -111,7 +111,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>lemmatizer.Lemmatizer</mainClass>
+                            <mainClass>nlptools.Lemmatizer</mainClass>
                         </manifest>
                         <manifestEntries>
                             <Class-Path>.</Class-Path>
