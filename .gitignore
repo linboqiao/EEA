@@ -1,9 +1,9 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-.pyc
+*.pyc
 .idea
-.iml
+*.iml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
