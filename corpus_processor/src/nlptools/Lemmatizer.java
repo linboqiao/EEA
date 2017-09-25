@@ -21,16 +21,14 @@ import java.util.*;
 public class Lemmatizer {
 
     private StanfordCoreNLP pipeline;
-    private HashSet<String> punctuations;
 
-    private Lemmatizer() throws IOException {
+    public Lemmatizer() throws IOException {
         // Create StanfordCoreNLP object properties, with POS tagging
         // (required for lemmatization), and lemmatization
         Properties props;
         props = new Properties();
         props.put("annotators", "tokenize, ssplit, pos, lemma");
         props.put("ssplit.boundaryTokenRegex", "\\.|[!?;:]+");
-        this.punctuations = new HashSet<>(Files.readLines(new File("stopwords.txt"), Charsets.UTF_8));
 
         /*
          * This is a pipeline that takes in a string and returns various analyzed linguistic forms.
@@ -87,10 +85,8 @@ public class Lemmatizer {
                 // list of lemmas
                 String lemma = token.get(LemmaAnnotation.class).toLowerCase();
                 String postag = token.get(PartOfSpeechAnnotation.class);
-                if (!this.punctuations.contains(lemma)) {
-                    lemmaSentence.add(lemma);
-                    postagSentence.add(postag);
-                }
+                lemmaSentence.add(lemma);
+                postagSentence.add(postag);
             }
             lemmasBySentence.add(lemmaSentence);
             postagBySentence.add(postagSentence);
