@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class SentenceAnnotator {
@@ -33,8 +34,20 @@ public class SentenceAnnotator {
             List<String> posTags = sent.posTags();
             List<String> nerTags = sent.nerTags();
             List<String> deps = new ArrayList<>();
+            Boolean depPresent = true;
             for (int i = 0; i < tokens.size(); i++) {
-                deps.add(Integer.toString(sent.governor(i).get() + 1) + '_' + sent.incomingDependencyLabel(i).get());
+                Optional<Integer> governor = sent.governor(i);
+                Optional<String> dependencyLabel = sent.incomingDependencyLabel(i);
+                if (governor.isPresent() && dependencyLabel.isPresent()){
+                    deps.add(Integer.toString(governor.get() + 1) + '_' + dependencyLabel.get());
+                }
+                else {
+                    depPresent = false;
+                    break;
+                }
+            }
+            if (!depPresent) {
+                break;
             }
             // Writing to file
             tokensWriter.write(Joiner.on(' ').join(tokens) + '\n');
