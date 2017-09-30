@@ -68,12 +68,31 @@ def load_emb(emb_path, trigger):
                 emb.append(map(float, line[1:]))
         return np.array(emb), inv_triggers
 
+def nameCluster(ref, clusters, out):
+    refs = set()
+    with open(ref) as IN:
+        for line in IN:
+            refs.add(line.strip())
+    with open(out, 'w') as OUT:
+        for k,v in clusters.iteritems():
+            pivots = []
+            discovers = []
+            for word in v:
+                if word in refs:
+                    pivots.append(word)
+                else:
+                    discovers.append(word)
+            OUT.write('Cluster '+str(k)+':\t' + ','.join(pivots) + '\t' + ','.join(discovers) + '\n')
+
+
+
 if __name__ == '__main__':
     train_data, triggers = load_emb(sys.argv[1], sys.argv[2])
     print train_data.shape
-    tmp = Clusterer(train_data, 50)
+    tmp = Clusterer(train_data, 30)
     tmp.fit()
     for k,v in tmp.clusters.iteritems():
         tmp.clusters[k] = map(lambda x: triggers[x], v)
-    print tmp.clusters
+    #print tmp.clusters
+    nameCluster(sys.argv[3], tmp.clusters, sys.argv[4])
 

@@ -1,0 +1,30 @@
+Cluster 0:	sentence,rule,test,advance,protest,trade,decline,request,pledge,transport,storm,row,praise	serve,offer,file,drop,announce,oppose,seek,admit,discuss,accuse_of,condemn,arrive_in,govern,report_from
+Cluster 1:	surprise,doubt,trust,swing	agree,remember,be_about,suffer,mean_that
+Cluster 2:	mention,address,debate,star,blame,pain,camp,transfer,loan,journey,fake,quiet,ambush,bias,reward,overthrow,bust,commission,impact,drag,sacrifice,copy,exit	come_from,be_with,kill_in,come_into,break_out,notice_that
+Cluster 3:	evidence,murder	pay,support,follow,consider,join,say_that,date
+Cluster 4:	pick,trouble,access,kiss	find,keep,live,lose,sell,spend,decide,look_at,be_on,welcome
+Cluster 5:	win,step	put,be_in,hold,allow,stop,create,fear
+Cluster 6:	divorce,marriage,vow,reply	die,write,please,warn,continue_policy_of,wed,declare_brain_dead_on,sue_for
+Cluster 7:	head,fall,target,search,launch,rise,regard,defeat,research,shift,influence,cook,clash,permit,survey,sweep,warrant	leave,become,fly,invite,burn,meet_with,take_control_of,tighten,note_that,be_kill_by
+Cluster 8:	report,charge,turn,release,push,battle,front	kill,move,expect,appear,wound
+Cluster 9:	guess	know,think,like,mean,seem,think_that,be_kind_of
+Cluster 10:	end	begin
+Cluster 11:	claim,strike,appeal,arrest,capture,demand,suicide,assault,attempt,ban,raid,march,surrender,rebel	include,_,accord,lead,remain,shoot,fail,injure,accuse,carry_out
+Cluster 12:	look	be,get,see,take,make,happen,run,start
+Cluster 13:	result,fine,act,walk,experience,risk,benefit,practice,hire,gain,study,partner,gift,ticket,rumor,signal,slaughter,fault,exercise,match	drive,represent,be_watch,live_in,go_down,turn_out,forgive
+Cluster 14:	want,work	do,tell,ask
+Cluster 15:	will,use,help,hope	show,continue
+Cluster 16:	plan,travel,design,lack,promise,aim,struggle,abuse,remark,desire	speak,add,quote,approve,argue_that,embed_with
+Cluster 17:	comment,contact,tie,exchange,neighbor,net,reform,manufacture,rain	meet,receive,refuse,present,deny,declare,convict_of,call_for,propose,conclude,take_place_in,know_as,stress,submit,report_on,call_on,blow_himself_up,resign_as,result_in
+Cluster 18:	flight,suspect,pull,link,approach,damage,supply,birth,crash,compromise,ride,rape,escape	hand,determine,beat,assure
+Cluster 19:	war,attack,fight,fire,control,hit,return,command	force
+Cluster 20:		name
+Cluster 21:	try,need	go,give
+Cluster 22:	cost,cruise,total,increase,tour,delay,auction,freeze	plead,report_that,found,go_off,blow_up,say_Monday_that
+Cluster 23:	question,change,stay,cause,answer,lie,respect,wish	believe,be_that,send,talk_about,figure,go_on
+Cluster 24:	side,order,cut,visit,chance,pressure,conduct,progress,retreat,probe,taste	face,complete,threaten,note,identify,discover
+Cluster 25:	call	say
+Cluster 26:		come,bring
+Cluster 27:		have
+Cluster 28:	massacre	be_from
+Cluster 29:		talk,post
