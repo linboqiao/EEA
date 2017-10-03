@@ -2,14 +2,13 @@ package nlptools;
 
 import com.google.common.base.Joiner;
 import edu.stanford.nlp.simple.*;
+import helper.Utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 public class SentenceAnnotator {
@@ -33,22 +32,8 @@ public class SentenceAnnotator {
             List<String> lemmas = sent.lemmas();
             List<String> posTags = sent.posTags();
             List<String> nerTags = sent.nerTags();
-            List<String> deps = new ArrayList<>();
-            Boolean depPresent = true;
-            for (int i = 0; i < tokens.size(); i++) {
-                Optional<Integer> governor = sent.governor(i);
-                Optional<String> dependencyLabel = sent.incomingDependencyLabel(i);
-                if (governor.isPresent() && dependencyLabel.isPresent()){
-                    deps.add(Integer.toString(governor.get() + 1) + '_' + dependencyLabel.get());
-                }
-                else {
-                    depPresent = false;
-                    break;
-                }
-            }
-            if (!depPresent) {
-                break;
-            }
+            List<String> deps = Utils.getDeps(sent, tokens.size());
+            if (deps == null) break;
             // Writing to file
             tokensWriter.write(Joiner.on(' ').join(tokens) + '\n');
             lemmasWriter.write(Joiner.on(' ').join(lemmas) + '\n');
@@ -63,4 +48,5 @@ public class SentenceAnnotator {
         nerWriter.close();
         depWriter.close();
     }
+
 }
