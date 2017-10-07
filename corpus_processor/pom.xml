@@ -36,19 +36,7 @@
             <version>2.8.2</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>edu.illinois.cs.cogcomp</groupId>
-            <artifactId>illinois-corpusreaders</artifactId>
-            <version>3.1.33</version>
-        </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>CogCompSoftware</id>
-            <name>CogCompSoftware</name>
-            <url>http://cogcomp.cs.illinois.edu/m2repo/</url>
-        </repository>
-    </repositories>
 
 
     <build>
