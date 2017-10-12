@@ -79,8 +79,7 @@ public class RunnerUtils {
             throws ResourceInitializationException {
         return AnalysisEngineFactory.createEngineDescription(
                 GoldStandardEventMentionAnnotator.class,
-                GoldStandardEventMentionAnnotator.PARAM_TARGET_VIEWS,
-                new String[]{CAS.NAME_DEFAULT_SOFA, UimaConst.inputViewName},
+                GoldStandardEventMentionAnnotator.PARAM_TARGET_VIEWS, new String[]{CAS.NAME_DEFAULT_SOFA},
                 GoldStandardEventMentionAnnotator.PARAM_COPY_MENTION_TYPE, copyType,
                 GoldStandardEventMentionAnnotator.PARAM_COPY_REALIS, copyRealis,
                 GoldStandardEventMentionAnnotator.PARAM_COPY_CLUSTER, copyCluster,

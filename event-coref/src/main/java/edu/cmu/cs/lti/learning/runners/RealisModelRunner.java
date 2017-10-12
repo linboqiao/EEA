@@ -26,12 +26,14 @@ import java.io.IOException;
  * @author Zhengzhong Liu
  */
 public class RealisModelRunner extends AbstractMentionModelRunner {
+    private String realisModelDir = null;
+
     public RealisModelRunner(Configuration mainConfig, TypeSystemDescription typeSystemDescription) {
         super(mainConfig, typeSystemDescription);
     }
 
-    public String trainRealis(Configuration config, CollectionReaderDescription trainingReader, String suffix,
-                              boolean skipTrain) throws Exception {
+    public void trainRealis(Configuration config, CollectionReaderDescription trainingReader, String suffix,
+                            boolean skipTrain) throws Exception {
         String realisCvModelDir = ModelUtils.getTrainModelPath(eventModelDir, config, suffix);
 
         if (skipTrain && new File(realisCvModelDir).exists()) {
@@ -41,8 +43,11 @@ public class RealisModelRunner extends AbstractMentionModelRunner {
                     config);
             trainer.buildModels(realisCvModelDir);
         }
+        this.realisModelDir = realisCvModelDir;
+    }
 
-        return realisCvModelDir;
+    public String getModelDir() {
+        return realisModelDir;
     }
 
     public CollectionReaderDescription realisAnnotation(Configuration taskConfig, CollectionReaderDescription reader,
@@ -73,17 +78,16 @@ public class RealisModelRunner extends AbstractMentionModelRunner {
     }
 
     public CollectionReaderDescription testRealis(Configuration taskConfig, CollectionReaderDescription reader,
-                                                  String realisModel, String sliceSuffix, String runName,
+                                                  String sliceSuffix, String runName,
                                                   String outputDir, File gold, boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
 
         return new ModelTester(mainConfig) {
             @Override
             protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
-                    reader, String
-                                                                   mainDir, String baseDir) throws SAXException,
+                    reader, String mainDir, String baseDir) throws SAXException,
                     UIMAException, CpeDescriptorException, IOException {
-                return realisAnnotation(taskConfig, reader, realisModel, trainingWorkingDir, baseDir, skipTest);
+                return realisAnnotation(taskConfig, reader, realisModelDir, trainingWorkingDir, baseDir, skipTest);
             }
         }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, gold);
     }

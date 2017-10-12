@@ -92,10 +92,6 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
                         test(modelPath + "_iter" + numIteration, "token_mention_heldout_iter" + numIteration);
                     }
 
-//                    if (numIteration > 3) {
-//                        TokenLevelEventMentionCrfTrainer.TOGGLE_CHECK_UPDATE = true;
-//                    }
-
                     trainingSeed.add(2);
                     logger.debug("Update the training seed to " + trainingSeed.intValue());
                     trainingReader.setAttributeValue(RandomizedXmiCollectionReader.PARAM_SEED, trainingSeed.getValue());
@@ -145,9 +141,7 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
         return new ModelTester(mainConfig) {
             @Override
             protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
-                    reader, String
-                                                                   mainDir, String baseDir) throws SAXException,
-                    UIMAException,
+                    reader, String mainDir, String baseDir) throws SAXException, UIMAException,
                     CpeDescriptorException, IOException {
                 return sentenceLevelMentionTagging(taskConfig, reader, typeModel,
                         trainingWorkingDir, baseDir, skipTest);

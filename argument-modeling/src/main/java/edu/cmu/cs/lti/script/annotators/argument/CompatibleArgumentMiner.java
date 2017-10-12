@@ -19,7 +19,6 @@ public class CompatibleArgumentMiner extends AbstractLoggingAnnotator {
 
     }
 
-
     private void getEvents(JCas aJCas) {
         // Use semafor to get these.
         JCasUtil.select(aJCas, SemaforAnnotationSet.class);

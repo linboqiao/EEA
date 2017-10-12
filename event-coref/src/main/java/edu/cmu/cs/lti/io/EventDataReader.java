@@ -81,7 +81,8 @@ public class EventDataReader {
                     AceDataCollectionReader.class, typeSystemDescription,
                     AceDataCollectionReader.PARAM_ACE_DATA_PATH, datasetConfig.get("edu.cmu.cs.lti.data.path"),
                     AceDataCollectionReader.PARAM_ACE_DATA_STATUS, datasetConfig.get("edu.cmu.cs.lti.data.ace.status"),
-                    AceDataCollectionReader.PARAM_LANGUAGE, datasetConfig.get("edu.cmu.cs.lti.data.language")
+                    AceDataCollectionReader.PARAM_LANGUAGE, datasetConfig.get("edu.cmu.cs.lti.data.language"),
+                    AceDataCollectionReader.PARAM_SPLIT_FILE, datasetConfig.get("edu.cmu.cs.lti.data.split")
             );
             writeAsXmi(reader, workingDir, rawBase, skipRaw);
         }

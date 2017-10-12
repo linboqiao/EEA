@@ -22,14 +22,14 @@ public abstract class ModelTester {
     private final boolean charOffset;
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-    private final String evalLogOutputDir;
+    //    private final String evalLogOutputDir;
     private final String evalScript;
     private final String tokenDir;
 
     public ModelTester(Configuration config) {
         charOffset = config.getBoolean("edu.cmu.cs.lti.output.character.offset", true);
-        evalLogOutputDir = FileUtils.joinPaths(config.get("edu.cmu.cs.lti.eval.log_dir"),
-                config.get("edu.cmu.cs.lti.experiment.name"));
+//        evalLogOutputDir = FileUtils.joinPaths(config.get("edu.cmu.cs.lti.eval.log_dir"),
+//                config.get("edu.cmu.cs.lti.experiment.name"));
         evalScript = config.get("edu.cmu.cs.lti.eval.script");
         tokenDir = config.get("edu.cmu.cs.lti.training.token_map.dir");
 
@@ -72,10 +72,12 @@ public abstract class ModelTester {
             logger.info("Evaluating over all event types, gold is from: " + gold);
             eval(gold, tbfOutput, runName, sliceSuffix, null);
 
-            String selectedTypePath = taskConfig.get("edu.cmu.cs.lti.eval.selected_type.file");
-            if (selectedTypePath != null) {
-                logger.info("Evaluating on selected event types.");
-                eval(gold, tbfOutput, runName, sliceSuffix, selectedTypePath);
+            if (taskConfig != null) {
+                String selectedTypePath = taskConfig.get("edu.cmu.cs.lti.eval.selected_type.file");
+                if (selectedTypePath != null) {
+                    logger.info("Evaluating on selected event types.");
+                    eval(gold, tbfOutput, runName, sliceSuffix, selectedTypePath);
+                }
             }
         }
         return output;
@@ -89,19 +91,18 @@ public abstract class ModelTester {
 
         if (useSelectedType) {
             String typeName = FilenameUtils.removeExtension(FilenameUtils.getBaseName(typesPath));
-            evalDir = FileUtils.joinPaths(evalLogOutputDir, suffix, typeName, runName);
+            evalDir = FileUtils.joinPaths(new File(system).getParent(), runName + "_" + typeName);
         } else {
-            evalDir = FileUtils.joinPaths(evalLogOutputDir, suffix, "main", runName);
+            evalDir = FileUtils.joinPaths(new File(system).getParent(), runName);
         }
 
         String evalLog = FileUtils.joinPaths(evalDir, "scoring_log.txt");
-        File file = new File(evalLog);
-        file.getParentFile().mkdirs();
-        FileWriter writer = new FileWriter(file);
+        FileUtils.ensureDirectory(evalDir);
 
         logger.info("Evaluating with " + evalScript + ", saving results to " + evalDir);
         logger.info("Gold file is " + gold);
         logger.info("System file is " + system);
+        logger.info("Log file is " + evalLog);
 
         String evalMode = charOffset ? "char" : "token";
 
@@ -127,14 +128,13 @@ public abstract class ModelTester {
 
         ProcessBuilder pb = new ProcessBuilder(commands.toArray(new String[commands.size()]));
         pb.redirectErrorStream();
+        pb.redirectOutput(new File(evalLog));
 
         Process p = pb.start();
-        writeStream(writer, p.getInputStream());
 
         Thread thread = new Thread(() -> {
             try {
                 p.waitFor();
-                writer.close();
                 int exitValue = p.exitValue();
                 if (exitValue == 0) {
                     logger.info("Evaluation done successfully.");
@@ -148,15 +148,6 @@ public abstract class ModelTester {
         });
 
         thread.start();
-    }
-
-    private void writeStream(Writer writer, InputStream stream) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(stream));
-        String line;
-        while ((line = br.readLine()) != null) {
-            writer.write(line);
-            writer.write("\n");
-        }
     }
 
     protected abstract CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription

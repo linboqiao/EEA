@@ -2,6 +2,8 @@ package edu.cmu.cs.lti.event_coref.pipeline;
 
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.annotators.*;
+import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
+import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.misc.EventMentionTypeClassPrinter;
 import edu.cmu.cs.lti.emd.annotators.postprocessors.MentionTypeSplitter;
 import edu.cmu.cs.lti.emd.stat.ChineseMentionStats;
@@ -60,6 +62,7 @@ public class EventMentionPipeline {
     // Output directory.
     final private String trainingWorkingDir;
     final private String testingWorkingDir;
+    final private String devWorkingDir;
 
     // The directory that stores all the awesome and not-awesome models.
     final private String generalModelDir;
@@ -87,12 +90,13 @@ public class EventMentionPipeline {
      * @param modelOutDir        The models directory saving the output models.
      * @param trainingWorkingDir The main working directory of the training data.
      * @param testingWorkingDir  The main working directory of the testing data.
+     * @param devWorkingDir
      * @param modelConfigDir
      * @param processOutputDir
      */
     private EventMentionPipeline(String typeSystemName, String language, boolean useCharOffset, String modelDir,
                                  String modelOutDir, String trainingWorkingDir, String testingWorkingDir,
-                                 String modelConfigDir, String processOutputDir) {
+                                 String devWorkingDir, String modelConfigDir, String processOutputDir) {
         this.typeSystemDescription = TypeSystemDescriptionFactory.createTypeSystemDescription(typeSystemName);
         this.generalModelDir = modelDir;
         this.eventModelDir = modelOutDir;
@@ -101,6 +105,7 @@ public class EventMentionPipeline {
 
         this.trainingWorkingDir = trainingWorkingDir;
         this.testingWorkingDir = testingWorkingDir;
+        this.devWorkingDir = devWorkingDir;
 
         if (trainingWorkingDir != null) {
             logger.info(String.format("Training directory will be %s.", trainingWorkingDir));
@@ -108,6 +113,10 @@ public class EventMentionPipeline {
 
         if (testingWorkingDir != null && new File(testingWorkingDir).exists()) {
             logger.info(String.format("Testing directory will be %s.", testingWorkingDir));
+        }
+
+        if (devWorkingDir != null && new File(devWorkingDir).exists()) {
+            logger.info(String.format("Development directory will be %s.", devWorkingDir));
         }
 
         logger.info(String.format("Models can be found in %s.", modelOutDir));
@@ -133,11 +142,11 @@ public class EventMentionPipeline {
                 config.get("edu.cmu.cs.lti.model.event.dir"),
                 config.get("edu.cmu.cs.lti.training.working.dir"),
                 config.get("edu.cmu.cs.lti.test.working.dir"),
-                config.get("edu.cmu.cs.lti.model.config.dir"),
+                config.get("edu.cmu.cs.lti.dev.working.dir"),
                 // Experiment data are also put into their own experiemnt folders.
+                config.get("edu.cmu.cs.lti.model.config.dir"),
                 FileUtils.joinPaths(config.get("edu.cmu.cs.lti.process.base.dir"),
-                        config.get("edu.cmu.cs.lti.experiment.name"))
-        );
+                        config.get("edu.cmu.cs.lti.experiment.name")));
 
         if (config.getBoolean("edu.cmu.cs.lti.output.character.offset", true)) {
             logger.info("Evaluation mode is character based.");
@@ -174,12 +183,14 @@ public class EventMentionPipeline {
      */
     public void prepareData(Configuration taskConfig) throws IOException,
             UIMAException, CpeDescriptorException, SAXException {
-        boolean skipTrainPrepare = taskConfig.getBoolean("edu.cmu.cs.lti.train.skip.preprocess", false);
-        boolean skipTestPrepare = taskConfig.getBoolean("edu.cmu.cs.lti.test.skip.preprocess", false);
+        boolean skipTrainPreprocess = taskConfig.getBoolean("edu.cmu.cs.lti.train.skip.preprocess", false);
+        boolean skipTestPreprocess = taskConfig.getBoolean("edu.cmu.cs.lti.test.skip.preprocess", false);
+        boolean skipTrainPrepare = taskConfig.getBoolean("edu.cmu.cs.lti.train.skip.prepare", false);
 
         String datasetSettingDir = taskConfig.get("edu.cmu.cs.lti.dataset.settings.path");
         String[] trainingDatasets = taskConfig.getList("edu.cmu.cs.lti.training.datasets");
         String[] testDatasets = taskConfig.getList("edu.cmu.cs.lti.testing.datasets");
+        String[] devDatasets = taskConfig.getList("edu.cmu.cs.lti.dev.datasets");
 
         boolean skipRaw = taskConfig.getBoolean("edu.cmu.cs.lti.skip.raw", false);
 
@@ -191,12 +202,15 @@ public class EventMentionPipeline {
             logger.info("Datasets will always be read from corpus.");
         }
 
-        logger.info("Reading training data.");
+        logger.info("Loading training data.");
         CollectionReaderDescription trainingReader = readDatasets(datasetSettingDir, trainingDatasets,
                 trainingWorkingDir, skipRaw);
-        logger.info("Reading test data.");
+        logger.info("Loading test data.");
         CollectionReaderDescription testReader = readDatasets(datasetSettingDir, testDatasets,
                 testingWorkingDir, skipRaw);
+        logger.info("Loading dev data.");
+        CollectionReaderDescription devReader = readDatasets(datasetSettingDir, devDatasets,
+                devWorkingDir, skipRaw);
 
         File classFile = new File(FileUtils.joinPaths(trainingWorkingDir, "mention_types.txt"));
         if (classFile.exists()) {
@@ -213,7 +227,7 @@ public class EventMentionPipeline {
             );
             SimplePipeline.runPipeline(trainingReader, classPrinter);
             CollectionReaderDescription preprocssedData = prepareData(taskConfig, trainingWorkingDir,
-                    skipTrainPrepare, trainingReader);
+                    skipTrainPreprocess, trainingReader);
             prepareTraining(preprocssedData, trainingWorkingDir, "prepared_training", skipTrainPrepare, seed);
         } else {
             logger.warn("No training readers specified.");
@@ -221,9 +235,16 @@ public class EventMentionPipeline {
 
         if (testDatasets.length != 0) {
             logger.info("Preprocessing the raw testing data.");
-            prepareData(taskConfig, testingWorkingDir, skipTestPrepare, testReader);
+            prepareData(taskConfig, testingWorkingDir, skipTestPreprocess, testReader);
         } else {
             logger.warn("No test readers specified.");
+        }
+
+        if (devDatasets.length != 0) {
+            logger.info("Preprocessing the raw development data.");
+            prepareData(taskConfig, devWorkingDir, skipTestPreprocess, devReader);
+        } else {
+            logger.warn("No dev readers specified.");
         }
     }
 
@@ -517,7 +538,6 @@ public class EventMentionPipeline {
             List<AnalysisEngineDescription> annotators = new ArrayList<>();
             annotators.add(allGoldAnnotator);
             RunnerUtils.addMentionPostprocessors(annotators, typeSystemDescription, language);
-
             new BasicPipeline(reader, workingDir, outputBase,
                     annotators.toArray(new AnalysisEngineDescription[annotators.size()])).run();
         }
@@ -614,40 +634,74 @@ public class EventMentionPipeline {
         }
     }
 
-    public void trainTest(Configuration taskConfig, boolean runAll, boolean hasTestGold) throws Exception {
+    public void trainAndDev(Configuration taskConfig, boolean runAll) throws Exception {
+        trainEval(taskConfig, runAll, true);
+    }
+
+    public void trainAndTest(Configuration taskConfig, boolean runAll) throws Exception {
+        trainEval(taskConfig, runAll, false);
+    }
+
+    public void trainEval(Configuration taskConfig, boolean runAll, boolean useDev) throws Exception {
         logger.info("Will conduct training testing.");
 
         int seed = taskConfig.getInt("edu.cmu.cs.lti.random.seed", 17);
 
+        String evalDataWorkingDir = useDev ? devWorkingDir : testingWorkingDir;
+
         CollectionReaderDescription trainingReader = paths.randomPreparedTraining(typeSystemDescription,
                 trainingWorkingDir, seed);
 
-        CollectionReaderDescription testDataReader = paths.getPreprocessReader(typeSystemDescription,
-                testingWorkingDir);
+        CollectionReaderDescription evalDataReader = paths.getPreprocessReader(typeSystemDescription,
+                evalDataWorkingDir);
 
-        String resultDir = paths.getResultDir(testingWorkingDir, fullRunSuffix);
 
         String testGoldStandard = taskConfig.get("edu.cmu.cs.lti.test.gold_standard");
-        File testGold = testGoldStandard == null ? null : new File(testGoldStandard);
+        File testGold;
+        if (testGoldStandard == null) {
+            testGold = createGoldTBF(evalDataReader, evalDataWorkingDir);
+        } else {
+            testGold = new File(testGoldStandard);
+        }
+
 
         if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", false)) {
             logger.info("Will run individual model experiments.");
-            experiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, testGold, resultDir, runAll);
+            experiment(taskConfig, fullRunSuffix, trainingReader, evalDataReader, testGold, evalDataWorkingDir, runAll);
             logger.info("Experiment done.");
         }
 
         if (taskConfig.getBoolean("edu.cmu.cs.lti.joint.models", false)) {
             logger.info("Will run joint model experiments.");
-            jointExperiment(taskConfig, fullRunSuffix, trainingReader, testDataReader, testGold, resultDir, runAll);
+            jointExperiment(taskConfig, fullRunSuffix, trainingReader, evalDataReader, testGold, evalDataWorkingDir,
+                    runAll);
             logger.info("Experiment done.");
         }
 
         if (taskConfig.getBoolean("edu.cmu.lti.after.models", false)) {
             logger.info("Will run after model experiments.");
-            afterExperiment(taskConfig, testingWorkingDir, fullRunSuffix, trainingReader, testDataReader, testGold,
-                    resultDir, runAll);
+            afterExperiment(taskConfig, fullRunSuffix, trainingReader, evalDataReader, testGold, evalDataWorkingDir,
+                    runAll);
             logger.info("Experiment done.");
         }
+    }
+
+    private File createGoldTBF(CollectionReaderDescription evalDataReader, String workingDir) throws UIMAException,
+            IOException {
+        File outputFile = new File(workingDir, "generated_gold.tbf");
+
+        AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
+                TbfStyleEventWriter.class, typeSystemDescription,
+                TbfStyleEventWriter.PARAM_OUTPUT_PATH, outputFile,
+                TbfStyleEventWriter.PARAM_SYSTEM_ID, "gold",
+                TbfStyleEventWriter.PARAM_GOLD_TOKEN_COMPONENT_ID, TbfEventDataReader.COMPONENT_ID,
+                TbfStyleEventWriter.PARAM_USE_CHARACTER_OFFSET, true,
+                TbfStyleEventWriter.PARAM_USE_GOLD_VIEW, true
+        );
+
+        SimplePipeline.runPipeline(evalDataReader, writer);
+
+        return outputFile;
     }
 
     /**
@@ -681,19 +735,20 @@ public class EventMentionPipeline {
 
             if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", false)) {
                 logger.info("Will run individual model experiments.");
-                experiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, testGold, resultDir, false);
+                experiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, testGold,
+                        trainingWorkingDir, false);
             }
 
             if (taskConfig.getBoolean("edu.cmu.cs.lti.joint.models", false)) {
                 logger.info("Will run joint model experiments.");
-                jointExperiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, testGold, resultDir,
-                        false);
+                jointExperiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, testGold,
+                        trainingWorkingDir, false);
             }
 
             if (taskConfig.getBoolean("edu.cmu.lti.after.models", false)) {
                 logger.info("Will run after model experiments.");
-                afterExperiment(taskConfig, trainingWorkingDir, sliceSuffix, trainingSliceReader, devSliceReader,
-                        testGold, resultDir, false);
+                afterExperiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, testGold, trainingWorkingDir,
+                        false);
             }
         }
     }
@@ -751,6 +806,9 @@ public class EventMentionPipeline {
 //    }
 
     private Configuration getModelConfig(String modelConfigName) throws IOException {
+        if (modelConfigName == null || modelConfigName.isEmpty()) {
+            return null;
+        }
         return new Configuration(new File(modelConfigDir, modelConfigName + ".properties"));
     }
 
@@ -777,9 +835,9 @@ public class EventMentionPipeline {
         RunnerUtils.writeGold(trainReader, getTrainGoldPath(resultDir, sliceSuffix), useCharOffset);
     }
 
-    private void afterExperiment(Configuration taskConfig, String workingDir, String sliceSuffix,
-                                 CollectionReaderDescription trainingData, CollectionReaderDescription testReader,
-                                 File testGold, String resultDir, boolean runAll)
+    private void afterExperiment(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainingData,
+                                 CollectionReaderDescription testReader, File testGold, String evalWorkingDir,
+                                 boolean runAll)
             throws IOException, UIMAException, SAXException, CpeDescriptorException, ClassNotFoundException,
             NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException,
             InterruptedException {
@@ -788,12 +846,14 @@ public class EventMentionPipeline {
 
         Configuration afterConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.after"));
 
+        String resultDir = paths.getResultDir(evalWorkingDir, sliceSuffix);
+
         logger.info("Producing partial gold standards on test data to tag after links.");
-        CollectionReaderDescription goldMentionAll = annotateGoldMentions(testReader, workingDir,
+        CollectionReaderDescription goldMentionAll = annotateGoldMentions(testReader, evalWorkingDir,
                 paths.getMiddleOutputPath(sliceSuffix, "gold_mentions"),
                 true, true, true, false, false);
 
-        CollectionReaderDescription mentionPost = postProcessMention(goldMentionAll, workingDir,
+        CollectionReaderDescription mentionPost = postProcessMention(goldMentionAll, evalWorkingDir,
                 paths.getMiddleOutputPath(sliceSuffix, "mention_post"), false);
 
         logger.info("Done mention post processing.");
@@ -807,7 +867,7 @@ public class EventMentionPipeline {
     }
 
     private void jointExperiment(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainingData,
-                                 CollectionReaderDescription testReader, File testGold, String resultDir,
+                                 CollectionReaderDescription testReader, File testGold, String evalWorkingDir,
                                  boolean runAll) throws Exception {
         boolean skipRealisTrain = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptrain", false);
         boolean skipJointTrain = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.joint_span.skiptrain", false);
@@ -819,12 +879,14 @@ public class EventMentionPipeline {
 
         String[] lossTypes = jointConfig.getList("edu.cmu.cs.lti.mention.loss_types");
 
+        String resultDir = paths.getResultDir(evalWorkingDir, sliceSuffix);
+
         JointSpanCorefModelRunner jointModelRunner = new JointSpanCorefModelRunner(mainConfig, typeSystemDescription);
 
         RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
 
         // Train realis model.
-        String realisModelDir = realisModelRunner.trainRealis(realisConfig, trainingData, sliceSuffix, skipRealisTrain);
+        realisModelRunner.trainRealis(realisConfig, trainingData, sliceSuffix, skipRealisTrain);
 
         // We try experiments with different settings of the following:
         // 1. Loss type
@@ -834,20 +896,23 @@ public class EventMentionPipeline {
         for (int i = 0; i < lossTypes.length; i++) {
             String lossType = lossTypes[i];
             for (int strategy = 1; strategy <= 1; strategy++) {
-                jointModelRunner.trainJointSpanModel(jointConfig, trainingData, testReader, realisModelDir,
-                        resultDir,
-                        sliceSuffix, testGold, skipJointTrain, skipJointTest, lossType, jointBeamSize, strategy
+                jointModelRunner.trainJointSpanModel(jointConfig, trainingData, testReader,
+                        realisModelRunner.getModelDir(), resultDir, sliceSuffix, testGold, skipJointTrain,
+                        skipJointTest, lossType, jointBeamSize, strategy
                 );
             }
         }
     }
 
     private void experiment(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainingData,
-                            CollectionReaderDescription testReader, File testGold, String resultDir, boolean runAll)
+                            CollectionReaderDescription testReader, File testGold, String evalWorkingDir,
+                            boolean runAll)
             throws Exception {
         if (runAll) {
             logger.info("Force to run all experiments, no training will be skipped.");
         }
+
+        String resultDir = paths.getResultDir(evalWorkingDir, sliceSuffix);
 
         boolean skipCorefTrain = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptrain", false);
         boolean skipTypeTrain = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptrain", false);
@@ -863,6 +928,8 @@ public class EventMentionPipeline {
         logger.info(String.format("Testing skips, skip mention : %s, skip realis : %s, skip coref : %s.",
                 skipTypeTest, skipRealisTest, skipCorefTrain));
 
+        logger.info("Evaluation will be performed against " + testGold);
+
         Configuration realisConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.realis"));
         Configuration tokenCrfConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.token_crf"));
         Configuration corefConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.coreference"));
@@ -873,28 +940,30 @@ public class EventMentionPipeline {
         logger.info("Producing partial gold standards with type and realis only.");
 
         // Make sure no event stuff are annotated on the test data.
-        CollectionReaderDescription noEvent = removeEventSutff(testReader, trainingWorkingDir,
+        CollectionReaderDescription noEvent = removeEventSutff(testReader, evalWorkingDir,
                 paths.getMiddleOutputPath(sliceSuffix, "no_event"));
 
-        CollectionReaderDescription goldMentionAll = annotateGoldMentions(noEvent, trainingWorkingDir,
+        CollectionReaderDescription goldMentionAll = annotateGoldMentions(noEvent, evalWorkingDir,
                 paths.getMiddleOutputPath(sliceSuffix, "gold_mentions"), true, true, false, false, true);
 
         // Post process mentions to add headwords and arguments.
-        CollectionReaderDescription postMention = postProcessMention(goldMentionAll, trainingWorkingDir,
+        CollectionReaderDescription postMention = postProcessMention(goldMentionAll, evalWorkingDir,
                 paths.getMiddleOutputPath(sliceSuffix, "gold_mentions_post"), skipTypeTest);
 
         // Produce gold mention types, to test performance of realis detection.
-        CollectionReaderDescription goldMentionTypes = annotateGoldMentions(testReader, trainingWorkingDir,
+        CollectionReaderDescription goldMentionTypes = annotateGoldMentions(testReader, evalWorkingDir,
                 paths.getMiddleOutputPath(sliceSuffix, "gold_type"), true, false, false, false, false);
 
         // Train realis model.
         RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
-        String realisModelDir = realisModelRunner.trainRealis(realisConfig, trainingData, sliceSuffix, skipRealisTrain);
-        realisModelRunner.testRealis(realisConfig, goldMentionTypes, realisModelDir, sliceSuffix,
-                "gold_mention_realis", resultDir, testGold, skipRealisTest);
+
+        if (realisConfig != null) {
+            realisModelRunner.trainRealis(realisConfig, trainingData, sliceSuffix, skipRealisTrain);
+            realisModelRunner.testRealis(realisConfig, goldMentionTypes, sliceSuffix,
+                    "gold_mention_realis", resultDir, testGold, skipRealisTest);
+        }
 
         // Training the vanilla models.
-
         // The token models.
         TokenMentionModelRunner tokenModel = new TokenMentionModelRunner(mainConfig, typeSystemDescription);
         // The vanilla crf model.
@@ -914,7 +983,6 @@ public class EventMentionPipeline {
                 resultDir, subEvalDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);
 
         // End of the vanilla model training.
-
 
 //        /*#################################################
 //         * Begin of training of crf mention models.
@@ -1043,9 +1111,10 @@ public class EventMentionPipeline {
         // Post process mentions to add headwords and arguments.
         CollectionReaderDescription mentionWithHeadWord = postProcessMention(plainMentionOutput, trainingWorkingDir,
                 paths.getMiddleOutputPath(sliceSuffix, "vanillaMention_post"), skipTypeTest);
+
         CollectionReaderDescription realisOutput = realisModelRunner.testRealis(realisConfig, mentionWithHeadWord,
-                realisModelDir, sliceSuffix, "vanillaMentionRealis", resultDir, testGold,
-                skipTypeTest && skipRealisTest);
+                sliceSuffix, "vanillaMentionRealis", resultDir, testGold, skipTypeTest && skipRealisTest);
+
         corefModel.testCoref(corefConfig, realisOutput, treeCorefModel, sliceSuffix, "vanillaCoref",
                 resultDir, subEvalDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);
 

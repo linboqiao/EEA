@@ -27,7 +27,7 @@ public class AfterLinkPipeline {
         }
 
         if (config.getBoolean("edu.cmu.cs.lti.test", false)) {
-            pipeline.trainTest(config, false, config.getBoolean("edu.cmu.cs.lti.test.has_gold", false));
+            pipeline.trainAndTest(config, false);
         }
     }
 }
