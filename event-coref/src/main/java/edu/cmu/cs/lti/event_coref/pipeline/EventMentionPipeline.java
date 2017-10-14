@@ -2,8 +2,6 @@ package edu.cmu.cs.lti.event_coref.pipeline;
 
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.annotators.*;
-import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
-import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.misc.EventMentionTypeClassPrinter;
 import edu.cmu.cs.lti.emd.annotators.postprocessors.MentionTypeSplitter;
 import edu.cmu.cs.lti.emd.stat.ChineseMentionStats;
@@ -655,15 +653,16 @@ public class EventMentionPipeline {
         CollectionReaderDescription evalDataReader = paths.getPreprocessReader(typeSystemDescription,
                 evalDataWorkingDir);
 
-
         String testGoldStandard = taskConfig.get("edu.cmu.cs.lti.test.gold_standard");
         File testGold;
         if (testGoldStandard == null) {
-            testGold = createGoldTBF(evalDataReader, evalDataWorkingDir);
+            testGold = new File(evalDataWorkingDir, "generated_gold.tbf");
+            RunnerUtils.writeGold(evalDataReader, testGold.getAbsolutePath(), useCharOffset);
         } else {
             testGold = new File(testGoldStandard);
         }
 
+        RunnerUtils.writeText(evalDataReader, evalDataWorkingDir, "text");
 
         if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", false)) {
             logger.info("Will run individual model experiments.");
@@ -684,24 +683,6 @@ public class EventMentionPipeline {
                     runAll);
             logger.info("Experiment done.");
         }
-    }
-
-    private File createGoldTBF(CollectionReaderDescription evalDataReader, String workingDir) throws UIMAException,
-            IOException {
-        File outputFile = new File(workingDir, "generated_gold.tbf");
-
-        AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
-                TbfStyleEventWriter.class, typeSystemDescription,
-                TbfStyleEventWriter.PARAM_OUTPUT_PATH, outputFile,
-                TbfStyleEventWriter.PARAM_SYSTEM_ID, "gold",
-                TbfStyleEventWriter.PARAM_GOLD_TOKEN_COMPONENT_ID, TbfEventDataReader.COMPONENT_ID,
-                TbfStyleEventWriter.PARAM_USE_CHARACTER_OFFSET, true,
-                TbfStyleEventWriter.PARAM_USE_GOLD_VIEW, true
-        );
-
-        SimplePipeline.runPipeline(evalDataReader, writer);
-
-        return outputFile;
     }
 
     /**
@@ -728,10 +709,12 @@ public class EventMentionPipeline {
 
             String resultDir = paths.getResultDir(trainingWorkingDir, sliceSuffix);
 
-            logger.info("Writing evaluation output.");
-            writeEvaluationOutput(trainingSliceReader, devSliceReader, resultDir, sliceSuffix, true);
-            File testGold = new File(getTestGoldPath(resultDir, sliceSuffix));
-            logger.info("Done writing evaluation output.");
+            logger.info("Writing gold standard for the cross validation slice: " + sliceSuffix);
+            String trainGoldPath = resultDir + "/gold_train_" + sliceSuffix + ".tbf";
+            String testGoldPath = resultDir + "/gold_dev_" + sliceSuffix + ".tbf";
+            RunnerUtils.writeGold(trainingSliceReader, trainGoldPath, useCharOffset);
+            RunnerUtils.writeGold(devSliceReader, testGoldPath, useCharOffset);
+            File testGold = new File(testGoldPath);
 
             if (taskConfig.getBoolean("edu.cmu.cs.lti.individual.models", false)) {
                 logger.info("Will run individual model experiments.");
@@ -747,8 +730,8 @@ public class EventMentionPipeline {
 
             if (taskConfig.getBoolean("edu.cmu.lti.after.models", false)) {
                 logger.info("Will run after model experiments.");
-                afterExperiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, testGold, trainingWorkingDir,
-                        false);
+                afterExperiment(taskConfig, sliceSuffix, trainingSliceReader, devSliceReader, testGold,
+                        trainingWorkingDir, false);
             }
         }
     }
@@ -810,29 +793,6 @@ public class EventMentionPipeline {
             return null;
         }
         return new Configuration(new File(modelConfigDir, modelConfigName + ".properties"));
-    }
-
-    private String getTestGoldPath(String resultDir, String suffix) {
-        return FileUtils.joinPaths(resultDir, "gold_test_" + suffix + ".tbf");
-    }
-
-    private String getTrainGoldPath(String resultDir, String suffix) {
-        return FileUtils.joinPaths(resultDir, "gold_train_" + suffix + ".tbf");
-    }
-
-    private void writeEvaluationOutput(CollectionReaderDescription trainReader,
-                                       CollectionReaderDescription testReader,
-                                       String resultDir, String sliceSuffix,
-                                       boolean hasTestGold)
-            throws SAXException, UIMAException, CpeDescriptorException, IOException {
-        // Produce gold standard TBF for evaluation.
-        if (hasTestGold) {
-            logger.info("Writing development gold standard as TBF.");
-            RunnerUtils.writeGold(testReader, getTestGoldPath(resultDir, sliceSuffix), useCharOffset);
-        }
-
-        logger.info("Writing training data as TBF.");
-        RunnerUtils.writeGold(trainReader, getTrainGoldPath(resultDir, sliceSuffix), useCharOffset);
     }
 
     private void afterExperiment(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainingData,

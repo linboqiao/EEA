@@ -8,12 +8,14 @@ import edu.cmu.cs.lti.event_coref.annotators.prepare.EnglishSrlArgumentExtractor
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EventHeadWordAnnotator;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
+import edu.cmu.cs.lti.uima.io.writer.DocumentTextWriter;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.slf4j.Logger;
@@ -109,4 +111,13 @@ public class RunnerUtils {
         return new BasicPipeline(trainingData, mainDir, baseDir, goldRemover).run().getOutput();
     }
 
+    public static void writeText(CollectionReaderDescription reader, String parentDir, String baseDir) throws
+            IOException, UIMAException {
+        AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
+                DocumentTextWriter.class,
+                DocumentTextWriter.PARAM_PARENT_OUTPUT_DIR_PATH, parentDir,
+                DocumentTextWriter.PARAM_BASE_OUTPUT_DIR_NAME, baseDir
+        );
+        SimplePipeline.runPipeline(reader, writer);
+    }
 }
