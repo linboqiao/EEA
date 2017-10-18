@@ -39,7 +39,7 @@ public class BeamMentionModelRunner extends AbstractMentionModelRunner {
     public String trainBeamTypeModel(Configuration config, CollectionReaderDescription trainingReader, String suffix,
                                      boolean usePaTraing, String lossType, boolean useLaSO, boolean delayedLaso,
                                      float aggressiveParameter, int initialSeed, CollectionReaderDescription testReader,
-                                     String subEvalDir, File goldStandard, String processOutputDir, boolean skipTrain,
+                                     File goldStandard, String processOutputDir, String resultDir, boolean skipTrain,
                                      boolean skipTest)
             throws UIMAException, NoSuchMethodException, IOException, InstantiationException, IllegalAccessException,
             InvocationTargetException, ClassNotFoundException {
@@ -86,7 +86,7 @@ public class BeamMentionModelRunner extends AbstractMentionModelRunner {
                     BeamBasedMentionTypeTrainer.PARAM_USE_LASO, useLaSO,
                     BeamBasedMentionTypeTrainer.PARAM_AGGRESSIVE_PARAMETER, aggressiveParameter,
                     BeamBasedMentionTypeTrainer.PARAM_TYPE_FILE_PATH,
-                    FileUtils.joinPaths(trainingWorkingDir, "mention_types.txt")
+                    FileUtils.joinPaths(mainConfig.get("edu.cmu.cs.lti.training.working.dir"), "mention_types.txt")
             );
 
             MutableInt trainingSeed = new MutableInt(initialSeed);
@@ -114,8 +114,8 @@ public class BeamMentionModelRunner extends AbstractMentionModelRunner {
 
                 private void test(String model, String runName) {
                     try {
-                        testBeamMentionModels(config, testReader, model, suffix, runName, processOutputDir,
-                                subEvalDir, goldStandard, skipTest);
+                        testBeamMentionModels(config, testReader, model, suffix, runName, processOutputDir, resultDir,
+                                goldStandard, skipTest);
                     } catch (SAXException | InterruptedException | IOException | CpeDescriptorException |
                             UIMAException e) {
                         e.printStackTrace();
@@ -160,20 +160,19 @@ public class BeamMentionModelRunner extends AbstractMentionModelRunner {
 
     private CollectionReaderDescription testBeamMentionModels(Configuration config, CollectionReaderDescription reader,
                                                               String typeModel, String sliceSuffix, String runName,
-                                                              String outputDir, String subEval, File gold,
+                                                              String outputDir, String resultDir, File gold,
                                                               boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         int beamSize = config.getInt("edu.cmu.cs.lti.mention.beam.size", 5);
 
         return new ModelTester(mainConfig) {
             @Override
-            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
-                    reader, String
-                    mainDir, String baseDir) throws SAXException, UIMAException,
-                    CpeDescriptorException, IOException {
-                return beamMentionTagging(taskConfig, reader, typeModel, trainingWorkingDir, baseDir, beamSize,
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader,
+                                                           String mainDir, String baseDir)
+                    throws SAXException, UIMAException, CpeDescriptorException, IOException {
+                return beamMentionTagging(taskConfig, reader, typeModel, outputDir, baseDir, beamSize,
                         skipTest);
             }
-        }.run(config, reader, typeSystemDescription, sliceSuffix, runName, outputDir, gold);
+        }.run(config, reader, typeSystemDescription, sliceSuffix, runName, outputDir, resultDir, gold);
     }
 }

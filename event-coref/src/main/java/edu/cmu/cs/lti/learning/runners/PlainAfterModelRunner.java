@@ -35,15 +35,9 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
         super(mainConfig, typeSystemDescription);
     }
 
-    public void runBaseline(Configuration config, CollectionReaderDescription testReader, String resultDir,
-                            String suffix, File testGold)
-            throws InterruptedException, SAXException, UIMAException, CpeDescriptorException, IOException {
-        goldTemporalBaseline(config, testReader, suffix, resultDir, testGold);
-    }
-
     public String trainAfterModel(Configuration config, CollectionReaderDescription trainReader,
-                                  CollectionReaderDescription testReader, String processOutputDir, String suffix,
-                                  File testGold, boolean skipTrain, boolean skipTest)
+                                  CollectionReaderDescription testReader, String parentOutput, String resultDir,
+                                  String suffix, File testGold, boolean skipTrain, boolean skipTest)
             throws UIMAException, IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
             IllegalAccessException, InvocationTargetException, CpeDescriptorException, InterruptedException,
             SAXException {
@@ -58,7 +52,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
         if (skipTrain && modelExists) {
             logger.info("Skipping after training, taking existing models.");
             logger.info("Directly run the test and evaluate the performance.");
-            testAfter(config, testReader, cvModelDir, suffix, "test_only", processOutputDir,
+            testAfter(config, testReader, cvModelDir, suffix, "test_only", parentOutput, resultDir,
                     testGold, skipTest);
         } else {
             logger.info("Saving model directory at : " + cvModelDir);
@@ -91,7 +85,7 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                 private CollectionReaderDescription test(String model, String runName) {
                     if (testReader != null) {
                         try {
-                            return testAfter(config, testReader, model, suffix, runName, processOutputDir,
+                            return testAfter(config, testReader, model, suffix, runName, parentOutput, resultDir,
                                     testGold, skipTest);
                         } catch (SAXException | InterruptedException | IOException | CpeDescriptorException |
                                 UIMAException e) {
@@ -104,8 +98,8 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
                 private void baseline(CollectionReaderDescription reader) {
                     if (testReader != null) {
                         try {
-                            selectedTemporalBaseline(config, reader, suffix, processOutputDir, testGold);
-                            temporalBaseline(config, reader, suffix, processOutputDir, testGold);
+                            selectedTemporalBaseline(config, reader, suffix, parentOutput, resultDir, testGold);
+                            temporalBaseline(config, reader, suffix, parentOutput, resultDir, testGold);
                         } catch (InterruptedException | SAXException | UIMAException | IOException |
                                 CpeDescriptorException e) {
                             e.printStackTrace();
@@ -133,58 +127,56 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
     public CollectionReaderDescription testAfter(Configuration taskConfig,
                                                  CollectionReaderDescription reader, String afterModel,
                                                  String sliceSuffix, String runName, String outputDir,
-                                                 File gold, boolean skipTest)
+                                                 String resultDir, File gold, boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         return new ModelTester(mainConfig) {
             @Override
             protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
                     reader, String mainDir, String baseDir)
                     throws SAXException, UIMAException, CpeDescriptorException, IOException {
-                return afterLinking(taskConfig, reader, afterModel, trainingWorkingDir, baseDir, skipTest);
+                return afterLinking(taskConfig, reader, afterModel, outputDir, baseDir, skipTest);
             }
-        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, resultDir, gold);
     }
 
-    private CollectionReaderDescription goldTemporalBaseline(Configuration taskConfig,
-                                                             CollectionReaderDescription reader,
-                                                             String sliceSuffix,
-                                                             String outputDir,
-                                                             File gold)
+    private CollectionReaderDescription goldTemporalBaseline(Configuration modelConfig,
+                                                             CollectionReaderDescription reader, String sliceSuffix,
+                                                             String outputDir, String resultDir, File gold)
             throws InterruptedException, SAXException, UIMAException, CpeDescriptorException, IOException {
         logger.info("Running gold based temporal baseline.");
         String goldBaselineRun = "gold_temporal_baseline";
         return new ModelTester(mainConfig) {
             @Override
-            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
-                    reader, String mainDir, String baseDir) throws SAXException,
+            protected CollectionReaderDescription runModel(Configuration modelConfig, CollectionReaderDescription
+                    reader, String outputDir, String baseDir) throws SAXException,
                     UIMAException, CpeDescriptorException, IOException {
-                return GoldTemporalBaseline.run(reader, typeSystemDescription, trainingWorkingDir, baseDir);
+                return GoldTemporalBaseline.run(reader, typeSystemDescription, outputDir, baseDir);
             }
-        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, goldBaselineRun, outputDir, gold);
+        }.run(modelConfig, reader, typeSystemDescription, sliceSuffix, goldBaselineRun, outputDir, resultDir, gold);
     }
 
     private CollectionReaderDescription temporalBaseline(Configuration taskConfig,
                                                          CollectionReaderDescription reader,
                                                          String sliceSuffix, String outputDir,
-                                                         File gold) throws InterruptedException, SAXException,
-            UIMAException, CpeDescriptorException, IOException {
+                                                         String resultDir, File gold)
+            throws InterruptedException, SAXException, UIMAException, CpeDescriptorException, IOException {
         logger.info("Running plain temporal baselin.");
         String plainBaselineRun = "plain_temporal_baseline";
         return new ModelTester(mainConfig) {
             @Override
-            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
-                    reader, String mainDir, String baseDir)
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader,
+                                                           String mainDir, String baseDir)
                     throws SAXException, UIMAException, CpeDescriptorException, IOException {
-                return TemporalBaseline.run(reader, typeSystemDescription, trainingWorkingDir, baseDir);
+                return TemporalBaseline.run(reader, typeSystemDescription, mainDir, baseDir);
             }
-        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, plainBaselineRun, outputDir, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, plainBaselineRun, outputDir, resultDir, gold);
     }
 
     private CollectionReaderDescription selectedTemporalBaseline(Configuration taskConfig,
                                                                  CollectionReaderDescription reader,
                                                                  String sliceSuffix, String outputDir,
-                                                                 File gold) throws InterruptedException, SAXException,
-            UIMAException, CpeDescriptorException, IOException {
+                                                                 String resultDir, File gold)
+            throws InterruptedException, SAXException, UIMAException, CpeDescriptorException, IOException {
         logger.info("Running plain temporal baseline.");
         String selectedBaselineRun = "selected_temporal_baseline";
         return new ModelTester(mainConfig) {
@@ -192,9 +184,9 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
             protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
                     reader, String mainDir, String baseDir)
                     throws SAXException, UIMAException, CpeDescriptorException, IOException {
-                return SelectedTemporalBaseline.run(reader, typeSystemDescription, trainingWorkingDir, baseDir);
+                return SelectedTemporalBaseline.run(reader, typeSystemDescription, mainDir, baseDir);
             }
-        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, selectedBaselineRun, outputDir, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, selectedBaselineRun, outputDir, resultDir, gold);
     }
 
     public CollectionReaderDescription afterLinking(Configuration taskConfig, CollectionReaderDescription reader,

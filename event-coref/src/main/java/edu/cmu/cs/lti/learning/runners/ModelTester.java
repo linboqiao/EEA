@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class ModelTester {
-    private final String trainingWorkingDir;
     final private String middleResults;
     private final boolean charOffset;
 
@@ -33,7 +32,6 @@ public abstract class ModelTester {
         evalScript = config.get("edu.cmu.cs.lti.eval.script");
         tokenDir = config.get("edu.cmu.cs.lti.training.token_map.dir");
 
-        trainingWorkingDir = config.get("edu.cmu.cs.lti.training.working.dir");
         String processOutputDir = FileUtils.joinPaths(config.get("edu.cmu.cs.lti.process.base.dir"),
                 config.get("edu.cmu.cs.lti.experiment.name"));
 
@@ -41,12 +39,13 @@ public abstract class ModelTester {
     }
 
     /**
-     * @param taskConfig
+     * @param modelConfig
      * @param reader
      * @param typeSystemDescription
      * @param sliceSuffix
      * @param runName
      * @param outputDir
+     * @param resultDir
      * @param gold
      * @return System output of the collection.
      * @throws SAXException
@@ -55,25 +54,25 @@ public abstract class ModelTester {
      * @throws IOException
      * @throws InterruptedException
      */
-    CollectionReaderDescription run(Configuration taskConfig, CollectionReaderDescription reader,
+    CollectionReaderDescription run(Configuration modelConfig, CollectionReaderDescription reader,
                                     TypeSystemDescription typeSystemDescription, String sliceSuffix, String runName,
-                                    String outputDir, File gold)
+                                    String outputDir, String resultDir, File gold)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         logger.info(String.format("Current run name is %s", runName));
 
-        String annotatedOutput = FileUtils.joinPaths(middleResults, sliceSuffix, runName);
+        String baseDir = FileUtils.joinPaths(middleResults, sliceSuffix, runName);
 
-        CollectionReaderDescription output = runModel(taskConfig, reader, trainingWorkingDir, annotatedOutput);
+        CollectionReaderDescription output = runModel(modelConfig, reader, outputDir, baseDir);
 
-        String tbfOutput = FileUtils.joinPaths(outputDir, runName + ".tbf");
+        String tbfOutput = FileUtils.joinPaths(resultDir, runName + ".tbf");
         RunnerUtils.writeResults(output, typeSystemDescription, tbfOutput, runName, charOffset, false);
 
         if (gold != null && gold.isFile()) {
             logger.info("Evaluating over all event types, gold is from: " + gold);
             eval(gold, tbfOutput, runName, sliceSuffix, null);
 
-            if (taskConfig != null) {
-                String selectedTypePath = taskConfig.get("edu.cmu.cs.lti.eval.selected_type.file");
+            if (modelConfig != null) {
+                String selectedTypePath = modelConfig.get("edu.cmu.cs.lti.eval.selected_type.file");
                 if (selectedTypePath != null) {
                     logger.info("Evaluating on selected event types.");
                     eval(gold, tbfOutput, runName, sliceSuffix, selectedTypePath);
@@ -104,16 +103,13 @@ public abstract class ModelTester {
         logger.info("System file is " + system);
         logger.info("Log file is " + evalLog);
 
-        String evalMode = charOffset ? "char" : "token";
-
         // TODO: having python2 here make it less portable.
         List<String> commands = new ArrayList<>(Arrays.asList(
                 "python2", evalScript, "-g", gold.getPath(), "-s", system,
                 "-d", FileUtils.joinPaths(evalDir, suffix + ".cmp"),
                 "-o", FileUtils.joinPaths(evalDir, suffix + ".scores"),
                 "-c", FileUtils.joinPaths(evalDir, suffix + ".coref_out"),
-                "-a", FileUtils.joinPaths(evalDir, suffix + "_sequencing"),
-                "--eval_mode", evalMode
+                "-a", FileUtils.joinPaths(evalDir, suffix + "_sequencing")
         ));
 
         if (!charOffset) {
@@ -150,7 +146,8 @@ public abstract class ModelTester {
         thread.start();
     }
 
-    protected abstract CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
-            reader, String mainDir, String baseDir)
+    protected abstract CollectionReaderDescription runModel(Configuration taskConfig,
+                                                            CollectionReaderDescription reader,
+                                                            String mainDir, String baseDir)
             throws SAXException, UIMAException, CpeDescriptorException, IOException;
 }

@@ -36,7 +36,7 @@ public class JointSpanCorefModelRunner extends AbstractMentionModelRunner {
 
     public String trainJointSpanModel(Configuration config, CollectionReaderDescription trainReader,
                                       CollectionReaderDescription testReader, String realisModelDir,
-                                      String processOutputDir, String sliceSuffix,
+                                      String parentOutput, String resultDir, String sliceSuffix,
                                       File testGold, boolean skipTrain, boolean skipTest,
                                       String mentionLossType, int beamSize, int constraintType)
             throws UIMAException, IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
@@ -45,9 +45,7 @@ public class JointSpanCorefModelRunner extends AbstractMentionModelRunner {
         String cvModelDir = ModelUtils.getTrainModelPath(eventModelDir, config, sliceSuffix,
                 String.format("loss=%s_beamSize=%d_con=%d", mentionLossType, beamSize, constraintType));
 
-        String subEvalDir = sliceSuffix.equals(fullRunSuffix) ? "final" : "cv";
-
-        File cacheDir = new File(FileUtils.joinPaths(trainingWorkingDir, processOut,
+        File cacheDir = new File(FileUtils.joinPaths(mainConfig.get("edu.cmu.cs.lti.training.working.dir"), processOut,
                 config.get("edu.cmu.cs.lti.joint.cache.base")));
 
         int jointMaxIter = config.getInt("edu.cmu.cs.lti.perceptron.joint.maxiter", 30);
@@ -105,7 +103,7 @@ public class JointSpanCorefModelRunner extends AbstractMentionModelRunner {
                     if (testReader != null) {
                         try {
                             testJoint(config, testReader, model, runName, beamSize, realisModelDir, skipTest,
-                                    processOutputDir, subEvalDir, testGold, sliceSuffix);
+                                    parentOutput, resultDir, testGold, sliceSuffix);
                         } catch (SAXException | InterruptedException | IOException | CpeDescriptorException |
                                 UIMAException e) {
                             e.printStackTrace();
@@ -129,17 +127,18 @@ public class JointSpanCorefModelRunner extends AbstractMentionModelRunner {
 
     private void testJoint(Configuration taskConfig, CollectionReaderDescription devReader, String modelDir,
                            String runName, int beamSize, String realisModelDir, boolean skipTest,
-                           String processOutputDir, String subEvalDir, File goldStandard, String sliceSuffix)
+                           String parentOutput, String resultDir, File goldStandard, String sliceSuffix)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         new ModelTester(mainConfig) {
             @Override
-            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
-                    reader, String
-                    mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {
-                return beamJointSpanCoref(taskConfig, devReader, modelDir, realisModelDir, trainingWorkingDir,
-                        processOutputDir, beamSize, true, skipTest);
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader,
+                                                           String mainDir, String baseDir)
+                    throws SAXException, UIMAException, CpeDescriptorException, IOException {
+                return beamJointSpanCoref(taskConfig, devReader, modelDir, realisModelDir, parentOutput,
+                        baseDir, beamSize, true, skipTest);
             }
-        }.run(taskConfig, devReader, typeSystemDescription, sliceSuffix, runName, processOutputDir, goldStandard);
+        }.run(taskConfig, devReader, typeSystemDescription, sliceSuffix, runName, parentOutput, resultDir,
+                goldStandard);
 
     }
 

@@ -37,13 +37,9 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
         super(config, typeSystemDescription);
     }
 
-    public String getModelPath(Configuration config, String suffix, String lossType) {
-        return ModelUtils.getTrainModelPath(eventModelDir, config, suffix, "loss=" + lossType);
-    }
-
     public String trainSentLvType(Configuration config, CollectionReaderDescription trainingReader,
                                   CollectionReaderDescription testReader, String suffix, boolean usePaTraing,
-                                  String lossType, String processOutputDir, File testGold,
+                                  String lossType, String processOutputDir, String resultDir, File testGold,
                                   boolean skipTrain, boolean skipTest)
             throws UIMAException, IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
@@ -57,7 +53,8 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
         int modelOutputFreq = config.getInt("edu.cmu.cs.lti.perceptron.model.save.frequency", 1);
         boolean ignoreUnannotated = config.getBoolean("edu.cmu.cs.lti.mention.ignore.empty.sentence", false);
 
-        String classFile = FileUtils.joinPaths(trainingWorkingDir, "mention_types.txt");
+        String classFile = FileUtils.joinPaths(mainConfig.get("edu.cmu.cs.lti.training.working.dir"),
+                "mention_types.txt");
 
         if (usePaTraing) {
             logger.info("Use PA with loss : " + lossType);
@@ -68,8 +65,8 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
             logger.info("Skipping mention type training, taking existing models.");
         } else {
             logger.info("Model file " + modelFile + " not exists or no skipping, start training.");
-            File cacheDir = new File(FileUtils.joinPaths(trainingWorkingDir, processOut,
-                    config.get("edu.cmu.cs.lti.mention.cache.base")));
+            File cacheDir = new File(FileUtils.joinPaths(mainConfig.get("edu.cmu.cs.lti.training.working.dir"),
+                    processOut, config.get("edu.cmu.cs.lti.mention.cache.base")));
 
             AnalysisEngineDescription trainingEngine = AnalysisEngineFactory.createEngineDescription(
                     TokenLevelEventMentionCrfTrainer.class, typeSystemDescription,
@@ -109,7 +106,7 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
                     if (testReader != null) {
                         try {
                             testPlainMentionModel(config, testReader, model, suffix, runName, processOutputDir,
-                                    testGold, skipTest);
+                                    resultDir, testGold, skipTest);
                         } catch (SAXException | InterruptedException | IOException | CpeDescriptorException |
                                 UIMAException e) {
                             e.printStackTrace();
@@ -136,7 +133,7 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
     public CollectionReaderDescription testPlainMentionModel(Configuration taskConfig,
                                                              CollectionReaderDescription reader, String typeModel,
                                                              String sliceSuffix, String runName, String outputDir,
-                                                             File gold, boolean skipTest)
+                                                             String resultDir, File gold, boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         return new ModelTester(mainConfig) {
             @Override
@@ -144,21 +141,21 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
                     reader, String mainDir, String baseDir) throws SAXException, UIMAException,
                     CpeDescriptorException, IOException {
                 return sentenceLevelMentionTagging(taskConfig, reader, typeModel,
-                        trainingWorkingDir, baseDir, skipTest);
+                        outputDir, baseDir, skipTest);
             }
-        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, resultDir, gold);
     }
 
     public CollectionReaderDescription sentenceLevelMentionTagging(Configuration crfConfig,
                                                                    CollectionReaderDescription reader,
-                                                                   String modelDir, String mainDir, String baseOutput,
-                                                                   boolean skipTest)
+                                                                   String modelDir, String parentOutput,
+                                                                   String baseOutput, boolean skipTest)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
-        File outputFile = new File(mainDir, baseOutput);
+        File outputFile = new File(parentOutput, baseOutput);
 
         if (skipTest && outputFile.exists()) {
             logger.info("Skipping sent level tagging because output exists.");
-            return CustomCollectionReaderFactory.createXmiReader(mainDir, baseOutput);
+            return CustomCollectionReaderFactory.createXmiReader(parentOutput, baseOutput);
         } else {
             AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
                     CrfMentionTypeAnnotator.class, typeSystemDescription,
@@ -170,7 +167,7 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
                     MentionTypeSplitter.class, typeSystemDescription
             );
 
-            return new BasicPipeline(reader, mainDir, baseOutput, sentenceLevelTagger, mentionSplitter).run()
+            return new BasicPipeline(reader, parentOutput, baseOutput, sentenceLevelTagger, mentionSplitter).run()
                     .getOutput();
         }
     }

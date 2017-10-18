@@ -17,8 +17,8 @@ public abstract class AbstractMentionModelRunner {
     protected final TypeSystemDescription typeSystemDescription;
     protected final String eventModelDir;
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-    protected final String trainingWorkingDir;
-    protected final String testingWorkingDir;
+//    protected final String trainingWorkingDir;
+//    protected final String testingWorkingDir;
     protected final String processOut;
 
     protected final Configuration mainConfig;
@@ -29,8 +29,8 @@ public abstract class AbstractMentionModelRunner {
 
     public AbstractMentionModelRunner(Configuration mainConfig, TypeSystemDescription typeSystemDescription) {
         this.typeSystemDescription = typeSystemDescription;
-        this.trainingWorkingDir = mainConfig.get("edu.cmu.cs.lti.training.working.dir");
-        this.testingWorkingDir = mainConfig.get("edu.cmu.cs.lti.test.working.dir");
+//        this.trainingWorkingDir = mainConfig.get("edu.cmu.cs.lti.training.working.dir");
+//        this.testingWorkingDir = mainConfig.get("edu.cmu.cs.lti.test.working.dir");
         this.processOut = FileUtils.joinPaths(mainConfig.get("edu.cmu.cs.lti.process.base.dir"),
                 mainConfig.get("edu.cmu.cs.lti.experiment.name"));
         this.eventModelDir = mainConfig.get("edu.cmu.cs.lti.model.event.dir");

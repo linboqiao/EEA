@@ -41,13 +41,12 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
      * @param trainingReader Reader for the training data.
      * @param testReader     Reader for the test data.
      * @param suffix         The suffix for the model.
-     * @param skipTrain      Whether to skip the training if model file exists.
-     * @return The trained model directory.
+     * @param resultDir
+     * @param skipTrain      Whether to skip the training if model file exists.  @return The trained model directory.
      */
     public String trainLatentTreeCoref(Configuration config, CollectionReaderDescription trainingReader,
                                        CollectionReaderDescription testReader, String suffix, String outputDir,
-                                       String subEvalDir, File gold, boolean skipTrain,
-                                       boolean skipTest)
+                                       String resultDir, File gold, boolean skipTrain, boolean skipTest)
             throws UIMAException, IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         logger.info("Start coreference training.");
@@ -62,7 +61,7 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
             logger.info("Skipping training, taking existing models.");
         } else {
             logger.info("Saving model directory at : " + modelPath);
-            String cacheDir = FileUtils.joinPaths(trainingWorkingDir, processOut,
+            String cacheDir = FileUtils.joinPaths(mainConfig.get("edu.cmu.cs.lti.training.working.dir"), processOut,
                     config.get("edu.cmu.cs.lti.coref.cache.base"));
             AnalysisEngineDescription corefEngine = AnalysisEngineFactory.createEngineDescription(
                     PaLatentTreeTrainer.class, typeSystemDescription,
@@ -90,8 +89,7 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
                 private void test(String model, String runName) {
                     if (testReader != null) {
                         try {
-                            testCoref(config, testReader, model, suffix, runName, outputDir, subEvalDir, gold,
-                                    skipTest);
+                            testCoref(config, testReader, model, suffix, runName, outputDir, resultDir, gold, skipTest);
                         } catch (SAXException | UIMAException | IOException | InterruptedException |
                                 CpeDescriptorException e) {
                             e.printStackTrace();
@@ -111,13 +109,13 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
     }
 
     public CollectionReaderDescription corefResolution(Configuration config, CollectionReaderDescription reader,
-                                                       String modelDir, String mainDir, String outputBase,
+                                                       String modelDir, String parentOutput, String outputBase,
                                                        boolean skipCorefTest)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
         logger.info("Running coreference resolution, output at " + outputBase);
-        if (skipCorefTest && new File(mainDir, outputBase).exists()) {
+        if (skipCorefTest && new File(parentOutput, outputBase).exists()) {
             logger.info("Skipping running coreference, using existing results.");
-            return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, mainDir, outputBase);
+            return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, parentOutput, outputBase);
         } else {
             AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
                     MentionTypeSplitter.class, typeSystemDescription
@@ -129,7 +127,8 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
                     EventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile()
             );
 
-            return new BasicPipeline(reader, mainDir, outputBase, mentionSplitter, corefAnnotator).run().getOutput();
+            return new BasicPipeline(reader, parentOutput, outputBase, mentionSplitter, corefAnnotator).run()
+                    .getOutput();
 
         }
     }
@@ -138,15 +137,16 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
     public CollectionReaderDescription testCoref(Configuration taskConfig,
                                                  CollectionReaderDescription reader, String corefModel,
                                                  String sliceSuffix, String runName, String outputDir,
-                                                 String subEval, File gold, boolean skipTest)
+                                                 String resultDir, File gold, boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
         return new ModelTester(mainConfig) {
             @Override
-            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader, String
-                    mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {
-                return corefResolution(taskConfig, reader, corefModel, trainingWorkingDir, baseDir, skipTest);
+            protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription reader,
+                                                           String mainDir, String baseDir)
+                    throws SAXException, UIMAException, CpeDescriptorException, IOException {
+                return corefResolution(taskConfig, reader, corefModel, outputDir, baseDir, skipTest);
             }
-        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, resultDir, gold);
     }
 
 

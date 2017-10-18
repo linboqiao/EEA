@@ -35,8 +35,8 @@ public class BeamCorefModelRunner extends AbstractMentionModelRunner {
 
     public String trainBeamBasedCoref(Configuration config, CollectionReaderDescription trainingReader,
                                       CollectionReaderDescription testReader, String suffix, boolean useLaSO,
-                                      boolean delayedLaso, int beamSize, String outputDir, String subEvalDir,
-                                      File gold, int initialSeed, boolean skipTrain, boolean skipTest) throws
+                                      boolean delayedLaso, int beamSize, String outputDir, String resultDir,
+                                      File gold, boolean skipTrain, boolean skipTest) throws
             UIMAException, NoSuchMethodException, InstantiationException, IOException,
             IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         logger.info("Start beam based coreference training.");
@@ -87,7 +87,7 @@ public class BeamCorefModelRunner extends AbstractMentionModelRunner {
                 private void test(String model, String runName) {
                     try {
                         testBeamCoref(config, testReader, model, suffix, runName,
-                                outputDir, subEvalDir, gold, skipTest);
+                                outputDir, resultDir, gold, skipTest);
                     } catch (SAXException | UIMAException | IOException | InterruptedException |
                             CpeDescriptorException e) {
                         e.printStackTrace();
@@ -128,16 +128,18 @@ public class BeamCorefModelRunner extends AbstractMentionModelRunner {
 
     private CollectionReaderDescription testBeamCoref(Configuration config, CollectionReaderDescription reader,
                                                       String corefModel, String sliceSuffix, String runName,
-                                                      String outputDir, String subEval, File gold, boolean skipTest)
+                                                      String outputDir, String resultDir, File gold, boolean skipTest)
             throws InterruptedException, SAXException, UIMAException, CpeDescriptorException, IOException {
         return new ModelTester(mainConfig) {
             @Override
-            protected CollectionReaderDescription runModel(Configuration config, CollectionReaderDescription reader, String
-                    mainDir, String baseDir) throws SAXException, UIMAException, CpeDescriptorException, IOException {
-                return beamCorefResolution(config, reader, corefModel, trainingWorkingDir, baseDir, skipTest,
+            protected CollectionReaderDescription runModel(Configuration config, CollectionReaderDescription reader,
+                                                           String
+                                                                   mainDir, String baseDir) throws SAXException,
+                    UIMAException, CpeDescriptorException, IOException {
+                return beamCorefResolution(config, reader, corefModel, outputDir, baseDir, skipTest,
                         config.getInt("edu.cmu.cs.lti.coref.beam.size", 5)
                 );
             }
-        }.run(config, reader,typeSystemDescription , sliceSuffix, runName, outputDir, gold);
+        }.run(config, reader, typeSystemDescription, sliceSuffix, runName, outputDir, resultDir, gold);
     }
 }

@@ -73,13 +73,12 @@ public class RealisModelRunner extends AbstractMentionModelRunner {
             }
 
             return new BasicPipeline(reader, mainDir, realisOutputBase, realisAnnotator).run().getOutput();
-
         }
     }
 
     public CollectionReaderDescription testRealis(Configuration taskConfig, CollectionReaderDescription reader,
                                                   String sliceSuffix, String runName,
-                                                  String outputDir, File gold, boolean skipTest)
+                                                  String outputDir, String resultDir, File gold, boolean skipTest)
             throws SAXException, UIMAException, CpeDescriptorException, IOException, InterruptedException {
 
         return new ModelTester(mainConfig) {
@@ -87,8 +86,8 @@ public class RealisModelRunner extends AbstractMentionModelRunner {
             protected CollectionReaderDescription runModel(Configuration taskConfig, CollectionReaderDescription
                     reader, String mainDir, String baseDir) throws SAXException,
                     UIMAException, CpeDescriptorException, IOException {
-                return realisAnnotation(taskConfig, reader, realisModelDir, trainingWorkingDir, baseDir, skipTest);
+                return realisAnnotation(taskConfig, reader, realisModelDir, outputDir, baseDir, skipTest);
             }
-        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, gold);
+        }.run(taskConfig, reader, typeSystemDescription, sliceSuffix, runName, outputDir, resultDir, gold);
     }
 }

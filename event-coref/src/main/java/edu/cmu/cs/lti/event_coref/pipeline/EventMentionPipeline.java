@@ -740,7 +740,7 @@ public class EventMentionPipeline {
      * Post process the mentions to get important mention component: 1. Mention head word. 2. Mention aguments.
      *
      * @param mentionReader
-     * @param workingDir
+     * @param parentOutput
      * @param outputBase
      * @param skip
      * @return
@@ -750,17 +750,17 @@ public class EventMentionPipeline {
      * @throws SAXException
      */
     private CollectionReaderDescription postProcessMention(CollectionReaderDescription mentionReader,
-                                                           String workingDir, String outputBase, boolean skip)
+                                                           String parentOutput, String outputBase, boolean skip)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
         List<AnalysisEngineDescription> annotators = new ArrayList<>();
 
         RunnerUtils.addMentionPostprocessors(annotators, typeSystemDescription, language);
 
-        if (skip && new File(workingDir, outputBase).exists()) {
+        if (skip && new File(parentOutput, outputBase).exists()) {
             logger.info("Skipping mention post processing, using existing results.");
-            return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, workingDir, outputBase);
+            return CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, parentOutput, outputBase);
         } else {
-            return new BasicPipeline(mentionReader, workingDir, outputBase,
+            return new BasicPipeline(mentionReader, parentOutput, outputBase,
                     annotators.toArray(new AnalysisEngineDescription[annotators.size()])).run().getOutput();
         }
     }
@@ -822,8 +822,8 @@ public class EventMentionPipeline {
 
 //        runner.runBaseline(afterConfig, mentionPost, resultDir, sliceSuffix, testGold);
 
-        runner.trainAfterModel(afterConfig, trainingData, mentionPost, resultDir, sliceSuffix, testGold,
-                skipAfterTrain, skipAfterTest);
+        runner.trainAfterModel(afterConfig, trainingData, mentionPost, evalWorkingDir, resultDir, sliceSuffix,
+                testGold, skipAfterTrain, skipAfterTest);
     }
 
     private void jointExperiment(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainingData,
@@ -857,9 +857,9 @@ public class EventMentionPipeline {
             String lossType = lossTypes[i];
             for (int strategy = 1; strategy <= 1; strategy++) {
                 jointModelRunner.trainJointSpanModel(jointConfig, trainingData, testReader,
-                        realisModelRunner.getModelDir(), resultDir, sliceSuffix, testGold, skipJointTrain,
-                        skipJointTest, lossType, jointBeamSize, strategy
-                );
+                        realisModelRunner.getModelDir(), evalWorkingDir, resultDir, sliceSuffix, testGold,
+                        skipJointTrain, skipJointTest, lossType, jointBeamSize,
+                        strategy);
             }
         }
     }
@@ -920,7 +920,7 @@ public class EventMentionPipeline {
         if (realisConfig != null) {
             realisModelRunner.trainRealis(realisConfig, trainingData, sliceSuffix, skipRealisTrain);
             realisModelRunner.testRealis(realisConfig, goldMentionTypes, sliceSuffix,
-                    "gold_mention_realis", resultDir, testGold, skipRealisTest);
+                    "gold_mention_realis", evalWorkingDir, resultDir, testGold, skipRealisTest);
         }
 
         // Training the vanilla models.
@@ -928,7 +928,7 @@ public class EventMentionPipeline {
         TokenMentionModelRunner tokenModel = new TokenMentionModelRunner(mainConfig, typeSystemDescription);
         // The vanilla crf model.
         String vanillaTypeModel = tokenModel.trainSentLvType(tokenCrfConfig, trainingData, noEvent, sliceSuffix,
-                false, "hamming", resultDir, testGold, skipTypeTrain, skipTypeTest);
+                false, "hamming", evalWorkingDir, resultDir, testGold, skipTypeTrain, skipTypeTest);
 
 //        tokenMentionErrorAnalysis(tokenCrfConfig, testReader, vanillaTypeModel);
 
@@ -937,10 +937,10 @@ public class EventMentionPipeline {
 
         // The vanilla coref model.
         String treeCorefModel = corefModel.trainLatentTreeCoref(corefConfig, trainingData, postMention, sliceSuffix,
-                resultDir, subEvalDir, testGold, skipCorefTrain, skipTypeTest && skipCorefTest);
+                evalWorkingDir, resultDir, testGold, skipCorefTrain, skipTypeTest && skipCorefTest);
 
         corefModel.testCoref(corefConfig, postMention, treeCorefModel, sliceSuffix, "coref_test",
-                resultDir, subEvalDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);
+                evalWorkingDir, resultDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);
 
         // End of the vanilla model training.
 
@@ -1067,16 +1067,15 @@ public class EventMentionPipeline {
 //         ################################################*/
 
         CollectionReaderDescription plainMentionOutput = tokenModel.testPlainMentionModel(tokenCrfConfig, noEvent,
-                vanillaTypeModel, sliceSuffix, "vanillaMention", resultDir, testGold, skipTypeTest);
+                vanillaTypeModel, sliceSuffix, "vanillaMention", evalWorkingDir, resultDir, testGold, skipTypeTest);
         // Post process mentions to add headwords and arguments.
-        CollectionReaderDescription mentionWithHeadWord = postProcessMention(plainMentionOutput, trainingWorkingDir,
+        CollectionReaderDescription mentionWithHeadWord = postProcessMention(plainMentionOutput, evalWorkingDir,
                 paths.getMiddleOutputPath(sliceSuffix, "vanillaMention_post"), skipTypeTest);
-
         CollectionReaderDescription realisOutput = realisModelRunner.testRealis(realisConfig, mentionWithHeadWord,
-                sliceSuffix, "vanillaMentionRealis", resultDir, testGold, skipTypeTest && skipRealisTest);
-
+                sliceSuffix, "vanillaMentionRealis", evalWorkingDir, resultDir, testGold,
+                skipTypeTest && skipRealisTest);
         corefModel.testCoref(corefConfig, realisOutput, treeCorefModel, sliceSuffix, "vanillaCoref",
-                resultDir, subEvalDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);
+                evalWorkingDir, resultDir, testGold, skipTypeTest && skipRealisTest && skipCorefTest);
 
 //        for (Map.Entry<String, String> beamCorefModelWithName : beamCorefModels.entrySet()) {
 //            String corefModelName = beamCorefModelWithName.getKey();
