@@ -260,6 +260,9 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         return spots;
     }
 
+    private void getEventiveFrames(ArticleComponent component) {
+    }
+
     private void writeGold(JCas mainView, Writer output, boolean useToken) throws IOException {
         String docno = UimaConvenience.getArticleName(mainView);
         String title = TextUtils.asTokenized(JCasUtil.selectSingle(mainView, Headline.class));
