@@ -45,7 +45,7 @@ import static edu.cmu.cs.lti.salience.utils.FeatureUtils.lexicalPrefix;
  *
  * @author Zhengzhong Liu
  */
-public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnotator {
+public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
     public static final String PARAM_TEST_SPLIT = "testSplit";
     @ConfigurationParameter(name = PARAM_TEST_SPLIT)
     private File testSplitFile;
@@ -69,7 +69,6 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
     public static final String PARAM_FEATURE_OUTPUT_DIR = "featureOutput";
     @ConfigurationParameter(name = PARAM_FEATURE_OUTPUT_DIR)
     private String featureOutputDir;
-
 
     private Set<String> trainDocs;
     private Set<String> testDocs;
@@ -179,8 +178,14 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
 
     class Spot {
         List<Integer> loc;
-        String wiki_name;
         String surface;
+    }
+
+    class EventSpot extends Spot {
+    }
+
+    class EntitySpot extends Spot {
+        String wiki_name;
         List<Link> entities;
     }
 
@@ -221,12 +226,12 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
         private List<String> featureNames;
     }
 
-    private List<Spot> getSpots(ArticleComponent articleComponent) {
+    private List<Spot> getEntitySpots(ArticleComponent articleComponent) {
         List<Spot> spots = new ArrayList<>();
 
         for (GroundedEntity groundedEntity : JCasUtil.selectCovered(GroundedEntity.class, articleComponent)) {
             Span tokenOffset = TextUtils.getSpaceTokenOffset(articleComponent, groundedEntity);
-            Spot spot = new Spot();
+            EntitySpot spot = new EntitySpot();
             spot.loc = new ArrayList<>();
             spot.loc.add(tokenOffset.getBegin());
             spot.loc.add(tokenOffset.getEnd());
@@ -315,19 +320,21 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
 
         Body body = JCasUtil.selectSingle(aJCas, Body.class);
 
-        List<Spot> titleSpots = getSpots(title);
-        List<Spot> bodySpots = getSpots(body);
+        List<Spot> titleSpots = getEntitySpots(title);
+        List<Spot> bodySpots = getEntitySpots(body);
 
         // Handle features.
         featureWriter.write(docid + " " + titleStr + "\n");
         List<FeatureUtils.SimpleInstance> instances = FeatureUtils.getKbInstances(aJCas, simCalculator);
-        writeFeatures(bodySpots, instances, featureWriter);
+        writeFeatures(instances, featureWriter);
         featureWriter.write("\n");
+        addEntityFeatureToSpots(bodySpots, instances);
+
 
         JCas abstractView = JCasUtil.getView(aJCas, AnnotatedNytReader.ABSTRACT_VIEW_NAME, false);
         Article abstractArticle = JCasUtil.selectSingle(abstractView, Article.class);
 
-        List<Spot> abstractSpots = getSpots(abstractArticle);
+        List<Spot> abstractSpots = getEntitySpots(abstractArticle);
 
         DocStructure doc = new DocStructure();
         Spots allSpots = new Spots();
@@ -346,16 +353,14 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
 
     }
 
-    private void writeFeatures(List<Spot> bodySpots, List<FeatureUtils.SimpleInstance> instances,
-                               Writer featureWriter) throws IOException {
+    private void addEntityFeatureToSpots(List<Spot> bodySpots, List<FeatureUtils.SimpleInstance> instances) {
         Map<String, FeatureUtils.SimpleInstance> instanceLookup = new HashMap<>();
         for (FeatureUtils.SimpleInstance instance : instances) {
-            featureWriter.write(instance.toString() + "\n");
             instanceLookup.put(instance.getInstanceName(), instance);
         }
 
         for (Spot bodySpot : bodySpots) {
-            for (Link entity : bodySpot.entities) {
+            for (Link entity : ((EntitySpot) bodySpot).entities) {
                 FeatureUtils.SimpleInstance instance = instanceLookup.get(entity.id);
                 if (instance != null) {
                     entity.feature = new Feature(instanceLookup.get(entity.id));
@@ -364,6 +369,12 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
                     entity.feature = new Feature();
                 }
             }
+        }
+    }
+
+    private void writeFeatures(List<FeatureUtils.SimpleInstance> instances, Writer featureWriter) throws IOException {
+        for (FeatureUtils.SimpleInstance instance : instances) {
+            featureWriter.write(instance.toString() + "\n");
         }
     }
 
@@ -404,14 +415,14 @@ public class GoogleStyleSalienceGoldStandardWriter extends AbstractLoggingAnnota
         );
 
         AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
-                GoogleStyleSalienceGoldStandardWriter.class, typeSystemDescription,
-                GoogleStyleSalienceGoldStandardWriter.PARAM_OUTPUT_DIR, new File(workingDir, outputDir),
-                GoogleStyleSalienceGoldStandardWriter.PARAM_TRAIN_SPLIT, trainingSplitFile,
-                GoogleStyleSalienceGoldStandardWriter.PARAM_TEST_SPLIT, testSplitFile,
-                GoogleStyleSalienceGoldStandardWriter.PARAM_OUTPUT_PREFIX, "nyt_salience",
-                GoogleStyleSalienceGoldStandardWriter.MULTI_THREAD, true,
-                GoogleStyleSalienceGoldStandardWriter.PARAM_ENTITY_EMBEDDING, embeddingPath,
-                GoogleStyleSalienceGoldStandardWriter.PARAM_FEATURE_OUTPUT_DIR, featureOutput
+                MultiFormatEntityTrainingWriter.class, typeSystemDescription,
+                MultiFormatEntityTrainingWriter.PARAM_OUTPUT_DIR, new File(workingDir, outputDir),
+                MultiFormatEntityTrainingWriter.PARAM_TRAIN_SPLIT, trainingSplitFile,
+                MultiFormatEntityTrainingWriter.PARAM_TEST_SPLIT, testSplitFile,
+                MultiFormatEntityTrainingWriter.PARAM_OUTPUT_PREFIX, "nyt_salience",
+                MultiFormatEntityTrainingWriter.MULTI_THREAD, true,
+                MultiFormatEntityTrainingWriter.PARAM_ENTITY_EMBEDDING, embeddingPath,
+                MultiFormatEntityTrainingWriter.PARAM_FEATURE_OUTPUT_DIR, featureOutput
         );
 
         new BasicPipeline(reader, true, true, 7, writer).run();
