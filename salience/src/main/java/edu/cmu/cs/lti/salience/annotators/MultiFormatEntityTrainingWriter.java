@@ -1,10 +1,12 @@
 package edu.cmu.cs.lti.salience.annotators;
 
 import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
 import edu.cmu.cs.lti.collection_reader.AnnotatedNytReader;
+import edu.cmu.cs.lti.frame.FrameExtractor;
+import edu.cmu.cs.lti.frame.FrameStructure;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
+import edu.cmu.cs.lti.salience.model.SalienceJSONClasses.*;
 import edu.cmu.cs.lti.salience.utils.FeatureUtils;
 import edu.cmu.cs.lti.salience.utils.LookupTable;
 import edu.cmu.cs.lti.salience.utils.SalienceUtils;
@@ -13,9 +15,9 @@ import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
-import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -31,12 +33,11 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.StringArray;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.jdom2.JDOMException;
 import org.xml.sax.SAXException;
 
 import java.io.*;
 import java.util.*;
-
-import static edu.cmu.cs.lti.salience.utils.FeatureUtils.lexicalPrefix;
 
 /**
  * Created with IntelliJ IDEA.
@@ -62,13 +63,25 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_OUTPUT_PREFIX)
     private String outputPrefix;
 
-    public static final String PARAM_ENTITY_EMBEDDING = "entityEmbeddingFile";
-    @ConfigurationParameter(name = PARAM_ENTITY_EMBEDDING)
-    private File entityEmbeddingFile;
+    public static final String PARAM_JOINT_EMBEDDING = "jointEmbeddingFile";
+    @ConfigurationParameter(name = PARAM_JOINT_EMBEDDING)
+    private File jointEmbeddingFile;
+
+    public static final String PARAM_FRAME_RELATION = "frameRelationFile";
+    @ConfigurationParameter(name = PARAM_FRAME_RELATION, mandatory = false)
+    private File frameRelationFile;
 
     public static final String PARAM_FEATURE_OUTPUT_DIR = "featureOutput";
     @ConfigurationParameter(name = PARAM_FEATURE_OUTPUT_DIR)
     private String featureOutputDir;
+
+    public static final String PARAM_WRITE_ENTITY = "writeEntity";
+    @ConfigurationParameter(name = PARAM_WRITE_ENTITY, defaultValue = "false")
+    private boolean writeEntity;
+
+    public static final String PARAM_WRITE_EVENT = "writeEvent";
+    @ConfigurationParameter(name = PARAM_WRITE_EVENT, defaultValue = "false")
+    private boolean writeEvent;
 
     private Set<String> trainDocs;
     private Set<String> testDocs;
@@ -85,8 +98,13 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
     private BufferedWriter trainFeatures;
     private BufferedWriter testFeatures;
 
+    // Calculate embedding similarity
     private LookupTable.SimCalculator simCalculator;
     private LookupTable table;
+
+    //
+    private FrameExtractor frameExtractor;
+    private Set<String> eventFrameTypes;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -98,15 +116,24 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
             e.printStackTrace();
         }
 
+        logger.info("Number of docs in training: " + trainDocs.size());
+        logger.info("Number of docs in testing: " + testDocs.size());
+
         try {
-            table = SalienceUtils.loadEmbedding(entityEmbeddingFile);
+            table = SalienceUtils.loadEmbedding(jointEmbeddingFile);
             simCalculator = new LookupTable.SimCalculator(table);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        logger.info("Number of docs in training: " + trainDocs.size());
-        logger.info("Number of docs in testing: " + testDocs.size());
+        if (frameRelationFile != null) {
+            try {
+                frameExtractor = new FrameExtractor(frameRelationFile.getPath());
+                eventFrameTypes = frameExtractor.getAllInHeritedFrameNames("Event");
+            } catch (JDOMException | IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         try {
             trainGoldWriter = getWriter(outputDir, "salience", "token", outputPrefix + "_train");
@@ -120,9 +147,17 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
 
             trainFeatures = getWriter(featureOutputDir, "train.tsv");
             testFeatures = getWriter(featureOutputDir, "test.tsv");
-
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+
+        if (!(writeEntity || writeEvent)) {
+            throw new ResourceInitializationException(new IllegalArgumentException("Not writing entity or events!"));
+        }
+
+        if (writeEvent && writeEntity) {
+            throw new ResourceInitializationException(new IllegalArgumentException("Writing both entity and events!"));
         }
     }
 
@@ -152,79 +187,6 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         }
     }
 
-    private Set<String> readList(File splitFile) throws IOException {
-        Set<String> docs = new HashSet<>();
-        for (String s : FileUtils.readLines(splitFile)) {
-            docs.add(s.trim());
-        }
-        return docs;
-    }
-
-    class DocStructure {
-        private String bodyText;
-        private String docno;
-        private Spots spot;
-        private String title;
-        @SerializedName("abstract")
-        private String abstractText;
-    }
-
-    class Spots {
-        private List<Spot> bodyText;
-        @SerializedName("abstract")
-        private List<Spot> abstractSpots;
-        private List<Spot> title;
-    }
-
-    class Spot {
-        List<Integer> loc;
-        String surface;
-    }
-
-    class EventSpot extends Spot {
-    }
-
-    class EntitySpot extends Spot {
-        String wiki_name;
-        List<Link> entities;
-    }
-
-    class Link {
-        public Link(double score, String id) {
-            this.score = score;
-            this.id = id;
-        }
-
-        double score;
-        String id;
-        Feature feature;
-    }
-
-    class Feature {
-        private Feature(FeatureUtils.SimpleInstance instance) {
-            featureArray = new ArrayList<>();
-            List<Double> lexicalFeatures = new ArrayList<>();
-            instance.getFeatureMap().keySet().stream().sorted().forEach(f -> {
-                if (!f.startsWith(lexicalPrefix)) {
-                    featureArray.add(instance.getFeatureMap().get(f));
-                } else {
-                    String word = f.split("_")[1];
-                    for (double v : table.getEmbedding(word)) {
-                        lexicalFeatures.add(v);
-                    }
-                }
-            });
-            featureArray.addAll(lexicalFeatures);
-            featureNames = instance.getFeatureNames();
-        }
-
-        private Feature() {
-            featureArray = new ArrayList<>();
-        }
-
-        private List<Double> featureArray;
-        private List<String> featureNames;
-    }
 
     private List<Spot> getEntitySpots(ArticleComponent articleComponent) {
         List<Spot> spots = new ArrayList<>();
@@ -260,10 +222,43 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         return spots;
     }
 
-    private void getEventiveFrames(ArticleComponent component) {
+    private void writeEventGold(JCas mainView, Writer output, boolean useToken) throws IOException {
+        String docno = UimaConvenience.getArticleName(mainView);
+        String title = TextUtils.asTokenized(JCasUtil.selectSingle(mainView, Headline.class));
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(docno).append(" ").append(title).append("\n");
+
+        JCas abstractView = JCasUtil.getView(mainView, AnnotatedNytReader.ABSTRACT_VIEW_NAME, false);
+        Set<String> abstractLemmas = new HashSet<>();
+
+        for (StanfordCorenlpToken token : JCasUtil.select(abstractView, StanfordCorenlpToken.class)) {
+            abstractLemmas.add(token.getLemma().toLowerCase());
+        }
+
+        Body body = JCasUtil.selectSingle(mainView, Body.class);
+
+        int index = 0;
+        for (FrameStructure fs : frameExtractor.getFramesOfType(body, eventFrameTypes)) {
+            SemaforLabel target = fs.getTarget();
+            StanfordCorenlpToken targetHead = UimaNlpUtils.findHeadFromStanfordAnnotation(fs.getTarget());
+            if (targetHead != null) {
+                String targetLemma = targetHead.getLemma().toLowerCase();
+                if (abstractLemmas.contains(targetLemma)) {
+                    int salience = abstractLemmas.contains(targetLemma) ? 1 : 0;
+                    sb.append(index).append("\t").append(salience).append("\t").append("-").append("\t");
+                    addSpan(sb, useToken, target, body);
+                    sb.append("\t").append(fs.getFrameName()).append("\n");
+                }
+                index++;
+            }
+        }
+
+        sb.append("\n");
+        output.write(sb.toString());
     }
 
-    private void writeGold(JCas mainView, Writer output, boolean useToken) throws IOException {
+    private void writeEntityGold(JCas mainView, Writer output, boolean useToken) throws IOException {
         String docno = UimaConvenience.getArticleName(mainView);
         String title = TextUtils.asTokenized(JCasUtil.selectSingle(mainView, Headline.class));
 
@@ -285,28 +280,9 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
             String id = groundedEntity.getKnowledgeBaseId();
             int salience = abstractEntities.contains(id) ? 1 : 0;
 
-            sb.append(index);
-            sb.append("\t");
-            sb.append(salience);
-            sb.append("\t");
-            sb.append(entityCounts.get(id));
-            sb.append("\t");
-            sb.append(groundedEntity.getCoveredText().replaceAll("\t", " ")
-                    .replaceAll("\n", " "));
-
-            int begin;
-            int end;
-            if (useToken) {
-                Span tokenSpan = TextUtils.getSpaceTokenOffset(body, groundedEntity);
-                begin = tokenSpan.getBegin();
-                end = tokenSpan.getEnd();
-            } else {
-                begin = groundedEntity.getBegin();
-                end = groundedEntity.getEnd();
-            }
-
-            sb.append("\t").append(begin).append("\t").append(end).append("\t").append(id).append("\n");
-
+            sb.append(index).append("\t").append(salience).append("\t").append(entityCounts.get(id)).append("\t");
+            addSpan(sb, useToken, groundedEntity, body);
+            sb.append("\t").append(id).append("\n");
             index++;
         }
 
@@ -314,7 +290,38 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         output.write(sb.toString());
     }
 
+    private void writeGold(JCas mainView, Writer output, boolean useToken) throws IOException {
+        if (writeEntity) {
+            writeEntityGold(mainView, output, useToken);
+        } else if (writeEvent) {
+            writeEventGold(mainView, output, useToken);
+        }
+    }
+
+    private void addSpan(StringBuilder sb, boolean useToken, ComponentAnnotation anno, ArticleComponent article) {
+        String text = anno.getCoveredText().replaceAll("\t", " ").replaceAll("\n", " ");
+        int begin;
+        int end;
+        if (useToken) {
+            Span tokenSpan = TextUtils.getSpaceTokenOffset(article, anno);
+            begin = tokenSpan.getBegin();
+            end = tokenSpan.getEnd();
+        } else {
+            begin = anno.getBegin();
+            end = anno.getEnd();
+        }
+        sb.append(text).append("\t").append(begin).append("\t").append(end);
+    }
+
     private void writeTagged(JCas aJCas, Writer output, Writer featureWriter) throws IOException {
+        if (writeEntity) {
+            writeEntityTagged(aJCas, output, featureWriter);
+        } else {
+
+        }
+    }
+
+    private void writeEntityTagged(JCas aJCas, Writer output, Writer featureWriter) throws IOException {
         Gson gson = new Gson();
 
         Headline title = JCasUtil.selectSingle(aJCas, Headline.class);
@@ -366,7 +373,7 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
             for (Link entity : ((EntitySpot) bodySpot).entities) {
                 FeatureUtils.SimpleInstance instance = instanceLookup.get(entity.id);
                 if (instance != null) {
-                    entity.feature = new Feature(instanceLookup.get(entity.id));
+                    entity.feature = new Feature(table, instanceLookup.get(entity.id));
                 } else {
                     // This should not happen because both spots are looking for entities in the body.
                     entity.feature = new Feature();
@@ -404,18 +411,31 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription("TypeSystem");
         String workingDir = argv[0];
-        String outputDir = argv[1];
-        String trainingSplitFile = argv[2];
-        String testSplitFile = argv[3];
-        String featureOutput = argv[4];
-        String embeddingPath = argv[5];
+        String inputDir = argv[1];
+        String outputDir = argv[2];
+        String trainingSplitFile = argv[3];
+        String testSplitFile = argv[4];
+        String featureOutput = argv[5];
+        String embeddingPath = argv[6];
 
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                 GzippedXmiCollectionReader.class, typeSystemDescription,
                 GzippedXmiCollectionReader.PARAM_PARENT_INPUT_DIR_PATH, workingDir,
-                GzippedXmiCollectionReader.PARAM_BASE_INPUT_DIR_NAME, "tagged",
-                GzippedXmiCollectionReader.PARAM_EXTENSION, ".xmi.gz"
+                GzippedXmiCollectionReader.PARAM_BASE_INPUT_DIR_NAME, inputDir,
+                GzippedXmiCollectionReader.PARAM_EXTENSION, ".xmi.gz",
+                GzippedXmiCollectionReader.PARAM_RECURSIVE, true
         );
+
+//        AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
+//                MultiFormatEntityTrainingWriter.class, typeSystemDescription,
+//                MultiFormatEntityTrainingWriter.PARAM_OUTPUT_DIR, new File(workingDir, outputDir),
+//                MultiFormatEntityTrainingWriter.PARAM_TRAIN_SPLIT, trainingSplitFile,
+//                MultiFormatEntityTrainingWriter.PARAM_TEST_SPLIT, testSplitFile,
+//                MultiFormatEntityTrainingWriter.PARAM_OUTPUT_PREFIX, "nyt_salience",
+//                MultiFormatEntityTrainingWriter.MULTI_THREAD, true,
+//                MultiFormatEntityTrainingWriter.PARAM_JOINT_EMBEDDING, embeddingPath,
+//                MultiFormatEntityTrainingWriter.PARAM_FEATURE_OUTPUT_DIR, featureOutput
+//        );
 
         AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
                 MultiFormatEntityTrainingWriter.class, typeSystemDescription,
@@ -424,9 +444,12 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
                 MultiFormatEntityTrainingWriter.PARAM_TEST_SPLIT, testSplitFile,
                 MultiFormatEntityTrainingWriter.PARAM_OUTPUT_PREFIX, "nyt_salience",
                 MultiFormatEntityTrainingWriter.MULTI_THREAD, true,
-                MultiFormatEntityTrainingWriter.PARAM_ENTITY_EMBEDDING, embeddingPath,
-                MultiFormatEntityTrainingWriter.PARAM_FEATURE_OUTPUT_DIR, featureOutput
+                MultiFormatEntityTrainingWriter.PARAM_JOINT_EMBEDDING, embeddingPath,
+                MultiFormatEntityTrainingWriter.PARAM_FEATURE_OUTPUT_DIR, featureOutput,
+                MultiFormatEntityTrainingWriter.PARAM_WRITE_EVENT, true,
+                MultiFormatEntityTrainingWriter.PARAM_FRAME_RELATION, "../data/resources/fndata-1.7/frRelation.xml"
         );
+
 
         new BasicPipeline(reader, true, true, 7, writer).run();
     }

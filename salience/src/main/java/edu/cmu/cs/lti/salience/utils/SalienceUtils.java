@@ -59,10 +59,6 @@ public class SalienceUtils {
         return abstractEntities;
     }
 
-    public void getEvents(){
-
-    }
-
     public static Set<String> readSplit(File splitFile) throws IOException {
         Set<String> docs = new HashSet<>();
         for (String s : FileUtils.readLines(splitFile)) {
