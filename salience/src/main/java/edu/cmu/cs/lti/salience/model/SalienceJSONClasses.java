@@ -21,6 +21,7 @@ public class SalienceJSONClasses {
         public String bodyText;
         public String docno;
         public Spots spot;
+        public Spots event;
         public String title;
         @SerializedName("abstract")
         public String abstractText;
@@ -36,31 +37,31 @@ public class SalienceJSONClasses {
     static public class Spot {
         public List<Integer> loc;
         public String surface;
+        public Feature feature;
+        public String id;
     }
 
     static public class EventSpot extends Spot {
+        public String frame_name;
+        public List<String> arguments;
     }
 
     static public class EntitySpot extends Spot {
         public String wiki_name;
-        public List<Link> entities;
+        public double score;
     }
 
-    static public class Link {
-        public Link(double score, String id) {
-            this.score = score;
-            this.id = id;
-        }
-
-        public double score;
-        public String id;
-        public Feature feature;
+    static public class Argument {
+        public String type;
+        public String surface;
+        public String headEntityId;
     }
 
     public static class Feature {
         public Feature(LookupTable table, FeatureUtils.SimpleInstance instance) {
             featureArray = new ArrayList<>();
             List<Double> lexicalFeatures = new ArrayList<>();
+
             instance.getFeatureMap().keySet().stream().sorted().forEach(f -> {
                 if (!f.startsWith(lexicalPrefix)) {
                     featureArray.add(instance.getFeatureMap().get(f));

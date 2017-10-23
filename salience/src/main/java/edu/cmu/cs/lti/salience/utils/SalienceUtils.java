@@ -11,10 +11,7 @@ import org.uimafit.util.FSCollectionFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -96,7 +93,7 @@ public class SalienceUtils {
         }
     }
 
-    public static MergedClusters getBodyCorefeEntities(JCas aJCas) {
+    public static MergedClusters getBodyCorefeEntities(JCas aJCas, Map<ComponentAnnotation, Integer> sentenceIds) {
         MergedClusters cluster = new MergedClusters();
 
         // Identify the entity id based on the head word.
@@ -104,15 +101,42 @@ public class SalienceUtils {
 
         // Using entity IDs for faster comparison.
         int index = 0;
-        for (Entity entity : org.uimafit.util.JCasUtil.select(aJCas, Entity.class)) {
+        for (Entity entity : JCasUtil.select(aJCas, Entity.class)) {
             entity.setIndex(index);
             index++;
         }
 
-        Body body = org.uimafit.util.JCasUtil.selectSingle(aJCas, Body.class);
-        Headline headline = org.uimafit.util.JCasUtil.selectSingle(aJCas, Headline.class);
+        Body body = JCasUtil.selectSingle(aJCas, Body.class);
+        Headline headline = JCasUtil.selectSingle(aJCas, Headline.class);
 
-        for (Entity entity : org.uimafit.util.JCasUtil.select(aJCas, Entity.class)) {
+        int sentIndex = 0;
+        Collection<StanfordCorenlpSentence> allSentences = JCasUtil.selectCovered(StanfordCorenlpSentence.class, body);
+
+        int[] sentenceEnds = new int[allSentences.size()];
+        for (Sentence sentence : allSentences) {
+            for (EntityMention entityMention : JCasUtil.selectCovered(EntityMention.class, sentence)) {
+                sentenceIds.put(entityMention, sentIndex);
+            }
+            for (GroundedEntity groundedEntity : JCasUtil.selectCovered(GroundedEntity.class, sentence)) {
+                sentenceIds.put(groundedEntity, sentIndex);
+            }
+            sentenceEnds[sentIndex] = sentence.getEnd();
+            sentIndex++;
+        }
+
+        // These lines add those entities that cross sentence broundaries, we assign them to the former sentence.
+        for (GroundedEntity groundedEntity : JCasUtil.selectCovered(GroundedEntity.class, body)) {
+            if (!sentenceIds.containsKey(groundedEntity)) {
+                for (int sentId = 0; sentId < sentenceEnds.length; sentId++) {
+                    int sentenceEnd = sentenceEnds[sentId];
+                    if (groundedEntity.getBegin() < sentenceEnd) {
+                        sentenceIds.put(groundedEntity, sentId);
+                    }
+                }
+            }
+        }
+
+        for (Entity entity : JCasUtil.select(aJCas, Entity.class)) {
             for (EntityMention mention : FSCollectionFactory.create(entity.getEntityMentions(), EntityMention.class)) {
                 if (mention.getEnd() <= headline.getEnd()) {
                     // Ignore headline mentions.
@@ -125,7 +149,7 @@ public class SalienceUtils {
         }
 
         // Identify the entity id based on the KB id.
-        for (GroundedEntity groundedEntity : org.uimafit.util.JCasUtil.selectCovered(GroundedEntity.class, body)) {
+        for (GroundedEntity groundedEntity : JCasUtil.selectCovered(GroundedEntity.class, body)) {
             String kbid = groundedEntity.getKnowledgeBaseId();
             Word headword = UimaNlpUtils.findHeadFromStanfordAnnotation(groundedEntity);
 

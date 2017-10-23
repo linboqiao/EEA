@@ -1,11 +1,13 @@
 package edu.cmu.cs.lti.salience.utils;
 
+import edu.cmu.cs.lti.frame.FrameExtractor;
+import edu.cmu.cs.lti.frame.FrameStructure;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.uimafit.util.JCasUtil;
 
 import java.util.*;
 
@@ -81,12 +83,57 @@ public class FeatureUtils {
         return sentenceIds;
     }
 
-    public static List<SimpleInstance> getKbInstances(JCas aJCas, LookupTable.SimCalculator simCalculator) {
+    public static List<SimpleInstance> getEventInstances(ArticleComponent component, int[] eventSaliency,
+                                                         LookupTable.SimCalculator simCalculator,
+                                                         FrameExtractor frameExtractor,
+                                                         Set<String> eventFrameTypes) {
         List<SimpleInstance> instances = new ArrayList<>();
 
-        Set<String> abstractEntities = SalienceUtils.getAbstractEntities(aJCas);
+        Map<SemaforLabel, Integer> labelSentence = new HashMap<>();
+        int sentIndex = 0;
+        for (StanfordCorenlpSentence sentence : JCasUtil.selectCovered(StanfordCorenlpSentence.class, component)) {
+            for (SemaforLabel semaforLabel : JCasUtil.selectCovered(SemaforLabel.class, sentence)) {
+                labelSentence.put(semaforLabel, sentIndex);
+            }
+            sentIndex++;
+        }
 
-        SalienceUtils.MergedClusters clusters = SalienceUtils.getBodyCorefeEntities(aJCas);
+        TObjectIntMap<String> tokenCount = new TObjectIntHashMap<>();
+        for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, component)) {
+            tokenCount.adjustOrPutValue(SalienceUtils.getCanonicalToken(token), 1, 1);
+        }
+
+        int index = 0;
+        for (FrameStructure fs : frameExtractor.getFramesOfType(component, eventFrameTypes)) {
+            SimpleInstance instance = new SimpleInstance();
+
+            instance.label = eventSaliency[index];
+            instance.instanceName = Integer.toString(index);
+
+            StanfordCorenlpToken targetWord = UimaNlpUtils.findHeadFromStanfordAnnotation(fs.getTarget());
+            String targetLex = targetWord == null ? TextUtils.asTokenized(fs.getTarget()) :
+                    SalienceUtils.getCanonicalToken(targetWord);
+            instance.featureMap.put(lexicalPrefix + "Head_" + targetLex, 1.0);
+            instance.featureMap.put("SentenceLoc", (double) labelSentence.get(fs.getTarget()));
+            instance.featureMap.put("Sparse_FrameName_" + fs.getFrameName(), 1.0);
+            instance.featureMap.put("HeadCount", (double) tokenCount.get(targetLex));
+
+//            instance.featureMap.put("EmbeddingVoting", votingScore);
+
+            index++;
+
+            instances.add(instance);
+        }
+        return instances;
+    }
+
+    public static List<SimpleInstance> getKbInstances(JCas aJCas, Set<String> entitySalience,
+                                                      LookupTable.SimCalculator simCalculator) {
+        List<SimpleInstance> instances = new ArrayList<>();
+
+        Map<ComponentAnnotation, Integer> sentenceIds = new HashMap<>();
+        SalienceUtils.MergedClusters clusters = SalienceUtils.getBodyCorefeEntities(aJCas, sentenceIds);
+
         Body body = JCasUtil.selectSingle(aJCas, Body.class);
 
         TObjectIntMap<String> tokenCount = new TObjectIntHashMap<>();
@@ -95,7 +142,6 @@ public class FeatureUtils {
         }
 
         Collection<StanfordCorenlpSentence> sentences = JCasUtil.selectCovered(StanfordCorenlpSentence.class, body);
-        Map<Word, Integer> sentenceIds = loadSentenceIds(sentences);
 
         Set<String> allKbs = clusters.kbidEntities.keySet();
         for (Map.Entry<String, Collection<Integer>> kbEntry : clusters.kbidEntities.asMap().entrySet()) {
@@ -114,12 +160,12 @@ public class FeatureUtils {
             }
 
             int isNamedEntity = 0;
+
             for (Integer entityId : kbEntry.getValue()) {
                 List<ComponentAnnotation> mentions = clusters.getClusters().get(entityId);
                 for (ComponentAnnotation mention : mentions) {
-                    StanfordCorenlpToken head = UimaNlpUtils.findHeadFromStanfordAnnotation(mention);
-                    int sentenceAppear = sentenceIds.get(head);
-                    if (sentenceAppear < firstLoc) {
+                    int sentenceAppear = sentenceIds.get(mention);
+                    if (sentenceAppear <= firstLoc) {
                         firstLoc = sentenceAppear;
                         firstMention = mention;
                     }
@@ -137,8 +183,9 @@ public class FeatureUtils {
                 numMention += mentions.size();
             }
 
-            int salience = abstractEntities.contains(kbid) ? 1 : 0;
+            int salience = entitySalience.contains(kbid) ? 1 : 0;
             StanfordCorenlpToken firstHeadWord = UimaNlpUtils.findHeadFromStanfordAnnotation(firstMention);
+
             String firstHeadLex = SalienceUtils.getCanonicalToken(firstHeadWord);
 
             instance.instanceName = kbid;

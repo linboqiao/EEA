@@ -16,6 +16,8 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
+import edu.cmu.cs.lti.utils.DebugUtils;
+import edu.cmu.cs.lti.utils.FileUtils;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.uima.UIMAException;
@@ -71,10 +73,6 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_FRAME_RELATION, mandatory = false)
     private File frameRelationFile;
 
-    public static final String PARAM_FEATURE_OUTPUT_DIR = "featureOutput";
-    @ConfigurationParameter(name = PARAM_FEATURE_OUTPUT_DIR)
-    private String featureOutputDir;
-
     public static final String PARAM_WRITE_ENTITY = "writeEntity";
     @ConfigurationParameter(name = PARAM_WRITE_ENTITY, defaultValue = "false")
     private boolean writeEntity;
@@ -86,25 +84,19 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
     private Set<String> trainDocs;
     private Set<String> testDocs;
 
-    private BufferedWriter trainGoldWriter;
-    private BufferedWriter testGoldWriter;
-
-    private BufferedWriter trainGoldCharWriter;
-    private BufferedWriter testGoldCharWriter;
-
-    private BufferedWriter trainTagsWriter;
-    private BufferedWriter testTagsWriter;
-
-    private BufferedWriter trainFeatures;
-    private BufferedWriter testFeatures;
-
     // Calculate embedding similarity
     private LookupTable.SimCalculator simCalculator;
     private LookupTable table;
 
-    //
     private FrameExtractor frameExtractor;
     private Set<String> eventFrameTypes;
+    private Map<String, BufferedWriter> goldTokenEntityWriters;
+    private Map<String, BufferedWriter> goldTokenEventWriters;
+    private Map<String, BufferedWriter> goldCharEntityWriters;
+    private Map<String, BufferedWriter> goldCharEventWriters;
+    private Map<String, BufferedWriter> tagWriters;
+    private Map<String, BufferedWriter> entityFeatureWriters;
+    private Map<String, BufferedWriter> eventFeatureWriters;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -136,17 +128,17 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         }
 
         try {
-            trainGoldWriter = getWriter(outputDir, "salience", "token", outputPrefix + "_train");
-            testGoldWriter = getWriter(outputDir, "salience", "token", outputPrefix + "_test");
+            goldTokenEntityWriters = getDualWriter(outputDir, "entity_gold", "token");
+            goldTokenEventWriters = getDualWriter(outputDir, "event_gold", "token");
 
-            trainGoldCharWriter = getWriter(outputDir, "salience", "char", outputPrefix + "_train");
-            testGoldCharWriter = getWriter(outputDir, "salience", "char", outputPrefix + "_test");
+            goldCharEntityWriters = getDualWriter(outputDir, "entity_gold", "char");
+            goldCharEventWriters = getDualWriter(outputDir, "event_gold", "char");
 
-            trainTagsWriter = getWriter(outputDir, "docs", outputPrefix + "_tagged_train.json");
-            testTagsWriter = getWriter(outputDir, "docs", outputPrefix + "_tagged_test.json");
+            tagWriters = getDualWriter(outputDir, "docs");
 
-            trainFeatures = getWriter(featureOutputDir, "train.tsv");
-            testFeatures = getWriter(featureOutputDir, "test.tsv");
+            entityFeatureWriters = getDualWriter(outputDir, "entity_features");
+            eventFeatureWriters = getDualWriter(outputDir, "event_features");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -161,44 +153,87 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         }
     }
 
-    private BufferedWriter getWriter(String... segments) throws IOException {
-        File outputPath = edu.cmu.cs.lti.utils.FileUtils.joinPathsAsFile(segments);
-        File parent = outputPath.getParentFile();
-        if (!parent.exists()) {
-            parent.mkdirs();
+    private Map<String, BufferedWriter> getDualWriter(String... segments) throws IOException {
+        Map<String, BufferedWriter> writers = new HashMap<>();
+
+        File outputParent = FileUtils.joinPathsAsFile(segments);
+        File fullTrainOutput = new File(outputParent, "train");
+        File fullTestOutput = new File(outputParent, "test");
+        if (!outputParent.exists()) {
+            outputParent.mkdirs();
         }
 
-        logger.info("Writing to : " + outputPath);
-        return new BufferedWriter(new FileWriter(outputPath));
+        writers.put("train", new BufferedWriter(new FileWriter(fullTrainOutput)));
+        writers.put("test", new BufferedWriter(new FileWriter(fullTestOutput)));
+
+        return writers;
     }
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
         super.collectionProcessComplete();
         try {
-            trainGoldWriter.close();
-            testGoldWriter.close();
-            trainTagsWriter.close();
-            testTagsWriter.close();
-            trainTagsWriter.close();
-            testTagsWriter.close();
+            close(goldTokenEntityWriters);
+            close(goldTokenEventWriters);
+            close(goldCharEntityWriters);
+            close(goldCharEventWriters);
+            close(tagWriters);
+            close(entityFeatureWriters);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private void close(Map<String, BufferedWriter> writers) throws IOException {
+        for (BufferedWriter writer : writers.values()) {
+            writer.close();
+        }
+    }
 
-    private List<Spot> getEntitySpots(ArticleComponent articleComponent) {
+    private List<Spot> getEventSpots(ArticleComponent articleComponent, Map<StanfordCorenlpToken, String> entityIds) {
         List<Spot> spots = new ArrayList<>();
+
+        int index = 0;
+        for (FrameStructure fs : frameExtractor.getFramesOfType(articleComponent, eventFrameTypes)) {
+            EventSpot spot = new EventSpot();
+
+            spot.frame_name = fs.getFrameName();
+
+            SemaforLabel target = fs.getTarget();
+
+            spot.loc = Arrays.asList(target.getBegin(), target.getEnd());
+            spot.surface = TextUtils.asTokenized(target);
+            spot.id = Integer.toString(index);
+
+            for (SemaforLabel semaforLabel : fs.getFrameElements()) {
+                Argument argument = new Argument();
+                argument.surface = TextUtils.asTokenized(semaforLabel);
+                StanfordCorenlpToken argumentHead = UimaNlpUtils.findHeadFromStanfordAnnotation(semaforLabel);
+                argument.headEntityId = entityIds.getOrDefault(argumentHead, "-");
+                argument.type = semaforLabel.getName();
+            }
+
+            spots.add(spot);
+            index++;
+        }
+        return spots;
+    }
+
+
+    private List<Spot> getEntitySpots(ArticleComponent articleComponent, Map<StanfordCorenlpToken, String> entityIds) {
+        List<Spot> spots = new ArrayList<>();
+
+        int index = 0;
+
 
         for (GroundedEntity groundedEntity : JCasUtil.selectCovered(GroundedEntity.class, articleComponent)) {
             Span tokenOffset = TextUtils.getSpaceTokenOffset(articleComponent, groundedEntity);
             EntitySpot spot = new EntitySpot();
-            spot.loc = new ArrayList<>();
-            spot.loc.add(tokenOffset.getBegin());
-            spot.loc.add(tokenOffset.getEnd());
-            spot.wiki_name = groundedEntity.getKnowledgeBaseId();
+            spot.loc = Arrays.asList(tokenOffset.getBegin(), tokenOffset.getEnd());
+
             spot.surface = groundedEntity.getCoveredText();
+            spot.id = groundedEntity.getKnowledgeBaseId();
+            spot.score = groundedEntity.getConfidence();
 
             StringArray kbNames = groundedEntity.getKnowledgeBaseNames();
             StringArray kbValues = groundedEntity.getKnowledgeBaseValues();
@@ -211,30 +246,22 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
                 }
             }
 
-            Link link = new Link(groundedEntity.getConfidence(), groundedEntity.getKnowledgeBaseId());
-
-            spot.entities = new ArrayList<>();
-
-            spot.entities.add(link);
+            StanfordCorenlpToken entityHead = UimaNlpUtils.findHeadFromStanfordAnnotation(groundedEntity);
+            entityIds.put(entityHead, Integer.toString(index));
 
             spots.add(spot);
+            index++;
         }
+
         return spots;
     }
 
-    private void writeEventGold(JCas mainView, Writer output, boolean useToken) throws IOException {
+    private void writeEventGold(JCas mainView, int[] saliency, Writer output, boolean useToken) throws IOException {
         String docno = UimaConvenience.getArticleName(mainView);
         String title = TextUtils.asTokenized(JCasUtil.selectSingle(mainView, Headline.class));
 
         StringBuilder sb = new StringBuilder();
         sb.append(docno).append(" ").append(title).append("\n");
-
-        JCas abstractView = JCasUtil.getView(mainView, AnnotatedNytReader.ABSTRACT_VIEW_NAME, false);
-        Set<String> abstractLemmas = new HashSet<>();
-
-        for (StanfordCorenlpToken token : JCasUtil.select(abstractView, StanfordCorenlpToken.class)) {
-            abstractLemmas.add(token.getLemma().toLowerCase());
-        }
 
         Body body = JCasUtil.selectSingle(mainView, Body.class);
 
@@ -243,13 +270,10 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
             SemaforLabel target = fs.getTarget();
             StanfordCorenlpToken targetHead = UimaNlpUtils.findHeadFromStanfordAnnotation(fs.getTarget());
             if (targetHead != null) {
-                String targetLemma = targetHead.getLemma().toLowerCase();
-                if (abstractLemmas.contains(targetLemma)) {
-                    int salience = abstractLemmas.contains(targetLemma) ? 1 : 0;
-                    sb.append(index).append("\t").append(salience).append("\t").append("-").append("\t");
-                    addSpan(sb, useToken, target, body);
-                    sb.append("\t").append(fs.getFrameName()).append("\n");
-                }
+                int salience = saliency[index];
+                sb.append(index).append("\t").append(salience).append("\t").append("-").append("\t");
+                addSpan(sb, useToken, target, body);
+                sb.append("\t").append(fs.getFrameName()).append("\n");
                 index++;
             }
         }
@@ -258,14 +282,36 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         output.write(sb.toString());
     }
 
-    private void writeEntityGold(JCas mainView, Writer output, boolean useToken) throws IOException {
+    private int[] getEventSaliency(JCas mainView, List<FrameStructure> frames) {
+        JCas abstractView = JCasUtil.getView(mainView, AnnotatedNytReader.ABSTRACT_VIEW_NAME, false);
+        Set<String> abstractLemmas = new HashSet<>();
+
+        for (StanfordCorenlpToken token : JCasUtil.select(abstractView, StanfordCorenlpToken.class)) {
+            abstractLemmas.add(token.getLemma().toLowerCase());
+        }
+
+        int[] saliency = new int[frames.size()];
+        int index = 0;
+        for (FrameStructure fs : frames) {
+            StanfordCorenlpToken targetHead = UimaNlpUtils.findHeadFromStanfordAnnotation(fs.getTarget());
+            int salience = 0;
+            if (targetHead != null) {
+                String targetLemma = targetHead.getLemma().toLowerCase();
+                salience = abstractLemmas.contains(targetLemma) ? 1 : 0;
+            }
+            saliency[index] = salience;
+            index++;
+        }
+        return saliency;
+    }
+
+    private void writeEntityGold(JCas mainView, Set<String> salientEntities, Writer output, boolean useToken) throws
+            IOException {
         String docno = UimaConvenience.getArticleName(mainView);
         String title = TextUtils.asTokenized(JCasUtil.selectSingle(mainView, Headline.class));
 
         StringBuilder sb = new StringBuilder();
         sb.append(docno).append(" ").append(title).append("\n");
-
-        Set<String> abstractEntities = SalienceUtils.getAbstractEntities(mainView);
 
         int index = 0;
 
@@ -278,8 +324,7 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
 
         for (GroundedEntity groundedEntity : JCasUtil.selectCovered(GroundedEntity.class, body)) {
             String id = groundedEntity.getKnowledgeBaseId();
-            int salience = abstractEntities.contains(id) ? 1 : 0;
-
+            int salience = salientEntities.contains(id) ? 1 : 0;
             sb.append(index).append("\t").append(salience).append("\t").append(entityCounts.get(id)).append("\t");
             addSpan(sb, useToken, groundedEntity, body);
             sb.append("\t").append(id).append("\n");
@@ -288,14 +333,6 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
 
         sb.append("\n");
         output.write(sb.toString());
-    }
-
-    private void writeGold(JCas mainView, Writer output, boolean useToken) throws IOException {
-        if (writeEntity) {
-            writeEntityGold(mainView, output, useToken);
-        } else if (writeEvent) {
-            writeEventGold(mainView, output, useToken);
-        }
     }
 
     private void addSpan(StringBuilder sb, boolean useToken, ComponentAnnotation anno, ArticleComponent article) {
@@ -313,98 +350,128 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         sb.append(text).append("\t").append(begin).append("\t").append(end);
     }
 
-    private void writeTagged(JCas aJCas, Writer output, Writer featureWriter) throws IOException {
-        if (writeEntity) {
-            writeEntityTagged(aJCas, output, featureWriter);
-        } else {
-
-        }
-    }
-
-    private void writeEntityTagged(JCas aJCas, Writer output, Writer featureWriter) throws IOException {
-        Gson gson = new Gson();
-
+    private void writeFeatures(JCas aJCas, Writer featureWriter, List<FeatureUtils.SimpleInstance> instances)
+            throws IOException {
         Headline title = JCasUtil.selectSingle(aJCas, Headline.class);
         String titleStr = TextUtils.asTokenized(title);
         String docid = UimaConvenience.getArticleName(aJCas);
 
-        Body body = JCasUtil.selectSingle(aJCas, Body.class);
-
-        List<Spot> titleSpots = getEntitySpots(title);
-        List<Spot> bodySpots = getEntitySpots(body);
-
         // Handle features.
         featureWriter.write(docid + " " + titleStr + "\n");
-        List<FeatureUtils.SimpleInstance> instances = FeatureUtils.getKbInstances(aJCas, simCalculator);
-        writeFeatures(instances, featureWriter);
+        for (FeatureUtils.SimpleInstance instance : instances) {
+            featureWriter.write(instance.toString() + "\n");
+        }
         featureWriter.write("\n");
-        addEntityFeatureToSpots(bodySpots, instances);
+    }
 
+    private void writeTagged(JCas aJCas, Writer output,
+                             List<FeatureUtils.SimpleInstance> entityFeatures,
+                             List<FeatureUtils.SimpleInstance> eventFeatures) throws IOException {
+        Gson gson = new Gson();
 
+        Headline title = JCasUtil.selectSingle(aJCas, Headline.class);
+        Body body = JCasUtil.selectSingle(aJCas, Body.class);
         JCas abstractView = JCasUtil.getView(aJCas, AnnotatedNytReader.ABSTRACT_VIEW_NAME, false);
         Article abstractArticle = JCasUtil.selectSingle(abstractView, Article.class);
 
-        List<Spot> abstractSpots = getEntitySpots(abstractArticle);
+        String titleStr = TextUtils.asTokenized(title);
+        String docid = UimaConvenience.getArticleName(aJCas);
+
+        Map<StanfordCorenlpToken, String> titleEntityIds = new HashMap<>();
+        List<Spot> titleEntities = getEntitySpots(title, titleEntityIds);
+        List<Spot> titleEvents = getEventSpots(title, titleEntityIds);
+
+        Map<StanfordCorenlpToken, String> bodyEntityIds = new HashMap<>();
+        List<Spot> bodyEntities = getEntitySpots(body, bodyEntityIds);
+        List<Spot> bodyEvents = getEventSpots(body, bodyEntityIds);
+
+        Map<StanfordCorenlpToken, String> abstractEntityIds = new HashMap<>();
+        List<Spot> abstractEntities = getEntitySpots(body, abstractEntityIds);
+        List<Spot> abstractEvents = getEventSpots(abstractArticle, abstractEntityIds);
+
+        addFeatureToSpots(bodyEntities, entityFeatures);
+        addFeatureToSpots(bodyEvents, eventFeatures);
 
         DocStructure doc = new DocStructure();
-        Spots allSpots = new Spots();
-        allSpots.bodyText = bodySpots;
-        allSpots.abstractSpots = abstractSpots;
-        allSpots.title = titleSpots;
+
+        Spots entitySpots = new Spots();
+        entitySpots.bodyText = bodyEntities;
+        entitySpots.abstractSpots = abstractEntities;
+        entitySpots.title = titleEntities;
+
+        Spots eventSpots = new Spots();
+        eventSpots.bodyText = bodyEvents;
+        eventSpots.abstractSpots = abstractEvents;
+        eventSpots.title = titleEvents;
 
         doc.bodyText = TextUtils.asTokenized(body);
         doc.docno = docid;
-        doc.spot = allSpots;
+        doc.spot = entitySpots;
+        doc.event = eventSpots;
         doc.title = titleStr;
         doc.abstractText = TextUtils.asTokenized(abstractArticle);
 
         String jsonStr = gson.toJson(doc);
         output.write(jsonStr + "\n");
-
     }
 
-    private void addEntityFeatureToSpots(List<Spot> bodySpots, List<FeatureUtils.SimpleInstance> instances) {
-        Map<String, FeatureUtils.SimpleInstance> instanceLookup = new HashMap<>();
+    private void addFeatureToSpots(List<Spot> bodySpots, List<FeatureUtils.SimpleInstance> instances) {
+        Map<String, FeatureUtils.SimpleInstance> featureLookup = new HashMap<>();
         for (FeatureUtils.SimpleInstance instance : instances) {
-            instanceLookup.put(instance.getInstanceName(), instance);
+            featureLookup.put(instance.getInstanceName(), instance);
         }
 
         for (Spot bodySpot : bodySpots) {
-            for (Link entity : ((EntitySpot) bodySpot).entities) {
-                FeatureUtils.SimpleInstance instance = instanceLookup.get(entity.id);
-                if (instance != null) {
-                    entity.feature = new Feature(table, instanceLookup.get(entity.id));
-                } else {
-                    // This should not happen because both spots are looking for entities in the body.
-                    entity.feature = new Feature();
-                }
+            FeatureUtils.SimpleInstance instance = featureLookup.get(bodySpot.id);
+            if (instance == null) {
+                logger.info("Null instance for body spot id is " + bodySpot.id);
+                DebugUtils.pause();
             }
+            bodySpot.feature = new Feature(table, instance);
         }
     }
 
-    private void writeFeatures(List<FeatureUtils.SimpleInstance> instances, Writer featureWriter) throws IOException {
-        for (FeatureUtils.SimpleInstance instance : instances) {
-            featureWriter.write(instance.toString() + "\n");
-        }
-    }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         String articleName = UimaConvenience.getArticleName(aJCas);
+
+        Body body = JCasUtil.selectSingle(aJCas, Body.class);
+
+        int[] eventSaliency = getEventSaliency(aJCas, frameExtractor.getFramesOfType(body, eventFrameTypes));
+        Set<String> entitySaliency = SalienceUtils.getAbstractEntities(aJCas);
+
+        List<FeatureUtils.SimpleInstance> entityInstance = FeatureUtils.getKbInstances(aJCas, entitySaliency,
+                simCalculator);
+        List<FeatureUtils.SimpleInstance> eventInstances = FeatureUtils.getEventInstances(body, eventSaliency,
+                simCalculator, frameExtractor, eventFrameTypes);
         try {
             if (trainDocs.contains(articleName)) {
-                writeGold(aJCas, trainGoldWriter, true);
-                writeGold(aJCas, trainGoldCharWriter, false);
-                writeTagged(aJCas, trainTagsWriter, trainFeatures);
+                writeEntityGold(aJCas, entitySaliency, goldTokenEntityWriters.get("train"), true);
+                writeEntityGold(aJCas, entitySaliency, goldCharEntityWriters.get("train"), false);
+
+                writeEventGold(aJCas, eventSaliency, goldTokenEventWriters.get("train"), true);
+                writeEventGold(aJCas, eventSaliency, goldCharEventWriters.get("train"), false);
+
+                writeTagged(aJCas, tagWriters.get("train"), entityInstance, eventInstances);
+
+                writeFeatures(aJCas, entityFeatureWriters.get("train"), entityInstance);
+                writeFeatures(aJCas, eventFeatureWriters.get("train"), eventInstances);
             } else if (testDocs.contains(articleName)) {
-                writeGold(aJCas, testGoldWriter, true);
-                writeGold(aJCas, testGoldCharWriter, false);
-                writeTagged(aJCas, testTagsWriter, testFeatures);
+                writeEntityGold(aJCas, entitySaliency, goldTokenEntityWriters.get("test"), true);
+                writeEntityGold(aJCas, entitySaliency, goldCharEntityWriters.get("test"), false);
+
+                writeEventGold(aJCas, eventSaliency, goldTokenEventWriters.get("test"), true);
+                writeEventGold(aJCas, eventSaliency, goldCharEventWriters.get("test"), false);
+
+                writeTagged(aJCas, tagWriters.get("test"), entityInstance, eventInstances);
+
+                writeFeatures(aJCas, entityFeatureWriters.get("test"), entityInstance);
+                writeFeatures(aJCas, eventFeatureWriters.get("test"), eventInstances);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public static void main(String[] argv) throws UIMAException, SAXException, CpeDescriptorException, IOException {
@@ -415,8 +482,7 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         String outputDir = argv[2];
         String trainingSplitFile = argv[3];
         String testSplitFile = argv[4];
-        String featureOutput = argv[5];
-        String embeddingPath = argv[6];
+        String embeddingPath = argv[5];
 
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                 GzippedXmiCollectionReader.class, typeSystemDescription,
@@ -445,7 +511,6 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
                 MultiFormatEntityTrainingWriter.PARAM_OUTPUT_PREFIX, "nyt_salience",
                 MultiFormatEntityTrainingWriter.MULTI_THREAD, true,
                 MultiFormatEntityTrainingWriter.PARAM_JOINT_EMBEDDING, embeddingPath,
-                MultiFormatEntityTrainingWriter.PARAM_FEATURE_OUTPUT_DIR, featureOutput,
                 MultiFormatEntityTrainingWriter.PARAM_WRITE_EVENT, true,
                 MultiFormatEntityTrainingWriter.PARAM_FRAME_RELATION, "../data/resources/fndata-1.7/frRelation.xml"
         );
