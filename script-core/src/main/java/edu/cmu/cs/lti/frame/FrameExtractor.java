@@ -8,7 +8,11 @@ import edu.cmu.cs.lti.script.type.SemaforLabel;
 import edu.cmu.cs.lti.script.type.SemaforLayer;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
+import org.jdom2.Document;
+import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.jdom2.Namespace;
+import org.jdom2.input.SAXBuilder;
 
 import java.io.IOException;
 import java.util.*;
@@ -22,12 +26,42 @@ import java.util.*;
  */
 public class FrameExtractor {
     private Map<String, FrameNode> frameByName;
+    private Set<String> targetFrames;
 
     public FrameExtractor(String fnRelatonPath) throws JDOMException, IOException {
-        frameByName = FnRelationReader.readFnRelations(fnRelatonPath);
+        frameByName = readFnRelations(fnRelatonPath);
     }
 
-    public List<FrameStructure> getFrames(ComponentAnnotation annotation) {
+    public List<FrameStructure> getTargetFrames(ComponentAnnotation annotation) {
+        List<FrameStructure> frameStructures = new ArrayList<>();
+        for (FrameStructure frameStructure : getFrames(annotation)) {
+            String frameName = frameStructure.getFrameName();
+            if (targetFrames.contains(frameName)) {
+                frameStructures.add(frameStructure);
+            }
+        }
+        return frameStructures;
+    }
+
+    public FrameExtractor setTargetFrames(Set<String> targetFrames) {
+        this.targetFrames = targetFrames;
+        return this;
+    }
+
+    public FrameExtractor setSubframeAsTarget(String superFrameName) {
+        this.targetFrames = getAllInHeritedFrameNames(superFrameName);
+        return this;
+    }
+
+    private Set<String> getAllInHeritedFrameNames(String superFrameName) {
+        Set<String> childFrameNames = new HashSet<>();
+        for (FrameNode frameNode : getAllInherited(superFrameName)) {
+            childFrameNames.add(frameNode.getFrameName());
+        }
+        return childFrameNames;
+    }
+
+    private List<FrameStructure> getFrames(ComponentAnnotation annotation) {
         List<FrameStructure> frameStructures = new ArrayList<>();
 
         for (SemaforAnnotationSet annoSet : JCasUtil.selectCovered(SemaforAnnotationSet.class, annotation)) {
@@ -51,28 +85,47 @@ public class FrameExtractor {
         return frameStructures;
     }
 
-    public List<FrameStructure> getFramesOfType(ComponentAnnotation annotation, Set<String> frameTypes) {
-        List<FrameStructure> frameStructures = new ArrayList<>();
-        for (FrameStructure frameStructure : getFrames(annotation)) {
-            String frameName = frameStructure.getFrameName();
-            if (frameTypes.contains(frameName)) {
-                frameStructures.add(frameStructure);
-            }
-        }
-        return frameStructures;
-    }
-
-    public Set<String> getAllInHeritedFrameNames(String superFrameName) {
-        Set<String> childFrameNames = new HashSet<>();
-        for (FrameNode frameNode : getAllInherited(superFrameName)) {
-            childFrameNames.add(frameNode.getFrameName());
-        }
-        return childFrameNames;
-    }
-
-    public Iterable<FrameNode> getAllInherited(String superFrameName) {
+    private Iterable<FrameNode> getAllInherited(String superFrameName) {
         FrameNode superFrame = frameByName.get(superFrameName);
         TreeTraverser<FrameNode> traverser = TreeTraverser.using(FrameNode::getInheritedBy);
         return traverser.breadthFirstTraversal(superFrame);
+    }
+
+    private static Map<String, FrameNode> readFnRelations(String fnRelatonPath) throws JDOMException, IOException {
+        Map<String, FrameNode> frameByName = new HashMap<>();
+
+        SAXBuilder builder = new SAXBuilder();
+        builder.setDTDHandler(null);
+        Document doc = builder.build(fnRelatonPath);
+        Element data = doc.getRootElement();
+        Namespace ns = data.getNamespace();
+
+        List<Element> relationTypeGroup = data.getChildren("frameRelationType", ns);
+
+        for (Element relationsByType : relationTypeGroup) {
+            String relationType = relationsByType.getAttributeValue("name");
+            List<Element> frameRelations = relationsByType.getChildren("frameRelation", ns);
+            for (Element frameRelation : frameRelations) {
+                String subFrameName = frameRelation.getAttributeValue("subFrameName");
+                String superFrameName = frameRelation.getAttributeValue("superFrameName");
+                FrameNode subNode = getOrCreateNode(frameByName, subFrameName);
+                FrameNode superNode = getOrCreateNode(frameByName, superFrameName);
+                if (relationType.equals("Inheritance")) {
+                    superNode.addInheritence(subNode);
+                }
+            }
+        }
+
+        return frameByName;
+    }
+
+    private static FrameNode getOrCreateNode(Map<String, FrameNode> frameByName, String frameName) {
+        if (frameByName.containsKey(frameName)) {
+            return frameByName.get(frameName);
+        } else {
+            FrameNode node = new FrameNode(frameName);
+            frameByName.put(frameName, node);
+            return node;
+        }
     }
 }

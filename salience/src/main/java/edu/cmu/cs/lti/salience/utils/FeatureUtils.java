@@ -85,8 +85,7 @@ public class FeatureUtils {
 
     public static List<SimpleInstance> getEventInstances(ArticleComponent component, int[] eventSaliency,
                                                          LookupTable.SimCalculator simCalculator,
-                                                         FrameExtractor frameExtractor,
-                                                         Set<String> eventFrameTypes) {
+                                                         FrameExtractor frameExtractor) {
         List<SimpleInstance> instances = new ArrayList<>();
 
         Map<SemaforLabel, Integer> labelSentence = new HashMap<>();
@@ -104,7 +103,7 @@ public class FeatureUtils {
         }
 
         int index = 0;
-        for (FrameStructure fs : frameExtractor.getFramesOfType(component, eventFrameTypes)) {
+        for (FrameStructure fs : frameExtractor.getTargetFrames(component)) {
             SimpleInstance instance = new SimpleInstance();
 
             instance.label = eventSaliency[index];
@@ -164,7 +163,13 @@ public class FeatureUtils {
             for (Integer entityId : kbEntry.getValue()) {
                 List<ComponentAnnotation> mentions = clusters.getClusters().get(entityId);
                 for (ComponentAnnotation mention : mentions) {
-                    int sentenceAppear = sentenceIds.get(mention);
+                    int sentenceAppear;
+                    if (sentenceIds.containsKey(mention)) {
+                        sentenceAppear = sentenceIds.get(mention);
+                    } else {
+                        sentenceAppear = sentences.size();
+                    }
+
                     if (sentenceAppear <= firstLoc) {
                         firstLoc = sentenceAppear;
                         firstMention = mention;

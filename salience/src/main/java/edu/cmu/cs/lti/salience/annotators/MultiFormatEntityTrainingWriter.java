@@ -89,7 +89,6 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
     private LookupTable table;
 
     private FrameExtractor frameExtractor;
-    private Set<String> eventFrameTypes;
     private Map<String, BufferedWriter> goldTokenEntityWriters;
     private Map<String, BufferedWriter> goldTokenEventWriters;
     private Map<String, BufferedWriter> goldCharEntityWriters;
@@ -120,10 +119,9 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
 
         if (frameRelationFile != null) {
             try {
-                frameExtractor = new FrameExtractor(frameRelationFile.getPath());
-                eventFrameTypes = frameExtractor.getAllInHeritedFrameNames("Event");
+                frameExtractor = new FrameExtractor(frameRelationFile.getPath()).setSubframeAsTarget("Event");
             } catch (JDOMException | IOException e) {
-                e.printStackTrace();
+                throw new ResourceInitializationException(e);
             }
         }
 
@@ -194,7 +192,7 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         List<Spot> spots = new ArrayList<>();
 
         int index = 0;
-        for (FrameStructure fs : frameExtractor.getFramesOfType(articleComponent, eventFrameTypes)) {
+        for (FrameStructure fs : frameExtractor.getTargetFrames(articleComponent)) {
             EventSpot spot = new EventSpot();
 
             spot.frame_name = fs.getFrameName();
@@ -266,7 +264,7 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         Body body = JCasUtil.selectSingle(mainView, Body.class);
 
         int index = 0;
-        for (FrameStructure fs : frameExtractor.getFramesOfType(body, eventFrameTypes)) {
+        for (FrameStructure fs : frameExtractor.getTargetFrames(body)) {
             SemaforLabel target = fs.getTarget();
             StanfordCorenlpToken targetHead = UimaNlpUtils.findHeadFromStanfordAnnotation(fs.getTarget());
             if (targetHead != null) {
@@ -438,13 +436,13 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
 
         Body body = JCasUtil.selectSingle(aJCas, Body.class);
 
-        int[] eventSaliency = getEventSaliency(aJCas, frameExtractor.getFramesOfType(body, eventFrameTypes));
+        int[] eventSaliency = getEventSaliency(aJCas, frameExtractor.getTargetFrames(body));
         Set<String> entitySaliency = SalienceUtils.getAbstractEntities(aJCas);
 
         List<FeatureUtils.SimpleInstance> entityInstance = FeatureUtils.getKbInstances(aJCas, entitySaliency,
                 simCalculator);
         List<FeatureUtils.SimpleInstance> eventInstances = FeatureUtils.getEventInstances(body, eventSaliency,
-                simCalculator, frameExtractor, eventFrameTypes);
+                simCalculator, frameExtractor);
         try {
             if (trainDocs.contains(articleName)) {
                 writeEntityGold(aJCas, entitySaliency, goldTokenEntityWriters.get("train"), true);
