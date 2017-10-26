@@ -17,19 +17,23 @@ public class FrameStructure {
 
     private List<SemaforLabel> frameElements;
 
+    private List<String> superFeNames;
+
     private SemaforLabel target;
 
     public FrameStructure(String frameName) {
         this.frameName = frameName;
         this.frameElements = new ArrayList<>();
+        this.superFeNames = new ArrayList<>();
     }
 
     public void setTarget(SemaforLabel label) {
         this.target = label;
     }
 
-    public void addFrameElement(SemaforLabel label) {
+    public void addFrameElement(SemaforLabel label, String superFeName) {
         this.frameElements.add(label);
+        this.superFeNames.add(superFeName);
     }
 
     public String getFrameName() {
@@ -40,25 +44,11 @@ public class FrameStructure {
         return frameElements;
     }
 
+    public List<String> getSuperFeNames() {
+        return superFeNames;
+    }
+
     public SemaforLabel getTarget() {
         return target;
     }
-
-    //    private class FrameElement {
-//        private String name;
-//        private Span span;
-//
-//        public FrameElement(String name, int begin, int end) {
-//            this.name = name;
-//            this.span = Span.of(begin, end);
-//        }
-//
-//        public String getName() {
-//            return name;
-//        }
-//
-//        public Span getSpan() {
-//            return span;
-//        }
-//    }
 }

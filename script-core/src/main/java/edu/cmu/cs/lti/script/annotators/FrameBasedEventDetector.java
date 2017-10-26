@@ -51,6 +51,8 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
         if (frameRelationFile != null) {
             try {
                 frameExtractor = new FrameExtractor(frameRelationFile.getPath()).setSubframeAsTarget("Event");
+//                FrameDataReader.getFN2VNFrameMap();
+
             } catch (JDOMException | IOException e) {
                 throw new ResourceInitializationException(e);
             }
@@ -76,6 +78,9 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
 
             List<EventMentionArgumentLink> argumentLinks = new ArrayList<>();
 
+            List<String> superFeNames = frameStructure.getSuperFeNames();
+
+            int i = 0;
             for (SemaforLabel frameElement : frameStructure.getFrameElements()) {
                 String feName = frameElement.getName();
                 EventMentionArgumentLink argumentLink = new EventMentionArgumentLink(aJCas);
@@ -87,6 +92,9 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
                 argumentLink.setFrameElementName(feName);
                 UimaAnnotationUtils.finishTop(argumentLink, COMPONENT_ID, 0, aJCas);
                 argumentLinks.add(argumentLink);
+
+                String superFeName = superFeNames.get(i);
+                argumentLink.setSuperFrameElementRoleName(superFeName);
             }
 
             eventMention.setArguments(FSCollectionFactory.createFSList(aJCas, argumentLinks));

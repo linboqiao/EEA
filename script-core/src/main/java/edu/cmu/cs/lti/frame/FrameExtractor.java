@@ -26,10 +26,14 @@ import java.util.*;
  */
 public class FrameExtractor {
     private Map<String, FrameNode> frameByName;
+    private Map<String, FrameNode.FrameElement> feByName;
+
     private Set<String> targetFrames;
 
     public FrameExtractor(String fnRelatonPath) throws JDOMException, IOException {
-        frameByName = readFnRelations(fnRelatonPath);
+        frameByName = new HashMap<>();
+        feByName = new HashMap<>();
+        readFnRelations(fnRelatonPath, "Inheritance");
     }
 
     public List<FrameStructure> getTargetFrames(ComponentAnnotation annotation) {
@@ -49,13 +53,14 @@ public class FrameExtractor {
     }
 
     public FrameExtractor setSubframeAsTarget(String superFrameName) {
-        this.targetFrames = getAllInHeritedFrameNames(superFrameName);
+        this.targetFrames = getAllSubFrameNames(superFrameName);
+        System.out.println("Number of target frames " + targetFrames.size());
         return this;
     }
 
-    private Set<String> getAllInHeritedFrameNames(String superFrameName) {
+    private Set<String> getAllSubFrameNames(String superFrameName) {
         Set<String> childFrameNames = new HashSet<>();
-        for (FrameNode frameNode : getAllInherited(superFrameName)) {
+        for (FrameNode frameNode : getAllSubFrames(superFrameName)) {
             childFrameNames.add(frameNode.getFrameName());
         }
         return childFrameNames;
@@ -76,7 +81,14 @@ public class FrameExtractor {
                     }
                 } else {
                     for (SemaforLabel label : FSCollectionFactory.create(layer.getLabels(), SemaforLabel.class)) {
-                        fs.addFrameElement(label);
+                        String fullFeName = getFullFeName(fs.getFrameName(), label.getName());
+
+                        if (feByName.containsKey(fullFeName)) {
+                            FrameNode.FrameElement fe = feByName.get(fullFeName);
+                            FrameNode.FrameElement superFe = getSuperFrameName(fe);
+                            fullFeName = superFe.getFullFeName();
+                        }
+                        fs.addFrameElement(label, fullFeName);
                     }
                 }
             }
@@ -85,15 +97,23 @@ public class FrameExtractor {
         return frameStructures;
     }
 
-    private Iterable<FrameNode> getAllInherited(String superFrameName) {
+    private FrameNode.FrameElement getSuperFrameName(FrameNode.FrameElement fe) {
+        FrameNode.FrameElement root = fe;
+
+        while (root.getSuperFrameElement() != null) {
+            root = root.getSuperFrameElement();
+        }
+        return root;
+    }
+
+    private Iterable<FrameNode> getAllSubFrames(String superFrameName) {
         FrameNode superFrame = frameByName.get(superFrameName);
-        TreeTraverser<FrameNode> traverser = TreeTraverser.using(FrameNode::getInheritedBy);
+        TreeTraverser<FrameNode> traverser = TreeTraverser.using(FrameNode::getSubFrames);
         return traverser.breadthFirstTraversal(superFrame);
     }
 
-    private static Map<String, FrameNode> readFnRelations(String fnRelatonPath) throws JDOMException, IOException {
-        Map<String, FrameNode> frameByName = new HashMap<>();
-
+    private Map<String, FrameNode> readFnRelations(String fnRelatonPath, String targetRelationType)
+            throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder();
         builder.setDTDHandler(null);
         Document doc = builder.build(fnRelatonPath);
@@ -104,22 +124,48 @@ public class FrameExtractor {
 
         for (Element relationsByType : relationTypeGroup) {
             String relationType = relationsByType.getAttributeValue("name");
-            List<Element> frameRelations = relationsByType.getChildren("frameRelation", ns);
-            for (Element frameRelation : frameRelations) {
-                String subFrameName = frameRelation.getAttributeValue("subFrameName");
-                String superFrameName = frameRelation.getAttributeValue("superFrameName");
-                FrameNode subNode = getOrCreateNode(frameByName, subFrameName);
-                FrameNode superNode = getOrCreateNode(frameByName, superFrameName);
-                if (relationType.equals("Inheritance")) {
-                    superNode.addInheritence(subNode);
+
+            if (relationType.equals(targetRelationType)) {
+                List<Element> frameRelations = relationsByType.getChildren("frameRelation", ns);
+                for (Element frameRelation : frameRelations) {
+                    String subFrameName = frameRelation.getAttributeValue("subFrameName");
+                    String superFrameName = frameRelation.getAttributeValue("superFrameName");
+
+                    List<Element> feRelations = frameRelation.getChildren("FERelation", ns);
+
+                    FrameNode subNode = getOrCreateNode(frameByName, subFrameName);
+                    FrameNode superNode = getOrCreateNode(frameByName, superFrameName);
+
+                    for (Element feRelation : feRelations) {
+                        String subFeName = feRelation.getAttributeValue("subFEName");
+                        FrameNode.FrameElement subFe = getOrCreateFe(feByName, subNode, subFeName);
+
+                        String superFeName = feRelation.getAttributeValue("superFEName");
+                        FrameNode.FrameElement superFe = getOrCreateFe(feByName, superNode, superFeName);
+
+                        superFe.addSubFrameElement(subFe);
+                    }
+
+                    superNode.addSubFrame(subNode);
                 }
             }
         }
-
         return frameByName;
     }
 
-    private static FrameNode getOrCreateNode(Map<String, FrameNode> frameByName, String frameName) {
+    private FrameNode.FrameElement getOrCreateFe(Map<String, FrameNode.FrameElement> feByName, FrameNode frameNode,
+                                                 String feName) {
+        String fullFeName = getFullFeName(frameNode.getFrameName(), feName);
+        if (feByName.containsKey(fullFeName)) {
+            return feByName.get(fullFeName);
+        } else {
+            FrameNode.FrameElement fe = frameNode.addFrameElement(feName);
+            feByName.put(fullFeName, fe);
+            return fe;
+        }
+    }
+
+    private FrameNode getOrCreateNode(Map<String, FrameNode> frameByName, String frameName) {
         if (frameByName.containsKey(frameName)) {
             return frameByName.get(frameName);
         } else {
@@ -127,5 +173,9 @@ public class FrameExtractor {
             frameByName.put(frameName, node);
             return node;
         }
+    }
+
+    private String getFullFeName(String frameName, String feName) {
+        return frameName + "." + feName;
     }
 }
