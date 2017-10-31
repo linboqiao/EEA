@@ -1,7 +1,5 @@
 package edu.cmu.cs.lti.salience.utils;
 
-import edu.cmu.cs.lti.frame.FrameExtractor;
-import edu.cmu.cs.lti.frame.FrameStructure;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import gnu.trove.map.TObjectIntMap;
@@ -20,6 +18,7 @@ import java.util.*;
  */
 public class FeatureUtils {
     public static final String lexicalPrefix = "Lexical";
+    public static final String sparsePrefix = "Sparse";
 
     public static class SimpleInstance {
         String instanceName;
@@ -84,15 +83,14 @@ public class FeatureUtils {
     }
 
     public static List<SimpleInstance> getEventInstances(ArticleComponent component, int[] eventSaliency,
-                                                         LookupTable.SimCalculator simCalculator,
-                                                         FrameExtractor frameExtractor) {
+                                                         LookupTable.SimCalculator simCalculator) {
         List<SimpleInstance> instances = new ArrayList<>();
 
-        Map<SemaforLabel, Integer> labelSentence = new HashMap<>();
+        Map<EventMention, Integer> mentionSentenceIds = new HashMap<>();
         int sentIndex = 0;
         for (StanfordCorenlpSentence sentence : JCasUtil.selectCovered(StanfordCorenlpSentence.class, component)) {
-            for (SemaforLabel semaforLabel : JCasUtil.selectCovered(SemaforLabel.class, sentence)) {
-                labelSentence.put(semaforLabel, sentIndex);
+            for (EventMention eventMention : JCasUtil.selectCovered(EventMention.class, sentence)) {
+                mentionSentenceIds.put(eventMention, sentIndex);
             }
             sentIndex++;
         }
@@ -103,21 +101,35 @@ public class FeatureUtils {
         }
 
         int index = 0;
-        for (FrameStructure fs : frameExtractor.getTargetFrames(component)) {
+
+        List<EventMention> allEventMentions = JCasUtil.selectCovered(EventMention.class, component);
+
+        for (EventMention eventMention : allEventMentions) {
             SimpleInstance instance = new SimpleInstance();
 
             instance.label = eventSaliency[index];
             instance.instanceName = Integer.toString(index);
 
-            StanfordCorenlpToken targetWord = UimaNlpUtils.findHeadFromStanfordAnnotation(fs.getTarget());
-            String targetLex = targetWord == null ? TextUtils.asTokenized(fs.getTarget()) :
+            double votingScore = 0;
+            for (EventMention evm : allEventMentions) {
+                if (evm != eventMention) {
+                    votingScore += simCalculator.getSimilarity(eventMention.getCoveredText(), evm.getCoveredText());
+                }
+            }
+
+            // Normalize by length.
+            if (allEventMentions.size() > 1) {
+                votingScore /= (allEventMentions.size() - 1);
+            }
+
+            StanfordCorenlpToken targetWord = UimaNlpUtils.findHeadFromStanfordAnnotation(eventMention);
+            String targetLex = targetWord == null ? TextUtils.asTokenized(eventMention) :
                     SalienceUtils.getCanonicalToken(targetWord);
             instance.featureMap.put(lexicalPrefix + "Head_" + targetLex, 1.0);
-            instance.featureMap.put("SentenceLoc", (double) labelSentence.get(fs.getTarget()));
-            instance.featureMap.put("Sparse_FrameName_" + fs.getFrameName(), 1.0);
+            instance.featureMap.put("SentenceLoc", (double) mentionSentenceIds.get(eventMention));
+            instance.featureMap.put(sparsePrefix + "FrameName_" + eventMention.getFrameName(), 1.0);
             instance.featureMap.put("HeadCount", (double) tokenCount.get(targetLex));
-
-//            instance.featureMap.put("EmbeddingVoting", votingScore);
+            instance.featureMap.put("EmbeddingVoting", votingScore);
 
             index++;
 
@@ -156,6 +168,11 @@ public class FeatureUtils {
                 if (!kb.equals(kbid)) {
                     votingScore += simCalculator.getSimilarity(kbid, kb);
                 }
+            }
+
+            // Normalize by length.
+            if (allKbs.size() > 1) {
+                votingScore /= (allKbs.size() - 1);
             }
 
             int isNamedEntity = 0;

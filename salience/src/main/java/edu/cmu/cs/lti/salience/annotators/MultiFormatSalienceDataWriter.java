@@ -2,8 +2,6 @@ package edu.cmu.cs.lti.salience.annotators;
 
 import com.google.gson.Gson;
 import edu.cmu.cs.lti.collection_reader.AnnotatedNytReader;
-import edu.cmu.cs.lti.frame.FrameExtractor;
-import edu.cmu.cs.lti.frame.FrameStructure;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.salience.model.SalienceJSONClasses.*;
@@ -16,7 +14,6 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
-import edu.cmu.cs.lti.utils.DebugUtils;
 import edu.cmu.cs.lti.utils.FileUtils;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
@@ -30,12 +27,12 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
+import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.StringArray;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.jdom2.JDOMException;
 import org.xml.sax.SAXException;
 
 import java.io.*;
@@ -48,7 +45,7 @@ import java.util.*;
  *
  * @author Zhengzhong Liu
  */
-public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
+public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
     public static final String PARAM_TEST_SPLIT = "testSplit";
     @ConfigurationParameter(name = PARAM_TEST_SPLIT)
     private File testSplitFile;
@@ -69,10 +66,6 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_JOINT_EMBEDDING)
     private File jointEmbeddingFile;
 
-    public static final String PARAM_FRAME_RELATION = "frameRelationFile";
-    @ConfigurationParameter(name = PARAM_FRAME_RELATION, mandatory = false)
-    private File frameRelationFile;
-
     public static final String PARAM_WRITE_ENTITY = "writeEntity";
     @ConfigurationParameter(name = PARAM_WRITE_ENTITY, defaultValue = "false")
     private boolean writeEntity;
@@ -88,7 +81,6 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
     private LookupTable.SimCalculator simCalculator;
     private LookupTable table;
 
-    private FrameExtractor frameExtractor;
     private Map<String, BufferedWriter> goldTokenEntityWriters;
     private Map<String, BufferedWriter> goldTokenEventWriters;
     private Map<String, BufferedWriter> goldCharEntityWriters;
@@ -115,14 +107,6 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
             simCalculator = new LookupTable.SimCalculator(table);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-        if (frameRelationFile != null) {
-            try {
-                frameExtractor = new FrameExtractor(frameRelationFile.getPath()).setSubframeAsTarget("Event");
-            } catch (JDOMException | IOException e) {
-                throw new ResourceInitializationException(e);
-            }
         }
 
         try {
@@ -192,25 +176,24 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         List<Spot> spots = new ArrayList<>();
 
         int index = 0;
-        for (FrameStructure fs : frameExtractor.getTargetFrames(articleComponent)) {
+
+        for (EventMention eventMention : JCasUtil.selectCovered(EventMention.class, articleComponent)) {
             EventSpot spot = new EventSpot();
-
-            spot.frame_name = fs.getFrameName();
-
-            SemaforLabel target = fs.getTarget();
-
-            spot.loc = Arrays.asList(target.getBegin(), target.getEnd());
-            spot.surface = TextUtils.asTokenized(target);
+            spot.frame_name = eventMention.getFrameName();
+            Span tokenOffset = TextUtils.getSpaceTokenOffset(articleComponent, eventMention);
+            spot.loc = Arrays.asList(tokenOffset.getBegin(), tokenOffset.getEnd());
+            spot.surface = TextUtils.asTokenized(eventMention);
             spot.id = Integer.toString(index);
 
-            for (SemaforLabel semaforLabel : fs.getFrameElements()) {
+            for (EventMentionArgumentLink argumentLink :
+                    FSCollectionFactory.create(eventMention.getArguments(), EventMentionArgumentLink.class)) {
+                EntityMention argumentMention = argumentLink.getArgument();
                 Argument argument = new Argument();
-                argument.surface = TextUtils.asTokenized(semaforLabel);
-                StanfordCorenlpToken argumentHead = UimaNlpUtils.findHeadFromStanfordAnnotation(semaforLabel);
+                argument.surface = TextUtils.asTokenized(argumentMention);
+                StanfordCorenlpToken argumentHead = UimaNlpUtils.findHeadFromStanfordAnnotation(argumentMention);
                 argument.headEntityId = entityIds.getOrDefault(argumentHead, "-");
-                argument.type = semaforLabel.getName();
+                argument.type = argumentLink.getArgumentRole();
             }
-
             spots.add(spot);
             index++;
         }
@@ -264,14 +247,13 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         Body body = JCasUtil.selectSingle(mainView, Body.class);
 
         int index = 0;
-        for (FrameStructure fs : frameExtractor.getTargetFrames(body)) {
-            SemaforLabel target = fs.getTarget();
-            StanfordCorenlpToken targetHead = UimaNlpUtils.findHeadFromStanfordAnnotation(fs.getTarget());
+        for (EventMention eventMention : JCasUtil.selectCovered(EventMention.class, body)) {
+            StanfordCorenlpToken targetHead = UimaNlpUtils.findHeadFromStanfordAnnotation(eventMention);
             if (targetHead != null) {
                 int salience = saliency[index];
                 sb.append(index).append("\t").append(salience).append("\t").append("-").append("\t");
-                addSpan(sb, useToken, target, body);
-                sb.append("\t").append(fs.getFrameName()).append("\n");
+                addSpan(sb, useToken, eventMention, body);
+                sb.append("\t").append(eventMention.getFrameName()).append("\n");
                 index++;
             }
         }
@@ -280,7 +262,7 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
         output.write(sb.toString());
     }
 
-    private int[] getEventSaliency(JCas mainView, List<FrameStructure> frames) {
+    private int[] getEventSaliency(JCas mainView, List<EventMention> eventMentions) {
         JCas abstractView = JCasUtil.getView(mainView, AnnotatedNytReader.ABSTRACT_VIEW_NAME, false);
         Set<String> abstractLemmas = new HashSet<>();
 
@@ -288,10 +270,11 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
             abstractLemmas.add(token.getLemma().toLowerCase());
         }
 
-        int[] saliency = new int[frames.size()];
+        int[] saliency = new int[eventMentions.size()];
         int index = 0;
-        for (FrameStructure fs : frames) {
-            StanfordCorenlpToken targetHead = UimaNlpUtils.findHeadFromStanfordAnnotation(fs.getTarget());
+
+        for (EventMention eventMention : eventMentions) {
+            StanfordCorenlpToken targetHead = UimaNlpUtils.findHeadFromStanfordAnnotation(eventMention);
             int salience = 0;
             if (targetHead != null) {
                 String targetLemma = targetHead.getLemma().toLowerCase();
@@ -421,10 +404,6 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
 
         for (Spot bodySpot : bodySpots) {
             FeatureUtils.SimpleInstance instance = featureLookup.get(bodySpot.id);
-            if (instance == null) {
-                logger.info("Null instance for body spot id is " + bodySpot.id);
-                DebugUtils.pause();
-            }
             bodySpot.feature = new Feature(table, instance);
         }
     }
@@ -436,13 +415,15 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
 
         Body body = JCasUtil.selectSingle(aJCas, Body.class);
 
-        int[] eventSaliency = getEventSaliency(aJCas, frameExtractor.getTargetFrames(body));
+        List<EventMention> bodyEventMentions = JCasUtil.selectCovered(EventMention.class, body);
+
+        int[] eventSaliency = getEventSaliency(aJCas, bodyEventMentions);
         Set<String> entitySaliency = SalienceUtils.getAbstractEntities(aJCas);
 
         List<FeatureUtils.SimpleInstance> entityInstance = FeatureUtils.getKbInstances(aJCas, entitySaliency,
                 simCalculator);
         List<FeatureUtils.SimpleInstance> eventInstances = FeatureUtils.getEventInstances(body, eventSaliency,
-                simCalculator, frameExtractor);
+                simCalculator);
         try {
             if (trainDocs.contains(articleName)) {
                 writeEntityGold(aJCas, entitySaliency, goldTokenEntityWriters.get("train"), true);
@@ -490,29 +471,16 @@ public class MultiFormatEntityTrainingWriter extends AbstractLoggingAnnotator {
                 GzippedXmiCollectionReader.PARAM_RECURSIVE, true
         );
 
-//        AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
-//                MultiFormatEntityTrainingWriter.class, typeSystemDescription,
-//                MultiFormatEntityTrainingWriter.PARAM_OUTPUT_DIR, new File(workingDir, outputDir),
-//                MultiFormatEntityTrainingWriter.PARAM_TRAIN_SPLIT, trainingSplitFile,
-//                MultiFormatEntityTrainingWriter.PARAM_TEST_SPLIT, testSplitFile,
-//                MultiFormatEntityTrainingWriter.PARAM_OUTPUT_PREFIX, "nyt_salience",
-//                MultiFormatEntityTrainingWriter.MULTI_THREAD, true,
-//                MultiFormatEntityTrainingWriter.PARAM_JOINT_EMBEDDING, embeddingPath,
-//                MultiFormatEntityTrainingWriter.PARAM_FEATURE_OUTPUT_DIR, featureOutput
-//        );
-
         AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
-                MultiFormatEntityTrainingWriter.class, typeSystemDescription,
-                MultiFormatEntityTrainingWriter.PARAM_OUTPUT_DIR, new File(workingDir, outputDir),
-                MultiFormatEntityTrainingWriter.PARAM_TRAIN_SPLIT, trainingSplitFile,
-                MultiFormatEntityTrainingWriter.PARAM_TEST_SPLIT, testSplitFile,
-                MultiFormatEntityTrainingWriter.PARAM_OUTPUT_PREFIX, "nyt_salience",
-                MultiFormatEntityTrainingWriter.MULTI_THREAD, true,
-                MultiFormatEntityTrainingWriter.PARAM_JOINT_EMBEDDING, embeddingPath,
-                MultiFormatEntityTrainingWriter.PARAM_WRITE_EVENT, true,
-                MultiFormatEntityTrainingWriter.PARAM_FRAME_RELATION, "../data/resources/fndata-1.7/frRelation.xml"
+                MultiFormatSalienceDataWriter.class, typeSystemDescription,
+                MultiFormatSalienceDataWriter.PARAM_OUTPUT_DIR, new File(workingDir, outputDir),
+                MultiFormatSalienceDataWriter.PARAM_TRAIN_SPLIT, trainingSplitFile,
+                MultiFormatSalienceDataWriter.PARAM_TEST_SPLIT, testSplitFile,
+                MultiFormatSalienceDataWriter.PARAM_OUTPUT_PREFIX, "nyt_salience",
+                MultiFormatSalienceDataWriter.MULTI_THREAD, true,
+                MultiFormatSalienceDataWriter.PARAM_JOINT_EMBEDDING, embeddingPath,
+                MultiFormatSalienceDataWriter.PARAM_WRITE_EVENT, true
         );
-
 
         new BasicPipeline(reader, true, true, 7, writer).run();
     }

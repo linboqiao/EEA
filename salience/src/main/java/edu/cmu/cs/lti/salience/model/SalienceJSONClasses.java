@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static edu.cmu.cs.lti.salience.utils.FeatureUtils.lexicalPrefix;
+import static edu.cmu.cs.lti.salience.utils.FeatureUtils.sparsePrefix;
 
 /**
  * Created with IntelliJ IDEA.
@@ -60,20 +61,25 @@ public class SalienceJSONClasses {
     public static class Feature {
         public Feature(LookupTable table, FeatureUtils.SimpleInstance instance) {
             featureArray = new ArrayList<>();
+            featureNames = new ArrayList<>();
+
             List<Double> lexicalFeatures = new ArrayList<>();
 
             instance.getFeatureMap().keySet().stream().sorted().forEach(f -> {
-                if (!f.startsWith(lexicalPrefix)) {
-                    featureArray.add(instance.getFeatureMap().get(f));
-                } else {
+                if (f.startsWith(lexicalPrefix)) {
                     String word = f.split("_")[1];
                     for (double v : table.getEmbedding(word)) {
                         lexicalFeatures.add(v);
                     }
+                    featureNames.add(f);
+                } else if (f.startsWith(sparsePrefix)) {
+                    // Currently not adding sparse features.
+                } else {
+                    featureArray.add(instance.getFeatureMap().get(f));
+                    featureNames.add(f);
                 }
             });
             featureArray.addAll(lexicalFeatures);
-            featureNames = instance.getFeatureNames();
         }
 
         public Feature() {
