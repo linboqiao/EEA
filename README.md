@@ -23,6 +23,10 @@ Building is simple with Maven, under the root directory of the project, do (You 
     
     mvn clean install
     
+Note
+----------
+The master branch has been changed quite a lot from the previous models. Currrently the branch: https://bitbucket.org/hunterhector/cmu-script/branch/model0411 would probably work with the model below. At the mean time, I am working on releasing a new version of code and models.
+    
 Running with existing model
 ----------
 1. Download a copy of all the models package, and unpack it: 
