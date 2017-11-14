@@ -37,6 +37,7 @@ import org.xml.sax.SAXException;
 
 import java.io.*;
 import java.util.*;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Created with IntelliJ IDEA.
@@ -139,14 +140,18 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         Map<String, BufferedWriter> writers = new HashMap<>();
 
         File outputParent = FileUtils.joinPathsAsFile(segments);
-        File fullTrainOutput = new File(outputParent, "train");
-        File fullTestOutput = new File(outputParent, "test");
+        File fullTrainOutput = new File(outputParent, "train.gz");
+        File fullTestOutput = new File(outputParent, "test.gz");
         if (!outputParent.exists()) {
             outputParent.mkdirs();
         }
 
-        writers.put("train", new BufferedWriter(new FileWriter(fullTrainOutput)));
-        writers.put("test", new BufferedWriter(new FileWriter(fullTestOutput)));
+        writers.put("train", new BufferedWriter(
+                new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(fullTrainOutput)))
+        ));
+        writers.put("test", new BufferedWriter(
+                new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(fullTestOutput)))
+        ));
 
         return writers;
     }
@@ -347,7 +352,10 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
     private void writeTagged(JCas aJCas, Writer output,
                              List<FeatureUtils.SimpleInstance> entityFeatures,
-                             List<FeatureUtils.SimpleInstance> eventFeatures) throws IOException {
+                             List<FeatureUtils.SimpleInstance> eventFeatures,
+                             Set<String> entitySaliency,
+                             int[] eventSaliency
+    ) throws IOException {
         Gson gson = new Gson();
 
         Headline title = JCasUtil.selectSingle(aJCas, Headline.class);
@@ -372,6 +380,9 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
         addFeatureToSpots(bodyEntities, entityFeatures);
         addFeatureToSpots(bodyEvents, eventFeatures);
+
+        addEventSalienceToSpots(bodyEvents, eventSaliency);
+        addEntitySalienceToSpots(bodyEntities, entitySaliency);
 
         DocStructure doc = new DocStructure();
 
@@ -408,6 +419,17 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         }
     }
 
+    private void addEntitySalienceToSpots(List<Spot> spots, Set<String> salientEids) {
+        for (Spot spot : spots) {
+            spot.salience = salientEids.contains(spot.id) ? 1 : 0;
+        }
+    }
+
+    private void addEventSalienceToSpots(List<Spot> bodySpots, int[] eventSaliency) {
+        for (int i = 0; i < bodySpots.size(); i++) {
+            bodySpots.get(i).salience = eventSaliency[i];
+        }
+    }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
@@ -432,7 +454,8 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
                 writeEventGold(aJCas, eventSaliency, goldTokenEventWriters.get("train"), true);
                 writeEventGold(aJCas, eventSaliency, goldCharEventWriters.get("train"), false);
 
-                writeTagged(aJCas, tagWriters.get("train"), entityInstance, eventInstances);
+                writeTagged(aJCas, tagWriters.get("train"), entityInstance, eventInstances, entitySaliency,
+                        eventSaliency);
 
                 writeFeatures(aJCas, entityFeatureWriters.get("train"), entityInstance);
                 writeFeatures(aJCas, eventFeatureWriters.get("train"), eventInstances);
@@ -443,7 +466,8 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
                 writeEventGold(aJCas, eventSaliency, goldTokenEventWriters.get("test"), true);
                 writeEventGold(aJCas, eventSaliency, goldCharEventWriters.get("test"), false);
 
-                writeTagged(aJCas, tagWriters.get("test"), entityInstance, eventInstances);
+                writeTagged(aJCas, tagWriters.get("test"), entityInstance, eventInstances, entitySaliency,
+                        eventSaliency);
 
                 writeFeatures(aJCas, entityFeatureWriters.get("test"), entityInstance);
                 writeFeatures(aJCas, eventFeatureWriters.get("test"), eventInstances);

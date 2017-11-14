@@ -40,6 +40,7 @@ public class SalienceJSONClasses {
         public String surface;
         public Feature feature;
         public String id;
+        public int salience;
     }
 
     static public class EventSpot extends Spot {
@@ -62,6 +63,8 @@ public class SalienceJSONClasses {
         public Feature(LookupTable table, FeatureUtils.SimpleInstance instance) {
             featureArray = new ArrayList<>();
             featureNames = new ArrayList<>();
+            sparseFeatureArray = new ArrayList<>();
+            sparseFeatureName = new ArrayList<>();
 
             List<Double> lexicalFeatures = new ArrayList<>();
 
@@ -73,7 +76,10 @@ public class SalienceJSONClasses {
                     }
                     featureNames.add(f);
                 } else if (f.startsWith(sparsePrefix)) {
-                    // Currently not adding sparse features.
+                    // Sparse features go to a different field.
+                    String featureName = f.split("_")[0];
+                    sparseFeatureArray.add(f);
+                    sparseFeatureName.add(featureName);
                 } else {
                     featureArray.add(instance.getFeatureMap().get(f));
                     featureNames.add(f);
@@ -88,5 +94,8 @@ public class SalienceJSONClasses {
 
         public List<Double> featureArray;
         public List<String> featureNames;
+
+        public List<String> sparseFeatureArray;
+        public List<String> sparseFeatureName;
     }
 }

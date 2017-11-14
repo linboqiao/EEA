@@ -24,10 +24,6 @@ public class FrameNode {
         frameElements = new ArrayList<>();
     }
 
-    public void addFrameElement(FrameElement element) {
-        this.frameElements.add(element);
-    }
-
     public FrameElement addFrameElement(String feName) {
         FrameElement fe = new FrameElement(this, feName);
         this.frameElements.add(fe);

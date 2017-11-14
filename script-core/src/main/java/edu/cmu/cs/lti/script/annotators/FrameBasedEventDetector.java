@@ -1,13 +1,18 @@
 package edu.cmu.cs.lti.script.annotators;
 
-import edu.cmu.cs.lti.frame.FrameExtractor;
+import edu.cmu.cs.lti.frame.FrameRelationReader;
 import edu.cmu.cs.lti.frame.FrameStructure;
+import edu.cmu.cs.lti.frame.UimaFrameExtractor;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.io.IOUtils;
 import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
+import edu.cmu.cs.lti.uima.io.writer.StepBasedDirGzippedXmiWriter;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
+import edu.cmu.cs.lti.utils.DebugUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -28,8 +33,8 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URISyntaxException;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -40,22 +45,32 @@ import java.util.List;
  */
 public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
     public static final String PARAM_FRAME_RELATION = "frameRelationFile";
-    @ConfigurationParameter(name = PARAM_FRAME_RELATION, mandatory = false)
+    @ConfigurationParameter(name = PARAM_FRAME_RELATION)
     private File frameRelationFile;
 
-    private FrameExtractor frameExtractor;
+    private Set<String> ignoredHeadWords;
+    private UimaFrameExtractor extractor;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
-        if (frameRelationFile != null) {
-            try {
-                frameExtractor = new FrameExtractor(frameRelationFile.getPath()).setSubframeAsTarget("Event");
-//                FrameDataReader.getFN2VNFrameMap();
 
-            } catch (JDOMException | IOException e) {
-                throw new ResourceInitializationException(e);
+        String[] ignoredVerbs = new String[]{"appear", "be", "become", "do", "have", "seem", "do", "get", "give",
+                "go", "have", "keep", "make", "put", "set", "take", "argue", "claim", "say", "suggest", "tell"};
+        ignoredHeadWords = new HashSet<>();
+        Collections.addAll(ignoredHeadWords, ignoredVerbs);
+
+        try {
+            FrameRelationReader frameReader = new FrameRelationReader(frameRelationFile.getPath());
+            File eventFrameFile = new File(FrameBasedEventDetector.class
+                    .getResource("/event_evoking_frames.txt").toURI());
+            HashSet<String> targetFrames = new HashSet<>();
+            for (String line : FileUtils.readLines(eventFrameFile)) {
+                targetFrames.add(line.trim());
             }
+            extractor = new UimaFrameExtractor(frameReader.getFeByName(), targetFrames);
+        } catch (URISyntaxException | IOException | JDOMException e) {
+            e.printStackTrace();
         }
     }
 
@@ -67,8 +82,21 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
     private void annotateEvents(JCas aJCas) {
         ArticleComponent article = JCasUtil.selectSingle(aJCas, Article.class);
 
-        for (FrameStructure frameStructure : frameExtractor.getTargetFrames(article)) {
+        for (FrameStructure frameStructure : extractor.getTargetFrames(article)) {
             EventMention eventMention = new EventMention(aJCas);
+
+            StanfordCorenlpToken headword = UimaNlpUtils.findHeadFromStanfordAnnotation(frameStructure.getTarget());
+
+            if (headword == null) {
+                continue;
+            } else if (ignoredHeadWords.contains(headword.getLemma().toLowerCase())) {
+                logger.info("Filtered because light.");
+                continue;
+            }
+
+            logger.info(String.format("Target event %s of frame %s, of headword %s",
+                    frameStructure.getTarget().getCoveredText(), frameStructure.getFrameName(),
+                    headword.getLemma().toLowerCase()));
 
             SemaforLabel predicate = frameStructure.getTarget();
             String frameName = frameStructure.getFrameName();
@@ -95,11 +123,14 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
 
                 String superFeName = superFeNames.get(i);
                 argumentLink.setSuperFrameElementRoleName(superFeName);
+                i++;
             }
 
             eventMention.setArguments(FSCollectionFactory.createFSList(aJCas, argumentLinks));
             UimaAnnotationUtils.finishAnnotation(eventMention, predicate.getBegin(), predicate.getEnd(),
                     COMPONENT_ID, 0, aJCas);
+
+            DebugUtils.pause();
         }
     }
 
@@ -122,6 +153,8 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
                 FrameBasedEventDetector.class, typeSystemDescription,
                 FrameBasedEventDetector.PARAM_FRAME_RELATION, "../data/resources/fndata-1.7/frRelation.xml"
         );
+
+        StepBasedDirGzippedXmiWriter.dirSegFunction = IOUtils::indexBasedSegFunc;
 
         new BasicPipeline(reader, true, true, 7, workingDir, outputDir, true, detector).run();
     }

@@ -59,6 +59,8 @@ public class CompatibleArgumentMiner extends AbstractLoggingAnnotator {
 
     private BufferedWriter outputWriter;
 
+    private Set<String> ignoreVerbs;
+
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -81,6 +83,11 @@ public class CompatibleArgumentMiner extends AbstractLoggingAnnotator {
         } catch (IOException e) {
             throw new ResourceInitializationException(e);
         }
+
+        ignoreVerbs = new HashSet<>();
+
+        ignoreVerbs.addAll(Arrays.asList("appear", "be", "become", "do", "have", "seem", "do", "get", "give", "go",
+                "have", "keep", "make", "put", "set", "take", "argue", "claim", "say", "suggest", "tell"));
     }
 
     private void parseFileFile(File frameFile) throws IOException {
@@ -100,91 +107,120 @@ public class CompatibleArgumentMiner extends AbstractLoggingAnnotator {
         // 2. Filter some verbs based on type. /Done
         // 3. Filter some verbs based on size.
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("#").append(UimaConvenience.getDocId(aJCas)).append("\n");
-
-        ArrayListMultimap<String, Pair<String, StanfordCorenlpSentence>> argumentByFrame = ArrayListMultimap.create();
+        ArrayListMultimap<String, Pair<EntityMention, StanfordCorenlpSentence>> argumentByFrame =
+                ArrayListMultimap.create();
 
         int index = 0;
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             for (EventMention eventMention : JCasUtil.selectCovered(EventMention.class, sentence)) {
                 String eventHead = getHeadLemma(eventMention);
+
+                if (ignoreVerbs.contains(eventHead)) {
+                    continue;
+                }
+
                 FSList argumentsFS = eventMention.getArguments();
                 for (EventMentionArgumentLink argumentLink : FSCollectionFactory.create(argumentsFS,
                         EventMentionArgumentLink.class)) {
+                    // TODO ignore arguments that match the head itself.
                     String role = argumentLink.getSuperFrameElementRoleName();
-                    String argumentText = argumentLink.getArgument().getCoveredText().replace("\t", " ")
-                            .replace("\n", " ");
                     argumentByFrame.put(eventHead + "|" + eventMention.getFrameName() + "|" + role,
-                            Pair.of(argumentText, sentence));
+                            Pair.of(argumentLink.getArgument(), sentence));
                 }
             }
             sentence.setIndex(index);
             index++;
         }
 
-        for (Map.Entry<String, Collection<Pair<String, StanfordCorenlpSentence>>> framedArguments : argumentByFrame
-                .asMap().entrySet()) {
+        List<String> lines = new ArrayList<>();
+
+        for (Map.Entry<String, Collection<Pair<EntityMention, StanfordCorenlpSentence>>> framedArguments :
+                argumentByFrame.asMap().entrySet()) {
             String[] frameElementKey = framedArguments.getKey().split("\\|");
-            List<Pair<String, StanfordCorenlpSentence>> arguments = new ArrayList<>(framedArguments.getValue());
+            List<Pair<EntityMention, StanfordCorenlpSentence>> arguments = new ArrayList<>(framedArguments.getValue());
 
             List<Pair<String, String>> argPairs = new ArrayList<>();
             List<Pair<String, String>> provenances = new ArrayList<>();
 
             getArgumentPairs(arguments, argPairs, provenances);
 
-            List<String> parts = new ArrayList<>();
             if (argPairs.size() > 0) {
                 String event = frameElementKey[0];
                 String frame = frameElementKey[1];
                 String role = frameElementKey[2];
 
-                parts.add(event);
-                parts.add(frame);
-                parts.add(role);
-
                 for (int i = 0; i < argPairs.size(); i++) {
+                    List<String> parts = new ArrayList<>();
+
+                    parts.add(event);
+                    parts.add(frame);
+                    parts.add(role);
+
                     Pair<String, String> paireArg = argPairs.get(i);
                     Pair<String, String> provenance = provenances.get(i);
 
-                    parts.add(paireArg.getKey());
-                    parts.add(paireArg.getValue());
+                    parts.add("[" + paireArg.getLeft() + "]");
+                    parts.add("[" + paireArg.getRight() + "]");
 
-                    parts.add(provenance.getKey());
-                    parts.add(provenance.getValue());
+                    parts.add(provenance.getLeft());
+                    parts.add(provenance.getRight());
+
+                    lines.add(Joiner.on("\t").join(parts));
                 }
-
-
-                sb.append(Joiner.on("\t").join(parts)).append("\n");
             }
         }
 
         try {
-            outputWriter.write(sb.append("\n").toString());
+            if (!lines.isEmpty()) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("#").append(UimaConvenience.getArticleName(aJCas)).append("\n");
+                for (String line : lines) {
+                    sb.append(line).append("\n");
+                }
+                outputWriter.write(sb.append("\n").toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void getArgumentPairs(List<Pair<String, StanfordCorenlpSentence>> arguments,
+    @Override
+    public void collectionProcessComplete() throws AnalysisEngineProcessException {
+        super.collectionProcessComplete();
+        try {
+            outputWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getArgumentPairs(List<Pair<EntityMention, StanfordCorenlpSentence>> arguments,
                                   List<Pair<String, String>> argPairs,
                                   List<Pair<String, String>> provenances) {
         for (int i = 0; i < arguments.size() - 1; i++) {
-            Pair<String, StanfordCorenlpSentence> argument1 = arguments.get(i);
+            Pair<EntityMention, StanfordCorenlpSentence> argument1 = arguments.get(i);
+            String argument1Text = argument1.getKey().getCoveredText();
+            StanfordCorenlpToken argument1Head = UimaNlpUtils.findHeadFromStanfordAnnotation(argument1.getKey());
+            if (argument1Head.getPos().startsWith("PR")) {
+                continue;
+            }
+
             for (int j = i + 1; j < arguments.size(); j++) {
-                Pair<String, StanfordCorenlpSentence> argument2 = arguments.get(j);
-                String argument1Text = argument1.getKey();
-                String argument2Text = argument2.getKey();
+                Pair<EntityMention, StanfordCorenlpSentence> argument2 = arguments.get(j);
+                String argument2Text = cleanWhite(argument2.getKey().getCoveredText());
+
+                StanfordCorenlpToken argument2Head = UimaNlpUtils.findHeadFromStanfordAnnotation(argument2.getKey());
+                if (argument2Head.getPos().startsWith("PR")) {
+                    continue;
+                }
 
                 if (!argument1Text.equals(argument2Text)) {
                     int sentIndex1 = argument1.getValue().getIndex();
                     int sentIndex2 = argument2.getValue().getIndex();
 
                     if (Math.abs(sentIndex1 - sentIndex2) <= sentenceDistance) {
-                        String sent1 = argument1.getValue().getCoveredText().replace("|", "_")
-                                .replace("\t", " ");
-                        String sent2 = argument2.getValue().getCoveredText().replace("|", "_")
-                                .replace("\t", " ");
+                        String sent1 = cleanWhite(argument1.getValue().getCoveredText());
+                        String sent2 = cleanWhite(argument2.getValue().getCoveredText());
 
                         if (!sent1.equals(sent2)) {
                             argPairs.add(Pair.of(argument1Text, argument2Text));
@@ -196,12 +232,16 @@ public class CompatibleArgumentMiner extends AbstractLoggingAnnotator {
         }
     }
 
+    private String cleanWhite(String str) {
+        return str.replace("\t", " ").replace("\n", " ").replace("\t", " ").replace("|", "_");
+    }
+
     private String getHeadLemma(ComponentAnnotation anno) {
         StanfordCorenlpToken head = UimaNlpUtils.findHeadFromStanfordAnnotation(anno);
         if (head != null) {
             return head.getLemma().toLowerCase();
         } else {
-            return anno.getCoveredText().replace("\t", " ").replace("\n", " ").toLowerCase();
+            return cleanWhite(anno.getCoveredText()).toLowerCase();
         }
     }
 

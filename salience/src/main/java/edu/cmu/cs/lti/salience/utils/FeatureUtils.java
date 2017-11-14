@@ -69,21 +69,8 @@ public class FeatureUtils {
         }
     }
 
-
-    private static Map<Word, Integer> loadSentenceIds(Collection<StanfordCorenlpSentence> sentences) {
-        Map<Word, Integer> sentenceIds = new HashMap<>();
-        int sentenceIndex = 0;
-        for (StanfordCorenlpSentence sentence : sentences) {
-            for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence)) {
-                sentenceIds.put(token, sentenceIndex);
-            }
-            sentenceIndex++;
-        }
-        return sentenceIds;
-    }
-
-    public static List<SimpleInstance> getEventInstances(ArticleComponent component, int[] eventSaliency,
-                                                         LookupTable.SimCalculator simCalculator) {
+    public static List<SimpleInstance> getEventInstances(ArticleComponent component,
+                                                         int[] eventSaliency, LookupTable.SimCalculator simCalculator) {
         List<SimpleInstance> instances = new ArrayList<>();
 
         Map<EventMention, Integer> mentionSentenceIds = new HashMap<>();
@@ -126,7 +113,7 @@ public class FeatureUtils {
             String targetLex = targetWord == null ? TextUtils.asTokenized(eventMention) :
                     SalienceUtils.getCanonicalToken(targetWord);
             instance.featureMap.put(lexicalPrefix + "Head_" + targetLex, 1.0);
-            instance.featureMap.put("SentenceLoc", (double) mentionSentenceIds.get(eventMention));
+            instance.featureMap.put("SentenceLoc", (double) mentionSentenceIds.getOrDefault(eventMention, 0));
             instance.featureMap.put(sparsePrefix + "FrameName_" + eventMention.getFrameName(), 1.0);
             instance.featureMap.put("HeadCount", (double) tokenCount.get(targetLex));
             instance.featureMap.put("EmbeddingVoting", votingScore);
