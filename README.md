@@ -31,15 +31,18 @@ Running with existing model
 ----------
 1. Download a copy of all the models package, and unpack it: 
    > http://cairo.lti.cs.cmu.edu/~hector/models/EventMentionModelsAndResources20160411.tar.gz
-2. Modify the kbp.properties file with the following:
+1. Currently the project has been refactored a lot:
+    1. To run these old models, try an earlier branch:
+    1. https://bitbucket.org/hunterhector/cmu-script/branch/model0411
+1. Modify the kbp.properties file with the following:
     1. point edu.cmu.cs.lti.model.dir to the unpacked directory
     2. point edu.cmu.cs.lti.model.event.dir to the unpacked directory
     3. point edu.cmu.cs.lti.resource.dir to the unpacked directory
-3. Test it out by running the following command in cmu-script project directory:
+1. Test it out by running the following command in cmu-script project directory:
 
         bin/test/coref_plain_text.sh settings/kbp.properties event-coref/src/test/resources/sample-input ../sample-output
     
-4. You should be able to find the annotation in TBF format in the following file:
+1. You should be able to find the annotation in TBF format in the following file:
    > ../sample-output/eval/full_run/lv1_coref.tbf
 
 For details about the TBF format, scoring, visit the TAC KBP event task website (look for Task Definition):
