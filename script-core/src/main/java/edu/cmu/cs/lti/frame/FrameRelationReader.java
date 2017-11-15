@@ -176,7 +176,7 @@ public class FrameRelationReader {
                 "Preventing_or_letting", "Delivery", "Defending", "Deciding", "Detaining", "Discussion", "Emitting",
                 "Food_gathering", "Growing_food", "Be_in_agreement_on_action", "Hindering", "Success_or_failure",
                 "Import_export_scenario", "Impact", "Installing", "Judgment", "Judgment_communication", "Justifying",
-                "Leadership", "Losing", "Make_agreement_on_action", "Meet_with", "Make_noise", "Occupy_rank", "Project",
+                "Losing", "Make_agreement_on_action", "Meet_with", "Make_noise", "Occupy_rank", "Project",
                 "Statement", "Delivery", "Rebellion", "Revolution", "Protest", "Protecting", "Provide_lodging",
                 "Questioning", "Quarreling", "Reading_activity", "Repayment", "Reporting", "Request", "Research",
                 "Resurrection", "Scheduling", "Sending", "Studying", "Meet_with_response", "Offering", "Prank",

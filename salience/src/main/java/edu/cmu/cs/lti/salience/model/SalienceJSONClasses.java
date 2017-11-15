@@ -2,7 +2,6 @@ package edu.cmu.cs.lti.salience.model;
 
 import com.google.gson.annotations.SerializedName;
 import edu.cmu.cs.lti.salience.utils.FeatureUtils;
-import edu.cmu.cs.lti.salience.utils.LookupTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,22 +59,14 @@ public class SalienceJSONClasses {
     }
 
     public static class Feature {
-        public Feature(LookupTable table, FeatureUtils.SimpleInstance instance) {
+        public Feature(FeatureUtils.SimpleInstance instance) {
             featureArray = new ArrayList<>();
             featureNames = new ArrayList<>();
             sparseFeatureArray = new ArrayList<>();
             sparseFeatureName = new ArrayList<>();
 
-            List<Double> lexicalFeatures = new ArrayList<>();
-
             instance.getFeatureMap().keySet().stream().sorted().forEach(f -> {
-                if (f.startsWith(lexicalPrefix)) {
-                    String word = f.split("_")[1];
-                    for (double v : table.getEmbedding(word)) {
-                        lexicalFeatures.add(v);
-                    }
-                    featureNames.add(f);
-                } else if (f.startsWith(sparsePrefix)) {
+                if (f.startsWith(sparsePrefix) || f.startsWith(lexicalPrefix)) {
                     // Sparse features go to a different field.
                     String featureName = f.split("_")[0];
                     sparseFeatureArray.add(f);
@@ -85,11 +76,6 @@ public class SalienceJSONClasses {
                     featureNames.add(f);
                 }
             });
-            featureArray.addAll(lexicalFeatures);
-        }
-
-        public Feature() {
-            featureArray = new ArrayList<>();
         }
 
         public List<Double> featureArray;

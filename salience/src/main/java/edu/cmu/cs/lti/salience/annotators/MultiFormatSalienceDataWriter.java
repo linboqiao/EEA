@@ -80,7 +80,6 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
     // Calculate embedding similarity
     private LookupTable.SimCalculator simCalculator;
-    private LookupTable table;
 
     private Map<String, BufferedWriter> goldTokenEntityWriters;
     private Map<String, BufferedWriter> goldTokenEventWriters;
@@ -104,7 +103,7 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         logger.info("Number of docs in testing: " + testDocs.size());
 
         try {
-            table = SalienceUtils.loadEmbedding(jointEmbeddingFile);
+            LookupTable table = SalienceUtils.loadEmbedding(jointEmbeddingFile);
             simCalculator = new LookupTable.SimCalculator(table);
         } catch (IOException e) {
             e.printStackTrace();
@@ -415,7 +414,7 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
         for (Spot bodySpot : bodySpots) {
             FeatureUtils.SimpleInstance instance = featureLookup.get(bodySpot.id);
-            bodySpot.feature = new Feature(table, instance);
+            bodySpot.feature = new Feature(instance);
         }
     }
 
@@ -442,7 +441,7 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         int[] eventSaliency = getEventSaliency(aJCas, bodyEventMentions);
         Set<String> entitySaliency = SalienceUtils.getAbstractEntities(aJCas);
 
-        List<FeatureUtils.SimpleInstance> entityInstance = FeatureUtils.getKbInstances(aJCas, entitySaliency,
+        List<FeatureUtils.SimpleInstance> entityInstances = FeatureUtils.getKbInstances(aJCas, entitySaliency,
                 simCalculator);
         List<FeatureUtils.SimpleInstance> eventInstances = FeatureUtils.getEventInstances(body, eventSaliency,
                 simCalculator);
@@ -454,10 +453,10 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
                 writeEventGold(aJCas, eventSaliency, goldTokenEventWriters.get("train"), true);
                 writeEventGold(aJCas, eventSaliency, goldCharEventWriters.get("train"), false);
 
-                writeTagged(aJCas, tagWriters.get("train"), entityInstance, eventInstances, entitySaliency,
+                writeTagged(aJCas, tagWriters.get("train"), entityInstances, eventInstances, entitySaliency,
                         eventSaliency);
 
-                writeFeatures(aJCas, entityFeatureWriters.get("train"), entityInstance);
+                writeFeatures(aJCas, entityFeatureWriters.get("train"), entityInstances);
                 writeFeatures(aJCas, eventFeatureWriters.get("train"), eventInstances);
             } else if (testDocs.contains(articleName)) {
                 writeEntityGold(aJCas, entitySaliency, goldTokenEntityWriters.get("test"), true);
@@ -466,10 +465,10 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
                 writeEventGold(aJCas, eventSaliency, goldTokenEventWriters.get("test"), true);
                 writeEventGold(aJCas, eventSaliency, goldCharEventWriters.get("test"), false);
 
-                writeTagged(aJCas, tagWriters.get("test"), entityInstance, eventInstances, entitySaliency,
+                writeTagged(aJCas, tagWriters.get("test"), entityInstances, eventInstances, entitySaliency,
                         eventSaliency);
 
-                writeFeatures(aJCas, entityFeatureWriters.get("test"), entityInstance);
+                writeFeatures(aJCas, entityFeatureWriters.get("test"), entityInstances);
                 writeFeatures(aJCas, eventFeatureWriters.get("test"), eventInstances);
             }
         } catch (IOException e) {

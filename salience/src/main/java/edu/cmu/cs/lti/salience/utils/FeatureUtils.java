@@ -98,9 +98,12 @@ public class FeatureUtils {
             instance.instanceName = Integer.toString(index);
 
             double votingScore = 0;
+            String curr = SalienceUtils.getCanonicalToken(UimaNlpUtils.findHeadFromStanfordAnnotation(eventMention));
+
             for (EventMention evm : allEventMentions) {
                 if (evm != eventMention) {
-                    votingScore += simCalculator.getSimilarity(eventMention.getCoveredText(), evm.getCoveredText());
+                    String other = SalienceUtils.getCanonicalToken(UimaNlpUtils.findHeadFromStanfordAnnotation(evm));
+                    votingScore += simCalculator.getSimilarity(curr, other);
                 }
             }
 
@@ -112,8 +115,13 @@ public class FeatureUtils {
             StanfordCorenlpToken targetWord = UimaNlpUtils.findHeadFromStanfordAnnotation(eventMention);
             String targetLex = targetWord == null ? TextUtils.asTokenized(eventMention) :
                     SalienceUtils.getCanonicalToken(targetWord);
+            int sentLoc = mentionSentenceIds.getOrDefault(eventMention, 0);
+            if (sentLoc > 10) {
+                sentLoc = 10;
+            }
+
             instance.featureMap.put(lexicalPrefix + "Head_" + targetLex, 1.0);
-            instance.featureMap.put("SentenceLoc", (double) mentionSentenceIds.getOrDefault(eventMention, 0));
+            instance.featureMap.put("SentenceLoc", (double) sentLoc);
             instance.featureMap.put(sparsePrefix + "FrameName_" + eventMention.getFrameName(), 1.0);
             instance.featureMap.put("HeadCount", (double) tokenCount.get(targetLex));
             instance.featureMap.put("EmbeddingVoting", votingScore);
@@ -196,6 +204,10 @@ public class FeatureUtils {
             StanfordCorenlpToken firstHeadWord = UimaNlpUtils.findHeadFromStanfordAnnotation(firstMention);
 
             String firstHeadLex = SalienceUtils.getCanonicalToken(firstHeadWord);
+
+            if (firstLoc > 10) {
+                firstLoc = 10;
+            }
 
             instance.instanceName = kbid;
             instance.label = salience;

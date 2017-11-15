@@ -322,7 +322,6 @@ Killing
 Knot_creation
 Labeling
 Launch_process
-Leadership
 Legal_rulings
 Lending
 Limiting
