@@ -10,9 +10,7 @@ import edu.cmu.cs.lti.uima.io.IOUtils;
 import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
 import edu.cmu.cs.lti.uima.io.writer.StepBasedDirGzippedXmiWriter;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
-import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -60,8 +58,6 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
 
         try {
             FrameRelationReader frameReader = new FrameRelationReader(frameRelationFile.getPath());
-            logger.info(String.valueOf(getClass().getResource("/event_evoking_frames.txt").getPath()));
-
             HashSet<String> targetFrames = new HashSet<>();
             InputStream frameInputStream = getClass().getResourceAsStream("/event_evoking_frames.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(frameInputStream));
@@ -86,20 +82,15 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
     private void annotateEvents(JCas aJCas) {
         ArticleComponent article = JCasUtil.selectSingle(aJCas, Article.class);
 
-        UimaConvenience.printProcessLog(aJCas);
-
         for (FrameStructure frameStructure : extractor.getTargetFrames(article)) {
             SemaforLabel predicate = frameStructure.getTarget();
             String frameName = frameStructure.getFrameName();
 
             StanfordCorenlpToken headword = UimaNlpUtils.findHeadFromStanfordAnnotation(predicate);
 
-            logger.info(headword.getCoveredText());
-
             if (headword == null) {
                 continue;
             } else if (ignoredHeadWords.contains(headword.getLemma().toLowerCase())) {
-                logger.info("Filtered because light.");
                 continue;
             }
 
@@ -107,6 +98,7 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
 
             eventMention.setEventType(frameName);
             eventMention.setFrameName(frameName);
+            eventMention.setHeadWord(headword);
 
             List<EventMentionArgumentLink> argumentLinks = new ArrayList<>();
 
@@ -134,7 +126,7 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
             UimaAnnotationUtils.finishAnnotation(eventMention, COMPONENT_ID, 0, aJCas);
         }
 
-        DebugUtils.pause();
+//        DebugUtils.pause();
     }
 
     public static void main(String[] argv) throws UIMAException, SAXException, CpeDescriptorException, IOException {
