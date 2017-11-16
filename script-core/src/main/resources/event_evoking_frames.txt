@@ -1,6 +1,7 @@
 Abandonment
 Absorb_heat
 Abusing
+Accomplishment
 Achieving_first
 Activity
 Activity_abandoned_state
@@ -18,8 +19,10 @@ Adjusting
 Adopt_selection
 Affirm_or_deny
 Aging
+Agree_or_refuse_to_act
 Agriculture
 Aiming
+Alliance
 Amalgamation
 Amassing
 Appeal
@@ -62,8 +65,10 @@ Becoming_dry
 Becoming_visible
 Being_awake
 Being_born
+Being_detached
 Being_employed
 Being_in_control
+Being_incarcerated
 Being_pregnant
 Besieging
 Billing
@@ -79,8 +84,10 @@ Breaking_out_captive
 Breathing
 Bringing
 Building
+Bungling
 Burying
 Business_closure
+Carry_goods
 Catastrophe
 Catching_fire
 Causation
@@ -157,6 +164,7 @@ Communication
 Communication_manner
 Communication_noise
 Communication_response
+Commutation
 Competition
 Complaining
 Confronting_problem
@@ -164,6 +172,7 @@ Conquering
 Contacting
 Container_focused_placing
 Container_focused_removing
+Contrition
 Control
 Convey_importance
 Cooking_creation
@@ -173,6 +182,7 @@ Cotheme
 Counterattack
 Court_examination
 Create_physical_artwork
+Create_representation
 Creating
 Crime_scenario
 Criminal_investigation
@@ -291,6 +301,7 @@ Hostile_encounter
 Hunting
 Hunting_scenario
 Hunting_success_or_failure
+Imitating
 Immobilization
 Impact
 Import_export_scenario
@@ -303,6 +314,7 @@ Infecting
 Ingest_substance
 Ingestion
 Inhibit_movement
+Inspecting
 Installing
 Intentional_traversing
 Intentionally_act
@@ -361,6 +373,7 @@ Offering
 Ontogeny
 Operate_vehicle
 Operating_a_system
+Operational_testing
 Pardon
 Passing
 Passing_off
@@ -370,6 +383,7 @@ Performing_arts
 Piracy
 Placing
 Planting
+Political_actions
 Posing_as
 Practice
 Prank
@@ -407,6 +421,7 @@ Questioning
 Quitting
 Quitting_a_place
 Rape
+Ratification
 Reading_activity
 Reading_aloud
 Reading_perception
@@ -417,6 +432,8 @@ Receiving
 Reciprocality
 Recording
 Recovery
+Redirecting
+Reforming_a_system
 Rejuvenation
 Releasing
 Releasing_from_custody
@@ -436,6 +453,7 @@ Research
 Reserving
 Reshaping
 Resolve_problem
+Resolve_problem
 Response
 Resurrection
 Retaining
@@ -452,6 +470,7 @@ Sacrificing_for
 Satisfying
 Scheduling
 Scouring
+Scrutiny
 See_through
 Seeking
 Seeking_to_achieve
@@ -475,6 +494,10 @@ Sleep
 Sleep_wake_cycle
 Smuggling
 Soaking
+Soaking_up
+Social_event
+Social_event_collective
+Social_event_individuals
 Speak_on_topic
 Standing_by
 State
@@ -493,6 +516,7 @@ Supporting
 Surrendering
 Surrendering_possession
 Surviving
+Suspicion
 Take_place_of
 Taking
 Talking_into

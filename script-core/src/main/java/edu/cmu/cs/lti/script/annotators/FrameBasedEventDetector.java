@@ -10,9 +10,9 @@ import edu.cmu.cs.lti.uima.io.IOUtils;
 import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
 import edu.cmu.cs.lti.uima.io.writer.StepBasedDirGzippedXmiWriter;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.DebugUtils;
-import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -31,9 +31,7 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.jdom2.JDOMException;
 import org.xml.sax.SAXException;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -62,14 +60,20 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
 
         try {
             FrameRelationReader frameReader = new FrameRelationReader(frameRelationFile.getPath());
-            File eventFrameFile = new File(FrameBasedEventDetector.class
-                    .getResource("/event_evoking_frames.txt").toURI());
+            logger.info(String.valueOf(getClass().getResource("/event_evoking_frames.txt").getPath()));
+
             HashSet<String> targetFrames = new HashSet<>();
-            for (String line : FileUtils.readLines(eventFrameFile)) {
+            InputStream frameInputStream = getClass().getResourceAsStream("/event_evoking_frames.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(frameInputStream));
+            String line;
+            while ((line = br.readLine()) != null) {
                 targetFrames.add(line.trim());
             }
+
+            logger.info(String.format("Loaded %d event target frames.", targetFrames.size()));
+
             extractor = new UimaFrameExtractor(frameReader.getFeByName(), targetFrames);
-        } catch (URISyntaxException | IOException | JDOMException e) {
+        } catch (IOException | JDOMException e) {
             e.printStackTrace();
         }
     }
@@ -82,10 +86,15 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
     private void annotateEvents(JCas aJCas) {
         ArticleComponent article = JCasUtil.selectSingle(aJCas, Article.class);
 
-        for (FrameStructure frameStructure : extractor.getTargetFrames(article)) {
-            EventMention eventMention = new EventMention(aJCas);
+        UimaConvenience.printProcessLog(aJCas);
 
-            StanfordCorenlpToken headword = UimaNlpUtils.findHeadFromStanfordAnnotation(eventMention);
+        for (FrameStructure frameStructure : extractor.getTargetFrames(article)) {
+            SemaforLabel predicate = frameStructure.getTarget();
+            String frameName = frameStructure.getFrameName();
+
+            StanfordCorenlpToken headword = UimaNlpUtils.findHeadFromStanfordAnnotation(predicate);
+
+            logger.info(headword.getCoveredText());
 
             if (headword == null) {
                 continue;
@@ -94,8 +103,7 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
                 continue;
             }
 
-            SemaforLabel predicate = frameStructure.getTarget();
-            String frameName = frameStructure.getFrameName();
+            EventMention eventMention = new EventMention(aJCas, predicate.getBegin(), predicate.getEnd());
 
             eventMention.setEventType(frameName);
             eventMention.setFrameName(frameName);
@@ -123,11 +131,10 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
             }
 
             eventMention.setArguments(FSCollectionFactory.createFSList(aJCas, argumentLinks));
-            UimaAnnotationUtils.finishAnnotation(eventMention, predicate.getBegin(), predicate.getEnd(),
-                    COMPONENT_ID, 0, aJCas);
-
-            DebugUtils.pause();
+            UimaAnnotationUtils.finishAnnotation(eventMention, COMPONENT_ID, 0, aJCas);
         }
+
+        DebugUtils.pause();
     }
 
     public static void main(String[] argv) throws UIMAException, SAXException, CpeDescriptorException, IOException {

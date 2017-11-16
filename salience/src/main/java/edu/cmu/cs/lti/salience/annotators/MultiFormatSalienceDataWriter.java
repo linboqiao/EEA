@@ -443,6 +443,8 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
         List<FeatureUtils.SimpleInstance> entityInstances = FeatureUtils.getKbInstances(aJCas, entitySaliency,
                 simCalculator);
+
+        // TODO: Calculate some baseline based on some feature.
         List<FeatureUtils.SimpleInstance> eventInstances = FeatureUtils.getEventInstances(body, entityInstances,
                 eventSaliency, simCalculator);
         try {
