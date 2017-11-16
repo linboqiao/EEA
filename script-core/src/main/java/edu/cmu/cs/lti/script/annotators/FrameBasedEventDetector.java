@@ -11,6 +11,7 @@ import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
 import edu.cmu.cs.lti.uima.io.writer.StepBasedDirGzippedXmiWriter;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
@@ -84,18 +85,14 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
         for (FrameStructure frameStructure : extractor.getTargetFrames(article)) {
             EventMention eventMention = new EventMention(aJCas);
 
-            StanfordCorenlpToken headword = UimaNlpUtils.findHeadFromStanfordAnnotation(frameStructure.getTarget());
+            StanfordCorenlpToken headword = UimaNlpUtils.findHeadFromStanfordAnnotation(eventMention);
 
             if (headword == null) {
                 continue;
             } else if (ignoredHeadWords.contains(headword.getLemma().toLowerCase())) {
+                logger.info("Filtered because light.");
                 continue;
             }
-
-//            logger.info(String.format("Target event %s of frame %s, of headword %s",
-//                    frameStructure.getTarget().getCoveredText(), frameStructure.getFrameName(),
-//                    headword.getLemma().toLowerCase()));
-//            DebugUtils.pause();
 
             SemaforLabel predicate = frameStructure.getTarget();
             String frameName = frameStructure.getFrameName();
@@ -129,6 +126,7 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
             UimaAnnotationUtils.finishAnnotation(eventMention, predicate.getBegin(), predicate.getEnd(),
                     COMPONENT_ID, 0, aJCas);
 
+            DebugUtils.pause();
         }
     }
 

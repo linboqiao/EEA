@@ -443,8 +443,8 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
         List<FeatureUtils.SimpleInstance> entityInstances = FeatureUtils.getKbInstances(aJCas, entitySaliency,
                 simCalculator);
-        List<FeatureUtils.SimpleInstance> eventInstances = FeatureUtils.getEventInstances(body, eventSaliency,
-                simCalculator);
+        List<FeatureUtils.SimpleInstance> eventInstances = FeatureUtils.getEventInstances(body, entityInstances,
+                eventSaliency, simCalculator);
         try {
             if (trainDocs.contains(articleName)) {
                 writeEntityGold(aJCas, entitySaliency, goldTokenEntityWriters.get("train"), true);

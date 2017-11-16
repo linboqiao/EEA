@@ -1,11 +1,14 @@
 package edu.cmu.cs.lti.salience.utils;
 
+import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSList;
 
 import java.util.*;
 
@@ -52,32 +55,61 @@ public class FeatureUtils {
             );
             return sb.toString();
         }
-
-        public List<String> getFeatureNames() {
-            List<String> allFeatures = new ArrayList<>();
-            List<String> lexicalFeatures = new ArrayList<>();
-            featureMap.keySet().stream().sorted().forEach(f -> {
-                if (!f.startsWith("Lexical")) {
-                    allFeatures.add(f);
-                } else {
-                    String lexicalType = f.split("_")[0];
-                    lexicalFeatures.add(lexicalType);
-                }
-            });
-            allFeatures.addAll(lexicalFeatures);
-            return allFeatures;
-        }
     }
 
     public static List<SimpleInstance> getEventInstances(ArticleComponent component,
+                                                         List<SimpleInstance> entityInstances,
                                                          int[] eventSaliency, LookupTable.SimCalculator simCalculator) {
+        Map<String, SimpleInstance> instanceByKbId = new HashMap<>();
+        for (SimpleInstance entityInstance : entityInstances) {
+            instanceByKbId.put(entityInstance.instanceName, entityInstance);
+        }
+
+        Map<StanfordCorenlpToken, String> kbidByHead = new HashMap<>();
+        for (GroundedEntity groundedEntity : JCasUtil.selectCovered(GroundedEntity.class, component)) {
+            StanfordCorenlpToken head = UimaNlpUtils.findHeadFromStanfordAnnotation(groundedEntity);
+            if (head != null) {
+                kbidByHead.put(head, groundedEntity.getKnowledgeBaseId());
+            }
+        }
+
         List<SimpleInstance> instances = new ArrayList<>();
 
         Map<EventMention, Integer> mentionSentenceIds = new HashMap<>();
+        ArrayListMultimap<EventMention, SimpleInstance> sameSentInstances = ArrayListMultimap.create();
+        ArrayListMultimap<EventMention, SimpleInstance> argumentInstances = ArrayListMultimap.create();
+
         int sentIndex = 0;
         for (StanfordCorenlpSentence sentence : JCasUtil.selectCovered(StanfordCorenlpSentence.class, component)) {
+            List<GroundedEntity> groundedEntities = JCasUtil.selectCovered(GroundedEntity.class, sentence);
+
             for (EventMention eventMention : JCasUtil.selectCovered(EventMention.class, sentence)) {
+                // Record the sentence id of each event mention.
                 mentionSentenceIds.put(eventMention, sentIndex);
+
+                // Find the entities in each sentence for each event.
+                for (GroundedEntity groundedEntity : groundedEntities) {
+                    SimpleInstance entityInstance = instanceByKbId.get(groundedEntity.getKnowledgeBaseId());
+                    if (entityInstance != null) {
+                        sameSentInstances.put(eventMention, entityInstance);
+                    }
+                }
+
+                // Find the argument entity for each event.
+                FSList arguments = eventMention.getArguments();
+                if (arguments != null) {
+                    for (EventMentionArgumentLink argument : FSCollectionFactory.create(arguments,
+                            EventMentionArgumentLink.class)) {
+                        EntityMention argumentMention = argument.getArgument();
+                        String entityKbId = kbidByHead.get(argumentMention.getHead());
+                        if (entityKbId != null) {
+                            SimpleInstance entityInstance = instanceByKbId.get(entityKbId);
+                            if (entityInstance != null) {
+                                argumentInstances.put(eventMention, entityInstance);
+                            }
+                        }
+                    }
+                }
             }
             sentIndex++;
         }
@@ -92,24 +124,25 @@ public class FeatureUtils {
         List<EventMention> allEventMentions = JCasUtil.selectCovered(EventMention.class, component);
 
         for (EventMention eventMention : allEventMentions) {
-            SimpleInstance instance = new SimpleInstance();
+            SimpleInstance eventInstance = new SimpleInstance();
 
-            instance.label = eventSaliency[index];
-            instance.instanceName = Integer.toString(index);
+            eventInstance.label = eventSaliency[index];
+            eventInstance.instanceName = Integer.toString(index);
 
-            double votingScore = 0;
             String curr = SalienceUtils.getCanonicalToken(UimaNlpUtils.findHeadFromStanfordAnnotation(eventMention));
 
+            // Calculate the average voting from the other event to this event.
+            double eventVotingScore = 0;
             for (EventMention evm : allEventMentions) {
                 if (evm != eventMention) {
                     String other = SalienceUtils.getCanonicalToken(UimaNlpUtils.findHeadFromStanfordAnnotation(evm));
-                    votingScore += simCalculator.getSimilarity(curr, other);
+                    eventVotingScore += simCalculator.getSimilarity(curr, other);
                 }
             }
 
             // Normalize by length.
             if (allEventMentions.size() > 1) {
-                votingScore /= (allEventMentions.size() - 1);
+                eventVotingScore /= (allEventMentions.size() - 1);
             }
 
             StanfordCorenlpToken targetWord = UimaNlpUtils.findHeadFromStanfordAnnotation(eventMention);
@@ -120,18 +153,68 @@ public class FeatureUtils {
                 sentLoc = 10;
             }
 
-            instance.featureMap.put(lexicalPrefix + "Head_" + targetLex, 1.0);
-            instance.featureMap.put("SentenceLoc", (double) sentLoc);
-            instance.featureMap.put(sparsePrefix + "FrameName_" + eventMention.getFrameName(), 1.0);
-            instance.featureMap.put("HeadCount", (double) tokenCount.get(targetLex));
-            instance.featureMap.put("EmbeddingVoting", votingScore);
+            // Calculate the average voting from the entity to this event.
+            double entityVotingScore = 0;
+            for (String kb : instanceByKbId.keySet()) {
+                entityVotingScore += simCalculator.getSimilarity(curr, kb);
+            }
+            entityVotingScore /= instanceByKbId.keySet().size();
+
+
+            eventInstance.featureMap.put(lexicalPrefix + "Head_" + targetLex, 1.0);
+            eventInstance.featureMap.put("SentenceLoc", (double) sentLoc);
+            eventInstance.featureMap.put(sparsePrefix + "FrameName_" + eventMention.getFrameName(), 1.0);
+            eventInstance.featureMap.put("HeadCount", (double) tokenCount.get(targetLex));
+            eventInstance.featureMap.put("EventEmbeddingVoting", eventVotingScore);
+            eventInstance.featureMap.put("EntityEmbeddingVoting", entityVotingScore);
+
+            // Add entity instances related to the event to features.
+            List<SimpleInstance> sentEntities = sameSentInstances.containsKey(eventMention) ?
+                    sameSentInstances.get(eventMention) : new ArrayList<>();
+            List<SimpleInstance> argumentEntities = argumentInstances.containsKey(eventMention) ?
+                    argumentInstances.get(eventMention) : new ArrayList<>();
+
+            addEntityInstanceFeatures(eventInstance, sentEntities, "EntitySameSent");
+            addEntityInstanceFeatures(eventInstance, argumentEntities, "EntityArguments");
 
             index++;
 
-            instances.add(instance);
+            instances.add(eventInstance);
         }
         return instances;
     }
+
+    private static void addEntityInstanceFeatures(SimpleInstance instance, List<SimpleInstance> entityInstances,
+                                                  String featureBase) {
+        String[] entityFeatureNames = new String[]{"EmbeddingVoting", "MentionsCount", "HeadCount"};
+
+        for (String featureName : entityFeatureNames) {
+            double maxValue = 0;
+            double averValue = 0;
+            double minValue = Double.MAX_VALUE;
+
+            if (entityInstances.size() > 0) {
+                for (SimpleInstance entityInstance : entityInstances) {
+                    double featureValue = entityInstance.featureMap.get(featureName);
+                    if (featureValue > maxValue) {
+                        maxValue = featureValue;
+                    }
+                    if (featureValue < minValue) {
+                        minValue = featureValue;
+                    }
+                    averValue += featureValue;
+                }
+                averValue /= entityInstances.size();
+            } else {
+                minValue = 0;
+            }
+
+            instance.featureMap.put(String.format("%s_%s_max", featureBase, featureName), maxValue);
+            instance.featureMap.put(String.format("%s_%s_aver", featureBase, featureName), averValue);
+            instance.featureMap.put(String.format("%s_%s_min", featureBase, featureName), minValue);
+        }
+    }
+
 
     public static List<SimpleInstance> getKbInstances(JCas aJCas, Set<String> entitySalience,
                                                       LookupTable.SimCalculator simCalculator) {
