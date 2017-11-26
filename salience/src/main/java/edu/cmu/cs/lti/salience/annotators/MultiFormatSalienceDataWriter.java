@@ -435,7 +435,7 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         List<Spot> bodyEvents = getEventSpots(body, bodyEntityIds);
 
         Map<StanfordCorenlpToken, String> abstractEntityIds = new HashMap<>();
-        List<Spot> abstractEntities = getEntitySpots(body, abstractEntityIds);
+        List<Spot> abstractEntities = getEntitySpots(abstractArticle, abstractEntityIds);
         List<Spot> abstractEvents = getEventSpots(abstractArticle, abstractEntityIds);
 
         addFeatureToSpots(bodyEntities, entityFeatures);

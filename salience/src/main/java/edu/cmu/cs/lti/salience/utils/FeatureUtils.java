@@ -158,8 +158,10 @@ public class FeatureUtils {
             for (String kb : instanceByKbId.keySet()) {
                 entityVotingScore += simCalculator.getSimilarity(curr, kb);
             }
-            entityVotingScore /= instanceByKbId.keySet().size();
 
+            if (instanceByKbId.keySet().size() > 0) {
+                entityVotingScore /= instanceByKbId.keySet().size();
+            }
 
             eventInstance.featureMap.put(lexicalPrefix + "Head_" + targetLex, 1.0);
             eventInstance.featureMap.put("SentenceLoc", (double) sentLoc);
