@@ -1,6 +1,5 @@
 package edu.cmu.cs.lti.salience.annotators;
 
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import edu.cmu.cs.lti.collection_reader.AnnotatedNytReader;
 import edu.cmu.cs.lti.model.Span;
@@ -18,7 +17,6 @@ import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.FileUtils;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -39,8 +37,6 @@ import org.xml.sax.SAXException;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.GZIPOutputStream;
 
@@ -91,19 +87,8 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
     private Map<String, BufferedWriter> goldCharEntityWriters;
     private Map<String, BufferedWriter> goldCharEventWriters;
     private Map<String, BufferedWriter> tagWriters;
-    private Map<String, BufferedWriter> entityFeatureWriters;
-    private Map<String, BufferedWriter> eventFeatureWriters;
-
-    private ConcurrentMap<String, Double> eventPat1Sum;
-    private ConcurrentMap<String, Double> eventPat5Sum;
-    private ConcurrentMap<String, Double> eventPat10Sum;
-
-    private ConcurrentMap<String, Double> entityPat1Sum;
-    private ConcurrentMap<String, Double> entityPat5Sum;
-    private ConcurrentMap<String, Double> entityPat10Sum;
 
     private AtomicInteger documentCount;
-
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -125,14 +110,6 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
             e.printStackTrace();
         }
 
-        eventPat1Sum = new ConcurrentHashMap<>();
-        eventPat5Sum = new ConcurrentHashMap<>();
-        eventPat10Sum = new ConcurrentHashMap<>();
-
-        entityPat1Sum = new ConcurrentHashMap<>();
-        entityPat5Sum = new ConcurrentHashMap<>();
-        entityPat10Sum = new ConcurrentHashMap<>();
-
         documentCount = new AtomicInteger();
 
         try {
@@ -143,10 +120,6 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
             goldCharEventWriters = getDualWriter(outputDir, "event_gold", "char");
 
             tagWriters = getDualWriter(outputDir, "docs");
-
-            entityFeatureWriters = getDualWriter(outputDir, "entity_features");
-            eventFeatureWriters = getDualWriter(outputDir, "event_features");
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -190,44 +163,8 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
             close(goldCharEntityWriters);
             close(goldCharEventWriters);
             close(tagWriters);
-            close(entityFeatureWriters);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-        writeBaselines(documentCount.get());
-    }
-
-    private void writeBaselines(int numItems) {
-        // Write out the baselines.
-        logger.info("Writing event precision @ 1");
-        for (Map.Entry<String, Double> prec : eventPat1Sum.entrySet()) {
-            logger.info(String.format("-- Based on %s is %.2f", prec.getKey(), prec.getValue() / numItems));
-        }
-
-        logger.info("Writing event precision @ 5");
-        for (Map.Entry<String, Double> prec : eventPat5Sum.entrySet()) {
-            logger.info(String.format("-- Based on %s is %.2f", prec.getKey(), prec.getValue() / numItems));
-        }
-
-        logger.info("Writing event precision @ 10");
-        for (Map.Entry<String, Double> prec : eventPat10Sum.entrySet()) {
-            logger.info(String.format("-- Based on %s is %.2f", prec.getKey(), prec.getValue() / numItems));
-        }
-
-        logger.info("Writing entity precision @ 1");
-        for (Map.Entry<String, Double> prec : entityPat1Sum.entrySet()) {
-            logger.info(String.format("-- Based on %s is %.2f", prec.getKey(), prec.getValue() / numItems));
-        }
-
-        logger.info("Writing entity precision @ 5");
-        for (Map.Entry<String, Double> prec : entityPat5Sum.entrySet()) {
-            logger.info(String.format("-- Based on %s is %.2f", prec.getKey(), prec.getValue() / numItems));
-        }
-
-        logger.info("Writing entity precision @ 10");
-        for (Map.Entry<String, Double> prec : entityPat10Sum.entrySet()) {
-            logger.info(String.format("-- Based on %s is %.2f", prec.getKey(), prec.getValue() / numItems));
         }
     }
 
@@ -507,9 +444,6 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         List<FeatureUtils.SimpleInstance> eventInstances = FeatureUtils.getEventInstances(body, entityInstances,
                 eventSaliency, simCalculator);
 
-        entityBaseline(entityInstances, entitySaliency);
-        eventBaseline(eventInstances, eventSaliency);
-
         try {
             if (trainDocs.contains(articleName)) {
                 writeEntityGold(aJCas, entitySaliency, goldTokenEntityWriters.get("train"), true);
@@ -520,9 +454,6 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
                 writeTagged(aJCas, tagWriters.get("train"), entityInstances, eventInstances, entitySaliency,
                         eventSaliency);
-
-                writeFeatures(aJCas, entityFeatureWriters.get("train"), entityInstances);
-                writeFeatures(aJCas, eventFeatureWriters.get("train"), eventInstances);
             } else if (testDocs.contains(articleName)) {
                 writeEntityGold(aJCas, entitySaliency, goldTokenEntityWriters.get("test"), true);
                 writeEntityGold(aJCas, entitySaliency, goldCharEntityWriters.get("test"), false);
@@ -532,145 +463,12 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
                 writeTagged(aJCas, tagWriters.get("test"), entityInstances, eventInstances, entitySaliency,
                         eventSaliency);
-
-                writeFeatures(aJCas, entityFeatureWriters.get("test"), entityInstances);
-                writeFeatures(aJCas, eventFeatureWriters.get("test"), eventInstances);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         int numDocs = documentCount.incrementAndGet();
-
-        if (numDocs % 1000 == 0) {
-            writeBaselines(numDocs);
-        }
-    }
-
-    private void entityBaseline(List<FeatureUtils.SimpleInstance> entityInstances, Set<String> entitySaliency) {
-        List<Pair<Integer, Double>> headCountPredicts = getFeaturesBasedSorted(entityInstances, "HeadCount", true);
-        List<Pair<Integer, Double>> mentionCountPredicts = getFeaturesBasedSorted(entityInstances, "MentionsCount",
-                true);
-        List<Pair<Integer, Double>> entityEmbeddingPredicts = getFeaturesBasedSorted(entityInstances,
-                "EmbeddingVoting", true);
-        List<Pair<Integer, Double>> firstAppearPredicts = getFeaturesBasedSorted(entityInstances, "FirstLoc", false);
-
-        Map<String, List<Pair<Integer, Double>>> predicts = new HashMap<>();
-
-        predicts.put("HeadCount", headCountPredicts);
-        predicts.put("MentionsCount", mentionCountPredicts);
-        predicts.put("EmbeddingVoting", entityEmbeddingPredicts);
-        predicts.put("FirstLoc", firstAppearPredicts);
-
-        for (Map.Entry<String, List<Pair<Integer, Double>>> featurePredicts : predicts.entrySet()) {
-            entityPat1Sum.merge(featurePredicts.getKey(),
-                    getEntityPrecisionAtK(featurePredicts.getValue(), entityInstances, entitySaliency, 1),
-                    (last, current) -> last + current
-            );
-            entityPat5Sum.merge(featurePredicts.getKey(),
-                    getEntityPrecisionAtK(featurePredicts.getValue(), entityInstances, entitySaliency, 5),
-                    (last, current) -> last + current
-            );
-            entityPat10Sum.merge(featurePredicts.getKey(),
-                    getEntityPrecisionAtK(featurePredicts.getValue(), entityInstances, entitySaliency, 10),
-                    (last, current) -> last + current
-            );
-        }
-    }
-
-    private void eventBaseline(List<FeatureUtils.SimpleInstance> eventInstances, int[] eventSaliency) {
-        List<Pair<Integer, Double>> headCountPredicts = getFeaturesBasedSorted(eventInstances, "HeadCount", true);
-        List<Pair<Integer, Double>> evmEmbeddingPredicts = getFeaturesBasedSorted(eventInstances,
-                "EventEmbeddingVoting", true);
-        List<Pair<Integer, Double>> entityEmbeddingPredicts = getFeaturesBasedSorted(eventInstances,
-                "EntityEmbeddingVoting", true);
-        List<Pair<Integer, Double>> firstAppearPredicts = getFeaturesBasedSorted(eventInstances, "SentenceLoc", false);
-
-        Map<String, List<Pair<Integer, Double>>> predicts = new HashMap<>();
-
-        predicts.put("HeadCount", headCountPredicts);
-        predicts.put("EventEmbeddingVoting", evmEmbeddingPredicts);
-        predicts.put("EntityEmbeddingVoting", entityEmbeddingPredicts);
-        predicts.put("SentenceLoc", firstAppearPredicts);
-
-        for (Map.Entry<String, List<Pair<Integer, Double>>> featurePredicts : predicts.entrySet()) {
-            eventPat1Sum.merge(featurePredicts.getKey(),
-                    getEventPrecisionAtK(featurePredicts.getValue(), eventSaliency, 1),
-                    (last, current) -> last + current
-            );
-            eventPat5Sum.merge(featurePredicts.getKey(),
-                    getEventPrecisionAtK(featurePredicts.getValue(), eventSaliency, 5),
-                    (last, current) -> last + current
-            );
-            eventPat10Sum.merge(featurePredicts.getKey(),
-                    getEventPrecisionAtK(featurePredicts.getValue(), eventSaliency, 10),
-                    (last, current) -> last + current
-            );
-        }
-    }
-
-    private double getEntityPrecisionAtK(List<Pair<Integer, Double>> predicts,
-                                         List<FeatureUtils.SimpleInstance> entityInstances,
-                                         Set<String> entitySaliency, int k) {
-        int correct = 0;
-        int numPredicted = 0;
-
-        if (predicts.size() == 0) {
-            return 0;
-        }
-
-        for (int i = 0; i < k; i++) {
-            if (i < predicts.size()) {
-                Integer predictedIndex = predicts.get(i).getKey();
-                numPredicted += 1;
-                if (entitySaliency.contains(entityInstances.get(predictedIndex).getInstanceName())) {
-                    correct += 1;
-                }
-            }
-        }
-
-        return 1.0 * correct / numPredicted;
-    }
-
-    private double getEventPrecisionAtK(List<Pair<Integer, Double>> predicts, int[] eventSaliency, int k) {
-        int correct = 0;
-        int numPredicted = 0;
-
-        if (predicts.size() == 0) {
-            return 0;
-        }
-
-        for (int i = 0; i < k; i++) {
-            if (i < predicts.size()) {
-                Integer predictedIndex = predicts.get(i).getKey();
-                numPredicted += 1;
-                if (eventSaliency[predictedIndex] == 1) {
-                    correct += 1;
-                }
-            }
-        }
-        return 1.0 * correct / numPredicted;
-    }
-
-    private List<Pair<Integer, Double>> getFeaturesBasedSorted(List<FeatureUtils.SimpleInstance> eventInstances,
-                                                               String featureName, boolean descending) {
-
-        List<Pair<Integer, Double>> instanceScores = new ArrayList<>();
-
-        for (int i = 0; i < eventInstances.size(); i++) {
-            Map<String, Double> features = eventInstances.get(i).getFeatureMap();
-            double value = features.get(featureName);
-
-            instanceScores.add(Pair.of(i, value));
-        }
-
-        instanceScores.sort(Comparator.comparing(Pair::getValue));
-
-        if (descending) {
-            return Lists.reverse(instanceScores);
-        } else {
-            return instanceScores;
-        }
     }
 
     public static void main(String[] argv) throws UIMAException, SAXException, CpeDescriptorException, IOException {
