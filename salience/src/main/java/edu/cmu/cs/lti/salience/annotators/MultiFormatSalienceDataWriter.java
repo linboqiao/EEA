@@ -56,6 +56,10 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_TRAIN_SPLIT)
     private File trainSplitFile;
 
+    public static final String PARAM_DEV_SPLIT = "devSplit";
+    @ConfigurationParameter(name = PARAM_DEV_SPLIT, mandatory = false)
+    private File devSplitFile;
+
     public static final String PARAM_OUTPUT_DIR = "outputDir";
     @ConfigurationParameter(name = PARAM_OUTPUT_DIR)
     private String outputDir;
@@ -78,6 +82,7 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
     private Set<String> trainDocs;
     private Set<String> testDocs;
+    private Set<String> devDocs;
 
     // Calculate embedding similarity
     private LookupTable.SimCalculator simCalculator;
@@ -96,6 +101,9 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         try {
             trainDocs = SalienceUtils.readSplit(trainSplitFile);
             testDocs = SalienceUtils.readSplit(testSplitFile);
+            if (devSplitFile != null) {
+                devDocs = SalienceUtils.readSplit(devSplitFile);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -113,13 +121,13 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         documentCount = new AtomicInteger();
 
         try {
-            goldTokenEntityWriters = getDualWriter(outputDir, "entity_gold", "token");
-            goldTokenEventWriters = getDualWriter(outputDir, "event_gold", "token");
+            goldTokenEntityWriters = getWriters(outputDir, "entity_gold", "token");
+            goldTokenEventWriters = getWriters(outputDir, "event_gold", "token");
 
-            goldCharEntityWriters = getDualWriter(outputDir, "entity_gold", "char");
-            goldCharEventWriters = getDualWriter(outputDir, "event_gold", "char");
+            goldCharEntityWriters = getWriters(outputDir, "entity_gold", "char");
+            goldCharEventWriters = getWriters(outputDir, "event_gold", "char");
 
-            tagWriters = getDualWriter(outputDir, "docs");
+            tagWriters = getWriters(outputDir, "docs");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -134,12 +142,13 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         }
     }
 
-    private Map<String, BufferedWriter> getDualWriter(String... segments) throws IOException {
+    private Map<String, BufferedWriter> getWriters(String... segments) throws IOException {
         Map<String, BufferedWriter> writers = new HashMap<>();
 
         File outputParent = FileUtils.joinPathsAsFile(segments);
         File fullTrainOutput = new File(outputParent, "train.gz");
         File fullTestOutput = new File(outputParent, "test.gz");
+
         if (!outputParent.exists()) {
             outputParent.mkdirs();
         }
@@ -151,6 +160,13 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
                 new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(fullTestOutput)))
         ));
 
+
+        if (devSplitFile != null) {
+            File fullDevOutput = new File(outputParent, "dev.gz");
+            writers.put("dev", new BufferedWriter(
+                    new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(fullDevOutput)))
+            ));
+        }
         return writers;
     }
 
@@ -333,20 +349,6 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         sb.append(text).append("\t").append(begin).append("\t").append(end);
     }
 
-    private void writeFeatures(JCas aJCas, Writer featureWriter, List<FeatureUtils.SimpleInstance> instances)
-            throws IOException {
-        Headline title = JCasUtil.selectSingle(aJCas, Headline.class);
-        String titleStr = TextUtils.asTokenized(title);
-        String docid = UimaConvenience.getArticleName(aJCas);
-
-        // Handle features.
-        featureWriter.write(docid + " " + titleStr + "\n");
-        for (FeatureUtils.SimpleInstance instance : instances) {
-            featureWriter.write(instance.toString() + "\n");
-        }
-        featureWriter.write("\n");
-    }
-
     private void writeTagged(JCas aJCas, Writer output,
                              List<FeatureUtils.SimpleInstance> entityFeatures,
                              List<FeatureUtils.SimpleInstance> eventFeatures,
@@ -462,6 +464,15 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
                 writeEventGold(aJCas, eventSaliency, goldCharEventWriters.get("test"), false);
 
                 writeTagged(aJCas, tagWriters.get("test"), entityInstances, eventInstances, entitySaliency,
+                        eventSaliency);
+            } else if (devDocs.contains(articleName)) {
+                writeEntityGold(aJCas, entitySaliency, goldTokenEntityWriters.get("dev"), true);
+                writeEntityGold(aJCas, entitySaliency, goldCharEntityWriters.get("dev"), false);
+
+                writeEventGold(aJCas, eventSaliency, goldTokenEventWriters.get("dev"), true);
+                writeEventGold(aJCas, eventSaliency, goldCharEventWriters.get("dev"), false);
+
+                writeTagged(aJCas, tagWriters.get("dev"), entityInstances, eventInstances, entitySaliency,
                         eventSaliency);
             }
         } catch (IOException e) {
