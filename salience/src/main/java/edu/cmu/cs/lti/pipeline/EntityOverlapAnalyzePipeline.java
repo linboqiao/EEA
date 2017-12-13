@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.pipeline;
 
 import edu.cmu.cs.lti.annotators.EntityOverlapAnalyzer;
-import edu.cmu.cs.lti.annotators.TagmeEntityLinkerResultAnnotator;
+import edu.cmu.cs.lti.salience.annotators.TagmeEntityLinkerResultAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import org.apache.uima.UIMAException;

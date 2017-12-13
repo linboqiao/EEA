@@ -107,7 +107,12 @@ public class SalienceUtils {
         }
 
         Body body = JCasUtil.selectSingle(aJCas, Body.class);
-        Headline headline = JCasUtil.selectSingle(aJCas, Headline.class);
+
+        int headlineEnd = 0;
+        if (JCasUtil.select(aJCas, Headline.class).size() == 1) {
+            Headline headline = JCasUtil.selectSingle(aJCas, Headline.class);
+            headlineEnd = headline.getEnd();
+        }
 
         int sentIndex = 0;
         Collection<StanfordCorenlpSentence> allSentences = JCasUtil.selectCovered(StanfordCorenlpSentence.class, body);
@@ -138,7 +143,7 @@ public class SalienceUtils {
 
         for (Entity entity : JCasUtil.select(aJCas, Entity.class)) {
             for (EntityMention mention : FSCollectionFactory.create(entity.getEntityMentions(), EntityMention.class)) {
-                if (mention.getEnd() <= headline.getEnd()) {
+                if (mention.getEnd() <= headlineEnd) {
                     // Ignore headline mentions.
                     continue;
                 }

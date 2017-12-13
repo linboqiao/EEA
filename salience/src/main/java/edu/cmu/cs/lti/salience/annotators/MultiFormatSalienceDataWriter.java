@@ -257,10 +257,8 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
     private void writeEventGold(JCas mainView, int[] saliency, Writer output, boolean useToken) throws IOException {
         String docno = UimaConvenience.getArticleName(mainView);
-        String title = TextUtils.asTokenized(JCasUtil.selectSingle(mainView, Headline.class));
-
         StringBuilder sb = new StringBuilder();
-        sb.append(docno).append(" ").append(title).append("\n");
+        sb.append(docno).append(" ").append(getHeadline(mainView)).append("\n");
 
         Body body = JCasUtil.selectSingle(mainView, Body.class);
 
@@ -307,10 +305,10 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
     private void writeEntityGold(JCas mainView, Set<String> salientEntities, Writer output, boolean useToken) throws
             IOException {
         String docno = UimaConvenience.getArticleName(mainView);
-        String title = TextUtils.asTokenized(JCasUtil.selectSingle(mainView, Headline.class));
 
         StringBuilder sb = new StringBuilder();
-        sb.append(docno).append(" ").append(title).append("\n");
+
+        sb.append(docno).append(" ").append(getHeadline(mainView)).append("\n");
 
         int index = 0;
 
@@ -332,6 +330,14 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
         sb.append("\n");
         output.write(sb.toString());
+    }
+
+    private String getHeadline(JCas view) {
+        if (JCasUtil.select(view, Headline.class).size() == 1) {
+            return TextUtils.asTokenized(JCasUtil.selectSingle(view, Headline.class));
+        } else {
+            return "";
+        }
     }
 
     private void addSpan(StringBuilder sb, boolean useToken, ComponentAnnotation anno, ArticleComponent article) {
@@ -357,17 +363,11 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
     ) throws IOException {
         Gson gson = new Gson();
 
-        Headline title = JCasUtil.selectSingle(aJCas, Headline.class);
         Body body = JCasUtil.selectSingle(aJCas, Body.class);
         JCas abstractView = JCasUtil.getView(aJCas, AnnotatedNytReader.ABSTRACT_VIEW_NAME, false);
         Article abstractArticle = JCasUtil.selectSingle(abstractView, Article.class);
 
-        String titleStr = TextUtils.asTokenized(title);
         String docid = UimaConvenience.getArticleName(aJCas);
-
-        Map<StanfordCorenlpToken, String> titleEntityIds = new HashMap<>();
-        List<Spot> titleEntities = getEntitySpots(title, titleEntityIds);
-        List<Spot> titleEvents = getEventSpots(title, titleEntityIds);
 
         Map<StanfordCorenlpToken, String> bodyEntityIds = new HashMap<>();
         List<Spot> bodyEntities = getEntitySpots(body, bodyEntityIds);
@@ -388,18 +388,15 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         Spots entitySpots = new Spots();
         entitySpots.bodyText = bodyEntities;
         entitySpots.abstractSpots = abstractEntities;
-        entitySpots.title = titleEntities;
 
         Spots eventSpots = new Spots();
         eventSpots.bodyText = bodyEvents;
         eventSpots.abstractSpots = abstractEvents;
-        eventSpots.title = titleEvents;
 
         doc.bodyText = TextUtils.asTokenized(body);
         doc.docno = docid;
         doc.spot = entitySpots;
         doc.event = eventSpots;
-        doc.title = titleStr;
         doc.abstractText = TextUtils.asTokenized(abstractArticle);
 
         String jsonStr = gson.toJson(doc);

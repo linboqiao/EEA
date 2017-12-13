@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.annotators;
+package edu.cmu.cs.lti.salience.annotators;
 
 import com.google.common.collect.Lists;
 import com.google.gson.*;

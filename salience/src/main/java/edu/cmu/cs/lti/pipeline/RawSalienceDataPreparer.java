@@ -1,12 +1,10 @@
 package edu.cmu.cs.lti.pipeline;
 
 import edu.cmu.cs.lti.annotators.StanfordCoreNlpAnnotator;
-import edu.cmu.cs.lti.annotators.TagmeStyleJSONReader;
 import edu.cmu.cs.lti.collection_reader.AnnotatedNytReader;
 import edu.cmu.cs.lti.salience.annotators.MultiFormatSalienceDataWriter;
-import edu.cmu.cs.lti.uima.io.IOUtils;
+import edu.cmu.cs.lti.salience.annotators.TagmeStyleJSONReader;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
-import edu.cmu.cs.lti.uima.io.writer.StepBasedDirGzippedXmiWriter;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -14,6 +12,7 @@ import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.xml.sax.SAXException;
 
@@ -44,8 +43,8 @@ public class RawSalienceDataPreparer {
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                 TagmeStyleJSONReader.class, typeSystemDescription,
                 TagmeStyleJSONReader.PARAM_INPUT_JSON, inputJson,
-                TagmeStyleJSONReader.PARAM_ABSTRACT_FIELDS, new String[]{"title"},
-                TagmeStyleJSONReader.PARAM_TEXT_FIELDS, new String[]{"paperAbstract"}
+                TagmeStyleJSONReader.PARAM_ABSTRACT_FIELD, "title",
+                TagmeStyleJSONReader.PARAM_BODY_FIELDS, new String[]{"paperAbstract"}
         );
 
         AnalysisEngineDescription stanfordAnalyzer = AnalysisEngineFactory.createEngineDescription(
@@ -73,8 +72,9 @@ public class RawSalienceDataPreparer {
                 MultiFormatSalienceDataWriter.PARAM_WRITE_EVENT, true
         );
 
-        StepBasedDirGzippedXmiWriter.dirSegFunction = IOUtils::indexBasedSegFunc;
-        new BasicPipeline(reader, true, true, 7, workingDir, xmiOutput, true, stanfordAnalyzer, parsedWriter,
-                jsonWriter).run();
+//        new BasicPipeline(reader, true, true, 7, workingDir, xmiOutput, true, stanfordAnalyzer, parsedWriter,
+//                jsonWriter).run();
+
+        SimplePipeline.runPipeline(reader, stanfordAnalyzer, parsedWriter, jsonWriter);
     }
 }

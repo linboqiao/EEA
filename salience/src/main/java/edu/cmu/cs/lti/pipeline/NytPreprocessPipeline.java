@@ -2,7 +2,7 @@ package edu.cmu.cs.lti.pipeline;
 
 import edu.cmu.cs.lti.annotators.AnnotationRemover;
 import edu.cmu.cs.lti.annotators.StanfordCoreNlpAnnotator;
-import edu.cmu.cs.lti.annotators.TagmeEntityLinkerResultAnnotator;
+import edu.cmu.cs.lti.salience.annotators.TagmeEntityLinkerResultAnnotator;
 import edu.cmu.cs.lti.collection_reader.AnnotatedNytReader;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;

@@ -22,7 +22,6 @@ public class SalienceJSONClasses {
         public String docno;
         public Spots spot;
         public Spots event;
-        public String title;
         @SerializedName("abstract")
         public String abstractText;
     }
@@ -31,7 +30,6 @@ public class SalienceJSONClasses {
         public List<Spot> bodyText;
         @SerializedName("abstract")
         public List<Spot> abstractSpots;
-        public List<Spot> title;
     }
 
     static public class Spot {
