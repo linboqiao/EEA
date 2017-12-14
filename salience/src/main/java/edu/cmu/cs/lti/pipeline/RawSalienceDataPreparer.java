@@ -32,7 +32,7 @@ public class RawSalienceDataPreparer {
                 .createTypeSystemDescription("TypeSystem");
         String workingDir = argv[0];
         String inputJson = argv[1];
-        String xmiOutput = argv[3];
+        String xmiOutput = argv[2];
 
         // This reader can read Semantic scholar data.
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
