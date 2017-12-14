@@ -32,12 +32,7 @@ public class RawSalienceDataPreparer {
                 .createTypeSystemDescription("TypeSystem");
         String workingDir = argv[0];
         String inputJson = argv[1];
-        String jsonOutput = argv[2];
         String xmiOutput = argv[3];
-        String embeddingPath = argv[4];
-        String trainingSplitFile = argv[5];
-        String testSplitFile = argv[6];
-        String devSplitFile = argv[7];
 
         // This reader can read Semantic scholar data.
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
@@ -57,24 +52,6 @@ public class RawSalienceDataPreparer {
                 StanfordCoreNlpAnnotator.PARAM_PARSER_MAXLEN, 40
         );
 
-        AnalysisEngineDescription parsedWriter = CustomAnalysisEngineFactory.createGzippedXmiWriter(
-                workingDir, "parsed");
-
-//        AnalysisEngineDescription jsonWriter = AnalysisEngineFactory.createEngineDescription(
-//                MultiFormatSalienceDataWriter.class, typeSystemDescription,
-//                MultiFormatSalienceDataWriter.PARAM_OUTPUT_DIR, new File(workingDir, jsonOutput),
-//                MultiFormatSalienceDataWriter.PARAM_TRAIN_SPLIT, trainingSplitFile,
-//                MultiFormatSalienceDataWriter.PARAM_TEST_SPLIT, testSplitFile,
-//                MultiFormatSalienceDataWriter.PARAM_DEV_SPLIT, devSplitFile,
-//                MultiFormatSalienceDataWriter.PARAM_OUTPUT_PREFIX, "salience",
-//                MultiFormatSalienceDataWriter.MULTI_THREAD, true,
-//                MultiFormatSalienceDataWriter.PARAM_JOINT_EMBEDDING, embeddingPath,
-//                MultiFormatSalienceDataWriter.PARAM_WRITE_EVENT, true
-//        );
-
-//        new BasicPipeline(reader, true, true, 7, workingDir, xmiOutput, true, stanfordAnalyzer, parsedWriter,
-//                jsonWriter).run();
-
-        SimplePipeline.runPipeline(reader, stanfordAnalyzer, parsedWriter);
+        new BasicPipeline(reader, true, true, 7, workingDir, xmiOutput, true, stanfordAnalyzer).run();
     }
 }
