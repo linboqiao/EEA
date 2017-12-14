@@ -60,21 +60,21 @@ public class RawSalienceDataPreparer {
         AnalysisEngineDescription parsedWriter = CustomAnalysisEngineFactory.createGzippedXmiWriter(
                 workingDir, "parsed");
 
-        AnalysisEngineDescription jsonWriter = AnalysisEngineFactory.createEngineDescription(
-                MultiFormatSalienceDataWriter.class, typeSystemDescription,
-                MultiFormatSalienceDataWriter.PARAM_OUTPUT_DIR, new File(workingDir, jsonOutput),
-                MultiFormatSalienceDataWriter.PARAM_TRAIN_SPLIT, trainingSplitFile,
-                MultiFormatSalienceDataWriter.PARAM_TEST_SPLIT, testSplitFile,
-                MultiFormatSalienceDataWriter.PARAM_DEV_SPLIT, devSplitFile,
-                MultiFormatSalienceDataWriter.PARAM_OUTPUT_PREFIX, "salience",
-                MultiFormatSalienceDataWriter.MULTI_THREAD, true,
-                MultiFormatSalienceDataWriter.PARAM_JOINT_EMBEDDING, embeddingPath,
-                MultiFormatSalienceDataWriter.PARAM_WRITE_EVENT, true
-        );
+//        AnalysisEngineDescription jsonWriter = AnalysisEngineFactory.createEngineDescription(
+//                MultiFormatSalienceDataWriter.class, typeSystemDescription,
+//                MultiFormatSalienceDataWriter.PARAM_OUTPUT_DIR, new File(workingDir, jsonOutput),
+//                MultiFormatSalienceDataWriter.PARAM_TRAIN_SPLIT, trainingSplitFile,
+//                MultiFormatSalienceDataWriter.PARAM_TEST_SPLIT, testSplitFile,
+//                MultiFormatSalienceDataWriter.PARAM_DEV_SPLIT, devSplitFile,
+//                MultiFormatSalienceDataWriter.PARAM_OUTPUT_PREFIX, "salience",
+//                MultiFormatSalienceDataWriter.MULTI_THREAD, true,
+//                MultiFormatSalienceDataWriter.PARAM_JOINT_EMBEDDING, embeddingPath,
+//                MultiFormatSalienceDataWriter.PARAM_WRITE_EVENT, true
+//        );
 
 //        new BasicPipeline(reader, true, true, 7, workingDir, xmiOutput, true, stanfordAnalyzer, parsedWriter,
 //                jsonWriter).run();
 
-        SimplePipeline.runPipeline(reader, stanfordAnalyzer, parsedWriter, jsonWriter);
+        SimplePipeline.runPipeline(reader, stanfordAnalyzer, parsedWriter);
     }
 }

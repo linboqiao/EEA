@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import edu.cmu.cs.lti.model.Span;
+import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.Body;
 import edu.cmu.cs.lti.script.type.GroundedEntity;
@@ -13,16 +14,23 @@ import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
 import org.apache.uima.collection.CollectionException;
+import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.examples.SourceDocumentInformation;
 import org.apache.uima.fit.component.JCasCollectionReader_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import org.apache.uima.fit.factory.CollectionReaderFactory;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.StringArray;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.apache.uima.util.Progress;
+import org.xml.sax.SAXException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -239,5 +247,23 @@ public class TagmeStyleJSONReader extends JCasCollectionReader_ImplBase {
     public void close() throws IOException {
         super.close();
         reader.close();
+    }
+
+    public static void main(String[] argv) throws UIMAException, SAXException, CpeDescriptorException, IOException {
+        TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
+                .createTypeSystemDescription("TypeSystem");
+        String workingDir = argv[0];
+        String inputJson = argv[1];
+        String xmiOutput = argv[2];
+
+        // This reader can read Semantic scholar data.
+        CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
+                TagmeStyleJSONReader.class, typeSystemDescription,
+                TagmeStyleJSONReader.PARAM_INPUT_JSON, inputJson,
+                TagmeStyleJSONReader.PARAM_ABSTRACT_FIELD, "title",
+                TagmeStyleJSONReader.PARAM_BODY_FIELDS, new String[]{"paperAbstract"}
+        );
+
+        new BasicPipeline(reader, true, true, 7, workingDir, xmiOutput, true).run();
     }
 }
