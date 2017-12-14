@@ -96,16 +96,16 @@ public class TagmeStyleJSONReader extends JCasCollectionReader_ImplBase {
 
         int offset = 0;
         for (String headerField : headerFields) {
-            String text = addCharFormatFields(jCas, docInfo, allSpots, headerField, offset);
+            String text = addTokenFormatFields(jCas, docInfo, allSpots, headerField, offset);
             allText.add(text);
-            offset += text.length() + 1;
+            offset += text.split(" ").length + 1;
         }
 
         int bodyStart = offset;
         for (String textField : bodyFields) {
-            String text = addCharFormatFields(jCas, docInfo, allSpots, textField, offset);
+            String text = addTokenFormatFields(jCas, docInfo, allSpots, textField, offset);
             allText.add(text);
-            offset += text.length() + 1;
+            offset += text.split(" ").length + 1;
         }
         int bodyEnd = offset;
 
