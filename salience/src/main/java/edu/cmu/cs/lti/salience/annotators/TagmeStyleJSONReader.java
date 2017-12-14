@@ -150,8 +150,6 @@ public class TagmeStyleJSONReader extends JCasCollectionReader_ImplBase {
         srcDocInfo.addToIndexes();
 
         lineNumber++;
-
-        DebugUtils.pause();
     }
 
     private String addCharFormatFields(JCas jCas, JsonObject docInfo, JsonObject allSpots, String field, int offset) {
