@@ -89,8 +89,6 @@ public class TagmeStyleJSONReader extends JCasCollectionReader_ImplBase {
         JsonObject docInfo = new JsonParser().parse(nextLine).getAsJsonObject();
         String docid = docInfo.get("docno").getAsString();
 
-        UimaConvenience.printProcessLog(jCas);
-
         List<String> allText = new ArrayList<>();
         JsonObject allSpots = docInfo.get("spot").getAsJsonObject();
 
