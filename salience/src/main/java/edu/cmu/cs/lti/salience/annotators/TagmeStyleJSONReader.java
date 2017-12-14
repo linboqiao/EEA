@@ -120,18 +120,17 @@ public class TagmeStyleJSONReader extends JCasCollectionReader_ImplBase {
         String salienceText = addTokenFormatFields(salienceView, docInfo, allSpots, abstractField, 0);
         salienceView.setDocumentText(salienceText);
 
-        for (GroundedEntity entity : JCasUtil.select(jCas, GroundedEntity.class)) {
-            System.out.println(String.format("Entity %s [%d:%d], %s", entity.getCoveredText(), entity.getBegin(),
-                    entity.getEnd(), entity.getKnowledgeBaseId()));
-        }
-
-        for (GroundedEntity entity : JCasUtil.select(salienceView, GroundedEntity.class)) {
-            System.out.println(String.format("Entity %s [%d:%d], %s", entity.getCoveredText(), entity.getBegin(),
-                    entity.getEnd(), entity.getKnowledgeBaseId()));
-        }
-
-        DebugUtils.pause();
-
+//        for (GroundedEntity entity : JCasUtil.select(jCas, GroundedEntity.class)) {
+//            System.out.println(String.format("Entity %s [%d:%d], %s", entity.getCoveredText(), entity.getBegin(),
+//                    entity.getEnd(), entity.getKnowledgeBaseId()));
+//        }
+//
+//        for (GroundedEntity entity : JCasUtil.select(salienceView, GroundedEntity.class)) {
+//            System.out.println(String.format("Entity %s [%d:%d], %s", entity.getCoveredText(), entity.getBegin(),
+//                    entity.getEnd(), entity.getKnowledgeBaseId()));
+//        }
+//
+//        DebugUtils.pause();
 
         Article article = new Article(jCas);
         UimaAnnotationUtils.finishAnnotation(article, 0, documentText.length(), COMPONENT_ID, 0, jCas);
