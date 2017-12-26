@@ -2,9 +2,7 @@ package edu.cmu.cs.lti.pipeline;
 
 import edu.cmu.cs.lti.salience.annotators.MultiFormatSalienceDataWriter;
 import edu.cmu.cs.lti.script.annotators.FrameBasedEventDetector;
-import edu.cmu.cs.lti.uima.io.IOUtils;
 import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
-import edu.cmu.cs.lti.uima.io.writer.StepBasedDirGzippedXmiWriter;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -12,6 +10,7 @@ import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.xml.sax.SAXException;
 
@@ -35,7 +34,8 @@ public class SalienceDataPreparer {
         String xmiOutput = argv[3];
         String trainingSplitFile = argv[4];
         String testSplitFile = argv[5];
-        String embeddingPath = argv[6];
+        String devSplitFile = argv[6];
+        String embeddingPath = argv[7];
 
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                 GzippedXmiCollectionReader.class, typeSystemDescription,
@@ -55,13 +55,16 @@ public class SalienceDataPreparer {
                 MultiFormatSalienceDataWriter.PARAM_OUTPUT_DIR, new File(workingDir, jsonOutput),
                 MultiFormatSalienceDataWriter.PARAM_TRAIN_SPLIT, trainingSplitFile,
                 MultiFormatSalienceDataWriter.PARAM_TEST_SPLIT, testSplitFile,
+                MultiFormatSalienceDataWriter.PARAM_DEV_SPLIT, devSplitFile,
                 MultiFormatSalienceDataWriter.PARAM_OUTPUT_PREFIX, "nyt_salience",
                 MultiFormatSalienceDataWriter.MULTI_THREAD, true,
                 MultiFormatSalienceDataWriter.PARAM_JOINT_EMBEDDING, embeddingPath,
                 MultiFormatSalienceDataWriter.PARAM_WRITE_EVENT, true
         );
 
-        StepBasedDirGzippedXmiWriter.dirSegFunction = IOUtils::indexBasedSegFunc;
-        new BasicPipeline(reader, true, true, 7, workingDir, xmiOutput, true, detector, jsonWriter).run();
+//        StepBasedDirGzippedXmiWriter.dirSegFunction = IOUtils::indexBasedSegFunc;
+
+//        new BasicPipeline(reader, true, true, 7, workingDir, xmiOutput, true, detector, jsonWriter).run();
+        SimplePipeline.runPipeline(reader, detector, jsonWriter);
     }
 }

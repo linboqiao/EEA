@@ -288,9 +288,6 @@ public class FeatureUtils {
             int salience = entitySalience.contains(kbid) ? 1 : 0;
             StanfordCorenlpToken firstHeadWord = UimaNlpUtils.findHeadFromStanfordAnnotation(firstMention);
 
-            System.out.println("Mention is " + firstMention.getCoveredText());
-            System.out.println(firstHeadWord.getCoveredText());
-
             String firstHeadLex = SalienceUtils.getCanonicalToken(firstHeadWord);
 
             if (firstLoc > 10) {

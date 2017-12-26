@@ -12,6 +12,7 @@ import edu.cmu.cs.lti.salience.utils.TextUtils;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
+import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.FileUtils;
@@ -101,15 +102,18 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         try {
             trainDocs = SalienceUtils.readSplit(trainSplitFile);
             testDocs = SalienceUtils.readSplit(testSplitFile);
+
+            logger.info("Number of docs in training: " + trainDocs.size());
+            logger.info("Number of docs in testing: " + testDocs.size());
+
             if (devSplitFile != null) {
                 devDocs = SalienceUtils.readSplit(devSplitFile);
+                logger.info("Number of docs in dev: " + devDocs.size());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        logger.info("Number of docs in training: " + trainDocs.size());
-        logger.info("Number of docs in testing: " + testDocs.size());
 
         try {
             LookupTable table = SalienceUtils.loadEmbedding(jointEmbeddingFile);
@@ -427,9 +431,24 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         }
     }
 
+    private void setAbstractArticle(JCas abstractView, Article mainArticle) {
+        if (JCasUtil.select(abstractView, Article.class).isEmpty()) {
+            // Article in abstract view.
+            Article abstractArticle = new Article(abstractView);
+            UimaAnnotationUtils.finishAnnotation(abstractArticle, 0, abstractView.getDocumentText().length(),
+                    COMPONENT_ID, 0, abstractView);
+            abstractArticle.setArticleName(mainArticle.getArticleName());
+            abstractArticle.setLanguage(mainArticle.getLanguage());
+        }
+    }
+
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        String articleName = UimaConvenience.getArticleName(aJCas);
+        Article mainArticle = JCasUtil.selectSingle(aJCas, Article.class);
+        JCas abstractView = JCasUtil.getView(aJCas, AnnotatedNytReader.ABSTRACT_VIEW_NAME, false);
+        String articleName = mainArticle.getArticleName();
+
+        setAbstractArticle(abstractView, mainArticle);
 
         Body body = JCasUtil.selectSingle(aJCas, Body.class);
 

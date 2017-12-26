@@ -10,8 +10,6 @@ import edu.cmu.cs.lti.script.type.Article;
 import edu.cmu.cs.lti.script.type.Body;
 import edu.cmu.cs.lti.script.type.GroundedEntity;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import edu.cmu.cs.lti.utils.DebugUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.collection.CollectionException;
@@ -81,21 +79,19 @@ public class TagmeStyleJSONReader extends JCasCollectionReader_ImplBase {
         JsonObject docInfo = new JsonParser().parse(nextLine).getAsJsonObject();
         String docid = docInfo.get("docno").getAsString();
 
-        UimaConvenience.printProcessLog(jCas);
-
         List<String> allText = new ArrayList<>();
         JsonObject allSpots = docInfo.get("spot").getAsJsonObject();
 
         int offset = 0;
         for (String headerField : headerFields) {
-            String text = addCharFormatFields(jCas, docInfo, allSpots, headerField, offset);
+            String text = addTokenFormatFields(jCas, docInfo, allSpots, headerField, offset);
             allText.add(text);
             offset += text.length() + 1;
         }
 
         int bodyStart = offset;
         for (String textField : bodyFields) {
-            String text = addCharFormatFields(jCas, docInfo, allSpots, textField, offset);
+            String text = addTokenFormatFields(jCas, docInfo, allSpots, textField, offset);
             allText.add(text);
             offset += text.length() + 1;
         }
@@ -112,23 +108,17 @@ public class TagmeStyleJSONReader extends JCasCollectionReader_ImplBase {
         String salienceText = addTokenFormatFields(salienceView, docInfo, allSpots, abstractField, 0);
         salienceView.setDocumentText(salienceText);
 
-        for (GroundedEntity entity : JCasUtil.select(jCas, GroundedEntity.class)) {
-            System.out.println(String.format("Entity %s [%d:%d], %s", entity.getCoveredText(), entity.getBegin(),
-                    entity.getEnd(), entity.getKnowledgeBaseId()));
-        }
-
-        for (GroundedEntity entity : JCasUtil.select(salienceView, GroundedEntity.class)) {
-            System.out.println(String.format("Entity %s [%d:%d], %s", entity.getCoveredText(), entity.getBegin(),
-                    entity.getEnd(), entity.getKnowledgeBaseId()));
-        }
-
-        DebugUtils.pause();
-
-
+        // Article in default view.
         Article article = new Article(jCas);
         UimaAnnotationUtils.finishAnnotation(article, 0, documentText.length(), COMPONENT_ID, 0, jCas);
         article.setArticleName(FilenameUtils.getBaseName(docid));
         article.setLanguage(language);
+
+        // Article in abstract view.
+        Article abstractArticle = new Article(salienceView);
+        UimaAnnotationUtils.finishAnnotation(abstractArticle, 0, salienceText.length(), COMPONENT_ID, 0, salienceView);
+        abstractArticle.setArticleName(FilenameUtils.getBaseName(docid));
+        abstractArticle.setLanguage(language);
 
         // Also store location of source document in CAS. This information is critical
         // if CAS Consumers will need to know where the original document contents are located.
@@ -143,8 +133,6 @@ public class TagmeStyleJSONReader extends JCasCollectionReader_ImplBase {
         srcDocInfo.addToIndexes();
 
         lineNumber++;
-
-        DebugUtils.pause();
     }
 
     private String addCharFormatFields(JCas jCas, JsonObject docInfo, JsonObject allSpots, String field, int offset) {
