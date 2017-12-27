@@ -10,7 +10,6 @@ import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
-import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.xml.sax.SAXException;
 
@@ -64,7 +63,6 @@ public class SalienceDataPreparer {
 
 //        StepBasedDirGzippedXmiWriter.dirSegFunction = IOUtils::indexBasedSegFunc;
 
-//        new BasicPipeline(reader, true, true, 7, workingDir, xmiOutput, true, detector, jsonWriter).run();
-        SimplePipeline.runPipeline(reader, detector, jsonWriter);
+        new BasicPipeline(reader, true, true, 7, workingDir, xmiOutput, true, detector, jsonWriter).run();
     }
 }

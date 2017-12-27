@@ -308,6 +308,10 @@ public class FeatureUtils {
     }
 
     private static int bucket(int number) {
-        return (int) Math.round(Math.log(10 * (number + 1)));
+        return bucket(number, 1);
+    }
+
+    private static int bucket(int number, int k) {
+        return (int) Math.round(Math.log(k * (number + 1)));
     }
 }
