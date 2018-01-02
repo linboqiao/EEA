@@ -18,17 +18,21 @@ import static edu.cmu.cs.lti.salience.utils.FeatureUtils.sparsePrefix;
  */
 public class SalienceJSONClasses {
     static public class DocStructure {
+        @SerializedName("paperAbstract") // Semantic Scholar version
         public String bodyText;
         public String docno;
         public Spots spot;
         public Spots event;
-        @SerializedName("abstract")
+        @SerializedName("title") // Semantic Scholar version
+//        @SerializedName("abstract") //NYT version
         public String abstractText;
     }
 
     static public class Spots {
+        @SerializedName("paperAbstract") // Semantic Scholar version
         public List<Spot> bodyText;
-        @SerializedName("abstract")
+        @SerializedName("title") // Semantic Scholar version
+        //        @SerializedName("abstract") // NYT version
         public List<Spot> abstractSpots;
     }
 

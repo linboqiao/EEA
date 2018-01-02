@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.pipeline;
 
 import edu.cmu.cs.lti.salience.annotators.MultiFormatSalienceDataWriter;
+import edu.cmu.cs.lti.salience.annotators.NaiveBodyAnnotator;
 import edu.cmu.cs.lti.script.annotators.FrameBasedEventDetector;
 import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
 import org.apache.uima.UIMAException;
@@ -49,6 +50,10 @@ public class SalienceDataPreparer {
                 FrameBasedEventDetector.PARAM_FRAME_RELATION, "../data/resources/fndata-1.7/frRelation.xml"
         );
 
+        AnalysisEngineDescription bodyAnno = AnalysisEngineFactory.createEngineDescription(
+                NaiveBodyAnnotator.class, typeSystemDescription
+        );
+
         AnalysisEngineDescription jsonWriter = AnalysisEngineFactory.createEngineDescription(
                 MultiFormatSalienceDataWriter.class, typeSystemDescription,
                 MultiFormatSalienceDataWriter.PARAM_OUTPUT_DIR, new File(workingDir, jsonOutput),
@@ -63,6 +68,6 @@ public class SalienceDataPreparer {
 
 //        StepBasedDirGzippedXmiWriter.dirSegFunction = IOUtils::indexBasedSegFunc;
 
-        new BasicPipeline(reader, true, true, 7, workingDir, xmiOutput, true, detector, jsonWriter).run();
+        new BasicPipeline(reader, true, true, 7, workingDir, xmiOutput, true, detector, bodyAnno, jsonWriter).run();
     }
 }
