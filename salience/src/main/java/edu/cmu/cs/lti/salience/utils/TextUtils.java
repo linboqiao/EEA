@@ -8,7 +8,9 @@ import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import org.apache.uima.fit.util.JCasUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,6 +32,19 @@ public class TextUtils {
             words.add(token.getCoveredText());
         }
         return Joiner.on(" ").join(words);
+    }
+
+    public static Map<StanfordCorenlpToken, Span> getTokenSpacedOffset(ArticleComponent articleComponent){
+        Map<StanfordCorenlpToken, Span> tokenOffsets = new HashMap<>();
+        int offset = 0;
+        for (StanfordCorenlpToken token : JCasUtil.selectCovered(StanfordCorenlpToken.class, articleComponent)) {
+            int begin = offset;
+            int tokenSize = asTokenized(token).split(" ").length;
+            int end = begin + tokenSize;
+            tokenOffsets.put(token, Span.of(begin, end));
+            offset += tokenSize;
+        }
+        return tokenOffsets;
     }
 
     /**

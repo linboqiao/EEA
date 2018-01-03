@@ -10,6 +10,7 @@ import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.uimafit.pipeline.SimplePipeline;
 import org.xml.sax.SAXException;
 
 import java.io.File;
@@ -44,5 +45,6 @@ public class EventEntityGraphPreparer {
         );
 
         new BasicPipeline(reader, true, true, 7, jsonWriter).run();
+//        SimplePipeline.runPipeline(reader, jsonWriter);
     }
 }

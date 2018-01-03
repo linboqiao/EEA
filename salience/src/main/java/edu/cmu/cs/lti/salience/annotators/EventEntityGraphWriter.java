@@ -22,6 +22,8 @@ import java.io.*;
 import java.util.*;
 import java.util.zip.GZIPOutputStream;
 
+import static edu.cmu.cs.lti.salience.utils.TextUtils.getTokenSpacedOffset;
+
 /**
  * Created with IntelliJ IDEA.
  * Date: 1/2/18
@@ -58,6 +60,12 @@ public class EventEntityGraphWriter extends AbstractLoggingAnnotator {
         }
     }
 
+    private Span getSpaceBasedLoc(ComponentAnnotation anno, Map<StanfordCorenlpToken, Span> tokenOffsets){
+        List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, anno);
+        int tokenBegin = tokenOffsets.get(tokens.get(0)).getBegin();
+        int tokenEnd = tokenOffsets.get(tokens.get(tokens.size() -1 )).getEnd();
+        return Span.of(tokenBegin, tokenEnd);
+    }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
@@ -65,9 +73,21 @@ public class EventEntityGraphWriter extends AbstractLoggingAnnotator {
 
         //Make sure index is correct.
         int index = 0;
+
+        Map<StanfordCorenlpToken, Span> tokenOffsets = getTokenSpacedOffset(body);
+
+        Map<EventMention, Span> eventLocs = new HashMap<>();
         for (EventMention eventMention : JCasUtil.selectCovered(EventMention.class, body)) {
             eventMention.setIndex(index);
+            Span tokenOffset = getSpaceBasedLoc(eventMention, tokenOffsets);
+            eventLocs.put(eventMention, tokenOffset);
             index++;
+        }
+
+        Map<GroundedEntity, Span> entityLocs = new HashMap<>();
+        for (GroundedEntity entity : JCasUtil.selectCovered(GroundedEntity.class, body)) {
+            Span tokenOffset = getSpaceBasedLoc(entity, tokenOffsets);
+            entityLocs.put(entity, tokenOffset);
         }
 
         ArrayListMultimap<EventMention, Pair<String, GroundedEntity>> dependencyAdjacent = ArrayListMultimap
@@ -88,9 +108,9 @@ public class EventEntityGraphWriter extends AbstractLoggingAnnotator {
         }
 
         try {
-            writeAdjacent(aJCas, body, dependencyWriter, dependencyAdjacent);
-            writeAdjacent(aJCas, body, semanticWriter, semanticAdjacent);
-            writeAdjacent(aJCas, body, sameSentenceWriter, sameSentenceAdjacent);
+            writeAdjacent(aJCas, dependencyWriter, dependencyAdjacent, eventLocs, entityLocs);
+            writeAdjacent(aJCas, semanticWriter, semanticAdjacent, eventLocs, entityLocs);
+            writeAdjacent(aJCas, sameSentenceWriter, sameSentenceAdjacent, eventLocs, entityLocs);
         } catch (IOException e) {
             throw new AnalysisEngineProcessException(e);
         }
@@ -112,13 +132,10 @@ public class EventEntityGraphWriter extends AbstractLoggingAnnotator {
         return new BufferedWriter(new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(file))));
     }
 
-    private List<Integer> getLoc(ArticleComponent articleComponent, ComponentAnnotation anno) {
-        Span tokenOffset = TextUtils.getSpaceTokenOffset(articleComponent, anno);
-        return Arrays.asList(tokenOffset.getBegin(), tokenOffset.getEnd());
-    }
-
-    private void writeAdjacent(JCas jCas, ArticleComponent component, Writer writer, ArrayListMultimap<EventMention,
-            Pair<String, GroundedEntity>> adjacent) throws IOException {
+    private void writeAdjacent(JCas jCas, Writer writer,
+                               ArrayListMultimap<EventMention, Pair<String, GroundedEntity>> adjacent,
+                               Map<EventMention, Span> eventLocs, Map<GroundedEntity, Span> entityLocs)
+            throws IOException {
         Gson gson = new Gson();
         String docid = UimaConvenience.getArticleName(jCas);
 
@@ -133,7 +150,7 @@ public class EventEntityGraphWriter extends AbstractLoggingAnnotator {
             EventAdjacent ea = new EventAdjacent();
             ea.id = Integer.toString(evm.getIndex());
             ea.surface = TextUtils.asTokenized(evm);
-            ea.loc = getLoc(component, evm);
+            ea.loc = Arrays.asList(eventLocs.get(evm).getBegin(), eventLocs.get(evm).getEnd());
 
             List<LinkedEntity> argEntities = new ArrayList<>();
 
@@ -144,11 +161,11 @@ public class EventEntityGraphWriter extends AbstractLoggingAnnotator {
                 LinkedEntity le = new LinkedEntity();
                 le.id = entity.getKnowledgeBaseId();
                 le.link = rel;
-                le.loc = getLoc(component, entity);
+                le.loc = Arrays.asList(entityLocs.get(entity).getBegin(), entityLocs.get(entity).getEnd());
+                le.surface = TextUtils.asTokenized(entity);
                 argEntities.add(le);
             }
             ea.entities = argEntities;
-
             adjacentList.add(ea);
         }
         as.adjacentList = adjacentList;
@@ -174,6 +191,7 @@ public class EventEntityGraphWriter extends AbstractLoggingAnnotator {
         public String link;
         public String id;
         public List<Integer> loc;
+        public String surface;
     }
 
     private <T extends ComponentAnnotation> Map<Word, T> headwordMapping(Collection<T> annotations) {
