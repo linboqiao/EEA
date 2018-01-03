@@ -60,10 +60,10 @@ public class EventEntityGraphWriter extends AbstractLoggingAnnotator {
         }
     }
 
-    private Span getSpaceBasedLoc(ComponentAnnotation anno, Map<StanfordCorenlpToken, Span> tokenOffsets){
+    private Span getSpaceBasedLoc(ComponentAnnotation anno, Map<StanfordCorenlpToken, Span> tokenOffsets) {
         List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, anno);
         int tokenBegin = tokenOffsets.get(tokens.get(0)).getBegin();
-        int tokenEnd = tokenOffsets.get(tokens.get(tokens.size() -1 )).getEnd();
+        int tokenEnd = tokenOffsets.get(tokens.get(tokens.size() - 1)).getEnd();
         return Span.of(tokenBegin, tokenEnd);
     }
 
@@ -209,6 +209,14 @@ public class EventEntityGraphWriter extends AbstractLoggingAnnotator {
                                         ArrayListMultimap<EventMention, Pair<String, GroundedEntity>> adjacent) {
         for (EventMention event : events) {
             Word headword = event.getHeadWord();
+            if (headword == null) {
+                headword = UimaNlpUtils.findHeadFromStanfordAnnotation(event);
+            }
+
+            if (headword == null) {
+                continue;
+            }
+
             FSList childDepFS = headword.getChildDependencyRelations();
 
             if (childDepFS != null) {
