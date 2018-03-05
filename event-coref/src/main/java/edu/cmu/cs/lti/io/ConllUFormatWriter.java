@@ -2,19 +2,29 @@ package edu.cmu.cs.lti.io;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
-import edu.cmu.cs.lti.script.type.Dependency;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
-import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
+import edu.cmu.cs.lti.learning.runners.RunnerUtils;
+import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
+import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.uimafit.descriptor.ConfigurationParameter;
+import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -38,6 +48,11 @@ public class ConllUFormatWriter extends AbstractLoggingAnnotator {
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
 
+        if (!outputFile.getParentFile().exists()) {
+            File parent = outputFile.getParentFile();
+            parent.mkdirs();
+        }
+
         try {
             writer = new BufferedWriter(new FileWriter(outputFile));
         } catch (IOException e) {
@@ -47,40 +62,108 @@ public class ConllUFormatWriter extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas jCas) throws AnalysisEngineProcessException {
-        JCas goldView = JCasUtil.getView(jCas, goldStandardViewName, jCas);
-
         int sentId = 0;
+
+        String docid = UimaConvenience.getArticleName(jCas);
+
+        Map<EventMention, Integer> clusterIds = new HashMap<>();
+
+        int clusterId = 0;
+        for (Event event : JCasUtil.select(jCas, Event.class)) {
+            FSArray mentions = event.getEventMentions();
+            if (mentions.size() > 1) {
+                for (EventMention eventMention : FSCollectionFactory.create(mentions, EventMention.class)) {
+                    clusterIds.put(eventMention, clusterId++);
+                }
+            }
+        }
+
+        writeLine("# doc = " + docid);
         for (StanfordCorenlpSentence sentence : JCasUtil.select(jCas, StanfordCorenlpSentence.class)) {
 
-            writeLine(String.valueOf(sentId++));
+            writeLine("# sentence = " + String.valueOf(sentId++));
 
-            List<Pair<Integer, String>> deps = getDeps(sentence);
             List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
-
+            Map<StanfordCorenlpToken, Integer> tokenIds = new HashMap<>();
             for (int tokenId = 0; tokenId < tokens.size(); tokenId++) {
-                StanfordCorenlpToken token = tokens.get(tokenId);
+                tokenIds.put(tokens.get(tokenId), tokenId);
+            }
+
+            List<Pair<Integer, String>> deps = getDeps(tokens, tokenIds);
+
+            Pair<String[], int[]> eventInfo = getEvents(sentence, tokenIds, clusterIds);
+            String[] tokenEventType = eventInfo.getKey();
+            int[] tokenEventId = eventInfo.getValue();
+
+            for (int tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++) {
+                StanfordCorenlpToken token = tokens.get(tokenIndex);
                 List<String> conllFields = new ArrayList<>();
-                conllFields.add(String.valueOf(tokenId));
+
+                // Token id is one-based since there is a ROOT.
+                conllFields.add(String.valueOf(tokenIndex + 1));
                 conllFields.addAll(getWordFieds(token));
 
-                Pair<Integer, String> dep = deps.get(tokenId);
+                Pair<Integer, String> dep = deps.get(tokenIndex);
                 conllFields.add(String.valueOf(dep.getLeft()));
                 conllFields.add(dep.getRight());
+
+                // Enhanced dependency not available.
+                conllFields.add("_");
+
+                // Add event info.
+                conllFields.add(tokenEventType[tokenIndex]);
+                int eid = tokenEventId[tokenIndex];
+                conllFields.add(eid == -1 ? "_" : String.valueOf(eid));
 
                 token.getHeadDependencyRelations();
                 writeLine(conllFields);
             }
+
+            writeLine("");
         }
     }
 
-    private List<Pair<Integer, String>> getDeps(StanfordCorenlpSentence sentence) {
-        List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
-        List<Pair<Integer, String>> heads = new ArrayList<>();
-
-        Map<StanfordCorenlpToken, Integer> tokenIds = new HashMap<>();
-        for (int tokenId = 0; tokenId < tokens.size(); tokenId++) {
-            tokenIds.put(tokens.get(tokenId), tokenId);
+    @Override
+    public void collectionProcessComplete() throws AnalysisEngineProcessException {
+        super.collectionProcessComplete();
+        try {
+            writer.close();
+        } catch (IOException e) {
+            throw new AnalysisEngineProcessException(e);
         }
+    }
+
+    private Pair<String[], int[]> getEvents(StanfordCorenlpSentence sentence,
+                                            Map<StanfordCorenlpToken, Integer> tokenIds,
+                                            Map<EventMention, Integer> clusterIds
+    ) {
+        String[] tokenMentionTypes = new String[tokenIds.size()];
+        for (int i = 0; i < tokenMentionTypes.length; i++) {
+            tokenMentionTypes[i] = "O";
+        }
+
+        int[] tokenEventId = new int[tokenIds.size()];
+
+        for (EventMention mention : JCasUtil.selectCovered(EventMention.class, sentence)) {
+            List<StanfordCorenlpToken> mentionTokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, mention);
+
+            for (int i = 0; i < mentionTokens.size(); i++) {
+                StanfordCorenlpToken mentionToken = mentionTokens.get(i);
+                int tokenId = tokenIds.get(mentionToken);
+                String prefix = "I_";
+                if (i == 0) {
+                    prefix = "B_";
+                }
+                tokenMentionTypes[tokenId] = prefix + mention.getEventType();
+                tokenEventId[tokenId] = clusterIds.getOrDefault(mention, -1);
+            }
+        }
+        return Pair.of(tokenMentionTypes, tokenEventId);
+    }
+
+    private List<Pair<Integer, String>> getDeps(List<StanfordCorenlpToken> tokens,
+                                                Map<StanfordCorenlpToken, Integer> tokenIds) {
+        List<Pair<Integer, String>> heads = new ArrayList<>();
 
         for (int tokenId = 0; tokenId < tokens.size(); tokenId++) {
             StanfordCorenlpToken token = tokens.get(tokenId);
@@ -122,4 +205,27 @@ public class ConllUFormatWriter extends AbstractLoggingAnnotator {
         fields.add("_"); // morphological features, not available.
         return fields;
     }
+
+    public static void main(String[] argv) throws IOException, UIMAException {
+        Configuration commonConfig = new Configuration("settings/common.properties");
+        String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
+        TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
+                .createTypeSystemDescription(typeSystemName);
+
+        String inputDir = argv[0];
+        String outputFile = argv[1];
+
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader
+                (inputDir, "preprocessed");
+
+        AnalysisEngineDescription goldAnnotator = RunnerUtils.getGoldAnnotator(true, true, true, true);
+
+        AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
+                ConllUFormatWriter.class, typeSystemDescription,
+                ConllUFormatWriter.PARAM_OUTPUT_FILE, outputFile
+        );
+
+        SimplePipeline.runPipeline(reader, goldAnnotator, writer);
+    }
+
 }
