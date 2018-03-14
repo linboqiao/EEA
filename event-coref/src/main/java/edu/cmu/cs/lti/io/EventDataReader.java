@@ -65,6 +65,9 @@ public class EventDataReader {
             case "bratafter":
                 readBratAfter(datasetConfig, typeSystemDescription, rawBase);
                 break;
+            case "bratafterbase":
+                readBratAfterWithBase(datasetConfig, typeSystemDescription, rawBase);
+                break;
             case "brat":
                 readBrat(datasetConfig, typeSystemDescription, rawBase);
                 break;
@@ -161,12 +164,13 @@ public class EventDataReader {
             CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                     PlainTextCollectionReader.class, typeSystemDescription,
                     PlainTextCollectionReader.PARAM_INPUTDIR, datasetConfig.get("edu.cmu.cs.lti.data.source.path"),
-                    PlainTextCollectionReader.PARAM_TEXT_SUFFIX, datasetConfig.get("edu.cmu.cs.lti.data.source" +
-                            ".extension"),
+                    PlainTextCollectionReader.PARAM_TEXT_SUFFIX, "."+ datasetConfig
+                            .get("edu.cmu.cs.lti.data.source.extension"),
                     PlainTextCollectionReader.PARAM_REMOVE_QUOTES,
-                    datasetConfig.getBoolean("edu.cmu.cs.lti.data.quotes.remove", true)
+                    datasetConfig.getBoolean("edu.cmu.cs.lti.data.quotes.remove", true),
+                    PlainTextCollectionReader.PARAM_QUOTED_AREA_FILE,
+                    datasetConfig.get("edu.cmu.cs.lti.data.quotes.file")
             );
-
 
             AnalysisEngineDescription goldAnnotator = AnalysisEngineFactory.createEngineDescription(
                     BratEventGoldStandardAnnotator.class, typeSystemDescription,
@@ -181,8 +185,6 @@ public class EventDataReader {
                     EventSpanProcessor.class, typeSystemDescription
             );
 
-//            CustomAnalysisEngineFactory.setTypeSystem(typeSystemDescription);
-
             AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(workingDir, rawBase);
 
             SimplePipeline.runPipeline(reader, goldAnnotator, emsAnnotator, writer);
@@ -190,6 +192,46 @@ public class EventDataReader {
     }
 
     private void readBratAfter(Configuration datasetConfig, TypeSystemDescription typeSystemDescription, String rawBase)
+            throws UIMAException, IOException {
+        if (!skipRaw || !new File(workingDir, rawBase).exists()) {
+            CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
+                    PlainTextCollectionReader.class, typeSystemDescription,
+                    PlainTextCollectionReader.PARAM_INPUTDIR, datasetConfig.get("edu.cmu.cs.lti.data.source.path"),
+                    PlainTextCollectionReader.PARAM_TEXT_SUFFIX,
+                    datasetConfig.get("edu.cmu.cs.lti.data.source.extension"),
+                    PlainTextCollectionReader.PARAM_REMOVE_QUOTES,
+                    datasetConfig.getBoolean("edu.cmu.cs.lti.data.quotes.remove", true),
+                    PlainTextCollectionReader.PARAM_QUOTED_AREA_FILE,
+                    datasetConfig.get("edu.cmu.cs.lti.data.quotes.file")
+            );
+
+            AnalysisEngineDescription goldAnnotator = AnalysisEngineFactory.createEngineDescription(
+                    BratEventGoldStandardAnnotator.class, typeSystemDescription,
+                    BratEventGoldStandardAnnotator.PARAM_ANNOTATION_DIR,
+                    datasetConfig.get("edu.cmu.cs.lti.data.annotation.path"),
+                    BratEventGoldStandardAnnotator.PARAM_TEXT_FILE_SUFFIX, ".txt",
+                    BratEventGoldStandardAnnotator.PARAM_ANNOTATION_FILE_NAME_SUFFIX, ".ann",
+                    BratEventGoldStandardAnnotator.PARAM_PREFER_COREF_LINK, true
+            );
+
+            AnalysisEngineDescription goldAfterLinker = AnalysisEngineFactory.createEngineDescription(
+                    AfterLinkGoldStandardAnnotator.class, typeSystemDescription,
+                    AfterLinkGoldStandardAnnotator.PARAM_ANNOTATION_DIR,
+                    datasetConfig.get("edu.cmu.cs.lti.data.annotation.path")
+            );
+
+            AnalysisEngineDescription emsAnnotator = AnalysisEngineFactory.createEngineDescription(
+                    EventSpanProcessor.class, typeSystemDescription
+            );
+
+            AnalysisEngineDescription writer = CustomAnalysisEngineFactory.createXmiWriter(workingDir, rawBase);
+
+            SimplePipeline.runPipeline(reader, goldAnnotator, goldAfterLinker, emsAnnotator, writer);
+        }
+    }
+
+    private void readBratAfterWithBase(Configuration datasetConfig, TypeSystemDescription typeSystemDescription,
+                                       String rawBase)
             throws SAXException, UIMAException, CpeDescriptorException, IOException {
         if (!skipRaw || !new File(workingDir, rawBase).exists()) {
             CollectionReaderDescription baseReader = getBaseReader(datasetConfig, typeSystemDescription,
