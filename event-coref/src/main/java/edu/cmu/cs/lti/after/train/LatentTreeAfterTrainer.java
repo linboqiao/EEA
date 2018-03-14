@@ -85,7 +85,7 @@ public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
 //        DebugUtils.pause();
 
         GraphWeightVector weights = updater.getWeightVector(AFTER_MODEL_NAME);
-
+        
         MentionSubGraph predictedTree = decoder.decode(mentionGraph, candidates, weights, false);
 
         boolean debug = false;

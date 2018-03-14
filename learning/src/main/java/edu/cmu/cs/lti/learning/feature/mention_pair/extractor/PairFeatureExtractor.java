@@ -87,7 +87,6 @@ public class PairFeatureExtractor implements Serializable {
         });
     }
 
-
     /**
      * Extract label agnostic features for the mention pair.
      *
