@@ -109,7 +109,8 @@ public abstract class ModelTester {
                 "-d", FileUtils.joinPaths(evalDir, suffix + ".cmp"),
                 "-o", FileUtils.joinPaths(evalDir, suffix + ".scores"),
                 "-c", FileUtils.joinPaths(evalDir, suffix + ".coref_out"),
-                "-a", FileUtils.joinPaths(evalDir, suffix + "_sequencing")
+                "-a", FileUtils.joinPaths(evalDir, suffix + "_sequencing"),
+                "-nv" // sometimes sequencing have requirements difficult to meet.
         ));
 
         if (!charOffset) {
