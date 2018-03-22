@@ -115,10 +115,10 @@ public class ConllUFormatWriter extends AbstractLoggingAnnotator {
                 int eid = tokenEventId[tokenIndex];
                 conllFields.add(eid == -1 ? "_" : String.valueOf(eid));
 
-                token.getHeadDependencyRelations();
+                // Add span info.
+                conllFields.add(String.format("%d,%d", token.getBegin(), token.getEnd()));
                 writeLine(conllFields);
             }
-
             writeLine("");
         }
     }
@@ -215,8 +215,7 @@ public class ConllUFormatWriter extends AbstractLoggingAnnotator {
         String inputDir = argv[0];
         String outputFile = argv[1];
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader
-                (inputDir, "preprocessed");
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, inputDir);
 
         AnalysisEngineDescription goldAnnotator = RunnerUtils.getGoldAnnotator(true, true, true, true);
 
