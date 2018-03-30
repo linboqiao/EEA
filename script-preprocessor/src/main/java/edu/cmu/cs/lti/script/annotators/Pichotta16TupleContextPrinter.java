@@ -5,6 +5,7 @@ import edu.cmu.cs.lti.script.type.Dependency;
 import edu.cmu.cs.lti.script.type.StanfordDependencyRelation;
 import edu.cmu.cs.lti.script.type.Word;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
+import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -57,15 +58,15 @@ public class Pichotta16TupleContextPrinter extends AbstractTupleContextPrinter {
     protected String getTupleContent(Word head, String sentence) {
         String[] tupleFields = new String[9];
 
-        List<Word> extendedHeads = new ArrayList<>();
-        String eventHead = getEventHead(head, extendedHeads).toLowerCase();
+        List<Word> complements = new ArrayList<>();
+        String eventHead = UimaNlpUtils.getPredicate(head, complements);
 
         tupleFields[1] = eventHead;
         tupleFields[7] = sentence;
 
         List<String> prepNouns = new ArrayList<>();
 
-        for (Word extendedHead : extendedHeads) {
+        for (Word extendedHead : complements) {
             usedHeads.add(extendedHead);
             getSyntacticArguments(extendedHead, tupleFields, prepNouns);
         }
@@ -160,51 +161,6 @@ public class Pichotta16TupleContextPrinter extends AbstractTupleContextPrinter {
         }
         return null;
     }
-
-    private String getEventHead(Word head, List<Word> possibleHeads) {
-        possibleHeads.add(head);
-
-        FSList childDeps = head.getChildDependencyRelations();
-
-        String extendedEventPart = "";
-        String negationPart = "";
-
-        if (childDeps != null) {
-            for (StanfordDependencyRelation dep : FSCollectionFactory.create(childDeps,
-                    StanfordDependencyRelation.class)) {
-
-                if (combineVerbRelations.contains(dep.getDependencyType())) {
-                    Word shareSubjectNode = dep.getChild();
-                    possibleHeads.add(shareSubjectNode);
-                    extendedEventPart = "_" + getExtendedHead(shareSubjectNode);
-                }
-
-                if (dep.getDependencyType().equals("neg")) {
-                    negationPart = "not_";
-                }
-            }
-        }
-
-        return negationPart + head.getLemma() + extendedEventPart;
-    }
-
-    private String getExtendedHead(Word head) {
-        FSList childDeps = head.getChildDependencyRelations();
-
-        if (childDeps != null) {
-            for (StanfordDependencyRelation dep : FSCollectionFactory.create(childDeps,
-                    StanfordDependencyRelation.class)) {
-                Word child = dep.getChild();
-
-                if (dep.getDependencyType().equals("aux")) {
-                    return child.getLemma() + "_" + head.getLemma();
-                }
-            }
-        }
-
-        return head.getCoveredText();
-    }
-
 
     public static void main(String[] args) throws UIMAException, IOException {
         String paramTypeSystemDescriptor = "TypeSystem";
