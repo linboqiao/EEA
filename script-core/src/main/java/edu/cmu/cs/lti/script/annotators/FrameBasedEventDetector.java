@@ -82,6 +82,8 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
     private void annotateEvents(JCas aJCas) {
         ArticleComponent article = JCasUtil.selectSingle(aJCas, Article.class);
 
+        Map<Word, EntityMention> h2Entities = UimaNlpUtils.indexEntityMentions(aJCas);
+
         for (FrameStructure frameStructure : extractor.getTargetFrames(article)) {
             SemaforLabel predicate = frameStructure.getTarget();
             String frameName = frameStructure.getFrameName();
@@ -108,8 +110,9 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
             for (SemaforLabel frameElement : frameStructure.getFrameElements()) {
                 String feName = frameElement.getName();
                 EventMentionArgumentLink argumentLink = new EventMentionArgumentLink(aJCas);
-                EntityMention argumentMention = UimaNlpUtils.createEntityMention(aJCas,
+                EntityMention argumentMention = UimaNlpUtils.createNonExistEntityMention(aJCas, h2Entities,
                         frameElement.getBegin(), frameElement.getEnd(), COMPONENT_ID);
+
                 argumentLink.setArgumentRole(feName);
                 argumentLink.setArgument(argumentMention);
                 argumentLink.setEventMention(eventMention);
@@ -126,7 +129,8 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
             UimaAnnotationUtils.finishAnnotation(eventMention, COMPONENT_ID, 0, aJCas);
         }
 
-//        DebugUtils.pause();
+        UimaNlpUtils.createSingletons(aJCas, new ArrayList<>(JCasUtil.select(aJCas, EntityMention.class)),
+                COMPONENT_ID);
     }
 
     public static void main(String[] argv) throws UIMAException, SAXException, CpeDescriptorException, IOException {
