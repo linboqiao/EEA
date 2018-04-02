@@ -70,6 +70,10 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
             entity.setId(String.valueOf(id++));
         }
 
+        // The fields:
+        // predicate_head, predicate_context, frame_name,
+        //   [arg_role, frame_element, entity_id, arg_text, more_than_one] * Number_Roles
+
         StringBuilder sb = new StringBuilder();
         sb.append("#" + UimaConvenience.getArticleName(aJCas) + "\n");
 
