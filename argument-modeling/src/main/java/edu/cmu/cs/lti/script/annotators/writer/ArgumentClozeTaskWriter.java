@@ -1,9 +1,9 @@
 package edu.cmu.cs.lti.script.annotators.writer;
 
-import edu.cmu.cs.lti.script.type.EntityMention;
-import edu.cmu.cs.lti.script.type.EventMention;
-import edu.cmu.cs.lti.script.type.EventMentionArgumentLink;
-import edu.cmu.cs.lti.script.type.Word;
+import edu.cmu.cs.lti.pipeline.BasicPipeline;
+import edu.cmu.cs.lti.script.annotators.FrameBasedEventDetector;
+import edu.cmu.cs.lti.script.annotators.VerbBasedEventDetector;
+import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
@@ -13,16 +13,17 @@ import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
-import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.xml.sax.SAXException;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -44,6 +45,11 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
     public static final String PARAM_OUTPUT_FILE = "outputFile";
     @ConfigurationParameter(name = PARAM_OUTPUT_FILE)
     private File outputFile;
+
+    public static final String PARAM_CONTEXT_WINDOW = "contextWindow";
+    @ConfigurationParameter(name = PARAM_CONTEXT_WINDOW, defaultValue = "5")
+    private int contextWindowSize;
+
     private BufferedWriter writer;
 
     @Override
@@ -58,19 +64,42 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        try {
-            writer.write("#" + UimaConvenience.getArticleName(aJCas) + "\n");
-        } catch (IOException e) {
-            throw new AnalysisEngineProcessException(e);
+        // Assign IDs.
+        int id = 0;
+        for (Entity entity : JCasUtil.select(aJCas, Entity.class)) {
+            entity.setId(String.valueOf(id++));
         }
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("#" + UimaConvenience.getArticleName(aJCas) + "\n");
+
+        Collection<StanfordCorenlpToken> allTokens = JCasUtil.select(aJCas, StanfordCorenlpToken.class);
+        String[] lemmas = new String[allTokens.size()];
+        int i = 0;
+        for (StanfordCorenlpToken token : allTokens) {
+            lemmas[i] = token.getLemma().toLowerCase();
+            token.setIndex(i);
+            i++;
+        }
 
         for (EventMention eventMention : JCasUtil.select(aJCas, EventMention.class)) {
             List<Word> complements = new ArrayList<>();
-            String predicate_text = UimaNlpUtils.getPredicate(eventMention.getHeadWord(), complements);
 
-            StringBuilder sb = new StringBuilder();
+            boolean isFrameEvent = eventMention.getComponentId().equals(FrameBasedEventDetector.class.getSimpleName());
+
+            String predicate_text;
+            if (isFrameEvent) {
+                predicate_text = eventMention.getHeadWord().getLemma();
+            } else {
+                predicate_text = UimaNlpUtils.getPredicate(eventMention.getHeadWord(), complements);
+            }
+
+            String predicate_context = getContext(lemmas, (StanfordCorenlpToken) eventMention.getHeadWord());
+
             sb.append(predicate_text);
+            sb.append("\t").append(predicate_context);
+            String frame = eventMention.getFrameName();
+            sb.append("\t").append(frame == null ? "NA" : frame);
 
             FSList argsFS = eventMention.getArguments();
             Collection<EventMentionArgumentLink> argLinks = FSCollectionFactory.create(argsFS,
@@ -78,27 +107,64 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
 
             for (EventMentionArgumentLink argLink : argLinks) {
                 String role = argLink.getArgumentRole();
+                if (role == null) {
+                    role = "NA";
+                }
+                String fe = argLink.getFrameElementName();
+                if (fe == null) {
+                    fe = "NA";
+                }
                 EntityMention en = argLink.getArgument();
-                String entityId = en.getReferingEntity().getId();
+                Entity cluster = en.getReferingEntity();
+                String entityId = cluster.getId();
+
+                int notSingleton = cluster.getEntityMentions().size() == 1 ? 0 : 1;
+
                 String argText = en.getHead() == null ? en.getCoveredText() : en.getHead().getLemma();
+
                 sb.append("\t");
-                sb.append(role).append(entityId).append(":").append(argText);
+                sb.append(role).append("\t").append(fe).append("\t").append(entityId).append(":").append(argText)
+                        .append("\t").append(notSingleton);
             }
-
             sb.append("\n");
-
-            try {
-                writer.write(sb.toString());
-            } catch (IOException e) {
-                throw new AnalysisEngineProcessException(e);
-            }
         }
 
+        sb.append("\n");
+
         try {
-            writer.write("\n");
+            writer.write(sb.toString());
         } catch (IOException e) {
             throw new AnalysisEngineProcessException(e);
         }
+    }
+
+    private String getContext(String[] lemmas, StanfordCorenlpToken token) {
+        int index = token.getIndex();
+
+        int left = index - contextWindowSize;
+        if (left < 0) {
+            left = 0;
+        }
+
+        int right = index + contextWindowSize;
+        if (right > lemmas.length) {
+            right = lemmas.length;
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = left; i < index; i++) {
+            sb.append(lemmas[i]).append(" ");
+        }
+
+        // Indicate the context center.
+        sb.append("_");
+
+        for (int i = index + 1; i < right; i++) {
+            sb.append(" ").append(lemmas[i]);
+        }
+
+        return sb.toString();
     }
 
     @Override
@@ -111,18 +177,32 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         }
     }
 
-    public static void main(String[] args) throws UIMAException, IOException {
+    public static void main(String[] args) throws UIMAException, IOException, CpeDescriptorException, SAXException {
         String paramTypeSystemDescriptor = "TaskEventMentionDetectionTypeSystem";
 
-        String inputDir = args[0];
-        String outputFile = args[1];
+        String workingDir = args[0];
+        String inputBase = args[1];
+        String xmiOut = args[2];
+        String outputFile = args[3];
 
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
         CollectionReaderDescription reader =
-                CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, inputDir);
+                CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(
+                        typeSystemDescription, workingDir, inputBase
+                );
+
+        AnalysisEngineDescription verbEvents = AnalysisEngineFactory.createEngineDescription(
+                VerbBasedEventDetector.class, typeSystemDescription
+        );
+
+        AnalysisEngineDescription frameEvents = AnalysisEngineFactory.createEngineDescription(
+                FrameBasedEventDetector.class, typeSystemDescription,
+                FrameBasedEventDetector.PARAM_FRAME_RELATION, "../data/resources/fndata-1.7/frRelation.xml",
+                FrameBasedEventDetector.PARAM_IGNORE_BARE_FRAME, true
+        );
 
         AnalysisEngineDescription eventExtractor = AnalysisEngineFactory.createEngineDescription(
                 ArgumentClozeTaskWriter.class, typeSystemDescription,
@@ -130,6 +210,7 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         );
 
         // Run the pipeline.
-        SimplePipeline.runPipeline(reader, eventExtractor);
+        new BasicPipeline(reader, true, true, 7, workingDir, xmiOut, true,
+                frameEvents, verbEvents, eventExtractor).run();
     }
 }

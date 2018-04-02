@@ -1,16 +1,19 @@
 package edu.cmu.cs.lti.script.annotators;
 
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.tcas.Annotation;
+import org.apache.uima.resource.ResourceInitializationException;
 
 import java.util.*;
 
@@ -22,18 +25,32 @@ import java.util.*;
  * @author Zhengzhong Liu
  */
 public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
+
+    private Set<String> ignoredHeadWords;
+
+    @Override
+    public void initialize(UimaContext aContext) throws ResourceInitializationException {
+        super.initialize(aContext);
+        String[] ignoredVerbs = new String[]{"be", "do", "have", "seem", "go", "have", "keep", "argue", "claim",
+                "say", "suggest", "tell"};
+        ignoredHeadWords = new HashSet<>();
+        Collections.addAll(ignoredHeadWords, ignoredVerbs);
+
+    }
+
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         Set<Word> usedHeads = new HashSet<>();
         Map<Word, EntityMention> h2Entities = UimaNlpUtils.indexEntityMentions(aJCas);
+        Table<Integer, Integer, EventMention> span2Events = UimaNlpUtils.indexEventMentions(aJCas);
 
         int eventId = 0;
         for (StanfordCorenlpToken token : JCasUtil.select(aJCas, StanfordCorenlpToken.class)) {
             if (!token.getPos().startsWith("V")) {
                 continue;
-            }
-
-            if (usedHeads.contains(token)) {
+            } else if (usedHeads.contains(token)) {
+                continue;
+            } else if (ignoredHeadWords.contains(token.getLemma().toLowerCase())) {
                 continue;
             }
 
@@ -41,7 +58,13 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
             UimaNlpUtils.getPredicate(token, complements);
             usedHeads.addAll(complements);
 
-            EventMention eventMention = new EventMention(aJCas, token.getBegin(), token.getEnd());
+            EventMention eventMention;
+            if (span2Events.contains(token.getBegin(), token.getEnd())) {
+                eventMention = span2Events.get(token.getBegin(), token.getEnd());
+            } else {
+                eventMention = new EventMention(aJCas, token.getBegin(), token.getEnd());
+                UimaAnnotationUtils.finishAnnotation(eventMention, COMPONENT_ID, eventId++, aJCas);
+            }
             eventMention.setHeadWord(token);
 
             Map<String, Word> args = getArgs(token);
@@ -67,23 +90,25 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
                 eventMention.setRegions(i, regions.get(i));
             }
 
+            Map<Word, EventMentionArgumentLink> head2Args = UimaNlpUtils.indexArgs(eventMention);
+
             for (Map.Entry<String, Word> arg : args.entrySet()) {
                 String role = arg.getKey();
                 Word argWord = arg.getValue();
-                EventMentionArgumentLink argumentLink = new EventMentionArgumentLink(aJCas);
-                EntityMention argumentMention = UimaNlpUtils.createNonExistEntityMention(aJCas, h2Entities,
-                        argWord.getBegin(), argWord.getEnd(), COMPONENT_ID);
 
-                argumentLink.setArgumentRole(role);
-                argumentLink.setArgument(argumentMention);
-                argumentLink.setEventMention(eventMention);
+                EventMentionArgumentLink argumentLink;
+                if (head2Args.containsKey(argWord)) {
+                    argumentLink = head2Args.get(argWord);
+                } else {
+                    argumentLink = UimaNlpUtils.createArg(aJCas, h2Entities, eventMention, argWord.getBegin(),
+                            argWord.getEnd(), COMPONENT_ID);
+                }
 
-                UimaAnnotationUtils.finishTop(argumentLink, COMPONENT_ID, 0, aJCas);
                 argumentLinks.add(argumentLink);
+                argumentLink.setArgumentRole(role);
             }
 
             eventMention.setArguments(FSCollectionFactory.createFSList(aJCas, argumentLinks));
-            UimaAnnotationUtils.finishAnnotation(eventMention, COMPONENT_ID, eventId++, aJCas);
         }
 
         UimaNlpUtils.createSingletons(aJCas, new ArrayList<>(JCasUtil.select(aJCas, EntityMention.class)),
@@ -113,34 +138,15 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
         String depType = dep.getDependencyType();
         Word depWord = dep.getChild();
         if (depType.equals("nsubj") || depType.equals("agent")) {
-            return Pair.of("subj", depWord);
+            return Pair.of("arg0", depWord);
         } else if (depType.equals("dobj") || depType.equals("nsubjpass")) {
-            return Pair.of("dobj", depWord);
+            return Pair.of("arg1", depWord);
         } else if (depType.equals("iobj")) {
-            return Pair.of("iobj", depWord);
+            return Pair.of("arg2", depWord);
         } else if (depType.startsWith("prep_")) {
             return Pair.of(depType, depWord);
         }
 
         return null;
-    }
-
-    private Map<Word, Integer> loadCoref(JCas aJCas) {
-        Map<Word, Integer> headToCoref = new HashMap<>();
-
-        int corefId = 0;
-        for (Entity entity : JCasUtil.select(aJCas, Entity.class)) {
-            Collection<EntityMention> mentions = FSCollectionFactory.create(entity
-                    .getEntityMentions(), EntityMention.class);
-
-            if (mentions.size() > 1) {
-                for (EntityMention mention : mentions) {
-                    StanfordCorenlpToken head = UimaNlpUtils.findHeadFromStanfordAnnotation(mention);
-                    headToCoref.put(head, corefId);
-                }
-                corefId += 1;
-            }
-        }
-        return headToCoref;
     }
 }

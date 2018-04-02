@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.script.annotators;
 
+import com.google.common.collect.Table;
 import edu.cmu.cs.lti.frame.FrameRelationReader;
 import edu.cmu.cs.lti.frame.FrameStructure;
 import edu.cmu.cs.lti.frame.UimaFrameExtractor;
@@ -24,6 +25,7 @@ import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.jdom2.JDOMException;
@@ -43,6 +45,10 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
     public static final String PARAM_FRAME_RELATION = "frameRelationFile";
     @ConfigurationParameter(name = PARAM_FRAME_RELATION)
     private File frameRelationFile;
+
+    public static final String PARAM_IGNORE_BARE_FRAME = "ignoreBareFrame";
+    @ConfigurationParameter(name = PARAM_IGNORE_BARE_FRAME, defaultValue = "false")
+    private boolean ignoreBareFrame;
 
     private Set<String> ignoredHeadWords;
     private UimaFrameExtractor extractor;
@@ -83,54 +89,100 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
         ArticleComponent article = JCasUtil.selectSingle(aJCas, Article.class);
 
         Map<Word, EntityMention> h2Entities = UimaNlpUtils.indexEntityMentions(aJCas);
+        Table<Integer, Integer, EventMention> span2Events = UimaNlpUtils.indexEventMentions(aJCas);
 
         for (FrameStructure frameStructure : extractor.getTargetFrames(article)) {
             SemaforLabel predicate = frameStructure.getTarget();
             String frameName = frameStructure.getFrameName();
 
-            StanfordCorenlpToken headword = UimaNlpUtils.findHeadFromStanfordAnnotation(predicate);
+            if (ignoreBareFrame) {
+                if (frameStructure.getFrameElements().size() == 0) {
+                    // Ignoring frames without arguments for now?
+                    continue;
+                }
+            }
 
-            if (headword == null) {
+            StanfordCorenlpToken predHead = UimaNlpUtils.findHeadFromStanfordAnnotation(predicate);
+
+            if (predHead == null) {
                 continue;
-            } else if (ignoredHeadWords.contains(headword.getLemma().toLowerCase())) {
+            } else if (ignoredHeadWords.contains(predHead.getLemma().toLowerCase())) {
                 continue;
             }
 
-            EventMention eventMention = new EventMention(aJCas, predicate.getBegin(), predicate.getEnd());
+            EventMention eventMention;
+            if (span2Events.contains(predicate.getBegin(), predicate.getEnd())) {
+                eventMention = span2Events.get(predicate.getBegin(), predicate.getEnd());
+            } else {
+                eventMention = new EventMention(aJCas, predicate.getBegin(), predicate.getEnd());
+                UimaAnnotationUtils.finishAnnotation(eventMention, COMPONENT_ID, 0, aJCas);
+            }
 
             eventMention.setEventType(frameName);
             eventMention.setFrameName(frameName);
-            eventMention.setHeadWord(headword);
+            eventMention.setHeadWord(predHead);
 
             List<EventMentionArgumentLink> argumentLinks = new ArrayList<>();
-
             List<String> superFeNames = frameStructure.getSuperFeNames();
+
+            Map<Word, EventMentionArgumentLink> head2Args = UimaNlpUtils.indexArgs(eventMention);
 
             int i = 0;
             for (SemaforLabel frameElement : frameStructure.getFrameElements()) {
                 String feName = frameElement.getName();
-                EventMentionArgumentLink argumentLink = new EventMentionArgumentLink(aJCas);
-                EntityMention argumentMention = UimaNlpUtils.createNonExistEntityMention(aJCas, h2Entities,
-                        frameElement.getBegin(), frameElement.getEnd(), COMPONENT_ID);
 
-                argumentLink.setArgumentRole(feName);
-                argumentLink.setArgument(argumentMention);
-                argumentLink.setEventMention(eventMention);
-                argumentLink.setFrameElementName(feName);
-                UimaAnnotationUtils.finishTop(argumentLink, COMPONENT_ID, 0, aJCas);
-                argumentLinks.add(argumentLink);
+                StanfordCorenlpToken argHead = UimaNlpUtils.findHeadFromStanfordAnnotation(frameElement);
+                String prep = null;
+
+                if (argHead.getPos().equals("IN")) {
+                    prep = "prep_" + argHead.getLemma();
+                    argHead = findPrepBy(predHead, prep);
+                }
+
+                if (argHead == null) {
+                    continue;
+                }
+
+                EventMentionArgumentLink argumentLink;
+                if (head2Args.containsKey(argHead)) {
+                    argumentLink = head2Args.get(argHead);
+                } else {
+                    argumentLink = UimaNlpUtils.createArg(aJCas, h2Entities, eventMention, argHead.getBegin(),
+                            argHead.getEnd(), COMPONENT_ID);
+                }
 
                 String superFeName = superFeNames.get(i);
+
+                argumentLink.setFrameElementName(feName);
                 argumentLink.setSuperFrameElementRoleName(superFeName);
+
+                if (prep != null) {
+                    argumentLink.setArgumentRole(prep);
+                }
+
+                argumentLinks.add(argumentLink);
                 i++;
             }
 
             eventMention.setArguments(FSCollectionFactory.createFSList(aJCas, argumentLinks));
-            UimaAnnotationUtils.finishAnnotation(eventMention, COMPONENT_ID, 0, aJCas);
         }
 
         UimaNlpUtils.createSingletons(aJCas, new ArrayList<>(JCasUtil.select(aJCas, EntityMention.class)),
                 COMPONENT_ID);
+    }
+
+    private StanfordCorenlpToken findPrepBy(StanfordCorenlpToken depHead, String depRel) {
+        FSList childFS = depHead.getChildDependencyRelations();
+        if (childFS != null) {
+            for (StanfordDependencyRelation dep : FSCollectionFactory.create(childFS,
+                    StanfordDependencyRelation.class)) {
+                if (dep.getDependencyType().equals(depRel)) {
+                    return (StanfordCorenlpToken) dep.getChild();
+                }
+            }
+        }
+
+        return null;
     }
 
     public static void main(String[] argv) throws UIMAException, SAXException, CpeDescriptorException, IOException {
