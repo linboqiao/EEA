@@ -1,10 +1,8 @@
 package edu.cmu.cs.lti.frame;
 
 import edu.cmu.cs.lti.model.FrameNode;
-import edu.cmu.cs.lti.script.type.ComponentAnnotation;
-import edu.cmu.cs.lti.script.type.SemaforAnnotationSet;
-import edu.cmu.cs.lti.script.type.SemaforLabel;
-import edu.cmu.cs.lti.script.type.SemaforLayer;
+import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 
@@ -21,20 +19,38 @@ import java.util.Set;
  * @author Zhengzhong Liu
  */
 public class UimaFrameExtractor {
+    private final boolean keepVerbs;
+
     private Map<String, FrameNode.FrameElement> feByName;
 
     private Set<String> targetFrames;
 
-    public UimaFrameExtractor(Map<String, FrameNode.FrameElement> feByName, Set<String> targetFrames) {
+    public UimaFrameExtractor(Map<String, FrameNode.FrameElement> feByName, Set<String> targetFrames, boolean
+            keepVerbs) {
         this.feByName = feByName;
         this.targetFrames = targetFrames;
+        this.keepVerbs = keepVerbs;
     }
 
     public List<FrameStructure> getTargetFrames(ComponentAnnotation annotation) {
         List<FrameStructure> frameStructures = new ArrayList<>();
         for (FrameStructure frameStructure : getFrames(annotation)) {
+            boolean keepFrame = false;
+
+            if (keepVerbs) {
+                SemaforLabel target = frameStructure.getTarget();
+                StanfordCorenlpToken head = UimaNlpUtils.findHeadFromStanfordAnnotation(target);
+                if (head.getPos().startsWith("V")) {
+                    keepFrame = true;
+                }
+            }
+
             String frameName = frameStructure.getFrameName();
             if (targetFrames.contains(frameName)) {
+                keepFrame = true;
+            }
+
+            if (keepFrame) {
                 frameStructures.add(frameStructure);
             }
         }

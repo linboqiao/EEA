@@ -11,8 +11,6 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.FSArray;
-import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.util.*;
@@ -31,8 +29,10 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
-        String[] ignoredVerbs = new String[]{"be", "do", "have", "seem", "go", "have", "keep", "argue", "claim",
+        String[] ignoredVerbs = new String[]{"become", "be", "do", "have", "seem", "go", "have", "keep", "argue",
+                "claim",
                 "say", "suggest", "tell"};
+
         ignoredHeadWords = new HashSet<>();
         Collections.addAll(ignoredHeadWords, ignoredVerbs);
 
@@ -40,7 +40,7 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-        Set<Word> usedHeads = new HashSet<>();
+//        Set<Word> usedHeads = new HashSet<>();
         Map<Word, EntityMention> h2Entities = UimaNlpUtils.indexEntityMentions(aJCas);
         Table<Integer, Integer, EventMention> span2Events = UimaNlpUtils.indexEventMentions(aJCas);
 
@@ -48,15 +48,15 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
         for (StanfordCorenlpToken token : JCasUtil.select(aJCas, StanfordCorenlpToken.class)) {
             if (!token.getPos().startsWith("V")) {
                 continue;
-            } else if (usedHeads.contains(token)) {
-                continue;
+//            } else if (usedHeads.contains(token)) {
+//                continue;
             } else if (ignoredHeadWords.contains(token.getLemma().toLowerCase())) {
                 continue;
             }
 
-            List<Word> complements = new ArrayList<>();
-            UimaNlpUtils.getPredicate(token, complements);
-            usedHeads.addAll(complements);
+//            List<Word> complements = new ArrayList<>();
+//            UimaNlpUtils.getPredicate(token, complements, false);
+//            usedHeads.addAll(complements);
 
             EventMention eventMention;
             if (span2Events.contains(token.getBegin(), token.getEnd())) {
@@ -69,28 +69,28 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
 
             Map<String, Word> args = getArgs(token);
 
-            List<Annotation> regions = new ArrayList<>();
-            regions.add(token);
 
             List<EventMentionArgumentLink> argumentLinks = new ArrayList<>();
 
-            for (Word complement : complements) {
-                regions.add(complement);
-                Map<String, Word> complement_args = getArgs(complement);
-                for (Map.Entry<String, Word> arg : complement_args.entrySet()) {
-                    String role = arg.getKey();
-                    if (!args.containsKey(role)) {
-                        args.put(role, arg.getValue());
-                    }
-                }
-            }
-
-            eventMention.setRegions(new FSArray(aJCas, regions.size()));
-            for (int i = 0; i < regions.size(); i++) {
-                eventMention.setRegions(i, regions.get(i));
-            }
+//            List<Annotation> regions = new ArrayList<>();
+//            regions.add(token);
+//            for (Word complement : complements) {
+//                regions.add(complement);
+//                Map<String, Word> complement_args = getArgs(complement);
+//                for (Map.Entry<String, Word> arg : complement_args.entrySet()) {
+//                    String role = arg.getKey();
+//                    if (!args.containsKey(role)) {
+//                        args.put(role, arg.getValue());
+//                    }
+//                }
+//            }
+//            eventMention.setRegions(new FSArray(aJCas, regions.size()));
+//            for (int i = 0; i < regions.size(); i++) {
+//                eventMention.setRegions(i, regions.get(i));
+//            }
 
             Map<Word, EventMentionArgumentLink> head2Args = UimaNlpUtils.indexArgs(eventMention);
+            argumentLinks.addAll(head2Args.values());
 
             for (Map.Entry<String, Word> arg : args.entrySet()) {
                 String role = arg.getKey();
@@ -102,9 +102,9 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
                 } else {
                     argumentLink = UimaNlpUtils.createArg(aJCas, h2Entities, eventMention, argWord.getBegin(),
                             argWord.getEnd(), COMPONENT_ID);
+                    argumentLinks.add(argumentLink);
                 }
 
-                argumentLinks.add(argumentLink);
                 argumentLink.setArgumentRole(role);
             }
 

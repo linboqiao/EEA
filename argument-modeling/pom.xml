@@ -26,5 +26,9 @@
             <groupId>edu.cmu.cs.lti.script</groupId>
             <artifactId>core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>misc-annotators</artifactId>
+        </dependency>
     </dependencies>
 </project>

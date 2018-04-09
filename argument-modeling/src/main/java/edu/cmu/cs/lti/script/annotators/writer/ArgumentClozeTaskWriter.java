@@ -1,5 +1,8 @@
 package edu.cmu.cs.lti.script.annotators.writer;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import edu.cmu.cs.lti.annotators.EventMentionRemover;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.script.annotators.FrameBasedEventDetector;
 import edu.cmu.cs.lti.script.annotators.VerbBasedEventDetector;
@@ -32,6 +35,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Given dependency parses and coreference chains, create argument
@@ -74,64 +78,76 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         // predicate_head, predicate_context, frame_name,
         //   [arg_role, frame_element, entity_id, arg_text, more_than_one] * Number_Roles
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("#" + UimaConvenience.getArticleName(aJCas) + "\n");
+        StringBuffer sb = new StringBuffer();
+        sb.append("#").append(UimaConvenience.getArticleName(aJCas)).append("\n");
 
         Collection<StanfordCorenlpToken> allTokens = JCasUtil.select(aJCas, StanfordCorenlpToken.class);
         String[] lemmas = new String[allTokens.size()];
-        int i = 0;
+        int tIndex = 0;
         for (StanfordCorenlpToken token : allTokens) {
-            lemmas[i] = token.getLemma().toLowerCase();
-            token.setIndex(i);
-            i++;
+            lemmas[tIndex] = token.getLemma().toLowerCase();
+            token.setIndex(tIndex);
+            tIndex++;
         }
 
-        for (EventMention eventMention : JCasUtil.select(aJCas, EventMention.class)) {
-            List<Word> complements = new ArrayList<>();
+        List<StanfordCorenlpSentence> sentences = new ArrayList<>(
+                JCasUtil.select(aJCas, StanfordCorenlpSentence.class));
 
-            boolean isFrameEvent = eventMention.getComponentId().equals(FrameBasedEventDetector.class.getSimpleName());
+        for (int sentId = 0; sentId < sentences.size(); sentId++) {
+            StanfordCorenlpSentence sentence = sentences.get(sentId);
 
-            String predicate_text;
-            if (isFrameEvent) {
-                predicate_text = eventMention.getHeadWord().getLemma();
-            } else {
-                predicate_text = UimaNlpUtils.getPredicate(eventMention.getHeadWord(), complements);
-            }
+            for (EventMention eventMention : JCasUtil.selectCovered(EventMention.class, sentence)) {
+                List<Word> complements = new ArrayList<>();
 
-            String predicate_context = getContext(lemmas, (StanfordCorenlpToken) eventMention.getHeadWord());
+                String predicate_text = UimaNlpUtils.getPredicate(eventMention.getHeadWord(), complements, false);
 
-            sb.append(predicate_text);
-            sb.append("\t").append(predicate_context);
-            String frame = eventMention.getFrameName();
-            sb.append("\t").append(frame == null ? "NA" : frame);
+                List<String> fields = new ArrayList<>();
+                String frame = eventMention.getFrameName();
 
-            FSList argsFS = eventMention.getArguments();
-            Collection<EventMentionArgumentLink> argLinks = FSCollectionFactory.create(argsFS,
-                    EventMentionArgumentLink.class);
+                String predicate_context = getContext(lemmas, (StanfordCorenlpToken) eventMention.getHeadWord());
 
-            for (EventMentionArgumentLink argLink : argLinks) {
-                String role = argLink.getArgumentRole();
-                if (role == null) {
-                    role = "NA";
+                fields.add(predicate_text);
+                fields.add(predicate_context);
+                fields.add(frame == null ? "NA" : frame);
+
+                FSList argsFS = eventMention.getArguments();
+                Collection<EventMentionArgumentLink> argLinks = FSCollectionFactory.create(argsFS,
+                        EventMentionArgumentLink.class);
+
+                for (EventMentionArgumentLink argLink : argLinks) {
+                    String role = argLink.getArgumentRole();
+                    if (role == null) {
+                        role = "NA";
+                    }
+                    String fe = argLink.getFrameElementName();
+                    if (fe == null) {
+                        fe = "NA";
+                    }
+                    EntityMention en = argLink.getArgument();
+                    Entity cluster = en.getReferingEntity();
+                    String entityId = cluster.getId();
+
+                    int notSingleton = cluster.getEntityMentions().size() == 1 ? 0 : 1;
+
+                    String argText = en.getHead() == null ? en.getCoveredText() : en.getHead().getLemma();
+                    argText = onlySpace(argText);
+
+                    fields.add(role);
+                    fields.add(fe);
+                    fields.add(entityId);
+                    fields.add(argText);
+                    fields.add(String.valueOf(notSingleton));
                 }
-                String fe = argLink.getFrameElementName();
-                if (fe == null) {
-                    fe = "NA";
-                }
-                EntityMention en = argLink.getArgument();
-                Entity cluster = en.getReferingEntity();
-                String entityId = cluster.getId();
 
-                int notSingleton = cluster.getEntityMentions().size() == 1 ? 0 : 1;
+                fields.add(String.valueOf(sentId));
 
-                String argText = en.getHead() == null ? en.getCoveredText() : en.getHead().getLemma();
+                sb.append(Joiner.on("\t").join(fields.stream().map((Function<String, String>) this::onlySpace)
+                        .collect(Collectors.toList())));
 
-                sb.append("\t");
-                sb.append(role).append("\t").append(fe).append("\t").append(entityId).append(":").append(argText)
-                        .append("\t").append(notSingleton);
+                sb.append("\n");
             }
-            sb.append("\n");
         }
+
 
         sb.append("\n");
 
@@ -140,6 +156,10 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         } catch (IOException e) {
             throw new AnalysisEngineProcessException(e);
         }
+    }
+
+    private String onlySpace(String text) {
+        return text.trim().replaceAll("\t", " ").replaceAll("\n", " ");
     }
 
     private String getContext(String[] lemmas, StanfordCorenlpToken token) {
@@ -155,20 +175,20 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
             right = lemmas.length;
         }
 
-        StringBuilder sb = new StringBuilder();
+        StringBuffer sb = new StringBuffer();
 
         for (int i = left; i < index; i++) {
             sb.append(lemmas[i]).append(" ");
         }
 
         // Indicate the context center.
-        sb.append("_");
+        sb.append("___");
 
         for (int i = index + 1; i < right; i++) {
             sb.append(" ").append(lemmas[i]);
         }
 
-        return sb.toString();
+        return onlySpace(sb.toString());
     }
 
     @Override
@@ -186,8 +206,9 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
 
         String workingDir = args[0];
         String inputBase = args[1];
-        String xmiOut = args[2];
-        String outputFile = args[3];
+        String outputFile = args[2];
+        String xmiOut = args[3];
+
 
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
@@ -197,6 +218,8 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
                 CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(
                         typeSystemDescription, workingDir, inputBase
                 );
+
+        AnalysisEngineDescription remover = AnalysisEngineFactory.createEngineDescription(EventMentionRemover.class);
 
         AnalysisEngineDescription verbEvents = AnalysisEngineFactory.createEngineDescription(
                 VerbBasedEventDetector.class, typeSystemDescription
@@ -208,13 +231,18 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
                 FrameBasedEventDetector.PARAM_IGNORE_BARE_FRAME, true
         );
 
-        AnalysisEngineDescription eventExtractor = AnalysisEngineFactory.createEngineDescription(
+        AnalysisEngineDescription clozeExtractor = AnalysisEngineFactory.createEngineDescription(
                 ArgumentClozeTaskWriter.class, typeSystemDescription,
                 ArgumentClozeTaskWriter.PARAM_OUTPUT_FILE, outputFile
         );
 
+//        StepBasedDirGzippedXmiWriter.dirSegFunction = IOUtils::indexBasedSegFunc;
+
         // Run the pipeline.
         new BasicPipeline(reader, true, true, 7, workingDir, xmiOut, true,
-                frameEvents, verbEvents, eventExtractor).run();
+                remover, frameEvents, verbEvents, clozeExtractor).run();
+
+//        new BasicPipeline(reader, true, true, 7, clozeExtractor).run();
+
     }
 }

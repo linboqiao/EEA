@@ -57,8 +57,9 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
 
-        String[] ignoredVerbs = new String[]{"appear", "be", "become", "do", "have", "seem", "do", "get", "give",
-                "go", "have", "keep", "make", "put", "set", "take", "argue", "claim", "say", "suggest", "tell"};
+        String[] ignoredVerbs = new String[]{"become", "be", "do", "have", "seem", "go", "have", "keep", "argue",
+                "claim", "say", "suggest", "tell"};
+
         ignoredHeadWords = new HashSet<>();
         Collections.addAll(ignoredHeadWords, ignoredVerbs);
 
@@ -74,7 +75,7 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
 
             logger.info(String.format("Loaded %d event target frames.", targetFrames.size()));
 
-            extractor = new UimaFrameExtractor(frameReader.getFeByName(), targetFrames);
+            extractor = new UimaFrameExtractor(frameReader.getFeByName(), targetFrames, true);
         } catch (IOException | JDOMException e) {
             e.printStackTrace();
         }

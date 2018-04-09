@@ -59,7 +59,7 @@ public class Pichotta16TupleContextPrinter extends AbstractTupleContextPrinter {
         String[] tupleFields = new String[9];
 
         List<Word> complements = new ArrayList<>();
-        String eventHead = UimaNlpUtils.getPredicate(head, complements);
+        String eventHead = UimaNlpUtils.getPredicate(head, complements, true);
 
         tupleFields[1] = eventHead;
         tupleFields[7] = sentence;
