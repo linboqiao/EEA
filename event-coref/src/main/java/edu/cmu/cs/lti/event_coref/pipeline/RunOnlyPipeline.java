@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.event_coref.pipeline;
 
 import edu.cmu.cs.lti.collection_reader.LDCXmlCollectionReader;
+import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.reader.PlainTextCollectionReader;
 import edu.cmu.cs.lti.utils.Configuration;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -20,7 +21,12 @@ public class RunOnlyPipeline {
 
     public static void main(String argv[]) throws Exception {
         if (argv.length < 2) {
-            System.err.println("First argument is the settings; Second argument is the input data directory.");
+            System.err.println("Args: [setting] [input] [output] [format]");
+        }
+
+        String readerType = "text";
+        if (argv.length >= 4) {
+            readerType = argv[3];
         }
 
         Configuration commonConfig = new Configuration("settings/common.properties");
@@ -37,8 +43,16 @@ public class RunOnlyPipeline {
         String outputPath = argv[2];
         //"../data/project_data/cmu-script/mention/kbp/chinese/Chinese_Coled_Start_LDC2016E63"
 
-//        CollectionReaderDescription reader = ldcReader(typeSystemDescription, inputPath, kbpConfig);
-        CollectionReaderDescription reader = textReader(typeSystemDescription, inputPath, kbpConfig);
+        CollectionReaderDescription reader;
+
+        if (readerType.equals("xmi")) {
+            reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription,
+                    inputPath);
+        } else {
+            reader = textReader(typeSystemDescription, inputPath, kbpConfig);
+        }
+
+//        reader = ldcReader(typeSystemDescription, inputPath, kbpConfig);
 
         // Now prepare the real pipeline.
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
@@ -50,7 +64,8 @@ public class RunOnlyPipeline {
     }
 
     private static CollectionReaderDescription ldcReader(TypeSystemDescription typeSystemDescription, String inputPath,
-                                                         Configuration kbpConfig) throws ResourceInitializationException {
+                                                         Configuration kbpConfig) throws
+            ResourceInitializationException {
         return CollectionReaderFactory.createReaderDescription(
                 LDCXmlCollectionReader.class, typeSystemDescription,
                 LDCXmlCollectionReader.PARAM_DATA_PATH, inputPath,
@@ -65,8 +80,9 @@ public class RunOnlyPipeline {
     }
 
     private static CollectionReaderDescription textReader(TypeSystemDescription typeSystemDescription, String inputPath,
-                                                          Configuration kbpConfig) throws ResourceInitializationException {
-        return    CollectionReaderFactory.createReaderDescription(
+                                                          Configuration kbpConfig) throws
+            ResourceInitializationException {
+        return CollectionReaderFactory.createReaderDescription(
                 PlainTextCollectionReader.class, typeSystemDescription,
                 PlainTextCollectionReader.PARAM_INPUTDIR, inputPath,
                 PlainTextCollectionReader.PARAM_LANGUAGE, kbpConfig.get("edu.cmu.cs.lti.language"),

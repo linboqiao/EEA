@@ -78,10 +78,10 @@ public class ConllUFormatWriter extends AbstractLoggingAnnotator {
             }
         }
 
-        writeLine("# doc = " + docid);
+        writeLine("# newdoc id = " + docid);
         for (StanfordCorenlpSentence sentence : JCasUtil.select(jCas, StanfordCorenlpSentence.class)) {
 
-            writeLine("# sentence = " + String.valueOf(sentId++));
+            writeLine("# sent_id = " + String.valueOf(sentId++));
 
             List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
             Map<StanfordCorenlpToken, Integer> tokenIds = new HashMap<>();

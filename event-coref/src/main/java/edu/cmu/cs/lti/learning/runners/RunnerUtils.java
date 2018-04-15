@@ -44,7 +44,7 @@ public class RunnerUtils {
                 TbfStyleEventWriter.class, typeSystemDescription,
                 TbfStyleEventWriter.PARAM_OUTPUT_PATH, tbfOutput,
                 TbfStyleEventWriter.PARAM_SYSTEM_ID, systemId,
-                TbfStyleEventWriter.PARAM_GOLD_TOKEN_COMPONENT_ID, TbfEventDataReader.COMPONENT_ID,
+                TbfStyleEventWriter.PARAM_GOLD_TOKEN_COMPONENT_ID, UimaConst.goldComponentName,
                 TbfStyleEventWriter.PARAM_USE_CHARACTER_OFFSET, useCharOffset,
                 TbfStyleEventWriter.PARAM_ADD_SEMANTIC_ROLE, addSemanticRole
         );

@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.emd.annotators;
 
 import com.google.common.base.Joiner;
+import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
@@ -28,7 +29,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
     private String systemId;
 
     public static final String PARAM_GOLD_TOKEN_COMPONENT_ID = "goldTokenComponentId";
-    @ConfigurationParameter(name = PARAM_GOLD_TOKEN_COMPONENT_ID)
+    @ConfigurationParameter(name = PARAM_GOLD_TOKEN_COMPONENT_ID, defaultValue = UimaConst.goldComponentName)
     public String goldComponentId;
 
     public static final String PARAM_USE_CHARACTER_OFFSET = "useCharacterOffsets";
