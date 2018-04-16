@@ -112,8 +112,8 @@ public class ConllUReader extends AbstractCollectionReader {
             String text = fields[1];
             String lemma = fields[2];
             String pos = fields[3];
-            Integer head = Integer.parseInt(fields[6]);
-            String dep = fields[7];
+//            Integer head = Integer.parseInt(fields[6]);
+//            String dep = fields[7];
 
             int begin, end;
 
@@ -139,6 +139,7 @@ public class ConllUReader extends AbstractCollectionReader {
             }
 
             Word word = new Word(jCas, begin, end);
+            word.setPos(pos);
             UimaAnnotationUtils.finishAnnotation(word, UimaConst.goldComponentName, wordId, jCas);
             word.setIndex(wordId);
             lastEnd = end;
