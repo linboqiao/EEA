@@ -78,8 +78,8 @@ public class ConllUReader extends AbstractCollectionReader {
         int lastEnd = 0;
 
         String nextDocId = "";
+        int wordId = 0;
 
-        List<Word> goldWords = new ArrayList<>();
         while (currentIter.hasNext()) {
             String line = currentIter.next().trim();
 
@@ -115,26 +115,36 @@ public class ConllUReader extends AbstractCollectionReader {
             Integer head = Integer.parseInt(fields[6]);
             String dep = fields[7];
 
+            int begin, end;
+
             if (useLemmaText) {
+                begin = lastEnd + 1;
+                end = begin + lemma.length();
+
+                if (begin > sb.length()) {
+                    sb.append(StringUtils.repeat(' ', begin - sb.length()));
+                }
+
                 sb.append(lemma).append(' ');
             } else {
                 String[] offset_str = fields[fields.length - 1].split(",");
-                int begin = Integer.parseInt(offset_str[0]) - 1;
-                int end = Integer.parseInt(offset_str[1]) - 1;
+                begin = Integer.parseInt(offset_str[0]) - 1;
+                end = Integer.parseInt(offset_str[1]) - 1;
 
                 if (begin > lastEnd + 1) {
                     sb.append(StringUtils.repeat(' ', begin - 1 - lastEnd));
                 }
 
-                Word word = new Word(jCas, begin, end);
-                UimaAnnotationUtils.finishAnnotation(word, UimaConst.goldComponentName, 0, jCas);
-
-                lastEnd = end;
-
                 sb.append(text);
             }
-        }
 
+            Word word = new Word(jCas, begin, end);
+            UimaAnnotationUtils.finishAnnotation(word, UimaConst.goldComponentName, wordId, jCas);
+            word.setIndex(wordId);
+            lastEnd = end;
+
+            wordId ++;
+        }
 
         String docText = sb.toString();
         jCas.setDocumentText(docText);
