@@ -68,8 +68,6 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         TokenAlignmentHelper align = new TokenAlignmentHelper();
         align.loadWord2Stanford(aJCas, goldComponentId);
 
-//        Map<EventMention, String> mentionIds = new HashMap<>();
-
         int eventMentionIndex = 1;
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
             Pair<String, String> wordInfo = useCharacter ? getSpanInfo(mention) : getWords(mention, align);
@@ -101,7 +99,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
                     mentionHead = ltpTokens.get(0);
                 }
 
-                sb.append("\t").append(formatArguments(mentionHead));
+                sb.append("\t").append(formatArguments(mentionHead, align));
             }
 
             sb.append("\n");
@@ -168,7 +166,7 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
         return sb.toString();
     }
 
-    private String formatArguments(Word headWord) {
+    private String formatArguments(Word headWord, TokenAlignmentHelper align) {
         List<String> argumentComponents = new ArrayList<>();
 
         FSList semanticRelationsFS = headWord.getChildSemanticRelations();
@@ -188,9 +186,20 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
                 String pbName = handleNull(semanticRelation.getPropbankRoleName());
                 String vnName = handleNull(semanticRelation.getFrameElementName());
 
-                argumentComponents.add(String.format("%d-%d:%s,%s,%s",
-                        argument.getBegin(), argument.getEnd(), spanText, pbName, vnName
-                ));
+                if (useCharacter) {
+                    argumentComponents.add(String.format("%d-%d:%s,%s,%s",
+                            argument.getBegin(), argument.getEnd(), spanText, pbName, vnName
+                    ));
+                }else{
+                    Pair<String, String> wordInfo = getWords(argument, align);
+                    if (wordInfo == null) {
+                        continue;
+                    }
+                    argumentComponents.add(String.format("%s:%s,%s,%s",
+                            wordInfo.getValue0(), spanText, pbName, vnName
+                    ));
+
+                }
             }
         }
 
