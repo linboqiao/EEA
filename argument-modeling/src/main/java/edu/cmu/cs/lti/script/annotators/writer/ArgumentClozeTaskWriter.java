@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.script.annotators.writer;
 
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
+import com.google.gson.Gson;
 import edu.cmu.cs.lti.annotators.EventMentionRemover;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.script.annotators.FrameBasedEventDetector;
@@ -9,7 +8,6 @@ import edu.cmu.cs.lti.script.annotators.VerbBasedEventDetector;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
-import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
@@ -28,14 +26,14 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.xml.sax.SAXException;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.zip.GZIPOutputStream;
+
 
 /**
  * Given dependency parses and coreference chains, create argument
@@ -48,21 +46,48 @@ import java.util.stream.Collectors;
 public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
     public static final String PARAM_OUTPUT_FILE = "outputFile";
     @ConfigurationParameter(name = PARAM_OUTPUT_FILE)
-    private File outputFile;
+    private String outputFile;
 
     public static final String PARAM_CONTEXT_WINDOW = "contextWindow";
     @ConfigurationParameter(name = PARAM_CONTEXT_WINDOW, defaultValue = "5")
     private int contextWindowSize;
 
-    private BufferedWriter writer;
+    private OutputStreamWriter writer;
+
+    private Gson gson = new Gson();
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
         try {
-            writer = new BufferedWriter(new FileWriter(outputFile));
+            writer = new OutputStreamWriter(new GZIPOutputStream(new FileOutputStream(outputFile + ".gz")));
         } catch (IOException e) {
             throw new ResourceInitializationException(e);
+        }
+    }
+
+    static class ClozeDoc {
+        List<ClozeEvent> events;
+    }
+
+    static class ClozeEvent {
+        String predicate;
+        String sentence;
+        String context;
+        int predicateStart;
+        int predicateEnd;
+        String frame;
+        List<ClozeArgument> arguments;
+        double[] predicateFeatures;
+
+        static class ClozeArgument {
+            String feName;
+            String dep;
+            String context;
+            int entityId;
+
+            double[] salienceFeatures;
+            double[] lifeFeatures;
         }
     }
 
@@ -78,8 +103,11 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         // predicate_head, predicate_context, frame_name,
         //   [arg_role, frame_element, entity_id, arg_text, more_than_one] * Number_Roles
 
-        StringBuffer sb = new StringBuffer();
-        sb.append("#").append(UimaConvenience.getArticleName(aJCas)).append("\n");
+//        StringBuffer sb = new StringBuffer();
+//        sb.append("#").append(UimaConvenience.getArticleName(aJCas)).append("\n");
+
+        ClozeDoc doc = new ClozeDoc();
+        doc.events = new ArrayList<>();
 
         Collection<StanfordCorenlpToken> allTokens = JCasUtil.select(aJCas, StanfordCorenlpToken.class);
         String[] lemmas = new String[allTokens.size()];
@@ -97,24 +125,36 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
             StanfordCorenlpSentence sentence = sentences.get(sentId);
 
             for (EventMention eventMention : JCasUtil.selectCovered(EventMention.class, sentence)) {
+                ClozeEvent ce = new ClozeEvent();
+                ce.sentence = sentence.getCoveredText();
+
                 List<Word> complements = new ArrayList<>();
 
                 String predicate_text = UimaNlpUtils.getPredicate(eventMention.getHeadWord(), complements, false);
 
-                List<String> fields = new ArrayList<>();
+//                List<String> fields = new ArrayList<>();
                 String frame = eventMention.getFrameName();
 
                 String predicate_context = getContext(lemmas, (StanfordCorenlpToken) eventMention.getHeadWord());
 
-                fields.add(predicate_text);
-                fields.add(predicate_context);
-                fields.add(frame == null ? "NA" : frame);
+//                fields.add(predicate_text);
+//                fields.add(predicate_context);
+//                fields.add(frame == null ? "NA" : frame);
+
+                ce.predicate = predicate_text;
+                ce.context = predicate_context;
+                ce.predicateStart = eventMention.getBegin() - sentence.getBegin();
+                ce.predicateEnd = eventMention.getEnd() - sentence.getBegin();
+                ce.frame = frame;
 
                 FSList argsFS = eventMention.getArguments();
                 Collection<EventMentionArgumentLink> argLinks = FSCollectionFactory.create(argsFS,
                         EventMentionArgumentLink.class);
 
+                List<ClozeEvent.ClozeArgument> clozeArguments = new ArrayList<>();
                 for (EventMentionArgumentLink argLink : argLinks) {
+                    ClozeEvent.ClozeArgument ca = new ClozeEvent.ClozeArgument();
+
                     String role = argLink.getArgumentRole();
                     if (role == null) {
                         role = "NA";
@@ -127,32 +167,48 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
                     Entity cluster = en.getReferingEntity();
                     String entityId = cluster.getId();
 
+
                     int notSingleton = cluster.getEntityMentions().size() == 1 ? 0 : 1;
 
                     String argText = en.getHead() == null ? en.getCoveredText() : en.getHead().getLemma();
                     argText = onlySpace(argText);
 
-                    fields.add(role);
-                    fields.add(fe);
-                    fields.add(entityId);
-                    fields.add(argText);
-                    fields.add(String.valueOf(notSingleton));
+//                    fields.add(role);
+//                    fields.add(fe);
+//                    fields.add(entityId);
+//                    fields.add(argText);
+//                    fields.add(String.valueOf(notSingleton));
+
+                    String argumentContext = getContext(lemmas, (StanfordCorenlpToken) eventMention.getHeadWord());
+
+                    ca.feName = fe;
+                    ca.dep = role;
+                    ca.context = argumentContext;
+                    ca.entityId = Integer.parseInt(entityId);
+
+                    clozeArguments.add(ca);
                 }
 
-                fields.add(String.valueOf(sentId));
+                ce.arguments = clozeArguments;
+                doc.events.add(ce);
 
-                sb.append(Joiner.on("\t").join(fields.stream().map((Function<String, String>) this::onlySpace)
-                        .collect(Collectors.toList())));
+//                fields.add(String.valueOf(sentId));
 
-                sb.append("\n");
+//                String jsonText = gson.toJson(ce);
+
+//                sb.append(jsonText).append("\n");
+//
+//                sb.append(Joiner.on("\t").join(fields.stream().map((Function<String, String>) this::onlySpace)
+//                        .collect(Collectors.toList())));
+//                sb.append("\n");
             }
         }
 
 
-        sb.append("\n");
+//        sb.append("\n");
 
         try {
-            writer.write(sb.toString());
+            writer.write(gson.toJson(doc));
         } catch (IOException e) {
             throw new AnalysisEngineProcessException(e);
         }

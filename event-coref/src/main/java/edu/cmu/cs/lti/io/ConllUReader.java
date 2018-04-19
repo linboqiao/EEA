@@ -112,8 +112,6 @@ public class ConllUReader extends AbstractCollectionReader {
             String text = fields[1];
             String lemma = fields[2];
             String pos = fields[3];
-//            Integer head = Integer.parseInt(fields[6]);
-//            String dep = fields[7];
 
             int begin, end;
 
@@ -128,11 +126,11 @@ public class ConllUReader extends AbstractCollectionReader {
                 sb.append(lemma).append(' ');
             } else {
                 String[] offset_str = fields[fields.length - 1].split(",");
-                begin = Integer.parseInt(offset_str[0]) - 1;
-                end = Integer.parseInt(offset_str[1]) - 1;
+                begin = Integer.parseInt(offset_str[0]);
+                end = Integer.parseInt(offset_str[1]);
 
-                if (begin > lastEnd + 1) {
-                    sb.append(StringUtils.repeat(' ', begin - 1 - lastEnd));
+                if (begin > lastEnd) {
+                    sb.append(StringUtils.repeat(' ', begin - lastEnd));
                 }
 
                 sb.append(text);
@@ -144,7 +142,7 @@ public class ConllUReader extends AbstractCollectionReader {
             word.setIndex(wordId);
             lastEnd = end;
 
-            wordId ++;
+            wordId++;
         }
 
         String docText = sb.toString();
@@ -186,12 +184,17 @@ public class ConllUReader extends AbstractCollectionReader {
         String outputPath = args[1];
         String language = args[2];
 
+        boolean useLemma = false;
+        if (args.length > 3 && args[3].equals("useLemma")) {
+            useLemma = true;
+        }
+
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription("TaskEventMentionDetectionTypeSystem");
 
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                 ConllUReader.class, typeSystemDescription,
-                ConllUReader.PARAM_USE_LEMMA_TEXT, true,
+                ConllUReader.PARAM_USE_LEMMA_TEXT, useLemma,
                 ConllUReader.PARAM_LANGUAGE, language,
                 ConllUReader.PARAM_DATA_PATH, inputPath,
                 ConllUReader.PARAM_EXTENSION, "conllu"

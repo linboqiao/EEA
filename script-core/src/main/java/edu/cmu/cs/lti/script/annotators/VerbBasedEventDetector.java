@@ -138,11 +138,11 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
         String depType = dep.getDependencyType();
         Word depWord = dep.getChild();
         if (depType.equals("nsubj") || depType.equals("agent")) {
-            return Pair.of("arg0", depWord);
+            return Pair.of("subj", depWord);
         } else if (depType.equals("dobj") || depType.equals("nsubjpass")) {
-            return Pair.of("arg1", depWord);
+            return Pair.of("obj", depWord);
         } else if (depType.equals("iobj")) {
-            return Pair.of("arg2", depWord);
+            return Pair.of("iobj", depWord);
         } else if (depType.startsWith("prep_")) {
             return Pair.of(depType, depWord);
         }
