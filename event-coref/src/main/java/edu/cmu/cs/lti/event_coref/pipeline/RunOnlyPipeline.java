@@ -1,10 +1,14 @@
 package edu.cmu.cs.lti.event_coref.pipeline;
 
 import edu.cmu.cs.lti.collection_reader.LDCXmlCollectionReader;
+import edu.cmu.cs.lti.script.annotators.FrameBasedEventDetector;
+import edu.cmu.cs.lti.script.annotators.VerbBasedEventDetector;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.reader.PlainTextCollectionReader;
 import edu.cmu.cs.lti.utils.Configuration;
+import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
@@ -21,11 +25,18 @@ public class RunOnlyPipeline {
 
     public static void main(String argv[]) throws Exception {
         if (argv.length < 2) {
-            System.err.println("Args: [setting] [input] [output] [format]");
+            System.err.println("Args: [setting] [input] [output] [simple event] [format]");
+        }
+
+        boolean simpleEvent = false;
+        if (argv.length >= 4) {
+            if (argv[3].equals("simple")) {
+                simpleEvent = true;
+            }
         }
 
         String readerType = "text";
-        if (argv.length >= 4) {
+        if (argv.length >= 5) {
             readerType = argv[3];
         }
 
@@ -58,9 +69,27 @@ public class RunOnlyPipeline {
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
         boolean skipTestPrepare = kbpConfig.getBoolean("edu.cmu.cs.lti.test.skip.preprocess", false);
-        pipeline.prepareData(kbpConfig, outputPath, skipTestPrepare, reader);
+        CollectionReaderDescription preparedData = pipeline.prepareData(kbpConfig, outputPath, skipTestPrepare, reader);
 
-        pipeline.runVanilla(kbpConfig, outputPath);
+        if (simpleEvent) {
+            AnalysisEngineDescription verbEvents = AnalysisEngineFactory.createEngineDescription(
+                    VerbBasedEventDetector.class, typeSystemDescription
+            );
+
+            AnalysisEngineDescription frameEvents = AnalysisEngineFactory.createEngineDescription(
+                    FrameBasedEventDetector.class, typeSystemDescription,
+                    FrameBasedEventDetector.PARAM_FRAME_RELATION, "../data/resources/fndata-1.7/frRelation.xml",
+                    FrameBasedEventDetector.PARAM_IGNORE_BARE_FRAME, true
+            );
+
+            AnalysisEngineDescription[] engines = new AnalysisEngineDescription[]{
+                    verbEvents, frameEvents
+            };
+
+            pipeline.runOnMentions(kbpConfig, outputPath, engines, "SimpleEvents");
+        } else {
+            pipeline.runVanilla(kbpConfig, outputPath);
+        }
     }
 
     private static CollectionReaderDescription ldcReader(TypeSystemDescription typeSystemDescription, String inputPath,

@@ -5,8 +5,8 @@ import edu.cmu.cs.lti.collection_reader.AnnotatedNytReader;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.salience.model.SalienceJSONClasses.*;
-import edu.cmu.cs.lti.salience.utils.SalienceFeatureExtractor;
 import edu.cmu.cs.lti.salience.utils.LookupTable;
+import edu.cmu.cs.lti.salience.utils.SalienceFeatureExtractor;
 import edu.cmu.cs.lti.salience.utils.SalienceUtils;
 import edu.cmu.cs.lti.salience.utils.TextUtils;
 import edu.cmu.cs.lti.script.type.*;
@@ -15,6 +15,7 @@ import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
+import edu.cmu.cs.lti.utils.FeatureUtils;
 import edu.cmu.cs.lti.utils.FileUtils;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
@@ -360,8 +361,8 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
     }
 
     private void writeTagged(JCas aJCas, Writer output,
-                             List<SalienceFeatureExtractor.SimpleInstance> entityFeatures,
-                             List<SalienceFeatureExtractor.SimpleInstance> eventFeatures,
+                             List<FeatureUtils.SimpleInstance> entityFeatures,
+                             List<FeatureUtils.SimpleInstance> eventFeatures,
                              Set<String> entitySaliency,
                              int[] eventSaliency
     ) throws IOException {
@@ -407,14 +408,14 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         output.write(jsonStr + "\n");
     }
 
-    private void addFeatureToSpots(List<Spot> bodySpots, List<SalienceFeatureExtractor.SimpleInstance> instances) {
-        Map<String, SalienceFeatureExtractor.SimpleInstance> featureLookup = new HashMap<>();
-        for (SalienceFeatureExtractor.SimpleInstance instance : instances) {
+    private void addFeatureToSpots(List<Spot> bodySpots, List<FeatureUtils.SimpleInstance> instances) {
+        Map<String, FeatureUtils.SimpleInstance> featureLookup = new HashMap<>();
+        for (FeatureUtils.SimpleInstance instance : instances) {
             featureLookup.put(instance.getInstanceName(), instance);
         }
 
         for (Spot bodySpot : bodySpots) {
-            SalienceFeatureExtractor.SimpleInstance instance = featureLookup.get(bodySpot.id);
+            FeatureUtils.SimpleInstance instance = featureLookup.get(bodySpot.id);
             bodySpot.feature = new Feature(instance);
         }
     }
@@ -457,9 +458,9 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         int[] eventSaliency = getEventSaliency(aJCas, bodyEventMentions);
         Set<String> entitySaliency = SalienceUtils.getAbstractEntities(aJCas);
 
-        List<SalienceFeatureExtractor.SimpleInstance> entityInstances = SalienceFeatureExtractor.getKbInstances(aJCas, entitySaliency,
+        List<FeatureUtils.SimpleInstance> entityInstances = SalienceFeatureExtractor.getKbInstances(aJCas, entitySaliency,
                 simCalculator);
-        List<SalienceFeatureExtractor.SimpleInstance> eventInstances = SalienceFeatureExtractor.getEventInstances(body, entityInstances,
+        List<FeatureUtils.SimpleInstance> eventInstances = SalienceFeatureExtractor.getEventInstances(body, entityInstances,
                 eventSaliency, simCalculator);
 
         try {

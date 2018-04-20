@@ -544,6 +544,40 @@ public class EventMentionPipeline {
                 seed);
     }
 
+    public void runOnMentions(Configuration taskConfig, String workingDir, AnalysisEngineDescription[] engines,
+                              String runName) throws Exception {
+        Configuration realisConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.realis"));
+        Configuration corefConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.coreference"));
+
+        File blackList = taskConfig.getFile("edu.cmu.cs.lti.file.basename.ignores.mention");
+        File whiteList = taskConfig.getFile("edu.cmu.cs.lti.file.basename.accept.mention");
+
+        CollectionReaderDescription testReader = paths.getPreprocessReader(typeSystemDescription, workingDir,
+                blackList, whiteList);
+
+        String realisModelDir = ModelUtils.getTestModelFile(eventModelDir, realisConfig);
+        String treeCorefModel = ModelUtils.getTestModelFile(eventModelDir, corefConfig);
+
+        String annotatedOutput = paths.getMiddleOutputPath(fullRunSuffix, runName);
+
+        CollectionReaderDescription mentionAnnotated = new BasicPipeline(testReader, workingDir, FileUtils.joinPaths
+                (annotatedOutput, "mentions"), engines).run().getOutput();
+
+        CorefModelRunner corefModelRunner = new CorefModelRunner(mainConfig, typeSystemDescription);
+        RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
+
+        CollectionReaderDescription realisOutput = realisModelRunner.realisAnnotation(realisConfig, mentionAnnotated,
+                realisModelDir, workingDir, FileUtils.joinPaths(annotatedOutput, "realis"), false);
+
+        CollectionReaderDescription corefSentMentions = corefModelRunner.corefResolution(corefConfig,
+                realisOutput, treeCorefModel, workingDir, FileUtils.joinPaths(annotatedOutput, "coref"),
+                false);
+
+        String resultDir = paths.getResultDir(workingDir, fullRunSuffix);
+        String tbfOutput = FileUtils.joinPaths(resultDir, runName + ".tbf");
+        RunnerUtils.writeResults(corefSentMentions, typeSystemDescription, tbfOutput, runName, useCharOffset, true);
+    }
+
     public void runVanilla(Configuration taskConfig, String workingDir) throws Exception {
         boolean skipType = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
         boolean skipRealis = taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);

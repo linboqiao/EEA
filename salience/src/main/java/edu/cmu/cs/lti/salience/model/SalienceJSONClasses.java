@@ -1,7 +1,7 @@
 package edu.cmu.cs.lti.salience.model;
 
 import com.google.gson.annotations.SerializedName;
-import edu.cmu.cs.lti.salience.utils.SalienceFeatureExtractor;
+import edu.cmu.cs.lti.utils.FeatureUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ public class SalienceJSONClasses {
     }
 
     public static class Feature {
-        public Feature(SalienceFeatureExtractor.SimpleInstance instance) {
+        public Feature(FeatureUtils.SimpleInstance instance) {
             featureArray = new ArrayList<>();
             featureNames = new ArrayList<>();
             sparseFeatureArray = new ArrayList<>();

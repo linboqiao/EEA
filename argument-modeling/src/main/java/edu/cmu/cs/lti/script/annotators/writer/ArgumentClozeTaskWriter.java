@@ -273,7 +273,6 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         String outputFile = args[2];
         String xmiOut = args[3];
 
-
         // Instantiate the analysis engine.
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
