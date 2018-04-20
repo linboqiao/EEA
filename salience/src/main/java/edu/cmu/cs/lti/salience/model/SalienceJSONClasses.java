@@ -1,13 +1,13 @@
 package edu.cmu.cs.lti.salience.model;
 
 import com.google.gson.annotations.SerializedName;
-import edu.cmu.cs.lti.salience.utils.FeatureUtils;
+import edu.cmu.cs.lti.salience.utils.SalienceFeatureExtractor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static edu.cmu.cs.lti.salience.utils.FeatureUtils.lexicalPrefix;
-import static edu.cmu.cs.lti.salience.utils.FeatureUtils.sparsePrefix;
+import static edu.cmu.cs.lti.salience.utils.SalienceFeatureExtractor.lexicalPrefix;
+import static edu.cmu.cs.lti.salience.utils.SalienceFeatureExtractor.sparsePrefix;
 
 /**
  * Created with IntelliJ IDEA.
@@ -61,7 +61,7 @@ public class SalienceJSONClasses {
     }
 
     public static class Feature {
-        public Feature(FeatureUtils.SimpleInstance instance) {
+        public Feature(SalienceFeatureExtractor.SimpleInstance instance) {
             featureArray = new ArrayList<>();
             featureNames = new ArrayList<>();
             sparseFeatureArray = new ArrayList<>();

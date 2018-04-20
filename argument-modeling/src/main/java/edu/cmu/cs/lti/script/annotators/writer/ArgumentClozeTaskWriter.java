@@ -6,8 +6,10 @@ import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.script.annotators.FrameBasedEventDetector;
 import edu.cmu.cs.lti.script.annotators.VerbBasedEventDetector;
 import edu.cmu.cs.lti.script.type.*;
+import edu.cmu.cs.lti.script.utils.ImplicitFeaturesExtractor;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
@@ -32,6 +34,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.GZIPOutputStream;
 
 
@@ -67,6 +70,7 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
     }
 
     static class ClozeDoc {
+        String docid;
         List<ClozeEvent> events;
     }
 
@@ -108,6 +112,7 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
 
         ClozeDoc doc = new ClozeDoc();
         doc.events = new ArrayList<>();
+        doc.docid = UimaConvenience.getArticleName(aJCas);
 
         Collection<StanfordCorenlpToken> allTokens = JCasUtil.select(aJCas, StanfordCorenlpToken.class);
         String[] lemmas = new String[allTokens.size()];
@@ -120,6 +125,9 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
 
         List<StanfordCorenlpSentence> sentences = new ArrayList<>(
                 JCasUtil.select(aJCas, StanfordCorenlpSentence.class));
+
+        Map<EntityMention, Map<String, Double>> entitySalienceFeatures = ImplicitFeaturesExtractor
+                .getSalienceFeatures(aJCas);
 
         for (int sentId = 0; sentId < sentences.size(); sentId++) {
             StanfordCorenlpSentence sentence = sentences.get(sentId);
@@ -227,11 +235,11 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         }
 
         int right = index + contextWindowSize;
-        if (right > lemmas.length) {
-            right = lemmas.length;
+        if (right > lemmas.length - 1) {
+            right = lemmas.length - 1;
         }
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         for (int i = left; i < index; i++) {
             sb.append(lemmas[i]).append(" ");
@@ -240,7 +248,7 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         // Indicate the context center.
         sb.append("___");
 
-        for (int i = index + 1; i < right; i++) {
+        for (int i = index + 1; i <= right; i++) {
             sb.append(" ").append(lemmas[i]);
         }
 

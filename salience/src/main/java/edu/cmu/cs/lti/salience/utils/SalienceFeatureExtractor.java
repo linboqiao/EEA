@@ -3,6 +3,7 @@ package edu.cmu.cs.lti.salience.utils;
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
+import edu.cmu.cs.lti.utils.FeatureUtils.SimpleInstance;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.uima.fit.util.FSCollectionFactory;
@@ -19,43 +20,9 @@ import java.util.*;
  *
  * @author Zhengzhong Liu
  */
-public class FeatureUtils {
+public class SalienceFeatureExtractor {
     public static final String lexicalPrefix = "Lexical";
     public static final String sparsePrefix = "Sparse";
-
-    public static class SimpleInstance {
-        String instanceName;
-
-        Map<String, Double> featureMap;
-
-        int label;
-
-        public SimpleInstance() {
-            featureMap = new HashMap<>();
-        }
-
-        public Map<String, Double> getFeatureMap() {
-            return featureMap;
-        }
-
-        public int getLabel() {
-            return label;
-        }
-
-        public String getInstanceName() {
-            return instanceName;
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append(instanceName).append("\t").append(label);
-            featureMap.keySet().stream().sorted().forEach(f ->
-                    sb.append("\t").append(String.format("%s:%.5f", f, featureMap.get(f)))
-            );
-            return sb.toString();
-        }
-    }
 
     public static List<SimpleInstance> getEventInstances(ArticleComponent component,
                                                          List<SimpleInstance> entityInstances,
