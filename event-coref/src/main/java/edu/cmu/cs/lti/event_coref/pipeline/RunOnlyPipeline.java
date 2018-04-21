@@ -3,9 +3,9 @@ package edu.cmu.cs.lti.event_coref.pipeline;
 import edu.cmu.cs.lti.collection_reader.LDCXmlCollectionReader;
 import edu.cmu.cs.lti.script.annotators.FrameBasedEventDetector;
 import edu.cmu.cs.lti.script.annotators.VerbBasedEventDetector;
-import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.reader.PlainTextCollectionReader;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.DispatchReader;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
@@ -58,18 +58,9 @@ public class RunOnlyPipeline {
         Configuration kbpConfig = new Configuration(argv[0]);
         kbpConfig.set("edu.cmu.cs.lti.experiment.name", runName);
 
-        CollectionReaderDescription reader;
 
-        if (readerType.equals("xmi")) {
-            System.out.println("Using xmi based reader");
-            reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription,
-                    inputPath);
-        } else {
-            System.out.println("Using text based reader");
-            reader = textReader(typeSystemDescription, inputPath, kbpConfig);
-        }
-
-//        reader = ldcReader(typeSystemDescription, inputPath, kbpConfig);
+        CollectionReaderDescription reader = DispatchReader.getReader(typeSystemDescription, readerType, inputPath,
+                kbpConfig);
 
         // Now prepare the real pipeline.
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);

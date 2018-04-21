@@ -95,6 +95,10 @@
             <groupId>edu.cmu.cs.lti</groupId>
             <artifactId>uima-base</artifactId>
         </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>corpus-reader</artifactId>
+        </dependency>
         <!--<dependency>-->
             <!--<groupId>edu.cmu.cs.lti</groupId>-->
             <!--<artifactId>opennlp</artifactId>-->
