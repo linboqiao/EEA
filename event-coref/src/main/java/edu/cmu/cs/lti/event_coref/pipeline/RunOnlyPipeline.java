@@ -25,19 +25,28 @@ public class RunOnlyPipeline {
 
     public static void main(String argv[]) throws Exception {
         if (argv.length < 2) {
-            System.err.println("Args: [setting] [input] [output] [simple event] [format]");
+            System.err.println("Args: [setting] [input] [output] [run name] [simple event] [format]");
         }
 
+        String inputPath = argv[1];
+        //"data/mention/LDC/LDC2015E77_TAC_KBP_2015_English_Cold_Start_Evaluation_Source_Corpus_V2.0/data/";
+
+        String outputPath = argv[2];
+        //"../data/project_data/cmu-script/mention/kbp/chinese/Chinese_Coled_Start_LDC2016E63"
+
+        String runName = argv[3];
+
         boolean simpleEvent = false;
-        if (argv.length >= 4) {
-            if (argv[3].equals("simple")) {
+        if (argv.length >= 5) {
+            if (argv[4].equals("simple")) {
                 simpleEvent = true;
+                System.out.println("Using simple event extractor.");
             }
         }
 
         String readerType = "text";
-        if (argv.length >= 5) {
-            readerType = argv[3];
+        if (argv.length >= 6) {
+            readerType = argv[5];
         }
 
         Configuration commonConfig = new Configuration("settings/common.properties");
@@ -47,19 +56,16 @@ public class RunOnlyPipeline {
                 .createTypeSystemDescription(typeSystemName);
 
         Configuration kbpConfig = new Configuration(argv[0]);
-
-        String inputPath = argv[1];
-        //"data/mention/LDC/LDC2015E77_TAC_KBP_2015_English_Cold_Start_Evaluation_Source_Corpus_V2.0/data/";
-
-        String outputPath = argv[2];
-        //"../data/project_data/cmu-script/mention/kbp/chinese/Chinese_Coled_Start_LDC2016E63"
+        kbpConfig.set("edu.cmu.cs.lti.experiment.name", runName);
 
         CollectionReaderDescription reader;
 
         if (readerType.equals("xmi")) {
+            System.out.println("Using xmi based reader");
             reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription,
                     inputPath);
         } else {
+            System.out.println("Using text based reader");
             reader = textReader(typeSystemDescription, inputPath, kbpConfig);
         }
 

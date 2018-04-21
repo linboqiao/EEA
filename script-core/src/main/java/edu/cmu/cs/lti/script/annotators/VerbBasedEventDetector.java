@@ -48,15 +48,10 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
         for (StanfordCorenlpToken token : JCasUtil.select(aJCas, StanfordCorenlpToken.class)) {
             if (!token.getPos().startsWith("V")) {
                 continue;
-//            } else if (usedHeads.contains(token)) {
-//                continue;
             } else if (ignoredHeadWords.contains(token.getLemma().toLowerCase())) {
                 continue;
             }
 
-//            List<Word> complements = new ArrayList<>();
-//            UimaNlpUtils.getPredicate(token, complements, false);
-//            usedHeads.addAll(complements);
 
             EventMention eventMention;
             if (span2Events.contains(token.getBegin(), token.getEnd())) {
@@ -66,28 +61,11 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
                 UimaAnnotationUtils.finishAnnotation(eventMention, COMPONENT_ID, eventId++, aJCas);
             }
             eventMention.setHeadWord(token);
+            eventMention.setEventType("Verbal");
 
             Map<String, Word> args = getArgs(token);
 
-
             List<EventMentionArgumentLink> argumentLinks = new ArrayList<>();
-
-//            List<Annotation> regions = new ArrayList<>();
-//            regions.add(token);
-//            for (Word complement : complements) {
-//                regions.add(complement);
-//                Map<String, Word> complement_args = getArgs(complement);
-//                for (Map.Entry<String, Word> arg : complement_args.entrySet()) {
-//                    String role = arg.getKey();
-//                    if (!args.containsKey(role)) {
-//                        args.put(role, arg.getValue());
-//                    }
-//                }
-//            }
-//            eventMention.setRegions(new FSArray(aJCas, regions.size()));
-//            for (int i = 0; i < regions.size(); i++) {
-//                eventMention.setRegions(i, regions.get(i));
-//            }
 
             Map<Word, EventMentionArgumentLink> head2Args = UimaNlpUtils.indexArgs(eventMention);
             argumentLinks.addAll(head2Args.values());

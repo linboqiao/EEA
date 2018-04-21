@@ -50,6 +50,10 @@ import java.util.zip.GZIPOutputStream;
  * @author Zhengzhong Liu
  */
 public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
+    public static final String PARAM_PROCESS_MODE = "processMode";
+    @ConfigurationParameter(name = PARAM_PROCESS_MODE)
+    private boolean processMode;
+
     public static final String PARAM_TEST_SPLIT = "testSplit";
     @ConfigurationParameter(name = PARAM_TEST_SPLIT)
     private File testSplitFile;
@@ -100,21 +104,22 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
-        try {
-            trainDocs = SalienceUtils.readSplit(trainSplitFile);
-            testDocs = SalienceUtils.readSplit(testSplitFile);
+        if (!processMode) {
+            try {
+                trainDocs = SalienceUtils.readSplit(trainSplitFile);
+                logger.info("Number of docs in training: " + trainDocs.size());
 
-            logger.info("Number of docs in training: " + trainDocs.size());
-            logger.info("Number of docs in testing: " + testDocs.size());
+                testDocs = SalienceUtils.readSplit(testSplitFile);
+                logger.info("Number of docs in testing: " + testDocs.size());
 
-            if (devSplitFile != null) {
-                devDocs = SalienceUtils.readSplit(devSplitFile);
-                logger.info("Number of docs in dev: " + devDocs.size());
+                if (devSplitFile != null) {
+                    devDocs = SalienceUtils.readSplit(devSplitFile);
+                    logger.info("Number of docs in dev: " + devDocs.size());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
 
         try {
             LookupTable table = SalienceUtils.loadEmbedding(jointEmbeddingFile);
@@ -195,7 +200,8 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         }
     }
 
-    private List<Spot> getEventSpots(ArticleComponent articleComponent, Map<StanfordCorenlpToken, String> entityIds) {
+    private static List<Spot> getEventSpots(ArticleComponent articleComponent, Map<StanfordCorenlpToken, String>
+            entityIds) {
         List<Spot> spots = new ArrayList<>();
 
         int index = 0;
@@ -224,7 +230,8 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
     }
 
 
-    private List<Spot> getEntitySpots(ArticleComponent articleComponent, Map<StanfordCorenlpToken, String> entityIds) {
+    private static List<Spot> getEntitySpots(ArticleComponent articleComponent, Map<StanfordCorenlpToken, String>
+            entityIds) {
         List<Spot> spots = new ArrayList<>();
 
         int index = 0;
@@ -360,11 +367,11 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         sb.append(text).append("\t").append(begin).append("\t").append(end);
     }
 
-    private void writeTagged(JCas aJCas, Writer output,
-                             List<FeatureUtils.SimpleInstance> entityFeatures,
-                             List<FeatureUtils.SimpleInstance> eventFeatures,
-                             Set<String> entitySaliency,
-                             int[] eventSaliency
+    public static void writeTagged(JCas aJCas, Writer output,
+                                   List<FeatureUtils.SimpleInstance> entityFeatures,
+                                   List<FeatureUtils.SimpleInstance> eventFeatures,
+                                   Set<String> entitySaliency,
+                                   int[] eventSaliency
     ) throws IOException {
         Gson gson = new Gson();
 
@@ -408,7 +415,7 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         output.write(jsonStr + "\n");
     }
 
-    private void addFeatureToSpots(List<Spot> bodySpots, List<FeatureUtils.SimpleInstance> instances) {
+    private static void addFeatureToSpots(List<Spot> bodySpots, List<FeatureUtils.SimpleInstance> instances) {
         Map<String, FeatureUtils.SimpleInstance> featureLookup = new HashMap<>();
         for (FeatureUtils.SimpleInstance instance : instances) {
             featureLookup.put(instance.getInstanceName(), instance);
@@ -420,13 +427,13 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         }
     }
 
-    private void addEntitySalienceToSpots(List<Spot> spots, Set<String> salientEids) {
+    private static void addEntitySalienceToSpots(List<Spot> spots, Set<String> salientEids) {
         for (Spot spot : spots) {
             spot.salience = salientEids.contains(spot.id) ? 1 : 0;
         }
     }
 
-    private void addEventSalienceToSpots(List<Spot> bodySpots, int[] eventSaliency) {
+    private static void addEventSalienceToSpots(List<Spot> bodySpots, int[] eventSaliency) {
         for (int i = 0; i < bodySpots.size(); i++) {
             bodySpots.get(i).salience = eventSaliency[i];
         }
@@ -458,10 +465,10 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         int[] eventSaliency = getEventSaliency(aJCas, bodyEventMentions);
         Set<String> entitySaliency = SalienceUtils.getAbstractEntities(aJCas);
 
-        List<FeatureUtils.SimpleInstance> entityInstances = SalienceFeatureExtractor.getKbInstances(aJCas, entitySaliency,
-                simCalculator);
-        List<FeatureUtils.SimpleInstance> eventInstances = SalienceFeatureExtractor.getEventInstances(body, entityInstances,
-                eventSaliency, simCalculator);
+        List<FeatureUtils.SimpleInstance> entityInstances = SalienceFeatureExtractor.getKbInstances(aJCas,
+                entitySaliency, simCalculator);
+        List<FeatureUtils.SimpleInstance> eventInstances = SalienceFeatureExtractor.getEventInstances(body,
+                entityInstances, eventSaliency, simCalculator);
 
         try {
             if (trainDocs.contains(articleName)) {
