@@ -376,18 +376,12 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
         Gson gson = new Gson();
 
         Body body = JCasUtil.selectSingle(aJCas, Body.class);
-        JCas abstractView = JCasUtil.getView(aJCas, AnnotatedNytReader.ABSTRACT_VIEW_NAME, false);
-        Article abstractArticle = JCasUtil.selectSingle(abstractView, Article.class);
 
         String docid = UimaConvenience.getArticleName(aJCas);
 
         Map<StanfordCorenlpToken, String> bodyEntityIds = new HashMap<>();
         List<Spot> bodyEntities = getEntitySpots(body, bodyEntityIds);
         List<Spot> bodyEvents = getEventSpots(body, bodyEntityIds);
-
-        Map<StanfordCorenlpToken, String> abstractEntityIds = new HashMap<>();
-        List<Spot> abstractEntities = getEntitySpots(abstractArticle, abstractEntityIds);
-        List<Spot> abstractEvents = getEventSpots(abstractArticle, abstractEntityIds);
 
         addFeatureToSpots(bodyEntities, entityFeatures);
         addFeatureToSpots(bodyEvents, eventFeatures);
@@ -399,19 +393,29 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
         Spots entitySpots = new Spots();
         entitySpots.bodyText = bodyEntities;
-        entitySpots.abstractSpots = abstractEntities;
 
         Spots eventSpots = new Spots();
         eventSpots.bodyText = bodyEvents;
-        eventSpots.abstractSpots = abstractEvents;
 
         doc.bodyText = TextUtils.asTokenized(body);
         doc.docno = docid;
         doc.spot = entitySpots;
         doc.event = eventSpots;
-        doc.abstractText = TextUtils.asTokenized(abstractArticle);
 
+        JCas abstractView = JCasUtil.getView(aJCas, AnnotatedNytReader.ABSTRACT_VIEW_NAME, aJCas);
+        if (abstractView != aJCas) {
+            // This means there is not abstract view and we fall back to the original view.
+            Article abstractArticle = JCasUtil.selectSingle(abstractView, Article.class);
+            Map<StanfordCorenlpToken, String> abstractEntityIds = new HashMap<>();
+            List<Spot> abstractEntities = getEntitySpots(abstractArticle, abstractEntityIds);
+            List<Spot> abstractEvents = getEventSpots(abstractArticle, abstractEntityIds);
+
+            entitySpots.abstractSpots = abstractEntities;
+            eventSpots.abstractSpots = abstractEvents;
+            doc.abstractText = TextUtils.asTokenized(abstractArticle);
+        }
         String jsonStr = gson.toJson(doc);
+
         output.write(jsonStr + "\n");
     }
 

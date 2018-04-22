@@ -41,6 +41,7 @@ public class SalienceInputPipeline {
                 NaiveBodyAnnotator.class, typeSystemDescription
         );
 
+        // TODO: Adding entity output annotator here.
         AnalysisEngineDescription jsonWriter = AnalysisEngineFactory.createEngineDescription(
                 SalienceInputCreator.class, typeSystemDescription,
                 SalienceInputCreator.PARAM_OUTPUT_DIR, jsonOutput,

@@ -16,6 +16,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
@@ -36,7 +37,7 @@ public class SalienceInputCreator extends AbstractLoggingAnnotator {
 
     public static final String PARAM_OUTPUT_DIR = "outputDir";
     @ConfigurationParameter(name = PARAM_OUTPUT_DIR)
-    private String outputDir;
+    private File outputDir;
 
     private LookupTable.SimCalculator simCalculator;
 
@@ -46,13 +47,17 @@ public class SalienceInputCreator extends AbstractLoggingAnnotator {
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
 
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
+        }
+
         try {
             LookupTable table = SalienceUtils.loadEmbedding(jointEmbeddingFile);
             simCalculator = new LookupTable.SimCalculator(table);
+            writer = new BufferedWriter(new FileWriter(new File(outputDir, "data.json")));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ResourceInitializationException(e);
         }
-
     }
 
     @Override
@@ -72,6 +77,16 @@ public class SalienceInputCreator extends AbstractLoggingAnnotator {
         try {
             MultiFormatSalienceDataWriter.writeTagged(aJCas, writer, entityInstances, eventInstances, entitySaliency,
                     eventSaliency);
+        } catch (IOException e) {
+            throw new AnalysisEngineProcessException(e);
+        }
+    }
+
+    @Override
+    public void collectionProcessComplete() throws AnalysisEngineProcessException {
+        super.collectionProcessComplete();
+        try {
+            writer.close();
         } catch (IOException e) {
             throw new AnalysisEngineProcessException(e);
         }
