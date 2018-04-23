@@ -215,6 +215,9 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
             spot.surface = TextUtils.asTokenized(eventMention);
             spot.id = Integer.toString(index);
 
+            StanfordCorenlpToken eventHead = UimaNlpUtils.findHeadFromStanfordAnnotation(eventMention);
+            spot.head_span = Arrays.asList(eventHead.getBegin(), eventHead.getEnd());
+
             for (EventMentionArgumentLink argumentLink :
                     FSCollectionFactory.create(eventMention.getArguments(), EventMentionArgumentLink.class)) {
                 EntityMention argumentMention = argumentLink.getArgument();
@@ -260,6 +263,7 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
             }
 
             StanfordCorenlpToken entityHead = UimaNlpUtils.findHeadFromStanfordAnnotation(groundedEntity);
+            spot.head_span = Arrays.asList(entityHead.getBegin(), entityHead.getEnd());
             entityIds.put(entityHead, Integer.toString(index));
 
             spots.add(spot);
