@@ -211,6 +211,7 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
             spot.frame_name = eventMention.getFrameName();
             Span tokenOffset = TextUtils.getSpaceTokenOffset(articleComponent, eventMention);
             spot.loc = Arrays.asList(tokenOffset.getBegin(), tokenOffset.getEnd());
+            spot.span = Arrays.asList(eventMention.getBegin(), eventMention.getEnd());
             spot.surface = TextUtils.asTokenized(eventMention);
             spot.id = Integer.toString(index);
 
@@ -241,6 +242,7 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
             Span tokenOffset = TextUtils.getSpaceTokenOffset(articleComponent, groundedEntity);
             EntitySpot spot = new EntitySpot();
             spot.loc = Arrays.asList(tokenOffset.getBegin(), tokenOffset.getEnd());
+            spot.span = Arrays.asList(groundedEntity.getBegin(), groundedEntity.getEnd());
 
             spot.surface = groundedEntity.getCoveredText();
             spot.id = groundedEntity.getKnowledgeBaseId();

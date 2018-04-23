@@ -38,6 +38,7 @@ public class SalienceJSONClasses {
 
     static public class Spot {
         public List<Integer> loc;
+        public List<Integer> span;
         public String surface;
         public Feature feature;
         public String id;
