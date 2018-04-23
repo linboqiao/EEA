@@ -74,11 +74,10 @@ public class TagmeEntityLinkerResultAnnotator extends AbstractLoggingAnnotator {
 
     private JsonObject parseResultFile(File linkerResultFile) throws IOException {
         String jsonStr = FileUtils.readFileToString(linkerResultFile);
-        Gson gson = new Gson();
-        gson.toJson(jsonStr);
+//        Gson gson = new Gson();
+//        gson.toJson(jsonStr);
         JsonParser parser = new JsonParser();
-        JsonObject document = parser.parse(jsonStr).getAsJsonObject();
-        return document;
+        return parser.parse(jsonStr).getAsJsonObject();
     }
 
     private int countTokensInJson(JsonObject document,
@@ -116,7 +115,7 @@ public class TagmeEntityLinkerResultAnnotator extends AbstractLoggingAnnotator {
 
     private List<EntityAnnotation> loadResults(JsonObject document,
                                                List<String> fields,
-                                               boolean useToken) throws IOException {
+                                               boolean useToken) {
         List<EntityAnnotation> annotations = new ArrayList<>();
         JsonObject allSpots = document.get("spot").getAsJsonObject();
 

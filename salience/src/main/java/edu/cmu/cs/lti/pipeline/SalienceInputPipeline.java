@@ -27,9 +27,10 @@ public class SalienceInputPipeline {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription("TypeSystem");
         String inputPath = argv[0];
-        String jsonOutput = argv[1];
-        String inputType = argv[2];
-        String embeddingPath = argv[3];
+        String tagmeInput = argv[1];
+        String jsonOutput = argv[2];
+        String inputType = argv[3];
+        String embeddingPath = argv[4];
 
         Configuration config = new Configuration();
         config.add("language", "en");
@@ -41,11 +42,11 @@ public class SalienceInputPipeline {
                 NaiveBodyAnnotator.class, typeSystemDescription
         );
 
-        // TODO: Adding entity output annotator here.
         AnalysisEngineDescription jsonWriter = AnalysisEngineFactory.createEngineDescription(
                 SalienceInputCreator.class, typeSystemDescription,
                 SalienceInputCreator.PARAM_OUTPUT_DIR, jsonOutput,
-                SalienceInputCreator.PARAM_JOINT_EMBEDDING, embeddingPath
+                SalienceInputCreator.PARAM_JOINT_EMBEDDING, embeddingPath,
+                SalienceInputCreator.PARAM_TAGME_OUTPUT, tagmeInput
         );
 
         new BasicPipeline(reader, true, true, 7, bodyAnno, jsonWriter).run();
