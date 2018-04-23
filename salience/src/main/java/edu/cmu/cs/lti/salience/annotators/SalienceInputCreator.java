@@ -73,7 +73,7 @@ public class SalienceInputCreator extends AbstractLoggingAnnotator {
         }
 
         taggedFiles = new HashMap<>();
-        for (File file : FileUtils.listFiles(tagmeOutputDir, new String[]{"mid"}, false)) {
+        for (File file : FileUtils.listFiles(tagmeOutputDir, new String[]{"json"}, false)) {
             taggedFiles.put(file.getName().split("\\.")[0], file);
             }
     }
