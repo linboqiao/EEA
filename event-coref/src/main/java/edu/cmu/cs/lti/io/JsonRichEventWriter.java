@@ -9,6 +9,7 @@ import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.DispatchReader;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
+import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -20,6 +21,7 @@ import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
+import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 
 import java.io.File;
@@ -39,7 +41,13 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_OUTPUT_FILE)
     private File outputFile;
 
-    int objectIndex;
+    private int objectIndex;
+
+    @Override
+    public void initialize(UimaContext aContext) throws ResourceInitializationException {
+        super.initialize(aContext);
+        logger.info("Writing JSON Rcih events.");
+    }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
@@ -127,9 +135,10 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                 for (String role : argument.getValue()) {
                     JsonArgument jsonArg = new JsonArgument();
                     jsonArg.roles = new ArrayList<>();
-                    jsonArg.entity = jsonEnt;
-                    jsonArg.event = jsonEvm;
+                    jsonArg.entityId = jsonEnt.id;
+                    jsonArg.eventId = jsonEvm.id;
                     jsonArg.roles.add(role);
+                    jsonEvm.arguments.add(jsonArg);
                 }
             }
 
@@ -258,8 +267,8 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
     }
 
     class JsonArgument {
-        JsonEventMention event;
-        JsonEntityMention entity;
+        int eventId;
+        int entityId;
         List<String> roles;
     }
 

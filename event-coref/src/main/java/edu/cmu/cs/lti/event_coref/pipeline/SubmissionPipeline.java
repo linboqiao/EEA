@@ -8,7 +8,7 @@ import edu.cmu.cs.lti.emd.annotators.classification.RealisTypeAnnotator;
 import edu.cmu.cs.lti.emd.annotators.misc.TypeBasedMentionSelector;
 import edu.cmu.cs.lti.emd.annotators.postprocessors.MentionTypeSplitter;
 import edu.cmu.cs.lti.event_coref.annotators.EventCorefAnnotator;
-import edu.cmu.cs.lti.event_coref.annotators.prepare.EnglishSrlArgumentExtractor;
+import edu.cmu.cs.lti.event_coref.annotators.prepare.MergedArgumentAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EventHeadWordAnnotator;
 import edu.cmu.cs.lti.learning.utils.ModelUtils;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
@@ -146,7 +146,7 @@ public class SubmissionPipeline {
             preAnnotators.add(headWordExtractor);
         } else {
             AnalysisEngineDescription argumentExtractor = AnalysisEngineFactory.createEngineDescription(
-                    EnglishSrlArgumentExtractor.class
+                    MergedArgumentAnnotator.class
             );
             preAnnotators.add(headWordExtractor);
             preAnnotators.add(argumentExtractor);

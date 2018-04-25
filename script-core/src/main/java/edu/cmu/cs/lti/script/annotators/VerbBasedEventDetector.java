@@ -115,7 +115,7 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
     private Pair<String, Word> takeDep(StanfordDependencyRelation dep) {
         String depType = dep.getDependencyType();
         Word depWord = dep.getChild();
-        if (depType.equals("nsubj") || depType.equals("agent")) {
+        if (depType.equals("nsubj") || depType.contains("agent")) {
             return Pair.of("subj", depWord);
         } else if (depType.equals("dobj") || depType.equals("nsubjpass")) {
             return Pair.of("obj", depWord);

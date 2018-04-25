@@ -4,7 +4,7 @@ import edu.cmu.cs.lti.annotators.GoldStandardEventMentionAnnotator;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.event_coref.annotators.misc.GoldRemover;
-import edu.cmu.cs.lti.event_coref.annotators.prepare.EnglishSrlArgumentExtractor;
+import edu.cmu.cs.lti.event_coref.annotators.prepare.MergedArgumentAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EventHeadWordAnnotator;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
@@ -63,12 +63,11 @@ public class RunnerUtils {
             annotators.add(headWordExtractor);
         } else {
             AnalysisEngineDescription argumentExtractor = AnalysisEngineFactory.createEngineDescription(
-                    EnglishSrlArgumentExtractor.class, typeSystemDescription
+                    MergedArgumentAnnotator.class, typeSystemDescription
             );
             annotators.add(headWordExtractor);
             annotators.add(argumentExtractor);
 
-            // TODO see if caevo can be run.
 //            AnalysisEngineDescription caevo = AnalysisEngineFactory.createEngineDescription(
 //                    CaevoAnnotator.class
 //            );

@@ -544,8 +544,9 @@ public class EventMentionPipeline {
                 seed);
     }
 
-    public void runOnMentions(Configuration taskConfig, String workingDir, AnalysisEngineDescription[] engines,
-                              String runName) throws Exception {
+    public CollectionReaderDescription runOnMentions(Configuration taskConfig, String workingDir,
+                                                     AnalysisEngineDescription[] engines,
+                                                     String runName) throws Exception {
         Configuration realisConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.realis"));
         Configuration corefConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.coreference"));
 
@@ -576,9 +577,11 @@ public class EventMentionPipeline {
         String resultDir = paths.getResultDir(workingDir, fullRunSuffix);
         String tbfOutput = FileUtils.joinPaths(resultDir, runName + ".tbf");
         RunnerUtils.writeResults(corefSentMentions, typeSystemDescription, tbfOutput, runName, useCharOffset, true);
+
+        return corefSentMentions;
     }
 
-    public void runVanilla(Configuration taskConfig, String workingDir) throws Exception {
+    public CollectionReaderDescription runVanilla(Configuration taskConfig, String workingDir) throws Exception {
         boolean skipType = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
         boolean skipRealis = taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
         boolean skipCoref = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
@@ -632,6 +635,8 @@ public class EventMentionPipeline {
         String tbfOutput = FileUtils.joinPaths(resultDir, runName + ".tbf");
         RunnerUtils.writeResults(corefSentMentions, typeSystemDescription, tbfOutput, runName, useCharOffset,
                 addSemanticRole);
+
+        return corefSentMentions;
     }
 
     public void tryAnnotator(Configuration taskConfig) throws SAXException, UIMAException, CpeDescriptorException,

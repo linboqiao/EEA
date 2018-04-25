@@ -1,15 +1,18 @@
 package edu.cmu.cs.lti.event_coref.pipeline;
 
 import edu.cmu.cs.lti.collection_reader.LDCXmlCollectionReader;
+import edu.cmu.cs.lti.io.JsonRichEventWriter;
 import edu.cmu.cs.lti.script.annotators.FrameBasedEventDetector;
 import edu.cmu.cs.lti.script.annotators.VerbBasedEventDetector;
 import edu.cmu.cs.lti.uima.io.reader.PlainTextCollectionReader;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.DispatchReader;
+import edu.cmu.cs.lti.utils.FileUtils;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.slf4j.Logger;
@@ -47,7 +50,7 @@ public class RunOnlyPipeline {
             }
         }
 
-        String readerType = "text";
+        String readerType = "txt";
         if (argv.length >= 6) {
             readerType = argv[5];
         }
@@ -70,8 +73,9 @@ public class RunOnlyPipeline {
         EventMentionPipeline pipeline = new EventMentionPipeline(typeSystemName, kbpConfig);
 
         boolean skipTestPrepare = kbpConfig.getBoolean("edu.cmu.cs.lti.test.skip.preprocess", false);
-        CollectionReaderDescription preparedData = pipeline.prepareData(kbpConfig, outputPath, skipTestPrepare, reader);
+        pipeline.prepareData(kbpConfig, outputPath, skipTestPrepare, reader);
 
+        CollectionReaderDescription results;
         if (simpleEvent) {
             AnalysisEngineDescription verbEvents = AnalysisEngineFactory.createEngineDescription(
                     VerbBasedEventDetector.class, typeSystemDescription
@@ -87,10 +91,18 @@ public class RunOnlyPipeline {
                     verbEvents, frameEvents
             };
 
-            pipeline.runOnMentions(kbpConfig, outputPath, engines, "SimpleEvents");
+            results = pipeline.runOnMentions(kbpConfig, outputPath, engines, "SimpleEvents");
         } else {
-            pipeline.runVanilla(kbpConfig, outputPath);
+            results = pipeline.runVanilla(kbpConfig, outputPath);
         }
+
+        AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
+                JsonRichEventWriter.class, typeSystemDescription,
+                JsonRichEventWriter.PARAM_OUTPUT_FILE, FileUtils.joinPaths(outputPath, "rich", runName, "events_out" +
+                        ".json")
+        );
+
+        SimplePipeline.runPipeline(results, writer);
     }
 
     private static CollectionReaderDescription ldcReader(TypeSystemDescription typeSystemDescription, String inputPath,

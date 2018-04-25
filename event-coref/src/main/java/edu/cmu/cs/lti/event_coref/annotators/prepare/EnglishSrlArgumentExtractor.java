@@ -79,7 +79,7 @@ public class EnglishSrlArgumentExtractor extends AbstractLoggingAnnotator {
                 String semaforRoleName = semaforRoleHead.getValue();
                 SemaforLabel argumentAnnotation = semaforRoles.get(semaforRoleName);
                 EventMentionArgumentLink argumentLink = new EventMentionArgumentLink(aJCas);
-                EntityMention argumentEntityMention = UimaNlpUtils.createEntityMention(aJCas, argumentAnnotation
+                EntityMention argumentEntityMention = UimaNlpUtils.createArgMention(aJCas, argumentAnnotation
                         .getBegin(), argumentAnnotation.getEnd(), ANNOTATOR_COMPONENT_ID);
                 argumentLink.setArgument(argumentEntityMention);
                 argumentLink.setFrameElementName(semaforRoleName);
@@ -97,7 +97,7 @@ public class EnglishSrlArgumentExtractor extends AbstractLoggingAnnotator {
                     String fanseRoleName = fanseRoleHead.getValue();
                     FanseToken argumentAnnotation = fanseRoles.get(fanseRoleName);
                     EventMentionArgumentLink argumentLink = new EventMentionArgumentLink((aJCas));
-                    EntityMention argumentEntityMention = UimaNlpUtils.createEntityMention(aJCas, argumentAnnotation
+                    EntityMention argumentEntityMention = UimaNlpUtils.createArgMention(aJCas, argumentAnnotation
                             .getBegin(), argumentAnnotation.getEnd(), ANNOTATOR_COMPONENT_ID);
                     argumentLink.setArgument(argumentEntityMention);
                     argumentLink.setPropbankRoleName(fanseRoleName);
