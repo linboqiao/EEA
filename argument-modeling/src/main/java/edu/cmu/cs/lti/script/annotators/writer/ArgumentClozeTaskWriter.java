@@ -140,14 +140,9 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
 
                 String predicate_text = UimaNlpUtils.getPredicate(eventMention.getHeadWord(), complements, false);
 
-//                List<String> fields = new ArrayList<>();
                 String frame = eventMention.getFrameName();
 
                 String predicate_context = getContext(lemmas, (StanfordCorenlpToken) eventMention.getHeadWord());
-
-//                fields.add(predicate_text);
-//                fields.add(predicate_context);
-//                fields.add(frame == null ? "NA" : frame);
 
                 ce.predicate = predicate_text;
                 ce.context = predicate_context;
@@ -175,17 +170,10 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
                     Entity cluster = en.getReferingEntity();
                     String entityId = cluster.getId();
 
-
                     int notSingleton = cluster.getEntityMentions().size() == 1 ? 0 : 1;
 
                     String argText = en.getHead() == null ? en.getCoveredText() : en.getHead().getLemma();
                     argText = onlySpace(argText);
-
-//                    fields.add(role);
-//                    fields.add(fe);
-//                    fields.add(entityId);
-//                    fields.add(argText);
-//                    fields.add(String.valueOf(notSingleton));
 
                     String argumentContext = getContext(lemmas, (StanfordCorenlpToken) eventMention.getHeadWord());
 
@@ -199,16 +187,6 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
 
                 ce.arguments = clozeArguments;
                 doc.events.add(ce);
-
-//                fields.add(String.valueOf(sentId));
-
-//                String jsonText = gson.toJson(ce);
-
-//                sb.append(jsonText).append("\n");
-//
-//                sb.append(Joiner.on("\t").join(fields.stream().map((Function<String, String>) this::onlySpace)
-//                        .collect(Collectors.toList())));
-//                sb.append("\n");
             }
         }
 
