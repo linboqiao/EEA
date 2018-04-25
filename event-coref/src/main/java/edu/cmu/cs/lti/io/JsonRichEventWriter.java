@@ -36,10 +36,10 @@ import java.util.*;
  * @author Zhengzhong Liu
  */
 public class JsonRichEventWriter extends AbstractLoggingAnnotator {
-    public static final String PARAM_OUTPUT_FILE = "outputFile";
+    public static final String PARAM_OUTPUT_DIR = "outputFile";
 
-    @ConfigurationParameter(name = PARAM_OUTPUT_FILE)
-    private File outputFile;
+    @ConfigurationParameter(name = PARAM_OUTPUT_DIR)
+    private File outputDir;
 
     private int objectIndex;
 
@@ -47,6 +47,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
         logger.info("Writing JSON Rcih events.");
+        edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(outputDir);
     }
 
     @Override
@@ -54,6 +55,8 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         Gson gson = new Gson();
 
         objectIndex = 0;
+
+        File outputFile = new File(outputDir, UimaConvenience.getArticleName(aJCas) + ".json");
         try {
             FileUtils.write(outputFile, gson.toJson(buildJson(aJCas)) + "\n");
         } catch (IOException e) {
@@ -74,7 +77,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
         AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
                 JsonRichEventWriter.class, typeSystemDescription,
-                JsonRichEventWriter.PARAM_OUTPUT_FILE, outputPath
+                JsonRichEventWriter.PARAM_OUTPUT_DIR, outputPath
         );
 
         SimplePipeline.runPipeline(reader, writer);
@@ -87,6 +90,13 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         JsonWord jsonHead = new JsonWord(objectIndex++, uimaHead);
         jsonHead.lemma = uimaHead.getLemma();
         jsonEnt.headWord = jsonHead;
+
+        if (anno instanceof EntityMention) {
+            String type = ((EntityMention) anno).getEntityType();
+            if (type != null) {
+                jsonEnt.type = type;
+            }
+        }
         return jsonEnt;
     }
 
@@ -113,6 +123,9 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
             JsonEventMention jsonEvm = new JsonEventMention(objectIndex++, mention);
+            jsonEvm.type = mention.getEventType();
+            jsonEvm.realis = mention.getRealisType();
+
             Word headword = mention.getHeadWord();
 
             jsonEvm.headWord = new JsonWord(objectIndex++, headword);
@@ -225,9 +238,11 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
     class DiscourseObject {
         int id;
         List<Integer> span;
+        String text;
 
-        public DiscourseObject(int id, ComponentAnnotation anno) {
+        DiscourseObject(int id, ComponentAnnotation anno, String text) {
             this.id = id;
+            this.text = text;
             setSpan(anno);
         }
 
@@ -240,24 +255,29 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         JsonWord headWord;
         List<JsonArgument> arguments;
 
-        public JsonEventMention(int id, ComponentAnnotation anno) {
-            super(id, anno);
+        String type;
+        String realis;
+
+        JsonEventMention(int id, ComponentAnnotation anno) {
+            super(id, anno, anno.getCoveredText());
         }
     }
 
     class JsonEntityMention extends DiscourseObject {
         JsonWord headWord;
 
-        public JsonEntityMention(int id, ComponentAnnotation anno) {
-            super(id, anno);
+        String type;
+
+        JsonEntityMention(int id, ComponentAnnotation anno) {
+            super(id, anno, anno.getCoveredText());
         }
     }
 
     class JsonWord extends DiscourseObject {
         String lemma;
 
-        public JsonWord(int id, ComponentAnnotation anno) {
-            super(id, anno);
+        JsonWord(int id, ComponentAnnotation anno) {
+            super(id, anno, anno.getCoveredText());
         }
     }
 
