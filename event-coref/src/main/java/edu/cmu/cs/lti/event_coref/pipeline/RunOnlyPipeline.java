@@ -12,6 +12,8 @@ import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 /**
@@ -22,6 +24,7 @@ import org.uimafit.factory.TypeSystemDescriptionFactory;
  * @author Zhengzhong Liu
  */
 public class RunOnlyPipeline {
+    private static final Logger logger = LoggerFactory.getLogger(RunOnlyPipeline.class);
 
     public static void main(String argv[]) throws Exception {
         if (argv.length < 2) {
@@ -58,8 +61,9 @@ public class RunOnlyPipeline {
         Configuration kbpConfig = new Configuration(argv[0]);
         kbpConfig.set("edu.cmu.cs.lti.experiment.name", runName);
 
+        logger.info("Reader type is: " + readerType);
 
-        CollectionReaderDescription reader = DispatchReader.getReader(typeSystemDescription, readerType, inputPath,
+        CollectionReaderDescription reader = DispatchReader.getReader(typeSystemDescription, inputPath, readerType,
                 kbpConfig);
 
         // Now prepare the real pipeline.
