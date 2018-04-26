@@ -138,6 +138,7 @@ public class ConllUReader extends AbstractCollectionReader {
 
             Word word = new Word(jCas, begin, end);
             word.setPos(pos);
+            word.setLemma(lemma);
             UimaAnnotationUtils.finishAnnotation(word, UimaConst.goldComponentName, wordId, jCas);
             word.setIndex(wordId);
             lastEnd = end;
@@ -147,6 +148,7 @@ public class ConllUReader extends AbstractCollectionReader {
 
         String docText = sb.toString();
         jCas.setDocumentText(docText);
+        jCas.setDocumentLanguage(language);
 
         UimaConvenience.setDocInfo(jCas, language, COMPONENT_ID, docText.length(), docid, dataPath, false);
 
@@ -157,19 +159,14 @@ public class ConllUReader extends AbstractCollectionReader {
     public boolean hasNext() throws IOException, CollectionException {
         while (currentFile < lineIters.size()) {
             if (currentIter.hasNext()) {
-                logger.info("Has next in iter");
                 return true;
             } else {
                 currentFile += 1;
                 if (currentFile < lineIters.size()) {
-                    logger.info("Trying to use next file iter");
                     currentIter = lineIters.get(currentFile);
                 }
             }
         }
-
-
-        logger.info("Nothing remains");
 
         return false;
     }

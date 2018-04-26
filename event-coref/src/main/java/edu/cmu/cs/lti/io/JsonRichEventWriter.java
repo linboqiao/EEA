@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.io;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.gson.Gson;
+import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
@@ -114,6 +115,13 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         Map<StanfordCorenlpToken, JsonEntityMention> jsonEntMap = new HashMap<>();
 
         Map<StanfordCorenlpToken, EntityMention> entMap = new HashMap<>();
+
+        int wordId = 0;
+        for (Word word : JCasUtil.select(aJCas, Word.class)) {
+            if (word.getComponentId().equals(UimaConst.goldComponentName)) {
+                word.setIndex(wordId++);
+            }
+        }
 
         for (EntityMention mention : JCasUtil.select(aJCas, EntityMention.class)) {
             StanfordCorenlpToken head = UimaNlpUtils.findHeadFromStanfordAnnotation(mention);
@@ -238,16 +246,27 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
     class DiscourseObject {
         int id;
         List<Integer> span;
+        List<Integer> tokens;
         String text;
 
         DiscourseObject(int id, ComponentAnnotation anno, String text) {
             this.id = id;
             this.text = text;
             setSpan(anno);
+            setTokens(anno);
         }
 
         void setSpan(ComponentAnnotation anno) {
             span = Arrays.asList(anno.getBegin(), anno.getEnd());
+        }
+
+        void setTokens(ComponentAnnotation anno) {
+            tokens = new ArrayList<>();
+            for (Word word : JCasUtil.selectCovered(Word.class, anno)) {
+                if (word.getComponentId().equals(UimaConst.goldComponentName)) {
+                    tokens.add(word.getIndex());
+                }
+            }
         }
     }
 

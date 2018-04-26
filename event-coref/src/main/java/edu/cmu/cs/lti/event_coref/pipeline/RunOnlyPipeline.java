@@ -98,8 +98,7 @@ public class RunOnlyPipeline {
 
         AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
                 JsonRichEventWriter.class, typeSystemDescription,
-                JsonRichEventWriter.PARAM_OUTPUT_DIR, FileUtils.joinPaths(outputPath, "rich", runName, "events_out" +
-                        ".json")
+                JsonRichEventWriter.PARAM_OUTPUT_DIR, FileUtils.joinPaths(outputPath, "rich", runName)
         );
 
         SimplePipeline.runPipeline(results, writer);

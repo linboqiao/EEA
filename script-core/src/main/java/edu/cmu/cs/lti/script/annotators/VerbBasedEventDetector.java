@@ -40,7 +40,10 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
-//        Set<Word> usedHeads = new HashSet<>();
+        if (!aJCas.getDocumentLanguage().equals("en")) {
+            return;
+        }
+
         Map<Word, EntityMention> h2Entities = UimaNlpUtils.indexEntityMentions(aJCas);
         Table<Integer, Integer, EventMention> span2Events = UimaNlpUtils.indexEventMentions(aJCas);
 
@@ -82,10 +85,8 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
                             argWord.getEnd(), COMPONENT_ID);
                     argumentLinks.add(argumentLink);
                 }
-
                 argumentLink.setArgumentRole(role);
             }
-
             eventMention.setArguments(FSCollectionFactory.createFSList(aJCas, argumentLinks));
         }
 
