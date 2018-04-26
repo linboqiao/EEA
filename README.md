@@ -19,3 +19,5 @@ mstparser:
 Event Extraction as Dependency Parsing
 David McClosky, Mihai Surdeanu, and Christopher D. Manning
 
+EventExtraction:
+https://github.com/LeonCrashCode/EventExtraction
