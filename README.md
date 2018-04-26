@@ -9,7 +9,7 @@ Joint Event Extraction via Recurrent Neural Networks
 Thien Huu Nguyen, Kyunghyun Cho and Ralph Grishman (NAACL 2016)
 
 event-extraction:
-The source is from git@github.com:franticnerd/event-extraction.git
+git@github.com:franticnerd/event-extraction.git
 
 EventEntityExtractor:
 Joint Extraction of Events and Entities within a Document Context
