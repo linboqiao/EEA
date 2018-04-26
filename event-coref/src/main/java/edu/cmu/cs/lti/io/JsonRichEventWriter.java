@@ -43,11 +43,12 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
     private File outputDir;
 
     private int objectIndex;
+    private ArrayList<Word> allWords;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
-        logger.info("Writing JSON Rcih events.");
+        logger.info("Writing JSON Rich events to : " + outputDir);
         edu.cmu.cs.lti.utils.FileUtils.ensureDirectory(outputDir);
     }
 
@@ -117,9 +118,11 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         Map<StanfordCorenlpToken, EntityMention> entMap = new HashMap<>();
 
         int wordId = 0;
+        allWords = new ArrayList<>();
         for (Word word : JCasUtil.select(aJCas, Word.class)) {
             if (word.getComponentId().equals(UimaConst.goldComponentName)) {
                 word.setIndex(wordId++);
+                allWords.add(word);
             }
         }
 
@@ -262,9 +265,18 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
         void setTokens(ComponentAnnotation anno) {
             tokens = new ArrayList<>();
+
             for (Word word : JCasUtil.selectCovered(Word.class, anno)) {
                 if (word.getComponentId().equals(UimaConst.goldComponentName)) {
                     tokens.add(word.getIndex());
+                }
+            }
+
+            if (tokens.size() == 0) {
+                for (Word word : JCasUtil.selectCovering(Word.class, anno)) {
+                    if (word.getComponentId().equals(UimaConst.goldComponentName)) {
+                        tokens.add(word.getIndex());
+                    }
                 }
             }
         }
