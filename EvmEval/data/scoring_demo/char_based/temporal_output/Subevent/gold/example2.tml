@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<TimML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://timeml.org/timeMLdocs/TimeML_1.2.1.xsd">
+  <DCT>
+    <TIMEX3 functionInDocument="CREATION_TIME" scriptFunction="false" tid="t0" type="TIME" value=""/>
+  </DCT>
+  <TEXT>
+    <EVENT eid="te0"/>
+    <EVENT eid="te1"/>
+    <EVENT eid="te2"/>
+    <EVENT eid="te3"/>
+    <EVENT eid="te4"/>
+  </TEXT>
+  <MAKEINSTANCE eid="te0" eiid="instance_te0"/>
+  <MAKEINSTANCE eid="te1" eiid="instance_te1"/>
+  <MAKEINSTANCE eid="te2" eiid="instance_te2"/>
+  <MAKEINSTANCE eid="te3" eiid="instance_te3"/>
+  <MAKEINSTANCE eid="te4" eiid="instance_te4"/>
+</TimML>

@@ -1,0 +1,6 @@
+=== Temporal Awareness Score ===
+Evaluated considering implicit relations in recall as well
+Temporal Score	F1	P	R
+		0.0	0.0	0.0	
+Overall Temporal Awareness Score (F1 score): 0.0
+
