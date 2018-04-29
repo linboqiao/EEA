@@ -275,7 +275,7 @@ public class SalienceFeatureExtractor {
     }
 
     private static int bucket(int number) {
-        return bucket(number, 1);
+        return bucket(number, 10);
     }
 
     private static int bucket(int number, int k) {
