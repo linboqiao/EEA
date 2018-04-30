@@ -228,7 +228,7 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         }
 
         try {
-            writer.write(gson.toJson(doc));
+            writer.write(gson.toJson(doc) + "\n");
         } catch (IOException e) {
             throw new AnalysisEngineProcessException(e);
         }
