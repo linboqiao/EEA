@@ -166,6 +166,7 @@ public class ImplicitFeaturesExtractor {
 
                 // Set first location to the last sentence.
                 int firstLoc = sentIndex;
+
                 for (EntityMention mention : FSCollectionFactory.create(entity.getEntityMentions(), EntityMention
                         .class)) {
                     Word head = mention.getHead();
@@ -176,6 +177,7 @@ public class ImplicitFeaturesExtractor {
                     if (mentionLoc < firstLoc) {
                         firstLoc = mentionLoc;
                     }
+
 
                     if (pos.equals("NNP")) {
                         namedCount += 1;
@@ -274,7 +276,9 @@ public class ImplicitFeaturesExtractor {
 
 
     private static double bucket(int number) {
-        return bucketK(number, Math.exp(1.0));
+        // Don't bucket here.
+        return number;
+//        return bucketK(number, Math.exp(1.0));
     }
 
     private static double bucketK(int number, double k) {

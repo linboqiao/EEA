@@ -205,14 +205,14 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
             }
         }
 
-        Map<Word, SortedMap<String, Double>> entitySalienceFeatures = ImplicitFeaturesExtractor
+        Map<Word, SortedMap<String, Double>> implicitFeatures = ImplicitFeaturesExtractor
                 .getArgumentFeatures(aJCas, argumentByHead.keySet());
 
         for (Map.Entry<Word, ClozeEvent.ClozeArgument> wordArg : argumentByHead.entrySet()) {
             Word argHead = wordArg.getKey();
             ClozeEvent.ClozeArgument arg = wordArg.getValue();
 
-            SortedMap<String, Double> argFeatures = entitySalienceFeatures.get(argHead);
+            SortedMap<String, Double> argFeatures = implicitFeatures.get(argHead);
 
             double[] featureArray = new double[argFeatures.size()];
             String[] featureNameArray = new String[argFeatures.size()];
