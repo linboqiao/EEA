@@ -1,5 +1,6 @@
 package edu.cmu.cs.lti.script.annotators.writer;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.gson.Gson;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.script.type.*;
@@ -73,6 +74,14 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         String docid;
         List<String> sentences;
         List<ClozeEvent> events;
+        List<ClozeEntity> entities;
+    }
+
+    static class ClozeEntity {
+        int entityId;
+        double[] entityFeatures;
+        String[] featureNames;
+        String representEntityHead;
     }
 
     static class ClozeEvent {
@@ -83,18 +92,16 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         int predicateEnd;
         String frame;
         List<ClozeArgument> arguments;
-        double[] predicateFeatures;
 
         static class ClozeArgument {
             String feName;
             String dep;
             String context;
-            String representText;
             String text;
             int entityId;
 
-            double[] argumentFeatures;
-            String[] featureNames;
+            int argStart;
+            int argEnd;
         }
     }
 
@@ -103,7 +110,9 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         // Assign IDs.
         int id = 0;
         for (Entity entity : JCasUtil.select(aJCas, Entity.class)) {
-            entity.setId(String.valueOf(id++));
+            entity.setId(String.valueOf(id));
+            entity.setIndex(id);
+            id++;
         }
 
         ClozeDoc doc = new ClozeDoc();
@@ -120,18 +129,10 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
             tIndex++;
         }
 
-        Map<Word, Entity> head2Entities = new HashMap<>();
-        for (Entity entity : JCasUtil.select(aJCas, Entity.class)) {
-            for (EntityMention mention : FSCollectionFactory.create(entity.getEntityMentions(), EntityMention.class)) {
-                head2Entities.put(mention.getHead(), entity);
-            }
-        }
-
         List<StanfordCorenlpSentence> sentences = new ArrayList<>(
                 JCasUtil.select(aJCas, StanfordCorenlpSentence.class));
 
-        Map<Word, ClozeEvent.ClozeArgument> argumentByHead = new HashMap<>();
-
+        ArrayListMultimap<EntityMention, ClozeEvent.ClozeArgument> argumentMap = ArrayListMultimap.create();
 
         for (int sentId = 0; sentId < sentences.size(); sentId++) {
             StanfordCorenlpSentence sentence = sentences.get(sentId);
@@ -147,6 +148,9 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
                 String predicate_text = UimaNlpUtils.getPredicate(eventMention.getHeadWord(), complements, false);
 
                 String frame = eventMention.getFrameName();
+                if (frame == null) {
+                    frame = "NA";
+                }
 
                 String predicate_context = getContext(lemmas, (StanfordCorenlpToken) eventMention.getHeadWord());
 
@@ -174,8 +178,6 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
                     }
                     EntityMention en = argLink.getArgument();
                     Word argHead = en.getHead();
-                    Entity cluster = en.getReferingEntity();
-                    String entityId = cluster.getId();
 
                     String argText = en.getHead().getLemma();
                     argText = onlySpace(argText);
@@ -185,47 +187,50 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
                     ca.feName = fe;
                     ca.dep = role;
                     ca.context = argumentContext;
-                    ca.entityId = Integer.parseInt(entityId);
+                    ca.entityId = en.getReferingEntity().getIndex();
                     ca.text = onlySpace(argText);
+
+                    ca.argStart = en.getBegin() - sentence.getBegin();
+                    ca.argEnd = en.getEnd() - sentence.getBegin();
 
                     clozeArguments.add(ca);
 
-                    argumentByHead.put(argHead, ca);
-
-                    if (head2Entities.containsKey(argHead)) {
-                        EntityMention repreMention = head2Entities.get(argHead).getRepresentativeMention();
-                        ca.representText = onlySpace(repreMention.getHead().getLemma().toLowerCase());
-                    } else {
-                        ca.representText = ca.text;
-                    }
+                    argumentMap.put(en, ca);
                 }
-
                 ce.arguments = clozeArguments;
                 doc.events.add(ce);
             }
         }
 
-        Map<Word, SortedMap<String, Double>> implicitFeatures = ImplicitFeaturesExtractor
-                .getArgumentFeatures(aJCas, argumentByHead.keySet());
+        Map<Entity, SortedMap<String, Double>> implicitFeatures = ImplicitFeaturesExtractor.getArgumentFeatures(aJCas);
 
-        for (Map.Entry<Word, ClozeEvent.ClozeArgument> wordArg : argumentByHead.entrySet()) {
-            Word argHead = wordArg.getKey();
-            ClozeEvent.ClozeArgument arg = wordArg.getValue();
 
-            SortedMap<String, Double> argFeatures = implicitFeatures.get(argHead);
+        List<ClozeEntity> clozeEntities = new ArrayList<>();
 
-            double[] featureArray = new double[argFeatures.size()];
-            String[] featureNameArray = new String[argFeatures.size()];
+        for (Map.Entry<Entity, SortedMap<String, Double>> entityFeatures : implicitFeatures.entrySet()) {
+            Entity entity = entityFeatures.getKey();
+            Map<String, Double> features = entityFeatures.getValue();
+
+            ClozeEntity clozeEntity = new ClozeEntity();
+            clozeEntity.representEntityHead = onlySpace(entity.getRepresentativeMention()
+                    .getHead().getLemma().toLowerCase());
+
+            double[] featureArray = new double[features.size()];
+            String[] featureNameArray = new String[features.size()];
             int index = 0;
-            for (Map.Entry<String, Double> feature : argFeatures.entrySet()) {
+            for (Map.Entry<String, Double> feature : features.entrySet()) {
                 featureArray[index] = feature.getValue();
                 featureNameArray[index] = feature.getKey();
                 index++;
             }
+            clozeEntity.entityFeatures = featureArray;
+            clozeEntity.featureNames = featureNameArray;
+            clozeEntity.entityId = entity.getIndex();
 
-            arg.argumentFeatures = featureArray;
-            arg.featureNames = featureNameArray;
+            clozeEntities.add(clozeEntity);
         }
+
+        doc.entities = clozeEntities;
 
         try {
             writer.write(gson.toJson(doc) + "\n");
