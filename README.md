@@ -23,11 +23,39 @@ Building is simple with Maven, under the root directory of the project, do (You 
     
     mvn clean install
     
-Note
+Running with the current master
 ----------
-The master branch has been changed quite a lot from the previous models. Currrently the branch: https://bitbucket.org/hunterhector/cmu-script/branch/model0411 would probably work with the model below. At the mean time, I am working on releasing a new version of code and models.
-    
-Running with existing model
+
+1. Now try running the system using the example data:
+    1. First, get the models and resources:
+        1. English: http://accra.sp.cs.cmu.edu/~zhengzhl/event_models/event_english_run_resources.tar.gz
+        1. Chinese: http://accra.sp.cs.cmu.edu/~zhengzhl/event_models/event_chinese_run_resources.tar.gz
+        1. Put it a directory, we represent as <models_and_resources>
+    1. Locate the setting file: 
+        1. English setting: settings/nugget/event-run.en.properties
+        1. Chinese setting: settings/nugget/event-run.zh.properties
+    1. Modify the settings:
+        1. edu.cmu.cs.lti.model.dir=<models_and_resources>
+        1. edu.cmu.cs.lti.resource.dir=<models_and_resources>
+        1. For English: edu.cmu.cs.lti.model.event.dir=<models_and_resources>/EventMention/english
+        1. For Chinese: edu.cmu.cs.lti.model.event.dir=<models_and_resources>/EventMention/chinese
+    1. Run English:
+        1. Just Run it:
+            > bin/kbp/run_only_pipeline.sh settings/nugget/event-run.en.properties data/samples/en data/samples/en/output experiment_en_01
+    2. Run Chinese:
+        1. Prerequisites:
+            1. Get the chinese models and resources:
+                http://accra.sp.cs.cmu.edu/~zhengzhl/event_models/event_chinese_run_resources.tar.gz
+            1. Add the LTP JNI to environment variable:
+                >export LD_LIBRARY_PATH=<models_and_resources>/ltp/lib:$LD_LIBRARY_PATH
+            1. Run it:          
+                > bin/kbp/run_only_pipeline.sh settings/nugget/event-run.zh.properties data/samples/zh data/samples/zh/output experiment_zh_01
+    3. The results can be found in two formats:
+        1. Json format in: data/samples/en/output/rich/test_run
+        1. TBF format in: data/samples/en/output/experiments/test_run/results/all/vanillaMention.tbf
+  
+
+Running with an old model (20160411)
 ----------
 1. Download a copy of all the models package, and unpack it: 
    > http://cairo.lti.cs.cmu.edu/~hector/models/EventMentionModelsAndResources20160411.tar.gz

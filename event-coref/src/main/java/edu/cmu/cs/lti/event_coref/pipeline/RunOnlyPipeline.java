@@ -30,8 +30,8 @@ public class RunOnlyPipeline {
     private static final Logger logger = LoggerFactory.getLogger(RunOnlyPipeline.class);
 
     public static void main(String argv[]) throws Exception {
-        if (argv.length < 2) {
-            System.err.println("Args: [setting] [input] [output] [run name] [simple event] [format]");
+        if (argv.length < 3) {
+            System.err.println("Args: [setting] [input] [output] [run name] ([simple event] [format])");
         }
 
         String inputPath = argv[1];
