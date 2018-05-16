@@ -20,8 +20,8 @@ In addition, it depends on the following modules,
 2. Other Utilities : https://bitbucket.org/hunterhector/zl-utils
 
 Building is simple with Maven, under the root directory of the project, do (You need to do the same thing for the two modules I mentioned above beforehand.):
-    
-    mvn clean install
+
+    `mvn clean install`
     
 Running with the current master
 ----------
@@ -41,15 +41,16 @@ Running with the current master
         1. For Chinese: edu.cmu.cs.lti.model.event.dir=<models_and_resources>/EventMention/chinese
     1. Run English:
         1. Just Run it:
-            > bin/kbp/run_only_pipeline.sh settings/nugget/event-run.en.properties data/samples/en data/samples/en/output experiment_en_01
+            `bin/kbp/run_only_pipeline.sh settings/nugget/event-run.en.properties data/samples/en data/samples/en/output experiment_en_01`
+            
     1. Run Chinese:
         1. Prerequisites:
             1. Get the chinese models and resources:
                 http://accra.sp.cs.cmu.edu/~zhengzhl/event_models/event_chinese_run_resources.tar.gz
             1. Add the LTP JNI to environment variable:
-                >export LD_LIBRARY_PATH=<models_and_resources>/ltp/lib:$LD_LIBRARY_PATH
-            1. Run it:          
-                > bin/kbp/run_only_pipeline.sh settings/nugget/event-run.zh.properties data/samples/zh data/samples/zh/output experiment_zh_01
+                `export LD_LIBRARY_PATH=<models_and_resources>/ltp/lib:$LD_LIBRARY_PATH`                
+            1. Run it:                          
+                `bin/kbp/run_only_pipeline.sh settings/nugget/event-run.zh.properties data/samples/zh data/samples/zh/output experiment_zh_01`
     1. The results can be found in two formats:
         1. Json format in: data/samples/en/output/rich/test_run
         1. TBF format in: data/samples/en/output/experiments/test_run/results/all/vanillaMention.tbf
