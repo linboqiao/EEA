@@ -45,12 +45,9 @@ Running with the current master
         1. Just Run it:
             ```
             bin/kbp/run_only_pipeline.sh settings/nugget/event-run.en.properties data/samples/en data/samples/en/output experiment_en_01
-            ```
-            
+            ```           
     1. Run Chinese:
         1. Prerequisites:
-            1. Get the chinese models and resources:
-                http://accra.sp.cs.cmu.edu/~zhengzhl/event_models/event_chinese_run_resources.tar.gz
             1. Add the LTP JNI to environment variable:
                 ```
                 export LD_LIBRARY_PATH=<models_and_resources>/ltp/lib:$LD_LIBRARY_PATH
