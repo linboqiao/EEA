@@ -35,7 +35,6 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
 
         ignoredHeadWords = new HashSet<>();
         Collections.addAll(ignoredHeadWords, ignoredVerbs);
-
     }
 
     @Override
@@ -55,7 +54,6 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
                 continue;
             }
 
-
             EventMention eventMention;
             if (span2Events.contains(token.getBegin(), token.getEnd())) {
                 eventMention = span2Events.get(token.getBegin(), token.getEnd());
@@ -66,35 +64,39 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
             eventMention.setHeadWord(token);
             eventMention.setEventType("Verbal");
 
-            Map<String, Word> args = getArgs(token);
-
-            List<EventMentionArgumentLink> argumentLinks = new ArrayList<>();
-
-            Map<Word, EventMentionArgumentLink> head2Args = UimaNlpUtils.indexArgs(eventMention);
-            argumentLinks.addAll(head2Args.values());
-
-            for (Map.Entry<String, Word> arg : args.entrySet()) {
-                String role = arg.getKey();
-                Word argWord = arg.getValue();
-
-                EventMentionArgumentLink argumentLink;
-                if (head2Args.containsKey(argWord)) {
-                    argumentLink = head2Args.get(argWord);
-                } else {
-                    argumentLink = UimaNlpUtils.createArg(aJCas, h2Entities, eventMention, argWord.getBegin(),
-                            argWord.getEnd(), COMPONENT_ID);
-                    argumentLinks.add(argumentLink);
-                }
-                argumentLink.setArgumentRole(role);
-            }
-            eventMention.setArguments(FSCollectionFactory.createFSList(aJCas, argumentLinks));
+            createDependencyArgs(aJCas, eventMention, h2Entities, COMPONENT_ID);
         }
 
-        UimaNlpUtils.createSingletons(aJCas, new ArrayList<>(JCasUtil.select(aJCas, EntityMention.class)),
+        UimaNlpUtils.fixEntityMentions(aJCas, new ArrayList<>(JCasUtil.select(aJCas, EntityMention.class)),
                 COMPONENT_ID);
     }
 
-    private Map<String, Word> getArgs(Word predicate) {
+    public static void createDependencyArgs(JCas aJCas, EventMention eventMention, Map<Word, EntityMention>
+            h2Entities, String COMPONENT_ID) {
+        Word headToken = eventMention.getHeadWord();
+        Map<String, Word> args = getArgs(headToken);
+
+        Map<Word, EventMentionArgumentLink> head2Args = UimaNlpUtils.indexArgs(eventMention);
+        List<EventMentionArgumentLink> argumentLinks = new ArrayList<>(head2Args.values());
+
+        for (Map.Entry<String, Word> arg : args.entrySet()) {
+            String role = arg.getKey();
+            Word argWord = arg.getValue();
+
+            EventMentionArgumentLink argumentLink;
+            if (head2Args.containsKey(argWord)) {
+                argumentLink = head2Args.get(argWord);
+            } else {
+                argumentLink = UimaNlpUtils.createArg(aJCas, h2Entities, eventMention, argWord.getBegin(),
+                        argWord.getEnd(), COMPONENT_ID);
+                argumentLinks.add(argumentLink);
+            }
+            argumentLink.setArgumentRole(role);
+        }
+        eventMention.setArguments(FSCollectionFactory.createFSList(aJCas, argumentLinks));
+    }
+
+    public static Map<String, Word> getArgs(Word predicate) {
         Map<String, Word> args = new HashMap<>();
         if (predicate.getChildDependencyRelations() != null) {
             for (StanfordDependencyRelation dep : FSCollectionFactory.create(predicate
@@ -113,7 +115,7 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
         return args;
     }
 
-    private Pair<String, Word> takeDep(StanfordDependencyRelation dep) {
+    public static Pair<String, Word> takeDep(StanfordDependencyRelation dep) {
         String depType = dep.getDependencyType();
         Word depWord = dep.getChild();
         if (depType.equals("nsubj") || depType.contains("agent")) {

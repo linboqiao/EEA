@@ -165,6 +165,9 @@ public class ImplicitFeaturesExtractor {
             int firstLoc = sentIndex;
 
             EntityMention representEnt = entity.getRepresentativeMention();
+            if (representEnt == null) {
+                System.out.println(UimaConvenience.getArticleName(aJCas));
+            }
 
             for (EntityMention mention : FSCollectionFactory.create(entity.getEntityMentions(), EntityMention.class)) {
                 Word mentionHead = mention.getHead();

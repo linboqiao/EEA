@@ -2,7 +2,10 @@ package edu.cmu.cs.lti.script.annotators.writer;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.gson.Gson;
+import edu.cmu.cs.lti.annotators.GoldStandardEventMentionAnnotator;
+import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
+import edu.cmu.cs.lti.script.annotators.EnglishSrlArgumentExtractor;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.script.utils.ImplicitFeaturesExtractor;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
@@ -14,6 +17,7 @@ import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.collection.metadata.CpeDescriptorException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -140,6 +144,11 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
             doc.sentences.add(sentence.getCoveredText());
 
             for (EventMention eventMention : JCasUtil.selectCovered(EventMention.class, sentence)) {
+                if (eventMention.getHeadWord() == null) {
+                    eventMention.setHeadWord(UimaNlpUtils.findHeadFromStanfordAnnotation(eventMention));
+                }
+
+
                 ClozeEvent ce = new ClozeEvent();
                 ce.sentenceId = sentId;
 
@@ -301,10 +310,10 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
                 .createTypeSystemDescription(paramTypeSystemDescriptor);
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(
-                typeSystemDescription, workingDir, inputBase
-        );
-
+        // Reader and extractors for unsupervised events.
+//        CollectionReaderDescription reader = CustomCollectionReaderFactory.createRecursiveGzippedXmiReader(
+//                typeSystemDescription, workingDir, inputBase
+//        );
 //        AnalysisEngineDescription remover = AnalysisEngineFactory.createEngineDescription(EventMentionRemover.class);
 //
 //        AnalysisEngineDescription verbEvents = AnalysisEngineFactory.createEngineDescription(
@@ -317,18 +326,36 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
 //                FrameBasedEventDetector.PARAM_IGNORE_BARE_FRAME, true
 //        );
 
+        // Reader and extractors for existing mentions.
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(
+                typeSystemDescription, workingDir, inputBase
+        );
+
+        AnalysisEngineDescription goldAnnotator = AnalysisEngineFactory.createEngineDescription(
+                GoldStandardEventMentionAnnotator.class, typeSystemDescription,
+                GoldStandardEventMentionAnnotator.PARAM_TARGET_VIEWS,
+                new String[]{CAS.NAME_DEFAULT_SOFA, UimaConst.inputViewName},
+                GoldStandardEventMentionAnnotator.PARAM_COPY_MENTION_TYPE, true,
+                GoldStandardEventMentionAnnotator.PARAM_COPY_REALIS, true,
+                GoldStandardEventMentionAnnotator.PARAM_COPY_CLUSTER, true,
+                GoldStandardEventMentionAnnotator.PARAM_COPY_RELATIONS, true
+        );
+
+        AnalysisEngineDescription arguments = AnalysisEngineFactory.createEngineDescription(
+                EnglishSrlArgumentExtractor.class, typeSystemDescription,
+                EnglishSrlArgumentExtractor.PARAM_ADD_SEMAFOR, true,
+                EnglishSrlArgumentExtractor.PARAM_ADD_FANSE, false,
+                EnglishSrlArgumentExtractor.PARAM_ADD_DEPENDENCY, true
+        );
+
         AnalysisEngineDescription clozeExtractor = AnalysisEngineFactory.createEngineDescription(
                 ArgumentClozeTaskWriter.class, typeSystemDescription,
                 ArgumentClozeTaskWriter.PARAM_OUTPUT_FILE, outputFile
         );
 
-        // Extract and write as cloze.
-//        String xmiOut = args[3];
-//        new BasicPipeline(reader, true, true, 7, workingDir, xmiOut, true,
-//                remover, frameEvents, verbEvents, clozeExtractor).run();
 
         // Write only clozes.
-        new BasicPipeline(reader, true, true, 7, clozeExtractor).run();
+        new BasicPipeline(reader, false, true, 7, goldAnnotator, arguments, clozeExtractor).run();
 
     }
 }
