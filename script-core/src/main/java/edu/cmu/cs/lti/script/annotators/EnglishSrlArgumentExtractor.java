@@ -132,12 +132,11 @@ public class EnglishSrlArgumentExtractor extends AbstractLoggingAnnotator {
             }
 
             if (addDependency) {
-                VerbBasedEventDetector.createDependencyArgs(aJCas, mention, h2Entities, COMPONENT_ID);
+                VerbBasedEventDetector.createDependencyArgs(aJCas, mention, argumentLinks, head2Args, h2Entities,
+                        COMPONENT_ID);
             }
 
             mention.setArguments(FSCollectionFactory.createFSList(aJCas, argumentLinks));
-//            logger.info(String.format("%d arguments for %s", argumentLinks.size(), mention.getCoveredText()));
-//            DebugUtils.pause();
         }
 
         UimaNlpUtils.fixEntityMentions(aJCas, new ArrayList<>(JCasUtil.select(aJCas, EntityMention.class)),

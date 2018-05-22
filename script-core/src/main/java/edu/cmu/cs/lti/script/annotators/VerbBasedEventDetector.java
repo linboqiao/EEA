@@ -64,20 +64,25 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
             eventMention.setHeadWord(token);
             eventMention.setEventType("Verbal");
 
-            createDependencyArgs(aJCas, eventMention, h2Entities, COMPONENT_ID);
+            Map<Word, EventMentionArgumentLink> head2Args = UimaNlpUtils.indexArgs(eventMention);
+
+            List<EventMentionArgumentLink> argumentLinks = new ArrayList<>(head2Args.values());
+
+            createDependencyArgs(aJCas, eventMention, argumentLinks, head2Args, h2Entities, COMPONENT_ID);
+            eventMention.setArguments(FSCollectionFactory.createFSList(aJCas, argumentLinks));
         }
 
         UimaNlpUtils.fixEntityMentions(aJCas, new ArrayList<>(JCasUtil.select(aJCas, EntityMention.class)),
                 COMPONENT_ID);
     }
 
-    public static void createDependencyArgs(JCas aJCas, EventMention eventMention, Map<Word, EntityMention>
-            h2Entities, String COMPONENT_ID) {
+    public static void createDependencyArgs(
+            JCas aJCas, EventMention eventMention, List<EventMentionArgumentLink> argumentLinks,
+            Map<Word, EventMentionArgumentLink> head2Args, Map<Word, EntityMention> h2Entities, String COMPONENT_ID
+    ) {
         Word headToken = eventMention.getHeadWord();
         Map<String, Word> args = getArgs(headToken);
 
-        Map<Word, EventMentionArgumentLink> head2Args = UimaNlpUtils.indexArgs(eventMention);
-        List<EventMentionArgumentLink> argumentLinks = new ArrayList<>(head2Args.values());
 
         for (Map.Entry<String, Word> arg : args.entrySet()) {
             String role = arg.getKey();
@@ -93,10 +98,9 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
             }
             argumentLink.setArgumentRole(role);
         }
-        eventMention.setArguments(FSCollectionFactory.createFSList(aJCas, argumentLinks));
     }
 
-    public static Map<String, Word> getArgs(Word predicate) {
+    private static Map<String, Word> getArgs(Word predicate) {
         Map<String, Word> args = new HashMap<>();
         if (predicate.getChildDependencyRelations() != null) {
             for (StanfordDependencyRelation dep : FSCollectionFactory.create(predicate
@@ -106,6 +110,7 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
                 if (child == null) {
                     continue;
                 }
+
                 Word word = child.getRight();
                 String role = child.getLeft();
                 args.put(role, word);
@@ -115,9 +120,10 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
         return args;
     }
 
-    public static Pair<String, Word> takeDep(StanfordDependencyRelation dep) {
+    private static Pair<String, Word> takeDep(StanfordDependencyRelation dep) {
         String depType = dep.getDependencyType();
         Word depWord = dep.getChild();
+
         if (depType.equals("nsubj") || depType.contains("agent")) {
             return Pair.of("subj", depWord);
         } else if (depType.equals("dobj") || depType.equals("nsubjpass")) {
@@ -126,6 +132,13 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
             return Pair.of("iobj", depWord);
         } else if (depType.startsWith("prep_")) {
             return Pair.of(depType, depWord);
+        } else if (depType.startsWith("nmod:")) {
+            if (depType.equals("nmod:tmod") || depType.equals("nmod:poss")) {
+                return Pair.of(depType, depWord);
+            } else {
+                String backoffDepType = depType.replace("nmod:", "prep_");
+                return Pair.of(backoffDepType, depWord);
+            }
         }
 
         return null;

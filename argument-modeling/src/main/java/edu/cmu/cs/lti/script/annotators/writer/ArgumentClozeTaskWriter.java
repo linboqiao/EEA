@@ -12,6 +12,8 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
+import gnu.trove.map.TObjectIntMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
@@ -57,8 +59,12 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
     private int contextWindowSize;
 
     public static final String PARAM_FRAME_MAPPINGS = "frameMappings";
-    @ConfigurationParameter(name = PARAM_FRAME_MAPPINGS, defaultValue = "frameMappings")
+    @ConfigurationParameter(name = PARAM_FRAME_MAPPINGS, mandatory = false)
     private File frameMappingFile;
+
+    public static final String PARAM_ADD_EVENT_COREF = "addEventCoref";
+    @ConfigurationParameter(name = PARAM_ADD_EVENT_COREF, defaultValue = "false")
+    private boolean addEventCoref;
 
     private OutputStreamWriter writer;
 
@@ -79,7 +85,13 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         List<String> sentences;
         List<ClozeEvent> events;
         List<ClozeEntity> entities;
+        List<CorefCluster> eventCorefClusters;
     }
+
+    static class CorefCluster {
+        List<Integer> elementIds;
+    }
+
 
     static class ClozeEntity {
         int entityId;
@@ -97,6 +109,8 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         String frame;
         List<ClozeArgument> arguments;
 
+        int eventId;
+
         static class ClozeArgument {
             String feName;
             String dep;
@@ -106,6 +120,22 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
 
             int argStart;
             int argEnd;
+        }
+    }
+
+    private void addCoref(JCas aJCas, ClozeDoc doc, TObjectIntMap<EventMention> eid2Event) {
+        doc.eventCorefClusters = new ArrayList<>();
+
+        for (Event event : JCasUtil.select(aJCas, Event.class)) {
+            CorefCluster cluster = new CorefCluster();
+            cluster.elementIds = new ArrayList<>();
+
+            for (EventMention eventMention : FSCollectionFactory.create(event.getEventMentions(), EventMention.class)) {
+                if (eid2Event.containsKey(eventMention)) {
+                    cluster.elementIds.add(eid2Event.get(eventMention));
+                }
+            }
+            doc.eventCorefClusters.add(cluster);
         }
     }
 
@@ -138,6 +168,9 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
 
         ArrayListMultimap<EntityMention, ClozeEvent.ClozeArgument> argumentMap = ArrayListMultimap.create();
 
+        TObjectIntMap<EventMention> eid2Event = new TObjectIntHashMap<>();
+
+        int eventId = 0;
         for (int sentId = 0; sentId < sentences.size(); sentId++) {
             StanfordCorenlpSentence sentence = sentences.get(sentId);
 
@@ -168,6 +201,9 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
                 ce.predicateStart = eventMention.getBegin() - sentence.getBegin();
                 ce.predicateEnd = eventMention.getEnd() - sentence.getBegin();
                 ce.frame = frame;
+                ce.eventId = eventId++;
+
+                eid2Event.put(eventMention, ce.eventId);
 
                 FSList argsFS = eventMention.getArguments();
                 Collection<EventMentionArgumentLink> argLinks = FSCollectionFactory.create(argsFS,
@@ -209,6 +245,10 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
                 ce.arguments = clozeArguments;
                 doc.events.add(ce);
             }
+        }
+
+        if (addEventCoref) {
+            addCoref(aJCas, doc, eid2Event);
         }
 
         Map<Entity, SortedMap<String, Double>> implicitFeatures = ImplicitFeaturesExtractor.getArgumentFeatures(aJCas);
@@ -350,7 +390,8 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
 
         AnalysisEngineDescription clozeExtractor = AnalysisEngineFactory.createEngineDescription(
                 ArgumentClozeTaskWriter.class, typeSystemDescription,
-                ArgumentClozeTaskWriter.PARAM_OUTPUT_FILE, outputFile
+                ArgumentClozeTaskWriter.PARAM_OUTPUT_FILE, outputFile,
+                ArgumentClozeTaskWriter.PARAM_ADD_EVENT_COREF, true
         );
 
 
