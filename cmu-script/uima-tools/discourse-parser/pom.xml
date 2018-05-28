@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>uima-tools</artifactId>
+        <groupId>edu.cmu.cs.lti</groupId>
+        <version>0.0.1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>discourse-parser</artifactId>
+    <name>Sista Discourse Parser Uima</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>edu.arizona.sista</groupId>
+            <artifactId>processors</artifactId>
+            <version>3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>edu.arizona.sista</groupId>
+            <artifactId>processors</artifactId>
+            <version>3.3</version>
+            <classifier>models</classifier>
+        </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>uima-util</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>uima-base</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.uimafit</groupId>
+            <artifactId>uimafit</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+    </dependencies>
+</project>

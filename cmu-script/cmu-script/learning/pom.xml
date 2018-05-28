@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cmu-script</artifactId>
+        <groupId>edu.cmu.cs.lti.script</groupId>
+        <version>0.0.2</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>learning</artifactId>
+
+    <repositories>
+        <repository>
+            <id>evd_local</id>
+            <url>file://${project.basedir}/lib</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>zl-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.cmu.cs.lti</groupId>
+            <artifactId>uima-base</artifactId>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>edu.cmu.cs.lti.script</groupId>-->
+            <!--<artifactId>event-mention-detection</artifactId>-->
+            <!--<version>0.0.2</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>edu.cmu.cs.lti.script</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>nz.ac.waikato.cms.weka</groupId>
+            <artifactId>LibSVM</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>nz.ac.waikato.cms.weka</groupId>
+            <artifactId>LibLINEAR</artifactId>
+            <version>1.9.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>de.bwaldvogel</groupId>
+            <artifactId>liblinear</artifactId>
+            <version>1.94</version>
+        </dependency>
+    </dependencies>
+
+    <distributionManagement></distributionManagement>
+</project>

@@ -1,0 +1,24 @@
+#BeginOfDocument test
+lv1_coref	test	E1	109,114	TRIAL	Justice_Trial-Hearing	Actual
+lv1_coref	test	E2	240,245	trial	Justice_Trial-Hearing	Actual
+lv1_coref	test	E3	323,328	trial	Justice_Trial-Hearing	Actual
+lv1_coref	test	E4	374,383	convicted	Justice_Convict	Actual
+lv1_coref	test	E5	402,407	trial	Justice_Trial-Hearing	Actual
+lv1_coref	test	E6	866,871	trial	Justice_Trial-Hearing	Other
+lv1_coref	test	E7	926,934	appealed	Justice_Appeal	Actual
+lv1_coref	test	E8	974,980	appeal	Justice_Appeal	Actual
+lv1_coref	test	E9	1076,1081	spoke	Contact_Meet	Actual
+lv1_coref	test	E10	1486,1497	prosecution	Justice_Charge-Indict	Generic
+lv1_coref	test	E11	1574,1580	prison	Justice_Arrest-Jail	Other
+lv1_coref	test	E12	1707,1714	charged	Justice_Charge-Indict	Actual
+lv1_coref	test	E13	1720,1730	embezzling	Transaction_Transfer-Money	Other
+lv1_coref	test	E14	1995,2003	protests	Conflict_Demonstrate	Actual
+lv1_coref	test	E15	2241,2249	protests	Conflict_Demonstrate	Actual
+lv1_coref	test	E16	2290,2298	protests	Conflict_Demonstrate	Actual
+lv1_coref	test	E17	2382,2386	said	Contact_Broadcast	Actual
+lv1_coref	test	E18	2393,2402	interview	Contact_Broadcast	Actual
+lv1_coref	test	E19	2572,2577	trial	Justice_Trial-Hearing	Actual
+@Coreference	R1	E1,E2,E3,E5,E6,E19
+@Coreference	R2	E7,E8
+@Coreference	R3	E14,E15,E16
+#EndOfDocument

@@ -1,0 +1,37 @@
+<DOC id="test" type="story" from_file="/test.xml">
+<HEADLINE>
+RUSSIAN OPPOSITION LEADER ASSERTS INNOCENCE AT TRIAL
+</HEADLINE>
+<TEXT>
+<P>
+MOSCOW – Aleksei A. Navalny, the opposition leader and one of the most prominent politicians to go on trial in modern Russia, used his first full day in court Wednesday to say that the trial would prove his innocence, even if the judge convicted him.
+</P>
+<P>
+The trial, streamed on the Internet, has promised to be an important touchstone in President Vladimir V. Putin’s long career, as prosecutors have not previously indicted a high-profile politician, but it has gotten off to a languid start.
+</P>
+<P>
+It began last week in the provincial city of Kirov, east of Moscow. Within an hour of opening, however, Judge Sergei A. Blinov granted a request by the defense lawyers for an adjournment so they could better prepare for trial. They requested a month, he gave them a week and they appealed.
+</P>
+<P>
+A higher court rejected that appeal Tuesday, clearing the way for opening statements to begin Wednesday. Navalny, who is a lawyer, spoke at times in his own defense.
+</P>
+<P>
+“I am certain my innocence will be clear to everybody who is present in this chamber and everybody watching,” Navalny told the court, according to a transcript posted by the Rapsi legal news agency. “To all those involved in the illegal investigation, sooner or later you will face a severe but just punishment.”
+</P>
+<P>
+Others who have challenged Putin have faced prosecution, most notably the Yukos oil tycoon, Mikhail B. Khodorkovsky, who remains in prison, but the case against Navalny is the first in post-Soviet Russia against a high-profile political figure.
+</P>
+<P>
+Navalny is charged with embezzling $500,000 from a state-controlled timber company in Kirov while working as an adviser to the regional governor in 2009.
+</P>
+<P>
+Prosecutors initially dismissed the case, but federal officials revived it after Navalny became the most prominent leader of the street protests in Moscow last year.
+</P>
+<P>
+He used his first day in court for a flurry of motions seemingly intended to highlight the apparent absurdity of a 4-year-old case in a provincial city far from Moscow surfacing in the wake of last winter’s protests, but ostensibly unrelated to the street protests. A spokesman for the Investigative Committee, a branch of the prosecutor’s office, said in an interview in Izvestia newspaper that investigators had focused on Navalny because he was accusing state officials of corruption while claiming to be “clean” himself.
+</P>
+<P>
+The trial will resume Thursday.
+</P>
+</TEXT>
+</DOC>
