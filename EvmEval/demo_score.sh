@@ -1,5 +1,5 @@
 #!/bin/sh 
-scorer=./scorer_v1.8.py
+scorer=./bin/scorer_v1.8.py
 
 char_dir=data/scoring_demo/char_based
 token_dir=data/scoring_demo/token_based

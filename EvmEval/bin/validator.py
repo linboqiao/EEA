@@ -297,6 +297,8 @@ def parse_characters(s):
     :param s:
     """
     span_strs = s.split(span_separator)
+    print(s)
+    print(span_strs)
     characters = []
     for span_strs in span_strs:
         span = list(map(int, span_strs.split(span_joiner)))

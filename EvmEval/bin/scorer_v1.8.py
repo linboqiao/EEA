@@ -260,6 +260,7 @@ def main():
     logger.info("Coreference mentions need to match %s before consideration" % Config.coref_criteria[0][1])
 
     while True:
+        print('dir is:',token_dir)              
         if not evaluate(token_dir, args.coref, attribute_comb,
                         token_offset_fields, args.token_table_extension,
                         diff_out):
