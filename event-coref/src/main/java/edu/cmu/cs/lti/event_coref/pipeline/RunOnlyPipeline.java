@@ -81,9 +81,12 @@ public class RunOnlyPipeline {
                     VerbBasedEventDetector.class, typeSystemDescription
             );
 
+            String frPath = FileUtils.joinPaths(
+                    kbpConfig.get("edu.cmu.cs.lti.resource.dir"), "fndata-1.7/frRelation.xml");
+
             AnalysisEngineDescription frameEvents = AnalysisEngineFactory.createEngineDescription(
                     FrameBasedEventDetector.class, typeSystemDescription,
-                    FrameBasedEventDetector.PARAM_FRAME_RELATION, "../data/resources/fndata-1.7/frRelation.xml",
+                    FrameBasedEventDetector.PARAM_FRAME_RELATION, frPath,
                     FrameBasedEventDetector.PARAM_IGNORE_BARE_FRAME, true
             );
 
