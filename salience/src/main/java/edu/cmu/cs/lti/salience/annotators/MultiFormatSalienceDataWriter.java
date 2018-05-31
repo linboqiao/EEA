@@ -15,6 +15,7 @@ import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
+import edu.cmu.cs.lti.utils.DebugUtils;
 import edu.cmu.cs.lti.utils.FeatureUtils;
 import edu.cmu.cs.lti.utils.FileUtils;
 import gnu.trove.map.TObjectIntMap;
@@ -240,7 +241,6 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
         int index = 0;
 
-
         for (GroundedEntity groundedEntity : JCasUtil.selectCovered(GroundedEntity.class, articleComponent)) {
             Span tokenOffset = TextUtils.getSpaceTokenOffset(articleComponent, groundedEntity);
             EntitySpot spot = new EntitySpot();
@@ -263,6 +263,11 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
             }
 
             StanfordCorenlpToken entityHead = UimaNlpUtils.findHeadFromStanfordAnnotation(groundedEntity);
+            if (entityHead == null){
+                System.out.println(groundedEntity.getCoveredText());
+                DebugUtils.pause();
+            }
+
             spot.head_span = Arrays.asList(entityHead.getBegin(), entityHead.getEnd());
             entityIds.put(entityHead, Integer.toString(index));
 

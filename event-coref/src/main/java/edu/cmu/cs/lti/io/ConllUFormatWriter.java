@@ -8,6 +8,7 @@ import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.FileUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
@@ -26,10 +27,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,26 +35,38 @@ import java.util.stream.Collectors;
  * See the ConllU format description: http://universaldependencies.org/docs/format.html
  */
 public class ConllUFormatWriter extends AbstractLoggingAnnotator {
-    public static final String PARAM_OUTPUT_FILE = "outputFile";
+    public static final String PARAM_OUTPUT_PATH = "outputFile";
 
-    @ConfigurationParameter(name = PARAM_OUTPUT_FILE)
+    @ConfigurationParameter(name = PARAM_OUTPUT_PATH)
     private File outputFile;
 
-    private BufferedWriter writer;
+    public static final String PARAM_SINGLE_FILE = "singleFile";
+    @ConfigurationParameter(name = PARAM_SINGLE_FILE, defaultValue = "false")
+    private boolean outputSingleFile;
+
+    private BufferedWriter singleWriter;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
 
-        if (!outputFile.getParentFile().exists()) {
-            File parent = outputFile.getParentFile();
-            parent.mkdirs();
-        }
+        if (outputSingleFile) {
+            if (!outputFile.getParentFile().exists()) {
+                File parent = outputFile.getParentFile();
+                parent.mkdirs();
+            }
 
-        try {
-            writer = new BufferedWriter(new FileWriter(outputFile));
-        } catch (IOException e) {
-            throw new ResourceInitializationException(e);
+            try {
+                singleWriter = new BufferedWriter(new FileWriter(outputFile));
+            } catch (IOException e) {
+                throw new ResourceInitializationException(e);
+            }
+
+            logger.info("Output into a single Conllu file at " + outputFile);
+        } else {
+            FileUtils.ensureDirectory(outputFile);
+            logger.info("Output multiple Conllu files at " + outputFile);
+
         }
     }
 
@@ -65,6 +75,18 @@ public class ConllUFormatWriter extends AbstractLoggingAnnotator {
         int sentId = 0;
 
         String docid = UimaConvenience.getArticleName(jCas);
+
+        Writer writer = null;
+
+        if (outputSingleFile) {
+            writer = singleWriter;
+        } else {
+            try {
+                writer = new BufferedWriter(new FileWriter(new File(outputFile, docid + ".conllu")));
+            } catch (IOException e) {
+                throw new AnalysisEngineProcessException(e);
+            }
+        }
 
         Map<EventMention, Integer> clusterIds = new HashMap<>();
 
@@ -78,10 +100,10 @@ public class ConllUFormatWriter extends AbstractLoggingAnnotator {
             }
         }
 
-        writeLine("# newdoc id = " + docid);
+        writeLine(writer, "# newdoc id = " + docid);
         for (StanfordCorenlpSentence sentence : JCasUtil.select(jCas, StanfordCorenlpSentence.class)) {
 
-            writeLine("# sent_id = " + String.valueOf(sentId++));
+            writeLine(writer, "# sent_id = " + String.valueOf(sentId++));
 
             List<StanfordCorenlpToken> tokens = JCasUtil.selectCovered(StanfordCorenlpToken.class, sentence);
             Map<StanfordCorenlpToken, Integer> tokenIds = new HashMap<>();
@@ -117,19 +139,29 @@ public class ConllUFormatWriter extends AbstractLoggingAnnotator {
 
                 // Add span info.
                 conllFields.add(String.format("%d,%d", token.getBegin(), token.getEnd()));
-                writeLine(conllFields);
+                writeLine(writer, conllFields);
             }
-            writeLine("");
+            writeLine(writer, "");
+        }
+
+        if (!outputSingleFile) {
+            try {
+                writer.close();
+            } catch (IOException e) {
+                throw new AnalysisEngineProcessException(e);
+            }
         }
     }
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
         super.collectionProcessComplete();
-        try {
-            writer.close();
-        } catch (IOException e) {
-            throw new AnalysisEngineProcessException(e);
+        if (outputSingleFile) {
+            try {
+                singleWriter.close();
+            } catch (IOException e) {
+                throw new AnalysisEngineProcessException(e);
+            }
         }
     }
 
@@ -183,7 +215,7 @@ public class ConllUFormatWriter extends AbstractLoggingAnnotator {
         return heads;
     }
 
-    private void writeLine(String text) throws AnalysisEngineProcessException {
+    private void writeLine(Writer writer, String text) throws AnalysisEngineProcessException {
         try {
             writer.write(text + "\n");
         } catch (IOException e) {
@@ -191,9 +223,9 @@ public class ConllUFormatWriter extends AbstractLoggingAnnotator {
         }
     }
 
-    private void writeLine(List<String> fields) throws AnalysisEngineProcessException {
+    private void writeLine(Writer writer, List<String> fields) throws AnalysisEngineProcessException {
         List<String> cleanFields = fields.stream().map(v -> v.replaceAll("\\s+", "")).collect(Collectors.toList());
-        writeLine(Joiner.on('\t').join(cleanFields));
+        writeLine(writer, Joiner.on('\t').join(cleanFields));
     }
 
     private List<String> getWordFieds(StanfordCorenlpToken token) {
@@ -213,15 +245,22 @@ public class ConllUFormatWriter extends AbstractLoggingAnnotator {
                 .createTypeSystemDescription(typeSystemName);
 
         String inputDir = argv[0];
-        String outputFile = argv[1];
+        String outputPath = argv[1];
 
-        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription, inputDir);
+        boolean oneSingleFile = false;
+        if (argv.length > 2) {
+            oneSingleFile = true;
+        }
+
+        CollectionReaderDescription reader = CustomCollectionReaderFactory.createXmiReader(typeSystemDescription,
+                inputDir);
 
         AnalysisEngineDescription goldAnnotator = RunnerUtils.getGoldAnnotator(true, true, true, true);
 
         AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
                 ConllUFormatWriter.class, typeSystemDescription,
-                ConllUFormatWriter.PARAM_OUTPUT_FILE, outputFile
+                ConllUFormatWriter.PARAM_OUTPUT_PATH, outputPath,
+                ConllUFormatWriter.PARAM_SINGLE_FILE, oneSingleFile
         );
 
         SimplePipeline.runPipeline(reader, goldAnnotator, writer);

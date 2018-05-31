@@ -9,9 +9,11 @@ import edu.cmu.cs.lti.salience.utils.SalienceUtils;
 import edu.cmu.cs.lti.script.type.Body;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.GroundedEntity;
+import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
+import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.FeatureUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -75,7 +77,7 @@ public class SalienceInputCreator extends AbstractLoggingAnnotator {
         taggedFiles = new HashMap<>();
         for (File file : FileUtils.listFiles(tagmeOutputDir, new String[]{"json"}, false)) {
             taggedFiles.put(file.getName().split("\\.")[0], file);
-            }
+        }
     }
 
     @Override
@@ -120,6 +122,10 @@ public class SalienceInputCreator extends AbstractLoggingAnnotator {
         for (JsonElement jsonElement : taggedData.get("annotations").getAsJsonArray()) {
             JsonObject anno = jsonElement.getAsJsonObject();
 
+            if (!anno.has("mid")) {
+                continue;
+            }
+
             String mid = anno.get("mid").getAsString();
             int start = anno.get("start").getAsInt();
             int end = anno.get("end").getAsInt();
@@ -142,12 +148,16 @@ public class SalienceInputCreator extends AbstractLoggingAnnotator {
 
             groundedEntity.setKnowledgeBaseNames(kbNames);
             groundedEntity.setKnowledgeBaseValues(kbValues);
-
             groundedEntity.setConfidence(rho);
 
-            UimaAnnotationUtils.finishAnnotation(groundedEntity, COMPONENT_ID, 0, aJCas);
-
-            entities.add(groundedEntity);
+            StanfordCorenlpToken headword = UimaNlpUtils.findHeadFromStanfordAnnotation(groundedEntity);
+            if (headword == null) {
+                // Do not include unmappable entities.
+                groundedEntity.removeFromIndexes();
+            } else {
+                UimaAnnotationUtils.finishAnnotation(groundedEntity, COMPONENT_ID, 0, aJCas);
+                entities.add(groundedEntity);
+            }
         }
     }
 
