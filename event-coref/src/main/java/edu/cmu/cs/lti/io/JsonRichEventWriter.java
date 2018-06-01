@@ -66,25 +66,6 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         }
     }
 
-    public static void main(String[] args) throws UIMAException, IOException {
-        TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
-                .createTypeSystemDescription("TypeSystem");
-
-        String inputPath = args[0];
-        String inputType = args[1];
-        String outputPath = args[2];
-
-        CollectionReaderDescription reader = DispatchReader.getReader(typeSystemDescription, inputPath, inputType,
-                null);
-
-        AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
-                JsonRichEventWriter.class, typeSystemDescription,
-                JsonRichEventWriter.PARAM_OUTPUT_DIR, outputPath
-        );
-
-        SimplePipeline.runPipeline(reader, writer);
-    }
-
     private JsonEntityMention createEntity(ComponentAnnotation anno) {
         JsonEntityMention jsonEnt = new JsonEntityMention(objectIndex++, anno);
 
@@ -99,6 +80,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                 jsonEnt.type = type;
             }
         }
+
         return jsonEnt;
     }
 
@@ -115,7 +97,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
         Map<StanfordCorenlpToken, JsonEntityMention> jsonEntMap = new HashMap<>();
 
-        Map<StanfordCorenlpToken, EntityMention> entMap = new HashMap<>();
+        Map<StanfordCorenlpToken, EntityMention> uimaEntMap = new HashMap<>();
 
         int wordId = 0;
         allWords = new ArrayList<>();
@@ -126,12 +108,14 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
             }
         }
 
+        // Adding entity mentions.
         for (EntityMention mention : JCasUtil.select(aJCas, EntityMention.class)) {
             StanfordCorenlpToken head = UimaNlpUtils.findHeadFromStanfordAnnotation(mention);
-            entMap.put(head, mention);
+            uimaEntMap.put(head, mention);
             jsonEntMap.put(head, createEntity(mention));
         }
 
+        // Adding event mentions.
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
             JsonEventMention jsonEvm = new JsonEventMention(objectIndex++, mention);
             jsonEvm.type = mention.getEventType();
@@ -140,8 +124,8 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
             Word headword = mention.getHeadWord();
 
             jsonEvm.headWord = new JsonWord(objectIndex++, headword);
-
             jsonEvm.arguments = new ArrayList<>();
+
             for (Map.Entry<SemanticArgument, Collection<String>> argument : getArguments(headword).asMap()
                     .entrySet()) {
                 SemanticArgument arg = argument.getKey();
@@ -149,7 +133,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                 StanfordCorenlpToken argHead = UimaNlpUtils.findHeadFromStanfordAnnotation(arg);
 
                 JsonEntityMention jsonEnt;
-                if (entMap.containsKey(argHead)) {
+                if (jsonEntMap.containsKey(argHead)) {
                     jsonEnt = jsonEntMap.get(argHead);
                 } else {
                     jsonEnt = createEntity(arg);
@@ -323,4 +307,23 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         List<String> roles;
     }
 
+
+    public static void main(String[] args) throws UIMAException, IOException {
+        TypeSystemDescription typeSystemDescription = TypeSystemDescriptionFactory
+                .createTypeSystemDescription("TypeSystem");
+
+        String inputPath = args[0];
+        String inputType = args[1]; //xmi
+        String outputPath = args[2];
+
+        CollectionReaderDescription reader = DispatchReader.getReader(typeSystemDescription, inputPath, inputType,
+                null);
+
+        AnalysisEngineDescription writer = AnalysisEngineFactory.createEngineDescription(
+                JsonRichEventWriter.class, typeSystemDescription,
+                JsonRichEventWriter.PARAM_OUTPUT_DIR, outputPath
+        );
+
+        SimplePipeline.runPipeline(reader, writer);
+    }
 }
