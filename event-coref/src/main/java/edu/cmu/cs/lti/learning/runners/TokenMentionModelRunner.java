@@ -71,13 +71,14 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
             AnalysisEngineDescription trainingEngine = AnalysisEngineFactory.createEngineDescription(
                     TokenLevelEventMentionCrfTrainer.class, typeSystemDescription,
                     TokenLevelEventMentionCrfTrainer.PARAM_GOLD_STANDARD_VIEW_NAME, UimaConst.goldViewName,
-                    TokenLevelEventMentionCrfTrainer.PARAM_CONFIGURATION_FILE, config.getConfigFile(),
                     TokenLevelEventMentionCrfTrainer.PARAM_CLASS_FILE, classFile,
                     TokenLevelEventMentionCrfTrainer.PARAM_CACHE_DIRECTORY, cacheDir,
                     TokenLevelEventMentionCrfTrainer.PARAM_USE_PA_UPDATE, usePaTraing,
                     TokenLevelEventMentionCrfTrainer.PARAM_LOSS_TYPE, lossType,
                     TokenLevelEventMentionCrfTrainer.PARAM_IGNORE_UNANNOTATED_SENTENCE, ignoreUnannotated
             );
+
+            TokenLevelEventMentionCrfTrainer.setConfig(config);
 
             TrainingLooper mentionTypeTrainer = new TrainingLooper(modelPath, trainingReader, trainingEngine,
                     maxIter, modelOutputFreq) {
@@ -159,9 +160,10 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
         } else {
             AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
                     CrfMentionTypeAnnotator.class, typeSystemDescription,
-                    CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                    CrfMentionTypeAnnotator.PARAM_CONFIG, crfConfig.getConfigFile().getPath()
+                    CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir
             );
+
+            CrfMentionTypeAnnotator.setConfig(crfConfig);
 
             AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
                     MentionTypeSplitter.class, typeSystemDescription
@@ -177,9 +179,9 @@ public class TokenMentionModelRunner extends AbstractMentionModelRunner {
             SAXException, UIMAException, CpeDescriptorException, IOException {
         AnalysisEngineDescription analyzer = AnalysisEngineFactory.createEngineDescription(
                 TokenBasedMentionErrorAnalyzer.class, typeSystemDescription,
-                TokenBasedMentionErrorAnalyzer.PARAM_MODEL_DIRECTORY, tokenModel,
-                TokenBasedMentionErrorAnalyzer.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
+                TokenBasedMentionErrorAnalyzer.PARAM_MODEL_DIRECTORY, tokenModel
         );
+        TokenBasedMentionErrorAnalyzer.setConfig(taskConfig);
         new BasicPipeline(reader, analyzer).run();
     }
 }

@@ -31,7 +31,7 @@ public class RunOnlyPipeline {
 
     public static void main(String argv[]) throws Exception {
         if (argv.length < 3) {
-            System.err.println("Args: [setting] [input] [output] [run name] ([simple event] [format])");
+            System.err.println("Args: [setting] [input] [output] [run name] ([simple event])");
         }
 
         String inputPath = argv[1];
@@ -42,18 +42,6 @@ public class RunOnlyPipeline {
 
         String runName = argv[3];
 
-        boolean simpleEvent = false;
-        if (argv.length >= 5) {
-            if (argv[4].equals("simple")) {
-                simpleEvent = true;
-                System.out.println("Using simple event extractor.");
-            }
-        }
-
-        String readerType = "txt";
-        if (argv.length >= 6) {
-            readerType = argv[5];
-        }
 
         Configuration commonConfig = new Configuration("settings/common.properties");
         String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
@@ -63,6 +51,11 @@ public class RunOnlyPipeline {
 
         Configuration kbpConfig = new Configuration(argv[0]);
         kbpConfig.set("edu.cmu.cs.lti.experiment.name", runName);
+
+        logger.info(kbpConfig.get("edu.cmu.cs.lti.resource.dir"));
+
+        boolean runGeneral = kbpConfig.getBoolean("edu.cmu.cs.lti.run_general_detector", false);
+        String readerType = kbpConfig.getOrElse("edu.cmu.cs.lti.input_format", "txt");
 
         logger.info("Reader type is: " + readerType);
 
@@ -76,7 +69,7 @@ public class RunOnlyPipeline {
         pipeline.prepareData(kbpConfig, outputPath, skipTestPrepare, reader);
 
         CollectionReaderDescription results;
-        if (simpleEvent) {
+        if (runGeneral) {
             AnalysisEngineDescription verbEvents = AnalysisEngineFactory.createEngineDescription(
                     VerbBasedEventDetector.class, typeSystemDescription
             );
@@ -94,7 +87,7 @@ public class RunOnlyPipeline {
                     verbEvents, frameEvents
             };
 
-            results = pipeline.runOnMentions(kbpConfig, outputPath, engines, "SimpleEvents");
+            results = pipeline.runWithExtractors(kbpConfig, outputPath, engines, "SimpleEvents");
         } else {
             results = pipeline.runVanilla(kbpConfig, outputPath);
         }

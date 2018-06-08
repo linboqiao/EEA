@@ -13,6 +13,7 @@ import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
@@ -47,7 +48,7 @@ import static edu.cmu.cs.lti.learning.model.ModelConstants.TYPE_MODEL_NAME;
  *
  * @author Zhengzhong Liu
  */
-public class JointMentionCorefAnnotator extends AbstractLoggingAnnotator {
+public class JointMentionCorefAnnotator extends AbstractConfigAnnotator {
     public static final String PARAM_CONFIG_PATH = "configPath";
     @ConfigurationParameter(name = PARAM_CONFIG_PATH)
     private Configuration config;

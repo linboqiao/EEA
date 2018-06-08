@@ -35,6 +35,8 @@ public class MentionTypeSplitter extends AbstractLoggingAnnotator {
 
         // Copy mentions.
         for (EventMention candidate : originalMentions) {
+            String originComponent = candidate.getComponentId();
+
             String[] predictedTypes = MentionTypeUtils.splitToMultipleTypes(candidate.getEventType());
             // Split each stored mention by the duplicated type count.
             for (int duplicateTagCount = 0; duplicateTagCount < candidate.getMultiTag() + 1; duplicateTagCount++) {
@@ -54,8 +56,9 @@ public class MentionTypeSplitter extends AbstractLoggingAnnotator {
 
                     // Mention type should be set explicitly.
                     mention.setEventType(predictedType);
+
                     UimaAnnotationUtils.finishAnnotation(mention, candidate.getBegin(), candidate.getEnd(),
-                            COMPONENT_ID, 0, aJCas);
+                            originComponent, 0, aJCas);
                 }
             }
         }

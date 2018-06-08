@@ -55,11 +55,12 @@ public class BeamCorefModelRunner extends AbstractMentionModelRunner {
             logger.info("Saving model directory at : " + modelPath);
             AnalysisEngineDescription corefEngine = AnalysisEngineFactory.createEngineDescription(
                     BeamBasedCorefTrainer.class, typeSystemDescription,
-                    BeamBasedCorefTrainer.PARAM_CONFIGURATION_FILE, config.getConfigFile().getPath(),
                     BeamBasedCorefTrainer.PARAM_DELAYED_LASO, delayedLaso,
                     BeamBasedCorefTrainer.PARAM_BEAM_SIZE, beamSize,
                     BeamBasedCorefTrainer.PARAM_USE_LASO, useLaSO
             );
+
+            BeamBasedCorefTrainer.setConfig(config);
 
             TrainingLooper corefTrainer = new TrainingLooper(modelPath, trainingReader, corefEngine, maxIter,
                     modelOutputFreq) {
@@ -113,9 +114,10 @@ public class BeamCorefModelRunner extends AbstractMentionModelRunner {
             AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
                     BeamEventCorefAnnotator.class, typeSystemDescription,
                     BeamEventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                    BeamEventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
                     BeamEventCorefAnnotator.PARAM_BEAM_SIZE, beamSize
             );
+
+            BeamEventCorefAnnotator.setConfig(config);
 
             AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
                     MentionTypeSplitter.class, typeSystemDescription

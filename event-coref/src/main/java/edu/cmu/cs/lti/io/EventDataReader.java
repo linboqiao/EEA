@@ -44,12 +44,14 @@ public class EventDataReader {
         return CustomCollectionReaderFactory.createXmiReader(workingDir, rawBase);
     }
 
-    public void readData(Configuration datasetConfig, TypeSystemDescription typeSystemDescription)
+    //File configPath,
+    public void readData(Configuration datasetConfig, String configDir, TypeSystemDescription typeSystemDescription)
             throws UIMAException, SAXException, CpeDescriptorException, IOException {
-        readData(datasetConfig, typeSystemDescription, rawBase);
+        readData(datasetConfig, configDir, typeSystemDescription, rawBase);
     }
 
-    private void readData(Configuration datasetConfig, TypeSystemDescription typeSystemDescription, String rawBase)
+    private void readData(Configuration datasetConfig, String configDir,
+                          TypeSystemDescription typeSystemDescription, String rawBase)
             throws UIMAException, SAXException, CpeDescriptorException, IOException {
         String datasetFormat = datasetConfig.get("edu.cmu.cs.lti.data.format").toLowerCase();
         switch (datasetFormat) {
@@ -66,7 +68,7 @@ public class EventDataReader {
                 readBratAfter(datasetConfig, typeSystemDescription, rawBase);
                 break;
             case "bratafterbase":
-                readBratAfterWithBase(datasetConfig, typeSystemDescription, rawBase);
+                readBratAfterWithBase(datasetConfig, configDir, typeSystemDescription, rawBase);
                 break;
             case "brat":
                 readBrat(datasetConfig, typeSystemDescription, rawBase);
@@ -164,7 +166,7 @@ public class EventDataReader {
             CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
                     PlainTextCollectionReader.class, typeSystemDescription,
                     PlainTextCollectionReader.PARAM_INPUTDIR, datasetConfig.get("edu.cmu.cs.lti.data.source.path"),
-                    PlainTextCollectionReader.PARAM_TEXT_SUFFIX, "."+ datasetConfig
+                    PlainTextCollectionReader.PARAM_TEXT_SUFFIX, "." + datasetConfig
                             .get("edu.cmu.cs.lti.data.source.extension"),
                     PlainTextCollectionReader.PARAM_REMOVE_QUOTES,
                     datasetConfig.getBoolean("edu.cmu.cs.lti.data.quotes.remove", true),
@@ -230,11 +232,12 @@ public class EventDataReader {
         }
     }
 
-    private void readBratAfterWithBase(Configuration datasetConfig, TypeSystemDescription typeSystemDescription,
+    private void readBratAfterWithBase(Configuration datasetConfig, String configDir,
+                                       TypeSystemDescription typeSystemDescription,
                                        String rawBase)
             throws SAXException, UIMAException, CpeDescriptorException, IOException {
         if (!skipRaw || !new File(workingDir, rawBase).exists()) {
-            CollectionReaderDescription baseReader = getBaseReader(datasetConfig, typeSystemDescription,
+            CollectionReaderDescription baseReader = getBaseReader(datasetConfig, configDir, typeSystemDescription,
                     "before_after");
             AnalysisEngineDescription goldAfterLinker = AnalysisEngineFactory.createEngineDescription(
                     AfterLinkGoldStandardAnnotator.class, typeSystemDescription,
@@ -249,14 +252,12 @@ public class EventDataReader {
         }
     }
 
-    private CollectionReaderDescription getBaseReader(Configuration datasetConfig,
+    private CollectionReaderDescription getBaseReader(Configuration datasetConfig, String configDir,
                                                       TypeSystemDescription typeSystemDescription, String base)
             throws IOException, UIMAException, SAXException, CpeDescriptorException {
-        File configDir = datasetConfig.getConfigFile().getParentFile();
-
         Configuration baseDatasetConfig = new Configuration(new File(configDir,
                 datasetConfig.get("edu.cmu.cs.lti.data.base.corpus") + ".properties"));
-        readData(baseDatasetConfig, typeSystemDescription, base);
+        readData(baseDatasetConfig, configDir, typeSystemDescription, base);
 
         return CustomCollectionReaderFactory.createXmiReader(workingDir, base);
     }

@@ -64,7 +64,6 @@ public class JointSpanCorefModelRunner extends AbstractMentionModelRunner {
             logger.info("Saving model directory at : " + cvModelDir);
             AnalysisEngineDescription trainEngine = AnalysisEngineFactory.createEngineDescription(
                     BeamJointTrainer.class, typeSystemDescription,
-                    BeamJointTrainer.PARAM_CONFIG_PATH, config.getConfigFile().getPath(),
                     BeamJointTrainer.PARAM_REALIS_MODEL_DIRECTORY, realisModelDir,
                     BeamJointTrainer.PARAM_MENTION_LOSS_TYPE, mentionLossType,
                     BeamJointTrainer.PARAM_BEAM_SIZE, beamSize,
@@ -74,6 +73,8 @@ public class JointSpanCorefModelRunner extends AbstractMentionModelRunner {
                     BeamJointTrainer.PARAM_TWO_LAYER, useTwoLayer,
                     BeamJointTrainer.PARAM_WARM_START_ITER, warmStartIter
             );
+            BeamJointTrainer.setConfig(config);
+
 
             TrainingLooper trainer = new TrainingLooper(cvModelDir, trainReader, trainEngine, jointMaxIter,
                     modelOutputFreq) {
@@ -160,13 +161,13 @@ public class JointSpanCorefModelRunner extends AbstractMentionModelRunner {
 
             AnalysisEngineDescription jointDecoder = AnalysisEngineFactory.createEngineDescription(
                     JointMentionCorefAnnotator.class, typeSystemDescription,
-                    JointMentionCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
                     JointMentionCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
                     JointMentionCorefAnnotator.PARAM_REALIS_MODEL_DIRECTORY, realisDir,
                     JointMentionCorefAnnotator.PARAM_BEAM_SIZE, beamSize,
                     JointMentionCorefAnnotator.PARAM_USE_LASO, useLaso,
                     JointMentionCorefAnnotator.PARAM_TWO_LAYER, useTwoLayer
             );
+            JointMentionCorefAnnotator.setConfig(config);
 
             return new BasicPipeline(reader, mainDir, outputBase, goldRemover, jointDecoder).run().getOutput();
         }

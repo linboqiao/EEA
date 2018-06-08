@@ -11,7 +11,7 @@ import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -44,11 +44,7 @@ import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
  *
  * @author Zhengzhong Liu
  */
-public class BeamEventCorefAnnotator extends AbstractLoggingAnnotator {
-    public static final String PARAM_CONFIG_PATH = "configPath";
-    @ConfigurationParameter(name = PARAM_CONFIG_PATH)
-    private Configuration config;
-
+public class BeamEventCorefAnnotator extends AbstractConfigAnnotator {
     public static final String PARAM_MODEL_DIRECTORY = "modelDirectory";
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
     File modelDirectory;

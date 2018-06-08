@@ -8,6 +8,7 @@ import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
@@ -31,7 +32,7 @@ import java.util.List;
  *
  * @author Zhengzhong Liu
  */
-public class PaLatentTreeTrainer extends AbstractLoggingAnnotator {
+public class PaLatentTreeTrainer extends AbstractConfigAnnotator {
     public static final String MODEL_NAME = "latentTreeModel";
 
     public static final String PARAM_CONFIG_PATH = "configPath";

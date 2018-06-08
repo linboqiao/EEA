@@ -18,7 +18,7 @@ import edu.cmu.cs.lti.script.type.CandidateEventMention;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
@@ -58,7 +58,7 @@ import java.util.PriorityQueue;
  *
  * @author Zhengzhong Liu
  */
-public class SingleInstanceDebugger extends AbstractLoggingAnnotator {
+public class SingleInstanceDebugger extends AbstractConfigAnnotator {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private UimaSequenceFeatureExtractor lv1Extractor;
@@ -282,9 +282,10 @@ public class SingleInstanceDebugger extends AbstractLoggingAnnotator {
                 "preprocessed");
         AnalysisEngineDescription debugger = AnalysisEngineFactory.createEngineDescription(
                 SingleInstanceDebugger.class, typeSystemDescription,
-                SingleInstanceDebugger.PARAM_CONFIG, kbpConfig.getConfigFile(),
                 SingleInstanceDebugger.PARAM_TARGET_DOC_NAME, targetDocName,
                 SingleInstanceDebugger.PARAM_TARGET_WORD, targetWord);
+
+        SingleInstanceDebugger.setConfig(kbpConfig);
         new BasicPipeline(reader, debugger).run();
     }
 }

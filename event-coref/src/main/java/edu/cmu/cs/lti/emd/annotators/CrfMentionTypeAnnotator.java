@@ -13,7 +13,7 @@ import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -43,7 +43,7 @@ import java.util.List;
  *
  * @author Zhengzhong Liu
  */
-public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
+public class CrfMentionTypeAnnotator extends AbstractConfigAnnotator {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private UimaSequenceFeatureExtractor sentenceExtractor;
@@ -55,24 +55,12 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
     private File modelDirectory;
 
-    public static final String PARAM_CONFIG = "configuration";
-    @ConfigurationParameter(name = PARAM_CONFIG)
-    private String configPath;
-
-    private Configuration config;
-
     // A dummy lagrangian variable.
     private DummyCubicLagrangian lagrangian = new DummyCubicLagrangian();
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
         super.initialize(aContext);
-
-        try {
-            config = new Configuration(configPath);
-        } catch (IOException e) {
-            throw new ResourceInitializationException(e);
-        }
 
         logger.info("Loading models ...");
 
@@ -144,6 +132,8 @@ public class CrfMentionTypeAnnotator extends AbstractLoggingAnnotator {
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         UimaConvenience.printProcessLog(aJCas, logger, true);
         sentenceExtractor.initWorkspace(aJCas);
+
+//        logger.info(aJCas.getDocumentText());
 
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             sentenceExtractor.resetWorkspace(aJCas, sentence.getBegin(), sentence.getEnd());

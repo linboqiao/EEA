@@ -12,14 +12,12 @@ import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
 import edu.cmu.cs.lti.learning.utils.LearningUtils;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.DebugUtils;
 import edu.cmu.cs.lti.utils.MentionUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
@@ -37,7 +35,7 @@ import static edu.cmu.cs.lti.learning.model.ModelConstants.AFTER_MODEL_NAME;
  *
  * @author Zhengzhong Liu
  */
-public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
+public class LatentTreeAfterTrainer extends AbstractConfigAnnotator {
     private PairFeatureExtractor extractor;
     private static DiscriminativeUpdater updater;
 
@@ -45,9 +43,6 @@ public class LatentTreeAfterTrainer extends AbstractLoggingAnnotator {
 
     private TrainingStats trainingStats;
 
-    public static final String PARAM_CONFIG_PATH = "configPath";
-    @ConfigurationParameter(name = PARAM_CONFIG_PATH)
-    private Configuration config;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {

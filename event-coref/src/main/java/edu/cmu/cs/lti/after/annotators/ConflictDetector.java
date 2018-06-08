@@ -166,7 +166,7 @@ public class ConflictDetector extends AbstractSimpleTextWriterAnalysisEngine {
         for (String datasetName : datasetNames) {
             System.out.println("Reading dataset : " + datasetName);
             Configuration datasetConfig = new Configuration(new File(datasetConfigPath, datasetName + ".properties"));
-            reader.readData(datasetConfig, typeSystemDescription);
+            reader.readData(datasetConfig, datasetConfigPath, typeSystemDescription);
         }
 
         return reader.getReader();

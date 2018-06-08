@@ -14,7 +14,7 @@ import edu.cmu.cs.lti.learning.utils.LearningUtils;
 import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.EventMentionRelation;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -41,7 +41,7 @@ import static edu.cmu.cs.lti.learning.model.ModelConstants.AFTER_MODEL_NAME;
  *
  * @author Zhengzhong Liu
  */
-public class LatentTreeAfterAnnotator extends AbstractLoggingAnnotator {
+public class LatentTreeAfterAnnotator extends AbstractConfigAnnotator {
     private PairFeatureExtractor extractor;
 
     private BFAfterLatentTreeDecoder decoder;

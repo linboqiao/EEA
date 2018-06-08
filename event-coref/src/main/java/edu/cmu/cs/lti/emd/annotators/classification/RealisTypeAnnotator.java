@@ -12,7 +12,7 @@ import edu.cmu.cs.lti.learning.model.WekaModel;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
@@ -27,7 +27,6 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -37,16 +36,13 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @author Zhengzhong Liu
  */
-public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
+public class RealisTypeAnnotator extends AbstractConfigAnnotator {
     public static final String PARAM_MODEL_DIRECTORY = "modelDirectory";
 
-    public static final String PARAM_CONFIG_PATH = "configPath";
+    public static final String PARAM_CONFIG = "configPath";
 
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
     private File modelDirectory;
-
-    @ConfigurationParameter(name = PARAM_CONFIG_PATH)
-    private File configPath;
 
     private static SentenceFeatureExtractor extractor;
 
@@ -70,13 +66,6 @@ public class RealisTypeAnnotator extends AbstractLoggingAnnotator {
             model = new WekaModel(modelDirectory);
         } catch (Exception e) {
             throw new ResourceInitializationException(e);
-        }
-
-        Configuration config = null;
-        try {
-            config = new Configuration(configPath);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Configuration path is not correct : " + configPath.getPath());
         }
 
         String featureSpec = config.get("edu.cmu.cs.lti.features.realis.spec");

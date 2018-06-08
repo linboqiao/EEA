@@ -57,9 +57,10 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
         } else {
             logger.info("Saving model directory at : " + cvModelDir);
             AnalysisEngineDescription trainEngine = AnalysisEngineFactory.createEngineDescription(
-                    LatentTreeAfterTrainer.class, typeSystemDescription,
-                    LatentTreeAfterTrainer.PARAM_CONFIG_PATH, config.getConfigFile()
+                    LatentTreeAfterTrainer.class, typeSystemDescription
             );
+
+            LatentTreeAfterTrainer.setConfig(config);
 
             TrainingLooper trainer = new TrainingLooper(cvModelDir, trainReader, trainEngine, maxIter,
                     modelOutputFreq) {
@@ -201,9 +202,9 @@ public class PlainAfterModelRunner extends AbstractMentionModelRunner {
             logger.info("Running after link.");
             AnalysisEngineDescription afterLinker = AnalysisEngineFactory.createEngineDescription(
                     LatentTreeAfterAnnotator.class, typeSystemDescription,
-                    LatentTreeAfterAnnotator.PARAM_MODEL_DIRECTORY, model,
-                    LatentTreeAfterAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
+                    LatentTreeAfterAnnotator.PARAM_MODEL_DIRECTORY, model
             );
+            LatentTreeAfterAnnotator.setConfig(taskConfig);
 
             return new BasicPipeline(reader, mainDir, baseOutput, afterLinker).run().getOutput();
         }

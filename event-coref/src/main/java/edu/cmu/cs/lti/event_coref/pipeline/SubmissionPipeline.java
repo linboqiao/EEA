@@ -8,13 +8,13 @@ import edu.cmu.cs.lti.emd.annotators.classification.RealisTypeAnnotator;
 import edu.cmu.cs.lti.emd.annotators.misc.TypeBasedMentionSelector;
 import edu.cmu.cs.lti.emd.annotators.postprocessors.MentionTypeSplitter;
 import edu.cmu.cs.lti.event_coref.annotators.EventCorefAnnotator;
-import edu.cmu.cs.lti.event_coref.annotators.prepare.MergedArgumentAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.EventHeadWordAnnotator;
+import edu.cmu.cs.lti.event_coref.annotators.prepare.MergedArgumentAnnotator;
 import edu.cmu.cs.lti.learning.utils.ModelUtils;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.stanford.nlp.util.StringUtils;
+import edu.cmu.cs.lti.utils.ExperimentUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -96,21 +96,21 @@ public class SubmissionPipeline {
     }
 
     // Run realis.
-    private CollectionReaderDescription realisAnnotation(Configuration config, CollectionReaderDescription reader,
+    private CollectionReaderDescription realisAnnotation(Configuration realisConfig, CollectionReaderDescription reader,
                                                          String mainOutputDir)
             throws IOException, UIMAException, CpeDescriptorException, SAXException {
         AnalysisEngineDescription realisAnnotator;
-        if (config == null) {
+        if (realisConfig == null) {
             realisAnnotator = AnalysisEngineFactory.createEngineDescription(
                     AllActualRealisAnnotator.class
             );
         } else {
-            String modelDir = ModelUtils.getTestModelFile(mainModelDir, config);
+            String modelDir = ModelUtils.getTestModelFile(mainModelDir, realisConfig);
 
             realisAnnotator = AnalysisEngineFactory.createEngineDescription(
                     RealisTypeAnnotator.class, typeSystemDescription,
                     RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                    RealisTypeAnnotator.PARAM_CONFIG_PATH, config.getConfigFile()
+                    RealisTypeAnnotator.PARAM_CONFIG, realisConfig
             );
         }
         return new BasicPipeline(reader, mainOutputDir, "realis", realisAnnotator).run().getOutput();
@@ -124,9 +124,10 @@ public class SubmissionPipeline {
 
         AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
                 EventCorefAnnotator.class, typeSystemDescription,
-                EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                EventCorefAnnotator.PARAM_CONFIG_PATH, modelConfig.getConfigFile()
+                EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir
         );
+
+        EventCorefAnnotator.setConfig(modelConfig);
 
         List<AnalysisEngineDescription> annotators = new ArrayList<>();
         addCorefPreprocessors(annotators);
@@ -190,41 +191,30 @@ public class SubmissionPipeline {
         writeResults(coref, mainOutputDir, systemName + "_with_coref" + ".tbf");
     }
 
-    private static Configuration loadModelConfig(String configDir, String configName) {
-        File configFile = new File(configDir, configName + ".properties");
-        try {
-            return new Configuration(configFile);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Model configuration node found: " + configFile);
-        }
+    private static Configuration loadModelConfig(Configuration taskConfig, String configDir, String configName)
+            throws IOException {
+        return ExperimentUtils.getModelConfig(taskConfig, configDir, configName);
     }
 
-    public static void main(String[] argv) throws SAXException, UIMAException, CpeDescriptorException, IOException {
-        String mainOutput = argv[0];
-        String eventModelDir = argv[1];
-        String name = argv[2];
-
-        SubmissionPipeline pipeline = new SubmissionPipeline("zh", eventModelDir,
-                "TaskEventMentionDetectionTypeSystem");
-
-        List<String> inputs = StringUtils.split(argv[3], ",");
-
-        String configDir = "settings/nugget/models";
-
-//        List<String> typeConfigNames = StringUtils.split(argv[4], ",");
-//        String[] typeConfigs = new String[typeConfigNames.size()];
-//        for (String configName : typeConfigNames) {
-//            typeCon
-//        }
-
-        String[] typeConfigs = StringUtils.split(argv[4], ",").stream()
-                .map(p -> new File(configDir, p + ".properties").getAbsolutePath()).toArray(String[]::new);
-
-        Configuration corefConfig = loadModelConfig(configDir, argv[5]);
-
-        Configuration realisConfig = loadModelConfig(configDir, argv[6]);
-
-        pipeline.runAll(mainOutput, inputs, typeConfigs,
-                "../EvmEval/TAC_KBP_eval_type_2016.txt", realisConfig, corefConfig, "union", name);
-    }
+//    public static void main(String[] argv) throws SAXException, UIMAException, CpeDescriptorException, IOException {
+//        String mainOutput = argv[0];
+//        String eventModelDir = argv[1];
+//        String name = argv[2];
+//
+//        SubmissionPipeline pipeline = new SubmissionPipeline("zh", eventModelDir,
+//                "TaskEventMentionDetectionTypeSystem");
+//
+//        List<String> inputs = StringUtils.split(argv[3], ",");
+//
+//        String configDir = "settings/nugget/models";
+//
+//        String[] typeConfigs = StringUtils.split(argv[4], ",").stream()
+//                .map(p -> new File(configDir, p + ".properties").getAbsolutePath()).toArray(String[]::new);
+//
+//        Configuration corefConfig = loadModelConfig(configDir, argv[5]);
+//        Configuration realisConfig = loadModelConfig(configDir, argv[6]);
+//
+//        pipeline.runAll(mainOutput, inputs, typeConfigs,
+//                "../EvmEval/TAC_KBP_eval_type_2016.txt", realisConfig, corefConfig, "union", name);
+//    }
 }

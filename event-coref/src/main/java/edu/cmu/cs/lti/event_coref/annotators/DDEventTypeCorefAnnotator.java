@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.event_coref.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.emd.annotators.train.MentionLevelEventMentionCrfTrainer;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.event_coref.annotators.train.PaLatentTreeTrainer;
 import edu.cmu.cs.lti.event_coref.decoding.DDLatentTreeCrfDecoder;
@@ -44,7 +45,7 @@ import java.util.*;
  *
  * @author Zhengzhong Liu
  */
-public class DDEventTypeCorefAnnotator extends AbstractLoggingAnnotator {
+public class DDEventTypeCorefAnnotator extends AbstractConfigAnnotator {
     public static final String PARAM_CONFIG_PATH = "configPath";
     @ConfigurationParameter(name = PARAM_CONFIG_PATH)
     private Configuration config;

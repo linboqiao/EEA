@@ -65,9 +65,9 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
                     config.get("edu.cmu.cs.lti.coref.cache.base"));
             AnalysisEngineDescription corefEngine = AnalysisEngineFactory.createEngineDescription(
                     PaLatentTreeTrainer.class, typeSystemDescription,
-                    PaLatentTreeTrainer.PARAM_CONFIG_PATH, config.getConfigFile().getPath(),
                     PaLatentTreeTrainer.PARAM_CACHE_DIRECTORY, cacheDir
             );
+            PaLatentTreeTrainer.setConfig(config);
 
             TrainingLooper corefTrainer = new TrainingLooper(modelPath, trainingReader, corefEngine, maxIter,
                     modelOutputFreq) {
@@ -108,7 +108,7 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
         return modelPath;
     }
 
-    public CollectionReaderDescription corefResolution(Configuration config, CollectionReaderDescription reader,
+    public CollectionReaderDescription corefResolution(Configuration corefConfig, CollectionReaderDescription reader,
                                                        String modelDir, String parentOutput, String outputBase,
                                                        boolean skipCorefTest)
             throws UIMAException, IOException, CpeDescriptorException, SAXException {
@@ -123,9 +123,10 @@ public class CorefModelRunner extends AbstractMentionModelRunner {
 
             AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
                     EventCorefAnnotator.class, typeSystemDescription,
-                    EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                    EventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile()
+                    EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir
             );
+
+            EventCorefAnnotator.setConfig(corefConfig);
 
             return new BasicPipeline(reader, parentOutput, outputBase, mentionSplitter, corefAnnotator).run()
                     .getOutput();

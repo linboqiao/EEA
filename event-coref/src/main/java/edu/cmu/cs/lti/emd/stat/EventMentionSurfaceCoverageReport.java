@@ -297,9 +297,10 @@ public class EventMentionSurfaceCoverageReport extends AbstractLoggingAnnotator 
         EventDataReader dataReader = new EventDataReader(workingDir, "all", false);
 
         for (String datasetName : datasetNames) {
+            String dataConfigPath = commonConfig.get("edu.cmu.cs.lti.dataset.settings.path");
             Configuration datasetConfig = new Configuration(
-                    new File(commonConfig.get("edu.cmu.cs.lti.dataset.settings.path"), datasetName + ".properties"));
-            dataReader.readData(datasetConfig, typeSystemDescription);
+                    new File(dataConfigPath, datasetName + ".properties"));
+            dataReader.readData(datasetConfig, dataConfigPath, typeSystemDescription);
         }
 
         CollectionReaderDescription reader = dataReader.getReader();

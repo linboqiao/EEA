@@ -14,7 +14,7 @@ import edu.cmu.cs.lti.script.type.CharacterAnnotation;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpSentence;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.DebugUtils;
@@ -41,7 +41,7 @@ import java.util.*;
  *
  * @author Zhengzhong Liu
  */
-public class TokenBasedMentionErrorAnalyzer extends AbstractLoggingAnnotator {
+public class TokenBasedMentionErrorAnalyzer extends AbstractConfigAnnotator {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private UimaSequenceFeatureExtractor sentenceExtractor;
@@ -53,9 +53,9 @@ public class TokenBasedMentionErrorAnalyzer extends AbstractLoggingAnnotator {
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
     private File modelDirectory;
 
-    public static final String PARAM_CONFIG = "configuration";
-    @ConfigurationParameter(name = PARAM_CONFIG)
-    private Configuration config;
+//    public static final String PARAM_CONFIG = "configuration";
+//    @ConfigurationParameter(name = PARAM_CONFIG)
+//    private Configuration config;
 
     // A dummy lagrangian variable.
     private DummyCubicLagrangian lagrangian = new DummyCubicLagrangian();

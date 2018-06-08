@@ -8,7 +8,7 @@ import edu.cmu.cs.lti.learning.model.graph.EdgeType;
 import edu.cmu.cs.lti.learning.model.graph.MentionGraph;
 import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
 import edu.cmu.cs.lti.script.type.EventMention;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.MentionUtils;
 import org.apache.uima.UimaContext;
@@ -33,7 +33,7 @@ import static edu.cmu.cs.lti.learning.model.ModelConstants.COREF_MODEL_NAME;
  *
  * @author Zhengzhong Liu
  */
-public class BeamBasedCorefTrainer extends AbstractLoggingAnnotator {
+public class BeamBasedCorefTrainer extends AbstractConfigAnnotator {
     private static DiscriminativeUpdater updater;
 
     public static final String PARAM_CONFIGURATION_FILE = "configPath";

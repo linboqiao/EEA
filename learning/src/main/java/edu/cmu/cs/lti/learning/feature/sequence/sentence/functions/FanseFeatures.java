@@ -111,7 +111,9 @@ public class FanseFeatures extends SequenceFeatureWithFocus<StanfordCorenlpToken
 
         FanseToken fanseToken = align.getFanseToken(token);
 
-        headTemplates.forEach(t -> t.accept(nodeFeatures, fanseToken));
+        if (fanseToken != null) {
+            headTemplates.forEach(t -> t.accept(nodeFeatures, fanseToken));
+        }
 
         FSList childRelations = token.getChildSemanticRelations();
 

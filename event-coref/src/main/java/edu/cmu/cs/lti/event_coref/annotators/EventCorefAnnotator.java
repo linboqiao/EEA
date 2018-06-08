@@ -11,7 +11,7 @@ import edu.cmu.cs.lti.learning.model.graph.MentionSubGraph;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import edu.cmu.cs.lti.script.type.Event;
 import edu.cmu.cs.lti.script.type.EventMention;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.MentionUtils;
@@ -38,11 +38,7 @@ import java.util.List;
  *
  * @author Zhengzhong Liu
  */
-public class EventCorefAnnotator extends AbstractLoggingAnnotator {
-    public static final String PARAM_CONFIG_PATH = "configPath";
-    @ConfigurationParameter(name = PARAM_CONFIG_PATH)
-    private Configuration config;
-
+public class EventCorefAnnotator extends AbstractConfigAnnotator {
     public static final String PARAM_MODEL_DIRECTORY = "modelDirectory";
     @ConfigurationParameter(name = PARAM_MODEL_DIRECTORY)
     File modelDirectory;

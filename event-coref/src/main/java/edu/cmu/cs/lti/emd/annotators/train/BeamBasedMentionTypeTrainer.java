@@ -8,11 +8,11 @@ import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.update.DiscriminativeUpdater;
-import edu.cmu.cs.lti.uima.util.MentionTypeUtils;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
 import edu.cmu.cs.lti.script.type.Word;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
+import edu.cmu.cs.lti.uima.util.MentionTypeUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.MentionUtils;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
  *
  * @author Zhengzhong Liu
  */
-public class BeamBasedMentionTypeTrainer extends AbstractLoggingAnnotator {
+public class BeamBasedMentionTypeTrainer extends AbstractConfigAnnotator {
     private static DiscriminativeUpdater updater;
 
     public static final String PARAM_CONFIGURATION_FILE = "configPath";

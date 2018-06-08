@@ -67,11 +67,6 @@ public class RunnerUtils {
             );
             annotators.add(headWordExtractor);
             annotators.add(argumentExtractor);
-
-//            AnalysisEngineDescription caevo = AnalysisEngineFactory.createEngineDescription(
-//                    CaevoAnnotator.class
-//            );
-//            annotators.add(caevo);
         }
     }
 

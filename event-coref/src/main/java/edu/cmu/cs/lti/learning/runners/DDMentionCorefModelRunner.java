@@ -41,11 +41,12 @@ public class DDMentionCorefModelRunner extends AbstractMentionModelRunner {
         } else {
             AnalysisEngineDescription ddDecoder = AnalysisEngineFactory.createEngineDescription(
                     DDEventTypeCorefAnnotator.class, typeSystemDescription,
-                    DDEventTypeCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile(),
                     DDEventTypeCorefAnnotator.PARAM_MENTION_MODEL_DIRECTORY, mentionModelDir,
                     DDEventTypeCorefAnnotator.PARAM_COREF_MODEL_DIRECTORY, latentTreeDir,
                     DDEventTypeCorefAnnotator.PARAM_COREF_RULE_FILE, corefRuleFile
             );
+
+            DDEventTypeCorefAnnotator.setConfig(config);
 
             AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
                     MentionTypeAndClusterSplitter.class, typeSystemDescription,

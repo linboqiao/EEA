@@ -78,7 +78,6 @@ public class BeamMentionModelRunner extends AbstractMentionModelRunner {
             AnalysisEngineDescription trainer = AnalysisEngineFactory.createEngineDescription(
                     BeamBasedMentionTypeTrainer.class, typeSystemDescription,
                     BeamBasedMentionTypeTrainer.PARAM_GOLD_STANDARD_VIEW_NAME, UimaConst.goldViewName,
-                    BeamBasedMentionTypeTrainer.PARAM_CONFIGURATION_FILE, config.getConfigFile(),
                     BeamBasedMentionTypeTrainer.PARAM_USE_PA_UPDATE, usePaTraing,
                     BeamBasedMentionTypeTrainer.PARAM_LOSS_TYPE, lossType,
                     BeamBasedMentionTypeTrainer.PARAM_DELAYED_LASO, delayedLaso,
@@ -88,6 +87,8 @@ public class BeamMentionModelRunner extends AbstractMentionModelRunner {
                     BeamBasedMentionTypeTrainer.PARAM_TYPE_FILE_PATH,
                     FileUtils.joinPaths(mainConfig.get("edu.cmu.cs.lti.training.working.dir"), "mention_types.txt")
             );
+
+            BeamBasedMentionTypeTrainer.setConfig(config);
 
             MutableInt trainingSeed = new MutableInt(initialSeed);
 
@@ -144,9 +145,10 @@ public class BeamMentionModelRunner extends AbstractMentionModelRunner {
             AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
                     BeamTypeAnnotator.class, typeSystemDescription,
                     BeamTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                    BeamTypeAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath(),
                     BeamTypeAnnotator.PARAM_BEAM_SIZE, beamSize
             );
+
+            BeamTypeAnnotator.setConfig(taskConfig);
 
             AnalysisEngineDescription mentionSplitter = AnalysisEngineFactory.createEngineDescription(
                     MentionTypeSplitter.class, typeSystemDescription

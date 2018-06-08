@@ -155,9 +155,11 @@ public class PlainTextProcessor {
         } else {
             AnalysisEngineDescription sentenceLevelTagger = AnalysisEngineFactory.createEngineDescription(
                     CrfMentionTypeAnnotator.class, typeSystemDescription,
-                    CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                    CrfMentionTypeAnnotator.PARAM_CONFIG, taskConfig.getConfigFile().getPath()
+                    CrfMentionTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir
             );
+
+            CrfMentionTypeAnnotator.setConfig(taskConfig);
+
             return new BasicPipeline(reader, mainDir, baseOutput, sentenceLevelTagger).run().getOutput();
         }
     }
@@ -173,9 +175,10 @@ public class PlainTextProcessor {
         } else {
             AnalysisEngineDescription corefAnnotator = AnalysisEngineFactory.createEngineDescription(
                     EventCorefAnnotator.class, typeSystemDescription,
-                    EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                    EventCorefAnnotator.PARAM_CONFIG_PATH, config.getConfigFile()
+                    EventCorefAnnotator.PARAM_MODEL_DIRECTORY, modelDir
             );
+
+            EventCorefAnnotator.setConfig(config);
 
             AnalysisEngineDescription headWordExtractor = AnalysisEngineFactory.createEngineDescription(
                     EventHeadWordAnnotator.class, typeSystemDescription
@@ -184,7 +187,7 @@ public class PlainTextProcessor {
         }
     }
 
-    public CollectionReaderDescription realisAnnotation(Configuration taskConfig, CollectionReaderDescription reader,
+    public CollectionReaderDescription realisAnnotation(Configuration realisConfig, CollectionReaderDescription reader,
                                                         String modelDir, String mainDir, String realisOutputBase,
                                                         boolean skipTest)
             throws IOException, UIMAException, CpeDescriptorException, SAXException {
@@ -196,7 +199,7 @@ public class PlainTextProcessor {
             AnalysisEngineDescription realisAnnotator = AnalysisEngineFactory.createEngineDescription(
                     RealisTypeAnnotator.class, typeSystemDescription,
                     RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                    RealisTypeAnnotator.PARAM_CONFIG_PATH, taskConfig.getConfigFile()
+                    RealisTypeAnnotator.PARAM_CONFIG, realisConfig
             );
             return new BasicPipeline(reader, mainDir, realisOutputBase, realisAnnotator).run().getOutput();
         }
@@ -312,7 +315,7 @@ public class PlainTextProcessor {
         }
 
         for (CollectionReaderDescription reader : inputReaders) {
-             new BasicPipeline(reader, outputDir, preprocessBase, preprocessors).run();
+            new BasicPipeline(reader, outputDir, preprocessBase, preprocessors).run();
         }
     }
 

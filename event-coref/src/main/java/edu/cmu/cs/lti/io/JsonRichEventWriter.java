@@ -68,6 +68,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
     private JsonEntityMention createEntity(ComponentAnnotation anno) {
         JsonEntityMention jsonEnt = new JsonEntityMention(objectIndex++, anno);
+        jsonEnt.component = anno.getComponentId();
 
         StanfordCorenlpToken uimaHead = UimaNlpUtils.findHeadFromStanfordAnnotation(anno);
         JsonWord jsonHead = new JsonWord(objectIndex++, uimaHead);
@@ -125,6 +126,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
             jsonEvm.headWord = new JsonWord(objectIndex++, headword);
             jsonEvm.arguments = new ArrayList<>();
+            jsonEvm.component = mention.getComponentId();
 
             for (Map.Entry<SemanticArgument, Collection<String>> argument : getArguments(headword).asMap()
                     .entrySet()) {
@@ -273,6 +275,8 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         String type;
         String realis;
 
+        String component;
+
         JsonEventMention(int id, ComponentAnnotation anno) {
             super(id, anno, anno.getCoveredText());
         }
@@ -282,6 +286,9 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         JsonWord headWord;
 
         String type;
+
+        String component;
+
 
         JsonEntityMention(int id, ComponentAnnotation anno) {
             super(id, anno, anno.getCoveredText());

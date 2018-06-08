@@ -50,7 +50,7 @@ public class RealisModelRunner extends AbstractMentionModelRunner {
         return realisModelDir;
     }
 
-    public CollectionReaderDescription realisAnnotation(Configuration taskConfig, CollectionReaderDescription reader,
+    public CollectionReaderDescription realisAnnotation(Configuration realisConfig, CollectionReaderDescription reader,
                                                         String modelDir, String mainDir, String realisOutputBase,
                                                         boolean skipTest)
             throws IOException, UIMAException, CpeDescriptorException, SAXException {
@@ -68,7 +68,7 @@ public class RealisModelRunner extends AbstractMentionModelRunner {
                 realisAnnotator = AnalysisEngineFactory.createEngineDescription(
                         RealisTypeAnnotator.class, typeSystemDescription,
                         RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                        RealisTypeAnnotator.PARAM_CONFIG_PATH, taskConfig.getConfigFile()
+                        RealisTypeAnnotator.PARAM_CONFIG, realisConfig
                 );
             }
 

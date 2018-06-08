@@ -1,7 +1,6 @@
 package edu.cmu.cs.lti.emd.annotators;
 
 import edu.cmu.cs.lti.emd.decoding.BeamCrfDecoder;
-import edu.cmu.cs.lti.utils.MentionUtils;
 import edu.cmu.cs.lti.learning.feature.FeatureSpecParser;
 import edu.cmu.cs.lti.learning.feature.extractor.SentenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.feature.sequence.FeatureUtils;
@@ -10,10 +9,11 @@ import edu.cmu.cs.lti.learning.model.decoding.NodeLinkingState;
 import edu.cmu.cs.lti.learning.utils.DummyCubicLagrangian;
 import edu.cmu.cs.lti.script.type.EventMention;
 import edu.cmu.cs.lti.script.type.StanfordCorenlpToken;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.utils.Configuration;
+import edu.cmu.cs.lti.utils.MentionUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -38,7 +38,7 @@ import java.util.List;
  *
  * @author Zhengzhong Liu
  */
-public class BeamTypeAnnotator extends AbstractLoggingAnnotator {
+public class BeamTypeAnnotator extends AbstractConfigAnnotator {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private SentenceFeatureExtractor sentenceExtractor;

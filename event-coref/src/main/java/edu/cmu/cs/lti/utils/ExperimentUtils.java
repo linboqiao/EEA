@@ -8,6 +8,7 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.slf4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,7 +17,7 @@ import java.io.File;
  *
  * @author Zhengzhong Liu
  */
-public class ExperimentPaths {
+public class ExperimentUtils {
     final private String preprocessBase = "preprocessed";
     final private String prepredTrainingBase = "prepared_training";
     final private String rawBase = "raw";
@@ -29,7 +30,7 @@ public class ExperimentPaths {
 
     private Logger logger;
 
-    public ExperimentPaths(Logger logger, String processOutputDir) {
+    public ExperimentUtils(Logger logger, String processOutputDir) {
         this.processOut = processOutputDir;
         this.resultBase = processOutputDir + "/results";
         this.middleResults = processOutputDir + "/intermediate";
@@ -106,5 +107,19 @@ public class ExperimentPaths {
 
     public String getTrialBase() {
         return trialBase;
+    }
+
+    public static Configuration getModelConfig(Configuration taskConfig, String modelConfigDir,
+                                               String modelConfigKey) throws IOException {
+        String modelConfigName = taskConfig.get(modelConfigKey);
+        if (modelConfigName == null || modelConfigName.isEmpty()) {
+            return null;
+        }
+        Configuration modelConfig = new Configuration(new File(modelConfigDir, modelConfigName + ".properties"));
+        // Make resource config at one place.
+        modelConfig.set("edu.cmu.cs.lti.resource.dir", taskConfig.get("edu.cmu.cs.lti.resource.dir"));
+        modelConfig.set("edu.cmu.cs.lti.model.event.dir", taskConfig.get("edu.cmu.cs.lti.model.event.dir"));
+
+        return modelConfig;
     }
 }

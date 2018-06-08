@@ -16,7 +16,7 @@ import edu.cmu.cs.lti.uima.annotator.AbstractAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.io.writer.CustomAnalysisEngineFactory;
 import edu.cmu.cs.lti.utils.Configuration;
-import edu.cmu.cs.lti.utils.ExperimentPaths;
+import edu.cmu.cs.lti.utils.ExperimentUtils;
 import edu.cmu.cs.lti.utils.FileUtils;
 import edu.stanford.nlp.wordseg.ChineseStringUtils;
 import org.apache.commons.lang.NotImplementedException;
@@ -67,7 +67,7 @@ public class EventMentionPipeline {
     final private String eventModelDir;
     final private String modelConfigDir;
 
-    private ExperimentPaths paths;
+    private ExperimentUtils paths;
 
     // When cross validation, we have auto generated suffixes for outputs. Let's make one for the full run too.
     final static String fullRunSuffix = "all";
@@ -122,7 +122,7 @@ public class EventMentionPipeline {
         this.language = language;
         this.useCharOffset = useCharOffset;
 
-        this.paths = new ExperimentPaths(logger, processOutputDir);
+        this.paths = new ExperimentUtils(logger, processOutputDir);
 
         logger.info("The language is : " + language);
     }
@@ -166,7 +166,7 @@ public class EventMentionPipeline {
         for (String datasetName : datasetNames) {
             logger.info("Reading dataset : " + datasetName);
             Configuration datasetConfig = new Configuration(new File(datasetConfigPath, datasetName + ".properties"));
-            reader.readData(datasetConfig, typeSystemDescription);
+            reader.readData(datasetConfig, datasetConfigPath, typeSystemDescription);
         }
 
         return reader.getReader();
@@ -544,11 +544,12 @@ public class EventMentionPipeline {
                 seed);
     }
 
-    public CollectionReaderDescription runOnMentions(Configuration taskConfig, String workingDir,
-                                                     AnalysisEngineDescription[] engines,
-                                                     String runName) throws Exception {
-        Configuration realisConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.realis"));
-        Configuration corefConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.coreference"));
+    public CollectionReaderDescription runWithExtractors(Configuration taskConfig, String workingDir,
+                                                         AnalysisEngineDescription[] engines,
+                                                         String runName) throws Exception {
+        Configuration realisConfig = getModelConfig(taskConfig, "edu.cmu.cs.lti.model.realis");
+        Configuration tokenCrfConfig = getModelConfig(taskConfig, "edu.cmu.cs.lti.model.token_crf");
+        Configuration corefConfig = getModelConfig(taskConfig, "edu.cmu.cs.lti.model.coreference");
 
         File blackList = taskConfig.getFile("edu.cmu.cs.lti.file.basename.ignores.mention");
         File whiteList = taskConfig.getFile("edu.cmu.cs.lti.file.basename.accept.mention");
@@ -557,17 +558,22 @@ public class EventMentionPipeline {
                 blackList, whiteList);
 
         String realisModelDir = ModelUtils.getTestModelFile(eventModelDir, realisConfig);
+        String sentCrfModel = ModelUtils.getTestModelFile(eventModelDir, tokenCrfConfig);
         String treeCorefModel = ModelUtils.getTestModelFile(eventModelDir, corefConfig);
 
         String annotatedOutput = paths.getMiddleOutputPath(fullRunSuffix, runName);
 
-        CollectionReaderDescription mentionAnnotated = new BasicPipeline(testReader, workingDir, FileUtils.joinPaths
-                (annotatedOutput, "mentions"), engines).run().getOutput();
-
         CorefModelRunner corefModelRunner = new CorefModelRunner(mainConfig, typeSystemDescription);
+        TokenMentionModelRunner tokenModel = new TokenMentionModelRunner(mainConfig, typeSystemDescription);
         RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
 
-        CollectionReaderDescription realisOutput = realisModelRunner.realisAnnotation(realisConfig, mentionAnnotated,
+        CollectionReaderDescription vanillaMentions = tokenModel.sentenceLevelMentionTagging(tokenCrfConfig, testReader,
+                sentCrfModel, workingDir, FileUtils.joinPaths(annotatedOutput, "mention"), false);
+
+        CollectionReaderDescription moreMentions = new BasicPipeline(vanillaMentions, workingDir,
+                FileUtils.joinPaths(annotatedOutput, "additional_mentions"), engines).run().getOutput();
+
+        CollectionReaderDescription realisOutput = realisModelRunner.realisAnnotation(realisConfig, moreMentions,
                 realisModelDir, workingDir, FileUtils.joinPaths(annotatedOutput, "realis"), false);
 
         CollectionReaderDescription corefSentMentions = corefModelRunner.corefResolution(corefConfig,
@@ -582,15 +588,21 @@ public class EventMentionPipeline {
     }
 
     public CollectionReaderDescription runVanilla(Configuration taskConfig, String workingDir) throws Exception {
+        String runName = "vanillaMention";
+        return runVanilla(taskConfig, workingDir, runName);
+    }
+
+    public CollectionReaderDescription runVanilla(Configuration taskConfig, String workingDir,
+                                                  String runName) throws Exception {
         boolean skipType = taskConfig.getBoolean("edu.cmu.cs.lti.mention_type.skiptest", false);
         boolean skipRealis = taskConfig.getBoolean("edu.cmu.cs.lti.mention_realis.skiptest", false);
         boolean skipCoref = taskConfig.getBoolean("edu.cmu.cs.lti.coref.skiptest", false);
 
         boolean addSemanticRole = taskConfig.getBoolean("edu.cmu.cs.lti.semantic.role", false);
 
-        Configuration realisConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.realis"));
-        Configuration tokenCrfConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.token_crf"));
-        Configuration corefConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.coreference"));
+        Configuration realisConfig = getModelConfig(taskConfig, "edu.cmu.cs.lti.model.realis");
+        Configuration tokenCrfConfig = getModelConfig(taskConfig, "edu.cmu.cs.lti.model.token_crf");
+        Configuration corefConfig = getModelConfig(taskConfig, "edu.cmu.cs.lti.model.coreference");
 
         File blackList = taskConfig.getFile("edu.cmu.cs.lti.file.basename.ignores.mention");
         File whiteList = taskConfig.getFile("edu.cmu.cs.lti.file.basename.accept.mention");
@@ -601,8 +613,6 @@ public class EventMentionPipeline {
         String realisModelDir = ModelUtils.getTestModelFile(eventModelDir, realisConfig);
         String sentCrfModel = ModelUtils.getTestModelFile(eventModelDir, tokenCrfConfig);
         String treeCorefModel = ModelUtils.getTestModelFile(eventModelDir, corefConfig);
-
-        String runName = "vanillaMention";
 
         // Run the vanilla model.
         logger.info(String.format("Type model is %s, Realis Model is %s, Coref Model is %s.", sentCrfModel,
@@ -804,34 +814,8 @@ public class EventMentionPipeline {
         }
     }
 
-
-//    /**
-//     * Run two simple downstream tasks after mention detection, to check the performance of mention models.
-//     */
-//    private void mentionDownstream(Configuration realisConfig, Configuration corefConfig,
-//                                   CollectionReaderDescription mentionOutput, String sliceSuffix, String
-// processOutDir,
-//                                   String subEvalDir, File testGold, boolean skipRealisTest, boolean skipCorefTest)
-//            throws InterruptedException, SAXException, UIMAException, CpeDescriptorException, IOException {
-//        String realisModel = ModelUtils.getTestModelFile(eventModelDir, realisConfig, sliceSuffix);
-//        String treeCorefModel = ModelUtils.getTestModelFile(eventModelDir, corefConfig, sliceSuffix);
-//
-//        CorefModelRunner corefModelRunner = new CorefModelRunner(mainConfig, typeSystemDescription);
-//        RealisModelRunner realisModelRunner = new RealisModelRunner(mainConfig, typeSystemDescription);
-//
-//        CollectionReaderDescription realisOutput = realisModelRunner.testRealis(realisConfig, mentionOutput,
-//                realisModel,
-//                sliceSuffix, "realis", processOutDir, subEvalDir, testGold, skipRealisTest);
-//
-//        corefModelRunner.testCoref(corefConfig, realisOutput, treeCorefModel, sliceSuffix, "treeCoref",
-//                processOutDir, subEvalDir, testGold, skipCorefTest);
-//    }
-
-    private Configuration getModelConfig(String modelConfigName) throws IOException {
-        if (modelConfigName == null || modelConfigName.isEmpty()) {
-            return null;
-        }
-        return new Configuration(new File(modelConfigDir, modelConfigName + ".properties"));
+    private Configuration getModelConfig(Configuration taskConfig, String modelConfigKey) throws IOException {
+        return ExperimentUtils.getModelConfig(taskConfig, modelConfigDir, modelConfigKey);
     }
 
     private void afterExperiment(Configuration taskConfig, String sliceSuffix, CollectionReaderDescription trainingData,
@@ -843,7 +827,7 @@ public class EventMentionPipeline {
         boolean skipAfterTrain = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.after.skiptrain", false);
         boolean skipAfterTest = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.after.skiptest", false);
 
-        Configuration afterConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.after"));
+        Configuration afterConfig = getModelConfig(taskConfig, "edu.cmu.cs.lti.model.after");
 
         String resultDir = paths.getResultDir(evalWorkingDir, sliceSuffix);
 
@@ -873,8 +857,8 @@ public class EventMentionPipeline {
         boolean skipJointTest = !runAll && taskConfig.getBoolean("edu.cmu.cs.lti.joint_span.skiptest", false);
         int jointBeamSize = taskConfig.getInt("edu.cmu.cs.lti.joint.beam.size", 5);
 
-        Configuration realisConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.realis"));
-        Configuration jointConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.joint"));
+        Configuration realisConfig = getModelConfig(taskConfig, "edu.cmu.cs.lti.model.realis");
+        Configuration jointConfig = getModelConfig(taskConfig, "edu.cmu.cs.lti.model.joint");
 
         String[] lossTypes = jointConfig.getList("edu.cmu.cs.lti.mention.loss_types");
 
@@ -929,9 +913,9 @@ public class EventMentionPipeline {
 
         logger.info("Evaluation will be performed against " + testGold);
 
-        Configuration realisConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.realis"));
-        Configuration tokenCrfConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.token_crf"));
-        Configuration corefConfig = getModelConfig(taskConfig.get("edu.cmu.cs.lti.model.coreference"));
+        Configuration realisConfig = getModelConfig(taskConfig, "edu.cmu.cs.lti.model.realis");
+        Configuration tokenCrfConfig = getModelConfig(taskConfig, "edu.cmu.cs.lti.model.token_crf");
+        Configuration corefConfig = getModelConfig(taskConfig, "edu.cmu.cs.lti.model.coreference");
 
         String subEvalDir = sliceSuffix.equals(fullRunSuffix) ? "final" : "cv";
 

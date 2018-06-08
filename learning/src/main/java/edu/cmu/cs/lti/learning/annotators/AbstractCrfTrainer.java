@@ -4,7 +4,7 @@ import edu.cmu.cs.lti.learning.decoding.ViterbiDecoder;
 import edu.cmu.cs.lti.learning.feature.extractor.UimaSequenceFeatureExtractor;
 import edu.cmu.cs.lti.learning.model.*;
 import edu.cmu.cs.lti.learning.update.SeqLoss;
-import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
+import edu.cmu.cs.lti.uima.annotator.AbstractConfigAnnotator;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.MultiKeyDiskCacher;
 import org.apache.commons.io.FileUtils;
@@ -23,7 +23,7 @@ import java.io.Serializable;
  *
  * @author Zhengzhong Liu
  */
-public abstract class AbstractCrfTrainer extends AbstractLoggingAnnotator {
+public abstract class AbstractCrfTrainer extends AbstractConfigAnnotator {
     public static final String PARAM_CACHE_DIRECTORY = "cacheDirectory";
 
     public static final String PARAM_CONFIGURATION_FILE = "configurationFile";
