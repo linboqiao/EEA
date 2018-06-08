@@ -72,7 +72,8 @@ public class DispatchReader {
                 PlainTextCollectionReader.class, typeSystemDescription,
                 PlainTextCollectionReader.PARAM_INPUTDIR, inputPath,
                 PlainTextCollectionReader.PARAM_LANGUAGE, kbpConfig.get("edu.cmu.cs.lti.language"),
-                PlainTextCollectionReader.PARAM_DO_NOISE_FILTER, true
+                PlainTextCollectionReader.PARAM_DO_NOISE_FILTER, true,
+                PlainTextCollectionReader.PARAM_TEXT_SUFFIX, kbpConfig.get("edu.cmu.cs.lti.input_suffix")
         );
     }
 }

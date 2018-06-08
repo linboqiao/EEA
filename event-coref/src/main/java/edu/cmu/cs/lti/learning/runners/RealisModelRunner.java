@@ -67,9 +67,10 @@ public class RealisModelRunner extends AbstractMentionModelRunner {
             } else {
                 realisAnnotator = AnalysisEngineFactory.createEngineDescription(
                         RealisTypeAnnotator.class, typeSystemDescription,
-                        RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir,
-                        RealisTypeAnnotator.PARAM_CONFIG, realisConfig
+                        RealisTypeAnnotator.PARAM_MODEL_DIRECTORY, modelDir
                 );
+                RealisTypeAnnotator.setConfig(realisConfig);
+
             }
 
             return new BasicPipeline(reader, mainDir, realisOutputBase, realisAnnotator).run().getOutput();

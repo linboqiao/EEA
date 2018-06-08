@@ -42,7 +42,6 @@ public class RunOnlyPipeline {
 
         String runName = argv[3];
 
-
         Configuration commonConfig = new Configuration("settings/common.properties");
         String typeSystemName = commonConfig.get("edu.cmu.cs.lti.event.typesystem");
 
