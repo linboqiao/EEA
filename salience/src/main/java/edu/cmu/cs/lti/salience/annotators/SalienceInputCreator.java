@@ -115,8 +115,13 @@ public class SalienceInputCreator extends AbstractLoggingAnnotator {
 
         File taggedFile = taggedFiles.get(articleBaseName);
         JsonParser parser = new JsonParser();
-        JsonObject taggedData = parser.parse(FileUtils.readFileToString(taggedFile)).getAsJsonObject();
+        String taggedResult = FileUtils.readFileToString(taggedFile);
+        if (taggedResult.isEmpty()) {
+            logger.warn(String.format("Empty tagged result for %s.", UimaConvenience.getArticleName(aJCas)));
+            return;
+        }
 
+        JsonObject taggedData = parser.parse(taggedResult).getAsJsonObject();
         List<GroundedEntity> entities = new ArrayList<>();
 
         for (JsonElement jsonElement : taggedData.get("annotations").getAsJsonArray()) {
