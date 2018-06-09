@@ -33,6 +33,7 @@ import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.jcas.cas.StringArray;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
@@ -218,15 +219,23 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
 
             StanfordCorenlpToken eventHead = UimaNlpUtils.findHeadFromStanfordAnnotation(eventMention);
             spot.head_span = Arrays.asList(eventHead.getBegin(), eventHead.getEnd());
+            spot.arguments = new ArrayList<>();
 
-            for (EventMentionArgumentLink argumentLink :
-                    FSCollectionFactory.create(eventMention.getArguments(), EventMentionArgumentLink.class)) {
-                EntityMention argumentMention = argumentLink.getArgument();
-                Argument argument = new Argument();
-                argument.surface = TextUtils.asTokenized(argumentMention);
-                StanfordCorenlpToken argumentHead = UimaNlpUtils.findHeadFromStanfordAnnotation(argumentMention);
-                argument.headEntityId = entityIds.getOrDefault(argumentHead, "-");
-                argument.type = argumentLink.getArgumentRole();
+            FSList argumentsFs = eventMention.getArguments();
+
+            if (argumentsFs != null) {
+                for (EventMentionArgumentLink argumentLink :
+                        FSCollectionFactory.create(argumentsFs, EventMentionArgumentLink.class)) {
+                    EntityMention argumentMention = argumentLink.getArgument();
+                    StanfordCorenlpToken argumentHead = UimaNlpUtils.findHeadFromStanfordAnnotation(argumentMention);
+
+                    Argument argument = new Argument();
+                    argument.surface = TextUtils.asTokenized(argumentMention);
+                    argument.headEntityId = entityIds.getOrDefault(argumentHead, "-");
+                    argument.type = argumentLink.getArgumentRole();
+
+                    spot.arguments.add(argument);
+                }
             }
             spots.add(spot);
             index++;
@@ -263,7 +272,7 @@ public class MultiFormatSalienceDataWriter extends AbstractLoggingAnnotator {
             }
 
             StanfordCorenlpToken entityHead = UimaNlpUtils.findHeadFromStanfordAnnotation(groundedEntity);
-            if (entityHead == null){
+            if (entityHead == null) {
                 System.out.println(groundedEntity.getCoveredText());
                 DebugUtils.pause();
             }

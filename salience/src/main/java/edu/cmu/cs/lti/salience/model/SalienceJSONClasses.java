@@ -48,7 +48,7 @@ public class SalienceJSONClasses {
 
     static public class EventSpot extends Spot {
         public String frame_name;
-        public List<String> arguments;
+        public List<Argument> arguments;
     }
 
     static public class EntitySpot extends Spot {

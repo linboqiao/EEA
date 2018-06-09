@@ -12,6 +12,8 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
 
+import java.util.ArrayList;
+
 /**
  * Quick and dirty argument extractor based on Semafor and Fanse parsers.
  *
@@ -50,6 +52,9 @@ public class MergedArgumentAnnotator extends AbstractLoggingAnnotator {
                             EventMentionArgumentLink.class));
                     UimaAnnotationUtils.finishTop(argumentLink, ANNOTATOR_COMPONENT_ID, 0, aJCas);
                 }
+            } else {
+                // An empty argument list.
+                mention.setArguments(FSCollectionFactory.createFSList(aJCas, new ArrayList<>()));
             }
         }
     }
