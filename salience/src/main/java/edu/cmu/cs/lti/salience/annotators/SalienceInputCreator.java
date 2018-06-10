@@ -135,7 +135,7 @@ public class SalienceInputCreator extends AbstractLoggingAnnotator {
             int start = anno.get("start").getAsInt();
             int end = anno.get("end").getAsInt();
 
-            double rho = anno.get("rho").getAsDouble();
+            double confidence = anno.get("link_probability").getAsDouble();
 
             String wikiname = anno.get("title").getAsString().replace(" ", "_");
 
@@ -153,7 +153,7 @@ public class SalienceInputCreator extends AbstractLoggingAnnotator {
 
             groundedEntity.setKnowledgeBaseNames(kbNames);
             groundedEntity.setKnowledgeBaseValues(kbValues);
-            groundedEntity.setConfidence(rho);
+            groundedEntity.setConfidence(confidence);
 
             StanfordCorenlpToken headword = UimaNlpUtils.findHeadFromStanfordAnnotation(groundedEntity);
             if (headword == null) {
