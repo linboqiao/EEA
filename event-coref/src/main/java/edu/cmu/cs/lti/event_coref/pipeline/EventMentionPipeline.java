@@ -574,7 +574,11 @@ public class EventMentionPipeline {
         CollectionReaderDescription moreMentions = new BasicPipeline(vanillaMentions, workingDir,
                 FileUtils.joinPaths(annotatedOutput, "additional_mentions"), engines).run().getOutput();
 
-        CollectionReaderDescription realisOutput = realisModelRunner.realisAnnotation(realisConfig, moreMentions,
+        CollectionReaderDescription mentionPost = postProcessMention(moreMentions, workingDir,
+                FileUtils.joinPaths(annotatedOutput, "mention_post"), false);
+
+
+        CollectionReaderDescription realisOutput = realisModelRunner.realisAnnotation(realisConfig, mentionPost,
                 realisModelDir, workingDir, FileUtils.joinPaths(annotatedOutput, "realis"), false);
 
         CollectionReaderDescription corefSentMentions = corefModelRunner.corefResolution(corefConfig,
