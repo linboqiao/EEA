@@ -69,6 +69,8 @@ public class RunOnlyPipeline {
 
         CollectionReaderDescription results;
         if (runGeneral) {
+            logger.info("Running event extractors with other general extractors.");
+
             AnalysisEngineDescription verbEvents = AnalysisEngineFactory.createEngineDescription(
                     VerbBasedEventDetector.class, typeSystemDescription
             );

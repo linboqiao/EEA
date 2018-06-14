@@ -280,6 +280,7 @@ public class EventMentionPipeline {
             return output;
         } else {
             logger.info(String.format("Starting pre-processing at %s.", workingDirPath));
+            logger.info("Preprocessed output will be at : ", preprocessDir);
         }
 
         List<String> preprocessorNames = validatePreprocessors(taskConfig.getList("edu.cmu.cs.lti.preprocessors"));
