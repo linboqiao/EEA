@@ -116,10 +116,10 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
                 eventMention = span2Events.get(predicate.getBegin(), predicate.getEnd());
             } else {
                 eventMention = new EventMention(aJCas, predicate.getBegin(), predicate.getEnd());
+                eventMention.setEventType(frameName);
                 UimaAnnotationUtils.finishAnnotation(eventMention, COMPONENT_ID, 0, aJCas);
             }
 
-            eventMention.setEventType(frameName);
             eventMention.setFrameName(frameName);
             eventMention.setHeadWord(predHead);
 

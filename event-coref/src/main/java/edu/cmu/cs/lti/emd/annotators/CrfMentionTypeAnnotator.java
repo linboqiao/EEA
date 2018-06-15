@@ -133,8 +133,6 @@ public class CrfMentionTypeAnnotator extends AbstractConfigAnnotator {
         UimaConvenience.printProcessLog(aJCas, logger, true);
         sentenceExtractor.initWorkspace(aJCas);
 
-//        logger.info(aJCas.getDocumentText());
-
         for (StanfordCorenlpSentence sentence : JCasUtil.select(aJCas, StanfordCorenlpSentence.class)) {
             sentenceExtractor.resetWorkspace(aJCas, sentence.getBegin(), sentence.getEnd());
 
@@ -163,11 +161,6 @@ public class CrfMentionTypeAnnotator extends AbstractConfigAnnotator {
 
                 UimaAnnotationUtils.finishAnnotation(predictedMention, firstToken.getBegin(), lastToken
                         .getEnd(), COMPONENT_ID, 0, aJCas);
-
-                logger.debug("Adding event mention: " + predictedMention.getCoveredText() + " of type " +
-                        predictedMention.getEventType() + " with confidence "
-                        + predictedMention.getEventTypeConfidence());
-                DebugUtils.pause(logger);
             }
         }
     }

@@ -60,9 +60,9 @@ public class VerbBasedEventDetector extends AbstractLoggingAnnotator {
             } else {
                 eventMention = new EventMention(aJCas, token.getBegin(), token.getEnd());
                 UimaAnnotationUtils.finishAnnotation(eventMention, COMPONENT_ID, eventId++, aJCas);
+                eventMention.setEventType("Verbal");
             }
             eventMention.setHeadWord(token);
-            eventMention.setEventType("Verbal");
 
             Map<Word, EventMentionArgumentLink> head2Args = UimaNlpUtils.indexArgs(eventMention);
 

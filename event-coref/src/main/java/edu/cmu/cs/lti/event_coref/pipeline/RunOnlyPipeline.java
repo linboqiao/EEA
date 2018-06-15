@@ -71,10 +71,6 @@ public class RunOnlyPipeline {
         if (runGeneral) {
             logger.info("Running event extractors with other general extractors.");
 
-            AnalysisEngineDescription verbEvents = AnalysisEngineFactory.createEngineDescription(
-                    VerbBasedEventDetector.class, typeSystemDescription
-            );
-
             String frPath = FileUtils.joinPaths(
                     kbpConfig.get("edu.cmu.cs.lti.resource.dir"), "fndata-1.7/frRelation.xml");
 
@@ -84,8 +80,12 @@ public class RunOnlyPipeline {
                     FrameBasedEventDetector.PARAM_IGNORE_BARE_FRAME, true
             );
 
+            AnalysisEngineDescription verbEvents = AnalysisEngineFactory.createEngineDescription(
+                    VerbBasedEventDetector.class, typeSystemDescription
+            );
+
             AnalysisEngineDescription[] engines = new AnalysisEngineDescription[]{
-                    verbEvents, frameEvents
+                    frameEvents, verbEvents
             };
 
             results = pipeline.runWithExtractors(kbpConfig, outputPath, engines, "SimpleEvents");
