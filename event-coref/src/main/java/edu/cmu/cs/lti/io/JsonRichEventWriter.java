@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.io;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.gson.Gson;
+import edu.cmu.cs.lti.model.Span;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
@@ -66,13 +67,12 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         }
     }
 
-    private JsonEntityMention createEntity(ComponentAnnotation anno) {
+    private JsonEntityMention createEntity(ComponentAnnotation anno, Word head) {
         JsonEntityMention jsonEnt = new JsonEntityMention(objectIndex++, anno);
         jsonEnt.component = anno.getComponentId();
 
-        StanfordCorenlpToken uimaHead = UimaNlpUtils.findHeadFromStanfordAnnotation(anno);
-        JsonWord jsonHead = new JsonWord(objectIndex++, uimaHead);
-        jsonHead.lemma = uimaHead.getLemma();
+        JsonWord jsonHead = new JsonWord(objectIndex++, head);
+        jsonHead.lemma = head.getLemma();
         jsonEnt.headWord = jsonHead;
 
         if (anno instanceof EntityMention) {
@@ -85,7 +85,6 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         return jsonEnt;
     }
 
-
     private Document buildJson(JCas aJCas) {
         String docid = UimaConvenience.getArticleName(aJCas);
 
@@ -94,11 +93,8 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
         doc.eventMentions = new ArrayList<>();
 
-        Map<EventMention, JsonEventMention> evmMap = new HashMap<>();
-
-        Map<StanfordCorenlpToken, JsonEntityMention> jsonEntMap = new HashMap<>();
-
-        Map<StanfordCorenlpToken, EntityMention> uimaEntMap = new HashMap<>();
+        Map<Span, JsonEventMention> evmMap = new HashMap<>();
+        Map<Span, JsonEntityMention> jsonEntMap = new HashMap<>();
 
         int wordId = 0;
         allWords = new ArrayList<>();
@@ -111,9 +107,10 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
         // Adding entity mentions.
         for (EntityMention mention : JCasUtil.select(aJCas, EntityMention.class)) {
-            StanfordCorenlpToken head = UimaNlpUtils.findHeadFromStanfordAnnotation(mention);
-            uimaEntMap.put(head, mention);
-            jsonEntMap.put(head, createEntity(mention));
+            Word head = mention.getHead();
+            Span headSpan = Span.of(head.getBegin(), head.getEnd());
+            JsonEntityMention jsonEnt = createEntity(mention, head);
+            jsonEntMap.put(headSpan, jsonEnt);
         }
 
         // Adding event mentions.
@@ -133,13 +130,14 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                 SemanticArgument arg = argument.getKey();
 
                 StanfordCorenlpToken argHead = UimaNlpUtils.findHeadFromStanfordAnnotation(arg);
+                Span argHeadSpan = Span.of(argHead.getBegin(), argHead.getEnd());
 
                 JsonEntityMention jsonEnt;
-                if (jsonEntMap.containsKey(argHead)) {
-                    jsonEnt = jsonEntMap.get(argHead);
+                if (jsonEntMap.containsKey(argHeadSpan)) {
+                    jsonEnt = jsonEntMap.get(argHeadSpan);
                 } else {
-                    jsonEnt = createEntity(arg);
-                    jsonEntMap.put(argHead, jsonEnt);
+                    jsonEnt = createEntity(arg, argHead);
+                    jsonEntMap.put(argHeadSpan, jsonEnt);
                 }
 
                 for (String role : argument.getValue()) {
@@ -153,7 +151,9 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
             }
 
             doc.eventMentions.add(jsonEvm);
-            evmMap.put(mention, jsonEvm);
+
+            Span evmSpan = Span.of(mention.getBegin(), mention.getEnd());
+            evmMap.put(evmSpan, jsonEvm);
         }
 
         doc.relations = new ArrayList<>();
@@ -163,9 +163,9 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                 rel.relationType = "event_coreference";
                 rel.arguments = new ArrayList<>();
 
-                for (EventMention eventMention : FSCollectionFactory.create(event.getEventMentions(), EventMention
-                        .class)) {
-                    JsonEventMention jsonEvm = evmMap.get(eventMention);
+                for (EventMention evm : FSCollectionFactory.create(event.getEventMentions(), EventMention.class)) {
+                    Span evmSpan = Span.of(evm.getBegin(), evm.getEnd());
+                    JsonEventMention jsonEvm = evmMap.get(evmSpan);
                     rel.arguments.add(jsonEvm.id);
                 }
                 doc.relations.add(rel);
@@ -178,15 +178,15 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                 rel.relationType = "entity_coreference";
                 rel.arguments = new ArrayList<>();
 
-                for (EntityMention ent : FSCollectionFactory.create(entity.getEntityMentions(), EntityMention
-                        .class)) {
-                    StanfordCorenlpToken head = UimaNlpUtils.findHeadFromStanfordAnnotation(ent);
-                    if (jsonEntMap.containsKey(head)) {
-                        JsonEntityMention jsonEnt = jsonEntMap.get(head);
+                for (EntityMention ent : FSCollectionFactory.create(entity.getEntityMentions(), EntityMention.class)) {
+                    Word head = ent.getHead();
+                    Span headSpan = Span.of(head.getBegin(), head.getEnd());
+                    if (jsonEntMap.containsKey(headSpan)) {
+                        JsonEntityMention jsonEnt = jsonEntMap.get(headSpan);
                         rel.arguments.add(jsonEnt.id);
                     } else {
-                        System.out.println("Entity mention not found " + ent.getCoveredText() + " " + ent
-                                .getBegin());
+                        logger.warn(String.format("Entity mention [%s] : [%s] not found at [%s]",
+                                ent.getCoveredText() , headSpan, docid));
                     }
                 }
                 doc.relations.add(rel);
@@ -250,19 +250,14 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         }
 
         void setTokens(ComponentAnnotation anno) {
+            List<Word> words = JCasUtil.selectCovered(Word.class, anno);
+            if (words.size() == 0) {
+                words = JCasUtil.selectCovering(Word.class, anno);
+            }
             tokens = new ArrayList<>();
-
-            for (Word word : JCasUtil.selectCovered(Word.class, anno)) {
+            for (Word word : words) {
                 if (word.getComponentId().equals(UimaConst.goldComponentName)) {
                     tokens.add(word.getIndex());
-                }
-            }
-
-            if (tokens.size() == 0) {
-                for (Word word : JCasUtil.selectCovering(Word.class, anno)) {
-                    if (word.getComponentId().equals(UimaConst.goldComponentName)) {
-                        tokens.add(word.getIndex());
-                    }
                 }
             }
         }
