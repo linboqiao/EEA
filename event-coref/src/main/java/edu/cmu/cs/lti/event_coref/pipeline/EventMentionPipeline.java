@@ -791,7 +791,7 @@ public class EventMentionPipeline {
     }
 
     /**
-     * Post process the mentions to get important mention component: 1. Mention head word. 2. Mention aguments.
+     * Post process the mentions to get important mention component: 1. Mention head word. 2. Mention arguments.
      *
      * @param mentionReader
      * @param parentOutput

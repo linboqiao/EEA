@@ -12,8 +12,6 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Quick and dirty argument extractor based on Semafor and Fanse parsers.
@@ -30,24 +28,12 @@ public class MergedArgumentAnnotator extends AbstractLoggingAnnotator {
 //        helper.loadStanford2Fanse(aJCas);
 //        helper.loadFanse2Stanford(aJCas);
 
-        Map<StanfordCorenlpToken, String> token2Frame = new HashMap<>();
-        for (SemaforAnnotationSet annoSet : JCasUtil.select(aJCas, SemaforAnnotationSet.class)) {
-            String frameName = annoSet.getFrameName();
-            for (SemaforLayer layer : FSCollectionFactory.create(annoSet.getLayers(), SemaforLayer.class)) {
-                if (layer.getName().equals("Target")) {
-                    token2Frame.put(UimaNlpUtils.findHeadFromStanfordAnnotation(layer), frameName);
-                }
-            }
-        }
-
         for (EventMention mention : JCasUtil.select(aJCas, EventMention.class)) {
             StanfordCorenlpToken headWord = (StanfordCorenlpToken) mention.getHeadWord();
             FSList headArgsFS = headWord.getChildSemanticRelations();
 
             if (mention.getFrameName() == null) {
-                if (token2Frame.containsKey(headWord)) {
-                    mention.setFrameName(token2Frame.get(headWord));
-                }
+                mention.setFrameName(headWord.getFrameName());
             }
 
             if (headArgsFS != null) {
