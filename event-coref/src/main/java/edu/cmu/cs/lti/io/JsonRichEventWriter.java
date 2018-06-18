@@ -119,6 +119,8 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
             jsonEvm.type = mention.getEventType();
             jsonEvm.realis = mention.getRealisType();
 
+            jsonEvm.frame = mention.getFrameName();
+
             Word headword = mention.getHeadWord();
 
             jsonEvm.headWord = new JsonWord(objectIndex++, headword);
@@ -186,7 +188,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                         rel.arguments.add(jsonEnt.id);
                     } else {
                         logger.warn(String.format("Entity mention [%s] : [%s] not found at [%s]",
-                                ent.getCoveredText() , headSpan, docid));
+                                ent.getCoveredText(), headSpan, docid));
                     }
                 }
                 doc.relations.add(rel);
@@ -269,6 +271,8 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
         String type;
         String realis;
+
+        String frame;
 
         String component;
 
