@@ -90,8 +90,17 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
         Document doc = new Document();
         doc.docid = docid;
-
         doc.eventMentions = new ArrayList<>();
+
+        Map<StanfordCorenlpToken, String> token2Frame = new HashMap<>();
+        for (SemaforAnnotationSet annoSet : JCasUtil.select(aJCas, SemaforAnnotationSet.class)) {
+            String frameName = annoSet.getFrameName();
+            for (SemaforLayer layer : FSCollectionFactory.create(annoSet.getLayers(), SemaforLayer.class)) {
+                if (layer.getName().equals("Target")) {
+                    token2Frame.put(UimaNlpUtils.findHeadFromStanfordAnnotation(layer), frameName);
+                }
+            }
+        }
 
         Map<Span, JsonEventMention> evmMap = new HashMap<>();
         Map<Span, JsonEntityMention> jsonEntMap = new HashMap<>();
@@ -119,9 +128,16 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
             jsonEvm.type = mention.getEventType();
             jsonEvm.realis = mention.getRealisType();
 
-            jsonEvm.frame = mention.getFrameName();
-
             Word headword = mention.getHeadWord();
+
+
+            if (mention.getFrameName() == null) {
+                if (token2Frame.containsKey(headword)) {
+                    jsonEvm.frame = token2Frame.get(headword);
+                }
+            } else {
+                jsonEvm.frame = mention.getFrameName();
+            }
 
             jsonEvm.headWord = new JsonWord(objectIndex++, headword);
             jsonEvm.arguments = new ArrayList<>();
