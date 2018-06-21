@@ -82,7 +82,34 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
             }
         }
 
+        Map<String, Word> entityModifier = findTokenModifier(head);
+        if (entityModifier != null) {
+            if (entityModifier.containsKey("Negation")) {
+                jsonEnt.negationWord = entityModifier.get("Negation").getCoveredText();
+            }
+        }
+
         return jsonEnt;
+    }
+
+    private Map<String, Word> findTokenModifier(Word token) {
+        Map<String, Word> modifiers = new HashMap<>();
+
+        FSList relationsFS = token.getChildSemanticRelations();
+        if (relationsFS != null) {
+            for (SemanticRelation relation : FSCollectionFactory.create(relationsFS, SemanticRelation.class)) {
+                String pbRole = relation.getPropbankRoleName();
+                if (pbRole != null) {
+                    if (pbRole.equals("ARGM-NEG")) {
+                        modifiers.put("Negation", relation.getChild().getHead());
+                    } else if (pbRole.equals("ARGM-MOD")) {
+                        modifiers.put("Modal", relation.getChild().getHead());
+                    }
+                }
+            }
+        }
+
+        return modifiers;
     }
 
     private Document buildJson(JCas aJCas) {
@@ -126,9 +153,20 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                 jsonEvm.frame = mention.getFrameName();
             }
 
+
             jsonEvm.headWord = new JsonWord(objectIndex++, headword);
             jsonEvm.arguments = new ArrayList<>();
             jsonEvm.component = mention.getComponentId();
+
+            Map<String, Word> evmModifier = findTokenModifier(headword);
+            if (evmModifier != null) {
+                if (evmModifier.containsKey("Negation")) {
+                    jsonEvm.negationWord = evmModifier.get("Negation").getCoveredText();
+                }
+                if (evmModifier.containsKey("Modal")) {
+                    jsonEvm.modalWord = evmModifier.get("Modal").getCoveredText();
+                }
+            }
 
             for (Map.Entry<SemanticArgument, Collection<String>> argument : getArguments(headword).asMap()
                     .entrySet()) {
@@ -150,7 +188,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                 jsonArg.entityId = jsonEnt.id;
                 jsonArg.eventId = jsonEvm.id;
                 jsonArg.roles.addAll(argument.getValue());
-                jsonEvm.arguments.add(jsonArg);
+
             }
 
             doc.eventMentions.add(jsonEvm);
@@ -272,10 +310,11 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
         String type;
         String realis;
-
         String frame;
-
         String component;
+
+        String negationWord;
+        String modalWord;
 
         JsonEventMention(int id, ComponentAnnotation anno) {
             super(id, anno, anno.getCoveredText());
@@ -284,11 +323,10 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
     class JsonEntityMention extends DiscourseObject {
         JsonWord headWord;
-
         String type;
-
         String component;
 
+        String negationWord;
 
         JsonEntityMention(int id, ComponentAnnotation anno) {
             super(id, anno, anno.getCoveredText());
