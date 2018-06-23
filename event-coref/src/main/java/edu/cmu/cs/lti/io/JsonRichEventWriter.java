@@ -189,6 +189,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                 jsonArg.eventId = jsonEvm.id;
                 jsonArg.roles.addAll(argument.getValue());
 
+                jsonEvm.arguments.add(jsonArg);
             }
 
             doc.eventMentions.add(jsonEvm);
