@@ -335,6 +335,7 @@ public class EventMentionPipeline {
                             // Although the current English pipeline is thread safe, the Chinese one is not.
                             // Any future releases may not be thread safe guaranteed.
                             StanfordCoreNlpAnnotator.PARAM_NUM_THREADS, 10,
+                            StanfordCoreNlpAnnotator.PARAM_PARSER_MAXLEN, 40,
                             AbstractAnnotator.MULTI_THREAD, multithread
                     );
                     break;
