@@ -67,13 +67,15 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         }
     }
 
-    private JsonEntityMention createEntity(ComponentAnnotation anno, Word head) {
+
+    private JsonEntityMention createEntity(ComponentAnnotation anno, Word head, String entityForm) {
         JsonEntityMention jsonEnt = new JsonEntityMention(objectIndex++, anno);
         jsonEnt.component = anno.getComponentId();
 
         JsonWord jsonHead = new JsonWord(objectIndex++, head);
         jsonHead.lemma = head.getLemma();
         jsonEnt.headWord = jsonHead;
+        jsonEnt.entityForm = entityForm;
 
         if (anno instanceof EntityMention) {
             String type = ((EntityMention) anno).getEntityType();
@@ -88,6 +90,10 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                 jsonEnt.negationWord = entityModifier.get("Negation").getCoveredText();
             }
         }
+
+//        logger.info("Entity is " + anno.getCoveredText());
+//        logger.info("Entity form is " + entityForm);
+//        DebugUtils.pause();
 
         return jsonEnt;
     }
@@ -110,6 +116,17 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         }
 
         return modifiers;
+    }
+
+    private String getEntityFormFromHead(Word head) {
+        String pos = head.getPos();
+        if (pos.startsWith("PR")) {
+            return "pronominal";
+        } else if (pos.startsWith("NNP")) {
+            return "named";
+        } else {
+            return "nominal";
+        }
     }
 
     private Document buildJson(JCas aJCas) {
@@ -135,7 +152,15 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         for (EntityMention mention : JCasUtil.select(aJCas, EntityMention.class)) {
             Word head = mention.getHead();
             Span headSpan = Span.of(head.getBegin(), head.getEnd());
-            JsonEntityMention jsonEnt = createEntity(mention, head);
+
+            String entityForm;
+            if (mention.getEntityType() != null) {
+                entityForm = "nominal";
+            } else {
+                entityForm = getEntityFormFromHead(head);
+            }
+
+            JsonEntityMention jsonEnt = createEntity(mention, head, entityForm);
             jsonEntMap.put(headSpan, jsonEnt);
         }
 
@@ -179,7 +204,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                 if (jsonEntMap.containsKey(argHeadSpan)) {
                     jsonEnt = jsonEntMap.get(argHeadSpan);
                 } else {
-                    jsonEnt = createEntity(arg, argHead);
+                    jsonEnt = createEntity(arg, argHead, getEntityFormFromHead(argHead));
                     jsonEntMap.put(argHeadSpan, jsonEnt);
                 }
 
@@ -328,6 +353,8 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         String component;
 
         String negationWord;
+
+        String entityForm;
 
         JsonEntityMention(int id, ComponentAnnotation anno) {
             super(id, anno, anno.getCoveredText());
