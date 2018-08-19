@@ -439,9 +439,7 @@ if __name__=="__main__":
     for d in dataCorpus: data_list[d] = srcDir + "/" + d + ".txt"
     
     print "loading data...\n"
-    idMap, maxLength, revs, vocab, nodeDict, edgeDict, etypeDict, esubtypeDict, depRelDict,\
-    typeDict, typeOneDict, posDict, chunkDict, clauseDict, referDict, titleModifierDict,\
-    possibleNodeDict, nodeFetDict, edgeFetDict = build_data(data_file, data_list)
+    idMap, maxLength, revs, vocab, nodeDict, edgeDict, etypeDict, esubtypeDict, depRelDict, typeDict, typeOneDict, posDict, chunkDict, clauseDict, referDict, titleModifierDict, possibleNodeDict, nodeFetDict, edgeFetDict = build_data(data_file, data_list)
     
     eventEntityType = loadEventEntityType(eventEntityTypeFile, nodeDict)
     
