@@ -1,0 +1,39 @@
+#BeginOfDocument AFP_ENG_20090806.0680
+lv1_coref	AFP_ENG_20090806.0680	E1	103,107	vote	Personnel_Elect	Other
+lv1_coref	AFP_ENG_20090806.0680	E2	233,245	confirmation	Personnel_Start-Position	Other
+lv1_coref	AFP_ENG_20090806.0680	E3	387,394	appeals	Justice_Appeal	Generic
+lv1_coref	AFP_ENG_20090806.0680	E4	414,420	become	Personnel_Start-Position	Other
+lv1_coref	AFP_ENG_20090806.0680	E5	787,793	debate	Contact_Contact	Actual
+lv1_coref	AFP_ENG_20090806.0680	E6	824,834	nomination	Personnel_Nominate	Actual
+lv1_coref	AFP_ENG_20090806.0680	E7	913,920	comment	Contact_Contact	Actual
+lv1_coref	AFP_ENG_20090806.0680	E8	1013,1021	declared	Contact_Contact	Actual
+lv1_coref	AFP_ENG_20090806.0680	E9	1154,1158	warn	Contact_Contact	Generic
+lv1_coref	AFP_ENG_20090806.0680	E10	1210,1219	elections	Personnel_Elect	Other
+lv1_coref	AFP_ENG_20090806.0680	E11	1258,1268	nomination	Personnel_Nominate	Actual
+lv1_coref	AFP_ENG_20090806.0680	E12	1400,1404	said	Contact_Broadcast	Actual
+lv1_coref	AFP_ENG_20090806.0680	E13	1427,1437	conference	Contact_Meet	Actual
+lv1_coref	AFP_ENG_20090806.0680	E14	1505,1509	said	Contact_Meet	Actual
+lv1_coref	AFP_ENG_20090806.0680	E15	1576,1583	confirm	Personnel_Start-Position	Other
+lv1_coref	AFP_ENG_20090806.0680	E16	1618,1626	migrants	Movement_Transport-Person	Actual
+lv1_coref	AFP_ENG_20090806.0680	E17	1806,1815	elections	Personnel_Elect	Other
+lv1_coref	AFP_ENG_20090806.0680	E18	1842,1846	vote	Personnel_Elect	Other
+lv1_coref	AFP_ENG_20090806.0680	E19	2161,2165	vote	Personnel_Elect	Other
+lv1_coref	AFP_ENG_20090806.0680	E20	2464,2468	said	Contact_Contact	Actual
+lv1_coref	AFP_ENG_20090806.0680	E21	2481,2491	nomination	Personnel_Nominate	Actual
+lv1_coref	AFP_ENG_20090806.0680	E22	2591,2595	vote	Personnel_Elect	Other
+lv1_coref	AFP_ENG_20090806.0680	E23	2699,2703	vote	Personnel_Elect	Other
+lv1_coref	AFP_ENG_20090806.0680	E24	2798,2807	announced	Contact_Broadcast	Actual
+lv1_coref	AFP_ENG_20090806.0680	E25	2826,2838	confirmation	Personnel_Start-Position	Other
+lv1_coref	AFP_ENG_20090806.0680	E26	3196,3200	said	Contact_Contact	Actual
+lv1_coref	AFP_ENG_20090806.0680	E27	3275,3284	nominated	Personnel_Nominate	Actual
+lv1_coref	AFP_ENG_20090806.0680	E28	3502,3509	appeals	Justice_Appeal	Generic
+lv1_coref	AFP_ENG_20090806.0680	E29	3553,3562	nominated	Personnel_Nominate	Actual
+lv1_coref	AFP_ENG_20090806.0680	E30	3638,3642	said	Contact_Contact	Actual
+lv1_coref	AFP_ENG_20090806.0680	E31	3911,3919	approved	Personnel_Nominate	Actual
+lv1_coref	AFP_ENG_20090806.0680	E32	3952,3963	appointment	Personnel_Nominate	Actual
+@Coreference	R1	E1,E18,E19,E22,E23
+@Coreference	R2	E2,E15,E25
+@Coreference	R3	E3,E28
+@Coreference	R4	E6,E11,E21,E31
+@Coreference	R5	E10,E17
+#EndOfDocument
