@@ -182,6 +182,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
             jsonEvm.headWord = new JsonWord(objectIndex++, headword);
             jsonEvm.arguments = new ArrayList<>();
             jsonEvm.component = mention.getComponentId();
+            jsonEvm.headLemma = mention.getHeadWord().getLemma();
 
             Map<String, Word> evmModifier = findTokenModifier(headword);
             if (evmModifier != null) {
@@ -332,6 +333,8 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
     class JsonEventMention extends DiscourseObject {
         JsonWord headWord;
+        String headLemma;
+
         List<JsonArgument> arguments;
 
         String type;
