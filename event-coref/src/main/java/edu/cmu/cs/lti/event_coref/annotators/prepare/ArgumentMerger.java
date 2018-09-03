@@ -1,15 +1,18 @@
 package edu.cmu.cs.lti.event_coref.annotators.prepare;
 
 import com.google.common.collect.ArrayListMultimap;
+import edu.cmu.cs.lti.annotators.FanseAnnotator;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
 import edu.cmu.cs.lti.model.Span;
+import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.script.model.SemaforConstants;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.Configuration;
 import edu.cmu.cs.lti.utils.FileUtils;
@@ -19,7 +22,6 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
-import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
@@ -77,7 +79,8 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
                     SemanticArgument arg = new SemanticArgument(aJCas, frameSpan.getBegin(), frameSpan.getEnd());
                     arg.setHead(argHead);
                     relation.setChild(arg);
-                    UimaAnnotationUtils.finishAnnotation(arg, COMPONENT_ID, 0, aJCas);
+                    UimaAnnotationUtils.finishAnnotation(arg, FanseAnnotator.class.getSimpleName(), 0, aJCas);
+                    UimaAnnotationUtils.finishTop(relation, FanseAnnotator.class.getSimpleName(), 0, aJCas);
                     mergedArguments.put(argHead, relation);
                 }
             }
@@ -97,6 +100,9 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
                     arg.setHead(argHead);
                     relation.setChild(arg);
 
+                    UimaAnnotationUtils.finishAnnotation(arg, SemaforAnnotator.class.getSimpleName(), 0, aJCas);
+                    UimaAnnotationUtils.finishTop(relation, SemaforAnnotator.class.getSimpleName(), 0, aJCas);
+
                     mergedArguments.put(semaforArg.getKey(), relation);
                 }
                 token.setFrameName(frameNetName);
@@ -107,10 +113,12 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
                 SemanticRelation relation = argument.getValue();
                 UimaAnnotationUtils.finishTop(relation, COMPONENT_ID, 0, aJCas);
                 UimaAnnotationUtils.finishAnnotation(relation.getChild(), COMPONENT_ID, 0, aJCas);
-
                 argumentByChild.put(argument.getKey(), relation);
             }
-            token.setChildSemanticRelations(FSCollectionFactory.createFSList(aJCas, mergedArguments.values()));
+
+            FSList mergedRelations = UimaConvenience.appendAllFSList(aJCas, token.getChildSemanticRelations(),
+                    mergedArguments.values(), SemanticRelation.class);
+            token.setChildSemanticRelations(mergedRelations);
         }
 
 //        for (Map.Entry<StanfordCorenlpToken, Collection<SemanticRelation>> headArguments : argumentByChild.asMap()

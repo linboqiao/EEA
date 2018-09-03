@@ -355,6 +355,14 @@ public class EventMentionPipeline {
                             AbstractAnnotator.MULTI_THREAD, true
                     );
                     break;
+                case "allennlp":
+                    processor = AnalysisEngineFactory.createEngineDescription(
+                            JsonPropBankAnnotator.class, typeSystemDescription,
+                            JsonPropBankAnnotator.PARAM_INPUT_COMPONENT_NAME, "allennlp",
+                            JsonPropBankAnnotator.PARAM_JSON_SRL_INPUT_DIR,
+                            FileUtils.joinPaths(workingDirPath, "allen_srl")
+                    );
+                    break;
                 case "opennlp":
                     processor = AnalysisEngineFactory.createEngineDescription(
                             OpenNlpChunker.class, typeSystemDescription,

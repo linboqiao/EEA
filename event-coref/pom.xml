@@ -43,7 +43,8 @@
         </dependency>
         <dependency>
             <groupId>edu.cmu.cs.lti</groupId>
-            <artifactId>fanse-parser</artifactId>
+            <artifactId>srl-parser</artifactId>
+            <version>0.0.5</version>
         </dependency>
         <dependency>
             <groupId>edu.cmu.cs.lti.script</groupId>
