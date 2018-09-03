@@ -124,8 +124,10 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
             return "pronominal";
         } else if (pos.startsWith("NNP")) {
             return "named";
-        } else {
+        } else if (pos.startsWith("N")) {
             return "nominal";
+        } else {
+            return null;
         }
     }
 
@@ -153,9 +155,15 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
             Word head = mention.getHead();
             Span headSpan = Span.of(head.getBegin(), head.getEnd());
 
+            String namedType = mention.getEntityType();
+
             String entityForm;
-            if (mention.getEntityType() != null) {
-                entityForm = "nominal";
+            if (namedType != null) {
+                if (namedType.equals("DATE") || namedType.equals("NUMBER")) {
+                    entityForm = null;
+                }else{
+                    entityForm = "named";
+                }
             } else {
                 entityForm = getEntityFormFromHead(head);
             }
