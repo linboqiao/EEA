@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>edu.cmu.cs.lti</groupId>
-            <artifactId>fanse-parser</artifactId>
+            <artifactId>srl-parser</artifactId>
         </dependency>
         <dependency>
             <groupId>edu.cmu.cs.lti</groupId>
