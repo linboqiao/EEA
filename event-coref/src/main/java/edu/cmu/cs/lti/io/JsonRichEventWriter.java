@@ -7,7 +7,6 @@ import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;
 import edu.cmu.cs.lti.uima.util.UimaConvenience;
-import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import edu.cmu.cs.lti.utils.DispatchReader;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.UIMAException;
@@ -155,6 +154,8 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
             Word head = mention.getHead();
 
             if (head == null) {
+                logger.warn(String.format("Cannot find head word for entity mention [%s][%d:%d].", mention
+                        .getCoveredText(), mention.getBegin(), mention.getEnd()));
                 continue;
             }
 
@@ -188,6 +189,8 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
             Word headword = mention.getHeadWord();
 
             if (headword == null) {
+                logger.warn(String.format("Cannot find head word for event mention [%s][%d:%d].", mention
+                        .getCoveredText(), mention.getBegin(), mention.getEnd()));
                 continue;
             }
 
@@ -216,14 +219,19 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                     .entrySet()) {
                 SemanticArgument arg = argument.getKey();
 
-                StanfordCorenlpToken argHead = UimaNlpUtils.findHeadFromStanfordAnnotation(arg);
-                Span argHeadSpan = Span.of(argHead.getBegin(), argHead.getEnd());
+                if (arg.getHead() == null) {
+                    logger.warn(String.format("Cannot find head word for argument mention [%s][%d:%d].", arg
+                            .getCoveredText(), arg.getBegin(), arg.getEnd()));
+                    continue;
+                }
+
+                Span argHeadSpan = Span.of(arg.getHead().getBegin(), arg.getHead().getEnd());
 
                 JsonEntityMention jsonEnt;
                 if (jsonEntMap.containsKey(argHeadSpan)) {
                     jsonEnt = jsonEntMap.get(argHeadSpan);
                 } else {
-                    jsonEnt = createEntity(arg, argHead, getEntityFormFromHead(argHead));
+                    jsonEnt = createEntity(arg, arg.getHead(), getEntityFormFromHead(arg.getHead()));
                     jsonEntMap.put(argHeadSpan, jsonEnt);
                 }
 
