@@ -153,6 +153,11 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         // Adding entity mentions.
         for (EntityMention mention : JCasUtil.select(aJCas, EntityMention.class)) {
             Word head = mention.getHead();
+
+            if (head == null) {
+                continue;
+            }
+
             Span headSpan = Span.of(head.getBegin(), head.getEnd());
 
             String namedType = mention.getEntityType();
@@ -161,7 +166,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
             if (namedType != null) {
                 if (namedType.equals("DATE") || namedType.equals("NUMBER")) {
                     entityForm = null;
-                }else{
+                } else {
                     entityForm = "named";
                 }
             } else {
@@ -177,8 +182,14 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
             JsonEventMention jsonEvm = new JsonEventMention(objectIndex++, mention);
             jsonEvm.type = mention.getEventType();
             jsonEvm.realis = mention.getRealisType();
+            jsonEvm.component = mention.getComponentId();
+            doc.eventMentions.add(jsonEvm);
 
             Word headword = mention.getHeadWord();
+
+            if (headword == null) {
+                continue;
+            }
 
             if (mention.getFrameName() == null) {
                 jsonEvm.frame = headword.getFrameName();
@@ -189,8 +200,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
             jsonEvm.headWord = new JsonWord(objectIndex++, headword);
             jsonEvm.arguments = new ArrayList<>();
-            jsonEvm.component = mention.getComponentId();
-            jsonEvm.headLemma = mention.getHeadWord().getLemma();
+            jsonEvm.headLemma = headword.getLemma();
 
             Map<String, Word> evmModifier = findTokenModifier(headword);
             if (evmModifier != null) {
@@ -226,7 +236,6 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                 jsonEvm.arguments.add(jsonArg);
             }
 
-            doc.eventMentions.add(jsonEvm);
 
             Span evmSpan = Span.of(mention.getBegin(), mention.getEnd());
             evmMap.put(evmSpan, jsonEvm);
