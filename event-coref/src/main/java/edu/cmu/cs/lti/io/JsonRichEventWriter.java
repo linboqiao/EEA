@@ -240,6 +240,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
                 jsonArg.entityId = jsonEnt.id;
                 jsonArg.eventId = jsonEvm.id;
                 jsonArg.roles.addAll(argument.getValue());
+                jsonArg.component = arg.getComponentId();
 
                 jsonEvm.arguments.add(jsonArg);
             }
@@ -406,6 +407,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         int eventId;
         int entityId;
         List<String> roles;
+        String component;
     }
 
 
