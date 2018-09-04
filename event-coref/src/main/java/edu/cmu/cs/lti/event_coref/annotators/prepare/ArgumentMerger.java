@@ -111,8 +111,6 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
 
             for (Map.Entry<StanfordCorenlpToken, SemanticRelation> argument : mergedArguments.entrySet()) {
                 SemanticRelation relation = argument.getValue();
-                UimaAnnotationUtils.finishTop(relation, COMPONENT_ID, 0, aJCas);
-                UimaAnnotationUtils.finishAnnotation(relation.getChild(), COMPONENT_ID, 0, aJCas);
                 argumentByChild.put(argument.getKey(), relation);
             }
 
@@ -121,12 +119,6 @@ public class ArgumentMerger extends AbstractLoggingAnnotator {
             token.setChildSemanticRelations(mergedRelations);
         }
 
-//        for (Map.Entry<StanfordCorenlpToken, Collection<SemanticRelation>> headArguments : argumentByChild.asMap()
-//                .entrySet()) {
-//            StanfordCorenlpToken childToken = headArguments.getKey();
-//
-//            childToken.setHeadSemanticRelations(FSCollectionFactory.createFSList(aJCas, headArguments.getValue()));
-//        }
     }
 
     private Map<StanfordCorenlpToken, Pair<String, Map<StanfordCorenlpToken, Pair<String, Span>>>>

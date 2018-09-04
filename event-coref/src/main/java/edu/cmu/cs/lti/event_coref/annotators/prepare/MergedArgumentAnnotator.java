@@ -41,7 +41,7 @@ public class MergedArgumentAnnotator extends AbstractLoggingAnnotator {
                     EventMentionArgumentLink argumentLink = new EventMentionArgumentLink((aJCas));
                     SemanticArgument argument = relation.getChild();
                     EntityMention argumentEntityMention = UimaNlpUtils.createArgMention(aJCas, argument
-                            .getBegin(), argument.getEnd(), ANNOTATOR_COMPONENT_ID);
+                            .getBegin(), argument.getEnd(), argument.getComponentId());
                     argumentLink.setArgument(argumentEntityMention);
 
                     if (relation.getPropbankRoleName() != null) {
@@ -53,7 +53,7 @@ public class MergedArgumentAnnotator extends AbstractLoggingAnnotator {
                     }
                     mention.setArguments(UimaConvenience.appendFSList(aJCas, mention.getArguments(), argumentLink,
                             EventMentionArgumentLink.class));
-                    UimaAnnotationUtils.finishTop(argumentLink, ANNOTATOR_COMPONENT_ID, 0, aJCas);
+                    UimaAnnotationUtils.finishTop(argumentLink, relation.getComponentId(), 0, aJCas);
                 }
             } else {
                 // An empty argument list.
