@@ -40,9 +40,6 @@ import java.util.*;
  * @author Zhengzhong Liu
  */
 public class ArgumentMerger extends AbstractLoggingAnnotator {
-    public static final String COMPONENT_ID = ArgumentMerger.class.getSimpleName();
-
-
     TokenAlignmentHelper helper = new TokenAlignmentHelper(true);
 
     @Override
