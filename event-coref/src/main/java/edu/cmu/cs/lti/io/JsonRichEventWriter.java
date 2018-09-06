@@ -71,9 +71,7 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         JsonEntityMention jsonEnt = new JsonEntityMention(objectIndex++, anno);
         jsonEnt.component = anno.getComponentId();
 
-        JsonWord jsonHead = new JsonWord(objectIndex++, head);
-        jsonHead.lemma = head.getLemma();
-        jsonEnt.headWord = jsonHead;
+        jsonEnt.headWord = new JsonWord(objectIndex++, head);
         jsonEnt.entityForm = entityForm;
 
         if (anno instanceof EntityMention) {
@@ -392,9 +390,12 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
 
     class JsonWord extends DiscourseObject {
         String lemma;
+        String pos;
 
-        JsonWord(int id, ComponentAnnotation anno) {
-            super(id, anno, anno.getCoveredText());
+        JsonWord(int id, Word word) {
+            super(id, word, word.getCoveredText());
+            lemma = word.getLemma();
+            pos = word.getPos();
         }
     }
 
