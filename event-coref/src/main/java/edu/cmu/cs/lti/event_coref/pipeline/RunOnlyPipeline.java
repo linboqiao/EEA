@@ -2,6 +2,7 @@ package edu.cmu.cs.lti.event_coref.pipeline;
 
 import edu.cmu.cs.lti.collection_reader.LDCXmlCollectionReader;
 import edu.cmu.cs.lti.io.JsonRichEventWriter;
+import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.script.annotators.FrameBasedEventDetector;
 import edu.cmu.cs.lti.script.annotators.VerbBasedEventDetector;
 import edu.cmu.cs.lti.uima.io.reader.PlainTextCollectionReader;
@@ -12,7 +13,6 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
-import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.slf4j.Logger;
@@ -98,7 +98,8 @@ public class RunOnlyPipeline {
                 JsonRichEventWriter.PARAM_OUTPUT_DIR, FileUtils.joinPaths(outputPath, "rich", runName)
         );
 
-        SimplePipeline.runPipeline(results, writer);
+//        SimplePipeline.runPipeline(results, writer);
+        new BasicPipeline(results, writer).run();
     }
 
     private static CollectionReaderDescription ldcReader(TypeSystemDescription typeSystemDescription, String inputPath,
