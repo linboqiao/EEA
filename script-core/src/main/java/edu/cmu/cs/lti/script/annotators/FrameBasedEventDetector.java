@@ -11,6 +11,7 @@ import edu.cmu.cs.lti.uima.io.IOUtils;
 import edu.cmu.cs.lti.uima.io.reader.GzippedXmiCollectionReader;
 import edu.cmu.cs.lti.uima.io.writer.StepBasedDirGzippedXmiWriter;
 import edu.cmu.cs.lti.uima.util.UimaAnnotationUtils;
+import edu.cmu.cs.lti.uima.util.UimaConvenience;
 import edu.cmu.cs.lti.uima.util.UimaNlpUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UimaContext;
@@ -83,6 +84,7 @@ public class FrameBasedEventDetector extends AbstractLoggingAnnotator {
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
+        UimaConvenience.printProcessLog(aJCas);
         annotateEvents(aJCas);
     }
 
