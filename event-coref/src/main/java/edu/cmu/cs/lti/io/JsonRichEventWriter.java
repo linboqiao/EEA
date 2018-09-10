@@ -102,11 +102,12 @@ public class JsonRichEventWriter extends AbstractLoggingAnnotator {
         if (relationsFS != null) {
             for (SemanticRelation relation : FSCollectionFactory.create(relationsFS, SemanticRelation.class)) {
                 String pbRole = relation.getPropbankRoleName();
-                if (pbRole != null) {
+                Word childHead = relation.getChild().getHead();
+                if (pbRole != null && childHead != null) {
                     if (pbRole.equals("ARGM-NEG")) {
-                        modifiers.put("Negation", relation.getChild().getHead());
+                        modifiers.put("Negation", childHead);
                     } else if (pbRole.equals("ARGM-MOD")) {
-                        modifiers.put("Modal", relation.getChild().getHead());
+                        modifiers.put("Modal", childHead);
                     }
                 }
             }
