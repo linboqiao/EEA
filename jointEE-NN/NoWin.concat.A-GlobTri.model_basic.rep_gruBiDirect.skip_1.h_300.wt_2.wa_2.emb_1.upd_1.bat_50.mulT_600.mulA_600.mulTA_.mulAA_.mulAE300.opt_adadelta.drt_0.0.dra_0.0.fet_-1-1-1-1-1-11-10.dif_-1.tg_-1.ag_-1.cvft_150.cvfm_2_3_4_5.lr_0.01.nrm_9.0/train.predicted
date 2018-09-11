@@ -1,0 +1,1293 @@
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#0
+0	well
+1	,
+2	we
+3	'll
+4	debate
+5	that
+6	later
+7	on
+8	in
+9	the
+10	show
+11	.
+--------Entity_Mention--------
+0	2
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#1
+0	we
+1	'll
+2	have
+3	a
+4	couple
+5	of
+6	experts
+7	come
+8	out
+9	,
+10	so
+11	I
+12	'll
+13	withhold
+14	my
+15	comments
+16	until
+17	then
+18	.
+--------Entity_Mention--------
+0	0
+1	4
+2	6
+3	11
+4	14
+5	17
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#2
+0	even
+1	as
+2	the
+3	secretary
+4	of
+5	homeland
+6	security
+7	was
+8	putting
+9	his
+10	people
+11	on
+12	high
+13	alert
+14	last
+15	month
+16	,
+17	a
+18	30-foot
+19	Cuban
+20	patrol
+21	boat
+22	with
+23	four
+24	heavily
+25	armed
+26	men
+27	landed
+28	on
+29	American
+30	shores
+31	,
+32	utterly
+33	undetected
+34	by
+35	the
+36	Coast
+37	Guard
+38	Secretary
+39	Ridge
+40	now
+41	leads
+42	.
+--------Entity_Mention--------
+0	3
+1	6
+2	9
+3	10
+4	15
+5	19
+6	21
+7	26
+8	29
+9	30
+10	37
+11	38
+12	39
+13	40
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#3
+0	now
+1	,
+2	why
+3	has
+4	our
+5	president
+6	placed
+7	homeland
+8	security
+9	in
+10	the
+11	hands
+12	of
+13	Republican
+14	political
+15	hacks
+16	instead
+17	of
+18	professionals
+19	,
+20	by
+21	the
+22	way
+23	?
+--------Entity_Mention--------
+0	4
+1	5
+2	7
+3	13
+4	15
+5	18
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#4
+0	attorney
+1	General
+2	John
+3	Ashcroft
+4	,
+5	for
+6	example
+7	,
+8	is
+9	a
+10	career
+11	politician
+12	.
+--------Entity_Mention--------
+0	0
+1	3
+2	11
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#5
+0	he
+1	lost
+2	an
+3	election
+4	to
+5	a
+6	dead
+7	man
+8	.
+--------Entity_Mention--------
+0	0
+1	7
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#6
+0	secretary
+1	of
+2	Homeland
+3	Security
+4	Tom
+5	Ridge
+6	is
+7	another
+8	career
+9	politician
+10	who
+11	was
+12	passed
+13	over
+14	by
+15	Mr.
+16	Bush
+17	for
+18	the
+19	vice
+20	presidency
+21	.
+--------Entity_Mention--------
+0	0
+1	3
+2	5
+3	9
+4	10
+5	15
+6	16
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#7
+0	and
+1	Deputy
+2	Secretary
+3	of
+4	Homeland
+5	Security
+6	Asa
+7	Hutchinson
+8	is
+9	yet
+10	another
+11	career
+12	politician
+13	and
+14	a
+15	graduate
+16	of
+17	the
+18	disgraceful
+19	Bob
+20	Jones
+21	University
+22	.
+--------Entity_Mention--------
+0	2
+1	5
+2	7
+3	12
+4	15
+5	21
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#8
+0	apparently
+1	,
+2	Mr.
+3	Bush
+4	only
+5	turns
+6	to
+7	professionals
+8	when
+9	it
+10	's
+11	really
+12	important
+13	,
+14	like
+15	political
+16	consulting
+17	.
+--------Entity_Mention--------
+0	2
+1	3
+2	7
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#9
+0	paul
+1	,
+2	as
+3	I
+4	understand
+5	your
+6	definition
+7	of
+8	a
+9	political
+10	--
+11	of
+12	a
+13	professional
+14	politician
+15	based
+16	on
+17	that
+18	is
+19	somebody
+20	who
+21	is
+22	elected
+23	to
+24	public
+25	office
+26	.
+--------Entity_Mention--------
+0	0
+1	3
+2	5
+3	14
+4	19
+5	20
+6	25
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#10
+0	now
+1	in
+2	your
+3	administration
+4	,
+5	the
+6	Clinton
+7	administration
+8	,
+9	there
+10	were
+11	these
+12	members
+13	of
+14	the
+15	cabinet
+16	who
+17	by
+18	your
+19	definition
+20	were
+21	professional
+22	politicians
+23	--
+24	Lloyd
+25	Bentsen
+26	,
+27	Les
+28	Aspin
+29	,
+30	William
+31	S.
+32	Cohen
+33	,
+34	Janet
+35	Reno
+36	,
+37	Bruce
+38	Babbitt
+39	,
+40	Mike
+41	Espy
+42	,
+43	Dan
+44	Glickman
+45	,
+46	Norman
+47	Mineta
+48	,
+49	Henry
+50	Cisneros
+51	,
+52	Federico
+53	Pena
+54	,
+55	Bill
+56	Richardson
+57	,
+58	Richard
+59	Riley
+60	,
+61	12
+62	of
+63	them
+64	,
+65	not
+66	to
+67	mention
+68	former
+69	Democratic
+70	National
+71	Chairman
+72	Ron
+73	Brown
+74	,
+75	and
+76	one
+77	of
+78	the
+79	great
+80	professional
+81	politicians
+82	of
+83	all
+84	time
+85	,
+86	Bill
+87	Daly
+88	.
+--------Entity_Mention--------
+0	0
+1	2
+2	3
+3	6
+4	7
+5	12
+6	15
+7	16
+8	18
+9	22
+10	25
+11	28
+12	32
+13	35
+14	38
+15	41
+16	44
+17	47
+18	50
+19	53
+20	56
+21	59
+22	61
+23	63
+24	68
+25	69
+26	71
+27	71
+28	73
+29	76
+30	87
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#11
+0	and
+1	you
+2	know
+3	what
+4	,
+5	they
+6	did
+7	a
+8	hell
+9	of
+10	a
+11	job
+12	for
+13	our
+14	country
+15	.
+--------Entity_Mention--------
+0	1
+1	5
+2	13
+3	14
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#12
+0	and
+1	these
+2	bozos
+3	let
+4	four
+5	armed
+6	Cubans
+7	land
+8	on
+9	our
+10	shores
+11	when
+12	they
+13	're
+14	trying
+15	to
+16	make
+17	a
+18	high
+19	terrorist
+20	alert
+21	.
+--------Entity_Mention--------
+0	2
+1	6
+2	9
+3	10
+4	12
+5	19
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#13
+0	our
+1	president
+2	has
+3	put
+4	homeland
+5	security
+6	in
+7	the
+8	hands
+9	of
+10	failed
+11	Republican
+12	hacks
+13	.
+--------Entity_Mention--------
+0	0
+1	1
+2	4
+3	11
+4	12
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#14
+0	hire
+1	professionals
+2	,
+3	Mr.
+4	President
+5	.
+--------Entity_Mention--------
+0	1
+1	3
+2	4
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#15
+0	so
+1	it
+2	's
+3	OK
+4	--
+5	it
+6	's
+7	OK
+8	to
+9	have
+10	professional
+11	politicians
+12	at
+13	the
+14	Justice
+15	Department
+16	and
+17	the
+18	Pentagon
+19	...
+--------Entity_Mention--------
+0	11
+1	15
+2	18
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#16
+0	janet
+1	Reno
+2	was
+3	a
+4	career
+5	prosecutor
+6	.
+--------Entity_Mention--------
+0	1
+1	5
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#17
+0	just
+1	a
+2	minute
+3	,
+4	let
+5	me
+6	finish
+7	my
+8	sentence
+9	,
+10	please
+11	.
+--------Entity_Mention--------
+0	5
+1	7
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#18
+0	it
+1	's
+2	OK
+3	to
+4	put
+5	Democratic
+6	career
+7	politicians
+8	at
+9	the
+10	Pentagon
+11	and
+12	the
+13	Justice
+14	Department
+15	if
+16	they
+17	're
+18	Democrats
+19	but
+20	not
+21	if
+22	they
+23	're
+24	Republicans
+25	,
+26	is
+27	that
+28	right
+29	?
+--------Entity_Mention--------
+0	5
+1	7
+2	10
+3	14
+4	16
+5	18
+6	22
+7	24
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#19
+0	no,
+1	the
+2	difference
+3	is
+4	Janet
+5	Reno
+6	was
+7	a
+8	career
+9	prosecutor
+10	.
+--------Entity_Mention--------
+0	5
+1	9
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#20
+0	-LRB-
+1	CROSSTALK-RRB-
+--------Entity_Mention--------
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#21
+0	john
+1	Ashcroft
+2	was
+3	n't
+4	half
+5	the
+6	woman
+7	that
+8	Janet
+9	Reno
+10	was
+11	.
+--------Entity_Mention--------
+0	1
+1	6
+2	7
+3	9
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#22
+0	another
+1	potential
+2	Democratic
+3	presidential
+4	candidate
+5	pondered
+6	whether
+7	to
+8	run
+9	,
+10	and
+11	he
+12	made
+13	his
+14	announcement
+15	,
+16	and
+17	surprise
+18	,
+19	surprise
+20	,
+21	the
+22	answer
+23	was
+24	no
+25	.
+--------Entity_Mention--------
+0	2
+1	4
+2	11
+3	13
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#23
+0	senator
+1	Christopher
+2	Dodd
+3	of
+4	Connecticut
+5	made
+6	the
+7	announcement
+8	today
+9	that
+10	he
+11	would
+12	not
+13	be
+14	the
+15	10th
+16	candidate
+17	for
+18	the
+19	nomination
+20	.
+--------Entity_Mention--------
+0	0
+1	2
+2	4
+3	8
+4	10
+5	16
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#24
+0	why
+1	not
+2	?
+--------Entity_Mention--------
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#25
+0	surely
+1	Chris
+2	Dodd
+3	is
+4	at
+5	least
+6	more
+7	credible
+8	than
+9	Carol
+10	Moseley-Braun
+11	or
+12	Dennis
+13	Kucinich
+14	.
+--------Entity_Mention--------
+0	2
+1	10
+2	13
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#26
+0	he
+1	explained
+2	he
+3	could
+4	better
+5	spend
+6	the
+7	next
+8	two
+9	years
+10	on
+11	homeland
+12	security
+13	,
+14	the
+15	economy
+16	and
+17	judicial
+18	nominations
+19	.
+--------Entity_Mention--------
+0	0
+1	2
+2	9
+3	11
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#27
+0	i
+1	guess
+2	that
+3	means
+4	harassing
+5	Tom
+6	Ridge
+7	,
+8	fighting
+9	tax
+10	cuts
+11	and
+12	obstructing
+13	President
+14	Bush
+15	's
+16	plans
+17	to
+18	reform
+19	judiciary
+20	.
+--------Entity_Mention--------
+0	0
+1	6
+2	13
+3	14
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#28
+0	some
+1	two
+2	years
+3	.
+--------Entity_Mention--------
+0	2
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#29
+0	god
+1	,
+2	I
+3	hope
+4	so
+5	.
+--------Entity_Mention--------
+0	2
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#30
+0	that
+1	's
+2	all
+3	I
+4	can
+5	say
+6	.
+--------Entity_Mention--------
+0	3
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#31
+0	i
+1	love
+2	Senator
+3	Dodd
+4	.
+--------Entity_Mention--------
+0	0
+1	2
+2	3
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#32
+0	he
+1	would
+2	have
+3	brought
+4	a
+5	lot
+6	to
+7	the
+8	race
+9	.
+--------Entity_Mention--------
+0	0
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#33
+0	he
+1	brings
+2	a
+3	lot
+4	to
+5	the
+6	Senate
+7	and
+8	to
+9	the
+10	debate
+11	.
+--------Entity_Mention--------
+0	0
+1	6
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#34
+0	and
+1	I
+2	'm
+3	glad
+4	that
+5	he
+6	's
+7	going
+8	to
+9	be
+10	fighting
+11	those
+12	fights
+13	.
+--------Entity_Mention--------
+0	1
+1	5
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#35
+0	well
+1	,
+2	the
+3	Commerce
+4	Department
+5	reports
+6	today
+7	that
+8	consumer
+9	spending
+10	declined
+11	in
+12	January
+13	and
+14	that
+15	the
+16	manufacturing
+17	sector
+18	slowed
+19	in
+20	February
+21	.
+--------Entity_Mention--------
+0	4
+1	6
+2	8
+3	12
+4	17
+5	20
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#36
+0	in
+1	all
+2	,
+3	two
+4	million
+5	Americans
+6	have
+7	lost
+8	their
+9	jobs
+10	under
+11	President
+12	Bush
+13	so
+14	far
+15	,
+16	not
+17	to
+18	mention
+19	three
+20	of
+21	them
+22	being
+23	the
+24	top
+25	three
+26	leaders
+27	of
+28	his
+29	economic
+30	team
+31	.
+--------Entity_Mention--------
+0	5
+1	8
+2	11
+3	12
+4	21
+5	26
+6	28
+7	30
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#37
+0	meanwhile
+1	,
+2	the
+3	deficit
+4	now
+5	at
+6	$
+7	300
+8	billion
+9	.
+--------Entity_Mention--------
+0	4
+1	8
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#38
+0	it
+1	could
+2	swell
+3	to
+4	as
+5	much
+6	as
+7	$
+8	500
+9	billion
+10	if
+11	we
+12	go
+13	to
+14	war
+15	in
+16	Iraq
+17	.
+--------Entity_Mention--------
+0	9
+1	11
+2	16
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#39
+0	mr.
+1	Bush
+2	apparently
+3	is
+4	untroubled
+5	by
+6	this
+7	fiscal
+8	collapse
+9	.
+--------Entity_Mention--------
+0	0
+1	1
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#40
+0	one
+1	of
+2	his
+3	aides
+4	tells
+5	the
+6	current
+7	issue
+8	of
+9	''
+10	TIME
+11	,
+12	``
+13	magazine
+14	,
+15	quote
+16	,
+17	"even
+18	if
+19	it
+20	's
+21	$
+22	500
+23	billion
+24	,
+25	so
+26	what
+27	?
+28	''
+--------Entity_Mention--------
+0	0
+1	2
+2	3
+3	6
+4	13
+5	23
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#41
+0	of
+1	course
+2	,
+3	even
+4	a
+5	$
+6	500
+7	billion
+8	deficit
+9	number
+10	does
+11	n't
+12	count
+13	the
+14	$
+15	3
+16	trillion
+17	Mr.
+18	Bush
+19	is
+20	robbing
+21	from
+22	the
+23	Social
+24	Security
+25	trust
+26	fund
+27	.
+--------Entity_Mention--------
+0	7
+1	16
+2	17
+3	18
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#42
+0	you
+1	know
+2	,
+3	we
+4	should
+5	have
+6	known
+7	,
+8	every
+9	time
+10	George
+11	W.
+12	Bush
+13	gets
+14	in
+15	trouble
+16	,
+17	he
+18	borrows
+19	from
+20	a
+21	trust
+22	fund
+23	.
+--------Entity_Mention--------
+0	0
+1	3
+2	12
+3	17
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#43
+0	it
+1	's
+2	been
+3	his
+4	whole
+5	life
+6	,
+7	you
+8	know
+9	.
+--------Entity_Mention--------
+0	3
+1	7
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#44
+0	let
+1	me
+2	give
+3	you
+4	two
+5	economic
+6	facts
+7	of
+8	like
+9	,
+10	which
+11	you
+12	should
+13	know
+14	,
+15	even
+16	if
+17	you
+18	wo
+19	n't
+20	recognize
+21	them
+22	.
+--------Entity_Mention--------
+0	1
+1	3
+2	11
+3	17
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#45
+0	number
+1	one
+2	,
+3	there
+4	is
+5	absolutely
+6	no
+7	relationship
+8	between
+9	the
+10	deficit
+11	and
+12	unemployment
+13	.
+--------Entity_Mention--------
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#46
+0	they
+1	do
+2	n't
+3	go
+4	together
+5	.
+--------Entity_Mention--------
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#47
+0	and
+1	number
+2	two
+3	,
+4	there
+5	is
+6	no
+7	Social
+8	Security
+9	fund
+10	,
+11	Virginia
+12	.
+--------Entity_Mention--------
+0	11
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#48
+0	there
+1	just
+2	is
+3	n't
+4	one
+5	.
+--------Entity_Mention--------
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#49
+0	because
+1	Bush
+2	squandered
+3	it
+4	on
+5	his
+6	tax
+7	cuts
+8	.
+--------Entity_Mention--------
+0	1
+1	5
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#50
+0	there
+1	never
+2	has
+3	been
+4	one
+5	.
+--------Entity_Mention--------
+--------Annotation--------
+
+ID=bc/timex2norm/CNN_CF_20030303.1900.00#51
+0	there
+1	has
+2	been
+3	one
+4	for
+5	60
+6	years
+7	.
+--------Entity_Mention--------
+0	6
+--------Annotation--------
+

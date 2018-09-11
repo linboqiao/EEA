@@ -11,19 +11,23 @@ import theano
 from theano import tensor as T
 from collections import OrderedDict, defaultdict
 from theano.tensor.nnet import conv
-from theano.tensor.signal import downsample
 import theano.tensor.shared_randomstreams
 from jeeModels import *
 
+'''
 dataset_path = '~/projects/jointEE/nn/externalFets/word2vec_jointEE.pkl'
-#dataset_path = '../globHead/word2vec_jointEE.pkl'
-
 scoreScript = '~/projects/jointEE/do'
-
 data_sourceDir = '~/projects/jointEE/corpus/qi'
 data_fileLists = {'train': '~/projects/jointEE/fileLists/train.txt',
                  'valid': '~/projects/jointEE/fileLists/valid.txt',
                  'test': '~/projects/jointEE/fileLists/test.txt'}
+'''
+dataset_path = './cut_1.word2vec_jointEE.pkl'
+scoreScript = '~/projects/jointEE/do'
+data_sourceDir = './data/bc/timex2norm'
+data_fileLists = {'train': './data/train.txt',
+                 'valid': './data/valid.txt',
+                 'test': './data/test.txt'}
 data_predictedFiles = {'train': '',
                        'valid': '',
                        'test': ''}
@@ -544,7 +548,7 @@ def train(model='basic',
           nepochs=50,
           folder='./res'):
           
-    folder = '~/projects/jointEE/res/' + folder
+    #folder = '~/projects/jointEE/res/' + folder
     #folder = './res/storer'
 
     if not os.path.exists(folder): os.mkdir(folder)
@@ -690,10 +694,13 @@ def train(model='basic',
     random.seed(seed)
     reModel = eval('rnnJoint')(params)
     print 'done'
-    
-    evaluatingDataset = OrderedDict([#('train', datasets['train']),
+    '''
+    evaluatingDataset = OrderedDict([('train', datasets['train']),
                                      ('valid', datasets['valid']),
                                      ('test', datasets['test'])
+                                    ])
+    '''
+    evaluatingDataset = OrderedDict([('train', datasets['train'])
                                     ])
     
     _perfs = OrderedDict()

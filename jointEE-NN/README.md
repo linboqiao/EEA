@@ -31,3 +31,9 @@ This step takes the output file in step 1.
 There are various parameters of the model you can change directly in the ```evaluateJEE.py``` file.
 
 THE CODE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+
+cmds:
+
+python jee_processData.py 'word2vec' ~/workspace/Datasets/GoogleNews-vectors-negative300.bin ./data/fistDoc.nnData4.txt ./data ./data/eventEntityTypeFile.txt
+
+

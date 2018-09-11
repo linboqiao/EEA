@@ -1,0 +1,7 @@
+NONE
+Elect
+Nominate
+Attack
+Transport
+Start-Position
+End-Position
