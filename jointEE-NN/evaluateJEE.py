@@ -114,4 +114,5 @@ if __name__=='__main__':
              + '.lr_' + str(pars['lr']) \
              + '.nrm_' + str(pars['norm_lim'])
     pars['folder'] =  'NoWin.concat.A-GlobTri.' + folder
+    print(pars)
     main(pars)

@@ -60,9 +60,12 @@ def build_data(data_file, data_list):
             if line:
                 inst += [line]
                 
-                if line == '--------Entity_Mention--------': entId = len(inst)
-                if line == '--------Edge_Features--------': edgeId = len(inst)
-                if line == '--------Annotation--------': annId = len(inst)
+                if line == '--------Entity_Mention--------': 
+                    entId = len(inst)
+                if line == '--------Edge_Features--------': 
+                    edgeId = len(inst)
+                if line == '--------Annotation--------': 
+                    annId = len(inst)
                 
                 continue
             
@@ -74,14 +77,17 @@ def build_data(data_file, data_list):
                 exit()
             corpus = corpusMap[docId]
             
-            sentence, pos, chunk, clause, posType, grs, ets, ref, title, eligible, nodeFets, entities, edgeFets, eventPos, eventTrigger, eventArgs = parseInst(inst, entId, edgeId, annId)
+            #print(inst)
+            
+            sentence, pos, chunk, clause, posType, grs, ets, ref, title,\
+             eligible, nodeFets, entities, edgeFets, eventPos, eventTrigger, eventArgs = parseInst(inst, entId, edgeId, annId)
             
             inst = []
             
             if len(sentence) > maximumLen:
                 tooLong += 1
-                continue
-            if not eventPos and corpus == 'train': continue
+                #continue
+            #if not eventPos and corpus == 'train': continue
             
             entId, annId = -1, -1
             
@@ -232,11 +238,11 @@ def build_data(data_file, data_list):
     
     print 'instances in corpus'
     for corpus in corpusCountIns:
-    	print corpus, ' : ', corpusCountIns[corpus]
+        print corpus, ' : ', corpusCountIns[corpus]
     print '---------------'
     print 'length distribution'
     for le in lengthCounter:
-    	print le, ' : ', lengthCounter[le]
+        print le, ' : ', lengthCounter[le]
     print '---------------'
     print "maximum length of sentences: ", maxLength
     print "number of too long: ", tooLong
@@ -244,7 +250,9 @@ def build_data(data_file, data_list):
     print 'total node features: ', len(nodeFetDict)
     print 'total edge features: ', len(edgeFetDict)
     
-    return idMap, maxLength, revs, vocab, nodeDict, edgeDict, etypeDict, esubtypeDict, depRelDict, typeDict, typeOneDict, posDict, chunkDict, clauseDict, referDict, titleModifierDict, possibleNodeDict, nodeFetDict, edgeFetDict
+    return idMap, maxLength, revs, vocab, nodeDict, edgeDict, etypeDict, esubtypeDict, \
+        depRelDict, typeDict, typeOneDict, posDict, chunkDict, clauseDict, referDict, \
+        titleModifierDict, possibleNodeDict, nodeFetDict, edgeFetDict
 
 def lookup(mess, key, gdict, addOne):
     if key not in gdict:
@@ -262,7 +270,7 @@ def loadCorpusMap(data_list):
                 line = line.strip()
                 if not line: continue
                 res[line] = dl
-    print 'loaded: ', len(res), ' files'
+    print 'loaded: ', len(res), ' files Map'
     return res
 
 def parseInst(inst, entId, edgeId, annId):
@@ -370,8 +378,8 @@ def load_bin_vec(fname, vocab):
                 if ch != '\n':
                     word.append(ch)   
             if word in vocab:
-               word_vecs[word] = np.fromstring(f.read(binary_len), dtype='float32')
-               dim = word_vecs[word].shape[0]
+                word_vecs[word] = np.fromstring(f.read(binary_len), dtype='float32')
+                dim = word_vecs[word].shape[0]
             else:
                 f.read(binary_len)
     print 'dim: ', dim
@@ -439,7 +447,9 @@ if __name__=="__main__":
     for d in dataCorpus: data_list[d] = srcDir + "/" + d + ".txt"
     
     print "loading data...\n"
-    idMap, maxLength, revs, vocab, nodeDict, edgeDict, etypeDict, esubtypeDict, depRelDict, typeDict, typeOneDict, posDict, chunkDict, clauseDict, referDict, titleModifierDict, possibleNodeDict, nodeFetDict, edgeFetDict = build_data(data_file, data_list)
+    idMap, maxLength, revs, vocab, nodeDict, edgeDict, etypeDict, esubtypeDict, \
+    depRelDict, typeDict, typeOneDict, posDict, chunkDict, clauseDict, referDict, \
+    titleModifierDict, possibleNodeDict, nodeFetDict, edgeFetDict = build_data(data_file, data_list)
     
     eventEntityType = loadEventEntityType(eventEntityTypeFile, nodeDict)
     
@@ -449,9 +459,9 @@ if __name__=="__main__":
     print "loading word embeddings...",
     dimEmb = 300
     if embType == 'word2vec':
-    	dimEmb, w2v = load_bin_vec(w2v_file, vocab)
+        dimEmb, w2v = load_bin_vec(w2v_file, vocab)
     else:
-    	dimEmb, w2v = load_text_vec(w2v_file, vocab)
+        dimEmb, w2v = load_text_vec(w2v_file, vocab)
     print "word embeddings loaded!"
     print "num words already in word embeddings: " + str(len(w2v))
     add_unknown_words(w2v, vocab, 1, dimEmb)

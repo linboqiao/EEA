@@ -15,6 +15,8 @@ from theano.tensor.signal import downsample
 from theano.updates import OrderedUpdates
 import theano.tensor.shared_randomstreams
 
+theano.config.floatX = 'float32'
+
 #########################SOME UTILITIES########################
 
 
@@ -891,9 +893,29 @@ def _rnnJoint(model):
         g_tlabels = g_tlabels * T.cast(_entIds >= 0, dtype='int32')
         #_gats = T.set_subtensor(_gats[id_aposs, _entIds, g_tlabels], 1.0)
         
-        return ([tvec, avec, ext_arg, chosen], {_gts : T.set_subtensor(_gts[T.arange(model.glob['batch']), _tlabels], 1.0), _gas : T.set_subtensor(_gas[id_aposs, _alabels], 1.0), _gats : T.set_subtensor(_gats[id_aposs, _entIds, g_tlabels], 1.0), _gaas : T.set_subtensor(_gaas[id_aposs, _entIds, _alabels], 1.0)})
+        return ([tvec, avec, ext_arg, chosen],\
+                {_gts : T.set_subtensor(_gts[T.arange(model.glob['batch']), _tlabels], 1.0), \
+                 _gas : T.set_subtensor(_gas[id_aposs, _alabels], 1.0),\
+                 _gats : T.set_subtensor(_gats[id_aposs, _entIds, g_tlabels], 1.0), \
+                 _gaas : T.set_subtensor(_gaas[id_aposs, _entIds, _alabels], 1.0)
+                 })
     
-    outscanTrain, updateTrain = theano.scan(fn=recurTrain, sequences=[T.arange(model.args['maxSentLength']), model.container['triggerAnn'].T, model.container['argumentEntityIdAnn'].dimshuffle(1,0,2), model.container['argumentPosAnn'].dimshuffle(1,0,2), model.container['argumentLabelAnn'].dimshuffle(1,0,2), model.container['NodeFets'].dimshuffle(1,0,2), model.container['EdgeFets'].dimshuffle(1,0,2,3)], non_sequences = [_x, model.container['relDistIdxs'].dimshuffle(1,0,2), extendedWords, model.glob['trigger'], model.glob['arg'], model.glob['argTrigger'], model.glob['argArg']], outputs_info=[None, None, None, None], n_steps=model.args['maxSentLength']) #model.container['relDistBinary'].dimshuffle(1,0,2,3)
+    outscanTrain, updateTrain \
+    = \
+    theano.scan(fn=recurTrain, 
+                sequences=[T.arange(model.args['maxSentLength']), \
+                           model.container['triggerAnn'].T, \
+                           model.container['argumentEntityIdAnn'].dimshuffle(1,0,2), \
+                           model.container['argumentPosAnn'].dimshuffle(1,0,2), \
+                           model.container['argumentLabelAnn'].dimshuffle(1,0,2),\
+                           model.container['NodeFets'].dimshuffle(1,0,2), \
+                           model.container['EdgeFets'].dimshuffle(1,0,2,3)], \
+                non_sequences = [_x, model.container['relDistIdxs'].dimshuffle(1,0,2),\
+                                 extendedWords, model.glob['trigger'],\
+                                 model.glob['arg'], model.glob['argTrigger'],\
+                                 model.glob['argArg']], \
+                outputs_info=[None, None, None, None], \
+                n_steps=model.args['maxSentLength']) #model.container['relDistBinary'].dimshuffle(1,0,2,3)
     
     randTrigger = generateBinomial((model.args['maxSentLength'], model.args['batch'], hidTrigger[-1]), model.args['rng'], model.args['dropoutTrigger'])
     randArg = generateBinomial((model.args['maxSentLength'], model.args['batch'], model.args['maxNumEntities'], hidArg[-1]), model.args['rng'], model.args['dropoutArg'])
