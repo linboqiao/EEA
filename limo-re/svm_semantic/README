@@ -1,0 +1,58 @@
+SVM-Light-TK (v1.2) with semantics 
+==================================
+
+README author: Barbara Plank <bplank@gmail.com>
+date: May 2013
+
+This package contains SVM-Light-TK (v1.2, that contains the Collin's SST kernel) 
+and includes semantic simlarity as well as instance weighting.
+
+Input Format:
+
+To use the semantic similarity, the leaf nodes (terminals) must contain
+the id of the word in the matrix, where the ID must be prefixed by 000000 (six zeros).
+Example: 
+
++1 |BT| (NP (NP (E1 (NN 000000000013985)))(PP (IN 000000000001849)(NP (E2 (NNP 000000000010346))))) |ET|
+
+which encodes the fragment "surface of mars":
+   (NP (NP (E1 (NN surface)))(PP (IN of)(NP (E2 (NNP mars))))) |BT| 
+
+
+To use instance weighting, provide a instance_weights file where one line corresponds to one weight,
+thus it should contain as many lines as your train data file.
+
+Options:
+
+  -u matrixfile 
+  -y instance_weights
+ 
+
+Examples:
+
+ ./svm_learn -F 1 -t 5 -L 0.4 -u matrix.bin train.txt model 
+
+       Train a model with semantic similarity integrated into the leaf nodes (similarity is encoded in matrix).
+       
+
+  ./svm_learn -F 1 -t 5 -L 0.4 -u empty.bin train.txt model
+
+       Train a model without similarity (empty.bin is an empty matrix)
+
+  ./svm_learn -F 1 -t 5 -L 0.4 -u matrix.bin -y weights.dat train.txt model
+
+       Train a model with instance weighting.
+
+
+
+### to create the matrix file:
+create a file that contains the word-word similarity matrix (enough to have upper half of matrix):
+
+indexword1 indexword2 cosinesimilarity
+
+then, run ./createBinaryMatrix on this matrix
+
+NB: indices of words need to start at 1 (for semtk!)
+
+for some (deprecated) Java files used with s-space, see matrix/deprecated folder
+

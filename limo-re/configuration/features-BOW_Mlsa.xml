@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<exrel>
+	<extractorLayout>
+
+	    <separator id="sep1">|BT|</separator>
+
+		<structuredgroup id="str1">
+			<structuredfeature class="limo.exrel.features.re.structured.BOW_Mlsa" />
+		</structuredgroup>
+
+                <separator id="sep4">|ET|</separator>
+
+	</extractorLayout>
+
+</exrel>

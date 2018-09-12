@@ -1,0 +1,82 @@
+15	O	0	O	POS	American	O	O	O
+15	O	1	O	POS	Future	O	O	O
+15	O	2	O	POS	has	O	O	O
+15	O	3	O	POS	a	O	O	O
+15	O	4	O	POS	link	O	O	O
+15	O	5	O	POS	up	O	O	O
+15	O	6	O	POS	to	O	O	O
+15	O	7	O	POS	a	O	O	O
+15	O	8	O	POS	article	O	O	O
+15	O	9	O	POS	written	O	O	O
+15	O	10	O	POS	in	O	O	O
+15	O	11	O	POS	yesterdays	O	O	O
+15	ORG_NAM	12	O	POS	Houston/Chronicle	O	O	O
+15	O	13	O	POS	.	O	O	O
+
+18	O	0	O	POS	It	O	O	O
+18	O	1	O	POS	describes	O	O	O
+18	O	2	O	POS	how	O	O	O
+18	O	3	O	POS	the	O	O	O
+18	GPE_NAM	4	O	POS	European	O	O	O
+18	ORG_NOM	5	O	POS	Governments	O	O	O
+18	O	6	O	POS	look	O	O	O
+18	O	7	O	POS	to	O	O	O
+18	O	8	O	POS	be	O	O	O
+18	O	9	O	POS	changing	O	O	O
+18	ORG_PRO	10	O	POS	their	O	O	O
+18	O	11	O	POS	tune	O	O	O
+18	O	12	O	POS	in	O	O	O
+18	O	13	O	POS	regards	O	O	O
+18	O	14	O	POS	to	O	O	O
+18	PER_NOM	15	O	POS	President	O	O	O
+18	PER_NAM	16	O	POS	Bush	O	O	O
+18	O	17	O	POS	.	O	O	O
+
+5	4	PART-WHOLE
+
+4	O	0	O	POS	Why	O	O	O
+4	PER_PRO	1	O	POS	you	O	O	O
+4	O	2	O	POS	ask	O	O	O
+4	O	3	O	POS	?	O	O	O
+
+19	O	0	O	POS	But	O	O	O
+19	O	1	O	POS	there	O	O	O
+19	O	2	O	POS	is	O	O	O
+19	O	3	O	POS	arguably	O	O	O
+19	O	4	O	POS	more	O	O	O
+19	O	5	O	POS	to	O	O	O
+19	O	6	O	POS	this	O	O	O
+19	O	7	O	POS	sea	O	O	O
+19	O	8	O	POS	change	O	O	O
+19	O	9	O	POS	than	O	O	O
+19	O	10	O	POS	just	O	O	O
+19	O	11	O	POS	a	O	O	O
+19	O	12	O	POS	grumpy	O	O	O
+19	O	13	O	POS	acceptance	O	O	O
+19	O	14	O	POS	of	O	O	O
+19	O	15	O	POS	the	O	O	O
+19	O	16	O	POS	status	O	O	O
+19	O	17	O	POS	quo	O	O	O
+19	O	18	O	POS	.	O	O	O
+
+19	O	0	O	POS	From	O	O	O
+19	O	1	O	POS	a	O	O	O
+19	GPE_NAM	2	O	POS	European	O	O	O
+19	O	3	O	POS	perspective	O	O	O
+19	O	4	O	POS	,	O	O	O
+19	O	5	O	POS	three	O	O	O
+19	O	6	O	POS	things	O	O	O
+19	O	7	O	POS	are	O	O	O
+19	O	8	O	POS	making	O	O	O
+19	O	9	O	POS	it	O	O	O
+19	O	10	O	POS	easier	O	O	O
+19	O	11	O	POS	to	O	O	O
+19	O	12	O	POS	warm	O	O	O
+19	O	13	O	POS	to	O	O	O
+19	O	14	O	POS	the	O	O	O
+19	PER_NAM	15	O	POS	Bush	O	O	O
+19	ORG_NAM	16	O	POS	White/House	O	O	O
+19	O	17	O	POS	.	O	O	O
+
+15	16	ORG-AFF
+

@@ -1,0 +1,20 @@
+SVM-light Version V5.01-TK-2.0
+5 # kernel type
+3 # kernel parameter -d 
+1 # kernel parameter -g 
+1 # kernel parameter -s 
+1 # kernel parameter -r 
+/home/barbara/project/limosine/tools/limo/experiments_acl2013re/matrix/empty/matrix.bin# kernel parameter -u 
+0.4 # kernel parameter -L 
+0.4 # kernel parameter -T 
+T # kernel parameter -C 
+1 # kernel parameter -F 
+1 # kernel parameter -S 
+1.000000 # kernel parameter -D 
+3 # kernel parameter -N 
+S # kernel parameter -V 
+S # kernel parameter -W 
+0 # highest feature index 
+1 # number of training documents 
+1 # number of support vectors plus 1 
+1 # threshold b, each following line is a SV (starting with alpha*y)

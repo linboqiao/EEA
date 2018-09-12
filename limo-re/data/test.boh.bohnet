@@ -1,0 +1,21 @@
+1	In	_	ADP	IN	_	7	prep	_	_	
+2	Washington	_	NOUN	NNP	_	1	pobj	_	_	
+3	,	_	.	,	_	7	punct	_	_	
+4	U.S.	_	NOUN	NNP	_	5	nn	_	_	
+5	officials	_	NOUN	NNS	_	7	nsubj	_	_	
+6	are	_	VERB	VBP	_	7	aux	_	_	
+7	working	_	VERB	VBG	_	0	root	_	_	
+8	overtime	_	NOUN	NN	_	7	dobj	_	_	
+9	.	_	.	.	_	7	punct	_	_	
+
+1	Leaders	_	NOUN	NNPS	_	6	nsubj	_	_	
+2	of	_	ADP	IN	_	1	prep	_	_	
+3	the	_	DET	DT	_	5	det	_	_	
+4	European	_	NOUN	NNP	_	5	nn	_	_	
+5	Union	_	NOUN	NNP	_	2	pobj	_	_	
+6	meet	_	VERB	VBP	_	0	root	_	_	
+7	in	_	ADP	IN	_	6	prep	_	_	
+8	Zagreb	_	NOUN	NNP	_	7	pobj	_	_	
+9	today	_	NOUN	NN	_	6	tmod	_	_	
+10	.	_	.	.	_	6	punct	_	_	
+

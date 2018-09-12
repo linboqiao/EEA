@@ -1,0 +1,19 @@
+This software is free for personal, teaching or research uses.
+If you use this software for research, please cite the following 
+article in your work:
+
+   [1] Barbara Plank and Alessandro Moschitti. Embedding Semantic
+    Similarity in Tree Kernels for Domain Adaptation of Relation
+    Extraction. In Proceedings of the Annual Meeting of the
+    Association for Computational Linguistics (ACL 2013), Sofia,
+    Bulgaria, August 2013.
+
+Please note that research uses do NOT include those involving the
+development of technology to be employed for commercial or any other
+kind of revenue purposes. These include selling, releasing, or
+providing commercial services based on the software.
+
+For any other uses, please contact the authors of this software for
+further details.
+
+Licenses of third-party libraries can be found in lib/licenses.

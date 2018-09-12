@@ -1,0 +1,1427 @@
+<?xml version="1.0"?>
+<!DOCTYPE source_file SYSTEM "apf.v4.0.1.dtd">
+<source_file URI="ABC20001001.1830.0973.sgm" SOURCE="broadcast news" TYPE="text" VERSION="4.0" AUTHOR="LDC" ENCODING="UTF-8">
+<document DOCID="ABC20001001.1830.0973">
+<entity ID="ABC20001001.1830.0973-E1" TYPE="GPE" SUBTYPE="Nation" CLASS="SPC">
+  <entity_mention ID="1-27" TYPE="NAM" LDCTYPE="NAM" ROLE="GPE">
+    <extent>
+      <charseq START="962" END="968">america</charseq>
+    </extent>
+    <head>
+      <charseq START="962" END="968">america</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="1-28" TYPE="NAM" LDCTYPE="NAM" ROLE="LOC">
+    <extent>
+      <charseq START="992" END="998">america</charseq>
+    </extent>
+    <head>
+      <charseq START="992" END="998">america</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="1-101" TYPE="NAM" LDCTYPE="NAM" ROLE="LOC">
+    <extent>
+      <charseq START="388" END="390">usa</charseq>
+    </extent>
+    <head>
+      <charseq START="388" END="390">usa</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name>
+      <charseq START="962" END="968">america</charseq>
+    </name>
+    <name>
+      <charseq START="992" END="998">america</charseq>
+    </name>
+    <name>
+      <charseq START="388" END="390">usa</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<entity ID="ABC20001001.1830.0973-E2" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="2-3" TYPE="PRO" LDCTYPE="HLS">
+    <extent>
+      <charseq START="424" END="428">2,000</charseq>
+    </extent>
+    <head>
+      <charseq START="424" END="428">2,000</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E3" TYPE="GPE" SUBTYPE="Population-Center" CLASS="SPC">
+  <entity_mention ID="3-2" TYPE="NOM" LDCTYPE="NOM" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="411" END="428">this town of 2,000</charseq>
+    </extent>
+    <head>
+      <charseq START="416" END="419">town</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-4" TYPE="PRO" LDCTYPE="PRO" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="436" END="437">it</charseq>
+    </extent>
+    <head>
+      <charseq START="436" END="437">it</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-5" TYPE="NOM" LDCTYPE="NOM" ROLE="GPE" LDCATR="TRUE">
+    <extent>
+      <charseq START="448" END="471">a miniature ellis
+island</charseq>
+    </extent>
+    <head>
+      <charseq START="460" END="471">ellis
+island</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-6" TYPE="PRO" LDCTYPE="PRO" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="476" END="479">this</charseq>
+    </extent>
+    <head>
+      <charseq START="476" END="479">this</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-7" TYPE="NOM" LDCTYPE="NOM" ROLE="GPE" LDCATR="TRUE">
+    <extent>
+      <charseq START="485" END="651">an all-white, all-christian community that all the sudden
+was taken over -- not taken over, that's a very bad choice of words,
+but invaded by, perhaps different groups</charseq>
+    </extent>
+    <head>
+      <charseq START="513" END="521">community</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-10" TYPE="PRO" LDCTYPE="WHQ" ROLE="GPE" LDCATR="TRUE">
+    <extent>
+      <charseq START="523" END="526">that</charseq>
+    </extent>
+    <head>
+      <charseq START="523" END="526">that</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-16" TYPE="NOM" LDCTYPE="NOM" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="708" END="715">the town</charseq>
+    </extent>
+    <head>
+      <charseq START="712" END="715">town</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-24" TYPE="NAM" LDCTYPE="NAM" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="893" END="901">postville</charseq>
+    </extent>
+    <head>
+      <charseq START="893" END="901">postville</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-25" TYPE="NAM" LDCTYPE="NAM" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="914" END="922">postville</charseq>
+    </extent>
+    <head>
+      <charseq START="914" END="922">postville</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-35" TYPE="NOM" LDCTYPE="NOM" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="1118" END="1151">a town that had long
+been stagnant</charseq>
+    </extent>
+    <head>
+      <charseq START="1120" END="1123">town</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-36" TYPE="PRO" LDCTYPE="WHQ" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="1125" END="1128">that</charseq>
+    </extent>
+    <head>
+      <charseq START="1125" END="1128">that</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-40" TYPE="NAM" LDCTYPE="NAM" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="1325" END="1333">postville</charseq>
+    </extent>
+    <head>
+      <charseq START="1325" END="1333">postville</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-55" TYPE="PRO" LDCTYPE="PRO" ROLE="LOC" LDCATR="FALSE">
+    <extent>
+      <charseq START="1593" END="1596">here</charseq>
+    </extent>
+    <head>
+      <charseq START="1593" END="1596">here</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-68" TYPE="PRO" LDCTYPE="PRO" ROLE="LOC" LDCATR="FALSE">
+    <extent>
+      <charseq START="1833" END="1836">here</charseq>
+    </extent>
+    <head>
+      <charseq START="1833" END="1836">here</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-74" TYPE="NAM" LDCTYPE="NAM" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="1966" END="1974">postville</charseq>
+    </extent>
+    <head>
+      <charseq START="1966" END="1974">postville</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-84" TYPE="NAM" LDCTYPE="NAM" ROLE="LOC" LDCATR="FALSE">
+    <extent>
+      <charseq START="2204" END="2217">postville iowa</charseq>
+    </extent>
+    <head>
+      <charseq START="2204" END="2212">postville</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-98" TYPE="NOM" LDCTYPE="NOM" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="293" END="307">one little town</charseq>
+    </extent>
+    <head>
+      <charseq START="304" END="307">town</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="3-99" TYPE="NAM" LDCTYPE="NAM" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="357" END="365">postville</charseq>
+    </extent>
+    <head>
+      <charseq START="357" END="365">postville</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name>
+      <charseq START="914" END="922">postville</charseq>
+    </name>
+    <name>
+      <charseq START="1325" END="1333">postville</charseq>
+    </name>
+    <name>
+      <charseq START="1966" END="1974">postville</charseq>
+    </name>
+    <name>
+      <charseq START="2204" END="2212">postville</charseq>
+    </name>
+    <name>
+      <charseq START="357" END="365">postville</charseq>
+    </name>
+    <name>
+      <charseq START="893" END="901">postville</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<entity ID="ABC20001001.1830.0973-E4" TYPE="PER" CLASS="GEN">
+  <entity_mention ID="4-8" TYPE="PRE" LDCTYPE="PRE">
+    <extent>
+      <charseq START="488" END="496">all-white</charseq>
+    </extent>
+    <head>
+      <charseq START="488" END="496">all-white</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E5" TYPE="PER" CLASS="GEN">
+  <entity_mention ID="5-9" TYPE="PRE" LDCTYPE="PRE">
+    <extent>
+      <charseq START="499" END="511">all-christian</charseq>
+    </extent>
+    <head>
+      <charseq START="499" END="511">all-christian</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E6" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="6-11" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="636" END="651">different groups</charseq>
+    </extent>
+    <head>
+      <charseq START="646" END="651">groups</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E7" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="7-12" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="670" END="692">a hasidic jewish family</charseq>
+    </extent>
+    <head>
+      <charseq START="687" END="692">family</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="7-17" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="763" END="766">they</charseq>
+    </extent>
+    <head>
+      <charseq START="763" END="766">they</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E8" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="8-13" TYPE="PRE" LDCTYPE="PRE">
+    <extent>
+      <charseq START="672" END="685">hasidic jewish</charseq>
+    </extent>
+    <head>
+      <charseq START="672" END="685">hasidic jewish</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E9" TYPE="FAC" SUBTYPE="Building" CLASS="SPC">
+  <entity_mention ID="9-14" TYPE="PRO" LDCTYPE="PTV">
+    <extent>
+      <charseq START="701" END="741">one of the town's two
+meat-packing plants</charseq>
+    </extent>
+    <head>
+      <charseq START="701" END="703">one</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="9-22" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="840" END="848">the plant</charseq>
+    </extent>
+    <head>
+      <charseq START="844" END="848">plant</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E10" TYPE="FAC" SUBTYPE="Building" CLASS="SPC">
+  <entity_mention ID="10-15" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="708" END="741">the town's two
+meat-packing plants</charseq>
+    </extent>
+    <head>
+      <charseq START="736" END="741">plants</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E11" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="11-18" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="779" END="796">other
+hasidic jews</charseq>
+    </extent>
+    <head>
+      <charseq START="793" END="796">jews</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E12" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="12-19" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="804" END="811">mexicans</charseq>
+    </extent>
+    <head>
+      <charseq START="804" END="811">mexicans</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E13" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="13-20" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="814" END="825">palestinians</charseq>
+    </extent>
+    <head>
+      <charseq START="814" END="825">palestinians</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E14" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="14-21" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="828" END="837">ukrainians</charseq>
+    </extent>
+    <head>
+      <charseq START="828" END="837">ukrainians</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E15" TYPE="FAC" SUBTYPE="Building" CLASS="SPC">
+  <entity_mention ID="15-23" TYPE="PRO" LDCTYPE="HLS">
+    <extent>
+      <charseq START="854" END="871">another next store</charseq>
+    </extent>
+    <head>
+      <charseq START="854" END="860">another</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E16" TYPE="GPE" SUBTYPE="Other" CLASS="SPC">
+  <entity_mention ID="16-26" TYPE="NOM" LDCTYPE="NOM" ROLE="GPE">
+    <extent>
+      <charseq START="950" END="968">the rest of america</charseq>
+    </extent>
+    <head>
+      <charseq START="954" END="957">rest</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E17" TYPE="GPE" SUBTYPE="Population-Center" CLASS="GEN">
+  <entity_mention ID="17-29" TYPE="NOM" LDCTYPE="NOM" ROLE="GPE">
+    <extent>
+      <charseq START="1023" END="1036">any great city</charseq>
+    </extent>
+    <head>
+      <charseq START="1033" END="1036">city</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E18" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="18-30" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="906" END="906">i</charseq>
+    </extent>
+    <head>
+      <charseq START="906" END="906">i</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E19" TYPE="PER" CLASS="USP">
+  <entity_mention ID="19-31" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="974" END="976">you</charseq>
+    </extent>
+    <head>
+      <charseq START="974" END="976">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="19-32" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1004" END="1006">you</charseq>
+    </extent>
+    <head>
+      <charseq START="1004" END="1006">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="19-33" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1039" END="1041">you</charseq>
+    </extent>
+    <head>
+      <charseq START="1039" END="1041">you</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E20" TYPE="FAC" SUBTYPE="Subarea-Building" CLASS="SPC">
+  <entity_mention ID="20-37" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="1154" END="1159">stores</charseq>
+    </extent>
+    <head>
+      <charseq START="1154" END="1159">stores</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E21" TYPE="FAC" SUBTYPE="Building" CLASS="SPC">
+  <entity_mention ID="21-38" TYPE="NOM" LDCTYPE="MWH">
+    <extent>
+      <charseq START="1176" END="1200">new apartments and houses</charseq>
+    </extent>
+    <head>
+      <charseq START="1180" END="1200">apartments and houses</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E22" TYPE="GPE" SUBTYPE="State-or-Province" CLASS="SPC">
+  <entity_mention ID="22-1" TYPE="NOM" LDCTYPE="NOM" ROLE="GPE">
+    <extent>
+      <charseq START="70" END="90">many heartland states</charseq>
+    </extent>
+    <head>
+      <charseq START="85" END="90">states</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E23" TYPE="PER" CLASS="USP">
+  <entity_mention ID="23-39" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1313" END="1315">you</charseq>
+    </extent>
+    <head>
+      <charseq START="1313" END="1315">you</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E24" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="24-41" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1375" END="1387">some resident</charseq>
+    </extent>
+    <head>
+      <charseq START="1380" END="1387">resident</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="24-59" TYPE="PRO" LDCTYPE="HLS">
+    <extent>
+      <charseq START="1709" END="1742">those who prefer the old postville</charseq>
+    </extent>
+    <head>
+      <charseq START="1709" END="1713">those</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="24-60" TYPE="PRO" LDCTYPE="WHQ">
+    <extent>
+      <charseq START="1715" END="1717">who</charseq>
+    </extent>
+    <head>
+      <charseq START="1715" END="1717">who</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="24-65" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1797" END="1800">them</charseq>
+    </extent>
+    <head>
+      <charseq START="1797" END="1800">them</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="24-66" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1803" END="1805">you</charseq>
+    </extent>
+    <head>
+      <charseq START="1803" END="1805">you</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="24-70" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1876" END="1878">you</charseq>
+    </extent>
+    <head>
+      <charseq START="1876" END="1878">you</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E25" TYPE="PER" CLASS="GEN">
+  <entity_mention ID="25-42" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1406" END="1418">the newcomers</charseq>
+    </extent>
+    <head>
+      <charseq START="1410" END="1418">newcomers</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="25-43" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1423" END="1426">they</charseq>
+    </extent>
+    <head>
+      <charseq START="1423" END="1426">they</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="25-44" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1449" END="1453">their</charseq>
+    </extent>
+    <head>
+      <charseq START="1449" END="1453">their</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="25-45" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1461" END="1464">they</charseq>
+    </extent>
+    <head>
+      <charseq START="1461" END="1464">they</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="25-46" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1492" END="1495">they</charseq>
+    </extent>
+    <head>
+      <charseq START="1492" END="1495">they</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="25-47" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1508" END="1512">their</charseq>
+    </extent>
+    <head>
+      <charseq START="1508" END="1512">their</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="25-48" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1536" END="1539">they</charseq>
+    </extent>
+    <head>
+      <charseq START="1536" END="1539">they</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="25-57" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1645" END="1648">them</charseq>
+    </extent>
+    <head>
+      <charseq START="1645" END="1648">them</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="25-58" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1692" END="1695">they</charseq>
+    </extent>
+    <head>
+      <charseq START="1692" END="1695">they</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="25-67" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1825" END="1828">they</charseq>
+    </extent>
+    <head>
+      <charseq START="1825" END="1828">they</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="25-69" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1847" END="1850">they</charseq>
+    </extent>
+    <head>
+      <charseq START="1847" END="1850">they</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="25-71" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1909" END="1920">these
+people</charseq>
+    </extent>
+    <head>
+      <charseq START="1915" END="1920">people</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E26" TYPE="VEH" SUBTYPE="Land" CLASS="SPC">
+  <entity_mention ID="26-49" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1449" END="1458">their cars</charseq>
+    </extent>
+    <head>
+      <charseq START="1455" END="1458">cars</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E27" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="27-50" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1508" END="1521">their children</charseq>
+    </extent>
+    <head>
+      <charseq START="1514" END="1521">children</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E28" TYPE="VEH" SUBTYPE="Land" CLASS="GEN">
+  <entity_mention ID="28-51" TYPE="PRE" LDCTYPE="PRE">
+    <extent>
+      <charseq START="1561" END="1563">car</charseq>
+    </extent>
+    <head>
+      <charseq START="1561" END="1563">car</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E29" TYPE="PER" CLASS="USP">
+  <entity_mention ID="29-52" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1573" END="1575">you</charseq>
+    </extent>
+    <head>
+      <charseq START="1573" END="1575">you</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E30" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="30-53" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1582" END="1583">we</charseq>
+    </extent>
+    <head>
+      <charseq START="1582" END="1583">we</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E31" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="31-54" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="1614" END="1614">i</charseq>
+    </extent>
+    <head>
+      <charseq START="1614" END="1614">i</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E32" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="32-56" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1622" END="1632">most people</charseq>
+    </extent>
+    <head>
+      <charseq START="1627" END="1632">people</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E33" TYPE="GPE" SUBTYPE="Population-Center" CLASS="SPC">
+  <entity_mention ID="33-61" TYPE="NOM" LDCTYPE="NOM" ROLE="GPE">
+    <extent>
+      <charseq START="1726" END="1742">the old postville</charseq>
+    </extent>
+    <head>
+      <charseq START="1734" END="1742">postville</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E34" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="34-62" TYPE="NAM" LDCTYPE="NAM" LDCATR="FALSE">
+    <extent>
+      <charseq START="1745" END="1760">mayor john hyman</charseq>
+    </extent>
+    <head>
+      <charseq START="1751" END="1760">john hyman</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="34-63" TYPE="PRE" LDCTYPE="PRE" LDCATR="TRUE">
+    <extent>
+      <charseq START="1745" END="1749">mayor</charseq>
+    </extent>
+    <head>
+      <charseq START="1745" END="1749">mayor</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="34-64" TYPE="PRO" LDCTYPE="PRO" LDCATR="FALSE">
+    <extent>
+      <charseq START="1785" END="1785">i</charseq>
+    </extent>
+    <head>
+      <charseq START="1785" END="1785">i</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name>
+      <charseq START="1751" END="1760">john hyman</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<entity ID="ABC20001001.1830.0973-E36" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="36-72" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1925" END="1939">iowa's governor</charseq>
+    </extent>
+    <head>
+      <charseq START="1932" END="1939">governor</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E37" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="37-75" TYPE="NOM" LDCTYPE="NOM" LDCATR="FALSE">
+    <extent>
+      <charseq START="2075" END="2093">the starting kicker</charseq>
+    </extent>
+    <head>
+      <charseq START="2088" END="2093">kicker</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="37-76" TYPE="NAM" LDCTYPE="NAM" LDCATR="TRUE">
+    <extent>
+      <charseq START="2098" END="2178">14-year-old nikita
+kargalskiy, who may be 5,000 miles from his hometown in russia</charseq>
+    </extent>
+    <head>
+      <charseq START="2110" END="2126">nikita
+kargalskiy</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="37-77" TYPE="PRO" LDCTYPE="WHQ" LDCATR="TRUE">
+    <extent>
+      <charseq START="2129" END="2131">who</charseq>
+    </extent>
+    <head>
+      <charseq START="2129" END="2131">who</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="37-78" TYPE="PRO" LDCTYPE="PRO" LDCATR="TRUE">
+    <extent>
+      <charseq START="2157" END="2159">his</charseq>
+    </extent>
+    <head>
+      <charseq START="2157" END="2159">his</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name>
+      <charseq START="2110" END="2126">nikita
+kargalskiy</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<entity ID="ABC20001001.1830.0973-E39" TYPE="GPE" SUBTYPE="Population-Center" CLASS="SPC">
+  <entity_mention ID="39-79" TYPE="NOM" LDCTYPE="NOM" ROLE="LOC">
+    <extent>
+      <charseq START="2157" END="2178">his hometown in russia</charseq>
+    </extent>
+    <head>
+      <charseq START="2161" END="2168">hometown</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E40" TYPE="GPE" SUBTYPE="Nation" CLASS="SPC">
+  <entity_mention ID="40-80" TYPE="NAM" LDCTYPE="NAM" ROLE="LOC">
+    <extent>
+      <charseq START="2173" END="2178">russia</charseq>
+    </extent>
+    <head>
+      <charseq START="2173" END="2178">russia</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name>
+      <charseq START="2173" END="2178">russia</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<entity ID="ABC20001001.1830.0973-E41" TYPE="LOC" SUBTYPE="Region-Subnational" CLASS="GEN">
+  <entity_mention ID="41-89" TYPE="PRO" LDCTYPE="PRO">
+    <extent>
+      <charseq START="155" END="181">anywhere within state lines</charseq>
+    </extent>
+    <head>
+      <charseq START="155" END="162">anywhere</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E42" TYPE="FAC" SUBTYPE="Building" CLASS="SPC">
+  <entity_mention ID="42-34" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="1071" END="1080">the plants</charseq>
+    </extent>
+    <head>
+      <charseq START="1075" END="1080">plants</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E43" TYPE="LOC" SUBTYPE="Region-National" CLASS="SPC">
+  <entity_mention ID="43-82" TYPE="PRE" LDCTYPE="PRE">
+    <extent>
+      <charseq START="75" END="83">heartland</charseq>
+    </extent>
+    <head>
+      <charseq START="75" END="83">heartland</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E44" TYPE="GPE" SUBTYPE="State-or-Province" CLASS="SPC">
+  <entity_mention ID="44-73" TYPE="NAM" LDCTYPE="NAM" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="1925" END="1928">iowa</charseq>
+    </extent>
+    <head>
+      <charseq START="1925" END="1928">iowa</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="44-85" TYPE="NAM" LDCTYPE="NAM" ROLE="LOC" LDCATR="FALSE">
+    <extent>
+      <charseq START="2214" END="2217">iowa</charseq>
+    </extent>
+    <head>
+      <charseq START="2214" END="2217">iowa</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="44-86" TYPE="NAM" LDCTYPE="NAM" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="93" END="96">iowa</charseq>
+    </extent>
+    <head>
+      <charseq START="93" END="96">iowa</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="44-90" TYPE="PRE" LDCTYPE="PRE" ROLE="GPE" LDCATR="TRUE">
+    <extent>
+      <charseq START="171" END="175">state</charseq>
+    </extent>
+    <head>
+      <charseq START="171" END="175">state</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="44-92" TYPE="NOM" LDCTYPE="NOM" ROLE="ORG" LDCATR="FALSE">
+    <extent>
+      <charseq START="208" END="216">the state</charseq>
+    </extent>
+    <head>
+      <charseq START="212" END="216">state</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="44-93" TYPE="PRO" LDCTYPE="PRO" ROLE="GPE" LDCATR="FALSE">
+    <extent>
+      <charseq START="236" END="238">its</charseq>
+    </extent>
+    <head>
+      <charseq START="236" END="238">its</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name>
+      <charseq START="1925" END="1928">iowa</charseq>
+    </name>
+    <name>
+      <charseq START="2214" END="2217">iowa</charseq>
+    </name>
+    <name>
+      <charseq START="93" END="96">iowa</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<entity ID="ABC20001001.1830.0973-E45" TYPE="PER" CLASS="GEN">
+  <entity_mention ID="45-87" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="122" END="133">young
+people</charseq>
+    </extent>
+    <head>
+      <charseq START="128" END="133">people</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E46" TYPE="FAC" SUBTYPE="Bounded-Area" CLASS="GEN">
+  <entity_mention ID="46-88" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="143" END="150">the farm</charseq>
+    </extent>
+    <head>
+      <charseq START="147" END="150">farm</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E48" TYPE="LOC" SUBTYPE="Boundary" CLASS="SPC">
+  <entity_mention ID="48-91" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="171" END="181">state lines</charseq>
+    </extent>
+    <head>
+      <charseq START="177" END="181">lines</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="48-94" TYPE="NOM" LDCTYPE="NOM">
+    <extent>
+      <charseq START="236" END="246">its borders</charseq>
+    </extent>
+    <head>
+      <charseq START="240" END="246">borders</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E49" TYPE="PER" CLASS="GEN">
+  <entity_mention ID="49-95" TYPE="NOM" LDCTYPE="BAR">
+    <extent>
+      <charseq START="252" END="260">newcomers</charseq>
+    </extent>
+    <head>
+      <charseq START="252" END="260">newcomers</charseq>
+    </head>
+  </entity_mention>
+</entity>
+<entity ID="ABC20001001.1830.0973-E50" TYPE="ORG" SUBTYPE="Commercial" CLASS="SPC">
+  <entity_mention ID="50-83" TYPE="NAM" LDCTYPE="NAM">
+    <extent>
+      <charseq START="2194" END="2201">abc news</charseq>
+    </extent>
+    <head>
+      <charseq START="2194" END="2201">abc news</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="50-96" TYPE="NAM" LDCTYPE="NAM">
+    <extent>
+      <charseq START="266" END="268">abc</charseq>
+    </extent>
+    <head>
+      <charseq START="266" END="268">abc</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name>
+      <charseq START="2194" END="2201">abc news</charseq>
+    </name>
+    <name>
+      <charseq START="266" END="268">abc</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<entity ID="ABC20001001.1830.0973-E51" TYPE="PER" CLASS="SPC">
+  <entity_mention ID="51-81" TYPE="NAM" LDCTYPE="NAM">
+    <extent>
+      <charseq START="2181" END="2191">jim
+sciutto</charseq>
+    </extent>
+    <head>
+      <charseq START="2181" END="2191">jim
+sciutto</charseq>
+    </head>
+  </entity_mention>
+  <entity_mention ID="51-97" TYPE="NAM" LDCTYPE="NAM">
+    <extent>
+      <charseq START="266" END="282">abc's jim sciutto</charseq>
+    </extent>
+    <head>
+      <charseq START="272" END="282">jim sciutto</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name>
+      <charseq START="2181" END="2191">jim
+sciutto</charseq>
+    </name>
+    <name>
+      <charseq START="272" END="282">jim sciutto</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<entity ID="ABC20001001.1830.0973-E53" TYPE="GPE" SUBTYPE="Population-Center" CLASS="GEN">
+  <entity_mention ID="53-100" TYPE="NAM" LDCTYPE="NAM" ROLE="GPE">
+    <extent>
+      <charseq START="378" END="390">hometown, usa</charseq>
+    </extent>
+    <head>
+      <charseq START="378" END="385">hometown</charseq>
+    </head>
+  </entity_mention>
+  <entity_attributes>
+    <name>
+      <charseq START="378" END="385">hometown</charseq>
+    </name>
+  </entity_attributes>
+</entity>
+<relation ID="ABC20001001.1830.0973-R1" TYPE="PHYS" SUBTYPE="Part-Whole">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E22" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E43" ARGNUM="2" />
+  <relation_mention ID="1-1" LDCLEXICALCONDITION="PreMod">
+    <ldc_extent>
+      <charseq START="70" END="90">many heartland states</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="22-1" ARGNUM="1">
+      <extent>
+        <charseq START="70" END="90">many heartland states</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="43-82" ARGNUM="2">
+      <extent>
+        <charseq START="75" END="83">heartland</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R2" TYPE="PHYS" SUBTYPE="Near">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E44" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E48" ARGNUM="2" />
+  <relation_mention ID="2-1" LDCLEXICALCONDITION="Possessive">
+    <ldc_extent>
+      <charseq START="236" END="246">its borders</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="44-93" ARGNUM="1">
+      <extent>
+        <charseq START="236" END="238">its</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="48-94" ARGNUM="2">
+      <extent>
+        <charseq START="236" END="246">its borders</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+  <relation_mention ID="2-2" LDCLEXICALCONDITION="PreMod">
+    <ldc_extent>
+      <charseq START="171" END="181">state lines</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="44-90" ARGNUM="1">
+      <extent>
+        <charseq START="171" END="175">state</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="48-91" ARGNUM="2">
+      <extent>
+        <charseq START="171" END="181">state lines</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R4" TYPE="EMP-ORG" SUBTYPE="Employ-Staff">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E51" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E50" ARGNUM="2" />
+  <relation_mention ID="4-1" LDCLEXICALCONDITION="Possessive">
+    <ldc_extent>
+      <charseq START="266" END="282">abc's jim sciutto</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="51-97" ARGNUM="1">
+      <extent>
+        <charseq START="266" END="282">abc's jim sciutto</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="50-96" ARGNUM="2">
+      <extent>
+        <charseq START="266" END="268">abc</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+  <relation_mention ID="4-2" LDCLEXICALCONDITION="Formulaic">
+    <ldc_extent>
+      <charseq START="2181" END="2201">jim
+sciutto, abc news</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="51-81" ARGNUM="1">
+      <extent>
+        <charseq START="2181" END="2191">jim
+sciutto</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="50-83" ARGNUM="2">
+      <extent>
+        <charseq START="2194" END="2201">abc news</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R5" TYPE="PHYS" SUBTYPE="Part-Whole">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E53" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E1" ARGNUM="2" />
+  <relation_mention ID="5-1" LDCLEXICALCONDITION="Formulaic">
+    <ldc_extent>
+      <charseq START="378" END="390">hometown, usa</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="53-100" ARGNUM="1">
+      <extent>
+        <charseq START="378" END="390">hometown, usa</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="1-101" ARGNUM="2">
+      <extent>
+        <charseq START="388" END="390">usa</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R6" TYPE="GPE-AFF" SUBTYPE="Citizen-or-Resident">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E2" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E3" ARGNUM="2" />
+  <relation_mention ID="6-1" LDCLEXICALCONDITION="Preposition">
+    <ldc_extent>
+      <charseq START="411" END="428">this town of 2,000</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="2-3" ARGNUM="1">
+      <extent>
+        <charseq START="424" END="428">2,000</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="3-2" ARGNUM="2">
+      <extent>
+        <charseq START="411" END="428">this town of 2,000</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R7" TYPE="OTHER-AFF" SUBTYPE="Ideology">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E7" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E8" ARGNUM="2" />
+  <relation_mention ID="7-1" LDCLEXICALCONDITION="PreMod">
+    <ldc_extent>
+      <charseq START="670" END="692">a hasidic jewish family</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="7-12" ARGNUM="1">
+      <extent>
+        <charseq START="670" END="692">a hasidic jewish family</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="8-13" ARGNUM="2">
+      <extent>
+        <charseq START="672" END="685">hasidic jewish</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R8" TYPE="DISC">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E9" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E10" ARGNUM="2" />
+  <relation_mention ID="8-1" LDCLEXICALCONDITION="Preposition">
+    <ldc_extent>
+      <charseq START="701" END="741">one of the town's two
+meat-packing plants</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="9-14" ARGNUM="1">
+      <extent>
+        <charseq START="701" END="741">one of the town's two
+meat-packing plants</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="10-15" ARGNUM="2">
+      <extent>
+        <charseq START="708" END="741">the town's two
+meat-packing plants</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R9" TYPE="PHYS" SUBTYPE="Located">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E10" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E3" ARGNUM="2" />
+  <relation_mention ID="9-1" LDCLEXICALCONDITION="Possessive">
+    <ldc_extent>
+      <charseq START="708" END="741">the town's two
+meat-packing plants</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="10-15" ARGNUM="1">
+      <extent>
+        <charseq START="708" END="741">the town's two
+meat-packing plants</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="3-16" ARGNUM="2">
+      <extent>
+        <charseq START="708" END="715">the town</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R10" TYPE="ART" SUBTYPE="User-or-Owner">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E7" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E9" ARGNUM="2" />
+  <relation_mention ID="10-1" LDCLEXICALCONDITION="Verbal">
+    <ldc_extent>
+      <charseq START="670" END="754">a hasidic jewish family bought one of the town's two
+meat-packing plants 13 years ago</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="7-12" ARGNUM="1">
+      <extent>
+        <charseq START="670" END="692">a hasidic jewish family</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="9-14" ARGNUM="2">
+      <extent>
+        <charseq START="701" END="741">one of the town's two
+meat-packing plants</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R11" TYPE="PHYS" SUBTYPE="Part-Whole">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E16" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E1" ARGNUM="2" />
+  <relation_mention ID="11-1" LDCLEXICALCONDITION="Preposition">
+    <ldc_extent>
+      <charseq START="950" END="968">the rest of america</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="16-26" ARGNUM="1">
+      <extent>
+        <charseq START="950" END="968">the rest of america</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="1-27" ARGNUM="2">
+      <extent>
+        <charseq START="962" END="968">america</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R12" TYPE="ART" SUBTYPE="User-or-Owner">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E25" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E26" ARGNUM="2" />
+  <relation_mention ID="12-1" LDCLEXICALCONDITION="Possessive">
+    <ldc_extent>
+      <charseq START="1449" END="1458">their cars</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="25-44" ARGNUM="1">
+      <extent>
+        <charseq START="1449" END="1453">their</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="26-49" ARGNUM="2">
+      <extent>
+        <charseq START="1449" END="1458">their cars</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R13" TYPE="PER-SOC" SUBTYPE="Family">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E25" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E27" ARGNUM="2" />
+  <relation_mention ID="13-1" LDCLEXICALCONDITION="Possessive">
+    <ldc_extent>
+      <charseq START="1508" END="1521">their children</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="25-47" ARGNUM="1">
+      <extent>
+        <charseq START="1508" END="1512">their</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="27-50" ARGNUM="2">
+      <extent>
+        <charseq START="1508" END="1521">their children</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R14" TYPE="PHYS" SUBTYPE="Located">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E30" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E3" ARGNUM="2" />
+  <relation_mention ID="14-1" LDCLEXICALCONDITION="Verbal">
+    <ldc_extent>
+      <charseq START="1582" END="1608">we've been here a long time</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="30-53" ARGNUM="1">
+      <extent>
+        <charseq START="1582" END="1583">we</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="3-55" ARGNUM="2">
+      <extent>
+        <charseq START="1593" END="1596">here</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R15" TYPE="PHYS" SUBTYPE="Located">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E25" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E3" ARGNUM="2" />
+  <relation_mention ID="15-1" LDCLEXICALCONDITION="Verbal">
+    <ldc_extent>
+      <charseq START="1825" END="1844">they're here to stay</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="25-67" ARGNUM="1">
+      <extent>
+        <charseq START="1825" END="1828">they</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="3-68" ARGNUM="2">
+      <extent>
+        <charseq START="1833" END="1836">here</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R16" TYPE="EMP-ORG" SUBTYPE="Employ-Executive">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E36" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E44" ARGNUM="2" />
+  <relation_mention ID="16-1" LDCLEXICALCONDITION="Possessive">
+    <ldc_extent>
+      <charseq START="1925" END="1939">iowa's governor</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="36-72" ARGNUM="1">
+      <extent>
+        <charseq START="1925" END="1939">iowa's governor</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="44-73" ARGNUM="2">
+      <extent>
+        <charseq START="1925" END="1928">iowa</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R17" TYPE="GPE-AFF" SUBTYPE="Other">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E37" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E39" ARGNUM="2" />
+  <relation_mention ID="17-1" LDCLEXICALCONDITION="Possessive">
+    <ldc_extent>
+      <charseq START="2157" END="2178">his hometown in russia</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="37-78" ARGNUM="1">
+      <extent>
+        <charseq START="2157" END="2159">his</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="39-79" ARGNUM="2">
+      <extent>
+        <charseq START="2157" END="2178">his hometown in russia</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R18" TYPE="PHYS" SUBTYPE="Part-Whole">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E39" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E40" ARGNUM="2" />
+  <relation_mention ID="18-1" LDCLEXICALCONDITION="Preposition">
+    <ldc_extent>
+      <charseq START="2157" END="2178">his hometown in russia</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="39-79" ARGNUM="1">
+      <extent>
+        <charseq START="2157" END="2178">his hometown in russia</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="40-80" ARGNUM="2">
+      <extent>
+        <charseq START="2173" END="2178">russia</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R19" TYPE="PHYS" SUBTYPE="Located">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E51" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E3" ARGNUM="2" />
+  <relation_mention ID="19-1" LDCLEXICALCONDITION="Formulaic">
+    <ldc_extent>
+      <charseq START="2181" END="2217">jim
+sciutto, abc news, postville iowa</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="51-81" ARGNUM="1">
+      <extent>
+        <charseq START="2181" END="2191">jim
+sciutto</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="3-84" ARGNUM="2">
+      <extent>
+        <charseq START="2204" END="2217">postville iowa</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R20" TYPE="PHYS" SUBTYPE="Part-Whole">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E3" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E44" ARGNUM="2" />
+  <relation_mention ID="20-1" LDCLEXICALCONDITION="Formulaic">
+    <ldc_extent>
+      <charseq START="2204" END="2217">postville iowa</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="3-84" ARGNUM="1">
+      <extent>
+        <charseq START="2204" END="2217">postville iowa</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="44-85" ARGNUM="2">
+      <extent>
+        <charseq START="2214" END="2217">iowa</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+<relation ID="ABC20001001.1830.0973-R21" TYPE="PHYS" SUBTYPE="Part-Whole">
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E41" ARGNUM="1" />
+  <rel_entity_arg ENTITYID="ABC20001001.1830.0973-E44" ARGNUM="2" />
+  <relation_mention ID="21-1" LDCLEXICALCONDITION="Preposition">
+    <ldc_extent>
+      <charseq START="155" END="181">anywhere within state lines</charseq>
+    </ldc_extent>
+    <rel_mention_arg ENTITYMENTIONID="41-89" ARGNUM="1">
+      <extent>
+        <charseq START="155" END="181">anywhere within state lines</charseq>
+      </extent>
+    </rel_mention_arg>
+    <rel_mention_arg ENTITYMENTIONID="44-90" ARGNUM="2">
+      <extent>
+        <charseq START="171" END="175">state</charseq>
+      </extent>
+    </rel_mention_arg>
+  </relation_mention>
+</relation>
+</document>
+</source_file>
