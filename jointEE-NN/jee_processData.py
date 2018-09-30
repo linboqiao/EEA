@@ -1,8 +1,9 @@
 import numpy as np
 import cPickle
 from collections import defaultdict, OrderedDict
-import sys, re
-import pandas as pd
+import sys
+#import re
+#import pandas as pd
 import random
 
 #thien's version
@@ -69,8 +70,8 @@ def build_data(data_file, data_list):
                 
                 continue
             
-            id = inst[0]
-            docId = id[(id.find('=')+1):]
+            id_temp = inst[0]
+            docId = id_temp[(id_temp.find('=')+1):]
             docId = docId[0:docId.rfind('#')]
             if docId not in corpusMap:
                 print 'cannot find ', docId, ' in corpusMap'
@@ -186,7 +187,7 @@ def build_data(data_file, data_list):
             corpusCountIns[corpus] += 1
             
             idid += 1
-            idMap[idid] = id
+            idMap[idid] = id_temp
             
             datum = {"id": idid,
                          
@@ -420,9 +421,9 @@ def add_unknown_words(word_vecs, vocab, min_df=1, k=300):
         if word not in word_vecs and vocab[word] >= min_df:
             word_vecs[word] = np.random.uniform(-0.25,0.25,k)
 
-def loadEventEntityType(file, nodeDict):
+def loadEventEntityType(filename, nodeDict):
     res = {}
-    with open(file, 'r') as f:
+    with open(filename, 'r') as f:
         for line in f:
             line = line.strip()
             els = line.split('\t')

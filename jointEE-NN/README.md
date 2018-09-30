@@ -34,7 +34,7 @@ THE CODE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
 
 cmds:
 
-python jee_processData.py 'word2vec' ~/workspace/Datasets/GoogleNews-vectors-negative300.bin ./data/fistDoc.nnData4.txt ./data ./data/eventEntityTypeFile.txt
+python jee_processData.py 'word2vec' /home/linbo/workspace/Datasets/GoogleNews-vectors-negative300.bin ./data/fistDoc.nnData4.txt ./data ./data/eventEntityTypeFile.txt
 
-'word2vec' /home/linbo/workspace/Datasets/GoogleNews-vectors-negative300.bin ./data/fistDoc.nnData4.txt ./data ./data/eventEntityTypeFile.txt
+'word2vec' /home/linbo/workspace/Datasets/w2v_simp.bin ./data/fistDoc.nnData4.txt ./data ./data/eventEntityTypeFile.txt
 
