@@ -3,7 +3,7 @@ package edu.cmu.cs.lti.emd.pipeline.twostep;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Sets;
-import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
+import edu.cmu.cs.lti.script.annotators.writers.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.twostep.EventMentionTypeLearner;
 import edu.cmu.cs.lti.emd.eval.EventMentionEvalRunner;
 import edu.cmu.cs.lti.uima.io.reader.CustomCollectionReaderFactory;

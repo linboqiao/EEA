@@ -5,7 +5,7 @@ import edu.cmu.cs.lti.annotators.*;
 import edu.cmu.cs.lti.emd.annotators.misc.EventMentionTypeClassPrinter;
 import edu.cmu.cs.lti.emd.annotators.postprocessors.MentionTypeSplitter;
 import edu.cmu.cs.lti.emd.stat.ChineseMentionStats;
-import edu.cmu.cs.lti.event_coref.annotators.prepare.ArgumentMerger;
+import edu.cmu.cs.lti.script.annotators.ArgumentMerger;
 import edu.cmu.cs.lti.exceptions.ConfigurationException;
 import edu.cmu.cs.lti.io.EventDataReader;
 import edu.cmu.cs.lti.learning.runners.*;

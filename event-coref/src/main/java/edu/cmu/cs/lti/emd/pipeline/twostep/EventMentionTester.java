@@ -1,6 +1,6 @@
 package edu.cmu.cs.lti.emd.pipeline.twostep;
 
-import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
+import edu.cmu.cs.lti.script.annotators.writers.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.twostep.EventMentionTypeLearner;
 import edu.cmu.cs.lti.emd.annotators.postprocessors.NotOtherTypeAcceptor;
 import edu.cmu.cs.lti.emd.eval.EventMentionEvalRunner;

@@ -1,11 +1,10 @@
-package edu.cmu.cs.lti.event_coref.annotators.prepare;
+package edu.cmu.cs.lti.script.annotators;
 
 import com.google.common.collect.ArrayListMultimap;
 import edu.cmu.cs.lti.annotators.FanseAnnotator;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
-import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
+import edu.cmu.cs.lti.script.annotators.writers.TbfStyleEventWriter;
 import edu.cmu.cs.lti.model.Span;
-import edu.cmu.cs.lti.script.annotators.SemaforAnnotator;
 import edu.cmu.cs.lti.script.model.SemaforConstants;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;

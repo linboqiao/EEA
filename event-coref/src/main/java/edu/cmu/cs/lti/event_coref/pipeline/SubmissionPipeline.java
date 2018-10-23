@@ -2,13 +2,13 @@ package edu.cmu.cs.lti.event_coref.pipeline;
 
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
 import edu.cmu.cs.lti.emd.annotators.MultiModelMentionTypeAnnotator;
-import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
+import edu.cmu.cs.lti.script.annotators.writers.TbfStyleEventWriter;
 import edu.cmu.cs.lti.emd.annotators.classification.AllActualRealisAnnotator;
 import edu.cmu.cs.lti.emd.annotators.classification.RealisTypeAnnotator;
 import edu.cmu.cs.lti.emd.annotators.misc.TypeBasedMentionSelector;
 import edu.cmu.cs.lti.emd.annotators.postprocessors.MentionTypeSplitter;
 import edu.cmu.cs.lti.event_coref.annotators.EventCorefAnnotator;
-import edu.cmu.cs.lti.event_coref.annotators.prepare.EventHeadWordAnnotator;
+import edu.cmu.cs.lti.script.annotators.EventHeadWordAnnotator;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.MergedArgumentAnnotator;
 import edu.cmu.cs.lti.learning.utils.ModelUtils;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;

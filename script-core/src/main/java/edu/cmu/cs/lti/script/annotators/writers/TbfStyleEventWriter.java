@@ -1,11 +1,10 @@
-package edu.cmu.cs.lti.emd.annotators;
+package edu.cmu.cs.lti.script.annotators.writers;
 
 import com.google.common.base.Joiner;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.io.writer.AbstractSimpleTextWriterAnalysisEngine;
 import edu.cmu.cs.lti.uima.util.TokenAlignmentHelper;
-import edu.cmu.cs.lti.utils.MentionUtils;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -140,14 +139,14 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
 
             if (fromEventId == null) {
                 logger.error(String.format("Event %s in relation is not found in the mention list: %d",
-                        MentionUtils.mentionRepre(relation.getHead()), relation.getHead().hashCode())
+                        mentionRepre(relation.getHead()), relation.getHead().hashCode())
                         + " " + relation.getHead().getSofa().getSofaID());
                 throw new NullPointerException();
             }
 
             if (toEventId == null) {
                 logger.error(String.format("Event %s in relation is not found in the mention list: %d",
-                        MentionUtils.mentionRepre(relation.getChild()), relation.getHead().hashCode())
+                        mentionRepre(relation.getChild()), relation.getHead().hashCode())
                         + " " + relation.getHead().getSofa().getSofaID());
                 throw new NullPointerException();
             }
@@ -165,6 +164,12 @@ public class TbfStyleEventWriter extends AbstractSimpleTextWriterAnalysisEngine 
 
         return sb.toString();
     }
+
+    private String mentionRepre(EventMention mention) {
+        return String.format("%s [Type: %s] - [%d:%d]",
+                mention.getCoveredText(), mention.getEventType(), mention.getBegin(), mention.getEnd());
+    }
+
 
     private String formatArguments(Word headWord, TokenAlignmentHelper align) {
         List<String> argumentComponents = new ArrayList<>();

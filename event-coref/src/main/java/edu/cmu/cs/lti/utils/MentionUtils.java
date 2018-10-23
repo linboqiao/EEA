@@ -66,11 +66,6 @@ public class MentionUtils {
                 relations, extractor, isTraining, hasGold);
     }
 
-    public static String mentionRepre(EventMention mention) {
-        return String.format("%s [Type: %s] - [%d:%d]",
-                mention.getCoveredText(), mention.getEventType(), mention.getBegin(), mention.getEnd());
-    }
-
     private static int[] indexMentionClusters(JCas aJCas, List<EventMention> allMentions) {
         int eventIdx = 0;
         int[] mentionId2EventId = new int[allMentions.size()];

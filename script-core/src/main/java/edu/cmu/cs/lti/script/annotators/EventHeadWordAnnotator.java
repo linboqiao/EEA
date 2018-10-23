@@ -1,4 +1,4 @@
-package edu.cmu.cs.lti.event_coref.annotators.prepare;
+package edu.cmu.cs.lti.script.annotators;
 
 import edu.cmu.cs.lti.script.type.*;
 import edu.cmu.cs.lti.uima.annotator.AbstractLoggingAnnotator;

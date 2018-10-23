@@ -2,10 +2,10 @@ package edu.cmu.cs.lti.learning.runners;
 
 import edu.cmu.cs.lti.annotators.GoldStandardEventMentionAnnotator;
 import edu.cmu.cs.lti.collection_reader.TbfEventDataReader;
-import edu.cmu.cs.lti.emd.annotators.TbfStyleEventWriter;
+import edu.cmu.cs.lti.script.annotators.writers.TbfStyleEventWriter;
 import edu.cmu.cs.lti.event_coref.annotators.misc.GoldRemover;
 import edu.cmu.cs.lti.event_coref.annotators.prepare.MergedArgumentAnnotator;
-import edu.cmu.cs.lti.event_coref.annotators.prepare.EventHeadWordAnnotator;
+import edu.cmu.cs.lti.script.annotators.EventHeadWordAnnotator;
 import edu.cmu.cs.lti.model.UimaConst;
 import edu.cmu.cs.lti.pipeline.BasicPipeline;
 import edu.cmu.cs.lti.uima.io.writer.DocumentTextWriter;

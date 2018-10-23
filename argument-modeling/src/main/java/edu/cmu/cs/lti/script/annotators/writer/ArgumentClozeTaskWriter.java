@@ -32,6 +32,10 @@ import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.xml.sax.SAXException;
+import edu.cmu.cs.lti.script.Cloze.ClozeDoc;
+import edu.cmu.cs.lti.script.Cloze.CorefCluster;
+import edu.cmu.cs.lti.script.Cloze.ClozeEvent;
+import edu.cmu.cs.lti.script.Cloze.ClozeEntity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -80,48 +84,6 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
         }
     }
 
-    static class ClozeDoc {
-        String docid;
-        List<String> sentences;
-        List<ClozeEvent> events;
-        List<ClozeEntity> entities;
-        List<CorefCluster> eventCorefClusters;
-    }
-
-    static class CorefCluster {
-        List<Integer> elementIds;
-    }
-
-
-    static class ClozeEntity {
-        int entityId;
-        double[] entityFeatures;
-        String[] featureNames;
-        String representEntityHead;
-    }
-
-    static class ClozeEvent {
-        String predicate;
-        String context;
-        int sentenceId;
-        int predicateStart;
-        int predicateEnd;
-        String frame;
-        List<ClozeArgument> arguments;
-
-        int eventId;
-
-        static class ClozeArgument {
-            String feName;
-            String dep;
-            String context;
-            String text;
-            int entityId;
-
-            int argStart;
-            int argEnd;
-        }
-    }
 
     private void addCoref(JCas aJCas, ClozeDoc doc, TObjectIntMap<EventMention> eid2Event) {
         doc.eventCorefClusters = new ArrayList<>();
@@ -206,8 +168,12 @@ public class ArgumentClozeTaskWriter extends AbstractLoggingAnnotator {
                 eid2Event.put(eventMention, ce.eventId);
 
                 FSList argsFS = eventMention.getArguments();
-                Collection<EventMentionArgumentLink> argLinks = FSCollectionFactory.create(argsFS,
-                        EventMentionArgumentLink.class);
+                Collection<EventMentionArgumentLink> argLinks;
+                if (argsFS != null) {
+                    argLinks = FSCollectionFactory.create(argsFS, EventMentionArgumentLink.class);
+                } else {
+                    argLinks = new ArrayList<>();
+                }
 
                 List<ClozeEvent.ClozeArgument> clozeArguments = new ArrayList<>();
                 for (EventMentionArgumentLink argLink : argLinks) {
