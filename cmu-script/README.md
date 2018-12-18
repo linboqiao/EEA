@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-# cmu-script
-
-7z x models.7z.001
-
-
-# run the model
-
-bash run_EE.sh
-=======
 # README #
 
 The event project
@@ -111,4 +101,3 @@ About The Configuration File
 Training the model
 ----------
 To train the model, the easiest way is to use the data provided by [TAC-KBP 2015](http://www.nist.gov/tac/2015/KBP/data.html). One can also create files of similar format to train them.
->>>>>>> 0b1d50b9fb7eda2a0594d07b1bb39c417e65ceee
