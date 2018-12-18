@@ -1,5 +1,5 @@
 
 
-git subtree add -P "ComplexEventExtraction" git@github.com:liuhuanyong/ComplexEventExtraction.git; git push
-git subtree add -P "SequentialEventExtration" git@github.com:liuhuanyong/SequentialEventExtration.git; git push
-git subtree add -P "CausalityEventExtraction" git@github.com:liuhuanyong/CausalityEventExtraction.git; git push
+git subtree add -P "ComplexEventExtraction" git@github.com:liuhuanyong/ComplexEventExtraction.git master; git push
+git subtree add -P "SequentialEventExtration" git@github.com:liuhuanyong/SequentialEventExtration.git master; git push
+git subtree add -P "CausalityEventExtraction" git@github.com:liuhuanyong/CausalityEventExtraction.git master; git push
