@@ -1,9 +1,7 @@
-git subtree pull -P "EvmEval" git@github.com:hunterhector/EvmEval.git master
-git subtree pull -P "cmu-script" https://bitbucket.org/hunterhector/cmu-script.git master
-git subtree pull -P "jointEE-NN" git@github.com:anoperson/jointEE-NN.git master
-git subtree pull -P "EventEntityExtractor" git@github.com:bishanyang/EventEntityExtractor.git master
-git subtree pull -P "EventExtraction" git@github.com:LeonCrashCode/EventExtraction.git master
-git subtree pull -P "event-extraction" git@github.com:franticnerd/event-extraction.git master
-git subtree pull -P "mstparser" git@github.com:travisbrown/mstparser.git master
-git push
+
+
+git subtree add -P "ComplexEventExtraction" git@github.com:liuhuanyong/ComplexEventExtraction.git; git push
+git subtree add -P "SequentialEventExtration" git@github.com:liuhuanyong/SequentialEventExtration.git; git push
+git subtree add -P "CausalityEventExtraction" git@github.com:liuhuanyong/CausalityEventExtraction.git; git push
+
 
