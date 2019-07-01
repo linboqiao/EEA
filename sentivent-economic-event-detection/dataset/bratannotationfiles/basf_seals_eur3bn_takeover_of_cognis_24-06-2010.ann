@@ -1,0 +1,42 @@
+T1	MergerAcquisition 104 164	sealed a EUR3.1bn ( $3.8bn ) deal to take over smaller rival
+A1	Confidence T1 Certain
+T2	Company 89 93	BASF
+R1	is_about_acquirer Arg1:T1 Arg2:T2	
+T7	Company 778 782	BASF
+T10	Company 165 171	Cognis
+R5	is_about_target Arg1:T1 Arg2:T10	
+T13	Company 831 835	Ciba
+T8	Company 2319 2325	Cognis
+T11	Turnover 2252 2300	which made revenues of EUR9.4bn in the past year
+A9	Confidence T11 Certain
+T4	Company 2622 2626	BASF
+T14	MergerAcquisition 783 815	after its almost EUR4bn takeover
+A11	Confidence T14 Certain
+A12	MergerAcquisition_MergerAcquisition T14
+R6	is_about_target Arg1:T14 Arg2:T13	
+T15	MergerAcquisition 5 29	seals EUR3bn takeover of
+A13	Confidence T15 Certain
+A14	MergerAcquisition_MergerAcquisition T15
+T16	Company 30 36	Cognis
+T17	Company 0 4	BASF
+R8	is_about_target Arg1:T15 Arg2:T16	
+R9	is_about_acquirer Arg1:T15 Arg2:T17	
+A2	MergerAcquisition_MergerAcquisition T1
+T18	MergerAcquisition 433 493	to buy the company for an equity purchasing price of EUR700m
+A15	Confidence T18 Certain
+A16	MergerAcquisition_MergerAcquisition T18
+T19	MergerAcquisition 308 332	had reached an agreement
+A17	Confidence T19 Certain
+A18	MergerAcquisition_MergerAcquisition T19
+*	in_span_with T19 T18
+R10	is_about_target Arg1:T19 Arg2:T10	
+R11	is_about_acquirer Arg1:T19 Arg2:T2	
+R3	is_about_acquirer Arg1:T14 Arg2:T7	
+R4	is_about_company Arg1:T11 Arg2:T8	
+A5	Turnover_Other T11
+T5	MergerAcquisition 2744 2759	its acquisition
+A6	Confidence T5 Certain
+A7	MergerAcquisition_MergerAcquisition T5
+T6	Company 2763 2767	Ciba
+R7	is_about_target Arg1:T5 Arg2:T6	
+R12	is_about_acquirer Arg1:T5 Arg2:T4	

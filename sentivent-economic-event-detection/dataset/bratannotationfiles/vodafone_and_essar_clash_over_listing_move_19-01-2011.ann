@@ -1,0 +1,36 @@
+T1	MergerAcquisition 472 510	to merge 11 per cent of its stake into
+A1	Confidence T1 SomewhatCertain
+A2	MergerAcquisition_Other T1
+T2	Company 420 425	Essar
+T3	Company 511 527	India Securities
+R1	is_about_company Arg1:T1 Arg2:T2	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	MergerAcquisition 1181 1255	which has an option until May to sell its 33 per cent stake in the venture
+A3	Confidence T4 SomewhatCertain
+A4	MergerAcquisition_Other T4
+T5	MergerAcquisition 1268 1276	for $5bn
+A5	MergerAcquisition_Other T5
+*	in_span_with T4 T5
+T6	Company 1259 1267	Vodafone
+T7	Company 1173 1178	Essar
+R3	is_about_company Arg1:T4 Arg2:T7	
+R4	is_about_company Arg1:T4 Arg2:T6	
+T8	MergerAcquisition 1990 2010	its 2007 acquisition
+A6	Confidence T8 Certain
+A7	MergerAcquisition_MergerAcquisition T8
+T9	MergerAcquisition 2030 2039	for $11bn
+A8	MergerAcquisition_Other T9
+*	in_span_with T8 T9
+T10	Company 2014 2029	Hutchison Essar
+T11	Company 1947 1955	Vodafone
+R5	is_about_acquirer Arg1:T8 Arg2:T11	
+R6	is_about_target Arg1:T8 Arg2:T10	
+T12	Profit 2523 2685	In 2007-08 , the business recorded a profit margin of 33 per cent based on earnings before interest , tax , depreciation and amortisation as a percentage of sales
+A9	Confidence T12 Certain
+A10	Profit_Other T12
+T13	Company 2407 2415	Vodafone
+R7	is_about_company Arg1:T12 Arg2:T13	
+T14	Profit 2688 2741	But by 2009-10 that margin had slipped to 26 per cent
+A11	Confidence T14 Certain
+A12	Profit_Decrease T14
+R8	is_about_company Arg1:T14 Arg2:T13	

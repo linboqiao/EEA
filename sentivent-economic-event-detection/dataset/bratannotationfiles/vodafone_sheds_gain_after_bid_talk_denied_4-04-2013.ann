@@ -1,0 +1,44 @@
+T1	MergerAcquisition 68 99	denied it was considering a bid
+A1	Confidence T1 Certain
+A2	MergerAcquisition_NoMergerAcquisition T1
+T2	Company 60 67	Verizon
+T3	Company 104 112	Vodafone
+R1	is_about_acquirer Arg1:T1 Arg2:T2	
+R2	is_about_target Arg1:T1 Arg2:T3	
+T4	BuyRating 750 812	cutting UBS ratings on all three companies ' stock to " sell "
+A3	Confidence T4 Certain
+A4	BuyRating_Downgrade T4
+A5	BuyRating_Sell T4
+T5	Company 700 714	Telecom Italia
+T6	Company 717 728	TeliaSonera
+T7	Company 733 747	France Telecom
+R3	is_about_company Arg1:T4 Arg2:T7	
+R4	is_about_company Arg1:T4 Arg2:T6	
+R5	is_about_company Arg1:T4 Arg2:T5	
+T8	TargetPrice 953 1001	cut their target price for the shares to EUR0.45
+A6	Confidence T8 Certain
+A7	TargetPrice_Reduction T8
+T9	Company 826 840	Telecom Italia
+R6	is_about_company Arg1:T8 Arg2:T9	
+T10	TargetPrice 1142 1185	lowered their target on the shares to SKr38
+A8	Confidence T10 Certain
+A9	TargetPrice_Reduction T10
+T11	Company 1024 1035	TeliaSonera
+R7	is_about_company Arg1:T10 Arg2:T11	
+T12	TargetPrice 1217 1256	saw its target price lowered to EUR6.80
+A10	Confidence T12 Certain
+A11	TargetPrice_Reduction T12
+T13	Company 1188 1202	France Telecom
+R8	is_about_company Arg1:T12 Arg2:T13	
+T14	TargetPrice 1804 1826	increased their target
+A12	Confidence T14 Certain
+A13	TargetPrice_Raise T14
+T15	TargetPrice 1856 1877	from DKr120 to DKr125
+A14	TargetPrice_Raise T15
+*	in_span_with T14 T15
+T16	Company 1709 1720	Danske Bank
+R9	is_about_company Arg1:T14 Arg2:T16	
+T17	BuyRating 1897 1921	an " overweight " rating
+A15	Confidence T17 Certain
+A16	BuyRating_Outperform T17
+R10	is_about_company Arg1:T17 Arg2:T16	

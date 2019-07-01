@@ -1,0 +1,13 @@
+T1	Turnover 1480 1512	overall turnover fell 6 per cent
+A1	Confidence T1 Certain
+A2	Turnover_Decrease T1
+T2	Profit 1553 1586	while net profit fell 32 per cent
+A3	Confidence T2 Certain
+A4	Profit_Decrease T2
+T3	SalesVolume 1591 1630	underlying sales rose just 0.4 per cent
+A5	Confidence T3 Certain
+A6	SalesVolume_Increase T3
+T4	Company 1468 1476	Unilever
+R1	is_about_company Arg1:T1 Arg2:T4	
+R2	is_about_company Arg1:T2 Arg2:T4	
+R3	is_about_company Arg1:T3 Arg2:T4	

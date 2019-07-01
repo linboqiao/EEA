@@ -1,0 +1,38 @@
+T1	Profit 90 115	posts 9 % fall in profits
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 0 8	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	QuarterlyResults 422 492	it reported a 9 per cent fall in profits for the first quarter of 2011
+A3	Confidence T3 Certain
+A4	QuarterlyResults_Worse T3
+T4	Profit 422 492	it reported a 9 per cent fall in profits for the first quarter of 2011
+A5	Profit_Declaration T4
+A6	Confidence T4 Certain
+A7	Profit_Decrease T4
+A8	Profit_Declaration T1
+T5	Company 495 503	Barclays
+R2	is_about_company Arg1:T4 Arg2:T5	
+R3	is_about_company Arg1:T3 Arg2:T5	
+T6	Profit 747 835	analysts ' consensus expectations for pound(s)7bn of underlying pre-tax profit this year
+A9	Confidence T6 Certain
+A10	Profit_Forecast T6
+T7	Company 694 702	Barclays
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Profit 2087 2147	made a pre-tax profit of pound(s)1.66bn in the first quarter
+A11	Confidence T8 Certain
+A12	Profit_Positive T8
+T9	Profit 2150 2192	down 9 per cent on the same period in 2010
+A13	Confidence T9 Certain
+A14	Profit_Decrease T9
+T10	QuarterlyResults 2087 2192	made a pre-tax profit of pound(s)1.66bn in the first quarter , down 9 per cent on the same period in 2010
+A15	Confidence T10 Certain
+A16	QuarterlyResults_Worse T10
+T11	Company 2078 2086	Barclays
+R5	is_about_company Arg1:T8 Arg2:T11	
+R6	is_about_company Arg1:T10 Arg2:T11	
+R7	is_about_company Arg1:T9 Arg2:T11	
+T12	Profit 2296 2352	adjusted pre-tax profit was pound(s)2bn , up 10 per cent
+A17	Confidence T12 Certain
+A18	Profit_Increase T12
+R8	is_about_company Arg1:T12 Arg2:T11	

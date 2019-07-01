@@ -1,0 +1,42 @@
+T1	QuarterlyResults 1369 1422	its first-quarter results proved better than expected
+A1	Confidence T1 Certain
+A2	QuarterlyResults_BetterThanExpected T1
+T2	Company 1281 1303	Royal Bank of Scotland
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	QuarterlyResults 1742 1782	which posts quarterly results on Tuesday
+A3	Confidence T3 Certain
+A4	QuarterlyResults_Publication T3
+T4	Company 1731 1739	BG Group
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 2314 2361	a sharp decline in advertising sales over April
+A5	Confidence T5 Certain
+A6	SalesVolume_Decrease T5
+T6	Company 2188 2191	ITV
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	QuarterlyResults 2428 2465	the worse-thanexpected second quarter
+A7	Confidence T7 Certain
+A8	QuarterlyResults_WorseThanExpected T7
+R4	is_about_company Arg1:T7 Arg2:T6	
+T8	QuarterlyResults 2561 2607	the worse-than-expected secondquarter revenues
+A9	Confidence T8 Certain
+A10	QuarterlyResults_WorseThanExpected T8
+R5	is_about_company Arg1:T8 Arg2:T6	
+T9	Turnover 2561 2607	the worse-than-expected secondquarter revenues
+A11	Confidence T9 Certain
+A12	Turnover_WorseThanExpected T9
+R6	is_about_company Arg1:T9 Arg2:T6	
+T10	TargetPrice 3548 3589	started coverage with a 205p target price
+A13	Confidence T10 Certain
+A14	TargetPrice_Announcement T10
+T11	Company 3490 3504	Brewin Dolphin
+R7	is_about_company Arg1:T10 Arg2:T11	
+T12	Profit 3592 3694	It forecast continuing growth in assets under management to drive 18 per cent compound earnings growth
+A15	Confidence T12 Certain
+A16	Profit_Increase T12
+A17	Profit_Forecast T12
+R8	is_about_company Arg1:T12 Arg2:T11	
+T13	BuyRating 4473 4508	added the stock to its " buy " list
+A18	Confidence T13 Certain
+A19	BuyRating_Buy T13
+T14	Company 4242 4248	Cobham
+R9	is_about_company Arg1:T13 Arg2:T14	

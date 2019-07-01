@@ -1,0 +1,21 @@
+T1	ShareRepurchase 438 456	a share buy-back .
+A1	Confidence T1 Certain
+A2	ShareRepurchase_Announcement T1
+T2	Company 295 303	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 2103 2132	has blocked dividend payments
+A3	Confidence T3 Certain
+A4	Dividend_NoPayment T3
+T4	Company 2136 2152	Verizon Wireless
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Debt 2361 2394	debt should be paid off next year
+A5	Confidence T5 Certain
+A6	Debt_Other T5
+A7	Debt_Reduction T5
+T6	Company 2342 2358	Verizon Wireless
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Dividend 2403 2458	could enable a restoration of dividend payments in 2012
+A8	Confidence T7 Certain
+A9	Dividend_Payment T7
+A10	Dividend_Forecast T7
+R4	is_about_company Arg1:T7 Arg2:T6	

@@ -1,0 +1,26 @@
+T1	QuarterlyResults 63 192	the investment bank 's fixed income , commodities and currencies unit has delivered a lacklustre performance in the first quarter
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Weak T1
+T2	Company 9 25	Barclays Capital
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 63 192	the investment bank 's fixed income , commodities and currencies unit has delivered a lacklustre performance in the first quarter
+A3	Confidence T3 Uncertain
+A4	Turnover_Decrease T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Turnover 195 261	Revenue fell by more than a fifth from a year ago to pound(s)2.1bn
+A5	Confidence T4 Certain
+A6	Turnover_Decrease T4
+R3	is_about_company Arg1:T4 Arg2:T2	
+T5	Turnover 377 426	achieving only an 11 per cent increase in revenue
+A7	Confidence T5 Certain
+A8	Turnover_Increase T5
+R4	is_about_company Arg1:T5 Arg2:T2	
+T6	Turnover 498 538	revenue fell 15 per cent from a year ago
+A9	Confidence T6 Certain
+A10	Turnover_Decrease T6
+T7	Company 488 494	BarCap
+R5	is_about_company Arg1:T6 Arg2:T7	
+T8	QuarterlyResults 904 966	the 8.1 per cent achieved in the normally strong first quarter
+A11	Confidence T8 Certain
+A12	QuarterlyResults_Weak T8
+R6	is_about_company Arg1:T8 Arg2:T7	

@@ -291,7 +291,7 @@ if __name__ == "__main__":
         ".//sentifmdetect/output/en_maintype_2017-11-30_09-58-15",
         ".//sentifmdetect/output/en_maintype_2017-12-15_17-28-53",
             ]
-    # dirp = glob(".//sentifmdetect/output/*")
+    dirp = glob("./output/*")
     for drp in dirp:
         if "_WORDVECTORS" not in drp:
             print(drp)
@@ -299,7 +299,7 @@ if __name__ == "__main__":
             if isinstance(df, pandas.DataFrame):
                 print(df.sort_values(by=['f1'], ascending=False))
 
-    # instances, labels = load_corpus(settings.DATA_DIR)
+    instances, labels = load_corpus(settings.DATA_DIR)
     # inspect_similar(instances)
     # test_dupes = ["I like cookies!", "I like cookies", "He did not walk into the barber shop to get a haircut however.",
     #               "He took is dog for a walk past the barbershop."]

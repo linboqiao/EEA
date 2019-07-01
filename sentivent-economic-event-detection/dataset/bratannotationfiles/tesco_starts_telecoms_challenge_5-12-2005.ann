@@ -1,0 +1,23 @@
+T1	SalesVolume 1326 1385	the first slowdown in underlying sales growth for two years
+A1	SalesVolume_Decrease T1
+A2	Confidence T1 Certain
+T2	Company 1188 1193	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 1525 1588	Overall sales in the UK rose 11.6 per cent in the third quarter
+A3	Confidence T3 Certain
+A4	SalesVolume_Increase T3
+T4	QuarterlyResults 1525 1588	Overall sales in the UK rose 11.6 per cent in the third quarter
+A5	Confidence T4 Certain
+A6	QuarterlyResults_Strong T4
+T5	Company 1388 1393	Tesco
+R2	is_about_company Arg1:T3 Arg2:T5	
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	SalesVolume 1723 1802	Growth in non-food sales was below the 13 per cent reported in the last quarter
+A7	Confidence T6 Certain
+A8	SalesVolume_Decrease T6
+T7	Company 1695 1700	Tesco
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	QuarterlyResults 1723 1802	Growth in non-food sales was below the 13 per cent reported in the last quarter
+A9	Confidence T8 SomewhatCertain
+A10	QuarterlyResults_Weak T8
+R5	is_about_company Arg1:T8 Arg2:T7	

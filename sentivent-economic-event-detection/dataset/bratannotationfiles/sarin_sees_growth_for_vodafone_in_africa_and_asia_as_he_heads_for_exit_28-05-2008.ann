@@ -1,0 +1,34 @@
+T1	Turnover 166 191	slowing revenue growth at
+A1	Confidence T1 Certain
+A2	Turnover_Other T1
+T2	Company 192 200	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 535 618	guidance implies revenue growth of 5.6 per cent on a like-for-like basis in 2008-09
+A3	Confidence T3 Certain
+A4	Turnover_Forecast T3
+A5	Turnover_Increase T3
+T4	Turnover 621 654	down from 6.6 per cent in 2007-08
+A6	Confidence T4 Certain
+A7	Turnover_Decrease T4
+T5	Company 523 531	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T5	
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Turnover 882 932	lifted overall revenue by 14.1 per cent to L35.5bn
+A8	Confidence T6 Certain
+A9	Turnover_Increase T6
+T7	Company 873 881	Vodafone
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Profit 979 1011	it made a pre-tax profit of L9bn
+A10	Confidence T8 Certain
+T9	Profit 1014 1055	compared with a loss of L2.4bn in 2006-07
+A12	Confidence T9 Certain
+A13	Profit_Increase T9
+A11	Profit_Positive T8
+R5	is_about_company Arg1:T8 Arg2:T7	
+R6	is_about_company Arg1:T9 Arg2:T7	
+T10	Profit 1788 1812	declining profit margins
+A14	Confidence T10 SomewhatCertain
+A15	Profit_Positive T10
+A16	Profit_Other T10
+T11	Company 1746 1754	Vodafone
+R7	is_about_company Arg1:T10 Arg2:T11	

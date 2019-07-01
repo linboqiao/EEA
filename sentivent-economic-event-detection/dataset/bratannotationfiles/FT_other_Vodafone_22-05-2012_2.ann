@@ -1,0 +1,55 @@
+T1	Turnover 461 575	prompted the company to cut its medium-term revenue growth target by 1 percentage point to a range of 0-3 per cent
+A1	Confidence T1 Certain
+A2	Turnover_Decrease T1
+A3	Turnover_Forecast T1
+T2	Company 68 76	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 1113 1187	Service revenues in Europe fell 1.1 per cent compared to the previous year
+A4	Confidence T3 Certain
+A5	Turnover_Decrease T3
+T4	Company 695 703	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 1437 1491	reported service revenues up 7.3 per cent year on year
+A6	Confidence T5 Certain
+A7	Turnover_Increase T5
+T6	Company 1366 1382	Verizon Wireless
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	SalesVolume 1549 1590	Annual sales from data rose 22.2 per cent
+A8	Confidence T7 Certain
+A9	SalesVolume_Increase T7
+T8	Profit 1892 1922	flat pre-tax profit of £ 9.5bn
+A10	Confidence T8 Certain
+A11	Profit_Stable T8
+T9	Turnover 1928 1965	revenues up from £ 45.8bn to £ 46.4bn
+A12	Confidence T9 Certain
+A13	Turnover_Increase T9
+T10	Company 1874 1882	Vodafone
+R4	is_about_company Arg1:T8 Arg2:T10	
+R5	is_about_company Arg1:T9 Arg2:T10	
+T11	Profit 1969 2022	Diluted earnings per share fell from 15.11p to 13.65p
+A14	Confidence T11 Certain
+A15	Profit_Decrease T11
+T12	Dividend 2029 2083	a final dividend of 6.47p was proposed , up from 6.05p
+A16	Confidence T12 Certain
+A17	Dividend_Raise T12
+T13	Dividend 2143 2235	including a 4p special dividend - to 13.52p , a rise of 51.9 per cent from the previous year
+A18	Confidence T13 Certain
+A19	Dividend_Raise T13
+*	in_span_with T13 T12
+R6	is_about_company Arg1:T7 Arg2:T10	
+R7	is_about_company Arg1:T11 Arg2:T10	
+R8	is_about_company Arg1:T12 Arg2:T10	
+T14	MergerAcquisition 2282 2298	£ 1.04bn bid for
+A20	Confidence T14 SomewhatCertain
+A21	MergerAcquisition_Other T14
+T15	Company 2270 2278	Vodafone
+T16	Company 2299 2325	Cable & Wireless Worldwide
+R9	is_about_acquirer Arg1:T14 Arg2:T15	
+R10	is_about_target Arg1:T14 Arg2:T16	
+T17	MergerAcquisition 2700 2741	its acquisition of a controlling stake in
+A22	Confidence T17 Certain
+A23	MergerAcquisition_MergerAcquisition T17
+T18	Company 2742 2757	Hutchison Essar
+T19	Company 2648 2656	Vodafone
+R11	is_about_acquirer Arg1:T17 Arg2:T19	
+R12	is_about_target Arg1:T17 Arg2:T18	

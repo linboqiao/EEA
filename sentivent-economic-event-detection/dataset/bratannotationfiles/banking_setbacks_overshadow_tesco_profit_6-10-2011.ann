@@ -1,0 +1,79 @@
+T1	Profit 176 219	a 12 per cent increase in first-half profit
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+T2	Company 59 64	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 1034 1044	UK profits
+A3	Confidence T3 Certain
+A4	Profit_BetterThanExpected T3
+T4	Profit 1067 1096	had been better than expected
+A5	Confidence T4 Certain
+A6	Profit_BetterThanExpected T4
+*	in_span_with T4 T3
+T5	Company 722 727	Tesco
+R2	is_about_company Arg1:T3 Arg2:T5	
+T6	Profit 1099 1225	Pre-tax profit from continuing operations in the 26 weeks to August 27 was pound(s)1.88bn , up 12 per cent from a year earlier
+A7	Confidence T6 Certain
+A8	Profit_Increase T6
+A9	Profit_Positive T6
+R3	is_about_company Arg1:T6 Arg2:T5	
+T7	SalesVolume 1228 1267	Sales rose 8 per cent to pound(s)31.8bn
+A10	Confidence T7 Certain
+A11	SalesVolume_Increase T7
+R4	is_about_company Arg1:T7 Arg2:T5	
+T8	Profit 1269 1283	Trading profit
+A12	Confidence T8 Certain
+A13	Profit_Increase T8
+T9	Profit 1356 1389	rose 5 per cent to pound(s)1.27bn
+A14	Confidence T9 Certain
+A15	Profit_Increase T9
+T10	SalesVolume 1393 1437	sales that rose 6 per cent to pound(s)21.2bn
+A16	Confidence T10 Certain
+A17	SalesVolume_Increase T10
+*	in_span_with T9 T8
+T11	Company 1287 1292	Tesco
+R5	is_about_company Arg1:T8 Arg2:T11	
+R6	is_about_company Arg1:T10 Arg2:T11	
+T12	SalesVolume 1485 1526	sales were down 0.5 per cent for the half
+A18	Confidence T12 Certain
+A19	SalesVolume_Decrease T12
+R7	is_about_company Arg1:T12 Arg2:T11	
+T14	QuarterlyResults 1644 1736	hitting 0.9 per cent in the second quarter after a drop of 0.1 per cent in the first quarter
+A22	Confidence T14 Certain
+A23	QuarterlyResults_Worse T14
+T15	SalesVolume 1581 1736	This like-for-like sales decline accelerated over the period , hitting 0.9 per cent in the second quarter after a drop of 0.1 per cent in the first quarter
+A24	Confidence T15 Certain
+A25	SalesVolume_Decrease T15
+R8	is_about_company Arg1:T15 Arg2:T11	
+R9	is_about_company Arg1:T14 Arg2:T11	
+T13	SalesVolume 1739 1814	Sales of " non-food " items such as electrical goods were particularly weak
+A20	Confidence T13 Certain
+A21	SalesVolume_Other T13
+R10	is_about_company Arg1:T13 Arg2:T11	
+T16	Profit 2107 2175	Trading profit rose 19 per cent year on year to pound(s)292m in Asia
+A26	Confidence T16 Certain
+A27	Profit_Increase T16
+T17	Profit 2225 2288	and increased 12 per cent to pound(s)237m in continental Europe
+A28	Confidence T17 Certain
+A29	Profit_Increase T17
+T18	Company 1900 1905	Tesco
+R11	is_about_company Arg1:T16 Arg2:T18	
+R12	is_about_company Arg1:T17 Arg2:T18	
+T19	SalesVolume 2024 2104	the discounts would mean its UK profits would be broadly flat in the second half
+A30	SalesVolume_Forecast T19
+R13	is_about_company Arg1:T19 Arg2:T18	
+T20	Profit 2748 2800	Diluted earnings per share rose 14 per cent to 17.9p
+A31	Confidence T20 Certain
+A32	Profit_Increase T20
+T21	Company 2303 2308	Tesco
+R14	is_about_company Arg1:T20 Arg2:T21	
+T22	Dividend 2803 2881	while an interim dividend of 4.63p per share has been declared , up 6 per cent
+A33	Confidence T22 Certain
+A34	Dividend_Raise T22
+A35	Dividend_Announcement T22
+R15	is_about_company Arg1:T22 Arg2:T21	
+T23	Profit 2374 2453	The trading profit posted by Tesco 's banking arm fell 66 per cent year on year
+A36	Confidence T23 Certain
+A37	Profit_Decrease T23
+A38	Profit_Positive T23
+R16	is_about_company Arg1:T23 Arg2:T21	

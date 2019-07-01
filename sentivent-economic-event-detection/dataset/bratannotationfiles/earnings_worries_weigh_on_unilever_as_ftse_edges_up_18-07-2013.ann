@@ -1,0 +1,63 @@
+T1	Profit 0 16	Earnings worries
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A3	Profit_Forecast T1
+T2	Company 26 34	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 156 220	Analysts expect the group to deliver 5.5 per cent organic growth
+A4	Confidence T3 Certain
+T4	SalesVolume 272 324	down from 5.7 per cent for the same period last year
+A6	Confidence T4 Certain
+A7	SalesVolume_Decrease T4
+A5	SalesVolume_Decrease T3
+A8	SalesVolume_Forecast T3
+A9	SalesVolume_Forecast T4
+*	in_span_with T4 T3
+T5	QuarterlyResults 221 269	when it reports second-quarter results next week
+A10	Confidence T5 Certain
+A11	QuarterlyResults_Publication T5
+T6	Company 103 111	Unilever
+R2	is_about_company Arg1:T3 Arg2:T6	
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	BuyRating 569 585	which downgraded
+A12	Confidence T7 Certain
+A13	BuyRating_Downgrade T7
+A14	BuyRating_Underperform T7
+T8	BuyRating 595 614	to " underperform "
+A15	Confidence T8 Certain
+A16	BuyRating_Downgrade T8
+A17	BuyRating_Underperform T8
+*	in_span_with T8 T7
+T9	Company 586 594	Unilever
+R4	is_about_company Arg1:T8 Arg2:T9	
+T10	SalesVolume 1221 1249	grocery sales spiking higher
+A18	Confidence T10 Certain
+A19	SalesVolume_Increase T10
+T11	Company 1067 1084	Marks and Spencer
+T12	SalesVolume 1185 1213	as did industry data showing
+A20	Confidence T12 Certain
+A21	SalesVolume_Increase T12
+*	in_span_with T10 T12
+R5	is_about_company Arg1:T12 Arg2:T11	
+T13	BuyRating 1302 1337	added the stock to its " buy " list
+A22	Confidence T13 Certain
+A23	BuyRating_Buy T13
+T14	Company 1252 1263	Thomas Cook
+R6	is_about_company Arg1:T13 Arg2:T14	
+T15	Profit 2275 2314	warned of a pound(s)15m hit to earnings
+A24	Confidence T15 Certain
+A25	Profit_Decrease T15
+A26	Profit_Forecast T15
+T16	Company 2209 2221	Smiths Group
+R7	is_about_company Arg1:T15 Arg2:T16	
+T17	BuyRating 2601 2641	with RBC downgrading to " underperform "
+A27	Confidence T17 Certain
+A28	BuyRating_Downgrade T17
+A29	BuyRating_Underperform T17
+T18	Company 2556 2562	Capita
+R8	is_about_company Arg1:T17 Arg2:T18	
+T19	BuyRating 2841 2876	cut the stock from its " buy " list
+A30	Confidence T19 Certain
+A31	BuyRating_Downgrade T19
+T20	Company 2724 2740	Imperial Tobacco
+R9	is_about_company Arg1:T19 Arg2:T20	

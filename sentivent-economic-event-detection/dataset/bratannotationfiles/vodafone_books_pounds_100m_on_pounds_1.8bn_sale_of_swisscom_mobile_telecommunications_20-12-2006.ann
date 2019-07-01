@@ -1,0 +1,14 @@
+T1	Debt 473 512	to reduce its net debt of Pounds 20.2bn
+A1	Confidence T1 Certain
+A2	Debt_Reduction T1
+T2	Company 429 437	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 1665 1687	slowing revenue growth
+A3	Confidence T3 Certain
+A4	Turnover_Increase T3
+T4	Profit 1692 1716	declining profit margins
+A5	Confidence T4 Certain
+A6	Profit_Decrease T4
+T5	Company 1503 1511	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T5	
+R3	is_about_company Arg1:T4 Arg2:T5	

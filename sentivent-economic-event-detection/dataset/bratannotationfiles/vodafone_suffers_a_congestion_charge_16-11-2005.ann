@@ -1,0 +1,12 @@
+T1	Profit 505 559	expects only a 10 per cent return on capital this year
+A1	Confidence T1 Uncertain
+A2	Profit_Positive T1
+A3	Profit_Forecast T1
+T2	Company 461 471	NTT DoCoMo
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 1186 1245	earnings forecasts for next year should fallby 5-8 per cent
+A4	Confidence T3 Certain
+A5	Profit_Decrease T3
+A6	Profit_Forecast T3
+T4	Company 920 928	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	

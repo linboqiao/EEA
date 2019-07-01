@@ -1,0 +1,34 @@
+T1	Profit 193 209	a profit warning
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A3	Profit_Forecast T1
+T2	Company 166 171	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 287 326	UK sales rose 1.8 per cent year-on-year
+A4	Confidence T3 Certain
+A5	SalesVolume_Increase T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	SalesVolume 719 774	a like-for-like sales decline of 2.3 per cent in the UK
+A6	Confidence T4 Certain
+A7	SalesVolume_Decrease T4
+T5	Profit 799 832	the group 's first profit warning
+A8	Confidence T5 Certain
+A9	Profit_Decrease T5
+A10	Profit_Forecast T5
+T6	SalesVolume 2773 2854	said like-for-like sales in Europe fell 3.6 per cent , and 2.1 per cent in the US
+A11	Confidence T6 Certain
+A12	SalesVolume_Decrease T6
+T7	SalesVolume 2857 2902	Like-for-like sales in Asia fell 0.2 per cent
+A13	Confidence T7 Certain
+A14	SalesVolume_Decrease T7
+T8	Company 631 636	Tesco
+R3	is_about_company Arg1:T4 Arg2:T8	
+T9	Profit 1762 1803	the shock of the profit warning last year
+A15	Confidence T9 Certain
+A16	Profit_Decrease T9
+A17	Profit_Forecast T9
+R4	is_about_company Arg1:T9 Arg2:T8	
+R5	is_about_company Arg1:T5 Arg2:T8	
+T10	Company 2767 2772	Tesco
+R6	is_about_company Arg1:T6 Arg2:T10	
+R7	is_about_company Arg1:T7 Arg2:T10	

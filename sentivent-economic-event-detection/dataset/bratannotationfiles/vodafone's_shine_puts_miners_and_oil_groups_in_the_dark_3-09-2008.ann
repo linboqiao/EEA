@@ -1,0 +1,43 @@
+T1	SalesVolume 2362 2409	underlying sales trends continue to deteriorate
+A1	Confidence T1 Certain
+A2	SalesVolume_Decrease T1
+T2	Company 2412 2416	Next
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	BuyRating 2792 2819	repeated its " buy " rating
+A3	Confidence T3 Certain
+A4	BuyRating_Buy T3
+A5	BuyRating_Maintained T3
+T4	Company 2643 2660	DSG International
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	BuyRating 3219 3249	we retain an overweight rating
+A6	Confidence T5 Certain
+A7	BuyRating_Outperform T5
+A8	BuyRating_Maintained T5
+T6	Company 2984 2994	Prudential
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	TargetPrice 3273 3296	has a 989p target price
+A9	Confidence T7 Certain
+A10	TargetPrice_Announcement T7
+R4	is_about_company Arg1:T7 Arg2:T6	
+T8	BuyRating 3450 3477	Moving to a " hold " rating
+A11	Confidence T8 Certain
+A12	BuyRating_Hold T8
+T9	Company 3306 3317	Premier Oil
+R5	is_about_company Arg1:T8 Arg2:T9	
+T10	BuyRating 3646 3657	cut ratings
+A13	Confidence T10 SomewhatCertain
+A14	BuyRating_Downgrade T10
+T11	Company 3661 3679	Venture Production
+T12	Company 3718 3735	Salamander Energy
+R6	is_about_company Arg1:T10 Arg2:T11	
+R7	is_about_company Arg1:T10 Arg2:T12	
+T13	BuyRating 554 599	reiterating its " overweight " recommendation
+A15	Confidence T13 Certain
+A16	BuyRating_Outperform T13
+A17	BuyRating_Maintained T13
+T14	Company 435 443	Vodafone
+R8	is_about_company Arg1:T13 Arg2:T14	
+T15	BuyRating 3412 3423	a downgrade
+A18	Confidence T15 Certain
+A19	BuyRating_Downgrade T15
+R9	is_about_company Arg1:T15 Arg2:T9	

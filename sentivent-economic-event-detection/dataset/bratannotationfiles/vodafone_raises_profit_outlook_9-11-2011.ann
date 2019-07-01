@@ -1,0 +1,26 @@
+T1	Profit 9 30	raises profit outlook
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+A3	Profit_Forecast T1
+T2	Company 0 8	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 40 89	raised its outlook for full-year operating profit
+A4	Confidence T3 Certain
+A5	Profit_Increase T3
+A6	Profit_Forecast T3
+T4	Company 31 39	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 496 560	sales and operating profit were ahead of analysts ' expectations
+A7	Confidence T5 Certain
+A8	Profit_BetterThanExpected T5
+T6	SalesVolume 496 560	sales and operating profit were ahead of analysts ' expectations
+A9	Confidence T6 Certain
+A10	SalesVolume_BetterThanExpected T6
+T7	Company 484 492	Vodafone
+R3	is_about_company Arg1:T6 Arg2:T7	
+R4	is_about_company Arg1:T5 Arg2:T7	
+T8	Turnover 563 647	It reported pound(s)23.5bn of revenue for the half to September 30 , up 4.1 per cent
+A11	Confidence T8 Certain
+A12	Turnover_Forecast T8
+A13	Turnover_Increase T8
+R5	is_about_company Arg1:T8 Arg2:T7	

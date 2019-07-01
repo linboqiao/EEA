@@ -1,0 +1,20 @@
+T1	Turnover 9 28	turnover rises 10 %
+A1	Confidence T1 Certain
+A2	Turnover_Increase T1
+T2	Company 0 8	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 141 216	lifting turnover 10.5 per cent year on year to EUR51.3bn last calendar year
+A3	Confidence T3 Certain
+A4	Turnover_Increase T3
+T4	Company 55 63	Unilever
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 378 487	Operating profit rose 9 per cent to EUR7bn for the full year and was up 7 per cent to EUR4.9bn on a net basis
+A5	Confidence T5 Certain
+A6	Profit_Increase T5
+A7	Profit_Positive T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	SalesVolume 1295 1334	underlying sales growth of 6.9 per cent
+A8	Confidence T6 Certain
+A9	SalesVolume_Increase T6
+T7	Company 949 957	Unilever
+R4	is_about_company Arg1:T6 Arg2:T7	

@@ -1,0 +1,23 @@
+T1	QuarterlyResults 94 146	presented better-than-expected third-quarter profits
+A1	QuarterlyResults_Publication T1
+A2	QuarterlyResults_BetterThanExpected T1
+T2	Company 28 36	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 1128 1189	posted a pre-tax profit of pound(s)327m for the third quarter
+A3	Profit_Declaration T3
+A4	Confidence T3 Certain
+A5	Profit_Positive T3
+T4	QuarterlyResults 1128 1189	posted a pre-tax profit of pound(s)327m for the third quarter
+A6	Confidence T4 Certain
+A7	QuarterlyResults_Publication T4
+T5	Profit 1192 1234	compared with pound(s)1.4bn a year earlier
+A8	Confidence T5 Certain
+A9	Profit_Increase T5
+T6	Company 1119 1127	Barclays
+R2	is_about_company Arg1:T3 Arg2:T6	
+R3	is_about_company Arg1:T4 Arg2:T6	
+R4	is_about_company Arg1:T5 Arg2:T6	
+T7	Profit 1299 1339	profit fell 28 per cent to pound(s)1.3bn
+A10	Confidence T7 Certain
+A11	Profit_Decrease T7
+R5	is_about_company Arg1:T7 Arg2:T6	

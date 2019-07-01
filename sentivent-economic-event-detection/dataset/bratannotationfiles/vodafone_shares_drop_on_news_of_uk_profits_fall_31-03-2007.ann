@@ -1,0 +1,40 @@
+T1	Profit 24 47	news of UK profits fall
+A1	Profit_Declaration T1
+A2	Confidence T1 Certain
+A3	Profit_Decrease T1
+T2	Company 0 8	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 132 195	revealed how the profitability of its UK business had been hurt
+A4	Profit_Declaration T3
+A5	Confidence T3 Certain
+A6	Profit_Decrease T3
+T4	Company 48 56	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 955 1049	the group 's ebitda margin would fall by one percentage point in 2006-07 compared with 2005-06
+A7	Confidence T5 Certain
+A8	Profit_Decrease T5
+A9	Profit_Forecast T5
+T6	Company 920 928	Vodafone
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Turnover 1497 1521	bolstered revenue growth
+A10	Confidence T7 Certain
+A11	Turnover_Increase T7
+T8	SalesVolume 1534 1558	attracting new customers
+A12	Confidence T8 Certain
+A13	SalesVolume_Increase T8
+T9	Company 1472 1480	Vodafone
+R4	is_about_company Arg1:T7 Arg2:T9	
+R5	is_about_company Arg1:T8 Arg2:T9	
+T10	Turnover 1561 1668	Service revenue growth increased 5 per cent in January and February compared with the same period last year
+A14	Confidence T10 Certain
+A15	Turnover_Increase T10
+R6	is_about_company Arg1:T10 Arg2:T9	
+T11	Profit 549 759	the UK margin on earnings before interest , tax , depreciation and amortisation had declined from 34 per cent in the six months to March 31 last year to 26.6 per cent in the five months to February 28 this year
+A16	Confidence T11 Certain
+A17	Profit_Decrease T11
+T12	Company 241 249	Vodafone
+R7	is_about_company Arg1:T11 Arg2:T12	
+T13	BuyRating 1930 1950	has a " buy " rating
+A18	Confidence T13 Certain
+A19	BuyRating_Buy T13
+R8	is_about_company Arg1:T13 Arg2:T9	

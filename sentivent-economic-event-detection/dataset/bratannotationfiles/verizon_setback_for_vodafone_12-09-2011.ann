@@ -1,0 +1,10 @@
+T1	Dividend 1120 1178	authorised a long-awaited $10bn ( pound(s)6.3bn ) dividend
+A1	Confidence T1 Certain
+A2	Dividend_Payment T1
+T2	Company 1040 1057	Ver-izon Wireless
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 1444 1484	decided to halt the dividends after 2005
+A3	Confidence T3 Certain
+A4	Dividend_NoPayment T3
+T4	Company 1503 1519	Verizon Wireless
+R2	is_about_company Arg1:T3 Arg2:T4	

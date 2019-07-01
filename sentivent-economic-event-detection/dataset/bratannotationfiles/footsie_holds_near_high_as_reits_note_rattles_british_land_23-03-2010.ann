@@ -1,0 +1,40 @@
+T1	BuyRating 920 942	had " reduce " ratings
+A1	Confidence T1 Certain
+A2	BuyRating_Sell T1
+T2	Company 946 958	British Land
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	BuyRating 1899 1942	cut the software maker off its " buy " list
+A3	Confidence T3 Certain
+A4	BuyRating_Downgrade T3
+T4	Company 1841 1849	Autonomy
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	BuyRating 2653 2671	restarted coverage
+A5	Confidence T5 Certain
+A6	BuyRating_Buy T5
+T6	BuyRating 2682 2703	with a " buy " rating
+A7	Confidence T6 Certain
+A8	BuyRating_Buy T6
+*	in_span_with T6 T5
+T7	TargetPrice 2704 2725	and pound(s)13 target
+A9	Confidence T7 Certain
+A10	TargetPrice_Announcement T7
+T8	Company 2675 2681	Smiths
+R3	is_about_company Arg1:T6 Arg2:T8	
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	BuyRating 3452 3475	repeated " buy " advice
+A11	Confidence T9 Certain
+A12	BuyRating_Buy T9
+A13	BuyRating_Maintained T9
+T10	Company 3392 3395	GKN
+R5	is_about_company Arg1:T9 Arg2:T10	
+T11	BuyRating 3967 3992	reiterated " buy " advice
+A14	Confidence T11 Certain
+A15	BuyRating_Buy T11
+T12	Company 3908 3911	HMV
+R6	is_about_company Arg1:T11 Arg2:T12	
+T13	Company 4060 4069	Homeserve
+T14	BuyRating 4148 4181	upgraded from " hold " to " buy "
+A16	Confidence T14 Certain
+A17	BuyRating_Upgrade T14
+A18	BuyRating_Buy T14
+R7	is_about_company Arg1:T14 Arg2:T13	

@@ -1,0 +1,32 @@
+T1	BuyRating 252 283	downgraded their recommendation
+A1	BuyRating_Downgrade T1
+A2	BuyRating_Sell T1
+T2	BuyRating 306 330	from " buy " to " sell "
+A3	Confidence T2 Certain
+A4	BuyRating_Downgrade T2
+A5	BuyRating_Sell T2
+*	in_span_with T1 T2
+T3	Company 287 295	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T3	
+T4	Profit 1736 1794	estimated progressive cuts between 2009 and 2012 would cut
+A6	Confidence T4 Certain
+A7	Profit_Decrease T4
+A8	Profit_Positive T4
+A9	Profit_Forecast T4
+T5	Profit 1816 1910	earnings before interest , tax , depreciation and amortisation by 11 per cent , or Pounds 900m
+*	in_span_with T4 T5
+T6	Company 1795 1803	Vodafone
+R2	is_about_company Arg1:T4 Arg2:T6	
+T7	Profit 1913 1974	That would equate to an 8 per cent cut in the group 's ebitda
+A10	Confidence T7 Certain
+A11	Profit_Decrease T7
+A12	Profit_Forecast T7
+R3	is_about_company Arg1:T7 Arg2:T6	
+T8	MergerAcquisition 2912 2941	said it had rejected an offer
+A13	Confidence T8 Certain
+A14	MergerAcquisition_NoMergerAcquisition T8
+A15	MergerAcquisition_Announcement T8
+T9	Company 2905 2911	Telkom
+T10	Company 2945 2957	Oger Telecom
+R4	is_about_target Arg1:T8 Arg2:T9	
+R5	is_about_acquirer Arg1:T8 Arg2:T10	

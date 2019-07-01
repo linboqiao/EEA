@@ -1,0 +1,15 @@
+T1	BuyRating 1203 1234	downgrading to " underperform "
+A1	Confidence T1 Certain
+A2	BuyRating_Downgrade T1
+A3	BuyRating_Underperform T1
+T2	TargetPrice 1239 1266	setting a 540p target price
+A4	Confidence T2 Certain
+A5	TargetPrice_Announcement T2
+T3	Company 1080 1088	Wolseley
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	TargetPrice 1400 1428	cut its price target to 115p
+A6	Confidence T4 Certain
+A7	TargetPrice_Reduction T4
+T5	Company 1269 1279	Kingfisher
+R3	is_about_company Arg1:T4 Arg2:T5	

@@ -1,0 +1,24 @@
+T1	Profit 8 26	loses pound(s)500m
+A1	Confidence T1 SomewhatCertain
+A2	Profit_Negative T1
+T2	Company 0 7	Temasek
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 66 98	loses pound(s)500m on investment
+A3	Confidence T3 SomewhatCertain
+A4	Profit_Negative T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Profit 106 118	makes profit
+A5	Confidence T4 Certain
+A6	Profit_Positive T4
+T5	Company 101 105	IPIC
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Profit 246 301	making an estimated pound(s)500m loss on its investment
+A7	Confidence T6 Certain
+A8	Profit_Negative T6
+T7	Company 142 149	Temasek
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Profit 801 827	generated a healthy profit
+A9	Confidence T8 Certain
+A10	Profit_Positive T8
+T9	Company 758 800	International Petroleum Investment Company
+R5	is_about_company Arg1:T8 Arg2:T9	

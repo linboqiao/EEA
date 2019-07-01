@@ -1,0 +1,21 @@
+T1	Dividend 890 919	last issued dividends in 2005
+A1	Confidence T1 Certain
+A2	Dividend_Payment T1
+A3	Dividend_Other T1
+T2	Company 873 889	Verizon Wireless
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 959 980	The payments dried up
+A4	Confidence T3 Certain
+A5	Dividend_NoPayment T3
+T4	Company 1025 1041	Verizon Wireless
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	MergerAcquisition 2255 2287	announced plans last July to buy
+A6	Confidence T5 Certain
+A7	MergerAcquisition_Announcement T5
+T6	MergerAcquisition 2336 2359	in a Dollars 2.7bn deal
+A8	MergerAcquisition_Other T6
+*	in_span_with T5 T6
+T7	Company 2288 2302	Rural Cellular
+T8	Company 2193 2209	Verizon Wireless
+R3	is_about_acquirer Arg1:T5 Arg2:T8	
+R4	is_about_target Arg1:T5 Arg2:T7	

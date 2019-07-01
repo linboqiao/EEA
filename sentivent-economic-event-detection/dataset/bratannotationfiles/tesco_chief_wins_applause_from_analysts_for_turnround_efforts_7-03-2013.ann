@@ -1,0 +1,51 @@
+T1	Profit 100 127	last year 's profit warning
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A3	Profit_Forecast T1
+T2	Company 62 67	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 1566 1638	like-for-like sales in the country may have dropped 8 per cent this year
+A4	Confidence T3 Certain
+A5	SalesVolume_Decrease T3
+T4	Company 1537 1542	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 2342 2361	its annual earnings
+A6	Confidence T5 Certain
+A7	Profit_BetterThanExpected T5
+T6	Profit 2375 2394	topped expectations
+A8	Confidence T6 Certain
+A9	Profit_BetterThanExpected T6
+T7	Dividend 2366 2394	dividend topped expectations
+A10	Confidence T7 SomewhatCertain
+A11	Dividend_Raise T7
+*	in_span_with T5 T6
+T8	Company 2290 2297	Admiral
+R3	is_about_company Arg1:T5 Arg2:T8	
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	Dividend 2397 2412	A dividend hike
+A12	Confidence T9 Certain
+A13	Dividend_Raise T9
+T10	Dividend 2434 2453	also beat forecasts
+A14	Confidence T10 Certain
+A15	Dividend_Raise T10
+*	in_span_with T10 T9
+T11	Company 2418 2433	Legal & General
+R5	is_about_company Arg1:T9 Arg2:T11	
+T12	Debt 3497 3535	had the sector 's highest debt gearing
+A16	Confidence T12 SomewhatCertain
+T13	Company 3401 3414	Petropavlovsk
+R6	is_about_company Arg1:T12 Arg2:T13	
+A17	Debt_Other T12
+T14	BuyRating 3705 3741	started coverage with " buy " advice
+A18	Confidence T14 Certain
+A19	BuyRating_Buy T14
+T15	TargetPrice 3746 3759	a 300p target
+A20	Confidence T15 Certain
+A21	TargetPrice_Announcement T15
+T16	TargetPrice 3705 3726	started coverage with
+A22	Confidence T16 Certain
+A23	TargetPrice_Announcement T16
+T17	Company 3643 3660	Salamander Energy
+*	in_span_with T16 T15
+R7	is_about_company Arg1:T16 Arg2:T17	
+R8	is_about_company Arg1:T14 Arg2:T17	

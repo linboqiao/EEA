@@ -1,0 +1,10 @@
+T1	Turnover 835 922	debt and equity underwriting and merger advice business alone generated $4bn in revenue
+A1	Confidence T1 Certain
+T2	Company 828 834	Lehman
+R1	is_about_company Arg1:T1 Arg2:T2	
+A2	Turnover_Other T1
+T3	Profit 1568 1622	The pound(s)4bn profit ascribed to the investment bank
+A3	Confidence T3 Certain
+A4	Profit_Positive T3
+T4	Company 1632 1640	Barclays
+R2	is_about_company Arg1:T3 Arg2:T4	

@@ -1,0 +1,25 @@
+T1	BuyRating 1101 1147	started coverage with a " buy " recommendation
+A1	Confidence T1 Certain
+A2	BuyRating_Buy T1
+A3	BuyRating_Announcement T1
+T2	TargetPrice 1101 1122	started coverage with
+A4	Confidence T2 Certain
+A5	TargetPrice_Announcement T2
+T3	TargetPrice 1152 1176	pound(s)12.26 price targ
+A6	Confidence T3 Certain
+A7	TargetPrice_Announcement T3
+*	in_span_with T3 T2
+T4	Company 1013 1017	Asos
+R1	is_about_company Arg1:T2 Arg2:T4	
+R2	is_about_company Arg1:T1 Arg2:T4	
+T5	SalesVolume 1470 1522	after reporting a sharp slowdown in same-store sales
+A8	Confidence T5 Certain
+A9	SalesVolume_Decrease T5
+T6	Company 1424 1434	JJB Sports
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Profit 1867 1897	after Monday 's profit warning
+A10	Confidence T7 Certain
+A11	Profit_Decrease T7
+A12	Profit_Forecast T7
+T8	Company 1815 1832	Healthcare Locums
+R4	is_about_company Arg1:T7 Arg2:T8	

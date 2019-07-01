@@ -1,0 +1,18 @@
+T1	QuarterlyResults 89 120	first-quarter results on Friday
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Publication T1
+T2	Company 22 30	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 265 338	Revenues in Turkey increased 32 per cent and India were up by 17 per cent
+A3	Confidence T3 Certain
+A4	Turnover_Increase T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Turnover 526 589	revenue falls of 10 per cent in Spain and 16 per cent in Greece
+A5	Confidence T4 Certain
+A6	Turnover_Decrease T4
+R3	is_about_company Arg1:T4 Arg2:T2	
+T5	ShareRepurchase 1307 1345	A pound(s)4bn share buy-back programme
+A7	Confidence T5 Certain
+A8	ShareRepurchase_Announcement T5
+T6	Company 1102 1110	Vodafone
+R4	is_about_company Arg1:T5 Arg2:T6	

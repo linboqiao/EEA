@@ -1,0 +1,7 @@
+T1	MergerAcquisition 711 757	which made a failed Dollars 27.5bn hostile bid
+A1	Confidence T1 Certain
+A2	MergerAcquisition_NoMergerAcquisition T1
+T2	Company 762 767	Alcan
+T3	Company 703 708	Alcoa
+R1	is_about_target Arg1:T1 Arg2:T2	
+R2	is_about_acquirer Arg1:T1 Arg2:T3	

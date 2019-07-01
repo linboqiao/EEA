@@ -1,0 +1,102 @@
+T1	Profit 104 141	report a rise in first-quarter profit
+A1	Profit_Increase T1
+T2	QuarterlyResults 104 141	report a rise in first-quarter profit
+A2	Confidence T2 Certain
+A3	QuarterlyResults_Better T2
+A4	Confidence T1 Certain
+T3	Company 79 103	British American Tobacco
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	SalesVolume 162 177	a fall in sales
+A5	Confidence T4 Certain
+A6	SalesVolume_Decrease T4
+R3	is_about_company Arg1:T4 Arg2:T3	
+T5	Profit 451 504	Underlying earnings per share exceeded many forecasts
+A7	Confidence T5 Certain
+A9	Profit_BetterThanExpected T5
+R4	is_about_company Arg1:T5 Arg2:T3	
+T6	ShareRepurchase 705 733	the share buy-back programme
+A10	Confidence T6 Certain
+T7	Company 737 740	BAT
+R5	is_about_company Arg1:T6 Arg2:T7	
+T8	Profit 1040 1111	that the current earnings growth was not indicative of the rest of year
+A11	Confidence T8 Certain
+A13	Profit_Forecast T8
+R6	is_about_company Arg1:T8 Arg2:T7	
+T9	Profit 1124 1182	predicted that growth would be closer to 10 to 12 per cent
+A14	Confidence T9 Certain
+A15	Profit_Forecast T9
+R7	is_about_company Arg1:T9 Arg2:T7	
+T10	QuarterlyResults 1341 1404	During the quarter , organic volume growth rose by 0.6 per cent
+A16	Confidence T10 Certain
+A17	QuarterlyResults_Better T10
+T11	SalesVolume 1341 1404	During the quarter , organic volume growth rose by 0.6 per cent
+A18	Confidence T11 Certain
+A19	SalesVolume_Increase T11
+T12	Company 1228 1231	BAT
+R8	is_about_company Arg1:T11 Arg2:T12	
+R9	is_about_company Arg1:T10 Arg2:T12	
+T13	SalesVolume 1509 1566	said he was expecting better growth for the year as whole
+A20	Confidence T13 Certain
+A21	SalesVolume_Forecast T13
+A22	SalesVolume_Increase T13
+R10	is_about_company Arg1:T13 Arg2:T12	
+T14	SalesVolume 2005 2011	volume
+A23	Confidence T14 Certain
+A24	SalesVolume_Decrease T14
+T15	Profit 2016 2028	profit falls
+A25	Confidence T15 Certain
+A26	Profit_Decrease T15
+T16	Company 1656 1659	BAT
+T17	Profit 1682 1705	reported higher profits
+A27	Confidence T17 Certain
+A28	Profit_Increase T17
+R11	is_about_company Arg1:T17 Arg2:T16	
+T18	Profit 1754 1791	profits fell Pounds 35m to Pounds 88m
+A29	Confidence T18 Certain
+A30	Profit_Decrease T18
+R12	is_about_company Arg1:T18 Arg2:T16	
+R13	is_about_company Arg1:T14 Arg2:T16	
+R14	is_about_company Arg1:T15 Arg2:T16	
+T19	Profit 2118 2132	dented profits
+A31	Confidence T19 Certain
+A32	Profit_Decrease T19
+T20	SalesVolume 2118 2124	dented
+A33	Confidence T20 Certain
+A34	SalesVolume_Decrease T20
+R15	is_about_company Arg1:T20 Arg2:T16	
+R16	is_about_company Arg1:T19 Arg2:T16	
+T21	Profit 2209 2302	caused pre-tax profit to rise from Pounds 575m to Pounds 624m in the three months to March 31
+A35	Confidence T21 Certain
+A36	Profit_Increase T21
+T22	QuarterlyResults 2209 2302	caused pre-tax profit to rise from Pounds 575m to Pounds 624m in the three months to March 31
+A37	Confidence T22 Certain
+A38	QuarterlyResults_Better T22
+T23	Company 2527 2530	BAT
+R17	is_about_company Arg1:T22 Arg2:T23	
+R18	is_about_company Arg1:T21 Arg2:T23	
+T24	Profit 2383 2436	Operating profit fell from Pounds 604m to Pounds 582m
+A39	Confidence T24 Certain
+A40	Profit_Decrease T24
+R19	is_about_company Arg1:T24 Arg2:T23	
+T25	Turnover 2576 2623	Turnover fell from Pounds 2.6bn to Pounds 2.1bn
+A41	Confidence T25 Certain
+A42	Turnover_Decrease T25
+T26	Profit 2630 2693	earnings per share were 22 per cent higher at 20.26p ( 16.65p )
+A43	Confidence T26 Certain
+A44	Profit_Increase T26
+R20	is_about_company Arg1:T26 Arg2:T23	
+R21	is_about_company Arg1:T25 Arg2:T23	
+T27	Profit 507 579	rising by 26 per cent compared with estimated rises of about 10 per cent
+A45	Confidence T27 Certain
+A46	Profit_BetterThanExpected T27
+*	in_span_with T27 T5
+A8	Profit_Decrease T8
+T28	SalesVolume 2023 2028	falls
+A12	Confidence T28 Certain
+A47	SalesVolume_Decrease T28
+*	in_span_with T28 T14
+T29	SalesVolume 2137 2144	volumes
+A48	Confidence T29 Certain
+A49	SalesVolume_Decrease T29
+*	in_span_with T29 T20

@@ -1,0 +1,36 @@
+T1	Debt 1953 2004	programmes to pay down its debt and pension deficit
+A1	Confidence T1 Certain
+A2	Debt_Announcement T1
+T2	Company 1702 1710	BT Group
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	TargetPrice 2665 2694	set a pound(s)20 target price
+A3	Confidence T3 Certain
+A4	TargetPrice_Announcement T3
+T4	Company 2568 2578	Weir Group
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	BuyRating 3085 3102	on " buy " advice
+A5	Confidence T5 Certain
+A6	BuyRating_Buy T5
+T6	Company 3020 3028	Telecity
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	TargetPrice 3124 3148	with a 560p price target
+A7	Confidence T7 Certain
+A8	TargetPrice_Announcement T7
+R4	is_about_company Arg1:T7 Arg2:T6	
+T8	MergerAcquisition 3403 3435	a theory about takeover interest
+A9	Confidence T8 Certain
+T9	Company 3441 3462	Morrison supermarkets
+T10	Company 3334 3339	Ocado
+R5	is_about_acquirer Arg1:T8 Arg2:T9	
+A10	MergerAcquisition_Forecast T8
+R6	is_about_target Arg1:T8 Arg2:T10	
+T11	BuyRating 3693 3732	started coverage with a " sell " rating
+A11	Confidence T11 Certain
+A12	BuyRating_Sell T11
+T12	Company 3643 3650	Betfair
+R7	is_about_company Arg1:T11 Arg2:T12	
+T13	BuyRating 1576 1586	Downgrades
+A13	Confidence T13 SomewhatCertain
+A14	BuyRating_Downgrade T13
+T14	Company 1624 1634	Kingfisher
+R8	is_about_company Arg1:T13 Arg2:T14	

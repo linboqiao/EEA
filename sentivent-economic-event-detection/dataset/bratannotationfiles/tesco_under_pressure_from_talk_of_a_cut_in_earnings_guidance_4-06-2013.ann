@@ -1,0 +1,42 @@
+T1	Profit 34 60	a cut in earnings guidance
+A2	Profit_Forecast T1
+T2	Company 0 5	Tesco
+A3	Confidence T1 Certain
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 128 166	the grocer would cut earnings guidance
+A4	Confidence T3 Certain
+A5	Profit_Decrease T3
+A7	Profit_Forecast T3
+T4	Company 61 66	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 298 314	rein in guidance
+A8	Confidence T5 Certain
+A9	Profit_Decrease T5
+A10	Profit_Forecast T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	SalesVolume 461 474	sales falling
+A11	Confidence T6 Certain
+A12	SalesVolume_Decrease T6
+R4	is_about_company Arg1:T6 Arg2:T4	
+T7	SalesVolume 969 1009	sales growth has stalled since Christmas
+A13	Confidence T7 Certain
+A14	SalesVolume_Stable T7
+T8	Company 919 924	Tesco
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	SalesVolume 1017 1075	same-store sales expected to be down by about 0.5 per cent
+A15	SalesVolume_Decrease T9
+A16	SalesVolume_Forecast T9
+A17	Confidence T9 Certain
+R6	is_about_company Arg1:T9 Arg2:T8	
+A18	SalesVolume_Forecast T7
+T10	BuyRating 2890 2928	added the explorer to its " buy " list
+A19	Confidence T10 Certain
+A20	BuyRating_Buy T10
+T11	Company 2829 2841	Heritage Oil
+R7	is_about_company Arg1:T10 Arg2:T11	
+T12	Profit 3320 3336	a profit warning
+A21	Profit_Decrease T12
+A23	Profit_Forecast T12
+A24	Confidence T12 Certain
+T13	Company 3244 3251	Fastjet
+A1	Profit_Decrease T1

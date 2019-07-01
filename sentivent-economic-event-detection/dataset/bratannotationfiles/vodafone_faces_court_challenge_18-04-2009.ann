@@ -1,0 +1,12 @@
+T1	Turnover 836 866	revenues of R48.2bn ( $5.4bn )
+A1	Confidence T1 Certain
+A2	Turnover_Other T1
+T2	Company 763 770	Vodacom
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	MergerAcquisition 326 379	it planned to acquire an additional 15 per cent stake
+A3	Confidence T3 SomewhatCertain
+A4	MergerAcquisition_Other T3
+T4	Company 383 390	Vodacom
+T5	Company 31 39	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+R3	is_about_company Arg1:T3 Arg2:T5	

@@ -1,0 +1,38 @@
+T1	Profit 34 66	unveils record full-year profits
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+T2	Company 8 11	BHP
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 492 585	reported a 22 per cent rise in pre-tax profits from $19.2bn to $23.5bn in the year to June 30
+A3	Confidence T3 Certain
+A4	Profit_Increase T3
+T4	Company 277 289	BHP Billiton
+R2	is_about_company Arg1:T3 Arg2:T4	
+T6	Profit 1545 1589	For each $2 of revenue you get $1 of profits
+A7	Confidence T6 Certain
+T7	Company 1594 1597	BHP
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Dividend 2161 2241	The final dividend will be $0.70 a share , up 48.9 per cent from the year before
+A9	Confidence T8 Certain
+A10	Dividend_Raise T8
+T9	Company 2337 2340	BHP
+R5	is_about_company Arg1:T8 Arg2:T9	
+T10	Profit 191 227	it unveiled record full-year profits
+A12	Confidence T10 Certain
+A13	Profit_Increase T10
+R6	is_about_company Arg1:T10 Arg2:T2	
+T11	Profit 739 794	This was the seventh consecutive year of record profits
+A14	Confidence T11 Certain
+A15	Profit_Positive T11
+R7	is_about_company Arg1:T11 Arg2:T4	
+A5	Profit_Positive T6
+T5	Profit 2244 2289	Earnings per share rose 20 per cent at $2.753
+A6	Confidence T5 Certain
+A8	Profit_Increase T5
+T12	Turnover 2296 2335	revenue was up 25.3 per cent at $59.5bn
+A11	Confidence T12 Certain
+A16	Turnover_Increase T12
+R3	is_about_company Arg1:T5 Arg2:T9	
+R8	is_about_company Arg1:T12 Arg2:T9	
+A17	Profit_Declaration T1
+A18	Profit_Declaration T10

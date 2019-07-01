@@ -1,0 +1,57 @@
+T1	Turnover 82 111	a 31 per cent revenue decline
+A1	Confidence T1 Certain
+A2	Turnover_Decrease T1
+T2	Profit 288 325	healthy profits for the third quarter
+A3	Confidence T2 Certain
+A4	Profit_Positive T2
+T3	QuarterlyResults 288 325	healthy profits for the third quarter
+A5	Confidence T3 Certain
+A6	QuarterlyResults_Strong T3
+T4	Company 182 190	Barclays
+R1	is_about_company Arg1:T3 Arg2:T4	
+R2	is_about_company Arg1:T2 Arg2:T4	
+T5	Dividend 390 439	reinstatement of its dividend after almost a year
+A7	Confidence T5 Certain
+A8	Dividend_Announcement T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+R4	is_about_company Arg1:T1 Arg2:T4	
+T6	Turnover 490 570	one-third quarter-on-quarter fall in investment banking revenue to pound(s)3.7bn
+A9	Confidence T6 Certain
+A10	Turnover_Decrease T6
+R5	is_about_company Arg1:T6 Arg2:T4	
+T7	MergerAcquisition 624 656	beefed up through the acquisitio
+A11	Confidence T7 Certain
+A12	MergerAcquisition_MergerAcquisition T7
+T8	Company 661 697	the US operations of Lehman Brothers
+T9	Company 586 602	Barclays Capital
+R6	is_about_target Arg1:T7 Arg2:T8	
+R7	is_about_acquirer Arg1:T7 Arg2:T9	
+T10	Turnover 836 871	revenue has now fallen more sharply
+A13	Confidence T10 Certain
+A14	Turnover_Decrease T10
+R8	is_about_company Arg1:T10 Arg2:T9	
+T11	Profit 1458 1620	pre-tax profits for the three months to the end of September were pound(s)1.56bn , compared with pound(s)1.61bn in the second quarter and pound(s)2.8bn a year ago
+A15	Confidence T11 Certain
+A16	Profit_Decrease T11
+A17	Profit_Positive T11
+T12	QuarterlyResults 1458 1620	pre-tax profits for the three months to the end of September were pound(s)1.56bn , compared with pound(s)1.61bn in the second quarter and pound(s)2.8bn a year ago
+A18	Confidence T12 Certain
+A19	QuarterlyResults_Worse T12
+T13	Company 1444 1452	Barclays
+R9	is_about_company Arg1:T12 Arg2:T13	
+R10	is_about_company Arg1:T11 Arg2:T13	
+T14	Dividend 2414 2445	from earnings per share of 7.8p
+A20	Confidence T14 Certain
+A21	Dividend_Reduction T14
+A22	Dividend_Announcement T14
+T15	Dividend 2341 2364	is to pay a 1p dividend
+A23	Confidence T15 Certain
+A24	Dividend_Reduction T15
+A25	Dividend_Announcement T15
+*	in_span_with T15 T14
+T16	Company 2332 2340	Barclays
+R11	is_about_company Arg1:T15 Arg2:T16	
+T17	Dividend 2456 2503	said the payout ratio would be higher in future
+A26	Dividend_Raise T17
+A27	Dividend_Forecast T17
+R12	is_about_company Arg1:T17 Arg2:T16	

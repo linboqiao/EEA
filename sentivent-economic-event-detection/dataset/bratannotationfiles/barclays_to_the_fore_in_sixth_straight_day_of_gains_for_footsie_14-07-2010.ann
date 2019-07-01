@@ -1,0 +1,48 @@
+T1	QuarterlyResults 321 351	made for a weak second quarter
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Weak T1
+T2	Company 355 371	Barclays Capital
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 396 478	It forecast underlying profit at the division to have halved in the second quarter
+A3	Confidence T3 Certain
+A4	Profit_Decrease T3
+A5	Profit_Forecast T3
+T4	SalesVolume 482 554	sales fell 17 per cent from the previous quarter to around pound(s)3.2bn
+A6	Confidence T4 Certain
+A7	SalesVolume_Decrease T4
+T5	QuarterlyResults 396 478	It forecast underlying profit at the division to have halved in the second quarter
+A8	Confidence T5 Certain
+A9	QuarterlyResults_Worse T5
+T6	QuarterlyResults 482 554	sales fell 17 per cent from the previous quarter to around pound(s)3.2bn
+A10	Confidence T6 Certain
+A11	QuarterlyResults_Worse T6
+R2	is_about_company Arg1:T5 Arg2:T2	
+R3	is_about_company Arg1:T3 Arg2:T2	
+R4	is_about_company Arg1:T4 Arg2:T2	
+R5	is_about_company Arg1:T6 Arg2:T2	
+T7	TargetPrice 700 726	it set a 400p price target
+A12	Confidence T7 Certain
+A13	TargetPrice_Announcement T7
+T8	Company 560 568	Barclays
+R6	is_about_company Arg1:T7 Arg2:T8	
+T9	BuyRating 2797 2826	on the back of " buy " advice
+A14	Confidence T9 Certain
+A15	BuyRating_Buy T9
+T10	Company 2754 2762	Intertek
+R7	is_about_company Arg1:T9 Arg2:T10	
+T11	TargetPrice 2864 2905	raising its target price to pound(s)16.40
+A16	Confidence T11 Certain
+A17	TargetPrice_Raise T11
+R8	is_about_company Arg1:T11 Arg2:T10	
+T12	BuyRating 3382 3420	started coverage with a " buy " rating
+A18	Confidence T12 Certain
+A19	BuyRating_Buy T12
+A20	BuyRating_Announcement T12
+T13	Company 3321 3334	Compass Group
+R9	is_about_company Arg1:T12 Arg2:T13	
+T14	Profit 3857 3881	raised earnings guidance
+A21	Confidence T14 Certain
+A22	Profit_Increase T14
+A23	Profit_Forecast T14
+T15	Company 3853 3856	BMW
+R10	is_about_company Arg1:T14 Arg2:T15	

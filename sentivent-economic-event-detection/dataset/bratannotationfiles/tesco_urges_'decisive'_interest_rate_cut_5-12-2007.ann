@@ -1,0 +1,28 @@
+T1	SalesVolume 266 289	an improvement in sales
+A1	Confidence T1 Certain
+A2	SalesVolume_Declaration T1
+A3	SalesVolume_Increase T1
+T2	Company 78 83	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 1096 1137	non-food sales were falling back a little
+A4	Confidence T3 Certain
+A5	SalesVolume_Decrease T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	SalesVolume 1297 1349	underlying UK sales excluding petrol up 4.1 per cent
+A6	Confidence T4 Certain
+A7	SalesVolume_Increase T4
+T5	SalesVolume 1444 1472	group sales up 11.8 per cent
+A8	Confidence T5 Certain
+A9	SalesVolume_Increase T5
+R3	is_about_company Arg1:T4 Arg2:T2	
+R4	is_about_company Arg1:T5 Arg2:T2	
+T6	SalesVolume 1621 1658	UK sales overall were up 7.6 per cent
+A10	Confidence T6 Certain
+A11	SalesVolume_Increase T6
+T7	Company 1539 1544	Tesco
+R5	is_about_company Arg1:T6 Arg2:T7	
+T8	SalesVolume 2400 2480	International sales across its 12 Asian and European businesses rose 26 per cent
+A12	Confidence T8 Certain
+A13	SalesVolume_Increase T8
+T9	Company 1693 1698	Tesco
+R6	is_about_company Arg1:T8 Arg2:T9	

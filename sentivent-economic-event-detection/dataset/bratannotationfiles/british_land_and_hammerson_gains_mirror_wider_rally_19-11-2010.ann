@@ -1,0 +1,43 @@
+T1	Profit 1726 1766	following brighter-than- expected profit
+A1	Confidence T1 Certain
+A3	Profit_BetterThanExpected T1
+T2	Company 1591 1600	SABMiller
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	BuyRating 2136 2165	retained a " neutral " rating
+A2	Confidence T3 Certain
+A4	BuyRating_Hold T3
+A5	BuyRating_Maintained T3
+T4	Company 1802 1814	Arm Holdings
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 2429 2532	warning in a trading update that its full-year profit margin would be " slightly below " the 2009 level
+A6	Confidence T5 Certain
+A7	Profit_Decrease T5
+T6	Company 2376 2384	Intertek
+R3	is_about_company Arg1:T5 Arg2:T6	
+A8	Profit_Declaration T5
+T7	BuyRating 2535 2556	A Citigroup downgrade
+A9	Confidence T7 Certain
+A10	BuyRating_Downgrade T7
+T8	Company 2583 2591	Centrica
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	Profit 2659 2761	after the construction group warned that full-year earnings would be at the bottom end of expectations
+A11	Confidence T9 Certain
+A12	Profit_WorseThanExpected T9
+T10	Company 2626 2632	Keller
+R5	is_about_company Arg1:T9 Arg2:T10	
+T11	BuyRating 3169 3205	repeated " buy " advice on the stock
+A13	Confidence T11 Certain
+A14	BuyRating_Buy T11
+A15	BuyRating_Maintained T11
+T12	Company 2976 3000	Imagination Technologies
+R6	is_about_company Arg1:T11 Arg2:T12	
+T13	Turnover 3774 3798	falling service revenues
+A16	Confidence T13 Certain
+A17	Turnover_Decrease T13
+T14	Company 3664 3671	Qinetiq
+R7	is_about_company Arg1:T13 Arg2:T14	
+T15	BuyRating 3988 4032	following a downgrade from Canaccord Genuity
+A18	Confidence T15 Certain
+A19	BuyRating_Downgrade T15
+T16	Company 3909 3929	Moneysupermarket.com
+R8	is_about_company Arg1:T15 Arg2:T16	

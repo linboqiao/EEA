@@ -1,0 +1,72 @@
+T1	Profit 132 184	raising its guidance on operating profit for 2007-08
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+A3	Profit_Forecast T1
+T2	Company 84 92	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 369 402	a 45 per cent increase in revenue
+A4	Confidence T3 Certain
+A5	Turnover_Increase T3
+T4	Company 351 359	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 1085 1161	Revenue for the six months to September 30 was Pounds 17bn , up 4.4 per cent
+A6	Confidence T5 Certain
+A7	Turnover_Increase T5
+T6	Profit 1231 1291	adjusted operating profit was Pounds 5.2bn , up 6.1 per cent
+A8	Confidence T6 Certain
+A9	Profit_Increase T6
+A10	Profit_Positive T6
+T7	Company 1294 1302	Vodafone
+R3	is_about_company Arg1:T6 Arg2:T7	
+R4	is_about_company Arg1:T5 Arg2:T7	
+T8	Profit 1303 1412	recorded a pre-tax profit of Pounds 4.6bn , compared with a loss of Pounds 3.3bn in the first half of 2006-07
+A11	Confidence T8 Certain
+A12	Profit_Increase T8
+A13	Profit_Positive T8
+R5	is_about_company Arg1:T8 Arg2:T7	
+T9	Profit 1543 1687	raised its guidance on adjusted operating profit for 2007-08 from between Pounds 9.3bn and Pounds 9.8bn to between Pounds 9.5bn and Pounds 9.9bn
+A14	Confidence T9 Certain
+A15	Profit_Increase T9
+A16	Profit_Positive T9
+A17	Profit_Forecast T9
+T10	Company 1456 1464	Vodafone
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	MergerAcquisition 1758 1788	bought for Pounds 5.5bn in May
+A18	Confidence T11 Certain
+A19	MergerAcquisition_Other T11
+A20	MergerAcquisition_MergerAcquisition T11
+T12	Company 1714 1728	Vodafone Essar
+R7	is_about_target Arg1:T11 Arg2:T12	
+R8	is_about_acquirer Arg1:T11 Arg2:T10	
+T13	Turnover 1806 1835	revenue growth of 53 per cent
+A21	Confidence T13 Certain
+A22	Turnover_Increase T13
+R9	is_about_company Arg1:T13 Arg2:T10	
+T14	SalesVolume 1840 1880	signing up 1.6m new customers each month
+A23	Confidence T14 Certain
+A24	SalesVolume_Increase T14
+R10	is_about_company Arg1:T14 Arg2:T10	
+T15	Turnover 1995 2025	recorded growth of 16 per cent
+A25	Confidence T15 Certain
+A26	Turnover_Increase T15
+T16	Company 1883 1891	Vodafone
+R11	is_about_company Arg1:T15 Arg2:T16	
+T17	Turnover 2125 2154	revenue growth was 2 per cent
+A27	Confidence T17 Certain
+A28	Turnover_Increase T17
+R12	is_about_company Arg1:T17 Arg2:T16	
+T18	Turnover 2538 2601	Data revenue was Pounds 965m in the first half , up 45 per cent
+A29	Confidence T18 Certain
+A30	Turnover_Increase T18
+T19	Company 2221 2229	Vodafone
+R13	is_about_company Arg1:T18 Arg2:T19	
+T20	Dividend 2930 2984	announced an interim dividend of 2.49p , up 6 per cent
+A31	Confidence T20 Certain
+A32	Dividend_Raise T20
+T21	Company 2921 2929	Vodafone
+R14	is_about_company Arg1:T20 Arg2:T21	
+T22	Profit 2987 3044	Earnings per share were 6.22p ( loss per share of 8.02p )
+A33	Confidence T22 Certain
+A34	Profit_Decrease T22
+A35	Profit_Positive T22
+R15	is_about_company Arg1:T22 Arg2:T21	

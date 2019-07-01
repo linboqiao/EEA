@@ -1,0 +1,29 @@
+T1	Dividend 363 411	the 11 per cent increase in the interim dividend
+A1	Confidence T1 Certain
+A2	Dividend_Raise T1
+T2	Profit 415 443	in line with earnings growth
+A3	Confidence T2 Certain
+A4	Profit_Increase T2
+T3	Profit 487 564	These reached Pounds 74m in the first half and are expected to continue apace
+A5	Confidence T3 Certain
+A6	Profit_Increase T3
+A7	Profit_Forecast T3
+T4	Company 570 575	Tesco
+R1	is_about_company Arg1:T3 Arg2:T4	
+R2	is_about_company Arg1:T2 Arg2:T4	
+R3	is_about_company Arg1:T1 Arg2:T4	
+T5	ShareRepurchase 672 724	The group 's share buy-back programme is now running
+A8	Confidence T5 SomewhatCertain
+R4	is_about_company Arg1:T5 Arg2:T4	
+T6	Dividend 877 928	a dividend yield approaching 2.8 per cent this year
+A9	Confidence T6 SomewhatCertain
+A10	Dividend_Other T6
+T7	SalesVolume 1160 1237	like-for-like sales growth in the second quarter of 6.6 per cent year-on-year
+A11	Confidence T7 Certain
+A12	SalesVolume_Increase T7
+T8	QuarterlyResults 1160 1237	like-for-like sales growth in the second quarter of 6.6 per cent year-on-year
+A13	Confidence T8 Certain
+A14	QuarterlyResults_Better T8
+R5	is_about_company Arg1:T6 Arg2:T4	
+R6	is_about_company Arg1:T7 Arg2:T4	
+R7	is_about_company Arg1:T8 Arg2:T4	

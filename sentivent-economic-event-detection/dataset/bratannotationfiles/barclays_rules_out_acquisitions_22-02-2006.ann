@@ -1,0 +1,44 @@
+T1	MergerAcquisition 1583 1605	the South African bank
+A1	Confidence T1 Certain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	MergerAcquisition 1615 1631	bought last year
+A3	Confidence T2 Certain
+A4	MergerAcquisition_MergerAcquisition T2
+*	in_span_with T2 T1
+T3	Company 1606 1614	Barclays
+T4	Company 1576 1580	Absa
+R1	is_about_target Arg1:T1 Arg2:T4	
+R2	is_about_acquirer Arg1:T1 Arg2:T3	
+T5	Profit 1473 1518	International earnings will also grow in 2006
+A5	Confidence T5 Certain
+A6	Profit_Increase T5
+A7	Profit_Forecast T5
+R3	is_about_company Arg1:T5 Arg2:T3	
+T6	Profit 1643 1755	yesterday reported pre-tax profits of Pounds 5.28bn for 2005 , an increase of 15 per cent over the previous year
+A8	Confidence T6 Certain
+A9	Profit_Increase T6
+A10	Profit_Positive T6
+T7	Company 1634 1642	Barclays
+T8	Profit 1802 1815	lower profits
+A11	Confidence T8 Certain
+A12	Profit_Decrease T8
+T9	Company 1823 1834	Barclaycard
+R4	is_about_company Arg1:T8 Arg2:T9	
+R5	is_about_company Arg1:T6 Arg2:T7	
+T10	Profit 1912 1949	unveiled a 21 per cent rise in profit
+A13	Profit_Declaration T10
+A14	Confidence T10 Certain
+A15	Profit_Increase T10
+T11	Company 1907 1911	Absa
+T12	SalesVolume 1988 2053	a healthy economy and low interest rates boosted customer numbers
+A16	Confidence T12 SomewhatCertain
+A17	SalesVolume_Increase T12
+R6	is_about_company Arg1:T10 Arg2:T11	
+R7	is_about_company Arg1:T12 Arg2:T11	
+T13	MergerAcquisition 547 569	the recent acquisition
+A18	Confidence T13 Certain
+A19	MergerAcquisition_MergerAcquisition T13
+T14	Company 573 599	Banca Nazionale del Lavoro
+T15	Company 626 637	BNP Paribas
+R8	is_about_target Arg1:T13 Arg2:T14	
+R9	is_about_acquirer Arg1:T13 Arg2:T15	

@@ -1,0 +1,72 @@
+T1	Company 2958 2975	Reckitt Benckiser
+T2	QuarterlyResults 3021 3091	first-quarter results showed a surprisingly weak performance in Europe
+A1	Confidence T2 Certain
+A2	QuarterlyResults_WorseThanExpected T2
+T3	SalesVolume 3100 3146	dragged sales growth below consensus forecasts
+A3	Confidence T3 Certain
+A4	SalesVolume_WorseThanExpected T3
+A5	SalesVolume_Decrease T3
+R1	is_about_company Arg1:T2 Arg2:T1	
+R2	is_about_company Arg1:T3 Arg2:T1	
+T4	Company 3867 3876	Citigroup
+T5	TargetPrice 3877 3898	started coverage with
+A6	TargetPrice_Announcement T5
+A7	Confidence T5 Certain
+T6	BuyRating 3877 3915	started coverage with a " buy " rating
+A8	Confidence T6 Certain
+A9	BuyRating_Announcement T6
+R3	is_about_company Arg1:T5 Arg2:T4	
+R4	is_about_company Arg1:T6 Arg2:T4	
+T7	Profit 526 556	This would cut annual earnings
+A10	Confidence T7 Certain
+A11	Profit_Forecast T7
+T8	Profit 573 598	by as much as 30 per cent
+A12	Confidence T8 Certain
+A13	Profit_Forecast T8
+T9	Company 561 564	Rio
+T10	Company 569 572	BHP
+T11	Profit 603 614	19 per cent
+A14	Confidence T11 Certain
+A15	Profit_Forecast T11
+R5	is_about_company Arg1:T8 Arg2:T9	
+R6	is_about_company Arg1:T11 Arg2:T10	
+T12	SalesVolume 4093 4120	Disappointing sales figures
+A16	Confidence T12 Certain
+T13	Company 4126 4139	Premier Foods
+*	in_span_with T7 T8 T11
+T15	MergerAcquisition 1114 1127	its $66bn bid
+A19	Confidence T15 Certain
+A20	MergerAcquisition_NoMergerAcquisition T15
+T16	MergerAcquisition 1138 1202	which it abandoned at the height of the financial crisis in 2008
+A21	Confidence T16 Certain
+A22	MergerAcquisition_NoMergerAcquisition T16
+T17	Company 1132 1135	Rio
+T18	Company 1096 1099	BHP
+*	in_span_with T15 T16
+R8	is_about_target Arg1:T16 Arg2:T17	
+R9	is_about_acquirer Arg1:T15 Arg2:T18	
+T19	BuyRating 2579 2615	added the stock to its " sell " list
+A23	Confidence T19 Certain
+A24	BuyRating_Sell T19
+T20	Company 2503 2524	Liberty International
+R10	is_about_company Arg1:T19 Arg2:T20	
+T21	BuyRating 2801 2825	downgraded to " reduce "
+A25	Confidence T21 Certain
+A26	BuyRating_Downgrade T21
+A27	BuyRating_Sell T21
+T22	Company 2735 2746	J Sainsbury
+R11	is_about_company Arg1:T21 Arg2:T22	
+A28	QuarterlyResults_Weak T2
+T23	QuarterlyResults 3303 3346	saying first-quarter results could surprise
+A29	Confidence T23 Certain
+A30	QuarterlyResults_BetterThanExpected T23
+A31	QuarterlyResults_Forecast T23
+T24	Company 3295 3300	Shell
+R12	is_about_company Arg1:T23 Arg2:T24	
+A32	BuyRating_Buy T6
+T25	TargetPrice 3920 3937	145p target price
+A33	Confidence T25 Certain
+A34	TargetPrice_Announcement T25
+*	in_span_with T25 T5
+A17	SalesVolume_WorseThanExpected T12
+R7	is_about_company Arg1:T12 Arg2:T13	

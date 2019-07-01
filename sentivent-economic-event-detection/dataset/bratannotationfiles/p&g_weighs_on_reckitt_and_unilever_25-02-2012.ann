@@ -1,0 +1,11 @@
+T1	Profit 1158 1206	it reported a 6 per cent rise in profit for 2011
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+T2	Company 1117 1123	Capita
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 1321 1337	A profit warning
+A3	Confidence T3 Certain
+A4	Profit_Decrease T3
+A5	Profit_Forecast T3
+T4	Company 1343 1363	Lloyds Banking Group
+R2	is_about_company Arg1:T3 Arg2:T4	

@@ -1,0 +1,17 @@
+T1	QuarterlyResults 860 890	second-quarter earnings report
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Publication T1
+T2	Company 784 792	Ericsson
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	MergerAcquisition 1252 1262	the merger
+A3	Confidence T3 Certain
+A4	MergerAcquisition_MergerAcquisition T3
+T4	Company 1266 1279	Gaz de France
+T5	Company 1284 1288	Suez
+R2	is_about_company Arg1:T3 Arg2:T4	
+R3	is_about_company Arg1:T3 Arg2:T5	
+T6	MergerAcquisition 1385 1395	the merger
+A5	Confidence T6 Certain
+A6	MergerAcquisition_MergerAcquisition T6
+R4	is_about_company Arg1:T6 Arg2:T4	
+R5	is_about_company Arg1:T6 Arg2:T5	

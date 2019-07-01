@@ -1,0 +1,5 @@
+T1	SalesVolume 361 380	dreary summer sales
+T2	Company 0 5	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+A1	Confidence T1 SomewhatCertain
+A2	SalesVolume_Decrease T1

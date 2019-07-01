@@ -1,0 +1,77 @@
+T1	SalesVolume 37 46	sales dip
+A1	Confidence T1 Certain
+A2	SalesVolume_Decrease T1
+T2	Company 0 5	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 202 255	underlying sales are set to fall in the first quarter
+A3	SalesVolume_Decrease T3
+A4	SalesVolume_Forecast T3
+T4	Company 190 195	Tesco
+A5	Confidence T3 Certain
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 461 503	after its first profit warning in 20 years
+A6	Confidence T5 Certain
+A7	Profit_Decrease T5
+A8	Profit_Forecast T5
+T6	Company 569 574	Tesco
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	SalesVolume 521 563	analysts still forecast a decline in sales
+A9	Confidence T7 Certain
+A10	SalesVolume_Decrease T7
+A11	SalesVolume_Forecast T7
+R4	is_about_company Arg1:T7 Arg2:T6	
+T8	SalesVolume 686 818	expects a decline in UK like-for-like sales of 1-2 per cent year on year , excluding fuel and VAT , in the retailer 's first quarter
+A12	Confidence T8 Certain
+A13	SalesVolume_Decrease T8
+A14	SalesVolume_Forecast T8
+T9	QuarterlyResults 686 818	expects a decline in UK like-for-like sales of 1-2 per cent year on year , excluding fuel and VAT , in the retailer 's first quarter
+A15	Confidence T9 Certain
+A16	QuarterlyResults_Forecast T9
+A17	QuarterlyResults_Worse T9
+R5	is_about_company Arg1:T8 Arg2:T6	
+R6	is_about_company Arg1:T9 Arg2:T6	
+T10	SalesVolume 860 911	the volume of goods sold would be down 3-4 per cent
+A18	Confidence T10 Certain
+A19	SalesVolume_Decrease T10
+A20	SalesVolume_Forecast T10
+R7	is_about_company Arg1:T10 Arg2:T6	
+T11	SalesVolume 959 991	forecasts a 1.5 per cent decline
+A21	Confidence T11 Certain
+A22	SalesVolume_Decrease T11
+A23	SalesVolume_Forecast T11
+R8	is_about_company Arg1:T11 Arg2:T6	
+T12	SalesVolume 1013 1080	a 1.6 per cent drop in UK like-for-like sales in the fourth quarter
+A24	Confidence T12 Certain
+A25	SalesVolume_Decrease T12
+T13	QuarterlyResults 1013 1080	a 1.6 per cent drop in UK like-for-like sales in the fourth quarter
+A26	Confidence T13 Certain
+A27	QuarterlyResults_Worse T13
+T14	SalesVolume 1115 1195	it is an improvement on the 2.3 per cent decline over Christmas and the new year
+A28	Confidence T14 SomewhatCertain
+A29	SalesVolume_Decrease T14
+A30	SalesVolume_BetterThanExpected T14
+T15	Company 1198 1203	Tesco
+R9	is_about_company Arg1:T12 Arg2:T15	
+R10	is_about_company Arg1:T13 Arg2:T15	
+R11	is_about_company Arg1:T14 Arg2:T15	
+T16	QuarterlyResults 1248 1317	said the first-quarter performance would be in line with expectations
+A31	Confidence T16 Certain
+A32	QuarterlyResults_Forecast T16
+A33	QuarterlyResults_AsExpected T16
+R12	is_about_company Arg1:T16 Arg2:T15	
+T17	SalesVolume 1536 1561	We would not be expecting
+A34	Confidence T17 Certain
+A35	SalesVolume_Forecast T17
+A36	SalesVolume_AsExpected T17
+T18	SalesVolume 1580 1642	anything other than performing in line with the fourth quarter
+A37	Confidence T18 Certain
+A38	SalesVolume_Forecast T18
+A39	SalesVolume_AsExpected T18
+*	in_span_with T18 T17
+T19	Company 1562 1567	Tesco
+R13	is_about_company Arg1:T17 Arg2:T19	
+T20	SalesVolume 2144 2210	we think there probably has been some underlying sales improvement
+A40	Confidence T20 SomewhatCertain
+A41	SalesVolume_Forecast T20
+A42	SalesVolume_Increase T20
+R14	is_about_company Arg1:T20 Arg2:T19	

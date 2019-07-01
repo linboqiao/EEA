@@ -1,0 +1,30 @@
+T1	Profit 212 267	delivered the supermarket chain 's first profit warning
+A1	Profit_Declaration T1
+A2	Confidence T1 Certain
+A3	Profit_Decrease T1
+A4	Profit_Forecast T1
+T2	Company 98 103	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 282 338	Sales over Christmas and the New Year were unusually bad
+A5	Confidence T3 Certain
+A6	SalesVolume_WorseThanExpected T3
+A7	SalesVolume_Decrease T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Profit 2542 2592	pre-tax profit last year rose more than 5 per cent
+A8	Confidence T4 Certain
+A9	Profit_Increase T4
+T5	Company 2533 2538	Tesco
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Turnover 2640 2682	revenues increased by more than 7 per cent
+A10	Confidence T6 Certain
+A11	Turnover_Increase T6
+R4	is_about_company Arg1:T6 Arg2:T5	
+T7	Dividend 2765 2794	dividend also went up as well
+A12	Confidence T7 Certain
+A13	Dividend_Raise T7
+T8	Company 2756 2761	Tesco
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	Dividend 2797 2853	The dividend yield on its shares is a tasty 5.1 per cent
+A14	Confidence T9 SomewhatCertain
+A15	Dividend_Other T9
+R6	is_about_company Arg1:T9 Arg2:T8	

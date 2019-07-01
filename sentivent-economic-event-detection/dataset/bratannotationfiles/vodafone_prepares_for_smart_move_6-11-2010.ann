@@ -1,0 +1,21 @@
+T1	Dividend 836 862	the prospect of a dividend
+A1	Confidence T1 Certain
+A2	Dividend_Payment T1
+A3	Dividend_Forecast T1
+T2	Company 868 884	Verizon Wireless
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 1028 1065	has been blocking pay-outs since 2005
+A4	Confidence T3 Certain
+A5	Dividend_NoPayment T3
+T4	Company 1009 1025	Verizon Wireless
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Dividend 1134 1170	that dividends might restart in 2012
+A6	Confidence T5 Certain
+A7	Dividend_Payment T5
+A8	Dividend_Forecast T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	Turnover 2294 2331	is therefore getting a revenue fillip
+A9	Confidence T6 Certain
+A10	Turnover_Increase T6
+T7	Company 2285 2293	Vodafone
+R4	is_about_company Arg1:T6 Arg2:T7	

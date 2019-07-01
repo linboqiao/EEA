@@ -1,0 +1,20 @@
+T1	Company 508 512	BASF
+T2	Profit 513 535	cut its profit outlook
+A1	Confidence T2 Certain
+A2	Profit_Decrease T2
+R1	is_about_company Arg1:T2 Arg2:T1	
+A3	Profit_Forecast T2
+T3	BuyRating 694 754	cut its recommendation on the stock from " buy " to " hold "
+A4	Confidence T3 Certain
+A5	BuyRating_Hold T3
+A6	BuyRating_Downgrade T3
+R2	is_about_company Arg1:T3 Arg2:T1	
+T4	TargetPrice 1898 1937	cut its price target from EUR14 to EUR9
+A7	Confidence T4 Certain
+A8	TargetPrice_Reduction T4
+T5	BuyRating 1942 1972	kept its rating at " neutral "
+A9	Confidence T5 Certain
+A10	BuyRating_Hold T5
+T6	Company 1805 1808	ING
+R3	is_about_company Arg1:T4 Arg2:T6	
+R4	is_about_company Arg1:T5 Arg2:T6	

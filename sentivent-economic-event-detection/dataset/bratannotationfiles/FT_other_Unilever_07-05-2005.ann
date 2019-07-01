@@ -1,0 +1,79 @@
+T1	SalesVolume 30 58	first-quarter sales recovery
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	QuarterlyResults 30 58	first-quarter sales recovery
+A3	Confidence T2 Certain
+T3	Company 18 26	Unilever
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	SalesVolume 69 180	bucked its recent depressing trend with a surprise increase in underlying sales growth during the first quarter
+A5	Confidence T4 Certain
+A6	SalesVolume_BetterThanExpected T4
+A7	SalesVolume_Increase T4
+T5	QuarterlyResults 69 179	bucked its recent depressing trend with a surprise increase in underlying sales growth during the first quarte
+A8	Confidence T5 Certain
+T6	Company 60 68	Unilever
+R3	is_about_company Arg1:T5 Arg2:T6	
+R4	is_about_company Arg1:T4 Arg2:T6	
+T7	QuarterlyResults 292 358	Analysts and investors had been wary of poor first-quarter results
+A10	Confidence T7 Certain
+A11	QuarterlyResults_Weak T7
+A12	QuarterlyResults_Forecast T7
+T8	Company 364 372	Unilever
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	SalesVolume 375 431	which has struggled with declining sales in recent years
+A13	Confidence T9 Certain
+A14	SalesVolume_Decrease T9
+R6	is_about_company Arg1:T9 Arg2:T8	
+T10	SalesVolume 667 744	with sales growing 2 per cent in the first quarter compared to a year earlier
+A15	Confidence T10 Certain
+A16	SalesVolume_Increase T10
+T11	QuarterlyResults 667 744	with sales growing 2 per cent in the first quarter compared to a year earlier
+A17	Confidence T11 Certain
+A18	QuarterlyResults_Better T11
+T12	Company 588 596	Unilever
+R7	is_about_company Arg1:T11 Arg2:T12	
+R8	is_about_company Arg1:T10 Arg2:T12	
+T13	SalesVolume 793 839	Most of the increase was down to healthy sales
+A19	Confidence T13 Certain
+A20	SalesVolume_Increase T13
+T14	SalesVolume 861 880	in emerging markets
+A21	Confidence T14 Certain
+A22	SalesVolume_Increase T14
+T15	Company 843 851	Unilever
+*	in_span_with T14 T13
+R9	is_about_company Arg1:T13 Arg2:T15	
+T16	SalesVolume 920 960	underlying sales rose by some 7 per cent
+A23	Confidence T16 Certain
+A24	SalesVolume_Increase T16
+R10	is_about_company Arg1:T16 Arg2:T15	
+T17	SalesVolume 1066 1090	sales dropped 2 per cent
+A25	Confidence T17 Certain
+A26	SalesVolume_Decrease T17
+R11	is_about_company Arg1:T17 Arg2:T15	
+T18	SalesVolume 1094 1131	Sales rose 4 per cent in the Americas
+A27	Confidence T18 Certain
+A28	SalesVolume_Increase T18
+R12	is_about_company Arg1:T18 Arg2:T15	
+T19	Profit 1135 1185	Pre-tax profit was up 8.5 per cent to Euros 1.28bn
+A29	Confidence T19 Certain
+A30	Profit_Increase T19
+R13	is_about_company Arg1:T19 Arg2:T15	
+T20	SalesVolume 1219 1319	it is too early to tell whether the first-quarter rise in underlying sales growth would be sustained
+A31	Confidence T20 Certain
+A32	SalesVolume_Forecast T20
+T21	Company 1434 1442	Unilever
+R14	is_about_company Arg1:T20 Arg2:T21	
+T22	Profit 1747 1761	profit margins
+A33	Confidence T22 Certain
+A34	Profit_Increase T22
+T23	Profit 1719 1734	may be boosting
+A35	Confidence T23 Certain
+A36	Profit_Increase T23
+T24	Company 1735 1743	Unilever
+*	in_span_with T22 T23
+R15	is_about_company Arg1:T22 Arg2:T24	
+A4	QuarterlyResults_Better T2
+A9	QuarterlyResults_Better T5
+A37	Profit_Forecast T23
+A38	Profit_Forecast T22

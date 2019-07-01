@@ -1,0 +1,41 @@
+T1	MergerAcquisition 183 205	joint venture in China
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Announcement T1
+T2	Company 174 179	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 727 749	profits have collapsed
+A3	Confidence T3 Certain
+A4	Profit_Decrease T3
+T4	Company 484 489	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 972 986	profit warning
+A5	Confidence T5 Certain
+A6	Profit_Decrease T5
+A7	Profit_Forecast T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	SalesVolume 1126 1245	Sales from UK stores open at least a year were flat on the year-earlier period in the three months to the end of August
+A8	Confidence T6 Certain
+A9	SalesVolume_Stable T6
+R4	is_about_company Arg1:T6 Arg2:T4	
+T7	SalesVolume 1262 1307	a 1 per cent decline in the preceding quarter
+A10	Confidence T7 Certain
+R5	is_about_company Arg1:T7 Arg2:T4	
+T8	QuarterlyResults 1262 1307	a 1 per cent decline in the preceding quarter
+A11	Confidence T8 Certain
+A13	SalesVolume_Decrease T7
+T9	Company 1728 1733	Tesco
+T10	Profit 1560 1686	trading profit in central Europe slumped 70 per cent to pound(s)55m , compared with analysts ' forecasts of about pound(s)130m
+A14	Profit_Decrease T10
+A15	Profit_WorseThanExpected T10
+R6	is_about_company Arg1:T10 Arg2:T9	
+T11	SalesVolume 3565 3589	sales of Tesco 's tablet
+A17	Confidence T11 Certain
+A19	SalesVolume_BetterThanExpected T11
+T12	SalesVolume 3634 3659	were better than forecast
+A20	Confidence T12 Certain
+A21	SalesVolume_Forecast T12
+A22	SalesVolume_BetterThanExpected T12
+*	in_span_with T11 T12
+T13	Company 3273 3278	Tesco
+R7	is_about_company Arg1:T11 Arg2:T13	
+A12	QuarterlyResults_Weak T8

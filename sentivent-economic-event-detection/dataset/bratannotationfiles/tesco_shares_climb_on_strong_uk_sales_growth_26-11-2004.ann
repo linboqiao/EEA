@@ -1,0 +1,71 @@
+T1	SalesVolume 22 44	strong UK sales growth
+A1	Confidence T1 Certain
+A3	SalesVolume_Increase T1
+T2	Company 0 5	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 99 146	sales at the UK 's largest retailer raced ahead
+A4	Confidence T3 Certain
+A6	SalesVolume_Increase T3
+T4	Company 55 60	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	QuarterlyResults 99 167	sales at the UK 's largest retailer raced ahead in the third quarter
+A7	Confidence T5 Certain
+A8	QuarterlyResults_Strong T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	SalesVolume 250 310	a 12.2 per cent rise in sales in the 14 weeks to November 20
+A9	Confidence T6 Certain
+A11	SalesVolume_Increase T6
+R4	is_about_company Arg1:T6 Arg2:T4	
+T7	QuarterlyResults 313 362	the strongest quarterly performance in five years
+A12	Confidence T7 Certain
+A13	QuarterlyResults_Strong T7
+R5	is_about_company Arg1:T7 Arg2:T4	
+T8	SalesVolume 580 599	like-for-like sales
+A14	Confidence T8 Certain
+A16	SalesVolume_Increase T8
+T9	Company 603 608	Tesco
+R6	is_about_company Arg1:T8 Arg2:T9	
+T10	QuarterlyResults 654 723	in the third quarter , rising from 8.8 per cent in the second quarter
+A2	Confidence T10 Certain
+A5	QuarterlyResults_Better T10
+R7	is_about_company Arg1:T10 Arg2:T9	
+T11	SalesVolume 854 896	saw total UK sales growth of 12.3 per cent
+A10	Confidence T11 Certain
+A15	SalesVolume_Increase T11
+T12	Company 769 774	Tesco
+R8	is_about_company Arg1:T11 Arg2:T12	
+T13	Profit 1131 1200	full-year pre-tax profit forecast from Pounds 2.01bn to Pounds 2.02bn
+A17	Confidence T13 Certain
+A18	Profit_Increase T13
+A19	Profit_Forecast T13
+R9	is_about_company Arg1:T13 Arg2:T12	
+T14	SalesVolume 1916 1957	like- for-like UK growth was 7.5 per cent
+A20	Confidence T14 Uncertain
+A21	SalesVolume_Increase T14
+T15	Company 1819 1824	Tesco
+R10	is_about_company Arg1:T14 Arg2:T15	
+T16	SalesVolume 1964 1969	sales
+A22	Confidence T16 Certain
+A23	SalesVolume_WorseThanExpected T16
+T17	SalesVolume 2092 2140	came in slightly below some analysts ' forecasts
+A24	SalesVolume_WorseThanExpected T17
+*	in_span_with T17 T16
+R11	is_about_company Arg1:T16 Arg2:T15	
+T18	Turnover 2143 2170	Turnover grew 11.9 per cent
+A25	Confidence T18 Certain
+A26	Turnover_Increase T18
+T19	Company 1973 1978	Tesco
+R12	is_about_company Arg1:T18 Arg2:T19	
+T20	MergerAcquisition 2258 2296	a second acquisition earlier this year
+A27	Confidence T20 Certain
+A28	MergerAcquisition_MergerAcquisition T20
+T21	Company 2247 2252	Tesco
+R13	is_about_company Arg1:T20 Arg2:T21	
+T22	SalesVolume 2299 2359	international sales were " broadly similar to the first half
+A29	Confidence T22 Certain
+A30	SalesVolume_Stable T22
+R14	is_about_company Arg1:T22 Arg2:T21	
+T23	SalesVolume 629 653	accelerated 9.8 per cent
+A31	Confidence T23 Certain
+A32	SalesVolume_Increase T23
+*	in_span_with T23 T8

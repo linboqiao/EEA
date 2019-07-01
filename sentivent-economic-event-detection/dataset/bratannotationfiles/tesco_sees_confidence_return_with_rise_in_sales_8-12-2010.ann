@@ -1,0 +1,69 @@
+T1	SalesVolume 34 47	rise in sales
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	Company 0 5	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 596 612	total sales rose
+A3	Confidence T3 Certain
+A4	SalesVolume_Increase T3
+T4	Company 580 585	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 713 737	UK sales rose 5 per cent
+A5	Confidence T5 Certain
+A6	SalesVolume_Increase T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	QuarterlyResults 1103 1150	performance strengthened throughout the quarter
+A7	Confidence T6 Certain
+A8	QuarterlyResults_Strong T6
+R4	is_about_company Arg1:T6 Arg2:T4	
+T7	SalesVolume 1158 1196	UK like-for-like sales up 2.1 per cent
+A9	Confidence T7 Certain
+A10	SalesVolume_Increase T7
+R5	is_about_company Arg1:T7 Arg2:T4	
+T8	QuarterlyResults 1248 1328	Food price inflation was 0.7 per cent lower in the third quarter than the second
+A15	Confidence T8 Certain
+A16	QuarterlyResults_Worse T8
+T9	Company 1463 1468	Tesco
+R6	is_about_company Arg1:T8 Arg2:T9	
+T10	QuarterlyResults 1825 1870	I feel we will have a good [ fourth quarter ]
+A17	Confidence T10 Certain
+A18	QuarterlyResults_Strong T10
+A19	QuarterlyResults_Forecast T10
+R7	is_about_company Arg1:T10 Arg2:T9	
+T11	QuarterlyResults 1873 1961	I expect us to improve upon the third quarter like-for-like [ increase ] of 1.5 per cent
+A20	QuarterlyResults_Better T11
+A21	QuarterlyResults_Forecast T11
+R8	is_about_company Arg1:T11 Arg2:T9	
+T12	SalesVolume 2045 2053	Sales of
+A22	Confidence T12 Certain
+A24	SalesVolume_Increase T12
+T13	Company 2054 2059	Tesco
+R9	is_about_company Arg1:T12 Arg2:T13	
+T14	SalesVolume 2159 2192	non-food sales were up 3 per cent
+A25	Confidence T14 Certain
+A27	SalesVolume_Increase T14
+R10	is_about_company Arg1:T14 Arg2:T13	
+T15	SalesVolume 2581 2738	if UK sales were reported in accordance with the accounting standard for loyalty schemes , then they would have been 0.2 per cent higher in the third quarter
+A28	Confidence T15 Uncertain
+A29	SalesVolume_Increase T15
+T16	QuarterlyResults 2581 2738	if UK sales were reported in accordance with the accounting standard for loyalty schemes , then they would have been 0.2 per cent higher in the third quarter
+A30	Confidence T16 Uncertain
+A31	QuarterlyResults_Better T16
+T17	Company 2386 2391	Tesco
+R11	is_about_company Arg1:T15 Arg2:T17	
+R12	is_about_company Arg1:T16 Arg2:T17	
+T18	SalesVolume 2879 2923	total international sales rose 15.2 per cent
+A32	Confidence T18 Certain
+A34	SalesVolume_Increase T18
+T19	Company 2741 2746	Tesco
+R13	is_about_company Arg1:T18 Arg2:T19	
+T20	SalesVolume 2926 2973	Like-for-like sales rose 9.8 per cent in the US
+A35	Confidence T20 Certain
+A37	SalesVolume_Increase T20
+R14	is_about_company Arg1:T20 Arg2:T19	
+T21	SalesVolume 2063 2122	Finest range of premium foods were up more than 10 per cent
+A11	Confidence T21 Certain
+A12	SalesVolume_Increase T21
+*	in_span_with T21 T12
+A13	SalesVolume_Other T15
+A14	QuarterlyResults_Forecast T16

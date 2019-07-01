@@ -1,0 +1,15 @@
+T1	QuarterlyResults 630 685	third-quarter numbers show growth slowly coming through
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Publication T1
+A3	QuarterlyResults_Better T1
+T2	Company 22 30	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	QuarterlyResults 966 1084	The problem business in the third quarter was the investment bank , dragged back by a slowdown in fixed income trading
+A4	Confidence T3 Certain
+A5	QuarterlyResults_Worse T3
+T4	Company 1287 1295	Barclays
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 1087 1202	Profits from the division were pound(s)463m , 45 per cent below the average quarterly level over the past two years
+A6	Confidence T5 Certain
+A7	Profit_Decrease T5
+R3	is_about_company Arg1:T5 Arg2:T4	

@@ -1,0 +1,81 @@
+T1	Profit 413 443	profit forecasts were too high
+A1	Confidence T1 SomewhatCertain
+A2	Profit_WorseThanExpected T1
+A3	Profit_Forecast T1
+T2	Company 215 223	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	TargetPrice 1362 1385	repeating a 420p target
+A4	Confidence T3 Certain
+A5	TargetPrice_Maintained T3
+T4	Company 1181 1193	Cairn Energy
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 1847 1892	could provide further upside for 2012 profits
+A6	Confidence T5 SomewhatCertain
+A7	Profit_Increase T5
+A8	Profit_Forecast T5
+T6	Company 1633 1644	Tate & Lyle
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Profit 2045 2104	as was a rumour that earnings due on Thursday would impress
+A9	Confidence T7 Certain
+A10	Profit_Forecast T7
+T8	Company 1934 1939	Shire
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	Dividend 2557 2589	after doubling its 2011 dividend
+A11	Confidence T9 Certain
+A12	Dividend_Raise T9
+T10	Profit 2594 2640	beating forecasts with fourth-quarter earnings
+A13	Confidence T10 Certain
+A14	Profit_BetterThanExpected T10
+T11	Company 2454 2472	Randgold Resources
+R5	is_about_company Arg1:T9 Arg2:T11	
+R6	is_about_company Arg1:T10 Arg2:T11	
+T12	MergerAcquisition 2723 2805	reports that the former would offer a slim premium of 2.8 shares to buy the latter
+A15	Confidence T12 Certain
+A16	MergerAcquisition_Forecast T12
+T13	Company 2690 2697	Xstrata
+T14	Company 2663 2685	Glencore International
+R7	is_about_acquirer Arg1:T12 Arg2:T14	
+R8	is_about_target Arg1:T12 Arg2:T13	
+T15	BuyRating 3227 3241	to " neutral "
+A17	Confidence T15 Certain
+A18	BuyRating_Hold T15
+A19	BuyRating_Downgrade T15
+T16	BuyRating 3211 3221	downgraded
+A20	Confidence T16 Certain
+A21	BuyRating_Hold T16
+A22	BuyRating_Downgrade T16
+*	in_span_with T15 T16
+T17	Company 3222 3226	Bumi
+R9	is_about_company Arg1:T15 Arg2:T17	
+T18	Debt 3538 3592	net debt could be pushed to 2.5 times operating profit
+A23	Confidence T18 Certain
+A24	Debt_Forecast T18
+A25	Debt_Increase T18
+T19	Company 3521 3534	Petropavlovsk
+R10	is_about_company Arg1:T18 Arg2:T19	
+T20	BuyRating 3917 3955	added the staffer to its " sell " list
+A26	Confidence T20 Certain
+A27	BuyRating_Sell T20
+T21	Company 3822 3826	Hays
+R11	is_about_company Arg1:T20 Arg2:T21	
+T22	BuyRating 4033 4054	an upgrade to " buy "
+A28	Confidence T22 Certain
+A29	BuyRating_Upgrade T22
+A30	BuyRating_Buy T22
+T23	Company 3975 3985	SuperGroup
+R12	is_about_company Arg1:T22 Arg2:T23	
+T24	Profit 4362 4383	a profit warning from
+A31	Confidence T24 Certain
+A32	Profit_Decrease T24
+A33	Profit_Forecast T24
+T25	Company 4290 4307	French Connection
+R13	is_about_company Arg1:T24 Arg2:T25	
+T26	Dividend 2280 2298	dividend as secure
+A34	Confidence T26 SomewhatCertain
+A35	Dividend_Forecast T26
+T27	Dividend 2264 2267	saw
+A36	Confidence T27 SomewhatCertain
+A37	Dividend_Forecast T27
+*	in_span_with T26 T27
+T28	Company 2268 2276	Vodafone
+R14	is_about_company Arg1:T26 Arg2:T28	

@@ -1,0 +1,10 @@
+T3	Dividend 2552 2646	of offering no increase in quarterly dividend payments of 42 cents over three years since 2009
+A3	Confidence T3 Certain
+A4	Dividend_Stable T3
+T4	Company 2534 2539	Shell
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Dividend 2656 2710	nudged the payment up by a 1 cent to 43 cents in April
+A5	Confidence T5 Certain
+A6	Dividend_Raise T5
+T6	Company 2650 2655	Shell
+R3	is_about_company Arg1:T5 Arg2:T6	

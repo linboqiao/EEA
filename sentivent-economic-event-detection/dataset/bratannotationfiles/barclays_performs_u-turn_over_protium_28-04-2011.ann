@@ -1,0 +1,38 @@
+T1	Profit 341 439	it reported a 10 per cent year-on-year increase in underlying profit for the first quarter of 2011
+A1	Profit_Declaration T1
+A2	Confidence T1 Certain
+A3	Profit_Increase T1
+T2	QuarterlyResults 341 439	it reported a 10 per cent year-on-year increase in underlying profit for the first quarter of 2011
+A4	Confidence T2 Certain
+A5	QuarterlyResults_Better T2
+T3	Company 44 52	Barclays
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	Profit 636 692	the more concerning news was on the outlook for earnings
+A6	Confidence T4 Certain
+A7	Profit_Forecast T4
+T5	Company 603 611	Barclays
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Profit 712 832	had previously said it was comfortable with analysts ' consensus expectations for pound(s)7bn of annual profit this year
+A8	Confidence T6 Certain
+A9	Profit_Positive T6
+A10	Profit_Forecast T6
+T7	Company 703 711	Barclays
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Profit 2631 2757	made a pre-tax profit of pound(s)1.66bn during the January to March period , down 9 per cent on the same period a year earlier
+A11	Confidence T8 Certain
+A12	Profit_Decrease T8
+A13	Profit_Positive T8
+T9	Company 2622 2630	Barclays
+R5	is_about_company Arg1:T8 Arg2:T9	
+T10	Profit 2861 2917	adjusted pre-tax profit was pound(s)2bn , up 10 per cent
+A14	Confidence T10 Certain
+A15	Profit_Increase T10
+A16	Profit_Positive T10
+R6	is_about_company Arg1:T10 Arg2:T9	
+T11	Profit 3033 3110	with underlying pre-tax profit slipping from pound(s)1.57bn to pound(s)1.33bn
+A17	Confidence T11 Certain
+A18	Profit_Decrease T11
+A19	Profit_Positive T11
+T12	Company 2924 2940	Barclays Capital
+R7	is_about_company Arg1:T11 Arg2:T12	

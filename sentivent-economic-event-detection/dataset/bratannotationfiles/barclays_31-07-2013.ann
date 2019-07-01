@@ -1,0 +1,20 @@
+T1	Profit 1201 1232	could take longer than expected
+A1	Confidence T1 Certain
+A2	Profit_WorseThanExpected T1
+T2	Profit 1132 1149	Earnings recovery
+A3	Confidence T2 Certain
+A4	Profit_WorseThanExpected T2
+*	in_span_with T2 T1
+T3	Profit 1235 1309	earnings forecasts for 2013 are a fifth lower than they were two years ago
+A5	Confidence T3 Certain
+A6	Profit_Decrease T3
+A7	Profit_Forecast T3
+T4	Company 994 1002	Barclays
+R1	is_about_company Arg1:T2 Arg2:T4	
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Dividend 1467 1540	has become more generous on dividends , pledging to pay more , and sooner
+A8	Confidence T5 SomewhatCertain
+A9	Dividend_Raise T5
+A10	Dividend_Forecast T5
+T6	Company 1458 1466	Barclays
+R3	is_about_company Arg1:T5 Arg2:T6	

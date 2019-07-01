@@ -1,0 +1,59 @@
+T1	BuyRating 381 389	upgraded
+A1	Confidence T1 Certain
+A2	BuyRating_Upgrade T1
+T2	BuyRating 399 409	to " buy "
+A3	Confidence T2 Certain
+A4	BuyRating_Upgrade T2
+A5	BuyRating_Buy T2
+A6	BuyRating_Buy T1
+T3	TargetPrice 410 434	with a 208p target price
+A7	Confidence T3 Certain
+A8	TargetPrice_Announcement T3
+*	in_span_with T2 T1
+T4	Company 390 398	Barclays
+R1	is_about_company Arg1:T1 Arg2:T4	
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 1606 1697	said it saw no reason why a regulatory review would materially affect its revenue or profit
+A9	Confidence T5 SomewhatCertain
+A10	Profit_Stable T5
+A11	Profit_Forecast T5
+T6	Turnover 1606 1697	said it saw no reason why a regulatory review would materially affect its revenue or profit
+A12	Confidence T6 SomewhatCertain
+A13	Turnover_Forecast T6
+A14	Turnover_Stable T6
+T7	Company 1497 1516	Hargreaves Lansdown
+R3	is_about_company Arg1:T6 Arg2:T7	
+R4	is_about_company Arg1:T5 Arg2:T7	
+T8	Profit 1953 2017	it could boost operating profit by 3.5-4 per cent in a full year
+A15	Confidence T8 Certain
+A16	Profit_Increase T8
+A17	Profit_Forecast T8
+T9	Company 1808 1824	Imperial Tobacco
+R5	is_about_company Arg1:T8 Arg2:T9	
+T10	BuyRating 2750 2785	took the stock off its " buy " list
+A18	Confidence T10 SomewhatCertain
+A19	BuyRating_Downgrade T10
+T11	Company 2707 2710	ITV
+R6	is_about_company Arg1:T10 Arg2:T11	
+T12	BuyRating 3557 3591	cut the stock off its " buy " list
+A20	Confidence T12 SomewhatCertain
+A21	BuyRating_Downgrade T12
+T13	Company 3406 3414	Go-Ahead
+R7	is_about_company Arg1:T12 Arg2:T13	
+T14	BuyRating 3676 3697	An upgrade to " buy "
+A22	Confidence T14 SomewhatCertain
+A23	BuyRating_Upgrade T14
+A24	BuyRating_Buy T14
+T15	Company 3732 3740	Telecity
+R8	is_about_company Arg1:T14 Arg2:T15	
+T16	BuyRating 4178 4205	repeating " buy " advice on
+A25	Confidence T16 Certain
+A26	BuyRating_Buy T16
+A27	BuyRating_Maintained T16
+T17	Company 4206 4209	C&W
+R9	is_about_company Arg1:T16 Arg2:T17	
+T18	Debt 4413 4479	a $30m debt facility was no longer available on the original terms
+A28	Confidence T18 Certain
+A29	Debt_Other T18
+T19	Company 4343 4359	Namakwa Diamonds
+R10	is_about_company Arg1:T18 Arg2:T19	

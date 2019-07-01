@@ -1,0 +1,15 @@
+T5	Dividend 1834 1903	dividend yield that , at 5.1 per cent , will attract income investors
+A5	Confidence T5 SomewhatCertain
+T6	Company 1910 1922	British Land
+R3	is_about_company Arg1:T5 Arg2:T6	
+A1	Dividend_Other T5
+T1	Debt 756 804	46 per cent of its portfolio is financed by debt
+A2	Confidence T1 Certain
+A3	Debt_Other T1
+T2	Debt 807 830	against 36 per cent for
+A4	Confidence T2 Certain
+A6	Debt_Other T2
+T3	Company 831 846	Land Securities
+R1	is_about_company Arg1:T2 Arg2:T3	
+T4	Company 692 704	British Land
+R2	is_about_company Arg1:T1 Arg2:T4	

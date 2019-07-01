@@ -1,0 +1,13 @@
+T1	Profit 787 812	These exceptionals shrank
+A1	Confidence T1 Certain
+T2	Profit 820 884	June full-year net profit more than a third from 2011 to $15.4bn
+A3	Confidence T2 Certain
+T3	Turnover 947 994	revenue up a fifth since 2008 to a record $72bn
+A5	Confidence T3 Certain
+T4	Company 813 816	BHP
+R1	is_about_company Arg1:T2 Arg2:T4	
+A4	Profit_Decrease T2
+A2	Profit_Decrease T1
+*	in_span_with T2 T1
+A6	Turnover_Increase T3
+R2	is_about_company Arg1:T3 Arg2:T4	

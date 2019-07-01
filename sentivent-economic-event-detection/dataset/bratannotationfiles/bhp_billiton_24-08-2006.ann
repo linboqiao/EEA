@@ -1,0 +1,15 @@
+T1	Company 88 100	BHP Billiton
+T2	Profit 111 167	unveiled a58 per cent rise in full-year operating profit
+A1	Confidence T2 Certain
+A2	Profit_Increase T2
+R1	is_about_company Arg1:T2 Arg2:T1	
+T4	Company 750 753	BHP
+T5	Dividend 754 796	increased its final dividend by28 per cent
+A6	Confidence T5 Certain
+A7	Dividend_Raise T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	Company 897 900	BHP
+T7	ShareRepurchase 906 943	unveiled a Dollars 3bn share buy-back
+A8	Confidence T7 Certain
+A9	ShareRepurchase_Announcement T7
+R4	is_about_company Arg1:T7 Arg2:T6	

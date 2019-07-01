@@ -1,0 +1,61 @@
+T1	SalesVolume 128 154	higher third-quarter sales
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	QuarterlyResults 128 154	higher third-quarter sales
+A3	Confidence T2 Certain
+A4	QuarterlyResults_Better T2
+T3	Company 158 166	Unilever
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	Turnover 175 239	underlying revenue growth of 4.8 per cent surpassed expectations
+A5	Confidence T4 Certain
+A6	Turnover_Increase T4
+A7	Turnover_BetterThanExpected T4
+R3	is_about_company Arg1:T4 Arg2:T3	
+T5	SalesVolume 269 331	an improvement on last quarter 's sales growth of 3.9 per cent
+A8	Confidence T5 Certain
+A9	SalesVolume_Increase T5
+R4	is_about_company Arg1:T5 Arg2:T3	
+T6	Dividend 468 524	announcing a one-off Euros 750m ( Pounds 502m ) dividend
+A10	Confidence T6 Certain
+A11	Dividend_Payment T6
+A12	Dividend_Announcement T6
+T7	Company 436 444	Unilever
+R5	is_about_company Arg1:T6 Arg2:T7	
+T8	Profit 1272 1319	Pre-tax profits fell 19 per cent to Euros 1.1bn
+A13	Confidence T8 Certain
+A14	Profit_Decrease T8
+A15	Profit_Positive T8
+T9	Company 932 940	Unilever
+R6	is_about_company Arg1:T8 Arg2:T9	
+T10	Turnover 1538 1603	Turnover rose 4 per cent at constant exchange rates to Euros 10bn
+A16	Confidence T10 Certain
+A17	Turnover_Increase T10
+T11	Profit 1612 1688	earnings per share from continuing operations fell 47 per cent to Euros 0.25
+A18	Confidence T11 Certain
+A19	Profit_Decrease T11
+A20	Profit_Positive T11
+R7	is_about_company Arg1:T10 Arg2:T9	
+R8	is_about_company Arg1:T11 Arg2:T9	
+T12	ShareRepurchase 1971 2036	plans to undertake a Euros 1.5bn share buy-back programme in 2007
+A21	Confidence T12 Certain
+A22	ShareRepurchase_Announcement T12
+T13	Company 1690 1698	Unilever
+R9	is_about_company Arg1:T12 Arg2:T13	
+T14	Profit 2039 2100	Nine-month pre-tax profits were Euros 3.79bn ( Euros 3.65bn )
+A23	Confidence T14 Certain
+A24	Profit_Positive T14
+T15	Turnover 2104 2160	turnover which advanced to Euros 29.9bn ( Euros 28.6bn )
+A25	Confidence T15 Certain
+A26	Turnover_Increase T15
+R10	is_about_company Arg1:T14 Arg2:T13	
+R11	is_about_company Arg1:T15 Arg2:T13	
+T16	SalesVolume 2355 2378	consistent sales growth
+A27	Confidence T16 Certain
+A28	SalesVolume_Increase T16
+T17	Company 2274 2282	Unilever
+R12	is_about_company Arg1:T16 Arg2:T17	
+T18	Profit 984 1093	This quarter it reported margins of 14.8 per cent , 80 basis points lower than the same period a year earlier
+A29	Confidence T18 Certain
+A30	Profit_Decrease T18
+R13	is_about_company Arg1:T18 Arg2:T9	

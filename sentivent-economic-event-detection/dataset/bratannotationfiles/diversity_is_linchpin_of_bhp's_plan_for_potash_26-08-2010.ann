@@ -1,0 +1,61 @@
+T1	Profit 89 118	has already bolstered profits
+A1	Confidence T1 Certain
+A2	Profit_Positive T1
+T2	Company 25 28	BHP
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 364 413	it reported annual profits margins of 38 per cent
+A3	Confidence T3 Certain
+A4	Profit_Positive T3
+T4	Profit 697 776	it reported that annual pre-tax profits had risen nearly 70 per cent to $19.6bn
+A5	Confidence T4 Certain
+A6	Profit_Increase T4
+T5	Company 184 196	BHP Billiton
+R2	is_about_company Arg1:T3 Arg2:T5	
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Profit 1183 1199	Iron ore boosted
+A7	Confidence T6 Certain
+A8	Profit_Increase T6
+T7	Profit 1207 1214	profits
+A9	Confidence T7 Certain
+A10	Profit_Increase T7
+T8	Company 1200 1203	BHP
+*	in_span_with T7 T6
+R4	is_about_company Arg1:T6 Arg2:T8	
+T9	Turnover 2070 2139	Revenues were stable , rising only marginally from $50.2bn to $52.8bn
+A11	Confidence T9 Certain
+A12	Turnover_Stable T9
+T10	Company 1935 1938	BHP
+R5	is_about_company Arg1:T9 Arg2:T10	
+T11	Profit 2216 2284	profits were also relatively stable , rising from $18.2bn to $19.7bn
+A13	Confidence T11 Certain
+A14	Profit_Stable T11
+R6	is_about_company Arg1:T11 Arg2:T10	
+T12	Debt 3307 3368	allowed it to pay down net debt , which fell $2.3bn to $3.3bn
+A15	Confidence T12 Certain
+A16	Debt_Reduction T12
+T13	Company 3098 3101	BHP
+R7	is_about_company Arg1:T12 Arg2:T13	
+T14	Profit 4541 4574	Analysts expect stronger earnings
+A17	Confidence T14 Certain
+A18	Profit_Increase T14
+A19	Profit_Forecast T14
+T15	Profit 4596 4634	for the remainder of the calendar year
+A20	Confidence T15 Certain
+A21	Profit_Increase T15
+A22	Profit_Forecast T15
+T16	Company 4580 4583	BHP
+*	in_span_with T15 T14
+R8	is_about_company Arg1:T15 Arg2:T16	
+T17	Profit 4865 4916	wiped $2.15bn from earnings before interest and tax
+A23	Confidence T17 SomewhatCertain
+A24	Profit_Decrease T17
+T18	Company 4919 4922	BHP
+R9	is_about_company Arg1:T17 Arg2:T18	
+T19	Dividend 4923 4959	upped its final dividend to 45 cents
+A25	Confidence T19 Certain
+A26	Dividend_Raise T19
+R10	is_about_company Arg1:T19 Arg2:T18	
+T20	Profit 5005 5074	Earnings per share were 228.6 cents , up from 105.6 the previous year
+A27	Confidence T20 Certain
+A28	Profit_Increase T20
+R11	is_about_company Arg1:T20 Arg2:T18	

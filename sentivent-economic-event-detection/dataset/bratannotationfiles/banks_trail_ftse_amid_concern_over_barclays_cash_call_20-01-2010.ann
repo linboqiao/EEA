@@ -1,0 +1,45 @@
+T1	BuyRating 1185 1216	a downgrade to " underperform "
+A1	Confidence T1 Certain
+A2	BuyRating_Downgrade T1
+A3	BuyRating_Underperform T1
+T2	Company 1132 1136	HSBC
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	BuyRating 2065 2105	restarted coverage with a " buy " rating
+A4	Confidence T3 Certain
+A5	BuyRating_Buy T3
+T4	TargetPrice 2110 2127	380p target price
+A6	Confidence T4 Certain
+A7	TargetPrice_Announcement T4
+T5	Company 2006 2011	Rexam
+R2	is_about_company Arg1:T3 Arg2:T5	
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Dividend 2154 2206	Investors are being paid a 4 per cent dividend yield
+A8	Confidence T6 Certain
+A9	Dividend_Payment T6
+R4	is_about_company Arg1:T6 Arg2:T5	
+T7	SalesVolume 3665 3698	quarterly beer sales disappointed
+A10	Confidence T7 Certain
+A11	SalesVolume_WorseThanExpected T7
+T8	QuarterlyResults 3665 3698	quarterly beer sales disappointed
+A12	Confidence T8 Certain
+A13	QuarterlyResults_Weak T8
+T9	Company 3614 3623	SABMiller
+R5	is_about_company Arg1:T7 Arg2:T9	
+R6	is_about_company Arg1:T8 Arg2:T9	
+T10	BuyRating 2695 2725	Upgrading the stock to " buy "
+A14	Confidence T10 Certain
+A15	BuyRating_Upgrade T10
+A16	BuyRating_Buy T10
+T11	Company 2650 2660	Prudential
+R7	is_about_company Arg1:T10 Arg2:T11	
+T12	SalesVolume 2969 3040	after its Christmas quarter sales and earnings growth beat expectations
+A17	Confidence T12 Certain
+A18	SalesVolume_BetterThanExpected T12
+A19	SalesVolume_Increase T12
+T13	Profit 2969 3040	after its Christmas quarter sales and earnings growth beat expectations
+A20	Confidence T13 Certain
+A21	Profit_Increase T13
+A22	Profit_BetterThanExpected T13
+T14	Company 2907 2915	Burberry
+R8	is_about_company Arg1:T13 Arg2:T14	
+R9	is_about_company Arg1:T12 Arg2:T14	

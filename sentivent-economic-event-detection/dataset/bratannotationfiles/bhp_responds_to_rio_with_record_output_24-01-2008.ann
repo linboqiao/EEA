@@ -1,0 +1,32 @@
+T1	QuarterlyResults 2240 2333	Iron ore production rose 9 per in the second quarter and was up 8 per cent in the latest half
+A1	Confidence T1 Certain
+T2	Company 1986 1989	BHP
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	QuarterlyResults 2336 2407	Petroleum rose 10 per cent in the quarter and by 5 per cent in the half
+A4	Confidence T3 Certain
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	QuarterlyResults 2410 2441	Alumina was flat on the quarter
+A7	Confidence T4 Certain
+R3	is_about_company Arg1:T4 Arg2:T2	
+T7	Company 621 624	BHP
+T8	Company 636 639	Rio
+T9	MergerAcquisition 625 635	approached
+A16	MergerAcquisition_NoMergerAcquisition T9
+T10	MergerAcquisition 640 757	with a take-over proposal offering three BHP shares for each Rio share , worth about Pounds 65bn , which was rejected
+A17	Confidence T10 Certain
+A18	MergerAcquisition_NoMergerAcquisition T10
+A19	Confidence T9 Certain
+*	in_span_with T10 T9
+R6	is_about_acquirer Arg1:T9 Arg2:T7	
+R7	is_about_target Arg1:T9 Arg2:T8	
+A2	QuarterlyResults_Better T1
+A3	QuarterlyResults_Better T3
+A5	QuarterlyResults_Stable T4
+T5	QuarterlyResults 2488 2509	aluminium was flat in
+A6	Confidence T5 Certain
+A8	QuarterlyResults_Stable T5
+T6	QuarterlyResults 2515 2526	the quarter
+A9	Confidence T6 Certain
+A10	QuarterlyResults_Stable T6
+*	in_span_with T6 T5
+R4	is_about_company Arg1:T5 Arg2:T2	

@@ -1,0 +1,28 @@
+T1	MergerAcquisition 9 25	in EUR1.3bn deal
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Other T1
+T2	Company 0 8	Unilever
+T3	Company 30 38	Sara Lee
+R1	is_about_company Arg1:T1 Arg2:T2	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	MergerAcquisition 175 217	agreed to pay EUR1.27bn ( $1.9bn ) in cash
+A3	Confidence T4 Certain
+A4	MergerAcquisition_Other T4
+T5	Company 222 230	Sara Lee
+T6	Company 111 119	Unilever
+R3	is_about_acquirer Arg1:T4 Arg2:T6	
+R4	is_about_company Arg1:T4 Arg2:T5	
+T7	MergerAcquisition 308 323	The acquisition
+A5	Confidence T7 Certain
+A6	MergerAcquisition_MergerAcquisition T7
+R5	is_about_company Arg1:T7 Arg2:T6	
+R6	is_about_company Arg1:T7 Arg2:T5	
+T8	SalesVolume 2254 2279	is worth EUR750m in sales
+A7	Confidence T8 Certain
+A8	SalesVolume_Other T8
+T9	Company 2236 2244	Sara Lee
+R7	is_about_company Arg1:T8 Arg2:T9	
+T10	Profit 2286 2363	has earnings before interest , tax , depreciation and amortisation of EUR128m
+A9	Confidence T10 Certain
+A10	Profit_Positive T10
+R8	is_about_company Arg1:T10 Arg2:T9	

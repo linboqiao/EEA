@@ -1,0 +1,7 @@
+T1	Profit 2046 2081	was profitable in the first quarter
+A1	Confidence T1 Certain
+A2	Profit_Positive T1
+T2	QuarterlyResults 2046 2081	was profitable in the first quarter
+A3	Confidence T2 Certain
+A4	QuarterlyResults_Strong T2
+T3	Company 1991 2007	Barclays Capital

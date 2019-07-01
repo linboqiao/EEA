@@ -1,0 +1,10 @@
+T1	SalesVolume 557 615	are estimated to have just over EUR1bn ( $1.6bn ) in sales
+A1	Confidence T1 SomewhatCertain
+A2	SalesVolume_Forecast T1
+A3	SalesVolume_Other T1
+T2	Company 477 485	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 697 773	sales have risen between 6 per cent and 8 per cent over the past three years
+A4	Confidence T3 Certain
+A5	SalesVolume_Increase T3
+R2	is_about_company Arg1:T3 Arg2:T2	

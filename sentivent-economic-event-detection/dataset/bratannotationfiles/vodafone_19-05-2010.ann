@@ -1,0 +1,10 @@
+T1	Turnover 877 892	The growth rate
+A1	Confidence T1 Certain
+A2	Turnover_Decrease T1
+A3	Turnover_Other T1
+T2	Turnover 915 1062	revenue , which accounts for less than a 10th of its total sales , slowed to 13 per cent last year and was less than half that in the final quarter
+A4	Turnover_Decrease T2
+A5	Turnover_Other T2
+*	in_span_with T1 T2
+T3	Company 896 904	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T3	

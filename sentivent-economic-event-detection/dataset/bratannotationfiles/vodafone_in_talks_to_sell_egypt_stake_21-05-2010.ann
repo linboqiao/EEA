@@ -1,0 +1,31 @@
+T1	MergerAcquisition 319 333	has approached
+A1	Confidence T1 SomewhatCertain
+A2	MergerAcquisition_Other T1
+A3	MergerAcquisition_MergerAcquisition T1
+T2	MergerAcquisition 343 407	about buying the UK group 's 55 per cent stake in Vodafone Egypt
+A4	MergerAcquisition_Other T2
+A5	MergerAcquisition_MergerAcquisition T2
+*	in_span_with T1 T2
+T3	Company 334 342	Vodafone
+T4	Company 253 266	Telecom Egypt
+R1	is_about_acquirer Arg1:T1 Arg2:T4	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T5	MergerAcquisition 698 783	could expect to receive about pound(s)3bn for its controlling stake in Vodafone Egypt
+A6	Confidence T5 SomewhatCertain
+A7	MergerAcquisition_Forecast T5
+A8	MergerAcquisition_Other T5
+T6	Company 689 697	Vodafone
+T7	Company 585 598	Telecom Egypt
+R3	is_about_company Arg1:T5 Arg2:T6	
+R4	is_about_acquirer Arg1:T5 Arg2:T7	
+T8	Turnover 2264 2289	revenue growth has slowed
+A9	Confidence T8 Certain
+A10	Turnover_Increase T8
+T9	Company 2246 2260	Vodafone Egypt
+A11	Turnover_Other T8
+R5	is_about_company Arg1:T8 Arg2:T9	
+T10	Profit 2580 2698	The margin at the level of earnings before interest , tax , depreciation and amortisation was 50 per cent in 2009-2010
+A12	Confidence T10 Certain
+A13	Profit_Other T10
+T11	Company 2479 2493	Vodafone Egypt
+R6	is_about_company Arg1:T10 Arg2:T11	

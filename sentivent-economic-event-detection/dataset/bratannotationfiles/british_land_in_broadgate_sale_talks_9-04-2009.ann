@@ -1,0 +1,5 @@
+T3	Debt 1967 2023	has an untapped debt facility of more than pound(s)2.5bn
+A2	Debt_Other T3
+A3	Confidence T3 Uncertain
+T1	Company 2137 2149	British Land
+R1	is_about_company Arg1:T3 Arg2:T1	

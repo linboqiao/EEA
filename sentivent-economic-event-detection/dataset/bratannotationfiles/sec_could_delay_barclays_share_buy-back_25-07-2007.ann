@@ -1,0 +1,5 @@
+T1	ShareRepurchase 125 188	Euros 3.6bn ( Dollars 4.9bn ) share buy-back unveiled yesterday
+A1	Confidence T1 Certain
+A2	ShareRepurchase_Announcement T1
+T2	Company 114 122	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	

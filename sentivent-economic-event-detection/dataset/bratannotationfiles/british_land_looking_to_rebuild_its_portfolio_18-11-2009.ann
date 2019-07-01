@@ -1,0 +1,40 @@
+T1	Turnover 341 464	fall in the number of retailers facing administration had helped boost net income from its retail portfolio by 2.7 per cent
+A1	Confidence T1 Certain
+T2	Company 133 145	British Land
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 501 616	although a 2.3 per cent decline in office income reduced overall like-for-like rental income growth to 0.7 per cent
+A3	Confidence T3 Certain
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	QuarterlyResults 814 869	NAV had rebounded by 3.1 per cent in the second quarter
+A5	Confidence T4 Certain
+A6	QuarterlyResults_BetterThanExpected T4
+T5	Company 1240 1252	British Land
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Turnover 2191 2268	Gross rental income for the six months fell from pound(s)283m to pound(s)240m
+A7	Confidence T6 Certain
+T7	Profit 2376 2442	saw pre-tax losses pegged back from pound(s)1.33bn to pound(s)113m
+A9	Confidence T7 Certain
+T8	Company 2445 2457	British Land
+R4	is_about_company Arg1:T7 Arg2:T8	
+R5	is_about_company Arg1:T6 Arg2:T8	
+T9	Profit 2601 2645	backed by pound(s)129m of underlying profits
+A11	Confidence T9 Certain
+A12	Profit_BetterThanExpected T9
+R6	is_about_company Arg1:T9 Arg2:T8	
+A2	Turnover_Increase T1
+A4	Turnover_Decrease T3
+A8	Turnover_Decrease T6
+A10	Profit_Increase T7
+A13	Profit_Negative T7
+T10	Dividend 2458 2502	declared a second quarterly dividend of 6.5p
+A14	Confidence T10 Certain
+A15	Dividend_Announcement T10
+R7	is_about_company Arg1:T10 Arg2:T8	
+T11	Profit 2648 2700	which generated underlying earnings per share of 15p
+A16	Confidence T11 Certain
+A17	Profit_Positive T11
+T12	Profit 2551 2596	This was uncovered by losses per share of 13p
+A18	Confidence T12 Certain
+A19	Profit_Negative T12
+R8	is_about_company Arg1:T12 Arg2:T8	
+R9	is_about_company Arg1:T11 Arg2:T8	

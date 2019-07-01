@@ -1,0 +1,59 @@
+T1	Profit 0 16	Earnings worries
+A1	Confidence T1 SomewhatCertain
+A2	Profit_Forecast T1
+T2	Profit 66 82	Earnings worries
+A3	Confidence T2 SomewhatCertain
+A4	Profit_Forecast T2
+T3	Company 33 41	Unilever
+T4	Company 87 95	Unilever
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T4	
+T5	SalesVolume 182 239	sales growth was likely to undershoot market expectations
+A5	Confidence T5 Certain
+A6	SalesVolume_WorseThanExpected T5
+T6	Company 170 178	Unilever
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	SalesVolume 463 632	Analysts expect the group to deliver 5.5 per cent organic growth when it reports second-quarter results next week , down from 5.7 per cent from the same period last year
+A7	Confidence T7 Certain
+A8	SalesVolume_Decrease T7
+A9	SalesVolume_Forecast T7
+T8	QuarterlyResults 463 632	Analysts expect the group to deliver 5.5 per cent organic growth when it reports second-quarter results next week , down from 5.7 per cent from the same period last year
+A10	Confidence T8 Certain
+A11	QuarterlyResults_Forecast T8
+A12	QuarterlyResults_Worse T8
+T9	Company 749 757	Unilever
+R4	is_about_company Arg1:T8 Arg2:T9	
+R5	is_about_company Arg1:T7 Arg2:T9	
+T10	BuyRating 1294 1304	downgraded
+A13	Confidence T10 Certain
+A14	BuyRating_Downgrade T10
+A15	BuyRating_Underperform T10
+T11	BuyRating 1314 1333	to " underperform "
+A16	Confidence T11 Certain
+A17	BuyRating_Downgrade T11
+A18	BuyRating_Underperform T11
+T12	Company 1305 1313	Unilever
+*	in_span_with T11 T10
+R6	is_about_company Arg1:T11 Arg2:T12	
+T13	BuyRating 2048 2083	added the stock to its " buy " list
+A19	Confidence T13 Certain
+A20	BuyRating_Buy T13
+T14	Company 1998 2009	Thomas Cook
+R7	is_about_company Arg1:T13 Arg2:T14	
+T15	Profit 3413 3452	warned of a pound(s)15m hit to earnings
+A21	Confidence T15 Certain
+A22	Profit_Decrease T15
+A23	Profit_Forecast T15
+T16	Company 3347 3359	Smiths Group
+R8	is_about_company Arg1:T15 Arg2:T16	
+T17	BuyRating 3640 3680	with RBC downgrading to " underperform "
+A24	Confidence T17 Certain
+A25	BuyRating_Downgrade T17
+A26	BuyRating_Underperform T17
+T18	Company 3595 3601	Capita
+R9	is_about_company Arg1:T17 Arg2:T18	
+T19	BuyRating 3800 3828	cut it from its " buy " list
+A27	Confidence T19 Certain
+A28	BuyRating_Downgrade T19
+T20	Company 3683 3699	Imperial Tobacco
+R10	is_about_company Arg1:T19 Arg2:T20	

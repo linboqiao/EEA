@@ -1,0 +1,54 @@
+T1	Profit 9 31	raises profit guidance
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+A3	Profit_Forecast T1
+T2	Company 0 8	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 127 179	raising its guidance on operating profit for 2007-08
+A4	Confidence T3 Certain
+A5	Profit_Increase T3
+A6	Profit_Forecast T3
+T4	Company 79 87	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 356 416	a 45 per cent increase in revenue from mobile data functions
+A7	Confidence T5 Certain
+A8	Turnover_Increase T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	Turnover 848 1004	Revenue for the six months to September 30 was Pounds 17bn ( Dollars 35bn ) , up 4.4 per cent on an underlying basis compared with the same period last year
+A9	Confidence T6 Certain
+A10	Turnover_Increase T6
+T7	Profit 1011 1070	adjusted operating profit of Pounds 5.2bn , up 6.1 per cent
+A11	Confidence T7 Certain
+A12	Profit_Increase T7
+A13	Profit_Positive T7
+T8	Company 1073 1081	Vodafone
+R4	is_about_company Arg1:T7 Arg2:T8	
+R5	is_about_company Arg1:T6 Arg2:T8	
+T9	Profit 1091 1191	a pre-tax profit of Pounds 4.6bn , compared with a loss of Pounds 3.3bn in the first half of 2006-07
+A14	Confidence T9 Certain
+A15	Profit_Increase T9
+A16	Profit_Positive T9
+R6	is_about_company Arg1:T9 Arg2:T8	
+T10	Profit 1315 1459	raised its guidance on adjusted operating profit for 2007-08 from between Pounds 9.3bn and Pounds 9.8bn to between Pounds 9.5bn and Pounds 9.9bn
+A17	Confidence T10 Certain
+A18	Profit_Increase T10
+A19	Profit_Positive T10
+A20	Profit_Forecast T10
+T11	Company 1235 1243	Vodafone
+R7	is_about_company Arg1:T10 Arg2:T11	
+T12	MergerAcquisition 1530 1560	bought for Pounds 5.5bn in May
+A21	Confidence T12 Certain
+A22	MergerAcquisition_Other T12
+A23	MergerAcquisition_MergerAcquisition T12
+T13	Company 1486 1500	Vodafone Essar
+R8	is_about_target Arg1:T12 Arg2:T13	
+R9	is_about_acquirer Arg1:T12 Arg2:T11	
+T14	Turnover 1578 1607	revenue growth of 53 per cent
+A24	Confidence T14 Certain
+A25	Turnover_Increase T14
+T15	SalesVolume 1614 1654	signing up 1.6m new customers each month
+A26	Confidence T15 Certain
+A27	SalesVolume_Increase T15
+T16	Company 1657 1665	Vodafone
+R10	is_about_company Arg1:T14 Arg2:T16	
+R11	is_about_company Arg1:T15 Arg2:T16	

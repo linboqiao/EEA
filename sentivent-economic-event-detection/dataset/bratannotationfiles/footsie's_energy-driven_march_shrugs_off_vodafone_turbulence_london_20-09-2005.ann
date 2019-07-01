@@ -1,0 +1,16 @@
+T1	BuyRating 3075 3117	cut its rating to " neutral " from " buy "
+A1	Confidence T1 Certain
+A2	BuyRating_Hold T1
+A3	BuyRating_Downgrade T1
+T2	Company 3003 3006	GUS
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	TargetPrice 3122 3165	lowered its price target to 970p from 1050p
+A4	Confidence T3 Certain
+A5	TargetPrice_Reduction T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	BuyRating 4134 4175	upped its rating to " add " from " sell "
+A6	Confidence T4 Certain
+A7	BuyRating_Upgrade T4
+A8	BuyRating_Buy T4
+T5	Company 4055 4074	Countrywide Estates
+R3	is_about_company Arg1:T4 Arg2:T5	

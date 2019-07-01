@@ -1,0 +1,39 @@
+T1	Profit 101 115	profit warning
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A3	Profit_WorseThanExpected T1
+T2	Company 50 55	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 955 974	like-for-like sales
+A4	Confidence T3 Certain
+A5	SalesVolume_Decrease T3
+T4	SalesVolume 990 1017	may have dropped 8 per cent
+A6	Confidence T4 Certain
+A7	SalesVolume_Decrease T4
+*	in_span_with T4 T3
+T5	Company 926 931	Tesco
+R2	is_about_company Arg1:T3 Arg2:T5	
+T6	MergerAcquisition 1270 1285	in merger talks
+A8	Confidence T6 Certain
+A9	MergerAcquisition_MergerAcquisition T6
+T7	Company 1252 1260	Vodafone
+R3	is_about_company Arg1:T6 Arg2:T7	
+T8	Profit 1731 1783	its annual earnings and dividend topped expectations
+A10	Confidence T8 Certain
+A11	Profit_Increase T8
+A12	Profit_BetterThanExpected T8
+T9	Dividend 1731 1783	its annual earnings and dividend topped expectations
+A13	Confidence T9 Certain
+A14	Dividend_Announcement T9
+T10	Company 1679 1686	Admiral
+R4	is_about_company Arg1:T8 Arg2:T10	
+R5	is_about_company Arg1:T9 Arg2:T10	
+T11	Dividend 1788 1801	dividend hike
+A15	Confidence T11 Certain
+A16	Dividend_Raise T11
+T12	Company 1807 1822	Legal & General
+R6	is_about_company Arg1:T11 Arg2:T12	
+T13	Dividend 1828 1842	beat forecasts
+A17	Confidence T13 Certain
+A18	Dividend_Raise T13
+*	in_span_with T13 T11

@@ -1,0 +1,51 @@
+T1	QuarterlyResults 196 314	production fell 4 per cent in the quarter ending March 31 against both the prior quarter and the same period last year
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Worse T1
+T2	Company 173 176	BHP
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	QuarterlyResults 913 996	Copper production for the world 's biggest miner fell 9 per cent quarter on quarter
+A3	Confidence T3 Certain
+A4	QuarterlyResults_Worse T3
+T4	Company 658 661	BHP
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 1707 1768	first-quarter net profits rose from $897m last year to $1.5bn
+A5	Confidence T5 Certain
+A6	Profit_Increase T5
+T6	QuarterlyResults 1707 1768	first-quarter net profits rose from $897m last year to $1.5bn
+A7	Confidence T6 Certain
+A8	QuarterlyResults_Better T6
+T7	Company 1571 1587	Freeport McMoran
+R3	is_about_company Arg1:T6 Arg2:T7	
+R4	is_about_company Arg1:T5 Arg2:T7	
+T8	QuarterlyResults 1877 1977	saw copper production fall by more than 5 per cent in the latest quarter compared with the prior one
+A9	Confidence T8 Certain
+A10	QuarterlyResults_Worse T8
+T9	Company 1868 1876	Freeport
+T10	Company 1860 1863	BHP
+R5	is_about_company Arg1:T8 Arg2:T9	
+R6	is_about_company Arg1:T8 Arg2:T10	
+T11	Dividend 1989 2082	said on Tuesday it would add a 50 cent supplementary dividend to its 25 cent regular dividend
+A11	Confidence T11 Certain
+A12	Dividend_Raise T11
+A13	Dividend_Announcement T11
+T12	Company 1980 1988	Freeport
+R7	is_about_company Arg1:T11 Arg2:T12	
+T13	QuarterlyResults 2384 2498	In the three quarters to March it produced 99m tonnes of iron ore , a 6 per cent gain on the same period last time
+A14	Confidence T13 Certain
+A15	QuarterlyResults_Better T13
+T14	Company 2173 2176	BHP
+R8	is_about_company Arg1:T13 Arg2:T14	
+T15	QuarterlyResults 1145 1269	lower production of coking coal , which fell to 6.7m tonnes from 7.8m in the prior quarter and 8.2m in same period last year
+A16	Confidence T15 Certain
+A17	QuarterlyResults_Worse T15
+R9	is_about_company Arg1:T15 Arg2:T4	
+T16	Profit 1410 1568	it expects quarterly earnings per share for diversified miners to rise 6 per cent against the last quarter and 101 per cent against the same quarter last year
+A18	Confidence T16 Certain
+A19	Profit_Increase T16
+A20	Profit_Forecast T16
+T17	QuarterlyResults 1410 1568	it expects quarterly earnings per share for diversified miners to rise 6 per cent against the last quarter and 101 per cent against the same quarter last year
+A21	Confidence T17 Certain
+A22	QuarterlyResults_Better T17
+A23	QuarterlyResults_Forecast T17
+R10	is_about_company Arg1:T17 Arg2:T4	
+R11	is_about_company Arg1:T16 Arg2:T4	

@@ -1,0 +1,32 @@
+T2	Company 443 447	BASF
+T3	Dividend 1198 1237	free cash flow has been used to finance
+A3	Confidence T3 Certain
+A4	Dividend_Raise T3
+T4	ShareRepurchase 1198 1252	free cash flow has been used to finance share buybacks
+A5	Confidence T4 SomewhatCertain
+A6	ShareRepurchase_Announcement T4
+T1	QuarterlyResults 302 400	first-quarter numbers , showing operating profits up 40 per cent and product prices up 13 per cent
+A1	Confidence T1 Certain
+T7	Profit 334 366	operating profits up 40 per cent
+A2	Confidence T7 Certain
+A9	Profit_Increase T7
+R1	is_about_company Arg1:T1 Arg2:T2	
+R3	is_about_company Arg1:T7 Arg2:T2	
+A7	QuarterlyResults_Better T1
+T5	Turnover 251 286	forecast flat 2005 operating income
+A8	Confidence T5 Certain
+A10	Turnover_Forecast T5
+A11	Turnover_Stable T5
+T6	Company 9 13	BASF
+R2	is_about_company Arg1:T5 Arg2:T6	
+T8	Profit 111 126	surging profits
+A12	Confidence T8 Certain
+A13	Profit_Increase T8
+R4	is_about_company Arg1:T8 Arg2:T6	
+T9	Dividend 1257 1275	dividend increases
+A14	Confidence T9 Certain
+A15	Dividend_Raise T9
+*	in_span_with T9 T3
+T10	Company 833 837	BASF
+R5	is_about_company Arg1:T3 Arg2:T10	
+R6	is_about_company Arg1:T4 Arg2:T10	

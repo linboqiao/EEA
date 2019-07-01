@@ -1,0 +1,47 @@
+T1	BuyRating 528 551	repeated " buy " advice
+A1	Confidence T1 Certain
+A2	BuyRating_Buy T1
+A3	BuyRating_Maintained T1
+T2	Company 356 364	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	BuyRating 2630 2668	upgraded both stocks to " outperform "
+A4	Confidence T3 Certain
+A5	BuyRating_Upgrade T3
+A6	BuyRating_Outperform T3
+T4	Company 2508 2528	Lloyds Banking Group
+T5	Company 2560 2582	Royal Bank of Scotland
+R2	is_about_company Arg1:T3 Arg2:T4	
+R3	is_about_company Arg1:T3 Arg2:T5	
+T6	BuyRating 2840 2856	a " buy " rating
+A7	Confidence T6 Certain
+A8	BuyRating_Buy T6
+T7	TargetPrice 2861 2872	310p target
+A9	Confidence T7 Certain
+A10	TargetPrice_Announcement T7
+T8	Company 2692 2701	Man Group
+R4	is_about_company Arg1:T6 Arg2:T8	
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	Profit 2938 2977	better than forecast full-year earnings
+A11	Confidence T9 Certain
+A12	Profit_BetterThanExpected T9
+T10	Company 2875 2883	Burberry
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	BuyRating 3932 3948	a " buy " rating
+A13	Confidence T11 Certain
+A14	BuyRating_Buy T11
+T12	TargetPrice 3953 3970	135p price target
+A15	Confidence T12 Certain
+A16	TargetPrice_Announcement T12
+T13	Company 3811 3816	Afren
+R7	is_about_company Arg1:T11 Arg2:T13	
+R8	is_about_company Arg1:T12 Arg2:T13	
+T14	BuyRating 4121 4139	upgrade to " buy "
+A17	Confidence T14 Certain
+A18	BuyRating_Upgrade T14
+A19	BuyRating_Buy T14
+T15	TargetPrice 4147 4170	720p share price target
+A20	Confidence T15 Certain
+A21	TargetPrice_Announcement T15
+T16	Company 4061 4064	IMI
+R9	is_about_company Arg1:T14 Arg2:T16	
+R10	is_about_company Arg1:T15 Arg2:T16	

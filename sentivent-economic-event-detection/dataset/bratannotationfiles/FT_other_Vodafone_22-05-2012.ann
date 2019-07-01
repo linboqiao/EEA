@@ -1,0 +1,13 @@
+T1	Profit 919 953	pre-tax profit was flat at £ 9.5bn
+A1	Confidence T1 Certain
+A2	Profit_Stable T1
+T2	Company 818 826	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 1736 1771	with £ 19.2bn paid out in dividends
+A3	Confidence T3 Certain
+A4	Dividend_Payment T3
+T4	ShareRepurchase 1776 1801	£ 6.7bn in share buybacks
+A5	Confidence T4 Certain
+T5	Company 1622 1630	Vodafone
+R2	is_about_company Arg1:T4 Arg2:T5	
+R3	is_about_company Arg1:T3 Arg2:T5	

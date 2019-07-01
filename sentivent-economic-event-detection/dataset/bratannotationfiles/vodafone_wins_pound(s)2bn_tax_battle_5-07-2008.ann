@@ -1,0 +1,7 @@
+T1	MergerAcquisition 459 475	1999 acquisition
+A1	Confidence T1 Certain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	Company 411 419	Vodafone
+T3	Company 490 500	Mannesmann
+R1	is_about_acquirer Arg1:T1 Arg2:T2	
+R2	is_about_target Arg1:T1 Arg2:T3	

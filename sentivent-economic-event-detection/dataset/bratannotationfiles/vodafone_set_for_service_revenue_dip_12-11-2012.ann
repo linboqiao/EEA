@@ -1,0 +1,68 @@
+T1	Turnover 9 36	set for service revenue dip
+A1	Confidence T1 Certain
+A2	Turnover_Decrease T1
+A3	Turnover_Forecast T1
+T2	Company 0 8	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 46 133	is expected to report that service revenue growth turned negative in the second quarter
+A4	Confidence T3 Certain
+A5	Turnover_Decrease T3
+A6	Turnover_Forecast T3
+A7	Turnover_Declaration T3
+T4	Company 37 45	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 331 419	service revenues might have fallen 0.7 per cent in the second quarter against a year ago
+A8	Confidence T5 Certain
+A9	Turnover_Decrease T5
+A10	Turnover_Forecast T5
+T6	QuarterlyResults 46 133	is expected to report that service revenue growth turned negative in the second quarter
+A11	Confidence T6 Certain
+A12	QuarterlyResults_Forecast T6
+A13	QuarterlyResults_Worse T6
+R3	is_about_company Arg1:T6 Arg2:T4	
+T7	QuarterlyResults 331 419	service revenues might have fallen 0.7 per cent in the second quarter against a year ago
+A14	Confidence T7 Certain
+A15	QuarterlyResults_Forecast T7
+A16	QuarterlyResults_Worse T7
+R4	is_about_company Arg1:T5 Arg2:T4	
+R5	is_about_company Arg1:T7 Arg2:T4	
+T8	Turnover 427 465	declines expected of about 12 per cent
+A17	Confidence T8 Certain
+A18	Turnover_Decrease T8
+A19	Turnover_Forecast T8
+R6	is_about_company Arg1:T8 Arg2:T4	
+T9	Turnover 530 597	is expected to have suffered a moderate decline in service revenues
+A20	Confidence T9 Certain
+A21	Turnover_Decrease T9
+A22	Turnover_Forecast T9
+T10	Turnover 622 653	an increase of about 3 per cent
+A23	Confidence T10 Certain
+A24	Turnover_Increase T10
+R7	is_about_company Arg1:T9 Arg2:T4	
+R8	is_about_company Arg1:T10 Arg2:T4	
+T11	Turnover 848 891	revenues might be as much as a fifth higher
+A25	Confidence T11 Certain
+A26	Turnover_Forecast T11
+A27	Turnover_Increase T11
+R9	is_about_company Arg1:T11 Arg2:T4	
+T12	Turnover 952 999	reported service revenue growth of 7.5 per cent
+A28	Confidence T12 Certain
+A29	Turnover_Increase T12
+A30	Turnover_Declaration T12
+T13	Company 931 947	Verizon Wireless
+R10	is_about_company Arg1:T12 Arg2:T13	
+T14	Profit 1327 1394	expect group ebitda to be down about 2.5 per cent in the first half
+A31	Confidence T14 Certain
+A32	Profit_Decrease T14
+A33	Profit_Forecast T14
+R11	is_about_company Arg1:T14 Arg2:T4	
+T15	Profit 1002 1166	First-half margins are expected to be slightly lower at about 31 per cent , with falling European margins likely to be offset by expansion in South Africa and India
+A34	Confidence T15 Certain
+A35	Profit_Decrease T15
+R12	is_about_company Arg1:T15 Arg2:T4	
+T16	Profit 1169 1294	Consensus first-half earnings are put at pound(s)6.8bn , a 10 per cent decline but mostly owing to foreign exchange movements
+A36	Confidence T16 Certain
+A37	Profit_Decrease T16
+A38	Profit_Positive T16
+A39	Profit_Forecast T16
+R13	is_about_company Arg1:T16 Arg2:T4	

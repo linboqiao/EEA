@@ -1,0 +1,56 @@
+T1	Profit 3895 4008	the betting exchange 's plans to launch a fixed-odds sportsbook next year could boost group profit by 50 per cent
+A1	Profit_Increase T1
+A2	Profit_Forecast T1
+T3	MergerAcquisition 196 231	amid renewed speculation it may bid
+A3	Confidence T3 SomewhatCertain
+A4	MergerAcquisition_Forecast T3
+T4	Company 236 242	Mosaic
+T5	Company 151 154	BHP
+R2	is_about_target Arg1:T3 Arg2:T4	
+R3	is_about_acquirer Arg1:T3 Arg2:T5	
+T6	MergerAcquisition 560 594	last year 's failed $40bn approach
+A5	Confidence T6 Certain
+A6	MergerAcquisition_NoMergerAcquisition T6
+T7	Company 599 609	PotashCorp
+T8	Company 527 530	BHP
+R4	is_about_target Arg1:T6 Arg2:T7	
+R5	is_about_acquirer Arg1:T6 Arg2:T8	
+T9	MergerAcquisition 856 863	blocked
+A7	Confidence T9 Certain
+A8	MergerAcquisition_NoMergerAcquisition T9
+T10	MergerAcquisition 882 885	bid
+A9	Confidence T10 Certain
+A10	MergerAcquisition_NoMergerAcquisition T10
+*	in_span_with T9 T10
+T11	Company 864 867	BHP
+T12	Company 871 881	PotashCorp
+R6	is_about_acquirer Arg1:T9 Arg2:T11	
+R7	is_about_target Arg1:T10 Arg2:T12	
+T13	MergerAcquisition 1693 1777	amid continued speculation that shareholders may block its pound(s)5.2bn deal to buy
+A11	Confidence T13 SomewhatCertain
+A12	MergerAcquisition_NoMergerAcquisition T13
+A13	MergerAcquisition_Forecast T13
+T14	Company 1778 1781	ISS
+T15	Company 1664 1667	G4S
+R8	is_about_target Arg1:T13 Arg2:T14	
+R9	is_about_acquirer Arg1:T13 Arg2:T15	
+T16	ShareRepurchase 2401 2420	Share buy-back news
+A14	Confidence T16 SomewhatCertain
+A15	ShareRepurchase_Announcement T16
+T17	Company 2425 2434	Debenhams
+R10	is_about_company Arg1:T16 Arg2:T17	
+T18	Profit 3171 3213	after its third profit warning of the year
+A16	Confidence T18 Certain
+A17	Profit_Decrease T18
+A18	Profit_Forecast T18
+T19	Company 3141 3145	Pace
+R11	is_about_company Arg1:T18 Arg2:T19	
+T20	BuyRating 3357 3388	A downgrade to " underperform "
+A19	Confidence T20 Certain
+A20	BuyRating_Downgrade T20
+A21	BuyRating_Underperform T20
+T21	Company 3413 3418	Mondi
+R12	is_about_company Arg1:T20 Arg2:T21	
+A22	Confidence T1 SomewhatCertain
+T2	Company 3835 3842	Betfair
+R1	is_about_company Arg1:T1 Arg2:T2	

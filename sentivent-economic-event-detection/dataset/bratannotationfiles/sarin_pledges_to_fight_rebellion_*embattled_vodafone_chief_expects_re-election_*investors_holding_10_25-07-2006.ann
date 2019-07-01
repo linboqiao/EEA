@@ -1,0 +1,62 @@
+T1	Turnover 545 567	slowing revenue growth
+A1	Confidence T1 Certain
+A2	Turnover_Other T1
+T2	Company 338 346	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 1743 1850	the publication of better than expected group revenue figures for the first quarter of its 2007 fiscal year
+A3	Confidence T3 Certain
+A4	Turnover_Declaration T3
+A5	Turnover_BetterThanExpected T3
+T4	QuarterlyResults 1743 1850	the publication of better than expected group revenue figures for the first quarter of its 2007 fiscal year
+A6	Confidence T4 Certain
+A7	QuarterlyResults_Publication T4
+A8	QuarterlyResults_BetterThanExpected T4
+T5	Company 1679 1687	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T5	
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Turnover 1853 1929	It reported revenue growth of 9.2 per cent against the first quarter of 2006
+A9	Confidence T6 Certain
+A10	Turnover_Increase T6
+T7	QuarterlyResults 1853 1929	It reported revenue growth of 9.2 per cent against the first quarter of 2006
+A11	Confidence T7 Certain
+A12	QuarterlyResults_Better T7
+R4	is_about_company Arg1:T6 Arg2:T5	
+R5	is_about_company Arg1:T7 Arg2:T5	
+T8	Turnover 1936 2041	year- on-year revenue growth in Europe was 0.5 per cent , compared with 62.2 per cent in emerging markets
+A13	Confidence T8 SomewhatCertain
+A14	Turnover_Increase T8
+A15	Turnover_Other T8
+R6	is_about_company Arg1:T8 Arg2:T5	
+T9	SalesVolume 2053 2100	added a total of 16.2m customers in the quarter
+A16	Confidence T9 Certain
+A17	SalesVolume_Increase T9
+T10	QuarterlyResults 2053 2100	added a total of 16.2m customers in the quarter
+A18	Confidence T10 Certain
+A19	QuarterlyResults_Better T10
+T11	Company 2044 2052	Vodafone
+R7	is_about_company Arg1:T10 Arg2:T11	
+R8	is_about_company Arg1:T9 Arg2:T11	
+T12	Turnover 2152 2228	It stuck by its guidance of mobile revenue growth of 5-6.5 per cent for 2007
+A20	Confidence T12 Certain
+A21	Turnover_Forecast T12
+A22	Turnover_Increase T12
+T13	Turnover 2231 2263	compared with 9 per cent in 2006
+A23	Confidence T13 Certain
+A24	Turnover_Decrease T13
+R9	is_about_company Arg1:T12 Arg2:T11	
+R10	is_about_company Arg1:T13 Arg2:T11	
+T14	Profit 2266 2326	It expects its profit margins to be 1 per cent lower in 2007
+A25	Confidence T14 Certain
+A26	Profit_Decrease T14
+A27	Profit_Forecast T14
+R11	is_about_company Arg1:T14 Arg2:T11	
+T15	Profit 2345 2401	reported a record pre-tax loss of Pounds 14.9bn for 2006
+A28	Confidence T15 Certain
+A29	Profit_Negative T15
+T16	Company 2336 2344	Vodafone
+R12	is_about_company Arg1:T15 Arg2:T16	
+T17	Profit 2611 2653	plans to lower the earnings growth targets
+A30	Confidence T17 SomewhatCertain
+A31	Profit_Other T17
+T18	Company 2599 2607	Vodafone
+R13	is_about_company Arg1:T17 Arg2:T18	

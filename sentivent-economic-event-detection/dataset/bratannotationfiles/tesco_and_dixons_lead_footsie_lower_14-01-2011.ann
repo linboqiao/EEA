@@ -1,0 +1,21 @@
+T1	SalesVolume 357 392	weaker than expected non-food sales
+A1	Confidence T1 Certain
+A2	SalesVolume_WorseThanExpected T1
+T2	Company 308 313	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 747 763	a profit warning
+A3	Confidence T3 Certain
+A4	Profit_Decrease T3
+A5	Profit_Forecast T3
+T4	Company 694 707	Dixons Retail
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 905 948	its holiday sales proved better than feared
+A6	Confidence T5 Certain
+A7	SalesVolume_BetterThanExpected T5
+T6	Company 831 848	Home Retail Group
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	BuyRating 1612 1626	" buy " advice
+A8	Confidence T7 Certain
+A9	BuyRating_Buy T7
+T8	Company 1548 1561	Admiral Group
+R4	is_about_company Arg1:T7 Arg2:T8	

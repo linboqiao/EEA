@@ -1,0 +1,100 @@
+T1	SalesVolume 309 356	experienced stronger than expected sales growth
+A1	Confidence T1 Certain
+A2	SalesVolume_BetterThanExpected T1
+A3	SalesVolume_Increase T1
+T2	Company 303 308	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 419 432	sales through
+A4	Confidence T3 Certain
+A5	SalesVolume_Increase T3
+T4	SalesVolume 442 478	tills rose 2.7 per cent year on year
+A6	Confidence T4 Certain
+A7	SalesVolume_Increase T4
+*	in_span_with T4 T3
+T5	Company 433 438	Tesco
+R2	is_about_company Arg1:T4 Arg2:T5	
+T6	SalesVolume 603 667	grocery sales rose 5.2 per cent in the four weeks to November 25
+A8	Confidence T6 Certain
+A9	SalesVolume_Increase T6
+T7	Company 594 599	Tesco
+R3	is_about_company Arg1:T6 Arg2:T7	
+T8	SalesVolume 903 1010	it is forecast to report flat to slightly negative sales growth for the three months to the end of November
+A10	Confidence T8 Certain
+A11	SalesVolume_Stable T8
+A12	SalesVolume_Forecast T8
+T9	QuarterlyResults 903 1010	it is forecast to report flat to slightly negative sales growth for the three months to the end of November
+A13	Confidence T9 Certain
+A14	QuarterlyResults_Stable T9
+T10	QuarterlyResults 866 895	today 's third-quarter update
+A15	Confidence T10 Certain
+A16	QuarterlyResults_Publication T10
+T11	Company 1063 1068	Tesco
+R4	is_about_company Arg1:T10 Arg2:T11	
+R5	is_about_company Arg1:T8 Arg2:T11	
+R6	is_about_company Arg1:T9 Arg2:T11	
+T12	SalesVolume 1069 1186	had its first rise in UK like-for-like sales for two years , up 0.1 per cent in the three months to the end of August
+A17	Confidence T12 Certain
+A18	SalesVolume_Increase T12
+R7	is_about_company Arg1:T12 Arg2:T11	
+T13	QuarterlyResults 1069 1186	had its first rise in UK like-for-like sales for two years , up 0.1 per cent in the three months to the end of August
+A19	Confidence T13 SomewhatCertain
+A20	QuarterlyResults_Better T13
+R8	is_about_company Arg1:T13 Arg2:T11	
+T14	SalesVolume 1241 1328	forecast a 0.8 per cent decline in Tesco 's UK like-for-like sales in the third quarter
+A21	Confidence T14 Certain
+A22	SalesVolume_Decrease T14
+A23	SalesVolume_Forecast T14
+T15	QuarterlyResults 1241 1328	forecast a 0.8 per cent decline in Tesco 's UK like-for-like sales in the third quarter
+A24	Confidence T15 Certain
+A25	QuarterlyResults_Forecast T15
+A26	QuarterlyResults_Worse T15
+T16	SalesVolume 1391 1435	forecasts flat sales to a 1 per cent decline
+A27	Confidence T16 Certain
+A28	SalesVolume_Stable T16
+A29	SalesVolume_Forecast T16
+T17	Company 1233 1238	Tesco
+R9	is_about_company Arg1:T14 Arg2:T17	
+R10	is_about_company Arg1:T15 Arg2:T17	
+R11	is_about_company Arg1:T16 Arg2:T17	
+T18	SalesVolume 1527 1562	sales could be better than forecast
+A30	Confidence T18 Certain
+A31	SalesVolume_Forecast T18
+A32	SalesVolume_BetterThanExpected T18
+T19	SalesVolume 1502 1517	it was possible
+A33	Confidence T19 Certain
+A34	SalesVolume_Forecast T19
+A35	SalesVolume_BetterThanExpected T19
+*	in_span_with T18 T19
+T20	Company 1518 1523	Tesco
+R12	is_about_company Arg1:T19 Arg2:T20	
+T21	SalesVolume 1860 1942	like-for-like sales in its lossmaking US business forecast to rise by 4-5 per cent
+A36	Confidence T21 Certain
+A37	SalesVolume_Forecast T21
+A38	SalesVolume_Increase T21
+T22	Company 1808 1813	Tesco
+R13	is_about_company Arg1:T21 Arg2:T22	
+T23	SalesVolume 2013 2101	the 3.6 per cent increase in the first quarter , regarded as disappointing by the market
+A39	Confidence T23 Certain
+A40	SalesVolume_Increase T23
+T24	QuarterlyResults 2013 2101	the 3.6 per cent increase in the first quarter , regarded as disappointing by the market
+A41	Confidence T24 Certain
+A42	QuarterlyResults_Better T24
+A43	SalesVolume_WorseThanExpected T23
+A44	QuarterlyResults_WorseThanExpected T24
+R14	is_about_company Arg1:T23 Arg2:T22	
+R15	is_about_company Arg1:T24 Arg2:T22	
+T25	SalesVolume 2287 2306	sales growth slowed
+A45	Confidence T25 Uncertain
+T26	Company 2310 2321	J Sainsbury
+R16	is_about_company Arg1:T25 Arg2:T26	
+A46	SalesVolume_Other T25
+T27	SalesVolume 2396 2428	grocery sales rose by 1 per cent
+A47	Confidence T27 Certain
+A48	SalesVolume_Increase T27
+T28	Company 2383 2392	Sainsbury
+R17	is_about_company Arg1:T27 Arg2:T28	
+T29	SalesVolume 2616 2651	sales fell 1.7 per cent in November
+A49	Confidence T29 Certain
+A50	SalesVolume_Decrease T29
+T30	Company 2604 2615	Wm Morrison
+R18	is_about_company Arg1:T29 Arg2:T30	

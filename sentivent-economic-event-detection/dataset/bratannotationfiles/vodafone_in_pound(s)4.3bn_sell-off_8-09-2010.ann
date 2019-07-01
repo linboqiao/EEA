@@ -1,0 +1,24 @@
+T1	ShareRepurchase 94 113	fund share buy-back
+A1	Confidence T1 Certain
+A2	ShareRepurchase_Announcement T1
+T2	Debt 118 126	cut debt
+A3	Confidence T2 Certain
+A4	Debt_Reduction T2
+T3	Company 0 8	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	ShareRepurchase 442 458	a share buy-back
+A5	Confidence T4 Certain
+A6	ShareRepurchase_Announcement T4
+T5	Debt 488 552	reduce the UK group 's net debt , which stands at pound(s)33.3bn
+A7	Confidence T5 Certain
+A8	Debt_Reduction T5
+T6	Company 127 135	Vodafone
+R3	is_about_company Arg1:T4 Arg2:T6	
+R4	is_about_company Arg1:T5 Arg2:T6	
+T7	Dividend 2218 2268	is pressing for a restoration of dividend payments
+A9	Confidence T7 SomewhatCertain
+A10	Dividend_Payment T7
+A11	Dividend_Other T7
+T8	Company 2301 2317	Verizon Wireless
+R5	is_about_company Arg1:T7 Arg2:T8	

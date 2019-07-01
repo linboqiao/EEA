@@ -1,0 +1,53 @@
+T1	MergerAcquisition 1830 1862	preparing a $10bn takeover offer
+A1	Confidence T1 SomewhatCertain
+A2	MergerAcquisition_Forecast T1
+T2	Company 1810 1825	Hewlett-Packard
+R1	is_about_acquirer Arg1:T1 Arg2:T2	
+T3	Company 1721 1729	Autonomy
+R2	is_about_target Arg1:T1 Arg2:T3	
+T4	SalesVolume 2317 2367	sales will have dropped 7 per cent for the quarter
+A3	Confidence T4 Certain
+A4	SalesVolume_Decrease T4
+A5	SalesVolume_Forecast T4
+T5	SalesVolume 2283 2291	forecast
+A6	Confidence T5 Certain
+A7	SalesVolume_Decrease T5
+A8	SalesVolume_Forecast T5
+T6	QuarterlyResults 2317 2367	sales will have dropped 7 per cent for the quarter
+A9	Confidence T6 Certain
+A10	QuarterlyResults_Forecast T6
+A11	QuarterlyResults_Worse T6
+T7	QuarterlyResults 2283 2291	forecast
+A12	Confidence T7 Certain
+A13	QuarterlyResults_Forecast T7
+A14	QuarterlyResults_Worse T7
+*	in_span_with T7 T6
+*	in_span_with T5 T4
+T8	Company 2297 2303	Dixons
+R3	is_about_company Arg1:T7 Arg2:T8	
+R4	is_about_company Arg1:T5 Arg2:T8	
+T9	BuyRating 2589 2612	downgrading to " sell "
+A15	Confidence T9 Certain
+A16	BuyRating_Downgrade T9
+A17	BuyRating_Sell T9
+T10	Company 2521 2538	Home Retail Group
+R5	is_about_company Arg1:T9 Arg2:T10	
+T11	BuyRating 3420 3440	off its " buy " list
+A18	Confidence T11 SomewhatCertain
+A19	BuyRating_Downgrade T11
+T12	BuyRating 3392 3395	cut
+A20	Confidence T12 SomewhatCertain
+A21	BuyRating_Downgrade T12
+*	in_span_with T12 T11
+T13	Profit 3445 3471	slashed earnings forecasts
+A22	Confidence T13 Certain
+A23	Profit_Decrease T13
+A24	Profit_Forecast T13
+T14	Company 3332 3337	Regus
+R6	is_about_company Arg1:T12 Arg2:T14	
+R7	is_about_company Arg1:T13 Arg2:T14	
+T15	Debt 4281 4325	it will use the sale proceeds to reduce debt
+A25	Confidence T15 Certain
+A26	Debt_Reduction T15
+T16	Company 4265 4271	Cosalt
+R8	is_about_company Arg1:T15 Arg2:T16	

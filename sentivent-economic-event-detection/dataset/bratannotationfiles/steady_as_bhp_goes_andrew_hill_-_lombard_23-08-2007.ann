@@ -1,0 +1,15 @@
+T1	ShareRepurchase 303 342	No halt to the share buy-back programme
+A1	Confidence T1 Certain
+A2	ShareRepurchase_Announcement T1
+T2	Company 143 155	BHP Billiton
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 785 911	a rebased dividend a good 5 per cent higher than analysts had expected and nearly 50 per cent up on last year 's final pay-out
+A3	Confidence T3 Certain
+A4	Dividend_Raise T3
+T4	Company 569 572	BHP
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	TargetPrice 1059 1182	most analysts setting their 12-month share price targets at least Pounds 2 above yesterday 's closing level of Pounds 13.65
+A5	Confidence T5 Certain
+A6	TargetPrice_Raise T5
+T6	Company 1033 1036	BHP
+R3	is_about_company Arg1:T5 Arg2:T6	

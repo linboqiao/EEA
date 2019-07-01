@@ -1,0 +1,13 @@
+T1	MergerAcquisition 202 254	offered Rs600 to buy up to another 23 per cent of it
+A1	Confidence T1 SomewhatCertain
+A2	MergerAcquisition_Other T1
+A3	MergerAcquisition_MergerAcquisition T1
+T2	Company 148 156	Unilever
+T3	Company 196 199	HUL
+R1	is_about_target Arg1:T1 Arg2:T3	
+R2	is_about_acquirer Arg1:T1 Arg2:T2	
+T4	Profit 756 783	forecast earnings of EUR5bn
+A4	Confidence T4 Certain
+A5	Profit_Forecast T4
+T5	Company 744 752	Unilever
+R3	is_about_company Arg1:T4 Arg2:T5	

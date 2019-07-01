@@ -1,0 +1,53 @@
+T1	MergerAcquisition 117 152	concluding a deal to secure control
+A1	Confidence T1 SomewhatCertain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	Company 41 49	Vodafone
+T3	Company 156 171	Hutchison Essar
+R1	is_about_acquirer Arg1:T1 Arg2:T2	
+R2	is_about_target Arg1:T1 Arg2:T3	
+T4	MergerAcquisition 1381 1421	has agreed to pay Dollars 11.1bn in cash
+A3	Confidence T4 Certain
+A4	MergerAcquisition_Other T4
+T5	Company 1372 1380	Vodafone
+T6	Company 1425 1429	HTIL
+R3	is_about_acquirer Arg1:T4 Arg2:T5	
+R4	is_about_target Arg1:T4 Arg2:T6	
+T7	Debt 1576 1611	is assuming net debt of Dollars 2bn
+A5	Confidence T7 Certain
+A6	Debt_Other T7
+T8	Company 1567 1575	Vodafone
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	Debt 1641 1698	net debt will increase to up to Pounds 23.3bn by March 31
+A7	Confidence T9 Certain
+A8	Debt_Increase T9
+R6	is_about_company Arg1:T9 Arg2:T8	
+T10	MergerAcquisition 697 760	is buying companies that control 67 per cent of Hutchison Essar
+A9	Confidence T10 SomewhatCertain
+A10	MergerAcquisition_MergerAcquisition T10
+T11	Company 688 696	Vodafone
+T12	Company 766 808	Hutchison Telecommunications International
+R7	is_about_company Arg1:T10 Arg2:T11	
+R8	is_about_company Arg1:T10 Arg2:T12	
+T13	MergerAcquisition 1765 1828	is also offering to buy the 33 per cent of Hutchison Essar held
+A11	Confidence T13 SomewhatCertain
+A12	MergerAcquisition_MergerAcquisition T13
+T14	Company 1832 1837	Essar
+T15	Company 1756 1764	Vodafone
+R9	is_about_company Arg1:T13 Arg2:T15	
+R10	is_about_company Arg1:T13 Arg2:T14	
+T16	MergerAcquisition 1874 1883	would pay
+A13	Confidence T16 Certain
+A14	MergerAcquisition_Other T16
+T17	MergerAcquisition 1898 1903	5.7bn
+A15	MergerAcquisition_Other T17
+*	in_span_with T16 T17
+T18	Company 1865 1873	Vodafone
+T19	Company 1884 1889	Essar
+R11	is_about_company Arg1:T16 Arg2:T18	
+R12	is_about_company Arg1:T16 Arg2:T19	
+T20	SalesVolume 2001 2035	the group warned of slowing growth
+A16	Confidence T20 SomewhatCertain
+A17	SalesVolume_Other T20
+A18	SalesVolume_Increase T20
+T21	Company 1949 1957	Vodafone
+R13	is_about_company Arg1:T20 Arg2:T21	

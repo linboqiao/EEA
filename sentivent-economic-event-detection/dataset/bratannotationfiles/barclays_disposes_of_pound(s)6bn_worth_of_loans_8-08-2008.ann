@@ -1,0 +1,10 @@
+T1	Profit 1749 1831	the drop in the bank 's pre-tax profits , which fell 33 per cent to pound(s)2.75bn
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 1438 1446	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 2700 2779	indicated it was likely to maintain its cash dividend payment for the full year
+A3	Confidence T3 Certain
+A4	Dividend_Other T3
+T4	Company 2647 2655	Barclays
+R2	is_about_company Arg1:T3 Arg2:T4	

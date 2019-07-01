@@ -1,0 +1,91 @@
+T1	Profit 288 296	Earnings
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+A3	Profit_Forecast T1
+T2	Profit 317 369	will show a rise of 64 per cent in the first quarter
+A4	Confidence T2 Certain
+A5	Profit_Increase T2
+A6	Profit_Forecast T2
+T3	Profit 413 448	Citi analyst Leigh Goodwin forecast
+A7	Confidence T3 Certain
+A8	Profit_Increase T3
+A9	Profit_Forecast T3
+T4	Company 300 316	Barclays Capital
+*	in_span_with T1 T2 T3
+R1	is_about_company Arg1:T1 Arg2:T4	
+T5	Profit 549 562	Citi forecast
+A10	Confidence T5 Certain
+A11	Profit_Positive T5
+A12	Profit_Forecast T5
+T6	Profit 572 609	to report earnings of 37.9p per share
+A14	Profit_Positive T6
+A15	Profit_Forecast T6
+A13	Confidence T6 Certain
+*	in_span_with T6 T5
+T7	Profit 612 656	some 20 per cent above the current consensus
+A16	Confidence T7 Certain
+A17	Profit_Increase T7
+A18	Profit_Forecast T7
+T8	Company 563 571	Barclays
+R2	is_about_company Arg1:T6 Arg2:T8	
+R3	is_about_company Arg1:T7 Arg2:T8	
+T9	BuyRating 723 746	repeated " buy " advice
+A19	Confidence T9 SomewhatCertain
+A20	BuyRating_Buy T9
+A21	BuyRating_Maintained T9
+T10	TargetPrice 747 765	with a 470p target
+A22	Confidence T10 Certain
+A23	TargetPrice_Announcement T10
+T11	Company 669 677	Barclays
+R4	is_about_company Arg1:T9 Arg2:T11	
+R5	is_about_company Arg1:T10 Arg2:T11	
+T12	QuarterlyResults 1110 1158	before its first-quarter update due this morning
+A24	Confidence T12 Certain
+A25	QuarterlyResults_Publication T12
+T13	Company 1059 1079	Lloyds Banking Group
+R6	is_about_company Arg1:T12 Arg2:T13	
+T14	BuyRating 1633 1661	An upgrade to " outperform "
+A26	Confidence T14 Certain
+A27	BuyRating_Upgrade T14
+A28	BuyRating_Outperform T14
+T15	Company 1692 1700	Wolseley
+R7	is_about_company Arg1:T14 Arg2:T15	
+T16	Profit 1927 1958	lifted its 2010 profit forecast
+A29	Confidence T16 Certain
+A30	Profit_Increase T16
+A31	Profit_Forecast T16
+T17	Company 1868 1877	Whirlpool
+R8	is_about_company Arg1:T16 Arg2:T17	
+T18	BuyRating 2043 2078	cut the stock from its " buy " list
+A32	Confidence T18 SomewhatCertain
+A33	BuyRating_Downgrade T18
+T19	Company 1981 1986	BSkyB
+R9	is_about_company Arg1:T18 Arg2:T19	
+T20	MergerAcquisition 2683 2719	after it rejected a 275p a share bid
+A34	Confidence T20 Certain
+A35	MergerAcquisition_NoMergerAcquisition T20
+T21	Company 2725 2741	Emerson Electric
+T22	Company 2577 2585	Chloride
+R10	is_about_target Arg1:T20 Arg2:T22	
+R11	is_about_acquirer Arg1:T20 Arg2:T21	
+T23	TargetPrice 3019 3050	lifted its target price to 930p
+A36	Confidence T23 Certain
+A37	TargetPrice_Raise T23
+T24	Company 2903 2911	Bodycote
+R12	is_about_company Arg1:T23 Arg2:T24	
+T25	TargetPrice 3864 3887	set a 180p target price
+A38	Confidence T25 Certain
+A39	TargetPrice_Announcement T25
+T26	Company 3751 3759	TalkTalk
+R13	is_about_company Arg1:T25 Arg2:T26	
+T27	MergerAcquisition 4122 4132	which said
+A40	Confidence T27 Certain
+A41	MergerAcquisition_Announcement T27
+T28	MergerAcquisition 4143 4157	it would merge
+A42	Confidence T28 Certain
+A43	MergerAcquisition_Announcement T28
+*	in_span_with T28 T27
+T29	Company 4178 4206	UK Commercial Property Trust
+T30	Company 4090 4119	F&C Commercial Property Trust
+R14	is_about_company Arg1:T27 Arg2:T30	
+R15	is_about_company Arg1:T28 Arg2:T29	

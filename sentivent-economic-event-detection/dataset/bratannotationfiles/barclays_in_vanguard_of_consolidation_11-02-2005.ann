@@ -1,0 +1,24 @@
+T1	Profit 772 866	yesterday reported a 20 per cent jump in 2004 pre-tax profits to Pounds 4.6bn ( Pounds 3.8bn )
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+T2	Company 632 640	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 2445 2525	The dividend is 24p ( 20.5p ) payable from earnings per share of 51.2p ( 42.3p )
+A3	Confidence T3 Certain
+A4	Dividend_Other T3
+T4	Company 2272 2280	Barclays
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 1831 1869	profits rose 5 per cent to Pounds 801m
+A5	Confidence T5 Certain
+A6	Profit_Increase T5
+T6	Company 1788 1799	Barclaycard
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Profit 1257 1318	saw profits rise 25 per cent to Pounds 1.04bn ( Pounds 836m )
+A7	Confidence T7 Certain
+A8	Profit_Increase T7
+T8	Profit 1321 1384	helped by a 41 per cent jump in dealing profits to Pounds 1.5bn
+A9	Confidence T8 Certain
+A10	Profit_Increase T8
+T9	Company 1240 1256	Barclays Capital
+R4	is_about_company Arg1:T7 Arg2:T9	
+R5	is_about_company Arg1:T8 Arg2:T9	

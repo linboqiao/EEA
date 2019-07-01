@@ -1,0 +1,26 @@
+T1	BuyRating 640 670	a"trading buy " recommendation
+A1	Confidence T1 Certain
+A2	BuyRating_Buy T1
+T2	Company 553 561	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	ShareRepurchase 2335 2426	a Pounds 1bn share buy-back programme , which it expects to kick in over the next 18 months
+A3	Confidence T3 Certain
+A4	ShareRepurchase_Forecast T3
+T4	Company 2274 2284	Enterprise
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	BuyRating 3212 3245	the downgrade to " underperform "
+A5	Confidence T5 Certain
+A6	BuyRating_Downgrade T5
+A7	BuyRating_Underperform T5
+T6	Company 3184 3195	Antofagasta
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	BuyRating 2059 2077	upgrade to " buy "
+A8	Confidence T7 Certain
+A9	BuyRating_Upgrade T7
+A10	BuyRating_Buy T7
+T8	Company 1947 1962	Enterprise Inns
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	TargetPrice 2088 2107	a 859p target price
+A11	Confidence T9 Certain
+A12	TargetPrice_Announcement T9
+R5	is_about_company Arg1:T9 Arg2:T8	

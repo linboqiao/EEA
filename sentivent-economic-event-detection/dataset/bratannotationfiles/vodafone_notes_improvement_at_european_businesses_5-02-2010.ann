@@ -1,0 +1,49 @@
+T1	Turnover 321 336	revenue decline
+A1	Confidence T1 Certain
+A2	Turnover_Decrease T1
+T2	Company 340 348	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 1028 1059	report falling underlying sales
+A3	Confidence T3 Certain
+A4	SalesVolume_Decrease T3
+A5	SalesVolume_Declaration T3
+T4	Company 956 964	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 1120 1218	revenue fell 3.2 per cent in the three months to December 31 compared with the same period in 2008
+A6	Confidence T5 Certain
+A7	Turnover_Decrease T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	Turnover 1221 1266	It fell by 4.6 per cent in the second quarter
+A8	Confidence T6 Certain
+A9	Turnover_Decrease T6
+R4	is_about_company Arg1:T6 Arg2:T4	
+T7	QuarterlyResults 1120 1218	revenue fell 3.2 per cent in the three months to December 31 compared with the same period in 2008
+A10	Confidence T7 Certain
+A11	QuarterlyResults_Worse T7
+T8	QuarterlyResults 1221 1266	It fell by 4.6 per cent in the second quarter
+A12	Confidence T8 Certain
+A13	QuarterlyResults_Worse T8
+R5	is_about_company Arg1:T7 Arg2:T4	
+R6	is_about_company Arg1:T8 Arg2:T4	
+T9	Turnover 1269 1376	Group revenue rose 10.3 per cent to pound(s)11.5bn in the third quarter compared with the same time in 2008
+A14	Confidence T9 Certain
+A15	Turnover_Increase T9
+T10	QuarterlyResults 1269 1376	Group revenue rose 10.3 per cent to pound(s)11.5bn in the third quarter compared with the same time in 2008
+A16	Confidence T10 Certain
+A17	QuarterlyResults_Better T10
+R7	is_about_company Arg1:T9 Arg2:T4	
+R8	is_about_company Arg1:T10 Arg2:T4	
+T11	SalesVolume 2486 2509	reporting falling sales
+A18	Confidence T11 Certain
+A19	SalesVolume_Decrease T11
+A20	SalesVolume_Declaration T11
+T12	SalesVolume 2539 2566	growth in the third quarter
+A21	Confidence T12 SomewhatCertain
+A22	SalesVolume_Increase T12
+T13	QuarterlyResults 2539 2566	growth in the third quarter
+A23	Confidence T13 Certain
+A24	QuarterlyResults_Better T13
+T14	Company 2421 2429	Vodafone
+R9	is_about_company Arg1:T11 Arg2:T14	
+R10	is_about_company Arg1:T12 Arg2:T14	
+R11	is_about_company Arg1:T13 Arg2:T14	

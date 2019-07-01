@@ -1,0 +1,34 @@
+T1	SalesVolume 205 245	failed to match up to sales expectations
+A1	Confidence T1 Certain
+A2	SalesVolume_WorseThanExpected T1
+T2	Company 78 83	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 319 397	3.1 per cent lift in underlying sales - against expectations of 4-4.5 per cent
+A3	Confidence T3 Certain
+A4	SalesVolume_WorseThanExpected T3
+A5	SalesVolume_Increase T3
+T4	Company 248 253	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 905 931	a 30 per cent sales uplift
+A6	Confidence T5 Certain
+A7	SalesVolume_Increase T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	SalesVolume 1051 1088	enjoyed sales growth of 26.9 per cent
+A8	Confidence T6 Certain
+A9	SalesVolume_Increase T6
+T7	Company 1158 1163	Tesco
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Turnover 1126 1157	said yesterday that it expected
+A10	Confidence T8 Certain
+A11	Turnover_Increase T8
+T9	Turnover 1167 1256	international turnover to increase by Pounds 30bn ( Dollars 59bn ) to Pounds 74bn by 2012
+A12	Confidence T9 Certain
+A13	Turnover_Forecast T9
+A14	Turnover_Increase T9
+A15	Turnover_Forecast T8
+*	in_span_with T9 T8
+R5	is_about_company Arg1:T8 Arg2:T7	
+T10	SalesVolume 1377 1406	disappointing trading figures
+A16	Confidence T10 Certain
+A17	SalesVolume_WorseThanExpected T10
+R6	is_about_company Arg1:T10 Arg2:T7	

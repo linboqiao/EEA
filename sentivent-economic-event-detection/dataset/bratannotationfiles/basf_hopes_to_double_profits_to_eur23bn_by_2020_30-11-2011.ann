@@ -1,0 +1,38 @@
+T2	Company 58 62	BASF
+T4	Company 1004 1008	BASF
+T6	SalesVolume 2422 2503	is targeting EUR500m in sales from products for electromobility batteries by 2020
+A7	Confidence T6 Certain
+T7	Company 2409 2413	BASF
+R3	is_about_company Arg1:T6 Arg2:T7	
+T1	ShareRepurchase 413 469	was also considering reviving a share buy-back programme
+A1	Confidence T1 SomewhatCertain
+R1	is_about_company Arg1:T1 Arg2:T2	
+T9	Profit 1284 1423	wants to achieve earnings before interest , taxation , depreciation and amortisation of EUR23bn by 2020 , compared with EUR11.1bn last year
+A11	Confidence T9 Certain
+A12	Profit_Forecast T9
+R5	is_about_company Arg1:T9 Arg2:T4	
+T5	MergerAcquisition 2076 2107	made several large acquisitions
+A5	Confidence T5 Certain
+A6	MergerAcquisition_MergerAcquisition T5
+T10	Company 2229 2233	BASF
+T11	Company 2118 2122	Ciba
+R6	is_about_target Arg1:T5 Arg2:T11	
+R7	is_about_acquirer Arg1:T5 Arg2:T10	
+T12	Profit 5 47	hopes to double profits to EUR23bn by 2020
+A13	Confidence T12 Certain
+A14	Profit_Forecast T12
+T13	Company 0 4	BASF
+R8	is_about_company Arg1:T12 Arg2:T13	
+T14	Profit 188 322	unveiled a new strategy to double profits by 2020 on strong emerging markets demand , innovative products and a cost-savings programme
+A15	Confidence T14 Certain
+A16	Profit_Forecast T14
+R9	is_about_company Arg1:T14 Arg2:T2	
+T3	SalesVolume 1013 1151	expects to achieve EUR115bn ( $153bn ) in sales by 2020 , compared with a previous forecast of EUR90bn and last year 's level of EUR63.9bn
+A3	Confidence T3 Certain
+A4	SalesVolume_Increase T3
+A9	SalesVolume_Forecast T3
+A10	Profit_Increase T9
+T8	Company 2157 2163	Cognis
+R2	is_about_target Arg1:T5 Arg2:T8	
+A17	Profit_Increase T12
+A2	SalesVolume_Forecast T6

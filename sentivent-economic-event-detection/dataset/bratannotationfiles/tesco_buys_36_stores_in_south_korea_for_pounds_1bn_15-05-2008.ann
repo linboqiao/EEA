@@ -1,0 +1,10 @@
+T1	SalesVolume 1932 1979	which has sales of Won9,000bn ( Pounds ? ? bn )
+A1	Confidence T1 Certain
+A2	SalesVolume_Other T1
+T2	SalesVolume 1999 2009	Won5,900bn
+A3	Confidence T2 Certain
+A4	SalesVolume_Other T2
+T3	Company 1923 1929	E-mart
+T4	Company 1990 1995	Tesco
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T4	

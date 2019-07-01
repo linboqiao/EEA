@@ -1,0 +1,55 @@
+T1	Dividend 174 274	unveiling plans to give Pounds 9bn to shareholders on top of the UK mobile operator 's 2006 dividend
+A1	Confidence T1 SomewhatCertain
+A2	Dividend_Payment T1
+A3	Dividend_Announcement T1
+T2	Company 73 81	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 625 681	reported a record pre-tax loss of Pounds 14.9bn for 2006
+A4	Confidence T3 Certain
+A5	Profit_Negative T3
+T4	Turnover 688 720	warned of slowing revenue growth
+A6	Confidence T4 Certain
+A7	Turnover_Forecast T4
+T5	Profit 688 697	warned of
+A9	Confidence T5 Certain
+A10	Profit_Forecast T5
+T6	Profit 723 743	lower profit margins
+A8	Confidence T6 Certain
+A11	Profit_Forecast T6
+*	in_span_with T6 T5
+T7	Company 616 624	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T7	
+R3	is_about_company Arg1:T5 Arg2:T7	
+R4	is_about_company Arg1:T4 Arg2:T7	
+T8	Dividend 785 930	it increased its dividend pay-out ratio from 45 per cent of adjusted earnings per share from continuing operations in 2005 to 60 per cent in 2006
+A12	Confidence T8 Certain
+A13	Dividend_Raise T8
+R5	is_about_company Arg1:T8 Arg2:T7	
+T9	Profit 1120 1135	saw core profit
+A14	Confidence T9 Certain
+A15	Profit_Increase T9
+T10	Profit 1237 1276	increase by 7 per cent to Pounds 11.8bn
+A16	Confidence T10 Certain
+A17	Profit_Increase T10
+*	in_span_with T10 T9
+T11	Company 1111 1119	Vodafone
+R6	is_about_company Arg1:T9 Arg2:T11	
+T12	Profit 1278 1301	The record pre-tax loss
+A18	Confidence T12 Certain
+A19	Profit_Negative T12
+T13	Profit 1367 1410	resulted in a basic loss per share of 27.7p
+A20	Confidence T13 Certain
+A21	Profit_Negative T13
+R7	is_about_company Arg1:T12 Arg2:T11	
+R8	is_about_company Arg1:T13 Arg2:T11	
+T14	Profit 2163 2204	ability to realise its earnings potential
+A22	Confidence T14 Certain
+A23	Profit_WorseThanExpected T14
+A24	Profit_Forecast T14
+T15	Profit 2131 2150	remain sceptical on
+A25	Confidence T15 Certain
+A26	Profit_WorseThanExpected T15
+A27	Profit_Forecast T15
+*	in_span_with T14 T15
+T16	Company 2151 2159	Vodafone
+R9	is_about_company Arg1:T14 Arg2:T16	

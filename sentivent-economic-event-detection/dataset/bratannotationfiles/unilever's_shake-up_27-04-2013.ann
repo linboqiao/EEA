@@ -1,0 +1,20 @@
+T1	SalesVolume 1424 1497	report a 5.5 per cent year-on-year increase in sales in the first quarter
+A1	Confidence T1 Certain
+A2	SalesVolume_Declaration T1
+A3	SalesVolume_Increase T1
+T2	QuarterlyResults 1424 1497	report a 5.5 per cent year-on-year increase in sales in the first quarter
+A4	Confidence T2 Certain
+A5	QuarterlyResults_Publication T2
+A6	QuarterlyResults_Better T2
+T3	Company 1324 1331	L'Oreal
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	SalesVolume 1779 1840	lifted sales by 11 per cent year-on-year in its first quarter
+A7	Confidence T4 Certain
+A8	SalesVolume_Increase T4
+T5	QuarterlyResults 1779 1840	lifted sales by 11 per cent year-on-year in its first quarter
+A9	Confidence T5 Certain
+A10	QuarterlyResults_Better T5
+T6	Company 1771 1778	L'Oreal
+R3	is_about_company Arg1:T5 Arg2:T6	
+R4	is_about_company Arg1:T4 Arg2:T6	

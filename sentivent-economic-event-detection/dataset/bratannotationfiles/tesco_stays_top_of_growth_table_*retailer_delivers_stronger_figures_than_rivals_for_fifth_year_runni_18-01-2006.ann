@@ -1,0 +1,49 @@
+T1	SalesVolume 567 590	volumes up 7.2 per cent
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	Company 394 399	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T4	SalesVolume 1036 1074	like- for-like volumes up 7.2 per cent
+A5	Confidence T4 Certain
+A6	SalesVolume_Increase T4
+T5	Company 924 929	Tesco
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	SalesVolume 1217 1277	a 5.2 per cent rise in underlying sales in the third quarter
+A7	Confidence T6 Certain
+A8	SalesVolume_Increase T6
+T7	Company 1198 1209	J Sainsbury
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	QuarterlyResults 1217 1277	a 5.2 per cent rise in underlying sales in the third quarter
+A9	Confidence T8 Certain
+A10	QuarterlyResults_Strong T8
+R5	is_about_company Arg1:T8 Arg2:T7	
+T9	SalesVolume 1863 1941	total sales over the period grew 11.5 per cent against 12.1 per cent last year
+A11	Confidence T9 Certain
+A13	SalesVolume_Increase T9
+T10	Company 1854 1859	Tesco
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	SalesVolume 1738 1792	like-for-like gain will have been better than Tesco 's
+T12	Company 1725 1734	Sainsbury
+A14	Confidence T11 Certain
+A15	SalesVolume_Increase T11
+T13	SalesVolume 2653 2715	a slowdown in sales , which rose 16.1 per cent over the period
+A16	Confidence T13 SomewhatCertain
+A17	SalesVolume_Decrease T13
+T14	Company 2303 2308	Tesco
+R7	is_about_company Arg1:T13 Arg2:T14	
+T15	QuarterlyResults 2718 2765	They rose 23.3 per cent in the previous quarter
+A18	Confidence T15 Certain
+A19	QuarterlyResults_Worse T15
+R8	is_about_company Arg1:T15 Arg2:T14	
+T16	SalesVolume 2718 2765	They rose 23.3 per cent in the previous quarter
+A20	Confidence T16 Certain
+A21	SalesVolume_Decrease T16
+R9	is_about_company Arg1:T16 Arg2:T14	
+T17	Profit 2768 2837	Full-year profit forecasts are unchanged at Pounds 2.1bn-Pounds 2.2bn
+A22	Confidence T17 Certain
+A23	Profit_Stable T17
+R10	is_about_company Arg1:T17 Arg2:T14	
+T18	SalesVolume 496 529	under-lying sales up 5.7 per cent
+A24	Confidence T18 Certain
+A25	SalesVolume_Increase T18
+R11	is_about_company Arg1:T18 Arg2:T2	

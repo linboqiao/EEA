@@ -1,0 +1,24 @@
+T1	Profit 133 161	full-year earnings yesterday
+A1	Profit_Declaration T1
+A2	Confidence T1 SomewhatCertain
+T2	Company 121 129	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 244 362	Underlying revenues from phone services were down more than 4 per cent year-on-year in the final three months to March
+A3	Confidence T3 Certain
+A4	Turnover_Decrease T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	QuarterlyResults 369 401	weakest quarterly result to date
+A5	Confidence T4 Certain
+A6	QuarterlyResults_Weak T4
+R3	is_about_company Arg1:T4 Arg2:T2	
+T5	Profit 1136 1208	are projecting a 2013/14 operating profit of pound(s)12bn-pound(s)12.8bn
+A7	Confidence T5 Certain
+A8	Profit_Positive T5
+A9	Profit_Forecast T5
+T6	Company 1003 1011	Vodafone
+R4	is_about_company Arg1:T5 Arg2:T6	
+T7	Dividend 1399 1446	dividends are pledged to stay at current levels
+A10	Confidence T7 Certain
+A11	Dividend_Stable T7
+T8	Company 1482 1490	Vodafone
+R5	is_about_company Arg1:T7 Arg2:T8	

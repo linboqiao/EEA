@@ -1,0 +1,23 @@
+T1	MergerAcquisition 276 314	it acquired for USDollars 13bn in 2003
+A1	Confidence T1 Certain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	Company 235 258	Household International
+T3	Company 61 65	HSBC
+R1	is_about_target Arg1:T1 Arg2:T2	
+R2	is_about_acquirer Arg1:T1 Arg2:T3	
+T4	Profit 1211 1240	a key driver of profit growth
+A3	Confidence T4 Certain
+A4	Profit_Positive T4
+T5	Company 1244 1248	HSBC
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Profit 1324 1371	accounted for about 30 per cent of group profit
+A5	Confidence T6 Certain
+A6	Profit_Positive T6
+R4	is_about_company Arg1:T6 Arg2:T5	
+T7	MergerAcquisition 2446 2469	bought a majority stake
+A7	Confidence T7 Certain
+A8	MergerAcquisition_MergerAcquisition T7
+T8	Company 2473 2477	Absa
+T9	Company 2437 2445	Barclays
+R5	is_about_acquirer Arg1:T7 Arg2:T9	
+R6	is_about_target Arg1:T7 Arg2:T8	

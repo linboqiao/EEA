@@ -1,0 +1,25 @@
+T1	Profit 734 771	boosting earnings by about 5 per cent
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+T2	Company 501 509	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 940 1001	sales growth was at the top end of guidance of 6-6.5 per cent
+A3	Confidence T3 Certain
+A4	SalesVolume_Increase T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Profit 1380 1424	5 per cent annual ebitda declines until 2011
+A5	Confidence T4 Certain
+A6	Profit_Decrease T4
+T5	Company 1552 1560	Vodafone
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	MergerAcquisition 1663 1691	the Pounds 2.6bn acquisition
+A7	Confidence T6 Certain
+A8	MergerAcquisition_Other T6
+A9	MergerAcquisition_MergerAcquisition T6
+T7	Company 1705 1711	Telsim
+R4	is_about_acquirer Arg1:T6 Arg2:T5	
+R5	is_about_target Arg1:T6 Arg2:T7	
+T8	SalesVolume 1794 1827	to highlight growth beyond Europe
+A10	Confidence T8 SomewhatCertain
+A11	SalesVolume_Increase T8
+R6	is_about_company Arg1:T8 Arg2:T5	

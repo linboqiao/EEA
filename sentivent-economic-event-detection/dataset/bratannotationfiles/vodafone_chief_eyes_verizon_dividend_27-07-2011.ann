@@ -1,0 +1,6 @@
+T1	Dividend 2099 2127	confirming a pay-out in 2012
+A1	Confidence T1 Certain
+A2	Dividend_Payment T1
+A3	Dividend_Announcement T1
+T2	Company 1983 1999	Verizon Wireless
+R1	is_about_company Arg1:T1 Arg2:T2	

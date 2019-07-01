@@ -1,0 +1,31 @@
+T1	Profit 170 279	the retailer reported underlying first-half trading profits of Pounds 1.2bn , a 10 per cent rise year on year
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+T2	Company 101 106	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 322 425	Like-for-like sales in the UK , excluding fuel , grew 3.5 per cent , one of the lowest figures in years
+A3	Confidence T3 Certain
+A4	SalesVolume_WorseThanExpected T3
+A5	SalesVolume_Increase T3
+T4	Company 428 433	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 664 746	same-store summer sales were also unimpressive , up just 2.7 per cent year on year
+A6	Confidence T5 Certain
+A7	SalesVolume_WorseThanExpected T5
+A8	SalesVolume_Increase T5
+T6	Company 652 661	Morrisons
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	SalesVolume 762 790	like-for-like sales improved
+A9	Confidence T7 Certain
+A10	SalesVolume_Increase T7
+T8	Company 753 758	Tesco
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	SalesVolume 826 869	Non-food sales , though small , grew faster
+A11	Confidence T9 Certain
+A12	SalesVolume_Increase T9
+R5	is_about_company Arg1:T9 Arg2:T8	
+T10	SalesVolume 967 1034	International sales grew 22 per cent in the first half year on year
+A13	Confidence T10 Certain
+A14	SalesVolume_Increase T10
+T11	Company 928 933	Tesco
+R6	is_about_company Arg1:T10 Arg2:T11	

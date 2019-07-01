@@ -1,0 +1,30 @@
+T1	Company 44 56	BHP Billiton
+T3	QuarterlyResults 282 348	The increase in iron ore output to 28m tonnes in the March quarter
+A3	Confidence T3 Certain
+A4	QuarterlyResults_Better T3
+T4	QuarterlyResults 378 439	outstripped the near 16 per cent quarterly rise to 39m tonnes
+A5	Confidence T4 Certain
+A6	QuarterlyResults_Better T4
+T5	Company 452 461	Rio Tinto
+*	in_span_with T3 T4
+R1	is_about_company Arg1:T4 Arg2:T5	
+T6	QuarterlyResults 1358 1438	mixed set of quarterly production figures , which showed its iron ore production
+A7	Confidence T6 SomewhatCertain
+A8	QuarterlyResults_Weak T6
+A9	QuarterlyResults_WorseThanExpected T6
+T7	QuarterlyResults 1460 1499	had been hit by cyclones and power cuts
+A10	Confidence T7 SomewhatCertain
+A11	QuarterlyResults_Weak T7
+A12	QuarterlyResults_WorseThanExpected T7
+*	in_span_with T6 T7
+T8	Company 1338 1341	Rio
+R2	is_about_company Arg1:T6 Arg2:T8	
+T9	QuarterlyResults 2197 2251	third-quarter production rose 19 per cent to 32.7m boe
+A13	Confidence T9 Certain
+A14	QuarterlyResults_Strong T9
+T10	Company 2254 2257	BHP
+R3	is_about_company Arg1:T9 Arg2:T10	
+T2	QuarterlyResults 158 208	saw third-quarter iron ore output rise 22 per cent
+A1	Confidence T2 Certain
+A2	QuarterlyResults_Better T2
+R4	is_about_company Arg1:T2 Arg2:T1	

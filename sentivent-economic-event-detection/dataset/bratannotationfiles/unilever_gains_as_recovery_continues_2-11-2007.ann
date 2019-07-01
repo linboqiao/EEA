@@ -1,0 +1,50 @@
+T1	QuarterlyResults 171 225	third consecutive quarter of profit margin improvement
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Better T1
+T2	Profit 171 225	third consecutive quarter of profit margin improvement
+A3	Confidence T2 Certain
+A4	Profit_Increase T2
+T3	Company 37 45	Unilever
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	SalesVolume 288 343	underlying sales grew 4.5 per cent in the third quarter
+A5	Confidence T4 Certain
+A6	SalesVolume_Increase T4
+T5	QuarterlyResults 288 343	underlying sales grew 4.5 per cent in the third quarter
+A7	Confidence T5 Certain
+A8	QuarterlyResults_Better T5
+T6	Company 228 236	Unilever
+R3	is_about_company Arg1:T4 Arg2:T6	
+R4	is_about_company Arg1:T5 Arg2:T6	
+T7	Profit 350 411	operating margins rose 0.2 percentage points to 13.7 per cent
+A9	Confidence T7 Certain
+A10	Profit_Increase T7
+R5	is_about_company Arg1:T7 Arg2:T6	
+T8	SalesVolume 863 958	all product categories , with the exception of ice cream , were showing sales and profit growth
+A11	Confidence T8 Certain
+A12	SalesVolume_Increase T8
+T9	Profit 863 958	all product categories , with the exception of ice cream , were showing sales and profit growth
+A13	Confidence T9 Certain
+A14	Profit_Increase T9
+T10	Company 653 661	Unilever
+R6	is_about_company Arg1:T9 Arg2:T10	
+R7	is_about_company Arg1:T8 Arg2:T10	
+T11	SalesVolume 961 1069	Total sales of ice cream fell Euros 70m ( Dollars 101.3m ) in the third quarter compared with a year earlier
+A15	Confidence T11 Certain
+A16	SalesVolume_Decrease T11
+T12	Company 1077 1085	Unilever
+R8	is_about_company Arg1:T11 Arg2:T12	
+T13	QuarterlyResults 961 1069	Total sales of ice cream fell Euros 70m ( Dollars 101.3m ) in the third quarter compared with a year earlier
+A17	Confidence T13 Certain
+A18	QuarterlyResults_Worse T13
+R9	is_about_company Arg1:T13 Arg2:T12	
+T14	SalesVolume 545 557	sales growth
+A19	Confidence T14 Certain
+A20	SalesVolume_Increase T14
+T15	Company 440 448	Unilever
+R10	is_about_company Arg1:T14 Arg2:T15	
+T16	Profit 2141 2164	increase profit margins
+A21	Confidence T16 Certain
+A22	Profit_Increase T16
+T17	Company 2117 2125	Unilever
+R11	is_about_company Arg1:T16 Arg2:T17	

@@ -1,0 +1,5 @@
+T1	SalesVolume 268 282	flagging sales
+A1	Confidence T1 Certain
+A2	SalesVolume_Decrease T1
+T2	Company 88 99	Austin Reed
+R1	is_about_company Arg1:T1 Arg2:T2	

@@ -1,0 +1,57 @@
+T1	Profit 382 423	reported a surge in third-quarter profits
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+T2	Turnover 382 401	reported a surge in
+A3	Confidence T2 Certain
+A4	Turnover_Increase T2
+T3	Turnover 428 436	revenues
+A5	Confidence T3 Certain
+A6	Turnover_Increase T3
+*	in_span_with T3 T2
+T4	Company 352 364	Dow Chemical
+R1	is_about_company Arg1:T2 Arg2:T4	
+R2	is_about_company Arg1:T1 Arg2:T4	
+T5	SalesVolume 641 683	said sales rose 11.6 per cent to EUR17.6bn
+A7	Confidence T5 Certain
+A8	SalesVolume_Increase T5
+T6	Company 593 597	BASF
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Profit 774 788	dented profits
+A9	Confidence T7 Certain
+A10	Profit_Positive T7
+R4	is_about_company Arg1:T7 Arg2:T6	
+T8	Turnover 1936 1969	In the third quarter , net income
+A11	Confidence T8 Certain
+A12	Turnover_Increase T8
+T9	QuarterlyResults 1936 1969	In the third quarter , net income
+A13	Confidence T9 Certain
+A14	QuarterlyResults_Better T9
+T10	Profit 2040 2127	giving earnings per share of $0.69 , despite a $1.7bn rise in the cost of raw materials
+A15	Confidence T10 Certain
+A16	Profit_Positive T10
+T11	QuarterlyResults 1977 2037	doubled to about $900m compared with the same period in 2010
+A17	Confidence T11 Certain
+A18	QuarterlyResults_Better T11
+*	in_span_with T11 T9
+T12	Turnover 1977 2037	doubled to about $900m compared with the same period in 2010
+A19	Confidence T12 Certain
+A20	Turnover_Increase T12
+*	in_span_with T12 T8
+T13	Company 1973 1976	Dow
+R5	is_about_company Arg1:T9 Arg2:T13	
+R6	is_about_company Arg1:T8 Arg2:T13	
+A21	Profit_BetterThanExpected T10
+R7	is_about_company Arg1:T10 Arg2:T13	
+T14	Turnover 2130 2218	During the three months to the end of September , revenues jumped 17 per cent to $15.1bn
+A22	Confidence T14 Certain
+A23	Turnover_Increase T14
+T15	QuarterlyResults 2130 2218	During the three months to the end of September , revenues jumped 17 per cent to $15.1bn
+A24	Confidence T15 Certain
+A25	QuarterlyResults_Better T15
+T16	Company 2343 2346	Dow
+R8	is_about_company Arg1:T15 Arg2:T16	
+R9	is_about_company Arg1:T14 Arg2:T16	
+T17	SalesVolume 2231 2243	strong sales
+A26	Confidence T17 Certain
+A27	SalesVolume_Increase T17
+R10	is_about_company Arg1:T17 Arg2:T16	

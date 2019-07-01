@@ -1,0 +1,39 @@
+T1	Profit 1878 1939	the fund estimated to provide about four-fifths of its profit
+A1	Confidence T1 SomewhatCertain
+A2	Profit_WorseThanExpected T1
+A3	Profit_Forecast T1
+T2	Company 1808 1817	Man Group
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 2563 2609	said its 2011 earnings would meet expectations
+A4	Confidence T3 Certain
+A5	Profit_AsExpected T3
+A6	Profit_Forecast T3
+T4	Company 2554 2562	Lamprell
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 2926 2970	reporting no signs of sales growth weakening
+A7	Confidence T5 Certain
+A8	SalesVolume_Declaration T5
+A9	SalesVolume_Increase T5
+T6	Company 2859 2873	Travis Perkins
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	BuyRating 3033 3050	on " buy " advice
+A10	Confidence T7 Certain
+A11	BuyRating_Buy T7
+T8	Company 2973 2978	Amlin
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	Dividend 3141 3213	a 2012 dividend yield of 8 per cent looked " relatively safe " , it said
+A12	Confidence T9 SomewhatCertain
+A13	Dividend_Announcement T9
+R5	is_about_company Arg1:T9 Arg2:T8	
+T10	Profit 3544 3570	a profit warning on Friday
+A14	Confidence T10 Certain
+A15	Profit_Decrease T10
+A16	Profit_Forecast T10
+T11	Company 3478 3491	Premier Foods
+R6	is_about_company Arg1:T10 Arg2:T11	
+T12	Profit 4379 4401	after a profit warning
+A17	Confidence T12 Certain
+A18	Profit_Decrease T12
+A19	Profit_Forecast T12
+T13	Company 4303 4316	Enova Systems
+R7	is_about_company Arg1:T12 Arg2:T13	

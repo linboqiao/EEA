@@ -1,0 +1,66 @@
+T1	MergerAcquisition 40 58	Merger speculation
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Forecast T1
+T2	Company 120 128	ABN Amro
+T3	Company 133 141	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	Profit 1188 1226	after releasing fourth-quarter profits
+A3	Profit_Declaration T4
+A4	Confidence T4 Certain
+T5	QuarterlyResults 1188 1226	after releasing fourth-quarter profits
+A5	Confidence T5 Certain
+A6	QuarterlyResults_Publication T5
+T6	Company 1108 1125	Deutsche Postbank
+R3	is_about_company Arg1:T4 Arg2:T6	
+R4	is_about_company Arg1:T5 Arg2:T6	
+T7	BuyRating 1372 1386	after upgrades
+A7	Confidence T7 Certain
+A9	BuyRating_Upgrade T7
+T8	BuyRating 1404 1428	from " hold " to " buy "
+A10	Confidence T8 Certain
+A11	BuyRating_Upgrade T8
+A12	BuyRating_Sell T8
+A8	BuyRating_Sell T7
+T9	BuyRating 1451 1485	from " neutral " to " outperform "
+A13	Confidence T9 Certain
+A15	BuyRating_Upgrade T9
+A14	BuyRating_Outperform T9
+*	in_span_with T8 T7 T9
+T10	Company 1275 1288	Deutsche Bank
+R5	is_about_company Arg1:T7 Arg2:T10	
+T11	MergerAcquisition 1924 1982	after announcingit would merge its tour operating business
+A16	Confidence T11 Certain
+A17	MergerAcquisition_NoMergerAcquisition T11
+T12	Company 1856 1859	Tui
+T13	Company 1995 2016	First Choice Holidays
+R6	is_about_company Arg1:T11 Arg2:T13	
+R7	is_about_company Arg1:T11 Arg2:T12	
+T14	TargetPrice 2414 2472	raised its price target on the stock from SFr635 to SFr725
+A18	Confidence T14 Certain
+A19	TargetPrice_Raise T14
+T15	Company 2339 2344	Kuoni
+R8	is_about_company Arg1:T14 Arg2:T15	
+T16	Profit 2492 2536	announcement of record full-year net profits
+A20	Profit_Declaration T16
+A21	Confidence T16 Certain
+A22	Profit_Increase T16
+R9	is_about_company Arg1:T16 Arg2:T15	
+T17	Dividend 2541 2575	proposed dividend of SFr15 a share
+A23	Confidence T17 SomewhatCertain
+A24	Dividend_Forecast T17
+R10	is_about_company Arg1:T17 Arg2:T15	
+T18	MergerAcquisition 2672 2725	after it on Friday rejected a Euros 45- a-share offer
+A25	Confidence T18 Certain
+A26	MergerAcquisition_NoMergerAcquisition T18
+T19	Company 2731 2747	Imperial Tobacco
+T20	Company 2600 2607	Altadis
+R11	is_about_acquirer Arg1:T18 Arg2:T19	
+R12	is_about_target Arg1:T18 Arg2:T20	
+T21	MergerAcquisition 2258 2275	the recent merger
+A27	Confidence T21 Certain
+A28	MergerAcquisition_MergerAcquisition T21
+T22	Company 2279 2290	Thomas Cook
+T23	Company 2295 2303	MyTravel
+R13	is_about_company Arg1:T21 Arg2:T22	
+R14	is_about_company Arg1:T21 Arg2:T23	

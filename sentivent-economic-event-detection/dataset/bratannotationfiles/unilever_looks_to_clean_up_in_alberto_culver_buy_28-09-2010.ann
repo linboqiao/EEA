@@ -1,0 +1,71 @@
+T1	MergerAcquisition 45 48	buy
+A1	Confidence T1 Certain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	Company 0 8	Unilever
+T3	Company 30 44	Alberto Culver
+R1	is_about_target Arg1:T1 Arg2:T3	
+R2	is_about_acquirer Arg1:T1 Arg2:T2	
+T4	MergerAcquisition 176 184	swoop on
+A3	Confidence T4 Certain
+A4	MergerAcquisition_MergerAcquisition T4
+T5	Company 164 172	Unilever
+T6	Company 185 199	Alberto Culver
+R3	is_about_acquirer Arg1:T4 Arg2:T5	
+R4	is_about_target Arg1:T4 Arg2:T6	
+T7	Profit 493 599	Assuming earnings before interest , tax , depreciation and amortisation for 2010 of $259m ( pound(s)163m )
+A5	Confidence T7 SomewhatCertain
+A6	Profit_Positive T7
+A7	Profit_Forecast T7
+T8	Company 637 651	Alberto Culver
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	MergerAcquisition 1304 1315	taking over
+A8	Confidence T9 Certain
+A9	MergerAcquisition_Other T9
+A10	MergerAcquisition_MergerAcquisition T9
+T10	MergerAcquisition 1403 1420	for pound(s)1.5bn
+A11	MergerAcquisition_Other T10
+A12	MergerAcquisition_MergerAcquisition T10
+*	in_span_with T9 T10
+T11	Company 1286 1303	Reckitt Benckiser
+T12	Company 1316 1333	SSL International
+R6	is_about_acquirer Arg1:T9 Arg2:T11	
+R7	is_about_target Arg1:T9 Arg2:T12	
+T13	Profit 1722 1868	operating margins in the personal care category , which includes haircare , were 15.5 per cent last year , above the group margin of 12.6 per cent
+A13	Confidence T13 SomewhatCertain
+A14	Profit_Increase T13
+T14	Company 1670 1678	Unilever
+R8	is_about_company Arg1:T13 Arg2:T14	
+T15	SalesVolume 1951 2032	sales of health personal care goods rose 7.8 per cent to EUR3.6bn ( pound(s)3bn )
+A15	Confidence T15 Certain
+A16	SalesVolume_Increase T15
+T16	Company 1939 1947	Unilever
+R9	is_about_company Arg1:T15 Arg2:T16	
+T17	SalesVolume 2049 2165	growth of only 3.5 per cent for ice-cream and beverages , and 0.5 per cent for savoury foods , dressings and spreads
+A17	Confidence T17 Certain
+A18	SalesVolume_Increase T17
+R10	is_about_company Arg1:T17 Arg2:T16	
+T18	MergerAcquisition 3889 3907	acquired last year
+A19	Confidence T18 Certain
+A20	MergerAcquisition_MergerAcquisition T18
+T19	Company 3878 3886	Sara Lee
+T20	Company 3819 3833	Alberto Culver
+R11	is_about_target Arg1:T18 Arg2:T19	
+R12	is_about_acquirer Arg1:T18 Arg2:T20	
+T21	SalesVolume 4454 4470	underlying sales
+A21	Confidence T21 Certain
+A22	SalesVolume_Decrease T21
+T22	SalesVolume 4501 4528	fell 2 per cent to EUR1.3bn
+A23	Confidence T22 Certain
+A24	SalesVolume_Decrease T22
+*	in_span_with T21 T22
+T23	Company 4474 4482	Unilever
+R13	is_about_company Arg1:T21 Arg2:T23	
+T24	SalesVolume 4590 4630	sales rose 8 per cent , to pound(s)4.7bn
+A25	Confidence T24 Certain
+A26	SalesVolume_Increase T24
+R14	is_about_company Arg1:T24 Arg2:T23	
+T25	SalesVolume 2308 2425	health and personal care is growing at 14 per cent a year , compared with 8 per cent growth across the whole business
+A27	Confidence T25 SomewhatCertain
+A28	SalesVolume_Increase T25
+T26	Company 2218 2235	Reckitt Benckiser
+R15	is_about_company Arg1:T25 Arg2:T26	

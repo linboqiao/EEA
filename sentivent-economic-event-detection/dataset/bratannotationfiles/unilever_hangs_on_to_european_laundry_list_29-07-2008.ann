@@ -1,0 +1,13 @@
+T1	MergerAcquisition 333 400	sold its North American laundry brands for $1.45bn ( pound(s)730m )
+A1	Confidence T1 SomewhatCertain
+A2	MergerAcquisition_Other T1
+A3	MergerAcquisition_MergerAcquisition T1
+T2	Company 425 448	Vestar Capital Partners
+T3	Company 114 122	Unilever
+R1	is_about_acquirer Arg1:T1 Arg2:T2	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	SalesVolume 805 865	sales have risen 6 to 8 per cent during the past three years
+A4	Confidence T4 Certain
+A5	SalesVolume_Increase T4
+T5	Company 617 625	Unilever
+R3	is_about_company Arg1:T4 Arg2:T5	

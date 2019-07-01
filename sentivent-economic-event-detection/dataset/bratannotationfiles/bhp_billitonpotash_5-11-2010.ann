@@ -1,0 +1,7 @@
+T1	MergerAcquisition 920 932	merging with
+A1	Confidence T1 Certain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	Company 933 941	GDF Suez
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Company 898 917	International Power
+R2	is_about_company Arg1:T1 Arg2:T3	

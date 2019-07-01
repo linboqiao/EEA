@@ -1,0 +1,11 @@
+T1	MergerAcquisition 531 543	has rejected
+A1	Confidence T1 Certain
+A2	MergerAcquisition_NoMergerAcquisition T1
+T3	MergerAcquisition 552 558	offers
+A3	Confidence T3 Certain
+A4	MergerAcquisition_NoMergerAcquisition T3
+T4	Company 544 548	BASF
+T5	Company 503 512	Engelhard
+*	in_span_with T1 T3
+R1	is_about_acquirer Arg1:T1 Arg2:T4	
+R2	is_about_target Arg1:T1 Arg2:T5	

@@ -1,0 +1,28 @@
+T1	SalesVolume 23 42	takes a bite out of
+A1	Confidence T1 SomewhatCertain
+T2	SalesVolume 49 61	sales growth
+A3	Confidence T2 SomewhatCertain
+*	in_span_with T1 T2
+T3	Company 43 48	Tesco
+R1	is_about_company Arg1:T2 Arg2:T3	
+T4	SalesVolume 71 159	underlying sales growth in the UK has dropped to its lowest levels in at least six years
+A5	Confidence T4 SomewhatCertain
+T5	Company 62 67	Tesco
+R2	is_about_company Arg1:T4 Arg2:T5	
+T6	SalesVolume 227 359	The world 's third-biggest grocer yesterday reported underlying sales rose just 0.1 per cent , excluding fuel , in the first quarter
+A7	Confidence T6 Certain
+A8	SalesVolume_Increase T6
+R3	is_about_company Arg1:T6 Arg2:T5	
+A6	SalesVolume_Other T4
+A4	SalesVolume_Other T2
+A2	SalesVolume_Other T1
+T7	QuarterlyResults 1031 1094	the first quarter was the weakest performance he could remember
+A9	Confidence T7 Certain
+A10	QuarterlyResults_Weak T7
+T8	Company 802 807	Tesco
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	SalesVolume 2477 2512	while group sales rose 8.2 per cent
+A11	Confidence T9 Certain
+A12	SalesVolume_Increase T9
+T10	Company 2534 2539	Tesco
+R5	is_about_company Arg1:T9 Arg2:T10	

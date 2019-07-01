@@ -1,0 +1,60 @@
+T1	Profit 89 124	reports 12 % fall in pre-tax profit
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 32 44	Fresh & Easy
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 238 295	he unveiled the retailer 's first fall in pre-tax profits
+A3	Confidence T3 Certain
+A4	Profit_Decrease T3
+T4	SalesVolume 357 416	first increase in under-lying UK sales for almost two years
+A5	Confidence T4 Certain
+A6	SalesVolume_Increase T4
+T5	Profit 1095 1135	disappointing with losses of pound(s)74m
+A7	Confidence T5 Certain
+A8	Profit_WorseThanExpected T5
+A9	Profit_Negative T5
+T6	Company 1045 1057	Fresh & Easy
+R2	is_about_company Arg1:T5 Arg2:T6	
+T7	Profit 1305 1363	cut group pre-tax profits by 12 per cent to pound(s)1.66bn
+A10	Confidence T7 Certain
+A11	Profit_Decrease T7
+T8	Company 1239 1244	Tesco
+R3	is_about_company Arg1:T7 Arg2:T8	
+T9	Profit 1594 1608	profit warning
+A12	Confidence T9 Certain
+A13	Profit_Decrease T9
+A14	Profit_Forecast T9
+R4	is_about_company Arg1:T9 Arg2:T8	
+T10	SalesVolume 1625 1706	Sales from UK stores open at least a year rose 0.1 per cent in the second quarter
+A15	Confidence T10 Certain
+A16	SalesVolume_Increase T10
+T11	QuarterlyResults 1625 1706	Sales from UK stores open at least a year rose 0.1 per cent in the second quarter
+A17	Confidence T11 Certain
+A18	QuarterlyResults_Better T11
+T12	SalesVolume 1746 1868	against a 1.5 per cent decline in the first quarter and a 2.3 per cent fall over the crucial Christmas and New Year period
+A19	Confidence T12 Certain
+A20	SalesVolume_Decrease T12
+T13	SalesVolume 1920 1998	which reported better than expected like-for-like sales growth of 1.9 per cent
+A21	Confidence T13 Certain
+A22	SalesVolume_BetterThanExpected T13
+A23	SalesVolume_Increase T13
+T14	Company 1906 1917	J Sainsbury
+R5	is_about_company Arg1:T13 Arg2:T14	
+T15	Profit 2145 2172	was hit by falling earnings
+A24	Confidence T15 Certain
+A25	Profit_Decrease T15
+T16	Company 2139 2144	Tesco
+R6	is_about_company Arg1:T12 Arg2:T16	
+R7	is_about_company Arg1:T11 Arg2:T16	
+R8	is_about_company Arg1:T10 Arg2:T16	
+T17	Profit 2297 2348	analysts continued to trim their earnings estimates
+A26	Confidence T17 Certain
+A27	Profit_Decrease T17
+A28	Profit_Forecast T17
+R9	is_about_company Arg1:T17 Arg2:T16	
+R10	is_about_company Arg1:T15 Arg2:T16	
+T18	Profit 2373 2482	forecast that full-year pre-tax profits excluding property would fall by up to pound(s)150m to pound(s)3.15bn
+A29	Confidence T18 Certain
+A30	Profit_Decrease T18
+A31	Profit_Forecast T18
+R11	is_about_company Arg1:T18 Arg2:T16	

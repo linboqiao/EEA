@@ -1,0 +1,10 @@
+T1	QuarterlyResults 102 182	it had seen a " marked " increase in bad and doubtful debts in the first quarter
+A1	Confidence T1 Certain
+T2	Company 40 44	HSBC
+R1	is_about_company Arg1:T1 Arg2:T2	
+A2	QuarterlyResults_Worse T1
+T3	QuarterlyResults 1871 1899	had a positive first quarter
+A3	Confidence T3 Certain
+A4	QuarterlyResults_Strong T3
+T4	Company 1739 1743	HSBC
+R2	is_about_company Arg1:T3 Arg2:T4	

@@ -1,0 +1,56 @@
+T1	Profit 749 795	suffered falls in profits during the recession
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 419 424	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 1138 1183	as UK sales rose 4.2 per cent to pound(s)42bn
+A3	Confidence T3 Certain
+A4	SalesVolume_Increase T3
+T4	Company 909 914	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 1345 1400	group sales up 6 per cent to pound(s)57bn over the year
+A5	Confidence T5 Certain
+A6	SalesVolume_Increase T5
+T6	Company 1287 1292	Tesco
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Profit 1408 1454	pre-tax profits up 9 per cent at pound(s)3.2bn
+A7	Confidence T7 Certain
+A8	Profit_Increase T7
+A9	Profit_Positive T7
+R4	is_about_company Arg1:T7 Arg2:T6	
+T8	Profit 1896 1938	would dip into a loss of about pound(s)25m
+A10	Confidence T8 Certain
+A11	Profit_Negative T8
+A12	Profit_Forecast T8
+T9	Profit 1880 1889	predicted
+A13	Profit_Negative T9
+A14	Profit_Forecast T9
+*	in_span_with T9 T8
+T10	Company 1890 1895	Tesco
+R5	is_about_company Arg1:T9 Arg2:T10	
+T11	SalesVolume 2044 2081	sales up by a fifth to pound(s)9.01bn
+A15	Confidence T11 Certain
+A16	SalesVolume_Increase T11
+R6	is_about_company Arg1:T11 Arg2:T10	
+T12	Profit 2086 2124	profits up 24 per cent to pound(s)440m
+A17	Confidence T12 Certain
+A18	Profit_Increase T12
+A19	Profit_Positive T12
+R7	is_about_company Arg1:T12 Arg2:T10	
+T13	SalesVolume 2147 2186	sales fell 0.7 per cent to pound(s)10bn
+A20	Confidence T13 Certain
+A21	SalesVolume_Decrease T13
+R8	is_about_company Arg1:T13 Arg2:T10	
+T14	Profit 2194 2239	trading profit off 4 per cent to pound(s)474m
+A22	Confidence T14 Certain
+A23	Profit_Decrease T14
+A24	Profit_Positive T14
+R9	is_about_company Arg1:T14 Arg2:T10	
+T15	Profit 2256 2295	losses ran to pound(s)165m for the year
+A25	Confidence T15 Certain
+A26	Profit_Negative T15
+R10	is_about_company Arg1:T15 Arg2:T10	
+T16	Debt 2298 2336	Group net debt was lower than expected
+A27	Confidence T16 SomewhatCertain
+A28	Debt_Reduction T16
+R11	is_about_company Arg1:T16 Arg2:T10	

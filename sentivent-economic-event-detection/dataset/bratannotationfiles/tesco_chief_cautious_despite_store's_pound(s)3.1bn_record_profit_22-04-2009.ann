@@ -1,0 +1,38 @@
+T1	Profit 38 65	pound(s)3.1bn record profit
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+T2	Company 0 5	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 329 374	to deliver yet another year of record profits
+A3	Confidence T3 Certain
+A4	Profit_Increase T3
+T4	Company 389 394	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 570 643	trading profit rose 8.8 per cent year-on-year to pound(s)3.1bn ( $4.5bn )
+A5	Confidence T5 Certain
+A6	Profit_Increase T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	SalesVolume 719 770	lifted group sales by 13.5 per cent to pound(s)60bn
+A7	Confidence T6 Certain
+A8	SalesVolume_Increase T6
+T7	Company 674 679	Tesco
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	SalesVolume 805 855	underlying sales growth of 3 per cent for the year
+A9	Confidence T8 Certain
+A10	SalesVolume_Increase T8
+T9	Company 796 801	Tesco
+R5	is_about_company Arg1:T8 Arg2:T9	
+T10	Debt 1169 1260	the retailer 's net debt has ballooned to pound(s)9.6bn from pound(s)6.2bn in the past year
+A11	Confidence T10 Certain
+A12	Debt_Increase T10
+T11	Profit 1614 1636	another year of losses
+A13	Confidence T11 Certain
+A14	Profit_Negative T11
+T12	Company 1523 1528	Tesco
+R6	is_about_company Arg1:T11 Arg2:T12	
+R7	is_about_company Arg1:T10 Arg2:T12	
+T13	Profit 2754 2786	pound(s)140m of losses this year
+A15	Confidence T13 Certain
+A16	Profit_Negative T13
+T14	Company 2721 2733	Fresh & Easy
+R8	is_about_company Arg1:T13 Arg2:T14	

@@ -1,0 +1,15 @@
+T1	SalesVolume 544 584	7.6 per cent first-quarter volume growth
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	Company 291 299	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 914 963	increased its operating margin by 60 basis points
+A3	Confidence T3 Certain
+A4	Profit_Increase T3
+T4	Company 905 913	Unilever
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	QuarterlyResults 1621 1695	first-quarter figures failed , uncharacteristically , to meet expectations
+A5	Confidence T5 Certain
+A6	QuarterlyResults_WorseThanExpected T5
+T6	Company 1595 1612	Reckitt Benckiser
+R3	is_about_company Arg1:T5 Arg2:T6	

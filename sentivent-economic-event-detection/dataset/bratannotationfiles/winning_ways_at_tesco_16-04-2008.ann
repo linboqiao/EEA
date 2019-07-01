@@ -1,0 +1,10 @@
+T1	SalesVolume 441 479	like-for-like sales grew at 4 per cent
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	Company 280 285	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 536 583	overall retail sales fell 1.6 per cent in March
+A3	Confidence T3 Certain
+A4	SalesVolume_Decrease T3
+T4	Company 607 612	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	

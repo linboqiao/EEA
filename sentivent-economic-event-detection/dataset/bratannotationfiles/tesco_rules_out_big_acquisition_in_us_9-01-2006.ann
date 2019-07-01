@@ -1,0 +1,16 @@
+T1	MergerAcquisition 6 31	rules out big acquisition
+A1	Confidence T1 Certain
+A2	MergerAcquisition_NoMergerAcquisition T1
+T2	Company 0 5	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	MergerAcquisition 190 232	no plans to make a large acquisition there
+A3	Confidence T3 Certain
+A4	MergerAcquisition_NoMergerAcquisition T3
+T4	Company 75 80	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 804 863	nowgenerates just over onefifth of its sales outside the UK
+A5	Confidence T5 Certain
+T6	Company 734 739	Tesco
+R3	is_about_company Arg1:T5 Arg2:T6	
+A6	SalesVolume_Other T5
+#1	AnnotatorNotes T5	state of affairs

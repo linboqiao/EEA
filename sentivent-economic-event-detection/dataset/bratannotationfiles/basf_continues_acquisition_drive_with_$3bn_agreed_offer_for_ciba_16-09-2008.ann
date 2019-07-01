@@ -1,0 +1,36 @@
+T1	Company 65 69	BASF
+T3	QuarterlyResults 552 627	reported a second-quarter loss of SFr606m after a SFr595m impairment charge
+A2	Confidence T3 Certain
+T4	Company 547 551	Ciba
+R1	is_about_company Arg1:T3 Arg2:T4	
+T2	Company 205 209	Ciba
+T5	MergerAcquisition 123 182	continued its acquisition drive with an agreed offer to buy
+A1	Confidence T5 Certain
+T6	MergerAcquisition 210 234	for SFr3.4bn ( $3.04bn )
+*	in_span_with T6 T5
+R2	is_about_target Arg1:T6 Arg2:T2	
+R3	is_about_acquirer Arg1:T5 Arg2:T1	
+A3	QuarterlyResults_Weak T3
+A4	MergerAcquisition_Forecast T5
+A5	MergerAcquisition_Forecast T6
+T7	MergerAcquisition 5 55	continues acquisition drive with $3bn agreed offer
+A6	Confidence T7 Certain
+A7	MergerAcquisition_Forecast T7
+T8	Company 0 4	BASF
+T9	Company 60 64	Ciba
+R4	is_about_acquirer Arg1:T7 Arg2:T8	
+R5	is_about_target Arg1:T7 Arg2:T9	
+T10	Profit 552 627	reported a second-quarter loss of SFr606m after a SFr595m impairment charge
+A8	Confidence T10 Certain
+A9	Profit_Decrease T10
+T11	Profit 1871 1931	The deal would boost earnings per share from the second year
+A10	Profit_Forecast T11
+T12	Company 1845 1849	BASF
+R6	is_about_company Arg1:T11 Arg2:T12	
+A11	Confidence T11 Certain
+T13	SalesVolume 244 272	which had sales of SFr6.52bn
+A12	Confidence T13 Certain
+A13	SalesVolume_Other T13
+T14	Company 237 241	Ciba
+R7	is_about_company Arg1:T13 Arg2:T14	
+A14	Profit_Increase T11

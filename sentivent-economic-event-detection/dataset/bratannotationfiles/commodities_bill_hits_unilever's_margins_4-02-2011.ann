@@ -1,0 +1,36 @@
+T1	SalesVolume 76 148	issued a warning that input inflation will cost some 4 per cent of sales
+A1	Confidence T1 Certain
+A2	SalesVolume_Decrease T1
+A3	SalesVolume_Forecast T1
+T2	Company 57 65	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 625 697	saying the 26 per cent increase in operating profit to EUR6.3bn for 2010
+A4	Confidence T3 Certain
+A5	Profit_Increase T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	SalesVolume 990 1087	underlying volumes at the maker of Dove soap and Magnum ice- cream rose 5.8 per cent year-on-year
+A6	Confidence T4 Certain
+A7	SalesVolume_Increase T4
+T5	Company 823 831	Unilever
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Turnover 1207 1246	turn-over of EUR44.3bn , up 11 per cent
+A8	Confidence T6 Certain
+A9	Turnover_Increase T6
+T7	Company 1189 1197	Unilever
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Profit 1300 1343	Pre-tax profit rose 25 per cent to EUR6.1bn
+A10	Confidence T8 Certain
+A11	Profit_Increase T8
+T9	Profit 1345 1384	Net profit rose 26 per cent to EUR4.6bn
+A12	Confidence T9 Certain
+A13	Profit_Increase T9
+T10	Profit 1393 1450	diluted earnings per share were up 25 per cent to EUR1.46
+A14	Confidence T10 Certain
+A15	Profit_Increase T10
+R5	is_about_company Arg1:T8 Arg2:T7	
+R6	is_about_company Arg1:T9 Arg2:T7	
+R7	is_about_company Arg1:T10 Arg2:T7	
+T11	Dividend 1452 1510	A fourth-quarter dividend of 17.75p ( 17.04p ) is proposed
+A16	Confidence T11 Certain
+A17	Dividend_Other T11
+R8	is_about_company Arg1:T11 Arg2:T7	

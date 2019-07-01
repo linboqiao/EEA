@@ -35,7 +35,7 @@ np.random.seed(RANDOM_SEED)
 LANGUAGE = "en"
 TASK = "maintype"
 DATASET = f"{LANGUAGE}_{TASK}" if not TEST else f"TEST{N_TEST_INSTANCES}_{LANGUAGE}_{TASK}"
-EXPERIMENT_DATA = ".//sentifmdetect/static/experiment_data.json" # made for sharing
+EXPERIMENT_DATA = ".//static/experiment_data.json" # made for sharing
 ALL_DATA_DIR = {
     "en_maintype": "sentifmdatadirEnglish/MainType",
     "nl_maintype": "sentifmdatadirDutch/MainType",
@@ -86,16 +86,16 @@ EARLY_STOP = EarlyStopping(
 # EMB_NAME = "glove.6B.300d".format(EMB_DIM)
 
 EMB_FP = {
-    "glove.6B.50d": "./stanfordpretraineddir/glove.6B/glove.6B.50d.txt",
-    "glove.6B.100d": "./stanfordpretraineddir/glove.6B/glove.6B.100d.txt",
-    "glove.6B.200d": "./stanfordpretraineddir/glove.6B/glove.6B.200d.txt",
-    "glove.6B.300d": "./stanfordpretraineddir/glove.6B/glove.6B.300d.txt",
-    "glove.42B.300d": "./stanfordpretraineddir/glove.42B.300d/glove.42B.300d.txt",
-    "glove.840B.300d": "./stanfordpretraineddir/glove.840B.300d/glove.840B.300d.txt",
-    "glove.twitter.27B.25d": "./stanfordpretraineddir/glove.twitter.27B/glove.twitter.27B.25d.txt",
-    "glove.twitter.27B.50d": "./stanfordpretraineddir/glove.twitter.27B/glove.twitter.27B.50d.txt",
-    "glove.twitter.27B.100d": "./stanfordpretraineddir/glove.twitter.27B/glove.twitter.27B.100d.txt",
-    "glove.twitter.27B.200d": "./stanfordpretraineddir/glove.twitter.27B/glove.twitter.27B.200d.txt",
+    "glove.6B.50d": "/home/linbo/workspace/Datasets/glove.6B.50d.txt",
+    "glove.6B.100d": "/home/linbo/workspace/Datasets/glove.6B.100d.txt",
+    "glove.6B.200d": "/home/linbo/workspace/Datasets/glove.6B.200d.txt",
+    "glove.6B.300d": "/home/linbo/workspace/Datasets/glove.6B.300d.txt",
+    "glove.42B.300d": "/home/linbo/workspace/Datasets/glove.42B.300d.txt",
+    "glove.840B.300d": "/home/linbo/workspace/Datasets/glove.840B.300d.txt",
+    "glove.twitter.27B.25d": "/home/linbo/workspace/Datasets/glove.twitter.27B.25d.txt",
+    "glove.twitter.27B.50d": "/home/linbo/workspace/Datasets/glove.twitter.27B.50d.txt",
+    "glove.twitter.27B.100d": "/home/linbo/workspace/Datasets/glove.twitter.27B.100d.txt",
+    "glove.twitter.27B.200d": "/home/linbo/workspace/Datasets/glove.twitter.27B.200d.txt",
 	"glove.en_maintype_w15_lr0.25_ep20.50d.glovemodel": # own trained model top 10 best on google word2vec analogy eval (cf. /static)
 		".//output/en_maintype_2018-03-22_18:41:52_CET_WORDVECTORS/glove.en_maintype_w15_lr0.25_ep20.50d.glovemodel",
 	"glove.en_maintype_w15_lr0.25_ep30.100d.glovemodel":

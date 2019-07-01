@@ -1,0 +1,41 @@
+T1	SalesVolume 6 16	sales fall
+A1	Confidence T1 Certain
+A2	SalesVolume_Decrease T1
+T2	Company 0 5	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 1506 1529	failed to improve sales
+A3	Confidence T3 Certain
+A4	SalesVolume_Decrease T3
+T4	Company 1416 1421	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 1591 1610	like-for-like sales
+A5	Confidence T5 Certain
+A6	SalesVolume_Decrease T5
+T6	SalesVolume 1638 1689	fell by 0.9 per cent in the 13 weeks to November 26
+A7	Confidence T6 Certain
+A8	SalesVolume_Decrease T6
+T7	QuarterlyResults 1747 1764	preceding quarter
+A9	Confidence T7 Certain
+A10	QuarterlyResults_Stable T7
+R3	is_about_company Arg1:T5 Arg2:T4	
+R4	is_about_company Arg1:T6 Arg2:T4	
+R5	is_about_company Arg1:T7 Arg2:T4	
+T8	SalesVolume 1817 1867	the volume of goods sold in the third quarter rose
+A11	Confidence T8 Certain
+A12	SalesVolume_Increase T8
+T9	QuarterlyResults 1817 1867	the volume of goods sold in the third quarter rose
+A13	QuarterlyResults_Strong T9
+A14	Confidence T9 Certain
+R6	is_about_company Arg1:T8 Arg2:T4	
+R7	is_about_company Arg1:T9 Arg2:T4	
+T10	SalesVolume 2408 2450	Group sales rose 5.5 per cent year on year
+A15	Confidence T10 Certain
+A16	SalesVolume_Increase T10
+T11	Company 2029 2034	Tesco
+R8	is_about_company Arg1:T10 Arg2:T11	
+T12	SalesVolume 2654 2690	Like-for-like sales rose 12 per cent
+A17	Confidence T12 Certain
+A18	SalesVolume_Increase T12
+R9	is_about_company Arg1:T12 Arg2:T11	
+A19	SalesVolume_Declaration T1
+*	in_span_with T6 T5

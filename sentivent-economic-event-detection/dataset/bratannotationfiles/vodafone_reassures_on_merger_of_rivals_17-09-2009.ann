@@ -1,0 +1,20 @@
+T1	MergerAcquisition 131 149	plans for a merger
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Other T1
+A3	MergerAcquisition_MergerAcquisition T1
+T2	Company 371 380	Orange UK
+T3	Company 405 416	T-Mobile UK
+R1	is_about_company Arg1:T1 Arg2:T2	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	MergerAcquisition 334 344	the merger
+A4	Confidence T4 Certain
+A5	MergerAcquisition_MergerAcquisition T4
+R3	is_about_company Arg1:T4 Arg2:T2	
+R4	is_about_company Arg1:T4 Arg2:T3	
+T5	MergerAcquisition 1387 1393	bought
+A6	Confidence T5 Certain
+A7	MergerAcquisition_MergerAcquisition T5
+T6	Company 1370 1386	Deutsche Telekom
+T7	Company 1394 1408	France Telecom
+R5	is_about_acquirer Arg1:T5 Arg2:T6	
+R6	is_about_target Arg1:T5 Arg2:T7	

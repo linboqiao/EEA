@@ -1,0 +1,8 @@
+T1	BuyRating 1636 1668	issued a " sell " recommendation
+A1	Confidence T1 Certain
+A2	BuyRating_Sell T1
+A3	BuyRating_Announcement T1
+T2	Company 1510 1518	ABN Amro
+T3	Company 1497 1505	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+R2	is_about_company Arg1:T1 Arg2:T3	

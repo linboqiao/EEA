@@ -1,0 +1,78 @@
+T1	SalesVolume 404 409	sales
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	SalesVolume 461 500	were all heading in the right direction
+A3	Confidence T2 Certain
+A4	SalesVolume_Increase T2
+T3	Profit 461 500	were all heading in the right direction
+A5	Confidence T3 Certain
+A6	Profit_Increase T3
+T4	Profit 414 421	profits
+A7	Confidence T4 Certain
+A8	Profit_Increase T4
+*	in_span_with T4 T3
+*	in_span_with T1 T2
+T5	Profit 636 706	a 12.5 per cent increase in first-half pre-tax profit to pound(s)1.6bn
+A9	Confidence T5 Certain
+A10	Profit_Increase T5
+T6	SalesVolume 712 765	sales excluding VAT up 7.1 per cent to pound(s)29.8bn
+A11	Confidence T6 Certain
+A12	SalesVolume_Increase T6
+T7	Profit 812 929	Underlying profit , which excludes exceptional items and goodwill amortisation , rose 14.1 per cent to pound(s)1.79bn
+A13	Confidence T7 Certain
+A14	Profit_Increase T7
+T8	Profit 931 990	Earnings per share jumped 14 per cent from 12.93p to 14.72p
+A15	Confidence T8 Certain
+A16	Profit_Increase T8
+T9	Dividend 997 1050	the interim dividend is lifted 12.3 per cent to 4.37p
+A17	Confidence T9 Certain
+A18	Dividend_Raise T9
+T10	Debt 1113 1131	a fall in net debt
+A19	Confidence T10 Certain
+A20	Debt_Reduction T10
+T11	Debt 1168 1214	from pound(s)9.5bn a year ago to pound(s)7.6bn
+A21	Confidence T11 Certain
+A22	Debt_Reduction T11
+*	in_span_with T11 T10
+T12	Company 254 259	Tesco
+R1	is_about_company Arg1:T1 Arg2:T12	
+R2	is_about_company Arg1:T4 Arg2:T12	
+R3	is_about_company Arg1:T5 Arg2:T12	
+R4	is_about_company Arg1:T6 Arg2:T12	
+R5	is_about_company Arg1:T7 Arg2:T12	
+R6	is_about_company Arg1:T8 Arg2:T12	
+R7	is_about_company Arg1:T9 Arg2:T12	
+R8	is_about_company Arg1:T10 Arg2:T12	
+T13	Profit 2293 2299	Losses
+A23	Confidence T13 Certain
+A24	Profit_Negative T13
+T14	Company 2303 2315	Fresh & Easy
+R9	is_about_company Arg1:T13 Arg2:T14	
+T15	SalesVolume 3430 3468	sales from stores open at least a year
+A25	Confidence T15 Certain
+A26	SalesVolume_Increase T15
+T16	SalesVolume 3498 3533	rose 0.3 per cent in the first half
+A27	Confidence T16 Certain
+A28	SalesVolume_Increase T16
+*	in_span_with T16 T15
+T17	Company 3968 3973	Tesco
+R10	is_about_company Arg1:T16 Arg2:T17	
+T18	SalesVolume 3536 3634	This was made up of 0.1 per cent growth in the first quarter and 0.4 per cent growth in the second
+A29	Confidence T18 Certain
+A30	SalesVolume_Increase T18
+T19	QuarterlyResults 3536 3634	This was made up of 0.1 per cent growth in the first quarter and 0.4 per cent growth in the second
+A31	Confidence T19 Certain
+A32	QuarterlyResults_Better T19
+R11	is_about_company Arg1:T19 Arg2:T17	
+R12	is_about_company Arg1:T18 Arg2:T17	
+T20	SalesVolume 3784 3796	He forecasts
+A33	Confidence T20 Certain
+A34	SalesVolume_Forecast T20
+A35	SalesVolume_Increase T20
+T21	SalesVolume 3845 3901	first-half UK like-for-like sales growth of 1.6 per cent
+A36	Confidence T21 Certain
+A37	SalesVolume_Forecast T21
+A38	SalesVolume_Increase T21
+*	in_span_with T21 T20
+T22	Company 3808 3819	J Sainsbury
+R13	is_about_company Arg1:T20 Arg2:T22	

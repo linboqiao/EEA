@@ -1,0 +1,31 @@
+T1	QuarterlyResults 3036 3089	in the fourth quarter , the unit outshone most rivals
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Better T1
+T2	Company 2534 2542	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 3092 3161	In the advisory businesses revenues where up 29 per cent sequentially
+A3	Confidence T3 Certain
+A4	Turnover_Increase T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Turnover 3299 3358	revenues dropped 8 per cent compared with the third quarter
+A5	Confidence T4 Certain
+A6	Turnover_Decrease T4
+T5	QuarterlyResults 3299 3358	revenues dropped 8 per cent compared with the third quarter
+A7	Confidence T5 Certain
+A8	QuarterlyResults_Worse T5
+T6	Company 3288 3296	Barclays
+R3	is_about_company Arg1:T5 Arg2:T6	
+R4	is_about_company Arg1:T4 Arg2:T6	
+T7	Turnover 3428 3489	fixed income revenues of pound(s)1.46bn in the fourth quarter
+A9	Confidence T7 Certain
+A10	Turnover_Other T7
+T8	QuarterlyResults 3428 3489	fixed income revenues of pound(s)1.46bn in the fourth quarter
+A11	Confidence T8 Certain
+A12	QuarterlyResults_Other T8
+R5	is_about_company Arg1:T7 Arg2:T6	
+R6	is_about_company Arg1:T8 Arg2:T6	
+T9	Turnover 3636 3659	9 per cent revenue fall
+A13	Confidence T9 Certain
+A14	Turnover_Decrease T9
+T10	Company 3625 3633	Barclays
+R7	is_about_company Arg1:T9 Arg2:T10	

@@ -1,0 +1,50 @@
+T1	Dividend 154 178	a pound(s)2.1bn dividend
+A1	Confidence T1 Certain
+A2	Dividend_Payment T1
+T2	Company 202 209	Verizon
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 301 367	reported its biggest annual fall in service revenues in five years
+A3	Confidence T3 Certain
+A4	Turnover_Decrease T3
+A5	Turnover_Declaration T3
+T4	Company 127 135	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 454 575	revenues for the year to March 31 falling to pound(s)44.4bn , down 4.2 per cent - or pound(s)2bn - from the previous year
+A6	Confidence T5 Certain
+A7	Turnover_Decrease T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	Turnover 1040 1079	the continued decline in voice revenues
+A8	Confidence T6 Certain
+A9	Turnover_Decrease T6
+T7	Company 759 767	Vodafone
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Dividend 2095 2112	the pound(s)2.1bn
+A10	Confidence T8 Certain
+A11	Dividend_Payment T8
+T9	Dividend 2121 2129	dividend
+A12	Dividend_Payment T9
+*	in_span_with T8 T9
+T10	Company 2113 2120	Verizon
+R5	is_about_company Arg1:T8 Arg2:T10	
+T11	Profit 2377 2449	reported that pre-tax profit slipped from pound(s)9.6bn to pound(s)3.3bn
+A13	Profit_Declaration T11
+A14	Confidence T11 Certain
+A15	Profit_Decrease T11
+T12	Company 2368 2376	Vodafone
+R6	is_about_company Arg1:T11 Arg2:T12	
+T13	Profit 2497 2569	adjusted operating profit rose 9.3 per cent year on year to pound(s)12bn
+A16	Confidence T13 Certain
+A17	Profit_Increase T13
+A18	Profit_Positive T13
+R7	is_about_company Arg1:T13 Arg2:T12	
+T14	Profit 2580 2630	earnings per share contracted from 13.65p to 0.87p
+A19	Confidence T14 Certain
+A20	Profit_Decrease T14
+A21	Profit_Positive T14
+T15	Company 2787 2795	Vodafone
+R8	is_about_company Arg1:T14 Arg2:T15	
+T16	Dividend 2637 2772	a final dividend of 6.92p was proposed compared with 6.47p last year , bringing the total payout for the year to 10.19p , up 7 per cent
+A22	Confidence T16 Certain
+A23	Dividend_Raise T16
+A24	Dividend_Payment T16
+R9	is_about_company Arg1:T16 Arg2:T15	

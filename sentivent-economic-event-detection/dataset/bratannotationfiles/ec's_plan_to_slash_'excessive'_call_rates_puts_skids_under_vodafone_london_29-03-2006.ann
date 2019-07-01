@@ -1,0 +1,11 @@
+T1	BuyRating 2243 2274	maintaining anoutperform rating
+A1	Confidence T1 Certain
+A2	BuyRating_Outperform T1
+A3	BuyRating_Maintained T1
+T2	Company 2128 2137	Kazakhmys
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	TargetPrice 2485 2542	lifted its price target from Pounds 22.60 to Pounds 26.20
+A4	Confidence T3 Certain
+A5	TargetPrice_Raise T3
+T4	Company 2421 2430	Man Group
+R2	is_about_company Arg1:T3 Arg2:T4	

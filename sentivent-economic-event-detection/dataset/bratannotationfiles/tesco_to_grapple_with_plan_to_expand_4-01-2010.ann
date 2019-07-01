@@ -1,0 +1,99 @@
+T1	SalesVolume 1323 1370	sales rising 37.4 per cent in the third quarter
+A1	SalesVolume_Increase T1
+T2	Company 1063 1068	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	QuarterlyResults 1323 1370	sales rising 37.4 per cent in the third quarter
+R2	is_about_company Arg1:T3 Arg2:T2	
+A2	Confidence T3 Certain
+A3	QuarterlyResults_Strong T3
+A4	Confidence T1 Certain
+T4	SalesVolume 1377 1410	also stronger like-for-like sales
+A5	Confidence T4 Certain
+A6	SalesVolume_Increase T4
+R3	is_about_company Arg1:T4 Arg2:T2	
+T5	Profit 1459 1489	make a loss over the full year
+A7	Confidence T5 SomewhatCertain
+A8	Profit_Negative T5
+A9	Profit_Forecast T5
+T6	Company 1428 1433	Tesco
+R4	is_about_company Arg1:T5 Arg2:T6	
+T7	MergerAcquisition 1754 1803	put an expansion into northern California on hold
+A10	Confidence T7 SomewhatCertain
+A11	MergerAcquisition_NoMergerAcquisition T7
+T8	Company 1739 1744	Tesco
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	MergerAcquisition 1812 1872	continued to acquire sites in central to northern California
+A12	Confidence T9 Certain
+A13	MergerAcquisition_MergerAcquisition T9
+R6	is_about_company Arg1:T9 Arg2:T8	
+T13	MergerAcquisition 2310 2351	has international opportunities elsewhere
+A18	Confidence T13 Certain
+A19	MergerAcquisition_Announcement T13
+T14	Company 2269 2274	Tesco
+R9	is_about_company Arg1:T13 Arg2:T14	
+T15	MergerAcquisition 2459 2502	China , which will be a big focus for Tesco
+A20	Confidence T15 Certain
+A21	MergerAcquisition_Forecast T15
+R10	is_about_company Arg1:T15 Arg2:T14	
+T16	Debt 3148 3200	capable of going faster in terms of paying down debt
+A22	Confidence T16 Certain
+A23	Debt_Forecast T16
+T17	Company 3095 3100	Tesco
+R11	is_about_company Arg1:T16 Arg2:T17	
+T18	SalesVolume 3373 3437	which accounts for more than two-thirds of its profits and sales
+A24	Confidence T18 SomewhatCertain
+A25	SalesVolume_Other T18
+#1	AnnotatorNotes T18	state of affairs
+T19	Profit 3373 3437	which accounts for more than two-thirds of its profits and sales
+A26	Profit_Other T19
+#2	AnnotatorNotes T19	state of affairs
+A27	Confidence T19 SomewhatCertain
+T20	Company 3302 3307	Tesco
+R12	is_about_company Arg1:T18 Arg2:T20	
+R13	is_about_company Arg1:T19 Arg2:T20	
+T21	SalesVolume 3440 3517	For much of 2009 it lagged behind its main rivals in terms of UK sales growth
+A28	Confidence T21 Certain
+A29	SalesVolume_Other T21
+#3	AnnotatorNotes T21	comparison to others
+R14	is_about_company Arg1:T21 Arg2:T20	
+T22	SalesVolume 3859 3966	likefor-like sales in the three months to the end of November rose by 2.8 per cent , less than expectations
+A30	Confidence T22 Certain
+A31	SalesVolume_WorseThanExpected T22
+T23	Company 3847 3852	Tesco
+R15	is_about_company Arg1:T22 Arg2:T23	
+T24	QuarterlyResults 4273 4365	third-quarter sales covered a period when spiralling increases in food prices came to an end
+A32	Confidence T24 Certain
+A33	QuarterlyResults_Publication T24
+T25	Company 4264 4269	Tesco
+R16	is_about_company Arg1:T24 Arg2:T25	
+T26	SalesVolume 4273 4365	third-quarter sales covered a period when spiralling increases in food prices came to an end
+A34	Confidence T26 SomewhatCertain
+A35	SalesVolume_Declaration T26
+R17	is_about_company Arg1:T26 Arg2:T25	
+T27	SalesVolume 4574 4645	like-for-like sales growth of 3 per cent for the six weeks to January 9
+A36	Confidence T27 Certain
+A37	SalesVolume_Forecast T27
+A38	SalesVolume_Increase T27
+T28	Company 4423 4428	Tesco
+R18	is_about_company Arg1:T27 Arg2:T28	
+T29	QuarterlyResults 4648 4694	in line with J Sainsbury for the third quarter
+A39	Confidence T29 Certain
+A40	QuarterlyResults_Forecast T29
+R19	is_about_company Arg1:T29 Arg2:T28	
+T30	SalesVolume 5011 5073	it will artificially inflate reported sales by 1 to 2 per cent
+A41	Confidence T30 Certain
+A42	SalesVolume_Forecast T30
+A43	SalesVolume_Increase T30
+T31	Company 4876 4881	Tesco
+R20	is_about_company Arg1:T30 Arg2:T31	
+T32	SalesVolume 5126 5172	Clubcard vouchers artificially inflating sales
+A44	Confidence T32 Certain
+A45	SalesVolume_Other T32
+A46	SalesVolume_Increase T32
+T33	Company 5078 5083	Tesco
+R21	is_about_company Arg1:T32 Arg2:T33	
+T34	Profit 5298 5335	vouchers make no difference to profit
+A47	Profit_Declaration T34
+A48	Confidence T34 SomewhatCertain
+A49	Profit_Other T34
+R22	is_about_company Arg1:T34 Arg2:T33	

@@ -1,0 +1,36 @@
+T1	Turnover 149 183	revenues increasing by 14 per cent
+A1	Confidence T1 SomewhatCertain
+A2	Turnover_Increase T1
+T2	Company 0 8	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 322 393	this half 's Pounds 2.7bn pre-tax result was well ahead of expectations
+A3	Confidence T3 Certain
+A4	Profit_BetterThanExpected T3
+A5	Profit_Positive T3
+T4	Profit 755 801	increased profits by a fifth in the first half
+A6	Confidence T4 Certain
+A7	Profit_Increase T4
+T5	Profit 828 854	saw an 18 per cent decline
+A8	Confidence T5 Certain
+A9	Profit_Decrease T5
+T6	Company 804 808	HSBC
+T7	Company 642 650	Barclays
+R2	is_about_company Arg1:T4 Arg2:T7	
+R3	is_about_company Arg1:T3 Arg2:T2	
+R4	is_about_company Arg1:T5 Arg2:T6	
+T8	Dividend 1366 1396	will keep the dividend growing
+A10	Confidence T8 SomewhatCertain
+A11	Dividend_Raise T8
+T9	Company 1357 1365	Barclays
+R5	is_about_company Arg1:T8 Arg2:T9	
+T10	MergerAcquisition 1455 1466	acquisition
+A12	Confidence T10 Certain
+A13	MergerAcquisition_MergerAcquisition T10
+T11	Company 1450 1454	Absa
+T12	Profit 1490 1543	a 2006 multiple of 10 times earnings looks attractive
+A14	Confidence T12 SomewhatCertain
+A15	Profit_Increase T12
+A16	Profit_Forecast T12
+R6	is_about_target Arg1:T10 Arg2:T11	
+R7	is_about_acquirer Arg1:T10 Arg2:T9	
+R8	is_about_company Arg1:T12 Arg2:T9	

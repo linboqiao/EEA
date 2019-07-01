@@ -1,0 +1,59 @@
+T1	QuarterlyResults 9 48	quarterly profits rise to pound(s)2.4bn
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Better T1
+T2	Profit 9 48	quarterly profits rise to pound(s)2.4bn
+A3	Confidence T2 Certain
+A4	Profit_Increase T2
+T3	Company 0 8	Barclays
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	Profit 210 270	it revealed a sharp rise in underlying first-quarter profits
+A5	Profit_Declaration T4
+A6	Confidence T4 Certain
+A7	Profit_Increase T4
+T5	QuarterlyResults 210 270	it revealed a sharp rise in underlying first-quarter profits
+A8	Confidence T5 Certain
+A9	QuarterlyResults_Better T5
+T6	Company 100 108	Barclays
+R3	is_about_company Arg1:T4 Arg2:T6	
+R4	is_about_company Arg1:T5 Arg2:T6	
+T7	Turnover 273 333	A near doubling of income at its investment banking business
+A10	Confidence T7 SomewhatCertain
+A11	Turnover_Increase T7
+T8	Profit 334 387	helped pre-tax profits rise a fifth to pound(s)2.45bn
+A12	Confidence T8 Certain
+A13	Profit_Increase T8
+R5	is_about_company Arg1:T7 Arg2:T6	
+R6	is_about_company Arg1:T8 Arg2:T6	
+T9	Profit 550 599	the bank fell into a pre-tax loss of pound(s)475m
+A14	Confidence T9 Certain
+A15	Profit_Negative T9
+T10	Profit 602 672	compared with a pound(s)1.7bn profit in the first three months of 2011
+A16	Confidence T10 Certain
+A17	Profit_Positive T10
+A18	Profit_Decrease T9
+T11	QuarterlyResults 602 672	compared with a pound(s)1.7bn profit in the first three months of 2011
+A19	Confidence T11 Certain
+A20	QuarterlyResults_Strong T11
+T12	Company 718 726	Barclays
+T13	Turnover 820 887	where income was more than double that of the final quarter of 2011
+A21	Confidence T13 Certain
+A22	Turnover_Increase T13
+R7	is_about_company Arg1:T13 Arg2:T12	
+R8	is_about_company Arg1:T9 Arg2:T12	
+R9	is_about_company Arg1:T10 Arg2:T12	
+R10	is_about_company Arg1:T11 Arg2:T12	
+T14	Profit 939 967	pre-tax profits rose 10-fold
+A23	Confidence T14 Certain
+A24	Profit_Increase T14
+R11	is_about_company Arg1:T14 Arg2:T12	
+T15	Dividend 2148 2182	they pledged to increase dividends
+A25	Confidence T15 Certain
+A26	Dividend_Raise T15
+A27	Dividend_Other T15
+T16	Company 1265 1273	Barclays
+R12	is_about_company Arg1:T15 Arg2:T16	
+T17	Dividend 2213 2264	The first-quarter dividend remained at 1p per share
+A28	Confidence T17 Certain
+A29	Dividend_Stable T17
+R13	is_about_company Arg1:T17 Arg2:T16	

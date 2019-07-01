@@ -1,0 +1,37 @@
+T1	BuyRating 1797 1832	added the stock to its " buy " list
+A1	Confidence T1 Certain
+A2	BuyRating_Buy T1
+T2	Company 1708 1714	Lonmin
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	TargetPrice 2085 2123	which set a pound(s)20.75 price target
+A3	Confidence T3 Certain
+A4	TargetPrice_Announcement T3
+T4	BuyRating 2211 2229	upgrade to " buy "
+A5	Confidence T4 Certain
+A6	BuyRating_Upgrade T4
+A7	BuyRating_Buy T4
+T5	Company 2126 2143	Vedanta Resources
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	BuyRating 3055 3098	started coverage of the stock with a " sell
+A8	Confidence T6 Certain
+A9	BuyRating_Sell T6
+T7	Company 2952 2964	Cairn Energy
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	BuyRating 3418 3425	brokers
+A10	Confidence T8 Certain
+A11	BuyRating_Buy T8
+A12	BuyRating_Maintained T8
+T9	BuyRating 3464 3487	repeated " buy " advice
+A13	Confidence T9 Certain
+A14	BuyRating_Buy T9
+A15	BuyRating_Maintained T9
+*	in_span_with T9 T8
+T10	Company 3365 3375	Tui Travel
+R5	is_about_company Arg1:T8 Arg2:T10	
+T11	TargetPrice 3545 3576	raised its target price to 160p
+A16	Confidence T11 Certain
+A17	TargetPrice_Raise T11
+T12	Company 3490 3498	Vodafone
+R6	is_about_company Arg1:T11 Arg2:T12	
+T13	Company 2031 2037	Lonmin
+R2	is_about_company Arg1:T3 Arg2:T13	

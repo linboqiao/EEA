@@ -1,0 +1,16 @@
+T1	SalesVolume 1428 1459	ability to sustain sales growth
+A1	Confidence T1 Certain
+A2	SalesVolume_Decrease T1
+A3	SalesVolume_Forecast T1
+T2	SalesVolume 1384 1415	Analysts remain sceptical about
+A4	Confidence T2 Certain
+A5	SalesVolume_Decrease T2
+A6	SalesVolume_Forecast T2
+T3	Company 1416 1424	Unilever
+*	in_span_with T1 T2
+R1	is_about_company Arg1:T1 Arg2:T3	
+T4	QuarterlyResults 1330 1381	managed to report such strong first-quarter results
+A7	Confidence T4 Certain
+A8	QuarterlyResults_Strong T4
+T5	Company 1321 1329	Unilever
+R2	is_about_company Arg1:T4 Arg2:T5	

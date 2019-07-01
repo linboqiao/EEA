@@ -1,0 +1,22 @@
+T1	Profit 1655 1687	earnings before interest and tax
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+T2	Company 1648 1651	BHP
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 143 223	he has just unveiled the biggest half-year profit ever for an Australian company
+A4	Confidence T3 Certain
+A5	Profit_Positive T3
+T4	Company 226 229	BHP
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	ShareRepurchase 267 320	the mining sector 's largest share buy-back programme
+A6	Confidence T5 Certain
+A7	ShareRepurchase_Announcement T5
+T6	ShareRepurchase 143 163	he has just unveiled
+A8	Confidence T6 Certain
+A9	ShareRepurchase_Announcement T6
+*	in_span_with T6 T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T7	Profit 1611 1647	37 per cent year-on-year increase in
+A10	Confidence T7 Certain
+A11	Profit_Increase T7
+*	in_span_with T1 T7

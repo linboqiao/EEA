@@ -1,0 +1,12 @@
+T1	MergerAcquisition 94 116	after it agreed to buy
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Announcement T1
+T2	Company 63 78	GlaxoSmithKline
+T3	Company 117 123	Corixa
+R1	is_about_target Arg1:T1 Arg2:T3	
+R2	is_about_acquirer Arg1:T1 Arg2:T2	
+T4	QuarterlyResults 1962 1998	the company 's first-quarter results
+A3	Confidence T4 Certain
+A4	QuarterlyResults_Publication T4
+T5	Company 1927 1930	GSK
+R3	is_about_company Arg1:T4 Arg2:T5	

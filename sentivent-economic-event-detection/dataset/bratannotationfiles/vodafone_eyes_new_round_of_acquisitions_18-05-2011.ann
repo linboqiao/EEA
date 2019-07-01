@@ -1,0 +1,40 @@
+T1	Profit 97 140	Pre-tax profit rises 9.5 % to pound(s)9.5bn
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+A3	Profit_Positive T1
+T2	Company 0 8	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 935 1033	reported revenue of pound(s)45.9bn for the year to March 31 , up 3.2 per cent on the previous year
+A4	Confidence T3 Certain
+A5	Turnover_Increase T3
+A6	Turnover_Declaration T3
+T4	Company 926 934	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 1132 1208	Operating profit excluding one-off items rose 3.1 per cent to pound(s)11.8bn
+A7	Confidence T5 Certain
+A8	Profit_Increase T5
+A9	Profit_Positive T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	MergerAcquisition 1376 1396	proposed acquisition
+A10	Confidence T6 Certain
+A11	MergerAcquisition_Other T6
+A12	MergerAcquisition_MergerAcquisition T6
+T7	Company 1400 1412	T-Mobile USA
+T8	Company 1368 1372	AT&T
+R4	is_about_acquirer Arg1:T6 Arg2:T8	
+R5	is_about_target Arg1:T6 Arg2:T7	
+T9	Profit 2538 2592	Pre-tax profit increased 9.5 per cent to pound(s)9.5bn
+A13	Confidence T9 Certain
+A14	Profit_Increase T9
+A15	Profit_Positive T9
+T10	Dividend 2597 2674	the total dividend rose 7.1 per cent to 8.9p after a final of 6.05p ( 5.65p )
+A16	Confidence T10 Certain
+A17	Dividend_Raise T10
+T11	Profit 2677 2726	Earnings per share were 15.2p , down 7.6 per cent
+A18	Confidence T11 Certain
+A19	Profit_Decrease T11
+A20	Profit_Positive T11
+T12	Company 2257 2265	Vodafone
+R6	is_about_company Arg1:T9 Arg2:T12	
+R7	is_about_company Arg1:T10 Arg2:T12	
+R8	is_about_company Arg1:T11 Arg2:T12	

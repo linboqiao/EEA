@@ -1,0 +1,11 @@
+T1	Company 16 28	BHP Billiton
+T2	Company 120 129	Rio Tinto
+T3	MergerAcquisition 50 119	has submitted its proposed hostile $180bn ( L91bn ) takeover of rival
+A1	Confidence T3 Certain
+A2	MergerAcquisition_Announcement T3
+T4	MergerAcquisition 130 156	to the European Commission
+A3	Confidence T4 Certain
+A4	MergerAcquisition_Announcement T4
+*	in_span_with T3 T4
+R1	is_about_acquirer Arg1:T3 Arg2:T1	
+R2	is_about_target Arg1:T3 Arg2:T2	

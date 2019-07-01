@@ -1,0 +1,55 @@
+T1	SalesVolume 240 318	sales of product lines such as ice-cream and deodorant accelerating since July
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	Company 169 177	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	BuyRating 432 465	repeated an " overweight " rating
+A3	Confidence T3 Certain
+A4	BuyRating_Outperform T3
+A5	BuyRating_Maintained T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	SalesVolume 350 405	our view that volume growth will surprise on the upside
+A6	Confidence T4 Certain
+A7	SalesVolume_Forecast T4
+A8	SalesVolume_Other T4
+R3	is_about_company Arg1:T4 Arg2:T2	
+T5	SalesVolume 547 602	sales had been sharply below company targets since July
+A9	Confidence T5 Certain
+A10	SalesVolume_WorseThanExpected T5
+T6	Company 533 540	Cadbury
+R4	is_about_company Arg1:T5 Arg2:T6	
+T7	MergerAcquisition 653 670	last month 's bid
+A11	Confidence T7 Certain
+A12	MergerAcquisition_Other T7
+T8	Company 676 681	Kraft
+R5	is_about_company Arg1:T7 Arg2:T8	
+R6	is_about_company Arg1:T7 Arg2:T6	
+T9	BuyRating 1203 1226	advising clients to buy
+A13	Confidence T9 Certain
+A14	BuyRating_Buy T9
+T10	Company 1079 1088	Whitbread
+R7	is_about_company Arg1:T9 Arg2:T10	
+T11	BuyRating 1248 1258	An upgrade
+A15	Confidence T11 Certain
+A16	BuyRating_Upgrade T11
+R8	is_about_company Arg1:T11 Arg2:T10	
+T12	SalesVolume 1820 1863	the move provided a significant sales boost
+A17	Confidence T12 Certain
+A18	SalesVolume_Increase T12
+T13	Company 1581 1589	BT Group
+R9	is_about_company Arg1:T12 Arg2:T13	
+T14	BuyRating 2679 2682	cut
+A19	Confidence T14 Certain
+A20	BuyRating_Hold T14
+A21	BuyRating_Downgrade T14
+T15	BuyRating 2692 2704	to " neutral
+A22	BuyRating_Hold T15
+A23	BuyRating_Downgrade T15
+*	in_span_with T14 T15
+T16	Company 2683 2691	Autonomy
+R10	is_about_company Arg1:T14 Arg2:T16	
+T17	BuyRating 2948 2986	added the retailer to its " buy " list
+A24	Confidence T17 Certain
+A25	BuyRating_Buy T17
+T18	Company 2894 2911	DSG International
+R11	is_about_company Arg1:T17 Arg2:T18	

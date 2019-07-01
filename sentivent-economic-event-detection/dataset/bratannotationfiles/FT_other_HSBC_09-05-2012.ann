@@ -1,0 +1,44 @@
+T1	Profit 5 34	delivers 25 % rise in profits
+A1	Confidence T1 Certain
+T2	Company 0 4	HSBC
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 181 277	it announced that first-quarter underlying profit had risen 25 per cent year on year to $ 6.78bn
+A3	Confidence T3 Certain
+A4	Profit_Increase T3
+T4	QuarterlyResults 181 277	it announced that first-quarter underlying profit had risen 25 per cent year on year to $ 6.78bn
+A5	Confidence T4 Certain
+A6	QuarterlyResults_Better T4
+T5	Company 151 155	HSBC
+R2	is_about_company Arg1:T3 Arg2:T5	
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Profit 1141 1170	the rise in underlying profit
+A7	Confidence T6 Certain
+A8	Profit_Increase T6
+T7	Company 1131 1135	HSBC
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Turnover 1181 1253	increased revenues in its investment banking and commercial banking arms
+A9	Confidence T8 Certain
+A10	Turnover_Increase T8
+R5	is_about_company Arg1:T8 Arg2:T7	
+T9	Profit 1580 1617	The group 's statutory pre-tax profit
+A11	Confidence T9 Certain
+A12	Profit_Decrease T9
+T10	Profit 1720 1821	was $ 4.32bn for the first three months of the year , down from $ 4.91bn in the first quarter of 2011
+A13	Confidence T10 Certain
+A14	Profit_Decrease T10
+*	in_span_with T10 T9
+T11	QuarterlyResults 1580 1617	The group 's statutory pre-tax profit
+A15	Confidence T11 Certain
+A16	QuarterlyResults_Worse T11
+T12	QuarterlyResults 1720 1821	was $ 4.32bn for the first three months of the year , down from $ 4.91bn in the first quarter of 2011
+A17	Confidence T12 Certain
+A18	QuarterlyResults_Worse T12
+*	in_span_with T12 T11
+T13	Company 1489 1493	HSBC
+R6	is_about_company Arg1:T11 Arg2:T13	
+R7	is_about_company Arg1:T9 Arg2:T13	
+T14	Profit 1996 2039	pushed up loan losses there by about $ 250m
+A19	Confidence T14 Certain
+A20	Profit_Negative T14
+R8	is_about_company Arg1:T14 Arg2:T13	
+A2	Profit_Increase T1

@@ -1,0 +1,26 @@
+T1	Dividend 127 162	played down fears of a dividend cut
+A1	Confidence T1 Certain
+A2	Dividend_Reduction T1
+A3	Dividend_Forecast T1
+T2	Company 60 68	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 177 204	7.6 per cent dividend yield
+A4	Confidence T3 Certain
+A5	Dividend_Reduction T3
+T4	Company 165 173	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	TargetPrice 1352 1377	raised its target to 200p
+A6	Confidence T5 Certain
+A7	TargetPrice_Raise T5
+T6	Company 1382 1390	Vodafone
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	BuyRating 2872 2880	upgraded
+A8	Confidence T7 Certain
+A9	BuyRating_Upgrade T7
+A10	BuyRating_Outperform T7
+T8	BuyRating 2889 2906	to " outperform "
+A11	BuyRating_Upgrade T8
+A12	BuyRating_Outperform T8
+*	in_span_with T7 T8
+T9	Company 2881 2888	Pearson
+R4	is_about_company Arg1:T7 Arg2:T9	

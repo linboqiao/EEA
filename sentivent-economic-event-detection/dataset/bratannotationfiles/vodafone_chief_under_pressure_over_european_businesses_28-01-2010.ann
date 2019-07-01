@@ -1,0 +1,18 @@
+T1	Turnover 2313 2361	reported falling underlying revenue in 2008-2009
+A1	Confidence T1 Certain
+A2	Turnover_Decrease T1
+A3	Turnover_Declaration T1
+T2	Company 2204 2212	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Debt 3012 3030	paid down its debt
+A4	Confidence T3 Certain
+A5	Debt_Reduction T3
+A6	Debt_Forecast T3
+T4	Company 2995 3011	Verizon Wireless
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	MergerAcquisition 3078 3093	the acquisition
+A7	Confidence T5 Certain
+A8	MergerAcquisition_MergerAcquisition T5
+T6	Company 3097 3103	Alltel
+R3	is_about_target Arg1:T5 Arg2:T6	
+R4	is_about_acquirer Arg1:T5 Arg2:T4	

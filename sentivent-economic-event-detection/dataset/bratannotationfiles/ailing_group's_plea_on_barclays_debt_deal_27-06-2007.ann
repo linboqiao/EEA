@@ -1,0 +1,11 @@
+T1	Profit 2856 2863	results
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A3	Profit_Negative T1
+T2	Profit 2891 2948	published yesterday , showed a pre-tax loss of Pounds 32m
+A4	Confidence T2 Certain
+A5	Profit_Decrease T2
+A6	Profit_Negative T2
+*	in_span_with T2 T1
+T3	Company 2845 2853	Biofuels
+R1	is_about_company Arg1:T1 Arg2:T3	

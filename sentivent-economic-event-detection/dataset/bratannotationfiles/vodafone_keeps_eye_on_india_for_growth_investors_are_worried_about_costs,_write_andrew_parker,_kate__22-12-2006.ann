@@ -1,0 +1,35 @@
+T1	MergerAcquisition 407 418	merged with
+A1	Confidence T1 Certain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	Company 419 427	Vodafone
+T3	Company 340 363	AirTouch Communications
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T2	
+T4	MergerAcquisition 1384 1407	an offer to be made for
+A3	Confidence T4 Certain
+A4	MergerAcquisition_Other T4
+A5	MergerAcquisition_MergerAcquisition T4
+T5	Company 1408 1423	Hutchison Essar
+T6	Company 1333 1341	Vodafone
+R3	is_about_acquirer Arg1:T4 Arg2:T6	
+R4	is_about_target Arg1:T4 Arg2:T5	
+T7	Turnover 2624 2668	warned in November of slowing revenue growth
+A6	Confidence T7 Certain
+A7	Turnover_Increase T7
+T8	Company 2573 2581	Vodafone
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	MergerAcquisition 2850 2878	was bought for Dollars 4.6bn
+A8	Confidence T9 Certain
+A9	MergerAcquisition_Other T9
+A10	MergerAcquisition_MergerAcquisition T9
+T10	Company 2792 2798	Telsim
+R6	is_about_target Arg1:T9 Arg2:T10	
+T11	Company 2706 2714	Vodafone
+R7	is_about_acquirer Arg1:T9 Arg2:T11	
+T12	MergerAcquisition 3458 3482	ill-fated attempt to buy
+A11	Confidence T12 Certain
+A12	MergerAcquisition_NoMergerAcquisition T12
+T13	Company 3483 3496	AT&T Wireless
+T14	Company 3264 3272	Vodafone
+R8	is_about_target Arg1:T12 Arg2:T13	
+R9	is_about_acquirer Arg1:T12 Arg2:T14	

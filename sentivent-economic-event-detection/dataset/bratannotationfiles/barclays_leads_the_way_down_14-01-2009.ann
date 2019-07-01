@@ -1,0 +1,19 @@
+T1	Profit 669 712	posted a wider-than-expected quarterly loss
+A1	Confidence T1 Certain
+A2	Profit_WorseThanExpected T1
+A3	Profit_Negative T1
+T2	QuarterlyResults 669 712	posted a wider-than-expected quarterly loss
+A4	Confidence T2 Certain
+A5	QuarterlyResults_WorseThanExpected T2
+T3	Company 663 668	Alcoa
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	MergerAcquisition 1398 1449	renewed speculation it was on the acquisition trail
+A6	Confidence T4 Certain
+A7	MergerAcquisition_Forecast T4
+T5	Company 1514 1530	Aspen Pharmacare
+T6	Company 1452 1458	Genmab
+T7	Company 1339 1354	GlaxoSmithKline
+R3	is_about_acquirer Arg1:T4 Arg2:T7	
+R4	is_about_target Arg1:T4 Arg2:T6	
+R5	is_about_target Arg1:T4 Arg2:T5	

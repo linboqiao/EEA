@@ -1,0 +1,36 @@
+T1	TargetPrice 260 277	raised its target
+A1	Confidence T1 Certain
+A2	TargetPrice_Raise T1
+T2	TargetPrice 300 325	from EUR10.25 to EUR11.50
+A3	Confidence T2 Certain
+A4	TargetPrice_Raise T2
+*	in_span_with T2 T1
+T3	Company 281 299	Deutsche Lufthansa
+R1	is_about_company Arg1:T2 Arg2:T3	
+T4	TargetPrice 541 558	lifted its target
+A5	Confidence T4 Certain
+A6	TargetPrice_Raise T4
+T5	TargetPrice 577 597	from EUR4 to EUR6.30
+A7	Confidence T5 Certain
+A8	TargetPrice_Raise T5
+*	in_span_with T5 T4
+T6	Company 562 576	Air France-KLM
+R2	is_about_company Arg1:T5 Arg2:T6	
+T7	TargetPrice 846 896	increased its price target from EUR4.40 to EUR4.95
+A9	Confidence T7 Certain
+A10	TargetPrice_Raise T7
+T8	Company 767 774	Ryanair
+R3	is_about_company Arg1:T7 Arg2:T8	
+T9	BuyRating 598 630	with an " equal weight " outlook
+A11	Confidence T9 SomewhatCertain
+A12	BuyRating_Hold T9
+T10	BuyRating 326 358	with an " equal weight " outlook
+A13	Confidence T10 SomewhatCertain
+A14	BuyRating_Hold T10
+R4	is_about_company Arg1:T10 Arg2:T3	
+R5	is_about_company Arg1:T9 Arg2:T6	
+T11	BuyRating 1167 1204	to maintain an " overweight " outlook
+A15	Confidence T11 Certain
+A16	BuyRating_Outperform T11
+T12	Company 1117 1145	International Airlines Group
+R6	is_about_company Arg1:T11 Arg2:T12	

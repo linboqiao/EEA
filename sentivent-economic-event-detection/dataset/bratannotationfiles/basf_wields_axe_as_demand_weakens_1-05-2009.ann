@@ -1,0 +1,84 @@
+T3	Company 44 48	BASF
+T6	Turnover 1262 1318	pushed quarterly revenues 23 per cent lower to EUR12.2bn
+A13	Confidence T6 Certain
+A14	Turnover_Decrease T6
+T7	Company 507 511	BASF
+T9	SalesVolume 1865 1886	sales volumes of some
+A17	Confidence T9 Certain
+A18	SalesVolume_Decrease T9
+T10	SalesVolume 1892 1934	products falling by as much as 50 per cent
+A19	Confidence T10 Certain
+*	in_span_with T9 T10
+T11	Company 1887 1891	BASF
+R5	is_about_company Arg1:T9 Arg2:T11	
+T12	SalesVolume 2345 2372	first-quarter sales in Asia
+A20	Confidence T12 Certain
+A21	SalesVolume_Decrease T12
+T13	SalesVolume 2419 2435	fall 34 per cent
+A22	Confidence T13 Certain
+A23	SalesVolume_Decrease T13
+*	in_span_with T12 T13
+T14	Company 2292 2296	BASF
+R6	is_about_company Arg1:T12 Arg2:T14	
+T1	SalesVolume 138 187	dragged its first-quarter sales down by a quarter
+T16	Profit 192 223	wiped two-thirds off net profit
+A6	Confidence T16 Certain
+R1	is_about_company Arg1:T16 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T19	Company 773 777	Ciba
+T20	Company 794 799	Revus
+T4	SalesVolume 820 881	sales would fall below the EUR62.3bn ( $82.3bn ) seen in 2008
+A8	Confidence T4 Certain
+A9	SalesVolume_Decrease T4
+R4	is_about_company Arg1:T4 Arg2:T7	
+T8	Profit 1320 1395	Net profit slipped 68 per cent to EUR375m as prices for its products eroded
+T21	SalesVolume 1199 1261	" drastic " sales declines in its plastics and chemicals units
+A29	Confidence T21 Certain
+A30	SalesVolume_Decrease T21
+R12	is_about_company Arg1:T8 Arg2:T11	
+R13	is_about_company Arg1:T6 Arg2:T11	
+R14	is_about_company Arg1:T21 Arg2:T11	
+A31	SalesVolume_Decrease T10
+T22	QuarterlyResults 2345 2372	first-quarter sales in Asia
+A32	Confidence T22 Certain
+R15	is_about_company Arg1:T22 Arg2:T14	
+T15	Turnover 2438 2508	North American revenues fell 26 per cent , those in Europe 21 per cent
+A24	Confidence T15 Certain
+A25	Turnover_Decrease T15
+R7	is_about_company Arg1:T15 Arg2:T14	
+T2	QuarterlyResults 138 187	dragged its first-quarter sales down by a quarter
+A1	Confidence T2 Certain
+T18	MergerAcquisition 719 756	Despite the acquisition of speciality
+A28	Confidence T18 Certain
+A34	MergerAcquisition_MergerAcquisition T18
+R8	is_about_target Arg1:T18 Arg2:T19	
+R9	is_about_target Arg1:T18 Arg2:T20	
+R10	is_about_acquirer Arg1:T18 Arg2:T7	
+T5	Profit 884 954	Operating income would come in " sharply " below last year 's EUR6.9bn
+A10	Confidence T5 Certain
+A11	Profit_Decrease T5
+R3	is_about_company Arg1:T5 Arg2:T7	
+A7	Profit_Decrease T16
+A15	Profit_Decrease T8
+A16	Confidence T8 Certain
+A2	SalesVolume_Decrease T1
+A4	Confidence T1 Certain
+A3	QuarterlyResults_Worse T2
+T23	QuarterlyResults 434 490	signalling that the second quarter could be even tougher
+A5	Confidence T23 Certain
+A36	QuarterlyResults_Forecast T23
+R11	is_about_company Arg1:T23 Arg2:T3	
+T17	QuarterlyResults 1262 1318	pushed quarterly revenues 23 per cent lower to EUR12.2bn
+A12	Confidence T17 Certain
+A26	QuarterlyResults_Worse T17
+R16	is_about_company Arg1:T17 Arg2:T11	
+A27	QuarterlyResults_Worse T22
+T24	QuarterlyResults 2419 2435	fall 34 per cent
+A33	Confidence T24 Certain
+A37	QuarterlyResults_Worse T24
+*	in_span_with T24 T22
+T25	SalesVolume 2605 2674	Its unit making chemicals for agriculture benefited from higher sales
+A38	Confidence T25 Certain
+A39	SalesVolume_Increase T25
+R17	is_about_company Arg1:T25 Arg2:T14	
+A35	QuarterlyResults_Worse T23

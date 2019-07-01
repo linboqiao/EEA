@@ -1,0 +1,26 @@
+T1	SalesVolume 214 250	reported disappointing sales figures
+A1	Confidence T1 Certain
+A2	SalesVolume_WorseThanExpected T1
+T2	Company 107 115	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 1232 1248	the sales growth
+A3	Confidence T3 Certain
+A4	SalesVolume_Increase T3
+T4	Company 1272 1289	Reckitt Benckiser
+T5	Company 1294 1300	Nestle
+R2	is_about_company Arg1:T3 Arg2:T4	
+R3	is_about_company Arg1:T3 Arg2:T5	
+T6	SalesVolume 1489 1555	reported underlying sales growth of 3.8 per cent for the full year
+A5	Confidence T6 Certain
+A6	SalesVolume_Increase T6
+T7	Company 1480 1488	Unilever
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Profit 1679 1732	Annual pre-tax profits rose 7 per cent to Euros 4.8bn
+A7	Confidence T8 Certain
+A8	Profit_Increase T8
+R5	is_about_company Arg1:T8 Arg2:T7	
+T9	Dividend 2333 2382	A final dividend of 32.04p ( 30.09p ) is proposed
+A9	Confidence T9 Certain
+A10	Dividend_Announcement T9
+T10	Company 1938 1946	Unilever
+R6	is_about_company Arg1:T9 Arg2:T10	

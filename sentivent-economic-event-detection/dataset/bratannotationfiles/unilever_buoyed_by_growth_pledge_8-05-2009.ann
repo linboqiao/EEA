@@ -1,0 +1,20 @@
+T1	SalesVolume 287 408	first-quarter sales volumes were poor , dropping 1.8 per cent , compared with a 1.6 per cent fall in the previous quarter
+A1	Confidence T1 Certain
+A2	SalesVolume_Decrease T1
+T2	Company 275 283	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 1064 1130	Underlying sales growth of 4.8 per cent was stronger than expected
+A3	Confidence T3 Certain
+A4	SalesVolume_BetterThanExpected T3
+A5	SalesVolume_Increase T3
+T4	Company 1134 1142	Unilever
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 1508 1558	sales volumes dropping 3.7 per cent in the quarter
+A6	Confidence T5 Certain
+A7	SalesVolume_Decrease T5
+T6	Company 1492 1500	Unilever
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	QuarterlyResults 1508 1558	sales volumes dropping 3.7 per cent in the quarter
+A8	Confidence T7 Certain
+A9	QuarterlyResults_Worse T7
+R4	is_about_company Arg1:T7 Arg2:T6	

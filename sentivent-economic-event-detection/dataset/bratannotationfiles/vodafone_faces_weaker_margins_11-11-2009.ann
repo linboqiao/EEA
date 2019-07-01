@@ -1,0 +1,51 @@
+T1	Profit 71 107	First-half pre-tax profits jump 73 %
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+T2	Company 0 8	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 127 192	a sharper-than-expected reduction in its profit margin in 2009-10
+A3	Confidence T3 Certain
+A4	Profit_Decrease T3
+A5	Profit_WorseThanExpected T3
+T4	Company 108 116	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 678 818	it reported revenue of pound(s)21.8bn for the six months to September 30 , an increase of 9 per cent compared with the same period last year
+A6	Confidence T5 Certain
+A7	Turnover_Increase T5
+A8	Turnover_Declaration T5
+T6	Company 637 645	Vodafone
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Profit 825 872	pre-tax profit up 73 per cent to pound(s)5.75bn
+A9	Confidence T7 Certain
+A10	Profit_Increase T7
+A11	Profit_Positive T7
+R4	is_about_company Arg1:T7 Arg2:T6	
+T8	Turnover 1030 1064	Underlying revenue fell 3 per cent
+A12	Confidence T8 Certain
+A13	Turnover_Decrease T8
+R5	is_about_company Arg1:T8 Arg2:T6	
+T9	Profit 1069 1150	earnings before interest , tax , depreciation and amortisation dropped 8 per cent
+A14	Confidence T9 Certain
+A15	Profit_Decrease T9
+R6	is_about_company Arg1:T9 Arg2:T6	
+T10	Profit 1162 1334	said in May that its ebitda margin should decline by 1.8 percentage points in 2009-10 , but yesterday it said the deterioration was now expected to be 2.1 percentage points
+A16	Confidence T10 Certain
+A17	Profit_Decrease T10
+A18	Profit_Forecast T10
+T11	Company 1153 1161	Vodafone
+R7	is_about_company Arg1:T10 Arg2:T11	
+T12	Profit 1982 2074	guidance that it will generate pound(s)11bn to pound(s)11.8bn of operating profit in 2009-10
+A19	Confidence T12 Certain
+A20	Profit_Positive T12
+A21	Profit_Forecast T12
+T13	Company 1960 1968	Vodafone
+R8	is_about_company Arg1:T12 Arg2:T13	
+T14	Dividend 2444 2490	The interim dividend rises from 2.57p to 2.66p
+A22	Confidence T14 Certain
+A23	Dividend_Raise T14
+T15	Company 2228 2236	Vodafone
+R9	is_about_company Arg1:T14 Arg2:T15	
+T16	Profit 2493 2532	earnings per share were 9.14p ( 4.02p )
+A24	Confidence T16 Certain
+A25	Profit_Positive T16
+R10	is_about_company Arg1:T16 Arg2:T15	

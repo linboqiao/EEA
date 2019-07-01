@@ -1,0 +1,42 @@
+T2	Company 64 68	BASF
+T3	QuarterlyResults 587 668	to report a fourth-quarter sales decline of 2.7 per cent to EUR14.3bn ( $18.3bn )
+A3	Confidence T3 Certain
+T4	SalesVolume 817 853	sales rose 7.5 per cent to EUR62.3bn
+A5	Confidence T4 Certain
+A6	SalesVolume_Increase T4
+T5	Company 582 586	BASF
+R2	is_about_company Arg1:T4 Arg2:T5	
+R3	is_about_company Arg1:T3 Arg2:T5	
+T7	Profit 894 962	earnings before interest and taxes slipped 11.7 per cent to EUR6.5bn
+A9	Confidence T7 Certain
+A10	Profit_Decrease T7
+T8	Profit 967 1011	net profit tumbled 28.4 per cent to EUR2.9bn
+R5	is_about_company Arg1:T7 Arg2:T5	
+T1	QuarterlyResults 112 200	has been hit by its first quarterly loss in seven years as the economic slump hit demand
+A1	Confidence T1 Certain
+R1	is_about_company Arg1:T1 Arg2:T2	
+T6	Company 1246 1250	BASF
+R4	is_about_company Arg1:T8 Arg2:T6	
+A7	Profit_Increase T8
+A8	Confidence T8 Certain
+A2	QuarterlyResults_Worse T1
+T9	SalesVolume 390 420	he expected 2009 sales to fall
+A11	Confidence T9 Certain
+A12	SalesVolume_Decrease T9
+A13	SalesVolume_Forecast T9
+T10	Turnover 455 513	and operating income to record " an even greater decline "
+A14	Confidence T10 Certain
+A15	Turnover_Decrease T10
+A16	Turnover_Forecast T10
+R6	is_about_company Arg1:T9 Arg2:T2	
+R7	is_about_company Arg1:T10 Arg2:T2	
+A4	QuarterlyResults_Worse T3
+T11	SalesVolume 587 668	to report a fourth-quarter sales decline of 2.7 per cent to EUR14.3bn ( $18.3bn )
+A17	Confidence T11 Certain
+A18	SalesVolume_Decrease T11
+R8	is_about_company Arg1:T11 Arg2:T5	
+T12	Profit 673 723	a net loss of EUR313m , from net profit of EUR793m
+A19	Confidence T12 Certain
+A20	Profit_Decrease T12
+A21	Profit_Negative T12
+R9	is_about_company Arg1:T12 Arg2:T5	

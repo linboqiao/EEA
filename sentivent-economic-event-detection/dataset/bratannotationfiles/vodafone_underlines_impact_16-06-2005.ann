@@ -1,0 +1,20 @@
+T1	Debt 140 196	reveal one of the most substantial increases in net debt
+A1	Confidence T1 Certain
+A2	Debt_Announcement T1
+A3	Debt_Increase T1
+T2	Company 27 35	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Debt 271 415	said that net debt of Pounds 8.7bn under UK accounting standards would rise by 27 per cent to Pounds 11.1bn under international accounting rules
+A4	Confidence T3 Certain
+A5	Debt_Forecast T3
+A6	Debt_Increase T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Debt 1244 1267	pushing net debt higher
+A7	Confidence T4 Certain
+A8	Debt_Increase T4
+T5	Company 1165 1173	Vodafone
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Debt 1280 1304	Pounds 880m rise in debt
+A9	Confidence T6 Certain
+A10	Debt_Increase T6
+R4	is_about_company Arg1:T6 Arg2:T5	

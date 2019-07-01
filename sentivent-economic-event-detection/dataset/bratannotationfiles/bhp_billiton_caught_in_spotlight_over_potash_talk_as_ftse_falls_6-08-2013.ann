@@ -1,0 +1,38 @@
+T4	BuyRating 2011 2030	upgraded to " buy "
+A3	BuyRating_Upgrade T4
+T5	TargetPrice 2031 2055	with a 900p target price
+A4	Confidence T5 Certain
+A5	TargetPrice_Announcement T5
+A6	Confidence T4 Certain
+T6	Company 2436 2447	Thomas Cook
+T7	BuyRating 2448 2503	climbed 5.5 per cent to 169.9p on an upgrade to " buy "
+A7	Confidence T7 Certain
+A8	BuyRating_Upgrade T7
+T8	MergerAcquisition 461 476	had a $39bn bid
+A9	Confidence T8 Certain
+A10	MergerAcquisition_NoMergerAcquisition T8
+T9	MergerAcquisition 502 509	blocked
+A11	Confidence T9 Certain
+A12	MergerAcquisition_NoMergerAcquisition T9
+*	in_span_with T9 T8
+T10	Company 491 501	PotashCorp
+R2	is_about_target Arg1:T8 Arg2:T10	
+T11	Company 520 523	BHP
+R3	is_about_acquirer Arg1:T9 Arg2:T11	
+T12	BuyRating 1031 1068	adding the stock to its " sell " list
+A13	Confidence T12 Certain
+A14	BuyRating_Sell T12
+T13	Company 967 989	Royal Bank of Scotland
+R4	is_about_company Arg1:T12 Arg2:T13	
+A15	BuyRating_Buy T4
+T3	Company 1958 1962	Drax
+R5	is_about_company Arg1:T4 Arg2:T3	
+R6	is_about_company Arg1:T5 Arg2:T3	
+T14	Profit 2264 2347	could deliver 40 per cent earnings a share growth annually over the next five years
+A16	Confidence T14 Certain
+A17	Profit_Increase T14
+A18	Profit_Forecast T14
+T15	Company 2259 2263	Drax
+R7	is_about_company Arg1:T14 Arg2:T15	
+A19	BuyRating_Buy T7
+R8	is_about_company Arg1:T7 Arg2:T6	

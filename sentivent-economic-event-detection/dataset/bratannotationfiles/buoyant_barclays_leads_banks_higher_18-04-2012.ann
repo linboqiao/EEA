@@ -1,0 +1,20 @@
+T1	QuarterlyResults 1091 1143	fourth-quarter like-for-like sales fell 0.7 per cent
+A1	Confidence T1 Certain
+T3	Turnover 1146 1251	confounding hopes of a rise of up to 1.6 per cent in the revenue taken at stores open for at least a year
+A3	Confidence T3 Certain
+A5	Turnover_WorseThanExpected T3
+A2	QuarterlyResults_Worse T1
+T4	SalesVolume 1091 1143	fourth-quarter like-for-like sales fell 0.7 per cent
+A6	Confidence T4 Certain
+A7	SalesVolume_Decrease T4
+T2	Company 1068 1085	Marks and Spencer
+R1	is_about_company Arg1:T4 Arg2:T2	
+R2	is_about_company Arg1:T1 Arg2:T2	
+A4	Turnover_Forecast T3
+R3	is_about_company Arg1:T3 Arg2:T2	
+T5	SalesVolume 1453 1516	its rise in sales for the second half of the year met forecasts
+A8	Confidence T5 Certain
+A9	SalesVolume_AsExpected T5
+A10	SalesVolume_Increase T5
+T6	Company 1402 1416	Burberry Group
+R4	is_about_company Arg1:T5 Arg2:T6	

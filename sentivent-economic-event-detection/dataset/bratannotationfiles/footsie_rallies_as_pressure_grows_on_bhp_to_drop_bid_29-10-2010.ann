@@ -1,0 +1,27 @@
+T1	BuyRating 1782 1806	helped by a " buy " note
+A1	Confidence T1 Certain
+A2	BuyRating_Buy T1
+T2	Company 1738 1746	Inmarsat
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	QuarterlyResults 2046 2082	Tuesday 's in-line quarterly results
+A3	Confidence T3 Certain
+A4	QuarterlyResults_AsExpected T3
+T4	Company 1955 1967	Arm Holdings
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	BuyRating 2102 2136	repeating an " overweight " rating
+A5	Confidence T5 Certain
+A6	BuyRating_Outperform T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	BuyRating 2354 2399	on the back of " overweight " recommendations
+A7	Confidence T6 Certain
+A8	BuyRating_Outperform T6
+T7	Company 2301 2326	Aberdeen Asset Management
+T8	Company 2249 2258	Schroders
+R4	is_about_company Arg1:T6 Arg2:T7	
+R5	is_about_company Arg1:T6 Arg2:T8	
+T9	Profit 2939 2963	a profit warning from 3m
+A9	Confidence T9 Certain
+A10	Profit_Decrease T9
+A11	Profit_Forecast T9
+T10	Company 2891 2901	Industrial
+R6	is_about_company Arg1:T9 Arg2:T10	

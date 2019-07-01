@@ -1,0 +1,40 @@
+T1	Dividend 89 116	it skipped a final dividend
+A1	Confidence T1 Certain
+A2	Dividend_NoPayment T1
+T2	Company 30 38	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 173 249	announcing a near doubling of group pre-tax profit to pound(s)11.6bn in 2009
+A3	Profit_Declaration T3
+A4	Confidence T3 Certain
+A5	Profit_Increase T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Profit 463 537	Underlying pre-tax profit rose from pound(s)1.6bn in 2008 to pound(s)5.6bn
+A6	Confidence T4 Certain
+A7	Profit_Increase T4
+T5	Company 431 439	Barclays
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	MergerAcquisition 612 620	the sale
+A8	Confidence T6 Certain
+A9	MergerAcquisition_MergerAcquisition T6
+T7	Company 624 649	Barclays Global Investors
+T8	Company 653 662	BlackRock
+R4	is_about_target Arg1:T6 Arg2:T7	
+R5	is_about_acquirer Arg1:T6 Arg2:T8	
+T9	MergerAcquisition 685 688	the
+A10	Confidence T9 Certain
+A11	MergerAcquisition_MergerAcquisition T9
+T10	MergerAcquisition 693 701	disposal
+A12	Confidence T10 Certain
+A13	MergerAcquisition_MergerAcquisition T10
+*	in_span_with T10 T9
+R6	is_about_target Arg1:T9 Arg2:T7	
+R7	is_about_acquirer Arg1:T9 Arg2:T8	
+T11	Profit 823 829	profit
+A14	Confidence T11 Certain
+A15	Profit_Increase T11
+T12	Profit 850 884	rose 89 per cent to pound(s)2.46bn
+A16	Confidence T12 Certain
+A17	Profit_Increase T12
+*	in_span_with T12 T11
+T13	Company 833 849	Barclays Capital
+R8	is_about_company Arg1:T12 Arg2:T13	

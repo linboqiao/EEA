@@ -1,0 +1,48 @@
+T1	SalesVolume 240 296	international sales buoyed its first-quarter performance
+A1	Confidence T1 SomewhatCertain
+A2	SalesVolume_Increase T1
+T2	QuarterlyResults 240 296	international sales buoyed its first-quarter performance
+A3	Confidence T2 SomewhatCertain
+A4	QuarterlyResults_Strong T2
+T3	Company 132 137	Tesco
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	SalesVolume 741 787	a 6.4 per cent increase in like-for-like sales
+A5	Confidence T4 Certain
+A6	SalesVolume_Increase T4
+T5	Company 700 709	Sainsbury
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	SalesVolume 1008 1059	with " modest " like-for-like sales growth resuming
+A7	Confidence T6 SomewhatCertain
+A8	SalesVolume_Increase T6
+T7	Company 790 795	Tesco
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	SalesVolume 93 131	International sales buoy first quarter
+A9	Confidence T8 SomewhatCertain
+A10	SalesVolume_Increase T8
+T9	QuarterlyResults 93 131	International sales buoy first quarter
+A11	Confidence T9 SomewhatCertain
+A12	QuarterlyResults_Strong T9
+R5	is_about_company Arg1:T9 Arg2:T3	
+R6	is_about_company Arg1:T8 Arg2:T3	
+T10	SalesVolume 1256 1370	Group sales for the 13 weeks to May 30 rose 9.7 per cent including petrol , and 12.6 per cent excluding such sales
+A13	Confidence T10 Certain
+A14	SalesVolume_Increase T10
+R7	is_about_company Arg1:T10 Arg2:T7	
+T11	SalesVolume 1410 1448	International sales rose 20.1 per cent
+A15	Confidence T11 Certain
+A16	SalesVolume_Increase T11
+T12	SalesVolume 1658 1748	Sales in the US - where Tesco has been forced to slow its expansion plans - almost tripled
+A17	Confidence T12 Certain
+A18	SalesVolume_Increase T12
+T13	SalesVolume 2634 2673	overall UK sales growth of 9.3 per cent
+A19	Confidence T13 Certain
+A20	SalesVolume_Increase T13
+T14	SalesVolume 2678 2719	The customer count is increasing steadily
+A21	Confidence T14 Certain
+A22	SalesVolume_Increase T14
+T15	Company 2032 2037	Tesco
+R8	is_about_company Arg1:T11 Arg2:T15	
+R9	is_about_company Arg1:T12 Arg2:T15	
+R10	is_about_company Arg1:T13 Arg2:T15	
+R11	is_about_company Arg1:T14 Arg2:T15	

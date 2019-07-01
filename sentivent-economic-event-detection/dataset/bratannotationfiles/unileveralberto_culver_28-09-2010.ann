@@ -1,0 +1,30 @@
+T1	SalesVolume 587 640	sales rose 16 per cent in the first half of this year
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	Company 531 539	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 944 985	expected $260m operating profit next year
+A3	Confidence T3 Certain
+A4	Profit_Positive T3
+A5	Profit_Forecast T3
+T4	Company 926 940	Alberto Culver
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 1007 1042	earnings should rise by about $290m
+A6	Confidence T5 Certain
+A7	Profit_Increase T5
+A8	Profit_Forecast T5
+R3	is_about_company Arg1:T5 Arg2:T2	
+T6	MergerAcquisition 234 262	it agreed to spend $3.7bn on
+A9	Confidence T6 Certain
+A10	MergerAcquisition_Other T6
+A11	MergerAcquisition_MergerAcquisition T6
+T7	Company 263 277	Alberto Culver
+T8	Company 26 34	Unilever
+R4	is_about_acquirer Arg1:T6 Arg2:T8	
+R5	is_about_target Arg1:T6 Arg2:T7	
+T9	MergerAcquisition 1062 1077	the acquisition
+A12	Confidence T9 Certain
+A13	MergerAcquisition_MergerAcquisition T9
+R6	is_about_target Arg1:T9 Arg2:T4	
+T10	Company 1171 1179	Unilever
+R7	is_about_acquirer Arg1:T9 Arg2:T10	

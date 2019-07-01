@@ -1,0 +1,40 @@
+T1	ShareRepurchase 9 52	reveals plan for pound(s)1bn share buy-back
+A1	Confidence T1 Certain
+A2	ShareRepurchase_Announcement T1
+T2	Company 0 8	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	ShareRepurchase 110 148	revealing a pound(s)1bn share buy-back
+A3	Confidence T3 Certain
+A4	ShareRepurchase_Announcement T3
+T4	Company 71 79	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 224 239	revenue warning
+A5	Turnover_Decrease T5
+A6	Turnover_Forecast T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	ShareRepurchase 483 534	Announcing the pound(s)1bn share buy-back yesterday
+A7	Confidence T6 Certain
+A8	ShareRepurchase_Announcement T6
+T7	Company 403 411	Vodafone
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	ShareRepurchase 778 791	share buyback
+A9	Confidence T8 Certain
+A10	ShareRepurchase_Announcement T8
+T9	Company 766 774	Vodafone
+R5	is_about_company Arg1:T8 Arg2:T9	
+T10	Turnover 1135 1179	scaled back its revenue forecast for 2008-09
+A11	Confidence T10 Certain
+A12	Turnover_Decrease T10
+A13	Turnover_Forecast T10
+T11	Company 1126 1134	Vodafone
+R6	is_about_company Arg1:T10 Arg2:T11	
+T12	Debt 1929 1955	net debt of pound(s)25.2bn
+A14	Confidence T12 Certain
+A15	Debt_Other T12
+T13	Company 1916 1924	Vodafone
+R7	is_about_company Arg1:T12 Arg2:T13	
+T14	BuyRating 2016 2038	ratings were unchanged
+A16	Confidence T14 Certain
+A17	BuyRating_Maintained T14
+T15	Company 2004 2012	Vodafone
+R8	is_about_company Arg1:T14 Arg2:T15	

@@ -1,0 +1,28 @@
+T1	Profit 280 347	unveiled a surge in profit and asset values in the year to March 31
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+T2	Company 175 187	British Land
+R1	is_about_company Arg1:T1 Arg2:T2	
+T4	Dividend 942 1023	dividend yield is set to rise by a minimum of 45 per cent to more than 2 per cent
+A5	Confidence T4 Certain
+A6	Dividend_Raise T4
+A7	Dividend_Forecast T4
+T5	Company 1026 1038	British Land
+R2	is_about_company Arg1:T4 Arg2:T5	
+T6	Profit 1432 1499	Underlying profit was up 26 per cent to Pounds 228m ( Pounds 181m )
+A8	Confidence T6 Certain
+A9	Profit_Increase T6
+T7	Company 1663 1675	British Land
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Dividend 1502 1598	A total dividend of 17p ( 15.7p ) will be paid from underlying earnings per share of 36p ( 27p )
+A10	Confidence T8 Certain
+A11	Dividend_Payment T8
+R5	is_about_company Arg1:T8 Arg2:T7	
+T9	Dividend 1611 1648	the final dividend is 11.8p ( 10.9p )
+A12	Confidence T9 SomewhatCertain
+R6	is_about_company Arg1:T9 Arg2:T7	
+T10	QuarterlyResults 280 347	unveiled a surge in profit and asset values in the year to March 31
+A15	Confidence T10 SomewhatCertain
+A16	QuarterlyResults_Better T10
+R7	is_about_company Arg1:T10 Arg2:T2	
+A3	Dividend_Other T9

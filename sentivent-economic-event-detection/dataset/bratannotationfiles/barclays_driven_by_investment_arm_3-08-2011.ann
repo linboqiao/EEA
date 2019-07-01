@@ -1,0 +1,50 @@
+T1	Profit 421 457	fell almost 30 per cent year-on-year
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Profit 367 385	First-half profits
+A3	Confidence T2 Certain
+A4	Profit_Decrease T2
+*	in_span_with T2 T1
+T3	Turnover 460 482	after revenues slipped
+A5	Confidence T3 Certain
+A6	Turnover_Decrease T3
+T4	Company 227 243	Barclays Capital
+R1	is_about_company Arg1:T2 Arg2:T4	
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 1363 1420	Overall pre-tax profits fell by a third in the first half
+A7	Confidence T5 Certain
+A8	Profit_Decrease T5
+T6	Company 819 827	Barclays
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Profit 1711 1760	pre-tax profit rose 24 per cent to pound(s)3.68bn
+A9	Confidence T7 Certain
+A10	Profit_Increase T7
+T8	Company 1485 1493	Barclays
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	Profit 2090 2172	On our forecasts pre-tax profit would be pound(s)2bn short of where it needs to be
+A11	Confidence T9 Certain
+A12	Profit_Forecast T9
+R5	is_about_company Arg1:T9 Arg2:T8	
+T10	Turnover 2212 2239	Revenue was relatively flat
+A13	Confidence T10 SomewhatCertain
+A14	Turnover_Stable T10
+T11	Company 2243 2254	Barclaycard
+R6	is_about_company Arg1:T10 Arg2:T11	
+T12	Profit 2668 2687	a pound(s)161m loss
+A15	Confidence T12 Certain
+A16	Profit_Negative T12
+T13	Profit 2690 2743	compared with a pound(s)10m pre-tax profit a year ago
+A17	Confidence T13 Certain
+A18	Profit_Positive T13
+A19	Profit_Decrease T12
+T14	Profit 2448 2479	pre-tax profits fell 7 per cent
+A20	Confidence T14 Certain
+A21	Profit_Decrease T14
+T15	Turnover 2510 2554	wiped out a 12 per cent increase in revenues
+A22	Confidence T15 SomewhatCertain
+A23	Turnover_Other T15
+T16	Company 2386 2401	Barclays Wealth
+R7	is_about_company Arg1:T14 Arg2:T16	
+R8	is_about_company Arg1:T15 Arg2:T16	
+R9	is_about_company Arg1:T12 Arg2:T8	
+R10	is_about_company Arg1:T13 Arg2:T8	

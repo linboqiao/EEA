@@ -1,0 +1,11 @@
+T1	SalesVolume 1459 1503	reporting no signs of sales growth weakening
+A1	Confidence T1 Certain
+A2	SalesVolume_Declaration T1
+A3	SalesVolume_Increase T1
+T2	Company 1392 1406	Travis Perkins
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	BuyRating 1569 1583	" buy " advice
+A4	Confidence T3 Certain
+A5	BuyRating_Buy T3
+T4	Company 1506 1511	Amlin
+R2	is_about_company Arg1:T3 Arg2:T4	

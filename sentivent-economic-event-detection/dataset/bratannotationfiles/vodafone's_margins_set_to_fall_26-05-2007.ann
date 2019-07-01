@@ -1,0 +1,66 @@
+T1	Profit 41 119	is expected to say next week that its core profit margin will continue to fall
+A1	Profit_Declaration T1
+A2	Confidence T1 SomewhatCertain
+A3	Profit_Decrease T1
+A4	Profit_Forecast T1
+T2	Company 32 40	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 749 921	warned in May last year that its margin on organic adjusted earnings before interest , tax , depreciation and amortisation should decline by one percentage point in 2006-07
+A5	Confidence T3 SomewhatCertain
+A6	Profit_Decrease T3
+A7	Profit_Forecast T3
+T4	Company 740 748	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 1676 1740	estimated revenue of Pounds 31.2bn for 2006-07 , up 6.5 per cent
+A8	Confidence T5 Certain
+A9	Turnover_Forecast T5
+A10	Turnover_Increase T5
+T6	Profit 1747 1786	ebitda of Pounds 12bn , up 1.8 per cent
+A11	Confidence T6 Certain
+A12	Profit_Increase T6
+A13	Profit_Positive T6
+A14	Profit_Forecast T6
+T7	Company 1872 1880	Vodafone
+R3	is_about_company Arg1:T5 Arg2:T7	
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	BuyRating 1848 1868	has a " buy " rating
+A15	Confidence T8 Certain
+A16	BuyRating_Buy T8
+R5	is_about_company Arg1:T8 Arg2:T7	
+T9	BuyRating 1964 1985	has a " hold " rating
+A17	Confidence T9 Certain
+A18	BuyRating_Hold T9
+T10	Company 1989 1997	Vodafone
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	MergerAcquisition 2599 2616	last month bought
+A19	Confidence T11 Certain
+A20	MergerAcquisition_MergerAcquisition T11
+T12	Company 2617 2632	Hutchison Essar
+T13	Company 2541 2549	Vodafone
+R7	is_about_acquirer Arg1:T11 Arg2:T13	
+R8	is_about_target Arg1:T11 Arg2:T12	
+T14	Profit 298 447	was likely to indicate at its 2006-07 results presentation on Tuesday that the group 's margin would deteriorate further in the year to March 31 2008
+A21	Confidence T14 Certain
+A22	Profit_Decrease T14
+A23	Profit_Forecast T14
+T15	Company 289 297	Vodafone
+R9	is_about_company Arg1:T14 Arg2:T15	
+T16	Profit 967 1000	The deteriorating margin position
+A24	Confidence T16 SomewhatCertain
+A25	Profit_Decrease T16
+T17	Company 1016 1024	Vodafone
+R10	is_about_company Arg1:T16 Arg2:T17	
+T18	Profit 1789 1825	delivering a margin of 38.3 per cent
+A26	Confidence T18 Certain
+A27	Profit_Other T18
+R11	is_about_company Arg1:T18 Arg2:T7	
+T19	Profit 1883 1943	calculated the margin would fall to 37.5 per cent in 2007-08
+A28	Confidence T19 Certain
+A29	Profit_Decrease T19
+A30	Profit_Forecast T19
+R12	is_about_company Arg1:T19 Arg2:T7	
+T20	Profit 2000 2054	estimated the margin would be 36.4 per cent in 2007-08
+A31	Confidence T20 Certain
+A32	Profit_Decrease T20
+A33	Profit_Forecast T20
+R13	is_about_company Arg1:T20 Arg2:T10	

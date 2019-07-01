@@ -1,0 +1,15 @@
+T1	Profit 130 159	declining fixed-line earnings
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 44 51	Verizon
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 304 330	freezing dividend payments
+A3	Confidence T3 Certain
+A4	Dividend_NoPayment T3
+T4	Company 89 105	Verizon Wireless
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Dividend 1489 1539	return pound(s)2bn of the dividend to shareholders
+A5	Confidence T5 SomewhatCertain
+A6	Dividend_Payment T5
+T6	Company 1371 1379	Vodafone
+R3	is_about_company Arg1:T5 Arg2:T6	

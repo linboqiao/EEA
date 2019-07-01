@@ -1,0 +1,19 @@
+T1	ShareRepurchase 265 349	has raised the target for its buy-back scheme from $4.8bn to $10bn ( pound(s)6.2bn )
+A1	Confidence T1 Certain
+A2	ShareRepurchase_Announcement T1
+T2	Company 213 225	BHP Billiton
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 1667 1757	utilised special dividends as an alternative means of returning spare cash to shareholders
+A3	Confidence T3 SomewhatCertain
+A4	Dividend_Payment T3
+T4	Company 1659 1666	Admiral
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Dividend 1986 2014	has not cut its own dividend
+A5	Confidence T5 Certain
+A6	Dividend_Stable T5
+T6	Company 1982 1985	BHP
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Dividend 2056 2082	since the Great Depression
+A7	Confidence T7 Certain
+A8	Dividend_Stable T7
+*	in_span_with T5 T7

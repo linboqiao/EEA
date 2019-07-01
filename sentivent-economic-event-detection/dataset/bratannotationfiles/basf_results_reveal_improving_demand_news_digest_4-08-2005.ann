@@ -1,0 +1,31 @@
+T1	QuarterlyResults 292 339	topped expectations with second-quarter results
+A1	Confidence T1 Certain
+A2	QuarterlyResults_BetterThanExpected T1
+T2	Company 287 291	BASF
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 431 478	an increase in earnings before interest and tax
+A3	Confidence T3 Certain
+A4	Profit_Forecast T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T5	SalesVolume 539 627	a 14 per cent rise in sales to Euros 10.6bn ( Dollars 12.9bn ) during the second quarter
+A7	Confidence T5 Certain
+A9	SalesVolume_Increase T5
+R3	is_about_company Arg1:T5 Arg2:T2	
+T6	Profit 630 715	as earnings before interest , taxes and special items jumped one-third to Euros 1.7bn
+A10	Confidence T6 Certain
+A11	Profit_Increase T6
+R4	is_about_company Arg1:T6 Arg2:T2	
+A5	Profit_Increase T3
+T4	Profit 385 395	It expects
+A6	Confidence T4 Certain
+A12	Profit_Increase T4
+A13	Profit_Forecast T4
+T7	SalesVolume 385 426	It expects " significantly " higher sales
+A14	Confidence T7 Certain
+A15	SalesVolume_Forecast T7
+A16	SalesVolume_Increase T7
+R5	is_about_company Arg1:T7 Arg2:T2	
+*	in_span_with T4 T3
+T8	QuarterlyResults 539 627	a 14 per cent rise in sales to Euros 10.6bn ( Dollars 12.9bn ) during the second quarter
+A17	Confidence T8 Certain
+A18	QuarterlyResults_Better T8

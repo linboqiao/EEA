@@ -1,0 +1,28 @@
+T1	Profit 1222 1249	earnings would rise in 2013
+A1	Confidence T1 Certain
+A2	Profit_Forecast T1
+T2	Turnover 1231 1249	would rise in 2013
+A3	Confidence T2 Certain
+A4	Turnover_Forecast T2
+T3	Company 1199 1203	BASF
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	SalesVolume 1302 1346	Full-year sales rose 7 per cent to EUR78.7bn
+A5	Confidence T4 Certain
+A6	SalesVolume_Increase T4
+T5	Profit 1351 1394	net income declined 21 per cent to EUR4.9bn
+R3	is_about_company Arg1:T4 Arg2:T3	
+R4	is_about_company Arg1:T5 Arg2:T3	
+A7	Confidence T5 Certain
+T6	Dividend 1472 1522	A dividend of EUR2.60 , up 10 cents , was proposed
+A9	Confidence T6 Certain
+A8	Profit_Decrease T5
+A11	Turnover_Increase T2
+A12	Profit_Increase T1
+T7	Turnover 1209 1217	revenues
+A13	Confidence T7 Certain
+A14	Turnover_Forecast T7
+A15	Turnover_Increase T7
+*	in_span_with T7 T2
+A10	Dividend_Raise T6
+R5	is_about_company Arg1:T6 Arg2:T3	

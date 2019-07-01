@@ -1,0 +1,65 @@
+T1	MergerAcquisition 9 19	weighs bid
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Other T1
+T2	MergerAcquisition 55 80	considers making move for
+A3	Confidence T2 Certain
+A4	MergerAcquisition_Other T2
+T3	Company 0 8	Vodafone
+T4	Company 81 84	KDG
+R1	is_about_acquirer Arg1:T1 Arg2:T3	
+R2	is_about_target Arg1:T1 Arg2:T4	
+R3	is_about_target Arg1:T2 Arg2:T4	
+T5	MergerAcquisition 167 186	has discussed a bid
+A5	Confidence T5 Certain
+A6	MergerAcquisition_Other T5
+T6	Company 129 137	Vodafone
+T7	Company 191 208	Kabel Deutschland
+R4	is_about_acquirer Arg1:T5 Arg2:T6	
+R5	is_about_target Arg1:T5 Arg2:T7	
+T8	MergerAcquisition 366 402	has been weighing up a potential bid
+A7	Confidence T8 Certain
+A8	MergerAcquisition_Other T8
+T9	Company 336 344	Vodafone
+T10	Company 583 586	KDG
+R6	is_about_acquirer Arg1:T8 Arg2:T9	
+R7	is_about_target Arg1:T8 Arg2:T10	
+T11	MergerAcquisition 702 717	the acquisition
+A9	Confidence T11 Certain
+A10	MergerAcquisition_MergerAcquisition T11
+T12	Company 721 733	Virgin Media
+T13	Company 626 640	Liberty Global
+R8	is_about_acquirer Arg1:T11 Arg2:T13	
+R9	is_about_target Arg1:T11 Arg2:T12	
+T14	MergerAcquisition 829 835	bought
+A11	Confidence T14 Certain
+A12	MergerAcquisition_MergerAcquisition T14
+T15	MergerAcquisition 849 863	merged it with
+A13	Confidence T15 Certain
+A14	MergerAcquisition_MergerAcquisition T15
+T16	Company 836 844	Kabel BW
+T17	Company 864 875	Unity Media
+R10	is_about_acquirer Arg1:T14 Arg2:T13	
+R11	is_about_target Arg1:T14 Arg2:T16	
+R12	is_about_company Arg1:T15 Arg2:T16	
+R13	is_about_company Arg1:T15 Arg2:T17	
+T18	Debt 2138 2162	had net debt of EUR2.8bn
+A15	Confidence T18 Certain
+T19	Company 2134 2137	KDG
+R14	is_about_company Arg1:T18 Arg2:T19	
+T20	SalesVolume 2371 2404	had 13.9m subscriptions last year
+A17	Confidence T20 Certain
+A18	SalesVolume_Other T20
+T21	Company 2367 2370	KDG
+R15	is_about_company Arg1:T20 Arg2:T21	
+T22	SalesVolume 2446 2474	reported strong sales growth
+A19	Confidence T22 Certain
+A20	SalesVolume_Increase T22
+R16	is_about_company Arg1:T22 Arg2:T21	
+T23	Company 2286 2306	Unity Media Kabel BW
+R17	is_about_company Arg1:T22 Arg2:T23	
+T24	Turnover 2479 2514	quarterly revenues of about EUR450m
+A21	Confidence T24 Certain
+A22	Turnover_Other T24
+R18	is_about_company Arg1:T24 Arg2:T21	
+R19	is_about_company Arg1:T24 Arg2:T23	
+A16	Debt_Other T18

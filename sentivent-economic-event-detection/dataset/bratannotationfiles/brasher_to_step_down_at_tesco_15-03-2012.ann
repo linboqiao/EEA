@@ -1,0 +1,35 @@
+T1	Profit 287 319	first profit warning in 20 years
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 160 165	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 2223 2265	is expected to hit profits by pound(s)457m
+A3	Confidence T3 Certain
+A5	Profit_Forecast T3
+T4	Company 2338 2343	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 55 75	shock profit warning
+A6	Confidence T5 Certain
+A7	Profit_Decrease T5
+A8	Profit_WorseThanExpected T5
+A9	Profit_Forecast T5
+T6	Company 24 29	Tesco
+R3	is_about_company Arg1:T5 Arg2:T6	
+A10	Profit_Forecast T1
+T7	Profit 688 704	a profit warning
+A11	Profit_Decrease T7
+A12	Profit_Forecast T7
+A13	Confidence T7 Certain
+T8	Company 722 727	Tesco
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	SalesVolume 995 1021	has failed to revive sales
+A14	Confidence T9 Certain
+A15	SalesVolume_Decrease T9
+T10	Company 932 937	Tesco
+R5	is_about_company Arg1:T9 Arg2:T10	
+T11	SalesVolume 1648 1683	has begun to stimulate sales growth
+A16	Confidence T11 Certain
+A17	SalesVolume_Increase T11
+T12	Company 1710 1715	Tesco
+R6	is_about_company Arg1:T11 Arg2:T12	
+A4	Profit_Decrease T3

@@ -1,0 +1,72 @@
+T1	ShareRepurchase 61 219	will today ratify an extension of the mobile operator 's aggressive share buy-back programme after repurchasing Pounds 564.7m of stock in the past eight weeks
+A1	Confidence T1 SomewhatCertain
+T2	Company 43 51	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T6	ShareRepurchase 288 343	is expected to announce a continuation of the programme
+A5	Confidence T6 Certain
+A6	ShareRepurchase_Forecast T6
+R4	is_about_company Arg1:T6 Arg2:T2	
+T8	ShareRepurchase 523 595	are forecasting a similar size repurchase for the current financial year
+A8	Confidence T8 Certain
+A9	ShareRepurchase_Forecast T8
+T9	Company 753 761	Vodafone
+R6	is_about_company Arg1:T8 Arg2:T9	
+T3	Dividend 1244 1295	reaffirm plans for a more generous dividend pay-out
+A3	Confidence T3 Certain
+A4	Dividend_Raise T3
+A7	Dividend_Forecast T3
+T4	Company 1299 1307	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 1317 1381	to announce underlying earnings up 2.3 per cent at Pounds 12.9bn
+A10	Confidence T5 Certain
+A11	Profit_Increase T5
+T7	SalesVolume 1385 1445	sales of Pounds 34bn , compared with Pounds 33.6bn last time
+A12	Confidence T7 Certain
+A13	SalesVolume_Increase T7
+R3	is_about_company Arg1:T5 Arg2:T4	
+R5	is_about_company Arg1:T7 Arg2:T4	
+T10	ShareRepurchase 598 689	but expectations of a richer programme - perhaps reaching Pounds 4.5bn - have gathered pace
+A14	Confidence T10 Certain
+A15	ShareRepurchase_Forecast T10
+R7	is_about_company Arg1:T10 Arg2:T9	
+T11	SalesVolume 1678 1759	are expecting the company to report about 1.5m 3G subscribers at the end of March
+A16	Confidence T11 Certain
+A17	SalesVolume_Forecast T11
+T12	SalesVolume 1763 1880	This could raise doubts about Vodafone 's target of reaching 10m subscribers by the end of the current financial year
+A18	Confidence T12 Certain
+A19	SalesVolume_WorseThanExpected T12
+A20	SalesVolume_Forecast T12
+T13	Company 1498 1506	Vodafone
+R8	is_about_company Arg1:T11 Arg2:T13	
+R9	is_about_company Arg1:T12 Arg2:T13	
+T14	Profit 2307 2386	pre-tax profits are expected to rise modestly from Pounds 10bn to Pounds 10.2bn
+A21	Confidence T14 Certain
+A22	Profit_Increase T14
+A23	Profit_Forecast T14
+T15	Company 2295 2303	Vodafone
+R10	is_about_company Arg1:T14 Arg2:T15	
+T16	Dividend 2614 2646	has promised increased dividends
+A24	Confidence T16 SomewhatCertain
+A25	Dividend_Raise T16
+R11	is_about_company Arg1:T16 Arg2:T15	
+T17	ShareRepurchase 2614 2626	has promised
+A26	Confidence T17 SomewhatCertain
+A27	ShareRepurchase_Forecast T17
+T18	ShareRepurchase 2651 2660	buy backs
+A28	Confidence T18 SomewhatCertain
+A29	ShareRepurchase_Forecast T18
+*	in_span_with T18 T17
+R12	is_about_company Arg1:T17 Arg2:T15	
+T19	SalesVolume 2192 2254	warned of little improvement in subscriber trends during April
+A30	Confidence T19 Certain
+A31	SalesVolume_Stable T19
+A32	SalesVolume_Forecast T19
+R13	is_about_company Arg1:T19 Arg2:T15	
+T20	ShareRepurchase 243 285	bought back Pounds 4bn of shares last year
+A2	Confidence T20 Certain
+R14	is_about_company Arg1:T20 Arg2:T2	
+T21	SalesVolume 2387 2512	with the total number of subscribers likely to rise about 10 per cent this year from the 151.8m total at the end of last year
+A33	Confidence T21 Certain
+A34	SalesVolume_Forecast T21
+A35	SalesVolume_Increase T21
+R15	is_about_company Arg1:T21 Arg2:T15	

@@ -1,0 +1,22 @@
+T1	MergerAcquisition 119 188	the sale of its Brazilian margarine brands and some factory machinery
+A1	Confidence T1 SomewhatCertain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	Company 36 44	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Company 192 200	Perdigao
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	SalesVolume 429 525	reporting a 5.7 per cent rise in under-lying first-quarter sales against a targeted 3-5 per cent
+A3	Confidence T4 Certain
+A4	SalesVolume_Declaration T4
+A5	SalesVolume_BetterThanExpected T4
+A6	SalesVolume_Increase T4
+T5	Profit 534 577	0.4 percentage point rise in profit margins
+A7	Confidence T5 Certain
+A8	Profit_Increase T5
+R3	is_about_company Arg1:T4 Arg2:T2	
+R4	is_about_company Arg1:T5 Arg2:T2	
+T6	SalesVolume 1539 1575	sales of the local brands in decline
+A9	Confidence T6 Certain
+A10	SalesVolume_Decrease T6
+T7	Company 1582 1590	Unilever
+R5	is_about_company Arg1:T6 Arg2:T7	

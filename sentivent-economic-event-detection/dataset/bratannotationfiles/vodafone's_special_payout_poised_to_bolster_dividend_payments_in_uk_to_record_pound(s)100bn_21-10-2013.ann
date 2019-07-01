@@ -1,0 +1,9 @@
+T1	Dividend 308 343	the pound(s)16.6bn special dividend
+A1	Confidence T1 Certain
+A2	Dividend_Payment T1
+T2	Company 349 357	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 418 461	handing shareholders just over pound(s)54bn
+A3	Confidence T3 Certain
+A4	Dividend_Payment T3
+R2	is_about_company Arg1:T3 Arg2:T2	

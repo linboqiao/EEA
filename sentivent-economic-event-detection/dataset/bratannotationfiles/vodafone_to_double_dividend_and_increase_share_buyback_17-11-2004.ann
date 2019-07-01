@@ -1,0 +1,65 @@
+T1	Dividend 9 27	to double dividend
+A1	Confidence T1 Certain
+A2	Dividend_Raise T1
+T2	Company 0 8	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	ShareRepurchase 32 54	increase share buyback
+A4	Confidence T3 Certain
+A5	ShareRepurchase_Announcement T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Dividend 74 107	said it would double its dividend
+A6	Dividend_Raise T4
+A7	Dividend_Announcement T4
+A3	Confidence T4 Certain
+T5	Company 55 63	Vodafone
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	ShareRepurchase 112 156	further increase its share buyback programme
+A8	Confidence T6 Certain
+A9	ShareRepurchase_Announcement T6
+R4	is_about_company Arg1:T6 Arg2:T5	
+T7	Dividend 261 344	The increases will take its dividend payouts for the financial year to Pounds 2.8bn
+A10	Confidence T7 Certain
+A11	Dividend_Raise T7
+R5	is_about_company Arg1:T7 Arg2:T5	
+T8	ShareRepurchase 457 521	raised its share buyback programme from Pounds 3bn to Pounds 4bn
+A12	Confidence T8 Certain
+A13	ShareRepurchase_Announcement T8
+R6	is_about_company Arg1:T8 Arg2:T5	
+T9	Turnover 533 648	reported a 6 per cent rise in underlying group turnover to Pounds 16.8bn for the six months to the end of September
+A14	Confidence T9 Certain
+A15	Turnover_Increase T9
+A16	Turnover_Declaration T9
+T10	Company 524 532	Vodafone
+R7	is_about_company Arg1:T9 Arg2:T10	
+T11	SalesVolume 652 705	it continued to add users to its global customer base
+A17	Confidence T11 Certain
+A18	SalesVolume_Increase T11
+R8	is_about_company Arg1:T11 Arg2:T10	
+T12	Turnover 708 761	The growth , slightly ahead of consensus expectations
+A19	Confidence T12 Certain
+A20	Turnover_Increase T12
+A21	Turnover_BetterThanExpected T12
+R9	is_about_company Arg1:T12 Arg2:T10	
+T13	SalesVolume 778 814	7.4m new customers in the first half
+A22	Confidence T13 Certain
+A23	SalesVolume_Increase T13
+R10	is_about_company Arg1:T13 Arg2:T10	
+T14	Turnover 898 926	a slowdown in revenue growth
+A24	Confidence T14 Certain
+A25	Turnover_Increase T14
+A26	Turnover_Other T14
+R11	is_about_company Arg1:T14 Arg2:T10	
+T15	Dividend 1111 1153	The bigger-than-expected dividend increase
+A27	Confidence T15 Certain
+A28	Dividend_Raise T15
+T16	Company 1075 1083	Vodafone
+R12	is_about_company Arg1:T15 Arg2:T16	
+T17	Profit 1456 1531	a pre-tax profit on ordinary activities before exceptionals of Pounds 5.4bn
+A29	Confidence T17 Certain
+A30	Profit_Positive T17
+R13	is_about_company Arg1:T17 Arg2:T16	
+T18	Profit 1533 1640	Group earnings before interest , tax , depreciation and amortisation were 6 per cent higher at Pounds 8.3bn
+A31	Confidence T18 Certain
+A32	Profit_Increase T18
+A33	Profit_Positive T18
+R14	is_about_company Arg1:T18 Arg2:T16	

@@ -1,0 +1,37 @@
+T1	SalesVolume 181 233	reporting Christmas trading was better than expected
+A1	Confidence T1 Certain
+A2	SalesVolume_BetterThanExpected T1
+T2	Company 121 131	Woolworths
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 274 328	warned that profits next year would be Pounds 10m down
+A3	Confidence T3 Certain
+A4	Profit_Decrease T3
+A5	Profit_Forecast T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	SalesVolume 1276 1322	kept the underlying sales fall to 0.8 per cent
+A6	Confidence T4 Certain
+A7	SalesVolume_Decrease T4
+T5	Company 1176 1186	Woolworths
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	SalesVolume 1325 1385	This was considerably better than many analysts had expected
+A8	Confidence T6 Certain
+A9	SalesVolume_Decrease T6
+A10	SalesVolume_BetterThanExpected T6
+R4	is_about_company Arg1:T6 Arg2:T5	
+T7	SalesVolume 1463 1519	For the year to date , total sales are down 4.1 per cent
+A11	Confidence T7 Certain
+A12	SalesVolume_Decrease T7
+R5	is_about_company Arg1:T7 Arg2:T5	
+T8	Profit 1629 1738	full-year pre-tax profit would be at the upper end of forecasts , currently between Pounds 50m and Pounds 60m
+A13	Confidence T8 SomewhatCertain
+A14	Profit_BetterThanExpected T8
+A15	Profit_Forecast T8
+R6	is_about_company Arg1:T8 Arg2:T5	
+T9	Profit 2177 2305	About Pounds 17m is coming off profit before exceptional items and amortisation in 2005-06 , which was much larger than expected
+A16	Profit_BetterThanExpected T9
+T10	Company 2100 2110	Woolworths
+R7	is_about_company Arg1:T9 Arg2:T10	
+T11	SalesVolume 1835 1860	sales held up pretty well
+A17	Confidence T11 SomewhatCertain
+A18	SalesVolume_Other T11
+R8	is_about_company Arg1:T11 Arg2:T5	

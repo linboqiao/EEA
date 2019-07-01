@@ -1,0 +1,68 @@
+T1	Dividend 430 456	a doubling of its dividend
+A1	Confidence T1 Certain
+A2	Dividend_Raise T1
+T2	ShareRepurchase 461 483	a hefty share buy-back
+A3	Confidence T2 Certain
+T3	Company 190 198	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	BuyRating 586 638	slashed the stock from " outperform " to " in-line "
+A4	Confidence T4 SomewhatCertain
+A6	BuyRating_Downgrade T4
+R3	is_about_company Arg1:T4 Arg2:T3	
+T5	Profit 1205 1243	record profits of more than Pounds 1bn
+A5	Confidence T5 Certain
+A7	Profit_Increase T5
+T6	Company 1107 1121	Scottish Power
+R4	is_about_company Arg1:T5 Arg2:T6	
+T7	SalesVolume 1971 2028	the retailer confirmed a 19 per cent fall in annual sales
+A9	Confidence T7 Certain
+A10	SalesVolume_Decrease T7
+T8	Company 1919 1936	Marks and Spencer
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	TargetPrice 2712 2744	which set a price target of 938p
+A11	Confidence T9 Certain
+A12	TargetPrice_Announcement T9
+T10	Company 2599 2612	Northern Rock
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	BuyRating 3316 3373	slashed its rating on the stock from " hold " to " sell "
+A13	Confidence T11 Certain
+A14	BuyRating_Downgrade T11
+A15	BuyRating_Sell T11
+T12	TargetPrice 3316 3323	slashed
+A16	Confidence T12 Certain
+A17	TargetPrice_Reduction T12
+T13	TargetPrice 3378 3412	its price target from 250p to 200p
+A18	Confidence T13 Certain
+A19	TargetPrice_Reduction T13
+*	in_span_with T12 T13
+T14	Company 3279 3282	EMI
+R7	is_about_company Arg1:T12 Arg2:T14	
+R8	is_about_company Arg1:T11 Arg2:T14	
+T15	Profit 3827 3850	A sharp jump in profits
+A20	Confidence T15 Certain
+A21	Profit_Increase T15
+T16	SalesVolume 3855 3881	higher like-for-like sales
+A22	Confidence T16 Certain
+A23	SalesVolume_Increase T16
+T17	Profit 3908 3931	March 's profit warning
+A24	Confidence T17 Certain
+A25	Profit_Decrease T17
+A26	Profit_Forecast T17
+T18	Company 3759 3770	Topps TiIes
+R9	is_about_company Arg1:T15 Arg2:T18	
+R10	is_about_company Arg1:T16 Arg2:T18	
+R11	is_about_company Arg1:T17 Arg2:T18	
+T19	TargetPrice 3940 3980	upped its price target from 195p to 205p
+A27	Confidence T19 Certain
+A28	TargetPrice_Raise T19
+R12	is_about_company Arg1:T19 Arg2:T18	
+T20	Profit 4066 4117	returned to profit for the year to the end of March
+A29	Confidence T20 Certain
+A30	Profit_Increase T20
+T21	QuarterlyResults 4066 4117	returned to profit for the year to the end of March
+A31	Confidence T21 Certain
+A32	QuarterlyResults_Better T21
+T22	Company 3983 3986	SSL
+R13	is_about_company Arg1:T21 Arg2:T22	
+R14	is_about_company Arg1:T20 Arg2:T22	

@@ -1,0 +1,39 @@
+T1	Dividend 174 203	a pound(s)2.4bn cash dividend
+A1	Confidence T1 Certain
+A2	Dividend_Payment T1
+T2	Company 222 238	Verizon Wireless
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	ShareRepurchase 338 367	a pound(s)1.5bn share buyback
+A3	Confidence T3 Certain
+A4	ShareRepurchase_Announcement T3
+T4	Company 54 62	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 576 603	a pound(s)492m pre-tax loss
+A5	Confidence T5 Certain
+A6	Profit_Negative T5
+T6	Company 506 514	Vodafone
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Turnover 846 1028	Service revenues - adjusted for acquisition activity and foreign exchange - fell by 0.4 per cent to pound(s)20.2bn , after a drop of almost 10 per cent in revenues in southern Europe
+A7	Confidence T7 Certain
+A8	Turnover_Decrease T7
+R4	is_about_company Arg1:T7 Arg2:T6	
+T8	Turnover 1053 1106	group revenue was down 7.4 per cent to pound(s)21.8bn
+A9	Confidence T8 Certain
+A10	Turnover_Decrease T8
+R5	is_about_company Arg1:T8 Arg2:T6	
+T9	Profit 1270 1348	The pre-tax loss of pound(s)492m compares with an pound(s)8bn profit last year
+A11	Confidence T9 Certain
+A12	Profit_Increase T9
+A13	Profit_Negative T9
+T10	Company 1108 1116	Vodafone
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	Profit 1363 1403	reported a basic loss per share of 4.01p
+A14	Profit_Declaration T11
+A15	Confidence T11 Certain
+A16	Profit_Negative T11
+R7	is_about_company Arg1:T11 Arg2:T10	
+T12	Profit 1405 1478	Adjusted operating profit improved , rising 8.5 per cent to pound(s)6.2bn
+A17	Confidence T12 Certain
+A18	Profit_Increase T12
+A19	Profit_Positive T12
+R8	is_about_company Arg1:T12 Arg2:T10	

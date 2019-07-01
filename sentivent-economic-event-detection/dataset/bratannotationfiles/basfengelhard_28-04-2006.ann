@@ -1,0 +1,5 @@
+T1	QuarterlyResults 1043 1102	better-than-expected first- quarter results might even help
+A1	Confidence T1 Certain
+A2	QuarterlyResults_BetterThanExpected T1
+T2	Company 1030 1039	Engelhard
+R1	is_about_company Arg1:T1 Arg2:T2	

@@ -1,0 +1,70 @@
+T1	QuarterlyResults 220 241	first-quarter results
+A1	Confidence T1 Certain
+T2	QuarterlyResults 380 433	show they are faring better than their regional peers
+A3	Confidence T2 Certain
+A4	QuarterlyResults_Strong T2
+*	in_span_with T1 T2
+T5	Company 530 536	BarCap
+T8	Company 678 684	BarCap
+T9	Turnover 735 789	take the unit 's equities revenue , up just 1 per cent
+A11	Confidence T9 Certain
+R4	is_about_company Arg1:T9 Arg2:T8	
+T10	Turnover 900 907	revenue
+A13	Confidence T10 Certain
+A14	Turnover_Increase T10
+T11	Turnover 943 961	climbed 3 per cent
+A15	Confidence T11 Certain
+A16	Turnover_Increase T11
+*	in_span_with T10 T11
+T20	Turnover 1424 1448	revenue slid 23 per cent
+A25	Confidence T20 Certain
+A26	Turnover_Decrease T20
+T4	Turnover 605 661	revenue rose 9 per cent to pound(s)2.4bn from a year ago
+R2	is_about_company Arg1:T4 Arg2:T5	
+A2	QuarterlyResults_BetterThanExpected T1
+T3	Company 247 263	Barclays Capital
+T23	Company 268 295	Deutsche 's investment bank
+R1	is_about_company Arg1:T1 Arg2:T3	
+R10	is_about_company Arg1:T1 Arg2:T23	
+T6	Turnover 685 729	is maintaining , even increasing , its share
+A5	Confidence T6 Certain
+A6	Turnover_Increase T6
+R3	is_about_company Arg1:T6 Arg2:T8	
+A7	Turnover_Increase T9
+T7	Company 807 813	BarCap
+R5	is_about_company Arg1:T10 Arg2:T7	
+T12	Company 978 986	Deutsche
+T15	Turnover 964 977	compared with
+A8	Confidence T15 Certain
+A9	Turnover_Decrease T15
+T24	Turnover 990 1009	11 per cent decline
+A10	Confidence T24 Certain
+A12	Turnover_Decrease T24
+*	in_span_with T15 T24
+R6	is_about_company Arg1:T24 Arg2:T12	
+T25	Company 1032 1046	JPMorgan Chase
+T13	Turnover 1012 1031	itself in line with
+A17	Confidence T13 Certain
+A18	Turnover_Decrease T13
+T14	Turnover 1050 1073	comparable revenue drop
+A19	Confidence T14 Certain
+A20	Turnover_Decrease T14
+*	in_span_with T13 T14
+R11	is_about_company Arg1:T14 Arg2:T25	
+T17	Company 1076 1084	Deutsche
+T19	Company 1276 1289	Credit Suisse
+T18	Turnover 1224 1272	That may be less than the one-fifth FICC decline
+A23	Confidence T18 Certain
+A24	Turnover_Decrease T18
+R8	is_about_company Arg1:T18 Arg2:T19	
+R9	is_about_company Arg1:T20 Arg2:T17	
+T16	Turnover 1115 1178	generated income of EUR3.4bn , 8 per cent lower than a year ago
+A21	Confidence T16 Certain
+A22	Turnover_Decrease T16
+R7	is_about_company Arg1:T16 Arg2:T17	
+T21	Company 818 832	Morgan Stanley
+T22	Turnover 862 887	report an increase so far
+A27	Confidence T22 Certain
+A28	Turnover_Increase T22
+R12	is_about_company Arg1:T22 Arg2:T21	
+R13	is_about_company Arg1:T22 Arg2:T7	

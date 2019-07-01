@@ -1,0 +1,39 @@
+T1	QuarterlyResults 235 313	Tuesday 's first-quarter results show that statement might have been premature
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Publication T1
+A3	QuarterlyResults_WorseThanExpected T1
+T2	Company 75 77	BP
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 317 391	Underlying profits were $ 4.8bn , a 13 per cent decline on year-ago levels
+A4	Confidence T3 Certain
+A5	Profit_Decrease T3
+T4	Profit 422 468	and came in below most analysts ' expectations
+A6	Confidence T4 Certain
+A7	Profit_WorseThanExpected T4
+R2	is_about_company Arg1:T3 Arg2:T2	
+T5	Profit 885 928	profits that beat most analysts ' forecasts
+A8	Confidence T5 Certain
+A9	Profit_BetterThanExpected T5
+T6	Company 834 851	Royal Dutch Shell
+R4	is_about_company Arg1:T5 Arg2:T6	
+T7	SalesVolume 3002 3060	is targeting total sales of $ 38bn by the end of next year
+A10	Confidence T7 Certain
+A11	SalesVolume_Forecast T7
+T8	Company 2999 3001	BP
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	QuarterlyResults 3438 3492	also warns that output will fall in the second quarter
+A12	Confidence T9 Certain
+T10	Company 3435 3437	BP
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	QuarterlyResults 4203 4283	says that first-quarter numbers suggest it is not yet on track to meet that goal
+A15	Confidence T11 Certain
+T12	Company 4097 4099	BP
+R7	is_about_company Arg1:T11 Arg2:T12	
+*	in_span_with T4 T3
+A13	QuarterlyResults_Weak T9
+A14	QuarterlyResults_Forecast T9
+T13	SalesVolume 3330 3407	About 120,000 barrels of oil equivalent capacity a day will be sold this year
+A17	Confidence T13 Certain
+A18	SalesVolume_Forecast T13
+R3	is_about_company Arg1:T13 Arg2:T8	
+A16	QuarterlyResults_WorseThanExpected T11

@@ -1,0 +1,18 @@
+T1	Profit 117 146	a rise in the unit 's profits
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+T2	Company 51 59	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	QuarterlyResults 147 213	cushioned a 25 per cent fall in group returns in the first quarter
+A3	Confidence T3 SomewhatCertain
+R2	is_about_company Arg1:T3 Arg2:T2	
+A4	QuarterlyResults_Worse T3
+T4	Profit 216 381	Profits in the investment banking arm accounted for three quarters of adjusted pre-tax profit of pound(s)1.79bn after rising by 11 per cent in the first three months
+A5	Confidence T4 Certain
+A6	Profit_Increase T4
+A7	Profit_Positive T4
+T5	QuarterlyResults 216 381	Profits in the investment banking arm accounted for three quarters of adjusted pre-tax profit of pound(s)1.79bn after rising by 11 per cent in the first three months
+A8	Confidence T5 Certain
+A9	QuarterlyResults_Better T5
+R3	is_about_company Arg1:T5 Arg2:T2	
+R4	is_about_company Arg1:T4 Arg2:T2	

@@ -1,0 +1,10 @@
+T1	Dividend 214 245	After August 's jumbo dividends
+A1	Confidence T1 Certain
+T2	Company 296 304	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 659 709	trades on a low 2006 earnings multiple of 12 times
+A3	Confidence T3 Uncertain
+T4	Company 613 621	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+A2	Dividend_Other T1
+A4	Profit_Other T3

@@ -1,0 +1,10 @@
+T1	Dividend 683 885	Dividends will be held in respect of this financial year , so shareholders should receive a 1p per share interim dividend in September , another 1p in early December and a 3.5p final dividend next March
+A1	Confidence T1 Certain
+A2	Dividend_Payment T1
+A3	Dividend_Announcement T1
+T2	Company 479 487	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 888 987	Thereafter , dividends will be 40-50 per cent of post-tax earnings - compared to 15-20 per cent now
+A4	Confidence T3 Certain
+A5	Dividend_Raise T3
+R2	is_about_company Arg1:T3 Arg2:T2	

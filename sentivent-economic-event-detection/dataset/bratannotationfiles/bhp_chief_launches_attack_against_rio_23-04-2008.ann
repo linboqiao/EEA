@@ -1,0 +1,11 @@
+T1	Company 1256 1259	Rio
+T2	Company 1269 1272	BHP
+T3	MergerAcquisition 1260 1268	rejected
+A1	Confidence T3 Certain
+A2	MergerAcquisition_NoMergerAcquisition T3
+T4	MergerAcquisition 1276 1361	offer of 3.4 of its shares for each one of Rio 's , in a takeover worth Dollars 147bn
+*	in_span_with T3 T4
+R1	is_about_target Arg1:T3 Arg2:T1	
+R2	is_about_acquirer Arg1:T3 Arg2:T2	
+A3	Confidence T4 Certain
+A4	MergerAcquisition_NoMergerAcquisition T4

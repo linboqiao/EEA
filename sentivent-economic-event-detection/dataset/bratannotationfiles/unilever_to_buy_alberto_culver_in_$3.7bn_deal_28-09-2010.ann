@@ -1,0 +1,47 @@
+T1	MergerAcquisition 9 15	to buy
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Other T1
+T2	MergerAcquisition 31 45	in $3.7bn deal
+A4	MergerAcquisition_Other T2
+*	in_span_with T1 T2
+T3	Company 0 8	Unilever
+R1	is_about_acquirer Arg1:T1 Arg2:T3	
+T4	Company 16 30	Alberto Culver
+R2	is_about_target Arg1:T1 Arg2:T4	
+T5	MergerAcquisition 145 154	is to buy
+A6	Confidence T5 Certain
+A7	MergerAcquisition_Forecast T5
+A8	MergerAcquisition_Other T5
+T6	MergerAcquisition 205 239	in a $3.7bn ( pound(s)2.3bn ) deal
+A9	MergerAcquisition_Forecast T6
+A10	MergerAcquisition_Other T6
+*	in_span_with T5 T6
+A3	MergerAcquisition_Forecast T1
+A5	MergerAcquisition_Forecast T2
+T7	Company 136 144	Unilever
+T8	Company 155 169	Alberto Culver
+R3	is_about_acquirer Arg1:T5 Arg2:T7	
+R4	is_about_target Arg1:T5 Arg2:T8	
+T9	MergerAcquisition 572 598	the $1.9bn deal to acquire
+A11	Confidence T9 Certain
+A12	MergerAcquisition_Other T9
+A13	MergerAcquisition_MergerAcquisition T9
+T10	Company 638 646	Sara Lee
+T11	Company 472 480	Unilever
+R5	is_about_company Arg1:T9 Arg2:T11	
+R6	is_about_company Arg1:T9 Arg2:T10	
+T12	Profit 2160 2267	the consensus forecast for its 2010 earnings before interest , tax , depreciation and amortisation of $259m
+A14	Confidence T12 Certain
+A15	Profit_Positive T12
+A16	Profit_Forecast T12
+T13	Company 2015 2029	Alberto Culver
+R7	is_about_company Arg1:T12 Arg2:T13	
+T14	Turnover 2484 2507	made revenues of $1.6bn
+A17	Confidence T14 Certain
+A18	Turnover_Other T14
+T15	Company 2469 2483	Alberto Culver
+R8	is_about_company Arg1:T14 Arg2:T15	
+T16	Profit 2512 2593	earnings before interest , tax , depreciation and amortisation of more than $250m
+A19	Confidence T16 Certain
+A20	Profit_Positive T16
+R9	is_about_company Arg1:T16 Arg2:T15	

@@ -1,0 +1,5 @@
+T1	Profit 2122 2143	pre-tax profit halved
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 2082 2087	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	

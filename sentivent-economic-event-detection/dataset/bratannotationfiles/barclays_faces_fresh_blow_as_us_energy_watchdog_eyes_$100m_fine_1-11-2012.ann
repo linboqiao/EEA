@@ -1,0 +1,15 @@
+T1	Profit 1726 1786	a quarterly pre-tax loss of pound(s)47m in the third quarter
+A1	Confidence T1 Certain
+A2	Profit_Negative T1
+T2	QuarterlyResults 1726 1786	a quarterly pre-tax loss of pound(s)47m in the third quarter
+A3	Confidence T2 Certain
+A4	QuarterlyResults_Worse T2
+A5	Profit_Decrease T1
+A6	QuarterlyResults_Weak T2
+T3	Profit 1789 1840	down from a profit of pound(s)2.42bn a year earlier
+A7	Confidence T3 Certain
+A8	Profit_Positive T3
+T4	Company 289 297	Barclays
+R1	is_about_company Arg1:T2 Arg2:T4	
+R2	is_about_company Arg1:T1 Arg2:T4	
+R3	is_about_company Arg1:T3 Arg2:T4	

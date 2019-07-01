@@ -1,0 +1,47 @@
+T1	Profit 246 306	the first UK retailer to break the Pounds 2bn profit barrier
+A1	Confidence T1 Certain
+A2	Profit_Positive T1
+T2	Company 131 136	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	MergerAcquisition 731 759	its Pounds 3.3bn acquisition
+A3	Confidence T3 Certain
+A4	MergerAcquisition_MergerAcquisition T3
+T4	Company 763 770	Safeway
+T5	Company 586 597	Wm Morrison
+R2	is_about_acquirer Arg1:T3 Arg2:T5	
+R3	is_about_target Arg1:T3 Arg2:T4	
+T6	Profit 855 905	grappled with four profit warnings in a few months
+A5	Confidence T6 Certain
+A6	Profit_Decrease T6
+A7	Profit_Forecast T6
+R4	is_about_company Arg1:T6 Arg2:T5	
+T7	SalesVolume 1315 1367	it missed two consecutive quarters of internal sales
+A8	Confidence T7 Certain
+A9	SalesVolume_WorseThanExpected T7
+T8	SalesVolume 1379 1386	targets
+A10	Confidence T8 Certain
+A11	SalesVolume_WorseThanExpected T8
+*	in_span_with T8 T7
+T9	Profit 1315 1352	it missed two consecutive quarters of
+A12	Confidence T9 Certain
+A13	Profit_WorseThanExpected T9
+T10	Profit 1372 1386	profit targets
+A14	Confidence T10 Certain
+A15	Profit_WorseThanExpected T10
+*	in_span_with T10 T9
+T11	Company 1208 1212	Asda
+R5	is_about_company Arg1:T9 Arg2:T11	
+R6	is_about_company Arg1:T7 Arg2:T11	
+T12	Profit 1440 1477	dishing out two rapid profit warnings
+A16	Confidence T12 Certain
+A17	Profit_Decrease T12
+A18	Profit_Forecast T12
+T13	Company 1408 1413	Boots
+R7	is_about_company Arg1:T12 Arg2:T13	
+T14	MergerAcquisition 1735 1773	the proposed Pounds 7bn merger between
+A19	Confidence T14 Certain
+A20	MergerAcquisition_MergerAcquisition T14
+T15	Company 1774 1779	Boots
+T16	Company 1784 1800	Alliance UniChem
+R8	is_about_company Arg1:T14 Arg2:T15	
+R9	is_about_company Arg1:T14 Arg2:T16	

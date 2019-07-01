@@ -1,0 +1,14 @@
+T1	SalesVolume 821 852	total UK sales rose 22 per cent
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	Company 779 783	Aldi
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 1487 1547	The step-up in its Christmas sales from the previous quarter
+A3	Confidence T3 Certain
+A4	SalesVolume_Increase T3
+T4	QuarterlyResults 1487 1547	The step-up in its Christmas sales from the previous quarter
+A5	Confidence T4 Certain
+A6	QuarterlyResults_Better T4
+T5	Company 1250 1255	Tesco
+R2	is_about_company Arg1:T3 Arg2:T5	
+R3	is_about_company Arg1:T4 Arg2:T5	

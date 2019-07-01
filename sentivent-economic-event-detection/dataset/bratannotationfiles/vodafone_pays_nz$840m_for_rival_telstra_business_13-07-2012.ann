@@ -1,0 +1,19 @@
+T1	MergerAcquisition 9 31	pays NZ$840m for rival
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Other T1
+A3	MergerAcquisition_MergerAcquisition T1
+T2	Company 0 8	Vodafone
+T3	Company 159 171	TelstraClear
+R1	is_about_acquirer Arg1:T1 Arg2:T2	
+R2	is_about_target Arg1:T1 Arg2:T3	
+T4	MergerAcquisition 146 157	buying riva
+A4	Confidence T4 Certain
+A5	MergerAcquisition_Other T4
+A6	MergerAcquisition_MergerAcquisition T4
+T5	MergerAcquisition 172 191	for NZ$840m in cash
+A7	MergerAcquisition_Other T5
+A8	MergerAcquisition_MergerAcquisition T5
+*	in_span_with T4 T5
+R3	is_about_target Arg1:T5 Arg2:T3	
+T6	Company 49 57	Vodafone
+R4	is_about_company Arg1:T4 Arg2:T6	

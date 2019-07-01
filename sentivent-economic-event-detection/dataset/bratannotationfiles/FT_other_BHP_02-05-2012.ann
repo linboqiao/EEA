@@ -1,0 +1,5 @@
+T1	ShareRepurchase 883 942	unlikely to bow to shareholder pressure for a share buyback
+A1	Confidence T1 Certain
+A2	ShareRepurchase_Forecast T1
+T2	Company 876 879	BHP
+R1	is_about_company Arg1:T1 Arg2:T2	

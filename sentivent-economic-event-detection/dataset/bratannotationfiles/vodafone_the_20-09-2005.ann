@@ -1,0 +1,9 @@
+T1	SalesVolume 599 643	1.1m proportionate 3G additions each quarter
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	Company 389 397	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 922 970	Organic sales growth is an impressive 9 per cent
+A3	Confidence T3 Certain
+A4	SalesVolume_Increase T3
+R2	is_about_company Arg1:T3 Arg2:T2	

@@ -1,0 +1,24 @@
+T1	BuyRating 1840 1871	Downgrading to " underperform "
+A1	Confidence T1 Certain
+A2	BuyRating_Downgrade T1
+A3	BuyRating_Underperform T1
+T2	TargetPrice 1884 1903	a 540p target price
+A4	Confidence T2 Certain
+A5	TargetPrice_Announcement T2
+T3	Company 1934 1942	Wolseley
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	TargetPrice 2659 2692	lowering its price target to 115p
+A6	Confidence T4 Certain
+A7	TargetPrice_Reduction T4
+T5	Company 2315 2325	Kingfisher
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	BuyRating 3959 3983	a " buy " recommendation
+A8	Confidence T6 Certain
+A9	BuyRating_Buy T6
+T7	TargetPrice 3998 4018	target price of 661p
+A10	Confidence T7 Certain
+A11	TargetPrice_Announcement T7
+T8	Company 3873 3880	UK Coal
+R4	is_about_company Arg1:T6 Arg2:T8	
+R5	is_about_company Arg1:T7 Arg2:T8	

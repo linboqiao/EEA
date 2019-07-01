@@ -1,0 +1,36 @@
+T1	TargetPrice 2735 2770	setting a Pounds 10.70 target price
+A1	Confidence T1 Certain
+A2	TargetPrice_Announcement T1
+T3	Profit 3874 3905	issuing another profits warning
+A3	Confidence T3 Certain
+A4	Profit_Decrease T3
+T4	Company 3828 3836	DS Smith
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	BuyRating 368 390	advised clients to buy
+A5	Confidence T5 SomewhatCertain
+A6	BuyRating_Buy T5
+T6	Company 515 531	The British Land
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	BuyRating 2697 2730	Lifting its recommendation to buy
+A7	Confidence T7 Certain
+A8	BuyRating_Upgrade T7
+A9	BuyRating_Buy T7
+T2	Company 2529 2542	Burren Energy
+R1	is_about_company Arg1:T7 Arg2:T2	
+R4	is_about_company Arg1:T1 Arg2:T2	
+A10	Profit_Declaration T3
+A11	Profit_Forecast T3
+T8	BuyRating 3948 3988	after a 44-page sell note from Citigroup
+A12	Confidence T8 SomewhatCertain
+A13	BuyRating_Sell T8
+T9	Company 3914 3928	Northern Foods
+T10	TargetPrice 4033 4071	Setting a downside target price of 75p
+A14	Confidence T10 Certain
+A15	TargetPrice_Announcement T10
+R5	is_about_company Arg1:T10 Arg2:T9	
+R6	is_about_company Arg1:T8 Arg2:T9	
+T11	BuyRating 4524 4549	a buy recommendation from
+A16	Confidence T11 Certain
+A17	BuyRating_Buy T11
+T12	Company 4480 4483	EMI
+R7	is_about_company Arg1:T11 Arg2:T12	

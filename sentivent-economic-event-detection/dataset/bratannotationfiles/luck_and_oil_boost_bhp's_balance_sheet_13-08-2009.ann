@@ -1,0 +1,52 @@
+T1	Dividend 408 455	delivering a final dividend of 41 cents a share
+A1	Confidence T1 Certain
+A2	Dividend_Payment T1
+T2	Company 333 345	BHP Billiton
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 645 681	which have suspended their dividends
+A3	Confidence T3 Certain
+A4	Dividend_NoPayment T3
+T4	Company 617 631	Anglo American
+T5	Company 635 642	Xstrata
+R2	is_about_company Arg1:T3 Arg2:T5	
+R3	is_about_company Arg1:T3 Arg2:T4	
+T6	Debt 706 741	they struggle with high debt levels
+A5	Confidence T6 Certain
+A6	Debt_Other T6
+R4	is_about_company Arg1:T6 Arg2:T5	
+R5	is_about_company Arg1:T6 Arg2:T4	
+T7	Profit 1349 1374	operating profits of $4bn
+A7	Confidence T7 Certain
+A8	Profit_Positive T7
+T8	Company 1312 1315	BHP
+R6	is_about_company Arg1:T7 Arg2:T8	
+T9	Profit 1447 1527	iron ore , which had operating profits of $6.23bn , and base metals with $4.62bn
+A9	Confidence T9 Certain
+A10	Profit_Positive T9
+R7	is_about_company Arg1:T9 Arg2:T8	
+T10	Profit 2045 2185	annual profits , which on a pre-tax basis fell 50 per cent to $11.6bn , were hailed by analysts as a solid , expectation-beating performance
+A11	Confidence T10 Certain
+A12	Profit_BetterThanExpected T10
+A13	Profit_Decrease T10
+T11	Company 2038 2041	BHP
+R8	is_about_company Arg1:T10 Arg2:T11	
+T12	Turnover 2188 2237	Group revenue fell 16 per cent to just over $50bn
+A14	Confidence T12 Certain
+A15	Turnover_Decrease T12
+R9	is_about_company Arg1:T12 Arg2:T11	
+T13	Profit 2294 2364	recorded pre-tax profits plunging by close to 70 per cent year-on-year
+A16	Confidence T13 Certain
+A17	Profit_Decrease T13
+T14	Company 2271 2276	Anglo
+T15	Company 2281 2288	Xstrata
+R10	is_about_company Arg1:T13 Arg2:T15	
+R11	is_about_company Arg1:T13 Arg2:T14	
+T16	Profit 2389 2474	profits of $4.72bn were 67 per cent lower than $14.3bn in the six months to June 2008
+A18	Confidence T16 Certain
+A19	Profit_Decrease T16
+T17	Company 2382 2385	BHP
+R12	is_about_company Arg1:T16 Arg2:T17	
+T18	Profit 2477 2524	Earnings per share fell 65 per cent to 58 cents
+A20	Confidence T18 Certain
+A21	Profit_Decrease T18
+R13	is_about_company Arg1:T18 Arg2:T17	

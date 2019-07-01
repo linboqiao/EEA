@@ -1,0 +1,6 @@
+T1	Company 34 46	BHP Billiton
+T2	QuarterlyResults 142 200	boosting quarterly production of iron ore to record levels
+A1	Confidence T2 Certain
+A2	QuarterlyResults_BetterThanExpected T2
+A3	QuarterlyResults_Strong T2
+R1	is_about_company Arg1:T2 Arg2:T1	

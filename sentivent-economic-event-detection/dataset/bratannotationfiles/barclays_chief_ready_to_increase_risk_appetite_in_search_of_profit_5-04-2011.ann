@@ -1,0 +1,7 @@
+T1	MergerAcquisition 1419 1456	last month 's pound(s)2bn acquisition
+A1	Confidence T1 Certain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	Company 1464 1467	Egg
+T3	Company 968 976	Barclays
+R1	is_about_target Arg1:T1 Arg2:T2	
+R2	is_about_acquirer Arg1:T1 Arg2:T3	

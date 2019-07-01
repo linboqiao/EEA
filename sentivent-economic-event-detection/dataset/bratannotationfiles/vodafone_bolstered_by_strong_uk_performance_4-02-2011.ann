@@ -1,0 +1,44 @@
+T1	SalesVolume 106 140	reported solid third-quarter sales
+A1	SalesVolume_Declaration T1
+T2	Company 97 105	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 263 391	it expected adjusted operating profit for 2010-11 to be towards the upper end of its target of pound(s)11.8bn to pound(s)12.2bn.
+A2	Confidence T3 Certain
+A3	Profit_Increase T3
+A4	Profit_Forecast T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Turnover 1148 1231	reported group revenue of pound(s)11.9bn , up 3 per cent on the same period in 2009
+A5	Confidence T4 Certain
+A6	Turnover_Increase T4
+A7	Turnover_Declaration T4
+T5	Company 1139 1147	Vodafone
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	SalesVolume 1544 1602	underlying sales growth of 7 per cent in the third quarter
+A8	Confidence T6 Certain
+A9	SalesVolume_Increase T6
+T7	QuarterlyResults 1544 1602	underlying sales growth of 7 per cent in the third quarter
+A10	Confidence T7 Certain
+A11	QuarterlyResults_Better T7
+T8	Company 1336 1344	Vodafone
+R4	is_about_company Arg1:T6 Arg2:T8	
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	Turnover 1777 1819	underlying revenue growth of 31.7 per cent
+A12	Confidence T9 Certain
+A13	Turnover_Increase T9
+R6	is_about_company Arg1:T9 Arg2:T8	
+T10	Turnover 1822 1829	Revenue
+A14	Confidence T10 Certain
+A15	Turnover_Increase T10
+T11	Turnover 1867 1928	rose 9.3 per cent on an underlying basis in the third quarter
+A16	Turnover_Increase T11
+*	in_span_with T10 T11
+T12	Company 1833 1841	Vodafone
+R7	is_about_company Arg1:T10 Arg2:T12	
+T13	QuarterlyResults 1867 1928	rose 9.3 per cent on an underlying basis in the third quarter
+A17	Confidence T13 Certain
+A18	QuarterlyResults_Better T13
+R8	is_about_company Arg1:T13 Arg2:T12	
+T14	SalesVolume 1951 1989	recorded sales growth of 16.7 per cent
+A19	Confidence T14 Certain
+A20	SalesVolume_Increase T14
+R9	is_about_company Arg1:T14 Arg2:T12	

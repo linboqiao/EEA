@@ -1,0 +1,17 @@
+T1	MergerAcquisition 172 188	to help fend off
+A1	Confidence T1 Certain
+A2	MergerAcquisition_NoMergerAcquisition T1
+T2	MergerAcquisition 207 226	$ 2.6bn hostile bid
+A3	Confidence T2 Certain
+A4	MergerAcquisition_NoMergerAcquisition T2
+*	in_span_with T2 T1
+T3	Company 189 204	GlaxoSmithKline
+T4	Company 74 95	Human Genome Sciences
+R1	is_about_acquirer Arg1:T1 Arg2:T3	
+R2	is_about_target Arg1:T1 Arg2:T4	
+T5	SalesVolume 933 978	It claimed substantial potential sales growth
+A5	Confidence T5 Certain
+A6	SalesVolume_Forecast T5
+A7	SalesVolume_Increase T5
+T6	Company 791 795	HGSI
+R3	is_about_company Arg1:T5 Arg2:T6	

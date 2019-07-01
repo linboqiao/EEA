@@ -1,0 +1,46 @@
+T1	Turnover 837 859	slowing revenue growth
+A1	Confidence T1 Certain
+A2	Turnover_Other T1
+T2	Company 799 807	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 1518 1564	warned last November of slowing revenue growth
+A3	Confidence T3 Certain
+A4	Turnover_Forecast T3
+T4	Company 1474 1482	Vodafone
+T5	Profit 1518 1541	warned last November of
+A5	Confidence T5 Certain
+A6	Profit_Decrease T5
+A7	Profit_Forecast T5
+T6	Profit 1569 1589	lower profit margins
+A8	Confidence T6 Certain
+A9	Profit_Decrease T6
+A10	Profit_Forecast T6
+*	in_span_with T6 T5
+R2	is_about_company Arg1:T5 Arg2:T4	
+R3	is_about_company Arg1:T3 Arg2:T4	
+T7	Profit 1610 1676	reported a record pre-tax loss of Pounds 14.9bn ( Dollars 27.7bn )
+A11	Confidence T7 Certain
+A12	Profit_Negative T7
+T8	Company 1601 1609	Vodafone
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	Turnover 1704 1731	Analysts said they expected
+A13	Confidence T9 Certain
+A14	Turnover_Decrease T9
+A15	Turnover_Forecast T9
+T10	Turnover 1756 1891	figures for the first quarter of its 2007 fiscal year , published today , to show year-on-year declines in average revenue per customer
+A16	Confidence T10 Certain
+A17	Turnover_Decrease T10
+A18	Turnover_Forecast T10
+T11	QuarterlyResults 1756 1891	figures for the first quarter of its 2007 fiscal year , published today , to show year-on-year declines in average revenue per customer
+A19	Confidence T11 Certain
+A20	QuarterlyResults_Forecast T11
+A21	QuarterlyResults_Worse T11
+T12	QuarterlyResults 1704 1731	Analysts said they expected
+A22	Confidence T12 Certain
+A23	QuarterlyResults_Forecast T12
+A24	QuarterlyResults_Worse T12
+T13	Company 1732 1740	Vodafone
+*	in_span_with T12 T11
+*	in_span_with T9 T10
+R5	is_about_company Arg1:T12 Arg2:T13	
+R6	is_about_company Arg1:T9 Arg2:T13	

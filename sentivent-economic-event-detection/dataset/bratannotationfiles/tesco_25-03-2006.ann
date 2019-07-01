@@ -1,0 +1,5 @@
+T1	Debt 1182 1208	net debt is not that large
+A1	Confidence T1 SomewhatCertain
+A2	Debt_Other T1
+T2	Company 1173 1178	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	

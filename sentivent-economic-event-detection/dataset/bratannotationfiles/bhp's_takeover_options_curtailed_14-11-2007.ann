@@ -1,0 +1,34 @@
+T1	MergerAcquisition 34 88	Australia 's foreign investment regulations will limit
+A1	Confidence T1 SomewhatCertain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	MergerAcquisition 105 133	takeover options in pursuing
+A3	Confidence T2 SomewhatCertain
+A4	MergerAcquisition_MergerAcquisition T2
+T3	Company 89 101	BHP Billiton
+T4	Company 134 143	Rio Tinto
+*	in_span_with T1 T2
+R1	is_about_acquirer Arg1:T2 Arg2:T3	
+R2	is_about_target Arg1:T2 Arg2:T4	
+T5	MergerAcquisition 745 810	proposal to ex-change three of its shares for every one of Rio 's
+A5	Confidence T5 Certain
+A6	MergerAcquisition_NoMergerAcquisition T5
+T6	MergerAcquisition 862 895	has been rejected by Rio 's board
+A7	Confidence T6 Certain
+A8	MergerAcquisition_NoMergerAcquisition T6
+*	in_span_with T6 T5
+T7	Company 738 741	BHP
+R3	is_about_acquirer Arg1:T5 Arg2:T7	
+T8	Company 821 824	Rio
+R4	is_about_target Arg1:T5 Arg2:T8	
+T9	ShareRepurchase 1239 1297	on Monday pledged to buy back Dollars 30bn worth of shares
+A9	Confidence T9 Certain
+A10	ShareRepurchase_Announcement T9
+T10	Company 1235 1238	BHP
+R5	is_about_company Arg1:T9 Arg2:T10	
+T11	MergerAcquisition 1709 1743	Dollars 40bn financing deal to buy
+A11	Confidence T11 Certain
+A12	MergerAcquisition_MergerAcquisition T11
+T12	Company 1744 1749	Alcan
+T13	Company 1696 1705	Rio Tinto
+R6	is_about_acquirer Arg1:T11 Arg2:T13	
+R7	is_about_target Arg1:T11 Arg2:T12	

@@ -1,0 +1,5 @@
+T7	ShareRepurchase 1384 1436	plans to finance the Dollars 30bn buy-back with debt
+A7	Confidence T7 SomewhatCertain
+A8	ShareRepurchase_Forecast T7
+T8	Company 1349 1352	BHP
+R4	is_about_company Arg1:T7 Arg2:T8	

@@ -1,0 +1,51 @@
+T1	Profit 588 602	profit warning
+A1	Confidence T1 SomewhatCertain
+A2	Profit_Other T1
+T5	Company 452 457	Tesco
+R1	is_about_company Arg1:T1 Arg2:T5	
+T6	SalesVolume 637 652	revive UK sales
+A3	Confidence T6 SomewhatCertain
+A4	SalesVolume_Forecast T6
+T7	Company 616 621	Tesco
+R2	is_about_company Arg1:T6 Arg2:T7	
+T3	Company 1243 1246	IAG
+T4	QuarterlyResults 1848 1906	lost 1.8 per cent to 274.9p ahead of first-quarter results
+A7	Confidence T4 Certain
+A8	QuarterlyResults_WorseThanExpected T4
+T8	Company 1837 1847	Kingfisher
+R4	is_about_company Arg1:T4 Arg2:T8	
+T9	SalesVolume 2012 2031	like-for-like sales
+A9	Confidence T9 Certain
+A10	SalesVolume_Forecast T9
+R5	is_about_company Arg1:T9 Arg2:T8	
+T14	Turnover 2552 2577	declining organic revenue
+A15	Confidence T14 Certain
+A16	Turnover_Decrease T14
+T15	MergerAcquisition 2582 2604	increased acquisitions
+A17	Confidence T15 Certain
+A18	MergerAcquisition_MergerAcquisition T15
+T16	Profit 2609 2627	weighed on returns
+A19	Confidence T16 Certain
+A20	Profit_Decrease T16
+T17	Company 2453 2459	Capita
+R8	is_about_company Arg1:T14 Arg2:T17	
+R9	is_about_company Arg1:T15 Arg2:T17	
+R10	is_about_company Arg1:T16 Arg2:T17	
+T18	Dividend 3516 3547	3.5-4.0 per cent dividend yield
+A21	Confidence T18 Certain
+A22	Dividend_Announcement T18
+T19	Company 3497 3502	Rexam
+R11	is_about_company Arg1:T18 Arg2:T19	
+T20	BuyRating 3347 3361	" buy " advice
+A23	Confidence T20 Certain
+A24	BuyRating_Buy T20
+T21	Company 3238 3243	Rexam
+R12	is_about_company Arg1:T20 Arg2:T21	
+A11	Profit_WorseThanExpected T1
+A12	SalesVolume_Increase T6
+A5	QuarterlyResults_Forecast T4
+T2	BuyRating 2496 2536	added the outsourcer to its " buy " list
+A6	Confidence T2 Certain
+A13	BuyRating_Buy T2
+R3	is_about_company Arg1:T2 Arg2:T17	
+A14	BuyRating_Maintained T20

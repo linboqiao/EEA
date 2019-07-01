@@ -1,0 +1,21 @@
+T1	QuarterlyResults 202 370	latest quarterly figures , due tomorrow , are expected to show a 3.6 per cent rise in underlying sales , an improvement on the2.9 per cent achieved in the first quarter
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Better T1
+A3	QuarterlyResults_Forecast T1
+T2	SalesVolume 202 370	latest quarterly figures , due tomorrow , are expected to show a 3.6 per cent rise in underlying sales , an improvement on the2.9 per cent achieved in the first quarter
+A4	Confidence T2 Certain
+A5	SalesVolume_Forecast T2
+A6	SalesVolume_Increase T2
+T3	Company 41 49	Unilever
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	TargetPrice 1585 1625	upped its target price from 710p to 775p
+A7	Confidence T4 Certain
+A8	TargetPrice_Raise T4
+T5	Company 1416 1427	Tate & Lyle
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	TargetPrice 2077 2127	raise its price target from Pounds 13 to Pounds 15
+A9	Confidence T6 Certain
+A10	TargetPrice_Raise T6
+T7	Company 1903 1912	Kazakhmys
+R4	is_about_company Arg1:T6 Arg2:T7	

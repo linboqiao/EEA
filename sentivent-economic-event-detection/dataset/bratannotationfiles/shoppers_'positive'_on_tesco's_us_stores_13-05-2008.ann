@@ -1,0 +1,9 @@
+T1	SalesVolume 2140 2174	We estimate that within five years
+A1	Confidence T1 Certain
+A2	SalesVolume_Forecast T1
+T2	SalesVolume 2179 2214	will make sales of Dollars 12bn , "
+A3	Confidence T2 Certain
+A4	SalesVolume_Forecast T2
+*	in_span_with T2 T1
+T3	Company 1620 1632	Fresh & Easy
+R1	is_about_company Arg1:T1 Arg2:T3	

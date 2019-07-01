@@ -1,0 +1,50 @@
+T3	Company 2468 2476	Intertek
+T4	Profit 2477 2483	was up
+A4	Confidence T4 Certain
+A5	Profit_Increase T4
+T5	Profit 2516 2570	after delivering better-than-expected interim earnings
+A6	Confidence T5 Certain
+A7	Profit_Increase T5
+A8	Profit_BetterThanExpected T5
+A9	Profit_BetterThanExpected T4
+*	in_span_with T4 T5
+R2	is_about_company Arg1:T4 Arg2:T3	
+T8	TargetPrice 2693 2761	raised target prices in response to the airline 's results last week
+A10	Confidence T8 Certain
+A11	TargetPrice_Raise T8
+T9	Company 3805 3814	Xchanging
+T10	SalesVolume 3815 3820	dived
+A12	Confidence T10 Certain
+A14	SalesVolume_Forecast T10
+T11	SalesVolume 3843 3890	on a warning that sales would miss expectations
+A15	Confidence T11 Certain
+A17	SalesVolume_Forecast T11
+*	in_span_with T10 T11
+R3	is_about_company Arg1:T10 Arg2:T9	
+T1	BuyRating 1817 1849	stuck with " outperform " advice
+A1	Confidence T1 Certain
+A2	BuyRating_Outperform T1
+A3	BuyRating_Maintained T1
+T2	Company 1643 1660	Vedanta Resources
+R1	is_about_company Arg1:T1 Arg2:T2	
+T12	SalesVolume 2575 2607	raising full-year sales guidance
+A18	Confidence T12 Certain
+A19	SalesVolume_Forecast T12
+A20	SalesVolume_Increase T12
+R4	is_about_company Arg1:T12 Arg2:T3	
+T6	Company 2610 2625	British Airways
+R5	is_about_company Arg1:T8 Arg2:T6	
+T7	BuyRating 3556 3589	downgraded from " buy " to hold "
+A21	Confidence T7 Certain
+A22	BuyRating_Hold T7
+A23	BuyRating_Downgrade T7
+T13	Company 3506 3510	Yell
+R6	is_about_company Arg1:T7 Arg2:T13	
+A16	SalesVolume_WorseThanExpected T11
+A13	SalesVolume_WorseThanExpected T10
+T14	BuyRating 3937 3958	downgrade to " hold "
+A24	Confidence T14 Certain
+A25	BuyRating_Hold T14
+A26	BuyRating_Downgrade T14
+T15	Company 3963 3976	Premier Foods
+R7	is_about_company Arg1:T14 Arg2:T15	

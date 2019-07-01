@@ -1,0 +1,17 @@
+T1	Profit 380 481	Underlying operating profit rose by 95 per cent year-on-year , some 10 per cent ahead of expectations
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+A3	Profit_BetterThanExpected T1
+T2	Company 326 338	BHP Billiton
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 579 625	signalled its optimism by raising its dividend
+A4	Confidence T3 Certain
+A5	Dividend_Raise T3
+T4	Company 575 578	BHP
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Company 563 572	Rio Tinto
+R3	is_about_company Arg1:T3 Arg2:T5	
+T6	SalesVolume 537 555	small volume gains
+A6	Confidence T6 Certain
+A7	SalesVolume_Increase T6
+R4	is_about_company Arg1:T6 Arg2:T2	

@@ -1,0 +1,59 @@
+T1	SalesVolume 24 34	sales fall
+A1	Confidence T1 Certain
+A2	SalesVolume_Decrease T1
+T2	Company 0 8	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 278 312	first-quarter sales in Europe fell
+A3	Confidence T3 Certain
+A4	SalesVolume_Decrease T3
+T4	QuarterlyResults 278 312	first-quarter sales in Europe fell
+A5	Confidence T4 Certain
+A6	QuarterlyResults_Worse T4
+T5	Company 131 139	Unilever
+R2	is_about_company Arg1:T4 Arg2:T5	
+R3	is_about_company Arg1:T3 Arg2:T5	
+T6	Profit 628 709	have reported earnings in recent days that fell short of investors ' expectations
+A7	Profit_Declaration T6
+A8	Profit_WorseThanExpected T6
+T7	Company 547 553	Nestle
+T8	Company 558 564	Diageo
+R4	is_about_company Arg1:T6 Arg2:T8	
+R5	is_about_company Arg1:T6 Arg2:T7	
+A9	Confidence T6 Certain
+T9	SalesVolume 817 853	reported disappointing sales figures
+A10	Confidence T9 Certain
+A11	SalesVolume_WorseThanExpected T9
+A12	SalesVolume_Declaration T9
+T10	Company 712 728	Procter & Gamble
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	SalesVolume 1021 1044	crimped ice cream sales
+A13	Confidence T11 Certain
+A14	SalesVolume_Decrease T11
+T12	Company 856 864	Unilever
+R7	is_about_company Arg1:T11 Arg2:T12	
+T13	SalesVolume 1059 1145	reported a rise in annual underlying sales growth in the first quarter of 4.9 per cent
+A15	Confidence T13 Certain
+A16	SalesVolume_Declaration T13
+A17	SalesVolume_Increase T13
+R8	is_about_company Arg1:T13 Arg2:T12	
+T14	QuarterlyResults 1059 1145	reported a rise in annual underlying sales growth in the first quarter of 4.9 per cent
+A18	Confidence T14 Certain
+A19	QuarterlyResults_Better T14
+R9	is_about_company Arg1:T14 Arg2:T12	
+T15	Turnover 1302 1343	lifted turnover 0.2 per cent to EUR12.2bn
+A20	Confidence T15 Certain
+A21	Turnover_Increase T15
+T16	Company 1293 1301	Unilever
+R10	is_about_company Arg1:T15 Arg2:T16	
+T17	SalesVolume 1383 1421	underlying sales reversed 3.1 per cent
+A22	Confidence T17 Certain
+A23	SalesVolume_Decrease T17
+T18	Company 1450 1458	Unilever
+R11	is_about_company Arg1:T17 Arg2:T18	
+T19	SalesVolume 2257 2335	reported organic sales growth of 6.1 per cent versus consensus of 7.4 per cent
+A24	Confidence T19 Certain
+A25	SalesVolume_Declaration T19
+A26	SalesVolume_BetterThanExpected T19
+A27	SalesVolume_Increase T19
+T20	Company 1967 1980	Pernod Ricard
+R12	is_about_company Arg1:T19 Arg2:T20	

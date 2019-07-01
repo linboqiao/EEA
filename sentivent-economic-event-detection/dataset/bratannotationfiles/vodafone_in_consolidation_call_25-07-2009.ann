@@ -1,0 +1,45 @@
+T1	MergerAcquisition 339 357	interest in buying
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Other T1
+T2	Company 327 335	Vodafone
+T3	Company 358 369	T-Mobile UK
+R1	is_about_acquirer Arg1:T1 Arg2:T2	
+R2	is_about_target Arg1:T1 Arg2:T3	
+T4	QuarterlyResults 763 791	first-quarter trading update
+A3	Confidence T4 Certain
+A4	QuarterlyResults_Publication T4
+T5	Company 674 682	Vodafone
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Turnover 815 871	group revenue performance slightly exceeded expectations
+A5	Confidence T6 Certain
+A6	Turnover_BetterThanExpected T6
+T7	Company 803 811	Vodafone
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	SalesVolume 874 989	underlying sales in Europe fell 4.4 per cent in the three months to June 30 compared with the same period last year
+A7	Confidence T8 Certain
+A8	SalesVolume_Decrease T8
+R5	is_about_company Arg1:T8 Arg2:T7	
+T9	SalesVolume 1004 1038	underlying sales fell 4.7 per cent
+A9	Confidence T9 Certain
+A10	SalesVolume_Decrease T9
+R6	is_about_company Arg1:T9 Arg2:T7	
+T10	Turnover 2482 2562	reported group revenue of pound(s)10.7bn for the first quarter , up 9.3 per cent
+A11	Turnover_Increase T10
+A12	Turnover_Declaration T10
+A13	Confidence T10 Certain
+T11	Company 2473 2481	Vodafone
+R7	is_about_company Arg1:T10 Arg2:T11	
+T12	QuarterlyResults 2482 2562	reported group revenue of pound(s)10.7bn for the first quarter , up 9.3 per cent
+A14	Confidence T12 Certain
+A15	QuarterlyResults_Publication T12
+A16	QuarterlyResults_Better T12
+R8	is_about_company Arg1:T12 Arg2:T11	
+T13	Turnover 2649 2680	group revenue fell 2.1 per cent
+A17	Confidence T13 Certain
+A18	Turnover_Decrease T13
+R9	is_about_company Arg1:T13 Arg2:T11	
+T14	Profit 2777 2858	guidance of generating pound(s)11bn-pound(s)11.8bn of operating profit in 2009-10
+A19	Confidence T14 Certain
+A20	Profit_Positive T14
+A21	Profit_Forecast T14
+R10	is_about_company Arg1:T14 Arg2:T11	

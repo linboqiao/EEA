@@ -1,0 +1,43 @@
+T1	Profit 355 370	Profit warnings
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A3	Profit_Forecast T1
+T2	Company 376 379	KPN
+T3	Company 384 392	Belgacom
+R1	is_about_company Arg1:T1 Arg2:T2	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	BuyRating 621 640	kept " buy " advice
+A4	Confidence T4 Certain
+A5	BuyRating_Buy T4
+A6	BuyRating_Maintained T4
+T5	Profit 273 319	trimmed earnings forecasts by about 3 per cent
+A7	Confidence T5 Certain
+A8	Profit_Decrease T5
+A9	Profit_Forecast T5
+T6	Company 48 56	Vodafone
+R3	is_about_company Arg1:T5 Arg2:T6	
+R4	is_about_company Arg1:T4 Arg2:T6	
+T7	BuyRating 1050 1092	added the fund manager to its " buy " list
+A10	Confidence T7 Certain
+A11	BuyRating_Buy T7
+T8	Company 966 975	Schroders
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	QuarterlyResults 1095 1131	Quarterly results were disappointing
+A12	Confidence T9 Certain
+A13	QuarterlyResults_WorseThanExpected T9
+R6	is_about_company Arg1:T9 Arg2:T8	
+T10	MergerAcquisition 1449 1512	gossip that the accounting software maker was a takeover target
+A14	Confidence T10 Certain
+A15	MergerAcquisition_Forecast T10
+A16	MergerAcquisition_MergerAcquisition T10
+T11	Company 1409 1419	Sage Group
+T12	Company 1517 1523	Oracle
+T13	Company 1527 1530	SAP
+R7	is_about_target Arg1:T10 Arg2:T11	
+R8	is_about_acquirer Arg1:T10 Arg2:T12	
+R9	is_about_acquirer Arg1:T10 Arg2:T13	
+T14	TargetPrice 1745 1763	a 40p price target
+A17	Confidence T14 Certain
+A18	TargetPrice_Announcement T14
+T15	Company 1638 1651	Premier Foods
+R10	is_about_company Arg1:T14 Arg2:T15	

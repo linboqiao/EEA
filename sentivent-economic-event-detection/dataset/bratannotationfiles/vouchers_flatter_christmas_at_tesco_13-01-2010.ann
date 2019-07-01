@@ -1,0 +1,31 @@
+T1	SalesVolume 245 292	best festive season performance for three years
+A1	Confidence T1 SomewhatCertain
+A2	SalesVolume_Increase T1
+T2	Company 46 51	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 301 522	reported UK sales growth , in stores open at least a year , of 4.9 per cent in the six weeks to January 9 , ahead of analysts ' expectations of about 3 per cent expansion and the 2.8 per cent increase in the third quarter
+A3	Confidence T3 Certain
+A4	SalesVolume_Declaration T3
+A5	SalesVolume_BetterThanExpected T3
+A6	SalesVolume_Increase T3
+T4	Company 295 300	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 1097 1140	like-for-like sales growth was 4.1 per cent
+A7	Confidence T5 Certain
+A8	SalesVolume_Increase T5
+T6	Company 805 810	Tesco
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	SalesVolume 2098 2235	Group sales rose 6.9 per cent , with international sales 2.4 per cent higher , or 4.1 per cent excluding the effect of currency movements
+A9	Confidence T7 Certain
+A10	SalesVolume_Increase T7
+T8	Company 1814 1819	Tesco
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	SalesVolume 2269 2291	sales rose 35 per cent
+A11	Confidence T9 Certain
+A12	SalesVolume_Increase T9
+R5	is_about_company Arg1:T9 Arg2:T8	
+T10	SalesVolume 2328 2383	like-for-like sales had risen in the " mid-teen " level
+A13	Confidence T10 Certain
+A14	SalesVolume_Other T10
+A15	SalesVolume_Increase T10
+R6	is_about_company Arg1:T10 Arg2:T8	

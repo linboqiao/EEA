@@ -1,0 +1,14 @@
+T1	SalesVolume 292 355	an unexpected slowdown in sales growth in the past three months
+A1	Confidence T1 SomewhatCertain
+A2	SalesVolume_Other T1
+T2	Company 133 138	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 1204 1317	reported UK sales growth from stores open at least a year of 2.8 per cent , slightly below the consensus forecast
+A3	Confidence T3 Certain
+A4	SalesVolume_WorseThanExpected T3
+A5	SalesVolume_Increase T3
+T4	Company 1157 1162	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 2484 2530	Total sales across the group rose 8.8 per cent
+A6	Confidence T5 Certain
+A7	SalesVolume_Increase T5

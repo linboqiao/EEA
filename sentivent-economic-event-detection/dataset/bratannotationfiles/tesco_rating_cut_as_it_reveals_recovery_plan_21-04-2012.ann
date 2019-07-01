@@ -1,0 +1,49 @@
+T1	BuyRating 82 92	downgraded
+A1	Confidence T1 Certain
+A2	BuyRating_Downgrade T1
+T2	Company 67 72	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T4	Profit 511 528	weigh on earnings
+A4	Confidence T4 Certain
+A5	Profit_Decrease T4
+T5	Company 404 409	Tesco
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Profit 627 647	revive profit growth
+A6	Confidence T6 Certain
+A7	Profit_Other T6
+#1	AnnotatorNotes T6	revival of profit growth
+T7	Company 555 560	Tesco
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	SalesVolume 787 799	sales growth
+A8	Confidence T8 SomewhatCertain
+T9	Company 778 783	Tesco
+R5	is_about_company Arg1:T8 Arg2:T9	
+T10	SalesVolume 977 1008	two-thirds of sales and profits
+A10	Confidence T10 Certain
+A11	SalesVolume_Declaration T10
+T11	Profit 977 1008	two-thirds of sales and profits
+A12	Profit_Declaration T11
+A13	Confidence T11 Certain
+T12	Company 863 868	Tesco
+R6	is_about_company Arg1:T11 Arg2:T12	
+R7	is_about_company Arg1:T10 Arg2:T12	
+T13	Profit 1034 1048	profit warning
+A14	Confidence T13 Certain
+#2	AnnotatorNotes T13	profit warning
+R8	is_about_company Arg1:T13 Arg2:T12	
+T14	Profit 1367 1387	record group profits
+A16	Confidence T14 Certain
+A17	Profit_Increase T14
+T15	Company 1321 1326	Tesco
+R9	is_about_company Arg1:T14 Arg2:T15	
+T3	BuyRating 400 403	cut
+A3	Confidence T3 Certain
+A18	BuyRating_Downgrade T3
+R2	is_about_company Arg1:T3 Arg2:T5	
+T16	BuyRating 413 475	long-term senior unsecured rating by one notch from A3 to Baa1
+A9	Confidence T16 Certain
+A19	BuyRating_Downgrade T16
+*	in_span_with T16 T3
+A20	Profit_Increase T6
+A15	Profit_Decrease T13
+A22	Profit_Forecast T13

@@ -1,0 +1,12 @@
+T1	SalesVolume 9 33	reports 5.5 % sales rise
+A1	Confidence T1 Certain
+A2	SalesVolume_Declaration T1
+A3	SalesVolume_Increase T1
+T2	Company 0 8	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 185 237	report strong full-year sales growth of 5.5 per cent
+A4	Confidence T3 Certain
+A5	SalesVolume_Declaration T3
+A6	SalesVolume_Increase T3
+T4	Company 34 42	Unilever
+R2	is_about_company Arg1:T3 Arg2:T4	

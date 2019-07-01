@@ -1,0 +1,49 @@
+T1	SalesVolume 171 225	reported the first slowdown in underlying sales growth
+A1	Confidence T1 SomewhatCertain
+A2	SalesVolume_Other T1
+T2	Company 67 72	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 283 355	the 5.5 per cent rise in underlying sales in the 14 weeks to November 19
+A3	Confidence T3 Certain
+A4	SalesVolume_Increase T3
+T4	QuarterlyResults 358 402	against 6.6 per cent in the previous quarter
+A5	Confidence T4 Certain
+A6	QuarterlyResults_Worse T4
+R2	is_about_company Arg1:T3 Arg2:T2	
+R3	is_about_company Arg1:T4 Arg2:T2	
+T5	SalesVolume 358 402	against 6.6 per cent in the previous quarter
+A7	Confidence T5 Certain
+A8	SalesVolume_Increase T5
+R4	is_about_company Arg1:T5 Arg2:T2	
+T6	Profit 919 989	kept his full- year pre-tax profit forecast unchanged at Pounds 2.16bn
+A9	Confidence T6 Certain
+A10	Profit_Positive T6
+A11	Profit_Forecast T6
+T7	Company 1075 1080	Tesco
+R5	is_about_company Arg1:T6 Arg2:T7	
+T8	SalesVolume 1301 1342	5.5 per cent rise ( in underlying sales )
+A12	Confidence T8 Certain
+A13	SalesVolume_Increase T8
+T9	SalesVolume 1409 1490	Overall sales in the UK rose 11.6 per cent , against 10.9 in the previous quarter
+A14	Confidence T9 Certain
+A15	SalesVolume_Increase T9
+T10	QuarterlyResults 1409 1490	Overall sales in the UK rose 11.6 per cent , against 10.9 in the previous quarter
+A16	Confidence T10 Certain
+A17	QuarterlyResults_Better T10
+T11	SalesVolume 1626 1705	Growth in non-food sales was below the 13 per cent reported in the last quarter
+A18	Confidence T11 Certain
+A19	SalesVolume_Increase T11
+T12	QuarterlyResults 1626 1705	Growth in non-food sales was below the 13 per cent reported in the last quarter
+A20	Confidence T12 Certain
+A21	QuarterlyResults_Worse T12
+T13	Company 1598 1603	Tesco
+R6	is_about_company Arg1:T8 Arg2:T13	
+R7	is_about_company Arg1:T9 Arg2:T13	
+R8	is_about_company Arg1:T10 Arg2:T13	
+R9	is_about_company Arg1:T11 Arg2:T13	
+R10	is_about_company Arg1:T12 Arg2:T13	
+T14	SalesVolume 2092 2185	the international business was " slightly ahead " of expectations , with sales up 16 per cent
+A22	Confidence T14 Certain
+A23	SalesVolume_BetterThanExpected T14
+A24	SalesVolume_Increase T14
+R11	is_about_company Arg1:T14 Arg2:T13	

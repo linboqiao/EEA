@@ -1,0 +1,14 @@
+T1	Profit 389 423	pound(s)800m of accumulated losses
+A1	Confidence T1 Certain
+A2	Profit_Negative T1
+T2	Company 308 313	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 1218 1286	like-for-like sales in the UK fell 1.2 per cent in the third quarter
+A3	Confidence T3 Certain
+A4	SalesVolume_Decrease T3
+T4	QuarterlyResults 1218 1286	like-for-like sales in the UK fell 1.2 per cent in the third quarter
+A5	Confidence T4 Certain
+A6	QuarterlyResults_Worse T4
+T5	Company 1126 1131	Tesco
+R2	is_about_company Arg1:T3 Arg2:T5	
+R3	is_about_company Arg1:T4 Arg2:T5	

@@ -1,0 +1,5 @@
+T1	Profit 1560 1637	reported a 11.4 per cent decline in profit before exceptionals to Pounds 481m
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 1536 1541	Boots
+R1	is_about_company Arg1:T1 Arg2:T2	

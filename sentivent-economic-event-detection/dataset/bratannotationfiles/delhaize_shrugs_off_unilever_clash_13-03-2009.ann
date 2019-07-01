@@ -1,0 +1,22 @@
+T1	SalesVolume 559 637	dismissed a marketing agency study that the clash had hurt first-quarter sales
+A1	Confidence T1 SomewhatCertain
+A2	SalesVolume_BetterThanExpected T1
+T2	Company 529 537	Delhaize
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 1399 1437	helped boost fourth-quarter net profit
+A3	Confidence T3 Certain
+A4	Profit_Increase T3
+T4	QuarterlyResults 1399 1437	helped boost fourth-quarter net profit
+A5	Confidence T4 Certain
+A6	QuarterlyResults_Better T4
+T5	Company 1241 1249	Delhaize
+T6	Dividend 1479 1529	An annual dividend of EUR1.48 a share was proposed
+A7	Confidence T6 Certain
+A8	Dividend_Other T6
+T7	Profit 1533 1563	earnings per share of EUR4.70.
+A9	Confidence T7 Certain
+A10	Profit_Positive T7
+R2	is_about_company Arg1:T4 Arg2:T5	
+R3	is_about_company Arg1:T3 Arg2:T5	
+R4	is_about_company Arg1:T6 Arg2:T5	
+R5	is_about_company Arg1:T7 Arg2:T5	

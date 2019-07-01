@@ -1,0 +1,57 @@
+T1	SalesVolume 6 32	forecasts UK sales rebound
+A1	Confidence T1 Certain
+A2	SalesVolume_Forecast T1
+A3	SalesVolume_Increase T1
+T2	Company 0 5	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 177 214	it reports sales figures this Tuesday
+A4	Confidence T3 Certain
+A5	SalesVolume_Declaration T3
+T4	Company 51 56	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 325 383	forecasts sales growth from UK stores open at least a year
+A6	Confidence T5 Certain
+A7	SalesVolume_Forecast T5
+A8	SalesVolume_Increase T5
+T6	SalesVolume 411 430	of 0.5-0.6 per cent
+A9	Confidence T6 Certain
+A10	SalesVolume_Forecast T6
+A11	SalesVolume_Increase T6
+*	in_span_with T6 T5
+T7	Company 317 322	Tesco
+R3	is_about_company Arg1:T5 Arg2:T7	
+T8	QuarterlyResults 459 534	This is an improvement on the final quarter of the 2010-2011 financial year
+A12	Confidence T8 Certain
+A13	QuarterlyResults_Better T8
+T9	SalesVolume 485 582	the final quarter of the 2010-2011 financial year , when like-for-like sales fell by 0.7 per cent
+A14	Confidence T9 Certain
+A15	SalesVolume_Decrease T9
+T10	QuarterlyResults 485 582	the final quarter of the 2010-2011 financial year , when like-for-like sales fell by 0.7 per cent
+A16	Confidence T10 Certain
+A17	QuarterlyResults_Worse T10
+R4	is_about_company Arg1:T8 Arg2:T7	
+R5	is_about_company Arg1:T9 Arg2:T7	
+R6	is_about_company Arg1:T10 Arg2:T7	
+T11	SalesVolume 949 981	expanding sales by 10.5 per cent
+A18	Confidence T11 Certain
+A19	SalesVolume_Increase T11
+T12	Company 870 875	Tesco
+R7	is_about_company Arg1:T11 Arg2:T12	
+T13	SalesVolume 1594 1644	due to report its first-quarter sales on Wednesday
+A20	Confidence T13 Certain
+A21	SalesVolume_Declaration T13
+T14	QuarterlyResults 1594 1644	due to report its first-quarter sales on Wednesday
+A22	Confidence T14 Certain
+A23	QuarterlyResults_Publication T14
+T15	Company 1574 1585	J Sainsbury
+R8	is_about_company Arg1:T13 Arg2:T15	
+R9	is_about_company Arg1:T14 Arg2:T15	
+T16	QuarterlyResults 1656 1722	forecasts like-for-like sales growth of 1.5 per cent to 2 per cent
+A24	QuarterlyResults_Better T16
+A25	QuarterlyResults_Forecast T16
+T17	SalesVolume 1656 1722	forecasts like-for-like sales growth of 1.5 per cent to 2 per cent
+A26	Confidence T17 Certain
+A27	SalesVolume_Forecast T17
+A28	SalesVolume_Increase T17
+R10	is_about_company Arg1:T17 Arg2:T15	
+R11	is_about_company Arg1:T16 Arg2:T15	

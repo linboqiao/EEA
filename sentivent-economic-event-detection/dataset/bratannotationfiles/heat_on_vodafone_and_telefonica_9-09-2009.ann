@@ -1,0 +1,5 @@
+T1	Debt 1836 1895	plans to place pound(s)1.25bn of its debt in the new entity
+A1	Confidence T1 SomewhatCertain
+A2	Debt_Restructuring T1
+T2	Company 1821 1835	France Telecom
+R1	is_about_company Arg1:T1 Arg2:T2	

@@ -1,0 +1,19 @@
+T1	Debt 1448 1499	is expected to be debt-free by the end of next year
+A1	Confidence T1 Certain
+A2	Debt_Reduction T1
+A3	Debt_Forecast T1
+T2	Company 1355 1371	Verizon Wireless
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 1606 1617	the lack of
+A4	Confidence T3 Certain
+A5	Dividend_NoPayment T3
+T4	Dividend 1637 1646	dividends
+A6	Dividend_NoPayment T4
+*	in_span_with T3 T4
+T5	Company 1618 1634	Verizon Wireless
+R2	is_about_company Arg1:T3 Arg2:T5	
+T6	Dividend 2228 2264	paid a dividend worth $5.3bn in 2009
+A7	Confidence T6 Certain
+A8	Dividend_Payment T6
+T7	Company 2205 2227	Verizon Communications
+R3	is_about_company Arg1:T6 Arg2:T7	

@@ -1,0 +1,38 @@
+T1	Dividend 1207 1252	dividend to 6p a share , a cut of 41 per cent
+A1	Confidence T1 Certain
+A2	Dividend_Reduction T1
+T2	Company 1037 1045	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	BuyRating 1390 1393	cut
+A3	Confidence T3 SomewhatCertain
+A4	BuyRating_Downgrade T3
+T4	BuyRating 1403 1424	from its " buy " list
+A5	BuyRating_Downgrade T4
+*	in_span_with T3 T4
+T5	Company 1394 1402	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T5	
+T6	MergerAcquisition 1774 1818	advanced negotiations over a possible merger
+A6	Confidence T6 Certain
+A7	MergerAcquisition_Forecast T6
+A8	MergerAcquisition_MergerAcquisition T6
+T7	Company 1684 1694	BAESystems
+T8	Company 1824 1828	EADS
+R3	is_about_company Arg1:T6 Arg2:T8	
+R4	is_about_company Arg1:T6 Arg2:T7	
+T9	Profit 3447 3493	missed profit expectations by about 7 per cent
+A9	Confidence T9 Certain
+A10	Profit_WorseThanExpected T9
+T10	Company 3334 3344	Kingfisher
+R5	is_about_company Arg1:T9 Arg2:T10	
+T11	Dividend 3646 3675	declared no dividend for 2012
+A11	Confidence T11 Certain
+A12	Dividend_NoPayment T11
+A13	Dividend_Announcement T11
+T12	Company 3574 3594	Barratt Developments
+R6	is_about_company Arg1:T11 Arg2:T12	
+T13	BuyRating 3919 3957	downgraded from " buy " to " neutral "
+A14	Confidence T13 Certain
+A15	BuyRating_Hold T13
+A16	BuyRating_Downgrade T13
+T14	Company 3861 3869	Invensys
+R7	is_about_company Arg1:T13 Arg2:T14	

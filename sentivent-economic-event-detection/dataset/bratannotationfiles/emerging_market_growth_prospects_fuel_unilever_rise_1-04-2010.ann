@@ -1,0 +1,22 @@
+T1	BuyRating 755 791	It moved from " neutral " to " buy "
+A1	Confidence T1 Certain
+A2	BuyRating_Upgrade T1
+A3	BuyRating_Buy T1
+T2	TargetPrice 792 840	with an unchanged price target of pound(s)22.70.
+A4	Confidence T2 Certain
+A5	TargetPrice_Maintained T2
+T3	Company 340 348	Unilever
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	BuyRating 2852 2884	stuck with " overweight " advice
+A6	Confidence T4 Certain
+A7	BuyRating_Outperform T4
+A8	BuyRating_Maintained T4
+T5	Company 2728 2736	Gartmore
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Profit 3431 3525	after warning that pressures on US school board budgets were likely to hold back profit growth
+A9	Confidence T6 Certain
+A10	Profit_Decrease T6
+A11	Profit_Forecast T6
+T7	Company 3394 3404	FirstGroup
+R4	is_about_company Arg1:T6 Arg2:T7	

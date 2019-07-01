@@ -1,0 +1,28 @@
+T2	Company 0 12	British Land
+T4	Company 135 147	British Land
+T5	Profit 1832 1926	For the three months to the end of December , pre-tax losses rose 22 per cent to pound(s)1.6bn
+A6	Confidence T5 Certain
+A7	Profit_Decrease T5
+T6	Profit 2146 2218	Underlying pre-tax profit fell 13 per cent in the quarter to pound(s)63m
+A8	Confidence T6 Certain
+A9	Profit_Decrease T6
+T7	Turnover 1981 2055	gross rental and related revenues that dropped 14 per cent to pound(s)137m
+A10	Confidence T7 Certain
+A11	Turnover_Decrease T7
+T8	Company 2231 2243	British Land
+R3	is_about_company Arg1:T6 Arg2:T8	
+R4	is_about_company Arg1:T7 Arg2:T8	
+R5	is_about_company Arg1:T5 Arg2:T8	
+A1	Profit_Negative T5
+T1	QuarterlyResults 1832 1926	For the three months to the end of December , pre-tax losses rose 22 per cent to pound(s)1.6bn
+A2	Confidence T1 Certain
+A3	QuarterlyResults_Worse T1
+T3	Profit 2058 2133	The loss per share grew 21 per cent compared with the same period last year
+A4	Confidence T3 Certain
+A5	Profit_Decrease T3
+A12	Profit_Negative T3
+T9	QuarterlyResults 2058 2133	The loss per share grew 21 per cent compared with the same period last year
+A13	Confidence T9 Certain
+A14	QuarterlyResults_Worse T9
+R1	is_about_company Arg1:T3 Arg2:T8	
+R2	is_about_company Arg1:T9 Arg2:T8	

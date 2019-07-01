@@ -1,0 +1,19 @@
+T1	Profit 1490 1558	first-half headline pre-tax profits fell 71 per cent to pound(s)759m
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 1284 1292	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 2099 2116	The steep fall in
+A3	Confidence T3 Certain
+A4	Profit_Decrease T3
+T4	Profit 2128 2152	statutory pre-tax profit
+A5	Confidence T4 Certain
+A6	Profit_Decrease T4
+*	in_span_with T4 T3
+T5	Company 2117 2125	Barclays
+R2	is_about_company Arg1:T4 Arg2:T5	
+T6	Profit 2504 2621	first-half pre-tax profit rose 13 per cent to pound(s)4.23bn , ahead of analysts ' average forecast of pound(s)3.82bn
+A7	Confidence T6 Certain
+A8	Profit_Increase T6
+A9	Profit_BetterThanExpected T6
+R3	is_about_company Arg1:T6 Arg2:T5	

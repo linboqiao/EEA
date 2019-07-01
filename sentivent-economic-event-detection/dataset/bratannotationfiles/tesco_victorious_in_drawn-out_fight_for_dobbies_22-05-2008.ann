@@ -1,0 +1,15 @@
+T1	MergerAcquisition 339 372	Pounds 155.6m acquisition attempt
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Announcement T1
+T2	Company 311 316	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	MergerAcquisition 942 980	attempted to frustrate the acquisition
+A3	Confidence T3 Uncertain
+A4	MergerAcquisition_Announcement T3
+T4	Company 894 899	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	MergerAcquisition 2446 2512	should now succeed in consolidating its first non-food acquisition
+A5	Confidence T5 Certain
+A6	MergerAcquisition_Forecast T5
+T6	Company 2440 2445	Tesco
+R3	is_about_company Arg1:T5 Arg2:T6	

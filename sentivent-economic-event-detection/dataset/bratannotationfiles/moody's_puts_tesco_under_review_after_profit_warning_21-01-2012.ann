@@ -1,0 +1,37 @@
+T1	Profit 33 53	after profit warning
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A3	Profit_Forecast T1
+T2	Company 14 19	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 211 247	the retailer 's shock profit warning
+A4	Confidence T3 Certain
+A5	Profit_Decrease T3
+A6	Profit_Forecast T3
+T4	Company 117 122	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 415 509	the warning that underlying profits in the 2012-13 financial year would be lower than expected
+A7	Confidence T5 Certain
+A8	Profit_WorseThanExpected T5
+A9	Profit_Forecast T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	SalesVolume 529 618	recent investment in price promotions has not had the anticipated impact on volume growth
+A10	Confidence T6 Certain
+A11	SalesVolume_WorseThanExpected T6
+R4	is_about_company Arg1:T6 Arg2:T4	
+T7	Debt 949 1012	had not altered its year-end net debt forecast of pound(s)6.4bn
+A12	Confidence T7 Certain
+A13	Debt_Forecast T7
+T8	Company 943 948	Tesco
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	Profit 1165 1209	issued its first profit warning for 20 years
+A14	Profit_Declaration T9
+A15	Confidence T9 Certain
+A16	Profit_Decrease T9
+A17	Profit_Forecast T9
+T10	Company 1159 1164	Tesco
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	Profit 677 726	the company 's revised forecast for profit growth
+A18	Confidence T11 Certain
+A19	Profit_Forecast T11
+R7	is_about_company Arg1:T11 Arg2:T8	

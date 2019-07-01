@@ -1,0 +1,65 @@
+T1	Dividend 282 337	the prospect that it would once again receive dividends
+A1	Confidence T1 Certain
+A2	Dividend_Payment T1
+A3	Dividend_Forecast T1
+T2	Company 343 359	Verizon Wireless
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 502 540	has been blocking dividends since 2005
+A4	Confidence T3 Certain
+A5	Dividend_NoPayment T3
+T4	Company 456 472	Verizon Wireless
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Dividend 561 609	it was likely that payments would resume in 2012
+A6	Confidence T5 Certain
+A7	Dividend_Payment T5
+A8	Dividend_Forecast T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	Debt 1175 1206	reduce the UK group 's net debt
+A9	Confidence T6 Certain
+A10	Debt_Reduction T6
+T7	Company 1095 1103	Vodafone
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	MergerAcquisition 866 899	sold its Japanese mobile business
+A11	Confidence T8 SomewhatCertain
+A12	MergerAcquisition_Other T8
+A13	MergerAcquisition_MergerAcquisition T8
+T9	MergerAcquisition 912 945	in 2006 for pound(s)6.8bn in cash
+A14	MergerAcquisition_Other T9
+A15	MergerAcquisition_MergerAcquisition T9
+*	in_span_with T8 T9
+T10	Company 857 865	Vodafone
+T11	Company 903 911	Softbank
+R5	is_about_company Arg1:T8 Arg2:T10	
+R6	is_about_company Arg1:T8 Arg2:T11	
+T12	MergerAcquisition 1113 1148	an initial payment of pound(s)1.6bn
+A16	Confidence T12 Certain
+A17	MergerAcquisition_Other T12
+T13	Company 1152 1160	Softbank
+R7	is_about_company Arg1:T12 Arg2:T13	
+R8	is_about_company Arg1:T12 Arg2:T7	
+T14	Turnover 1256 1381	predicted for the first time that the group could achieve annual revenue growth of up to 4 per cent over the next three years
+A18	Confidence T14 Certain
+A19	Turnover_Forecast T14
+A20	Turnover_Increase T14
+T15	Company 1226 1234	Vodafone
+R9	is_about_company Arg1:T14 Arg2:T15	
+T16	Turnover 1528 1628	reported revenue of pound(s)22.6bn for the six months to September 30 , up 3.9 per cent year on year
+A21	Confidence T16 Certain
+A22	Turnover_Increase T16
+A23	Turnover_Declaration T16
+T17	Company 1442 1450	Vodafone
+R10	is_about_company Arg1:T16 Arg2:T17	
+T18	Profit 1631 1722	Adjusted operating profit , which excludes impairments , rose 2.7 per cent to pound(s)6.1bn
+A24	Confidence T18 Certain
+A25	Profit_Increase T18
+A26	Profit_Positive T18
+R11	is_about_company Arg1:T18 Arg2:T17	
+T19	Turnover 1806 1852	net income rose 56.5 per cent to pound(s)7.5bn
+A27	Confidence T19 SomewhatCertain
+T20	Company 1794 1802	Vodafone
+R12	is_about_company Arg1:T19 Arg2:T20	
+A28	Turnover_Increase T19
+T21	Dividend 1925 1972	The interim dividend rose 7.1 per cent to 2.85p
+A29	Confidence T21 Certain
+A30	Dividend_Raise T21
+R13	is_about_company Arg1:T21 Arg2:T20	

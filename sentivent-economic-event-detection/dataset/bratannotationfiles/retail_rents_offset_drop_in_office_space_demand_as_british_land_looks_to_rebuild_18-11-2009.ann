@@ -1,0 +1,40 @@
+T1	Turnover 545 584	a 2.3 per cent decline in office income
+A1	Confidence T1 Certain
+T2	Turnover 585 651	reduced overall like-for-like rental income growth to 0.7 per cent
+A3	Confidence T2 Certain
+A4	Turnover_Decrease T2
+A2	Turnover_Decrease T1
+T3	Company 156 168	British Land
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	QuarterlyResults 841 904	it said NAV had rebounded by 3.1 per cent in the second quarter
+A5	Confidence T4 Certain
+A6	QuarterlyResults_Better T4
+T5	Company 1275 1287	British Land
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Turnover 2338 2415	Gross rental income for the six months fell from pound(s)283m to pound(s)240m
+A7	Confidence T6 Certain
+A8	Turnover_Decrease T6
+T7	Company 2240 2252	British Land
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Profit 2527 2589	pre-tax losses pegged back from pound(s)1.33bn to pound(s)113m
+A9	Confidence T8 Certain
+A10	Profit_Increase T8
+A11	Profit_Negative T8
+R5	is_about_company Arg1:T8 Arg2:T7	
+T9	Dividend 2605 2649	declared a second quarterly dividend of 6.5p
+A12	Confidence T9 Certain
+A13	Dividend_Announcement T9
+T10	Company 2592 2604	British Land
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	Profit 2720 2743	losses per share of 13p
+A14	Confidence T11 Certain
+A15	Profit_Negative T11
+T12	Profit 2758 2792	pound(s)129m of underlying profits
+A16	Confidence T12 Certain
+A17	Profit_Positive T12
+T13	Profit 2795 2847	which generated underlying earnings per share of 15p
+A18	Profit_Positive T13
+R7	is_about_company Arg1:T11 Arg2:T10	
+R8	is_about_company Arg1:T12 Arg2:T10	
+R9	is_about_company Arg1:T13 Arg2:T10	

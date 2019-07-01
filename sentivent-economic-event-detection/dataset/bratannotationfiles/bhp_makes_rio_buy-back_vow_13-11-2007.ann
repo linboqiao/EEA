@@ -1,0 +1,11 @@
+T5	Company 419 422	Rio
+T6	MergerAcquisition 466 518	offer of three of its shares for every one Rio share
+A5	Confidence T6 Certain
+A6	MergerAcquisition_NoMergerAcquisition T6
+T7	Company 459 462	BHP
+R4	is_about_acquirer Arg1:T6 Arg2:T7	
+T1	MergerAcquisition 433 455	repeated its rejection
+A1	Confidence T1 Certain
+A2	MergerAcquisition_NoMergerAcquisition T1
+*	in_span_with T1 T6
+R1	is_about_target Arg1:T1 Arg2:T5	

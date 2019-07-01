@@ -1,0 +1,22 @@
+T1	SalesVolume 126 172	third-quarter underlying sales up 5.6 per cent
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	QuarterlyResults 126 172	third-quarter underlying sales up 5.6 per cent
+A3	Confidence T2 Certain
+A4	QuarterlyResults_Better T2
+T3	Company 35 40	Tesco
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	SalesVolume 224 266	underlying sales in line with expectations
+A5	Confidence T4 Certain
+A6	SalesVolume_AsExpected T4
+T5	SalesVolume 395 443	sales in these products growing at double-digits
+A7	Confidence T5 Certain
+A8	SalesVolume_Increase T5
+R3	is_about_company Arg1:T4 Arg2:T3	
+R4	is_about_company Arg1:T5 Arg2:T3	
+T6	SalesVolume 855 966	Group sales , excluding petrol , grew 10.3 per cent in the 13 weeks to November , with UK sales up 8.5 per cent
+A9	Confidence T6 Certain
+A10	SalesVolume_Increase T6
+T7	Company 774 779	Tesco
+R5	is_about_company Arg1:T6 Arg2:T7	

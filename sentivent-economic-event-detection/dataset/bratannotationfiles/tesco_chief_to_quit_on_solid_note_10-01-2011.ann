@@ -1,0 +1,5 @@
+T1	SalesVolume 535 690	forecasts UK sales from stores open at least a year , excluding fuel and value added tax , to grow 1-2 per cent year on year for the six weeks to January 8
+A1	Confidence T1 SomewhatCertain
+A2	SalesVolume_Increase T1
+T2	Company 390 395	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	

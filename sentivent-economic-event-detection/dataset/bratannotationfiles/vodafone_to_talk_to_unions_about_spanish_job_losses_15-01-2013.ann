@@ -1,0 +1,16 @@
+T1	Turnover 384 450	revenues fell 11 per cent in the six months to September last year
+A1	Confidence T1 Certain
+A2	Turnover_Decrease T1
+T2	Company 251 259	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 1010 1104	a first-half pre-tax loss of pound(s)492m - down from an pound(s)8bn profit in the year before
+A3	Confidence T3 Certain
+A4	Profit_Negative T3
+T4	Company 874 882	Vodafone
+A5	Profit_Increase T3
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 1222 1253	revenues have continued to fall
+A6	Confidence T5 Certain
+A7	Turnover_Decrease T5
+T6	Company 1107 1115	Vodafone
+R3	is_about_company Arg1:T5 Arg2:T6	

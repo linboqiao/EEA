@@ -1,0 +1,48 @@
+T1	Company 176 188	BHP Billiton
+T2	MergerAcquisition 251 308	has yielded the biggest takeover bid in the mining sector
+A1	Confidence T2 Certain
+T3	Company 503 513	PotashCorp
+R2	is_about_target Arg1:T2 Arg2:T3	
+T4	Company 2389 2392	BHP
+T5	MergerAcquisition 2393 2406	agreed to buy
+A3	Confidence T5 Certain
+A4	MergerAcquisition_Announcement T5
+T6	Company 2407 2423	Athabasca Potash
+T7	MergerAcquisition 2424 2434	for C$341m
+A5	Confidence T7 Certain
+A6	MergerAcquisition_Announcement T7
+*	in_span_with T5 T7
+R3	is_about_acquirer Arg1:T5 Arg2:T4	
+R4	is_about_target Arg1:T5 Arg2:T6	
+T8	Debt 3718 3746	has net debt of about $3.4bn
+A7	Confidence T8 SomewhatCertain
+T9	Company 3699 3709	PotashCorp
+T10	Profit 3749 3825	saw pre-tax profits in the first half of the year rise from $452m to $1.28bn
+A9	Confidence T10 Certain
+A10	Profit_Increase T10
+A8	Debt_Other T8
+T11	MergerAcquisition 319 344	abandoned its hostile bid
+A11	Confidence T11 Certain
+A12	MergerAcquisition_NoMergerAcquisition T11
+T12	Company 315 318	BHP
+R5	is_about_acquirer Arg1:T11 Arg2:T12	
+T13	Company 349 358	Rio Tinto
+R6	is_about_target Arg1:T11 Arg2:T13	
+T14	MergerAcquisition 595 637	whose board immediately rejected the offer
+A13	Confidence T14 Certain
+A14	MergerAcquisition_NoMergerAcquisition T14
+T15	Company 581 592	Potash Corp
+R1	is_about_acquirer Arg1:T2 Arg2:T1	
+A2	MergerAcquisition_Other T2
+R7	is_about_target Arg1:T14 Arg2:T15	
+T16	Company 440 443	BHP
+R8	is_about_acquirer Arg1:T14 Arg2:T16	
+T17	MergerAcquisition 2938 2957	immediate rejection
+A15	Confidence T17 Certain
+A16	MergerAcquisition_NoMergerAcquisition T17
+T18	Company 2924 2934	PotashCorp
+T19	Company 2546 2549	BHP
+R9	is_about_target Arg1:T17 Arg2:T18	
+R10	is_about_acquirer Arg1:T17 Arg2:T19	
+R11	is_about_company Arg1:T8 Arg2:T9	
+R12	is_about_company Arg1:T10 Arg2:T9	

@@ -1,0 +1,28 @@
+T1	ShareRepurchase 82 171	surprised investors with plans to return Dollars 10bn ( Pounds 5.1bn ) in share buy-backs
+A1	Confidence T1 Certain
+A2	ShareRepurchase_Announcement T1
+T2	Company 38 50	BHP Billiton
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 314 394	the half-year earnings results , which were slightly short of analysts forecasts
+A3	Confidence T3 Certain
+A4	Profit_WorseThanExpected T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Profit 514 566	reported a 41 per cent jump in first-half net profit
+A5	Confidence T4 Certain
+A6	Profit_Increase T4
+T5	Company 510 513	BHP
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Profit 764 825	the first- half earnings were about3 per cent below estimates
+A7	Confidence T6 Certain
+A8	Profit_WorseThanExpected T6
+R4	is_about_company Arg1:T6 Arg2:T5	
+T7	Profit 1661 1742	which last week reported a 25 per cent gain in half-year profit to Dollars 3.59bn
+A9	Confidence T7 Certain
+A10	Profit_Increase T7
+T8	Company 1649 1658	Rio Tinto
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	Dividend 1917 1974	increased its first-half dividend 14 per cent to 20 cents
+A11	Confidence T9 Certain
+A12	Dividend_Raise T9
+T10	Company 1822 1825	BHP
+R6	is_about_company Arg1:T9 Arg2:T10	

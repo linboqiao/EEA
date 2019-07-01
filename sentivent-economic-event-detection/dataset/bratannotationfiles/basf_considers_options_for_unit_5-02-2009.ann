@@ -1,0 +1,16 @@
+T1	Turnover 483 552	The leather and textile chemicals unit saw revenues of around EUR400m
+A1	Confidence T1 Certain
+T2	Company 696 700	BASF
+R1	is_about_company Arg1:T1 Arg2:T2	
+T5	Company 771 775	Ciba
+T3	MergerAcquisition 701 770	announced a small internal reorganisation as it prepares to integrate
+A3	MergerAcquisition_Announcement T3
+A4	Confidence T3 Certain
+T4	MergerAcquisition 804 851	for which it made a takeover offer in September
+A5	Confidence T4 Certain
+A6	MergerAcquisition_Other T4
+#1	AnnotatorNotes T4	Offer
+R2	is_about_acquirer Arg1:T3 Arg2:T2	
+R3	is_about_target Arg1:T3 Arg2:T5	
+A2	Turnover_Other T1
+*	in_span_with T4 T3

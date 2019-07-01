@@ -1,0 +1,44 @@
+T1	Profit 172 210	announced a jump in its interim profit
+A1	Profit_Declaration T1
+A2	Confidence T1 Certain
+A3	Profit_Increase T1
+T2	Company 51 55	Absa
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 248 350	saw pre-tax profit for the six months ending September 30 rise from R3.33bn to R4.12bn ( Pounds 360m )
+A4	Confidence T3 Certain
+A5	Profit_Increase T3
+A6	Profit_Positive T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Dividend 862 928	to lift its interim dividend by 68.4 per cent to 160 cents a share
+A7	Confidence T4 Certain
+A8	Dividend_Raise T4
+T5	Dividend 826 856	The strong performance allowed
+A9	Confidence T5 Certain
+A10	Dividend_Raise T5
+*	in_span_with T5 T4
+T6	Company 857 861	Absa
+R3	is_about_company Arg1:T4 Arg2:T6	
+T7	MergerAcquisition 1269 1333	have estimated the implementation costs for the merger at R1.8bn
+A11	Confidence T7 Certain
+A12	MergerAcquisition_MergerAcquisition T7
+T8	Company 984 988	Absa
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	Company 1177 1185	Barclays
+R5	is_about_company Arg1:T7 Arg2:T9	
+T10	MergerAcquisition 1335 1345	The merger
+A13	Confidence T10 Certain
+A14	MergerAcquisition_MergerAcquisition T10
+T11	Company 1355 1359	Absa
+T12	Company 1422 1430	Barclays
+R6	is_about_company Arg1:T10 Arg2:T11	
+R7	is_about_company Arg1:T10 Arg2:T12	
+T13	SalesVolume 2060 2150	It has the most customers of any South African bank - 7.5m , up from 7m six months earlier
+A15	Confidence T13 Certain
+A16	SalesVolume_Increase T13
+T14	Company 1919 1923	Absa
+R8	is_about_company Arg1:T13 Arg2:T14	
+T15	Dividend 2365 2430	lifted its interim dividend by 68.4 per cent to 160 cents a share
+A17	Confidence T15 Certain
+A18	Dividend_Raise T15
+T16	Company 2360 2364	Absa
+R9	is_about_company Arg1:T15 Arg2:T16	

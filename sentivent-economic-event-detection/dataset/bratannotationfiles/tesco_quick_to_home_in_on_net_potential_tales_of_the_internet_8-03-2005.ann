@@ -1,0 +1,27 @@
+T1	SalesVolume 583 651	online sales accounted for just less than two per cent - Pounds 577m
+A1	Confidence T1 Certain
+T2	Company 574 579	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 657 691	total group sales of Pounds 33.5bn
+A3	Confidence T3 Certain
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	SalesVolume 795 834	internet sales will have grown strongly
+A5	Confidence T4 Certain
+A6	SalesVolume_Forecast T4
+T5	Company 709 714	Tesco
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	SalesVolume 1057 1104	online sales were up 27 per cent at Pounds 307m
+A7	Confidence T6 Certain
+A8	SalesVolume_Increase T6
+T7	Company 862 867	Tesco
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Profit 1113 1145	pre-tax profit was at Pounds 15m
+A10	Confidence T8 Certain
+R5	is_about_company Arg1:T8 Arg2:T7	
+T9	SalesVolume 1148 1203	That is double the annual sales of JSainsbury and Ocado
+A11	Confidence T9 Certain
+R6	is_about_company Arg1:T9 Arg2:T7	
+A13	SalesVolume_Increase T4
+A2	SalesVolume_Other T1
+A4	Profit_Other T8
+A9	SalesVolume_Other T9

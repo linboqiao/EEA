@@ -1,0 +1,22 @@
+T1	MergerAcquisition 26 29	bid
+A1	Confidence T1 SomewhatCertain
+A2	MergerAcquisition_Other T1
+T2	MergerAcquisition 4 17	sets deadline
+A3	Confidence T2 SomewhatCertain
+A4	MergerAcquisition_Other T2
+T3	Company 22 25	WMC
+T4	Company 0 3	BHP
+*	in_span_with T1 T2
+R1	is_about_target Arg1:T1 Arg2:T3	
+R2	is_about_acquirer Arg1:T2 Arg2:T4	
+T5	MergerAcquisition 66 94	ratcheted up the pressure on
+A5	Confidence T5 SomewhatCertain
+A6	MergerAcquisition_Other T5
+T6	MergerAcquisition 99 169	shareholders to accept its ADollars 9.2bn ( Dollars 7bn ) agreed offer
+A7	Confidence T6 SomewhatCertain
+A8	MergerAcquisition_Other T6
+*	in_span_with T6 T5
+T7	Company 95 98	WMC
+T8	Company 43 55	BHP Billiton
+R3	is_about_acquirer Arg1:T5 Arg2:T8	
+R4	is_about_target Arg1:T5 Arg2:T7	

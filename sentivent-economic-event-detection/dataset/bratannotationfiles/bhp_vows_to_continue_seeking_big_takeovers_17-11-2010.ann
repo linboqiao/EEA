@@ -1,0 +1,24 @@
+T4	Company 132 144	BHP Billiton
+T5	Company 374 384	PotashCorp
+T6	MergerAcquisition 296 363	this week 's aborted $39bn ( pound(s ) 24.6bn ) hostile takeover of
+A6	Confidence T6 Certain
+A7	MergerAcquisition_NoMergerAcquisition T6
+R3	is_about_target Arg1:T6 Arg2:T5	
+R4	is_about_acquirer Arg1:T6 Arg2:T4	
+T9	Debt 1655 1728	has a solid balance sheet with net debt falling to $3.3bn at the year end
+A3	Confidence T9 SomewhatCertain
+T10	Company 1581 1584	BHP
+R6	is_about_company Arg1:T9 Arg2:T10	
+T13	Company 2504 2514	PotashCorp
+T14	ShareRepurchase 2515 2595	said on Tuesday it was launching a $2bn stock buyback to support its share price
+A14	Confidence T14 Certain
+A15	ShareRepurchase_Announcement T14
+T1	MergerAcquisition 1139 1168	abandoned its hostile bid for
+A1	Confidence T1 Certain
+A2	MergerAcquisition_NoMergerAcquisition T1
+T2	Company 1135 1138	BHP
+T3	Company 1187 1196	Rio Tinto
+R1	is_about_target Arg1:T1 Arg2:T3	
+R2	is_about_acquirer Arg1:T1 Arg2:T2	
+A4	Debt_Reduction T9
+R5	is_about_company Arg1:T14 Arg2:T13	

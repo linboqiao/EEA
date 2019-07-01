@@ -1,0 +1,38 @@
+T1	MergerAcquisition 2366 2417	agreed to buy the biotech company for $27 per share
+A1	Confidence T1 Certain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	Company 2304 2323	Abbott Laboratories
+T3	Company 2253 2266	Facet Biotech
+R1	is_about_acquirer Arg1:T1 Arg2:T2	
+R2	is_about_target Arg1:T1 Arg2:T3	
+T4	SalesVolume 3434 3446	higher sales
+A3	Confidence T4 Certain
+A4	SalesVolume_Increase T4
+T5	Company 3302 3327	American Eagle Outfitters
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Profit 3489 3583	Net income in the fourth-quarter was $59.3m , up 81.3 per cent from the same period a year ago
+A5	Confidence T6 Certain
+A6	Profit_Increase T6
+T7	QuarterlyResults 3489 3583	Net income in the fourth-quarter was $59.3m , up 81.3 per cent from the same period a year ago
+A7	Confidence T7 Certain
+A8	QuarterlyResults_Better T7
+R4	is_about_company Arg1:T7 Arg2:T5	
+R5	is_about_company Arg1:T6 Arg2:T5	
+T8	Profit 3586 3679	The company also forecast higher earnings in the first quarter than analysts were looking for
+A9	Confidence T8 Certain
+A10	Profit_Increase T8
+A11	Profit_BetterThanExpected T8
+A12	Profit_Forecast T8
+R6	is_about_company Arg1:T8 Arg2:T5	
+T9	BuyRating 4068 4116	added to Goldman Sachs ' " conviction buy " list
+A13	Confidence T9 Certain
+A14	BuyRating_Buy T9
+T10	Company 3972 3993	Bucyrus International
+R7	is_about_company Arg1:T9 Arg2:T10	
+T11	MergerAcquisition 2897 2915	announced the sale
+A15	Confidence T11 Certain
+A16	MergerAcquisition_Announcement T11
+T12	Company 2923 2928	Cobra
+T13	Company 2965 2969	Puma
+R8	is_about_target Arg1:T11 Arg2:T12	
+R9	is_about_acquirer Arg1:T11 Arg2:T13	

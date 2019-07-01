@@ -1,0 +1,10 @@
+T1	SalesVolume 463 536	Underlying sales were flat last year and profit margins declined slightly
+A1	Confidence T1 SomewhatCertain
+A2	SalesVolume_Stable T1
+T2	Company 146 151	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 1153 1226	overall trading profit rose 11 per cent in Europe and 30 per cent in Asia
+A3	Confidence T3 Certain
+A4	Profit_Increase T3
+T4	Company 1132 1137	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	

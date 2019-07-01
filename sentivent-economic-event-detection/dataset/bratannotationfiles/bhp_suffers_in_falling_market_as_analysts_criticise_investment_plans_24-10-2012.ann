@@ -1,0 +1,48 @@
+T1	Company 3807 3819	Arm Holdings
+T2	QuarterlyResults 3820 3904	jumped 7.7 per cent to 640p after its quarterly earnings beat consensus expectations
+A1	Confidence T2 Certain
+A2	QuarterlyResults_BetterThanExpected T2
+T3	Company 4074 4082	Experian
+T4	Profit 4206 4261	saw the deal boosting 2014 earnings by about 7 per cent
+A4	Confidence T4 Certain
+A5	Profit_Forecast T4
+R1	is_about_company Arg1:T4 Arg2:T3	
+T5	Profit 1520 1535	profit warnings
+A6	Confidence T5 Certain
+A7	Profit_Decrease T5
+A8	Profit_Forecast T5
+T6	Company 1541 1543	3M
+T7	Company 1548 1555	Du Pont
+R2	is_about_company Arg1:T5 Arg2:T6	
+R3	is_about_company Arg1:T5 Arg2:T7	
+T8	BuyRating 2237 2278	started coverage with a " reduce " rating
+A9	Confidence T8 Certain
+A10	BuyRating_Sell T8
+T9	TargetPrice 2237 2258	started coverage with
+A11	Confidence T9 Certain
+A12	TargetPrice_Announcement T9
+T10	TargetPrice 2283 2294	174p target
+A13	Confidence T10 Certain
+A14	TargetPrice_Announcement T10
+*	in_span_with T10 T9
+T11	Company 2181 2192	Direct Line
+R4	is_about_company Arg1:T9 Arg2:T11	
+R5	is_about_company Arg1:T8 Arg2:T11	
+T12	Profit 2693 2709	A profit warning
+A15	Confidence T12 Certain
+A16	Profit_Decrease T12
+A17	Profit_Forecast T12
+T13	Company 2718 2726	Mulberry
+R6	is_about_company Arg1:T12 Arg2:T13	
+T14	SalesVolume 2949 2976	has already announced sales
+A18	Confidence T14 Certain
+A19	SalesVolume_Declaration T14
+T15	Company 2940 2948	Burberry
+R7	is_about_company Arg1:T14 Arg2:T15	
+T16	BuyRating 3188 3202	" Buy " advice
+A20	Confidence T16 Certain
+A21	BuyRating_Buy T16
+T17	Company 3219 3226	N Brown
+R8	is_about_company Arg1:T16 Arg2:T17	
+R9	is_about_company Arg1:T2 Arg2:T1	
+A3	Profit_Increase T4

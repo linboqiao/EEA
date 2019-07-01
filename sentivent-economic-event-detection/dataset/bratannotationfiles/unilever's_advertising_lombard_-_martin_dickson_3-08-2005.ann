@@ -1,0 +1,17 @@
+T1	Profit 49 88	The 9 per cent earnings growth reported
+A1	Profit_Declaration T1
+A2	Confidence T1 Certain
+A3	Profit_Increase T1
+T2	Company 92 108	Procter & Gamble
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	QuarterlyResults 155 186	second-quarter results tomorrow
+A4	Confidence T3 Certain
+A5	QuarterlyResults_Publication T3
+T4	Company 143 151	Unilever
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 672 740	some are expecting no more than 1.5 per cent underlying sales growth
+A6	Confidence T5 Certain
+A7	SalesVolume_Forecast T5
+A8	SalesVolume_Increase T5
+T6	Company 427 435	Unilever
+R3	is_about_company Arg1:T5 Arg2:T6	

@@ -1,0 +1,39 @@
+T1	Dividend 313 435	Added to dividends , this would equate to returning about 60 per cent of its current market capitalisation to shareholders
+A1	Confidence T1 Certain
+A2	Dividend_Forecast T1
+A3	Dividend_Announcement T1
+T2	Company 166 171	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 1170 1232	forecast the US chain to remain lossmaking until at least 2016
+A4	Confidence T3 Certain
+A5	Profit_Negative T3
+A6	Profit_Forecast T3
+T4	Company 858 863	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Company 1323 1328	Tesco
+T6	BuyRating 1319 1322	add
+A7	Confidence T6 Certain
+A8	BuyRating_Buy T6
+T7	BuyRating 1329 1373	to its " buy " list with a 370p price target
+A9	Confidence T7 Certain
+A10	BuyRating_Buy T7
+*	in_span_with T7 T6
+R3	is_about_company Arg1:T7 Arg2:T5	
+T8	BuyRating 2631 2687	downgraded the explorer from " buy " to " underperform "
+A11	Confidence T8 Certain
+A12	BuyRating_Downgrade T8
+A13	BuyRating_Underperform T8
+T9	Company 2578 2588	Dragon Oil
+R4	is_about_company Arg1:T8 Arg2:T9	
+T10	BuyRating 3875 3909	repeated its " outperform " stance
+A14	Confidence T10 Certain
+A15	BuyRating_Outperform T10
+A16	BuyRating_Maintained T10
+T11	Company 3913 3918	Shire
+R5	is_about_company Arg1:T10 Arg2:T11	
+T12	QuarterlyResults 4202 4248	beat forecasts with its third-quarter earnings
+A17	Confidence T12 Certain
+A18	QuarterlyResults_BetterThanExpected T12
+T13	Company 4194 4201	Ashtead
+R6	is_about_company Arg1:T12 Arg2:T13	
+A19	Dividend_Payment T1

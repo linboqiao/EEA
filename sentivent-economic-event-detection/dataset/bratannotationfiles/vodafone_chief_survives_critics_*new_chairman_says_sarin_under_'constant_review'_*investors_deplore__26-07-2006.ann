@@ -1,0 +1,15 @@
+T1	Turnover 1514 1560	warned last November of slowing revenue growth
+A1	Confidence T1 Certain
+A2	Turnover_Decrease T1
+A3	Turnover_Other T1
+T2	Profit 1565 1587	reduced profit margins
+A4	Confidence T2 Certain
+A5	Profit_Decrease T2
+T3	Company 1505 1513	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	Profit 1597 1673	it announced a record pre-tax loss for its 2006 fiscal year of Pounds 14.9bn
+A6	Profit_Declaration T4
+A7	Confidence T4 Certain
+A8	Profit_Negative T4
+R3	is_about_company Arg1:T4 Arg2:T3	

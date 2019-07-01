@@ -1,0 +1,26 @@
+T1	QuarterlyResults 1233 1365	reported a 3.6 per cent uplift in the value of its retail warehouses and a 4.8 per cent rise in City offices during the first quarte
+A1	Confidence T1 Certain
+T2	Profit 1581 1649	Underlying pre-tax profit rose 33 per cent from the previous quarter
+A3	Confidence T2 Certain
+A4	Profit_Increase T2
+T3	QuarterlyResults 1581 1649	Underlying pre-tax profit rose 33 per cent from the previous quarter
+A5	Confidence T3 Certain
+T4	Profit 2011 2032	yield of 4.8 per cent
+A7	Confidence T4 SomewhatCertain
+A8	Profit_Increase T4
+T5	Debt 2043 2071	cost of debt is 5.4 per cent
+A9	Confidence T5 Certain
+A10	Debt_Reduction T5
+T6	Company 1853 1865	British Land
+R1	is_about_company Arg1:T4 Arg2:T6	
+R2	is_about_company Arg1:T5 Arg2:T6	
+A2	QuarterlyResults_Better T1
+T7	Company 57 69	British Land
+R3	is_about_company Arg1:T1 Arg2:T7	
+A6	QuarterlyResults_Better T3
+R4	is_about_company Arg1:T3 Arg2:T7	
+R5	is_about_company Arg1:T2 Arg2:T7	
+T8	Profit 1793 1831	Underlying earnings per share were 11p
+A11	Confidence T8 Certain
+A12	Profit_Positive T8
+R6	is_about_company Arg1:T8 Arg2:T7	

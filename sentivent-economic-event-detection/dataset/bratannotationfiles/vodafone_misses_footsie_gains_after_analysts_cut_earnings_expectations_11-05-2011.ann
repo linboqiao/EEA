@@ -1,0 +1,62 @@
+T1	Profit 45 70	cut earnings expectations
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A3	Profit_Forecast T1
+T2	Company 0 8	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 353 399	trimmed earnings forecasts by about 3 per cent
+A4	Confidence T3 Certain
+A5	Profit_Decrease T3
+A6	Profit_Forecast T3
+T4	Company 78 86	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 435 450	Profit warnings
+A7	Confidence T5 Certain
+A8	Profit_Decrease T5
+A9	Profit_Forecast T5
+T6	Company 456 459	KPN
+T7	Company 464 472	Belgacom
+R3	is_about_company Arg1:T5 Arg2:T6	
+R4	is_about_company Arg1:T5 Arg2:T7	
+T8	BuyRating 935 954	kept " buy " advice
+A10	Confidence T8 Certain
+A11	BuyRating_Buy T8
+A12	BuyRating_Maintained T8
+T9	Company 858 866	Vodafone
+R5	is_about_company Arg1:T8 Arg2:T9	
+T10	BuyRating 1554 1573	to its " buy " list
+A13	Confidence T10 Certain
+A14	BuyRating_Buy T10
+T11	BuyRating 1531 1536	added
+A15	BuyRating_Buy T11
+*	in_span_with T11 T10
+T12	Company 1447 1456	Schroders
+R6	is_about_company Arg1:T11 Arg2:T12	
+T13	QuarterlyResults 1576 1622	Quarterly results last week were disappointing
+A16	Confidence T13 Certain
+A17	QuarterlyResults_WorseThanExpected T13
+R7	is_about_company Arg1:T13 Arg2:T12	
+T14	MergerAcquisition 2071 2132	talk that the accounting software maker was a takeover target
+A18	Confidence T14 Certain
+A19	MergerAcquisition_Forecast T14
+A20	MergerAcquisition_MergerAcquisition T14
+T15	Company 2137 2143	Oracle
+T16	Company 2147 2150	SAP
+T17	Company 2031 2041	Sage Group
+R8	is_about_target Arg1:T14 Arg2:T17	
+R9	is_about_acquirer Arg1:T14 Arg2:T15	
+R10	is_about_acquirer Arg1:T14 Arg2:T16	
+T18	TargetPrice 2776 2794	a 40p price target
+A21	Confidence T18 Certain
+A22	TargetPrice_Announcement T18
+T19	Company 2669 2682	Premier Foods
+R11	is_about_company Arg1:T18 Arg2:T19	
+T20	Debt 2797 2817	A debt restructuring
+A23	Confidence T20 Certain
+A24	Debt_Restructuring T20
+R12	is_about_company Arg1:T20 Arg2:T19	
+T21	TargetPrice 4035 4057	set a 40p price target
+A25	Confidence T21 Certain
+A26	TargetPrice_Announcement T21
+T22	Company 3970 3980	JJB Sports
+R13	is_about_company Arg1:T21 Arg2:T22	

@@ -1,0 +1,61 @@
+T1	Profit 169 229	reported a4 per cent increase in operating profit in 2006-07
+A1	Profit_Declaration T1
+A2	Confidence T1 Certain
+A3	Profit_Increase T1
+T2	Company 63 71	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 343 401	said operating profit would be potentially flat in 2007-08
+A4	Confidence T3 Certain
+A5	Profit_Forecast T3
+T4	Company 334 342	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	MergerAcquisition 599 623	dismissed market rumours
+A6	Confidence T5 Certain
+A7	MergerAcquisition_NoMergerAcquisition T5
+A8	MergerAcquisition_Forecast T5
+T6	MergerAcquisition 644 662	was planning a bid
+A9	MergerAcquisition_NoMergerAcquisition T6
+A10	MergerAcquisition_Forecast T6
+*	in_span_with T5 T6
+T7	Company 594 598	AT&T
+T8	Company 457 465	Vodafone
+R3	is_about_acquirer Arg1:T5 Arg2:T7	
+R4	is_about_target Arg1:T5 Arg2:T8	
+T9	MergerAcquisition 963 1013	paying Dollars 10.9bn ( Pounds 5.5bn ) for control
+A11	Confidence T9 Certain
+A12	MergerAcquisition_Other T9
+A13	MergerAcquisition_MergerAcquisition T9
+T10	Company 1017 1032	Hutchison Essar
+T11	Company 889 897	Vodafone
+R5	is_about_acquirer Arg1:T9 Arg2:T11	
+R6	is_about_target Arg1:T9 Arg2:T10	
+T12	Debt 1456 1481	net debt at Pounds 24.1bn
+A14	Confidence T12 Certain
+A15	Debt_Other T12
+T13	Company 1547 1555	Vodafone
+R7	is_about_company Arg1:T12 Arg2:T13	
+T14	Turnover 1688 1751	reported revenue of Pounds 31.1bn for 2006-07 , up 4.3 per cent
+A16	Confidence T14 Certain
+A17	Turnover_Increase T14
+A18	Turnover_Declaration T14
+T15	Company 1679 1687	Vodafone
+R8	is_about_company Arg1:T14 Arg2:T15	
+T16	Profit 1778 1837	adjusted operating profit of Pounds 9.5bn , up 4.2 per cent
+A19	Confidence T16 Certain
+A20	Profit_Increase T16
+A21	Profit_Positive T16
+R9	is_about_company Arg1:T16 Arg2:T15	
+T17	Profit 1852 1882	a pre-tax loss of Pounds 2.4bn
+A22	Confidence T17 Certain
+A23	Profit_Negative T17
+R10	is_about_company Arg1:T17 Arg2:T15	
+T18	Dividend 2036 2087	The full year dividend was 6.76p , up 11.4 per cent
+A24	Confidence T18 Certain
+A25	Dividend_Raise T18
+R11	is_about_company Arg1:T18 Arg2:T15	
+T19	Dividend 2122 2169	will over the next two years raise its dividend
+A26	Confidence T19 Certain
+A27	Dividend_Raise T19
+A28	Dividend_Forecast T19
+T20	Company 2113 2121	Vodafone
+R12	is_about_company Arg1:T19 Arg2:T20	

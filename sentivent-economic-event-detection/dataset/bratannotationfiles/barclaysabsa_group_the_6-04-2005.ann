@@ -1,0 +1,9 @@
+T1	Profit 1292 1316	Forecast earnings growth
+A1	Profit_Forecast T1
+T2	Profit 1326 1410	of 12 per cent a year to 2008 - before any synergies - should cushion rand movements
+A2	Confidence T2 Certain
+A3	Profit_Forecast T2
+A4	Confidence T1 Certain
+T3	Company 1321 1325	Absa
+*	in_span_with T1 T2
+R1	is_about_company Arg1:T1 Arg2:T3	

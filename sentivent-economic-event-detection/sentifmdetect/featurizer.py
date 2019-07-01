@@ -11,7 +11,7 @@ from sentifmdetect import util
 import json
 from sklearn.preprocessing import MultiLabelBinarizer
 import os
-os.environ['CORENLP_HOME'] = "~/software/stanford-corenlp-full-2018-02-27/"
+os.environ['CORENLP_HOME'] = "/home/linbo/workspace/Datasets/Standford-coreNLP/stanford-corenlp-full-2018-10-05/"
 import string
 from sklearn.model_selection import train_test_split
 import logging
@@ -20,7 +20,8 @@ import keras.preprocessing.text
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 import numpy as np
-from nltk.tokenize.stanford import CoreNLPTokenizer
+#from nltk.tokenize.stanford import CoreNLPTokenizer
+from nltk.tokenize.stanford import StanfordTokenizer
 from nltk import word_tokenize
 import nltk
 from glove import Glove

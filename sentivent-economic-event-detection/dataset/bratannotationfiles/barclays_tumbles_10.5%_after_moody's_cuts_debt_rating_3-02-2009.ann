@@ -1,0 +1,49 @@
+T1	BuyRating 1167 1202	The broker kept a " reduce " rating
+A1	Confidence T1 SomewhatCertain
+A2	BuyRating_Sell T1
+A3	BuyRating_Maintained T1
+T2	Company 1206 1214	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Company 1228 1234	Lloyds
+T4	Company 1270 1292	Royal Bank of Scotland
+R2	is_about_company Arg1:T1 Arg2:T3	
+R3	is_about_company Arg1:T1 Arg2:T4	
+T5	BuyRating 1329 1337	also cut
+A4	Confidence T5 Certain
+A5	BuyRating_Hold T5
+A6	BuyRating_Downgrade T5
+T6	BuyRating 1343 1357	to " neutral "
+A7	Confidence T6 Certain
+A8	BuyRating_Hold T6
+A9	BuyRating_Downgrade T6
+T7	Company 1338 1342	HSBC
+*	in_span_with T5 T6
+R4	is_about_company Arg1:T5 Arg2:T7	
+T8	BuyRating 2510 2556	downgraded the insurance sector to " neutral "
+A10	Confidence T8 Certain
+A11	BuyRating_Hold T8
+A12	BuyRating_Downgrade T8
+T9	Company 2426 2434	Clearnet
+R5	is_about_company Arg1:T8 Arg2:T9	
+T10	MergerAcquisition 3032 3068	attempts to renegotiate their merger
+A13	Confidence T10 Certain
+A14	MergerAcquisition_Other T10
+T11	Company 3000 3011	Caja Madrid
+T12	Company 2907 2922	British Airways
+R6	is_about_company Arg1:T10 Arg2:T11	
+R7	is_about_company Arg1:T10 Arg2:T12	
+T13	TargetPrice 3339 3365	set a 140p price target on
+A15	Confidence T13 Certain
+A16	TargetPrice_Announcement T13
+T14	Company 3366 3374	Wolseley
+R8	is_about_company Arg1:T13 Arg2:T14	
+T15	BuyRating 3807 3844	started coverage with " sell " advice
+A17	Confidence T15 Certain
+A18	BuyRating_Sell T15
+A19	BuyRating_Announcement T15
+T16	TargetPrice 3845 3862	and a 360p target
+A20	Confidence T16 Certain
+A21	TargetPrice_Announcement T16
+T17	Company 3755 3763	Paypoint
+R9	is_about_company Arg1:T15 Arg2:T17	
+R10	is_about_company Arg1:T16 Arg2:T17	

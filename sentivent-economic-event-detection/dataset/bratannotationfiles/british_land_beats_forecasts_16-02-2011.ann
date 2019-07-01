@@ -1,0 +1,26 @@
+T2	Company 41 53	British Land
+T1	QuarterlyResults 260 318	properties rose 2.3 per cent in value in the third quarter
+A1	Confidence T1 Certain
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	QuarterlyResults 1335 1413	0.5 per cent rise in estimated rental values in line with the previous quarter
+A4	Confidence T3 Certain
+T4	Company 950 962	British Land
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	QuarterlyResults 1416 1502	Lettings in the quarter have been agreed significantly ahead of estimated rental value
+A6	Confidence T5 Certain
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	Profit 1577 1644	Pre-tax profit fell from pound(s)611m to pound(s)263m in the period
+A8	Confidence T6 Certain
+A9	Profit_Decrease T6
+T7	Profit 1647 1664	Underlying profit
+T8	Profit 1719 1755	rose from pound(s)58m to pound(s)64m
+A10	Confidence T8 Certain
+A11	Profit_Increase T8
+A12	Confidence T7 Certain
+*	in_span_with T7 T8
+R4	is_about_company Arg1:T6 Arg2:T4	
+R5	is_about_company Arg1:T8 Arg2:T4	
+A2	QuarterlyResults_Better T1
+A3	QuarterlyResults_Better T3
+A5	QuarterlyResults_Better T5
+A7	Profit_Increase T7

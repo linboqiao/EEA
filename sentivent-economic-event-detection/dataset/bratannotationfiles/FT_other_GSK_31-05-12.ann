@@ -1,0 +1,7 @@
+T1	MergerAcquisition 147 201	adding pressure to the unsolicited $ 2.6bn bid it made
+A1	Confidence T1 SomewhatCertain
+A2	MergerAcquisition_NoMergerAcquisition T1
+T2	Company 123 144	Human Genome Sciences
+T3	Company 49 64	GlaxoSmithKline
+R1	is_about_target Arg1:T1 Arg2:T2	
+R2	is_about_company Arg1:T1 Arg2:T3	

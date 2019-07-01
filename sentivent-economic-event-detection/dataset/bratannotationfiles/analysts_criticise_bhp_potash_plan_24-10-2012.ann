@@ -1,0 +1,28 @@
+T1	BuyRating 1228 1269	started coverage with a " reduce " rating
+A1	Confidence T1 Certain
+A2	BuyRating_Underperform T1
+T2	TargetPrice 1270 1285	and 174p target
+A3	Confidence T2 Certain
+A4	TargetPrice_Announcement T2
+T3	Company 1172 1183	Direct Line
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	Profit 1474 1490	A profit warning
+A5	Confidence T4 Certain
+A6	Profit_Decrease T4
+A7	Profit_Forecast T4
+T5	Company 1499 1507	Mulberry
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	BuyRating 1718 1741	" Buy " advice from UBS
+A8	Confidence T6 Certain
+A9	BuyRating_Buy T6
+T7	Company 1749 1756	N Brown
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Profit 699 720	after profit warnings
+A10	Confidence T8 Certain
+A11	Profit_Decrease T8
+A12	Profit_Forecast T8
+T9	Company 726 728	3M
+T10	Company 733 740	Du Pont
+R5	is_about_company Arg1:T8 Arg2:T9	
+R6	is_about_company Arg1:T8 Arg2:T10	

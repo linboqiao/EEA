@@ -1,0 +1,20 @@
+T1	SalesVolume 472 532	reported Dollars 4.6bn in sales last year from its 40 stores
+A1	Confidence T1 Certain
+T2	Company 393 401	HomePlus
+R1	is_about_company Arg1:T1 Arg2:T2	
+A2	SalesVolume_Declaration T1
+T3	SalesVolume 1309 1437	sales more than doubled to 1.16m cars last year and increased 53 per cent to 476,000 units in the first four months of this year
+A3	Confidence T3 Certain
+A4	SalesVolume_Increase T3
+T5	Company 1200 1227	GM Daewoo Auto & Technology
+R2	is_about_company Arg1:T3 Arg2:T5	
+T6	SalesVolume 2063 2109	is reporting about Dollars 1bn in annual sales
+A7	Confidence T6 Certain
+A8	SalesVolume_Declaration T6
+T7	Company 2053 2062	IBM Korea
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Turnover 2181 2221	annual turnover is roughly Dollars 1.4bn
+A9	Confidence T8 Certain
+A10	Turnover_Declaration T8
+T9	Company 2156 2180	Hewlett-Packard Korea 's
+R5	is_about_company Arg1:T8 Arg2:T9	

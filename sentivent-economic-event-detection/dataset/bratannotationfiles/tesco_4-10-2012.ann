@@ -1,0 +1,33 @@
+T1	Profit 238 310	with profits for the UK company down in almost all areas of the business
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 36 41	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 408 536	The rate of decline in UK like-for-like sales slowed in the second quarter against the first - from 1.1 per cent to 0.8 per cent
+A3	Confidence T3 Certain
+A4	SalesVolume_Decrease T3
+T4	QuarterlyResults 408 536	The rate of decline in UK like-for-like sales slowed in the second quarter against the first - from 1.1 per cent to 0.8 per cent
+A5	Confidence T4 Certain
+A6	QuarterlyResults_Better T4
+R2	is_about_company Arg1:T3 Arg2:T2	
+R3	is_about_company Arg1:T4 Arg2:T2	
+T5	Profit 742 767	January 's profit warning
+A7	Confidence T5 Certain
+A8	Profit_Decrease T5
+A9	Profit_Forecast T5
+R4	is_about_company Arg1:T5 Arg2:T2	
+T6	Profit 1597 1626	On 10 times forecast earnings
+A10	Confidence T6 Certain
+A11	Profit_Increase T6
+A12	Profit_BetterThanExpected T6
+A13	Profit_Forecast T6
+T7	Company 1629 1634	Tesco
+R5	is_about_company Arg1:T6 Arg2:T7	
+T8	QuarterlyResults 1842 1899	one quarter of improvement in like-for-like sales numbers
+A14	Confidence T8 Certain
+A15	QuarterlyResults_Better T8
+T9	SalesVolume 1842 1899	one quarter of improvement in like-for-like sales numbers
+A16	Confidence T9 Certain
+A17	SalesVolume_Increase T9
+R6	is_about_company Arg1:T9 Arg2:T7	
+R7	is_about_company Arg1:T8 Arg2:T7	

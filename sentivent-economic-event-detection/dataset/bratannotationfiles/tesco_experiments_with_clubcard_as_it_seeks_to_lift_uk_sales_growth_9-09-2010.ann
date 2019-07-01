@@ -1,0 +1,17 @@
+T1	SalesVolume 2128 2208	underlying sales growth in the UK fell to its lowest level in at least six years
+A1	Confidence T1 Certain
+A2	SalesVolume_Decrease T1
+T2	QuarterlyResults 2128 2208	underlying sales growth in the UK fell to its lowest level in at least six years
+A3	Confidence T2 Certain
+A4	QuarterlyResults_Worse T2
+T3	QuarterlyResults 2096 2116	In the first quarter
+A5	Confidence T3 Certain
+A6	QuarterlyResults_Worse T3
+T4	SalesVolume 2096 2116	In the first quarter
+A7	Confidence T4 Certain
+A8	SalesVolume_Decrease T4
+*	in_span_with T4 T1
+*	in_span_with T3 T2
+T5	Company 2119 2124	Tesco
+R1	is_about_company Arg1:T3 Arg2:T5	
+R2	is_about_company Arg1:T4 Arg2:T5	

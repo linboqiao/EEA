@@ -1,0 +1,21 @@
+T1	Dividend 9 32	set for $5.5bn dividend
+A1	Confidence T1 Certain
+A2	Dividend_Payment T1
+A3	Dividend_Forecast T1
+T2	Company 121 137	Verizon Wireless
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 42 90	could receive an annual dividend of up to $5.5bn
+A4	Confidence T3 Certain
+A5	Dividend_Payment T3
+A6	Dividend_Forecast T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Debt 388 404	to pay down debt
+A7	Confidence T4 Certain
+A8	Debt_Reduction T4
+T5	Company 320 336	Verizon Wireless
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Dividend 460 509	topped paying a dividend to its corporate parents
+A9	Confidence T6 Certain
+A10	Dividend_NoPayment T6
+T7	Company 407 423	Verizon Wireless
+R4	is_about_company Arg1:T6 Arg2:T7	

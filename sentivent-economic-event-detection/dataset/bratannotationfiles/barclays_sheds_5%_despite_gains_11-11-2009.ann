@@ -1,0 +1,45 @@
+T1	Profit 149 186	healthy profits for the third quarter
+A1	Confidence T1 Certain
+A2	Profit_Positive T1
+T2	QuarterlyResults 149 186	healthy profits for the third quarter
+A3	Confidence T2 Certain
+A4	QuarterlyResults_Strong T2
+T3	Company 43 51	Barclays
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	Dividend 247 298	the reinstatement of a dividend after almost a year
+A5	Confidence T4 SomewhatCertain
+A6	Dividend_Payment T4
+R3	is_about_company Arg1:T4 Arg2:T3	
+T5	QuarterlyResults 345 439	the one-third quarter-on-quarter fall in investment banking revenues to pound(s)3.7bn ( $6.1bn
+A7	Confidence T5 Certain
+A8	QuarterlyResults_Worse T5
+R4	is_about_company Arg1:T5 Arg2:T3	
+T6	MergerAcquisition 546 561	the acquisition
+A9	Confidence T6 Certain
+A10	MergerAcquisition_MergerAcquisition T6
+T7	Company 565 601	the US operations of Lehman Brothers
+T8	Company 457 473	Barclays Capital
+R5	is_about_target Arg1:T6 Arg2:T7	
+R6	is_about_acquirer Arg1:T6 Arg2:T8	
+T9	Turnover 740 793	revenue has now fallen more sharply than at its peers
+A11	Confidence T9 SomewhatCertain
+A12	Turnover_Decrease T9
+T10	Company 698 704	BarCap
+R7	is_about_company Arg1:T9 Arg2:T10	
+T11	Profit 1344 1511	said pre-tax profits for the three months to the end of September were pound(s)1.56bn , compared with pound(s)1.61bn in the second quarter and pound(s)2.8bn a year ago
+A13	Confidence T11 Certain
+A14	Profit_Decrease T11
+A15	Profit_Positive T11
+T12	QuarterlyResults 1344 1511	said pre-tax profits for the three months to the end of September were pound(s)1.56bn , compared with pound(s)1.61bn in the second quarter and pound(s)2.8bn a year ago
+A16	Confidence T12 Certain
+A17	QuarterlyResults_Worse T12
+T15	Company 1335 1343	Barclays
+R8	is_about_company Arg1:T11 Arg2:T15	
+R9	is_about_company Arg1:T12 Arg2:T15	
+T13	Dividend 2178 2296	is to pay a 1 pence per share dividend , the first since the final dividend of 2008 was passed , from earnings of 7.8p
+A18	Confidence T13 Uncertain
+A19	Dividend_Payment T13
+T14	Company 2169 2177	Barclays
+R10	is_about_company Arg1:T13 Arg2:T14	
+A20	Dividend_Reduction T13

@@ -1,0 +1,84 @@
+T1	Dividend 211 241	will get a new pay-out in 2012
+A1	Confidence T1 Certain
+A2	Dividend_Payment T1
+T3	Dividend 388 431	will get a $4.5bn ( pound(s)2.7bn ) pay-out
+A3	Confidence T3 Certain
+A4	Dividend_Payment T3
+T5	Company 131 147	Verizon Wireless
+R1	is_about_company Arg1:T1 Arg2:T5	
+T2	Company 321 337	Verizon Wireless
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Company 473 481	Vodafone
+T6	Dividend 507 555	pound(s)2bn special dividend to its shareholders
+A5	Confidence T6 Certain
+A6	Dividend_Payment T6
+R3	is_about_company Arg1:T6 Arg2:T4	
+T7	Dividend 995 1025	dividend payments stop in 2005
+A7	Confidence T7 Certain
+A8	Dividend_NoPayment T7
+T8	Company 976 992	Verizon Wireless
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	Dividend 1890 1914	once again pay dividends
+T10	Company 1793 1809	Verizon Wireless
+R5	is_about_company Arg1:T9 Arg2:T10	
+T11	Dividend 2274 2290	obtain dividends
+A9	Confidence T11 SomewhatCertain
+A10	Dividend_Payment T11
+T12	Company 2296 2312	Verizon Wireless
+R6	is_about_company Arg1:T11 Arg2:T12	
+T13	Dividend 2356 2381	dividends to stop in 2005
+A11	Confidence T13 Certain
+A12	Dividend_NoPayment T13
+T14	Company 2337 2353	Verizon Wireless
+R7	is_about_company Arg1:T13 Arg2:T14	
+T15	Debt 2556 2576	to pay down its debt
+A13	Debt_Reduction T15
+A14	Confidence T15 Certain
+T16	Company 2452 2474	Verizon Communications
+R8	is_about_company Arg1:T15 Arg2:T16	
+T17	Dividend 2611 2659	halt to the mobile operator 's dividend payments
+A15	Confidence T17 Certain
+A16	Dividend_NoPayment T17
+T18	Company 2524 2540	Verizon Wireless
+R9	is_about_company Arg1:T17 Arg2:T18	
+T19	Dividend 4144 4170	the $10bn dividend payment
+T20	Company 4081 4097	Verizon Wireless
+R10	is_about_company Arg1:T19 Arg2:T20	
+T21	Dividend 4422 4462	maintain its own pay-out to shareholders
+A17	Confidence T21 Certain
+A18	Dividend_Payment T21
+T22	Company 4389 4411	Verizon Communications
+R11	is_about_company Arg1:T21 Arg2:T22	
+T23	Dividend 4635 4711	returning 70 per cent of its $4.5bn to shareholders via its special dividend
+T24	Company 4623 4631	Vodafone
+R12	is_about_company Arg1:T23 Arg2:T24	
+T25	Debt 4748 4779	reduce the UK group 's net debt
+A19	Confidence T25 Certain
+A20	Debt_Reduction T25
+R13	is_about_company Arg1:T25 Arg2:T24	
+T26	Dividend 4804 4825	dividends do continue
+A21	Confidence T26 Certain
+A22	Dividend_Payment T26
+A23	Dividend_Forecast T26
+T27	Company 4785 4801	Verizon Wireless
+R14	is_about_company Arg1:T26 Arg2:T27	
+T28	MergerAcquisition 4880 4892	acquisitions
+A24	Confidence T28 Certain
+A25	MergerAcquisition_Forecast T28
+A26	MergerAcquisition_MergerAcquisition T28
+T29	Company 4840 4848	Vodafone
+R15	is_about_company Arg1:T28 Arg2:T29	
+T30	MergerAcquisition 4915 4960	buying rivals in some of its existing markets
+A27	Confidence T30 Certain
+A28	MergerAcquisition_Forecast T30
+A29	MergerAcquisition_MergerAcquisition T30
+R16	is_about_company Arg1:T30 Arg2:T29	
+T31	MergerAcquisition 5831 5863	played down the idea of a merger
+A30	Confidence T31 Certain
+A31	MergerAcquisition_NoMergerAcquisition T31
+T32	Company 5872 5907	Verizon Communications and Vodafone
+R17	is_about_company Arg1:T31 Arg2:T32	
+T33	MergerAcquisition 5957 6005	a merger was possible in the medium to long term
+A32	Confidence T33 Certain
+A33	MergerAcquisition_Forecast T33
+R18	is_about_company Arg1:T33 Arg2:T32	

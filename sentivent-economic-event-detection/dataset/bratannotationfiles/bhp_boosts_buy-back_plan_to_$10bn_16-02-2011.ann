@@ -1,0 +1,57 @@
+T1	Company 120 132	BHP Billiton
+T2	ShareRepurchase 133 180	has expanded its share buy-back scheme to $10bn
+A1	Confidence T2 Certain
+A2	ShareRepurchase_Announcement T2
+T3	Profit 939 998	full-year pre-tax profits surged by 162 per cent to $20.6bn
+A3	Confidence T3 Certain
+A4	Profit_Increase T3
+T4	Company 796 799	BHP
+R2	is_about_company Arg1:T2 Arg2:T1	
+T5	Dividend 1008 1049	this month more than tripled its dividend
+A5	Confidence T5 Certain
+A6	Dividend_Raise T5
+T6	Company 1000 1007	Xstrata
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Profit 1057 1111	full-year pre-tax profits rose from $1.53bn to $6.61bn
+A7	Confidence T7 Certain
+A8	Profit_Increase T7
+R4	is_about_company Arg1:T7 Arg2:T6	
+T8	ShareRepurchase 803 865	decision to expand its buy-back programme from $4.8bn to $10bn
+A9	Confidence T8 Certain
+R5	is_about_company Arg1:T8 Arg2:T4	
+T9	Profit 2607 2690	Pre-tax profits rose from $8.88bn last time to $14.1bn in the half year to December
+A11	Confidence T9 Certain
+A12	Profit_Increase T9
+T11	Turnover 2693 2735	Revenues increased from $22.2bn to $32.4bn
+A13	Confidence T11 Certain
+A14	Turnover_Increase T11
+T12	Profit 2737 2847	Underlying earnings before interest tax depreciation and amortisation hit a record , up 60 per cent to $17.3bn
+A15	Confidence T12 Certain
+A16	Profit_Increase T12
+T13	ShareRepurchase 4 33	boosts buy-back plan to $10bn
+A17	Confidence T13 Certain
+A18	ShareRepurchase_Announcement T13
+T14	Company 0 3	BHP
+R9	is_about_company Arg1:T13 Arg2:T14	
+T15	Profit 187 222	reporting record first-half profits
+A19	Confidence T15 Certain
+A20	Profit_Increase T15
+A21	Profit_Positive T15
+R10	is_about_company Arg1:T15 Arg2:T1	
+T16	MergerAcquisition 679 722	it was forced to drop its $39bn hostile bid
+A22	Confidence T16 Certain
+A23	MergerAcquisition_NoMergerAcquisition T16
+T17	Company 737 747	PotashCorp
+R11	is_about_target Arg1:T16 Arg2:T17	
+R12	is_about_acquirer Arg1:T16 Arg2:T1	
+T18	ShareRepurchase 887 928	said it would buy back $5bn of its shares
+A24	Confidence T18 Certain
+A25	ShareRepurchase_Announcement T18
+T19	Company 883 886	Rio
+R13	is_about_company Arg1:T18 Arg2:T19	
+A10	ShareRepurchase_Announcement T8
+R1	is_about_company Arg1:T3 Arg2:T19	
+T20	Company 2535 2538	BHP
+R6	is_about_company Arg1:T9 Arg2:T20	
+R7	is_about_company Arg1:T11 Arg2:T20	
+R8	is_about_company Arg1:T12 Arg2:T20	

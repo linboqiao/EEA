@@ -1,0 +1,32 @@
+T1	QuarterlyResults 206 275	operating costs in the third quarter rose across most of its business
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Worse T1
+T2	Profit 462 561	expected pre-tax profit for 2005 will be " broadly " in line with market forecasts of Pounds 5.18bn
+A3	Confidence T2 Certain
+A4	Profit_AsExpected T2
+A5	Profit_Forecast T2
+T3	Company 453 461	Barclays
+R1	is_about_company Arg1:T2 Arg2:T3	
+T4	Turnover 1194 1216	saw a growth in income
+A6	Confidence T4 Certain
+A7	Turnover_Increase T4
+T5	Company 1177 1188	Barclaycard
+R2	is_about_company Arg1:T4 Arg2:T5	
+T6	Profit 2414 2457	continues to act as a drag on profit growth
+A8	Confidence T6 Certain
+A9	Profit_Decrease T6
+T7	Company 2283 2308	Barclays Global Investors
+R3	is_about_company Arg1:T6 Arg2:T7	
+T8	SalesVolume 1982 1997	The expectation
+A10	Confidence T8 SomewhatCertain
+A11	SalesVolume_Forecast T8
+A12	SalesVolume_Declaration T8
+A13	SalesVolume_Increase T8
+T9	SalesVolume 2012 2049	would issue a positive trading update
+A14	Confidence T9 SomewhatCertain
+A15	SalesVolume_Forecast T9
+A16	SalesVolume_Declaration T9
+A17	SalesVolume_Increase T9
+T10	Company 2003 2011	Barclays
+*	in_span_with T9 T8
+R4	is_about_company Arg1:T9 Arg2:T10	

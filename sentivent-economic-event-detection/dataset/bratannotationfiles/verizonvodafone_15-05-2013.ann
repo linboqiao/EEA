@@ -1,0 +1,11 @@
+T1	Dividend 68 98	declaration of a $7bn dividend
+A1	Confidence T1 Certain
+A2	Dividend_Payment T1
+A3	Dividend_Announcement T1
+T2	Company 48 64	Verizon Wireless
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	ShareRepurchase 1797 1830	a stock buyback already under way
+A4	Confidence T3 Certain
+A5	ShareRepurchase_Announcement T3
+T4	Company 1665 1673	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	

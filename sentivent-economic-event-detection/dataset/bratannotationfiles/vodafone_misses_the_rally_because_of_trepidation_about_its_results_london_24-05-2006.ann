@@ -1,0 +1,23 @@
+T1	Profit 642 692	has been forced to reduce earnings forecasts twice
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A3	Profit_Forecast T1
+T2	Company 591 599	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 1082 1146	reducing its 2006-07 earnings per share forecast by 4-5 per cent
+A4	Confidence T3 Certain
+A5	Profit_Decrease T3
+A6	Profit_Forecast T3
+T4	Company 1015 1023	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	BuyRating 3251 3259	upgraded
+A7	Confidence T5 Certain
+A8	BuyRating_Upgrade T5
+T6	Company 3133 3148	Land Securities
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	SalesVolume 3873 3920	a smaller-than-expected 5 per cent sales uplift
+A9	Confidence T7 Certain
+A10	SalesVolume_WorseThanExpected T7
+A11	SalesVolume_Increase T7
+T8	Company 3732 3749	Marks and Spencer
+R4	is_about_company Arg1:T7 Arg2:T8	

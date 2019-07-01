@@ -1,0 +1,24 @@
+T1	Profit 1947 1985	a 25 per cent fall in operating profit
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 1881 1889	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 2241 2391	reported a loss before interest and tax of HK$3.2bn in the first half of 2008 , although that was a 72 per cent improvement on the same period in 2007
+A3	Profit_Declaration T3
+A4	Confidence T3 Certain
+A5	Profit_Increase T3
+A6	Profit_Negative T3
+T4	Company 2048 2057	Hutchison
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 2418 2497	reported earnings before interest and tax of A$1.3m in the first half of 2008 .
+A7	Profit_Declaration T5
+A8	Confidence T5 Certain
+A9	Profit_Positive T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	MergerAcquisition 200 275	yesterday announced plans to merge their Australian mobile phone operations
+A10	Confidence T6 SomewhatCertain
+A11	MergerAcquisition_Announcement T6
+T7	Company 138 146	Vodafone
+T8	Company 165 182	Hutchison Whampoa
+R4	is_about_company Arg1:T6 Arg2:T8	
+R5	is_about_company Arg1:T6 Arg2:T7	

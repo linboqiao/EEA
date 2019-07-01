@@ -1,0 +1,19 @@
+T1	Profit 189 251	it announced bumper profits in its half-year results yesterday
+A1	Profit_Declaration T1
+A2	Confidence T1 Certain
+A3	Profit_Increase T1
+T2	Company 57 66	Fresnillo
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 254 359	Pre-tax profits for the Mexico-based miner rose to $354.4m , up from $179.9m on the same period last year
+A4	Confidence T3 Certain
+A5	Profit_Increase T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Dividend 614 677	The company said it would pay a dividend of 9.2 cents per share
+A6	Confidence T4 Certain
+A7	Dividend_Payment T4
+A8	Dividend_Announcement T4
+R3	is_about_company Arg1:T4 Arg2:T2	
+T5	SalesVolume 456 472	sales of $605.6m
+A9	Confidence T5 SomewhatCertain
+A10	SalesVolume_Other T5
+R4	is_about_company Arg1:T5 Arg2:T2	

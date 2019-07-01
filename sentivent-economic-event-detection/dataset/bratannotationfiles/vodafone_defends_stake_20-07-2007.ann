@@ -1,0 +1,6 @@
+T1	Turnover 2447 2504	said it generated revenue of Pounds 8.3bn , up 4 per cent
+A1	Confidence T1 Certain
+A2	Turnover_Increase T1
+A3	Turnover_Declaration T1
+T2	Company 2438 2446	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	

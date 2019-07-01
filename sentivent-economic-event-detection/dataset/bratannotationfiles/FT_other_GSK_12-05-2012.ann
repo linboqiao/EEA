@@ -1,0 +1,29 @@
+T1	MergerAcquisition 4 34	turns hostile with $ 2.6bn bid
+A1	Confidence T1 SomewhatCertain
+A2	MergerAcquisition_Other T1
+T2	Company 39 42	HGS
+T3	Company 0 3	GSK
+T4	MergerAcquisition 60 95	has formally turned its $ 2.6bn bid
+A3	Confidence T4 SomewhatCertain
+A4	MergerAcquisition_Other T4
+T5	MergerAcquisition 122 129	hostile
+A5	Confidence T5 SomewhatCertain
+A6	MergerAcquisition_Other T5
+*	in_span_with T5 T4
+T6	Company 100 121	Human Genome Sciences
+T7	Company 44 59	GlaxoSmithKline
+R1	is_about_acquirer Arg1:T4 Arg2:T7	
+R2	is_about_target Arg1:T4 Arg2:T6	
+T8	MergerAcquisition 926 947	a hostile $ 6.8bn bid
+A7	Confidence T8 Certain
+A8	MergerAcquisition_NoMergerAcquisition T8
+T9	MergerAcquisition 999 1027	which it withdrew last month
+A9	Confidence T9 Certain
+A10	MergerAcquisition_NoMergerAcquisition T9
+*	in_span_with T8 T9
+T10	Company 951 956	Roche
+T11	Company 961 969	Illumina
+R3	is_about_acquirer Arg1:T8 Arg2:T10	
+R4	is_about_target Arg1:T8 Arg2:T11	
+R5	is_about_acquirer Arg1:T1 Arg2:T3	
+R6	is_about_target Arg1:T1 Arg2:T2	

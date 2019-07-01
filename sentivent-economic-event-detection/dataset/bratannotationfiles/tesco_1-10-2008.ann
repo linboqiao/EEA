@@ -1,0 +1,19 @@
+T1	Profit 162 228	As its 10 per cent increase in first half profits yesterday showed
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+T2	Company 231 236	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 384 426	UK underlying sales growth of 3.7 per cent
+A3	Confidence T3 Certain
+A4	Profit_Increase T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	SalesVolume 690 722	4 per cent higher non-food sales
+A5	Confidence T4 Certain
+A6	SalesVolume_Increase T4
+T5	Company 681 686	Tesco
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	SalesVolume 806 899	Internationally , sales growth of 1 per cent from stores open at least a year is underwhelmin
+A7	Confidence T6 Certain
+A8	SalesVolume_WorseThanExpected T6
+A9	SalesVolume_Increase T6
+R4	is_about_company Arg1:T6 Arg2:T5	

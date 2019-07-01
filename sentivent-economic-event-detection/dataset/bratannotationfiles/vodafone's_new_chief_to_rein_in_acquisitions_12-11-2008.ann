@@ -1,0 +1,31 @@
+T1	Profit 604 692	it would stick to its operating profit target of pound(s)11bn-pound(s)11.5bn for 2008-09
+A1	Confidence T1 SomewhatCertain
+A2	Profit_Positive T1
+A3	Profit_Forecast T1
+T2	Company 526 534	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 2122 2200	revenue rose 17.1 per cent to pound(s)19.9bn in the six months to September 30
+A4	Confidence T3 Certain
+A5	Turnover_Increase T3
+T4	Company 2110 2118	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 2203 2264	Adjusted operating profit rose 10.5 per cent to pound(s)5.8bn
+A6	Confidence T5 Certain
+A7	Profit_Increase T5
+A8	Profit_Positive T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	Profit 2358 2390	operating profit fell 1 per cent
+A9	Confidence T6 Certain
+A10	Profit_Decrease T6
+R4	is_about_company Arg1:T6 Arg2:T4	
+T7	Profit 2393 2443	Pre-tax profit fell 27.3 per cent to pound(s)3.3bn
+A11	Confidence T7 Certain
+A12	Profit_Decrease T7
+A13	Profit_Positive T7
+T8	Company 2501 2509	Vodafone
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	Dividend 2834 2881	The interim dividend rose 3.2 per cent to 2.57p
+A14	Confidence T9 Certain
+A15	Dividend_Raise T9
+T10	Company 2915 2923	Vodafone
+R6	is_about_company Arg1:T9 Arg2:T10	

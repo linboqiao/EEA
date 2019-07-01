@@ -1,0 +1,21 @@
+T1	MergerAcquisition 406 421	operations into
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Other T1
+T2	MergerAcquisition 352 385	is proposing to merge most of its
+A3	Confidence T2 Certain
+A4	MergerAcquisition_Other T2
+*	in_span_with T1 T2
+T3	Company 337 341	Absa
+T4	Company 88 96	Barclays
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T4	
+T5	Profit 1731 1789	had a sharp fall in profits in the first half of this year
+A5	Confidence T5 Certain
+A6	Profit_Decrease T5
+T6	Company 1726 1730	Absa
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Profit 1897 1923	it issued a profit warning
+A7	Confidence T7 Certain
+A8	Profit_Decrease T7
+A9	Profit_Forecast T7
+R4	is_about_company Arg1:T7 Arg2:T6	

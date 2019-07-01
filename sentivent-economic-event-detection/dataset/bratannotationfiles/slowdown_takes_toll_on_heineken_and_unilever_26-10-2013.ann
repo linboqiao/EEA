@@ -1,0 +1,58 @@
+T1	Profit 274 310	lowered its full-year profit outlook
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A3	Profit_Forecast T1
+T2	Company 196 204	Heineken
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 717 837	it expected net profit before exceptional items and amortisation to decline by " a low single-digit percentage " in 2013
+A4	Confidence T3 Certain
+A5	Profit_Decrease T3
+A6	Profit_Forecast T3
+T4	Company 703 711	Heineken
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 1055 1087	reported underlying sales growth
+A7	Confidence T5 Certain
+A8	SalesVolume_Increase T5
+T6	SalesVolume 1160 1196	of 3.2 per cent in its third quarter
+A9	Confidence T6 Certain
+A10	SalesVolume_Increase T6
+T7	SalesVolume 1199 1253	compared with 5 per cent in the preceding two quarters
+A11	Confidence T7 Certain
+A12	SalesVolume_Decrease T7
+T8	QuarterlyResults 1160 1196	of 3.2 per cent in its third quarter
+A13	Confidence T8 Certain
+T9	QuarterlyResults 1055 1087	reported underlying sales growth
+*	in_span_with T9 T8
+*	in_span_with T6 T5
+A14	QuarterlyResults_Publication T8
+A15	QuarterlyResults_Publication T9
+T10	QuarterlyResults 1199 1253	compared with 5 per cent in the preceding two quarters
+A16	Confidence T10 SomewhatCertain
+A17	QuarterlyResults_Worse T10
+T11	Company 897 905	Unilever
+R3	is_about_company Arg1:T5 Arg2:T11	
+R4	is_about_company Arg1:T9 Arg2:T11	
+R5	is_about_company Arg1:T7 Arg2:T11	
+R6	is_about_company Arg1:T10 Arg2:T11	
+T12	SalesVolume 1295 1319	a sharp decline in sales
+A18	Confidence T12 Certain
+A19	SalesVolume_Decrease T12
+T13	Company 1337 1350	Pernod Ricard
+R7	is_about_company Arg1:T12 Arg2:T13	
+T14	Turnover 1353 1463	It said revenue in the three months from July was EUR2bn , a fall of 9 per cent from the same period last year
+A20	Confidence T14 Certain
+A21	Turnover_Decrease T14
+T15	QuarterlyResults 1353 1463	It said revenue in the three months from July was EUR2bn , a fall of 9 per cent from the same period last year
+A22	Confidence T15 Certain
+A23	QuarterlyResults_Worse T15
+R8	is_about_company Arg1:T15 Arg2:T13	
+R9	is_about_company Arg1:T14 Arg2:T13	
+T16	QuarterlyResults 906 969	suffered its worst rate of quarterly sales growth in four years
+A24	Confidence T16 Certain
+A25	QuarterlyResults_Weak T16
+T17	SalesVolume 974 996	issued a sales warning
+A26	SalesVolume_Decrease T17
+A27	SalesVolume_Forecast T17
+A28	Confidence T17 Certain
+R10	is_about_company Arg1:T17 Arg2:T11	
+R11	is_about_company Arg1:T16 Arg2:T11	

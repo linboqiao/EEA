@@ -1,0 +1,42 @@
+T1	Profit 775 917	reported a pre-tax loss of Pounds 3.3bn for the six months to September 30 , compared with a Pounds 3.9bn profit for the same period last year
+A1	Profit_Declaration T1
+A2	Confidence T1 Certain
+A3	Profit_Decrease T1
+A4	Profit_Negative T1
+T2	Company 766 774	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 1061 1221	earnings before interest , tax , depreciation and amortisation of Pounds 6.2bn for the six months of its 2006-07 fiscal year , up 3 per cent on an organic basis
+A5	Confidence T3 Certain
+A6	Profit_Increase T3
+A7	Profit_Positive T3
+T4	Company 1048 1056	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 1224 1265	Revenue was Pounds 15.6bn , up 4 per cent
+A8	Confidence T5 Certain
+A9	Turnover_Increase T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	Dividend 1342 1388	The interim dividend was 2.35p , up 7 per cent
+A10	Confidence T6 Certain
+A11	Dividend_Raise T6
+R4	is_about_company Arg1:T6 Arg2:T4	
+T7	Turnover 1607 1628	strong revenue growth
+A12	Confidence T7 Certain
+A13	Turnover_Increase T7
+T8	Company 1632 1640	Vodafone
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	Turnover 1476 1510	guidance of slowing revenue growth
+A14	Confidence T9 Certain
+A15	Turnover_Forecast T9
+A16	Turnover_Increase T9
+T10	Profit 1515 1540	a declining profit margin
+A17	Confidence T10 Certain
+A18	Profit_Decrease T10
+A19	Profit_Forecast T10
+T11	Company 1448 1456	Vodafone
+R6	is_about_company Arg1:T9 Arg2:T11	
+R7	is_about_company Arg1:T10 Arg2:T11	
+T12	Turnover 1812 1873	reported revenue of Pounds 3.1bn for 2006-07 , up 21 per cent
+A20	Confidence T12 Certain
+A21	Turnover_Increase T12
+A22	Turnover_Declaration T12
+R8	is_about_company Arg1:T12 Arg2:T8	

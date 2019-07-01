@@ -1,0 +1,15 @@
+T1	Company 33 45	BHP Billiton
+T2	Profit 46 113	is on course to report its sixth consecutive year of profits growth
+A1	Confidence T2 Certain
+A2	Profit_Increase T2
+R1	is_about_company Arg1:T2 Arg2:T1	
+T7	Company 806 809	BHP
+T8	Profit 820 877	reported net profits up by more than a quarter to $13.4bn
+A7	Confidence T8 Certain
+A8	Profit_Increase T8
+R3	is_about_company Arg1:T8 Arg2:T7	
+T9	Profit 964 1032	had forecast record profits of $16.1bn for the year ended last month
+A10	Confidence T9 Certain
+A12	Profit_Forecast T9
+R4	is_about_company Arg1:T9 Arg2:T7	
+A11	Profit_Increase T9

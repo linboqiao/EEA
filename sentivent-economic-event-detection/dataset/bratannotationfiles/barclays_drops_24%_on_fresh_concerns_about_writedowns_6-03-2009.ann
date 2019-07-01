@@ -1,0 +1,40 @@
+T1	Profit 296 305	We expect
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A3	Profit_Negative T1
+A4	Profit_Forecast T1
+T2	Profit 327 356	major losses in 2009 and 2010
+A5	Confidence T2 Certain
+A6	Profit_Decrease T2
+A7	Profit_Negative T2
+A8	Profit_Forecast T2
+*	in_span_with T2 T1
+T3	Company 306 314	Barclays
+R1	is_about_company Arg1:T2 Arg2:T3	
+T4	BuyRating 2012 2047	cut the stock from its " buy " list
+A9	Confidence T4 SomewhatCertain
+A10	BuyRating_Downgrade T4
+T5	Company 1921 1926	Aviva
+R2	is_about_company Arg1:T4 Arg2:T5	
+T6	MergerAcquisition 2674 2731	reports that it had rejected informal takeover approaches
+A11	Confidence T6 SomewhatCertain
+A12	MergerAcquisition_NoMergerAcquisition T6
+T7	Company 2765 2772	Sinopec
+T8	Company 2598 2608	Tullow Oil
+R3	is_about_acquirer Arg1:T6 Arg2:T7	
+R4	is_about_target Arg1:T6 Arg2:T8	
+T9	BuyRating 3460 3508	started coverage with an " underperform " rating
+A13	Confidence T9 Certain
+A14	BuyRating_Underperform T9
+T10	TargetPrice 3509 3530	and 250p target price
+A15	Confidence T10 Certain
+A16	TargetPrice_Announcement T10
+T11	Company 3388 3399	Rolls-Royce
+R5	is_about_company Arg1:T9 Arg2:T11	
+R6	is_about_company Arg1:T10 Arg2:T11	
+T12	Profit 3995 4027	as analysts cut profit forecasts
+A17	Confidence T12 Certain
+A18	Profit_WorseThanExpected T12
+A19	Profit_Forecast T12
+T13	Company 3962 3965	ITV
+R7	is_about_company Arg1:T12 Arg2:T13	

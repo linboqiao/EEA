@@ -1,0 +1,11 @@
+T7	Company 444 447	Rio
+T8	Company 484 487	BHP
+T9	MergerAcquisition 458 483	repeated its rejection of
+A7	Confidence T9 Certain
+A8	MergerAcquisition_NoMergerAcquisition T9
+T10	MergerAcquisition 491 543	offer of three of its shares for every one Rio share
+A9	Confidence T10 Certain
+A10	MergerAcquisition_NoMergerAcquisition T10
+*	in_span_with T10 T9
+R4	is_about_acquirer Arg1:T9 Arg2:T8	
+R5	is_about_target Arg1:T9 Arg2:T7	

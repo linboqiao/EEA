@@ -1,0 +1,16 @@
+T1	Profit 793 832	reported pre-tax losses of Pounds 1.5bn
+A1	Profit_Declaration T1
+A2	Confidence T1 Certain
+A3	Profit_Negative T1
+T2	Company 788 792	3 UK
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 2131 2182	expected revenues of Pounds 100m from data services
+A4	Confidence T3 Certain
+A5	Turnover_Forecast T3
+T4	Company 2079 2082	3UK
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 2267 2332	reported revenues of Pounds 700m for the first six months of 2006
+A6	Confidence T5 Certain
+A7	Turnover_Declaration T5
+T6	Company 2230 2231	3
+R3	is_about_company Arg1:T5 Arg2:T6	

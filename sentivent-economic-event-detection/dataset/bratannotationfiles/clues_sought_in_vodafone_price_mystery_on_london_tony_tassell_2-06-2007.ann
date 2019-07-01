@@ -1,0 +1,15 @@
+T1	Profit 371 421	a long- term trend of deteriorating profit margins
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Profit 426 453	a flat outlook for earnings
+A3	Confidence T2 Certain
+A4	Profit_Stable T2
+A5	Profit_Forecast T2
+T3	Company 118 126	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	Debt 1135 1170	including net debt of Dollars 200bn
+A6	Confidence T4 Certain
+A7	Debt_Other T4
+T5	Company 1057 1065	Vodafone
+R3	is_about_company Arg1:T4 Arg2:T5	

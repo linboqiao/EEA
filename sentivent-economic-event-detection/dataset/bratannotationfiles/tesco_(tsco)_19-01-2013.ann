@@ -1,0 +1,35 @@
+T1	Profit 86 104	its profit warning
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A3	Profit_Forecast T1
+T2	SalesVolume 116 169	Christmas sales figures look relatively underwhelming
+A4	Confidence T2 SomewhatCertain
+A5	SalesVolume_WorseThanExpected T2
+T3	Company 107 112	Tesco
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	SalesVolume 204 267	group like-for-like sales excluding petrol were up 0.3 per cent
+A6	Confidence T4 Certain
+A7	SalesVolume_Increase T4
+R3	is_about_company Arg1:T4 Arg2:T3	
+T5	SalesVolume 270 421	UK like-for-like sales , excluding petrol and stripping out sales from Clubcard vouchers , were broadly in line with expectations , rising 1.4 per cent
+A8	Confidence T5 Certain
+A9	SalesVolume_AsExpected T5
+A10	SalesVolume_Increase T5
+R4	is_about_company Arg1:T5 Arg2:T3	
+T6	Profit 638 665	a profit warning a year ago
+A11	Confidence T6 Certain
+A12	Profit_Decrease T6
+A13	Profit_Forecast T6
+T7	Company 542 547	Tesco
+R5	is_about_company Arg1:T6 Arg2:T7	
+T8	SalesVolume 775 842	Like-for-like sales in Asia and central Europe continued to decline
+A14	Confidence T8 Certain
+A15	SalesVolume_Decrease T8
+T9	SalesVolume 916 953	like-for-like sales fell 2.1 per cent
+A16	Confidence T9 Certain
+A17	SalesVolume_Decrease T9
+T10	Company 892 904	Fresh & Easy
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	Company 869 874	Tesco
+R7	is_about_company Arg1:T8 Arg2:T11	

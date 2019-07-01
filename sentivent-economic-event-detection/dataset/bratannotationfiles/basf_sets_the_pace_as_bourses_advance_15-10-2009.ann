@@ -1,0 +1,66 @@
+T2	Company 214 218	BASF
+T3	Profit 413 529	earnings before interest and taxes excluding one-time write-offs rose 9.5 per cent quarter over quarter to EUR1.25bn
+A2	Confidence T3 Certain
+T1	QuarterlyResults 294 369	after surprising the market with better than expected third quarter results
+A1	Confidence T1 Certain
+A4	QuarterlyResults_BetterThanExpected T1
+R1	is_about_company Arg1:T1 Arg2:T2	
+T4	MergerAcquisition 3346 3387	received approval to acquire Belgian peer
+A6	Confidence T4 Certain
+A7	MergerAcquisition_Announcement T4
+T5	Company 3388 3398	Electrabel
+T6	Company 3324 3327	Eon
+R3	is_about_acquirer Arg1:T4 Arg2:T6	
+R4	is_about_target Arg1:T4 Arg2:T5	
+A3	Profit_Increase T3
+T8	QuarterlyResults 413 529	earnings before interest and taxes excluding one-time write-offs rose 9.5 per cent quarter over quarter to EUR1.25bn
+A5	Confidence T8 Certain
+A8	QuarterlyResults_Better T8
+R5	is_about_company Arg1:T8 Arg2:T2	
+R2	is_about_company Arg1:T3 Arg2:T2	
+T7	Profit 532 586	beating consensus expectations of a 9 per cent decline
+A9	Confidence T7 Certain
+A10	Profit_BetterThanExpected T7
+R6	is_about_company Arg1:T7 Arg2:T2	
+T9	Profit 1610 1733	its earnings report revealed it had EUR777m worth of bookings in the third quarter , beating the EUR637m consensus forecast
+A11	Confidence T9 Uncertain
+A12	Profit_BetterThanExpected T9
+T10	Company 1471 1475	ASML
+R7	is_about_company Arg1:T9 Arg2:T10	
+T11	BuyRating 1953 2003	downgraded it from " neutral " to " underperform "
+A13	Confidence T11 Certain
+A14	BuyRating_Downgrade T11
+A15	BuyRating_Underperform T11
+T12	Company 1835 1848	Pernod Ricard
+R8	is_about_company Arg1:T11 Arg2:T12	
+T13	SalesVolume 2028 2076	reported poor underlying sales for first quarter
+A16	Confidence T13 Certain
+A17	SalesVolume_Decrease T13
+T14	QuarterlyResults 2028 2076	reported poor underlying sales for first quarter
+A18	Confidence T14 Certain
+A19	QuarterlyResults_Weak T14
+T15	Company 2021 2027	Diageo
+R9	is_about_company Arg1:T13 Arg2:T15	
+R10	is_about_company Arg1:T14 Arg2:T15	
+T16	TargetPrice 2154 2222	raised the Swedish carmaker 's sell price target from SKr30 to SKr35
+A20	Confidence T16 Certain
+A21	TargetPrice_Raise T16
+T17	Company 2099 2104	Volvo
+R11	is_about_company Arg1:T16 Arg2:T17	
+T18	BuyRating 2657 2725	downgraded the two companies from " overweight " to " equal-weight "
+A22	Confidence T18 Certain
+A23	BuyRating_Hold T18
+A24	BuyRating_Downgrade T18
+T19	Company 2581 2584	RWE
+T20	Company 2567 2576	Iberdrola
+R12	is_about_company Arg1:T18 Arg2:T19	
+R13	is_about_company Arg1:T18 Arg2:T20	
+T21	TargetPrice 3050 3082	price target from EUR30 to EUR28
+A25	Confidence T21 Certain
+A26	TargetPrice_Reduction T21
+T22	TargetPrice 3034 3041	lowered
+A27	Confidence T22 Certain
+A28	TargetPrice_Reduction T22
+*	in_span_with T21 T22
+T23	Company 3042 3045	Eon
+R14	is_about_company Arg1:T21 Arg2:T23	

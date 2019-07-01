@@ -1,0 +1,11 @@
+T1	SalesVolume 345 422	5 per cent year-on-year increase in fourth-quarter like- for-like group sales
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	Company 9 17	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 968 1031	consensus forecasts for 2006 earnings have fallen by 7 per cent
+A3	Confidence T3 Certain
+A4	Profit_Decrease T3
+A5	Profit_Forecast T3
+T4	Company 855 863	Unilever
+R2	is_about_company Arg1:T3 Arg2:T4	

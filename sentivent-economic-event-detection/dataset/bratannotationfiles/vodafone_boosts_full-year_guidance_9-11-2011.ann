@@ -1,0 +1,36 @@
+T1	Profit 62 111	raised its outlook for full-year operating profit
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+A3	Profit_Forecast T1
+T2	Company 53 61	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 802 918	reported revenue of pound(s)23.5bn for the six months to September 30 , up 4.1 per cent from the same time last year
+A4	Confidence T3 Certain
+A5	Turnover_Increase T3
+A6	Turnover_Declaration T3
+T4	Company 793 801	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 925 987	underlying operating profit of pound(s)6bn , down 0.6 per cent
+A7	Confidence T5 Certain
+A8	Profit_Decrease T5
+A9	Profit_Positive T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	Profit 990 1040	Pre-tax profit fell 2.8 per cent to pound(s)8.01bn
+A10	Confidence T6 Certain
+A11	Profit_Decrease T6
+A12	Profit_Positive T6
+R4	is_about_company Arg1:T6 Arg2:T4	
+T7	Dividend 1913 1937	a pound(s)2.8bn dividend
+A13	Confidence T7 Certain
+A14	Dividend_Payment T7
+T8	Company 1943 1959	Verizon Wireless
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	Dividend 1999 2048	it would pay a special dividend of 4p in February
+A15	Confidence T9 SomewhatCertain
+A16	Dividend_Payment T9
+T10	Company 1892 1900	Vodafone
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	Dividend 2051 2116	The interim dividend is set at 3.05p , up 7 per cent on last year
+A17	Confidence T11 Certain
+A18	Dividend_Raise T11
+R7	is_about_company Arg1:T11 Arg2:T10	

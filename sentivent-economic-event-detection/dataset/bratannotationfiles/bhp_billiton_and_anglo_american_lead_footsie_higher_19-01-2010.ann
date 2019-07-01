@@ -1,0 +1,22 @@
+T1	ShareRepurchase 320 354	suspended its buyback in late 2007
+T2	Company 176 179	BHP
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	BuyRating 1014 1043	on the back of " buy " advice
+A1	Confidence T3 Certain
+A2	BuyRating_Buy T3
+T4	Company 962 976	Anglo American
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	TargetPrice 1245 1271	The broker also raised its
+A3	Confidence T5 Certain
+A4	TargetPrice_Raise T5
+T6	TargetPrice 1278 1290	target price
+A5	Confidence T6 Certain
+A6	TargetPrice_Raise T6
+*	in_span_with T6 T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T7	BuyRating 2992 3031	started coverage with a " hold " rating
+A7	Confidence T7 Certain
+A8	BuyRating_Buy T7
+A9	BuyRating_Announcement T7
+T8	Company 2931 2942	BAE Systems
+R4	is_about_company Arg1:T7 Arg2:T8	

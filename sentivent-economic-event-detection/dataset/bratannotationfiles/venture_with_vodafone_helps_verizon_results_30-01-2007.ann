@@ -1,0 +1,43 @@
+T1	QuarterlyResults 102 131	helped fourth-quarter results
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Better T1
+T2	Company 135 157	Verizon Communications
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 164 218	quarterly profits lagged behind those of a yearearlier
+A3	Confidence T3 Certain
+A4	Profit_Decrease T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Profit 331 465	said fourth-quarter profit had fallen to Dollars 1bn , or 35 cents per share , from Dollars 1.7bn , or 59 cents per share , a year ago
+A5	Profit_Declaration T4
+A6	Confidence T4 Certain
+A7	Profit_Decrease T4
+A8	Profit_Positive T4
+T5	QuarterlyResults 331 465	said fourth-quarter profit had fallen to Dollars 1bn , or 35 cents per share , from Dollars 1.7bn , or 59 cents per share , a year ago
+A9	Confidence T5 Certain
+A10	QuarterlyResults_Worse T5
+T6	Company 272 279	Verizon
+R3	is_about_company Arg1:T4 Arg2:T6	
+R4	is_about_company Arg1:T5 Arg2:T6	
+T7	Turnover 479 536	fourth-quarter revenue rose 26 per cent to Dollars 22.6bn
+A11	Confidence T7 Certain
+A12	Turnover_Increase T7
+T8	QuarterlyResults 479 536	fourth-quarter revenue rose 26 per cent to Dollars 22.6bn
+A13	Confidence T8 Certain
+A14	QuarterlyResults_Better T8
+T9	Company 468 475	Verizon
+R5	is_about_company Arg1:T8 Arg2:T9	
+R6	is_about_company Arg1:T7 Arg2:T9	
+T10	Profit 713 889	Net income before these and other special items was Dollars 1.81bn , or 62 cents a share , compared with Dollars 1.78bn , or 64 cents a share , includingdiscontinued operations
+A15	Confidence T10 Certain
+A16	Profit_Decrease T10
+A17	Profit_Positive T10
+R7	is_about_company Arg1:T10 Arg2:T9	
+T11	SalesVolume 1267 1313	added 2.3m net customers in the fourth quarter
+A18	Confidence T11 Certain
+A19	SalesVolume_Increase T11
+T12	Company 1184 1200	Verizon Wireless
+R8	is_about_company Arg1:T11 Arg2:T12	
+T13	SalesVolume 1442 1570	Churn , a key measure of customer loyalty , fell to 1.14 per cent in the fourthquarter from 1.24 per cent in the previous period
+A20	Confidence T13 SomewhatCertain
+A21	SalesVolume_Decrease T13
+R9	is_about_company Arg1:T13 Arg2:T12	

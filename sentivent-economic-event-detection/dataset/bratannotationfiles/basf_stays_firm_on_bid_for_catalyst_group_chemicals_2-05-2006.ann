@@ -1,0 +1,23 @@
+T7	Company 2515 2524	Engelhard
+T10	Company 2691 2695	BASF
+T5	ShareRepurchase 872 980	unveiling instead a defence strategy centred on a planned Dollars 1.2bn share buy-back at Dollars 45 a share
+A6	Confidence T5 Certain
+T13	Company 774 783	Engelhard
+R2	is_about_company Arg1:T5 Arg2:T13	
+T6	Profit 2525 2589	reported first-quarter net income of Dollars 69m , up19 per cent
+T14	Turnover 2592 2637	on revenues of Dollars 1.5bn , up 43 per cent
+A12	Confidence T14 Certain
+A13	Turnover_Increase T14
+R4	is_about_company Arg1:T14 Arg2:T7	
+T8	Turnover 2698 2791	which reports first-quarter results on Thursday , would see a 10 per cent increase in revenue
+R5	is_about_company Arg1:T8 Arg2:T10	
+A9	Confidence T8 Certain
+A10	QuarterlyResults_BetterThanExpected T8
+A14	Turnover_BetterThanExpected T8
+R3	is_about_company Arg1:T6 Arg2:T7	
+A8	Profit_Increase T6
+A11	Confidence T6 Certain
+T9	QuarterlyResults 2525 2589	reported first-quarter net income of Dollars 69m , up19 per cent
+A15	Confidence T9 Certain
+A1	ShareRepurchase_Announcement T5
+A2	QuarterlyResults_Better T9

@@ -1,0 +1,29 @@
+T1	MergerAcquisition 504 530	approve plans for a merger
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Other T1
+A3	MergerAcquisition_MergerAcquisition T1
+T2	Company 557 566	Orange UK
+T3	Company 591 601	TMobile UK
+R1	is_about_company Arg1:T1 Arg2:T2	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	MergerAcquisition 932 940	a merger
+A4	Confidence T4 Certain
+A5	MergerAcquisition_MergerAcquisition T4
+T5	Company 949 958	Orange UK
+T6	Company 963 974	T-Mobile UK
+R3	is_about_company Arg1:T4 Arg2:T5	
+R4	is_about_company Arg1:T4 Arg2:T6	
+T7	MergerAcquisition 3013 3029	the merger plans
+A6	Confidence T7 Certain
+A7	MergerAcquisition_MergerAcquisition T7
+T8	Company 3040 3049	Orange UK
+T9	Company 3054 3065	T-Mobile UK
+R5	is_about_company Arg1:T7 Arg2:T8	
+R6	is_about_company Arg1:T7 Arg2:T9	
+T10	MergerAcquisition 3530 3595	the pound(s)3.5bn ( $5.8bn ) of cost savings sought in the merger
+A8	Confidence T10 Certain
+A9	MergerAcquisition_Other T10
+T11	Company 3128 3137	Orange UK
+T12	Company 3142 3153	T-Mobile UK
+R7	is_about_company Arg1:T10 Arg2:T11	
+R8	is_about_company Arg1:T10 Arg2:T12	

@@ -1,0 +1,11 @@
+T3	Company 1297 1306	Debenhams
+T4	ShareRepurchase 1265 1289	News of a share buy-back
+A3	Confidence T4 Certain
+A4	ShareRepurchase_Announcement T4
+R1	is_about_company Arg1:T4 Arg2:T3	
+T1	Profit 1603 1645	after its third profit warning of the year
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A5	Profit_Forecast T1
+T2	Company 1573 1577	Pace
+R2	is_about_company Arg1:T1 Arg2:T2	

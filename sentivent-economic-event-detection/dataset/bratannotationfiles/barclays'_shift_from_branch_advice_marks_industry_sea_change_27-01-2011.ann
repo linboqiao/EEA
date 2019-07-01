@@ -1,0 +1,5 @@
+T1	SalesVolume 2471 2543	which saw investment sales double between 2007 and 2009 to pound(s)3.5bn
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	Company 2459 2468	Santander
+R1	is_about_company Arg1:T1 Arg2:T2	

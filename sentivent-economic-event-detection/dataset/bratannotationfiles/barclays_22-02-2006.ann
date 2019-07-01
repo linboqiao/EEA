@@ -1,0 +1,27 @@
+T1	Profit 246 268	strong earnings growth
+A1	Confidence T1 Certain
+T2	Company 272 288	Barclays Capital
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 91 153	15 per cent jump in full year pre-tax profits looks impressive
+A3	Confidence T3 Certain
+A4	Profit_Increase T3
+A2	Profit_Increase T1
+T4	Company 80 88	Barclays
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	MergerAcquisition 402 413	acquisition
+A5	Confidence T5 Certain
+A6	MergerAcquisition_MergerAcquisition T5
+T6	MergerAcquisition 384 387	its
+A7	Confidence T6 Certain
+A8	MergerAcquisition_MergerAcquisition T6
+*	in_span_with T5 T6
+T7	Company 414 418	Absa
+T8	Company 324 327	BGI
+R3	is_about_company Arg1:T1 Arg2:T8	
+R4	is_about_target Arg1:T5 Arg2:T7	
+R5	is_about_acquirer Arg1:T6 Arg2:T4	
+T9	Profit 1113 1136	helped depress earnings
+A9	Confidence T9 Certain
+A10	Profit_Decrease T9
+T10	Company 1140 1151	Barclaycard
+R6	is_about_company Arg1:T9 Arg2:T10	

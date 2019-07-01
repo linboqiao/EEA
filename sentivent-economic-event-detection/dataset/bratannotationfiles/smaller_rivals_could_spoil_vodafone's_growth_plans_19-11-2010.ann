@@ -1,0 +1,10 @@
+T1	Dividend 1926 1968	but has not received a dividend since 2005
+A1	Confidence T1 Certain
+A2	Dividend_NoPayment T1
+T2	Company 1907 1923	Verizon Wireless
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 2068 2103	has been blocking dividend payments
+A3	Confidence T3 Certain
+A4	Dividend_NoPayment T3
+T4	Company 2049 2065	Verizon Wireless
+R2	is_about_company Arg1:T3 Arg2:T4	

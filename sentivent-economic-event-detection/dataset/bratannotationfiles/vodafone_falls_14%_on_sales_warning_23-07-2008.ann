@@ -1,0 +1,50 @@
+T1	SalesVolume 23 36	sales warning
+A1	Confidence T1 Certain
+A2	SalesVolume_Decrease T1
+A3	SalesVolume_Forecast T1
+T2	Company 0 8	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 209 224	a sales warning
+A4	Confidence T3 Certain
+A5	SalesVolume_Decrease T3
+A6	SalesVolume_Forecast T3
+T4	Company 37 45	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 240 302	scaled back its revenue forecast for 2008-09 to pound(s)39.8bn
+A7	Confidence T5 Certain
+T6	Company 227 235	Vodafone
+R3	is_about_company Arg1:T5 Arg2:T6	
+A8	Turnover_Decrease T5
+A9	Turnover_Forecast T5
+T7	Turnover 1209 1241	downgrading its revenue guidance
+A10	Confidence T7 Certain
+A11	Turnover_Decrease T7
+A12	Turnover_Forecast T7
+T8	Company 1200 1208	Vodafone
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	QuarterlyResults 1323 1351	first quarter trading update
+A13	Confidence T9 Certain
+A14	QuarterlyResults_Publication T9
+T10	Company 1366 1374	Vodafone
+R5	is_about_company Arg1:T9 Arg2:T10	
+T11	ShareRepurchase 1523 1542	a new share buyback
+A15	Confidence T11 Certain
+A16	ShareRepurchase_Forecast T11
+T12	Company 1436 1444	Vodafone
+R6	is_about_company Arg1:T11 Arg2:T12	
+T13	BuyRating 1881 1910	downgraded his recommendation
+A17	Confidence T13 Certain
+A18	BuyRating_Hold T13
+A19	BuyRating_Downgrade T13
+T14	BuyRating 1932 1956	from " buy " to " hold "
+A20	BuyRating_Hold T14
+A21	BuyRating_Downgrade T14
+*	in_span_with T13 T14
+T15	Company 1914 1922	Vodafone
+R7	is_about_company Arg1:T13 Arg2:T15	
+T16	Turnover 2095 2179	reported revenue of pound(s)9.8bn for the first quarter of 2008-09 , up 1.7 per cent
+A22	Confidence T16 Certain
+A23	Turnover_Increase T16
+A24	Turnover_Declaration T16
+T17	Company 2086 2094	Vodafone
+R8	is_about_company Arg1:T16 Arg2:T17	

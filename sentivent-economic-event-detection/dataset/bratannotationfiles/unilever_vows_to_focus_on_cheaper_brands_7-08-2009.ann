@@ -1,0 +1,51 @@
+T1	SalesVolume 610 642	sales volumes dropped 4 per cent
+A1	Confidence T1 Certain
+A2	SalesVolume_Decrease T1
+T2	Company 493 509	Procter & Gamble
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 1004 1065	it reported a 2 per cent rise in second-quarter sales volumes
+A3	Confidence T3 Certain
+A4	SalesVolume_Declaration T3
+A5	SalesVolume_Increase T3
+T4	QuarterlyResults 1004 1065	it reported a 2 per cent rise in second-quarter sales volumes
+A6	Confidence T4 Certain
+A7	QuarterlyResults_Better T4
+T5	Company 937 945	Unilever
+R2	is_about_company Arg1:T3 Arg2:T5	
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	SalesVolume 1122 1171	Underlying sales rose 4.1 per cent in the quarter
+A8	Confidence T6 Certain
+A9	SalesVolume_Increase T6
+R4	is_about_company Arg1:T6 Arg2:T5	
+T7	SalesVolume 1665 1704	Sales volumes in Europe rose 1 per cent
+A10	Confidence T7 Certain
+A11	SalesVolume_Increase T7
+T8	Company 1492 1500	Unilever
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	SalesVolume 2090 2145	Sales volumes rose 3.3 per cent in developing countries
+A12	Confidence T9 Certain
+A13	SalesVolume_Increase T9
+R6	is_about_company Arg1:T9 Arg2:T8	
+T10	SalesVolume 2302 2353	Total sales rose 1 per cent to EUR10.46bn ( $15bn )
+A14	Confidence T10 Certain
+A15	SalesVolume_Increase T10
+R7	is_about_company Arg1:T10 Arg2:T8	
+T11	Profit 2356 2415	Second-quarter pre-tax profits fell 12 per cent to EUR1.2bn
+A16	Confidence T11 Certain
+A17	Profit_Decrease T11
+A18	Profit_Positive T11
+T12	Company 2646 2654	Unilever
+R8	is_about_company Arg1:T11 Arg2:T12	
+T13	SalesVolume 2945 2966	sales up 9.2 per cent
+A19	Confidence T13 Certain
+A20	SalesVolume_Increase T13
+T14	Company 2888 2896	Unilever
+R9	is_about_company Arg1:T13 Arg2:T14	
+T15	SalesVolume 2969 3058	Personal care sales rose 5.4 per cent ; ice cream and beverage sales were up 4.9 per cent
+A21	Confidence T15 Certain
+A22	SalesVolume_Increase T15
+T16	SalesVolume 3065 3118	savoury , dressing and spread sales fell 0.2 per cent
+A23	Confidence T16 Certain
+A24	SalesVolume_Decrease T16
+R10	is_about_company Arg1:T15 Arg2:T14	
+R11	is_about_company Arg1:T16 Arg2:T14	

@@ -1,0 +1,25 @@
+T1	MergerAcquisition 10 31	agrees to Dollars 5bn
+A1	Confidence T1 Certain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	MergerAcquisition 37 48	acquisition
+A3	Confidence T2 Certain
+A4	MergerAcquisition_MergerAcquisition T2
+*	in_span_with T2 T1
+T3	Company 32 36	BASF
+T4	Company 0 9	Engelhard
+R1	is_about_acquirer Arg1:T2 Arg2:T3	
+R2	is_about_target Arg1:T1 Arg2:T4	
+T5	MergerAcquisition 145 169	has agreed to a takeover
+A5	Confidence T5 Certain
+A6	MergerAcquisition_MergerAcquisition T5
+T6	Company 66 75	Engelhard
+T7	Company 173 177	BASF
+R3	is_about_acquirer Arg1:T5 Arg2:T7	
+R4	is_about_target Arg1:T5 Arg2:T6	
+T8	MergerAcquisition 1530 1549	the agreed takeover
+A7	Confidence T8 Certain
+A8	MergerAcquisition_MergerAcquisition T8
+T9	Company 1352 1356	BASF
+T10	Company 1420 1429	Engelhard
+R5	is_about_target Arg1:T8 Arg2:T10	
+R6	is_about_acquirer Arg1:T8 Arg2:T9	

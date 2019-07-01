@@ -1,0 +1,32 @@
+T1	SalesVolume 432 458	Volumes jumped 14 per cent
+A1	Confidence T1 Certain
+T2	Company 648 652	BASF
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 792 906	quarterly operating profits more than doubled to Euros 1bn on a one-fifth gain in revenues , beating all forecasts
+A3	Confidence T3 Certain
+R2	is_about_company Arg1:T3 Arg2:T2	
+T6	ShareRepurchase 1210 1234	even more share buybacks
+A12	Confidence T6 SomewhatCertain
+A13	ShareRepurchase_Forecast T6
+T7	Company 1031 1035	BASF
+T5	Dividend 1172 1205	should prompt a dividend increase
+A9	Dividend_Raise T5
+A10	Dividend_Forecast T5
+R4	is_about_company Arg1:T5 Arg2:T7	
+R5	is_about_company Arg1:T6 Arg2:T7	
+A15	Profit_Increase T3
+A2	SalesVolume_Increase T1
+T10	QuarterlyResults 339 429	The German group 's third-quarter results show just how powerful a combination this can be
+A18	Confidence T10 Certain
+A19	QuarterlyResults_Strong T10
+R7	is_about_company Arg1:T10 Arg2:T2	
+T9	QuarterlyResults 792 906	quarterly operating profits more than doubled to Euros 1bn on a one-fifth gain in revenues , beating all forecasts
+A4	Confidence T9 Certain
+A5	QuarterlyResults_BetterThanExpected T9
+A6	QuarterlyResults_Strong T9
+R8	is_about_company Arg1:T9 Arg2:T2	
+A16	Confidence T5 SomewhatCertain
+T11	ShareRepurchase 1172 1185	should prompt
+A17	Confidence T11 SomewhatCertain
+A20	ShareRepurchase_Forecast T11
+*	in_span_with T6 T11

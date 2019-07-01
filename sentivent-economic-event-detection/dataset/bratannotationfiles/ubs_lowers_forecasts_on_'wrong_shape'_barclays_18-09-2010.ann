@@ -1,0 +1,18 @@
+T1	TargetPrice 2204 2232	a pound(s)16.40 target price
+A1	Confidence T1 Certain
+A2	TargetPrice_Announcement T1
+T2	Company 2091 2098	Aggreko
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	BuyRating 2456 2476	a " neutral " rating
+A3	Confidence T3 Certain
+A4	BuyRating_Hold T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	BuyRating 2534 2575	added the supermarket to its " buy " list
+A5	Confidence T4 Certain
+A6	BuyRating_Buy T4
+T5	Company 2479 2490	J Sainsbury
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	TargetPrice 2654 2677	set a 450p target price
+A7	Confidence T6 Certain
+A8	TargetPrice_Announcement T6
+R4	is_about_company Arg1:T6 Arg2:T5	

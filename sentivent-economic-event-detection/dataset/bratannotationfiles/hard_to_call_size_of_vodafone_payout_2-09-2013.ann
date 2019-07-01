@@ -1,0 +1,5 @@
+T1	Debt 3176 3209	which has net debt of about $40bn
+A1	Confidence T1 Certain
+A2	Debt_Other T1
+T2	Company 3159 3173	Liberty Global
+R1	is_about_company Arg1:T1 Arg2:T2	

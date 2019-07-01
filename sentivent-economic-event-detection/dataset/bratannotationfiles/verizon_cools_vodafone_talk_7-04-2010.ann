@@ -1,0 +1,12 @@
+T1	Dividend 452 486	does not at present pay a dividend
+A1	Confidence T1 Certain
+A2	Dividend_NoPayment T1
+T2	Company 419 435	Verizon Wireless
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	MergerAcquisition 1345 1377	was interested in buying a stake
+A3	Confidence T3 SomewhatCertain
+A4	MergerAcquisition_Other T3
+T4	Company 1318 1344	Korea National Oil Company
+T5	Company 1248 1258	Tullow Oil
+R2	is_about_company Arg1:T3 Arg2:T4	
+R3	is_about_company Arg1:T3 Arg2:T5	

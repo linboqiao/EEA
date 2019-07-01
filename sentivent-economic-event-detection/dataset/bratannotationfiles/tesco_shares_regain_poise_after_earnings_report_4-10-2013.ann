@@ -1,0 +1,36 @@
+T1	Profit 72 103	a collapse in European earnings
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 0 5	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	BuyRating 453 502	valued at 20 per cent below the long-term average
+A3	Confidence T3 SomewhatCertain
+A4	BuyRating_Underperform T3
+T4	Company 447 452	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 945 959	profit warning
+#1	AnnotatorNotes T5	profit warning
+A6	Confidence T5 Certain
+T6	Company 788 793	Tesco
+T7	Company 965 977	William Hill
+R3	is_about_company Arg1:T5 Arg2:T7	
+T8	Profit 1088 1127	a pound(s)20m hit to quarterly earnings
+A7	Confidence T8 Certain
+A8	Profit_Decrease T8
+T9	QuarterlyResults 1088 1127	a pound(s)20m hit to quarterly earnings
+A9	Confidence T9 Certain
+A10	QuarterlyResults_Weak T9
+T10	MergerAcquisition 1568 1598	Talk of potential acquisitions
+A11	Confidence T10 Certain
+A12	MergerAcquisition_Forecast T10
+T11	Company 1602 1619	Reckitt Benckiser
+R4	is_about_company Arg1:T10 Arg2:T11	
+R5	is_about_company Arg1:T9 Arg2:T7	
+R6	is_about_company Arg1:T8 Arg2:T7	
+A5	Profit_Decrease T5
+A13	Profit_Forecast T5
+T12	MergerAcquisition 2108 2114	merger
+A14	Confidence T12 Certain
+A15	MergerAcquisition_MergerAcquisition T12
+T13	Company 2091 2107	Publicis-Omnicom
+R7	is_about_company Arg1:T12 Arg2:T13	

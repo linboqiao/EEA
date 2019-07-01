@@ -1,0 +1,46 @@
+T1	SalesVolume 217 273	reported second-quarter underlying sales up 4.1 per cent
+A1	Confidence T1 Certain
+A2	SalesVolume_Declaration T1
+A3	SalesVolume_Increase T1
+T2	QuarterlyResults 217 273	reported second-quarter underlying sales up 4.1 per cent
+A4	Confidence T2 Certain
+A5	QuarterlyResults_Publication T2
+A6	QuarterlyResults_Better T2
+T3	Company 171 179	Unilever
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	SalesVolume 998 1107	reported a 2 per cent rise in second-quarter sales volumes following a 1.8 per cent fall in the first quarter
+A7	Confidence T4 Certain
+A8	SalesVolume_Declaration T4
+A9	SalesVolume_Increase T4
+T5	Company 937 945	Unilever
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	SalesVolume 1502 1541	Sales volumes in Europe rose 1 per cent
+A10	Confidence T6 Certain
+A11	SalesVolume_Increase T6
+T7	Company 1216 1224	Unilever
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	SalesVolume 1694 1748	total sales were steady at EUR19.96bn ( pound(s)17bn )
+A12	Confidence T8 Certain
+A13	SalesVolume_Stable T8
+T9	Profit 1757 1805	pre-tax profits fell from EUR3.14bn to EUR2.29bn
+A14	Confidence T9 Certain
+A15	Profit_Decrease T9
+A16	Profit_Positive T9
+R5	is_about_company Arg1:T8 Arg2:T7	
+R6	is_about_company Arg1:T9 Arg2:T7	
+T10	Profit 1903 1978	Earnings per share before restructuring costs fell from 79cents to 53 cents
+A17	Confidence T10 Certain
+A18	Profit_Decrease T10
+A19	Profit_Positive T10
+R7	is_about_company Arg1:T10 Arg2:T7	
+T11	Profit 2363 2410	forecasting pre-tax profit of EUR5.7bn for 2009
+A20	Confidence T11 Certain
+A21	Profit_Positive T11
+A22	Profit_Forecast T11
+T12	Company 2413 2421	Unilever
+R8	is_about_company Arg1:T11 Arg2:T12	
+T13	SalesVolume 1110 1129	The volume increase
+A23	Confidence T13 Certain
+A24	SalesVolume_Increase T13
+R9	is_about_company Arg1:T13 Arg2:T5	

@@ -1,0 +1,5 @@
+T1	MergerAcquisition 69 100	possibility of a bid for Tansas
+A1	Confidence T1 SomewhatCertain
+A2	MergerAcquisition_Forecast T1
+T2	Company 45 50	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	

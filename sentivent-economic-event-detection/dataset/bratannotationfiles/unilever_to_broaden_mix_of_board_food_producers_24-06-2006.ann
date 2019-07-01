@@ -1,0 +1,11 @@
+T1	SalesVolume 1883 1990	rate of decline in underlying sales has slowed from 3 per cent in 2004 to 0.5 per cent in the first quarter
+A1	Confidence T1 Certain
+A2	SalesVolume_Decrease T1
+A3	SalesVolume_Other T1
+T2	Company 1679 1687	Unilever
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 2298 2359	total underlying sales have been growing at around 3 per cent
+A4	Confidence T3 Certain
+A5	SalesVolume_Increase T3
+T4	Company 2286 2294	Unilever
+R2	is_about_company Arg1:T3 Arg2:T4	

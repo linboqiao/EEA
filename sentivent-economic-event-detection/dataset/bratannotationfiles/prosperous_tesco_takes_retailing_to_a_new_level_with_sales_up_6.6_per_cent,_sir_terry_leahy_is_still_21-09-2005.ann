@@ -1,0 +1,55 @@
+T1	SalesVolume 48 74	With sales up 6.6 per cent
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	Company 11 16	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	MergerAcquisition 769 797	its Pounds 3.3bn acquisition
+A3	Confidence T3 Certain
+A4	MergerAcquisition_MergerAcquisition T3
+T4	Company 801 808	Safeway
+T5	Company 719 730	Wm Morrison
+R2	is_about_acquirer Arg1:T3 Arg2:T5	
+R3	is_about_target Arg1:T3 Arg2:T4	
+T6	Profit 988 1053	it reported a near-19 per cent rise in first-half pre-tax profits
+A5	Confidence T6 Certain
+A6	Profit_Increase T6
+T7	SalesVolume 1058 1097	a 6.7 per cent rise in underlying sales
+A7	Confidence T7 Certain
+A8	SalesVolume_Increase T7
+T8	Company 968 973	Tesco
+R4	is_about_company Arg1:T6 Arg2:T8	
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	SalesVolume 1129 1170	with second-quarter sales up 6.6 per cent
+A9	Confidence T9 Certain
+A10	SalesVolume_Increase T9
+T10	QuarterlyResults 1129 1170	with second-quarter sales up 6.6 per cent
+A11	Confidence T10 Certain
+A12	QuarterlyResults_Better T10
+R6	is_about_company Arg1:T9 Arg2:T8	
+R7	is_about_company Arg1:T10 Arg2:T8	
+T11	SalesVolume 1508 1555	lift total sales 11.1 per cent to Pounds 14.6bn
+A13	Confidence T11 Certain
+A14	SalesVolume_Increase T11
+T12	Company 1502 1507	Tesco
+R8	is_about_company Arg1:T11 Arg2:T12	
+T13	SalesVolume 2189 2255	which lifted sales by 31 per cent to Pounds 401m in the first half
+A15	Confidence T13 Certain
+A16	SalesVolume_Increase T13
+T14	Company 2123 2128	Tesco
+R9	is_about_company Arg1:T13 Arg2:T14	
+T15	SalesVolume 3196 3235	underlying sales growth since July 2004
+A17	Confidence T15 Certain
+A18	SalesVolume_Increase T15
+T16	Company 3187 3192	Tesco
+R10	is_about_company Arg1:T15 Arg2:T16	
+T17	Profit 4080 4114	heading for a heavy loss this year
+A19	Confidence T17 Certain
+A20	Profit_Negative T17
+A21	Profit_Forecast T17
+T18	Profit 4134 4174	only scraped a profit in the year to May
+A22	Confidence T18 Certain
+A23	Profit_Positive T18
+T19	Company 4039 4047	Morrison
+T20	Company 4052 4061	Sainsbury
+R11	is_about_company Arg1:T17 Arg2:T19	
+R12	is_about_company Arg1:T18 Arg2:T20	

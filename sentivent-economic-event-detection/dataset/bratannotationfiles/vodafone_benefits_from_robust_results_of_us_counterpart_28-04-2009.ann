@@ -1,0 +1,50 @@
+T1	Profit 288 323	first-quarter profit beat forecasts
+A1	Confidence T1 Certain
+A2	Profit_BetterThanExpected T1
+T2	QuarterlyResults 288 323	first-quarter profit beat forecasts
+A3	Confidence T2 Certain
+A4	QuarterlyResults_BetterThanExpected T2
+T3	Company 277 284	Verizon
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	SalesVolume 334 381	better than expected mobile subscriber sign-ups
+A5	Confidence T4 Certain
+A6	SalesVolume_BetterThanExpected T4
+R3	is_about_company Arg1:T4 Arg2:T3	
+T5	Debt 611 636	uses the cash to pay debt
+A7	Confidence T5 Certain
+A8	Debt_Reduction T5
+T6	Dividend 641 713	is not forecast to give Vodafone its share of a dividend before mid-2010
+A9	Confidence T6 Certain
+A10	Dividend_NoPayment T6
+A11	Dividend_Forecast T6
+T7	Company 545 552	Verizon
+R4	is_about_company Arg1:T5 Arg2:T7	
+R5	is_about_company Arg1:T6 Arg2:T7	
+T8	BuyRating 1001 1036	added the stock to its " buy " list
+A12	Confidence T8 Certain
+A13	BuyRating_Buy T8
+T9	Company 953 961	BT Group
+R6	is_about_company Arg1:T8 Arg2:T9	
+T10	BuyRating 2188 2206	upgrade to " buy "
+A14	Confidence T10 Certain
+A15	BuyRating_Upgrade T10
+A16	BuyRating_Buy T10
+T11	Company 2116 2127	AstraZeneca
+R7	is_about_company Arg1:T10 Arg2:T11	
+T12	BuyRating 3037 3089	raised the confectioner from " sell " to " neutral "
+A17	Confidence T12 Certain
+A18	BuyRating_Hold T12
+A19	BuyRating_Downgrade T12
+T13	Company 2986 2993	Cadbury
+R8	is_about_company Arg1:T12 Arg2:T13	
+T14	BuyRating 4083 4122	added the stock to its " key buy " list
+A20	Confidence T14 Certain
+A21	BuyRating_Buy T14
+T15	Company 4026 4040	Northern Foods
+R9	is_about_company Arg1:T14 Arg2:T15	
+T16	BuyRating 4218 4250	downgraded to " market perform "
+A22	BuyRating_Hold T16
+A23	BuyRating_Downgrade T16
+T17	Company 4155 4166	Premier Oil
+R10	is_about_company Arg1:T16 Arg2:T17	

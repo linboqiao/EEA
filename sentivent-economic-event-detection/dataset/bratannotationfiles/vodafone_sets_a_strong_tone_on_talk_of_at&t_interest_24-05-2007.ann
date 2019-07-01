@@ -1,0 +1,45 @@
+T1	MergerAcquisition 319 361	rumours that it could be a takeover target
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Forecast T1
+A3	MergerAcquisition_Other T1
+T2	Company 366 370	AT&T
+T3	Company 93 101	Vodafone
+R1	is_about_acquirer Arg1:T1 Arg2:T2	
+R2	is_about_target Arg1:T1 Arg2:T3	
+T4	BuyRating 2684 2703	upgraded to " buy "
+A4	Confidence T4 Certain
+A5	BuyRating_Upgrade T4
+A6	BuyRating_Buy T4
+T5	Company 2556 2561	Rexam
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	MergerAcquisition 2849 2883	talk it could be a takeover target
+A7	Confidence T6 Certain
+A8	MergerAcquisition_Forecast T6
+A9	MergerAcquisition_Other T6
+A10	MergerAcquisition_MergerAcquisition T6
+T7	Company 2888 2900	British Land
+T8	Company 2804 2813	Hammerson
+R4	is_about_target Arg1:T6 Arg2:T8	
+R5	is_about_acquirer Arg1:T6 Arg2:T7	
+T9	BuyRating 3007 3044	reiterated its " buy " recommendation
+A11	Confidence T9 Certain
+A12	BuyRating_Buy T9
+A13	BuyRating_Maintained T9
+T10	Company 2943 2956	Compass Group
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	Turnover 3672 3704	warning of modest profits growth
+A14	Confidence T11 SomewhatCertain
+A15	Turnover_Decrease T11
+A16	Turnover_Forecast T11
+T12	Company 3625 3636	Tate & Lyle
+R7	is_about_company Arg1:T11 Arg2:T12	
+T13	BuyRating 3899 3923	upgraded to " outperfrom
+A17	Confidence T13 Certain
+A18	BuyRating_Upgrade T13
+A19	BuyRating_Outperform T13
+T14	Company 3747 3753	Enodis
+R8	is_about_company Arg1:T13 Arg2:T14	
+T15	TargetPrice 3930 3953	set a 250p target price
+A20	Confidence T15 Certain
+A21	TargetPrice_Announcement T15
+R9	is_about_company Arg1:T15 Arg2:T14	

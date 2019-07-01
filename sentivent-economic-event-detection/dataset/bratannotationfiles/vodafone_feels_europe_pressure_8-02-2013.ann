@@ -1,0 +1,41 @@
+T1	Turnover 51 82	Underlying revenue sees decline
+A1	Confidence T1 Certain
+A2	Turnover_Decrease T1
+T2	Company 0 8	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Turnover 236 272	decline in underlying group revenues
+A3	Confidence T3 Certain
+A4	Turnover_Decrease T3
+T4	Company 120 128	Vodafone
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Turnover 720 753	declining voice and text revenues
+A5	Confidence T5 Certain
+A6	Turnover_Decrease T5
+R3	is_about_company Arg1:T5 Arg2:T4	
+T6	Turnover 664 688	The growth in data usage
+A7	Confidence T6 SomewhatCertain
+A8	Turnover_Increase T6
+R4	is_about_company Arg1:T6 Arg2:T4	
+T7	Turnover 853 918	Revenues in southern Europe tumbled by almost a fifth year on yea
+A9	Confidence T7 Certain
+A10	Turnover_Decrease T7
+T8	Company 934 942	Vodafone
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	Turnover 1326 1400	service revenue decline of 2.6 per cent , weaker than expected by analysts
+A11	Confidence T9 Certain
+A12	Turnover_Decrease T9
+A13	Turnover_WorseThanExpected T9
+R6	is_about_company Arg1:T9 Arg2:T8	
+T10	Turnover 1419 1472	a fall of 0.4 per cent in underlying service revenues
+A14	Confidence T10 Certain
+A15	Turnover_Decrease T10
+R7	is_about_company Arg1:T10 Arg2:T8	
+T11	Turnover 1672 1703	revenue excluding MTRs declined
+A16	Confidence T11 Certain
+A17	Turnover_Decrease T11
+R8	is_about_company Arg1:T11 Arg2:T8	
+T12	Turnover 2284 2321	Group data revenue rose 12.8 per cent
+A18	Confidence T12 Certain
+A19	Turnover_Increase T12
+T13	Company 2196 2204	Vodafone
+R9	is_about_company Arg1:T12 Arg2:T13	

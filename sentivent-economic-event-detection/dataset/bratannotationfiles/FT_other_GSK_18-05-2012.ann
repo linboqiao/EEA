@@ -1,0 +1,16 @@
+T1	MergerAcquisition 470 542	The announcement came as the company formally rejected as " inadequate "
+A1	Confidence T1 Certain
+A2	MergerAcquisition_NoMergerAcquisition T1
+T2	MergerAcquisition 550 573	$ 13 a share cash offer
+A3	Confidence T2 Certain
+A4	MergerAcquisition_NoMergerAcquisition T2
+*	in_span_with T2 T1
+T3	Company 95 110	GlaxoSmithKline
+T4	Company 42 63	Human Genome Sciences
+R1	is_about_target Arg1:T1 Arg2:T4	
+R2	is_about_acquirer Arg1:T1 Arg2:T3	
+T5	SalesVolume 2633 2727	estimated Benlysta 's US sales potential at $ 7bn a year for an initial 200,000 lupus patients
+A5	Confidence T5 Certain
+A6	SalesVolume_Forecast T5
+T6	Company 2628 2632	HGSI
+R3	is_about_company Arg1:T5 Arg2:T6	

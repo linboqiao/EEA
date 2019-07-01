@@ -1,0 +1,37 @@
+T1	BuyRating 240 254	" buy " advice
+A1	Confidence T1 Certain
+A2	BuyRating_Buy T1
+T2	Company 60 68	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 1435 1483	sales numbers that , while they met expectations
+A3	Confidence T3 Certain
+A4	SalesVolume_AsExpected T3
+T4	Company 1353 1359	Lonmin
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 1801 1817	a profit warning
+A5	Confidence T5 Certain
+A6	Profit_Decrease T5
+A7	Profit_Forecast T5
+T6	Company 1734 1745	Potash Corp
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	MergerAcquisition 2066 2096	was said to be examining a bid
+A8	Confidence T7 Certain
+A9	MergerAcquisition_Forecast T7
+A10	MergerAcquisition_Other T7
+A11	MergerAcquisition_MergerAcquisition T7
+T8	Company 2063 2065	BP
+T9	Company 2101 2114	Kosmos Energy
+R4	is_about_acquirer Arg1:T7 Arg2:T8	
+R5	is_about_target Arg1:T7 Arg2:T9	
+T10	Profit 3649 3665	a fall in profit
+A12	Confidence T10 Certain
+A13	Profit_Decrease T10
+T11	Company 3540 3556	National Express
+R6	is_about_company Arg1:T10 Arg2:T11	
+T12	MergerAcquisition 3797 3823	ignore the merger proposal
+A14	Confidence T12 Certain
+A15	MergerAcquisition_NoMergerAcquisition T12
+T13	Company 3829 3839	Stagecoach
+T14	Company 3710 3726	National Express
+R7	is_about_company Arg1:T12 Arg2:T13	
+R8	is_about_company Arg1:T12 Arg2:T14	

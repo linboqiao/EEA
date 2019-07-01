@@ -1,0 +1,24 @@
+T1	SalesVolume 35 76	set for worst Christmas sales for decades
+A1	Confidence T1 SomewhatCertain
+A2	SalesVolume_Decrease T1
+A3	SalesVolume_Forecast T1
+T2	Company 17 22	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 124 184	is forecast to deliver its worst Christmas sales performance
+A4	Confidence T3 Certain
+A5	SalesVolume_Decrease T3
+A6	SalesVolume_Forecast T3
+T4	Company 118 123	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 366 415	is forecasting a 1.5 per cent decline in UK sales
+A7	Confidence T5 Certain
+A8	SalesVolume_Decrease T5
+A9	SalesVolume_Forecast T5
+T6	Company 358 363	Tesco
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Profit 1181 1217	that UK profit would be broadly flat
+A10	Confidence T7 SomewhatCertain
+A11	Profit_Stable T7
+A12	Profit_Forecast T7
+T8	Company 1110 1115	Tesco
+R4	is_about_company Arg1:T7 Arg2:T8	

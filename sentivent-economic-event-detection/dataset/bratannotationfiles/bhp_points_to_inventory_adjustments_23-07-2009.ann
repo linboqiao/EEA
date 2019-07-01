@@ -1,0 +1,34 @@
+T1	QuarterlyResults 1202 1235	In the quarter from April to June
+A1	Confidence T1 Certain
+T2	QuarterlyResults 1245 1336	iron ore production fell 10 per cent to 27m tonnes compared with the same quarter last year
+A4	Confidence T2 Certain
+T3	Company 1238 1241	BHP
+*	in_span_with T1 T2
+R1	is_about_company Arg1:T2 Arg2:T3	
+T4	Company 1364 1373	Rio Tinto
+T5	QuarterlyResults 1377 1423	8 per cent second-quarter rise to 45.1m tonnes
+A7	Confidence T5 Certain
+A9	QuarterlyResults_Better T5
+R2	is_about_company Arg1:T5 Arg2:T4	
+T6	Company 2584 2587	BHP
+T7	Profit 2535 2582	pre-tax profits falling from $24.2bn to $12.3bn
+A10	Confidence T7 Certain
+A11	Profit_Decrease T7
+R3	is_about_company Arg1:T7 Arg2:T6	
+T8	Turnover 2474 2528	forecasts see revenue dropping from $57.8bn to $52.3bn
+A12	Confidence T8 Certain
+A13	Turnover_Decrease T8
+A14	Turnover_Forecast T8
+A15	Profit_Forecast T7
+R4	is_about_company Arg1:T8 Arg2:T6	
+A5	QuarterlyResults_Worse T2
+A2	QuarterlyResults_Worse T1
+T9	QuarterlyResults 1575 1621	The drop was in line with analyst expectations
+A3	Confidence T9 Certain
+A6	QuarterlyResults_AsExpected T9
+R5	is_about_company Arg1:T9 Arg2:T3	
+T10	QuarterlyResults 2297 2342	but a 9 per cent gain on the previous quarter
+A8	Confidence T10 Certain
+A16	QuarterlyResults_Better T10
+T11	Company 1897 1900	BHP
+R6	is_about_company Arg1:T10 Arg2:T11	

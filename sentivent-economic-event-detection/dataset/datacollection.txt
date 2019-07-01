@@ -1,0 +1,17 @@
+SentiFM company-specific economic event English collection process
+-------
+- articles downloaded from ProQuest Newsstand
+- from newspaper The Financial Times
+- published between 01-11-2004 and 01-11-2013
+- with at least 1 of these 7 companies in the title:
+Barclays, BHP, Unilever, British Land, Tesco, Vodafone, Basf (same industries as for Dutch)
+-> for share repurchase: 'share buyback', 'share repurchase', 'stock buyback', 'stock repurchase'
+-> for dividend: 'dividend', 'payout', 'coupon'
+-> for target price: 'target price'
+-> for turnover: 'turnover', 'revenue'
+-> for sales: 'sales'
+-> for debt: 'debt'
+-> for profit: 'profit', 'ebit', 'ebitda', 'rebitda', 'rebit'
+-> for quarterly results: 'quarter', 'quarterly'
+-> for mergers/acquisitions: 'merger', 'acquisition', 'takeover', 'take-over', 'merge', 'acquire'
+-> for buy rating: 'rating'

@@ -12,7 +12,8 @@ import os
 import keras
 from keras.optimizers import Adam
 from keras import backend
-from keras.layers import Dense, Input, Flatten, Dropout, Merge, BatchNormalization
+#from keras.layers import Dense, Input, Flatten, Dropout, Merge, BatchNormalization
+from keras.layers import Dense, Input, Flatten, Dropout, BatchNormalization
 from keras.layers import Conv1D, MaxPooling1D, Embedding, LSTM, Bidirectional
 from keras.models import Model, Sequential
 from keras.wrappers.scikit_learn import KerasClassifier

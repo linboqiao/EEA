@@ -1,0 +1,14 @@
+T5	MergerAcquisition 124 196	has insisted its board voted unanimously to abandon the pursuit of rival
+A7	Confidence T5 Certain
+A8	MergerAcquisition_NoMergerAcquisition T5
+T6	Company 197 206	Rio Tinto
+T7	Company 111 123	BHP Billiton
+R3	is_about_target Arg1:T5 Arg2:T6	
+R4	is_about_acquirer Arg1:T5 Arg2:T7	
+T1	MergerAcquisition 2853 2876	when it dropped its bid
+A1	Confidence T1 Certain
+A2	MergerAcquisition_NoMergerAcquisition T1
+T2	Company 2881 2884	Rio
+T3	Company 2840 2843	BHP
+R1	is_about_target Arg1:T1 Arg2:T2	
+R2	is_about_acquirer Arg1:T1 Arg2:T3	

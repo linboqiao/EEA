@@ -1,0 +1,18 @@
+T1	Profit 710 817	decline in its profit margin at the level of earnings before interest , tax , depreciation and amortisation
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 637 645	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 833 895	the ebitda margin fell by 1.1 percentage points to 32 per cent
+A3	Confidence T3 Certain
+A4	Profit_Decrease T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Turnover 1474 1542	Fourth-quarter results for 2010-11 showed solid revenue performances
+A5	Confidence T4 Certain
+A6	Turnover_Other T4
+T5	QuarterlyResults 1474 1542	Fourth-quarter results for 2010-11 showed solid revenue performances
+A7	Confidence T5 Certain
+A8	QuarterlyResults_Strong T5
+T6	Company 1546 1554	Vodafone
+R3	is_about_company Arg1:T4 Arg2:T6	
+R4	is_about_company Arg1:T5 Arg2:T6	

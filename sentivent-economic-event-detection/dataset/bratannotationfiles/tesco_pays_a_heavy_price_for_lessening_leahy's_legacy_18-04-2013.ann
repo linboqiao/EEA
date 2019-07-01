@@ -1,0 +1,22 @@
+T1	Profit 144 186	the worst full-year pre-tax profit decline
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	Company 0 5	Tesco
+T3	SalesVolume 652 713	the sale-and-leasebacks that generated pound(s)3bn in profits
+A3	Confidence T3 Certain
+T4	Profit 652 713	the sale-and-leasebacks that generated pound(s)3bn in profits
+A5	Profit_Declaration T4
+A6	SalesVolume_Decrease T4
+R1	is_about_company Arg1:T1 Arg2:T2	
+R2	is_about_company Arg1:T3 Arg2:T2	
+R3	is_about_company Arg1:T4 Arg2:T2	
+T5	Profit 1143 1208	profit growth delivering a return of 12 to 15 per cent on capital
+A7	Profit_Increase T5
+T6	SalesVolume 1247 1273	3.5 to 4 per cent of sales
+T7	Company 796 801	Tesco
+R4	is_about_company Arg1:T5 Arg2:T7	
+R5	is_about_company Arg1:T6 Arg2:T7	
+A9	Confidence T5 Certain
+A10	Confidence T6 Certain
+A11	Confidence T4 Certain
+A4	SalesVolume_Forecast T6

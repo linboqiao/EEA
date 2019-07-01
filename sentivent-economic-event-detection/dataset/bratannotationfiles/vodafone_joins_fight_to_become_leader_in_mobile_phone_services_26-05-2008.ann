@@ -1,0 +1,55 @@
+T1	MergerAcquisition 511 537	agreeing to pay Pounds 25m
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Other T1
+A3	MergerAcquisition_MergerAcquisition T1
+T2	Company 449 457	Vodafone
+T3	Company 542 545	Zyb
+R1	is_about_acquirer Arg1:T1 Arg2:T2	
+R2	is_about_target Arg1:T1 Arg2:T3	
+T4	Turnover 907 950	said it had generated Pounds 1bn of revenue
+A4	Confidence T4 Certain
+A5	Turnover_Declaration T4
+T5	Company 898 906	Vodafone
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	MergerAcquisition 1758 1773	agreeing to buy
+A6	Confidence T6 Certain
+A7	MergerAcquisition_Other T6
+A8	MergerAcquisition_MergerAcquisition T6
+T7	MergerAcquisition 1821 1855	for Dollars 8.1bn ( Pounds 4.1bn )
+A9	MergerAcquisition_Other T7
+A10	MergerAcquisition_MergerAcquisition T7
+*	in_span_with T6 T7
+T8	Company 1774 1780	Navteq
+T9	Company 1717 1722	Nokia
+R4	is_about_acquirer Arg1:T6 Arg2:T9	
+R5	is_about_target Arg1:T6 Arg2:T8	
+T10	MergerAcquisition 3499 3512	agreed to buy
+A11	Confidence T10 Certain
+A12	MergerAcquisition_Other T10
+A13	MergerAcquisition_MergerAcquisition T10
+T11	MergerAcquisition 3606 3620	for Euros 775m
+A14	MergerAcquisition_Other T11
+A15	MergerAcquisition_MergerAcquisition T11
+*	in_span_with T10 T11
+T12	Company 3567 3572	Tele2
+T13	Company 3490 3498	Vodafone
+R6	is_about_acquirer Arg1:T10 Arg2:T13	
+R7	is_about_target Arg1:T10 Arg2:T12	
+T14	Turnover 3804 3810	expect
+A16	Confidence T14 Certain
+A17	Turnover_Forecast T14
+T15	Turnover 3820 3871	to report revenue of Pounds 35.2bn to Pounds 35.4bn
+A18	Turnover_Forecast T15
+*	in_span_with T14 T15
+T16	Company 3811 3819	Vodafone
+R8	is_about_company Arg1:T14 Arg2:T16	
+T17	Profit 3874 3930	adjusted operating profit of Pounds 9.9bn to Pounds 10bn
+A19	Confidence T17 Certain
+A20	Profit_Positive T17
+A21	Profit_Forecast T17
+R9	is_about_company Arg1:T17 Arg2:T16	
+T18	BuyRating 4457 4474	a " sell " rating
+A22	Confidence T18 Certain
+A23	BuyRating_Sell T18
+T19	Company 4478 4486	Vodafone
+R10	is_about_company Arg1:T18 Arg2:T19	

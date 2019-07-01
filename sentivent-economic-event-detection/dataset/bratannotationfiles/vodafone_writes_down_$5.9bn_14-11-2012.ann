@@ -1,0 +1,62 @@
+T1	Dividend 281 310	a pound(s)2.4bn cash dividend
+A1	Confidence T1 SomewhatCertain
+A2	Dividend_Other T1
+T2	Company 127 135	Vodafone
+T3	ShareRepurchase 445 474	a pound(s)1.5bn share buyback
+A3	Confidence T3 Certain
+A4	ShareRepurchase_Announcement T3
+R2	is_about_company Arg1:T3 Arg2:T2	
+T4	Dividend 370 436	will return more than 60 per cent of that dividend to shareholders
+A5	Confidence T4 SomewhatCertain
+A6	Dividend_Other T4
+R3	is_about_company Arg1:T4 Arg2:T2	
+T5	Profit 770 797	a pound(s)492m pre-tax loss
+A7	Confidence T5 Certain
+A8	Profit_Negative T5
+T6	Company 613 621	Vodafone
+R4	is_about_company Arg1:T5 Arg2:T6	
+T7	Turnover 968 1086	Service revenues - adjusted for acquisition activity and foreign exchange - declined by 0.4 per cent to pound(s)20.2bn
+A9	Confidence T7 Certain
+A10	Turnover_Decrease T7
+T8	Turnover 1105 1145	a fall of almost 10 per cent in revenues
+A11	Confidence T8 Certain
+A12	Turnover_Decrease T8
+R5	is_about_company Arg1:T7 Arg2:T6	
+R6	is_about_company Arg1:T8 Arg2:T6	
+T9	Turnover 1291 1344	group revenue was down 7.4 per cent to pound(s)21.8bn
+A13	Confidence T9 Certain
+A14	Turnover_Decrease T9
+T10	Company 1346 1354	Vodafone
+R7	is_about_company Arg1:T9 Arg2:T10	
+T11	Profit 1508 1586	The pre-tax loss of pound(s)492m compares with an pound(s)8bn profit last year
+A15	Confidence T11 Certain
+A16	Profit_Decrease T11
+A17	Profit_Negative T11
+R8	is_about_company Arg1:T11 Arg2:T10	
+T12	Profit 1601 1641	reported a basic loss per share of 4.01p
+A18	Profit_Declaration T12
+A19	Confidence T12 Certain
+A20	Profit_Negative T12
+R9	is_about_company Arg1:T12 Arg2:T10	
+T13	Profit 1643 1716	Adjusted operating profit improved , rising 8.5 per cent to pound(s)6.2bn
+A21	Confidence T13 Certain
+A22	Profit_Increase T13
+A23	Profit_Positive T13
+R10	is_about_company Arg1:T13 Arg2:T10	
+T14	Dividend 2328 2394	The interim dividend of 3.27p a share has been raised 7.2 per cent
+A24	Confidence T14 Certain
+A25	Dividend_Raise T14
+T15	Company 2397 2405	Vodafone
+R11	is_about_company Arg1:T14 Arg2:T15	
+T16	Turnover 2771 2811	said data revenues rose by 13.7 per cent
+A26	Confidence T16 Certain
+A27	Turnover_Increase T16
+A28	Turnover_Declaration T16
+T17	Company 2762 2770	Vodafone
+R12	is_about_company Arg1:T16 Arg2:T17	
+T18	Turnover 2824 2871	revenues from voice and text fell in the period
+A29	Confidence T18 Certain
+A30	Turnover_Decrease T18
+R13	is_about_company Arg1:T18 Arg2:T17	
+T19	Company 329 345	Verizon Wireless
+R1	is_about_company Arg1:T1 Arg2:T19	

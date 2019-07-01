@@ -1,0 +1,48 @@
+T1	BuyRating 797 829	maintained its outperform rating
+A1	Confidence T1 Certain
+A2	BuyRating_Outperform T1
+T2	Company 726 734	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 2548 2652	raised its 2005 and 2006 earnings per share forecast by 11 per cent to 19.3p per share and 18p per share
+A3	Confidence T3 Certain
+A4	Profit_Increase T3
+A5	Profit_Forecast T3
+T4	Company 2491 2498	Paladin
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Dividend 3180 3215	it increased its full-year dividend
+A6	Confidence T5 Certain
+A7	Dividend_Raise T5
+T6	Company 3089 3098	Man Group
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	Dividend 3453 3490	plans for its maiden dividend payment
+A8	Confidence T7 Certain
+A9	Dividend_Announcement T7
+T8	Company 3385 3398	Virgin Mobile
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	Turnover 3526 3625	forecast mid-teen percentage growth in service revenue , far better than most analysts had expected
+A10	Confidence T9 Certain
+A11	Turnover_Increase T9
+A12	Turnover_BetterThanExpected T9
+R5	is_about_company Arg1:T9 Arg2:T8	
+T10	SalesVolume 3736 3783	first-quarter trading was ahead of expectations
+A13	Confidence T10 Certain
+A14	SalesVolume_BetterThanExpected T10
+A15	SalesVolume_Increase T10
+T11	Company 3649 3656	Charter
+R6	is_about_company Arg1:T10 Arg2:T11	
+T12	Turnover 3875 3933	total turnover in the 16 weeks to May 22 fell 7.5 per cent
+A16	Confidence T12 Certain
+A17	Turnover_Decrease T12
+T13	Company 3786 3796	JJB Sports
+R7	is_about_company Arg1:T12 Arg2:T13	
+T14	Profit 4391 4414	issued a profit warning
+A18	Profit_Decrease T14
+A19	Profit_Forecast T14
+T15	Company 4326 4341	Regal Petroleum
+A20	Profit_Declaration T14
+R8	is_about_company Arg1:T14 Arg2:T15	
+T16	Dividend 4481 4534	it raised its dividend for the first time in 10 years
+A21	Confidence T16 Certain
+A22	Dividend_Raise T16
+T17	Company 4417 4427	Pilkington
+R9	is_about_company Arg1:T16 Arg2:T17	

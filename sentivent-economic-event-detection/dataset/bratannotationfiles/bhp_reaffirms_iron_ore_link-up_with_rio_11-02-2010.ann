@@ -1,0 +1,34 @@
+T4	Debt 2510 2553	net debt stood at $7.9bn at the end of 2009
+A2	Confidence T4 SomewhatCertain
+T5	Company 2606 2613	Xstrata
+T6	Company 2503 2506	BHP
+T7	Debt 2651 2706	revealed net debt of $12.3bn and gearing of 26 per cent
+A4	Confidence T7 Certain
+A5	Debt_Announcement T7
+T8	Profit 3024 3105	Pre-tax profits rose from $6.9bn last time to $8.9bn in the half year to December
+A6	Confidence T8 Certain
+A7	Profit_Increase T8
+A8	Profit_BetterThanExpected T8
+T9	Turnover 3108 3145	Revenues fell to $22.2bn from $25.4bn
+A9	Confidence T9 Certain
+A10	Turnover_Decrease T9
+T14	Dividend 476 568	It paid a dividend of 42 cents per share , one cent higher than the interim period last year
+A17	Confidence T14 Certain
+A18	Dividend_Raise T14
+A19	Dividend_Payment T14
+T10	Profit 347 473	the cash-rich miner continued to set itself apart from the hard-hit mining sector with profits higher than consensus forecasts
+A11	Confidence T10 Certain
+A12	Profit_BetterThanExpected T10
+T11	Company 135 147	BHP Billiton
+R3	is_about_company Arg1:T10 Arg2:T11	
+R4	is_about_company Arg1:T14 Arg2:T11	
+T12	Profit 571 636	Earnings per share more than doubled from 47 cents to 110.3 cents
+A13	Confidence T12 Certain
+A14	Profit_Increase T12
+R5	is_about_company Arg1:T12 Arg2:T11	
+A1	Debt_Other T4
+R1	is_about_company Arg1:T4 Arg2:T6	
+R2	is_about_company Arg1:T7 Arg2:T5	
+T1	Company 3147 3150	BHP
+R6	is_about_company Arg1:T8 Arg2:T1	
+R7	is_about_company Arg1:T9 Arg2:T1	

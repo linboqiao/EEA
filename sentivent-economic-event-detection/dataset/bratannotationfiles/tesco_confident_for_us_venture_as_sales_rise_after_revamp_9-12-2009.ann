@@ -1,0 +1,56 @@
+T1	SalesVolume 34 57	sales rise after revamp
+A1	Confidence T1 Certain
+A2	SalesVolume_Increase T1
+T2	Company 0 5	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 99 113	full-year loss
+A3	Confidence T3 Certain
+A4	Profit_Negative T3
+T4	Company 78 90	Fresh & Easy
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 313 347	group sales had risen 8.8 per cent
+A5	Confidence T5 Certain
+A6	SalesVolume_Increase T5
+T6	Company 298 303	Tesco
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	SalesVolume 406 451	its international sales had risen 12 per cent
+A7	Confidence T7 Certain
+A8	SalesVolume_Increase T7
+R4	is_about_company Arg1:T7 Arg2:T6	
+T8	SalesVolume 532 642	The decline in international sales from stores open at least a year narrowed from 6.7 per cent to 3.7 per cent
+A9	Confidence T8 Certain
+A10	SalesVolume_Decrease T8
+R5	is_about_company Arg1:T8 Arg2:T6	
+T9	SalesVolume 672 680	Sales at
+A11	Confidence T9 Certain
+A12	SalesVolume_Increase T9
+T10	SalesVolume 690 720	US business rose 37.4 per cent
+A13	Confidence T10 Certain
+A14	SalesVolume_Increase T10
+*	in_span_with T9 T10
+T11	Company 681 686	Tesco
+R6	is_about_company Arg1:T10 Arg2:T11	
+T12	SalesVolume 741 774	like-for-like sales were stronger
+A15	Confidence T12 Certain
+A16	SalesVolume_Increase T12
+T13	Company 778 790	Fresh & Easy
+R7	is_about_company Arg1:T12 Arg2:T13	
+T14	Profit 1125 1234	It expects the business to be on track to make a loss over the full year close to its $259m deficit last year
+A17	Confidence T14 Certain
+A18	Profit_Negative T14
+A19	Profit_Forecast T14
+T15	Company 1110 1122	Fresh & Easy
+R8	is_about_company Arg1:T14 Arg2:T15	
+T16	SalesVolume 1451 1535	It reported an increase in UK sales from stores open at least a year of 2.8 per cent
+A20	Confidence T16 Certain
+A21	SalesVolume_Increase T16
+T17	SalesVolume 1538 1597	below the 3 per cent forecast by analysts polled by Reuters
+A22	Confidence T17 Certain
+A23	SalesVolume_WorseThanExpected T17
+T18	QuarterlyResults 1604 1664	slower than the 3.1 per cent expansion in the second quarter
+A24	Confidence T18 Certain
+A25	QuarterlyResults_Worse T18
+T19	Company 1393 1398	Tesco
+R9	is_about_company Arg1:T16 Arg2:T19	
+R10	is_about_company Arg1:T17 Arg2:T19	
+R11	is_about_company Arg1:T18 Arg2:T19	

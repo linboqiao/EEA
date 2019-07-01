@@ -1,0 +1,7 @@
+T1	MergerAcquisition 126 137	unification
+A1	Confidence T1 Certain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	Company 141 152	Royal Dutch
+T3	Company 154 159	Shell
+R1	is_about_company Arg1:T1 Arg2:T2	
+R2	is_about_company Arg1:T1 Arg2:T3	

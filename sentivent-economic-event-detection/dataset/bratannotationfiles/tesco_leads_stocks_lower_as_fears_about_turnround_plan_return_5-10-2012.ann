@@ -1,0 +1,61 @@
+T1	Profit 334 352	its profit warning
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+A3	Profit_Forecast T1
+T2	Company 69 74	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 1866 1889	earnings beat forecasts
+A4	Confidence T3 Certain
+A5	Profit_BetterThanExpected T3
+T4	Company 1840 1862	Marriott International
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 2415 2484	after reporting its best like-for-like sales in more than three years
+A6	Confidence T5 Certain
+A7	SalesVolume_Declaration T5
+A8	SalesVolume_Increase T5
+T6	Company 2375 2383	Halfords
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	BuyRating 2984 3019	added the stock to its " buy " list
+A9	Confidence T7 Certain
+A10	BuyRating_Buy T7
+T8	Company 2907 2920	Sports Direct
+R4	is_about_company Arg1:T7 Arg2:T8	
+T9	SalesVolume 3611 3632	can add 6 per cent to
+A11	Confidence T9 Certain
+A12	SalesVolume_Forecast T9
+A13	SalesVolume_Increase T9
+T10	SalesVolume 3646 3659	sales by 2015
+A14	Confidence T10 Certain
+A15	SalesVolume_Forecast T10
+A16	SalesVolume_Increase T10
+T11	Company 3633 3642	De La Rue
+*	in_span_with T10 T9
+R5	is_about_company Arg1:T9 Arg2:T11	
+T12	Profit 4301 4317	A profit warning
+A17	Confidence T12 Certain
+A18	Profit_Decrease T12
+A19	Profit_Forecast T12
+T13	Company 4323 4339	Promethean World
+R6	is_about_company Arg1:T12 Arg2:T13	
+T14	Profit 4476 4516	warned that profits would miss forecasts
+A20	Confidence T14 Certain
+A21	Profit_Decrease T14
+A22	Profit_WorseThanExpected T14
+A23	Profit_Forecast T14
+T15	Company 4432 4438	Renold
+R7	is_about_company Arg1:T14 Arg2:T15	
+T16	Profit 684 702	the earnings slump
+A24	Confidence T16 SomewhatCertain
+A25	Profit_Decrease T16
+T17	Company 706 711	Tesco
+R8	is_about_company Arg1:T16 Arg2:T17	
+T18	Profit 1476 1502	the January profit warning
+A26	Confidence T18 Certain
+A27	Profit_Decrease T18
+A28	Profit_Forecast T18
+T19	Company 1410 1415	Tesco
+R9	is_about_company Arg1:T18 Arg2:T19	
+T20	SalesVolume 2547 2589	reported impr-oved sales in all categories
+A29	Confidence T20 Certain
+A30	SalesVolume_Increase T20
+R10	is_about_company Arg1:T20 Arg2:T6	

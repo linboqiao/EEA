@@ -1,0 +1,70 @@
+T1	Profit 6 37	expects Pounds 300m profit rise
+A1	Confidence T1 Certain
+A2	Profit_Increase T1
+A3	Profit_Forecast T1
+T2	Company 0 5	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	SalesVolume 98 171	UK 's biggest supermarket group reports strong first-quarter sales growth
+A4	Confidence T3 Certain
+A5	SalesVolume_Increase T3
+T4	QuarterlyResults 98 171	UK 's biggest supermarket group reports strong first-quarter sales growth
+A6	Confidence T4 Certain
+A7	QuarterlyResults_Strong T4
+R2	is_about_company Arg1:T4 Arg2:T2	
+R3	is_about_company Arg1:T3 Arg2:T2	
+T5	SalesVolume 282 327	reported a strong rise in first-quarter sales
+A8	Confidence T5 Certain
+A9	SalesVolume_Increase T5
+T6	QuarterlyResults 282 327	reported a strong rise in first-quarter sales
+A10	Confidence T6 Certain
+A11	QuarterlyResults_Strong T6
+A12	QuarterlyResults_Better T6
+A13	QuarterlyResults_Better T4
+T7	Company 172 177	Tesco
+R4	is_about_company Arg1:T6 Arg2:T7	
+R5	is_about_company Arg1:T5 Arg2:T7	
+T8	Profit 364 431	on track to increase its profits by more than Pounds 300m this year
+A14	Confidence T8 Certain
+A15	Profit_Increase T8
+A16	Profit_Forecast T8
+T9	Company 358 363	Tesco
+R6	is_about_company Arg1:T8 Arg2:T9	
+T10	Profit 443 473	the same amount of profit that
+A17	Confidence T10 Certain
+A18	Profit_Forecast T10
+T11	Profit 520 534	is set to make
+A19	Confidence T11 Certain
+A20	Profit_Forecast T11
+*	in_span_with T11 T10
+T12	Company 474 485	J Sainsbury
+R7	is_about_company Arg1:T10 Arg2:T12	
+T13	SalesVolume 914 1006	the 6.8 per cent rise in like-for-like sales growth excluding fuel in the 12 weeks to May 21
+A21	Confidence T13 Certain
+A22	SalesVolume_Increase T13
+T14	Company 710 715	Tesco
+R8	is_about_company Arg1:T13 Arg2:T14	
+T15	Profit 1318 1370	has issued five profits warnings in less than a year
+A23	Confidence T15 Certain
+A24	Profit_Decrease T15
+A25	Profit_Forecast T15
+T16	SalesVolume 1522 1552	also struggling to boost sales
+A26	Confidence T16 SomewhatCertain
+A27	SalesVolume_Other T16
+T17	Company 1265 1276	Wm Morrison
+R9	is_about_company Arg1:T15 Arg2:T17	
+R10	is_about_company Arg1:T16 Arg2:T17	
+T18	Profit 1910 1968	to trim its profit forecast for the division by Pounds 11m
+A28	Confidence T18 Certain
+A29	Profit_Decrease T18
+A30	Profit_Forecast T18
+T19	Company 1775 1780	Tesco
+R11	is_about_company Arg1:T18 Arg2:T19	
+T20	SalesVolume 2186 2218	underlying sales up 5.5 per cent
+A31	Confidence T20 Certain
+A32	SalesVolume_Increase T20
+T21	Company 2109 2114	Tesco
+R12	is_about_company Arg1:T20 Arg2:T21	
+T22	SalesVolume 2340 2450	Overall group sales rose 14.6 per cent , with international sales up 19.9 per cent and the UK up 11.3 per cent
+A33	Confidence T22 Certain
+A34	SalesVolume_Increase T22
+R13	is_about_company Arg1:T22 Arg2:T21	

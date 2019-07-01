@@ -1,0 +1,115 @@
+T1	BuyRating 956 981	cut the stock to " sell "
+A1	Confidence T1 Certain
+A2	BuyRating_Downgrade T1
+A3	BuyRating_Sell T1
+T2	TargetPrice 982 1000	with a 200p target
+A4	Confidence T2 Certain
+A5	TargetPrice_Announcement T2
+T3	Company 899 907	Barclays
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	Profit 870 884	earnings power
+A6	Confidence T4 Certain
+A7	Profit_Decrease T4
+A8	Profit_Forecast T4
+T5	Profit 833 858	could dramatically reduce
+A9	Confidence T5 Certain
+A10	Profit_Decrease T5
+A11	Profit_Forecast T5
+*	in_span_with T5 T4
+T6	Company 859 867	Barclays
+R3	is_about_company Arg1:T4 Arg2:T6	
+T7	Profit 1305 1350	reported its first quarterly loss in 14 years
+A12	Profit_Declaration T7
+A13	Profit_Negative T7
+T8	Company 1299 1304	Noble
+T9	QuarterlyResults 1305 1350	reported its first quarterly loss in 14 years
+A14	Confidence T9 Certain
+A15	QuarterlyResults_Worse T9
+R4	is_about_company Arg1:T9 Arg2:T8	
+R5	is_about_company Arg1:T7 Arg2:T8	
+A16	Confidence T7 Certain
+A17	QuarterlyResults_Publication T9
+T10	QuarterlyResults 1546 1595	after its third-quarter results beat expectations
+A18	Confidence T10 Certain
+A19	QuarterlyResults_BetterThanExpected T10
+T11	SalesVolume 1610 1648	a weaker outlook for advertising sales
+A20	Confidence T11 Certain
+A21	SalesVolume_Decrease T11
+A22	SalesVolume_Forecast T11
+T12	Company 1512 1515	ITV
+R6	is_about_company Arg1:T10 Arg2:T12	
+R7	is_about_company Arg1:T11 Arg2:T12	
+T13	BuyRating 1815 1835	helped by an upgrade
+A23	Confidence T13 SomewhatCertain
+A24	BuyRating_Upgrade T13
+T14	TargetPrice 1861 1882	Setting a 700p target
+A25	Confidence T14 Certain
+A26	TargetPrice_Announcement T14
+T15	Company 1765 1779	Smith & Nephew
+R8	is_about_company Arg1:T13 Arg2:T15	
+R9	is_about_company Arg1:T14 Arg2:T15	
+T16	MergerAcquisition 2052 2081	on continued speculation that
+A27	Confidence T16 Certain
+A28	MergerAcquisition_Forecast T16
+T17	MergerAcquisition 2087 2108	may make a second bid
+A29	Confidence T17 Certain
+A30	MergerAcquisition_Forecast T17
+T18	Company 2082 2086	Apax
+T19	Company 2008 2020	Smiths Group
+*	in_span_with T17 T16
+R10	is_about_acquirer Arg1:T17 Arg2:T18	
+R11	is_about_target Arg1:T16 Arg2:T19	
+T20	MergerAcquisition 2190 2213	when the group rejected
+A31	Confidence T20 Certain
+A32	MergerAcquisition_NoMergerAcquisition T20
+T21	MergerAcquisition 2222 2253	pound(s)2.45bn bid for the unit
+A33	Confidence T21 Certain
+A34	MergerAcquisition_NoMergerAcquisition T21
+*	in_span_with T21 T20
+T22	Company 2214 2218	Apax
+T23	Company 2136 2142	Smiths
+R12	is_about_target Arg1:T20 Arg2:T23	
+R13	is_about_acquirer Arg1:T20 Arg2:T22	
+T24	BuyRating 2498 2508	downgraded
+A35	Confidence T24 Certain
+A36	BuyRating_Downgrade T24
+A37	BuyRating_Sell T24
+T25	BuyRating 2517 2528	to " sell "
+A38	Confidence T25 Certain
+A39	BuyRating_Downgrade T25
+A40	BuyRating_Sell T25
+*	in_span_with T24 T25
+T26	TargetPrice 2529 2557	with a 2p share price target
+A41	Confidence T26 Certain
+A42	TargetPrice_Announcement T26
+T27	Company 2331 2344	Premier Foods
+R14	is_about_company Arg1:T26 Arg2:T27	
+R15	is_about_company Arg1:T24 Arg2:T27	
+T28	Profit 3519 3556	cut earnings forecasts by 28 per cent
+A43	Confidence T28 Certain
+A44	Profit_Decrease T28
+A45	Profit_Forecast T28
+T29	SalesVolume 3562 3593	reflect deteriorating trading i
+A46	Confidence T29 Certain
+A47	SalesVolume_Decrease T29
+T30	Company 3460 3476	Kesa Electricals
+R16	is_about_company Arg1:T28 Arg2:T30	
+R17	is_about_company Arg1:T29 Arg2:T30	
+T31	Profit 3878 3900	cut earnings forecasts
+A48	Profit_Decrease T31
+A49	Profit_Forecast T31
+T32	Company 3820 3841	Hikma Pharmaceuticals
+R18	is_about_company Arg1:T31 Arg2:T32	
+T33	MergerAcquisition 4048 4066	recent acquisition
+A50	Confidence T33 Certain
+A51	MergerAcquisition_MergerAcquisition T33
+T34	Company 4039 4044	Hikma
+T35	Company 4084 4094	Promopharm
+R19	is_about_target Arg1:T33 Arg2:T35	
+R20	is_about_acquirer Arg1:T33 Arg2:T34	
+T36	SalesVolume 4449 4489	A fall in like-for-like sales in October
+A52	Confidence T36 Certain
+A53	SalesVolume_Decrease T36
+T37	Company 4194 4199	Afren
+R21	is_about_company Arg1:T36 Arg2:T37	

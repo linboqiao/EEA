@@ -1,0 +1,16 @@
+T1	SalesVolume 767 801	limit sales to two packs at a time
+A1	Confidence T1 Uncertain
+A2	SalesVolume_Decrease T1
+A3	SalesVolume_Other T1
+T2	SalesVolume 621 644	designed to limit sales
+A4	Confidence T2 Uncertain
+A5	SalesVolume_Decrease T2
+A6	SalesVolume_Other T2
+T3	SalesVolume 577 589	Restrictions
+A7	Confidence T3 Uncertain
+A8	SalesVolume_Decrease T3
+A9	SalesVolume_Other T3
+*	in_span_with T2 T3
+T4	Company 33 38	Tesco
+R1	is_about_company Arg1:T2 Arg2:T4	
+R2	is_about_company Arg1:T1 Arg2:T4	

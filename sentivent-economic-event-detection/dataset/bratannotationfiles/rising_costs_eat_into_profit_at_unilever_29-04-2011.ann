@@ -1,0 +1,31 @@
+T1	Profit 134 199	underlying sales in the developed world fell in the first quarter
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	QuarterlyResults 134 199	underlying sales in the developed world fell in the first quarter
+A3	Confidence T2 Certain
+A4	QuarterlyResults_Worse T2
+T3	Company 56 64	Unilever
+R1	is_about_company Arg1:T2 Arg2:T3	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	Turnover 1029 1083	which only gave turnover numbers for the first quarter
+A5	Confidence T4 SomewhatCertain
+A6	Turnover_Declaration T4
+T5	Company 1018 1026	Unilever
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	SalesVolume 1403 1451	underlying sales rose 4.3 per cent to EUR10.86bn
+A7	Confidence T6 Certain
+A8	SalesVolume_Increase T6
+R4	is_about_company Arg1:T6 Arg2:T5	
+T7	SalesVolume 1572 1631	sales lifted 8.9 per cent year on year in the first quarter
+A9	Confidence T7 Certain
+A10	SalesVolume_Increase T7
+T8	QuarterlyResults 1572 1631	sales lifted 8.9 per cent year on year in the first quarter
+A11	Confidence T8 Certain
+A12	QuarterlyResults_Better T8
+T9	SalesVolume 1651 1685	underlying sales fell 2.7 per cent
+A13	Confidence T9 Certain
+A14	SalesVolume_Decrease T9
+T10	Company 1845 1853	Unilever
+R5	is_about_company Arg1:T9 Arg2:T10	
+R6	is_about_company Arg1:T8 Arg2:T10	
+R7	is_about_company Arg1:T7 Arg2:T10	

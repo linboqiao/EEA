@@ -1,0 +1,26 @@
+T1	BuyRating 3204 3226	advised clients to buy
+A1	Confidence T1 Certain
+A2	BuyRating_Buy T1
+T2	Company 3096 3102	Findel
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	BuyRating 3508 3550	retained its " overweight " recommendation
+A3	Confidence T3 Certain
+A4	BuyRating_Outperform T3
+A5	BuyRating_Maintained T3
+T4	TargetPrice 3555 3589	set a revised target price of 350p
+A6	Confidence T4 Certain
+A7	TargetPrice_Announcement T4
+T5	Company 3399 3403	Yell
+R2	is_about_company Arg1:T3 Arg2:T5	
+R3	is_about_company Arg1:T4 Arg2:T5	
+T6	Dividend 3657 3668	it expected
+A8	Confidence T6 Certain
+A9	Dividend_Payment T6
+A10	Dividend_Forecast T6
+T7	Dividend 3674 3697	to pay a final dividend
+A11	Confidence T7 Certain
+A12	Dividend_Payment T7
+A13	Dividend_Forecast T7
+*	in_span_with T7 T6
+T8	Company 3669 3673	Yell
+R4	is_about_company Arg1:T6 Arg2:T8	

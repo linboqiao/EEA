@@ -1,0 +1,40 @@
+T1	Profit 84 119	Quarterly pre-tax profit drops 73 %
+A1	Confidence T1 Certain
+A2	Profit_Decrease T1
+T2	QuarterlyResults 84 119	Quarterly pre-tax profit drops 73 %
+A3	Confidence T2 Certain
+T3	Company 120 132	British Land
+R1	is_about_company Arg1:T2 Arg2:T3	
+T4	QuarterlyResults 249 326	diminished rise in the value of its real estate portfolio in the past quarter
+A6	Confidence T4 Certain
+R2	is_about_company Arg1:T4 Arg2:T3	
+T5	Profit 587 675	Profit before tax dropped to pound(s)171m , against pound(s)630m in the previous quarter
+A8	Confidence T5 Certain
+A9	Profit_Decrease T5
+T6	QuarterlyResults 587 675	Profit before tax dropped to pound(s)171m , against pound(s)630m in the previous quarter
+A11	Confidence T6 Certain
+T7	Company 678 690	British Land
+R3	is_about_company Arg1:T5 Arg2:T7	
+R4	is_about_company Arg1:T6 Arg2:T7	
+T8	Dividend 1663 1707	will maintain its quarterly dividend at 6.5p
+A14	Confidence T8 Certain
+A15	Dividend_Stable T8
+T10	Company 1709 1721	British Land
+R5	is_about_company Arg1:T8 Arg2:T10	
+T11	QuarterlyResults 2219 2337	all-property total returns slowed to 3.6 per cent in the second quarter , against 6.2 per cent in the previous quarter
+A17	Confidence T11 Certain
+R7	is_about_company Arg1:T11 Arg2:T10	
+A7	QuarterlyResults_Worse T4
+A12	QuarterlyResults_Worse T6
+R8	is_about_company Arg1:T6 Arg2:T3	
+R9	is_about_company Arg1:T5 Arg2:T3	
+A10	QuarterlyResults_Worse T11
+T9	QuarterlyResults 329 431	The company 's property portfolio climbed 1.4 per cent to pound(s)8.7bn in the three months to June 30
+A13	Confidence T9 Certain
+A16	QuarterlyResults_Worse T9
+T12	QuarterlyResults 464 536	down considerably from the 16 per cent rise in the previous two quarters
+A18	Confidence T12 Certain
+A19	QuarterlyResults_Worse T12
+*	in_span_with T12 T9
+R6	is_about_company Arg1:T9 Arg2:T3	
+A4	QuarterlyResults_Worse T2

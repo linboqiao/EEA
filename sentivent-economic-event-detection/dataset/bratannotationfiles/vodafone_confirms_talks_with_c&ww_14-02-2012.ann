@@ -1,0 +1,21 @@
+T1	MergerAcquisition 9 28	confirms talks with
+A1	Confidence T1 Certain
+A2	MergerAcquisition_Other T1
+T2	Company 0 8	Vodafone
+T3	Company 29 33	C&WW
+R1	is_about_company Arg1:T1 Arg2:T2	
+R2	is_about_company Arg1:T1 Arg2:T3	
+T4	MergerAcquisition 201 276	confirmed that it was interested in bidding for the troubled telecoms group
+A3	Confidence T4 Certain
+A4	MergerAcquisition_Other T4
+A5	MergerAcquisition_Announcement T4
+T5	Company 192 200	Vodafone
+T6	Company 133 159	Cable & Wireless Worldwide
+R3	is_about_acquirer Arg1:T4 Arg2:T5	
+R4	is_about_target Arg1:T4 Arg2:T6	
+T7	Profit 983 1017	three profit warnings in 12 months
+A6	Confidence T7 Certain
+A7	Profit_Decrease T7
+A8	Profit_Forecast T7
+T8	Company 942 955	C&W Worldwide
+R5	is_about_company Arg1:T7 Arg2:T8	

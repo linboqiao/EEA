@@ -1,0 +1,58 @@
+T3	Turnover 437 445	Turnover
+A3	Confidence T3 Certain
+A4	Turnover_Increase T3
+T4	Turnover 502 577	rose 28 per cent to Dollars 31.8bn ( Pounds 17.7bn ) in the year to June 30
+A5	Confidence T4 Certain
+A6	Turnover_Increase T4
+*	in_span_with T3 T4
+T5	Profit 652 742	Pre-tax profit for the year was Dollars 8.7bn , up 92 per cent , in line with expectations
+A7	Confidence T5 Certain
+A8	Profit_Increase T5
+T6	Company 449 461	BHP Billiton
+R2	is_about_company Arg1:T5 Arg2:T6	
+T7	ShareRepurchase 1280 1384	purchased Dollars 1.8bn of its Australia-listed shares in a discounted off-market buy-back last November
+A9	Confidence T7 Certain
+T8	Company 1276 1279	BHP
+R3	is_about_company Arg1:T7 Arg2:T8	
+T9	Dividend 1493 1643	declared a final dividend of 14.5 cents , making a total of 28 cents , up 7.7 per cent , payable from earnings per share of 104.5 cents ( 54.3 cents )
+A10	Confidence T9 Certain
+A11	Dividend_Announcement T9
+T10	Company 1387 1390	BHP
+T11	Dividend 1396 1454	re-based its dividend at its half-year results in February
+A12	Confidence T11 Certain
+#1	AnnotatorNotes T11	re-base
+R4	is_about_company Arg1:T11 Arg2:T10	
+R5	is_about_company Arg1:T9 Arg2:T10	
+T12	Company 1854 1857	BHP
+T13	Profit 1861 1892	carbon steel materials division
+A13	Confidence T13 Certain
+A14	Profit_Increase T13
+T14	Profit 1936 1996	was the company 's star with profit doubled to Dollars 2.8bn
+A15	Confidence T14 Certain
+A16	Profit_Increase T14
+*	in_span_with T13 T14
+R6	is_about_company Arg1:T13 Arg2:T12	
+T15	Profit 2128 2199	the division is expected to yield even better profit in the coming year
+A17	Confidence T15 Certain
+A18	Profit_Increase T15
+A19	Profit_Positive T15
+A20	Profit_Forecast T15
+R7	is_about_company Arg1:T15 Arg2:T12	
+T1	Profit 362 395	unveiling record full-year profit
+A1	Profit_Declaration T1
+A2	Confidence T1 Certain
+A21	Profit_Increase T1
+T2	Company 358 361	BHP
+R1	is_about_company Arg1:T1 Arg2:T2	
+A22	Profit_AsExpected T5
+A23	Dividend_Other T11
+A24	Dividend_Raise T9
+T16	Profit 1646 1655	Profit at
+A25	Confidence T16 Certain
+A26	Profit_Positive T16
+T17	Company 1656 1659	BHP
+R8	is_about_company Arg1:T16 Arg2:T17	
+T18	SalesVolume 580 621	thanks to higher volumes in many products
+A27	Confidence T18 SomewhatCertain
+A28	SalesVolume_Increase T18
+R9	is_about_company Arg1:T18 Arg2:T6	

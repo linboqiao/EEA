@@ -1,0 +1,34 @@
+T1	Profit 38 52	Profit warning
+A1	Profit_Decrease T1
+A2	Profit_WorseThanExpected T1
+A3	Profit_Forecast T1
+T2	Company 0 5	Tesco
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Profit 115 129	profit warning
+A4	Confidence T3 Certain
+A5	Profit_Decrease T3
+A6	Profit_WorseThanExpected T3
+A7	Profit_Forecast T3
+T4	Company 53 58	Tesco
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	SalesVolume 1576 1621	increasingly satisfied through internet sales
+A8	Confidence T5 Certain
+A9	SalesVolume_Forecast T5
+A10	SalesVolume_Increase T5
+T6	Company 1418 1423	Tesco
+R3	is_about_company Arg1:T5 Arg2:T6	
+T7	SalesVolume 1669 1750	Sales in the six weeks to January 7 were down 2.3 per cent year-on-year in the UK
+A11	Confidence T7 Certain
+A12	SalesVolume_Decrease T7
+R4	is_about_company Arg1:T7 Arg2:T6	
+T8	QuarterlyResults 1869 1943	the 0.9 per cent decline posted in the third quarter of its financial year
+A13	Confidence T8 Certain
+A14	QuarterlyResults_Weak T8
+R5	is_about_company Arg1:T8 Arg2:T6	
+T9	Profit 2280 2346	" minimal " growth in trading profit and underlying pre-tax profit
+A15	Profit_Decrease T9
+A16	Profit_Forecast T9
+A17	Confidence T9 Certain
+T10	Company 2242 2247	Tesco
+R6	is_about_company Arg1:T9 Arg2:T10	
+A18	Confidence T1 Certain

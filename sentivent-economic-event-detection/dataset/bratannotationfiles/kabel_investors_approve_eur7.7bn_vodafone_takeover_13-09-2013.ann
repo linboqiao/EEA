@@ -1,0 +1,29 @@
+T1	MergerAcquisition 16 32	approve EUR7.7bn
+A1	Confidence T1 Certain
+A2	MergerAcquisition_MergerAcquisition T1
+T2	MergerAcquisition 42 50	takeover
+A3	Confidence T2 Certain
+A4	MergerAcquisition_MergerAcquisition T2
+*	in_span_with T2 T1
+T3	Company 33 41	Vodafone
+T4	Company 0 5	Kabel
+R1	is_about_target Arg1:T1 Arg2:T4	
+R2	is_about_acquirer Arg1:T2 Arg2:T3	
+T5	MergerAcquisition 51 75	The EUR7.7bn takeover of
+A5	Confidence T5 Certain
+A6	MergerAcquisition_MergerAcquisition T5
+T6	MergerAcquisition 106 130	won shareholder approval
+A7	Confidence T6 Certain
+A8	MergerAcquisition_MergerAcquisition T6
+*	in_span_with T6 T5
+T7	Company 76 93	Kabel Deutschland
+T8	Company 97 105	Vodafone
+R3	is_about_acquirer Arg1:T6 Arg2:T8	
+R4	is_about_target Arg1:T5 Arg2:T7	
+T9	MergerAcquisition 1219 1234	the acquisition
+A9	Confidence T9 Certain
+A10	MergerAcquisition_MergerAcquisition T9
+T10	Company 1238 1243	Kabel
+T11	Company 1255 1263	Vodafone
+R5	is_about_target Arg1:T9 Arg2:T10	
+R6	is_about_acquirer Arg1:T9 Arg2:T11	

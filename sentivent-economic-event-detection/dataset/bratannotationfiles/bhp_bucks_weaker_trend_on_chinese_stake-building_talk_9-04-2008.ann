@@ -1,0 +1,60 @@
+T1	MergerAcquisition 2566 2594	held abortive takeover talks
+A1	Confidence T1 Certain
+A2	MergerAcquisition_NoMergerAcquisition T1
+T2	Company 2556 2565	Santander
+T3	Company 2600 2603	A&L
+R1	is_about_acquirer Arg1:T1 Arg2:T2	
+R2	is_about_target Arg1:T1 Arg2:T3	
+T4	Profit 833 859	with profits warnings from
+A3	Confidence T4 Certain
+A4	Profit_Decrease T4
+A5	Profit_Forecast T4
+T5	Company 860 866	TomTom
+T6	Company 884 887	AMD
+R3	is_about_company Arg1:T4 Arg2:T5	
+R4	is_about_company Arg1:T4 Arg2:T6	
+T7	Profit 1441 1493	warned earnings forecasts could be cut by 5 per cent
+A6	Confidence T7 Certain
+A7	Profit_Decrease T7
+A8	Profit_Forecast T7
+T8	Company 1368 1373	Tesco
+R5	is_about_company Arg1:T7 Arg2:T8	
+T9	BuyRating 2794 2839	reiterated its " underweight " recommendation
+A9	Confidence T9 SomewhatCertain
+A10	BuyRating_Underperform T9
+T10	Company 2725 2747	Royal Bank of Scotland
+R6	is_about_company Arg1:T9 Arg2:T10	
+T11	Profit 3459 3489	slashed its earnings forecasts
+A11	Confidence T11 Certain
+A12	Profit_Decrease T11
+A13	Profit_Forecast T11
+T12	Company 3358 3365	Ashtead
+R7	is_about_company Arg1:T11 Arg2:T12	
+T13	Profit 4012 4031	the profits warning
+A14	Confidence T13 Certain
+A15	Profit_Decrease T13
+A16	Profit_Forecast T13
+T14	Company 4037 4043	TomTom
+R8	is_about_company Arg1:T13 Arg2:T14	
+T15	SalesVolume 4134 4157	warned of slowing sales
+A17	Confidence T15 Certain
+A18	SalesVolume_Decrease T15
+A19	SalesVolume_Forecast T15
+T16	Company 4094 4100	Garmin
+R9	is_about_company Arg1:T15 Arg2:T16	
+T17	MergerAcquisition 3844 3847	its
+A20	Confidence T17 Certain
+A21	MergerAcquisition_MergerAcquisition T17
+T18	MergerAcquisition 3860 3871	acquisition
+A22	Confidence T18 Certain
+A23	MergerAcquisition_MergerAcquisition T18
+*	in_span_with T18 T17
+T19	Company 3716 3723	Ashtead
+R10	is_about_acquirer Arg1:T17 Arg2:T19	
+T20	Company 3848 3859	Nationsrent
+R11	is_about_target Arg1:T17 Arg2:T20	
+T21	Profit 3771 3840	there was still Pounds 20m of additional profit potential to come out
+A24	Confidence T21 Uncertain
+A25	Profit_Positive T21
+A26	Profit_Forecast T21
+R12	is_about_company Arg1:T21 Arg2:T19	

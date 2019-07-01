@@ -1,0 +1,26 @@
+T1	Profit 315 336	a record pre-tax loss
+A1	Confidence T1 Certain
+A2	Profit_Negative T1
+T2	Company 339 347	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	MergerAcquisition 765 793	the Pounds 101bn acquisition
+A3	Confidence T3 Certain
+A4	MergerAcquisition_Other T3
+A5	MergerAcquisition_MergerAcquisition T3
+T4	Company 808 817	Mannesman
+T5	Company 652 660	Vodafone
+R2	is_about_acquirer Arg1:T3 Arg2:T5	
+R3	is_about_target Arg1:T3 Arg2:T4	
+T6	Turnover 1505 1567	warning that revenue growthwould be lower in 2007 than in 2006
+A6	Confidence T6 SomewhatCertain
+A7	Turnover_Decrease T6
+A8	Turnover_Forecast T6
+T7	Company 1451 1459	Vodafone
+R4	is_about_company Arg1:T6 Arg2:T7	
+A9	Turnover_Increase T6
+T8	Profit 2076 2137	a bigger pre-tax loss than the Pounds 13.5bn recorded in 2002
+A10	Confidence T8 Certain
+A11	Profit_Decrease T8
+A12	Profit_Negative T8
+T9	Company 2018 2026	Vodafone
+R5	is_about_company Arg1:T8 Arg2:T9	

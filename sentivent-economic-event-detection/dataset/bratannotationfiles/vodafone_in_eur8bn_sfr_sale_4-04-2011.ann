@@ -1,0 +1,26 @@
+T1	Debt 81 92	to pay debt
+A1	Confidence T1 Certain
+A2	Debt_Reduction T1
+T2	ShareRepurchase 97 112	buy back shares
+A3	Confidence T2 Certain
+A4	ShareRepurchase_Announcement T2
+T3	Company 0 8	Vodafone
+R1	is_about_company Arg1:T1 Arg2:T3	
+R2	is_about_company Arg1:T2 Arg2:T3	
+T4	MergerAcquisition 153 215	to pay EUR7.95bn ( pound(s)7.02bn ) for the 44 per cent of SFR
+A5	Confidence T4 Certain
+A6	MergerAcquisition_Other T4
+A7	MergerAcquisition_MergerAcquisition T4
+T5	Company 144 152	Vodafone
+T6	Company 113 120	Vivendi
+R3	is_about_company Arg1:T4 Arg2:T5	
+R4	is_about_company Arg1:T4 Arg2:T6	
+T7	ShareRepurchase 1905 1921	a share buy-back
+A8	Confidence T7 Certain
+A9	ShareRepurchase_Announcement T7
+T8	Debt 1948 1964	to pay down debt
+A10	Confidence T8 Certain
+A11	Debt_Reduction T8
+T9	Company 1820 1828	Vodafone
+R5	is_about_company Arg1:T7 Arg2:T9	
+R6	is_about_company Arg1:T8 Arg2:T9	

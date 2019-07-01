@@ -1,0 +1,15 @@
+T1	QuarterlyResults 166 199	reported on first-quarter trading
+A1	Confidence T1 Certain
+A2	QuarterlyResults_Publication T1
+T2	Company 46 54	Barclays
+R1	is_about_company Arg1:T1 Arg2:T2	
+T3	Dividend 1169 1241	he did rule out paying shareholders dividends in shares rather than cash
+A3	Confidence T3 Certain
+A4	Dividend_Other T3
+T4	Company 1035 1043	Barclays
+R2	is_about_company Arg1:T3 Arg2:T4	
+T5	Profit 1526 1560	had turned a profit so far in 2008
+A5	Confidence T5 Certain
+A6	Profit_Positive T5
+T6	Company 1473 1489	Barclays Capital
+R3	is_about_company Arg1:T5 Arg2:T6	
