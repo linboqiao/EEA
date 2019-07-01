@@ -8,5 +8,10 @@ git subtree pull -P "mstparser" git@github.com:travisbrown/mstparser.git master
 git subtree pull -P "ComplexEventExtraction" git@github.com:liuhuanyong/ComplexEventExtraction.git master
 git subtree pull -P "SequentialEventExtration" git@github.com:liuhuanyong/SequentialEventExtration.git master
 git subtree pull -P "CausalityEventExtraction" git@github.com:liuhuanyong/CausalityEventExtraction.git master
+git subtree pull -P "sentivent-economic-event-detection" https://github.com/GillesJ/sentivent-economic-event-detection.git master
+git subtree pull -P "bratreader" https://github.com/clips/bratreader.git master
+git subtree pull -P "FDUCEE" git@github.com:FrankSLB/FDU-NLP-Chinese-Event-Extraction.git master
 git push
+
+
 
