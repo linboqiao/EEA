@@ -402,7 +402,7 @@ def event_extract(text, model_trigger, encoder_trigger, model_arg, encoder_arg, 
     labels_arg = []
     idxT = 0
     idxE = 0
-    
+    ann = ''
     for idx in range(len(labels_trig)):
         embds_args = []
         if labels_trig[idx] == 'NULL':
