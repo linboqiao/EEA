@@ -1,2 +1,3 @@
 *.cmds
 *.pkl
+__pycache__
