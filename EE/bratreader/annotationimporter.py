@@ -19,6 +19,7 @@ def importann(pathtofile):
     path, extension = os.path.splitext(pathtofile)
 
     sentences = []
+    text = []
 
     char_index = 0
 
@@ -26,8 +27,13 @@ def importann(pathtofile):
         sentences.append(Sentence(sent_index, line, char_index))
         char_index += len(line)
 
-    _join(annotations.values(), sentences)
-    return sentences
+    _join(annotations.values(), sentences)   
+    
+    
+    with open(path + ".txt", encoding='utf-8') as input_file:
+        text = input_file.read()
+    
+    return sentences, text
 
 
 def _join(annotations, sentences):
@@ -69,11 +75,20 @@ def _createannotationobjects(annotations):
 
         split = t.split()
         label = split[0]
-
-        spans = [[int(span.split()[0]), int(span.split()[1])]
-                 for span in u" ".join(split[1:]).split(";")]
+#         print("t",t)
+#         print("key",key)
+        try:
+            #ann formate by brat
+            spans = [[int(span.split()[0]), int(span.split()[1])] for span in u" ".join(split[1:]).split(";")]
+        except:
+            #patch ann formate by BioNLP
+            split.append(splitted[1])
+            split.append(splitted[2])
+            spans = [[int(span.split()[0]), int(span.split()[1])] for span in u" ".join(split[1:]).split(";")]      
+        
 
         targets[key] = Annotation(key, repr, spans, [label])
+        targets[key].type = 'T'
 
     return targets
 
@@ -152,43 +167,43 @@ def _evaluate_annotations(annotations):
         id = key[1:]
 
         if type == "E":
-
             tempe = annotations["E"][id]
             key2 = tempe.split()[0].split(":")[1][1:]
             annotationobjects[key2].labels[label].append(valency)
 
         elif type == "T":
-
             annotationobjects[id].labels[label].append(valency)
+
 
     # "E" annotations
     for e in annotations["E"].values():
-
         # function returns the id of T.
         targetkeys = _find_t(e, annotations)
+        print("e",e)
         origintype, originkey = e.split()[0].split(":")
         originkey = originkey[1:]
-
         targets = [x[1:] for x in targetkeys]
-
         for x in targets:
             t = annotationobjects[originkey]
             annotationobjects[x].links[origintype].append(t)
+        
+        annotationobjects[originkey].type = 'E'
+        annotationobjects[originkey].args = targets # Args in the pre-defined order
+
 
     # "R" annotations
     for r in annotations["R"].values():
-
         r = r.split()
-
         if len(r) > 1:
-
             origintype = r[0]
             originkey = r[1].split(":")[1][1:]
             targets = [y for y in [x.split(":")[1][1:] for x in r[2:]]]
-
             for x in targets:
                 t = annotationobjects[originkey]
                 annotationobjects[x].links[origintype].append(t)
+        
+            #annotationobjects[originkey].type = 'R'
+            #annotationobjects[originkey].args = targets # Args in the pre-defined order
 
     return annotationobjects
 

@@ -38,8 +38,9 @@ class RepoModel(object):
                 # the suffix (i.e. "001.ann" becomes "001")
                 key = os.path.splitext(path)[0]
                 key = os.path.split(key)[-1]
-                context = importann(path)
-                self.documents[key] = AnnotatedDocument(key, context)
+                print(path)
+                context, text = importann(path)
+                self.documents[key] = AnnotatedDocument(key, context, text)
 
         else:
             raise IOError(u"{0} is not a valid directory".format(pathtorepo))

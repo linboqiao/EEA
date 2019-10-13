@@ -25,12 +25,11 @@ class Word(object):
         temp_ann = temp_ann + '\tsentkey:' + str(self.sentkey)
         temp_ann = temp_ann + '\tstart:' + str(self.start)
         temp_ann = temp_ann + '\tend:' + str(self.end)
-        temp_ann = temp_ann + '\tform:' + str(self.form)
-        temp_ann = temp_ann + '\tannotations:'
+        temp_ann = temp_ann + '\tform:' + str(self.form.strip())
+        temp_ann = temp_ann + '\nannotations:'
         ind = 0
         for ann in self.annotations:
-            temp_ann = temp_ann + 'ann[' + str(ind)+ ']:id:' + ann.id + ',label:' + list(ann.labels.keys())[0]\
-            + '' #',labels:' + str(list(ann.labels.keys()))
+            temp_ann = temp_ann + '\t' + ann.repr + ',labels:' + str(list(ann.labels.keys()))
             ind = ind + 1
-        return "{0}\n".format(temp_ann)
+        return "{0}".format(temp_ann)
     

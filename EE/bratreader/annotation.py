@@ -24,25 +24,30 @@ class Annotation(object):
         self.labels = defaultdict(list)
         for label in labels:
             self.labels[label] = []
+        self.label = list(self.labels.keys())[0]
         self.repr = representation
         self.spans = spans
         self.realspan = (spans[0][0], spans[-1][1])
         self.words = []
+        self.type = []
+        self.args = []
 
     def __repr__(self):        
         """Representation of the Annotation."""
         temp_ann = 'Annotation:' 
-        temp_ann = temp_ann + '\nid:' + str(self.id)
-        temp_ann = temp_ann + '\tspans:' + str(self.spans)
-        temp_ann = temp_ann + '\trealspan:' + str(self.realspan)
-        temp_ann = temp_ann + '\tlabel:' + list(self.labels.keys())[0]
+        temp_ann = temp_ann + 'id:' + str(self.id)
+        temp_ann = temp_ann + '\ttype:' + str(self.type)
+        temp_ann = temp_ann + '\trepr:' + self.repr
         temp_ann = temp_ann + '\tlabels:' + str(list(self.labels.keys()))
-        temp_ann = temp_ann + '\nlinks:' + str(list(self.links))
-        temp_ann = temp_ann + '\t\nrepr:' + self.repr
-        temp_ann = temp_ann + '\nWords:\n'
-        ind = 0
-        for word in self.words:
-            temp_ann = temp_ann + 'words[' + str(ind)+ ']:' + str(word)
-            ind = ind + 1
+        temp_ann = temp_ann + '\tspans:' + str(self.spans)
+        #temp_ann = temp_ann + '\trealspan:' + str(self.realspan)
+        #temp_ann = temp_ann + '\tlabel:' + list(self.labels.keys())[0]
+        temp_ann = temp_ann + '\targs:' + str(self.args)
+        #temp_ann = temp_ann + '\nlinks:' + str(list(self.links))
+        #temp_ann = temp_ann + '\nWords:\n'
+        #ind = 0
+        #for word in self.words:
+        #    temp_ann = temp_ann + 'words[' + str(ind)+ ']:' + str(word)
+        #    ind = ind + 1
         return "{0}".format(temp_ann)
     
