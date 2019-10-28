@@ -7,7 +7,7 @@ config.gpu_options.allow_growth=True
 #config.gpu_options.visible_device_list = "0"
 set_session(tf.Session(config=config))
 
-
+import copy
 import time
 import pickle
 import numpy as np
@@ -21,6 +21,7 @@ from keras.optimizers import SGD, Adam, RMSprop
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+from sklearn.externals import joblib
 
 
 def get_embdinspan(embds, spans, wordslabel, span):
@@ -173,7 +174,7 @@ def get_events(doc, bc):
     words, wordsvec, spans, wordslabel = get_words(doc, bc)
     wordslabel = [label[0] for label in wordslabel]
     #print('labels:', len(set(wordslabel)), set(wordslabel))
-    print([[words[idx], wordslabel[idx], spans[idx]] for idx in np.arange(len(wordslabel))])
+    #print([[words[idx], wordslabel[idx], spans[idx]] for idx in np.arange(len(wordslabel))])
     names=['triggers', 'embds_triggers', 'labels_triggers', 'args', 'embds_args', 'labels_args', 'espan'] 
     events = pd.DataFrame(columns=names)
     idx = 0
@@ -208,40 +209,54 @@ def get_events(doc, bc):
 def get_events_in_mention(doc, bc):
     '''get: triggers, embds_triggers, labels_triggers, args, embds_args, labels_args
     '''
+    en_NULL = False
     events = get_events(doc, bc)
-    for (index, row) in events.iterrows():
-        print(row['triggers'])
     triggers, embds_triggers, labels_triggers, args, embds_args, labels_args = [], [], [], [], [], []
     
+    label_arg_for_each_trig = []
     for index, r in events.iterrows():
+        num_trigger_NULL = 0
         triggers.extend(r['triggers'])
         embds_triggers.extend(r['embds_triggers'])
         labels_triggers.extend(r['labels_triggers'])
-        triggers.extend(r['args'])
-        embds_triggers.extend(r['embds_args'])
-        labels_triggers.extend(['NULL']*len(r['labels_args']))
-        triggers.extend(['NULL']*len(r['labels_NULL']))
-        embds_triggers.extend(r['embds_NULL'])
-        labels_triggers.extend(r['labels_NULL'])
+        if en_NULL:
+            triggers.extend(r['args'])
+            embds_triggers.extend(r['embds_args'])
+            labels_triggers.extend(['NULL']*len(r['labels_args']))
+            triggers.extend(['NULL']*len(r['labels_NULL']))
+            embds_triggers.extend(r['embds_NULL'])
+            labels_triggers.extend(r['labels_NULL'])
+        elif(len(r['args'])>0):
+            triggers.extend([r['args'][0]])
+            embds_triggers.append(r['embds_args'][0])
+            labels_triggers.extend(['NULL'])
+            
         for idx in range(len(r['triggers'])):
+            label_arg_for_each_trig.append([])
             for idxarg in range(len(r['args'])):
                 args.extend([r['triggers'][idx] + '->' + r['args'][idxarg]])
                 temp_embds_arg = np.append(r['embds_triggers'][idx], r['embds_args'][idxarg], axis=0)
                 embds_args.extend([temp_embds_arg])
                 labels_args.extend([r['labels_args'][idxarg]])
+                label_arg_for_each_trig[idx].extend([r['labels_args'][idxarg]])
             for idxN in range(len(r['labels_NULL'])):
                 args.extend([r['triggers'][idx] + '-> NULL'])
                 temp_embds_arg = np.append(r['embds_triggers'][idx], r['embds_NULL'][idxN], axis=0)
                 embds_args.extend([temp_embds_arg])
                 labels_args.extend(['NULL'])
-    return triggers, embds_triggers, labels_triggers, args, embds_args, labels_args
+                label_arg_for_each_trig[idx].extend(['NULL'])
+                if not en_NULL:
+                    break
+#label_arg_for_each_trig 是指在处理一个具有多个触发词的句子的时候,将不同trigger情况下的label_arg放在label_arg_for_each_trig的不同行
+#labels_triggers debug
+    return triggers, embds_triggers, labels_triggers, args, embds_args, labels_args, label_arg_for_each_trig
 
 
 def create_base_network(input_dim, nb_classes):
     '''Base network to be shared (eq. to feature extraction).
     '''    
     sgd = optimizers.SGD(lr=0.01, clipnorm=1.)
-    sgd = optimizers.SGD(lr=0.01, momentum=0.0, decay=0.0, nesterov=False)
+    sgd = optimizers.SGD(lr=0.01, momentum=0.05, decay=0.0, nesterov=True)
     rmsprop = optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=None, decay=0.0)
     adagrad = optimizers.Adagrad(lr=0.01, epsilon=None, decay=0.0)
     adadelta = optimizers.Adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0)
@@ -250,20 +265,20 @@ def create_base_network(input_dim, nb_classes):
     nadam = optimizers.Nadam(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.004)
     
     N_nodes = input_dim
-    r_droupout = 0.2
+    r_droupout = 0.05
     model_base = Sequential()
     model_base.add(Dense(N_nodes, input_shape=(input_dim,)))
     model_base.add(Activation('relu'))
     model_base.add(Dropout(r_droupout))
-    N_nodes = int(np.floor(N_nodes/2))
+    #N_nodes = int(np.floor(N_nodes/2))
     model_base.add(Dense(N_nodes))
     model_base.add(Activation('relu'))
     model_base.add(Dropout(r_droupout))
-    N_nodes = int(np.floor(N_nodes/2))
+    #N_nodes = int(np.floor(N_nodes/2))
     model_base.add(Dense(N_nodes))
     model_base.add(Activation('relu'))
     model_base.add(Dropout(r_droupout))
-    N_nodes = int(np.floor(N_nodes/2))
+    #N_nodes = int(np.floor(N_nodes/2))
     model_base.add(Dense(N_nodes))
     model_base.add(Activation('relu'))
     model_base.add(Dropout(r_droupout))
@@ -277,55 +292,143 @@ def create_base_network(input_dim, nb_classes):
     model_base.add(Dense(nb_classes))
     model_base.add(Activation('softmax'))    
     model_base.compile(loss='categorical_crossentropy',
-                       optimizer=rmsprop,
+                       optimizer=sgd,
                        metrics=['accuracy'])
     #model_base.load_weights('model_base.h5')
     return model_base
 
 
-def fit_on_data(wordsvec='NULL', wordslabel='NULL', N_batch = 4, N_epoch = 16, en_verbose = 0):
+def fit_on_data(wordsvec='NULL', wordslabel='NULL', model=0, encoder=0, learning_rate = 0.001, N_batch = 4, N_epoch = 16, en_verbose = 0):
     '''
     fit the model on given data
     '''
-    print('fit the model on given data:')
+    print('='*65,'\n>>fit the model on given data, learning_rate:{}, N_batch:{}, N_epoch:{}'.format(learning_rate, N_batch, N_epoch))
     # wordsvec from list to array
     wordsvec = np.asarray(wordsvec)
     print('samples shape:', wordsvec.shape)
     print('labels number:', len(set(wordslabel)), set(wordslabel))
     
+    classesnames = set(wordslabel)
+    classweight = dict([(i, 1) for i in range(len(classesnames))])
+    
     # encode class values as integers
-    encoder = LabelEncoder()
-    encoder.fit(wordslabel)
-    Y_encoder = encoder.transform(wordslabel)
+    #encoder = LabelEncoder()
+    #encoder.fit(wordslabel)
+    Y_encoder = encoder.transform(wordslabel)    
+    for idx in range(len(classesnames)):
+        classweight[idx] = 10*(1 - float(len(Y_encoder[np.where(Y_encoder==idx)])) / float(len(Y_encoder)))
+        
     # convert integers to dummy variables (i.e. one hot encoded)
     Y_encoder = np_utils.to_categorical(Y_encoder)
     
     #X_train, X_test, Y_train, Y_test = train_test_split(wordsvec, Y_encoder, random_state=0)
-    X_train, X_test, Y_train, Y_test  = wordsvec, wordsvec, Y_encoder, Y_encoder
+    X_train, X_test, Y_train, Y_test = wordsvec, wordsvec, Y_encoder, Y_encoder
+    #X_train, Y_train  = wordsvec, Y_encoder
     
     # model define
-    input_dim = wordsvec.shape[1]
-    N_classes = len(set(wordslabel))
-    
-    model = create_base_network(input_dim, N_classes)
-    model.summary()
+    #input_dim = wordsvec.shape[1]
+    #N_classes = len(set(wordslabel))    
+    #model = create_base_network(input_dim, N_classes)     
+    sgd = optimizers.SGD(lr=learning_rate, clipnorm=1.)
+    sgd = optimizers.SGD(lr=learning_rate, momentum=0.05, decay=0.0, nesterov=True)
+    #rmsprop = optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=None, decay=0.0)
+    adagrad = optimizers.Adagrad(lr=0.01, epsilon=None, decay=0.0)
+    adadelta = optimizers.Adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0)
+    adam = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+    adamax = optimizers.Adamax(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0)
+    nadam = optimizers.Nadam(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.004)
+    rmsprop = optimizers.RMSprop(lr=learning_rate, rho=0.9, epsilon=None, decay=0)
+    model.compile(loss='categorical_crossentropy',
+                  optimizer=sgd,
+                  metrics=['accuracy'])
+    #model.summary()
     
     # model training
     start   = time.time()
-    model.fit(X_train, Y_train,
-                        batch_size=N_batch, epochs=N_epoch,
-                        verbose=en_verbose, validation_data=(X_test, Y_test))
+    his = model.fit(X_train, Y_train,
+                    batch_size=N_batch, epochs=N_epoch,
+                    verbose=en_verbose, validation_data=(X_test, Y_test),
+                    class_weight = classweight)
     end     = time.time()
     print('time elapse on training:\t', end - start, 'sec')
-    return model, encoder
+    return model, encoder, his
 
 
-def test_on_data(model, encoder, wordsvec, wordslabel):   
-    print('test the model on given data:')
+import itertools
+import numpy as np
+from sklearn.metrics import confusion_matrix
+import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib.font_manager import * 
+##查看系统中文字体命令: $> fc-list :lang=zh
+#定义自定义字体，文件名从1.b查看系统中文字体中来 
+myfont = FontProperties(fname='/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc')  
+#解决负号'-'显示为方块的问题  
+matplotlib.rcParams['axes.unicode_minus']=False  
+
+
+def plot_confusion_matrix(cm, classes,
+                          normalize=False,
+                          title='Confusion matrix',
+                          cmap=plt.cm.Blues):
+    """
+    This function prints and plots the confusion matrix.
+    Normalization can be applied by setting `normalize=True`.
+    """
+    if normalize:
+        cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+        print("Normalized confusion matrix")
+    else:
+        print('Confusion matrix, without normalization')
+    #print(cm)
+    
+    #plt.figure()
+    plt.imshow(cm, interpolation='nearest', cmap=cmap)
+    plt.title(title)
+    #plt.title(u'中文标题',fontproperties=myfont)
+    plt.colorbar()
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation=90, fontproperties=myfont)
+    plt.yticks(tick_marks, classes, fontproperties=myfont)
+
+    fmt = '.2f' if normalize else 'd'
+    thresh = cm.max() / 2.
+    for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+        plt.text(j, i, format(cm[i, j], fmt),
+                 horizontalalignment="center",
+                 color="white" if cm[i, j] > thresh else "black")
+
+    plt.ylabel('True label',fontproperties=myfont)
+    plt.xlabel('Predicted label',fontproperties=myfont)
+    #plt.tight_layout()
+    
+def print_all_array(x):
+    for i in range(len(x)):
+        print([y for y in x[i]])
+
+def generate_confusion_matrix(labels_true, labels_pre, label_set):
+    cnf_matrix = confusion_matrix(labels_true, labels_pre)
+    #print(np.asarray(cnf_matrix))
+    print_all_array(np.asarray(cnf_matrix))
+    np.set_printoptions(precision=2)
+    if True:
+        fig =  plt.figure(figsize=(40,40))
+        plot_confusion_matrix(cnf_matrix, classes=label_set)
+        plt.show(block = False)
+        fig.savefig('./save/'+ time.asctime()+'-count.jpg')
+        plt.close()
+        fig =  plt.figure(figsize=(40,40))
+        plot_confusion_matrix(cnf_matrix, classes=label_set, normalize=True, title='Normalized confusion matrix')
+        plt.show(block = False)
+        fig.savefig('./save/'+ time.asctime()+'-norm.jpg')
+        plt.close()
+    
+    
+def test_on_data(model, encoder, wordsvec, wordslabel, en_verbose=0):    
+    print('='*65,'\n>>test the model on given data:')
     # wordsvec from list to array
     wordsvec = np.asarray(wordsvec)
-    print('samples shape:', wordsvec.shape)
-    print('labels number:', len(set(wordslabel)), set(wordslabel))
+    print('samples: {}, {} labels: {}'.format(wordsvec.shape, len(set(wordslabel)), set(wordslabel)))
     
     # encode class values as integers
     Y_encoder = encoder.transform(wordslabel)
@@ -333,16 +436,30 @@ def test_on_data(model, encoder, wordsvec, wordslabel):
     Y_encoder = np_utils.to_categorical(Y_encoder)
     
     # model test
-    print('='*65,'\n>>testing')
-    probs = model.predict(wordsvec, verbose=1)
+    print('>>testing')
+    probs = model.predict(wordsvec, verbose=en_verbose)
     print(probs.shape)
     
+    idxs = np.argmax(probs, axis=1)
+    labels_pre = encoder.inverse_transform(idxs)
+    labels_true = wordslabel
+    labels = []
+    for idx in range(len(set(labels_true))):
+        labels.append(encoder.inverse_transform(idx))
+    generate_confusion_matrix(labels_true, labels_pre, labels)
+ 
     # model eval
-    print('='*65,'\n>>evaluating')
+    print('>>evaluating')
     #Returns the loss value & metrics values for the model in test mode.
-    [loss, metrics] = model.evaluate(x=wordsvec, y=Y_encoder, verbose=1)
+    [loss, metrics] = model.evaluate(x=wordsvec, y=Y_encoder, verbose=en_verbose)
     print('loss : ', loss)
     print(model.metrics[0], ':', metrics)
+    return metrics
+
+#     labels_class = []
+#     for label_i in range(len(labels_true)):
+#         if labels_true[label_i] not in labels_class:
+#             labels_class.append(labels_true[label_i])
 
 
 def label2ann(words, labels_trig, labels_arg, idxT, idxE):
@@ -363,7 +480,7 @@ def label2ann(words, labels_trig, labels_arg, idxT, idxE):
         idx_tokens_trigger = np.where(labels_trig==label)[0]
         spans[0] = np.min(idx_tokens_trigger)
         for temp_idx in range(len(idx_tokens_trigger)-1):
-            if (idx_tokens_trigger[temp_idx+1]==idx_tokens_trigger[temp_idx] + 1):#连续的tokens被标记为相同的label
+            if (idx_tokens_trigger[temp_idx+1] == idx_tokens_trigger[temp_idx] + 1):#连续的tokens被标记为相同的label
                 spans[1] = idx_tokens_trigger[temp_idx+1]
         spans[1] = spans[1] + 1
         idxT = idxT + 1
@@ -388,17 +505,17 @@ def label2ann(words, labels_trig, labels_arg, idxT, idxE):
     return ann, idxT, idxE
 
 def event_extract(text, model_trigger, encoder_trigger, model_arg, encoder_arg, bc):
-    
     words, wordsvec = get_embd([text], bc)
     # wordsvec from list to array
     wordsvec = np.asarray(wordsvec)
-    
+      
     probs = model_trigger.predict(wordsvec)
     idxs = np.argmax(probs, axis=1)
     labels_trig = encoder_trigger.inverse_transform(idxs)
+      
     print(probs.shape, len(labels_trig))
     print([[words[idx], labels_trig[idx]] for idx in np.arange(len(labels_trig))])
-    
+      
     labels_arg = []
     idxT = 0
     idxE = 0
@@ -419,4 +536,65 @@ def event_extract(text, model_trigger, encoder_trigger, model_arg, encoder_arg, 
         print([[words[idx]+'->'+ words[idx_arg], labels_arg[idx_arg]] for idx_arg in np.arange(len(labels_arg))])
         ann, idxT, idxE = label2ann(words, labels_trig, labels_arg, idxT, idxE)
     return ann
+
+
+def event_extract_kzg(text, model_trigger, encoder_trigger, model_arg, encoder_arg, trigger_emb, 
+                      arg_emb, true_trig_labels, true_arg_labels_list, bc):
+#     words, wordsvec = get_embd([text], bc)
+    words, wordsvec = get_embd([text], bc)
+    # wordsvec from list to array
+    wordsvec = np.asarray(wordsvec)
+    
+    trigger_emb = np.asarray(trigger_emb)
+    probs = model_trigger.predict(trigger_emb)
+    idxs = np.argmax(probs, axis=1)
+    labels_trig = encoder_trigger.inverse_transform(idxs)
+    pre_trig_labels = labels_trig
+    
+    
+    event_match_strict_count = 0
+    event_match_approx_count = 0
+    for word_i in range(len(labels_trig)):
+
+        #稍作修改以便调试
+#         if pre_trig_labels[word_i] != 'NULL' and pre_trig_labels[word_i] == true_trig_labels[word_i]:
+        if pre_trig_labels[word_i] != 'NULL' and pre_trig_labels[word_i] == true_trig_labels[word_i]:
+            
+            #当true_trig_labels中不止一个trigger时,数清楚预测到的trigger是true_trig_labels中的第几个
+            trigger_count = 0
+            for word_idx_j in range(word_i):
+                #事实上,这里还要考虑trigger为短语的情况,目前先不考虑,以后再改
+                if true_trig_labels[word_idx_j] != 'NULL':
+                    trigger_count += 1
+            
+            embds_args = []
+            for idxarg in range(len(labels_trig)):
+                if labels_trig[idxarg] == 'NULL':
+                    temp_embds_arg = np.append(wordsvec[word_i], wordsvec[idxarg], axis=0)
+                    embds_args.extend([temp_embds_arg])
+            embds_args = np.asarray(embds_args)
+            probs = model_arg.predict(embds_args)
+            idxs = np.argmax(probs, axis=1)
+            pre_arg_label = encoder_arg.inverse_transform(idxs)
+            
+            true_arg_label = true_arg_labels_list[trigger_count]
+            
+            
+            arg_count = 0 
+            for arg_i in range(len(true_arg_label)):
+                if true_arg_label[arg_i] != 'NULL':
+                    arg_count +=1
+            
+            strict_match_mark = True
+            for arg_j in range(true_arg_label):
+                if true_arg_label[arg_j] != pre_arg_label[arg_j]:
+                    event_match_approx_count += 1
+                    strict_match_mark = False
+                
+            if strict_match_mark:
+                event_match_strict_count += 1
+            
+    return  event_match_strict_count, event_match_approx_count
+
+
 
